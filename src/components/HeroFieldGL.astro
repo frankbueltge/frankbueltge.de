@@ -1,0 +1,294 @@
+---
+// WebGL-Prototyp des Klima-Pulses (NASA GISTEMP, wie HeroField.astro):
+// gleiche Daten-Geometrie, aber GPU-gerendert — Glow-Shader, Tiefenstaffelung
+// mit Maus-Parallaxe, wanderndes Licht pro Jahr. Die GEOMETRIE bleibt die
+// Daten (§2: keine Verzerrung) — animiert wird ausschließlich Licht/Kamera.
+import snapshot from '@/data/climate/global-temp-anomalies.json'
+import { seriesToRidges, type ClimateSeries } from '@/lib/climate'
+
+const ridges = seriesToRidges(snapshot as ClimateSeries)
+const ridgeHeights = ridges.map((r) => r.heights)
+---
+
+<canvas data-herofield-gl aria-hidden="true" class="absolute inset-0 h-full w-full"></canvas>
+<script type="application/json" data-ridges-gl set:html={JSON.stringify(ridgeHeights)}></script>
+
+<script>
+  const canvas = document.querySelector<HTMLCanvasElement>('[data-herofield-gl]')
+  const ridgesEl = document.querySelector('[data-ridges-gl]')
+  const gl = canvas?.getContext('webgl2', { antialias: true, alpha: true, premultipliedAlpha: true })
+
+  if (canvas && ridgesEl && gl) {
+    const ridges: number[][] = JSON.parse(ridgesEl.textContent || '[]')
+    const ROWS = ridges.length
+    const N = 140 // Samples pro Jahres-Linie (Interpolation der 12 Monatswerte)
+
+    // ── Farben aus dem Skin (Muster aus HeroField) ──────────────────────────
+    const cssVar = (n: string, fb: [number, number, number]): [number, number, number] => {
+      const v = getComputedStyle(document.documentElement).getPropertyValue(n).trim().split(/\s+/).map(Number)
+      return v.length === 3 && v.every(Number.isFinite) ? (v as [number, number, number]) : fb
+    }
+    let colBack = cssVar('--rgb-accent', [194, 194, 200])
+    let colFront = cssVar('--rgb-cyan', [250, 250, 250])
+    let colBg = cssVar('--rgb-bg', [10, 10, 10])
+    new MutationObserver(() => {
+      colBack = cssVar('--rgb-accent', colBack)
+      colFront = cssVar('--rgb-cyan', colFront)
+      colBg = cssVar('--rgb-bg', colBg)
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-skin'] })
+
+    // ── Geometrie im Einheitsraum [0,1]² (Layout identisch zu HeroField 2D) ──
+    const lerp = (a: number, b: number, t: number) => a + (b - a) * t
+    const sample = (row: number, x: number): number => {
+      const h = ridges[row]
+      if (!h || !h.length) return 0
+      const f = Math.max(0, Math.min(1, x)) * (h.length - 1)
+      const lo = Math.floor(f)
+      return lerp(h[lo], h[Math.min(h.length - 1, lo + 1)], f - lo)
+    }
+    const TOP = 0.12
+    const GAP = 0.82 / ROWS
+    const AMP = 0.20
+    const yFor = (row: number, x: number) => TOP + row * GAP - sample(row, x) * AMP
+
+    // Linien: pos(x,y,depth) + tangent(2) + edge(1) → 6 floats, 2 Verts pro Sample.
+    // Fills: pos(3), Strip Linie↔Unterkante — verdeckt die Glows der hinteren Reihen.
+    const lineVerts = new Float32Array(ROWS * N * 2 * 6)
+    const fillVerts = new Float32Array(ROWS * N * 2 * 3)
+    for (let i = 0; i < ROWS; i++) {
+      const depth = ROWS === 1 ? 1 : i / (ROWS - 1)
+      for (let j = 0; j < N; j++) {
+        const x = j / (N - 1)
+        const y = yFor(i, x)
+        const xp = Math.max(0, j - 1) / (N - 1)
+        const xn = Math.min(N - 1, j + 1) / (N - 1)
+        let tx = xn - xp
+        let ty = yFor(i, xn) - yFor(i, xp)
+        const tl = Math.hypot(tx, ty) || 1
+        tx /= tl; ty /= tl
+        for (let e = 0; e < 2; e++) {
+          const o = (i * N * 2 + j * 2 + e) * 6
+          lineVerts[o] = x; lineVerts[o + 1] = y; lineVerts[o + 2] = depth
+          lineVerts[o + 3] = tx; lineVerts[o + 4] = ty
+          lineVerts[o + 5] = e === 0 ? 1 : -1
+        }
+        const f = (i * N * 2 + j * 2) * 3
+        fillVerts[f] = x; fillVerts[f + 1] = y; fillVerts[f + 2] = depth
+        fillVerts[f + 3] = x; fillVerts[f + 4] = 1.12; fillVerts[f + 5] = depth
+      }
+    }
+
+    // ── Shader ───────────────────────────────────────────────────────────────
+    const LINE_VS = `#version 300 es
+    layout(location=0) in vec3 a_pos;
+    layout(location=1) in vec2 a_tan;
+    layout(location=2) in float a_edge;
+    uniform mat4 u_mvp; uniform vec2 u_res; uniform float u_halfw;
+    out float v_edge; out float v_depth; out float v_x;
+    void main() {
+      vec4 clip = u_mvp * vec4(a_pos.x * 2.0 - 1.0, (1.0 - a_pos.y) * 2.0 - 1.0, (a_pos.z - 0.5) * 0.55, 1.0);
+      vec2 tpx = normalize(vec2(a_tan.x * u_res.x, -a_tan.y * u_res.y));
+      vec2 npx = vec2(-tpx.y, tpx.x);
+      clip.xy += npx * a_edge * u_halfw * 2.0 / u_res * clip.w;
+      gl_Position = clip;
+      v_edge = a_edge; v_depth = a_pos.z; v_x = a_pos.x;
+    }`
+    const LINE_FS = `#version 300 es
+    precision mediump float;
+    in float v_edge; in float v_depth; in float v_x;
+    uniform vec3 u_colA; uniform vec3 u_colB; uniform float u_time; uniform float u_pass;
+    out vec4 frag;
+    void main() {
+      float d = abs(v_edge);
+      // Hinten (alte Jahre) deutlich zurücknehmen — nur die jüngsten Jahre leuchten.
+      float w = pow(v_depth, 1.7);
+      vec3 col = mix(u_colA * 0.75, u_colB, w);
+      float seed = fract(v_depth * 61.803);
+      float head = fract(u_time * (0.04 + seed * 0.06) + seed);
+      float boost = exp(-pow((v_x - head) * 16.0, 2.0)) * (0.3 + 0.7 * w);
+      float alpha;
+      if (u_pass < 0.5) {
+        alpha = smoothstep(1.0, 0.55, d) * (0.07 + 0.78 * w);
+        col = min(col + boost * 0.5, vec3(1.0));
+      } else {
+        alpha = pow(max(0.0, 1.0 - d), 2.4) * (0.012 + 0.20 * w) * (0.35 + boost * 1.9);
+      }
+      frag = vec4(col * alpha, alpha);
+    }`
+    const FILL_VS = `#version 300 es
+    layout(location=0) in vec3 a_pos;
+    uniform mat4 u_mvp;
+    void main() {
+      gl_Position = u_mvp * vec4(a_pos.x * 2.0 - 1.0, (1.0 - a_pos.y) * 2.0 - 1.0, (a_pos.z - 0.5) * 0.55, 1.0);
+    }`
+    const FILL_FS = `#version 300 es
+    precision mediump float;
+    uniform vec3 u_bg;
+    out vec4 frag;
+    void main() { frag = vec4(u_bg, 1.0); }`
+
+    const compile = (type: number, src: string): WebGLShader => {
+      const s = gl.createShader(type)!
+      gl.shaderSource(s, src)
+      gl.compileShader(s)
+      if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s) || 'shader')
+      return s
+    }
+    const program = (vs: string, fs: string): WebGLProgram => {
+      const p = gl.createProgram()!
+      gl.attachShader(p, compile(gl.VERTEX_SHADER, vs))
+      gl.attachShader(p, compile(gl.FRAGMENT_SHADER, fs))
+      gl.linkProgram(p)
+      if (!gl.getProgramParameter(p, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(p) || 'link')
+      return p
+    }
+    const lineProg = program(LINE_VS, LINE_FS)
+    const fillProg = program(FILL_VS, FILL_FS)
+    const uL = {
+      mvp: gl.getUniformLocation(lineProg, 'u_mvp'),
+      res: gl.getUniformLocation(lineProg, 'u_res'),
+      halfw: gl.getUniformLocation(lineProg, 'u_halfw'),
+      colA: gl.getUniformLocation(lineProg, 'u_colA'),
+      colB: gl.getUniformLocation(lineProg, 'u_colB'),
+      time: gl.getUniformLocation(lineProg, 'u_time'),
+      pass: gl.getUniformLocation(lineProg, 'u_pass'),
+    }
+    const uF = { mvp: gl.getUniformLocation(fillProg, 'u_mvp'), bg: gl.getUniformLocation(fillProg, 'u_bg') }
+
+    const lineVao = gl.createVertexArray()!
+    gl.bindVertexArray(lineVao)
+    const lineBuf = gl.createBuffer()
+    gl.bindBuffer(gl.ARRAY_BUFFER, lineBuf)
+    gl.bufferData(gl.ARRAY_BUFFER, lineVerts, gl.STATIC_DRAW)
+    gl.enableVertexAttribArray(0); gl.vertexAttribPointer(0, 3, gl.FLOAT, false, 24, 0)
+    gl.enableVertexAttribArray(1); gl.vertexAttribPointer(1, 2, gl.FLOAT, false, 24, 12)
+    gl.enableVertexAttribArray(2); gl.vertexAttribPointer(2, 1, gl.FLOAT, false, 24, 20)
+    const fillVao = gl.createVertexArray()!
+    gl.bindVertexArray(fillVao)
+    const fillBuf = gl.createBuffer()
+    gl.bindBuffer(gl.ARRAY_BUFFER, fillBuf)
+    gl.bufferData(gl.ARRAY_BUFFER, fillVerts, gl.STATIC_DRAW)
+    gl.enableVertexAttribArray(0); gl.vertexAttribPointer(0, 3, gl.FLOAT, false, 12, 0)
+    gl.bindVertexArray(null)
+
+    // ── Mini-Mat4 (Spalten-major, nur was die Kamera braucht) ───────────────
+    const mat = {
+      mul(a: Float32Array, b: Float32Array): Float32Array {
+        const o = new Float32Array(16)
+        for (let c = 0; c < 4; c++)
+          for (let r = 0; r < 4; r++)
+            o[c * 4 + r] = a[r] * b[c * 4] + a[4 + r] * b[c * 4 + 1] + a[8 + r] * b[c * 4 + 2] + a[12 + r] * b[c * 4 + 3]
+        return o
+      },
+      persp(fovY: number, aspect: number, near: number, far: number): Float32Array {
+        const f = 1 / Math.tan(fovY / 2)
+        const o = new Float32Array(16)
+        o[0] = f / aspect; o[5] = f
+        o[10] = (far + near) / (near - far); o[11] = -1
+        o[14] = (2 * far * near) / (near - far)
+        return o
+      },
+      rotX(a: number): Float32Array {
+        const c = Math.cos(a), s = Math.sin(a)
+        return new Float32Array([1, 0, 0, 0, 0, c, s, 0, 0, -s, c, 0, 0, 0, 0, 1])
+      },
+      rotY(a: number): Float32Array {
+        const c = Math.cos(a), s = Math.sin(a)
+        return new Float32Array([c, 0, -s, 0, 0, 1, 0, 0, s, 0, c, 0, 0, 0, 0, 1])
+      },
+      scaleT(sx: number, sy: number, sz: number, tz: number): Float32Array {
+        return new Float32Array([sx, 0, 0, 0, 0, sy, 0, 0, 0, 0, sz, 0, 0, 0, tz, 1])
+      },
+    }
+
+    // ── Render-Loop ──────────────────────────────────────────────────────────
+    let W = 0, H = 0
+    const resize = () => {
+      const r = canvas.getBoundingClientRect()
+      const dpr = Math.min(window.devicePixelRatio || 1, 2)
+      W = Math.round(r.width * dpr); H = Math.round(r.height * dpr)
+      canvas.width = W; canvas.height = H
+      gl.viewport(0, 0, W, H)
+    }
+
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches
+    let tiltX = 0, tiltY = 0, targX = 0, targY = 0
+    if (!reduce) {
+      window.addEventListener('pointermove', (e) => {
+        const r = canvas.getBoundingClientRect()
+        targY = ((e.clientX - r.left) / r.width - 0.5) * 0.16
+        targX = ((e.clientY - r.top) / r.height - 0.5) * 0.12
+      })
+    }
+
+    const c01 = (c: [number, number, number]) => [c[0] / 255, c[1] / 255, c[2] / 255] as const
+
+    const draw = (timeS: number) => {
+      tiltX += (targX - tiltX) * 0.06
+      tiltY += (targY - tiltY) * 0.06
+      const aspect = W / H || 1
+      // Ebene füllt die Breite (Modell um aspect skaliert); Kamera-Abstand fasst die Höhe.
+      const model = mat.mul(mat.mul(mat.rotX(tiltX), mat.rotY(tiltY)), mat.scaleT(aspect, 1, 1, 0))
+      const view = mat.scaleT(1, 1, 1, -2.95)
+      const mvp = mat.mul(mat.persp(0.61, aspect, 0.1, 10), mat.mul(view, model))
+
+      gl.clearColor(0, 0, 0, 0)
+      gl.clear(gl.COLOR_BUFFER_BIT)
+      gl.disable(gl.DEPTH_TEST)
+
+      const bg = c01(colBg)
+      const a = c01(colBack)
+      const b = c01(colFront)
+
+      for (let i = 0; i < ROWS; i++) {
+        // 1) Verdeckungs-Fill der Reihe (opak, Seitenhintergrund)
+        gl.useProgram(fillProg)
+        gl.uniformMatrix4fv(uF.mvp, false, mvp)
+        gl.uniform3f(uF.bg, bg[0], bg[1], bg[2])
+        gl.disable(gl.BLEND)
+        gl.bindVertexArray(fillVao)
+        gl.drawArrays(gl.TRIANGLE_STRIP, i * N * 2, N * 2)
+        // 2) Glow (additiv) + 3) Kernlinie (premultiplied)
+        gl.useProgram(lineProg)
+        gl.uniformMatrix4fv(uL.mvp, false, mvp)
+        gl.uniform2f(uL.res, W, H)
+        gl.uniform3f(uL.colA, a[0], a[1], a[2])
+        gl.uniform3f(uL.colB, b[0], b[1], b[2])
+        gl.uniform1f(uL.time, timeS)
+        gl.enable(gl.BLEND)
+        gl.bindVertexArray(lineVao)
+        gl.blendFunc(gl.ONE, gl.ONE)
+        gl.uniform1f(uL.pass, 1)
+        gl.uniform1f(uL.halfw, 4.5 * Math.min(window.devicePixelRatio || 1, 2))
+        gl.drawArrays(gl.TRIANGLE_STRIP, i * N * 2, N * 2)
+        gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA)
+        gl.uniform1f(uL.pass, 0)
+        gl.uniform1f(uL.halfw, 1.1 * Math.min(window.devicePixelRatio || 1, 2))
+        gl.drawArrays(gl.TRIANGLE_STRIP, i * N * 2, N * 2)
+      }
+      gl.bindVertexArray(null)
+    }
+
+    resize()
+    new ResizeObserver(() => { resize(); if (reduce) draw(0) }).observe(canvas)
+
+    if (reduce) {
+      draw(0)
+    } else {
+      let visible = true
+      new IntersectionObserver(([e]) => { visible = e.isIntersecting }).observe(canvas)
+      const FRAME = 1000 / 30
+      let last = 0
+      const loop = (now: number) => {
+        requestAnimationFrame(loop)
+        if (!visible || now - last < FRAME) return
+        last = now
+        draw(now * 0.001)
+      }
+      requestAnimationFrame(loop)
+    }
+  } else if (canvas && !gl) {
+    // Kein WebGL2 → Hinweis statt leerer Fläche (der 2D-Hero bleibt der Fallback der echten Seite).
+    canvas.insertAdjacentHTML('afterend', '<p style="position:absolute;inset:auto 0 50% 0;text-align:center;font-family:monospace;font-size:12px;opacity:.6">WebGL2 nicht verfügbar</p>')
+  }
+</script>
