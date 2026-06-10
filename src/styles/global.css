@@ -272,7 +272,10 @@ body {
   --color-accent: #c2c2c8; --color-accent-soft: #dedee2; --color-cyan: #fafafa;
   --color-green: #d4d4d8; --color-amber: #a3a3a8; --color-line: #242427;
   --rgb-bg: 10 10 10; --rgb-accent: 194 194 200; --rgb-accent-soft: 222 222 226; --rgb-cyan: 250 250 250;
-  --puls-mode: glow;
+  /* solid statt glow: Canvas-shadowBlur ist eine Performance-Klippe (bei
+     Software-Rendering blockiert er den Main-Thread) — und die durchgezogene
+     Linie war ohnehin die bevorzugte Anmutung. */
+  --puls-mode: solid;
 }
 
 /* ── TERMINAL — green on black, monospace ─────────────────────────────────── */

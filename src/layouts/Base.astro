@@ -6,8 +6,10 @@ import '@fontsource-variable/jetbrains-mono'
 import '@/styles/global.css'
 import { SITE, type Locale } from '@/lib/site'
 import { t } from '@/i18n/ui'
-import SkinSwitcher from '@/components/SkinSwitcher.astro'
 
+// Skin fest auf mono (data-skin am <html>) — der Zyklus ist stillgelegt. Skins
+// + SkinSwitcher bleiben im Repo; Reaktivierung = SkinSwitcher wieder mounten
+// und data-skin dynamisch setzen.
 interface Props {
   title: string
   description: string
@@ -47,18 +49,11 @@ const website = {
 ---
 
 <!doctype html>
-<html lang={locale}>
+<html lang={locale} data-skin="mono">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
     <meta name="theme-color" content="#0a0a0a" />
-    {/* Anti-FOUC: pick a starting skin before first paint (each visit may differ). */}
-    <script is:inline>
-      ;(function () {
-        var skins = ['mono', 'terminal', 'tron', 'bauhaus', 'brutalism']
-        document.documentElement.setAttribute('data-skin', skins[Math.floor(Math.random() * skins.length)])
-      })()
-    </script>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -102,7 +97,5 @@ const website = {
       }
     </script>
 
-    {/* Shape-shifting skins: auto-cycle through complete art directions. */}
-    <SkinSwitcher />
   </body>
 </html>
