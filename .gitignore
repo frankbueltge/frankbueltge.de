@@ -1,0 +1,30 @@
+# build output
+dist/
+.astro/
+
+# dependencies
+node_modules/
+
+# archived Next.js build (kept locally for content porting, not shipped)
+_archive-next/
+
+# design handoff (reference prototypes)
+design_handoff_homepage/
+
+# env
+.env
+.env.production
+.env*.local
+
+# macOS
+.DS_Store
+
+# vercel
+.vercel
+
+# dev / verification artifacts
+*.jpeg
+*.png
+!public/**/*.png
+!public/**/*.jpeg
+.playwright-mcp/

@@ -1,0 +1,16 @@
+---
+import { t } from '@/i18n/ui'
+import { SITE, type Locale } from '@/lib/site'
+const locale = (Astro.currentLocale ?? 'de') as Locale
+---
+
+<main id="main" class="mx-auto w-full max-w-2xl flex-1 px-6 py-20 sm:py-28">
+  <p class="font-mono text-xs uppercase tracking-[0.28em] text-accent-soft">{t(locale, 'contact.title')}</p>
+  <h1 class="mt-5 text-[clamp(40px,7vw,80px)] font-bold tracking-[-0.03em]">{t(locale, 'contact.title')}</h1>
+  <p class="mt-5 max-w-lg text-lg text-fg-muted">{t(locale, 'contact.body')}</p>
+  <div class="mt-10 flex flex-wrap gap-3">
+    <a href={`mailto:${SITE.email}`} class="rounded-full bg-gradient-to-r from-accent to-accent-soft px-6 py-3.5 text-sm font-semibold text-white transition hover:-translate-y-0.5">{SITE.email} →</a>
+    <a href={SITE.social.linkedin} target="_blank" rel="noreferrer" class="rounded-full border border-line px-6 py-3.5 text-sm font-semibold text-fg transition hover:-translate-y-0.5 hover:border-fg">LinkedIn ↗</a>
+    <a href={SITE.social.github} target="_blank" rel="noreferrer" class="rounded-full border border-line px-6 py-3.5 text-sm font-semibold text-fg transition hover:-translate-y-0.5 hover:border-fg">GitHub ↗</a>
+  </div>
+</main>

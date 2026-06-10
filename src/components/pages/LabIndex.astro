@@ -1,0 +1,37 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import { t } from '@/i18n/ui'
+import { getLabPosts } from '@/lib/lab'
+import type { Locale } from '@/lib/site'
+
+const locale = (Astro.currentLocale ?? 'de') as Locale
+const posts = await getLabPosts(locale)
+const fmt = (iso: string) =>
+  new Date(iso).toLocaleDateString(locale === 'de' ? 'de-DE' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+---
+
+<main id="main" class="mx-auto w-full max-w-5xl flex-1 px-6 py-16 sm:py-24">
+  <h1 class="text-[clamp(34px,6vw,64px)] font-bold tracking-[-0.03em]">{t(locale, 'lab.title')}</h1>
+  <p class="mt-4 max-w-2xl text-fg-muted">{t(locale, 'lab.sub')}</p>
+
+  {posts.length === 0 ? (
+    <p class="mt-16 text-fg-muted">{t(locale, 'lab.empty')}</p>
+  ) : (
+    <ul class="mt-12 divide-y divide-line/60 border-t border-line/60">
+      {posts.map(({ entry, slug }) => (
+        <li>
+          <a href={getRelativeLocaleUrl(locale, `/lab/${slug}`)} class="group flex flex-col gap-2 py-8 sm:flex-row sm:items-baseline sm:gap-8">
+            <time class="shrink-0 font-mono text-xs text-fg-faint sm:w-40">{fmt(entry.data.date)}</time>
+            <div class="flex-1">
+              <h2 class="text-lg font-semibold transition-colors group-hover:text-accent-soft">{entry.data.title}</h2>
+              <p class="mt-1.5 text-sm leading-relaxed text-fg-muted">{entry.data.description}</p>
+              <ul class="mt-3 flex flex-wrap gap-1.5">
+                {entry.data.tags.map((tag) => <li class="rounded-full border border-line/60 px-2 py-0.5 font-mono text-[10px] text-fg-faint">{tag}</li>)}
+              </ul>
+            </div>
+          </a>
+        </li>
+      ))}
+    </ul>
+  )}
+</main>

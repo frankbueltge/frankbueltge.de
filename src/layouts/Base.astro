@@ -1,0 +1,108 @@
+---
+import { getAbsoluteLocaleUrl } from 'astro:i18n'
+// Self-hosted variable fonts (no external requests, no layout shift).
+import '@fontsource-variable/space-grotesk'
+import '@fontsource-variable/jetbrains-mono'
+import '@/styles/global.css'
+import { SITE, type Locale } from '@/lib/site'
+import { t } from '@/i18n/ui'
+import SkinSwitcher from '@/components/SkinSwitcher.astro'
+
+interface Props {
+  title: string
+  description: string
+}
+const { title, description } = Astro.props
+const locale = (Astro.currentLocale ?? 'de') as Locale
+
+// canonical + hreflang via Astro's config-aware locale URLs (de at /, en at /en; x-default → de)
+const pathNoLocale = Astro.url.pathname.replace(/^\/en/, '') || '/'
+const href = (l: Locale) => getAbsoluteLocaleUrl(l, pathNoLocale)
+const canonical = href(locale)
+
+const person = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  '@id': `${SITE.url}/#person`,
+  name: SITE.name,
+  alternateName: SITE.alternateName,
+  url: SITE.url,
+  jobTitle: SITE.role[locale],
+  disambiguatingDescription:
+    locale === 'de'
+      ? 'Data & AI Engineer: BigQuery, dbt, Tag Management, Daten-Storytelling. Macher von data-snack.com und datavism.org.'
+      : 'Data & AI engineer: BigQuery, dbt, tag management, data storytelling. Creator of data-snack.com and datavism.org.',
+  knowsAbout: ['Data Engineering', 'AI Engineering', 'BigQuery', 'dbt', 'Tag Management', 'Data Visualization', 'Data Storytelling'],
+  sameAs: [SITE.social.linkedin, SITE.social.github, SITE.social.instagram, SITE.projects.dataSnack, SITE.projects.datavism],
+}
+const website = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${SITE.url}/#website`,
+  name: SITE.name,
+  url: SITE.url,
+  inLanguage: locale === 'de' ? 'de-DE' : 'en',
+  publisher: { '@id': `${SITE.url}/#person` },
+}
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="theme-color" content="#0a0a0a" />
+    {/* Anti-FOUC: pick a starting skin before first paint (each visit may differ). */}
+    <script is:inline>
+      ;(function () {
+        var skins = ['mono', 'terminal', 'tron', 'bauhaus', 'brutalism']
+        document.documentElement.setAttribute('data-skin', skins[Math.floor(Math.random() * skins.length)])
+      })()
+    </script>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="de-DE" href={href('de')} />
+    <link rel="alternate" hreflang="en" href={href('en')} />
+    <link rel="alternate" hreflang="x-default" href={href('de')} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={locale === 'de' ? 'de_DE' : 'en_US'} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(person)} />
+    <script type="application/ld+json" set:html={JSON.stringify(website)} />
+  </head>
+
+  <body class="flex min-h-dvh flex-col">
+    <a
+      href="#main"
+      class="sr-only rounded-md bg-accent px-4 py-2 text-sm text-white focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50"
+    >
+      {t(locale, 'a11y.skip')}
+    </a>
+    <slot />
+
+    {/* Cinematic vignette over everything (decorative, never blocks input). */}
+    <div class="vignette" aria-hidden="true"></div>
+
+    {/* Lenis smooth scroll — site-wide nicety, disabled for reduced-motion. */}
+    <script>
+      import Lenis from 'lenis'
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        const lenis = new Lenis({ duration: 1.1, smoothWheel: true })
+        const raf = (time: number) => { lenis.raf(time); requestAnimationFrame(raf) }
+        requestAnimationFrame(raf)
+      }
+    </script>
+
+    {/* Shape-shifting skins: auto-cycle through complete art directions. */}
+    <SkinSwitcher />
+  </body>
+</html>

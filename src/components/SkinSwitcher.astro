@@ -1,0 +1,85 @@
+---
+// Shape-shifting skin controller. The whole site cycles through complete art
+// directions (mono · terminal · tron · bauhaus · brutalism) by swapping
+// <html data-skin>. Auto-cycles on a ~12s dwell; the swap cross-fades in place
+// via standing CSS transitions + the canvas colour tween (no curtain). Pauses
+// while the visitor is actively interacting; offers manual prev/next + a lock.
+// Under prefers-reduced-motion it never auto-cycles and switches instantly.
+---
+
+<div class="skin-switch" role="group" aria-label="site skin">
+  <button type="button" data-skin-prev aria-label="previous skin">◀</button>
+  <span data-skin-name aria-live="polite"></span>
+  <button type="button" data-skin-next aria-label="next skin">▶</button>
+  <button type="button" data-skin-lock aria-label="pause skin cycle" title="pause / play">⏸</button>
+</div>
+
+<script>
+  const SKINS = ['mono', 'terminal', 'tron', 'bauhaus', 'brutalism']
+  const DWELL = 12000
+
+  const root = document.documentElement
+  const nameEl = document.querySelector('[data-skin-name]')
+  const lockBtn = document.querySelector<HTMLButtonElement>('[data-skin-lock]')
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches
+
+  let idx = Math.max(0, SKINS.indexOf(root.getAttribute('data-skin') || ''))
+  let dwellTimer = 0
+  let idleTimer = 0
+  let locked = reduce
+
+  const setName = () => { if (nameEl) nameEl.textContent = SKINS[idx] }
+  const syncThemeColor = () => {
+    const c = getComputedStyle(root).getPropertyValue('--color-bg').trim()
+    const m = document.querySelector('meta[name="theme-color"]')
+    if (m && c) m.setAttribute('content', c)
+  }
+
+  // Swap the skin attribute; the standing CSS transitions (global.css) and the
+  // canvas colour tween (HeroField) cross-fade everything in place — no curtain.
+  const apply = () => { root.setAttribute('data-skin', SKINS[idx]); setName(); syncThemeColor() }
+
+  const go = (to: number) => {
+    const next = ((to % SKINS.length) + SKINS.length) % SKINS.length
+    if (next === idx) return
+    idx = next
+    apply()
+  }
+
+  const arm = () => {
+    window.clearTimeout(dwellTimer)
+    if (!locked) dwellTimer = window.setTimeout(() => go(idx + 1), DWELL)
+  }
+
+  setName()
+  syncThemeColor()
+
+  // Manual controls
+  document.querySelector('[data-skin-prev]')?.addEventListener('click', () => { go(idx - 1); arm() })
+  document.querySelector('[data-skin-next]')?.addEventListener('click', () => { go(idx + 1); arm() })
+  if (lockBtn) {
+    if (reduce) lockBtn.textContent = '▶'
+    lockBtn.addEventListener('click', () => {
+      locked = !locked
+      lockBtn.textContent = locked ? '▶' : '⏸'
+      if (locked) window.clearTimeout(dwellTimer)
+      else arm()
+    })
+  }
+
+  // Pause-while-active: meaningful interaction defers the next switch so it never
+  // happens mid-read. (mousemove is intentionally excluded — too twitchy.)
+  const onActivity = () => {
+    window.clearTimeout(dwellTimer)
+    window.clearTimeout(idleTimer)
+    idleTimer = window.setTimeout(arm, 1500)
+  }
+  addEventListener('wheel', onActivity, { passive: true })
+  addEventListener('scroll', onActivity, { passive: true })
+  addEventListener('keydown', onActivity)
+  const sw = document.querySelector('.skin-switch')
+  sw?.addEventListener('pointerenter', () => window.clearTimeout(dwellTimer))
+  sw?.addEventListener('pointerleave', arm)
+
+  if (!locked) arm()
+</script>

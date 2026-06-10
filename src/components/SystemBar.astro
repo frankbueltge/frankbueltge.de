@@ -1,0 +1,26 @@
+---
+import { t } from '@/i18n/ui'
+import type { Locale } from '@/lib/site'
+
+const locale = (Astro.currentLocale ?? 'de') as Locale
+// Real build metadata (git short SHA at build; 'local' in dev / non-git).
+const sha = (import.meta.env.PUBLIC_BUILD_SHA ?? 'local').toString().slice(0, 7)
+const region = import.meta.env.PUBLIC_BUILD_REGION ?? 'fra1'
+const astroVersion = (import.meta.env.PUBLIC_ASTRO_VERSION ?? '5').toString()
+---
+
+<footer class="keep-dark sticky bottom-0 z-30 flex items-center justify-between gap-4 border-t border-line bg-bg/80 px-4 py-2 font-mono text-[10.5px] text-fg-faint backdrop-blur-md">
+  <div class="flex min-w-0 items-center gap-3">
+    <span class="whitespace-nowrap">astro {astroVersion}</span>
+    <span class="hidden items-center gap-3 min-[480px]:flex">
+      <span class="opacity-40">·</span>
+      <span>{region}</span>
+      <span class="opacity-40">·</span>
+      <span>#{sha}</span>
+    </span>
+  </div>
+  <span class="flex items-center gap-2">
+    <span class="h-[6px] w-[6px] rounded-full bg-cyan"></span>
+    {t(locale, 'system.operational')}
+  </span>
+</footer>

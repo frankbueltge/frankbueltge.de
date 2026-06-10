@@ -1,0 +1,9 @@
+---
+import Page from '@/layouts/Page.astro'
+import Home from '@/components/Home.astro'
+import { t } from '@/i18n/ui'
+const locale = 'en' as const
+---
+<Page title={t(locale, 'meta.home.title')} description={t(locale, 'meta.home.desc')}>
+  <Home />
+</Page>

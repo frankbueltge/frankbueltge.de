@@ -1,0 +1,22 @@
+---
+title: 'Analytics Engineering: BigQuery and dbt as the foundation'
+description: 'How BigQuery and dbt turn raw events into reliable, tested models — the foundation for any dependable decision.'
+date: '2026-05-26'
+tags: ['BigQuery', 'dbt', 'Analytics Engineering']
+---
+
+Most analytics problems aren't tool problems — they're modelling problems: nobody knows exactly how a metric is built, and every team calculates it differently. Analytics engineering tackles this head-on, treating data as a versioned, tested product.
+
+## The layers
+
+A proven pattern separates three levels: **Raw** (source data, untouched), **Staging** (cleaned, typed — one source, one model) and **Marts** (business-facing models for reports). BigQuery is the warehouse, dbt the discipline on top.
+
+## Why dbt makes the difference
+
+- **Transformations as code** — SQL in Git, with review and history.
+- **Tests** — `not_null`, `unique`, `relationships`: assumptions become verifiable, not hoped for.
+- **Documentation & lineage** — every column has a traceable origin.
+
+## The real win
+
+When a metric is defined in exactly one place, tested and documented, the arguments about "the right number" stop. That's the goal: not more dashboards, but dependable ground for decisions.

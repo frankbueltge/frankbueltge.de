@@ -1,0 +1,65 @@
+---
+import { render } from 'astro:content'
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import { t } from '@/i18n/ui'
+import { getLabEntry } from '@/lib/lab'
+import { SITE, type Locale } from '@/lib/site'
+
+interface Props { slug: string }
+const { slug } = Astro.props
+const locale = (Astro.currentLocale ?? 'de') as Locale
+
+const item = (await getLabEntry(slug, locale))!
+const { entry, lang } = item
+const localeMissing = lang !== locale
+const { Content } = await render(entry)
+
+const words = (entry.body ?? '').trim().split(/\s+/).filter(Boolean).length
+const minutes = Math.max(1, Math.round(words / 200))
+const fmt = (iso: string) =>
+  new Date(iso).toLocaleDateString(locale === 'de' ? 'de-DE' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+const url = `${SITE.url}${getRelativeLocaleUrl(locale, `/lab/${slug}`)}`
+---
+
+<main id="main" class="mx-auto w-full max-w-[760px] flex-1 px-6 py-16 sm:py-24">
+  <a href={getRelativeLocaleUrl(locale, '/lab')} class="font-mono text-xs text-fg-muted transition-colors hover:text-fg">← {t(locale, 'lab.back')}</a>
+
+  <div class="mt-8 flex flex-wrap gap-2">
+    {entry.data.tags.map((tag, i) => (
+      <span class={`rounded-full border px-3 py-1 font-mono text-[11px] uppercase tracking-[0.06em] ${i % 2 === 0 ? 'border-cyan/30 text-cyan' : 'border-accent/30 text-accent-soft'}`}>{tag}</span>
+    ))}
+  </div>
+  <h1 class="mt-5 text-[clamp(32px,5vw,52px)] font-bold leading-[1.05] tracking-[-0.03em]">{entry.data.title}</h1>
+  <p class="mt-4 text-lg text-fg-muted sm:text-xl">{entry.data.description}</p>
+
+  <div class="mt-6 flex flex-wrap items-center gap-3 border-b border-line pb-6 font-mono text-xs text-fg-faint">
+    <span class="grid h-9 w-9 place-items-center rounded-lg bg-gradient-to-br from-accent to-cyan text-[13px] font-semibold text-white">FB</span>
+    <span class="flex flex-col gap-0.5 leading-tight">
+      <span class="text-[13px] font-medium text-fg">Frank Bültge</span>
+      <span class="text-[11px]"><span class="text-accent-soft">Data &amp; AI Engineer</span></span>
+    </span>
+    <span class="ml-auto flex items-center gap-2">
+      <time>{fmt(entry.data.date)}</time><span class="opacity-50">·</span><span>{minutes} {t(locale, 'lab.min')}</span>
+    </span>
+  </div>
+
+  {localeMissing && <p class="mt-4 rounded-lg border border-line/60 bg-panel-2/40 px-3 py-2 text-xs text-fg-faint">{t(locale, 'lab.onlyLang')}</p>}
+
+  <article class="prose prose-invert mt-8 max-w-none prose-headings:font-semibold prose-headings:tracking-tight prose-p:text-fg-muted prose-li:text-fg-muted prose-strong:text-fg prose-a:text-cyan prose-blockquote:border-accent prose-blockquote:not-italic prose-blockquote:text-fg">
+    <Content />
+  </article>
+</main>
+
+<script type="application/ld+json" set:html={JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: entry.data.title,
+  description: entry.data.description,
+  datePublished: entry.data.date,
+  dateModified: entry.data.updated ?? entry.data.date,
+  inLanguage: lang === 'de' ? 'de-DE' : 'en',
+  url,
+  mainEntityOfPage: url,
+  author: { '@id': `${SITE.url}/#person` },
+  publisher: { '@id': `${SITE.url}/#person` },
+})} />

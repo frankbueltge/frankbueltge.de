@@ -1,0 +1,75 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import { t } from '@/i18n/ui'
+import type { Locale } from '@/lib/site'
+
+const locale = (Astro.currentLocale ?? 'de') as Locale
+const home = getRelativeLocaleUrl(locale, '/')
+const nav = [
+  { href: getRelativeLocaleUrl(locale, '/work'), label: t(locale, 'nav.work') },
+  { href: getRelativeLocaleUrl(locale, '/lab'), label: t(locale, 'nav.lab') },
+  { href: getRelativeLocaleUrl(locale, '/about'), label: t(locale, 'nav.about') },
+  { href: getRelativeLocaleUrl(locale, '/contact'), label: t(locale, 'nav.contact') },
+]
+const other = locale === 'de' ? 'en' : 'de'
+const pathNoLocale = Astro.url.pathname.replace(/^\/(de|en)/, '') || '/'
+const otherUrl = getRelativeLocaleUrl(other, pathNoLocale)
+---
+
+<header class="keep-dark sticky top-0 z-30 flex h-12 items-center justify-between border-b border-line bg-bg/80 px-4 backdrop-blur-md sm:h-10">
+  <a href={home} class="group flex items-center gap-2.5" aria-label={t(locale, 'nav.overview')}>
+    <span class="h-[7px] w-[7px] rounded-full bg-cyan"></span>
+    <span class="text-[14px] font-semibold tracking-tight transition-opacity group-hover:opacity-70">
+      Frank Bültge
+    </span>
+  </a>
+
+  <div class="flex items-center gap-4 sm:gap-5">
+    <!-- desktop nav -->
+    <nav class="hidden items-center gap-5 text-sm text-fg-muted sm:flex">
+      {nav.map((item) => <a href={item.href} class="transition-colors hover:text-fg">{item.label}</a>)}
+    </nav>
+
+    <a href={otherUrl} class="font-mono text-xs text-fg-faint transition-colors hover:text-fg">
+      {locale.toUpperCase()}<span class="mx-1 opacity-50">/</span>{other.toUpperCase()}
+    </a>
+
+    <!-- mobile menu: native <details> disclosure (works without JS) -->
+    <details data-menu class="relative sm:hidden">
+      <summary
+        class="i-summary -mr-1 flex h-9 w-9 cursor-pointer items-center justify-center rounded-md text-fg-muted transition-colors hover:text-fg"
+        aria-label={t(locale, 'nav.menu')}
+      >
+        <svg class="i-menu" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
+        <svg class="i-close" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18" /></svg>
+      </summary>
+      <nav class="absolute right-0 top-[calc(100%+10px)] flex w-44 flex-col overflow-hidden rounded-xl border border-line bg-panel/95 p-1.5 shadow-2xl backdrop-blur-md">
+        {nav.map((item) => (
+          <a href={item.href} class="rounded-lg px-3 py-2.5 text-sm text-fg-muted transition-colors hover:bg-panel-2 hover:text-fg">{item.label}</a>
+        ))}
+      </nav>
+    </details>
+  </div>
+</header>
+
+<style>
+  /* hamburger ⇄ close icon swap driven purely by the open state */
+  .i-close { display: none; }
+  details[open] .i-menu { display: none; }
+  details[open] .i-close { display: block; }
+  summary { list-style: none; }
+  summary::-webkit-details-marker { display: none; }
+</style>
+
+<script>
+  // Close the mobile menu on outside-tap or Escape (the only JS this bar needs).
+  const menu = document.querySelector<HTMLDetailsElement>('[data-menu]')
+  if (menu) {
+    document.addEventListener('click', (e) => {
+      if (menu.open && !menu.contains(e.target as Node)) menu.open = false
+    })
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && menu.open) menu.open = false
+    })
+  }
+</script>
