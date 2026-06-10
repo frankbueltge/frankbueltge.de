@@ -1,30 +1,18 @@
 ---
-// Ridgeline ("Joy Division") field driven by REAL data: NASA GISTEMP global
-// monthly temperature anomalies (1880–present). One ridge per year (oldest at
-// the back/top), month → x-axis, anomaly → height. Heights are a faithful global
-// normalization (see src/lib/climate.ts) — warming shows up because recent years
-// carry higher anomalies, so their ridges sit higher and crowd the front.
-//
-// The GEOMETRY is the data; the STYLING is the skin. Reads CSS colour vars plus
-// --puls-mode (solid | glow | raw | ascii) and re-dresses on theme/skin change.
-// Pauses off-screen; renders a single static frame under prefers-reduced-motion.
-import snapshot from '@/data/climate/global-temp-anomalies.json'
-import { seriesToRidges, type ClimateSeries } from '@/lib/climate'
-
-const ridges = seriesToRidges(snapshot as ClimateSeries)
-const ridgeHeights = ridges.map((r) => r.heights)
+// Generative "Joy Division"-Ridgeline: spitze Berge aus Drei-Sinus-Interferenz
+// mit Gauß-Hüllkurve (Berge in der Mitte, ruhige Ränder) — rein ästhetisch,
+// keine Datenbehauptung. Liest CSS-Farben plus --puls-mode (solid | glow |
+// raw | ascii) und kleidet sich bei Theme-/Skin-Wechsel neu ein. Pausiert
+// off-screen; statischer Frame unter prefers-reduced-motion.
 ---
 
 <canvas data-herofield aria-hidden="true" class="absolute inset-0 h-full w-full"></canvas>
-<script type="application/json" data-ridges set:html={JSON.stringify(ridgeHeights)}></script>
 
 <script>
   const canvas = document.querySelector<HTMLCanvasElement>('[data-herofield]')
   const ctx = canvas?.getContext('2d')
-  const ridgesEl = document.querySelector('[data-ridges]')
-  if (canvas && ctx && ridgesEl) {
-    const ridges: number[][] = JSON.parse(ridgesEl.textContent || '[]')
-    const ROWS = ridges.length
+  if (canvas && ctx) {
+    const ROWS = 13
 
     const cssVar = (n: string, fb: [number, number, number]): [number, number, number] => {
       const v = getComputedStyle(document.documentElement).getPropertyValue(n).trim().split(/\s+/).map(Number)
@@ -61,18 +49,24 @@ const ridgeHeights = ridges.map((r) => r.heights)
     let lwCur = cfg(mode).lw, lwTgt = lwCur
     let glowCur = cfg(mode).glow, glowTgt = glowCur
 
-    const STEP = 8
+    const STEP = 6
     const lerp = (a: number, b: number, t: number) => a + (b - a) * t
     const approach = (cur: [number, number, number], tgt: [number, number, number], k: number): [number, number, number] =>
       [cur[0] + (tgt[0] - cur[0]) * k, cur[1] + (tgt[1] - cur[1]) * k, cur[2] + (tgt[2] - cur[2]) * k]
 
-    const sampleRidge = (row: number, x: number): number => {
-      const h = ridges[row]
-      if (!h || !h.length) return 0
-      const f = Math.max(0, Math.min(1, x)) * (h.length - 1)
-      const lo = Math.floor(f)
-      const hi = Math.min(h.length - 1, lo + 1)
-      return lerp(h[lo], h[hi], f - lo)
+    // Puls-Uhr: treibt die Sinus-Interferenz; steht still unter reduced-motion.
+    let T = 0
+    // Drei-Sinus-Interferenz × Gauß-Hüllkurve → spitze Berge in der Mitte,
+    // ruhige Ränder (Unknown-Pleasures-Charakter). Output normalisiert [0,1].
+    const ridge = (x: number, row: number): number => {
+      const r = row * 1.7
+      const s =
+        Math.sin(x * 4.1 + T * 0.5 + r) +
+        Math.sin(x * 8.7 - T * 0.34 + r * 1.7) +
+        Math.sin(x * 16.3 + T * 0.22 + r * 2.9)
+      const env = Math.exp(-((x - 0.5) * (x - 0.5)) * 10)
+      // Potenz schärft: Mittelmaß sinkt ab, nur markante Spitzen bleiben stehen.
+      return Math.min(1, Math.pow(0.5 + s / 6, 3) * 1.7) * env
     }
 
     const blend = (a: number[], b: number[], k: number): number[] => [Math.round(lerp(a[0], b[0], k)), Math.round(lerp(a[1], b[1], k)), Math.round(lerp(a[2], b[2], k))]
@@ -91,17 +85,19 @@ const ridgeHeights = ridges.map((r) => r.heights)
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
     }
 
-    // Layout: rows march downward; oldest (cold, low) at the top, newest (warm,
-    // high) crowding the front. Warming reads as the ribbon rising toward the front.
+    // Layout: 13 Reihen, große Amplitude relativ zum Zeilenabstand — vordere
+    // Berge ragen über die hinteren Reihen und verdecken sie (Occlusion-Fill).
     const yFor = (p01: number, i: number) => {
-      const top = H * 0.12
-      const gap = (H * 0.82) / ROWS
-      const amp = H * 0.16
-      return top + i * gap - sampleRidge(i, p01) * amp
+      const top = H * 0.2
+      const gap = (H * 0.7) / ROWS
+      const depth = ROWS === 1 ? 1 : i / (ROWS - 1)
+      const amp = gap * (4.5 + depth * 4)
+      return top + i * gap - ridge(p01, i) * amp
     }
 
     const draw = (dt: number) => {
       if (W === 0 || H === 0) return
+      T += dt
       ctx.clearRect(0, 0, W, H)
       // Ease the live colours / weight / glow toward the current skin's targets.
       const k = 1 - Math.exp(-dt / 0.18) // ~0.6s settle; 0 when dt is 0 (static)
