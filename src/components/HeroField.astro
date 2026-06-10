@@ -90,7 +90,7 @@
     const yFor = (p01: number, i: number) => {
       const top = H * 0.2
       const gap = (H * 0.7) / ROWS
-      const depth = ROWS === 1 ? 1 : i / (ROWS - 1)
+      const depth = i / (ROWS - 1)
       const amp = gap * (4.5 + depth * 4)
       return top + i * gap - ridge(p01, i) * amp
     }
