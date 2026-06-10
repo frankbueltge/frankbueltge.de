@@ -1,0 +1,18 @@
+---
+import Base from '@/layouts/Base.astro'
+import TopBar from '@/components/TopBar.astro'
+import SystemBar from '@/components/SystemBar.astro'
+---
+<Base title="404 | Frank Bültge" description="Page not found">
+  <TopBar />
+  <main id="main" class="mx-auto flex w-full max-w-2xl flex-1 flex-col items-center justify-center px-6 py-32 text-center">
+    <p class="font-mono text-sm uppercase tracking-[0.28em] text-accent-soft">404</p>
+    <h1 class="mt-5 text-[clamp(32px,6vw,56px)] font-bold tracking-[-0.03em]">Seite nicht gefunden — Page not found</h1>
+    <p class="mx-auto mt-4 max-w-md text-fg-muted">Diese Seite existiert nicht (mehr). — This page does not exist (anymore).</p>
+    <div class="mt-8 flex gap-4">
+      <a href="/" class="rounded-full bg-accent px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-accent-soft">Startseite</a>
+      <a href="/en/" class="rounded-full border border-line px-6 py-3 text-sm font-medium text-fg-muted transition-colors hover:border-fg-muted hover:text-fg">Home (EN)</a>
+    </div>
+  </main>
+  <SystemBar />
+</Base>

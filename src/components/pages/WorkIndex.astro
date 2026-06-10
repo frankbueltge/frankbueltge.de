@@ -1,0 +1,37 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import { t } from '@/i18n/ui'
+import { getProjects } from '@/data/projects'
+import type { Locale } from '@/lib/site'
+
+const locale = (Astro.currentLocale ?? 'de') as Locale
+const projects = getProjects()
+---
+
+<main id="main" class="mx-auto w-full max-w-5xl flex-1 px-6 py-16 sm:py-24">
+  <h1 class="text-[clamp(34px,6vw,64px)] font-bold tracking-[-0.03em]">{t(locale, 'work.title')}</h1>
+  <p class="mt-4 max-w-2xl text-fg-muted">{t(locale, 'work.sub')}</p>
+
+  <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+    {projects.map((p) => (
+      <a
+        href={getRelativeLocaleUrl(locale, `/work/${p.slug}`)}
+        class="group relative flex flex-col overflow-hidden rounded-2xl border border-line bg-panel p-6 transition-colors hover:border-fg-muted/40"
+      >
+        <div class="flex items-center justify-between">
+          <span class="font-mono text-xs text-fg-faint">{p.year}</span>
+          <span class={`font-mono text-[10px] uppercase tracking-wider ${p.badge === 'live' ? 'text-cyan' : 'text-accent-soft'}`}>
+            {p.badge === 'live' ? t(locale, 'badge.live') : t(locale, 'badge.dev')}
+          </span>
+        </div>
+        <h2 class="mt-8 text-lg font-semibold transition-colors group-hover:text-accent-soft">{p.name}</h2>
+        <p class="mt-2 text-sm leading-relaxed text-fg-muted">{p.tagline[locale]}</p>
+        <ul class="mt-5 flex flex-wrap gap-1.5">
+          {p.tech.slice(0, 4).map((tech) => (
+            <li class="rounded-full border border-line px-2 py-0.5 font-mono text-[10px] text-fg-faint">{tech}</li>
+          ))}
+        </ul>
+      </a>
+    ))}
+  </div>
+</main>

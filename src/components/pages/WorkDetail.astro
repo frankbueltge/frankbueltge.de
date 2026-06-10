@@ -1,0 +1,69 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import { t } from '@/i18n/ui'
+import { getProject } from '@/data/projects'
+import { SITE, type Locale } from '@/lib/site'
+
+interface Props { slug: string }
+const { slug } = Astro.props
+const locale = (Astro.currentLocale ?? 'de') as Locale
+const p = getProject(slug)!
+---
+
+<main id="main" class="mx-auto w-full max-w-3xl flex-1 px-6 py-16 sm:py-24">
+  <a href={getRelativeLocaleUrl(locale, '/work')} class="font-mono text-xs text-fg-muted transition-colors hover:text-fg">← {t(locale, 'work.back')}</a>
+
+  <div class="mt-8 flex flex-wrap items-center gap-3 font-mono text-xs text-fg-faint">
+    <span>{p.year}</span><span class="opacity-40">·</span><span>{p.status[locale]}</span>
+  </div>
+  <h1 class="mt-4 text-[clamp(32px,5vw,56px)] font-bold tracking-[-0.03em]">{p.name}</h1>
+  <p class="mt-3 text-xl text-fg sm:text-2xl">{p.tagline[locale]}</p>
+  <p class="mt-2 text-sm text-fg-muted">{p.role[locale]}</p>
+
+  <div class="mt-8 flex flex-wrap gap-3 text-sm">
+    {p.url ? (
+      <a href={p.url} target="_blank" rel="noreferrer" class="rounded-full bg-accent px-5 py-2.5 font-medium text-white transition-colors hover:bg-accent-soft">{p.url.replace('https://', '')} ↗</a>
+    ) : (
+      <span class="rounded-full border border-line px-5 py-2.5 font-mono text-xs text-fg-faint">{t(locale, 'work.internal')}</span>
+    )}
+  </div>
+
+  <p class="mt-10 text-base leading-relaxed text-fg-muted">{p.description[locale]}</p>
+
+  <h2 class="mt-10 font-mono text-xs uppercase tracking-widest text-fg-faint">{t(locale, 'work.highlights')}</h2>
+  <ul class="mt-4 space-y-3">
+    {p.highlights[locale].map((h) => (
+      <li class="flex gap-3 text-fg-muted"><span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent"></span>{h}</li>
+    ))}
+  </ul>
+
+  <h2 class="mt-10 font-mono text-xs uppercase tracking-widest text-fg-faint">{t(locale, 'work.tech')}</h2>
+  <ul class="mt-4 flex flex-wrap gap-2">
+    {p.tech.map((tech) => (
+      <li class="rounded-full border border-line bg-panel-2/60 px-3 py-1 font-mono text-xs text-fg-muted">{tech}</li>
+    ))}
+  </ul>
+
+  {p.channels && (
+    <>
+      <h2 class="mt-10 font-mono text-xs uppercase tracking-widest text-fg-faint">{t(locale, 'work.channels')}</h2>
+      <ul class="mt-4 flex flex-wrap gap-2">
+        {p.channels.map((c) => (
+          <li><a href={c.href} target="_blank" rel="noreferrer" class="rounded-full border border-line px-3 py-1 text-sm text-fg-muted transition-colors hover:border-fg-muted hover:text-fg">{c.label} ↗</a></li>
+        ))}
+      </ul>
+    </>
+  )}
+</main>
+
+<script type="application/ld+json" set:html={JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: p.name,
+  description: p.description[locale],
+  url: p.url ?? `${SITE.url}${getRelativeLocaleUrl(locale, `/work/${p.slug}`)}`,
+  applicationCategory: 'BusinessApplication',
+  operatingSystem: 'Web',
+  author: { '@id': `${SITE.url}/#person` },
+  ...(p.channels ? { sameAs: p.channels.map((c) => c.href) } : {}),
+})} />

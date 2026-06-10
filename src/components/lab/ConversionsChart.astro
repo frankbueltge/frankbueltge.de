@@ -1,0 +1,127 @@
+---
+import type { Locale } from '@/lib/site'
+const locale = (Astro.currentLocale ?? 'de') as Locale
+
+// Illustrative SAMPLE data (clearly labelled). Client capture decays; server stays high.
+const months = locale === 'de'
+  ? ['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez']
+  : ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+const client = [94, 91, 89, 86, 84, 81, 79, 77, 75, 73, 72, 70]
+const server = [97, 97, 96, 98, 97, 96, 97, 98, 97, 96, 98, 97]
+
+const W = 720, H = 240, PADL = 8, PADR = 8, TOP = 8, BOT = 30
+const xAt = (i: number) => PADL + (i / 11) * (W - PADL - PADR)
+const yAt = (v: number) => TOP + (1 - (v - 60) / 40) * (H - TOP - BOT)
+const line = (a: number[]) => a.map((v, i) => `${i ? 'L' : 'M'}${xAt(i).toFixed(1)},${yAt(v).toFixed(1)}`).join(' ')
+const area = (a: number[]) => `${line(a)} L${xAt(11).toFixed(1)},${H - BOT} L${xAt(0).toFixed(1)},${H - BOT} Z`
+const avg = (a: number[]) => Math.round(a.reduce((s, v) => s + v, 0) / a.length)
+
+// precompute (avoids block-body element maps in template)
+const gridY = [0, 1, 2, 3, 4].map((g) => TOP + (g / 4) * (H - TOP - BOT))
+const labels = months
+  .map((m, i) => ({ m, x: xAt(i), anchor: i === 0 ? 'start' : i === 11 ? 'end' : 'middle', show: !(i % 2 === 1 && i !== 11) }))
+  .filter((l) => l.show)
+const pathLC = line(client), pathAC = area(client), pathLS = line(server), pathAS = area(server)
+
+const tt = {
+  de: { lab: 'interaktiv · Beispieldaten', title: 'Erfasste Conversions über 12 Monate', both: 'Beide', c: 'Client-side', s: 'Server-side', cAvg: 'Client ø', sAvg: 'Server ø', delta: 'zurückgewonnen', foot: 'Illustrative Beispieldaten — nicht gemessen.' },
+  en: { lab: 'interactive · sample data', title: 'Captured conversions over 12 months', both: 'Both', c: 'Client-side', s: 'Server-side', cAvg: 'Client ø', sAvg: 'Server ø', delta: 'recovered', foot: 'Illustrative sample data — not measured.' },
+}[locale]
+const cfg = JSON.stringify({ months, client, server, W, H, PADL, PADR, TOP, BOT })
+---
+
+<figure class="not-prose my-11 overflow-hidden rounded-2xl border border-line bg-panel" data-conv>
+  <div class="flex flex-wrap items-start justify-between gap-4 px-5 pt-5">
+    <div>
+      <div class="mb-3 inline-flex items-center gap-2 rounded-full border border-cyan/30 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.12em] text-cyan">
+        <span class="h-1.5 w-1.5 rounded-full bg-cyan"></span>{tt.lab}
+      </div>
+      <div class="text-base font-semibold text-fg">{tt.title}</div>
+    </div>
+    <div class="inline-flex rounded-full border border-line bg-panel-2 p-[3px]" role="group">
+      <button data-view="both" class="rounded-full bg-panel px-3 py-1.5 font-mono text-xs text-fg">{tt.both}</button>
+      <button data-view="client" class="rounded-full px-3 py-1.5 font-mono text-xs text-fg-muted">{tt.c}</button>
+      <button data-view="server" class="rounded-full px-3 py-1.5 font-mono text-xs text-fg-muted">{tt.s}</button>
+    </div>
+  </div>
+
+  <div class="flex flex-wrap gap-8 px-5 pb-1 pt-4">
+    <div><div class="font-mono text-[10px] uppercase tracking-wider text-fg-faint">{tt.cAvg}</div><div class="text-2xl font-bold tabular-nums">{avg(client)}<span class="text-sm text-fg-faint">%</span></div></div>
+    <div><div class="font-mono text-[10px] uppercase tracking-wider text-fg-faint">{tt.sAvg}</div><div class="text-2xl font-bold tabular-nums">{avg(server)}<span class="text-sm text-fg-faint">%</span></div></div>
+    <div><div class="font-mono text-[10px] uppercase tracking-wider text-fg-faint">{tt.delta}</div><div class="text-2xl font-bold tabular-nums text-cyan">+{avg(server) - avg(client)}<span class="text-sm text-fg-faint"> pts</span></div></div>
+  </div>
+
+  <div class="relative px-3 pb-2 pt-1.5">
+    <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" class="block h-[230px] w-full overflow-visible">
+      <defs>
+        <linearGradient id="convC" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8a8a90" stop-opacity="0.28" /><stop offset="1" stop-color="#8a8a90" stop-opacity="0" /></linearGradient>
+        <linearGradient id="convS" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4f4f5" stop-opacity="0.3" /><stop offset="1" stop-color="#f4f4f5" stop-opacity="0" /></linearGradient>
+      </defs>
+      {gridY.map((gy) => <line x1={PADL} x2={W - PADR} y1={gy} y2={gy} stroke="#1f1f1f" stroke-width="1" />)}
+      <path data-area-c d={pathAC} fill="url(#convC)" />
+      <path data-area-s d={pathAS} fill="url(#convS)" />
+      <path data-line-c d={pathLC} fill="none" stroke="#8a8a90" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" />
+      <path data-line-s d={pathLS} fill="none" stroke="#f4f4f5" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" />
+      <line data-guide y1="6" y2={H - BOT} stroke="#6c6c72" stroke-width="1" stroke-dasharray="3 3" opacity="0" />
+      <circle data-dot-c r="4" fill="#8a8a90" stroke="#0a0a0a" stroke-width="2" opacity="0" />
+      <circle data-dot-s r="4" fill="#f4f4f5" stroke="#0a0a0a" stroke-width="2" opacity="0" />
+      {labels.map((l) => <text x={l.x} y={H - 10} text-anchor={l.anchor} class="fill-fg-faint font-mono" style="font-size:10px">{l.m}</text>)}
+    </svg>
+    <div data-tip class="pointer-events-none absolute z-10 -translate-x-1/2 -translate-y-[120%] whitespace-nowrap rounded-lg border border-line bg-bg/95 px-3 py-2 font-mono text-[11px] opacity-0"></div>
+  </div>
+
+  <figcaption class="border-t border-line/60 px-5 py-3 font-mono text-[11px] text-fg-faint">{tt.foot}</figcaption>
+</figure>
+
+<script define:vars={{ cfg }}>
+  (function () {
+    const root = document.currentScript ? document.currentScript.previousElementSibling : null
+    const fig = document.querySelector('figure[data-conv]:not([data-init])')
+    const el = fig
+    if (!el) return
+    el.setAttribute('data-init', '1')
+    const C = JSON.parse(cfg)
+    const { months, client, server, W, PADL, PADR, TOP, BOT, H } = C
+    const svg = el.querySelector('svg')
+    const xA = (i) => PADL + (i / 11) * (W - PADL - PADR)
+    const yA = (v) => TOP + (1 - (v - 60) / 40) * (H - TOP - BOT)
+    const lc = el.querySelector('[data-line-c]'), ac = el.querySelector('[data-area-c]')
+    const ls = el.querySelector('[data-line-s]'), as = el.querySelector('[data-area-s]')
+    const guide = el.querySelector('[data-guide]'), dc = el.querySelector('[data-dot-c]'), ds = el.querySelector('[data-dot-s]')
+    const tip = el.querySelector('[data-tip]')
+    let view = 'both'
+    const show = () => {
+      const sc = view !== 'server', ss = view !== 'client'
+      ;[lc, ac, dc].forEach((e) => (e.style.display = sc ? '' : 'none'))
+      ;[ls, as, ds].forEach((e) => (e.style.display = ss ? '' : 'none'))
+    }
+    el.querySelectorAll('[data-view]').forEach((b) =>
+      b.addEventListener('click', () => {
+        view = b.getAttribute('data-view')
+        el.querySelectorAll('[data-view]').forEach((x) => {
+          x.className = x === b ? 'rounded-full bg-panel px-3 py-1.5 font-mono text-xs text-fg' : 'rounded-full px-3 py-1.5 font-mono text-xs text-fg-muted'
+        })
+        show()
+      }),
+    )
+    show()
+    svg.addEventListener('pointermove', (e) => {
+      const r = svg.getBoundingClientRect()
+      const px = ((e.clientX - r.left) / r.width) * W
+      let i = Math.round(((px - PADL) / (W - PADL - PADR)) * 11)
+      i = Math.max(0, Math.min(11, i))
+      const gx = xA(i), sc = view !== 'server', ss = view !== 'client'
+      guide.setAttribute('x1', gx); guide.setAttribute('x2', gx); guide.style.opacity = '0.6'
+      dc.style.opacity = sc ? '1' : '0'; ds.style.opacity = ss ? '1' : '0'
+      dc.setAttribute('cx', gx); dc.setAttribute('cy', yA(client[i]))
+      ds.setAttribute('cx', gx); ds.setAttribute('cy', yA(server[i]))
+      tip.style.opacity = '1'
+      tip.style.left = (gx / W) * 100 + '%'
+      tip.style.top = (yA(Math.max(ss ? server[i] : 0, sc ? client[i] : 0)) / H) * 100 + '%'
+      tip.innerHTML = '<div class="text-fg-faint mb-1">' + months[i] + '</div>' +
+        (ss ? '<div class="text-fg">Server ' + server[i] + '%</div>' : '') +
+        (sc ? '<div class="text-fg">Client ' + client[i] + '%</div>' : '')
+    })
+    svg.addEventListener('pointerleave', () => { tip.style.opacity = '0'; guide.style.opacity = '0'; dc.style.opacity = '0'; ds.style.opacity = '0' })
+  })()
+</script>

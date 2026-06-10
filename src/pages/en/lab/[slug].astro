@@ -1,0 +1,16 @@
+---
+import Page from '@/layouts/Page.astro'
+import LabDetail from '@/components/pages/LabDetail.astro'
+import { getLabSlugs, getLabEntry } from '@/lib/lab'
+
+export async function getStaticPaths() {
+  const slugs = await getLabSlugs()
+  return slugs.map((slug) => ({ params: { slug } }))
+}
+
+const { slug } = Astro.params
+const item = (await getLabEntry(slug!, 'en'))!
+---
+<Page title={`${item.entry.data.title} | Frank Bültge`} description={item.entry.data.description}>
+  <LabDetail slug={slug!} />
+</Page>

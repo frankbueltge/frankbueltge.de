@@ -1,0 +1,22 @@
+---
+title: 'Analytics Engineering: BigQuery und dbt als Fundament'
+description: 'Wie aus rohen Events über BigQuery und dbt verlässliche, getestete Modelle werden — das Fundament für jede belastbare Entscheidung.'
+date: '2026-05-26'
+tags: ['BigQuery', 'dbt', 'Analytics Engineering']
+---
+
+Die meisten Analytics-Probleme sind keine Tool-Probleme, sondern Modell-Probleme: Niemand weiß genau, wie eine Kennzahl entsteht, und jede Abteilung rechnet anders. Analytics Engineering setzt genau hier an — mit Daten als versioniertem, getestetem Produkt.
+
+## Die Schichten
+
+Ein bewährtes Muster trennt drei Ebenen: **Raw** (Rohdaten, unverändert), **Staging** (bereinigt, typisiert — eine Quelle, ein Modell) und **Marts** (fachliche Modelle für Reports). BigQuery ist das Warehouse, dbt die Disziplin obendrauf.
+
+## Warum dbt den Unterschied macht
+
+- **Transformationen als Code** — SQL in Git, mit Review und Historie.
+- **Tests** — `not_null`, `unique`, `relationships`: Annahmen werden überprüfbar, nicht gehofft.
+- **Dokumentation & Lineage** — jede Spalte hat eine nachvollziehbare Herkunft.
+
+## Der eigentliche Gewinn
+
+Wenn eine Kennzahl an genau einer Stelle definiert ist, getestet wird und dokumentiert ist, hören die Diskussionen über „die richtige Zahl" auf. Das ist das Ziel: nicht mehr Dashboards, sondern verlässliche Entscheidungsgrundlagen.
