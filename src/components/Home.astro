@@ -1,31 +1,22 @@
 ---
-// Slim home: the climate-ridgeline hero (real data) + a provisional statement,
-// a visible data-source caption (integrity), and a Lab placeholder. Replaces the
-// retired BI dashboard. Copy here is provisional — the manifesto matures later.
+// Slim home: generativer Joy-Division-Puls als Hero + ein vorläufiges Statement
+// und ein Lab-Platzhalter. Copy ist provisorisch — das Manifest reift später.
 import { t } from '@/i18n/ui'
 import type { Locale } from '@/lib/site'
 import HeroField from '@/components/HeroField.astro'
-import snapshot from '@/data/climate/global-temp-anomalies.json'
-import type { ClimateSeries } from '@/lib/climate'
 
 const locale = (Astro.currentLocale ?? 'de') as Locale
-const series = snapshot as ClimateSeries
-const meta = series.meta
-const firstYear = series.years[0]?.year
-const lastYear = series.years.at(-1)?.year
 
 const copy = {
   de: {
     statement: 'Daten sichtbar machen — offene Daten, künstlerische Experimente, harte Fakten.',
-    caption: `globale Temperatur-Anomalie ${firstYear}–${lastYear} · ${meta?.source} · Basis ${meta?.baseline}`,
     labTitle: 'Lab',
-    labText: 'Kleine, faktenbasierte Daten-Experimente — wächst. Erstes Stück: 147 Jahre globale Temperatur als Ridgeline oben — jede Linie ein Jahr; die ältesten (1880, kühl) blass im Hintergrund, die jüngsten (warm) hell und dicht im Vordergrund.',
+    labText: 'Kleine, faktenbasierte Daten-Experimente — wächst.',
   },
   en: {
     statement: 'Making data visible — open data, artistic experiments, hard facts.',
-    caption: `global temperature anomaly ${firstYear}–${lastYear} · ${meta?.source} · baseline ${meta?.baseline}`,
     labTitle: 'Lab',
-    labText: 'Small, fact-based data experiments — growing. First piece: 147 years of global temperature as a ridgeline above — one line per year; the oldest (1880, cool) faint in the back, the most recent (warm) bright and dense in front.',
+    labText: 'Small, fact-based data experiments — growing.',
   },
 }[locale]
 ---
@@ -49,12 +40,6 @@ const copy = {
         <p class="mt-3 max-w-xl text-pretty text-sm text-fg-muted">{copy.statement}</p>
       </div>
     </section>
-
-    <!-- data-source caption (integrity: real, cited, with baseline) -->
-    <p class="col-span-12 font-mono text-[11px] leading-relaxed text-fg-faint">
-      {copy.caption} ·
-      <a href={meta?.url} target="_blank" rel="noopener" class="underline decoration-line underline-offset-2 transition-colors hover:text-fg">NASA GISTEMP v4</a>
-    </p>
 
     <!-- Lab placeholder -->
     <section class="col-span-12 mt-6 rounded-[14px] border border-line bg-panel panel-raised p-6">
