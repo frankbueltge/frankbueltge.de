@@ -17,4 +17,38 @@ const lab = defineCollection({
   }),
 })
 
-export const collections = { lab }
+// Protokoll = kanonische Tages-JSONs der Pipeline (src/content/protokoll/<jahr>/<datum>.json).
+// Die Prosa entsteht erst im Renderer — JSON ist das Archiv.
+const protokoll = defineCollection({
+  loader: glob({ pattern: '**/*.json', base: './src/content/protokoll' }),
+  schema: z.object({
+    date: z.string(),
+    generated_at: z.string(),
+    schema_version: z.string(),
+    pipeline_version: z.string(),
+    entries: z.array(
+      z.object({
+        top_id: z.string(),
+        status: z.enum(['ok', 'unavailable', 'implausible']),
+        unit: z.string(),
+        cadence: z.string(),
+        source: z.object({ name: z.string(), url: z.string(), license: z.string() }),
+        retrieved_at: z.string(),
+        value: z.number().nullable().default(null),
+        as_of: z.string().nullable().default(null),
+        comparison: z
+          .object({
+            label: z.enum(['prev_day', 'prev_month', 'prev_year_day', 'prev_observation_day']),
+            value: z.number(),
+          })
+          .nullable()
+          .default(null),
+        label: z.string().nullable().default(null),
+        record: z.boolean().default(false),
+        note: z.string().nullable().default(null),
+      }),
+    ),
+  }),
+})
+
+export const collections = { lab, protokoll }
