@@ -21,6 +21,11 @@ def build_entry(spec: AdapterSpec, ctx: Context) -> Entry:
         m = spec.measure(ctx)
         if not math.isfinite(m.value):
             return Entry(status="unavailable", note=f"non-finite value: {m.value!r}", **common)
+        if m.comparison is not None and not math.isfinite(m.comparison.value):
+            return Entry(status="unavailable",
+                         note=f"non-finite comparison value: {m.comparison.value!r}", **common)
+        if m.as_of is None:
+            return Entry(status="unavailable", note="as_of is None", **common)
         if is_stale(m.as_of, ctx.today, spec.max_age_days):
             return Entry(status="unavailable", note=f"stale: as_of={m.as_of}", **common)
         status = corridor_status(m.value, spec.corridor)
