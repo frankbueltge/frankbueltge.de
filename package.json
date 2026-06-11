@@ -11,6 +11,7 @@
     "check": "astro check",
     "test": "vitest run",
     "climate:refresh": "tsx scripts/fetch-climate.ts",
+    "ueberflug:refresh": "tsx scripts/fetch-ueberflug.ts",
     "protokoll:dry": "pipelines/protokoll/.venv/bin/python -m protokoll.run --dry-run --repo-root ."
   },
   "dependencies": {
@@ -23,6 +24,7 @@
     "@tailwindcss/vite": "^4.0.0",
     "astro": "^5.7.0",
     "lenis": "^1.3.23",
+    "satellite.js": "^7.0.1",
     "tailwindcss": "^4.0.0"
   },
   "devDependencies": {
