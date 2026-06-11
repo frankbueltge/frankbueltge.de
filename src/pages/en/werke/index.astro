@@ -1,0 +1,27 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import Page from '@/layouts/Page.astro'
+import { WERKE } from '@/data/werke'
+import { t } from '@/i18n/ui'
+const locale = 'en' as const
+---
+<Page title={`${t(locale, 'werke.title')} | Frank Bültge`} description={t(locale, 'werke.sub')}>
+  <div class="mx-auto max-w-2xl px-4 py-14">
+    <h1 class="mb-2 text-xl font-semibold">{t(locale, 'werke.title')}</h1>
+    <p class="mb-10 text-fg-muted">{t(locale, 'werke.sub')}</p>
+    <ul class="space-y-8">
+      {WERKE.map((werk) => (
+        <li class="border-t border-line pt-6">
+          <a href={getRelativeLocaleUrl(locale, werk.href)} class="group block">
+            <h2 class="font-semibold transition-opacity group-hover:opacity-70">{werk.title}</h2>
+            <p class="text-sm text-fg-faint">{werk.subtitle[locale]}</p>
+            <p class="mt-2 leading-relaxed text-fg-muted">{werk.description[locale]}</p>
+          </a>
+          <a href={getRelativeLocaleUrl(locale, `/werke/${werk.id}`)} class="mt-2 inline-block font-mono text-xs text-fg-faint transition-colors hover:text-fg">
+            {t(locale, 'prot.method')}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</Page>

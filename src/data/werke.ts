@@ -1,0 +1,28 @@
+import type { Locale } from '@/lib/site'
+
+export interface Werk {
+  id: string
+  title: string
+  subtitle: Record<Locale, string>
+  status: 'live' | 'in-arbeit' | 'geplant'
+  href: string
+  description: Record<Locale, string>
+}
+
+/** Werkverzeichnis. Satelliten (Überflug, Halbwertszeit, Parallaxe, Prämie) folgen je eigenem Zyklus. */
+export const WERKE: Werk[] = [
+  {
+    id: 'protokoll',
+    title: 'Das Protokoll',
+    subtitle: {
+      de: 'Die Sitzung der Welt ist eröffnet',
+      en: 'The session of the world is open',
+    },
+    status: 'live',
+    href: '/protokoll',
+    description: {
+      de: 'Jede Nacht verfasst eine Pipeline das Sitzungsprotokoll des Planeten — aus zwölf offenen, zitierfähigen Quellen, deterministisch, ohne LLM. Jeder Tagesordnungspunkt endet gleich: Beschluss: vertagt.',
+      en: "Every night a pipeline writes the minutes of the planet's session — from twelve open, citable sources, deterministic, no LLM. Every agenda item ends the same way: Resolution: adjourned.",
+    },
+  },
+]
