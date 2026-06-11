@@ -6,6 +6,7 @@ import type { Locale } from '@/lib/site'
 const locale = (Astro.currentLocale ?? 'de') as Locale
 const home = getRelativeLocaleUrl(locale, '/')
 const nav = [
+  { href: getRelativeLocaleUrl(locale, '/werke'), label: t(locale, 'nav.werke') },
   { href: getRelativeLocaleUrl(locale, '/work'), label: t(locale, 'nav.work') },
   { href: getRelativeLocaleUrl(locale, '/lab'), label: t(locale, 'nav.lab') },
   { href: getRelativeLocaleUrl(locale, '/about'), label: t(locale, 'nav.about') },
