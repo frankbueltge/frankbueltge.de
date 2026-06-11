@@ -10,10 +10,12 @@
     "preview": "astro preview",
     "check": "astro check",
     "test": "vitest run",
-    "climate:refresh": "tsx scripts/fetch-climate.ts"
+    "climate:refresh": "tsx scripts/fetch-climate.ts",
+    "protokoll:dry": "pipelines/protokoll/.venv/bin/python -m protokoll.run --dry-run --repo-root ."
   },
   "dependencies": {
     "@astrojs/mdx": "^4.2.0",
+    "@astrojs/rss": "^4.0.18",
     "@astrojs/sitemap": "^3.2.1",
     "@fontsource-variable/jetbrains-mono": "^5.2.8",
     "@fontsource-variable/space-grotesk": "^5.2.10",
