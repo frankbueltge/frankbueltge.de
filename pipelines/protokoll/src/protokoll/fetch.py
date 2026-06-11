@@ -1,13 +1,14 @@
 """HTTP-Zugriff: 3x Retry mit Backoff. Danach SourceUnavailable → 'Feststellung entfällt'."""
 from __future__ import annotations
 
+import json
 import time
 from typing import Any, Literal
 
 import httpx
 
 RETRY_DELAYS = (1.0, 2.0, 4.0)
-TIMEOUT = 30.0
+TIMEOUT = 30.0  # pro Versuch; Worst Case je URL: 4 Versuche × 30 s + 7 s Backoff
 
 
 class SourceUnavailable(Exception):
@@ -23,7 +24,15 @@ def fetch(url: str, *, client: httpx.Client,
         try:
             r = client.get(url, timeout=TIMEOUT, follow_redirects=True)
             r.raise_for_status()
-            return r.json() if expect == "json" else r.text
+            if expect == "json":
+                try:
+                    return r.json()
+                except json.JSONDecodeError as exc:
+                    raise SourceUnavailable(f"{url}: JSON parse error: {exc}") from exc
+            return r.text
         except httpx.HTTPError as exc:
+            # 4xx ist kein transienter Fehler — sofort melden statt Retries verbrennen.
+            if isinstance(exc, httpx.HTTPStatusError) and exc.response.status_code < 500:
+                raise SourceUnavailable(f"{url}: HTTP {exc.response.status_code}") from exc
             last = exc
     raise SourceUnavailable(f"{url}: {type(last).__name__}: {last}")

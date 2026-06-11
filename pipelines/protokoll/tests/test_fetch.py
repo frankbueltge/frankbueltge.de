@@ -42,3 +42,21 @@ def test_fetch_raises_after_all_retries(monkeypatch):
     with pytest.raises(SourceUnavailable):
         fetch("https://example.org", client=make_client(handler))
     assert calls["n"] == 4  # 1 Versuch + 3 Retries
+
+
+def test_fetch_4xx_fails_fast_without_retries():
+    calls = {"n": 0}
+
+    def handler(req):
+        calls["n"] += 1
+        return httpx.Response(404)
+
+    with pytest.raises(SourceUnavailable, match="HTTP 404"):
+        fetch("https://example.org/gone", client=make_client(handler))
+    assert calls["n"] == 1  # kein Retry bei 4xx
+
+
+def test_fetch_invalid_json_raises_source_unavailable():
+    client = make_client(lambda req: httpx.Response(200, text="<html>wartung</html>"))
+    with pytest.raises(SourceUnavailable, match="JSON parse error"):
+        fetch("https://example.org/api", client=client, expect="json")
