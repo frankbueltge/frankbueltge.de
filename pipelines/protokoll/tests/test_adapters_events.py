@@ -52,3 +52,31 @@ def test_attention_top_article_skips_meta_pages():
     m = attention.measure(ctx_for(handler))
     assert m.label == "Deep sea mining" and m.value == 812_345
     assert m.as_of == "2026-06-11"
+
+
+def test_fires_error_body_with_200_is_unavailable():
+    client_resp = "Invalid MAP_KEY.\n"
+    with pytest.raises(SourceUnavailable, match="unerwarteter Antwortkörper"):
+        fires.measure(ctx_for(lambda req: httpx.Response(200, text=client_resp),
+                              env={"FIRMS_MAP_KEY": "K123"}))
+
+
+def test_attention_skips_placeholder_and_talk_pages():
+    body = json.dumps({"items": [{"articles": [
+        {"article": "-", "views": 9_000_000},
+        {"article": "Talk:Something", "views": 2_000_000},
+        {"article": "Ocean_current", "views": 700_001},
+    ]}]})
+    m = attention.measure(ctx_for(lambda req: httpx.Response(
+        200, text=body, headers={"content-type": "application/json"})))
+    assert m.label == "Ocean current" and m.value == 700_001
+
+
+def test_attention_all_meta_pages_raises():
+    body = json.dumps({"items": [{"articles": [
+        {"article": "Main_Page", "views": 5_000_000},
+        {"article": "Special:Search", "views": 1_200_000},
+    ]}]})
+    with pytest.raises(ValueError):
+        attention.measure(ctx_for(lambda req: httpx.Response(
+            200, text=body, headers={"content-type": "application/json"})))

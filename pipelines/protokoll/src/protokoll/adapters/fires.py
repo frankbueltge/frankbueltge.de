@@ -13,12 +13,16 @@ def measure(ctx: Context) -> Measurement:
     if not key:
         raise SourceUnavailable("FIRMS_MAP_KEY nicht gesetzt")
     text = fetch(f"{BASE}/{key}/VIIRS_SNPP_NRT/world/1", client=ctx.client)
-    count = max(0, len([l for l in text.splitlines() if l.strip()]) - 1)  # minus Header
+    # FIRMS liefert Fehlermeldungen ("Invalid MAP_KEY.") mit HTTP 200 — Header prüfen,
+    # sonst würde ein Fehlertext still als "0 Brände weltweit" archiviert.
+    if not text.lower().startswith("latitude"):
+        raise SourceUnavailable(f"FIRMS: unerwarteter Antwortkörper: {text[:120]!r}")
+    count = sum(1 for line in text.splitlines() if line.strip()) - 1
     return Measurement(value=float(count), as_of=ctx.today.isoformat())
 
 
 SPEC = AdapterSpec(
-    top_id="fires", unit="Detektionen", cadence="daily", corridor=(0, 500_000), max_age_days=None,
+    top_id="fires", unit="Detektionen", cadence="daily", corridor=(1_000, 500_000), max_age_days=None,
     source=SourceMeta(name="NASA FIRMS (VIIRS S-NPP, Near-Real-Time)",
                       url="https://firms.modaps.eosdis.nasa.gov/",
                       license="NASA: frei nutzbar mit Quellenangabe"),
