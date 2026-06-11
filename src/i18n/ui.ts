@@ -44,6 +44,16 @@ export const ui = {
     'lab.back': 'Zum Lab',
     'lab.onlyLang': 'Dieser Beitrag liegt aktuell nur auf Englisch vor.',
 
+    'nav.werke': 'Werke',
+    'prot.title': 'Das Protokoll',
+    'prot.sub': 'Die Sitzung der Welt ist eröffnet — täglich, maschinell, amtlich.',
+    'prot.archive': 'Archiv',
+    'prot.method': 'Methodenblatt',
+    'prot.empty': 'Das erste Protokoll folgt mit dem nächsten nächtlichen Lauf.',
+    'prot.backToCurrent': 'Zum aktuellen Protokoll',
+    'werke.title': 'Werke',
+    'werke.sub': 'Messinstrumente, keine Visualisierungen — Werke an der Schnittstelle von Kunst, Wissenschaft und Philosophie.',
+
     'about.title': 'Über mich',
     'about.elsewhere': 'Anderswo im Netz',
 
@@ -104,6 +114,16 @@ export const ui = {
     'lab.min': 'min read',
     'lab.back': 'Back to Lab',
     'lab.onlyLang': 'This post is currently only available in German.',
+
+    'nav.werke': 'Works',
+    'prot.title': 'Das Protokoll',
+    'prot.sub': 'The session of the world is open — daily, mechanical, official.',
+    'prot.archive': 'Archive',
+    'prot.method': 'Method sheet',
+    'prot.empty': 'The first minutes will follow with the next nightly run.',
+    'prot.backToCurrent': 'To the current minutes',
+    'werke.title': 'Works',
+    'werke.sub': 'Measuring instruments, not visualisations — works at the intersection of art, science and philosophy.',
 
     'about.title': 'About',
     'about.elsewhere': 'Elsewhere on the web',
