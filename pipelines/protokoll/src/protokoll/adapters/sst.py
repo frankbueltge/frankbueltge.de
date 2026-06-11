@@ -1,4 +1,7 @@
-"""TOP Ozean — globale Meeresoberflächentemperatur (NOAA OISST v2.1 via Climate Reanalyzer)."""
+"""TOP Ozean — globale Meeresoberflächentemperatur (NOAA OISST v2.1 via Climate Reanalyzer).
+Live-Daten liegen unter json_2clim/; Jahresserien tragen finale Werte (~2 Wochen Verzug),
+die provisorische "Preliminary"-Serie wird bewusst ignoriert (isdigit-Filter) —
+lieber finaler Stand mit ehrlichem Datum als vorläufige Zahl."""
 from __future__ import annotations
 
 from datetime import date, timedelta
@@ -7,7 +10,7 @@ from protokoll.adapters.base import AdapterSpec, Context
 from protokoll.fetch import fetch
 from protokoll.model import Comparison, Measurement, SourceMeta
 
-URL = "https://climatereanalyzer.org/clim/sst_daily/json/oisst2.1_world2_sst_day.json"
+URL = "https://climatereanalyzer.org/clim/sst_daily/json_2clim/oisst2.1_world2_sst_day.json"
 
 
 def measure(ctx: Context) -> Measurement:
@@ -33,7 +36,7 @@ def measure(ctx: Context) -> Measurement:
 
 
 SPEC = AdapterSpec(
-    top_id="sst", unit="°C", cadence="daily", corridor=(15, 25), max_age_days=14,
+    top_id="sst", unit="°C", cadence="daily", corridor=(15, 25), max_age_days=30,
     source=SourceMeta(name="NOAA OISST v2.1 (via Climate Reanalyzer, University of Maine)",
                       url=URL, license="NOAA: Public Domain; Aufbereitung: Climate Reanalyzer"),
     measure=measure,

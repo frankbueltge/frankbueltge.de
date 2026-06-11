@@ -1,4 +1,5 @@
-"""TOP Meereis — NSIDC Sea Ice Index v3, tägliche Ausdehnung Arktis/Antarktis."""
+"""TOP Meereis — NSIDC Sea Ice Index v4, tägliche Ausdehnung Arktis/Antarktis.
+v4-CSV enthält in Spalte 6 quoted Kommas (Quelldatei-Listen) — unkritisch, wir lesen nur Spalte 1-4."""
 from __future__ import annotations
 
 from datetime import date
@@ -8,8 +9,8 @@ from protokoll.adapters.base import AdapterSpec, Context
 from protokoll.fetch import fetch
 from protokoll.model import Comparison, Measurement, SourceMeta
 
-URL_N = "https://noaadata.apps.nsidc.org/NOAA/G02135/north/daily/data/N_seaice_extent_daily_v3.0.csv"
-URL_S = "https://noaadata.apps.nsidc.org/NOAA/G02135/south/daily/data/S_seaice_extent_daily_v3.0.csv"
+URL_N = "https://noaadata.apps.nsidc.org/NOAA/G02135/north/daily/data/N_seaice_extent_daily_v4.0.csv"
+URL_S = "https://noaadata.apps.nsidc.org/NOAA/G02135/south/daily/data/S_seaice_extent_daily_v4.0.csv"
 
 
 def _rows(text: str) -> list[tuple[date, float]]:
@@ -44,7 +45,7 @@ def measure_south(ctx: Context) -> Measurement:
     return _measure(URL_S, ctx)
 
 
-_NSIDC = "NSIDC Sea Ice Index v3 (NOAA@NSIDC)"
+_NSIDC = "NSIDC Sea Ice Index v4 (NOAA@NSIDC)"
 _LICENSE = "NOAA/NSIDC: frei nutzbar mit Quellenangabe"
 
 SPEC_NORTH = AdapterSpec(top_id="seaice_north", unit="Mio. km²", cadence="daily",
