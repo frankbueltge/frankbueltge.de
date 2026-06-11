@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { CLASS_LABEL, classifyElevation, deg } from './visibility'
+import { CATEGORY_LABEL, CLASS_LABEL, classifyElevation, deg } from './visibility'
 
 describe('classifyElevation (Radiant-Input)', () => {
   it('zweistufiges Kriterium aus der Spec', () => {
@@ -19,5 +19,13 @@ describe('CLASS_LABEL', () => {
     expect(CLASS_LABEL.C.de).toBe('staatlich-zivil')
     expect(CLASS_LABEL.A.de).toBe('Amateur')
     expect(CLASS_LABEL.unknown.de).toBe('nicht klassifiziert')
+  })
+})
+
+
+describe('categoryLabel deckt reale GCAT-Codes ab', () => {
+  it('IMG-R und EOSCI (häufig im echten Snapshot) sind gemappt', () => {
+    expect(CATEGORY_LABEL['IMG-R'].de).toBe('Radar-Abbildung')
+    expect(CATEGORY_LABEL.EOSCI.en).toBe('earth science')
   })
 })
