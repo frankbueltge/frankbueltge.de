@@ -1,0 +1,26 @@
+[project]
+name = "protokoll"
+version = "0.1.0"
+description = "Nightly pipeline: the minutes of the world (frankbueltge.de)"
+requires-python = ">=3.12"
+dependencies = ["httpx>=0.27"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+bq = ["google-cloud-bigquery>=3.25"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+protokoll = ["data/*.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
