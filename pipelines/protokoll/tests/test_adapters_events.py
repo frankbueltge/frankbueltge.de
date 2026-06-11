@@ -61,6 +61,15 @@ def test_fires_error_body_with_200_is_unavailable():
                               env={"FIRMS_MAP_KEY": "K123"}))
 
 
+def test_fires_http_error_never_leaks_path_key():
+    # Der MAP_KEY steht im URL-Pfad — 403/429-Vermerke dürfen ihn nicht enthalten.
+    with pytest.raises(SourceUnavailable) as exc_info:
+        fires.measure(ctx_for(lambda req: httpx.Response(403),
+                              env={"FIRMS_MAP_KEY": "SECRETPATHKEY"}))
+    assert "SECRETPATHKEY" not in str(exc_info.value)
+    assert "***" in str(exc_info.value)
+
+
 def test_attention_skips_placeholder_and_talk_pages():
     body = json.dumps({"items": [{"articles": [
         {"article": "-", "views": 9_000_000},

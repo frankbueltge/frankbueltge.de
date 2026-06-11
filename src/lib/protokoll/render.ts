@@ -72,6 +72,22 @@ const STR = {
 export interface RenderedTop { heading: string; lines: string[]; sources: string[]; closing: string }
 export interface RenderedDay { kopf: string[]; tops: RenderedTop[]; schluss: string[]; meta: string }
 
+/** Einheiten kommen aus der Pipeline auf Deutsch — für EN-Sätze übersetzen. */
+const UNIT_L10N: Record<string, Record<Locale, string>> = {
+  'Mio. km²': { de: 'Mio. km²', en: 'million km²' },
+  Beben: { de: 'Beben', en: 'quakes' },
+  Detektionen: { de: 'Detektionen', en: 'detections' },
+  Menschen: { de: 'Menschen', en: 'people' },
+  Punkte: { de: 'Punkte', en: 'points' },
+  Aufrufe: { de: 'Aufrufe', en: 'views' },
+  Ereignisse: { de: 'Ereignisse', en: 'events' },
+  'USD/Barrel': { de: 'USD/Barrel', en: 'USD/barrel' },
+}
+
+function unitFor(unit: string, locale: Locale): string {
+  return UNIT_L10N[unit]?.[locale] ?? unit
+}
+
 export function fmtValue(id: string, value: number, locale: Locale): string {
   const f = VALUE_FORMATS[id] ?? { maxFrac: 2 }
   const v = f.scale ? value * f.scale : value
@@ -109,7 +125,7 @@ function renderTop(top: AgendaTop, byId: Map<string, ProtokollEntry>, locale: Lo
       lines.push(
         s.implausible
           .replace('{value}', e.value != null ? fmtValue(def.id, e.value, locale) : '—')
-          .replace('{unit}', e.unit),
+          .replace('{unit}', unitFor(e.unit, locale)),
       )
       sources.push(sourceLine(e, locale))
       continue
@@ -119,7 +135,9 @@ function renderTop(top: AgendaTop, byId: Map<string, ProtokollEntry>, locale: Lo
     if (e.label) line = line.replace('{label}', e.label)
     lines.push(line)
     if (e.comparison) {
-      lines.push(`${s.cmp[e.comparison.label]}: ${fmtValue(def.id, e.comparison.value, locale)} ${e.unit}.`)
+      lines.push(
+        `${s.cmp[e.comparison.label]}: ${fmtValue(def.id, e.comparison.value, locale)} ${unitFor(e.unit, locale)}.`,
+      )
     }
     if (e.record) lines.push(s.record)
     sources.push(sourceLine(e, locale))
