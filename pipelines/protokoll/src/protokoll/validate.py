@@ -3,11 +3,15 @@ from __future__ import annotations
 
 from datetime import date
 
+from protokoll.model import Status
 
-def corridor_status(value: float, corridor: tuple[float, float] | None) -> str:
+
+def corridor_status(value: float, corridor: tuple[float, float] | None) -> Status:
     if corridor is None:
         return "ok"
     lo, hi = corridor
+    if lo > hi:
+        raise ValueError(f"corridor lo > hi: {lo} > {hi}")
     return "ok" if lo <= value <= hi else "implausible"
 
 
