@@ -12,7 +12,12 @@ def measure(ctx: Context) -> Measurement:
     key = ctx.env.get("FIRMS_MAP_KEY")
     if not key:
         raise SourceUnavailable("FIRMS_MAP_KEY nicht gesetzt")
-    text = fetch(f"{BASE}/{key}/VIIRS_SNPP_NRT/world/1", client=ctx.client)
+    try:
+        text = fetch(f"{BASE}/{key}/VIIRS_SNPP_NRT/world/1", client=ctx.client)
+    except SourceUnavailable as exc:
+        # Der Key steht im URL-PFAD (nicht Query) — Fehlermeldungen landen als Vermerk
+        # im öffentlichen Archiv und dürfen ihn nie enthalten.
+        raise SourceUnavailable(str(exc).replace(key, "***")) from None
     # FIRMS liefert Fehlermeldungen ("Invalid MAP_KEY.") mit HTTP 200 — Header prüfen,
     # sonst würde ein Fehlertext still als "0 Brände weltweit" archiviert.
     if not text.lower().startswith("latitude"):

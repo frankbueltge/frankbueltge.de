@@ -30,7 +30,7 @@ Jedes Werk — auch jedes künftige — muss alle fünf Kriterien erfüllen:
 
 ### 3.1 Routing & Hierarchie
 
-- `/werke` (EN: `/en/works`): Werkverzeichnis mit fünf Einträgen, je Werk eine Seite unter `/werke/<name>` inkl. Methodenblatt.
+- `/werke` (EN: `/en/werke` — Segment bleibt in beiden Sprachen gleich, konsistent mit `/lab`): Werkverzeichnis mit fünf Einträgen, je Werk eine Seite unter `/werke/<name>` inkl. Methodenblatt.
 - `/protokoll`: das aktuelle Tagesprotokoll (Wirbelsäule der Gruppe), `/protokoll/<datum>` pro Tag, `/protokoll/archiv` als Index.
 - `/lab` bleibt unverändert: Engineering-Notizen. Klare Fallhöhe zwischen Notiz und Werk.
 - Alles zweisprachig DE/EN ab Tag eins (bestehendes i18n-Muster: Astro-i18n, de default, `/en/`-Präfix).
@@ -121,11 +121,14 @@ Katalog ist erweiterbar; jede Änderung wird im Methodenblatt-Änderungsprotokol
 Pro Tag committet die Pipeline `src/content/protokoll/<jahr>/<datum>.json`:
 
 ```
-{ date, generatedAt, templateVersion, entries: [
-    { topId, status: "ok" | "unavailable" | "implausible",
-      value(s), unit, comparison?,
-      source: { name, url, license }, retrievedAt, cadence } ] }
+{ date, generated_at, schema_version, pipeline_version, entries: [
+    { top_id, status: "ok" | "unavailable" | "implausible",
+      value, unit, as_of, comparison?, label?, record, note?,
+      source: { name, url, license }, retrieved_at, cadence } ] }
 ```
+
+(Die Registerfassung/`TEMPLATE_VERSION` lebt bewusst im Frontend-Renderer, nicht im JSON —
+Prosa ist Darstellung; das JSON bleibt darstellungsfrei.)
 
 Astro rendert die Prosa zur Buildzeit aus JSON + Templates. Das Archiv bleibt in den Daten unantastbar, in der Form korrigierbar. Die Druckedition friert Prosa zum Druckzeitpunkt ein.
 

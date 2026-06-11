@@ -78,7 +78,7 @@ export const AGENDA: AgendaTop[] = [
   ] },
   { n: 12, title: { de: 'Aufmerksamkeit', en: 'Attention' }, entries: [
     { id: 'attention', phrase: {
-      de: 'Gegenstand der größten Aufmerksamkeit (englischsprachige Wikipedia): „{label}" — {value} Aufrufe.',
+      de: 'Gegenstand der größten Aufmerksamkeit (englischsprachige Wikipedia): „{label}“ — {value} Aufrufe.',
       en: 'Object of greatest attention (English-language Wikipedia): "{label}" — {value} views.' } },
   ] },
 ]

@@ -41,4 +41,5 @@ def fetch(url: str, *, client: httpx.Client,
             if isinstance(exc, httpx.HTTPStatusError) and exc.response.status_code < 500:
                 raise SourceUnavailable(f"{_redacted(url)}: HTTP {exc.response.status_code}") from exc
             last = exc
-    raise SourceUnavailable(f"{_redacted(url)}: {type(last).__name__}: {last}")
+    # Auch die Exception-Message selbst kann die volle URL (inkl. Query) enthalten.
+    raise SourceUnavailable(f"{_redacted(url)}: {type(last).__name__}: {_redacted(str(last))}")

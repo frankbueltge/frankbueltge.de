@@ -87,7 +87,7 @@ describe('renderDay de', () => {
 
   it('TOP 12 Aufmerksamkeit mit Titel', () => {
     expect(top(12).lines[0]).toBe(
-      'Gegenstand der größten Aufmerksamkeit (englischsprachige Wikipedia): „Deep sea mining" — 812.345 Aufrufe.',
+      'Gegenstand der größten Aufmerksamkeit (englischsprachige Wikipedia): „Deep sea mining“ — 812.345 Aufrufe.',
     )
   })
 
@@ -109,6 +109,10 @@ describe('renderDay en', () => {
     expect(r.tops[0].closing).toBe('Discussion: none. Resolution: adjourned.')
     expect(r.tops[3].lines).toEqual(['Source unreachable — finding omitted.'])
     expect(r.tops[8].lines[1]).toBe('Previous observation: 1.92 %.')
+    expect(r.tops[1].lines).toContain('Same day last year: 11.013 million km².')
+    expect(r.tops[9].lines).toEqual([
+      'Value outside the plausibility corridor — finding under reserve: 8,000 USD/barrel.',
+    ])
     expect(r.schluss).toEqual(['The session was not closed.', 'Next session: tomorrow.'])
   })
 })

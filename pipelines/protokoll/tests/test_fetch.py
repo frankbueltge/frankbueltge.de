@@ -71,3 +71,16 @@ def test_fetch_error_messages_never_contain_query_string():
               client=make_client(handler))
     assert "SECRET123" not in str(exc_info.value)
     assert "api.example.org/v2/data" in str(exc_info.value)
+
+
+def test_fetch_5xx_exhaustion_message_redacts_query_string(monkeypatch):
+    monkeypatch.setattr(fetch_mod.time, "sleep", lambda s: None)
+
+    def handler(req):
+        return httpx.Response(500)
+
+    with pytest.raises(SourceUnavailable) as exc_info:
+        fetch("https://api.example.org/v2/data?api_key=SECRET123",
+              client=make_client(handler))
+    # httpx packt die volle URL in die HTTPStatusError-Message — auch dort redigieren.
+    assert "SECRET123" not in str(exc_info.value)
