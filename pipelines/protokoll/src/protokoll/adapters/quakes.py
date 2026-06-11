@@ -14,7 +14,7 @@ def measure(ctx: Context) -> Measurement:
 
 
 SPEC = AdapterSpec(
-    top_id="quakes", unit="Beben", cadence="realtime", corridor=(0, 200), max_age_days=None,
+    top_id="quakes", unit="Beben", cadence="realtime", corridor=(0, 500), max_age_days=None,
     source=SourceMeta(name="USGS Earthquake Hazards Program", url=URL,
                       license="Public Domain (U.S. Government)"),
     measure=measure,
