@@ -28,10 +28,12 @@ export const CLASS_LABEL: Record<'C' | 'D' | 'B' | 'A' | 'unknown', L10n> = {
 
 export const CATEGORY_LABEL: Record<string, L10n> = {
   IMG: { de: 'Abbildung', en: 'imaging' },
+  'IMG-R': { de: 'Radar-Abbildung', en: 'radar imaging' },
   MET: { de: 'Wetter', en: 'weather' },
   EW: { de: 'Frühwarnung', en: 'early warning' },
   SIG: { de: 'Signalerfassung', en: 'signals' },
   SCI: { de: 'Wissenschaft', en: 'science' },
+  EOSCI: { de: 'Erdbeobachtung (Wissenschaft)', en: 'earth science' },
 }
 
 export function categoryLabel(cat: string | null, locale: Locale): string {
