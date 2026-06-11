@@ -66,3 +66,17 @@ def test_seaice_without_prev_year_has_no_comparison():
     m = seaice.measure_north(ctx_for(csv))
     assert m.value == 10.689
     assert m.comparison is None
+
+
+def test_sst_january_gap_falls_back_to_previous_year():
+    import json
+
+    body = json.dumps([
+        {"name": "2024", "data": [20.0, 20.1, 20.2]},
+        {"name": "2025", "data": [20.5, 20.6, 20.7]},
+    ])
+    m = sst.measure(ctx_for(body, json_body=True, today=date(2026, 1, 5)))
+    assert m.value == 20.7             # Ende der Vorjahresserie
+    assert m.as_of == "2025-01-03"     # Index 2 im Ausweichjahr 2025
+    assert m.comparison.value == 20.2  # 2024, gleicher Tagesindex
+    assert m.record is True            # 20.7 > Alltime-Max der übrigen Jahre (20.2)

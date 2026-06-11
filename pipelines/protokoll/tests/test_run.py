@@ -31,3 +31,11 @@ def test_dry_run_writes_day_json(tmp_path, monkeypatch):
     out = tmp_path / "src/content/protokoll/2026/2026-06-12.json"
     assert out.exists()
     assert json.loads(out.read_text())["date"] == "2026-06-12"
+
+
+def test_invalid_date_exits_with_argparse_error(tmp_path):
+    import pytest
+
+    with pytest.raises(SystemExit) as exc_info:
+        run_mod.main(["--date", "12.06.2026", "--dry-run", "--repo-root", str(tmp_path)])
+    assert exc_info.value.code == 2
