@@ -20,5 +20,10 @@ export default defineConfig({
     worker: {
       format: 'es',
     },
+    optimizeDeps: {
+      // satellite.js bringt einen WASM-Build mit Top-Level-Await mit — Vites
+      // Dev-Optimizer (esbuild, es2020) bricht daran; Rollup im Prod-Build nicht.
+      exclude: ['satellite.js'],
+    },
   },
 })
