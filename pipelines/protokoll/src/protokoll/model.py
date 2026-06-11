@@ -20,7 +20,7 @@ class SourceMeta:
 
 @dataclass(frozen=True)
 class Comparison:
-    label: Literal["prev_day", "prev_month", "prev_year_day"]
+    label: Literal["prev_day", "prev_month", "prev_year_day", "prev_observation_day"]
     value: float
 
 
