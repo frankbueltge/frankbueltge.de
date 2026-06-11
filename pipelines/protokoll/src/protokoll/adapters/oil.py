@@ -17,7 +17,7 @@ def measure(ctx: Context) -> Measurement:
     data = fetch(f"{BASE}&api_key={key}", client=ctx.client, expect="json")
     rows = data["response"]["data"]
     latest = rows[0]
-    comparison = (Comparison(label="prev_day", value=float(rows[1]["value"]))
+    comparison = (Comparison(label="prev_observation_day", value=float(rows[1]["value"]))
                   if len(rows) > 1 else None)
     return Measurement(value=float(latest["value"]), as_of=latest["period"],
                        comparison=comparison)

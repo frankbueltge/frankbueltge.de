@@ -60,3 +60,14 @@ def test_fetch_invalid_json_raises_source_unavailable():
     client = make_client(lambda req: httpx.Response(200, text="<html>wartung</html>"))
     with pytest.raises(SourceUnavailable, match="JSON parse error"):
         fetch("https://example.org/api", client=client, expect="json")
+
+
+def test_fetch_error_messages_never_contain_query_string():
+    def handler(req):
+        return httpx.Response(404)
+
+    with pytest.raises(SourceUnavailable) as exc_info:
+        fetch("https://api.example.org/v2/data?api_key=SECRET123",
+              client=make_client(handler))
+    assert "SECRET123" not in str(exc_info.value)
+    assert "api.example.org/v2/data" in str(exc_info.value)
