@@ -43,31 +43,37 @@ def main(argv: list[str] | None = None) -> int:
     args = p.parse_args(argv)
 
     date_iso = args.date or datetime.now(timezone.utc).date().isoformat()
-    ctx = Context(
-        client=httpx.Client(headers={"User-Agent": USER_AGENT}),
-        today=datetime.strptime(date_iso, "%Y-%m-%d").date(),
-        env=os.environ,
-        bq_client_factory=_bq_factory_or_none(),
-    )
-    record = assemble(ALL_SPECS, ctx, date_iso)
-    payload = day_record_to_json(record)
-    path = content_path(date_iso)
+    try:
+        today = datetime.strptime(date_iso, "%Y-%m-%d").date()
+    except ValueError:
+        p.error(f"ungültiges Datum: {date_iso!r} (erwartet YYYY-MM-DD)")
 
-    if args.dry_run:
-        if not args.repo_root:
-            p.error("--dry-run braucht --repo-root")
-        target = Path(args.repo_root) / path
-        target.parent.mkdir(parents=True, exist_ok=True)
-        target.write_text(payload, encoding="utf-8")
-        print(f"geschrieben: {target}")
-    else:
-        sha = commit_file(
-            repo=os.environ.get("GITHUB_REPO", "frankbueltge/frankbueltge.de"),
-            path=path, content=payload,
-            message=f"protokoll: Sitzung vom {date_iso}",
-            token=os.environ["GITHUB_TOKEN"], client=ctx.client,
+    with httpx.Client(headers={"User-Agent": USER_AGENT}) as client:
+        ctx = Context(
+            client=client,
+            today=today,
+            env=os.environ,
+            bq_client_factory=_bq_factory_or_none(),
         )
-        print(f"committet: {path} @ {sha}")
+        record = assemble(ALL_SPECS, ctx, date_iso)
+        payload = day_record_to_json(record)
+        path = content_path(date_iso)
+
+        if args.dry_run:
+            if not args.repo_root:
+                p.error("--dry-run braucht --repo-root")
+            target = Path(args.repo_root) / path
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text(payload, encoding="utf-8")
+            print(f"geschrieben: {target}")
+        else:
+            sha = commit_file(
+                repo=os.environ.get("GITHUB_REPO", "frankbueltge/frankbueltge.de"),
+                path=path, content=payload,
+                message=f"protokoll: Sitzung vom {date_iso}",
+                token=os.environ["GITHUB_TOKEN"], client=client,
+            )
+            print(f"committet: {path} @ {sha}")
 
     unavailable = [e.top_id for e in record.entries if e.status != "ok"]
     if unavailable:
