@@ -8,6 +8,7 @@ from typing import Literal
 SCHEMA_VERSION = "1"
 
 Status = Literal["ok", "unavailable", "implausible"]
+Cadence = Literal["daily", "realtime", "monthly", "periodic", "computed"]
 
 
 @dataclass(frozen=True)
@@ -38,7 +39,7 @@ class Entry:
     top_id: str
     status: Status
     unit: str
-    cadence: str
+    cadence: Cadence
     source: SourceMeta
     retrieved_at: str
     value: float | None = None
@@ -55,8 +56,10 @@ class DayRecord:
     generated_at: str
     schema_version: str
     pipeline_version: str
-    entries: list[Entry]
+    entries: tuple[Entry, ...]
 
 
 def day_record_to_json(record: DayRecord) -> str:
-    return json.dumps(asdict(record), ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+    # allow_nan=False: ein nicht-finiter Wert darf nie still ins Archiv — lieber lauter Fehler.
+    return json.dumps(asdict(record), ensure_ascii=False, indent=2, sort_keys=True,
+                      allow_nan=False) + "\n"

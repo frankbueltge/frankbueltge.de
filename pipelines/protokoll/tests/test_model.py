@@ -46,3 +46,23 @@ def test_entry_without_value_serializes_nulls():
 def test_measurement_defaults():
     m = Measurement(value=1.0, as_of="2026-06-11")
     assert m.comparison is None and m.label is None and m.record is False
+
+
+def test_non_finite_values_refuse_to_serialize():
+    import pytest
+
+    e = make_entry(value=float("nan"), comparison=None)
+    record = DayRecord(date="2026-06-12", generated_at="x", schema_version="1",
+                       pipeline_version="0.1.0", entries=(e,))
+    with pytest.raises(ValueError):
+        day_record_to_json(record)
+
+
+def test_non_ascii_round_trip():
+    e = make_entry(note="Netzwerkfehler — Verbindung unterbrochen (üöä)",
+                   label="Berliner Mauer")
+    d = json.loads(day_record_to_json(DayRecord(
+        date="2026-06-12", generated_at="x", schema_version="1",
+        pipeline_version="0.1.0", entries=(e,))))
+    assert d["entries"][0]["note"] == "Netzwerkfehler — Verbindung unterbrochen (üöä)"
+    assert d["entries"][0]["label"] == "Berliner Mauer"
