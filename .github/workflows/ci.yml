@@ -1,0 +1,38 @@
+# CI: schützt die nächtliche Commit→Rebuild-Kette des Protokolls.
+# Läuft auch für die Bot-Commits der "Protokollführung" — validiert,
+# dass jede neue Tages-JSON gegen Schema und Renderer besteht.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  pipeline:
+    name: Pipeline (pytest)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: pipelines/protokoll
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -e ".[dev,bq]"
+      - run: pytest -q
+
+  site:
+    name: Site (vitest, check, build)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run test
+      - run: npm run check
+      - run: npm run build
