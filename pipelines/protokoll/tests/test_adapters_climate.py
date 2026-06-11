@@ -31,7 +31,7 @@ def test_sst_latest_non_null_with_prev_year_and_record():
     assert m.value == 21.1          # Index 1 = letzter Nicht-null-Wert 2026
     assert m.as_of == "2026-01-02"  # Tag-des-Jahres 2
     assert m.comparison.label == "prev_year_day" and m.comparison.value == 20.9
-    assert m.record is True         # 21.1 > 20.9 (2025, gleicher Tagesindex; "mean"-Serie zählt nicht)
+    assert m.record is True         # 21.1 > 21.0 (Alltime-Max aller anderen Jahre; "mean"-Serie zählt nicht)
 
 
 def test_seaice_north_and_south():
@@ -47,3 +47,22 @@ def test_specs_metadata():
     assert sst.SPEC.unit == "°C"
     assert seaice.SPEC_NORTH.top_id == "seaice_north"
     assert seaice.SPEC_SOUTH.top_id == "seaice_south"
+
+
+def test_seaice_skips_unit_line_and_sentinel_rows():
+    # Fixture enthält Unit-Header (YYYY, MM, ...) und eine -9999-Sentinel-Zeile —
+    # beide dürfen nicht als Messwerte landen.
+    m = seaice.measure_north(ctx_for((FIX / "n_seaice.csv").read_text()))
+    assert m.value == 10.689  # Sentinel-Zeile vom 08.06. ist übersprungen
+    assert m.as_of == "2026-06-10"
+
+
+def test_seaice_without_prev_year_has_no_comparison():
+    csv = (
+        "Year, Month, Day,     Extent,    Missing, Source Data\n"
+        "2026,    06,  09,     10.711,      0.000, NSIDC\n"
+        "2026,    06,  10,     10.689,      0.000, NSIDC\n"
+    )
+    m = seaice.measure_north(ctx_for(csv))
+    assert m.value == 10.689
+    assert m.comparison is None
