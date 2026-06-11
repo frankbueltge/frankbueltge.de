@@ -1,0 +1,131 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import type { Locale } from '@/lib/site'
+
+interface Props { locale: Locale }
+const { locale } = Astro.props
+const de = locale === 'de'
+const ueberflugUrl = getRelativeLocaleUrl(locale, '/ueberflug')
+
+const txt = {
+  h1: de ? 'Methodenblatt — Überflug' : 'Method sheet — Überflug',
+  s1: de ? '1. Quellen & Lizenzen' : '1. Sources & licences',
+  s2: de ? '2. Kadenz' : '2. Cadence',
+  s2body: de
+    ? 'Täglicher Bahndaten-Snapshot um 05:00 UTC via GitHub Actions Cron. Der Zeitpunkt der Erzeugung ist im UI unter „Bahndaten vom" ausgewiesen. Bahndaten sind operativ gültig (Tage bis wenige Wochen); sie werden täglich überschrieben statt archiviert — die Gegenwart zählt, nicht die Vergangenheit.'
+    : 'Daily orbital data snapshot at 05:00 UTC via GitHub Actions cron. The generation timestamp is shown in the UI under "Orbital data as of". Orbital elements are operationally valid for days to a few weeks; they are overwritten daily rather than archived — the present counts, not the past.',
+  s3: de ? '3. Verarbeitung' : '3. Processing',
+  s3body: de
+    ? 'SGP4-Propagation client-seitig mit satellite.js v7 (json2satrec → propagate → ecfToLookAngles). Join CelesTrak-OMM ↔ GCAT über den internationalen Designator (OBJECT_ID ↔ Piece). Zweistufige Klassifikation: Elevation > 10° = Sichtkontakt möglich; ≥ 35° = Abbildungsgeometrie wahrscheinlich. Tageszählung (Sichtkontakte seit Mitternacht) im Web Worker, 30-Sekunden-Raster.'
+    : 'SGP4 propagation client-side with satellite.js v7 (json2satrec → propagate → ecfToLookAngles). Join CelesTrak OMM ↔ GCAT via the international designator (OBJECT_ID ↔ Piece). Two-tier classification: elevation > 10° = line of sight possible; ≥ 35° = imaging geometry likely. Daily tally (contacts since midnight) in a Web Worker at 30-second intervals.',
+  s4: de ? '4. Grenzen der Methode' : '4. Limits of the method',
+  s4items: de
+    ? [
+        'Sichtkontakt (> 10°) bedeutet Geometrie, nicht Aufnahme — ob ein Sensor aktiv ist, Daten aufzeichnet oder speichert, sagt das Modell nicht.',
+        'Die Schwelle ≥ 35° markiert eine Abbildungsgeometrie als wahrscheinlich, nicht als sicher.',
+        'Nur katalogisierte, unklassifizierte Objekte aus CelesTrak-Gruppen resource, sar und weather — geheime oder nicht erfasste Systeme fehlen. Diese Lücke gehört zur Aussage.',
+        'Kommunikations- und Navigationssatelliten sind bewusst ausgenommen (andere Aufgabe, andere Aussage).',
+        'GCAT-Zuordnung kann Einzelfälle verfehlen — der internationale Designator ist nicht immer eindeutig besetzt.',
+        'Bahndaten sind maximal ~24 Stunden alt; bei manövrierenden Satelliten nimmt die Vorhersagegenauigkeit schnell ab.',
+      ]
+    : [
+        'Line of sight (> 10°) means geometry, not imagery — the model does not indicate whether a sensor is active, recording, or storing data.',
+        'The ≥ 35° threshold marks imaging geometry as likely, not certain.',
+        'Only catalogued, unclassified objects from CelesTrak groups resource, sar, and weather — classified or uncatalogued systems are absent. This gap is part of the statement.',
+        'Communication and navigation satellites are deliberately excluded (different purpose, different statement).',
+        'GCAT attribution can miss edge cases — the international designator is not always unambiguously assigned.',
+        'Orbital elements are at most ~24 hours old; for manoeuvring satellites prediction accuracy degrades quickly.',
+      ],
+  s5: de ? '5. Compute-Fußabdruck' : '5. Compute footprint',
+  s5body: de
+    ? 'Null Backend zur Laufzeit. Ein GitHub-Actions-Lauf pro Tag (~1 min, shared runner). Die Propagation- und Sichtwinkellast liegt beim Besucher — bewusst: das Werk rechnet dort, wo geschaut wird. Kein Tracking, keine externen Anfragen nach dem Seitenaufruf.'
+    : 'Zero backend at runtime. One GitHub Actions run per day (~1 min, shared runner). The propagation and look-angle computation runs in the visitor\'s browser — deliberately: the work computes where the watching happens. No tracking, no external requests after page load.',
+  s6: de ? '6. Änderungsprotokoll' : '6. Change log',
+  s6items: de
+    ? ['v1 — Erstfassung.']
+    : ['v1 — first edition.'],
+  toWork: de ? 'Zum Werk' : 'To the work',
+}
+
+const sources = [
+  {
+    name: 'CelesTrak',
+    url: 'https://celestrak.org/NORAD/elements/',
+    detail: de ? 'GROUPs resource / sar / weather, OMM/JSON' : 'GROUPs resource / sar / weather, OMM/JSON',
+    license: de
+      ? 'Frei verfügbar, Attribution. Ursprung: USSPACECOM / Space-Track.'
+      : 'Freely available, attribution. Origin: USSPACECOM / Space-Track.',
+  },
+  {
+    name: 'GCAT (J. McDowell, planet4589.org)',
+    url: 'https://planet4589.org/space/gcat/',
+    detail: 'active.tsv',
+    license: 'CC-BY 4.0',
+  },
+  {
+    name: 'satellite.js v7',
+    url: 'https://github.com/shashwatak/satellite-js',
+    detail: de ? 'SGP4-Implementierung' : 'SGP4 implementation',
+    license: 'MIT',
+  },
+]
+---
+
+<div class="mx-auto max-w-2xl px-4 py-14">
+  <h1 class="mb-8 text-xl font-semibold">{txt.h1}</h1>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s1}</h2>
+    <table class="w-full text-sm">
+      <tbody>
+        {sources.map((s) => (
+          <tr class="border-t border-line align-top">
+            <td class="py-2 pr-3">
+              <a href={s.url} class="transition-colors hover:text-fg" rel="noopener">{s.name}</a>
+            </td>
+            <td class="py-2 pr-3 font-mono text-xs text-fg-faint">{s.detail}</td>
+            <td class="py-2 text-fg-muted">{s.license}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s2}</h2>
+    <p class="leading-relaxed text-fg-muted">{txt.s2body}</p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s3}</h2>
+    <p class="leading-relaxed text-fg-muted">{txt.s3body}</p>
+    <p class="mt-2">
+      <a
+        href="https://github.com/frankbueltge/frankbueltge.de/tree/main/scripts/fetch-ueberflug.ts"
+        class="font-mono text-xs text-fg-faint transition-colors hover:text-fg"
+        rel="noopener">→ scripts/fetch-ueberflug.ts</a
+      >
+    </p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s4}</h2>
+    <ul class="list-disc space-y-1 pl-5 text-fg-muted">
+      {txt.s4items.map((i) => <li>{i}</li>)}
+    </ul>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s5}</h2>
+    <p class="leading-relaxed text-fg-muted">{txt.s5body}</p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s6}</h2>
+    <ul class="list-disc space-y-1 pl-5 text-fg-muted">
+      {txt.s6items.map((i) => <li>{i}</li>)}
+    </ul>
+  </section>
+
+  <a href={ueberflugUrl} class="text-sm text-fg-muted transition-colors hover:text-fg">→ {txt.toWork}</a>
+</div>
