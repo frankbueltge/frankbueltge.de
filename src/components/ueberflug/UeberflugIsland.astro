@@ -1,0 +1,159 @@
+---
+import { t } from '@/i18n/ui'
+import type { Locale } from '@/lib/site'
+import snapshot from '@/data/ueberflug/satellites.json'
+
+interface Props { locale: Locale }
+const { locale } = Astro.props
+const count = snapshot.satellites.length
+const generated = snapshot.generated_at
+---
+
+<section class="mx-auto max-w-2xl px-4 py-14" data-ueberflug data-locale={locale}>
+  <h1 class="mb-2 text-xl font-semibold">{t(locale, 'uefl.title')}</h1>
+  <p class="mb-6 leading-relaxed text-fg-muted">{t(locale, 'uefl.intro')}</p>
+  <p class="mb-8 font-mono text-xs text-fg-faint">{t(locale, 'uefl.privacy')}</p>
+
+  <div class="mb-8 flex flex-wrap items-center gap-3" data-controls>
+    <button data-locate class="rounded-md border border-line px-4 py-2 text-sm transition-colors hover:text-fg">
+      {t(locale, 'uefl.locate')}
+    </button>
+    <span class="text-sm text-fg-faint">{t(locale, 'uefl.or')}</span>
+    <input data-lat type="number" step="0.01" min="-90" max="90" placeholder={t(locale, 'uefl.lat')}
+      class="w-28 rounded-md border border-line bg-transparent px-2 py-2 font-mono text-sm" />
+    <input data-lon type="number" step="0.01" min="-180" max="180" placeholder={t(locale, 'uefl.lon')}
+      class="w-28 rounded-md border border-line bg-transparent px-2 py-2 font-mono text-sm" />
+    <button data-manual class="rounded-md border border-line px-4 py-2 text-sm transition-colors hover:text-fg">
+      {t(locale, 'uefl.calc')}
+    </button>
+  </div>
+
+  <div data-status class="mb-6 text-sm text-fg-muted"></div>
+
+  <div data-result hidden>
+    <h2 class="mb-1 font-semibold" data-now-heading></h2>
+    <p class="mb-4 font-mono text-xs text-fg-faint" data-tally></p>
+    <ul data-list class="space-y-2"></ul>
+    <p class="mt-8 border-t border-line pt-4 font-mono text-xs text-fg-faint">
+      {t(locale, 'uefl.dataAsOf')} {generated} · {count} {t(locale, 'uefl.satellites')} ·
+      CelesTrak · GCAT (J. McDowell, planet4589.org, CC-BY 4.0) ·
+      <a href={locale === 'de' ? '/werke/ueberflug' : '/en/werke/ueberflug'} class="hover:text-fg">{t(locale, 'prot.method')}</a>
+    </p>
+  </div>
+</section>
+
+<script>
+  import * as satellite from 'satellite.js'
+  import snapshot from '@/data/ueberflug/satellites.json'
+  import { classifyElevation, CLASS_LABEL, categoryLabel } from '@/lib/ueberflug/visibility'
+  import type { SatEntry } from '@/lib/ueberflug/types'
+
+  const root = document.querySelector<HTMLElement>('[data-ueberflug]')!
+  const locale = (root.dataset.locale ?? 'de') as 'de' | 'en'
+  const de = locale === 'de'
+  const $ = <T extends HTMLElement>(sel: string) => root.querySelector<T>(sel)!
+
+  const sats = (snapshot.satellites as SatEntry[]).map((s) => {
+    try { return { meta: s, rec: satellite.json2satrec(s.omm as never) } } catch { return null }
+  }).filter((x): x is NonNullable<typeof x> => x !== null)
+
+  let observer: { latDeg: number; lonDeg: number } | null = null
+  let timer: number | undefined
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches
+
+  function fmtDeg(rad: number): string {
+    return `${((rad * 180) / Math.PI).toFixed(0)}°`
+  }
+
+  function render() {
+    if (!observer) return
+    const gd = {
+      latitude: satellite.degreesToRadians(observer.latDeg),
+      longitude: satellite.degreesToRadians(observer.lonDeg),
+      height: 0,
+    }
+    const now = new Date()
+    const gmst = satellite.gstime(now)
+    const visible: { meta: SatEntry; elevation: number; azimuth: number; tier: string }[] = []
+    for (const { meta, rec } of sats) {
+      const pv = satellite.propagate(rec, now)
+      const pos = pv?.position
+      if (!pos || typeof pos === 'boolean') continue
+      const look = satellite.ecfToLookAngles(gd, satellite.eciToEcf(pos, gmst))
+      const tier = classifyElevation(look.elevation)
+      if (tier !== 'none') visible.push({ meta, elevation: look.elevation, azimuth: look.azimuth, tier })
+    }
+    visible.sort((a, b) => b.elevation - a.elevation)
+
+    $('[data-now-heading]').textContent = de
+      ? `Jetzt im Sichtfeld: ${visible.length}`
+      : `In view now: ${visible.length}`
+    const list = $('[data-list]')
+    list.innerHTML = ''
+    for (const v of visible) {
+      const li = document.createElement('li')
+      li.className = 'border-t border-line pt-2 text-sm'
+      const cls = CLASS_LABEL[v.meta.gcat.class ?? 'unknown'][locale]
+      const cat = categoryLabel(v.meta.gcat.category, locale)
+      const imaging = v.tier === 'imaging'
+        ? (de ? ' · Abbildungsgeometrie wahrscheinlich' : ' · imaging geometry likely')
+        : ''
+      li.innerHTML = `<span class="font-semibold">${v.meta.name}</span>
+        <span class="text-fg-muted"> — ${cls} · ${cat}${v.meta.gcat.state ? ` · ${v.meta.gcat.state}` : ''}</span>
+        <span class="block font-mono text-xs text-fg-faint">Elevation ${fmtDeg(v.elevation)} · Azimut ${fmtDeg(v.azimuth)}${imaging}</span>`
+      list.appendChild(li)
+    }
+    $('[data-result]').hidden = false
+  }
+
+  function startTally() {
+    if (!observer) return
+    const midnight = new Date(); midnight.setHours(0, 0, 0, 0)
+    const worker = new Worker(new URL('./tally-worker.ts', import.meta.url), { type: 'module' })
+    $('[data-tally]').textContent = de ? 'Sichtkontakte heute: wird gezählt …' : 'Contacts today: counting …'
+    worker.onmessage = (ev) => {
+      if (ev.data.type === 'result') {
+        $('[data-tally]').textContent = de
+          ? `Sichtkontakte heute seit Mitternacht: ${ev.data.contacts}`
+          : `Contacts today since midnight: ${ev.data.contacts}`
+        worker.terminate()
+      }
+    }
+    worker.postMessage({
+      omms: sats.map((s) => s.meta.omm),
+      observer: { latDeg: observer.latDeg, lonDeg: observer.lonDeg, heightKm: 0 },
+      startMs: midnight.getTime(),
+      endMs: Date.now(),
+    })
+  }
+
+  function activate(latDeg: number, lonDeg: number) {
+    observer = { latDeg, lonDeg }
+    $('[data-status]').textContent = de
+      ? `Standort gesetzt (${latDeg.toFixed(2)}, ${lonDeg.toFixed(2)}) — bleibt im Browser.`
+      : `Location set (${latDeg.toFixed(2)}, ${lonDeg.toFixed(2)}) — stays in your browser.`
+    render()
+    startTally()
+    if (timer) clearInterval(timer)
+    if (!reduced) timer = window.setInterval(render, 1000)
+  }
+
+  $('[data-locate]').addEventListener('click', () => {
+    $('[data-status]').textContent = de ? 'Frage Standort an …' : 'Requesting location …'
+    navigator.geolocation.getCurrentPosition(
+      (p) => activate(p.coords.latitude, p.coords.longitude),
+      () => { $('[data-status]').textContent = de
+        ? 'Kein Zugriff — Koordinaten manuell eingeben.' : 'No access — enter coordinates manually.' },
+      { enableHighAccuracy: false, timeout: 10_000 },
+    )
+  })
+  $('[data-manual]').addEventListener('click', () => {
+    const lat = parseFloat(($('[data-lat]') as HTMLInputElement).value)
+    const lon = parseFloat(($('[data-lon]') as HTMLInputElement).value)
+    if (Number.isFinite(lat) && Number.isFinite(lon) && Math.abs(lat) <= 90 && Math.abs(lon) <= 180) {
+      activate(lat, lon)
+    } else {
+      $('[data-status]').textContent = de ? 'Ungültige Koordinaten.' : 'Invalid coordinates.'
+    }
+  })
+</script>
