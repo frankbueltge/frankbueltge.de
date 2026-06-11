@@ -1,0 +1,30 @@
+# Täglicher Bahndaten-Snapshot für "Überflug". Öffentliche Quellen, keine Secrets.
+name: ueberflug-refresh
+
+on:
+  schedule:
+    - cron: '0 5 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run ueberflug:refresh
+      - name: Commit wenn geändert
+        run: |
+          git config user.name "Protokollführung"
+          git config user.email "protokoll@frankbueltge.de"
+          git add src/data/ueberflug/satellites.json
+          git diff --cached --quiet && echo "keine Änderung" && exit 0
+          git commit -m "ueberflug: Bahndaten vom $(date -u +%F)"
+          git push
