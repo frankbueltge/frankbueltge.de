@@ -56,3 +56,23 @@ def test_assemble_non_finite_value_is_unavailable():
     assert e.status == "unavailable"
     assert "non-finite" in e.note
     assert e.value is None
+
+
+def test_assemble_non_finite_comparison_is_unavailable():
+    from protokoll.model import Comparison
+
+    m = Measurement(value=5.0, as_of="2026-06-11",
+                    comparison=Comparison(label="prev_day", value=float("nan")))
+    record = assemble([spec("cmp", lambda c: m)], ctx(), "2026-06-12")
+    e = record.entries[0]
+    assert e.status == "unavailable"
+    assert "non-finite comparison" in e.note
+    assert e.value is None and e.comparison is None
+
+
+def test_assemble_missing_as_of_is_unavailable():
+    record = assemble([spec("noasof", lambda c: Measurement(value=5.0, as_of=None))],
+                      ctx(), "2026-06-12")
+    e = record.entries[0]
+    assert e.status == "unavailable"
+    assert "as_of" in e.note
