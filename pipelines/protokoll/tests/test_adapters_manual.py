@@ -17,8 +17,12 @@ def test_population_extrapolates_from_reference():
     m2 = population.measure(ctx(today=date(2025, 7, 11)))  # 10 Tage später
     assert m2.value == population.REF_POP + 10 * population.NET_PER_DAY
     assert m2.as_of == "2025-07-11"
+    m_past = population.measure(ctx(today=date(2024, 1, 1)))  # Backfill vor Referenzdatum
+    assert m_past.value < population.REF_POP
+    assert m_past.as_of == "2024-01-01"
 
 
+# Wertasserts unten beim redaktionellen Nachführen der JSON-Dateien mit aktualisieren.
 def test_refugees_reads_bundled_data():
     m = refugees.measure(ctx())
     assert m.value == 122_600_000 and m.as_of == "2024-12-31"

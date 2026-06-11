@@ -11,9 +11,19 @@ from protokoll.model import Measurement, SourceMeta
 REF_DATE = date(2025, 7, 1)
 REF_POP = 8_231_000_000.0
 NET_PER_DAY = 191_000.0
+# UN WPP erscheint ~alle 2 Jahre; nach diesem Datum Konstanten gegen die neue Revision prüfen.
+_REVIEW_AFTER = date(2027, 7, 1)
 
 
 def measure(ctx: Context) -> Measurement:
+    if ctx.today > _REVIEW_AFTER:
+        import warnings
+
+        warnings.warn(
+            "population: REF-Konstanten basieren auf UN WPP 2024 — "
+            f"Review-Datum {_REVIEW_AFTER} überschritten, neue WPP-Revision prüfen.",
+            stacklevel=2,
+        )
     days = (ctx.today - REF_DATE).days
     return Measurement(value=REF_POP + days * NET_PER_DAY, as_of=ctx.today.isoformat())
 
