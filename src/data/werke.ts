@@ -25,4 +25,18 @@ export const WERKE: Werk[] = [
       en: "Every night a pipeline writes the minutes of the planet's session — from twelve open, citable sources, deterministic, no LLM. Every agenda item ends the same way: Resolution: adjourned.",
     },
   },
+  {
+    id: 'ueberflug',
+    title: 'Überflug',
+    subtitle: {
+      de: 'Der Himmel führt Buch',
+      en: 'The sky keeps a ledger',
+    },
+    status: 'live',
+    href: '/ueberflug',
+    description: {
+      de: 'Welche Erdbeobachtungssatelliten haben deinen Standort jetzt im Sichtfeld? Berechnet im Browser aus öffentlichen Bahndaten — dein Standort verlässt die Seite nie. Sichtkontakt heißt Geometrie, nicht Aufnahme.',
+      en: 'Which Earth-observation satellites have your location in view right now? Computed in your browser from public orbital data — your location never leaves the page. Line of sight means geometry, not imagery.',
+    },
+  },
 ]

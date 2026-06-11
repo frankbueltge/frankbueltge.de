@@ -17,5 +17,8 @@ export default defineConfig({
   integrations: [sitemap(), mdx()],
   vite: {
     plugins: [tailwindcss()],
+    worker: {
+      format: 'es',
+    },
   },
 })

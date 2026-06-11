@@ -1,7 +1,9 @@
 /// <reference lib="webworker" />
 import * as satellite from 'satellite.js'
-import { CONTACT_MIN_RAD } from '@/lib/ueberflug/visibility'
 import type { Omm } from '@/lib/ueberflug/types'
+
+/** Spec §3: > 10° Sichtkontakt möglich — inlined to avoid alias resolution in worker build. */
+const CONTACT_MIN_RAD = (10 * Math.PI) / 180
 
 interface TallyRequest {
   omms: Omm[]
