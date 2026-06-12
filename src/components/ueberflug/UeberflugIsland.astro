@@ -59,6 +59,7 @@ const generated = snapshot.generated_at
 
   let observer: { latDeg: number; lonDeg: number } | null = null
   let timer: number | undefined
+  let tallyWorker: Worker | null = null
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches
 
   function fmtDeg(rad: number): string {
@@ -98,9 +99,16 @@ const generated = snapshot.generated_at
       const imaging = v.tier === 'imaging'
         ? (de ? ' · Abbildungsgeometrie wahrscheinlich' : ' · imaging geometry likely')
         : ''
-      li.innerHTML = `<span class="font-semibold">${v.meta.name}</span>
-        <span class="text-fg-muted"> — ${cls} · ${cat}${v.meta.gcat.state ? ` · ${v.meta.gcat.state}` : ''}</span>
-        <span class="block font-mono text-xs text-fg-faint">Elevation ${fmtDeg(v.elevation)} · Azimut ${fmtDeg(v.azimuth)}${imaging}</span>`
+      const strong = document.createElement('span')
+      strong.className = 'font-semibold'
+      strong.textContent = v.meta.name
+      const meta = document.createElement('span')
+      meta.className = 'text-fg-muted'
+      meta.textContent = ` — ${cls} · ${cat}${v.meta.gcat.state ? ` · ${v.meta.gcat.state}` : ''}`
+      const detail = document.createElement('span')
+      detail.className = 'block font-mono text-xs text-fg-faint'
+      detail.textContent = `Elevation ${fmtDeg(v.elevation)} · Azimut ${fmtDeg(v.azimuth)}${imaging}`
+      li.append(strong, meta, detail)
       list.appendChild(li)
     }
     $('[data-result]').hidden = false
@@ -108,16 +116,26 @@ const generated = snapshot.generated_at
 
   function startTally() {
     if (!observer) return
+    tallyWorker?.terminate()
     const midnight = new Date(); midnight.setHours(0, 0, 0, 0)
     const worker = new Worker(new URL('./tally-worker.ts', import.meta.url), { type: 'module' })
+    tallyWorker = worker
     $('[data-tally]').textContent = de ? 'Sichtkontakte heute: wird gezählt …' : 'Contacts today: counting …'
     worker.onmessage = (ev) => {
+      if (worker !== tallyWorker) return // veraltete Antwort eines ersetzten Workers
       if (ev.data.type === 'result') {
         $('[data-tally]').textContent = de
           ? `Sichtkontakte heute seit Mitternacht: ${ev.data.contacts}`
           : `Contacts today since midnight: ${ev.data.contacts}`
         worker.terminate()
+        tallyWorker = null
       }
+    }
+    worker.onerror = () => {
+      if (worker !== tallyWorker) return
+      $('[data-tally]').textContent = de ? 'Sichtkontakte heute: Zählung fehlgeschlagen.' : 'Contacts today: count failed.'
+      worker.terminate()
+      tallyWorker = null
     }
     worker.postMessage({
       omms: sats.map((s) => s.meta.omm),
