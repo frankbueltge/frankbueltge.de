@@ -1,24 +1,26 @@
 ---
-// Slim home: generativer Joy-Division-Puls als Hero + ein vorläufiges Statement
-// und ein Lab-Platzhalter. Copy ist provisorisch — das Manifest reift später.
+// „Die Akte zuerst": Hero (Klimapuls) → lebendes Protokoll → Werkleiste → Beruflich.
+// Spec: docs/superpowers/specs/2026-06-12-startseite-design.md
+import { getRelativeLocaleUrl } from 'astro:i18n'
 import { t } from '@/i18n/ui'
 import type { Locale } from '@/lib/site'
 import HeroField from '@/components/HeroField.astro'
+import ProtokollTeaser from '@/components/ProtokollTeaser.astro'
+import WerkeStrip from '@/components/WerkeStrip.astro'
+import { projects } from '@/data/projects'
 
 const locale = (Astro.currentLocale ?? 'de') as Locale
 
 const copy = {
   de: {
-    statement: 'Daten sichtbar machen — offene Daten, künstlerische Experimente, harte Fakten.',
-    labTitle: 'Lab',
-    labText: 'Kleine, faktenbasierte Daten-Experimente — wächst.',
+    statement: 'Daten sichtbar machen — offene Daten, künstlerische Werke, harte Fakten.',
   },
   en: {
-    statement: 'Making data visible — open data, artistic experiments, hard facts.',
-    labTitle: 'Lab',
-    labText: 'Small, fact-based data experiments — growing.',
+    statement: 'Making data visible — open data, artistic works, hard facts.',
   },
 }[locale]
+
+const featured = [...projects].sort((a, b) => a.order - b.order)
 ---
 
 <main id="main" class="grid-paper min-w-0 flex-1 px-[clamp(20px,3vw,40px)] pb-16 pt-[clamp(16px,3vw,28px)]">
@@ -41,10 +43,31 @@ const copy = {
       </div>
     </section>
 
-    <!-- Lab placeholder -->
-    <section class="col-span-12 mt-6 rounded-[14px] border border-line bg-panel panel-raised p-6">
-      <div class="mb-2 flex items-center gap-2 text-[13px] font-semibold"><span class="font-mono text-[10px] uppercase tracking-[0.14em] text-fg-faint">lab</span>{copy.labTitle}</div>
-      <p class="max-w-2xl text-sm text-fg-muted">{copy.labText}</p>
+    <!-- Das lebende Protokoll — erneuert sich mit jedem nächtlichen Pipeline-Commit -->
+    <section class="col-span-12 mt-6 rounded-[14px] border border-line bg-panel panel-raised p-[clamp(20px,3.5vw,36px)]">
+      <ProtokollTeaser locale={locale} />
+    </section>
+
+    <!-- Werkleiste -->
+    <section class="col-span-12 mt-4">
+      <WerkeStrip locale={locale} />
+    </section>
+
+    <!-- Beruflich, eingedampft -->
+    <section class="col-span-12 mt-4 rounded-[14px] border border-line bg-panel panel-raised p-6">
+      <p class="mb-1 font-mono text-xs uppercase tracking-[0.2em] text-fg-faint">{t(locale, 'home.beruflich')}</p>
+      <p class="mb-4 max-w-2xl text-sm text-fg-muted">{t(locale, 'home.beruflichLead')}</p>
+      <ul class="space-y-2">
+        {featured.map((p) => (
+          <li class="text-sm">
+            <a href={p.url ?? getRelativeLocaleUrl(locale, `/work/${p.slug}`)} class="font-semibold transition-opacity hover:opacity-70">{p.name}</a>
+            <span class="text-fg-muted"> — {p.tagline[locale]}</span>
+          </li>
+        ))}
+      </ul>
+      <a href={getRelativeLocaleUrl(locale, '/lab')} class="mt-4 inline-block text-sm text-fg-muted transition-colors hover:text-fg">
+        → {t(locale, 'home.toLab')}
+      </a>
     </section>
 
   </div>

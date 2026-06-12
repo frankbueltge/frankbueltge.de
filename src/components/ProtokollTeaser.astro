@@ -1,0 +1,47 @@
+---
+// Lebendes Protokoll auf der Startseite: zur Buildzeit aus dem jüngsten Tages-JSON
+// gerendert. Die Pipeline committet nächtlich → die Startseite erneuert sich täglich.
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import { t } from '@/i18n/ui'
+import type { Locale } from '@/lib/site'
+import { getLatestProtokoll } from '@/lib/protokoll/data'
+import { renderDay } from '@/lib/protokoll/render'
+
+interface Props { locale: Locale }
+const { locale } = Astro.props
+const day = await getLatestProtokoll()
+const r = day ? renderDay(day, locale) : null
+// Kuratiertes Trio: TOP 1 Atmosphäre, TOP 11 Konflikt, TOP 12 Aufmerksamkeit —
+// der Planet, die Gewalt, der Blick.
+const TEASER_TOPS = [0, 10, 11]
+const protokollUrl = getRelativeLocaleUrl(locale, '/protokoll')
+---
+
+<p class="mb-5 font-mono text-xs uppercase tracking-[0.2em] text-fg-faint">{t(locale, 'prot.title')}</p>
+{
+  r ? (
+    <>
+      <div class="space-y-1">
+        {r.kopf.map((line) => (
+          <p class="text-[15px] leading-relaxed">{line}</p>
+        ))}
+      </div>
+      <div class="mt-6 space-y-5">
+        {TEASER_TOPS.map((i) => (
+          <div>
+            <p class="font-semibold">{r.tops[i].heading}</p>
+            {r.tops[i].lines.map((line) => (
+              <p class="leading-relaxed text-fg-muted">{line}</p>
+            ))}
+            <p class="mt-1 text-sm text-fg-faint">{r.tops[i].closing}</p>
+          </div>
+        ))}
+      </div>
+      <a href={protokollUrl} class="mt-6 inline-block text-sm text-fg-muted transition-colors hover:text-fg">
+        → {t(locale, 'home.protokollLink')}
+      </a>
+    </>
+  ) : (
+    <p class="text-fg-muted">{t(locale, 'prot.empty')}</p>
+  )
+}
