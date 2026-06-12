@@ -3,13 +3,20 @@
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import { t } from '@/i18n/ui'
 import type { Locale } from '@/lib/site'
-import { GEPLANT } from '@/data/werke'
+import { GEPLANT, WERKE } from '@/data/werke'
 
 interface Props { locale: Locale }
 const { locale } = Astro.props
+const liveWerke = WERKE.filter((w) => w.id !== 'protokoll' && w.status === 'live')
 ---
 
 <div class="flex flex-wrap items-baseline gap-x-6 gap-y-2 rounded-[14px] border border-line bg-panel panel-raised p-6">
+  {liveWerke.map((werk) => (
+    <a href={getRelativeLocaleUrl(locale, werk.href)} class="group">
+      <span class="font-semibold transition-opacity group-hover:opacity-70">{werk.title}</span>
+      <span class="text-sm text-fg-muted"> — {werk.subtitle[locale]}</span>
+    </a>
+  ))}
   <span class="font-mono text-xs text-fg-faint">{GEPLANT.join(' · ')} — {t(locale, 'werke.inPrep')}</span>
   <a href={getRelativeLocaleUrl(locale, '/werke')} class="ml-auto text-sm text-fg-muted transition-colors hover:text-fg">
     {t(locale, 'werke.title')} →
