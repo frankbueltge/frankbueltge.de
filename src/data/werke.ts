@@ -40,3 +40,6 @@ export const WERKE: Werk[] = [
     },
   },
 ]
+
+/** Angekündigte Werke der Akte — erscheinen in der Werkleiste als „in Vorbereitung". */
+export const GEPLANT = ['Halbwertszeit', 'Parallaxe', 'Prämie']
