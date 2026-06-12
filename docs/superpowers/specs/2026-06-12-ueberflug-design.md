@@ -1,7 +1,11 @@
 # Werk ② „Überflug" — Teilprojekt-Design
 
 **Datum:** 2026-06-12
-**Status:** Entwurf (Nutzer hat Konzept + Komplettbau autorisiert; Review nachgelagert)
+**Status:** **AUSGEMUSTERT als Werk (2026-06-12)** — nach Realisierung am eigenen
+Substanz-Gate gescheitert (keine These, keine Akkumulation; erfahrbar als Utility).
+Lebt als Studie im Lab weiter (`src/content/lab/ueberflug-studie/`), Snapshot-Cron
+läuft weiter. Mögliche Härtung zum Werk („Verdichtung des Blicks", Zeitreihe statt
+Überschreiben) ist im Studientext als offene Frage dokumentiert.
 **Übergeordnet:** `2026-06-11-werkgruppe-design.md` §5 (Konzept), §2 (Substanz-Kriterien), §3 (Architektur)
 
 ## 1. These & Form

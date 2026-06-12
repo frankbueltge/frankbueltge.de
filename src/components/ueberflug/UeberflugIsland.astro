@@ -9,8 +9,8 @@ const count = snapshot.satellites.length
 const generated = snapshot.generated_at
 ---
 
-<section class="mx-auto max-w-2xl px-4 py-14" data-ueberflug data-locale={locale}>
-  <h1 class="mb-2 text-xl font-semibold">{t(locale, 'uefl.title')}</h1>
+<!-- Embed-freundlich (lebt als Studie im Lab): Überschrift und Container liefert der Artikel. -->
+<section class="not-prose py-6" data-ueberflug data-locale={locale}>
   <p class="mb-6 leading-relaxed text-fg-muted">{t(locale, 'uefl.intro')}</p>
   <p class="mb-8 font-mono text-xs text-fg-faint">{t(locale, 'uefl.privacy')}</p>
 

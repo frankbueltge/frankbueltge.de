@@ -1,0 +1,30 @@
+---
+title: 'Study: Überflug'
+description: 'SGP4 in the browser — which Earth-observation satellites currently have a location in view. A technical étude, not an artwork.'
+date: '2026-06-12'
+tags: ['study', 'satellites', 'orbital', 'sgp4']
+---
+
+import UeberflugIsland from '@/components/ueberflug/UeberflugIsland.astro'
+
+This study began as a candidate work for the File of the Present — and was culled.
+The reason is written into the work group's own substance gate: a work makes a
+verifiable claim about the world. This page claims nothing. It merely shows what
+hundreds of tracker sites can also show: which catalogued Earth-observation
+satellites have a location geometrically in view. That is information, not a thesis —
+an app, not a work.
+
+It remains here as an étude, because the craft holds up: orbital propagation (SGP4)
+runs entirely in the browser on daily-updated, committed orbital data (CelesTrak,
+OMM/JSON) with owner classification from McDowell's GCAT (CC-BY 4.0). Your location
+never leaves the browser — nothing is stored, nothing is sent. "Line of sight
+possible" means elevation above 10°, "imaging geometry likely" from 35°; both are
+geometry, not imagery. Classified satellites are absent from the catalogue.
+
+<UeberflugIsland locale="en" />
+
+**Open question, should this ever become a work:** It is not the view upward that is
+interesting, but its change — the densification of the gaze. The daily snapshot
+pipeline could keep a time series instead of overwriting: how quickly the orbit
+fills with observers, how the ratio of commercial to military shifts, year after
+year. That would be a measurable thesis. Until someone needs it, this remains a study.
