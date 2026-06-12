@@ -1,0 +1,9 @@
+---
+import Page from '@/layouts/Page.astro'
+import HalbwertszeitPage from '@/components/pages/HalbwertszeitPage.astro'
+import { t } from '@/i18n/ui'
+const locale = 'en' as const
+---
+<Page title={`${t(locale, 'hw.title')} | Frank Bültge`} description={t(locale, 'hw.sub')}>
+  <HalbwertszeitPage locale={locale} />
+</Page>

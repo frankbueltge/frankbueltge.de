@@ -1,0 +1,109 @@
+---
+// Werk 3 „Halbwertszeit" — Eine Zahl + chronologisches Register. Statisch aus register.json.
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import type { Locale } from '@/lib/site'
+import type { HwEvent, HwRegister } from '@/lib/halbwertszeit/types'
+import { SPARK_H, SPARK_W, sparkPath } from '@/lib/halbwertszeit/svg'
+import registerJson from '@/data/halbwertszeit/register.json'
+
+interface Props { locale: Locale }
+const { locale } = Astro.props
+const de = locale === 'de'
+const reg = registerJson as HwRegister
+const nf = new Intl.NumberFormat(de ? 'de-DE' : 'en-GB', { maximumFractionDigits: 1 })
+const ni = new Intl.NumberFormat(de ? 'de-DE' : 'en-GB', { maximumFractionDigits: 0 })
+const dateLong = (iso: string) =>
+  new Intl.DateTimeFormat(de ? 'de-DE' : 'en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })
+    .format(new Date(`${iso}T00:00:00Z`))
+
+const events = [...reg.events].sort((a, b) => a.date.localeCompare(b.date))
+const label = (e: HwEvent) => (de ? e.label_de : e.label_en)
+
+// Ungleichheits-Achse: Spreizung der Aufmerksamkeit je Todesopfer (nur Ereignisse mit Peak).
+const withAttention = events.filter((e) => e.peak > 0 && e.deaths > 0)
+const maxE = withAttention.reduce((a, b) => (a.views_per_death > b.views_per_death ? a : b))
+const minE = withAttention.reduce((a, b) => (a.views_per_death < b.views_per_death ? a : b))
+const spread = Math.round(maxE.views_per_death / Math.max(0.1, minE.views_per_death))
+
+const txt = {
+  headline: de
+    ? 'Die mittlere Halbwertszeit der Anteilnahme beträgt derzeit'
+    : 'The median half-life of attention currently stands at',
+  days: de ? 'Tage' : 'days',
+  constants: de
+    ? 'Cäsium-137: 30,1 Jahre · Mikroplastik: ~450 Jahre · CO₂ in der Atmosphäre: Jahrhunderte'
+    : 'Caesium-137: 30.1 years · microplastics: ~450 years · atmospheric CO₂: centuries',
+  unequalH: de ? 'Die Ungleichheit der Anteilnahme' : 'The inequality of attention',
+  unequal: de
+    ? `Die Aufmerksamkeit je Todesopfer spannt derzeit den Faktor ${ni.format(spread)} auf — von ${ni.format(maxE.views_per_death)} Aufrufen je Opfer (${label(maxE)}) bis ${ni.format(minE.views_per_death)} (${label(minE)}).`
+    : `Attention per death currently spans a factor of ${ni.format(spread)} — from ${ni.format(maxE.views_per_death)} views per victim (${label(maxE)}) down to ${ni.format(minE.views_per_death)} (${label(minE)}).`,
+  registerH: de ? 'Register' : 'Register',
+  ruleNote: de
+    ? `Aufgenommen wird jedes Ereignis, dem Wikidata ≥ ${reg.rule.deaths_min} Todesopfer zuschreibt, seit ${dateLong(reg.rule.since)}. Niemand wählt aus. Sortierung chronologisch — nie nach Halbwertszeit.`
+    : `Included is every event to which Wikidata attributes ≥ ${reg.rule.deaths_min} deaths, since ${dateLong(reg.rule.since)}. Nobody selects. Ordered chronologically — never by half-life.`,
+  deaths: de ? 'Tote' : 'deaths',
+  perDeath: de ? 'Aufrufe je Todesopfer' : 'views per death',
+  laeuft: de ? 'Messung läuft' : 'measurement running',
+  nichtMessbar: de ? 'keine messbare Anteilnahme' : 'no measurable attention',
+  hwz: de ? 'Halbwertszeit' : 'half-life',
+  dataAsOf: de ? 'Messstand' : 'Measured as of',
+  method: de ? 'Methodenblatt' : 'Method sheet',
+}
+const methodUrl = getRelativeLocaleUrl(locale, '/werke/halbwertszeit')
+---
+
+<div class="mx-auto max-w-3xl px-4 py-14">
+  <header class="mb-12">
+    <p class="mb-6 text-lg leading-relaxed">
+      {txt.headline}
+      <span class="block py-2 text-[clamp(40px,7vw,72px)] font-bold leading-none tracking-tight">
+        {reg.median_halflife_days != null ? nf.format(reg.median_halflife_days) : '—'}
+        <span class="text-[0.4em] font-semibold text-fg-muted">{txt.days}</span>
+      </span>
+    </p>
+    <p class="font-mono text-xs text-fg-faint">{txt.constants}</p>
+  </header>
+
+  <section class="mb-12 rounded-[14px] border border-line bg-panel panel-raised p-6">
+    <h2 class="mb-2 font-semibold">{txt.unequalH}</h2>
+    <p class="leading-relaxed text-fg-muted">{txt.unequal}</p>
+  </section>
+
+  <section>
+    <h2 class="mb-1 font-semibold">{txt.registerH}</h2>
+    <p class="mb-6 text-sm text-fg-faint">{txt.ruleNote}</p>
+    <ul class="space-y-6">
+      {events.map((e) => (
+        <li class="border-t border-line pt-4">
+          <div class="flex flex-wrap items-baseline gap-x-3">
+            <span class="font-mono text-xs text-fg-faint">{dateLong(e.date)}</span>
+            <span class="font-semibold">{label(e)}</span>
+            <span class="text-sm text-fg-muted">{ni.format(e.deaths)} {txt.deaths}</span>
+          </div>
+          <div class="mt-2 flex flex-wrap items-center gap-x-6 gap-y-2">
+            {e.series.length > 1 && (
+              <svg width={SPARK_W} height={SPARK_H} viewBox={`0 0 ${SPARK_W} ${SPARK_H}`}
+                class="shrink-0" aria-hidden="true">
+                <path d={sparkPath(e.series)} fill="none" stroke="rgb(var(--rgb-accent))" stroke-width="1.4" />
+              </svg>
+            )}
+            <div class="text-sm">
+              {e.status === 'gemessen' && (
+                <span>{txt.hwz}: <strong>{nf.format(e.halflife_days!)} {txt.days}</strong>
+                  <span class="text-fg-faint"> (R² {nf.format(e.r2!)})</span></span>
+              )}
+              {e.status === 'laeuft' && <span class="text-fg-muted">{txt.laeuft} …</span>}
+              {e.status === 'nicht_messbar' && <span class="text-fg-muted">{txt.nichtMessbar}</span>}
+              <span class="block text-fg-faint">{ni.format(e.views_per_death)} {txt.perDeath}</span>
+            </div>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <footer class="mt-12 border-t border-line pt-6 font-mono text-xs text-fg-faint">
+    {txt.dataAsOf}: {reg.generated_at} · Wikidata (CC0) · Wikimedia Pageviews ·
+    <a href={methodUrl} class="transition-colors hover:text-fg">{txt.method}</a>
+  </footer>
+</div>
