@@ -26,12 +26,11 @@ def fetch_event_series(client: httpx.Client, titles: dict[str, str],
     for lang, title in sorted(titles.items()):
         try:
             data = fetch(article_url(lang, title, start, end), client=client, expect="json")
+            for item in data.get("items", []):
+                ts = item["timestamp"]
+                day = f"{ts[:4]}-{ts[4:6]}-{ts[6:8]}"
+                daily[day] = daily.get(day, 0) + int(item["views"])
         except SourceUnavailable:
             failed.append(lang)
-            continue
-        for item in data.get("items", []):
-            ts = item["timestamp"]
-            day = f"{ts[:4]}-{ts[4:6]}-{ts[6:8]}"
-            daily[day] = daily.get(day, 0) + int(item["views"])
         time.sleep(THROTTLE_S)
     return sorted(daily.items()), failed
