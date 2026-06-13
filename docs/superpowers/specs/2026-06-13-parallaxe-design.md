@@ -97,6 +97,35 @@ eine künstlerische Weiche, keine technische — sie liegt beim Künstler:
 
 Prototyp-Artefakte: /tmp/px-*.json (Extrakte, Pivots, Distanzen, Faktentabelle).
 
+## 5b. Redesign „Was jede Sprache verschweigt" — Künstlerentscheidung (A), LLM-Gate bestanden (2026-06-14)
+
+Das Werk wird um die **Auslassung** herum neu gedacht, nicht um die (tote) Embedding-Distanz.
+
+**These (neu):** Es gibt nicht eine Beschreibung der Welt, sondern viele — und was jede Sprache
+*verschweigt*, ist das Messgerät. Nicht ein fuzzy Abstand, sondern: *welche Aussage benennt diese
+Version, welche lässt sie weg, welcher widerspricht sie.*
+
+**Mechanismus (validiert):** Ein Aufruf an Vertex Gemini (gemini-2.5-flash, temperature 0,
+strukturiertes JSON, **publizierter Prompt**) je Thema, gefüttert mit den nativen Einleitungstexten
+aller Sprachversionen. Ausgabe: (1) Primärname je Sprache (Lemma-Divergenz), (2) konsolidierte Liste
+atomarer Aussagen, (3) Matrix Aussage × Sprache mit „nennt | verschweigt | widerspricht". Jede Zelle
+ist gegen den verlinkten Quelltext prüfbar → transparenter Extraktor, kein Orakel. Gate-Beleg
+(Senkaku): „Territorialstreit" von ja/zh/en/de verschwiegen, von ru/uk/ar/fa benannt; Lemma-Divergenz
+Diaoyu/Senkaku korrekt erfasst; zusätzlich Richtungs-Widersprüche markiert.
+
+**Aggregatmaß (die eine Zahl):** Auslassungsindex je Thema = mittlerer Anteil der themenweiten
+Aussagen, den eine Version verschweigt. Schlagzeile konkret statt fuzzy
+(„Im Mittel verschweigt jede Sprachversion 41 % dessen, was die anderen benennen").
+
+**Register (automatisch, das Netz wählt):** Wikipedia pflegt selbst die Liste
+*Wikipedia:List of controversial issues* — daraus werden die Themen gezogen (verlinkte Artikel,
+gefiltert auf ≥ 4 Zielsprachen), nächtlich. Niemand (nicht der Künstler) wählt per Thema aus.
+Pro Thema wird zusätzlich der Schutzstatus (protection) als Konfliktbeleg angezeigt.
+
+**Vereinfachung ggü. §2/§6:** Kein Embedding, keine Übersetzung — Gemini ist multilingual. Pipeline
+= Register holen → je Thema Extrakte + ein Gemini-Aufruf → Matrix-JSON committen. Kosten: ~15 Flash-
+Aufrufe/Nacht, trivial.
+
 ## 6. Infrastruktur (nach Freigabe)
 
 GCP (data-snack): Cloud Translation + Vertex AI Embeddings, nächtlicher Cloud-Run-Job
