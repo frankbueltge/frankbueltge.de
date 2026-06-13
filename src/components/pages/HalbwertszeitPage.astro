@@ -9,7 +9,9 @@ import registerJson from '@/data/halbwertszeit/register.json'
 interface Props { locale: Locale }
 const { locale } = Astro.props
 const de = locale === 'de'
-const reg = registerJson as HwRegister
+// JSON-Import wird von TS strukturell zu eng inferiert (status: string, leere Arrays
+// als never[]) — Cast über unknown ist hier der korrekte Weg.
+const reg = registerJson as unknown as HwRegister
 const nf = new Intl.NumberFormat(de ? 'de-DE' : 'en-GB', { maximumFractionDigits: 1 })
 const ni = new Intl.NumberFormat(de ? 'de-DE' : 'en-GB', { maximumFractionDigits: 0 })
 const nf2 = new Intl.NumberFormat(de ? 'de-DE' : 'en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
