@@ -1,0 +1,375 @@
+{
+ "topic_test": "Senkaku/Diaoyu (umkämpft) vs Photosynthese (Kontrolle), je 8 Sprachen",
+ "embedding_intro_pivot": {
+  "umkämpft": 0.138,
+  "kontrolle": 0.111,
+  "faktor": 1.2
+ },
+ "embedding_volltext_multilingual": {
+  "umkämpft": 0.117,
+  "kontrolle": 0.12,
+  "faktor": 0.97
+ },
+ "verdikt": "Embedding-Distanz diskriminiert nicht (Faktor ~1,0) — konzeptionell, nicht durch Tuning behebbar.",
+ "lesbare_divergenz_senkaku": {
+  "_facts": [
+   "primärer_name",
+   "nennt_territorialstreit",
+   "souveränitäts_rahmung",
+   "fläche_km2",
+   "distanz_taiwan_km"
+  ],
+  "en": {
+   "primärer_name": "Senkaku",
+   "nennt_territorialstreit": "implizit",
+   "souveränitäts_rahmung": "von Japan verwaltet",
+   "fläche_km2": null,
+   "distanz_taiwan_km": null
+  },
+  "de": {
+   "primärer_name": "Senkaku",
+   "nennt_territorialstreit": "nein",
+   "souveränitäts_rahmung": "—",
+   "fläche_km2": null,
+   "distanz_taiwan_km": 170
+  },
+  "ru": {
+   "primärer_name": "Senkaku",
+   "nennt_territorialstreit": "ja, explizit",
+   "souveränitäts_rahmung": "Tokio kontrolliert; Peking und Taipeh beanspruchen",
+   "fläche_km2": null,
+   "distanz_taiwan_km": 170
+  },
+  "uk": {
+   "primärer_name": "Senkaku",
+   "nennt_territorialstreit": "ja",
+   "souveränitäts_rahmung": "gehören Japan; seit 1971 von VR China und Taiwan beansprucht",
+   "fläche_km2": 7.0,
+   "distanz_taiwan_km": null
+  },
+  "zh": {
+   "primärer_name": "Diaoyu",
+   "nennt_territorialstreit": "ja (Rahmung)",
+   "souveränitäts_rahmung": "von Japan 'Senkaku' genannt",
+   "fläche_km2": 6.16,
+   "distanz_taiwan_km": null
+  },
+  "ja": {
+   "primärer_name": "Senkaku",
+   "nennt_territorialstreit": "NEIN",
+   "souveränitäts_rahmung": "— (nur Geografie)",
+   "fläche_km2": null,
+   "distanz_taiwan_km": 170
+  },
+  "ar": {
+   "primärer_name": "Senkaku",
+   "nennt_territorialstreit": "ja, explizit",
+   "souveränitäts_rahmung": "Kontrolle 1972 an Japan zurück; China und Taiwan fordern Souveränität seit 1970/71",
+   "fläche_km2": null,
+   "distanz_taiwan_km": 170
+  },
+  "fa": {
+   "primärer_name": "Senkaku",
+   "nennt_territorialstreit": "ja",
+   "souveränitäts_rahmung": "in Japans Besitz; China und Taiwan beanspruchen unter Namen 'Diaoyu'",
+   "fläche_km2": 1.0,
+   "distanz_taiwan_km": null
+  }
+ },
+ "distanzen_intro": {
+  "Senkaku/Diaoyu": {
+   "mean": 0.13833203827657295,
+   "max": 0.22305456991527772,
+   "min": 0.06303723411255613,
+   "pairs": [
+    [
+     "ja",
+     "fa",
+     0.2231
+    ],
+    [
+     "zh",
+     "ja",
+     0.1962
+    ],
+    [
+     "de",
+     "fa",
+     0.1816
+    ],
+    [
+     "uk",
+     "ja",
+     0.1726
+    ],
+    [
+     "de",
+     "uk",
+     0.1711
+    ],
+    [
+     "ru",
+     "zh",
+     0.1586
+    ],
+    [
+     "en",
+     "ja",
+     0.1519
+    ],
+    [
+     "uk",
+     "fa",
+     0.1467
+    ],
+    [
+     "ru",
+     "ja",
+     0.1454
+    ],
+    [
+     "zh",
+     "fa",
+     0.1453
+    ],
+    [
+     "de",
+     "zh",
+     0.1453
+    ],
+    [
+     "en",
+     "fa",
+     0.145
+    ],
+    [
+     "zh",
+     "ar",
+     0.1359
+    ],
+    [
+     "uk",
+     "zh",
+     0.1344
+    ],
+    [
+     "en",
+     "uk",
+     0.1343
+    ],
+    [
+     "de",
+     "ru",
+     0.134
+    ],
+    [
+     "ja",
+     "ar",
+     0.1338
+    ],
+    [
+     "en",
+     "zh",
+     0.1317
+    ],
+    [
+     "ar",
+     "fa",
+     0.1277
+    ],
+    [
+     "ru",
+     "uk",
+     0.1257
+    ],
+    [
+     "ru",
+     "fa",
+     0.1252
+    ],
+    [
+     "de",
+     "ja",
+     0.1249
+    ],
+    [
+     "en",
+     "de",
+     0.1148
+    ],
+    [
+     "en",
+     "ru",
+     0.1121
+    ],
+    [
+     "uk",
+     "ar",
+     0.0989
+    ],
+    [
+     "de",
+     "ar",
+     0.0988
+    ],
+    [
+     "en",
+     "ar",
+     0.0953
+    ],
+    [
+     "ru",
+     "ar",
+     0.063
+    ]
+   ]
+  },
+  "Photosynthese": {
+   "mean": 0.11137911997909478,
+   "max": 0.17649671372045672,
+   "min": 0.04996145054650902,
+   "pairs": [
+    [
+     "ru",
+     "ar",
+     0.1765
+    ],
+    [
+     "ru",
+     "uk",
+     0.1757
+    ],
+    [
+     "ru",
+     "ja",
+     0.1648
+    ],
+    [
+     "ru",
+     "zh",
+     0.1478
+    ],
+    [
+     "ru",
+     "fa",
+     0.1368
+    ],
+    [
+     "en",
+     "ru",
+     0.1314
+    ],
+    [
+     "de",
+     "ar",
+     0.1267
+    ],
+    [
+     "de",
+     "ru",
+     0.124
+    ],
+    [
+     "uk",
+     "fa",
+     0.1233
+    ],
+    [
+     "de",
+     "uk",
+     0.12
+    ],
+    [
+     "zh",
+     "fa",
+     0.1176
+    ],
+    [
+     "ar",
+     "fa",
+     0.1155
+    ],
+    [
+     "de",
+     "zh",
+     0.1095
+    ],
+    [
+     "zh",
+     "ar",
+     0.1087
+    ],
+    [
+     "zh",
+     "ja",
+     0.1059
+    ],
+    [
+     "uk",
+     "ar",
+     0.1039
+    ],
+    [
+     "uk",
+     "ja",
+     0.099
+    ],
+    [
+     "en",
+     "de",
+     0.098
+    ],
+    [
+     "uk",
+     "zh",
+     0.0978
+    ],
+    [
+     "de",
+     "ja",
+     0.0954
+    ],
+    [
+     "ja",
+     "ar",
+     0.0924
+    ],
+    [
+     "ja",
+     "fa",
+     0.0912
+    ],
+    [
+     "en",
+     "ja",
+     0.0905
+    ],
+    [
+     "en",
+     "fa",
+     0.0885
+    ],
+    [
+     "en",
+     "uk",
+     0.0806
+    ],
+    [
+     "de",
+     "fa",
+     0.0736
+    ],
+    [
+     "en",
+     "zh",
+     0.0735
+    ],
+    [
+     "en",
+     "ar",
+     0.05
+    ]
+   ]
+  }
+ }
+}
