@@ -18,6 +18,7 @@ SELECT ?event ?labelDe ?labelEn ?date ?deaths ?article ?site WHERE {{
   ?event wdt:P585 ?date .
   FILTER(?deaths >= {deaths_min})
   FILTER(?date >= "{since}T00:00:00Z"^^xsd:dateTime)
+  FILTER(?date < NOW())
   ?article schema:about ?event ; schema:isPartOf ?site .
   OPTIONAL {{ ?event rdfs:label ?labelDe . FILTER(LANG(?labelDe) = "de") }}
   OPTIONAL {{ ?event rdfs:label ?labelEn . FILTER(LANG(?labelEn) = "en") }}

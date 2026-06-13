@@ -1,5 +1,3 @@
-import json
-
 import httpx
 
 from protokoll.halbwertszeit.pageviews import fetch_event_series

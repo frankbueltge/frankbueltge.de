@@ -38,8 +38,10 @@ def build_register(client: httpx.Client, today: str) -> dict[str, Any]:
                             "status": "nicht_messbar", "views_per_death": 0.0, "series": []})
             continue
         f = fit_series(series, today=today)
+        measured_only = f.status == "gemessen"  # vorläufige Fits nie als Messung archivieren
         entries.append({**base, "peak": f.peak, "peak_day": f.peak_day, "baseline": f.baseline,
-                        "lambda_per_day": f.lambda_per_day, "halflife_days": f.halflife_days,
+                        "lambda_per_day": f.lambda_per_day if measured_only else None,
+                        "halflife_days": f.halflife_days if measured_only else None,
                         "r2": f.r2, "status": f.status,
                         "views_per_death": round(f.peak / e["deaths"], 1),
                         "series": [[d, v] for d, v in series]})
@@ -47,9 +49,16 @@ def build_register(client: httpx.Client, today: str) -> dict[str, Any]:
     return {
         "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "rule": {"deaths_min": DEATHS_MIN, "since": REGISTER_START, "langs": list(LANGS)},
-        "median_halflife_days": measured[len(measured) // 2] if measured else None,
+        "median_halflife_days": _median(measured),
         "events": entries,
     }
+
+
+def _median(xs: list[float]) -> float | None:
+    if not xs:
+        return None
+    n, m = len(xs), len(xs) // 2
+    return round(xs[m] if n % 2 else (xs[m - 1] + xs[m]) / 2, 2)
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -59,9 +68,19 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--repo-root", default=None)
     args = p.parse_args(argv)
     today = args.date or datetime.now(timezone.utc).date().isoformat()
+    try:
+        datetime.strptime(today, "%Y-%m-%d")
+    except ValueError:
+        p.error(f"ungültiges Datum: {today!r} (erwartet YYYY-MM-DD)")
 
     with httpx.Client(headers={"User-Agent": USER_AGENT}) as client:
         register = build_register(client, today)
+        # Degenerat-Guard: lieber das gestrige Register behalten als ein leeres committen
+        # (z. B. bei Wikimedia-API-Ausfall, den fetch_event_series je Sprache toleriert).
+        if register["events"] and all(e["peak"] == 0 for e in register["events"]):
+            print("Abbruch: alle Serien leer — Quelle gestört, Register wird nicht ersetzt.",
+                  file=sys.stderr)
+            return 1
         payload = json.dumps(register, ensure_ascii=False, indent=1, sort_keys=True,
                              allow_nan=False) + "\n"
         if args.dry_run:

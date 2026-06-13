@@ -12,6 +12,7 @@ const de = locale === 'de'
 const reg = registerJson as HwRegister
 const nf = new Intl.NumberFormat(de ? 'de-DE' : 'en-GB', { maximumFractionDigits: 1 })
 const ni = new Intl.NumberFormat(de ? 'de-DE' : 'en-GB', { maximumFractionDigits: 0 })
+const nf2 = new Intl.NumberFormat(de ? 'de-DE' : 'en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 const dateLong = (iso: string) =>
   new Intl.DateTimeFormat(de ? 'de-DE' : 'en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })
     .format(new Date(`${iso}T00:00:00Z`))
@@ -21,9 +22,14 @@ const label = (e: HwEvent) => (de ? e.label_de : e.label_en)
 
 // Ungleichheits-Achse: Spreizung der Aufmerksamkeit je Todesopfer (nur Ereignisse mit Peak).
 const withAttention = events.filter((e) => e.peak > 0 && e.deaths > 0)
-const maxE = withAttention.reduce((a, b) => (a.views_per_death > b.views_per_death ? a : b))
-const minE = withAttention.reduce((a, b) => (a.views_per_death < b.views_per_death ? a : b))
-const spread = Math.round(maxE.views_per_death / Math.max(0.1, minE.views_per_death))
+const hasSpread = withAttention.length >= 2
+const maxE = hasSpread
+  ? withAttention.reduce((a, b) => (a.views_per_death > b.views_per_death ? a : b))
+  : null
+const minE = hasSpread
+  ? withAttention.reduce((a, b) => (a.views_per_death < b.views_per_death ? a : b))
+  : null
+const spread = hasSpread ? Math.round(maxE!.views_per_death / Math.max(0.1, minE!.views_per_death)) : 0
 
 const txt = {
   headline: de
@@ -34,9 +40,9 @@ const txt = {
     ? 'Cäsium-137: 30,1 Jahre · Mikroplastik: ~450 Jahre · CO₂ in der Atmosphäre: Jahrhunderte'
     : 'Caesium-137: 30.1 years · microplastics: ~450 years · atmospheric CO₂: centuries',
   unequalH: de ? 'Die Ungleichheit der Anteilnahme' : 'The inequality of attention',
-  unequal: de
-    ? `Die Aufmerksamkeit je Todesopfer spannt derzeit den Faktor ${ni.format(spread)} auf — von ${ni.format(maxE.views_per_death)} Aufrufen je Opfer (${label(maxE)}) bis ${ni.format(minE.views_per_death)} (${label(minE)}).`
-    : `Attention per death currently spans a factor of ${ni.format(spread)} — from ${ni.format(maxE.views_per_death)} views per victim (${label(maxE)}) down to ${ni.format(minE.views_per_death)} (${label(minE)}).`,
+  unequal: !hasSpread ? '' : de
+    ? `Die Aufmerksamkeit je Todesopfer spannt derzeit den Faktor ${ni.format(spread)} auf — von ${ni.format(maxE!.views_per_death)} Aufrufen je Opfer (${label(maxE!)}) bis ${ni.format(minE!.views_per_death)} (${label(minE!)}).`
+    : `Attention per death currently spans a factor of ${ni.format(spread)} — from ${ni.format(maxE!.views_per_death)} views per victim (${label(maxE!)}) down to ${ni.format(minE!.views_per_death)} (${label(minE!)}).`,
   registerH: de ? 'Register' : 'Register',
   ruleNote: de
     ? `Aufgenommen wird jedes Ereignis, dem Wikidata ≥ ${reg.rule.deaths_min} Todesopfer zuschreibt, seit ${dateLong(reg.rule.since)}. Niemand wählt aus. Sortierung chronologisch — nie nach Halbwertszeit.`
@@ -64,10 +70,12 @@ const methodUrl = getRelativeLocaleUrl(locale, '/werke/halbwertszeit')
     <p class="font-mono text-xs text-fg-faint">{txt.constants}</p>
   </header>
 
-  <section class="mb-12 rounded-[14px] border border-line bg-panel panel-raised p-6">
-    <h2 class="mb-2 font-semibold">{txt.unequalH}</h2>
-    <p class="leading-relaxed text-fg-muted">{txt.unequal}</p>
-  </section>
+  {hasSpread && (
+    <section class="mb-12 rounded-[14px] border border-line bg-panel panel-raised p-6">
+      <h2 class="mb-2 font-semibold">{txt.unequalH}</h2>
+      <p class="leading-relaxed text-fg-muted">{txt.unequal}</p>
+    </section>
+  )}
 
   <section>
     <h2 class="mb-1 font-semibold">{txt.registerH}</h2>
@@ -90,7 +98,7 @@ const methodUrl = getRelativeLocaleUrl(locale, '/werke/halbwertszeit')
             <div class="text-sm">
               {e.status === 'gemessen' && (
                 <span>{txt.hwz}: <strong>{nf.format(e.halflife_days!)} {txt.days}</strong>
-                  <span class="text-fg-faint"> (R² {nf.format(e.r2!)})</span></span>
+                  <span class="text-fg-faint"> (R² {nf2.format(e.r2!)})</span></span>
               )}
               {e.status === 'laeuft' && <span class="text-fg-muted">{txt.laeuft} …</span>}
               {e.status === 'nicht_messbar' && <span class="text-fg-muted">{txt.nichtMessbar}</span>}
