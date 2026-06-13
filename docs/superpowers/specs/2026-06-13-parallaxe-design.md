@@ -1,6 +1,9 @@
 # Werk ④ „Parallaxe" — Teilprojekt-Design
 
-**Datum:** 2026-06-13 · **Status:** Design abgenommen (Designrunde), **Prototyp-Gate offen** (§5)
+**Datum:** 2026-06-13 · **Status:** **PROTOTYP-GATE: Embedding-Maß durchgefallen (2026-06-14)** —
+das designierte Kernmaß (Pivot-/mehrsprachige Embedding-Distanz) trägt nicht; die lesbare
+Divergenz (Lemma, Auslassung, Rahmung) trägt sehr wohl. Entscheidung über Redesign/Weiterbau
+liegt beim Künstler (§5). Details unten.
 **Übergeordnet:** Werkgruppen-Spec §7; verschärftes Substanz-Gate (These zuerst, messbar, akkumulierend).
 
 ## 1. These
@@ -53,6 +56,46 @@ LLM mit publiziertem Prompt). Kriterien: (a) Abstände trennen plausibel (umkäm
 als unstrittige), (b) die extrahierten Fakten zeigen reale, belegbare Divergenz, (c) das
 Übersetzungsrauschen ist kleiner als das Signal. Erst nach Freigabe: Plan + Bau. Scheitert der
 Prototyp, wird hier dokumentiert woran.
+
+## 5a. Prototyp-Ergebnis (2026-06-14) — der entscheidende Befund
+
+Gemessen: Senkaku/Diaoyu (umkämpft, Eigennamen-Streit als Härtetest) gegen Photosynthese
+(Kontrolle), je 8 Sprachversionen, echte Wikipedia-Extrakte, Vertex-Embeddings.
+
+**Embedding-Distanz diskriminiert nicht:**
+- Intro-Absätze, Pivot ins Englische: umkämpft 0,138 vs. Kontrolle 0,111 → Faktor 1,2 (schwach).
+- Volltext, mehrsprachiges Embedding nativ: umkämpft 0,117 vs. Kontrolle 0,120 → **Faktor 0,97**.
+
+Die umkämpfte Frage liegt im Embedding-Raum *nicht* weiter auseinander als ein neutrales
+Lehrbuchthema. **Grund (konzeptionell, nicht durch Tuning behebbar):** Embedding-Distanz misst
+semantische Gesamtüberlappung; Umkämpftheit lebt in Name, Auslassung und Rahmung — einem
+kleinen Textanteil, den das Embedding wegmittelt. Beide Senkaku-Versionen beschreiben dieselben
+Inseln; sie streiten nur über den Namen und verschweigen Unterschiedliches.
+
+**Die lesbare Divergenz trägt dagegen klar** (manuell extrahiert, Beleg im Prototyp):
+- **Lemma-Divergenz:** zh führt mit *Diaoyu*, alle anderen mit *Senkaku* — der Streit steckt im Titel.
+- **Auslassung:** die japanische Version erwähnt den Territorialstreit mit **keinem Wort** (reine
+  Geografie); die deutsche auch nicht. ru/uk/ar/fa/zh benennen ihn explizit.
+- **Souveränitäts-Rahmung:** „von Japan verwaltet" (en) · „Tokio kontrolliert, Peking/Taipeh
+  beanspruchen" (ru) · „1972 an Japan zurückgegeben" (ar) · „von Japan ‚Senkaku' genannt" (zh).
+
+**Verdikt:** Das Werk als spezifiziert (Embedding-Distanz als Schlagzeile „Abstand der Wahrheiten")
+ist tot — diese Zahl wäre Rauschen, der Überflug-Fehler ein zweites Mal. Der reale, substanzielle
+Befund ist die **Auslassung** („Was jede Sprache verschweigt") und die **Lemma-Divergenz**. Diese
+generisch zu messen braucht ein LLM (Vertex Gemini) mit publiziertem Prompt — die Black-Box-
+Spannung, die der Künstler in der Designrunde markiert hat. Damit ist die nächste Entscheidung
+eine künstlerische Weiche, keine technische — sie liegt beim Künstler:
+
+- **(A) Redesign zu „Was jede Sprache verschweigt":** LLM extrahiert je Sprachversion die
+  benannten/ausgelassenen Kernaussagen; Schlagzeile wird konkret statt fuzzy
+  („Die japanische Version verschweigt den Territorialstreit, den 6 Sprachen benennen"). Stärkstes
+  Werk, aber LLM-abhängig (Prompt publiziert, jede Aussage gegen Quelle prüfbar → transparenter
+  Extraktor statt Orakel).
+- **(B) LLM-frei, schmal:** nur Lemma-Divergenz + Sprachabdeckung + Längenasymmetrie. Voll
+  transparent, aber dünn und nur für Eigennamen-Streits stark.
+- **(C) Parallaxe ruhen lassen** wie Überflug — dokumentiert, verworfen, Energie in Prämie.
+
+Prototyp-Artefakte: /tmp/px-*.json (Extrakte, Pivots, Distanzen, Faktentabelle).
 
 ## 6. Infrastruktur (nach Freigabe)
 
