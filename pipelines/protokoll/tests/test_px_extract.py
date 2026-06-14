@@ -69,3 +69,30 @@ def test_extract_omissions_retries_on_429_then_succeeds():
     out = extract_omissions({"en": "text"}, client=client)
     assert out == parsed
     assert state["calls"] == 2
+
+
+def test_fetch_token_prefers_metadata_server(monkeypatch):
+    """In Cloud Run liefert der Metadaten-Server den Token — die gcloud-CLI wird nicht berührt
+    (sie existiert im Slim-Image nicht). Genau dieser Pfad fehlte und ließ den Nacht-Job scheitern."""
+    captured = {}
+
+    def fake_get(url, headers=None, timeout=None):
+        captured["url"] = url
+        captured["headers"] = headers or {}
+        return httpx.Response(200, json={"access_token": "meta-token", "expires_in": 3599})
+
+    monkeypatch.setattr(ex.httpx, "get", fake_get)
+    monkeypatch.setattr(ex.subprocess, "check_output",
+                        lambda *a, **k: pytest.fail("gcloud darf nicht aufgerufen werden"))
+    assert ex._fetch_token() == "meta-token"
+    assert captured["headers"]["Metadata-Flavor"] == "Google"
+
+
+def test_fetch_token_falls_back_to_gcloud(monkeypatch):
+    """Lokal ist kein Metadaten-Server erreichbar — dann greift die gcloud-CLI."""
+    def fake_get(*a, **k):
+        raise httpx.ConnectError("kein Metadaten-Server")
+
+    monkeypatch.setattr(ex.httpx, "get", fake_get)
+    monkeypatch.setattr(ex.subprocess, "check_output", lambda *a, **k: b"cli-token\n")
+    assert ex._fetch_token() == "cli-token"
