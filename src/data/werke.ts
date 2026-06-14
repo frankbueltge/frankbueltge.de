@@ -9,7 +9,7 @@ export interface Werk {
   description: Record<Locale, string>
 }
 
-/** Werkverzeichnis. Satelliten (Überflug, Halbwertszeit, Parallaxe, Prämie) folgen je eigenem Zyklus. */
+/** Verzeichnis der Untersuchungen der Reihe „Die Akte der Gegenwart". Jede folgt ihrem eigenen Zyklus. */
 export const WERKE: Werk[] = [
   {
     id: 'protokoll',
@@ -68,10 +68,10 @@ export const WERKE: Werk[] = [
     },
   },
 ]
-// Überflug wurde am 2026-06-12 aus dem Werkregister genommen (keine These, keine
-// Akkumulation — fällt durch das Substanz-Gate der Werkgruppe) und lebt als Studie
-// im Lab weiter: src/content/lab/ueberflug-studie/
+// Überflug wurde am 2026-06-12 aus der Reihe genommen (keine These, keine Akkumulation —
+// fällt durch das Substanz-Gate) und lebt als Studie im Lab weiter:
+// src/content/lab/ueberflug-studie/
 
-/** Angekündigte Werke der Akte — erscheinen in der Werkleiste als „in Vorbereitung".
- *  Prämie war das letzte geplante Werk; die Liste ist nun leer. */
+/** Angekündigte Untersuchungen der Akte — erscheinen als „in Vorbereitung".
+ *  Prämie war die letzte geplante; die Liste ist nun leer. */
 export const GEPLANT: string[] = []
