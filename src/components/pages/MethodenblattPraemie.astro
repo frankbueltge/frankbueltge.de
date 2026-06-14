@@ -1,0 +1,123 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import type { Locale } from '@/lib/site'
+import { hasData, type Police } from '@/lib/praemie/types'
+import police from '@/data/praemie/police.json'
+
+interface Props { locale: Locale }
+const { locale } = Astro.props
+const de = locale === 'de'
+const workUrl = getRelativeLocaleUrl(locale, '/praemie')
+
+const p = police as unknown as Police
+
+// Quellen aus police.json am Build ziehen — fällt auf Schema-Defaults zurück,
+// falls eine Sektion einen Fehler trägt.
+type Src = { name: string; url: string; license: string }
+const FALLBACK: Record<string, Src> = {
+  premium: {
+    name: 'U.S. Bureau of Labor Statistics, PPI Hausrat-/Wohngebäudeversicherung (PCU9241269241262), via FRED',
+    url: 'https://fred.stlouisfed.org/series/PCU9241269241262',
+    license: 'Public Domain (BLS)',
+  },
+  disasters: {
+    name: 'NOAA NCEI, Billion-Dollar Weather and Climate Disasters',
+    url: 'https://www.ncei.noaa.gov/access/billions/',
+    license: 'Public Domain (NOAA), DOI 10.25921/stkw-7w73',
+  },
+  claims: {
+    name: 'FEMA OpenFEMA, NFIP Schadenzahlungen',
+    url: 'https://www.fema.gov/about/openfema/api',
+    license: 'Public Domain (FEMA)',
+  },
+  retreat: {
+    name: 'California Department of Insurance, Non-Renewals by ZIP',
+    url: 'https://www.insurance.ca.gov/01-consumers/200-wrr/DataAnalysisOnWildfiresAndInsurance.cfm',
+    license: 'öffentlich (CA DOI)',
+  },
+}
+const srcOf = (key: 'premium' | 'disasters' | 'claims' | 'retreat'): Src =>
+  hasData(p[key]) ? (p[key] as { source: Src }).source : FALLBACK[key]
+const sources: Src[] = [srcOf('premium'), srcOf('disasters'), srcOf('claims'), srcOf('retreat')]
+
+const txt = {
+  h1: de ? 'Methodenblatt — Die Police' : 'Method sheet — The Policy',
+  s1: de ? '1. Quellen & Lizenzen' : '1. Sources & licences',
+  s2: de ? '2. Kadenz' : '2. Cadence',
+  s2body: de
+    ? 'Nächtlicher Lauf (04:00 UTC): Prämie monatlich (US-Versicherungs-PPI via FRED), Schadenverlauf jährlich (NOAA NCEI, eingefroren auf 2024 — Climate Central führt die Reihe fort), Regulierung monatlich (FEMA NFIP), Rückzug jährlich (CA DOI, redaktionell nachgeführt). Das kanonische Artefakt ist eine versionierte police.json im Repository — Git ist das Archiv.'
+    : 'Nightly run (04:00 UTC): premium monthly (US insurance PPI via FRED), claims history annual (NOAA NCEI, frozen at 2024 — Climate Central continues the series), settlement monthly (FEMA NFIP), retreat annual (CA DOI, editorially maintained). The canonical artefact is a versioned police.json in the repository — git is the archive.',
+  s3: de ? '3. Verarbeitung' : '3. Processing',
+  s3body: de
+    ? 'Deterministisch, kein LLM: Jeder Paragraph der Police folgt mechanisch aus den Daten, gesetzt mit Intl-Zahlen- und Datumsformatierung. Die kanonische police.json liegt im Repository; Git ist das Archiv.'
+    : 'Deterministic, no LLM: every paragraph of the policy follows mechanically from the data, typeset with Intl number and date formatting. The canonical police.json lives in the repository; git is the archive.',
+  s3link: de ? '→ pipelines/protokoll/…/praemie' : '→ pipelines/protokoll/…/praemie',
+  s4: de ? '4. Grenzen der Methode' : '4. Limits of the method',
+  s4items: de
+    ? [
+        'Alle vier Quellen sind US-zentriert — der globale Versicherungsmarkt ist nicht offen zugänglich. Die Police ist insofern ein Schnitt durch den am besten dokumentierten Markt, nicht durch die Welt.',
+        'Der Prämienindex misst US-Wohngebäude-Versicherungspreise als Proxy für eingepreistes Klimarisiko, nicht Rückversicherungsprämien direkt.',
+        'Der Schadenverlauf (NOAA NCEI) endet 2024; die Reihe der Milliardenschäden wird von Climate Central fortgeführt.',
+        'Der Rückzug (Nicht-Erneuerungen, Kalifornien) ist redaktionell nachgeführt — kein Live-Feed.',
+        '„Der Markt hat die Apokalypse eingepreist" ist eine Deutung steigender Preise, nicht die Behauptung, irgendeine einzelne Zahl sei gleich den Kosten der Katastrophe.',
+      ]
+    : [
+        'All four sources are US-centric — the global insurance market is not openly accessible. The policy is thus a section through the best-documented market, not through the world.',
+        'The premium index measures US home-insurance prices as a proxy for priced-in climate risk, not reinsurance premiums directly.',
+        'The claims history (NOAA NCEI) ends in 2024; the billion-dollar-disaster series is continued by Climate Central.',
+        'The retreat (non-renewals, California) is editorially maintained — not a live feed.',
+        '"The market has priced the apocalypse" is an interpretation of rising prices, not a claim that any single number equals the cost of the catastrophe.',
+      ],
+  s5: de ? '5. Compute-Fußabdruck' : '5. Compute footprint',
+  s5body: de
+    ? 'Vier leichtgewichtige Abrufe pro Nacht, kein LLM, kein Embedding. Die Site selbst ist statisch.'
+    : 'Four lightweight fetches per night, no LLM, no embedding. The site itself is static.',
+  s6: de ? '6. Änderungsprotokoll' : '6. Change log',
+  s6items: de
+    ? ['v1 — Erstfassung: Police mit Prämie, Schadenverlauf, Regulierung und Rückzug.']
+    : ['v1 — first edition: policy with premium, claims history, settlement and retreat.'],
+  toWork: de ? 'Zum Werk' : 'To the work',
+}
+---
+
+<div class="mx-auto max-w-2xl px-4 py-14">
+  <h1 class="mb-8 text-xl font-semibold">{txt.h1}</h1>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s1}</h2>
+    <ul class="list-disc space-y-2 pl-5 text-fg-muted">
+      {sources.map((s) => (
+        <li>
+          {s.name} —{' '}
+          <a href={s.url} class="font-mono text-xs text-fg-faint transition-colors hover:text-fg" rel="noopener">{s.url}</a>{' '}
+          <span class="text-fg-faint">({s.license})</span>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="mb-8"><h2 class="mb-2 font-semibold">{txt.s2}</h2><p class="leading-relaxed text-fg-muted">{txt.s2body}</p></section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s3}</h2>
+    <p class="leading-relaxed text-fg-muted">{txt.s3body}</p>
+    <p class="mt-2">
+      <a href="https://github.com/frankbueltge/frankbueltge.de/tree/main/pipelines/protokoll/src/protokoll/praemie"
+        class="font-mono text-xs text-fg-faint transition-colors hover:text-fg" rel="noopener">{txt.s3link}</a>
+    </p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s4}</h2>
+    <ul class="list-disc space-y-1 pl-5 text-fg-muted">{txt.s4items.map((i) => <li>{i}</li>)}</ul>
+  </section>
+
+  <section class="mb-8"><h2 class="mb-2 font-semibold">{txt.s5}</h2><p class="leading-relaxed text-fg-muted">{txt.s5body}</p></section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s6}</h2>
+    <ul class="list-disc space-y-1 pl-5 text-fg-muted">{txt.s6items.map((i) => <li>{i}</li>)}</ul>
+  </section>
+
+  <a href={workUrl} class="text-sm text-fg-muted transition-colors hover:text-fg">→ {txt.toWork}</a>
+</div>

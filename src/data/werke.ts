@@ -39,10 +39,25 @@ export const WERKE: Werk[] = [
       en: 'For every major event with fatalities, a pipeline measures how quickly attention decays — half-life by half-life, next to the constants of physics. Intake follows a published rule; nobody selects.',
     },
   },
+  {
+    id: 'praemie',
+    title: 'Die Police',
+    subtitle: {
+      de: 'Was die Apokalypse kostet',
+      en: 'What the apocalypse costs',
+    },
+    status: 'live',
+    href: '/praemie',
+    description: {
+      de: 'Ein Versicherungsschein auf die Gegenwart, dessen Prämie jede Nacht aus echten Marktdaten neu berechnet wird. Der Markt hat die Klimakatastrophe längst eingepreist — und die Prämie steigt: +179 % seit 1998.',
+      en: 'An insurance policy on the present, its premium recomputed each night from real market data. The market has long since priced in the climate catastrophe — and the premium is rising: +179% since 1998.',
+    },
+  },
 ]
 // Überflug wurde am 2026-06-12 aus dem Werkregister genommen (keine These, keine
 // Akkumulation — fällt durch das Substanz-Gate der Werkgruppe) und lebt als Studie
 // im Lab weiter: src/content/lab/ueberflug-studie/
 
-/** Angekündigte Werke der Akte — erscheinen in der Werkleiste als „in Vorbereitung". */
-export const GEPLANT = ['Parallaxe', 'Prämie']
+/** Angekündigte Werke der Akte — erscheinen in der Werkleiste als „in Vorbereitung".
+ *  Prämie war das letzte geplante Werk; die Liste ist nun leer. */
+export const GEPLANT: string[] = []
