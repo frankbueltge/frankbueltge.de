@@ -1,5 +1,4 @@
 from protokoll.parallaxe.analyze import (
-    lemma_divergent,
     mean_omission,
     omission_index,
 )
@@ -46,15 +45,3 @@ def test_omission_index_empty_claims():
 def test_mean_omission():
     assert mean_omission({"de": 0.0, "ja": 0.6667, "ru": 0.5}) == 0.3889
     assert mean_omission({}) == 0.0
-
-
-def test_lemma_divergent_true():
-    assert lemma_divergent({"en": "Senkaku Islands", "zh": "Diaoyu Islands"}) is True
-
-
-def test_lemma_divergent_false_when_same_caseinsensitive():
-    assert lemma_divergent({"en": "Senkaku", "de": "senkaku ", "ja": "SENKAKU"}) is False
-
-
-def test_lemma_divergent_ignores_empty():
-    assert lemma_divergent({"en": "Senkaku", "de": "", "zh": None}) is False

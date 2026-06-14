@@ -8,6 +8,7 @@ import json
 import os
 import sys
 import traceback
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -16,10 +17,11 @@ import httpx
 
 from protokoll.github_commit import commit_file
 from protokoll.parallaxe import (
-    CONTROVERSIAL_PAGE,
     MIN_LANGS,
     MODEL,
+    SOURCE_CATEGORIES,
     TOPIC_CAP,
+    WORKERS,
 )
 from protokoll.parallaxe import analyze, extract_llm, extracts, register
 
@@ -27,39 +29,46 @@ USER_AGENT = "frankbueltge.de werkgruppe parallaxe (hello@frankbueltge.de)"
 OUT_PATH = "src/data/parallaxe/register.json"
 
 
+def _process_topic(client: httpx.Client, topic: dict[str, Any]) -> dict[str, Any] | None:
+    """Ein Thema vermessen — fault-isoliert (Fehler -> None, kippt nicht die Nacht)."""
+    try:
+        intros, failed = extracts.fetch_intros(client, topic["titles"])
+        if len(intros) < MIN_LANGS:
+            return None
+        data = extract_llm.extract_omissions(intros, client=client)
+        oi = analyze.omission_index(data["claims"], list(intros))
+        protection = register.protection_status(client, topic["en_title"])
+        return {
+            "en_title": topic["en_title"],
+            "lang_count": topic["lang_count"],
+            "protection": protection,
+            "langs": sorted(intros),
+            "lemma": data["lemma"],
+            "name_umstritten": bool(data.get("name_umstritten", False)),
+            "claims": [{"aussage": c["aussage"], "by_lang": c["nach_sprache"]}
+                       for c in data["claims"]],
+            "omission_by_lang": oi,
+            "mean_omission": analyze.mean_omission(oi),
+        }
+    except Exception:
+        print(f"Thema übersprungen ({topic.get('en_title')!r}):", file=sys.stderr)
+        traceback.print_exc()
+        return None
+
+
 def build_register(client: httpx.Client, today: str) -> dict[str, Any]:
     titles = register.controversial_titles(client)
     topics = register.rank_topics(client, titles)
-    topics_out: list[dict[str, Any]] = []
-    for topic in topics:
-        try:
-            intros, failed = extracts.fetch_intros(client, topic["titles"])
-            if len(intros) < MIN_LANGS:
-                continue
-            data = extract_llm.extract_omissions(intros, client=client)
-            oi = analyze.omission_index(data["claims"], list(intros))
-            protection = register.protection_status(client, topic["en_title"])
-            topics_out.append({
-                "en_title": topic["en_title"],
-                "lang_count": topic["lang_count"],
-                "protection": protection,
-                "langs": sorted(intros),
-                "lemma": data["lemma"],
-                "lemma_divergent": analyze.lemma_divergent(data["lemma"]),
-                "claims": [{"aussage": c["aussage"], "by_lang": c["nach_sprache"]}
-                           for c in data["claims"]],
-                "omission_by_lang": oi,
-                "mean_omission": analyze.mean_omission(oi),
-            })
-        except Exception:  # Fault-Isolation: ein gestörtes Thema kippt nicht die Nacht.
-            print(f"Thema übersprungen ({topic.get('en_title')!r}):", file=sys.stderr)
-            traceback.print_exc()
-            continue
+    # Themen parallel verarbeiten (I/O-gebunden; httpx.Client ist thread-sicher) — bändigt die
+    # Wandzeit trotz langsamer LLM-Aufrufe. Reihenfolge wird danach wiederhergestellt.
+    with ThreadPoolExecutor(max_workers=WORKERS) as pool:
+        results = list(pool.map(lambda t: _process_topic(client, t), topics))
+    topics_out = [r for r in results if r is not None]
     means = [t["mean_omission"] for t in topics_out]
     mean_index = round(sum(means) / len(means), 4) if means else None
     return {
         "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
-        "rule": {"source": CONTROVERSIAL_PAGE, "min_langs": MIN_LANGS,
+        "rule": {"source": list(SOURCE_CATEGORIES), "min_langs": MIN_LANGS,
                  "cap": TOPIC_CAP, "model": MODEL},
         "mean_omission_index": mean_index,
         "topics": topics_out,

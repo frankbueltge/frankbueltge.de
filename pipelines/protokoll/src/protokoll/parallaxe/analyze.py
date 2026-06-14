@@ -23,10 +23,3 @@ def mean_omission(omission_by_lang: dict[str, float]) -> float:
     if not omission_by_lang:
         return 0.0
     return round(sum(omission_by_lang.values()) / len(omission_by_lang), 4)
-
-
-def lemma_divergent(lemma: dict[str, str]) -> bool:
-    """Wahr, wenn die Menge der nicht-leeren Primärnamen >= 2 distinkte Werte enthält
-    (case-insensitive, getrimmt)."""
-    names = {v.strip().lower() for v in lemma.values() if v and v.strip()}
-    return len(names) >= 2

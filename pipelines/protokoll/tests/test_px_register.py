@@ -1,7 +1,8 @@
 import httpx
 
-from protokoll.parallaxe import MIN_LANGS, TOPIC_CAP
+from protokoll.parallaxe import MIN_LANGS, SOURCE_CATEGORIES, TOPIC_CAP
 from protokoll.parallaxe.register import (
+    category_members,
     controversial_titles,
     langlinks,
     protection_status,
@@ -9,17 +10,36 @@ from protokoll.parallaxe.register import (
 )
 
 
-def test_controversial_titles_keeps_only_ns0():
-    payload = {"parse": {"links": [
-        {"ns": 0, "*": "Abortion"},
-        {"ns": 0, "*": "Senkaku Islands"},
-        {"ns": 4, "*": "Wikipedia:Some project page"},  # ns != 0 -> raus
-        {"ns": 14, "*": "Category:Something"},           # ns != 0 -> raus
+def test_category_members_returns_page_titles():
+    payload = {"query": {"categorymembers": [
+        {"title": "Kuril Islands"}, {"title": "Senkaku Islands"},
     ]}}
     client = httpx.Client(transport=httpx.MockTransport(
         lambda req: httpx.Response(200, json=payload)))
+    assert category_members(client, "Disputed islands") == ["Kuril Islands", "Senkaku Islands"]
+
+
+def test_controversial_titles_unions_dedups_sorts(monkeypatch):
+    import protokoll.parallaxe.register as reg
+    monkeypatch.setattr(reg.time, "sleep", lambda s: None)
+    # Zwei Kategorien mit gemeinsamem Thema (Senkaku) -> dedupliziert, alphabetisch sortiert.
+    by_cat = {
+        SOURCE_CATEGORIES[0]: ["Taiwan", "Kosovo", "Senkaku Islands"],
+        SOURCE_CATEGORIES[1]: ["Senkaku Islands", "Kuril Islands"],
+    }
+
+    def handler(req):
+        url = str(req.url)
+        for cat, members in by_cat.items():
+            token = cat.split()[0]  # erstes Wort der Kategorie als Marker
+            if token in url:
+                return httpx.Response(200, json={"query": {"categorymembers": [
+                    {"title": t} for t in members]}})
+        return httpx.Response(200, json={"query": {"categorymembers": []}})
+
+    client = httpx.Client(transport=httpx.MockTransport(handler))
     titles = controversial_titles(client)
-    assert titles == ["Abortion", "Senkaku Islands"]
+    assert titles == ["Kosovo", "Kuril Islands", "Senkaku Islands", "Taiwan"]
 
 
 def test_langlinks_filters_to_target_langs_and_includes_en():

@@ -1,5 +1,5 @@
-"""Themenquelle: Wikipedias eigene Liste umstrittener Themen. Die veröffentlichte Regel ist
-die Kuration — niemand wählt per Thema aus; aufgenommen wird, wo das Netz selbst streitet."""
+"""Themenquelle: Wikipedias eigene Kategorien umstrittener Orte (Souveränitäts-/Territorial-
+streitigkeiten). Die Kategorisierung ist die Kuration — niemand wählt per Thema aus."""
 from __future__ import annotations
 
 import time
@@ -9,18 +9,29 @@ from typing import Any
 import httpx
 
 from protokoll.fetch import fetch
-from protokoll.parallaxe import LANGS, MIN_LANGS, TOPIC_CAP
+from protokoll.parallaxe import LANGS, MIN_LANGS, SOURCE_CATEGORIES, TOPIC_CAP
 
 API = "https://en.wikipedia.org/w/api.php"
-THROTTLE_S = 0.05
+THROTTLE_S = 0.25
+CANDIDATE_POOL = 200
+
+
+def category_members(client: httpx.Client, category: str) -> list[str]:
+    """Artikel-Mitglieder (cmtype=page) einer Wikipedia-Kategorie."""
+    url = (f"{API}?action=query&list=categorymembers&cmtitle=Category:{quote(category)}"
+           f"&cmlimit=500&cmtype=page&format=json")
+    data = fetch(url, client=client, expect="json")
+    return [m["title"] for m in data.get("query", {}).get("categorymembers", [])]
 
 
 def controversial_titles(client: httpx.Client) -> list[str]:
-    """Verlinkte Artikel (ns==0) der Liste umstrittener Themen."""
-    url = (f"{API}?action=parse&page=Wikipedia:List_of_controversial_issues"
-           f"&prop=links&format=json")
-    data = fetch(url, client=client, expect="json")
-    return [link["*"] for link in data["parse"]["links"] if link["ns"] == 0]
+    """Vereinigung der Artikel aus allen Quell-Kategorien (dedupliziert, stabil sortiert)."""
+    seen: dict[str, None] = {}
+    for cat in SOURCE_CATEGORIES:
+        for title in category_members(client, cat):
+            seen.setdefault(title, None)
+        time.sleep(THROTTLE_S)
+    return sorted(seen)
 
 
 def langlinks(client: httpx.Client, en_title: str) -> dict[str, str]:
@@ -59,8 +70,11 @@ def protection_status(client: httpx.Client, en_title: str) -> str:
 def rank_topics(client: httpx.Client, titles: list[str]) -> list[dict[str, Any]]:
     """Je en-Titel die Sprachversionen holen, auf >= MIN_LANGS filtern, nach Sprachzahl
     absteigend sortieren (Tie-Break: en_title aufsteigend), die ersten TOPIC_CAP nehmen."""
+    # Stichprobe quer durch die (alphabetische) Liste statt der ersten N Einträge.
+    step = max(1, len(titles) // CANDIDATE_POOL)
+    candidates = titles[::step][:CANDIDATE_POOL]
     ranked: list[dict[str, Any]] = []
-    for en_title in titles:
+    for en_title in candidates:
         titles_map = langlinks(client, en_title)
         time.sleep(THROTTLE_S)
         if len(titles_map) < MIN_LANGS:
