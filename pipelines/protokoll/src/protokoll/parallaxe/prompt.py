@@ -4,12 +4,13 @@ Unten der Einleitungstext eines Artikels in mehreren Sprachen (Sprachcode in eck
 
 Aufgaben:
 1. lemma: Welchen PRIMÄRNAMEN verwendet jede Version für den Gegenstand?
-2. claims: Erstelle eine konsolidierte Liste atomarer, faktischer oder rahmender AUSSAGEN, die in mindestens einer Version vorkommen (auf Deutsch, neutral formuliert).
-3. Markiere für jede Aussage und jede Sprache: "nennt" (Version sagt es aus), "verschweigt" (fehlt), "widerspricht" (sagt Unvereinbares).
+2. name_umstritten: Ist der NAME selbst zwischen den Sprachen umstritten — also ein echter Benennungsstreit mit unterschiedlichem Anspruch (etwa Falklandinseln vs. Malvinas, Senkaku vs. Diaoyu, Persischer vs. Arabischer Golf)? Nur dann true. Bloße Transliteration desselben Namens in andere Schriften (Carl Jung / Карл Юнг / كارل يونغ) ist KEIN Streit → false.
+3. claims: Erstelle eine konsolidierte Liste atomarer, faktischer oder rahmender AUSSAGEN, die in mindestens einer Version vorkommen (auf Deutsch, neutral formuliert).
+4. Markiere für jede Aussage und jede Sprache: "nennt" (Version sagt es aus), "verschweigt" (fehlt), "widerspricht" (sagt Unvereinbares).
 Sei konservativ: "nennt" nur, wenn die Version es wirklich aussagt.
 
 Antworte als striktes JSON, keine Erklärung:
-{"lemma": {"<lang>": "<name>"}, "claims": [{"aussage": "...", "nach_sprache": {"<lang>": "nennt|verschweigt|widerspricht"}}]}
+{"lemma": {"<lang>": "<name>"}, "name_umstritten": true/false, "claims": [{"aussage": "...", "nach_sprache": {"<lang>": "nennt|verschweigt|widerspricht"}}]}
 
 Die Versionen:
 """

@@ -38,7 +38,10 @@ def fetch(url: str, *, client: httpx.Client,
             return r.text
         except httpx.HTTPError as exc:
             # 4xx ist kein transienter Fehler — sofort melden statt Retries verbrennen.
-            if isinstance(exc, httpx.HTTPStatusError) and exc.response.status_code < 500:
+            # Ausnahme: 429 (Too Many Requests) heißt „später nochmal" → mit Backoff erneut.
+            if (isinstance(exc, httpx.HTTPStatusError)
+                    and exc.response.status_code < 500
+                    and exc.response.status_code != 429):
                 raise SourceUnavailable(f"{_redacted(url)}: HTTP {exc.response.status_code}") from exc
             last = exc
     # Auch die Exception-Message selbst kann die volle URL (inkl. Query) enthalten.

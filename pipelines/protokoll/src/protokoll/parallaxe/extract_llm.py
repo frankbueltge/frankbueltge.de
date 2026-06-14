@@ -6,6 +6,7 @@ from __future__ import annotations
 import json
 import os
 import subprocess
+import threading
 import time
 
 import httpx
@@ -21,6 +22,7 @@ MAX_RETRIES = 3
 RETRY_DELAY_S = 1.5
 
 _token_cache: dict[str, str] = {}
+_token_lock = threading.Lock()
 
 
 class ExtractionError(Exception):
@@ -28,11 +30,12 @@ class ExtractionError(Exception):
 
 
 def _access_token(refresh: bool = False) -> str:
-    """gcloud-ADC-Token, gecacht. refresh=True erzwingt einen frischen Token."""
-    if refresh or "token" not in _token_cache:
-        _token_cache["token"] = subprocess.check_output(
-            ["gcloud", "auth", "print-access-token"]).decode().strip()
-    return _token_cache["token"]
+    """gcloud-ADC-Token, gecacht und thread-sicher. refresh=True erzwingt einen frischen Token."""
+    with _token_lock:
+        if refresh or "token" not in _token_cache:
+            _token_cache["token"] = subprocess.check_output(
+                ["gcloud", "auth", "print-access-token"]).decode().strip()
+        return _token_cache["token"]
 
 
 def _endpoint() -> str:
@@ -46,7 +49,10 @@ def extract_omissions(lang_to_text: dict[str, str], *, client: httpx.Client) -> 
     text = PROMPT + "\n\n".join(f"[{lang}] {txt}" for lang, txt in lang_to_text.items())
     body = {
         "contents": [{"role": "user", "parts": [{"text": text}]}],
-        "generationConfig": {"temperature": 0, "responseMimeType": "application/json"},
+        # thinkingBudget 0: ohne „Thinking" ist gemini-2.5-flash ~10x schneller —
+        # entscheidend, damit der Nacht-Job mit 24 Aufrufen im Cloud-Run-Timeout bleibt.
+        "generationConfig": {"temperature": 0, "responseMimeType": "application/json",
+                             "thinkingConfig": {"thinkingBudget": 0}},
     }
 
     last_status: int | None = None
