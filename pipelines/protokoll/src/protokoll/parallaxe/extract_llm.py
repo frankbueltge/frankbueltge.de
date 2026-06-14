@@ -1,6 +1,7 @@
 """Der eine Gemini-Aufruf je Thema: Vertex generateContent (gemini-2.5-flash, temperature 0,
-strukturiertes JSON). Token via gcloud-ADC + x-goog-user-project, Retry/Token-Refresh bei
-401/429/503. In Tests vollständig gemockt — echte I/O nur in Produktion."""
+strukturiertes JSON). Token in Cloud Run über den Metadaten-Server, lokal über die gcloud-CLI;
+dazu x-goog-user-project, Retry/Token-Refresh bei 401/429/503. In Tests vollständig gemockt —
+echte I/O nur in Produktion."""
 from __future__ import annotations
 
 import json
@@ -17,6 +18,13 @@ from protokoll.parallaxe.prompt import PROMPT
 PROJECT = os.environ.get("GOOGLE_CLOUD_PROJECT", "data-snack")
 REGION = "us-central1"
 
+# Der Metadaten-Server liefert in Cloud Run/GCE den ADC-Token des Dienstkontos. Das Slim-Image
+# enthält keine gcloud-CLI — deshalb darf der Token NICHT per Subprozess geholt werden (das lief
+# nur lokal). Die IP 169.254.169.254 vermeidet DNS und scheitert lokal sofort statt zu hängen.
+METADATA_TOKEN_URL = (
+    "http://169.254.169.254/computeMetadata/v1/instance/service-accounts/default/token"
+)
+
 RETRY_STATUSES = (401, 429, 503)
 MAX_RETRIES = 3
 RETRY_DELAY_S = 1.5
@@ -29,12 +37,25 @@ class ExtractionError(Exception):
     pass
 
 
+def _fetch_token() -> str:
+    """Frischer Access-Token. Zuerst der Metadaten-Server (Cloud Run/GCE), dann als Fallback die
+    gcloud-CLI (lokale Entwicklung). Reihenfolge ist entscheidend: in Produktion gibt es keine CLI."""
+    try:
+        resp = httpx.get(METADATA_TOKEN_URL,
+                         headers={"Metadata-Flavor": "Google"}, timeout=2.0)
+        if resp.status_code == 200:
+            return resp.json()["access_token"]
+    except (httpx.HTTPError, KeyError, ValueError):
+        pass  # kein Metadaten-Server erreichbar -> lokal, gcloud-CLI versuchen
+    return subprocess.check_output(
+        ["gcloud", "auth", "print-access-token"]).decode().strip()
+
+
 def _access_token(refresh: bool = False) -> str:
-    """gcloud-ADC-Token, gecacht und thread-sicher. refresh=True erzwingt einen frischen Token."""
+    """ADC-Token, gecacht und thread-sicher. refresh=True erzwingt einen frischen Token."""
     with _token_lock:
         if refresh or "token" not in _token_cache:
-            _token_cache["token"] = subprocess.check_output(
-                ["gcloud", "auth", "print-access-token"]).decode().strip()
+            _token_cache["token"] = _fetch_token()
         return _token_cache["token"]
 
 
