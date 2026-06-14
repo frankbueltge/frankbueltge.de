@@ -23,7 +23,7 @@ const de: About = {
     {
       heading: 'Woran ich arbeite',
       paragraphs: [
-        'Beruflich: die Schwabe Intelligence Platform (SIP) — ein AI-natives Control Center für globales Analytics & Tag Management.',
+        'Beruflich: Analytics-, Tracking- und KI-Infrastruktur für ein international aufgestelltes Unternehmen — von der Messung bis zur Entscheidung.',
         'Privat: data-snack.com (interaktive Daten-Experimente) und datavism.org (Data Activism mit dem KI-Agenten GHOST).',
       ],
     },
@@ -52,7 +52,7 @@ const en: About = {
     {
       heading: "What I'm working on",
       paragraphs: [
-        'Professionally: the Schwabe Intelligence Platform (SIP) — an AI-native control center for global analytics & tag management.',
+        'Professionally: analytics, tracking and AI infrastructure for an internationally operating company — from measurement to decision.',
         'Personally: data-snack.com (interactive data experiments) and datavism.org (data activism with the AI agent GHOST).',
       ],
     },

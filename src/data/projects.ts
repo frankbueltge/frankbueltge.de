@@ -76,29 +76,6 @@ export const projects: Project[] = [
     badge: 'dev',
     order: 2,
   },
-  {
-    slug: 'sip',
-    name: 'SIP — Schwabe Intelligence Platform',
-    year: '2025',
-    // internal — no public url/repo
-    status: { de: 'Laufend (beruflich)', en: 'Ongoing (professional)' },
-    role: { de: 'Konzeption & Entwicklung · Schwabe Group', en: 'Design & development · Schwabe Group' },
-    tagline: {
-      de: 'AI-natives Control Center für globales Analytics & Tag Management.',
-      en: 'AI-native control center for global analytics & tag management.',
-    },
-    description: {
-      de: 'Eine Enterprise-Plattform für eine global aufgestellte Pharma-Gruppe, die Tag Management, DSGVO- & Consent-Compliance, Governance, QA und Marketing-Intelligence in einem System zusammenführt — über ein großes, marken- und marktübergreifendes Portfolio. Tracking „as code“, messbar gemacht. Internes Projekt — ein Lab-Beitrag dazu folgt.',
-      en: 'An enterprise platform for a globally distributed pharma group, unifying tag management, GDPR & consent compliance, governance, QA and marketing intelligence in one system — across a large, multi-brand, multi-market portfolio. Tracking “as code”, made measurable. Internal project — a lab post about it is coming.',
-    },
-    highlights: {
-      de: ['Einheitliches Tag- & Consent-Management', 'Automatisiertes Compliance-Scanning', 'BigQuery + dbt als Fundament', 'Self-Service Marketing Intelligence', 'Rollenbasierte Zugriffe (RBAC)'],
-      en: ['Unified tag & consent management', 'Automated compliance scanning', 'BigQuery + dbt foundation', 'Self-service marketing intelligence', 'Role-based access (RBAC)'],
-    },
-    tech: ['Python', 'FastAPI', 'React', 'TypeScript', 'BigQuery', 'dbt', 'Google Tag Manager', 'Google Cloud'],
-    badge: 'live',
-    order: 3,
-  },
 ]
 
 export function getProjects(): Project[] {

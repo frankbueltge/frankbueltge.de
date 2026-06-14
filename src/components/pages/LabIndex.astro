@@ -2,6 +2,7 @@
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import { t } from '@/i18n/ui'
 import { getLabPosts } from '@/lib/lab'
+import { WERKE } from '@/data/werke'
 import type { Locale } from '@/lib/site'
 
 const locale = (Astro.currentLocale ?? 'de') as Locale
@@ -14,24 +15,49 @@ const fmt = (iso: string) =>
   <h1 class="text-[clamp(34px,6vw,64px)] font-bold tracking-[-0.03em]">{t(locale, 'lab.title')}</h1>
   <p class="mt-4 max-w-2xl text-fg-muted">{t(locale, 'lab.sub')}</p>
 
-  {posts.length === 0 ? (
-    <p class="mt-16 text-fg-muted">{t(locale, 'lab.empty')}</p>
-  ) : (
-    <ul class="mt-12 divide-y divide-line/60 border-t border-line/60">
-      {posts.map(({ entry, slug }) => (
-        <li>
-          <a href={getRelativeLocaleUrl(locale, `/lab/${slug}`)} class="group flex flex-col gap-2 py-8 sm:flex-row sm:items-baseline sm:gap-8">
-            <time class="shrink-0 font-mono text-xs text-fg-faint sm:w-40">{fmt(entry.data.date)}</time>
-            <div class="flex-1">
-              <h2 class="text-lg font-semibold transition-colors group-hover:text-accent-soft">{entry.data.title}</h2>
-              <p class="mt-1.5 text-sm leading-relaxed text-fg-muted">{entry.data.description}</p>
-              <ul class="mt-3 flex flex-wrap gap-1.5">
-                {entry.data.tags.map((tag) => <li class="rounded-full border border-line/60 px-2 py-0.5 font-mono text-[10px] text-fg-faint">{tag}</li>)}
-              </ul>
-            </div>
+  <!-- Die Akte der Gegenwart — die fortlaufenden Untersuchungen, jede Nacht neu vermessen -->
+  <section class="mt-16">
+    <p class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">{t(locale, 'werke.kicker')} · {t(locale, 'werke.title')}</p>
+    <p class="mt-3 max-w-2xl leading-relaxed text-fg-muted">{t(locale, 'werke.sub')}</p>
+    <ul class="mt-8 divide-y divide-line/60 border-t border-line/60">
+      {WERKE.map((werk) => (
+        <li class="py-7">
+          <a href={getRelativeLocaleUrl(locale, werk.href)} class="group block">
+            <h2 class="text-lg font-semibold transition-colors group-hover:text-accent-soft">
+              {werk.title}<span class="font-normal text-fg-faint"> — {werk.subtitle[locale]}</span>
+            </h2>
+            <p class="mt-1.5 text-sm leading-relaxed text-fg-muted">{werk.description[locale]}</p>
+          </a>
+          <a href={getRelativeLocaleUrl(locale, `/werke/${werk.id}`)} class="mt-2 inline-block font-mono text-xs text-fg-faint transition-colors hover:text-fg">
+            {t(locale, 'prot.method')} →
           </a>
         </li>
       ))}
     </ul>
-  )}
+  </section>
+
+  <!-- Studien & Daten-Stories — Einzelstücke, kein nächtlicher Zyklus -->
+  <section class="mt-20">
+    <p class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">{t(locale, 'lab.studies')}</p>
+    {posts.length === 0 ? (
+      <p class="mt-8 text-fg-muted">{t(locale, 'lab.empty')}</p>
+    ) : (
+      <ul class="mt-6 divide-y divide-line/60 border-t border-line/60">
+        {posts.map(({ entry, slug }) => (
+          <li>
+            <a href={getRelativeLocaleUrl(locale, `/lab/${slug}`)} class="group flex flex-col gap-2 py-8 sm:flex-row sm:items-baseline sm:gap-8">
+              <time class="shrink-0 font-mono text-xs text-fg-faint sm:w-40">{fmt(entry.data.date)}</time>
+              <div class="flex-1">
+                <h2 class="text-lg font-semibold transition-colors group-hover:text-accent-soft">{entry.data.title}</h2>
+                <p class="mt-1.5 text-sm leading-relaxed text-fg-muted">{entry.data.description}</p>
+                <ul class="mt-3 flex flex-wrap gap-1.5">
+                  {entry.data.tags.map((tag) => <li class="rounded-full border border-line/60 px-2 py-0.5 font-mono text-[10px] text-fg-faint">{tag}</li>)}
+                </ul>
+              </div>
+            </a>
+          </li>
+        ))}
+      </ul>
+    )}
+  </section>
 </main>

@@ -1,5 +1,5 @@
 ---
-// „Die Akte zuerst": Hero (Klimapuls) → lebendes Protokoll → Werkleiste → Beruflich.
+// „Die Akte zuerst": Hero (Klimapuls) → lebendes Protokoll → Untersuchungen → Beruflich.
 // Spec: docs/superpowers/specs/2026-06-12-startseite-design.md
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import { t } from '@/i18n/ui'
@@ -10,15 +10,6 @@ import WerkeStrip from '@/components/WerkeStrip.astro'
 import { projects } from '@/data/projects'
 
 const locale = (Astro.currentLocale ?? 'de') as Locale
-
-const copy = {
-  de: {
-    statement: 'Daten sichtbar machen — offene Daten, künstlerische Werke, harte Fakten.',
-  },
-  en: {
-    statement: 'Making data visible — open data, artistic works, hard facts.',
-  },
-}[locale]
 
 const featured = [...projects].sort((a, b) => a.order - b.order)
 ---
@@ -34,12 +25,10 @@ const featured = [...projects].sort((a, b) => a.order - b.order)
         <span class="dot-live h-[7px] w-[7px] rounded-full"></span>{t(locale, 'system.live')}
       </div>
       <div class="relative z-[2] p-[clamp(20px,4vw,44px)]">
-        <p class="mb-3 font-mono text-xs uppercase tracking-[0.28em] text-accent-soft">{t(locale, 'hero.eyebrow')}</p>
         <h1 class="glow-text text-[clamp(44px,8vw,104px)] font-bold leading-[0.9] tracking-[-0.04em]"><span class="text-gradient">Frank Bültge</span></h1>
         <p class="mt-5 max-w-xl text-pretty text-base text-fg-muted sm:text-lg">
           <strong class="font-semibold text-fg">{t(locale, 'hero.roleLead')}</strong>{t(locale, 'hero.roleRest')}
         </p>
-        <p class="mt-3 max-w-xl text-pretty text-sm text-fg-muted">{copy.statement}</p>
       </div>
     </section>
 
@@ -48,7 +37,7 @@ const featured = [...projects].sort((a, b) => a.order - b.order)
       <ProtokollTeaser locale={locale} />
     </section>
 
-    <!-- Werkleiste -->
+    <!-- Untersuchungen — Die Akte der Gegenwart -->
     <section class="col-span-12 mt-4">
       <WerkeStrip locale={locale} />
     </section>
