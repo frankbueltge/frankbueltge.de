@@ -1,0 +1,9 @@
+---
+import Page from '@/layouts/Page.astro'
+import ParallaxePage from '@/components/pages/ParallaxePage.astro'
+import { t } from '@/i18n/ui'
+const locale = 'de' as const
+---
+<Page title={`${t(locale, 'px.title')} | Frank Bültge`} description={t(locale, 'px.sub')}>
+  <ParallaxePage locale={locale} />
+</Page>

@@ -1,0 +1,123 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import type { Locale } from '@/lib/site'
+
+interface Props { locale: Locale }
+const { locale } = Astro.props
+const de = locale === 'de'
+const workUrl = getRelativeLocaleUrl(locale, '/parallaxe')
+
+// Wortgetreu aus pipelines/protokoll/src/protokoll/parallaxe/prompt.py (Konstante PROMPT).
+// Der publizierte Prompt ist die Transparenzgarantie des Werks.
+const PROMPT = `Du vergleichst, wie dieselbe Sache in verschiedenen Sprachausgaben der Wikipedia beschrieben wird.
+Unten der Einleitungstext eines Artikels in mehreren Sprachen (Sprachcode in eckigen Klammern).
+
+Aufgaben:
+1. lemma: Welchen PRIMÄRNAMEN verwendet jede Version für den Gegenstand?
+2. name_umstritten: Ist der NAME selbst zwischen den Sprachen umstritten — also ein echter Benennungsstreit mit unterschiedlichem Anspruch (etwa Falklandinseln vs. Malvinas, Senkaku vs. Diaoyu, Persischer vs. Arabischer Golf)? Nur dann true. Bloße Transliteration desselben Namens in andere Schriften (Carl Jung / Карл Юнг / كارل يونغ) ist KEIN Streit → false.
+3. claims: Erstelle eine konsolidierte Liste atomarer, faktischer oder rahmender AUSSAGEN, die in mindestens einer Version vorkommen (auf Deutsch, neutral formuliert).
+4. Markiere für jede Aussage und jede Sprache: "nennt" (Version sagt es aus), "verschweigt" (fehlt), "widerspricht" (sagt Unvereinbares).
+Sei konservativ: "nennt" nur, wenn die Version es wirklich aussagt.
+
+Antworte als striktes JSON, keine Erklärung:
+{"lemma": {"<lang>": "<name>"}, "name_umstritten": true/false, "claims": [{"aussage": "...", "nach_sprache": {"<lang>": "nennt|verschweigt|widerspricht"}}]}
+
+Die Versionen:
+`
+
+const codeUrl = 'https://github.com/frankbueltge/frankbueltge.de/tree/main/pipelines/protokoll/src/protokoll/parallaxe'
+
+const txt = {
+  h1: de ? 'Methodenblatt — Parallaxe' : 'Method sheet — Parallaxe',
+  s1: de ? '1. Quellen & Lizenzen' : '1. Sources & licences',
+  s1items: de
+    ? [
+        'Themenregister: Wikipedias eigene Kategorien „States with limited recognition" und „Disputed islands" (CC BY-SA). Die Domäne wählt sich selbst — niemand kuratiert die Liste.',
+        'Beschreibungen: Wikipedia-Einleitungs-Extrakte je Sprachversion (CC BY-SA), abgerufen über die offizielle REST-API.',
+        'Extraktion: Vertex AI Gemini (gemini-2.5-flash-lite) als ein einzelner, transparenter Extraktionsschritt.',
+      ]
+    : [
+        'Topic register: Wikipedia’s own categories „States with limited recognition“ and „Disputed islands“ (CC BY-SA). The domain selects itself — nobody curates the list.',
+        'Descriptions: Wikipedia lead-section extracts per language edition (CC BY-SA), fetched via the official REST API.',
+        'Extraction: Vertex AI Gemini (gemini-2.5-flash-lite) as a single, transparent extraction step.',
+      ],
+  s2: de ? '2. Kadenz' : '2. Cadence',
+  s2body: de
+    ? 'Nächtlicher Lauf (05:30 UTC): Das Register wird neu aus den Wikipedia-Kategorien aufgebaut; je Thema werden die Einleitungstexte aller Sprachversionen erhoben und in einem einzigen Gemini-Aufruf verglichen. Das kanonische register.json liegt versioniert im Repository — Git ist das Archiv.'
+    : 'Nightly run (05:30 UTC): the register is rebuilt from the Wikipedia categories; per topic the lead sections of all language editions are collected and compared in a single Gemini call. The canonical register.json is versioned in the repository — git is the archive.',
+  s3: de ? '3. Verarbeitung' : '3. Processing',
+  s3body: de
+    ? 'Die Aggregation ist deterministisch: Auslassungsindizes je Sprache und Thema, mittlerer Index, Namensstreit-Erkennung. Der EINE LLM-Schritt ist die Auslassungs-Extraktion — der dabei verwendete Prompt ist unten vollständig veröffentlicht. Jede Zelle der Matrix ist gegen den verlinkten Quelltext prüfbar: ein transparenter Extraktor, kein Orakel.'
+    : 'Aggregation is deterministic: omission indices per language and topic, the mean index, name-contest detection. The ONE LLM step is the omission extraction — the prompt it uses is published in full below. Every cell of the matrix is checkable against the linked source text: a transparent extractor, not an oracle.',
+  s3promptCaption: de
+    ? 'Publizierter Extraktions-Prompt (wortgetreu aus dem Code):'
+    : 'Published extraction prompt (verbatim from the code):',
+  s4: de ? '4. Grenzen der Methode' : '4. Limits of the method',
+  s4items: de
+    ? [
+        'Die Domäne ist bewusst auf Souveränitäts- und Territorialstreitigkeiten geschärft, weil dort Auslassung bedeutsam ist. Ein früherer Embedding-Ansatz scheiterte (Faktor 0,97 — die Sprachen waren kaum unterscheidbar), und ein breites „umstrittene Themen"-Register maß bloß Trivia.',
+        'Der Auslassungsindex misst den Anteil verschwiegener themenweiter Aussagen — er gewichtet nicht nach Bedeutung. Eine verschwiegene Höhenangabe zählt wie ein verschwiegener Territorialstreit.',
+        'Gemini ist ein Extraktor, dessen Urteil fehlbar ist — aber prüfbar: Prompt und Quelltext sind offen, jede Zelle nachvollziehbar.',
+        'Gemessen wird nur der Einleitungstext, nicht der Volltext der Artikel.',
+        'Die Wikipedia-Kategorien sind selbst nicht neutral; auch ihre Grenzen sind eine Setzung.',
+      ]
+    : [
+        'The domain is deliberately sharpened to sovereignty and territorial disputes, because omission is meaningful there. An earlier embedding approach failed (factor 0.97 — the languages were barely distinguishable), and a broad „disputed topics“ register merely measured trivia.',
+        'The omission index measures the share of omitted topic-wide claims — it does not weight by importance. An omitted elevation figure counts the same as an omitted territorial dispute.',
+        'Gemini is an extractor whose judgement is fallible — but checkable: prompt and source text are open, every cell traceable.',
+        'Only the lead section is measured, not the full article text.',
+        'The Wikipedia categories are themselves not neutral; their boundaries are a choice too.',
+      ],
+  s5: de ? '5. Compute-Fußabdruck' : '5. Compute footprint',
+  s5body: de
+    ? 'Ein Gemini-Aufruf je Thema und Nacht (flash-lite), kein Embedding-Schritt. Die Site selbst ist statisch.'
+    : 'One Gemini call per topic per night (flash-lite), no embedding step. The site itself is static.',
+  s6: de ? '6. Änderungsprotokoll' : '6. Change log',
+  s6items: de
+    ? ['v1 — Auslassungsmatrix über Souveränitäts- und Territorialstreitigkeiten, Namensstreit-Erkennung, mittlerer Auslassungsindex.']
+    : ['v1 — omission matrix over sovereignty and territorial disputes, name-contest detection, mean omission index.'],
+  codeLabel: de ? '→ pipelines/protokoll/…/parallaxe' : '→ pipelines/protokoll/…/parallaxe',
+  toWork: de ? 'Zum Werk' : 'To the work',
+}
+---
+
+<div class="mx-auto max-w-2xl px-4 py-14">
+  <h1 class="mb-8 text-xl font-semibold">{txt.h1}</h1>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s1}</h2>
+    <ul class="list-disc space-y-1 pl-5 text-fg-muted">{txt.s1items.map((i) => <li>{i}</li>)}</ul>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s2}</h2>
+    <p class="leading-relaxed text-fg-muted">{txt.s2body}</p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s3}</h2>
+    <p class="leading-relaxed text-fg-muted">{txt.s3body}</p>
+    <p class="mt-2">
+      <a href={codeUrl} class="font-mono text-xs text-fg-faint transition-colors hover:text-fg" rel="noopener">{txt.codeLabel}</a>
+    </p>
+    <p class="mb-2 mt-4 text-sm text-fg-faint">{txt.s3promptCaption}</p>
+    <pre class="overflow-x-auto rounded-[14px] border border-line bg-panel p-4 font-mono text-xs leading-relaxed text-fg-muted whitespace-pre-wrap">{PROMPT}</pre>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s4}</h2>
+    <ul class="list-disc space-y-1 pl-5 text-fg-muted">{txt.s4items.map((i) => <li>{i}</li>)}</ul>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s5}</h2>
+    <p class="leading-relaxed text-fg-muted">{txt.s5body}</p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s6}</h2>
+    <ul class="list-disc space-y-1 pl-5 text-fg-muted">{txt.s6items.map((i) => <li>{i}</li>)}</ul>
+  </section>
+
+  <a href={workUrl} class="text-sm text-fg-muted transition-colors hover:text-fg">→ {txt.toWork}</a>
+</div>
