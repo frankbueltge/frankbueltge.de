@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import csv
 import io
+import math
 from typing import Any
 
 import httpx
@@ -31,6 +32,8 @@ def parse_disasters(csv_text: str) -> dict[str, Any]:
             cost = float(cost_raw)
             year = int(begin[:4])
         except ValueError:
+            continue
+        if not math.isfinite(cost):  # nicht-finiter Wert dürfte nie ins Archiv (allow_nan=False)
             continue
         deaths_raw = (row.get("Deaths") or "").strip()
         try:

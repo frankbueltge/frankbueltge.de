@@ -17,7 +17,9 @@ const liveWerke = WERKE.filter((w) => w.id !== 'protokoll' && w.status === 'live
       <span class="text-sm text-fg-muted"> — {werk.subtitle[locale]}</span>
     </a>
   ))}
-  <span class="font-mono text-xs text-fg-faint">{GEPLANT.join(' · ')} — {t(locale, 'werke.inPrep')}</span>
+  {GEPLANT.length > 0 && (
+    <span class="font-mono text-xs text-fg-faint">{GEPLANT.join(' · ')} — {t(locale, 'werke.inPrep')}</span>
+  )}
   <a href={getRelativeLocaleUrl(locale, '/werke')} class="ml-auto text-sm text-fg-muted transition-colors hover:text-fg">
     {t(locale, 'werke.title')} →
   </a>

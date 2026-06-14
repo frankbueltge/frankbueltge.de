@@ -20,7 +20,7 @@ export interface PoliceDisastersData {
   cumulative_cost_busd: number
   total_events: number
   since_year: number
-  latest_year: number
+  latest_year: number | null
   latest_year_events: number
   latest_year_cost_busd: number
   latest_year_deaths: number
@@ -31,7 +31,7 @@ export type PoliceDisasters = PoliceDisastersData | { error: string }
 export interface PoliceClaimsData {
   recent_paid_usd: number
   recent_count: number
-  latest_year: number
+  latest_year: number | null
   source: PoliceSource
 }
 export type PoliceClaims = PoliceClaimsData | { error: string }

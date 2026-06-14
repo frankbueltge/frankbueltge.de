@@ -13,7 +13,6 @@ def test_dry_run_writes_register(tmp_path, monkeypatch):
             "en_title": "Senkaku Islands", "lang_count": 8, "protection": "edit:autoconfirmed",
             "langs": ["de", "en", "ja", "ru", "zh"],
             "lemma": {"en": "Senkaku Islands", "zh": "Diaoyu Islands"},
-            "lemma_divergent": True,
             "claims": [{"aussage": "Territorialstreit",
                         "by_lang": {"en": "verschweigt", "ru": "nennt"}}],
             "omission_by_lang": {"en": 1.0, "ru": 0.0},
