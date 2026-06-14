@@ -1,0 +1,146 @@
+---
+// Werk „Parallaxe" — Auslassungsmatrix über Souveränitäts- und Territorialstreitigkeiten.
+// Statisch aus register.json, kein Client-JS. Layout spiegelt HalbwertszeitPage.
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import type { Locale } from '@/lib/site'
+import { getRegister, getTopicsSorted } from '@/lib/parallaxe/data'
+import { CLAIM_MARK, langLabel, omissionPercent, topicHeadline } from '@/lib/parallaxe/labels'
+import type { ClaimMark } from '@/lib/parallaxe/types'
+import { t } from '@/i18n/ui'
+
+interface Props { locale: Locale }
+const { locale } = Astro.props
+const de = locale === 'de'
+
+const reg = getRegister()
+const topics = getTopicsSorted()
+const methodUrl = getRelativeLocaleUrl(locale, '/werke/parallaxe')
+
+const ROW_CAP = 18
+
+const txt = {
+  headlineSentence: topicHeadline(reg.mean_omission_index, de ? 'de' : 'en'),
+  rule: de
+    ? 'Aufgenommen werden Souveränitäts- und Territorialstreitigkeiten aus Wikipedias eigenen Kategorien; niemand wählt aus.'
+    : "Included are sovereignty and territorial disputes drawn from Wikipedia's own categories; nobody selects.",
+  omitted: de ? 'verschwiegen' : 'omitted',
+  nameContested: de ? 'Schon der Name ist umstritten:' : 'Even the name is contested:',
+  caption: de
+    ? 'Punkt = verschwiegen. Was fehlt, ist das Werk.'
+    : 'Dot = omitted. What is missing is the work.',
+  more: (n: number) =>
+    de ? `… und ${n} weitere Aussagen` : `… and ${n} more claims`,
+  claimCol: de ? 'Aussage' : 'Claim',
+  dataAsOf: de ? 'Messstand' : 'Measured as of',
+  model: de ? 'Extraktion' : 'Extraction',
+  method: de ? 'Methodenblatt' : 'Method sheet',
+}
+
+// Anzahl „verschweigt" je Aussage — die Auslassung steht voran.
+function omitCount(byLang: Record<string, ClaimMark>): number {
+  return Object.values(byLang).filter((m) => m === 'verschweigt').length
+}
+const cellLabel = (m: ClaimMark) => (de ? CLAIM_MARK[m].de : CLAIM_MARK[m].en)
+---
+
+<div class="mx-auto max-w-5xl px-4 py-14">
+  <header class="mb-14 max-w-3xl">
+    <p class="text-lg leading-relaxed">
+      <span class="block py-2 text-[clamp(40px,7vw,72px)] font-bold leading-none tracking-tight tabular-nums">
+        {reg.mean_omission_index != null ? omissionPercent(reg.mean_omission_index) : '—'}
+        <span class="text-[0.4em] font-semibold text-fg-muted">%</span>
+      </span>
+      <span class="mt-2 block">{txt.headlineSentence}</span>
+    </p>
+    <p class="mt-6 font-mono text-xs text-fg-faint">{txt.rule}</p>
+  </header>
+
+  {topics.length === 0 && (
+    <p class="text-fg-muted">{t(locale, 'px.empty')}</p>
+  )}
+
+  {topics.map((topic) => {
+    const claimsSorted = [...topic.claims].sort(
+      (a, b) => omitCount(b.by_lang) - omitCount(a.by_lang),
+    )
+    const shown = claimsSorted.slice(0, ROW_CAP)
+    const hidden = claimsSorted.length - shown.length
+    const pct = omissionPercent(topic.mean_omission)
+    return (
+      <section class="mb-16">
+        <div class="mb-3 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+          <h2 class="text-lg font-semibold">{topic.en_title}</h2>
+          <span class="rounded-full border border-line bg-panel px-2.5 py-0.5 font-mono text-xs text-fg-muted tabular-nums">
+            {pct} % {txt.omitted}
+          </span>
+          <span class="font-mono text-xs text-fg-faint">{topic.protection}</span>
+        </div>
+
+        {topic.name_umstritten && (
+          <div class="mb-5 rounded-[14px] border border-line bg-panel panel-raised p-5">
+            <p class="mb-3 text-sm text-fg-muted">{txt.nameContested}</p>
+            <ul class="flex flex-wrap gap-2">
+              {topic.langs.map((lang) => (
+                <li class="rounded-md border border-line px-2.5 py-1 text-sm">
+                  <span class="font-mono text-xs text-fg-faint">{langLabel(lang)}</span>
+                  <span class="ml-2">{topic.lemma[lang] ?? '—'}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        <p class="mb-2 text-sm text-fg-faint">{txt.caption}</p>
+        <div class="overflow-x-auto">
+          <table class="w-full border-collapse text-sm">
+            <thead>
+              <tr class="border-b border-line">
+                <th scope="col" class="py-2 pr-3 text-left font-medium text-fg-muted">{txt.claimCol}</th>
+                {topic.langs.map((lang) => (
+                  <th scope="col" class="px-1.5 py-2 text-center font-mono text-xs font-medium text-fg-muted">
+                    {langLabel(lang)}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {shown.map((claim) => (
+                <tr class="border-b border-line/60 align-top">
+                  <td class="py-2 pr-3 text-sm leading-snug">{claim.aussage}</td>
+                  {topic.langs.map((lang) => {
+                    const mark: ClaimMark = claim.by_lang[lang] ?? 'verschweigt'
+                    const cls =
+                      mark === 'nennt'
+                        ? 'text-fg'
+                        : mark === 'widerspricht'
+                          ? 'font-bold text-cyan'
+                          : 'text-fg-faint'
+                    const aria = `${langLabel(lang)}: ${cellLabel(mark)}`
+                    return (
+                      <td class="px-1.5 py-2 text-center tabular-nums">
+                        <span class={cls} title={aria} aria-label={aria}>{CLAIM_MARK[mark].sym}</span>
+                      </td>
+                    )
+                  })}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        {hidden > 0 && <p class="mt-2 text-sm text-fg-faint">{txt.more(hidden)}</p>}
+      </section>
+    )
+  })}
+
+  <footer class="mt-12 border-t border-line pt-6 font-mono text-xs text-fg-faint">
+    {txt.dataAsOf}: {reg.generated_at} · {txt.model}: {reg.rule.model} · Wikipedia (CC BY-SA) ·
+    <a href={methodUrl} class="transition-colors hover:text-fg">{txt.method}</a>
+  </footer>
+</div>
+
+<style>
+  /* Druckfassung: Matrix schwarz auf weiß, Chrome ausgeblendet (wie die anderen Werke). */
+  @media print {
+    :global(body > header), :global(body > footer) { display: none !important; }
+  }
+</style>

@@ -40,6 +40,20 @@ export const WERKE: Werk[] = [
     },
   },
   {
+    id: 'parallaxe',
+    title: 'Parallaxe',
+    subtitle: {
+      de: 'Was jede Sprache verschweigt',
+      en: 'What each language conceals',
+    },
+    status: 'live',
+    href: '/parallaxe',
+    description: {
+      de: 'Dieselbe umstrittene Sache, acht Sprachversionen der Wikipedia — und die Messung, welche Aussage jede Version benennt und welche sie verschweigt. Die japanische Beschreibung der Senkaku-Inseln etwa erwähnt den Territorialstreit mit keinem Wort.',
+      en: 'The same contested thing across eight Wikipedia language versions — and the measure of which claim each version states and which it conceals. The Japanese description of the Senkaku Islands, for instance, never mentions the territorial dispute.',
+    },
+  },
+  {
     id: 'praemie',
     title: 'Die Police',
     subtitle: {
