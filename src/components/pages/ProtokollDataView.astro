@@ -60,6 +60,7 @@ const txt = {
     de ? `${n} Größen · Archiv seit ${d}` : `${n} figures · archive since ${d}`,
   noValue: de ? 'keine Messung' : 'no reading',
   tooFew: de ? 'zu wenige Messungen für einen Verlauf' : 'too few readings for a trend',
+  unchanged: (d: string) => (de ? `unverändert seit ${d}` : `unchanged since ${d}`),
   since: (n: number, d: string) => (de ? `${n} Messungen seit ${d}` : `${n} readings since ${d}`),
   vs: de ? 'ggü.' : 'vs',
   record: de ? 'Rekord' : 'record',
@@ -87,6 +88,8 @@ const txt = {
       const arrow = delta == null ? '' : delta > 0 ? '↑' : delta < 0 ? '↓' : '→'
       const vals = top.series.map((p) => p.value)
       const line = linePath(vals, SW, SH)
+      const flat = vals.length >= 2 && Math.max(...vals) === Math.min(...vals)
+      const moveClass = delta == null ? '' : delta > 0 ? 'text-fg' : delta < 0 ? 'text-fg-faint' : 'text-fg-muted'
       const phrase = (de ? top.phrase.de : top.phrase.en)
         .replace('{value}', hasVal ? nf.format(e.value!) : '—')
         .replace('{label}', e.label ?? '—')
@@ -108,14 +111,14 @@ const txt = {
               <p class="text-xl font-semibold text-fg-faint">—</p>
             )}
             {delta != null && cmp && (
-              <p class="whitespace-nowrap text-right font-mono text-xs tabular-nums" style="color:rgb(var(--rgb-accent))">
+              <p class={`whitespace-nowrap text-right font-mono text-xs tabular-nums ${moveClass}`}>
                 {arrow} {delta > 0 ? '+' : ''}{nf.format(delta)}
                 <span class="mt-0.5 block text-fg-faint">{txt.vs} {periodLabel(cmp.label)}</span>
               </p>
             )}
           </div>
 
-          {line ? (
+          {line && !flat ? (
             <div class="mt-4">
               <svg viewBox={`0 0 ${SW} ${SH}`} class="w-full overflow-visible" role="img"
                 aria-label={txt.since(top.series.length, dateShort(top.series[0].date))}>
@@ -125,6 +128,8 @@ const txt = {
               </svg>
               <p class="mt-1.5 font-mono text-[10px] text-fg-faint">{txt.since(top.series.length, dateShort(top.series[0].date))}</p>
             </div>
+          ) : flat ? (
+            <p class="mt-4 font-mono text-[11px] text-fg-faint">{txt.unchanged(dateShort(top.series[0].date))}</p>
           ) : (
             <p class="mt-4 text-sm text-fg-faint">{hasVal ? txt.tooFew : txt.noValue}</p>
           )}
