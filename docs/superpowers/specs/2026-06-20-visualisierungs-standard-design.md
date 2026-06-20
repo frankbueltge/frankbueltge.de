@@ -1,8 +1,12 @@
 # Visualisierungs-Standard — *Visualisierung als Messinstrument* — Design
 
-Status: abgenommen (2026-06-20)
-Integration: neuer **§3.6** in `2026-06-11-werkgruppe-design.md` (neben §3.4 „Fehler als
-Form" und §3.5 „Methodenblatt"); Kurzregel gespiegelt in `CLAUDE.md`.
+> **Herabgestuft (2026-06-20).** Die „Messinstrument"- und „Fehler-als-Form"-Rhetorik
+> entfällt (siehe `2026-06-20-ehrliche-umrahmung-design.md`). Was bleibt, gilt nur noch
+> als schlichte **Leitlinie für ehrliche Charts**: jede Markierung belegt, Lücke sichtbar,
+> kein Schmuck, keine Animation ohne gemessene Bewegung. Kein Kunst-Anspruch.
+
+Status: herabgestuft (2026-06-20), ursprünglich abgenommen (2026-06-20)
+Integration: als Leitlinie; die Kurzregel in `CLAUDE.md` ist entsprechend nüchtern zu halten.
 
 ## 1. Kontext & Ziel
 

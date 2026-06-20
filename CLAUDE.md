@@ -1,8 +1,10 @@
 # CLAUDE.md — frankbueltge.de
 
-Persönliche Website von Frank Bültge (Data Artist & Engineer) — und zugleich die
-Werkgruppe **„Die Akte der Gegenwart"**: Datenkunstwerke als Messinstrumente an der
-Schnittstelle von Kunst, Wissenschaft und Philosophie.
+Persönliche Website von Frank Bültge (Data & AI Engineer) — ein öffentliches
+**Experimentierfeld** mit Daten und Code. Die Experimente (Protokoll, Halbwertszeit,
+Parallaxe, Police) sind erste Annäherungen, praxisbasiert, auf dem Weg zu einer
+künstlerischen Forschung — nicht deren fertige Praxis. Das gestaltete Arbeiten lebt in
+den Projekten (datavism.org, data-snack.com). Positionierung: `docs/superpowers/specs/2026-06-20-ehrliche-umrahmung-design.md`.
 
 ## Befehle
 
@@ -27,17 +29,18 @@ Die Protokoll-Pipeline (`pipelines/protokoll/`, Python 3.12, Cloud Run Job, 03:3
 schreibt täglich `src/content/protokoll/<jahr>/<datum>.json` per GitHub-API-Commit
 (Autorin „Protokollführung") → Pages-Rebuild.
 
-## Werkgruppe — verbindliche Regeln
+## Experimente — verbindliche Regeln
 
 - **Spec:** `docs/superpowers/specs/2026-06-11-werkgruppe-design.md` (Substanz-Kriterien
-  in §2 sind das Gate für jedes neue Werk; Methodenblatt-Pflicht in §3.5).
-- **Kein LLM-Werktext.** Die Prosa des Protokolls ist deterministisch aus Templates
+  in §2 sind das Gate für jedes neue Experiment; Methodenblatt-Pflicht in §3.5).
+  Rahmung/Wortlaut: `2026-06-20-ehrliche-umrahmung-design.md` (kein Kunst-Anspruch).
+- **Kein LLM-Text.** Die Prosa des Protokolls ist deterministisch aus Templates
   (`src/lib/protokoll/agenda.ts`, `render.ts`); die exakten Strings stehen unter
   Testschutz (`render.test.ts`). **Test-Strings nie aufweichen** — sie sind das
   abgenommene amtliche Register.
 - **Archiv-JSONs sind unantastbar.** Committete Tagesprotokolle werden nie editiert;
   Korrekturen geschehen nur an der Darstellung (Registerfassung versioniert).
-- **Fehler als Form:** Quellenausfälle werden amtlich vermerkt („Feststellung entfällt"),
+- **Ausfälle ehrlich vermerken:** Quellenausfälle werden vermerkt („Feststellung entfällt"),
   nie still überbrückt. Adapter erfinden nichts.
 - **Secrets:** API-Keys nie in URLs-in-Fehlermeldungen (fetch redigiert Query-Strings
   und FIRMS maskiert den Pfad-Key) — Vermerke landen im öffentlichen Archiv.
