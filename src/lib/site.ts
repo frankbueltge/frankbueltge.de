@@ -3,7 +3,7 @@ export const SITE = {
   name: 'Frank Bültge',
   alternateName: 'Frank Bueltge',
   url: 'https://frankbueltge.de',
-  role: { de: 'Data Engineering & Artistic Research', en: 'Data Engineering & Artistic Research' },
+  role: { de: 'Data & AI Engineer', en: 'Data & AI Engineer' },
   email: 'hello@frankbueltge.de',
   /** Frank's personal profiles (used as Person.sameAs). Instagram is owned but empty → schema only. */
   social: {
