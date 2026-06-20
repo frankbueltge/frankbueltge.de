@@ -51,3 +51,32 @@ export function attentionStrip(
   }))
   return { points, min: 10 ** lo, max: 10 ** hi }
 }
+
+export interface HalflifeMarker {
+  x: number
+  y: number
+}
+
+/** Position des Halbwertszeit-Punkts auf der Sparkline — gleiche Koordinaten wie sparkPath.
+ *  x = Peak-Index + halflifeDays (Zeitachse); y = halber Überschuss über dem Sockel (Wurzelskala).
+ *  null, wenn nicht messbar, Peak unauffindbar oder T½ jenseits des sichtbaren Fensters. */
+export function halflifeMarker(
+  series: [string, number][],
+  peakDay: string | null,
+  halflifeDays: number | null,
+  peak: number,
+  baseline: number,
+): HalflifeMarker | null {
+  if (halflifeDays == null || peakDay == null || peak <= 0) return null
+  const peakIndex = series.findIndex(([d]) => d === peakDay)
+  if (peakIndex < 0) return null
+  const days = Math.min(series.length, MAX_DAYS)
+  if (days < 2) return null
+  const f = peakIndex + halflifeDays
+  if (f > days - 1) return null
+  const x = (f / (days - 1)) * SPARK_W
+  const halfLevel = baseline + (peak - baseline) / 2
+  const yFraction = Math.sqrt(Math.max(0, halfLevel) / peak)
+  const y = SPARK_H - yFraction * (SPARK_H - 2) - 1
+  return { x, y }
+}
