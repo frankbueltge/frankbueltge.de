@@ -9,7 +9,7 @@ export interface Werk {
   description: Record<Locale, string>
 }
 
-/** Verzeichnis der Untersuchungen der Reihe „Die Akte der Gegenwart". Jede folgt ihrem eigenen Zyklus. */
+/** Verzeichnis der Experimente. Jedes folgt seinem eigenen Zyklus. */
 export const WERKE: Werk[] = [
   {
     id: 'protokoll',
