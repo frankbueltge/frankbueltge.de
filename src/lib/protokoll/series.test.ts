@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { buildTopSeries, linePath, LINE_W } from './series'
+import { areaPath, buildTopSeries, linePath, LINE_W } from './series'
 import type { ProtokollDay, ProtokollEntry } from './types'
 
 function entry(top_id: string, value: number | null): ProtokollEntry {
@@ -54,5 +54,19 @@ describe('linePath', () => {
   it('weniger als zwei Punkte ergeben keinen Pfad', () => {
     expect(linePath([42], 200, 40)).toBe('')
     expect(linePath([], LINE_W)).toBe('')
+  })
+})
+
+describe('areaPath', () => {
+  it('schließt die Linie zur Grundlinie (beginnt mit M, endet mit Z)', () => {
+    const a = areaPath([0, 50, 100], 200, 40)
+    expect(a.startsWith('M')).toBe(true)
+    expect(a.endsWith('Z')).toBe(true)
+    expect(a).toContain('L200.0,40.0') // rechts hinunter zur Grundlinie
+    expect(a).toContain('L0.0,40.0')   // links zur Grundlinie zurück
+  })
+
+  it('weniger als zwei Punkte ergeben keine Fläche', () => {
+    expect(areaPath([42], 200, 40)).toBe('')
   })
 })
