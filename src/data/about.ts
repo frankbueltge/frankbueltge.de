@@ -10,27 +10,37 @@ export type About = {
 const de: About = {
   metaTitle: 'Über Frank Bültge — Data & AI Engineer',
   metaDesc:
-    'Frank Bültge ist Data & AI Engineer: Analytics Engineering, Tag Management, BigQuery & dbt, KI und Daten-Storytelling. Macher von data-snack.com und datavism.org.',
-  lede: 'Data & AI Engineer. Ich verwandle Rohdaten in Data Products, Entscheidungen, Insights und Geschichten.',
+    'Frank Bültge — Data & AI Engineer. Ein öffentliches Experimentierfeld mit Daten und Code: Versuche und erste Annäherungen, praxisbasiert, auf dem Weg zu einer künstlerischen Forschung.',
+  lede: 'Ich arbeite mit Daten. Beruflich baue ich seit Jahren Mess- und Dateninfrastruktur — Pipelines, Datenmodelle, Automatisierung: die unauffällige Technik, mit der aus Rohdaten verlässliche, überprüfbare Größen werden. Diese Seite ist nicht dieser Beruf. Sie ist mein öffentliches Experimentierfeld — und mein praxisbasierter Weg hin zu einer künstlerischen Forschung. Was hier steht, sind Versuche und erste Annäherungen, kein fertiges Werk.',
   sections: [
     {
-      heading: 'Wer ich bin',
+      heading: 'Worum es geht',
       paragraphs: [
-        'Ich arbeite an der Schnittstelle von sauberer Mess-Infrastruktur, belastbaren Datenmodellen, KI und verständlicher Kommunikation. Mein Anspruch: Daten so aufzubereiten, dass sie zu Entscheidungen führen — nicht nur zu weiteren Dashboards.',
-        'Beruflich baue ich Analytics-, Tracking- und KI-Infrastruktur für ein international aufgestelltes Unternehmen. Daneben entstehen eigene Projekte, in denen ich mit Datenkompetenz, Datenschutz und Bildung experimentiere.',
+        'Mich interessiert, was Messung sichtbar macht und was sie übersieht — und die unsichtbare Infrastruktur dahinter: Quellen, Standards, Rechenwege, Archive. Daraus entstehen kleine, laufende Experimente, die etwas aus offenen Datenquellen zu messen versuchen, ihre Quellen nennen und offenlegen, wie sie gemacht sind.',
       ],
     },
     {
-      heading: 'Woran ich arbeite',
+      heading: 'Hintergrund',
       paragraphs: [
-        'Beruflich: Analytics-, Tracking- und KI-Infrastruktur für ein international aufgestelltes Unternehmen — von der Messung bis zur Entscheidung.',
-        'Privat: data-snack.com (interaktive Daten-Experimente) und datavism.org (Data Activism mit dem KI-Agenten GHOST).',
+        'Der Weg zur künstlerischen Forschung ist für mich keine neue Richtung, sondern eine Wiederaufnahme — aber ein Weg, kein Ankommen. Lange habe ich nicht künstlerisch geforscht, sondern mit Daten, Messung und Technik gearbeitet. Diese Jahre waren kein Umweg: Sie haben das Material und das Handwerk gebracht, mit dem ich die alte Frage heute praxisbasiert bearbeiten kann.',
       ],
     },
     {
-      heading: 'Schwerpunkte',
+      heading: 'Beruf als Fundament',
       paragraphs: [
-        'Data & Analytics Engineering — BigQuery, dbt, moderne Datenmodelle. Tag Management & Tracking — GTM, server-side, Consent & DSGVO. KI/ML-Engineering. Daten-Storytelling & Visualisierung. Data Activism & Datenethik.',
+        'Die berufliche Datenpraxis bleibt wichtig — als methodisches Fundament, nicht als Schaufenster. Sie sorgt dafür, dass eine Messung haltbar, quelliert und nachvollziehbar ist. Den beruflichen Teil halte ich davon getrennt.',
+      ],
+    },
+    {
+      heading: 'Wo das eigentliche Arbeiten passiert',
+      paragraphs: [
+        'Das gestaltete, fertige Arbeiten lebt heute in meinen Projekten — datavism.org und Teile von data-snack.com. Diese Seite ist das Experimentierfeld davor: Vorstudien und Versuche. Linien dorthin ziehe ich später.',
+      ],
+    },
+    {
+      heading: 'Haltung',
+      paragraphs: [
+        'Substanz vor Anspruch, Quelle vor Deutung. Ich behaupte nichts, was die Experimente nicht zeigen — und nicht, schon dort zu sein, wo ich hinwill. Verworfene Versuche bleiben sichtbar.',
       ],
     },
   ],
@@ -39,27 +49,37 @@ const de: About = {
 const en: About = {
   metaTitle: 'About Frank Bültge — Data & AI Engineer',
   metaDesc:
-    'Frank Bültge is a data & AI engineer: analytics engineering, tag management, BigQuery & dbt, AI and data storytelling. Creator of data-snack.com and datavism.org.',
-  lede: 'Data & AI Engineer. I turn raw data into data products, decisions, insights and stories.',
+    'Frank Bültge — Data & AI Engineer. A public field for experiments with data and code: attempts and first approaches, practice-based, on the way toward artistic research.',
+  lede: 'I work with data. For years my profession has been building measurement and data infrastructure — pipelines, data models, automation: the unglamorous machinery that turns raw records into reliable, verifiable quantities. This site is not that job. It is my public field for experiments — and my practice-based path toward artistic research. What you find here are attempts and first approaches, not a finished body of work.',
   sections: [
     {
-      heading: 'Who I am',
+      heading: 'What it is about',
       paragraphs: [
-        'I work at the intersection of solid measurement infrastructure, dependable data models, AI, and clear communication. My goal: shaping data so it leads to decisions — not just to more dashboards.',
-        'Professionally I build analytics, tracking and AI infrastructure for an internationally operating company. Alongside that, I create side projects exploring data literacy, privacy and education.',
+        'What interests me is what measurement makes visible and what it overlooks — and the invisible infrastructure behind it: sources, standards, computational paths, archives. Out of this come small, ongoing experiments that try to measure something from open data sources, name their sources, and disclose how they are made.',
       ],
     },
     {
-      heading: "What I'm working on",
+      heading: 'Background',
       paragraphs: [
-        'Professionally: analytics, tracking and AI infrastructure for an internationally operating company — from measurement to decision.',
-        'Personally: data-snack.com (interactive data experiments) and datavism.org (data activism with the AI agent GHOST).',
+        'The path toward artistic research is not a new direction for me but a return — yet a path, not an arrival. For a long stretch I did not do artistic research; I worked with data, measurement, and technology. Those years were not a detour: they supplied the material and the craft with which I can now work on the old question in a practice-based way.',
       ],
     },
     {
-      heading: 'Focus areas',
+      heading: 'Profession as foundation',
       paragraphs: [
-        'Data & analytics engineering — BigQuery, dbt, modern data models. Tag management & tracking — GTM, server-side, consent & GDPR. AI/ML engineering. Data storytelling & visualization. Data activism & data ethics.',
+        'The professional data practice still matters — as a methodological foundation, not a shop window. It is what keeps a measurement durable, sourced, and traceable. I keep the professional side separate.',
+      ],
+    },
+    {
+      heading: 'Where the real work happens',
+      paragraphs: [
+        'The finished, crafted work lives in my projects today — datavism.org and parts of data-snack.com. This site is the experimental field before that: preliminary studies and attempts. I will draw the lines to it later.',
+      ],
+    },
+    {
+      heading: 'Stance',
+      paragraphs: [
+        'Substance before claim, source before interpretation. I assert nothing the experiments cannot show — and not that I am already where I want to get to. Discarded attempts stay visible.',
       ],
     },
   ],
