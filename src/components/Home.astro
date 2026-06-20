@@ -1,5 +1,5 @@
 ---
-// „Die Akte zuerst": Hero (Klimapuls) → lebendes Protokoll → Untersuchungen → Beruflich.
+// Experimente zuerst: Hero (Klimapuls) → lebendes Protokoll → Experimente → Beruflich.
 // Spec: docs/superpowers/specs/2026-06-12-startseite-design.md
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import { t } from '@/i18n/ui'
@@ -37,7 +37,7 @@ const featured = [...projects].sort((a, b) => a.order - b.order)
       <ProtokollTeaser locale={locale} />
     </section>
 
-    <!-- Untersuchungen — Die Akte der Gegenwart -->
+    <!-- Experimente -->
     <section class="col-span-12 mt-4">
       <WerkeStrip locale={locale} />
     </section>
