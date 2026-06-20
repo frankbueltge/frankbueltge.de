@@ -20,8 +20,8 @@ const txt = {
     : 'Daily sources are retrieved nightly (03:30 UTC). Sources with monthly or annual cadence never claim daily freshness: every finding states its measurement date ("As of: …"). UNHCR and FAO values are maintained editorially as versioned data files.',
   s3: de ? '3. Verarbeitung' : '3. Processing',
   s3body: de
-    ? `Jeder Satz ist deterministisch aus Daten erzeugt — Templates statt LLM, Registerfassung ${TEMPLATE_VERSION}, auf jeder Seite ausgewiesen. Das kanonische Artefakt ist die Tages-JSON-Datei im Repository (ein Commit pro Sitzung, Autorin „Protokollführung"); die Prosa ist Darstellung. Code öffentlich: pipelines/protokoll im Site-Repository. dbt-Lineage folgt mit den BigQuery-Untersuchungen der Reihe.`
-    : `Every sentence is derived deterministically from data — templates, no LLM, register version ${TEMPLATE_VERSION}, stated on every page. The canonical artefact is the daily JSON file in the repository (one commit per session, author "Protokollführung"); the prose is presentation. Code is public: pipelines/protokoll in the site repository. dbt lineage follows with the BigQuery investigations of the series.`,
+    ? `Jeder Satz ist deterministisch aus Daten erzeugt — Templates statt LLM, Registerfassung ${TEMPLATE_VERSION}, auf jeder Seite ausgewiesen. Das kanonische Artefakt ist die Tages-JSON-Datei im Repository (ein Commit pro Sitzung, Autorin „Protokollführung"); die Prosa ist Darstellung. Code öffentlich: pipelines/protokoll im Site-Repository. dbt-Lineage folgt mit den BigQuery-Experimenten.`
+    : `Every sentence is derived deterministically from data — templates, no LLM, register version ${TEMPLATE_VERSION}, stated on every page. The canonical artefact is the daily JSON file in the repository (one commit per session, author "Protokollführung"); the prose is presentation. Code is public: pipelines/protokoll in the site repository. dbt lineage follows with the BigQuery experiments.`,
   s4: de ? '4. Grenzen der Methode' : '4. Limits of the method',
   s4items: de
     ? [

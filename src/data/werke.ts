@@ -68,8 +68,8 @@ export const WERKE: Werk[] = [
     },
   },
 ]
-// Überflug wurde am 2026-06-12 aus der Reihe genommen (keine These, keine Akkumulation —
-// fällt durch das Substanz-Gate) und lebt als Studie im Lab weiter:
+// Überflug wurde am 2026-06-12 aus der Reihe der Experimente genommen (keine These,
+// keine Akkumulation) und lebt als Studie im Lab weiter:
 // src/content/lab/ueberflug-studie/
 
 /** Angekündigte Untersuchungen der Akte — erscheinen als „in Vorbereitung".
