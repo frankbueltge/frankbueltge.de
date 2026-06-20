@@ -6,7 +6,7 @@ import { renderDay } from '@/lib/protokoll/render'
 export async function GET(context: APIContext) {
   const days = await getProtokollDays()
   return rss({
-    title: 'Das Protokoll (minutes) — frankbueltge.de',
+    title: 'The Protocol (minutes) — frankbueltge.de',
     description: 'Daily minutes of the world. Resolution: adjourned.',
     site: context.site!,
     items: days.slice(0, 30).map((day) => {
