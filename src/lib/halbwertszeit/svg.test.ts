@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { attentionStrip, SPARK_H, SPARK_W, sparkPath, STRIP_W } from './svg'
+import { attentionStrip, halflifeMarker, SPARK_H, SPARK_W, sparkPath, STRIP_W } from './svg'
 
 describe('sparkPath', () => {
   it('startet am Peak oben und endet rechts unten beim Sockel', () => {
@@ -50,5 +50,27 @@ describe('attentionStrip', () => {
   it('benutzt STRIP_W als Standardbreite', () => {
     const layout = attentionStrip([{ vpd: 1, label: 'a' }, { vpd: 10, label: 'b' }])
     expect(layout.points[1].x).toBeCloseTo(STRIP_W)
+  })
+})
+
+describe('halflifeMarker', () => {
+  // Peak bei Index 1, T½ = 4 Tage → x bei Index 5; 11 Punkte → Spanne 10
+  const series: [string, number][] = Array.from({ length: 11 }, (_, i) => [
+    `2026-01-${String(i + 1).padStart(2, '0')}`, i === 1 ? 1000 : 100,
+  ])
+
+  it('setzt den Punkt bei Peak-Index + Halbwertszeit auf Höhe des halben Überschusses', () => {
+    const m = halflifeMarker(series, '2026-01-02', 4, 1000, 0)!
+    expect(m.x).toBeCloseTo(110)     // (1+4)/10 * 220
+    expect(m.y).toBeCloseTo(12.13, 1) // 40 - sqrt(0.5)*38 - 1
+  })
+
+  it('gibt null ohne Halbwertszeit oder ohne auffindbaren Peak', () => {
+    expect(halflifeMarker(series, '2026-01-02', null, 1000, 0)).toBeNull()
+    expect(halflifeMarker(series, '2099-01-01', 4, 1000, 0)).toBeNull()
+  })
+
+  it('gibt null, wenn die Halbwertszeit jenseits des sichtbaren Fensters liegt', () => {
+    expect(halflifeMarker(series, '2026-01-02', 200, 1000, 0)).toBeNull()
   })
 })
