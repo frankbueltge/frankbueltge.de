@@ -13,7 +13,7 @@ export interface Werk {
 export const WERKE: Werk[] = [
   {
     id: 'protokoll',
-    title: 'Das Protokoll',
+    title: 'The Protocol',
     subtitle: {
       de: 'Tägliche Kennzahlen aus zwölf offenen Quellen',
       en: 'Daily figures from twelve open sources',
@@ -27,7 +27,7 @@ export const WERKE: Werk[] = [
   },
   {
     id: 'halbwertszeit',
-    title: 'Halbwertszeit',
+    title: 'Half-Life',
     subtitle: {
       de: 'Wie schnell die Aufmerksamkeit für Katastrophen abklingt',
       en: 'How fast attention to disasters fades',
@@ -41,7 +41,7 @@ export const WERKE: Werk[] = [
   },
   {
     id: 'parallaxe',
-    title: 'Parallaxe',
+    title: 'Parallax',
     subtitle: {
       de: 'Wie sich Wikipedia-Sprachversionen über umstrittene Themen unterscheiden',
       en: 'How Wikipedia language editions differ on contested topics',
@@ -55,7 +55,7 @@ export const WERKE: Werk[] = [
   },
   {
     id: 'praemie',
-    title: 'Die Police',
+    title: 'The Policy',
     subtitle: {
       de: 'Klimakosten, aus Marktdaten als „Prämie" gerechnet',
       en: 'Climate cost, computed from market data as a „premium"',

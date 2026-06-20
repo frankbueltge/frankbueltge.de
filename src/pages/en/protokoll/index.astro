@@ -1,13 +1,13 @@
 ---
 import Page from '@/layouts/Page.astro'
-import ProtokollDoc from '@/components/pages/ProtokollDoc.astro'
-import { getLatestProtokoll } from '@/lib/protokoll/data'
+import ProtokollDataView from '@/components/pages/ProtokollDataView.astro'
+import { getProtokollDays } from '@/lib/protokoll/data'
 import { t } from '@/i18n/ui'
 const locale = 'en' as const
-const day = await getLatestProtokoll()
+const days = await getProtokollDays()
 ---
 <Page title={`${t(locale, 'prot.title')} | Frank Bültge`} description={t(locale, 'prot.sub')}>
-  {day ? <ProtokollDoc day={day} locale={locale} /> : (
+  {days.length ? <ProtokollDataView days={days} locale={locale} /> : (
     <p class="mx-auto max-w-2xl px-4 py-14 text-fg-muted">{t(locale, 'prot.empty')}</p>
   )}
 </Page>
