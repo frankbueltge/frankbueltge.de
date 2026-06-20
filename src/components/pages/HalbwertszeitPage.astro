@@ -19,7 +19,7 @@ const dateLong = (iso: string) =>
   new Intl.DateTimeFormat(de ? 'de-DE' : 'en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })
     .format(new Date(`${iso}T00:00:00Z`))
 
-const events = [...reg.events].sort((a, b) => a.date.localeCompare(b.date))
+const events = [...reg.events].sort((a, b) => b.date.localeCompare(a.date))
 const label = (e: HwEvent) => (de ? e.label_de : e.label_en)
 
 // Ungleichheits-Achse: Spreizung der Aufmerksamkeit je Todesopfer (nur Ereignisse mit Peak).
