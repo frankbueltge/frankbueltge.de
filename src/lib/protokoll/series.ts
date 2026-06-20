@@ -58,3 +58,11 @@ export function linePath(values: number[], width = LINE_W, height = LINE_H): str
   })
   return `M${pts.join(' L')}`
 }
+
+/** Wie linePath, aber zur Grundlinie geschlossen — für eine zarte Flächenfüllung unter der
+ *  echten Kurve (Magnitude sichtbar, kein Schmuck). Leer bei weniger als zwei Punkten. */
+export function areaPath(values: number[], width = LINE_W, height = LINE_H): string {
+  const line = linePath(values, width, height)
+  if (!line) return ''
+  return `${line} L${width.toFixed(1)},${height.toFixed(1)} L0.0,${height.toFixed(1)} Z`
+}

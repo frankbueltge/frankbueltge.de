@@ -1,11 +1,12 @@
 ---
-// Protokoll als Daten-Ansicht: gemessene Größen der Tagesordnung mit Bewegung + Verlauf;
-// der amtliche Wortlaut (renderDay, Register-geschützt) steht sekundär darunter.
+// Protokoll als Daten-Ansicht (Instrument-Panel): gemessene Größen der Tagesordnung mit
+// Wert, Bewegung und Verlauf; der amtliche Wortlaut (renderDay, Register-geschützt) steht
+// sekundär darunter. Mono-Skin, statisch, datentreu — kein Effekt-Schmuck, keine Animation.
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import { t } from '@/i18n/ui'
 import type { Locale } from '@/lib/site'
 import { renderDay } from '@/lib/protokoll/render'
-import { buildTopSeries, linePath, LINE_H, LINE_W } from '@/lib/protokoll/series'
+import { areaPath, buildTopSeries, linePath } from '@/lib/protokoll/series'
 import type { ComparisonLabel, ProtokollDay } from '@/lib/protokoll/types'
 
 interface Props { days: ProtokollDay[]; locale: Locale }
@@ -14,8 +15,13 @@ const de = locale === 'de'
 
 const sorted = [...days].sort((a, b) => b.date.localeCompare(a.date))
 const latest = sorted[0]
+const oldest = sorted.at(-1)
 const tops = buildTopSeries(days)
 const r = latest ? renderDay(latest, locale) : null
+
+// Sparkline-Koordinatenraum (skaliert uniform per w-full → Punkt bleibt rund).
+const SW = 320
+const SH = 64
 
 const archivUrl = getRelativeLocaleUrl(locale, '/protokoll/archiv')
 const methodUrl = getRelativeLocaleUrl(locale, '/werke/protokoll')
@@ -37,12 +43,23 @@ const PERIOD: Record<ComparisonLabel, { de: string; en: string }> = {
 }
 const periodLabel = (l: ComparisonLabel) => (de ? PERIOD[l].de : PERIOD[l].en)
 
+// y-Höhe des jüngsten Punkts (gleiche Formel wie linePath) — für den Markierungspunkt.
+function lastY(values: number[]): number {
+  const min = Math.min(...values)
+  const max = Math.max(...values)
+  const span = max - min || 1
+  return SH - ((values.at(-1)! - min) / span) * (SH - 2) - 1
+}
+
 const txt = {
-  title: de ? 'Protokoll — Daten' : 'Protokoll — data',
+  eyebrow: de ? 'Protokoll · Daten' : 'Protokoll · data',
   intro: de
-    ? 'Die gemessenen Größen der Tagesordnung: aktueller Wert, Bewegung und bisheriger Verlauf. Der amtliche Wortlaut steht darunter.'
-    : 'The measured figures of the agenda: current value, movement and course so far. The official wording is below.',
+    ? 'Die gemessenen Größen der Tagesordnung: aktueller Wert, Bewegung und bisheriger Verlauf.'
+    : 'The measured figures of the agenda: current value, movement and course so far.',
+  count: (n: number, d: string) =>
+    de ? `${n} Größen · Archiv seit ${d}` : `${n} figures · archive since ${d}`,
   noValue: de ? 'keine Messung' : 'no reading',
+  tooFew: de ? 'zu wenige Messungen für einen Verlauf' : 'too few readings for a trend',
   since: (n: number, d: string) => (de ? `${n} Messungen seit ${d}` : `${n} readings since ${d}`),
   vs: de ? 'ggü.' : 'vs',
   record: de ? 'Rekord' : 'record',
@@ -51,59 +68,69 @@ const txt = {
 }
 ---
 
-<article class="mx-auto max-w-3xl px-4 py-14">
+<div class="mx-auto max-w-5xl px-4 py-14">
   <header class="mb-10">
-    <h1 class="text-xl font-semibold">{txt.title}</h1>
-    {latest && <p class="mt-1 font-mono text-xs text-fg-faint">{dateLong(latest.date)}</p>}
-    <p class="mt-3 max-w-2xl text-fg-muted">{txt.intro}</p>
+    <p class="font-mono text-xs uppercase tracking-[0.2em] text-fg-faint">{txt.eyebrow}</p>
+    {latest && (
+      <h1 class="mt-2 text-[clamp(30px,5vw,52px)] font-bold leading-none tracking-tight">{dateLong(latest.date)}</h1>
+    )}
+    <p class="mt-4 max-w-2xl text-fg-muted">{txt.intro}</p>
+    {oldest && <p class="mt-2 font-mono text-xs text-fg-faint">{txt.count(tops.length, dateShort(oldest.date))}</p>}
   </header>
 
-  <div class="space-y-4">
+  <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
     {tops.map((top) => {
       const e = top.latest
       const hasVal = e.value != null
       const cmp = e.comparison
       const delta = hasVal && cmp ? e.value! - cmp.value : null
       const arrow = delta == null ? '' : delta > 0 ? '↑' : delta < 0 ? '↓' : '→'
-      const path = linePath(top.series.map((p) => p.value))
+      const vals = top.series.map((p) => p.value)
+      const line = linePath(vals, SW, SH)
       const phrase = (de ? top.phrase.de : top.phrase.en)
         .replace('{value}', hasVal ? nf.format(e.value!) : '—')
         .replace('{label}', e.label ?? '—')
       return (
-        <section class="rounded-[14px] border border-line bg-panel panel-raised p-5">
-          <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+        <section class="flex flex-col rounded-[16px] border border-line bg-panel panel-raised p-5">
+          <div class="flex items-baseline justify-between gap-x-3">
             <h2 class="font-semibold">{top.title[locale]}</h2>
             {e.record && (
               <span class="rounded-full border border-line px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-fg-muted">{txt.record}</span>
             )}
           </div>
-          <div class="mt-2 flex flex-wrap items-end gap-x-8 gap-y-3">
-            <div>
-              {hasVal ? (
-                <p class="text-[clamp(28px,5vw,44px)] font-bold leading-none tracking-tight tabular-nums">
-                  {nf.format(e.value!)}<span class="ml-1.5 text-[0.4em] font-semibold text-fg-muted">{e.unit}</span>
-                </p>
-              ) : (
-                <p class="text-2xl font-semibold text-fg-faint">—<span class="ml-2 text-sm font-normal">{txt.noValue}</span></p>
-              )}
-              {delta != null && cmp && (
-                <p class="mt-1.5 font-mono text-xs text-fg-muted tabular-nums">
-                  {arrow} {delta > 0 ? '+' : ''}{nf.format(delta)} {txt.vs} {periodLabel(cmp.label)}
-                </p>
-              )}
-            </div>
-            {path && (
-              <div class="shrink-0">
-                <svg viewBox={`0 0 ${LINE_W} ${LINE_H}`} width={LINE_W} height={LINE_H} class="text-fg-faint"
-                  role="img" aria-label={txt.since(top.series.length, dateShort(top.series[0].date))}>
-                  <path d={path} fill="none" stroke="rgb(var(--rgb-accent))" stroke-width="1.4" />
-                </svg>
-                <p class="mt-1 font-mono text-[10px] text-fg-faint">{txt.since(top.series.length, dateShort(top.series[0].date))}</p>
-              </div>
+
+          <div class="mt-3 flex items-end justify-between gap-x-3">
+            {hasVal ? (
+              <p class="text-[clamp(28px,4.5vw,42px)] font-bold leading-none tracking-tight tabular-nums">
+                {nf.format(e.value!)}<span class="ml-1.5 text-[0.4em] font-semibold text-fg-muted">{e.unit}</span>
+              </p>
+            ) : (
+              <p class="text-xl font-semibold text-fg-faint">—</p>
+            )}
+            {delta != null && cmp && (
+              <p class="whitespace-nowrap text-right font-mono text-xs tabular-nums" style="color:rgb(var(--rgb-accent))">
+                {arrow} {delta > 0 ? '+' : ''}{nf.format(delta)}
+                <span class="mt-0.5 block text-fg-faint">{txt.vs} {periodLabel(cmp.label)}</span>
+              </p>
             )}
           </div>
-          <p class="mt-3 text-sm leading-relaxed text-fg-muted">{phrase}</p>
-          <p class="mt-1 font-mono text-[11px] text-fg-faint">{e.source.name} · {txt.asOf} {e.as_of ?? '—'}</p>
+
+          {line ? (
+            <div class="mt-4">
+              <svg viewBox={`0 0 ${SW} ${SH}`} class="w-full overflow-visible" role="img"
+                aria-label={txt.since(top.series.length, dateShort(top.series[0].date))}>
+                <path d={areaPath(vals, SW, SH)} fill="rgb(var(--rgb-accent))" fill-opacity="0.1" stroke="none" />
+                <path d={line} fill="none" stroke="rgb(var(--rgb-accent))" stroke-width="1.5" vector-effect="non-scaling-stroke" />
+                <circle cx={SW} cy={lastY(vals).toFixed(1)} r="2.6" fill="rgb(var(--rgb-accent))" />
+              </svg>
+              <p class="mt-1.5 font-mono text-[10px] text-fg-faint">{txt.since(top.series.length, dateShort(top.series[0].date))}</p>
+            </div>
+          ) : (
+            <p class="mt-4 text-sm text-fg-faint">{hasVal ? txt.tooFew : txt.noValue}</p>
+          )}
+
+          <p class="mt-3 text-xs leading-relaxed text-fg-muted">{phrase}</p>
+          <p class="mt-auto pt-3 font-mono text-[10px] text-fg-faint">{e.source.name} · {txt.asOf} {e.as_of ?? '—'}</p>
         </section>
       )
     })}
@@ -112,7 +139,7 @@ const txt = {
   {r && (
     <details class="mt-12 border-t border-line pt-6">
       <summary class="cursor-pointer font-semibold text-fg-muted">{txt.wortlaut}</summary>
-      <div class="protokoll mt-6">
+      <div class="protokoll mx-auto mt-6 max-w-2xl">
         <div class="mb-8 space-y-1">{r.kopf.map((line) => <p class="text-[15px] leading-relaxed">{line}</p>)}</div>
         {r.tops.map((top) => (
           <section class="mb-6">
@@ -135,4 +162,4 @@ const txt = {
     <a href={methodUrl} class="transition-colors hover:text-fg">{t(locale, 'prot.method')}</a>
     <a href={feedUrl} class="transition-colors hover:text-fg">RSS</a>
   </nav>
-</article>
+</div>
