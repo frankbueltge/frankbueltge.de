@@ -16,7 +16,9 @@ export default defineConfig({
   },
   integrations: [sitemap(), mdx()],
   vite: {
-    plugins: [tailwindcss()],
+    // @tailwindcss/vite hängt noch an Vite 6, Astro 6 nutzt Vite 7 → die Plugin-Typen
+    // kollidieren (reiner Typ-Konflikt, der Build läuft). Cast, bis Tailwind auf Vite 7 zieht.
+    plugins: [/** @type {any} */ (tailwindcss())],
     worker: {
       format: 'es',
     },
