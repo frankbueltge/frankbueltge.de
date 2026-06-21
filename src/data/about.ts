@@ -32,12 +32,6 @@ const de: About = {
       ],
     },
     {
-      heading: 'Wo das eigentliche Arbeiten passiert',
-      paragraphs: [
-        'Das gestaltete, fertige Arbeiten lebt heute in meinen Projekten — datavism.org und Teile von data-snack.com. Diese Seite ist das Experimentierfeld davor: Vorstudien und Versuche. Linien dorthin ziehe ich später.',
-      ],
-    },
-    {
       heading: 'Haltung',
       paragraphs: [
         'Substanz vor Anspruch, Quelle vor Deutung. Ich behaupte nichts, was die Experimente nicht zeigen — und nicht, schon dort zu sein, wo ich hinwill. Verworfene Versuche bleiben sichtbar.',
@@ -68,12 +62,6 @@ const en: About = {
       heading: 'Profession as foundation',
       paragraphs: [
         'The professional data practice still matters — as a methodological foundation, not a shop window. It is what keeps a measurement durable, sourced, and traceable. I keep the professional side separate.',
-      ],
-    },
-    {
-      heading: 'Where the real work happens',
-      paragraphs: [
-        'The finished, crafted work lives in my projects today — datavism.org and parts of data-snack.com. This site is the experimental field before that: preliminary studies and attempts. I will draw the lines to it later.',
       ],
     },
     {
