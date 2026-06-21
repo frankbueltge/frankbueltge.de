@@ -81,6 +81,20 @@ export const WERKE: Werk[] = [
       en: 'First instrument of the „Counter-Measurement" line. Each day a machine picks the sentence the most „independent" outlets ran word-for-word, shows source and cascade, and computes how much of the news consensus is echo rather than reporting.',
     },
   },
+  {
+    id: 'correction',
+    title: 'The Correction',
+    subtitle: {
+      de: 'Die amtliche Zahl war zu niedrig — und ist nie endgültig',
+      en: 'The official number was too low — and is never final',
+    },
+    status: 'live',
+    href: '/correction',
+    description: {
+      de: 'Zweites Instrument der Linie „Gegenmessung". Nicht durch ein eigenes Modell, sondern durch die Revisionen, die das Amt selbst vornimmt: Die CDC-Grippezahlen werden fast immer nach oben korrigiert — manchmal noch zwei Jahre später. Die Echtzeit-Zahl ist systematisch zu niedrig.',
+      en: 'Second instrument of the „Counter-Measurement" line. Not via a model of my own but via the revisions the agency itself makes: the CDC flu numbers are almost always corrected upward — sometimes two years later. The real-time number is systematically too low.',
+    },
+  },
 ]
 // Überflug wurde am 2026-06-12 aus der Reihe der Experimente genommen (keine These,
 // keine Akkumulation) und lebt als Studie im Lab weiter:
