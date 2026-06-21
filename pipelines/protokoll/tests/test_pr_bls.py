@@ -17,6 +17,11 @@ def test_parse_premium_index_base_and_change():
     assert out["base_value"] == 100.0
     assert out["base_year"] == 1998
     assert out["change_pct_since_base"] == 179.1
+    assert out["series"] == [
+        {"year": 1998, "index": 100.0},
+        {"year": 2010, "index": 180.0},
+        {"year": 2026, "index": 279.1},
+    ]
     assert out["source"]["license"] == "Public Domain (BLS)"
 
 

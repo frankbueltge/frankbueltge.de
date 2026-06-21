@@ -39,12 +39,21 @@ def parse_premium(csv_text: str) -> dict[str, Any]:
 
     base_value = next((v for d, v in rows if d.startswith("1998-06")), rows[0][1])
     latest_date, latest = rows[-1]
+    # Jahres-Serie (für die Visualisierung): letzter Index-Wert je Jahr.
+    by_year: dict[int, float] = {}
+    for d, v in rows:
+        try:
+            by_year[int(d[:4])] = v  # rows chronologisch → letzter Wert des Jahres gewinnt
+        except ValueError:
+            continue
+    series = [{"year": y, "index": round(by_year[y], 1)} for y in sorted(by_year)]
     return {
         "index": latest,
         "latest_date": latest_date,
         "base_value": base_value,
         "base_year": PREMIUM_BASE_YEAR,
         "change_pct_since_base": round((latest / base_value - 1) * 100, 1),
+        "series": series,
         "source": SOURCE,
     }
 

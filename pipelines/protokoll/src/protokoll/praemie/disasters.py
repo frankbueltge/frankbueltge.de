@@ -45,6 +45,17 @@ def parse_disasters(csv_text: str) -> dict[str, Any]:
     if not events:
         raise ValueError("keine gültigen Ereignisse im NOAA-CSV")
 
+    # Jahres-Serie (für die Visualisierung): Kosten ($Mrd.) + Ereigniszahl je Jahr.
+    by_year_cost: dict[int, float] = {}
+    by_year_events: dict[int, int] = {}
+    for y, c, _ in events:
+        by_year_cost[y] = by_year_cost.get(y, 0.0) + c
+        by_year_events[y] = by_year_events.get(y, 0) + 1
+    series = [
+        {"year": y, "cost_busd": round(by_year_cost[y] / 1000, 1), "events": by_year_events[y]}
+        for y in sorted(by_year_cost)
+    ]
+
     latest_year = max(y for y, _, _ in events)
     latest = [(y, c, d) for y, c, d in events if y == latest_year]
     return {
@@ -55,6 +66,7 @@ def parse_disasters(csv_text: str) -> dict[str, Any]:
         "latest_year_events": len(latest),
         "latest_year_cost_busd": round(sum(c for _, c, _ in latest) / 1000, 1),
         "latest_year_deaths": sum(d for _, _, d in latest),
+        "series": series,
         "source": SOURCE,
     }
 

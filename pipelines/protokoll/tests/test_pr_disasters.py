@@ -22,6 +22,11 @@ def test_parse_disasters_aggregates_and_latest_year():
     assert out["latest_year_events"] == 1
     assert out["latest_year_cost_busd"] == 30.0
     assert out["latest_year_deaths"] == 100
+    assert out["series"] == [
+        {"year": 1998, "cost_busd": 1.0, "events": 1},
+        {"year": 2023, "cost_busd": 5.0, "events": 1},
+        {"year": 2024, "cost_busd": 30.0, "events": 1},
+    ]
     assert out["source"]["license"].startswith("Public Domain (NOAA)")
 
 
