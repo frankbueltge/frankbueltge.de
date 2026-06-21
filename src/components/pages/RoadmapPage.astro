@@ -1,0 +1,143 @@
+---
+// Experiment „The Roadmap" — Planet Earth Inc.
+// Ein Konzern-Quartalsbericht, der den realen Zustand der Welt der Optimierungslogik
+// unterwirft. Jede Zahl stammt aus earth.json mit Quelle; erfunden ist nur der Rahmen
+// (inkl. der Konzern-Wertung good_when). Der reflexive Umschlag lebt im Methodenblatt.
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import { t } from '@/i18n/ui'
+import type { Locale } from '@/lib/site'
+import { execSummary, latest, previous, ragStatus, statusLabel, yoyPercent } from '@/lib/roadmap/kpi'
+import type { EarthData, Kpi } from '@/lib/roadmap/types'
+import { yearLinePath } from '@/lib/praemie/chart'
+import earth from '@/data/roadmap/earth.json'
+
+interface Props { locale: Locale }
+const { locale } = Astro.props
+const de = locale === 'de'
+
+const d = earth as unknown as EarthData
+
+const nf0 = new Intl.NumberFormat(de ? 'de-DE' : 'en-GB', { maximumFractionDigits: 0 })
+const nf1 = new Intl.NumberFormat(de ? 'de-DE' : 'en-GB', { minimumFractionDigits: 1, maximumFractionDigits: 1 })
+const nf2 = new Intl.NumberFormat(de ? 'de-DE' : 'en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+
+const RAG: Record<string, { sym: string; color: string }> = {
+  ok: { sym: '✓', color: '#16a34a' },
+  warn: { sym: '⚠', color: '#d97706' },
+  crit: { sym: '✕', color: '#dc2626' },
+}
+
+const fmtValue = (k: Kpi) => {
+  const v = latest(k.series)[1]
+  if (k.unit === 'ppm') return `${nf0.format(v)} ppm`
+  if (k.unit === 'percent') return `${nf1.format(v)} %`
+  return nf2.format(v)
+}
+const fmtDelta = (k: Kpi) => {
+  const pct = yoyPercent(k.series)
+  const sign = pct >= 0 ? '+' : ''
+  return `${sign}${nf1.format(pct)} % ${de ? 'seit' : 'since'} ${previous(k.series)[0]}`
+}
+
+// Sparkline auf die eigene Min/Max-Spanne normiert (voller Höhenhub → Verlauf sichtbar).
+const SPARK_W = 128
+const SPARK_H = 34
+const spark = (k: Kpi) => {
+  const ys = k.series.map((p) => p[1])
+  const mn = Math.min(...ys)
+  const mx = Math.max(...ys)
+  const xs = k.series.map((p) => p[0])
+  const pts = k.series.map(([year, value]) => ({ year, value: value - mn }))
+  return yearLinePath(pts, Math.min(...xs), Math.max(...xs), mx - mn || 1, SPARK_W, SPARK_H)
+}
+
+const actions = de
+  ? [
+      'Einstellen: Meinungsfreiheit (geringer ROI)',
+      'A/B-Test: Wahlen vs. keine Wahlen',
+      'Backlog: Gewaltenteilung (P3)',
+      'OKR: CO₂ in der Atmosphäre +0,5 % QoQ steigern 🚀',
+      'Feiern: Top-1%-Einkommens-Meilenstein 🎉',
+      'Parkplatz: Biodiversität — kein Owner zugewiesen',
+    ]
+  : [
+      'Sunset: free expression (low ROI)',
+      'A/B-test: elections vs. no elections',
+      'Backlog: separation of powers (P3)',
+      'OKR: grow atmospheric CO₂ +0.5% QoQ 🚀',
+      'Celebrate: top-1% income milestone 🎉',
+      'Parking lot: biodiversity — no owner assigned',
+    ]
+
+const ownerLabel = t(locale, 'rm.owner')
+const methodUrl = getRelativeLocaleUrl(locale, '/werke/roadmap')
+const methodLabel = t(locale, 'prot.method')
+---
+
+<article class="roadmap mx-auto max-w-3xl px-4 py-14">
+  <header class="mb-10 border-b border-line pb-6">
+    <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-fg-faint">{t(locale, 'rm.confidential')}</p>
+    <h1 class="mt-3 text-[clamp(30px,6vw,56px)] font-bold tracking-[-0.03em]">PLANET EARTH INC.</h1>
+    <p class="mt-1 font-mono text-sm text-fg-muted">{d.quarter} · Quarterly Business Review</p>
+  </header>
+
+  <section class="mb-10 border-l-2 border-line pl-4">
+    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">{t(locale, 'rm.exec')}</p>
+    <p class="mt-2 leading-relaxed">{execSummary(d.kpis, locale)}</p>
+  </section>
+
+  <section class="mb-12">
+    <ul class="grid gap-3 sm:grid-cols-2">
+      {d.kpis.map((k) => {
+        const rag = RAG[ragStatus(k)]
+        return (
+          <li class="flex flex-col border border-line p-4">
+            <div class="flex items-start justify-between gap-3">
+              <p class="font-mono text-xs uppercase tracking-[0.14em] text-fg-faint">{k.label[locale]}</p>
+              <span class="shrink-0 font-mono text-xs font-semibold" style={`color:${rag.color}`}>
+                {rag.sym} {statusLabel(ragStatus(k), locale)}
+              </span>
+            </div>
+            <div class="mt-3 flex items-end gap-3">
+              <p class="text-3xl font-bold leading-none tabular-nums">{fmtValue(k)}</p>
+              <p class="pb-0.5 font-mono text-xs text-fg-muted tabular-nums">{fmtDelta(k)}</p>
+              <svg
+                class="ml-auto self-end text-fg-faint"
+                width={SPARK_W / 2}
+                height={SPARK_H / 2}
+                viewBox={`0 0 ${SPARK_W} ${SPARK_H}`}
+                role="img"
+                aria-label={k.metric[locale]}
+              >
+                <path d={spark(k)} fill="none" stroke="currentColor" stroke-width="1.5" vector-effect="non-scaling-stroke" />
+              </svg>
+            </div>
+            <p class="mt-3 text-xs leading-snug text-fg-muted">{k.metric[locale]}</p>
+            <div class="mt-2 flex items-center justify-between font-mono text-[11px] text-fg-faint">
+              <span>{k.spin[locale]}</span>
+              <span>{ownerLabel}: {k.owner[locale]}</span>
+            </div>
+          </li>
+        )
+      })}
+    </ul>
+  </section>
+
+  <section class="mb-12">
+    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">{t(locale, 'rm.roadmap')}</p>
+    <ul class="mt-3 space-y-1.5">
+      {actions.map((item) => (
+        <li class="flex gap-2.5 text-sm leading-relaxed">
+          <span class="select-none text-fg-faint">▢</span>
+          <span>{item}</span>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <footer class="mt-12 border-t border-line pt-6">
+    <nav class="text-sm text-fg-muted">
+      <a href={methodUrl} class="font-mono text-xs transition-colors hover:text-fg">{methodLabel} →</a>
+    </nav>
+  </footer>
+</article>
