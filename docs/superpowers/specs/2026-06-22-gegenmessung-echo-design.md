@@ -92,10 +92,27 @@ Titel statt Volltext (v1); GDELT-Abdeckungs-Bias (englisch/westlich); legitime S
 Manipulation — aber die *Illusion unabhängiger Bestätigung* bleibt der Punkt; kein Absichts-Claim;
 n-Gramm-Schwellen sind eine gesetzte Wahl (offengelegt).
 
-### 3.6 No-Gos respektiert
+### 3.6 KI/ML als Methode — nachprüfbar (ersetzt das alte „kein LLM"-Dogma)
 
-Kein erfundener Datenpunkt; Unsicherheit ehrlich; **deterministische** Aufbereitung (Prosa aus
-gemessenen Daten, kein LLM-Werktext); keine Secrets/PII; keine Tech-Demo-Ästhetik.
+Das Lab experimentiert mit Daten UND KI (inkl. ML und symbolischer/neuro-symbolischer KI). Die
+einzige Bedingung ist **Nachprüfbarkeit:** jeder KI-Schritt transparent (Modell/Prompt/Verfahren
+offengelegt), Output verifiziert oder als Schätzung markiert; wo das Modell der Gegenstand ist,
+wird seine Unzuverlässigkeit Teil der Messung. KI als ausgewiesenes, prüfbares Werkzeug UND als
+Gegenstand — nie als unbelegtes Orakel. Weiterhin gilt: kein erfundener Datenpunkt, keine
+Secrets/PII, keine Tech-Demo-Ästhetik, Unsicherheit ehrlich.
+
+### 3.7 KI/ML-Schichten von „The Consensus" (gestaffelt)
+
+- **v1 (Baseline, statistisch):** wortgleiche n-Gramm-Synchronität über Domains. Fängt *verbatim*
+  Wire-Copy — der validierte Fund (77 Medien, ein Satz).
+- **v2 (ML, semantisch):** Embeddings/Vektor-Ähnlichkeit fangen *paraphrasierte* Koordination
+  (gleiche Behauptung, leicht umformuliert) — die „weiche" Synchronität, die Verbatim-Matching verfehlt.
+- **v3 (symbolisch, neuro-symbolisch):** ein **Provenienz-/Propagations-Graph** (wer brachte den
+  Satz zuerst, wer echote wann) — auditierbares Graph-Reasoning identifiziert Quelle und Kaskade.
+  Optional ein LLM als *transparenter, gegen den Graphen verifizierter* Klassifikator
+  (Wire-Syndizierung vs. gestreute PR-Platzierung), Prompt offengelegt.
+- **Selbstbezug:** ein KI-Instrument, das einen zunehmend KI-erzeugten Medienstrom misst — und
+  über den eigenen KI-Einsatz Rechenschaft ablegt.
 
 ## 4. Technik-Skizze (kein Plan — der folgt mit writing-plans)
 
