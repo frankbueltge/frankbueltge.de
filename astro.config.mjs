@@ -14,7 +14,9 @@ export default defineConfig({
     // English at /, German at /de — hreflang handles parity; /en/* → / via vercel.json-Redirects.
     routing: { prefixDefaultLocale: false },
   },
-  integrations: [sitemap(), mdx()],
+  // Tages-Snapshots (/protokoll/<datum>) sind noindex + aus der Sitemap — dünn & wächst
+  // täglich; Frische trägt die aktuelle /protokoll-Seite + das Archiv-Register.
+  integrations: [sitemap({ filter: (page) => !/\/protokoll\/\d{4}-\d{2}-\d{2}\//.test(page) }), mdx()],
   vite: {
     // @tailwindcss/vite hängt noch an Vite 6, Astro 6 nutzt Vite 7 → die Plugin-Typen
     // kollidieren (reiner Typ-Konflikt, der Build läuft). Cast, bis Tailwind auf Vite 7 zieht.

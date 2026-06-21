@@ -6,11 +6,12 @@ import Footer from '@/components/Footer.astro'
 interface Props {
   title: string
   description: string
+  noindex?: boolean
 }
-const { title, description } = Astro.props
+const { title, description, noindex } = Astro.props
 ---
 
-<Base title={title} description={description}>
+<Base title={title} description={description} noindex={noindex}>
   <TopBar />
   <slot />
   <Footer />
