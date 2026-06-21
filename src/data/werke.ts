@@ -67,6 +67,20 @@ export const WERKE: Werk[] = [
       en: 'An insurance policy on the present, its premium recomputed each night from real market data. The market has long since priced in the climate catastrophe — and the premium is rising: +179% since 1998.',
     },
   },
+  {
+    id: 'consensus',
+    title: 'The Consensus',
+    subtitle: {
+      de: 'Wie viel „unabhängiger" Nachrichten-Konsens eine Quelle ist, x-fach kopiert',
+      en: 'How much „independent" news consensus is one source, copied',
+    },
+    status: 'live',
+    href: '/consensus',
+    description: {
+      de: 'Erstes Instrument der Linie „Gegenmessung". Jeden Tag wählt eine Maschine den Satz, den die meisten „unabhängigen" Medien wortgleich brachten, zeigt Quelle und Kaskade und rechnet, wie viel des Nachrichten-Konsenses Echo statt Recherche ist.',
+      en: 'First instrument of the „Counter-Measurement" line. Each day a machine picks the sentence the most „independent" outlets ran word-for-word, shows source and cascade, and computes how much of the news consensus is echo rather than reporting.',
+    },
+  },
 ]
 // Überflug wurde am 2026-06-12 aus der Reihe der Experimente genommen (keine These,
 // keine Akkumulation) und lebt als Studie im Lab weiter:
