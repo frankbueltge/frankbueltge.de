@@ -1,0 +1,9 @@
+---
+import Page from '@/layouts/Page.astro'
+import CorrectionPage from '@/components/pages/CorrectionPage.astro'
+import { t } from '@/i18n/ui'
+const locale = 'en' as const
+---
+<Page title={`${t(locale, 'cr.title')} | Frank Bültge`} description={t(locale, 'cr.sub')}>
+  <CorrectionPage {locale} />
+</Page>

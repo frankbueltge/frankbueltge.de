@@ -1,0 +1,93 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import type { Locale } from '@/lib/site'
+import type { RevisionData } from '@/lib/revision/types'
+import data from '@/data/revision/latest.json'
+
+interface Props { locale: Locale }
+const { locale } = Astro.props
+const de = locale === 'de'
+const d = data as unknown as RevisionData
+const workUrl = getRelativeLocaleUrl(locale, '/correction')
+
+const txt = {
+  h1: de ? 'Methodenblatt — The Correction' : 'Method sheet — The Correction',
+  revealHead: de ? 'Worum es geht' : 'What this is',
+  reveal: de
+    ? 'Es gibt nicht „die Zahl". Jede amtliche Statistik, die du in Echtzeit liest, ist vorläufig — und hier systematisch zu niedrig. Das Amt korrigiert sich still, manchmal Jahre später. Kein eigenes Modell, keine Spekulation: Gegenmessung zeigt nur die Lücke zwischen dem, was verkündet wurde, und dem, was die Quelle selbst später daraus machte.'
+    : 'There is no "the number". Every official statistic you read in real time is provisional — and here, systematically too low. The agency corrects itself quietly, sometimes years later. No model, no speculation: counter-measurement only shows the gap between what was announced and what the source itself later made of it.',
+  s1: de ? '1. Quellen & Lizenzen' : '1. Sources & licences',
+  s1body: de
+    ? `${d.source.name} (${d.source.license}). Die API liefert die „as-of-then"-Fassung gleich mit: jede Woche trägt ihre Ausgabe (issue) und ihren Verzug (lag).`
+    : `${d.source.name} (${d.source.license}). The API ships the "as-of-then" version with each row: every week carries its issue and its lag.`,
+  s2: de ? '2. Kadenz' : '2. Cadence',
+  s2body: de
+    ? 'Wöchentlich aktualisiert die Quelle die neueste Woche UND revidiert ältere. Der Build holt die jeweils jüngsten Revisionen. Kanonisches Artefakt: versionierte JSON in src/data/revision/ — Git ist das Archiv.'
+    : 'Weekly the source updates the newest week AND revises older ones. The build pulls the latest revisions each time. Canonical artefact: versioned JSON in src/data/revision/ — git is the archive.',
+  s3: de ? '3. Verarbeitung' : '3. Processing',
+  s3body: de
+    ? 'Deterministisch, kein Nowcast: Erst-Meldung = Ausgabe mit 1 Woche Verzug (lag=1); Korrektur = jüngste Ausgabe. Revision = Korrektur − Erst-Meldung. „Systematisch" = Anteil der Wochen, die nach oben gingen. Die Schlagzeile ist die stärkste Revision einer Peak-Woche.'
+    : 'Deterministic, no nowcast: first report = issue at 1-week lag (lag=1); correction = latest issue. Revision = correction − first report. "Systematic" = share of weeks revised upward. The headline is the largest revision of a peak week.',
+  s4: de ? '4. Grenzen der Methode' : '4. Limits of the method',
+  s4items: de
+    ? [
+        'Nationales ILINet (USA), nicht die Welt; ILI = grippeähnliche Erkrankung, ein Proxy, nicht laborbestätigte Grippe.',
+        'Die durchschnittliche Magnitude ist klein (~1 %), aber die RICHTUNG ist systematisch — fast immer nach oben. Das ist der Punkt, nicht die Größe.',
+        '„Erst-Meldung" = lag 1 Woche (nicht lag 0); ein konservativer Proxy für die Zahl, auf die in Echtzeit reagiert wird.',
+        'Revisionen entstehen durch spät meldende Labore — kein „Fehler" im engen Sinn, aber die Echtzeit-Zahl ist eben vorläufig und verzerrt zu niedrig.',
+      ]
+    : [
+        'National ILINet (US), not the world; ILI = influenza-like illness, a proxy, not lab-confirmed flu.',
+        'The average magnitude is small (~1%), but the DIRECTION is systematic — almost always upward. That is the point, not the size.',
+        '"First report" = lag 1 week (not lag 0); a conservative proxy for the number reacted to in real time.',
+        'Revisions arise from late-reporting labs — not "error" in a narrow sense, but the real-time number is provisional and biased low.',
+      ],
+  s5: de ? '5. Compute-Fußabdruck' : '5. Compute footprint',
+  s5body: de
+    ? 'Zwei HTTP-Abrufe pro Build, kein API-Key, kein LLM. Die Site ist statisch.'
+    : 'Two HTTP fetches per build, no API key, no LLM. The site is static.',
+  s6: de ? '6. Änderungsprotokoll' : '6. Change log',
+  s6items: de
+    ? ['v1 (2026-06) — Erstfassung: systematische Aufwärts-Revision, stärkste Korrektur, „keine finale Zahl".']
+    : ['v1 (2026-06) — first edition: systematic upward revision, largest correction, "no final number".'],
+  toWork: de ? 'Zum Experiment' : 'To the experiment',
+}
+---
+
+<div class="mx-auto max-w-2xl px-4 py-14">
+  <h1 class="mb-8 text-xl font-semibold">{txt.h1}</h1>
+
+  <section class="mb-10 border border-line bg-panel/60 p-5">
+    <h2 class="mb-2 font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">{txt.revealHead}</h2>
+    <p class="leading-relaxed">{txt.reveal}</p>
+  </section>
+
+  <section class="mb-8"><h2 class="mb-2 font-semibold">{txt.s1}</h2><p class="leading-relaxed text-fg-muted">{txt.s1body}</p>
+    <p class="mt-2"><a href={d.source.url} class="font-mono text-xs text-fg-faint transition-colors hover:text-fg" rel="noopener">{d.source.url}</a></p>
+  </section>
+
+  <section class="mb-8"><h2 class="mb-2 font-semibold">{txt.s2}</h2><p class="leading-relaxed text-fg-muted">{txt.s2body}</p></section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s3}</h2>
+    <p class="leading-relaxed text-fg-muted">{txt.s3body}</p>
+    <p class="mt-2">
+      <a href="https://github.com/frankbueltge/frankbueltge.de/tree/main/pipelines/revision"
+        class="font-mono text-xs text-fg-faint transition-colors hover:text-fg" rel="noopener">→ pipelines/revision</a>
+    </p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s4}</h2>
+    <ul class="list-disc space-y-1 pl-5 text-fg-muted">{txt.s4items.map((i) => <li>{i}</li>)}</ul>
+  </section>
+
+  <section class="mb-8"><h2 class="mb-2 font-semibold">{txt.s5}</h2><p class="leading-relaxed text-fg-muted">{txt.s5body}</p></section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s6}</h2>
+    <ul class="list-disc space-y-1 pl-5 text-fg-muted">{txt.s6items.map((i) => <li>{i}</li>)}</ul>
+  </section>
+
+  <a href={workUrl} class="text-sm text-fg-muted transition-colors hover:text-fg">→ {txt.toWork}</a>
+</div>
