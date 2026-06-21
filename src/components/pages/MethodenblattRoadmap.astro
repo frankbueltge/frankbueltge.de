@@ -1,0 +1,107 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import type { Locale } from '@/lib/site'
+import type { EarthData } from '@/lib/roadmap/types'
+import earth from '@/data/roadmap/earth.json'
+
+interface Props { locale: Locale }
+const { locale } = Astro.props
+const de = locale === 'de'
+const workUrl = getRelativeLocaleUrl(locale, '/roadmap')
+
+const d = earth as unknown as EarthData
+// Quellen je KPI auflisten — zeigt, welche offene Quelle hinter welcher Kennzahl steht.
+const sources = d.kpis.map((k) => ({ kpi: k.label[locale], ...k.source }))
+
+const txt = {
+  h1: de ? 'Methodenblatt — The Roadmap' : 'Method sheet — The Roadmap',
+  revealHead: de ? 'Worum es geht' : 'What this is',
+  reveal: de
+    ? 'Jede Zahl hier ist real und unten verlinkt. Erfunden ist nur der Rahmen — die Konzern-Sprache, die Zielmarken, die Roadmap und vor allem die Wertung good_when, die CO₂ und Ungleichheit als „Wachstum" führt. Der Rahmen ist der Punkt: Er zeigt, was die Optimierungslogik aus der Welt macht, sobald man sie ernst nimmt.'
+    : 'Every number here is real and linked below. Only the framing is invented — the corporate language, the targets, the roadmap, and above all the good_when verdict that files CO₂ and inequality as “growth”. The framing is the point: it shows what the logic of optimisation makes of the world once you take it seriously.',
+  s1: de ? '1. Quellen & Lizenzen' : '1. Sources & licences',
+  s2: de ? '2. Kadenz' : '2. Cadence',
+  s2body: de
+    ? 'Jahresdaten, einmal jährlich von Hand nachgezogen — keine Tagesfrische. Demokratie- und Biodiversitätsindizes erscheinen jährlich, CO₂ als Jahresmittel. Das kanonische Artefakt ist eine versionierte earth.json im Repository — Git ist das Archiv.'
+    : 'Annual data, refreshed by hand once a year — no daily freshness. Democracy and biodiversity indices are published yearly, CO₂ as an annual mean. The canonical artefact is a versioned earth.json in the repository — git is the archive.',
+  s3: de ? '3. Verarbeitung' : '3. Processing',
+  s3body: de
+    ? 'Deterministisch, kein LLM: RAG-Status, Veränderung und Executive Summary folgen mechanisch aus src/lib/roadmap/kpi.ts. Die Reihen sind dekadenweise Stützstellen des jeweiligen World-Aggregats.'
+    : 'Deterministic, no LLM: RAG status, change and executive summary follow mechanically from src/lib/roadmap/kpi.ts. The series are decade-spaced sample points of each global aggregate.',
+  s3link: '→ src/lib/roadmap',
+  s4: de ? '4. Grenzen der Methode' : '4. Limits of the method',
+  s4items: de
+    ? [
+        'good_when (die Konzern-Wertung) ist gesetzt, nicht gemessen — für CO₂ und Ungleichheit bewusst invertiert. Das ist der erfundene Teil.',
+        'Der „globale Mittelwert" (V-Dem, WID) verdeckt die Verteilung — ein Durchschnitt ist kein einzelnes Land.',
+        'Stützstellen im Zehn-Jahres-Abstand plus das jüngste Jahr; „ggü. Vorperiode" meint diese Periode, nicht ein Kalenderjahr.',
+        'Unterschiedliche Skalen und Basisjahre (LDI 0–1, CO₂ in ppm, Top-1 % in Prozent, LPI 1970 = 100) — nicht direkt vergleichbar, je Kennzahl getrennt zu lesen.',
+        'Der Living Planet Index ist modellbasiert (ZSL/WWF) und endet 2020; die Reihe wird alle zwei Jahre fortgeschrieben.',
+        'Quellen via Our World in Data; die Originaldaten stammen von V-Dem, WID und ZSL/WWF (unten verlinkt).',
+      ]
+    : [
+        'good_when (the corporate verdict) is set, not measured — deliberately inverted for CO₂ and inequality. That is the invented part.',
+        'The “global mean” (V-Dem, WID) hides the distribution — an average is not a single country.',
+        'Sample points are ten years apart plus the latest year; “vs. prior period” means that period, not a calendar year.',
+        'Different scales and base years (LDI 0–1, CO₂ in ppm, top 1% in per cent, LPI 1970 = 100) — not directly comparable, read per metric.',
+        'The Living Planet Index is model-based (ZSL/WWF) and ends in 2020; the series is updated every two years.',
+        'Sources via Our World in Data; the underlying data come from V-Dem, WID and ZSL/WWF (linked below).',
+      ],
+  s5: de ? '5. Compute-Fußabdruck' : '5. Compute footprint',
+  s5body: de
+    ? 'Statisch gebaut, kein Nacht-Job, kein API-Key, kein LLM. Fünf offene Datensätze, einmal jährlich von Hand nachgezogen. Reduktion ist die Position.'
+    : 'Built statically, no nightly job, no API key, no LLM. Five open datasets, refreshed by hand once a year. Reduction is the position.',
+  s6: de ? '6. Änderungsprotokoll' : '6. Change log',
+  s6items: de
+    ? ['v1 (2026-06) — Erstfassung: fünf KPIs (Demokratie, Meinungsfreiheit, Klima, Ungleichheit, Biodiversität).']
+    : ['v1 (2026-06) — first edition: five KPIs (democracy, free expression, climate, inequality, biodiversity).'],
+  toWork: de ? 'Zum Experiment' : 'To the experiment',
+}
+---
+
+<div class="mx-auto max-w-2xl px-4 py-14">
+  <h1 class="mb-8 text-xl font-semibold">{txt.h1}</h1>
+
+  <section class="mb-10 border border-line bg-panel/60 p-5">
+    <h2 class="mb-2 font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">{txt.revealHead}</h2>
+    <p class="leading-relaxed">{txt.reveal}</p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s1}</h2>
+    <ul class="list-disc space-y-2 pl-5 text-fg-muted">
+      {sources.map((s) => (
+        <li>
+          <span class="text-fg">{s.kpi}</span> — {s.name},{' '}
+          <a href={s.url} class="font-mono text-xs text-fg-faint transition-colors hover:text-fg" rel="noopener">{s.url}</a>{' '}
+          <span class="text-fg-faint">({s.license})</span>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="mb-8"><h2 class="mb-2 font-semibold">{txt.s2}</h2><p class="leading-relaxed text-fg-muted">{txt.s2body}</p></section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s3}</h2>
+    <p class="leading-relaxed text-fg-muted">{txt.s3body}</p>
+    <p class="mt-2">
+      <a href="https://github.com/frankbueltge/frankbueltge.de/tree/main/src/lib/roadmap"
+        class="font-mono text-xs text-fg-faint transition-colors hover:text-fg" rel="noopener">{txt.s3link}</a>
+    </p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s4}</h2>
+    <ul class="list-disc space-y-1 pl-5 text-fg-muted">{txt.s4items.map((i) => <li>{i}</li>)}</ul>
+  </section>
+
+  <section class="mb-8"><h2 class="mb-2 font-semibold">{txt.s5}</h2><p class="leading-relaxed text-fg-muted">{txt.s5body}</p></section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s6}</h2>
+    <ul class="list-disc space-y-1 pl-5 text-fg-muted">{txt.s6items.map((i) => <li>{i}</li>)}</ul>
+  </section>
+
+  <a href={workUrl} class="text-sm text-fg-muted transition-colors hover:text-fg">→ {txt.toWork}</a>
+</div>
