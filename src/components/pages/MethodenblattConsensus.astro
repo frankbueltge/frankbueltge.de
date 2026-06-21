@@ -1,0 +1,104 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import type { Locale } from '@/lib/site'
+import type { ConsensusData } from '@/lib/consensus/types'
+import data from '@/data/consensus/latest.json'
+
+interface Props { locale: Locale }
+const { locale } = Astro.props
+const de = locale === 'de'
+const d = data as unknown as ConsensusData
+const workUrl = getRelativeLocaleUrl(locale, '/consensus')
+
+const txt = {
+  h1: de ? 'Methodenblatt — The Consensus' : 'Method sheet — The Consensus',
+  revealHead: de ? 'Worum es geht' : 'What this is',
+  reveal: de
+    ? 'Jede hier genannte Quelle hat diese Worte wirklich gebracht. Genau das Echo zu zählen ist der Punkt: scheinbarer Konsens ist keine unabhängige Bestätigung. „47 Medien berichten X" heißt oft: eine Quelle, 47-mal. Gegenmessung zählt, was als unabhängig gilt, aber kopiert ist.'
+    : 'Every outlet named here really ran these words. Counting that echo is the point: apparent consensus is not independent confirmation. "47 outlets report X" often means: one source, 47 times. Counter-measurement counts what passes as independent but is copied.',
+  s1: de ? '1. Quellen & Lizenzen' : '1. Sources & licences',
+  s1body: de
+    ? `Nachrichten über die GDELT DOC 2.0 API (${d.source.license}). Acht breite Beats (${d.stats.beats.join(', ')}), englischsprachig. Die zitierten „unabhängigen" Quellen sind die Domains, die den Satz wortgleich brachten — auf der Werkseite namentlich gelistet.`
+    : `News via the GDELT DOC 2.0 API (${d.source.license}). Eight broad beats (${d.stats.beats.join(', ')}), English-language. The cited "independent" sources are the domains that ran the sentence verbatim — listed by name on the work page.`,
+  s2: de ? '2. Kadenz' : '2. Cadence',
+  s2body: de
+    ? 'Täglich. Die Maschine wählt selbst: die Phrase mit der höchsten Streuung über distinkte Quell-Domains ist die „Schlagzeile des Tages". Kanonisches Artefakt: versionierte JSON in src/data/consensus/ — Git ist das Archiv.'
+    : 'Daily. The machine selects on its own: the phrase with the widest spread across distinct source domains is the "headline of the day". Canonical artefact: versioned JSON in src/data/consensus/ — git is the archive.',
+  s3: de ? '3. Verarbeitung' : '3. Processing',
+  s3body: de
+    ? 'Artikel poolen (Dedupe nach URL) → wortgleiche 6-Gramm-Phrasen je Titel über distinkte Domains zählen → die meist-replizierte ist die Schlagzeile. Echo-Index = Anteil der Titel, die zu einem ≥3-Domain-Echo gehören. Symbolische Provenienz: der früheste Zeitstempel markiert die Quell-Kandidatin und die Kaskade.'
+    : 'Pool articles (dedupe by URL) → count verbatim 6-gram title phrases across distinct domains → the most replicated is the headline. Echo index = share of titles belonging to a ≥3-domain echo. Symbolic provenance: the earliest timestamp marks the source candidate and the cascade.',
+  aiHead: de ? 'KI/ML — gestaffelt, nachprüfbar' : 'AI/ML — staged, checkable',
+  aiBody: de
+    ? 'Das Lab experimentiert mit Daten UND KI. v1 ist eine statistische Baseline (wortgleich). Geplant: v2 Embeddings für paraphrasierte Koordination, v3 ein neuro-symbolischer Propagations-Graph (wer zuerst, wer echote) plus, optional, ein gegen den Graphen verifizierter LLM-Klassifikator (Wire vs. PR) mit offengelegtem Prompt. Bedingung immer: jeder KI-Schritt transparent, Output verifiziert oder als Schätzung markiert.'
+    : 'The lab experiments with data AND AI. v1 is a statistical baseline (verbatim). Planned: v2 embeddings for paraphrased coordination, v3 a neuro-symbolic propagation graph (who first, who echoed) plus, optionally, an LLM classifier verified against the graph (wire vs. PR) with the prompt disclosed. Condition throughout: every AI step transparent, output verified or marked as an estimate.',
+  s4: de ? '4. Grenzen der Methode' : '4. Limits of the method',
+  s4items: de
+    ? [
+        'GDELT-Abdeckung ist englisch-/westlich-lastig; gemessen wird ein Ausschnitt, nicht die Welt.',
+        'GDELT-Zeitstempel haben ~15-Minuten-/Stundenauflösung — „zuerst gesehen" ist das früheste GDELT-Fenster, keine präzise Erstveröffentlichungs-Zuschreibung.',
+        'v1 wertet Titel aus, nicht Volltext; paraphrasierte Koordination entgeht ihm (kommt in v2).',
+        'Legitime Wire-/Ketten-Syndizierung ≠ Manipulation — aber sie erzeugt die Illusion unabhängiger Bestätigung; das Instrument behauptet keine Absicht.',
+        'Beats können bei API-Rate-Limits ausfallen (im Stats-Block je Tag ausgewiesen).',
+      ]
+    : [
+        'GDELT coverage skews English/Western; this measures a section, not the world.',
+        'GDELT timestamps have ~15-minute/hourly resolution — "first seen" is the earliest GDELT window, not a precise first-publication attribution.',
+        'v1 reads titles, not full text; paraphrased coordination escapes it (arrives in v2).',
+        'Legitimate wire/chain syndication ≠ manipulation — but it creates the illusion of independent confirmation; the instrument claims no intent.',
+        'Beats can drop on API rate limits (disclosed per day in the stats block).',
+      ],
+  s5: de ? '5. Compute-Fußabdruck' : '5. Compute footprint',
+  s5body: de
+    ? 'Acht leichte HTTP-Abrufe pro Tag, kein API-Key, in v1 kein LLM. Die Site selbst ist statisch.'
+    : 'Eight lightweight HTTP fetches per day, no API key, no LLM in v1. The site itself is static.',
+  s6: de ? '6. Änderungsprotokoll' : '6. Change log',
+  s6items: de
+    ? ['v1 (2026-06) — Erstfassung: wortgleiche Synchronität + Echo-Index + symbolische Provenienz.']
+    : ['v1 (2026-06) — first edition: verbatim synchronicity + echo index + symbolic provenance.'],
+  toWork: de ? 'Zum Experiment' : 'To the experiment',
+}
+---
+
+<div class="mx-auto max-w-2xl px-4 py-14">
+  <h1 class="mb-8 text-xl font-semibold">{txt.h1}</h1>
+
+  <section class="mb-10 border border-line bg-panel/60 p-5">
+    <h2 class="mb-2 font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">{txt.revealHead}</h2>
+    <p class="leading-relaxed">{txt.reveal}</p>
+  </section>
+
+  <section class="mb-8"><h2 class="mb-2 font-semibold">{txt.s1}</h2><p class="leading-relaxed text-fg-muted">{txt.s1body}</p>
+    <p class="mt-2"><a href={d.source.url} class="font-mono text-xs text-fg-faint transition-colors hover:text-fg" rel="noopener">{d.source.url}</a></p>
+  </section>
+
+  <section class="mb-8"><h2 class="mb-2 font-semibold">{txt.s2}</h2><p class="leading-relaxed text-fg-muted">{txt.s2body}</p></section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s3}</h2>
+    <p class="leading-relaxed text-fg-muted">{txt.s3body}</p>
+    <p class="mt-2">
+      <a href="https://github.com/frankbueltge/frankbueltge.de/tree/main/pipelines/consensus"
+        class="font-mono text-xs text-fg-faint transition-colors hover:text-fg" rel="noopener">→ pipelines/consensus</a>
+    </p>
+  </section>
+
+  <section class="mb-8 border-l-2 border-line pl-4">
+    <h2 class="mb-2 font-semibold">{txt.aiHead}</h2>
+    <p class="leading-relaxed text-fg-muted">{txt.aiBody}</p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s4}</h2>
+    <ul class="list-disc space-y-1 pl-5 text-fg-muted">{txt.s4items.map((i) => <li>{i}</li>)}</ul>
+  </section>
+
+  <section class="mb-8"><h2 class="mb-2 font-semibold">{txt.s5}</h2><p class="leading-relaxed text-fg-muted">{txt.s5body}</p></section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s6}</h2>
+    <ul class="list-disc space-y-1 pl-5 text-fg-muted">{txt.s6items.map((i) => <li>{i}</li>)}</ul>
+  </section>
+
+  <a href={workUrl} class="text-sm text-fg-muted transition-colors hover:text-fg">→ {txt.toWork}</a>
+</div>

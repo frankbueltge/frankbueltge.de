@@ -1,0 +1,108 @@
+---
+// Gegenmessung I — „The Consensus".
+// Misst orchestrierten Konsens: wie viel Nachrichten-„Konsens" eine Quelle ist, x-fach
+// kopiert. Daten: src/data/consensus/latest.json (GDELT, täglich; pipelines/consensus/).
+// Die Ironie steckt im Deadpan: 77 identische Blätter unter dem Etikett „unabhängig".
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import { t } from '@/i18n/ui'
+import type { Locale } from '@/lib/site'
+import type { ConsensusData } from '@/lib/consensus/types'
+import { cleanTitle, echoPercent, spanLabel, hhmm } from '@/lib/consensus/format'
+import data from '@/data/consensus/latest.json'
+
+interface Props { locale: Locale }
+const { locale } = Astro.props
+const de = locale === 'de'
+const d = data as unknown as ConsensusData
+const h = d.headline
+const r = d.runner_up
+
+const dateLabel = new Date(d.date).toLocaleDateString(de ? 'de-DE' : 'en-GB', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+})
+const methodUrl = getRelativeLocaleUrl(locale, '/werke/consensus')
+
+const shownMastheads = h ? h.mastheads : []
+const moreCount = h ? Math.max(0, h.domain_count - shownMastheads.length) : 0
+---
+
+<article class="consensus mx-auto max-w-3xl px-4 py-14">
+  <header class="mb-10">
+    <h1 class="text-[clamp(30px,6vw,56px)] font-bold tracking-[-0.03em]">The Consensus</h1>
+    <p class="mt-2 max-w-xl text-fg-muted">{t(locale, 'cs.sub')}</p>
+    <p class="mt-3 font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">{dateLabel}</p>
+  </header>
+
+  {h ? (
+    <>
+      <section class="mb-12 border-l-2 border-accent/60 pl-5">
+        <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+          {de ? 'Der heute am unabhängigsten berichtete Satz' : "Today's most independently reported sentence"}
+        </p>
+        <p class="mt-3 text-[clamp(20px,3.4vw,30px)] font-semibold leading-snug">„{cleanTitle(h.sample_title)}"</p>
+        <p class="mt-3 text-fg-muted">
+          {de
+            ? `— wortgleich auf ${h.domain_count} verschiedenen Nachrichtenseiten.`
+            : `— word-for-word across ${h.domain_count} separate news outlets.`}
+        </p>
+        {h.first_domain && (
+          <p class="mt-2 font-mono text-xs text-fg-faint">
+            {de
+              ? `Zuerst aufgetaucht ${hhmm(h.first_seen)} UTC bei ${h.first_domain}` +
+                (h.span_hours != null ? `; binnen ${spanLabel(h.span_hours, locale)} liefen ${h.domain_count - 1} weitere denselben Satz.` : '.')
+              : `First surfaced ${hhmm(h.first_seen)} UTC via ${h.first_domain}` +
+                (h.span_hours != null ? `; within ${spanLabel(h.span_hours, locale)}, ${h.domain_count - 1} more ran the identical sentence.` : '.')}
+          </p>
+        )}
+      </section>
+
+      <section class="mb-12">
+        <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+          {de ? 'Die „unabhängigen" Quellen' : 'The „independent" outlets'}
+        </p>
+        <ul class="mt-3 flex flex-wrap gap-1.5">
+          {shownMastheads.map((m) => (
+            <li class="rounded border border-line/70 px-2 py-0.5 font-mono text-[11px] text-fg-muted">{m}</li>
+          ))}
+          {moreCount > 0 && (
+            <li class="px-2 py-0.5 font-mono text-[11px] text-fg-faint">{de ? `+ ${moreCount} weitere` : `+ ${moreCount} more`}</li>
+          )}
+        </ul>
+      </section>
+
+      <section class="mb-12 flex items-baseline gap-4">
+        <p class="text-[clamp(40px,8vw,72px)] font-bold leading-none tabular-nums">{echoPercent(d.echo_index, locale)}</p>
+        <p class="max-w-xs text-sm leading-snug text-fg-muted">
+          {de
+            ? 'des heute gescannten Nachrichten-Stroms war Echo — wortgleich von mindestens drei Quellen kopiert, nicht eigene Recherche.'
+            : "of today's scanned news stream was echo — copied verbatim by at least three outlets, not original reporting."}
+        </p>
+      </section>
+
+      {r && (
+        <section class="mb-12 border-t border-line pt-6">
+          <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">{de ? 'Auch heute im Chor' : 'Also in chorus today'}</p>
+          <p class="mt-2 leading-snug">„{cleanTitle(r.sample_title)}"</p>
+          <p class="mt-1 font-mono text-xs text-fg-faint">
+            {de ? `${r.domain_count} Medien, wortgleich` : `${r.domain_count} outlets, word-for-word`}
+          </p>
+        </section>
+      )}
+    </>
+  ) : (
+    <p class="text-fg-muted">{de ? 'Heute kein Echo-Cluster über der Schwelle.' : 'No echo cluster above threshold today.'}</p>
+  )}
+
+  <footer class="mt-12 border-t border-line pt-6">
+    <p class="font-mono text-xs text-fg-faint">
+      {de
+        ? `Gescannt: ${d.stats.articles_scanned} Artikel über ${d.stats.domains_scanned} Domains (GDELT, ${d.stats.beats.length} Beats).`
+        : `Scanned: ${d.stats.articles_scanned} articles across ${d.stats.domains_scanned} domains (GDELT, ${d.stats.beats.length} beats).`}
+    </p>
+    <nav class="mt-2">
+      <a href={methodUrl} class="font-mono text-xs text-fg-faint transition-colors hover:text-fg">{t(locale, 'prot.method')} →</a>
+    </nav>
+  </footer>
+</article>
