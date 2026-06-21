@@ -1,0 +1,145 @@
+{
+  "generated_at": "2026-06-21",
+  "quarter": "Q2 2026",
+  "kpis": [
+    {
+      "id": "democracy",
+      "label": { "de": "Demokratie", "en": "Democracy" },
+      "metric": {
+        "de": "Liberal Democracy Index (global ø)",
+        "en": "Liberal Democracy Index (global mean)"
+      },
+      "unit": "index",
+      "good_when": "high",
+      "target": 0.5,
+      "owner": { "de": "Die Geschichte", "en": "History" },
+      "spin": { "de": "unter Plan, Handlungsbedarf", "en": "below target, action required" },
+      "series": [
+        [1970, 0.225],
+        [1980, 0.248],
+        [1990, 0.32],
+        [2000, 0.384],
+        [2010, 0.409],
+        [2020, 0.397],
+        [2025, 0.372]
+      ],
+      "source": {
+        "name": "V-Dem (via Our World in Data)",
+        "url": "https://ourworldindata.org/grapher/liberal-democracy-index",
+        "license": "CC-BY 4.0",
+        "retrieved": "2026-06-21"
+      }
+    },
+    {
+      "id": "expression",
+      "label": { "de": "Meinungsfreiheit", "en": "Free expression" },
+      "metric": {
+        "de": "Freedom of Expression Index (global ø)",
+        "en": "Freedom of Expression Index (global mean)"
+      },
+      "unit": "index",
+      "good_when": "high",
+      "target": 0.7,
+      "owner": { "de": "Die Öffentlichkeit", "en": "The Public" },
+      "spin": { "de": "schwächelt", "en": "underperforming" },
+      "series": [
+        [1970, 0.375],
+        [1980, 0.391],
+        [1990, 0.537],
+        [2000, 0.658],
+        [2010, 0.68],
+        [2020, 0.647],
+        [2025, 0.609]
+      ],
+      "source": {
+        "name": "V-Dem (via Our World in Data)",
+        "url": "https://ourworldindata.org/grapher/freedom-of-expression-index",
+        "license": "CC-BY 4.0",
+        "retrieved": "2026-06-21"
+      }
+    },
+    {
+      "id": "climate",
+      "label": { "de": "Klima", "en": "Climate" },
+      "metric": {
+        "de": "CO₂ in der Atmosphäre (Jahresmittel)",
+        "en": "Atmospheric CO₂ (annual mean)"
+      },
+      "unit": "ppm",
+      "good_when": "high",
+      "target": 350,
+      "owner": { "de": "Der Markt", "en": "The Market" },
+      "spin": { "de": "starkes Wachstum", "en": "strong growth" },
+      "series": [
+        [1970, 325.68],
+        [1980, 338.76],
+        [1990, 354.45],
+        [2000, 369.71],
+        [2010, 390.1],
+        [2020, 414.21],
+        [2025, 427.35]
+      ],
+      "source": {
+        "name": "NOAA GML, Mauna Loa (annual mean)",
+        "url": "https://gml.noaa.gov/ccgg/trends/",
+        "license": "Public domain (NOAA)",
+        "retrieved": "2026-06-21"
+      }
+    },
+    {
+      "id": "inequality",
+      "label": { "de": "Ungleichheit", "en": "Inequality" },
+      "metric": {
+        "de": "Einkommensanteil der reichsten 1 % (vor Steuern)",
+        "en": "Income share of the richest 1% (pre-tax)"
+      },
+      "unit": "percent",
+      "good_when": "high",
+      "target": 15,
+      "owner": { "de": "Die Aktionäre", "en": "Shareholders" },
+      "spin": { "de": "über Plan — starke Leistung, Team", "en": "above plan — great work, team" },
+      "series": [
+        [1970, 15.45],
+        [1980, 16.75],
+        [1990, 18.04],
+        [2000, 20.58],
+        [2010, 20.6],
+        [2020, 20.07],
+        [2024, 20.67]
+      ],
+      "source": {
+        "name": "WID.world (via Our World in Data)",
+        "url": "https://ourworldindata.org/grapher/income-share-top-1-before-tax-wid",
+        "license": "CC-BY 4.0",
+        "retrieved": "2026-06-21"
+      }
+    },
+    {
+      "id": "biodiversity",
+      "label": { "de": "Biodiversität", "en": "Biodiversity" },
+      "metric": {
+        "de": "Living Planet Index (1970 = 100)",
+        "en": "Living Planet Index (1970 = 100)"
+      },
+      "unit": "index",
+      "good_when": "high",
+      "target": 50,
+      "owner": { "de": "Niemand", "en": "Nobody" },
+      "spin": { "de": "kritisch — Einstellung prüfen", "en": "critical — consider sunsetting" },
+      "series": [
+        [1970, 100],
+        [1980, 78.43],
+        [1990, 60.09],
+        [2000, 44.37],
+        [2010, 31.1],
+        [2020, 27.13]
+      ],
+      "source": {
+        "name": "Living Planet Index, ZSL/WWF (via Our World in Data)",
+        "url": "https://ourworldindata.org/grapher/global-living-planet-index",
+        "license": "CC-BY 4.0",
+        "retrieved": "2026-06-21"
+      }
+    }
+  ]
+}
