@@ -14,7 +14,7 @@ export const ui = {
     'meta.home.desc': 'Frank Bültge — Data & AI Engineer. Ein öffentliches Experimentierfeld mit Daten und Code: Versuche und erste Annäherungen, praxisbasiert, auf dem Weg zu einer künstlerischen Forschung.',
 
     'hero.roleLead': 'Data & AI Engineer',
-    'hero.roleRest': ' — ich baue Dateninfrastruktur und experimentiere hier öffentlich mit Daten und Code.',
+    'hero.roleRest': ' — ich baue Dateninfrastruktur und experimentiere mit Daten und Code.',
     'home.protokollLink': 'Vollständiges Protokoll',
     'home.beruflich': 'Eigene Projekte',
     'home.beruflichLead': 'Neben dem Beruf — eigene Projekte an der Schnittstelle von Daten, KI und Gestaltung.',
@@ -109,7 +109,7 @@ export const ui = {
     'meta.home.desc': 'Frank Bültge — Data & AI Engineer. A public field for experiments with data and code: attempts and first approaches, practice-based, on the way toward artistic research.',
 
     'hero.roleLead': 'Data & AI Engineer',
-    'hero.roleRest': ' — I build data infrastructure and experiment here in the open with data and code.',
+    'hero.roleRest': ' — I build data infrastructure and experiment with data and code.',
     'home.protokollLink': 'Full minutes',
     'home.beruflich': 'Side projects',
     'home.beruflichLead': 'Alongside the day job — my own projects at the intersection of data, AI and design.',
