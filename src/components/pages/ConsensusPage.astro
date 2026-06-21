@@ -26,6 +26,20 @@ const methodUrl = getRelativeLocaleUrl(locale, '/werke/consensus')
 
 const shownMastheads = h ? h.mastheads : []
 const moreCount = h ? Math.max(0, h.domain_count - shownMastheads.length) : 0
+
+// v3 — symbolische Klassifikation der Syndizierungs-Struktur (auditierbar).
+const SYN: Record<string, { de: string; en: string }> = {
+  'wire/chain syndication': {
+    de: 'Ketten-Syndizierung — eine Verlagsgruppe, ein Push',
+    en: 'chain syndication — one publishing group, one push',
+  },
+  'scattered placement': {
+    de: 'verstreute Platzierung über mehrere Märkte',
+    en: 'scattered placement across several markets',
+  },
+  mixed: { de: 'gemischt', en: 'mixed' },
+}
+const syn = h?.syndication
 ---
 
 <article class="consensus mx-auto max-w-3xl px-4 py-14">
@@ -56,6 +70,19 @@ const moreCount = h ? Math.max(0, h.domain_count - shownMastheads.length) : 0
                 (h.span_hours != null ? `; within ${spanLabel(h.span_hours, locale)}, ${h.domain_count - 1} more ran the identical sentence.` : '.')}
           </p>
         )}
+        {syn && SYN[syn.label] && (
+          <p class="mt-2 font-mono text-xs text-fg-faint">
+            {de ? 'Klassifikation: ' : 'Classified: '}{SYN[syn.label][locale]}
+            {` (${de ? 'TLD-Anteil' : 'TLD share'} ${Math.round(syn.tld_share * 100)}%).`}
+          </p>
+        )}
+        {h.soft_echo_extra ? (
+          <p class="mt-1 font-mono text-xs text-fg-faint">
+            {de
+              ? `+ ${h.soft_echo_extra} weitere Medien brachten denselben Inhalt umformuliert (Paraphrase, TF-IDF).`
+              : `+ ${h.soft_echo_extra} more outlets ran the same content reworded (paraphrase, TF-IDF).`}
+          </p>
+        ) : null}
       </section>
 
       <section class="mb-12">
