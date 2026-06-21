@@ -6,6 +6,7 @@ import '@fontsource-variable/jetbrains-mono'
 import '@/styles/global.css'
 import { SITE, type Locale } from '@/lib/site'
 import { t } from '@/i18n/ui'
+import { ogSlug } from '@/lib/og'
 
 // Skin fest auf mono (data-skin am <html>) — der Zyklus ist stillgelegt. Skins
 // + SkinSwitcher bleiben im Repo; Reaktivierung = SkinSwitcher wieder mounten
@@ -21,6 +22,8 @@ const locale = (Astro.currentLocale ?? 'de') as Locale
 const pathNoLocale = Astro.url.pathname.replace(/^\/en/, '') || '/'
 const href = (l: Locale) => getAbsoluteLocaleUrl(l, pathNoLocale)
 const canonical = href(locale)
+// Pro Seite generiertes OG-Bild (1200×630, build-time via src/pages/og/).
+const ogImage = `${SITE.url}/og/${ogSlug(Astro.url.pathname)}.png`
 
 const person = {
   '@context': 'https://schema.org',
@@ -75,7 +78,11 @@ const website = {
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content={locale === 'de' ? 'de_DE' : 'en_US'} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={ogImage} />
 
     <script type="application/ld+json" set:html={JSON.stringify(person)} />
     <script type="application/ld+json" set:html={JSON.stringify(website)} />
