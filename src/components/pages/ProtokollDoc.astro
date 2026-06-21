@@ -10,7 +10,7 @@ const { day, locale } = Astro.props
 const r = renderDay(day, locale)
 const archivUrl = getRelativeLocaleUrl(locale, '/protokoll/archiv')
 const methodUrl = getRelativeLocaleUrl(locale, '/werke/protokoll')
-const feedUrl = locale === 'de' ? '/protokoll/feed.xml' : '/en/protokoll/feed.xml'
+const feedUrl = locale === 'de' ? '/de/protokoll/feed.xml' : '/protokoll/feed.xml'
 ---
 
 <article class="protokoll mx-auto max-w-2xl px-4 py-14">

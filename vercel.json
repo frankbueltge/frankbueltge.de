@@ -6,6 +6,8 @@
   "installCommand": "npm install",
   "redirects": [
     { "source": "/werke", "destination": "/lab", "permanent": true },
-    { "source": "/en/werke", "destination": "/en/lab", "permanent": true }
+    { "source": "/de/werke", "destination": "/de/lab", "permanent": true },
+    { "source": "/en", "destination": "/", "permanent": true },
+    { "source": "/en/:path*", "destination": "/:path*", "permanent": true }
   ]
 }

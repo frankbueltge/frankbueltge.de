@@ -3,7 +3,7 @@ import Page from '@/layouts/Page.astro'
 import ProtokollDataView from '@/components/pages/ProtokollDataView.astro'
 import { getProtokollDays } from '@/lib/protokoll/data'
 import { t } from '@/i18n/ui'
-const locale = 'en' as const
+const locale = 'de' as const
 const days = await getProtokollDays()
 ---
 <Page title={`${t(locale, 'prot.title')} | Frank Bültge`} description={t(locale, 'prot.sub')}>

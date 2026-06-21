@@ -9,9 +9,9 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   site: 'https://frankbueltge.de',
   i18n: {
-    defaultLocale: 'de',
-    locales: ['de', 'en'],
-    // German at /, English at /en — standard, no redirect plumbing; hreflang handles parity.
+    defaultLocale: 'en',
+    locales: ['en', 'de'],
+    // English at /, German at /de — hreflang handles parity; /en/* → / via vercel.json-Redirects.
     routing: { prefixDefaultLocale: false },
   },
   integrations: [sitemap(), mdx()],

@@ -8,7 +8,7 @@ export function getStaticPaths() {
 }
 const { slug } = Astro.params
 const p = getProject(slug!)!
-const locale = 'en' as const
+const locale = 'de' as const
 ---
 <Page title={`${p.name} | Frank Bültge`} description={p.tagline[locale] + ' — ' + p.description[locale]}>
   <WorkDetail slug={slug!} />
