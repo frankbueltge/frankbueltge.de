@@ -12,6 +12,6 @@ export async function getStaticPaths() {
 const locale = 'en' as const
 const { day } = Astro.props as { day: ProtokollDay }
 ---
-<Page title={`${t(locale, 'prot.title')} ${day.date} | Frank Bültge`} description={t(locale, 'prot.sub')}>
+<Page title={`${t(locale, 'prot.title')} ${day.date} | Frank Bültge`} description={t(locale, 'prot.sub')} noindex>
   <ProtokollDoc day={day} locale={locale} />
 </Page>
