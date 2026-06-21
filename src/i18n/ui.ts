@@ -72,7 +72,7 @@ export const ui = {
     'prot.method': 'Methodenblatt',
     'prot.empty': 'Das erste Protokoll folgt mit dem nächsten nächtlichen Lauf.',
     'prot.backToCurrent': 'Zum aktuellen Protokoll',
-    'werke.title': 'fortlaufend, jede Nacht neu',
+    'werke.title': 'fortlaufend, je eigener Takt',
     'werke.kicker': 'Experimente',
     'werke.sub': 'Laufende Experimente mit offenen Datenquellen — jedes nennt seine Quellen und legt offen, wie es gemacht ist.',
 
@@ -177,7 +177,7 @@ export const ui = {
     'prot.method': 'Method sheet',
     'prot.empty': 'The first minutes will follow with the next nightly run.',
     'prot.backToCurrent': 'To the current minutes',
-    'werke.title': 'ongoing, refreshed each night',
+    'werke.title': 'ongoing, each on its own cadence',
     'werke.kicker': 'Experiments',
     'werke.sub': 'Ongoing experiments with open data sources — each names its sources and discloses how it is made.',
 

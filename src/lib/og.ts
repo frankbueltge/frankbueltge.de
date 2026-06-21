@@ -32,6 +32,10 @@ export const OG_PAGES: Record<string, { title: string; description: string }> = 
     title: 'The Policy',
     description: 'Klimakosten, aus Marktdaten als „Prämie" gerechnet',
   },
+  roadmap: {
+    title: 'The Roadmap',
+    description: 'Der Zustand der Welt als Konzern-Dashboard — echte Daten, erfundener Rahmen',
+  },
 }
 
 /** Pfad (mit/ohne /en, mit/ohne Trailing-Slash) → OG-Slug; Default 'home'. */
@@ -45,5 +49,6 @@ export function ogSlug(pathname: string): keyof typeof OG_PAGES {
   if (p.startsWith('/halbwertszeit')) return 'halbwertszeit'
   if (p.startsWith('/parallaxe')) return 'parallax'
   if (p.startsWith('/praemie') || p.startsWith('/police') || p.startsWith('/werke/praemie')) return 'policy'
+  if (p.startsWith('/roadmap') || p.startsWith('/werke/roadmap')) return 'roadmap'
   return 'home'
 }

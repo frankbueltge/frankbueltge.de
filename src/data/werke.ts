@@ -67,6 +67,20 @@ export const WERKE: Werk[] = [
       en: 'An insurance policy on the present, its premium recomputed each night from real market data. The market has long since priced in the climate catastrophe — and the premium is rising: +179% since 1998.',
     },
   },
+  {
+    id: 'roadmap',
+    title: 'The Roadmap',
+    subtitle: {
+      de: 'Der Zustand der Welt als Konzern-Dashboard — echte Daten, erfundener Rahmen',
+      en: 'The state of the world as a corporate dashboard — real data, invented framing',
+    },
+    status: 'live',
+    href: '/roadmap',
+    description: {
+      de: 'Ein Quartalsbericht von „Planet Earth Inc.": fünf reale Kennzahlen — Demokratie, Meinungsfreiheit, CO₂, Ungleichheit, Biodiversität — durch die Konzern-Optimierungslogik gedreht. Steigendes CO₂ wird als Wachstum gefeiert, die Ungleichheit ist die einzige Kennzahl „über Plan". Erfunden ist nur der Rahmen.',
+      en: 'A quarterly report by “Planet Earth Inc.”: five real metrics — democracy, free expression, CO₂, inequality, biodiversity — run through corporate optimisation logic. Rising CO₂ is celebrated as growth; inequality is the only KPI “above plan”. Only the framing is invented.',
+    },
+  },
 ]
 // Überflug wurde am 2026-06-12 aus der Reihe der Experimente genommen (keine These,
 // keine Akkumulation) und lebt als Studie im Lab weiter:
