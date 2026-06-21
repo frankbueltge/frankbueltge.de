@@ -5,7 +5,8 @@ import { getRelativeLocaleUrl } from 'astro:i18n'
 import { t } from '@/i18n/ui'
 import type { Locale } from '@/lib/site'
 import { renderPolice } from '@/lib/praemie/render'
-import { hasData, type Police, type PolicePremiumData } from '@/lib/praemie/types'
+import { hasData, type Police, type PolicePremiumData, type PoliceDisastersData } from '@/lib/praemie/types'
+import { PCHART_H, PCHART_W, yearAreaPath, yearLinePath } from '@/lib/praemie/chart'
 import police from '@/data/praemie/police.json'
 
 interface Props { locale: Locale }
@@ -27,6 +28,28 @@ const heroChange = premium
 const heroLabel = de ? 'Versicherungs-Preisindex' : 'Insurance price index'
 const heroBase = premium ? `${de ? 'Basis' : 'base'} ${premium.base_year} = 100` : ''
 
+// Diagramm: Schadenskosten ($Mrd., Fläche) und Prämien-Index (Linie) über die Jahre.
+// Zwei Reihen, gemeinsame Jahres-Achse, je eigene Werteskala (in der Legende benannt).
+const disasters: PoliceDisastersData | null = hasData<PoliceDisastersData>(p.disasters) ? p.disasters : null
+const costPts = (disasters?.series ?? []).map((s) => ({ year: s.year, value: s.cost_busd }))
+const idxPts = (premium?.series ?? []).map((s) => ({ year: s.year, value: s.index }))
+const showChart = costPts.length >= 2 && idxPts.length >= 2
+const years = [...costPts, ...idxPts].map((d) => d.year)
+const xMin = years.length ? Math.min(...years) : 0
+const xMax = years.length ? Math.max(...years) : 0
+const costMax = costPts.length ? Math.max(...costPts.map((d) => d.value)) : 0
+const idxMax = idxPts.length ? Math.max(...idxPts.map((d) => d.value)) : 0
+const costArea = yearAreaPath(costPts, xMin, xMax, costMax)
+const costLine = yearLinePath(costPts, xMin, xMax, costMax)
+const idxLine = yearLinePath(idxPts, xMin, xMax, idxMax)
+const chartTxt = {
+  heading: de ? 'Schäden und Prämie über die Zeit' : 'Damage and premium over time',
+  cost: de ? 'Schadenskosten je Jahr ($ Mrd., NOAA)' : 'Disaster cost per year ($bn, NOAA)',
+  index: de
+    ? `Prämien-Index (${premium?.base_year ?? 1998} = 100, BLS)`
+    : `Premium index (${premium?.base_year ?? 1998} = 100, BLS)`,
+}
+
 const methodUrl = getRelativeLocaleUrl(locale, '/werke/praemie')
 const methodLabel = de ? 'Methodenblatt' : 'Method sheet'
 ---
@@ -44,6 +67,30 @@ const methodLabel = de ? 'Methodenblatt' : 'Method sheet'
       </p>
       <p class="text-lg font-semibold text-fg-muted">{heroChange}</p>
       <p class="font-mono text-xs text-fg-faint">{heroBase}</p>
+    </section>
+  )}
+
+  {showChart && (
+    <section class="mb-12">
+      <h2 class="mb-1 font-semibold">{chartTxt.heading}</h2>
+      <svg viewBox={`0 0 ${PCHART_W} ${PCHART_H}`} class="mt-3 w-full overflow-visible text-fg-faint"
+        role="img" aria-label={chartTxt.heading}>
+        <path d={costArea} fill="rgb(var(--rgb-accent))" fill-opacity="0.1" stroke="none" />
+        <path d={costLine} fill="none" stroke="rgb(var(--rgb-accent))" stroke-width="1" stroke-opacity="0.5" vector-effect="non-scaling-stroke" />
+        <path d={idxLine} fill="none" stroke="rgb(var(--rgb-accent))" stroke-width="1.6" vector-effect="non-scaling-stroke" />
+        <text x="0" y={PCHART_H} font-size="9" fill="currentColor">{xMin}</text>
+        <text x={PCHART_W} y={PCHART_H} text-anchor="end" font-size="9" fill="currentColor">{xMax}</text>
+      </svg>
+      <ul class="mt-2 flex flex-wrap gap-x-5 gap-y-1 font-mono text-[11px] text-fg-faint">
+        <li class="flex items-center gap-1.5">
+          <svg width="16" height="8" aria-hidden="true"><rect width="16" height="8" fill="rgb(var(--rgb-accent))" fill-opacity="0.2" /></svg>
+          {chartTxt.cost}
+        </li>
+        <li class="flex items-center gap-1.5">
+          <svg width="16" height="8" aria-hidden="true"><line x1="0" y1="4" x2="16" y2="4" stroke="rgb(var(--rgb-accent))" stroke-width="1.6" /></svg>
+          {chartTxt.index}
+        </li>
+      </ul>
     </section>
   )}
 

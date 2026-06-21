@@ -12,6 +12,7 @@ export interface PolicePremiumData {
   base_year: number
   change_pct_since_base: number
   latest_date: string
+  series?: { year: number; index: number }[]
   source: PoliceSource
 }
 export type PolicePremium = PolicePremiumData | { error: string }
@@ -24,6 +25,7 @@ export interface PoliceDisastersData {
   latest_year_events: number
   latest_year_cost_busd: number
   latest_year_deaths: number
+  series?: { year: number; cost_busd: number; events: number }[]
   source: PoliceSource
 }
 export type PoliceDisasters = PoliceDisastersData | { error: string }
