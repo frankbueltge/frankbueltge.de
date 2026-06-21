@@ -1,5 +1,5 @@
 ---
-// Experimente zuerst: Hero (Klimapuls) → lebendes Protokoll → Experimente → Beruflich.
+// Experimente zuerst: Hero (Klimapuls) → lebendes Protokoll → Experimente → eigene Projekte.
 // Spec: docs/superpowers/specs/2026-06-12-startseite-design.md
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import { t } from '@/i18n/ui'
@@ -42,7 +42,7 @@ const featured = [...projects].sort((a, b) => a.order - b.order)
       <WerkeStrip locale={locale} />
     </section>
 
-    <!-- Beruflich, eingedampft -->
+    <!-- Eigene Projekte / Side Projects -->
     <section class="col-span-12 mt-4 rounded-[14px] border border-line bg-panel panel-raised p-6">
       <p class="mb-1 font-mono text-xs uppercase tracking-[0.2em] text-fg-faint">{t(locale, 'home.beruflich')}</p>
       <p class="mb-4 max-w-2xl text-sm text-fg-muted">{t(locale, 'home.beruflichLead')}</p>
