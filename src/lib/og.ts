@@ -36,7 +36,7 @@ export const OG_PAGES: Record<string, { title: string; description: string }> = 
 
 /** Pfad (mit/ohne /en, mit/ohne Trailing-Slash) → OG-Slug; Default 'home'. */
 export function ogSlug(pathname: string): keyof typeof OG_PAGES {
-  const p = pathname.replace(/^\/en/, '').replace(/\/+$/, '') || '/'
+  const p = pathname.replace(/^\/de/, '').replace(/\/+$/, '') || '/'
   if (p === '/') return 'home'
   if (p.startsWith('/lab')) return 'lab'
   if (p.startsWith('/ueber') || p.startsWith('/about')) return 'about'

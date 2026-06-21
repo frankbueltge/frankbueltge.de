@@ -9,7 +9,7 @@ export async function getStaticPaths() {
 }
 
 const { slug } = Astro.params
-const item = (await getLabEntry(slug!, 'en'))!
+const item = (await getLabEntry(slug!, 'de'))!
 ---
 <Page title={`${item.entry.data.title} | Frank Bültge`} description={item.entry.data.description}>
   <LabDetail slug={slug!} />

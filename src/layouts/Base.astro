@@ -20,7 +20,7 @@ const { title, description } = Astro.props
 const locale = (Astro.currentLocale ?? 'de') as Locale
 
 // canonical + hreflang via Astro's config-aware locale URLs (de at /, en at /en; x-default → de)
-const pathNoLocale = Astro.url.pathname.replace(/^\/en/, '') || '/'
+const pathNoLocale = Astro.url.pathname.replace(/^\/de/, '') || '/'
 const href = (l: Locale) => getAbsoluteLocaleUrl(l, pathNoLocale)
 const canonical = href(locale)
 // Pro Seite generiertes OG-Bild (1200×630, build-time via src/pages/og/).
@@ -68,12 +68,12 @@ const website = {
     <link rel="canonical" href={canonical} />
     <link rel="alternate" hreflang="de-DE" href={href('de')} />
     <link rel="alternate" hreflang="en" href={href('en')} />
-    <link rel="alternate" hreflang="x-default" href={href('de')} />
+    <link rel="alternate" hreflang="x-default" href={href('en')} />
     <link
       rel="alternate"
       type="application/rss+xml"
       title="The Protocol"
-      href={locale === 'de' ? '/protokoll/feed.xml' : '/en/protokoll/feed.xml'}
+      href={locale === 'de' ? '/de/protokoll/feed.xml' : '/protokoll/feed.xml'}
     />
 
     <meta property="og:type" content="website" />

@@ -25,7 +25,7 @@ const SH = 64
 
 const archivUrl = getRelativeLocaleUrl(locale, '/protokoll/archiv')
 const methodUrl = getRelativeLocaleUrl(locale, '/werke/protokoll')
-const feedUrl = de ? '/protokoll/feed.xml' : '/en/protokoll/feed.xml'
+const feedUrl = de ? '/de/protokoll/feed.xml' : '/protokoll/feed.xml'
 
 const nf = new Intl.NumberFormat(de ? 'de-DE' : 'en-GB', { maximumFractionDigits: 2 })
 const dateShort = (iso: string) =>

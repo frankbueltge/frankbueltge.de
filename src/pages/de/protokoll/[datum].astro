@@ -9,7 +9,7 @@ export async function getStaticPaths() {
   const days = await getProtokollDays()
   return days.map((day) => ({ params: { datum: day.date }, props: { day } }))
 }
-const locale = 'en' as const
+const locale = 'de' as const
 const { day } = Astro.props as { day: ProtokollDay }
 ---
 <Page title={`${t(locale, 'prot.title')} ${day.date} | Frank Bültge`} description={t(locale, 'prot.sub')}>
