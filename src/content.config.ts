@@ -1,4 +1,5 @@
-import { defineCollection, z } from 'astro:content'
+import { defineCollection } from 'astro:content'
+import { z } from 'zod/v4'
 import { glob } from 'astro/loaders'
 
 // Lab = data-stories. Bilingual via folder structure: src/content/lab/<slug>/<lang>.mdx
