@@ -8,6 +8,7 @@ import { SITE, type Locale } from '@/lib/site'
 import { t } from '@/i18n/ui'
 import { ogSlug } from '@/lib/og'
 import Analytics from '@vercel/analytics/astro'
+import SpeedInsights from '@vercel/speed-insights/astro'
 
 // Skin fest auf mono (data-skin am <html>) — der Zyklus ist stillgelegt. Skins
 // + SkinSwitcher bleiben im Repo; Reaktivierung = SkinSwitcher wieder mounten
@@ -113,5 +114,6 @@ const website = {
 
     {/* Vercel Web Analytics — cookielos/anonym (DSGVO-konform); sammelt erst, wenn im Vercel-Dashboard aktiviert. */}
     <Analytics />
+    <SpeedInsights />
   </body>
 </html>
