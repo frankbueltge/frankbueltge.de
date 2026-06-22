@@ -28,6 +28,24 @@ const methodUrl = getRelativeLocaleUrl(locale, '/werke/protokoll')
 const feedUrl = de ? '/de/protokoll/feed.xml' : '/protokoll/feed.xml'
 
 const nf = new Intl.NumberFormat(de ? 'de-DE' : 'en-GB', { maximumFractionDigits: 2 })
+// Große Zahlen (Bevölkerung, Aufrufe …) kompakt, damit sie die Kachel nicht sprengen.
+const nfCompact = new Intl.NumberFormat(de ? 'de-DE' : 'en-GB', { notation: 'compact', maximumFractionDigits: 1 })
+const fmtVal = (v: number) => (Math.abs(v) >= 100_000 ? nfCompact.format(v) : nf.format(v))
+
+// EN-Einheiten: die Tagesordnung trägt deutsche Einheiten — für die englische Ansicht mappen.
+const UNIT_EN: Record<string, string> = {
+  Detektionen: 'detections',
+  Beben: 'quakes',
+  Menschen: 'people',
+  Aufrufe: 'views',
+  Ereignisse: 'events',
+  Punkte: 'points',
+  'Mio. km²': 'M km²',
+  'USD/Barrel': 'USD/bbl',
+}
+const unitLabel = (u: string | null | undefined) => (!u ? '' : de ? u : (UNIT_EN[u] ?? u))
+// Einzige deutsche Quellenbezeichnung für die EN-Ansicht übersetzen.
+const srcName = (name: string) => (de ? name : name.replace('Europäische Zentralbank', 'European Central Bank'))
 const dateShort = (iso: string) =>
   new Intl.DateTimeFormat(de ? 'de-DE' : 'en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' })
     .format(new Date(`${iso}T00:00:00Z`))
@@ -104,15 +122,15 @@ const txt = {
 
           <div class="mt-3 flex items-end justify-between gap-x-3">
             {hasVal ? (
-              <p class="text-[clamp(28px,4.5vw,42px)] font-bold leading-none tracking-tight tabular-nums">
-                {nf.format(e.value!)}<span class="ml-1.5 text-[0.4em] font-semibold text-fg-muted">{e.unit}</span>
+              <p class="min-w-0 break-words text-[clamp(26px,4.2vw,40px)] font-bold leading-none tracking-tight tabular-nums">
+                {fmtVal(e.value!)}<span class="ml-1.5 text-[0.4em] font-semibold text-fg-muted">{unitLabel(e.unit)}</span>
               </p>
             ) : (
               <p class="text-xl font-semibold text-fg-faint">—</p>
             )}
             {delta != null && cmp && (
-              <p class={`whitespace-nowrap text-right font-mono text-xs tabular-nums ${moveClass}`}>
-                {arrow} {delta > 0 ? '+' : ''}{nf.format(delta)}
+              <p class={`shrink-0 whitespace-nowrap text-right font-mono text-xs tabular-nums ${moveClass}`}>
+                {arrow} {delta > 0 ? '+' : ''}{fmtVal(delta)}
                 <span class="mt-0.5 block text-fg-faint">{txt.vs} {periodLabel(cmp.label)}</span>
               </p>
             )}
@@ -135,7 +153,7 @@ const txt = {
           )}
 
           <p class="mt-3 text-xs leading-relaxed text-fg-muted">{phrase}</p>
-          <p class="mt-auto pt-3 font-mono text-[10px] text-fg-faint">{e.source.name} · {txt.asOf} {e.as_of ?? '—'}</p>
+          <p class="mt-auto truncate pt-3 font-mono text-[10px] text-fg-faint">{srcName(e.source.name)} · {txt.asOf} {e.as_of ?? '—'}</p>
         </section>
       )
     })}
