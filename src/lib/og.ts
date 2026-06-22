@@ -44,6 +44,10 @@ export const OG_PAGES: Record<string, { title: string; description: string }> = 
     title: 'The Tell',
     description: 'Die Fingerabdrücke der Maschine in der Wissenschaft — „delve" 14× seit ChatGPT',
   },
+  pattern: {
+    title: 'The Pattern',
+    description: 'Eine Maschine, die jeden Tag ein Muster findet — und nicht weiß, ob es etwas bedeutet',
+  },
 }
 
 /** Pfad (mit/ohne /en, mit/ohne Trailing-Slash) → OG-Slug; Default 'home'. */
@@ -60,5 +64,6 @@ export function ogSlug(pathname: string): keyof typeof OG_PAGES {
   if (p.startsWith('/consensus') || p.startsWith('/werke/consensus')) return 'consensus'
   if (p.startsWith('/correction') || p.startsWith('/werke/correction')) return 'correction'
   if (p.startsWith('/tell') || p.startsWith('/werke/tell')) return 'tell'
+  if (p.startsWith('/pattern') || p.startsWith('/werke/pattern')) return 'pattern'
   return 'home'
 }
