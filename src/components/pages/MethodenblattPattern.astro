@@ -1,0 +1,91 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import type { Locale } from '@/lib/site'
+import type { PatternData } from '@/lib/pattern/types'
+import data from '@/data/pattern/latest.json'
+
+interface Props { locale: Locale }
+const { locale } = Astro.props
+const de = locale === 'de'
+const d = data as unknown as PatternData
+const workUrl = getRelativeLocaleUrl(locale, '/pattern')
+
+const txt = {
+  h1: de ? 'Methodenblatt — The Pattern' : 'Method sheet — The Pattern',
+  revealHead: de ? 'Worum es geht' : 'What this is',
+  reveal: de
+    ? 'Der Capstone richtet die Linse auf das Lab selbst. Eine Maschine, die das eigene Archiv nach Korrelationen durchwühlt, findet jeden Tag eine — und kann Signal nicht von Rauschen unterscheiden. Genau das ist der Großteil „datengetriebener Erkenntnis": Muster-Schürfen ohne Urteil. Das Instrument fabriziert die Erkenntnis und entlarvt sie im selben Atemzug — auch die eigene.'
+    : 'The capstone turns the lens on the lab itself. A machine that mines its own archive for correlations finds one every day — and cannot tell signal from noise. That is most "data-driven insight": pattern-mining without judgement. The instrument manufactures the insight and exposes it in the same breath — including its own.',
+  s1: de ? '1. Quellen & Lizenzen' : '1. Sources & licences',
+  s1body: de
+    ? `${d.source.name}. Kein neuer Abruf — es nutzt ausschließlich die bereits committeten Tageswerte des Protokolls (NOAA, USGS, EZB, GDELT u. a.).`
+    : `${d.source.name}. No new fetch — it uses only the already-committed daily values of the Protocol (NOAA, USGS, ECB, GDELT, etc.).`,
+  s2: de ? '2. Kadenz' : '2. Cadence',
+  s2body: de
+    ? `Bei jedem Build neu, mit dem wachsenden Archiv. Derzeit nur ${d.days} gemeinsame Tage — bewusst kurz: je weniger Punkte, desto leichter das Scheinmuster.`
+    : `Recomputed on every build, with the growing archive. Currently only ${d.days} common days — deliberately short: the fewer the points, the easier the false pattern.`,
+  s3: de ? '3. Verarbeitung' : '3. Processing',
+  s3body: de
+    ? `Pearson-Korrelation über alle ${d.pairs} Paare variierender Metriken; die stärkste ist der „Fund". Ein Permutationstest (jede Reihe ${d.permutations.toLocaleString('de-DE')}-mal mischen, max|r| neu suchen) liefert die False-Discovery-Rate. Deterministischer Seed aus dem Datum. numpy, kein LLM.`
+    : `Pearson correlation across all ${d.pairs} pairs of varying metrics; the strongest is the "discovery". A permutation test (shuffle each series ${d.permutations.toLocaleString('en-GB')} times, re-find max|r|) gives the false-discovery rate. Deterministic seed from the date. numpy, no LLM.`,
+  s4: de ? '4. Grenzen der Methode' : '4. Limits of the method',
+  s4items: de
+    ? [
+        'Das Archiv ist kurz (Tage, nicht Jahre); Korrelationen über so wenige Punkte sind instabil und leicht Zufall — das ist Teil der Aussage, nicht ein Versehen.',
+        'Der tiefste Punkt: trendende Reihen (Klimawerte driften) blähen die Korrelation auf UND täuschen den Permutationstest — Mischen zerstört den Trend, also wirken Trend-Paare „signifikant", obwohl die Beziehung verwechselt sein kann. Sogar der Test ist getäuscht.',
+        'Korrelation ist nicht Kausalität; die Maschine behauptet weder das eine noch das andere.',
+        'Beinahe-konstante Metriken sind ausgeschlossen (sie gäben triviale ±1).',
+      ]
+    : [
+        'The archive is short (days, not years); correlations over so few points are unstable and easily chance — that is part of the point, not an oversight.',
+        'The deepest point: trending series (climate values drift) inflate the correlation AND fool the permutation test — shuffling destroys the trend, so trend-pairs look "significant" even when the relationship is confounded. Even the test is fooled.',
+        'Correlation is not causation; the machine asserts neither.',
+        'Near-constant metrics are excluded (they would give trivial ±1).',
+      ],
+  s5: de ? '5. Compute-Fußabdruck' : '5. Compute footprint',
+  s5body: de
+    ? 'Kein Abruf (nutzt das vorhandene Archiv), ein Permutationslauf in numpy, kein LLM. Die Site ist statisch.'
+    : 'No fetch (reuses the existing archive), one permutation run in numpy, no LLM. The site is static.',
+  s6: de ? '6. Änderungsprotokoll' : '6. Change log',
+  s6items: de
+    ? ['v1 (2026-06) — Erstfassung: stärkste Tages-Korrelation + Permutationstest + Geständnis.']
+    : ['v1 (2026-06) — first edition: strongest daily correlation + permutation test + confession.'],
+  toWork: de ? 'Zum Experiment' : 'To the experiment',
+}
+---
+
+<div class="mx-auto max-w-2xl px-4 py-14">
+  <h1 class="mb-8 text-xl font-semibold">{txt.h1}</h1>
+
+  <section class="mb-10 border border-line bg-panel/60 p-5">
+    <h2 class="mb-2 font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">{txt.revealHead}</h2>
+    <p class="leading-relaxed">{txt.reveal}</p>
+  </section>
+
+  <section class="mb-8"><h2 class="mb-2 font-semibold">{txt.s1}</h2><p class="leading-relaxed text-fg-muted">{txt.s1body}</p>
+    <p class="mt-2"><a href={d.source.url} class="font-mono text-xs text-fg-faint transition-colors hover:text-fg" rel="noopener">{d.source.url}</a></p>
+  </section>
+
+  <section class="mb-8"><h2 class="mb-2 font-semibold">{txt.s2}</h2><p class="leading-relaxed text-fg-muted">{txt.s2body}</p></section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s3}</h2>
+    <p class="leading-relaxed text-fg-muted">{txt.s3body}</p>
+    <p class="mt-2"><a href="https://github.com/frankbueltge/frankbueltge.de/tree/main/pipelines/pattern"
+      class="font-mono text-xs text-fg-faint transition-colors hover:text-fg" rel="noopener">→ pipelines/pattern</a></p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s4}</h2>
+    <ul class="list-disc space-y-1 pl-5 text-fg-muted">{txt.s4items.map((i) => <li>{i}</li>)}</ul>
+  </section>
+
+  <section class="mb-8"><h2 class="mb-2 font-semibold">{txt.s5}</h2><p class="leading-relaxed text-fg-muted">{txt.s5body}</p></section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s6}</h2>
+    <ul class="list-disc space-y-1 pl-5 text-fg-muted">{txt.s6items.map((i) => <li>{i}</li>)}</ul>
+  </section>
+
+  <a href={workUrl} class="text-sm text-fg-muted transition-colors hover:text-fg">→ {txt.toWork}</a>
+</div>

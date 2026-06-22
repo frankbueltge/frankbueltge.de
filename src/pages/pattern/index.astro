@@ -1,0 +1,9 @@
+---
+import Page from '@/layouts/Page.astro'
+import PatternPage from '@/components/pages/PatternPage.astro'
+import { t } from '@/i18n/ui'
+const locale = 'en' as const
+---
+<Page title={`${t(locale, 'pt.title')} | Frank Bültge`} description={t(locale, 'pt.sub')}>
+  <PatternPage {locale} />
+</Page>

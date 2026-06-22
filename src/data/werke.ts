@@ -109,6 +109,20 @@ export const WERKE: Werk[] = [
       en: 'Third instrument of the „Counter-Measurement" line. Certain words — „delve", „showcasing", „intricate" — are tells of generative AI. Their share in peer-reviewed PubMed abstracts jumped after ChatGPT: „delve" about 14×, „showcasing" 19× as often. An AI tool measuring AI’s footprint in science.',
     },
   },
+  {
+    id: 'pattern',
+    title: 'The Pattern',
+    subtitle: {
+      de: 'Eine Maschine, die jeden Tag ein Muster findet — und nicht weiß, ob es etwas bedeutet',
+      en: 'A machine that finds a pattern every day — and cannot tell if it means anything',
+    },
+    status: 'live',
+    href: '/pattern',
+    description: {
+      de: 'Capstone der Linie „Gegenmessung". Die Maschine durchwühlt täglich das eigene Protokoll-Archiv nach Korrelationen, hebt die stärkste — und beweist mit einem Permutationstest, dass sie Signal nicht von Rauschen unterscheiden kann. Mit genug Reihen findet man immer ein Muster. Die Gegenmessung der Gegenmessung.',
+      en: 'Capstone of the „Counter-Measurement" line. Each day the machine mines its own Protocol archive for correlations, surfaces the strongest — and proves with a permutation test that it cannot tell signal from noise. With enough series, you always find a pattern. The counter-measurement of counter-measurement.',
+    },
+  },
 ]
 // Überflug wurde am 2026-06-12 aus der Reihe der Experimente genommen (keine These,
 // keine Akkumulation) und lebt als Studie im Lab weiter:
