@@ -95,6 +95,20 @@ export const WERKE: Werk[] = [
       en: 'Second instrument of the „Counter-Measurement" line. Not via a model of my own but via the revisions the agency itself makes: US employment is quietly cut downward — June 2025 by 1.25 million jobs; every one of the last 24 months downward. The real-time number ran systematically too high.',
     },
   },
+  {
+    id: 'tell',
+    title: 'The Tell',
+    subtitle: {
+      de: 'Die Fingerabdrücke der Maschine in der Wissenschaft',
+      en: "The machine's fingerprints in science",
+    },
+    status: 'live',
+    href: '/tell',
+    description: {
+      de: 'Drittes Instrument der Linie „Gegenmessung". Bestimmte Wörter — „delve", „showcasing", „intricate" — sind Tells generativer KI. Ihr Anteil in begutachteten PubMed-Abstracts ist seit ChatGPT sprunghaft gestiegen: „delve" rund 14-mal, „showcasing" 19-mal so oft. Ein KI-Werkzeug misst den Fußabdruck der KI in der Wissenschaft.',
+      en: 'Third instrument of the „Counter-Measurement" line. Certain words — „delve", „showcasing", „intricate" — are tells of generative AI. Their share in peer-reviewed PubMed abstracts jumped after ChatGPT: „delve" about 14×, „showcasing" 19× as often. An AI tool measuring AI’s footprint in science.',
+    },
+  },
 ]
 // Überflug wurde am 2026-06-12 aus der Reihe der Experimente genommen (keine These,
 // keine Akkumulation) und lebt als Studie im Lab weiter:
