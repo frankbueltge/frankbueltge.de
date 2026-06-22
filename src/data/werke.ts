@@ -85,14 +85,14 @@ export const WERKE: Werk[] = [
     id: 'correction',
     title: 'The Correction',
     subtitle: {
-      de: 'Die amtliche Zahl war zu niedrig — und ist nie endgültig',
-      en: 'The official number was too low — and is never final',
+      de: 'Die Jobzahl war aufgebläht — und wird millionenweise gestrichen',
+      en: 'The jobs number was inflated — and is cut by the million',
     },
     status: 'live',
     href: '/correction',
     description: {
-      de: 'Zweites Instrument der Linie „Gegenmessung". Nicht durch ein eigenes Modell, sondern durch die Revisionen, die das Amt selbst vornimmt: Die CDC-Grippezahlen werden fast immer nach oben korrigiert — manchmal noch zwei Jahre später. Die Echtzeit-Zahl ist systematisch zu niedrig.',
-      en: 'Second instrument of the „Counter-Measurement" line. Not via a model of my own but via the revisions the agency itself makes: the CDC flu numbers are almost always corrected upward — sometimes two years later. The real-time number is systematically too low.',
+      de: 'Zweites Instrument der Linie „Gegenmessung". Nicht durch ein eigenes Modell, sondern durch die Revisionen, die das Amt selbst vornimmt: Die US-Beschäftigtenzahl wird still nach unten korrigiert — Juni 2025 um 1,25 Millionen Stellen; jeder der letzten 24 Monate nach unten. Die Echtzeit-Zahl war systematisch zu hoch.',
+      en: 'Second instrument of the „Counter-Measurement" line. Not via a model of my own but via the revisions the agency itself makes: US employment is quietly cut downward — June 2025 by 1.25 million jobs; every one of the last 24 months downward. The real-time number ran systematically too high.',
     },
   },
 ]

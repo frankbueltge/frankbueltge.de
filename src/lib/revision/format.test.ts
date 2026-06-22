@@ -1,31 +1,31 @@
 import { describe, expect, it } from 'vitest'
-import { signedPct, sharePct, epiweekLabel, num } from './format'
+import { millions, signedFull, sharePct, monthLabel } from './format'
 
-describe('signedPct', () => {
-  it('formatiert mit Vorzeichen je Sprache', () => {
-    expect(signedPct(8.9, 'en')).toBe('+8.9%')
-    expect(signedPct(8.9, 'de')).toBe('+8,9 %')
-    expect(signedPct(-1.2, 'en')).toBe('−1.2%')
+describe('millions', () => {
+  it('rechnet Tausender in Millionen, betragsweise', () => {
+    expect(millions(1246, 'en')).toBe('1.25')
+    expect(millions(1246, 'de')).toBe('1,25')
+    expect(millions(-298, 'en')).toBe('0.3')
+  })
+})
+
+describe('signedFull', () => {
+  it('volle Zahl mit Vorzeichen', () => {
+    expect(signedFull(-1246, 'en')).toBe('−1,246,000')
+    expect(signedFull(50, 'en')).toBe('+50,000')
   })
 })
 
 describe('sharePct', () => {
-  it('rundet Anteil auf ganze Prozent', () => {
-    expect(sharePct(0.949, 'en')).toBe('95%')
-    expect(sharePct(0.949, 'de')).toBe('95 %')
+  it('rundet Anteil', () => {
+    expect(sharePct(1, 'en')).toBe('100%')
+    expect(sharePct(1, 'de')).toBe('100 %')
   })
 })
 
-describe('epiweekLabel', () => {
-  it('zerlegt Epiweek in Jahr-Woche', () => {
-    expect(epiweekLabel(202514)).toBe('2025-W14')
-    expect(epiweekLabel(202240)).toBe('2022-W40')
-  })
-})
-
-describe('num', () => {
-  it('trennt Tausender', () => {
-    expect(num(66660, 'en')).toBe('66,660')
-    expect(num(66660, 'de')).toBe('66.660')
+describe('monthLabel', () => {
+  it('macht aus 2025-06 einen Monatsnamen', () => {
+    expect(monthLabel('2025-06', 'en')).toBe('June 2025')
+    expect(monthLabel('2025-06', 'de')).toBe('Juni 2025')
   })
 })

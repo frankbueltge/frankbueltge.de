@@ -1,28 +1,31 @@
 import type { Locale } from '@/lib/site'
 
-/** Vorzeichen-Prozent, z. B. „+8,9 %" / „+8.9%". */
-export function signedPct(n: number, locale: Locale): string {
-  const v = new Intl.NumberFormat(locale === 'de' ? 'de-DE' : 'en-GB', {
+/** Tausender als Millionen, 2 Nachkomma, z. B. 1246 → „1,25" / „1.25". */
+export function millions(thousands: number, locale: Locale): string {
+  return new Intl.NumberFormat(locale === 'de' ? 'de-DE' : 'en-GB', {
     minimumFractionDigits: 1,
-    maximumFractionDigits: 1,
-  }).format(Math.abs(n))
-  const sign = n >= 0 ? '+' : '−'
-  return locale === 'de' ? `${sign}${v} %` : `${sign}${v}%`
+    maximumFractionDigits: 2,
+  }).format(Math.abs(thousands) / 1000)
 }
 
-/** Anteil 0..1 als ganze Prozent, z. B. „95 %" / „95%". */
+/** Vorzeichen-Tausenderzahl, z. B. „−1.246.000" / „-1,246,000". */
+export function signedFull(thousands: number, locale: Locale): string {
+  const v = new Intl.NumberFormat(locale === 'de' ? 'de-DE' : 'en-GB').format(Math.abs(thousands) * 1000)
+  return `${thousands >= 0 ? '+' : '−'}${v}`
+}
+
+/** Anteil 0..1 als ganze Prozent. */
 export function sharePct(x: number, locale: Locale): string {
   const v = Math.round(x * 100)
   return locale === 'de' ? `${v} %` : `${v}%`
 }
 
-/** Epiweek 202514 → „2025-W14". */
-export function epiweekLabel(wk: number): string {
-  const y = Math.floor(wk / 100)
-  const w = wk % 100
-  return `${y}-W${String(w).padStart(2, '0')}`
+/** „2025-06" → „Juni 2025" / „June 2025". */
+export function monthLabel(period: string, locale: Locale): string {
+  const [y, m] = period.split('-').map(Number)
+  return new Date(Date.UTC(y, (m || 1) - 1, 1)).toLocaleDateString(locale === 'de' ? 'de-DE' : 'en-GB', {
+    year: 'numeric',
+    month: 'long',
+    timeZone: 'UTC',
+  })
 }
-
-/** Tausender-Trennung je Sprache. */
-export const num = (n: number, locale: Locale): string =>
-  new Intl.NumberFormat(locale === 'de' ? 'de-DE' : 'en-GB').format(n)
