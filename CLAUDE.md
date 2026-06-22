@@ -1,10 +1,14 @@
 # CLAUDE.md — frankbueltge.de
 
 Persönliche Website von Frank Bültge (Data & AI Engineer) — ein öffentliches
-**Experimentierfeld** mit Daten und Code. Die Experimente (Protokoll, Halbwertszeit,
-Parallaxe, Police) sind erste Annäherungen, praxisbasiert, auf dem Weg zu einer
-künstlerischen Forschung — nicht deren fertige Praxis. Das gestaltete Arbeiten lebt in
-den Projekten (datavism.org, data-snack.com). Positionierung: `docs/superpowers/specs/2026-06-20-ehrliche-umrahmung-design.md`.
+**Experimentierfeld** mit **Daten und KI** (inkl. ML und symbolischer KI). Die Experimente
+(Protokoll, Halbwertszeit, Parallaxe, Police) sind erste Annäherungen, praxisbasiert, auf dem
+Weg zu einer künstlerischen Forschung. Das gestaltete Arbeiten lebt in den Projekten
+(datavism.org, data-snack.com). Positionierung: `docs/superpowers/specs/2026-06-20-ehrliche-umrahmung-design.md`.
+
+**Neue Lab-Linie: Gegenmessung / Counter-Measurement** — messen, was Macht im Dunkeln lässt,
+und nachprüfbar machen. Erstes Instrument „The Consensus" misst orchestrierten Konsens
+(`docs/superpowers/specs/2026-06-22-gegenmessung-echo-design.md`).
 
 ## Befehle
 
@@ -34,10 +38,20 @@ schreibt täglich `src/content/protokoll/<jahr>/<datum>.json` per GitHub-API-Com
 - **Spec:** `docs/superpowers/specs/2026-06-11-werkgruppe-design.md` (Substanz-Kriterien
   in §2 sind das Gate für jedes neue Experiment; Methodenblatt-Pflicht in §3.5).
   Rahmung/Wortlaut: `2026-06-20-ehrliche-umrahmung-design.md` (kein Kunst-Anspruch).
-- **Kein LLM-Text.** Die Prosa des Protokolls ist deterministisch aus Templates
-  (`src/lib/protokoll/agenda.ts`, `render.ts`); die exakten Strings stehen unter
-  Testschutz (`render.test.ts`). **Test-Strings nie aufweichen** — sie sind das
-  abgenommene amtliche Register.
+- **KI/ML sind Material und Methode — inkl. symbolischer/neuro-symbolischer KI.**
+  Das Lab experimentiert mit Daten UND KI (Frank, 2026-06-22; das frühere lab-weite
+  „kein LLM"-Dogma ist aufgehoben). Einzige Bedingung ist **Nachprüfbarkeit:** jeder
+  KI-Schritt ist transparent (Modell/Prompt/Verfahren offengelegt), sein Output wird
+  verifiziert oder als Schätzung markiert; wo das Modell selbst der Gegenstand ist, wird
+  seine Unzuverlässigkeit Teil der Messung. KI als ausgewiesenes, prüfbares Werkzeug UND
+  als Untersuchungsgegenstand — nie als unbelegtes Orakel, das Fabrikation als Fakt
+  ausgibt. (Dieselbe Ethik wie datavism: „no AI output without verification, no claim
+  without evidence".) Symbolische KI ist besonders willkommen, weil auditierbar — sie
+  zahlt direkt auf „nachprüfbar machen" ein.
+- **Ausnahme — The Protocol bleibt deterministisch.** Die Prosa des Protokolls ist
+  deterministisch aus Templates (`src/lib/protokoll/agenda.ts`, `render.ts`); die Strings
+  stehen unter Testschutz (`render.test.ts`) — eine bewusste ästhetische Wahl für DIESES
+  Stück (abgenommenes amtliches Register), kein lab-weites Verbot. **Test-Strings nie aufweichen.**
 - **Archiv-JSONs sind unantastbar.** Committete Tagesprotokolle werden nie editiert;
   Korrekturen geschehen nur an der Darstellung (Registerfassung versioniert).
 - **Ausfälle ehrlich vermerken:** Quellenausfälle werden vermerkt („Feststellung entfällt"),
