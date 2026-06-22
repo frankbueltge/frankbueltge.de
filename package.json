@@ -14,7 +14,8 @@
     "ueberflug:refresh": "tsx scripts/fetch-ueberflug.ts",
     "protokoll:dry": "pipelines/protokoll/.venv/bin/python -m protokoll.run --dry-run --repo-root .",
     "consensus:refresh": "python3 pipelines/consensus/refresh.py",
-    "correction:refresh": "python3 pipelines/revision/refresh.py"
+    "correction:refresh": "python3 pipelines/revision/refresh.py",
+    "tell:refresh": "python3 pipelines/tell/refresh.py"
   },
   "dependencies": {
     "@astrojs/mdx": "^6.0.3",
