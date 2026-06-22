@@ -25,7 +25,7 @@ export const OG_PAGES: Record<string, { title: string; description: string }> = 
     description: 'Wie schnell die Aufmerksamkeit für Katastrophen abklingt',
   },
   parallax: {
-    title: 'Parallax',
+    title: 'Iceberg Theory',
     description: 'Wie sich Wikipedia-Sprachversionen über umstrittene Themen unterscheiden',
   },
   policy: {
@@ -45,7 +45,7 @@ export const OG_PAGES: Record<string, { title: string; description: string }> = 
     description: 'Die Fingerabdrücke der Maschine in der Wissenschaft — „delve" 14× seit ChatGPT',
   },
   pattern: {
-    title: 'The Pattern',
+    title: 'Patterns',
     description: 'Eine Maschine, die jeden Tag ein Muster findet — und nicht weiß, ob es etwas bedeutet',
   },
 }
