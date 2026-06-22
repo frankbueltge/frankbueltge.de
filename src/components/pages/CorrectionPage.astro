@@ -1,12 +1,12 @@
 ---
 // Gegenmessung II — „The Correction".
 // Misst die Lüge der offiziellen Zahl über die Revisionen, die das Amt selbst vornimmt.
-// Daten: src/data/revision/latest.json (CDC ILINet via Delphi Epidata; pipelines/revision/).
+// Daten: src/data/revision/latest.json (Philadelphia Fed RTDSM; pipelines/revision/).
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import { t } from '@/i18n/ui'
 import type { Locale } from '@/lib/site'
 import type { RevisionData } from '@/lib/revision/types'
-import { signedPct, sharePct, epiweekLabel, num } from '@/lib/revision/format'
+import { millions, signedFull, sharePct, monthLabel } from '@/lib/revision/format'
 import data from '@/data/revision/latest.json'
 
 interface Props { locale: Locale }
@@ -15,20 +15,19 @@ const de = locale === 'de'
 const d = data as unknown as RevisionData
 const s = d.systematic
 const h = d.headline
-const m = d.max_lag
 const methodUrl = getRelativeLocaleUrl(locale, '/werke/correction')
 
-// Balken: wöchentliche Revision in % — fast alle über der Null (systematisch nach oben).
-const ws = d.weeks
+const mio = (thousands: number) =>
+  new Intl.NumberFormat(de ? 'de-DE' : 'en-GB', { maximumFractionDigits: 1 }).format(thousands / 1000)
+
+// Balken: monatliche Revision (Tsd. Jobs) — alle nach unten. Nulllinie oben, Balken hängen.
+const rec = d.recent
 const W = 640
-const H = 120
-const mid = H / 2
-const maxAbs = Math.max(...ws.map((w) => Math.abs(w.pct)), 1)
-const bw = ws.length ? W / ws.length : W
-const bars = ws.map((w, i) => {
-  const hgt = (Math.abs(w.pct) / maxAbs) * (mid - 4)
-  return { x: i * bw, y: w.pct >= 0 ? mid - hgt : mid, h: hgt, up: w.pct >= 0 }
-})
+const H = 130
+const top = 10
+const maxAbs = Math.max(...rec.map((r) => Math.abs(r.delta)), 1)
+const bw = rec.length ? W / rec.length : W
+const bars = rec.map((r, i) => ({ x: i * bw, h: (Math.abs(r.delta) / maxAbs) * (H - top - 2) }))
 ---
 
 <article class="correction mx-auto max-w-3xl px-4 py-14">
@@ -39,59 +38,51 @@ const bars = ws.map((w, i) => {
 
   {h && (
     <section class="mb-12 flex items-baseline gap-4">
-      <p class="text-[clamp(40px,8vw,72px)] font-bold leading-none tabular-nums">{sharePct(s.revised_up_share, locale)}</p>
+      <p class="text-[clamp(40px,8vw,72px)] font-bold leading-none tabular-nums">{millions(h.delta, locale)}{de ? ' Mio.' : 'M'}</p>
       <p class="max-w-sm text-sm leading-snug text-fg-muted">
         {de
-          ? `der letzten ${s.weeks} wöchentlichen Grippezahlen wurden später revidiert — ${s.revised_up} davon nach oben. Die amtliche Echtzeit-Zahl ist systematisch zu niedrig.`
-          : `of the last ${s.weeks} weekly flu numbers were later revised — ${s.revised_up} of them upward. The official real-time number is systematically too low.`}
+          ? `Jobs gestrichen. Im ${monthLabel(h.period, locale)} meldeten die USA zuerst ${mio(h.first)} Mio. Beschäftigte. Inzwischen ist die Zahl auf ${mio(h.final)} Mio. nach unten revidiert.`
+          : `jobs erased. In ${monthLabel(h.period, locale)} the US first reported ${mio(h.first)} million jobs. It has since been revised down to ${mio(h.final)} million.`}
       </p>
     </section>
   )}
 
-  {ws.length > 1 && (
+  {rec.length > 1 && (
     <section class="mb-12">
       <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
-        {de ? 'Wöchentliche Revision (Erst-Meldung → Korrektur)' : 'Weekly revision (first report → correction)'}
+        {de ? 'Monatliche Revision der Beschäftigung (Erst-Meldung → Korrektur)' : 'Monthly revision of employment (first report → correction)'}
       </p>
       <svg viewBox={`0 0 ${W} ${H}`} class="mt-3 w-full" role="img"
-        aria-label={de ? 'Balken der wöchentlichen Revision, fast alle nach oben' : 'Bars of weekly revision, almost all upward'}>
+        aria-label={de ? 'Balken der monatlichen Revision, alle nach unten' : 'Bars of monthly revision, all downward'}>
+        <line x1="0" y1={top} x2={W} y2={top} stroke="currentColor" stroke-width="0.5" class="text-fg-faint" />
         {bars.map((b) => (
-          <rect x={b.x + 0.5} y={b.y} width={Math.max(1, bw - 1)} height={b.h}
-            fill={b.up ? 'rgb(var(--rgb-accent))' : '#dc2626'} fill-opacity={b.up ? '0.7' : '0.9'} />
+          <rect x={b.x + 0.5} y={top} width={Math.max(1, bw - 1)} height={b.h} fill="#dc2626" fill-opacity="0.8" />
         ))}
-        <line x1="0" y1={mid} x2={W} y2={mid} stroke="currentColor" stroke-width="0.5" class="text-fg-faint" />
       </svg>
       <p class="mt-2 font-mono text-[11px] text-fg-faint">
-        {de ? 'Über der Linie = nachträglich nach oben korrigiert.' : 'Above the line = later corrected upward.'}
+        {de
+          ? `Unter der Linie = nachträglich nach unten korrigiert. ${rec[0].period} – ${rec.at(-1)?.period}.`
+          : `Below the line = later corrected downward. ${rec[0].period} – ${rec.at(-1)?.period}.`}
       </p>
     </section>
   )}
+
+  <section class="mb-10 flex items-baseline gap-4">
+    <p class="text-[clamp(28px,5vw,44px)] font-bold leading-none tabular-nums">{sharePct(s.revised_down_share, locale)}</p>
+    <p class="max-w-sm text-sm leading-snug text-fg-muted">
+      {de
+        ? `der letzten ${s.months} Monate wurden nach unten revidiert. Die amtliche Beschäftigung war systematisch zu hoch — die Echtzeit-Zahl, auf die Märkte und Politik reagierten, eine vorläufige.`
+        : `of the last ${s.months} months were revised downward. Official employment was systematically too high — the real-time number markets and politics reacted to was a provisional one.`}
+    </p>
+  </section>
 
   {h && (
-    <section class="mb-10 border-l-2 border-accent/60 pl-5">
-      <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
-        {de ? 'Die Zahl, auf die alle reagierten' : 'The number everyone reacted to'}
-      </p>
-      <p class="mt-3 leading-relaxed">
-        {de
-          ? `Woche ${epiweekLabel(h.epiweek)}: Die CDC meldete zuerst ${num(h.first_cases, locale)} Grippefälle. Inzwischen hat sie das auf ${num(h.final_cases, locale)} korrigiert — ${signedPct(h.pct, locale)}.`
-          : `Week ${epiweekLabel(h.epiweek)}: the CDC first reported ${num(h.first_cases, locale)} flu cases. It has since revised that to ${num(h.final_cases, locale)} — ${signedPct(h.pct, locale)}.`}
-        {h.final_lag_weeks != null && (
-          <span class="text-fg-muted">
-            {de ? ` Die Korrektur kam ${h.final_lag_weeks} Wochen später.` : ` The correction arrived ${h.final_lag_weeks} weeks later.`}
-          </span>
-        )}
-      </p>
-    </section>
-  )}
-
-  {m && m.final_lag_weeks != null && (
     <section class="mb-12">
       <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">{de ? 'Es gibt keine finale Zahl' : 'There is no final number'}</p>
       <p class="mt-2 leading-relaxed text-fg-muted">
         {de
-          ? `Woche ${epiweekLabel(m.epiweek)} wurde noch ${m.final_lag_weeks} Wochen später verändert — fast zwei Jahre nach dem Ereignis, das sie beschreibt.`
-          : `Week ${epiweekLabel(m.epiweek)} was still being changed ${m.final_lag_weeks} weeks later — almost two years after the event it describes.`}
+          ? `Die Beschäftigung wird jährlich gegen Steuerdaten „gebenchmarkt" — die ${monthLabel(h.period, locale)}-Zahl verlor dabei ${signedFull(h.delta, locale)} Stellen. Die Zahl, die du gelesen hast, war nie endgültig.`
+          : `Employment is "benchmarked" against tax records each year — the ${monthLabel(h.period, locale)} figure lost ${signedFull(h.delta, locale)} jobs in the process. The number you read was never final.`}
       </p>
     </section>
   )}
@@ -99,7 +90,7 @@ const bars = ws.map((w, i) => {
   <footer class="mt-12 border-t border-line pt-6">
     <p class="font-mono text-xs text-fg-faint">
       {de ? 'Quelle: ' : 'Source: '}{d.source.name}.
-      {de ? ' Erst-Meldung = Ausgabe mit 1 Woche Verzug; Korrektur = jüngste Revision.' : ' First report = issue at 1-week lag; correction = latest revision.'}
+      {de ? ' Erst-Meldung = früheste Ausgabe mit Wert; Korrektur = jüngste Ausgabe.' : ' First report = earliest issue with a value; correction = latest issue.'}
     </p>
     <nav class="mt-2">
       <a href={methodUrl} class="font-mono text-xs text-fg-faint transition-colors hover:text-fg">{t(locale, 'prot.method')} →</a>

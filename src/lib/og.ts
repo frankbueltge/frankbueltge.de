@@ -38,7 +38,11 @@ export const OG_PAGES: Record<string, { title: string; description: string }> = 
   },
   correction: {
     title: 'The Correction',
-    description: 'Die amtliche Zahl war zu niedrig — und ist nie endgültig',
+    description: 'Die Jobzahl war aufgebläht — und wird millionenweise gestrichen',
+  },
+  tell: {
+    title: 'The Tell',
+    description: 'Die Fingerabdrücke der Maschine in der Wissenschaft — „delve" 14× seit ChatGPT',
   },
 }
 
@@ -55,5 +59,6 @@ export function ogSlug(pathname: string): keyof typeof OG_PAGES {
   if (p.startsWith('/praemie') || p.startsWith('/police') || p.startsWith('/werke/praemie')) return 'policy'
   if (p.startsWith('/consensus') || p.startsWith('/werke/consensus')) return 'consensus'
   if (p.startsWith('/correction') || p.startsWith('/werke/correction')) return 'correction'
+  if (p.startsWith('/tell') || p.startsWith('/werke/tell')) return 'tell'
   return 'home'
 }
