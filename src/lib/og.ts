@@ -32,6 +32,14 @@ export const OG_PAGES: Record<string, { title: string; description: string }> = 
     title: 'The Policy',
     description: 'Klimakosten, aus Marktdaten als „Prämie" gerechnet',
   },
+  consensus: {
+    title: 'The Consensus',
+    description: 'Wie viel „unabhängiger" Nachrichten-Konsens eine Quelle ist, x-fach kopiert',
+  },
+  correction: {
+    title: 'The Correction',
+    description: 'Die amtliche Zahl war zu niedrig — und ist nie endgültig',
+  },
 }
 
 /** Pfad (mit/ohne /en, mit/ohne Trailing-Slash) → OG-Slug; Default 'home'. */
@@ -45,5 +53,7 @@ export function ogSlug(pathname: string): keyof typeof OG_PAGES {
   if (p.startsWith('/halbwertszeit')) return 'halbwertszeit'
   if (p.startsWith('/parallaxe')) return 'parallax'
   if (p.startsWith('/praemie') || p.startsWith('/police') || p.startsWith('/werke/praemie')) return 'policy'
+  if (p.startsWith('/consensus') || p.startsWith('/werke/consensus')) return 'consensus'
+  if (p.startsWith('/correction') || p.startsWith('/werke/correction')) return 'correction'
   return 'home'
 }
