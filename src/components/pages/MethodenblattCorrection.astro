@@ -14,42 +14,48 @@ const txt = {
   h1: de ? 'Methodenblatt — The Correction' : 'Method sheet — The Correction',
   revealHead: de ? 'Worum es geht' : 'What this is',
   reveal: de
-    ? 'Es gibt nicht „die Zahl". Jede amtliche Statistik, die du in Echtzeit liest, ist vorläufig — und hier systematisch zu niedrig. Das Amt korrigiert sich still, manchmal Jahre später. Kein eigenes Modell, keine Spekulation: Gegenmessung zeigt nur die Lücke zwischen dem, was verkündet wurde, und dem, was die Quelle selbst später daraus machte.'
-    : 'There is no "the number". Every official statistic you read in real time is provisional — and here, systematically too low. The agency corrects itself quietly, sometimes years later. No model, no speculation: counter-measurement only shows the gap between what was announced and what the source itself later made of it.',
+    ? 'Es gibt nicht „die Zahl". Die Beschäftigung, auf die Märkte und Politik in Echtzeit reagieren, ist vorläufig — und wurde zuletzt millionenweise nach unten korrigiert. Kein eigenes Modell, keine Spekulation: Gegenmessung zeigt nur die Lücke zwischen dem, was verkündet wurde, und dem, was die Quelle selbst später daraus machte.'
+    : 'There is no "the number". The employment figure markets and politics react to in real time is provisional — and was lately revised down by the million. No model, no speculation: counter-measurement only shows the gap between what was announced and what the source itself later made of it.',
   s1: de ? '1. Quellen & Lizenzen' : '1. Sources & licences',
   s1body: de
-    ? `${d.source.name} (${d.source.license}). Die API liefert die „as-of-then"-Fassung gleich mit: jede Woche trägt ihre Ausgabe (issue) und ihren Verzug (lag).`
-    : `${d.source.name} (${d.source.license}). The API ships the "as-of-then" version with each row: every week carries its issue and its lag.`,
+    ? `${d.source.name} (${d.source.license}). Die Vintage-Datenbank speichert jede „Ausgabe" einer Zahl — so liefert sie die „as-of-then"-Fassung gleich mit.`
+    : `${d.source.name} (${d.source.license}). The vintage database stores every "issue" of a number — so it ships the "as-of-then" version with it.`,
   s2: de ? '2. Kadenz' : '2. Cadence',
   s2body: de
-    ? 'Wöchentlich aktualisiert die Quelle die neueste Woche UND revidiert ältere. Der Build holt die jeweils jüngsten Revisionen. Kanonisches Artefakt: versionierte JSON in src/data/revision/ — Git ist das Archiv.'
-    : 'Weekly the source updates the newest week AND revises older ones. The build pulls the latest revisions each time. Canonical artefact: versioned JSON in src/data/revision/ — git is the archive.',
+    ? 'Monatlich neue Meldung, jährlich „Benchmark"-Revision gegen Steuerdaten. Der Build holt die jeweils jüngsten Vintages. Kanonisches Artefakt: versionierte JSON in src/data/revision/ — Git ist das Archiv.'
+    : 'A new monthly report, an annual "benchmark" revision against tax records. The build pulls the latest vintages each time. Canonical artefact: versioned JSON in src/data/revision/ — git is the archive.',
   s3: de ? '3. Verarbeitung' : '3. Processing',
   s3body: de
-    ? 'Deterministisch, kein Nowcast: Erst-Meldung = Ausgabe mit 1 Woche Verzug (lag=1); Korrektur = jüngste Ausgabe. Revision = Korrektur − Erst-Meldung. „Systematisch" = Anteil der Wochen, die nach oben gingen. Die Schlagzeile ist die stärkste Revision einer Peak-Woche.'
-    : 'Deterministic, no nowcast: first report = issue at 1-week lag (lag=1); correction = latest issue. Revision = correction − first report. "Systematic" = share of weeks revised upward. The headline is the largest revision of a peak week.',
+    ? 'Deterministisch, kein Nowcast: Erst-Meldung = früheste Ausgabe mit Wert; Korrektur = jüngste Ausgabe. Revision = Korrektur − Erst-Meldung. „Systematisch" = Anteil der letzten Monate, die nach unten gingen. Die Schlagzeile ist die stärkste Revision seit 2024. XLSX-Quelle, geparst mit pandas/openpyxl.'
+    : 'Deterministic, no nowcast: first report = earliest issue with a value; correction = latest issue. Revision = correction − first report. "Systematic" = share of recent months revised downward. The headline is the largest revision since 2024. XLSX source, parsed with pandas/openpyxl.',
   s4: de ? '4. Grenzen der Methode' : '4. Limits of the method',
   s4items: de
     ? [
-        'Nationales ILINet (USA), nicht die Welt; ILI = grippeähnliche Erkrankung, ein Proxy, nicht laborbestätigte Grippe.',
-        'Die durchschnittliche Magnitude ist klein (~1 %), aber die RICHTUNG ist systematisch — fast immer nach oben. Das ist der Punkt, nicht die Größe.',
-        '„Erst-Meldung" = lag 1 Woche (nicht lag 0); ein konservativer Proxy für die Zahl, auf die in Echtzeit reagiert wird.',
-        'Revisionen entstehen durch spät meldende Labore — kein „Fehler" im engen Sinn, aber die Echtzeit-Zahl ist eben vorläufig und verzerrt zu niedrig.',
+        'US-Nonfarm-Payroll, nicht die Welt; ein Niveau (Beschäftigtenzahl), keine saisonbereinigte Feinheit.',
+        '„Erst-Meldung" = früheste RTDSM-Ausgabe (≈ erste/zweite Veröffentlichung), nicht zwingend exakt die Schlagzeile am Tag X.',
+        'Die großen Abwärts-Revisionen sind die jährliche Benchmark gegen Steuerdaten (QCEW) — kein „Fehler" im engen Sinn, aber die Echtzeit-Zahl ist eben vorläufig und lag zuletzt systematisch zu hoch.',
+        'FRED/BLS blocken Datacenter-IPs; darum die Philadelphia-Fed-RTDSM als gleichwertige, frei zugängliche Vintage-Quelle.',
       ]
     : [
-        'National ILINet (US), not the world; ILI = influenza-like illness, a proxy, not lab-confirmed flu.',
-        'The average magnitude is small (~1%), but the DIRECTION is systematic — almost always upward. That is the point, not the size.',
-        '"First report" = lag 1 week (not lag 0); a conservative proxy for the number reacted to in real time.',
-        'Revisions arise from late-reporting labs — not "error" in a narrow sense, but the real-time number is provisional and biased low.',
+        'US nonfarm payroll, not the world; a level (headcount), not seasonal-adjustment nuance.',
+        '"First report" = earliest RTDSM issue (≈ first/second release), not necessarily the exact day-X headline.',
+        'The large downward revisions are the annual benchmark against tax records (QCEW) — not "error" in a narrow sense, but the real-time number is provisional and lately ran systematically high.',
+        'FRED/BLS block datacenter IPs; hence the Philadelphia Fed RTDSM as an equivalent, freely accessible vintage source.',
       ],
   s5: de ? '5. Compute-Fußabdruck' : '5. Compute footprint',
   s5body: de
-    ? 'Zwei HTTP-Abrufe pro Build, kein API-Key, kein LLM. Die Site ist statisch.'
-    : 'Two HTTP fetches per build, no API key, no LLM. The site is static.',
+    ? 'Ein XLSX-Download pro Build (~2 MB), kein API-Key, kein LLM. Benötigt pandas/openpyxl. Die Site ist statisch.'
+    : 'One XLSX download per build (~2 MB), no API key, no LLM. Requires pandas/openpyxl. The site is static.',
   s6: de ? '6. Änderungsprotokoll' : '6. Change log',
   s6items: de
-    ? ['v1 (2026-06) — Erstfassung: systematische Aufwärts-Revision, stärkste Korrektur, „keine finale Zahl".']
-    : ['v1 (2026-06) — first edition: systematic upward revision, largest correction, "no final number".'],
+    ? [
+        'v2 (2026-06) — auf Beschäftigungs-Revisionen (Philadelphia Fed RTDSM) umgestellt; wuchtigere, marktrelevante Lücke.',
+        'v1 — Grippe-Revisionen (CDC/Delphi): systematische Aufwärts-Korrektur.',
+      ]
+    : [
+        'v2 (2026-06) — switched to employment revisions (Philadelphia Fed RTDSM); a heavier, market-relevant gap.',
+        'v1 — flu revisions (CDC/Delphi): systematic upward correction.',
+      ],
   toWork: de ? 'Zum Experiment' : 'To the experiment',
 }
 ---
@@ -71,10 +77,8 @@ const txt = {
   <section class="mb-8">
     <h2 class="mb-2 font-semibold">{txt.s3}</h2>
     <p class="leading-relaxed text-fg-muted">{txt.s3body}</p>
-    <p class="mt-2">
-      <a href="https://github.com/frankbueltge/frankbueltge.de/tree/main/pipelines/revision"
-        class="font-mono text-xs text-fg-faint transition-colors hover:text-fg" rel="noopener">→ pipelines/revision</a>
-    </p>
+    <p class="mt-2"><a href="https://github.com/frankbueltge/frankbueltge.de/tree/main/pipelines/revision"
+      class="font-mono text-xs text-fg-faint transition-colors hover:text-fg" rel="noopener">→ pipelines/revision</a></p>
   </section>
 
   <section class="mb-8">

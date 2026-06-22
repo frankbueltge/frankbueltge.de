@@ -38,7 +38,7 @@ export const OG_PAGES: Record<string, { title: string; description: string }> = 
   },
   correction: {
     title: 'The Correction',
-    description: 'Die amtliche Zahl war zu niedrig — und ist nie endgültig',
+    description: 'Die Jobzahl war aufgebläht — und wird millionenweise gestrichen',
   },
 }
 
