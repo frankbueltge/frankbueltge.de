@@ -1,0 +1,83 @@
+---
+// Gegenmessung IV (Capstone) — „The Pattern".
+// Die Maschine findet täglich blind die stärkste Korrelation im eigenen Protokoll-Archiv —
+// und kann nicht sagen, ob sie etwas bedeutet. Nur der Permutationstest trennt Signal von
+// Rauschen, und selbst der wird von Trends getäuscht. Daten: src/data/pattern/latest.json.
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import { t } from '@/i18n/ui'
+import type { Locale } from '@/lib/site'
+import type { PatternData } from '@/lib/pattern/types'
+import { rStr, pct, normalize, linePath } from '@/lib/pattern/format'
+import data from '@/data/pattern/latest.json'
+
+interface Props { locale: Locale }
+const { locale } = Astro.props
+const de = locale === 'de'
+const d = data as unknown as PatternData
+const h = d.headline
+const methodUrl = getRelativeLocaleUrl(locale, '/werke/pattern')
+
+const W = 640
+const H = 150
+const pathA = linePath(normalize(h.a_series), W, H)
+const pathB = linePath(normalize(h.b_series), W, H)
+const survives = d.false_discovery_rate < 0.1
+---
+
+<article class="pattern mx-auto max-w-3xl px-4 py-14">
+  <header class="mb-10">
+    <h1 class="text-[clamp(30px,6vw,56px)] font-bold tracking-[-0.03em]">The Pattern</h1>
+    <p class="mt-2 max-w-xl text-fg-muted">{t(locale, 'pt.sub')}</p>
+  </header>
+
+  <section class="mb-8 border-l-2 border-accent/60 pl-5">
+    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">{de ? 'Der Fund des Tages' : "Today's discovery"}</p>
+    <p class="mt-3 text-[clamp(18px,3vw,26px)] font-semibold leading-snug">
+      {h.a_label[locale]} <span class="text-fg-faint">↔</span> {h.b_label[locale]}
+    </p>
+    <p class="mt-1 font-mono text-sm text-fg-muted">r = {rStr(h.r, locale)} · {de ? `über ${d.days} Tage` : `over ${d.days} days`}</p>
+  </section>
+
+  <section class="mb-12">
+    <svg viewBox={`0 0 ${W} ${H}`} class="w-full overflow-visible" role="img"
+      aria-label={de ? 'Zwei normierte Reihen, die sich spiegeln' : 'Two normalised series mirroring each other'}>
+      <path d={pathA} fill="none" stroke="rgb(var(--rgb-accent))" stroke-width="1.6" vector-effect="non-scaling-stroke" />
+      <path d={pathB} fill="none" stroke="currentColor" stroke-width="1.6" stroke-dasharray="4 3" class="text-fg-faint" vector-effect="non-scaling-stroke" />
+    </svg>
+    <ul class="mt-2 flex flex-wrap gap-x-5 gap-y-1 font-mono text-[11px] text-fg-faint">
+      <li class="flex items-center gap-1.5"><svg width="16" height="2" aria-hidden="true"><line x1="0" y1="1" x2="16" y2="1" stroke="rgb(var(--rgb-accent))" stroke-width="2" /></svg>{h.a_label[locale]}</li>
+      <li class="flex items-center gap-1.5"><svg width="16" height="2" aria-hidden="true"><line x1="0" y1="1" x2="16" y2="1" stroke="currentColor" stroke-width="2" stroke-dasharray="4 3" /></svg>{h.b_label[locale]}</li>
+    </ul>
+  </section>
+
+  <section class="mb-12 border border-line bg-panel/60 p-5">
+    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">{de ? 'Das Geständnis' : 'The confession'}</p>
+    <p class="mt-3 leading-relaxed">
+      {de
+        ? `Die Maschine verglich ${d.pairs} Paare über ${d.days} Tage. ${d.strong_pairs} davon „korrelieren" (|r| ≥ ${d.strong_threshold}). Sie nahm das stärkste und nannte es einen Fund — ohne die leiseste Ahnung, ob es etwas bedeutet. Sie kann es nicht wissen.`
+        : `The machine compared ${d.pairs} pairs over ${d.days} days. ${d.strong_pairs} of them "correlate" (|r| ≥ ${d.strong_threshold}). It took the strongest and called it a discovery — without the faintest idea whether it means anything. It cannot know.`}
+    </p>
+    <p class="mt-3 leading-relaxed text-fg-muted">
+      {de
+        ? `Nur ein Test trennt Signal von Rauschen: die Daten ${d.permutations.toLocaleString('de-DE')}-mal durchschütteln und zählen, wie oft der Zufall allein ein ebenso starkes Muster erzeugt. Hier: ${pct(d.false_discovery_rate, locale)} der Durchläufe. ${survives ? 'Das macht reinen Zufall unwahrscheinlich — es könnte echt sein (das Meer erwärmt sich, das Eis schmilzt). Aber die Maschine hatte Glück: morgen paart sie Erdbeben mit Fußball, mit derselben Überzeugung.' : 'Mit anderen Worten: reines Rauschen — der Zufall produziert das ständig.'} Und selbst dieser Test wird von Trends getäuscht.`
+        : `Only one test separates signal from noise: shuffle the data ${d.permutations.toLocaleString('en-GB')} times and count how often chance alone produces a pattern this strong. Here: ${pct(d.false_discovery_rate, locale)} of runs. ${survives ? 'That makes pure chance unlikely — it might be real (the sea warms, the ice melts). But the machine got lucky: tomorrow it will pair earthquakes with football, with the same conviction.' : 'In other words, pure noise — chance manufactures this all the time.'} And even this test is fooled by trends.`}
+    </p>
+  </section>
+
+  <section class="mb-10">
+    <p class="leading-relaxed text-fg-muted">
+      {de
+        ? 'Mit genug Reihen und genug Vergleichen findet man immer ein Muster. Das ist die Maschine hinter jeder „datengetriebenen Erkenntnis" — und der blinde Fleck dieses Labs selbst.'
+        : 'With enough series and enough comparisons, you always find a pattern. That is the engine behind every "data-driven insight" — and the blind spot of this lab itself.'}
+    </p>
+  </section>
+
+  <footer class="mt-12 border-t border-line pt-6">
+    <p class="font-mono text-xs text-fg-faint">
+      {de ? 'Quelle: ' : 'Source: '}{d.source.name}. {de ? `${d.metrics_count} variierende Metriken.` : `${d.metrics_count} varying metrics.`}
+    </p>
+    <nav class="mt-2">
+      <a href={methodUrl} class="font-mono text-xs text-fg-faint transition-colors hover:text-fg">{t(locale, 'prot.method')} →</a>
+    </nav>
+  </footer>
+</article>
