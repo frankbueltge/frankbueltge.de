@@ -1,0 +1,100 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import type { Locale } from '@/lib/site'
+import type { TellData } from '@/lib/tell/types'
+import data from '@/data/tell/latest.json'
+
+interface Props { locale: Locale }
+const { locale } = Astro.props
+const de = locale === 'de'
+const d = data as unknown as TellData
+const workUrl = getRelativeLocaleUrl(locale, '/tell')
+
+const txt = {
+  h1: de ? 'Methodenblatt — The Tell' : 'Method sheet — The Tell',
+  revealHead: de ? 'Worum es geht' : 'What this is',
+  reveal: de
+    ? 'Ein KI-Werkzeug misst den Fußabdruck der KI in der Wissenschaft. Kein Detektor, keine Black Box — nur Zähldaten dokumentierter LLM-Tell-Wörter in PubMed. Der kollektive Sprung nach ChatGPT ist der Fingerabdruck; kein einzelnes Paper wird angeklagt. Selbstbezug ist Teil des Punkts: das Instrument legt offen, dass es selbst mit KI arbeitet.'
+    : 'An AI tool measuring AI’s footprint in science. No detector, no black box — just counts of documented LLM-tell words in PubMed. The collective jump after ChatGPT is the fingerprint; no single paper is accused. The self-reference is part of the point: the instrument discloses that it is itself built with AI.',
+  s1: de ? '1. Quellen & Lizenzen' : '1. Sources & licences',
+  s1body: de
+    ? `${d.source.name} (${d.source.license}). Nur Trefferzahlen je Suchbegriff/Jahr — keine Volltexte, keine Personen.`
+    : `${d.source.name} (${d.source.license}). Only hit counts per query/year — no full texts, no persons.`,
+  s2: de ? '2. Kadenz' : '2. Cadence',
+  s2body: de
+    ? 'Bei jedem Build. PubMed indexiert mit Verzug — das laufende Jahr ist ausgeschlossen, die jüngsten Jahre sind unvollständig (darum liegt der Peak 2024, nicht später). Kanonisches Artefakt: versionierte JSON in src/data/tell/ — Git ist das Archiv.'
+    : 'On every build. PubMed indexes with a lag — the current year is excluded, recent years are incomplete (which is why the peak sits in 2024, not later). Canonical artefact: versioned JSON in src/data/tell/ — git is the archive.',
+  s3: de ? '3. Verarbeitung' : '3. Processing',
+  s3body: de
+    ? 'Deterministisch: je Marker und Jahr die Treffer im Titel/Abstract (esearch), normiert je 100.000 Abstracts. Der Index ist die Summe der Marker-Anteile. Basislinie = Mittel vor ChatGPT; Peak = Jahr mit höchstem Index; Faktor = Peak / Basislinie.'
+    : 'Deterministic: per marker and year, hits in title/abstract (esearch), normalised per 100,000 abstracts. The index is the sum of marker shares. Baseline = pre-ChatGPT mean; peak = highest-index year; fold = peak / baseline.',
+  aiHead: de ? 'KI/ML — nachprüfbar' : 'AI/ML — checkable',
+  aiBody: de
+    ? 'v1 zählt nur (kein Modell). Geplant v2: ein transparenter LLM-Klassifikator, der je Abstract eine Synthese-Wahrscheinlichkeit schätzt und gegen die Marker-Zählung verifiziert wird — Prompt offengelegt, Unsicherheit als Teil der Messung. Bedingung: nie als unbelegtes Orakel.'
+    : 'v1 only counts (no model). Planned v2: a transparent LLM classifier estimating a synthetic-likelihood per abstract, verified against the marker counts — prompt disclosed, uncertainty as part of the measurement. Condition: never an unaccountable oracle.',
+  s4: de ? '4. Grenzen der Methode' : '4. Limits of the method',
+  s4items: de
+    ? [
+        'Die Marker sind ein PROXY — diese Wörter haben legitime Verwendungen; nur der kollektive Sprung ist aussagekräftig, kein einzelner Treffer.',
+        'Peak 2024, weil PubMed 2025+ noch unter-indexiert — und weil der „delve"-Tell inzwischen bekannt ist und teils gemieden wird.',
+        'Nur Titel/Abstract, englischlastig; Zählung, keine semantische Volltext-Analyse.',
+        'Korrelation mit ChatGPT, kein kausaler Beweis je Paper; misst Sprachgebrauch, nicht „Betrug".',
+      ]
+    : [
+        'The markers are a PROXY — these words have legitimate uses; only the collective jump is meaningful, not any single hit.',
+        'Peak 2024 because PubMed still under-indexes 2025+ — and because the "delve" tell is now known and partly avoided.',
+        'Title/abstract only, English-skewed; counts, not semantic full-text analysis.',
+        'Correlation with ChatGPT, not causal proof per paper; it measures word use, not "fraud".',
+      ],
+  s5: de ? '5. Compute-Fußabdruck' : '5. Compute footprint',
+  s5body: de
+    ? 'Rund 64 keyless HTTP-Zählabrufe pro Build, kein LLM. Die Site ist statisch.'
+    : 'About 64 keyless HTTP count requests per build, no LLM. The site is static.',
+  s6: de ? '6. Änderungsprotokoll' : '6. Change log',
+  s6items: de
+    ? ['v1 (2026-06) — Erstfassung: acht Marker, Maschinen-Sprech-Index, Faktor seit ChatGPT.']
+    : ['v1 (2026-06) — first edition: eight markers, machine-speak index, fold since ChatGPT.'],
+  toWork: de ? 'Zum Experiment' : 'To the experiment',
+}
+---
+
+<div class="mx-auto max-w-2xl px-4 py-14">
+  <h1 class="mb-8 text-xl font-semibold">{txt.h1}</h1>
+
+  <section class="mb-10 border border-line bg-panel/60 p-5">
+    <h2 class="mb-2 font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">{txt.revealHead}</h2>
+    <p class="leading-relaxed">{txt.reveal}</p>
+  </section>
+
+  <section class="mb-8"><h2 class="mb-2 font-semibold">{txt.s1}</h2><p class="leading-relaxed text-fg-muted">{txt.s1body}</p>
+    <p class="mt-2"><a href={d.source.url} class="font-mono text-xs text-fg-faint transition-colors hover:text-fg" rel="noopener">{d.source.url}</a></p>
+  </section>
+
+  <section class="mb-8"><h2 class="mb-2 font-semibold">{txt.s2}</h2><p class="leading-relaxed text-fg-muted">{txt.s2body}</p></section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s3}</h2>
+    <p class="leading-relaxed text-fg-muted">{txt.s3body}</p>
+    <p class="mt-2"><a href="https://github.com/frankbueltge/frankbueltge.de/tree/main/pipelines/tell"
+      class="font-mono text-xs text-fg-faint transition-colors hover:text-fg" rel="noopener">→ pipelines/tell</a></p>
+  </section>
+
+  <section class="mb-8 border-l-2 border-line pl-4">
+    <h2 class="mb-2 font-semibold">{txt.aiHead}</h2>
+    <p class="leading-relaxed text-fg-muted">{txt.aiBody}</p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s4}</h2>
+    <ul class="list-disc space-y-1 pl-5 text-fg-muted">{txt.s4items.map((i) => <li>{i}</li>)}</ul>
+  </section>
+
+  <section class="mb-8"><h2 class="mb-2 font-semibold">{txt.s5}</h2><p class="leading-relaxed text-fg-muted">{txt.s5body}</p></section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s6}</h2>
+    <ul class="list-disc space-y-1 pl-5 text-fg-muted">{txt.s6items.map((i) => <li>{i}</li>)}</ul>
+  </section>
+
+  <a href={workUrl} class="text-sm text-fg-muted transition-colors hover:text-fg">→ {txt.toWork}</a>
+</div>
