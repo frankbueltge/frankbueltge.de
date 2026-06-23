@@ -1,0 +1,47 @@
+name: Half-Life nightly
+
+# Half-Life ist keyless (nur Wikidata + Wikimedia) → läuft sauber auf GitHub-Runnern.
+# Ersetzt den GCP-Cloud-Run-Cron. Schreibt per --dry-run die Daten, Workflow committet per git.
+
+on:
+  schedule:
+    - cron: '30 4 * * *' # täglich 04:30 UTC (wie zuvor auf GCP)
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: halbwertszeit
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Pipeline-Paket installieren (Basis: httpx)
+        run: pip install --no-cache-dir ./pipelines/protokoll
+      - name: Half-Life laufen (schreibt, committet nicht)
+        run: python -m protokoll.halbwertszeit.run --dry-run --repo-root .
+      - name: Committen
+        run: |
+          git config user.name "Protokollführung"
+          git config user.email "protokoll@frankbueltge.de"
+          git add src/data/halbwertszeit 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "Keine Änderungen."; exit 0
+          fi
+          git commit -m "halbwertszeit: Messung vom $(date -u +%F)"
+          for i in 1 2 3 4 5; do
+            if git pull --rebase --autostash origin main && git push origin HEAD:main; then
+              echo "Gepusht."; exit 0
+            fi
+            echo "Push-Versuch $i fehlgeschlagen, neu …"; sleep 5
+          done
+          echo "::error::Push nach 5 Versuchen fehlgeschlagen"; exit 1
