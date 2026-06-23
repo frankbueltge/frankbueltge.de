@@ -7,7 +7,6 @@ import '@/styles/global.css'
 import { SITE, type Locale } from '@/lib/site'
 import { t } from '@/i18n/ui'
 import { ogSlug } from '@/lib/og'
-import Analytics from '@vercel/analytics/astro'
 
 // Skin fest auf mono (data-skin am <html>) — der Zyklus ist stillgelegt. Skins
 // + SkinSwitcher bleiben im Repo; Reaktivierung = SkinSwitcher wieder mounten
@@ -116,7 +115,7 @@ const website = {
       }
     </script>
 
-    {/* Vercel Web Analytics — cookielos/anonym (DSGVO-konform); sammelt erst, wenn im Vercel-Dashboard aktiviert. */}
-    <Analytics />
+    {/* Web Analytics: Cloudflare injiziert den Beacon edge-seitig (Automatic Setup,
+        proxied) — cookielos/anonym, kein Code nötig. Beacon hier nur falls je explizit gewünscht. */}
   </body>
 </html>
