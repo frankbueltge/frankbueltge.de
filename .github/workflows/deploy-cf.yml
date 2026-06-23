@@ -1,0 +1,38 @@
+name: Deploy to Cloudflare Pages
+
+# Baut auf GitHubs Runnern (gratis) und deployt das statische dist/ zu Cloudflare Pages.
+# Läuft bei jedem Push auf main — also auch nach jedem nächtlichen Cron-Commit → tägliche
+# Updates automatisch live. Keine harten Anbieter-Sperren (CF Pages serviert nur Statik).
+#
+# BENÖTIGT zwei Repository-Secrets (Settings → Secrets and variables → Actions):
+#   CLOUDFLARE_API_TOKEN  — Token mit „Cloudflare Pages: Edit"
+#   CLOUDFLARE_ACCOUNT_ID — die Account-ID
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cf-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install
+      - run: npm run build
+      - name: Deploy → Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy dist --project-name=frankbueltge-de --branch=main
