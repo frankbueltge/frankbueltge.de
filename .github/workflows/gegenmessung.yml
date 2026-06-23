@@ -21,6 +21,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # volle History → git pull --rebase im Commit-Schritt funktioniert
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -44,7 +46,14 @@ jobs:
           git add src/data/consensus src/data/pattern src/data/tell src/data/revision 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "Keine Änderungen."
-          else
-            git commit -m "gegenmessung: nightly refresh ($(date -u +%F))"
-            git push
+            exit 0
           fi
+          git commit -m "gegenmessung: nightly refresh ($(date -u +%F))"
+          # Gegen Push-Races (parallele Cron-/Repo-Commits): rebasen + mehrfach versuchen.
+          for i in 1 2 3 4 5; do
+            if git pull --rebase --autostash origin main && git push origin HEAD:main; then
+              echo "Gepusht."; exit 0
+            fi
+            echo "Push-Versuch $i fehlgeschlagen, neu …"; sleep 5
+          done
+          echo "::error::Push nach 5 Versuchen fehlgeschlagen"; exit 1
