@@ -4,9 +4,9 @@ name: Deploy to Cloudflare Pages
 # Läuft bei jedem Push auf main — also auch nach jedem nächtlichen Cron-Commit → tägliche
 # Updates automatisch live. Keine harten Anbieter-Sperren (CF Pages serviert nur Statik).
 #
-# BENÖTIGT zwei Repository-Secrets (Settings → Secrets and variables → Actions):
-#   CLOUDFLARE_API_TOKEN  — Token mit „Cloudflare Pages: Edit"
-#   CLOUDFLARE_ACCOUNT_ID — die Account-ID
+# BENÖTIGT ein Repository-Secret (Settings → Secrets and variables → Actions):
+#   CF — Cloudflare-API-Token mit „Cloudflare Pages: Edit"
+# (Die Account-ID ist nicht geheim und steht direkt unten.)
 
 on:
   push:
@@ -31,8 +31,7 @@ jobs:
       - run: npm install
       - run: npm run build
       - name: Deploy → Cloudflare Pages
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist --project-name=frankbueltge-de --branch=main
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF }}
+          CLOUDFLARE_ACCOUNT_ID: '991a2a1a4a288564f3bd05ff01476a30'
+        run: npx --yes wrangler@4 pages deploy dist --project-name=frankbueltge-de --branch=main --commit-dirty=true
