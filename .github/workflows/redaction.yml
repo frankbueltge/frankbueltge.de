@@ -1,0 +1,49 @@
+name: Redaction nightly
+
+# Gegenmessung-Instrument „The Redaction": difft täglich die Wayback-Snapshots einer
+# kuratierten Liste offizieller Seiten und committet die Schwärzungen zurück (→ Rebuild).
+# Läuft auf GitHubs Runnern, kostenlos, host-unabhängig. Vor gegenmessung (06:00 UTC).
+
+on:
+  schedule:
+    - cron: '30 5 * * *' # täglich 05:30 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: redaction
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # volle History → git pull --rebase im Commit-Schritt funktioniert
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Pipeline-Paket installieren (inkl. robuster Extraktion)
+        run: pip install --no-cache-dir "./pipelines/redaction[extract]"
+      - name: Redaction laufen (schreibt, committet nicht)
+        run: python -m redaction.run --repo-root .
+      - name: Committen
+        run: |
+          git config user.name "Gegenmessung"
+          git config user.email "gegenmessung@frankbueltge.de"
+          git add src/data/redaction 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "Keine Änderungen."; exit 0
+          fi
+          git commit -m "redaction: Schwärzung vom $(date -u +%F)"
+          # Gegen Push-Races (parallele Cron-/Repo-Commits): rebasen + mehrfach versuchen.
+          for i in 1 2 3 4 5; do
+            if git pull --rebase --autostash origin main && git push origin HEAD:main; then
+              echo "Gepusht."; exit 0
+            fi
+            echo "Push-Versuch $i fehlgeschlagen, neu …"; sleep 5
+          done
+          echo "::error::Push nach 5 Versuchen fehlgeschlagen"; exit 1

@@ -1,0 +1,106 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import { t } from '@/i18n/ui'
+import type { Locale } from '@/lib/site'
+import type { RedactionData, Redaction } from '@/lib/redaction/types'
+import { tokensLabel, signalLabel, dateLabel } from '@/lib/redaction/format'
+import data from '@/data/redaction/latest.json'
+
+interface Props { locale: Locale }
+const { locale } = Astro.props
+const de = locale === 'de'
+const d = data as unknown as RedactionData
+const pending = d.watched_count === 0 // no nightly run yet
+const pick: Redaction | null = d.pick ? d.redactions.find((r) => r.id === d.pick) ?? null : null
+const rest = d.redactions.filter((r) => r.id !== d.pick)
+const methodUrl = getRelativeLocaleUrl(locale, '/werke/redaction')
+---
+
+<article class="redaction mx-auto max-w-3xl px-4 py-14">
+  <header class="mb-10">
+    <h1 class="text-[clamp(30px,6vw,56px)] font-bold">The Redaction</h1>
+    <p class="mt-2 max-w-xl text-fg-muted">{t(locale, 'rd.sub')}</p>
+    <p class="mt-1 font-mono text-xs text-fg-faint">{dateLabel(d.date, locale)}</p>
+  </header>
+
+  {pending ? (
+    <p class="mb-12 text-fg-muted">{t(locale, 'rd.empty')}</p>
+  ) : d.changed_count === 0 ? (
+    <p class="mb-12 max-w-xl leading-relaxed text-fg-muted">
+      {de
+        ? `Heute hat das Archiv nichts zurückgenommen — auf den ${d.watched_count} beobachteten Seiten. Das ist keine Garantie, nur eine Beobachtung.`
+        : `Today the archive took nothing back — across the ${d.watched_count} watched pages. That is not a guarantee, only an observation.`}
+    </p>
+  ) : (
+  <>
+  {pick && (
+    <section class="mb-12 border-l-2 border-accent/60 pl-5">
+      <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+        {de ? 'Die Schwärzung des Tages' : 'The redaction of the day'}
+      </p>
+      <p class="mt-2 text-lg font-semibold">{pick.institution} — {pick.label}</p>
+      {pick.kind === 'removal' ? (
+        <p class="mt-3 leading-snug text-fg-muted line-through decoration-accent/70">
+          „{pick.removed_passages.slice(0, 3).join(' … ')}"
+        </p>
+      ) : (
+        <p class="mt-3 leading-snug text-fg-muted">
+          {de
+            ? 'Die ganze Seite ist aus dem Archiv verschwunden (404).'
+            : 'The entire page vanished from the record (404).'}
+        </p>
+      )}
+      <p class="mt-3 font-mono text-xs text-fg-faint">
+        {tokensLabel(pick.removed_tokens, locale)}
+        {pick.salience.signals.length > 0 && (
+          <> · {pick.salience.signals.map((s) => signalLabel(s, locale)).join(', ')}</>
+        )}
+      </p>
+      <p class="mt-3 flex gap-4 font-mono text-xs">
+        <a class="underline transition-colors hover:text-fg" href={pick.before.url} target="_blank" rel="noopener">
+          {de ? 'vorher ↗' : 'before ↗'}
+        </a>
+        <a class="underline transition-colors hover:text-fg" href={pick.after.url} target="_blank" rel="noopener">
+          {de ? 'nachher ↗' : 'after ↗'}
+        </a>
+      </p>
+    </section>
+  )}
+
+  <section class="mb-12 flex items-baseline gap-4">
+    <p class="text-[clamp(36px,7vw,64px)] font-bold tabular-nums">{d.changed_count}</p>
+    <p class="max-w-xs text-sm leading-snug text-fg-muted">
+      {de
+        ? `von ${d.watched_count} beobachteten offiziellen Seiten verloren zuletzt Inhalt.`
+        : `of ${d.watched_count} watched official pages lost content recently.`}
+    </p>
+  </section>
+
+  {rest.length > 0 && (
+    <section class="mb-12 border-t border-line pt-6">
+      <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+        {de ? 'Weitere Schwärzungen' : 'Other redactions'}
+      </p>
+      <ul class="mt-3 space-y-2">
+        {rest.map((r) => (
+          <li class="text-sm">
+            <span class="text-fg-muted">{r.institution} — {r.label}</span>
+            <span class="ml-2 font-mono text-xs text-fg-faint">{tokensLabel(r.removed_tokens, locale)}</span>
+            <a class="ml-2 font-mono text-xs underline transition-colors hover:text-fg" href={r.after.url} target="_blank" rel="noopener">↗</a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+  </>
+  )}
+
+  <p class="border-t border-line pt-6 text-xs leading-relaxed text-fg-faint">
+    {de
+      ? 'Belege sind Wayback-Permalinks (vorher/nachher) — in zwei Klicks selbst nachzuprüfen. Umschreibung ist nicht Vertuschung; das Instrument behauptet keine Absicht.'
+      : 'Evidence is Wayback permalinks (before/after) — checkable yourself in two clicks. Rewriting is not cover-up; the instrument claims no intent.'}
+    <a href={methodUrl} class="ml-1 underline transition-colors hover:text-fg">
+      {de ? 'Methodenblatt' : 'Method sheet'} →
+    </a>
+  </p>
+</article>
