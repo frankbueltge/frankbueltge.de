@@ -1,0 +1,26 @@
+[project]
+name = "redaction"
+version = "0.1.0"
+description = "Nightly pipeline: what was removed from the official public record (frankbueltge.de)"
+requires-python = ">=3.12"
+dependencies = ["httpx>=0.27"]
+
+[project.optional-dependencies]
+# Robust main-text extraction in production; the pipeline falls back to a stdlib
+# tag-strip when trafilatura is absent, so local dev/tests need not install it.
+extract = ["trafilatura>=1.8"]
+dev = ["pytest>=8"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
