@@ -70,17 +70,26 @@ def _is_ok(status: str) -> bool:
     return status == "200"
 
 
+def _is_dead(status: str) -> bool:
+    # Only an outright 4xx (gone/forbidden/not-found) counts as a deletion.
+    # 3xx (redirect / reorganisation) and 5xx (transient) are deliberately NOT
+    # treated as deletions — a moved page is not a redaction.
+    return status.startswith("4")
+
+
 def classify(caps: list[Capture]) -> tuple[str, Capture | None, Capture | None]:
-    """('deletion', last_ok, dead) | ('removal', prev_ok, last_ok) | ('none', None, None)."""
+    """('deletion', last_ok, dead) | ('removal', prev_ok, last_ok) | ('none', None, None).
+
+    Deletion = the page is now gone (4xx) after having been OK. Removal = the two
+    most recent OK captures differ in content digest. Redirects and server errors
+    yield no finding.
+    """
     if len(caps) < 2:
         return ("none", None, None)
-    newest = caps[-1]
-    if not _is_ok(newest.status):
-        last_ok = next((c for c in reversed(caps[:-1]) if _is_ok(c.status)), None)
-        if last_ok is not None:
-            return ("deletion", last_ok, newest)
-        return ("none", None, None)
     ok = [c for c in caps if _is_ok(c.status)]
+    newest = caps[-1]
+    if _is_dead(newest.status) and ok:
+        return ("deletion", ok[-1], newest)
     if len(ok) >= 2 and ok[-1].digest != ok[-2].digest:
         return ("removal", ok[-2], ok[-1])
     return ("none", None, None)
