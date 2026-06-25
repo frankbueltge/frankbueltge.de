@@ -1,0 +1,106 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import type { Locale } from '@/lib/site'
+import type { RedactionData } from '@/lib/redaction/types'
+import data from '@/data/redaction/latest.json'
+
+interface Props { locale: Locale }
+const { locale } = Astro.props
+const de = locale === 'de'
+const d = data as unknown as RedactionData
+const workUrl = getRelativeLocaleUrl(locale, '/redaction')
+
+const txt = {
+  h1: de ? 'Methodenblatt — The Redaction' : 'Method sheet — The Redaction',
+  revealHead: de ? 'Worum es geht' : 'What this is',
+  reveal: de
+    ? 'Das öffentliche Protokoll wird nicht nur geschrieben, sondern auch entschrieben. Veröffentlichung macht Schlagzeilen; das spätere Verschwinden nicht. Dieses Instrument zählt das Weggenommene — den durchgestrichenen Text — und macht jeden Fund über zwei Archiv-Permalinks überprüfbar. Reinste „Dark Data": Daten, die ein System zurücknimmt.'
+    : 'The public record is not only written but un-written. Publication makes headlines; the later disappearance does not. This instrument counts the thing taken away — the struck-through text — and makes every finding checkable via two archive permalinks. The purest "dark data": data a system takes back.',
+  s1: de ? '1. Quellen & Lizenzen' : '1. Sources & licences',
+  s1body: de
+    ? `Internet Archive — Wayback Machine, über die CDX-API (${d.source.license}, frei, keine Auth). Beobachtet wird eine kuratierte, versionierte Liste offizieller Seiten; jeder Fund ist archiv-belegt (Statuscode + archivierte Fassungen), nie eine Live-Abfrage — darum reproduzierbar.`
+    : `Internet Archive — Wayback Machine, via the CDX API (${d.source.license}, free, no auth). It watches a curated, versioned list of official pages; every finding is archive-sourced (status code + archived versions), never a live fetch — hence reproducible.`,
+  s2: de ? '2. Kadenz' : '2. Cadence',
+  s2body: de
+    ? 'Täglich. Die Maschine wählt selbst: die substanziellste Schwärzung des Tages (Salienz × entferntes Volumen). An stillen Tagen vermerkt sie, dass das Archiv nichts zurückgenommen hat — Stille ist eine Aussage, keine Lücke. Kanonisches Artefakt: versionierte JSON in src/data/redaction/ — Git ist das Archiv.'
+    : 'Daily. The machine selects on its own: the most substantive redaction of the day (salience × removed volume). On quiet days it notes that the archive took nothing back — silence is a statement, not a gap. Canonical artefact: versioned JSON in src/data/redaction/ — git is the archive.',
+  s3: de ? '3. Verarbeitung' : '3. Processing',
+  s3body: de
+    ? 'Pro URL: CDX-Captures holen (collapse=digest) → Löschung erkennen (Statuscode 200→4xx) oder Inhalts-Entfernung (Digest-Wechsel der beiden jüngsten 200-Captures) → beide Fassungen roh ziehen, Haupttext extrahieren, auf Satzebene diffen → entfernte Passagen + Token zählen. Hinzufügungen werden nicht gewertet (Schwärzen = Wegnehmen).'
+    : 'Per URL: fetch CDX captures (collapse=digest) → detect deletion (status 200→4xx) or content removal (digest change between the two newest 200-captures) → pull both versions raw, extract main text, diff at sentence level → count removed passages + tokens. Additions are not scored (redaction = taking away).',
+  aiHead: de ? 'KI/ML — symbolisch, auditierbar' : 'AI/ML — symbolic, auditable',
+  aiBody: de
+    ? 'Das Lab experimentiert mit Daten UND KI; symbolische KI ist hier die Wahl, weil prüfbar. Die Salienz ist ein offengelegtes Regelwerk (versioniert): trägt der entfernte Text Zahlen, Daten, Eigennamen, Verneinungen oder Verpflichtungsverben („wird", „muss", „verpflichtet"), gilt er als substanziell; nur Markup/Whitespace ist kosmetisch (Score 0) und kann die Tagesschwärzung nie gewinnen. Kein LLM in v1. Optional/künftig: ein gegen den Diff verifizierter LLM-Klassifikator der Entfernungs-Art (Prompt offengelegt).'
+    : 'The lab experiments with data AND AI; symbolic AI is the choice here because it is checkable. Salience is a disclosed rule set (versioned): if the removed text carries numbers, dates, named entities, negations or commitment verbs ("will", "must", "pledge"), it counts as substantive; markup/whitespace only is cosmetic (score 0) and can never win the redaction of the day. No LLM in v1. Optional/future: an LLM classifier of the removal kind, verified against the diff (prompt disclosed).',
+  s4: de ? '4. Grenzen der Methode' : '4. Limits of the method',
+  s4items: de
+    ? [
+        'Umschreibung ist nicht Vertuschung — das Instrument behauptet keine Absicht; legitime Korrekturen werden nicht von Unterdrückung unterschieden.',
+        'Die Seed-Liste ist eine redaktionelle Wahl; gemessen wird, was beobachtet wird, nicht „das Internet".',
+        'Wayback-Erfassungsbias: gemessen wird gegen verfügbare Captures; was nie erfasst wurde, bleibt unsichtbar.',
+        'Die Haupttext-Extraktion ist heuristisch (Version offengelegt) und kann Inhalt verfehlen oder fehl-segmentieren.',
+        'Die Salienz-Regeln und -Gewichte sind eine gesetzte, offengelegte Wahl (SALIENCE_VERSION).',
+      ]
+    : [
+        'Rewriting is not cover-up — the instrument claims no intent; legitimate corrections are not distinguished from suppression.',
+        'The seed list is an editorial choice; this measures what it watches, not "the internet".',
+        'Wayback coverage bias: measured against available captures; what was never captured stays invisible.',
+        'Main-text extraction is heuristic (version disclosed) and may miss or mis-segment content.',
+        'The salience rules and weights are a set, disclosed choice (SALIENCE_VERSION).',
+      ],
+  s5: de ? '5. Compute-Fußabdruck' : '5. Compute footprint',
+  s5body: de
+    ? 'Wenige leichte HTTP-Abrufe je beobachteter Seite und Tag, kein API-Key, kein LLM. Die Site selbst ist statisch.'
+    : 'A few lightweight HTTP fetches per watched page per day, no API key, no LLM. The site itself is static.',
+  s6: de ? '6. Änderungsprotokoll' : '6. Change log',
+  s6items: de
+    ? ['v1 (2026-06) — Erstfassung: CDX-Diff (Löschung + Entfernung), symbolische Salienz, zwei Archiv-Permalinks je Fund.']
+    : ['v1 (2026-06) — first edition: CDX diff (deletion + removal), symbolic salience, two archive permalinks per finding.'],
+  toWork: de ? 'Zum Experiment' : 'To the experiment',
+}
+---
+
+<div class="mx-auto max-w-2xl px-4 py-14">
+  <h1 class="mb-8 text-xl font-semibold">{txt.h1}</h1>
+
+  <section class="mb-10 border border-line bg-panel/60 p-5">
+    <h2 class="mb-2 font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">{txt.revealHead}</h2>
+    <p class="leading-relaxed">{txt.reveal}</p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s1}</h2>
+    <p class="leading-relaxed text-fg-muted">{txt.s1body}</p>
+    <p class="mt-2"><a href={d.source.url} class="font-mono text-xs text-fg-faint transition-colors hover:text-fg" rel="noopener">{d.source.url}</a></p>
+  </section>
+
+  <section class="mb-8"><h2 class="mb-2 font-semibold">{txt.s2}</h2><p class="leading-relaxed text-fg-muted">{txt.s2body}</p></section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s3}</h2>
+    <p class="leading-relaxed text-fg-muted">{txt.s3body}</p>
+    <p class="mt-2">
+      <a href="https://github.com/frankbueltge/frankbueltge.de/tree/main/pipelines/redaction"
+        class="font-mono text-xs text-fg-faint transition-colors hover:text-fg" rel="noopener">→ pipelines/redaction</a>
+    </p>
+  </section>
+
+  <section class="mb-8 border-l-2 border-line pl-4">
+    <h2 class="mb-2 font-semibold">{txt.aiHead}</h2>
+    <p class="leading-relaxed text-fg-muted">{txt.aiBody}</p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s4}</h2>
+    <ul class="list-disc space-y-1 pl-5 text-fg-muted">{txt.s4items.map((i) => <li>{i}</li>)}</ul>
+  </section>
+
+  <section class="mb-8"><h2 class="mb-2 font-semibold">{txt.s5}</h2><p class="leading-relaxed text-fg-muted">{txt.s5body}</p></section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s6}</h2>
+    <ul class="list-disc space-y-1 pl-5 text-fg-muted">{txt.s6items.map((i) => <li>{i}</li>)}</ul>
+  </section>
+
+  <a href={workUrl} class="text-sm text-fg-muted transition-colors hover:text-fg">→ {txt.toWork}</a>
+</div>

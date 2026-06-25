@@ -68,6 +68,20 @@ export const WERKE: Werk[] = [
     },
   },
   {
+    id: 'redaction',
+    title: 'The Redaction',
+    subtitle: {
+      de: 'Was aus dem offiziellen öffentlichen Eintrag still wieder entfernt wird',
+      en: 'What is quietly removed from the official public record',
+    },
+    status: 'live',
+    href: '/redaction',
+    description: {
+      de: 'Aus der Linie „Gegenmessung". Das öffentliche Protokoll wird nicht nur geschrieben, sondern auch entschrieben. Jeden Tag difft eine Maschine die Wayback-Snapshots einer kuratierten Liste offizieller Seiten und hebt die substanziellste Schwärzung — beide Fassungen verlinkt, in zwei Klicks überprüfbar. Kein Absichts-Vorwurf, nur das gezählte Weggenommene.',
+      en: 'From the „Counter-Measurement" line. The public record is not only written but un-written. Each day a machine diffs the Wayback snapshots of a curated list of official pages and surfaces the most substantive removal — both versions linked, checkable in two clicks. No claim of intent, only the counted thing taken away.',
+    },
+  },
+  {
     id: 'pattern',
     title: 'Patterns',
     subtitle: {
