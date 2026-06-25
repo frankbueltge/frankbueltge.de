@@ -1,0 +1,125 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import { t } from '@/i18n/ui'
+import type { Locale } from '@/lib/site'
+import type { RoundNumberData, Series } from '@/lib/round-number/types'
+import { percent, verdictLabel, dateLabel } from '@/lib/round-number/format'
+import { bars } from '@/lib/round-number/histogram'
+import data from '@/data/round-number/latest.json'
+
+interface Props { locale: Locale }
+const { locale } = Astro.props
+const de = locale === 'de'
+const d = data as unknown as RoundNumberData
+const pending = d.series.length === 0
+const pick: Series | null = d.pick ? d.series.find((s) => s.id === d.pick) ?? null : null
+const rest = d.series.filter((s) => s.id !== d.pick)
+const methodUrl = getRelativeLocaleUrl(locale, '/werke/round-number')
+
+// histogram geometry
+const H = 100, BASE = 110, BW = 24, STEP = 33
+const hb = pick ? bars(pick.benford.observed, pick.benford.expected) : []
+const flagged = pick ? pick.control.false_positive_rate >= 0.2 : false
+---
+
+<article class="round-number mx-auto max-w-3xl px-4 py-14">
+  <header class="mb-10">
+    <h1 class="text-[clamp(30px,6vw,56px)] font-bold">The Round Number</h1>
+    <p class="mt-2 max-w-xl text-fg-muted">{t(locale, 'rn.sub')}</p>
+    <p class="mt-1 font-mono text-xs text-fg-faint">{dateLabel(d.date, locale)}</p>
+  </header>
+
+  {pending ? (
+    <p class="mb-12 text-fg-muted">{t(locale, 'rn.empty')}</p>
+  ) : pick ? (
+    <>
+      <section class="mb-10 border-l-2 border-accent/60 pl-5">
+        <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+          {de ? 'Die Angeklagte des Tages' : 'The defendant of the day'}
+        </p>
+        <p class="mt-2 text-lg font-semibold">
+          {pick.name}
+          {pick.synthetic && (
+            <span class="ml-2 rounded border border-line px-1.5 py-0.5 align-middle font-mono text-[10px] text-fg-faint">
+              {de ? 'synthetische Kontrolle' : 'synthetic control'}
+            </span>
+          )}
+        </p>
+        <p class="mt-1 font-mono text-xs text-fg-faint">
+          {pick.institution} · n = {pick.n.toLocaleString(de ? 'de-DE' : 'en-GB')} ·
+          <a class="ml-1 underline transition-colors hover:text-fg" href={pick.source.url} target="_blank" rel="noopener">{de ? 'Quelle ↗' : 'source ↗'}</a>
+        </p>
+
+        <p class="mt-4 text-sm">
+          {de ? 'Das Benford-Verdikt:' : 'The Benford verdict:'}
+          <strong class="ml-1">{verdictLabel(pick.benford.verdict, locale)}</strong>
+          <span class="ml-2 font-mono text-xs text-fg-faint">MAD {pick.benford.mad.toFixed(4)}</span>
+        </p>
+
+        <svg viewBox="0 0 300 126" class="mt-3 w-full max-w-sm text-fg" role="img"
+          aria-label={de ? 'Ziffern-Histogramm: beobachtet gegen Benford-Erwartung' : 'Digit histogram: observed vs Benford expectation'}>
+          {hb.map((b, i) => (
+            <g>
+              <rect x={i * STEP + 6} y={BASE - b.obs * H} width={BW} height={b.obs * H} fill="currentColor" opacity="0.5" />
+              <line x1={i * STEP + 6} x2={i * STEP + 6 + BW} y1={BASE - b.exp * H} y2={BASE - b.exp * H}
+                class="text-accent" stroke="currentColor" stroke-width="2" />
+              <text x={i * STEP + 6 + BW / 2} y={122} text-anchor="middle" fill="currentColor" opacity="0.5" font-size="9" font-family="monospace">{b.digit}</text>
+            </g>
+          ))}
+        </svg>
+        <p class="mt-1 font-mono text-[10px] text-fg-faint">
+          {de ? '▦ beobachtete erste Ziffer · — Benford-Erwartung' : '▦ observed first digit · — Benford expectation'}
+        </p>
+      </section>
+
+      <section class="mb-12 border-l-2 border-line pl-5">
+        <div class="flex items-baseline gap-4">
+          <p class="text-[clamp(36px,7vw,64px)] font-bold tabular-nums">{percent(pick.control.false_positive_rate, locale)}</p>
+          <p class="max-w-sm text-sm leading-snug text-fg-muted">
+            {de
+              ? `nennt derselbe Test nachweislich saubere Daten dieser Größe (n = ${pick.n.toLocaleString('de-DE')}) genauso „verdächtig".`
+              : `is how often the same test calls provably-clean data of this size (n = ${pick.n.toLocaleString('en-GB')}) „suspicious".`}
+          </p>
+        </div>
+        <p class="mt-3 text-sm leading-relaxed">
+          {flagged
+            ? (de
+                ? 'Das Verdikt ist ein Artefakt der Stichprobengröße, kein Beweis. Die feste Schwelle ist blind für die Größe der Reihe.'
+                : 'The verdict is an artefact of sample size, not proof. The fixed threshold is blind to how small the series is.')
+            : (de
+                ? 'Hier hält das Verdikt — eine große, saubere Stichprobe. Genau dort, wo die Methode meist missbraucht wird (kleine Reihen), versagt sie.'
+                : 'Here the verdict holds — a large, clean sample. Where the method is most often misused (small series), it fails.')}
+        </p>
+      </section>
+
+      {rest.length > 0 && (
+        <section class="mb-12 border-t border-line pt-6">
+          <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+            {de ? 'Die übrigen Reihen heute' : 'The other series today'}
+          </p>
+          <ul class="mt-3 space-y-1.5">
+            {rest.map((s) => (
+              <li class="flex flex-wrap items-baseline gap-x-3 text-sm">
+                <span class="text-fg-muted">{s.name}</span>
+                <span class="font-mono text-xs text-fg-faint">
+                  {verdictLabel(s.benford.verdict, locale)} · {de ? 'falsch-positiv' : 'false-positive'} {percent(s.control.false_positive_rate, locale)}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+    </>
+  ) : (
+    <p class="mb-12 text-fg-muted">{t(locale, 'rn.empty')}</p>
+  )}
+
+  <p class="border-t border-line pt-6 text-xs leading-relaxed text-fg-faint">
+    {de
+      ? 'Eine Anomalie ist kein Betrug — und dieses Instrument klagt keine Institution an, sondern das Werkzeug. Benford ist nicht universell anwendbar; die Schwellen und Kontrollen liegen offen.'
+      : 'An anomaly is not fraud — and this instrument indicts the tool, not any institution. Benford is not universally applicable; the thresholds and controls are disclosed.'}
+    <a href={methodUrl} class="ml-1 underline transition-colors hover:text-fg">
+      {de ? 'Methodenblatt' : 'Method sheet'} →
+    </a>
+  </p>
+</article>

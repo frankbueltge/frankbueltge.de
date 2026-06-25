@@ -1,0 +1,9 @@
+---
+import Page from '@/layouts/Page.astro'
+import MethodenblattRoundNumber from '@/components/pages/MethodenblattRoundNumber.astro'
+import { t } from '@/i18n/ui'
+const locale = 'en' as const
+---
+<Page title={`${t(locale, 'prot.method')} — ${t(locale, 'rn.title')} | Frank Bültge`} description={t(locale, 'rn.sub')}>
+  <MethodenblattRoundNumber {locale} />
+</Page>

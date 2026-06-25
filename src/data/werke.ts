@@ -82,6 +82,20 @@ export const WERKE: Werk[] = [
     },
   },
   {
+    id: 'round-number',
+    title: 'The Round Number',
+    subtitle: {
+      de: 'Ein Test, der angeblich gefälschte Zahlen erkennt — und wie oft er sich irrt',
+      en: 'A test that claims to spot faked numbers — and how often it is wrong',
+    },
+    status: 'live',
+    href: '/round-number',
+    description: {
+      de: 'Aus der Linie „Gegenmessung". Ziffern-Forensik (Benford) gilt als Werkzeug gegen gefälschte Zahlen — und ist das Lieblingsinstrument von Wahlbetrugs-Mythen. Das Stück stellt die Methode selbst vor Gericht: Es zeigt täglich, dass derselbe Test, der eine echte amtliche Reihe „verdächtig" nennt, auch nachweislich saubere Daten gleicher Größe genauso verdächtig nennt.',
+      en: 'From the „Counter-Measurement" line. Digit-forensics (Benford) is sold as a tool against faked numbers — and is the favourite instrument of vote-fraud myths. The piece puts the method itself on trial: each day it shows that the same test which calls a real official series „suspicious" calls provably-clean data of the same size just as suspicious.',
+    },
+  },
+  {
     id: 'pattern',
     title: 'Patterns',
     subtitle: {
