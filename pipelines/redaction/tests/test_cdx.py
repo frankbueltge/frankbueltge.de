@@ -43,6 +43,15 @@ def test_classify_none_when_single_capture():
     assert classify([Capture("20260601000000", "200", "AAA")])[0] == "none"
 
 
+def test_classify_none_on_redirect_not_deletion():
+    # A 3xx redirect (page moved/reorganised) must NOT be reported as a deletion.
+    caps = [
+        Capture("20260601000000", "200", "AAA"),
+        Capture("20260610000000", "301", "CCC"),
+    ]
+    assert classify(caps)[0] == "none"
+
+
 def test_url_builders():
     assert (
         snapshot_url("20260601000000", "https://x.test/p")
