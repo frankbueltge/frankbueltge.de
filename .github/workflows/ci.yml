@@ -23,6 +23,20 @@ jobs:
       - run: pip install -e ".[dev,bq]"
       - run: pytest -q
 
+  redaction:
+    name: Redaction pipeline (pytest)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: pipelines/redaction
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -e ".[dev]"
+      - run: pytest -q
+
   site:
     name: Site (vitest, check, build)
     runs-on: ubuntu-latest
