@@ -22,8 +22,8 @@ const txt = {
     : `Internet Archive — Wayback Machine, via the CDX API (${d.source.license}, free, no auth). It watches a curated, versioned list of official pages; every finding is archive-sourced (status code + archived versions), never a live fetch — hence reproducible.`,
   s2: de ? '2. Kadenz' : '2. Cadence',
   s2body: de
-    ? 'Täglich. Die Maschine wählt selbst: die substanziellste Schwärzung des Tages (Salienz × entferntes Volumen). An stillen Tagen meldet sie ehrlich „Keine Schwärzung festgestellt" — Stille ist eine Aussage, keine Lücke. Kanonisches Artefakt: versionierte JSON in src/data/redaction/ — Git ist das Archiv.'
-    : 'Daily. The machine selects on its own: the most substantive redaction of the day (salience × removed volume). On quiet days it honestly reports "no redaction recorded" — silence is a statement, not a gap. Canonical artefact: versioned JSON in src/data/redaction/ — git is the archive.',
+    ? 'Täglich. Die Maschine wählt selbst: die substanziellste Schwärzung des Tages (Salienz × entferntes Volumen). An stillen Tagen vermerkt sie, dass das Archiv nichts zurückgenommen hat — Stille ist eine Aussage, keine Lücke. Kanonisches Artefakt: versionierte JSON in src/data/redaction/ — Git ist das Archiv.'
+    : 'Daily. The machine selects on its own: the most substantive redaction of the day (salience × removed volume). On quiet days it notes that the archive took nothing back — silence is a statement, not a gap. Canonical artefact: versioned JSON in src/data/redaction/ — git is the archive.',
   s3: de ? '3. Verarbeitung' : '3. Processing',
   s3body: de
     ? 'Pro URL: CDX-Captures holen (collapse=digest) → Löschung erkennen (Statuscode 200→4xx) oder Inhalts-Entfernung (Digest-Wechsel der beiden jüngsten 200-Captures) → beide Fassungen roh ziehen, Haupttext extrahieren, auf Satzebene diffen → entfernte Passagen + Token zählen. Hinzufügungen werden nicht gewertet (Schwärzen = Wegnehmen).'
