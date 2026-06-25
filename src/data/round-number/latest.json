@@ -1,0 +1,340 @@
+{
+  "date": "2026-06-25",
+  "generated_at": "2026-06-25T21:12:46Z",
+  "method_version": "1",
+  "pick": "wb-gdp",
+  "pipeline_version": "0.1.0",
+  "schema_version": "1",
+  "series": [
+    {
+      "benford": {
+        "chi2": 13.9013,
+        "expected": [
+          0.3010299956639812,
+          0.17609125905568124,
+          0.12493873660829993,
+          0.09691001300805642,
+          0.07918124604762482,
+          0.06694678963061322,
+          0.05799194697768673,
+          0.05115252244738129,
+          0.04575749056067514
+        ],
+        "mad": 0.004161,
+        "n": 6000,
+        "observed": [
+          0.29733333333333334,
+          0.1645,
+          0.1215,
+          0.09966666666666667,
+          0.08,
+          0.07416666666666667,
+          0.06283333333333334,
+          0.05383333333333333,
+          0.04616666666666667
+        ],
+        "verdict": "close"
+      },
+      "control": {
+        "false_positive_rate": 0.0,
+        "method": "bootstrap of clean Benford samples, same n",
+        "samples": 500,
+        "seed": 6000,
+        "threshold": 0.015,
+        "verdict_on_clean": "rarely flagged"
+      },
+      "id": "_control_clean",
+      "institution": "Kontrolle",
+      "last_digit": {
+        "chi2": 97.0433,
+        "n": 6000,
+        "observed": [
+          0.0845,
+          0.12016666666666667,
+          0.123,
+          0.1085,
+          0.10016666666666667,
+          0.096,
+          0.09866666666666667,
+          0.09383333333333334,
+          0.08916666666666667,
+          0.086
+        ],
+        "verdict": "heaped"
+      },
+      "n": 6000,
+      "name": "Synthetisch — saubere Benford-Reihe",
+      "source": {
+        "license": "n/a",
+        "name": "seeded log-uniform (seed=42)",
+        "retrieved": "2026-06-25",
+        "url": "https://en.wikipedia.org/wiki/Benford%27s_law"
+      },
+      "synthetic": true
+    },
+    {
+      "benford": {
+        "chi2": 26.4645,
+        "expected": [
+          0.3010299956639812,
+          0.17609125905568124,
+          0.12493873660829993,
+          0.09691001300805642,
+          0.07918124604762482,
+          0.06694678963061322,
+          0.05799194697768673,
+          0.05115252244738129,
+          0.04575749056067514
+        ],
+        "mad": 0.007765,
+        "n": 4330,
+        "observed": [
+          0.3334872979214781,
+          0.16697459584295613,
+          0.11501154734411086,
+          0.08752886836027714,
+          0.0766743648960739,
+          0.06674364896073903,
+          0.058660508083140876,
+          0.04734411085450346,
+          0.04757505773672056
+        ],
+        "verdict": "acceptable"
+      },
+      "control": {
+        "false_positive_rate": 0.0,
+        "method": "bootstrap of clean Benford samples, same n",
+        "samples": 500,
+        "seed": 4330,
+        "threshold": 0.015,
+        "verdict_on_clean": "rarely flagged"
+      },
+      "id": "_control_tampered",
+      "institution": "Kontrolle",
+      "last_digit": {
+        "chi2": 54000.0,
+        "n": 6000,
+        "observed": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "verdict": "heaped"
+      },
+      "n": 4330,
+      "name": "Synthetisch — gerundet (manipuliert)",
+      "source": {
+        "license": "n/a",
+        "name": "clean control rounded to multiples of 100",
+        "retrieved": "2026-06-25",
+        "url": "https://en.wikipedia.org/wiki/Benford%27s_law"
+      },
+      "synthetic": true
+    },
+    {
+      "benford": {
+        "chi2": 15.1243,
+        "expected": [
+          0.3010299956639812,
+          0.17609125905568124,
+          0.12493873660829993,
+          0.09691001300805642,
+          0.07918124604762482,
+          0.06694678963061322,
+          0.05799194697768673,
+          0.05115252244738129,
+          0.04575749056067514
+        ],
+        "mad": 0.019261,
+        "n": 251,
+        "observed": [
+          0.30677290836653387,
+          0.21912350597609562,
+          0.14342629482071714,
+          0.11553784860557768,
+          0.04780876494023904,
+          0.06772908366533864,
+          0.0398406374501992,
+          0.04780876494023904,
+          0.01195219123505976
+        ],
+        "verdict": "nonconformity"
+      },
+      "control": {
+        "false_positive_rate": 0.514,
+        "method": "bootstrap of clean Benford samples, same n",
+        "samples": 500,
+        "seed": 251,
+        "threshold": 0.015,
+        "verdict_on_clean": "frequently flagged"
+      },
+      "id": "wb-gdp",
+      "institution": "Weltbank",
+      "last_digit": {
+        "chi2": 10.4741,
+        "n": 251,
+        "observed": [
+          0.12749003984063745,
+          0.07569721115537849,
+          0.05179282868525897,
+          0.099601593625498,
+          0.10756972111553785,
+          0.10756972111553785,
+          0.099601593625498,
+          0.10358565737051793,
+          0.11155378486055777,
+          0.11553784860557768
+        ],
+        "verdict": "uniform"
+      },
+      "n": 251,
+      "name": "BIP je Volkswirtschaft, US$ (WDI)",
+      "source": {
+        "license": "CC BY-4.0 (World Bank)",
+        "name": "World Bank Open Data — NY.GDP.MKTP.CD",
+        "retrieved": "2026-06-25",
+        "url": "https://data.worldbank.org/indicator/NY.GDP.MKTP.CD"
+      },
+      "synthetic": false
+    },
+    {
+      "benford": {
+        "chi2": 4.0467,
+        "expected": [
+          0.3010299956639812,
+          0.17609125905568124,
+          0.12493873660829993,
+          0.09691001300805642,
+          0.07918124604762482,
+          0.06694678963061322,
+          0.05799194697768673,
+          0.05115252244738129,
+          0.04575749056067514
+        ],
+        "mad": 0.012288,
+        "n": 263,
+        "observed": [
+          0.27756653992395436,
+          0.20912547528517111,
+          0.12927756653992395,
+          0.09125475285171103,
+          0.07224334600760456,
+          0.057034220532319393,
+          0.06844106463878327,
+          0.04182509505703422,
+          0.053231939163498096
+        ],
+        "verdict": "marginal"
+      },
+      "control": {
+        "false_positive_rate": 0.38,
+        "method": "bootstrap of clean Benford samples, same n",
+        "samples": 500,
+        "seed": 263,
+        "threshold": 0.015,
+        "verdict_on_clean": "frequently flagged"
+      },
+      "id": "wb-land",
+      "institution": "Weltbank",
+      "last_digit": {
+        "chi2": 1164.1863,
+        "n": 263,
+        "observed": [
+          0.7300380228136882,
+          0.022813688212927757,
+          0.03802281368821293,
+          0.04182509505703422,
+          0.04182509505703422,
+          0.019011406844106463,
+          0.04182509505703422,
+          0.0038022813688212928,
+          0.04182509505703422,
+          0.019011406844106463
+        ],
+        "verdict": "heaped"
+      },
+      "n": 263,
+      "name": "Landfläche je Volkswirtschaft, km² (WDI)",
+      "source": {
+        "license": "CC BY-4.0 (World Bank)",
+        "name": "World Bank Open Data — AG.LND.TOTL.K2",
+        "retrieved": "2026-06-25",
+        "url": "https://data.worldbank.org/indicator/AG.LND.TOTL.K2"
+      },
+      "synthetic": false
+    },
+    {
+      "benford": {
+        "chi2": 6.3041,
+        "expected": [
+          0.3010299956639812,
+          0.17609125905568124,
+          0.12493873660829993,
+          0.09691001300805642,
+          0.07918124604762482,
+          0.06694678963061322,
+          0.05799194697768673,
+          0.05115252244738129,
+          0.04575749056067514
+        ],
+        "mad": 0.012909,
+        "n": 265,
+        "observed": [
+          0.3132075471698113,
+          0.1660377358490566,
+          0.12830188679245283,
+          0.07924528301886792,
+          0.10566037735849057,
+          0.0830188679245283,
+          0.045283018867924525,
+          0.03773584905660377,
+          0.04150943396226415
+        ],
+        "verdict": "marginal"
+      },
+      "control": {
+        "false_positive_rate": 0.448,
+        "method": "bootstrap of clean Benford samples, same n",
+        "samples": 500,
+        "seed": 265,
+        "threshold": 0.015,
+        "verdict_on_clean": "frequently flagged"
+      },
+      "id": "wb-population",
+      "institution": "Weltbank",
+      "last_digit": {
+        "chi2": 8.0943,
+        "n": 265,
+        "observed": [
+          0.12452830188679245,
+          0.11320754716981132,
+          0.0830188679245283,
+          0.09056603773584905,
+          0.10566037735849057,
+          0.1169811320754717,
+          0.10943396226415095,
+          0.07547169811320754,
+          0.07169811320754717,
+          0.10943396226415095
+        ],
+        "verdict": "uniform"
+      },
+      "n": 265,
+      "name": "Bevölkerung je Volkswirtschaft (WDI)",
+      "source": {
+        "license": "CC BY-4.0 (World Bank)",
+        "name": "World Bank Open Data — SP.POP.TOTL",
+        "retrieved": "2026-06-25",
+        "url": "https://data.worldbank.org/indicator/SP.POP.TOTL"
+      },
+      "synthetic": false
+    }
+  ]
+}

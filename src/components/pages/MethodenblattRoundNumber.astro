@@ -1,0 +1,98 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import type { Locale } from '@/lib/site'
+
+interface Props { locale: Locale }
+const { locale } = Astro.props
+const de = locale === 'de'
+const workUrl = getRelativeLocaleUrl(locale, '/round-number')
+
+const txt = {
+  h1: de ? 'Methodenblatt — The Round Number' : 'Method sheet — The Round Number',
+  revealHead: de ? 'Worum es geht' : 'What this is',
+  reveal: de
+    ? 'Ziffern-Forensik (Benfordsches Gesetz) gilt als Werkzeug, das gefälschte Zahlen erkennt — und ist das Lieblingsinstrument von Wahlbetrugs-Mythen. Dieses Stück stellt nicht eine Institution vor Gericht, sondern die Methode: Es zeigt täglich, dass derselbe Test, der eine echte amtliche Reihe „verdächtig" nennt, auch nachweislich saubere Daten gleicher Größe verdächtig nennt. Die Unzuverlässigkeit ist die gemessene Größe.'
+    : 'Digit-forensics (Benford’s Law) is sold as a tool that detects faked numbers — and is the favourite instrument of vote-fraud myths. This piece does not put an institution on trial but the method: each day it shows that the same test which calls a real official series „suspicious" also calls provably-clean data of the same size suspicious. The unreliability is the measured quantity.',
+  s1: de ? '1. Quellen & Lizenzen' : '1. Sources & licences',
+  s1body: de
+    ? 'Echte Reihen: Weltbank Open Data (World Development Indicators, CC BY-4.0) — Größen, die mehrere Größenordnungen umspannen, damit Benford überhaupt anwendbar ist. Dazu klar etikettierte synthetische Kontrollen (eine saubere Benford-Reihe, eine gerundete/manipulierte). Alle Datensätze sind committet — Git ist das Archiv.'
+    : 'Real series: World Bank Open Data (World Development Indicators, CC BY-4.0) — quantities spanning several orders of magnitude, so Benford is applicable at all. Plus clearly-labelled synthetic controls (one clean Benford series, one rounded/tampered). All datasets are committed — git is the archive.',
+  s2: de ? '2. Kadenz' : '2. Cadence',
+  s2body: de
+    ? 'Täglich. Die Maschine stellt deterministisch nach Datum rotierend je eine Reihe „vor Gericht" — jede kommt dran, kein Herauspicken der dramatischsten. Kanonisches Artefakt: versionierte JSON in src/data/round-number/.'
+    : 'Daily. The machine puts one series „on trial" each day, rotating deterministically by date — every one gets its turn, no cherry-picking the most dramatic. Canonical artefact: versioned JSON in src/data/round-number/.',
+  s3: de ? '3. Verarbeitung' : '3. Processing',
+  s3body: de
+    ? 'Benford 1. Ziffer: erwartete Anteile log10(1+1/d); Kennzahlen MAD (mit Nigrini-Schwellen) und χ². Letzte Ziffer: χ²-Test auf Gleichverteilung. Der Kern: für die Reihe (Größe n) läuft dieselbe Prüfung auf 500 seedgesteuerten, nachweislich sauberen Benford-Stichproben gleicher Größe → die Falsch-Positiv-Rate. Seed und Verfahren offengelegt, Lauf reproduzierbar.'
+    : 'Benford first digit: expected proportions log10(1+1/d); metrics MAD (with Nigrini bands) and χ². Last digit: χ² test for uniformity. The core: for the series (size n) the same test runs on 500 seeded, provably-clean Benford samples of the same size → the false-positive rate. Seed and method disclosed, run reproducible.',
+  aiHead: de ? 'KI/ML — symbolisch, auditierbar' : 'AI/ML — symbolic, auditable',
+  aiBody: de
+    ? 'Das Lab experimentiert mit Daten UND KI; hier ist die Methode rein symbolisch-statistisch und damit voll prüfbar — kein LLM, keine Black Box. Der Gegenstand ist die Methode selbst: ihre Unzuverlässigkeit wird gemessen und beziffert (die CLAUDE.md-Linie: „wo das Modell selbst der Gegenstand ist, wird seine Unzuverlässigkeit Teil der Messung").'
+    : 'The lab experiments with data AND AI; here the method is purely symbolic-statistical and therefore fully checkable — no LLM, no black box. The subject is the method itself: its unreliability is measured and quantified.',
+  s4: de ? '4. Grenzen der Methode' : '4. Limits of the method',
+  s4items: de
+    ? [
+        'Benford ist nicht universell anwendbar — begrenzte oder geclusterte Größen (Prozente, Alter, zugewiesene Nummern) folgen ihm nicht; Abweichung dort heißt nichts.',
+        'Eine „Anomalie" ist kein Betrug. Es wird kein Vorwurf gegen eine Institution erhoben.',
+        'Die festen Schwellen (Nigrini) sind eine gesetzte Wahl und stichprobengrößen-blind — genau das ist der Gegenstand.',
+        'Auch der χ²-Test letzter Ziffern ist größen-sensibel und markiert große Stichproben leicht über (im Tagesbefund ehrlich sichtbar).',
+        'Die Kontrollen sind synthetisch und im Datensatz als solche markiert.',
+      ]
+    : [
+        'Benford is not universally applicable — bounded or clustered quantities (percentages, ages, assigned numbers) do not follow it; deviation there means nothing.',
+        'An „anomaly" is not fraud. No accusation is made against any institution.',
+        'The fixed thresholds (Nigrini) are a set choice and sample-size blind — which is precisely the subject.',
+        'The last-digit χ² test is also size-sensitive and over-flags large samples (visible honestly in the daily record).',
+        'The controls are synthetic and marked as such in the dataset.',
+      ],
+  s5: de ? '5. Compute-Fußabdruck' : '5. Compute footprint',
+  s5body: de
+    ? 'Reine Statistik auf committeten Daten, kein Netz zur Laufzeit, kein API-Key, kein LLM. Die Site ist statisch.'
+    : 'Pure statistics over committed data, no network at run time, no API key, no LLM. The site is static.',
+  s6: de ? '6. Änderungsprotokoll' : '6. Change log',
+  s6items: de
+    ? ['v1 (2026-06) — Erstfassung: Benford-MAD/χ² + Last-Digit + seedgesteuerter Falsch-Positiv-Bootstrap, tägliche Rotation.']
+    : ['v1 (2026-06) — first edition: Benford MAD/χ² + last-digit + seeded false-positive bootstrap, daily rotation.'],
+  toWork: de ? 'Zum Experiment' : 'To the experiment',
+}
+---
+
+<div class="mx-auto max-w-2xl px-4 py-14">
+  <h1 class="mb-8 text-xl font-semibold">{txt.h1}</h1>
+
+  <section class="mb-10 border border-line bg-panel/60 p-5">
+    <h2 class="mb-2 font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">{txt.revealHead}</h2>
+    <p class="leading-relaxed">{txt.reveal}</p>
+  </section>
+
+  <section class="mb-8"><h2 class="mb-2 font-semibold">{txt.s1}</h2><p class="leading-relaxed text-fg-muted">{txt.s1body}</p></section>
+  <section class="mb-8"><h2 class="mb-2 font-semibold">{txt.s2}</h2><p class="leading-relaxed text-fg-muted">{txt.s2body}</p></section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s3}</h2>
+    <p class="leading-relaxed text-fg-muted">{txt.s3body}</p>
+    <p class="mt-2">
+      <a href="https://github.com/frankbueltge/frankbueltge.de/tree/main/pipelines/round-number"
+        class="font-mono text-xs text-fg-faint transition-colors hover:text-fg" rel="noopener">→ pipelines/round-number</a>
+    </p>
+  </section>
+
+  <section class="mb-8 border-l-2 border-line pl-4">
+    <h2 class="mb-2 font-semibold">{txt.aiHead}</h2>
+    <p class="leading-relaxed text-fg-muted">{txt.aiBody}</p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s4}</h2>
+    <ul class="list-disc space-y-1 pl-5 text-fg-muted">{txt.s4items.map((i) => <li>{i}</li>)}</ul>
+  </section>
+
+  <section class="mb-8"><h2 class="mb-2 font-semibold">{txt.s5}</h2><p class="leading-relaxed text-fg-muted">{txt.s5body}</p></section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s6}</h2>
+    <ul class="list-disc space-y-1 pl-5 text-fg-muted">{txt.s6items.map((i) => <li>{i}</li>)}</ul>
+  </section>
+
+  <a href={workUrl} class="text-sm text-fg-muted transition-colors hover:text-fg">→ {txt.toWork}</a>
+</div>

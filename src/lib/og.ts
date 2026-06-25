@@ -52,6 +52,10 @@ export const OG_PAGES: Record<string, { title: string; description: string }> = 
     title: 'The Redaction',
     description: 'Was aus dem offiziellen öffentlichen Eintrag still wieder entfernt wird',
   },
+  'round-number': {
+    title: 'The Round Number',
+    description: 'Ein Test, der angeblich gefälschte Zahlen erkennt — und wie oft er sich irrt',
+  },
 }
 
 /** Pfad (mit/ohne /en, mit/ohne Trailing-Slash) → OG-Slug; Default 'home'. */
@@ -70,5 +74,6 @@ export function ogSlug(pathname: string): keyof typeof OG_PAGES {
   if (p.startsWith('/tell') || p.startsWith('/werke/tell')) return 'tell'
   if (p.startsWith('/pattern') || p.startsWith('/werke/pattern')) return 'pattern'
   if (p.startsWith('/redaction') || p.startsWith('/werke/redaction')) return 'redaction'
+  if (p.startsWith('/round-number') || p.startsWith('/werke/round-number')) return 'round-number'
   return 'home'
 }
