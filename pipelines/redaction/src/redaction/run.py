@@ -10,13 +10,15 @@ from pathlib import Path
 
 import httpx
 
-from redaction import extract, salience, textdiff
+from redaction import extract, prose, salience, textdiff
 from redaction.build import day_record, make_redaction, to_json
 from redaction.cdx import captures, classify, snapshot_url
 from redaction.watchlist import WATCHLIST, WatchItem
 
 USER_AGENT = "frankbueltge.de redaction-pipeline (hello@frankbueltge.de)"
 PAUSE = 0.6  # gentle on the Wayback API
+RECENT_DAYS = 30  # a change whose newest capture is older than this is not "recent"
+                  # (Wayback captures these pages sparsely — this is the honest cadence)
 
 
 def _now_iso() -> str:
@@ -27,10 +29,22 @@ def _fetch_text(url: str, *, client: httpx.Client) -> str:
     return client.get(url, timeout=30.0, follow_redirects=True).text
 
 
-def _one(item: WatchItem, *, client: httpx.Client) -> dict | None:
+def _recent(after_ts: str, today: date, recent_days: int) -> bool:
+    try:
+        d = datetime.strptime(after_ts[:8], "%Y%m%d").date()
+    except ValueError:
+        return False
+    return 0 <= (today - d).days <= recent_days
+
+
+def _one(item: WatchItem, *, client: httpx.Client, today: date,
+         recent_days: int = RECENT_DAYS) -> dict | None:
     caps = captures(item.url, client=client)
     kind, before_cap, after_cap = classify(caps)
     if kind == "none" or before_cap is None or after_cap is None:
+        return None
+    # Daily instrument: ignore changes whose newest capture is not recent.
+    if not _recent(after_cap.timestamp, today, recent_days):
         return None
 
     if kind == "deletion":
@@ -46,9 +60,11 @@ def _one(item: WatchItem, *, client: httpx.Client) -> dict | None:
     after_text = extract.main_text(_fetch_text(snapshot_url(after_cap.timestamp, item.url),
                                                client=client))
     rem = textdiff.removed(before_text, after_text)
-    if rem.tokens == 0:
+    passages = prose.keep_prose(rem.passages)  # drop nav/menu/link-list noise
+    if not passages:
         return None
-    sal = salience.score(" ".join(rem.passages))
+    rem = textdiff.Removal(passages=passages, tokens=sum(len(p.split()) for p in passages))
+    sal = salience.score(" ".join(passages))
     return make_redaction(item, kind, before_cap, after_cap, rem, sal, item.url)
 
 
@@ -63,7 +79,7 @@ def run(
     redactions: list[dict] = []
     for item in watchlist:
         try:
-            r = _one(item, client=client)
+            r = _one(item, client=client, today=today)
             if r is not None:
                 redactions.append(r)
         except Exception:  # noqa: BLE001 — deliberate fault isolation
