@@ -17,7 +17,8 @@
     "correction:refresh": "python3 pipelines/revision/refresh.py",
     "tell:refresh": "python3 pipelines/tell/refresh.py",
     "pattern:refresh": "python3 pipelines/pattern/refresh.py",
-    "redaction:refresh": "pipelines/redaction/.venv/bin/python -m redaction.run --repo-root ."
+    "redaction:refresh": "pipelines/redaction/.venv/bin/python -m redaction.run --repo-root .",
+    "round-number:refresh": "pipelines/round-number/.venv/bin/python -m round_number.run --repo-root ."
   },
   "dependencies": {
     "@astrojs/mdx": "^6.0.3",
