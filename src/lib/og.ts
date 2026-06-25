@@ -48,6 +48,10 @@ export const OG_PAGES: Record<string, { title: string; description: string }> = 
     title: 'Patterns',
     description: 'Eine Maschine, die jeden Tag ein Muster findet — und nicht weiß, ob es etwas bedeutet',
   },
+  redaction: {
+    title: 'The Redaction',
+    description: 'Was aus dem offiziellen öffentlichen Eintrag still wieder entfernt wird',
+  },
 }
 
 /** Pfad (mit/ohne /en, mit/ohne Trailing-Slash) → OG-Slug; Default 'home'. */
@@ -65,5 +69,6 @@ export function ogSlug(pathname: string): keyof typeof OG_PAGES {
   if (p.startsWith('/correction') || p.startsWith('/werke/correction')) return 'correction'
   if (p.startsWith('/tell') || p.startsWith('/werke/tell')) return 'tell'
   if (p.startsWith('/pattern') || p.startsWith('/werke/pattern')) return 'pattern'
+  if (p.startsWith('/redaction') || p.startsWith('/werke/redaction')) return 'redaction'
   return 'home'
 }
