@@ -1,0 +1,49 @@
+name: Round Number nightly
+
+# Gegenmessung-Instrument „The Round Number": rechnet täglich die Ziffern-Forensik-
+# Rotation (Benford/Last-Digit + Falsch-Positiv-Bootstrap) auf committeten Datensätzen
+# und committet das Tages-JSON zurück (→ Rebuild). Kein Netz, kein Key.
+
+on:
+  schedule:
+    - cron: '0 5 * * *' # täglich 05:00 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: round-number
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # volle History → git pull --rebase im Commit-Schritt funktioniert
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Pipeline-Paket installieren
+        run: pip install --no-cache-dir ./pipelines/round-number
+      - name: Round Number laufen (schreibt, committet nicht)
+        run: python -m round_number.run --repo-root .
+      - name: Committen
+        run: |
+          git config user.name "Gegenmessung"
+          git config user.email "gegenmessung@frankbueltge.de"
+          git add src/data/round-number 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "Keine Änderungen."; exit 0
+          fi
+          git commit -m "round-number: Verhandlung vom $(date -u +%F)"
+          # Gegen Push-Races (parallele Cron-/Repo-Commits): rebasen + mehrfach versuchen.
+          for i in 1 2 3 4 5; do
+            if git pull --rebase --autostash origin main && git push origin HEAD:main; then
+              echo "Gepusht."; exit 0
+            fi
+            echo "Push-Versuch $i fehlgeschlagen, neu …"; sleep 5
+          done
+          echo "::error::Push nach 5 Versuchen fehlgeschlagen"; exit 1
