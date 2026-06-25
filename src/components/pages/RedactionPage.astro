@@ -25,9 +25,15 @@ const methodUrl = getRelativeLocaleUrl(locale, '/werke/redaction')
 
   {pending ? (
     <p class="mb-12 text-fg-muted">{t(locale, 'rd.empty')}</p>
+  ) : d.changed_count === 0 ? (
+    <p class="mb-12 max-w-xl leading-relaxed text-fg-muted">
+      {de
+        ? `Heute hat das Archiv nichts zurückgenommen — auf den ${d.watched_count} beobachteten Seiten. Das ist keine Garantie, nur eine Beobachtung.`
+        : `Today the archive took nothing back — across the ${d.watched_count} watched pages. That is not a guarantee, only an observation.`}
+    </p>
   ) : (
   <>
-  {pick ? (
+  {pick && (
     <section class="mb-12 border-l-2 border-accent/60 pl-5">
       <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
         {de ? 'Die Schwärzung des Tages' : 'The redaction of the day'}
@@ -59,10 +65,6 @@ const methodUrl = getRelativeLocaleUrl(locale, '/werke/redaction')
         </a>
       </p>
     </section>
-  ) : (
-    <p class="mb-12 text-fg-muted">
-      {de ? 'Keine Schwärzung festgestellt heute.' : 'No redaction recorded today.'}
-    </p>
   )}
 
   <section class="mb-12 flex items-baseline gap-4">
