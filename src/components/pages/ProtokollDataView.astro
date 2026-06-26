@@ -27,6 +27,9 @@ const verlusteTop = r?.tops.find((tp) => tp.heading.endsWith('Verluste.') || tp.
 // Sparkline-Koordinatenraum (skaliert uniform per w-full → Punkt bleibt rund).
 const SW = 320
 const SH = 64
+// Größerer Verlauf für die aufgeklappte Detail-Ansicht.
+const BW = 640
+const BH = 170
 
 const archivUrl = getRelativeLocaleUrl(locale, '/protokoll/archiv')
 const methodUrl = getRelativeLocaleUrl(locale, '/werke/protokoll')
@@ -67,11 +70,11 @@ const PERIOD: Record<ComparisonLabel, { de: string; en: string }> = {
 const periodLabel = (l: ComparisonLabel) => (de ? PERIOD[l].de : PERIOD[l].en)
 
 // y-Höhe des jüngsten Punkts (gleiche Formel wie linePath) — für den Markierungspunkt.
-function lastY(values: number[]): number {
+function lastY(values: number[], height: number): number {
   const min = Math.min(...values)
   const max = Math.max(...values)
   const span = max - min || 1
-  return SH - ((values.at(-1)! - min) / span) * (SH - 2) - 1
+  return height - ((values.at(-1)! - min) / span) * (height - 2) - 1
 }
 
 const txt = {
@@ -89,6 +92,9 @@ const txt = {
   record: de ? 'Rekord' : 'record',
   wortlaut: de ? 'Amtlicher Wortlaut' : 'Official wording',
   asOf: de ? 'Stand' : 'as of',
+  range: de ? 'Spanne' : 'range',
+  source: de ? 'Quelle' : 'source',
+  method: de ? 'Methodenblatt' : 'Method sheet',
 }
 ---
 
@@ -147,7 +153,7 @@ const txt = {
                 aria-label={txt.since(top.series.length, dateShort(top.series[0].date))}>
                 <path d={areaPath(vals, SW, SH)} fill="rgb(var(--rgb-accent))" fill-opacity="0.1" stroke="none" />
                 <path d={line} fill="none" stroke="rgb(var(--rgb-accent))" stroke-width="1.5" vector-effect="non-scaling-stroke" />
-                <circle cx={SW} cy={lastY(vals).toFixed(1)} r="2.6" fill="rgb(var(--rgb-accent))" />
+                <circle cx={SW} cy={lastY(vals, SH).toFixed(1)} r="2.6" fill="rgb(var(--rgb-accent))" />
               </svg>
               <p class="mt-1.5 font-mono text-[10px] text-fg-faint">{txt.since(top.series.length, dateShort(top.series[0].date))}</p>
             </div>
@@ -158,7 +164,57 @@ const txt = {
           )}
 
           <p class="mt-3 text-xs leading-relaxed text-fg-muted">{phrase}</p>
-          <p class="mt-auto truncate pt-3 font-mono text-[10px] text-fg-faint">{srcName(e.source.name)} · {txt.asOf} {e.as_of ?? '—'}</p>
+          <details class="group mt-auto border-t border-line pt-3">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-2 font-mono text-[10px] text-fg-faint transition-colors hover:text-fg-muted">
+              <span class="truncate">{srcName(e.source.name)} · {txt.asOf} {e.as_of ?? '—'}</span>
+              <span class="shrink-0 transition-transform group-open:rotate-90" aria-hidden="true">›</span>
+            </summary>
+            <div class="mt-4 space-y-4">
+              {vals.length >= 2 && !flat ? (
+                <svg viewBox={`0 0 ${BW} ${BH}`} class="w-full overflow-visible" role="img"
+                  aria-label={txt.since(top.series.length, dateShort(top.series[0].date))}>
+                  <path d={areaPath(vals, BW, BH)} fill="rgb(var(--rgb-accent))" fill-opacity="0.1" stroke="none" />
+                  <path d={linePath(vals, BW, BH)} fill="none" stroke="rgb(var(--rgb-accent))" stroke-width="1.5" vector-effect="non-scaling-stroke" />
+                  <circle cx={BW} cy={lastY(vals, BH).toFixed(1)} r="3" fill="rgb(var(--rgb-accent))" />
+                </svg>
+              ) : (
+                <p class="text-xs text-fg-faint">{hasVal ? txt.tooFew : txt.noValue}</p>
+              )}
+              {vals.length >= 1 && (
+                <div class="flex items-center justify-between gap-2 font-mono text-[10px] text-fg-faint">
+                  <span>{dateShort(top.series[0].date)}</span>
+                  <span class="text-center">{txt.range}: {fmtVal(Math.min(...vals))}–{fmtVal(Math.max(...vals))} {unitLabel(e.unit)}</span>
+                  <span>{dateShort(top.series.at(-1)!.date)}</span>
+                </div>
+              )}
+              <dl class="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 text-xs">
+                {hasVal && (
+                  <>
+                    <dt class="text-fg-faint">{txt.asOf}</dt>
+                    <dd class="tabular-nums">{nf.format(e.value!)} {unitLabel(e.unit)}{e.as_of ? ` · ${e.as_of}` : ''}</dd>
+                  </>
+                )}
+                {delta != null && cmp && (
+                  <>
+                    <dt class="text-fg-faint">{txt.vs} {periodLabel(cmp.label)}</dt>
+                    <dd class={`tabular-nums ${moveClass}`}>{arrow} {delta > 0 ? '+' : ''}{fmtVal(delta)}</dd>
+                  </>
+                )}
+                {e.note && (
+                  <>
+                    <dt class="text-fg-faint">Note</dt>
+                    <dd class="text-fg-muted">{e.note}</dd>
+                  </>
+                )}
+                <dt class="text-fg-faint">{txt.source}</dt>
+                <dd>
+                  <a href={e.source.url} target="_blank" rel="noopener" class="underline decoration-line underline-offset-2 transition-colors hover:text-fg">{srcName(e.source.name)}</a>
+                  <span class="text-fg-faint"> · {e.source.license}</span>
+                </dd>
+              </dl>
+              <a href={methodUrl} class="inline-block font-mono text-[10px] text-fg-faint underline decoration-line underline-offset-2 transition-colors hover:text-fg">{txt.method} →</a>
+            </div>
+          </details>
         </section>
       )
     })}
