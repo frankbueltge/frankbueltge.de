@@ -2,8 +2,15 @@
 from __future__ import annotations
 
 import json
+import re
 
 from ghost_fleet import PIPELINE_VERSION, SCHEMA_VERSION
+
+_NAME_CONFIDENCE = re.compile(r"\s+\d{1,3}%$")  # GFW appends a match score, e.g. "BOYA 9 100%"
+
+
+def _clean_name(name: str) -> str:
+    return _NAME_CONFIDENCE.sub("", name).strip() or "—"
 
 GFW_VESSEL = "https://globalfishingwatch.org/vessel/{id}"
 SOURCE = {
@@ -43,7 +50,7 @@ def normalize(raw: dict) -> dict | None:
     return {
         "id": raw["id"],
         "vessel": {
-            "name": vessel.get("name") or "—",
+            "name": _clean_name(vessel.get("name") or "—"),
             "flag": vessel.get("flag") or "—",
             "type": vessel.get("type") or "—",
         },
