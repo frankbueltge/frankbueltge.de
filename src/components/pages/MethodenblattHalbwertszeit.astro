@@ -25,8 +25,8 @@ const txt = {
     : 'Nightly run (04:30 UTC): register rebuilt from the rule, all time series fully re-collected, fits recomputed. The canonical artefact is a versioned JSON file in the repository — git is the archive.',
   s3: de ? '3. Verarbeitung' : '3. Processing',
   s3body: de
-    ? 'Je Ereignis: Sockel-Schätzung (Median der letzten 14 Tage nach dem Peak), dann log-lineare Regression auf den Post-Peak-Verlauf → Zerfallskonstante λ, Halbwertszeit = ln 2 / λ, Bestimmtheitsmaß R². Statusregeln: „gemessen" (Fit belastbar), „Messung läuft" (Peak jünger als 21 Tage), „keine messbare Anteilnahme" (Peak < 1.000 Aufrufe, R² < 0,30, weniger als 8 verwertbare Tage nach dem Peak oder kein Zerfall messbar, λ ≤ 0). Vorläufige Fits laufender Messungen werden nicht archiviert. Die Kopfzahl ist der Median über alle gemessenen Ereignisse. Aufrufe je Todesopfer = Peak ÷ Opferzahl. Die Ungleichheits-Achse trägt die Aufrufe je Todesopfer logarithmisch auf — ein Strich je Ereignis, die Extreme beschriftet; Ereignisse ohne messbare Anteilnahme erscheinen nicht und werden gezählt ausgewiesen. Auf der Zerfallskurve markiert der Punkt die Halbwertszeit aus dem Fit; die Kurve selbst ist der Rohverlauf — der Abstand zwischen beiden ist die Fit-Güte (R²).'
-    : 'Per event: baseline estimate (median of the last 14 post-peak days), then log-linear regression on the post-peak course → decay constant λ, half-life = ln 2 / λ, coefficient of determination R². Status rules: "measured" (robust fit), "measurement running" (peak younger than 21 days), "no measurable attention" (peak < 1,000 views, R² < 0.30, fewer than 8 usable post-peak days, or no measurable decay, λ ≤ 0). Provisional fits of running measurements are not archived. The headline number is the median over all measured events. Views per death = peak ÷ death toll. The inequality axis plots views per death logarithmically — one tick per event, the extremes labelled; events with no measurable attention do not appear and are reported as a count. On the decay curve the dot marks the half-life from the fit; the curve itself is the raw course — the distance between the two is the goodness of fit (R²).',
+    ? 'Je Ereignis: Sockel-Schätzung (Median der letzten 14 Tage nach dem Peak), dann log-lineare Regression auf den Post-Peak-Verlauf → Zerfallskonstante λ, Halbwertszeit = ln 2 / λ, Bestimmtheitsmaß R². Statusregeln: „gemessen" (Fit belastbar), „Messung läuft" (Peak jünger als 21 Tage), „keine messbare Anteilnahme" (Peak < 1.000 Aufrufe, R² < 0,30, weniger als 8 verwertbare Tage nach dem Peak oder kein Zerfall messbar, λ ≤ 0). Vorläufige Fits laufender Messungen werden nicht archiviert. Die Kopfzahl ist der Median über alle gemessenen Ereignisse. Auf der Zerfallskurve markiert der Punkt die Halbwertszeit; die Kurve selbst ist der Rohverlauf der Aufmerksamkeit. Bewusste Entscheidung: Es gibt keine „Aufrufe je Todesopfer" und keine Rangfolge — gemessen wird, wie schnell wir vergessen, nicht das Gewicht der Opfer.'
+    : 'Per event: baseline estimate (median of the last 14 post-peak days), then log-linear regression on the post-peak course → decay constant λ, half-life = ln 2 / λ, coefficient of determination R². Status rules: "measured" (robust fit), "measurement running" (peak younger than 21 days), "no measurable attention" (peak < 1,000 views, R² < 0.30, fewer than 8 usable post-peak days, or no measurable decay, λ ≤ 0). Provisional fits of running measurements are not archived. The headline number is the median over all measured events. On the decay curve the dot marks the half-life; the curve itself is the raw course of attention. A deliberate choice: there is no „views per death" and no ranking — what is measured is how quickly we forget, not the weight of the victims.',
   s4: de ? '4. Grenzen der Methode' : '4. Limits of the method',
   s4items: de
     ? [
@@ -51,8 +51,14 @@ const txt = {
     : 'One Cloud Run execution per night (< 5 min), ~300 throttled REST calls. No BigQuery costs: the planned large-table scan was prevented by our own cost brake and replaced with the REST API — the renunciation is stated here because it is part of the method. The site itself is static.',
   s6: de ? '6. Änderungsprotokoll' : '6. Change log',
   s6items: de
-    ? ['v1 — Erstfassung: Regel P1120 ≥ 25 seit 2026-01-01, 18 Sprachen, Sockel+log-linearer Fit, zwei Achsen (Zerfall, Ungleichheit).']
-    : ['v1 — first edition: rule P1120 ≥ 25 since 2026-01-01, 18 languages, baseline + log-linear fit, two axes (decay, inequality).'],
+    ? [
+        'v1 — Erstfassung: Regel P1120 ≥ 25 seit 2026-01-01, 18 Sprachen, Sockel+log-linearer Fit.',
+        'v2 (2026-06) — entschärft: „Aufrufe je Todesopfer" / Ungleichheits-Achse und die R²-Anzeige entfernt. Gemessen wird das Vergessen, nicht die Opfer.',
+      ]
+    : [
+        'v1 — first edition: rule P1120 ≥ 25 since 2026-01-01, 18 languages, baseline + log-linear fit.',
+        'v2 (2026-06) — softened: removed „views per death" / the inequality axis and the R² display. What is measured is the forgetting, not the victims.',
+      ],
   toWork: de ? 'Zum Werk' : 'To the work',
 }
 ---

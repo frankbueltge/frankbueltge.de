@@ -1,9 +1,11 @@
 ---
 // Werk 3 „Halbwertszeit" — Eine Zahl + chronologisches Register. Statisch aus register.json.
+// Bewusst entschärft (2026-06): keine „Aufrufe je Todesopfer"-Wertung, kein R² in der Anzeige —
+// gemessen wird UNSER Vergessen, nicht die Opfer. Die Totenzahl steht als nüchterner Kontext.
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import type { Locale } from '@/lib/site'
 import type { HwEvent, HwRegister } from '@/lib/halbwertszeit/types'
-import { SPARK_H, SPARK_W, sparkPath, STRIP_H, STRIP_W, attentionStrip, halflifeMarker } from '@/lib/halbwertszeit/svg'
+import { SPARK_H, SPARK_W, sparkPath, halflifeMarker } from '@/lib/halbwertszeit/svg'
 import registerJson from '@/data/halbwertszeit/register.json'
 
 interface Props { locale: Locale }
@@ -14,26 +16,12 @@ const de = locale === 'de'
 const reg = registerJson as unknown as HwRegister
 const nf = new Intl.NumberFormat(de ? 'de-DE' : 'en-GB', { maximumFractionDigits: 1 })
 const ni = new Intl.NumberFormat(de ? 'de-DE' : 'en-GB', { maximumFractionDigits: 0 })
-const nf2 = new Intl.NumberFormat(de ? 'de-DE' : 'en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 const dateLong = (iso: string) =>
   new Intl.DateTimeFormat(de ? 'de-DE' : 'en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })
     .format(new Date(`${iso}T00:00:00Z`))
 
 const events = [...reg.events].sort((a, b) => b.date.localeCompare(a.date))
 const label = (e: HwEvent) => (de ? e.label_de : e.label_en)
-
-// Ungleichheits-Achse: Spreizung der Aufmerksamkeit je Todesopfer (nur Ereignisse mit Peak).
-const withAttention = events.filter((e) => e.peak > 0 && e.deaths > 0)
-const hasSpread = withAttention.length >= 2
-const maxE = hasSpread
-  ? withAttention.reduce((a, b) => (a.views_per_death > b.views_per_death ? a : b))
-  : null
-const minE = hasSpread
-  ? withAttention.reduce((a, b) => (a.views_per_death < b.views_per_death ? a : b))
-  : null
-const spread = hasSpread ? Math.round(maxE!.views_per_death / Math.max(0.1, minE!.views_per_death)) : 0
-const strip = attentionStrip(withAttention.map((e) => ({ vpd: e.views_per_death, label: label(e) })))
-const excludedCount = events.filter((e) => e.deaths > 0 && e.views_per_death <= 0).length
 
 const txt = {
   headline: de
@@ -43,32 +31,24 @@ const txt = {
   constants: de
     ? 'Cäsium-137: 30,1 Jahre · Mikroplastik: ~450 Jahre · CO₂ in der Atmosphäre: Jahrhunderte'
     : 'Caesium-137: 30.1 years · microplastics: ~450 years · atmospheric CO₂: centuries',
-  unequalH: de ? 'Die Ungleichheit der Anteilnahme' : 'The inequality of attention',
-  unequal: !hasSpread ? '' : de
-    ? `Die Aufmerksamkeit je Todesopfer spannt derzeit den Faktor ${ni.format(spread)} auf — von ${ni.format(maxE!.views_per_death)} Aufrufen je Opfer (${label(maxE!)}) bis ${ni.format(minE!.views_per_death)} (${label(minE!)}).`
-    : `Attention per death currently spans a factor of ${ni.format(spread)} — from ${ni.format(maxE!.views_per_death)} views per victim (${label(maxE!)}) down to ${ni.format(minE!.views_per_death)} (${label(minE!)}).`,
+  intro: de
+    ? 'Nicht die Toten werden hier gewogen, sondern wie schnell die öffentliche Aufmerksamkeit für sie abklingt — gemessen am Abfall der Wikipedia-Aufrufe.'
+    : 'What is weighed here is not the dead, but how quickly public attention to them fades — measured by the decline of Wikipedia views.',
   registerH: de ? 'Register' : 'Register',
   ruleNote: de
     ? `Aufgenommen wird jedes Ereignis, dem Wikidata ≥ ${reg.rule.deaths_min} Todesopfer zuschreibt, seit ${dateLong(reg.rule.since)}. Niemand wählt aus. Sortierung chronologisch — nie nach Halbwertszeit.`
     : `Included is every event to which Wikidata attributes ≥ ${reg.rule.deaths_min} deaths, since ${dateLong(reg.rule.since)}. Nobody selects. Ordered chronologically — never by half-life.`,
   deaths: de ? 'Tote' : 'deaths',
-  perDeath: de ? 'Aufrufe je Todesopfer' : 'views per death',
   laeuft: de ? 'Messung läuft' : 'measurement running',
   nichtMessbar: de ? 'keine messbare Anteilnahme' : 'no measurable attention',
   hwz: de ? 'Halbwertszeit' : 'half-life',
   dataAsOf: de ? 'Messstand' : 'Measured as of',
   method: de ? 'Methodenblatt' : 'Method sheet',
-  axisNote: de
-    ? 'Logarithmische Achse: Aufrufe je Todesopfer, ein Strich je Ereignis.'
-    : 'Logarithmic axis: views per death, one tick per event.',
-  excluded: de
-    ? `${ni.format(excludedCount)} Ereignisse ohne messbare Anteilnahme sind nicht abgebildet.`
-    : `${ni.format(excludedCount)} events with no measurable attention are not shown.`,
   curveLabel: de ? 'Zerfallskurve' : 'Decay curve',
   hwzPoint: de ? 'Halbwertszeit (Fit)' : 'Half-life (fit)',
   markNote: de
-    ? 'Punkt = Halbwertszeit aus dem Fit; die Kurve ist der Rohverlauf.'
-    : 'Dot = half-life from the fit; the curve is the raw course.',
+    ? 'Punkt = Halbwertszeit; die Kurve ist der Rohverlauf der Aufmerksamkeit.'
+    : 'Dot = half-life; the curve is the raw course of attention.',
 }
 const methodUrl = getRelativeLocaleUrl(locale, '/werke/halbwertszeit')
 ---
@@ -83,29 +63,8 @@ const methodUrl = getRelativeLocaleUrl(locale, '/werke/halbwertszeit')
       </span>
     </p>
     <p class="font-mono text-xs text-fg-faint">{txt.constants}</p>
+    <p class="mt-5 max-w-xl leading-relaxed text-fg-muted">{txt.intro}</p>
   </header>
-
-  {hasSpread && (
-    <section class="mb-12 rounded-[14px] border border-line bg-panel panel-raised p-6">
-      <h2 class="mb-2 font-semibold">{txt.unequalH}</h2>
-      <svg viewBox={`0 0 ${STRIP_W} ${STRIP_H}`} width="100%" class="my-4 text-fg-faint"
-        role="img" aria-label={txt.unequalH}>
-        <line x1="0" y1={STRIP_H - 16} x2={STRIP_W} y2={STRIP_H - 16}
-          stroke="currentColor" stroke-opacity="0.3" stroke-width="1" />
-        {strip.points.map((p) => (
-          <line x1={p.x.toFixed(1)} y1={STRIP_H - 22} x2={p.x.toFixed(1)} y2={STRIP_H - 10}
-            stroke="rgb(var(--rgb-accent))" stroke-width="1.3">
-            <title>{p.label}: {ni.format(p.vpd)} {txt.perDeath}</title>
-          </line>
-        ))}
-        <text x="0" y={STRIP_H - 2} font-size="9" fill="currentColor">{ni.format(strip.min)}</text>
-        <text x={STRIP_W} y={STRIP_H - 2} text-anchor="end" font-size="9" fill="currentColor">{ni.format(strip.max)}</text>
-      </svg>
-      <p class="mb-3 font-mono text-[11px] text-fg-faint">{txt.axisNote}</p>
-      <p class="leading-relaxed text-fg-muted">{txt.unequal}</p>
-      {excludedCount > 0 && <p class="mt-2 text-sm text-fg-faint">{txt.excluded}</p>}
-    </section>
-  )}
 
   <section>
     <h2 class="mb-1 font-semibold">{txt.registerH}</h2>
@@ -126,7 +85,7 @@ const methodUrl = getRelativeLocaleUrl(locale, '/werke/halbwertszeit')
               <svg width={SPARK_W} height={SPARK_H} viewBox={`0 0 ${SPARK_W} ${SPARK_H}`}
                 class="shrink-0 text-fg-faint" role="img"
                 aria-label={e.status === 'gemessen'
-                  ? `${txt.curveLabel}: ${txt.hwz} ${nf.format(e.halflife_days!)} ${txt.days}, R² ${nf2.format(e.r2!)}`
+                  ? `${txt.curveLabel}: ${txt.hwz} ${nf.format(e.halflife_days!)} ${txt.days}`
                   : txt.curveLabel}>
                 <path d={sparkPath(e.series)} fill="none" stroke="rgb(var(--rgb-accent))" stroke-width="1.4" />
                 {marker && (
@@ -142,12 +101,10 @@ const methodUrl = getRelativeLocaleUrl(locale, '/werke/halbwertszeit')
             )}
             <div class="text-sm">
               {e.status === 'gemessen' && (
-                <span>{txt.hwz}: <strong>{nf.format(e.halflife_days!)} {txt.days}</strong>
-                  <span class="text-fg-faint"> (R² {nf2.format(e.r2!)})</span></span>
+                <span>{txt.hwz}: <strong>{nf.format(e.halflife_days!)} {txt.days}</strong></span>
               )}
               {e.status === 'laeuft' && <span class="text-fg-muted">{txt.laeuft} …</span>}
               {e.status === 'nicht_messbar' && <span class="text-fg-muted">{txt.nichtMessbar}</span>}
-              <span class="block text-fg-faint">{ni.format(e.views_per_death)} {txt.perDeath}</span>
             </div>
           </div>
         </li>
