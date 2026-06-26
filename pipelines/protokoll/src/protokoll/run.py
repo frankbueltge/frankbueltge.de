@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import os
 import sys
+from dataclasses import replace
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -14,6 +15,7 @@ from protokoll.adapters.base import Context
 from protokoll.assemble import assemble
 from protokoll.github_commit import commit_file
 from protokoll.model import day_record_to_json
+from protokoll.verluste import build_verluste_entry
 
 USER_AGENT = "frankbueltge.de protokoll-pipeline (hello@frankbueltge.de)"
 
@@ -56,6 +58,8 @@ def main(argv: list[str] | None = None) -> int:
             bq_client_factory=_bq_factory_or_none(),
         )
         record = assemble(ALL_SPECS, ctx, date_iso)
+        # TOP „Verluste" als eigener Eintrag (Liste statt Skalar) — fehler-isoliert angehängt.
+        record = replace(record, entries=(*record.entries, build_verluste_entry(ctx)))
         payload = day_record_to_json(record)
         path = content_path(date_iso)
 

@@ -36,7 +36,7 @@ def test_assemble_ok_implausible_unavailable_and_stale():
     assert by_id["c"].value is None
     assert by_id["d"].status == "unavailable" and "stale" in by_id["d"].note
     assert record.date == "2026-06-12"
-    assert record.schema_version == "1" and record.pipeline_version == "0.1.0"
+    assert record.schema_version == "2" and record.pipeline_version == "0.1.0"
     assert len(record.entries) == 4  # Reihenfolge = Spec-Reihenfolge
     assert isinstance(record.entries, tuple)  # Archiv ist unveränderlich
 
