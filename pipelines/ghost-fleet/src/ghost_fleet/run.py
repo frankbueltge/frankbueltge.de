@@ -10,7 +10,7 @@ from pathlib import Path
 
 import httpx
 
-from ghost_fleet import build, select
+from ghost_fleet import build, eez, select
 from ghost_fleet.gfw import fetch_gaps
 
 USER_AGENT = "frankbueltge.de ghost-fleet-pipeline (hello@frankbueltge.de)"
@@ -35,6 +35,8 @@ def run(*, client: httpx.Client, token: str, today: date) -> dict:
     named = [e for e in filtered if e["vessel"]["name"] != "—"]
     pick = select.rank(named)
     top = sorted(named, key=lambda e: (-select.salience(e), e["id"]))[:TOP_N]
+    for e in top:  # resolve EEZ ids → country names for the displayed cases
+        e["regions"]["eez_name"] = eez.name_for(e["regions"]["eez"])
     window = {
         "from": start, "to": end, "ended_within_days": select.WINDOW_DAYS,
         "examined": len(filtered), "capped": len(raw) >= CAP,

@@ -22,6 +22,7 @@ export function regionLabel(r: GfRegions, locale: Locale): string {
   const de = locale === 'de'
   if (r.no_take) return de ? 'No-Take-Schutzzone' : 'no-take reserve'
   if (r.mpa) return de ? 'Meeresschutzgebiet' : 'marine protected area'
+  if (r.eez_name) return r.eez_name
   if (r.eez.length) return de ? 'nationale Hoheitsgewässer (EEZ)' : 'national waters (EEZ)'
   if (r.high_seas) return de ? 'Hohe See' : 'high seas'
   return de ? 'ohne Zuordnung' : 'unattributed'

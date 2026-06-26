@@ -7,6 +7,7 @@ export interface GfRegions {
   mpa: boolean
   no_take: boolean
   eez: string[]
+  eez_name?: string | null
   high_seas: boolean
 }
 
