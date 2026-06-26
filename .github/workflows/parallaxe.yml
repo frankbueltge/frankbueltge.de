@@ -2,12 +2,11 @@ name: Parallaxe nightly
 
 # Werk „Parallaxe — Was jede Sprache verschweigt": je Streitthema ein Gemini-Aufruf
 # (AI-Studio-API, kein GCP/Vertex), committet src/data/parallaxe/register.json (→ Rebuild).
-# Ersetzt den Cloud-Run-Job. Secret: GEMINI_API_KEY (kostenloser AI-Studio-Key).
-#
-# NOCH OHNE schedule: erst nach gesetztem Key + erfolgreichem Test-Lauf wird der Cron
-# (30 5 * * * UTC) ergänzt und der Cloud-Run-Scheduler parallaxe-nightly pausiert (Cutover).
+# Ersetzt den Cloud-Run-Job parallaxe-nightly. Secret: GEMINI_API_KEY (kostenloser AI-Studio-Key).
 
 on:
+  schedule:
+    - cron: '30 5 * * *' # täglich 05:30 UTC (wie zuvor der Cloud-Run-Job)
   workflow_dispatch: {}
 
 permissions:
