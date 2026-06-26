@@ -56,6 +56,10 @@ export const OG_PAGES: Record<string, { title: string; description: string }> = 
     title: 'The Round Number',
     description: 'Ein Test, der angeblich gefälschte Zahlen erkennt — und wie oft er sich irrt',
   },
+  'ghost-fleet': {
+    title: 'The Ghost Fleet',
+    description: 'Schiffe, die ihren Transponder bewusst abschalten, um zu verschwinden',
+  },
 }
 
 /** Pfad (mit/ohne /en, mit/ohne Trailing-Slash) → OG-Slug; Default 'home'. */
@@ -75,5 +79,6 @@ export function ogSlug(pathname: string): keyof typeof OG_PAGES {
   if (p.startsWith('/pattern') || p.startsWith('/werke/pattern')) return 'pattern'
   if (p.startsWith('/redaction') || p.startsWith('/werke/redaction')) return 'redaction'
   if (p.startsWith('/round-number') || p.startsWith('/werke/round-number')) return 'round-number'
+  if (p.startsWith('/ghost-fleet') || p.startsWith('/werke/ghost-fleet')) return 'ghost-fleet'
   return 'home'
 }

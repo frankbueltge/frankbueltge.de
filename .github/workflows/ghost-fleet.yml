@@ -1,0 +1,50 @@
+name: Ghost Fleet nightly
+
+# Gegenmessung-Instrument „The Ghost Fleet": zählt absichtliche AIS-Abschaltungen
+# (GFW gap-events) und committet den Tagesbefund zurück (→ Rebuild). Erstes Instrument
+# mit Laufzeit-API — braucht das Secret GFW_TOKEN.
+
+on:
+  schedule:
+    - cron: '0 4 * * *' # täglich 04:00 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ghost-fleet
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Pipeline-Paket installieren
+        run: pip install --no-cache-dir ./pipelines/ghost-fleet
+      - name: Ghost Fleet laufen (schreibt, committet nicht)
+        env:
+          GFW_TOKEN: ${{ secrets.GFW_TOKEN }}
+        run: python -m ghost_fleet.run --repo-root .
+      - name: Committen
+        run: |
+          git config user.name "Gegenmessung"
+          git config user.email "gegenmessung@frankbueltge.de"
+          git add src/data/ghost-fleet 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "Keine Änderungen."; exit 0
+          fi
+          git commit -m "ghost-fleet: Funkstille vom $(date -u +%F)"
+          for i in 1 2 3 4 5; do
+            if git pull --rebase --autostash origin main && git push origin HEAD:main; then
+              echo "Gepusht."; exit 0
+            fi
+            echo "Push-Versuch $i fehlgeschlagen, neu …"; sleep 5
+          done
+          echo "::error::Push nach 5 Versuchen fehlgeschlagen"; exit 1

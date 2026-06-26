@@ -1,0 +1,9 @@
+---
+import Page from '@/layouts/Page.astro'
+import GhostFleetPage from '@/components/pages/GhostFleetPage.astro'
+import { t } from '@/i18n/ui'
+const locale = 'de' as const
+---
+<Page title={`${t(locale, 'gf.title')} | Frank Bültge`} description={t(locale, 'gf.sub')}>
+  <GhostFleetPage {locale} />
+</Page>
