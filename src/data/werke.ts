@@ -96,6 +96,20 @@ export const WERKE: Werk[] = [
     },
   },
   {
+    id: 'ghost-fleet',
+    title: 'The Ghost Fleet',
+    subtitle: {
+      de: 'Schiffe, die ihren Transponder bewusst abschalten, um zu verschwinden',
+      en: 'Ships that switch off their transponder on purpose to vanish',
+    },
+    status: 'live',
+    href: '/ghost-fleet',
+    description: {
+      de: 'Aus der Linie „Gegenmessung". Das AIS-Bild der Meere wirkt lückenlos — ist es aber nicht: Schiffe schalten ihren Transponder bewusst ab, um zu verschwinden. Jeden Tag zählt eine Maschine die absichtliche Funkstille und hebt den markantesten Fall hervor — ein benanntes Schiff, das wochenlang in fremden Hoheitsgewässern dunkel wurde. Kein Illegalitäts-Vorwurf, nur die gezählte Unsichtbarkeit.',
+      en: 'From the „Counter-Measurement" line. The AIS picture of the seas looks complete — but it is not: ships switch off their transponder on purpose to vanish. Each day a machine counts the deliberate radio silence and surfaces the most striking case — a named vessel that went dark for weeks inside foreign national waters. No claim of illegality, only the counted invisibility.',
+    },
+  },
+  {
     id: 'pattern',
     title: 'Patterns',
     subtitle: {
