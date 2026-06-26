@@ -5,7 +5,7 @@ import { getLabPosts } from '@/lib/lab'
 import { WERKE } from '@/data/werke'
 import type { Locale } from '@/lib/site'
 
-const locale = (Astro.currentLocale ?? 'de') as Locale
+const locale = (Astro.currentLocale ?? 'en') as Locale
 const posts = await getLabPosts(locale)
 const fmt = (iso: string) =>
   new Date(iso).toLocaleDateString(locale === 'de' ? 'de-DE' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' })

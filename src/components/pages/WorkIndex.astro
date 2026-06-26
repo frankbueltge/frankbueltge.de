@@ -4,7 +4,7 @@ import { t } from '@/i18n/ui'
 import { getProjects } from '@/data/projects'
 import type { Locale } from '@/lib/site'
 
-const locale = (Astro.currentLocale ?? 'de') as Locale
+const locale = (Astro.currentLocale ?? 'en') as Locale
 const projects = getProjects()
 ---
 

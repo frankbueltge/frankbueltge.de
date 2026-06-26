@@ -6,7 +6,7 @@ export type LabItem = { entry: CollectionEntry<'lab'>; slug: string; lang: Local
 /** entry.id is "<slug>/<lang>" (from the folder structure). */
 function parse(entry: CollectionEntry<'lab'>): LabItem {
   const [slug, lang] = entry.id.split('/')
-  return { entry, slug, lang: (lang as Locale) ?? 'de' }
+  return { entry, slug, lang: (lang as Locale) ?? 'en' }
 }
 
 export async function getLabPosts(locale: Locale): Promise<LabItem[]> {

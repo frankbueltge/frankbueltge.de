@@ -49,7 +49,7 @@ const generated = snapshot.generated_at
   import type { SatEntry } from '@/lib/ueberflug/types'
 
   const root = document.querySelector<HTMLElement>('[data-ueberflug]')!
-  const locale = (root.dataset.locale ?? 'de') as 'de' | 'en'
+  const locale = (root.dataset.locale ?? 'en') as 'de' | 'en'
   const de = locale === 'de'
   const $ = <T extends HTMLElement>(sel: string) => root.querySelector<T>(sel)!
 

@@ -9,7 +9,7 @@ import ProtokollTeaser from '@/components/ProtokollTeaser.astro'
 import WerkeStrip from '@/components/WerkeStrip.astro'
 import { projects } from '@/data/projects'
 
-const locale = (Astro.currentLocale ?? 'de') as Locale
+const locale = (Astro.currentLocale ?? 'en') as Locale
 
 const featured = [...projects].sort((a, b) => a.order - b.order)
 ---
