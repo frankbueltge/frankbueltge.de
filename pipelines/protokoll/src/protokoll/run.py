@@ -20,19 +20,6 @@ from protokoll.verluste import build_verluste_entry
 USER_AGENT = "frankbueltge.de protokoll-pipeline (hello@frankbueltge.de)"
 
 
-def _default_bq_factory():
-    from google.cloud import bigquery
-    return bigquery.Client()
-
-
-def _bq_factory_or_none():
-    try:
-        import google.cloud.bigquery  # noqa: F401
-        return _default_bq_factory
-    except ImportError:
-        return None
-
-
 def content_path(date_iso: str) -> str:
     return f"src/content/protokoll/{date_iso[:4]}/{date_iso}.json"
 
@@ -55,7 +42,6 @@ def main(argv: list[str] | None = None) -> int:
             client=client,
             today=today,
             env=os.environ,
-            bq_client_factory=_bq_factory_or_none(),
         )
         record = assemble(ALL_SPECS, ctx, date_iso)
         # TOP „Verluste" als eigener Eintrag (Liste statt Skalar) — fehler-isoliert angehängt.

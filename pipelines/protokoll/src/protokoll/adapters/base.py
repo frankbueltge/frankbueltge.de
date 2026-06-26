@@ -4,7 +4,6 @@ from __future__ import annotations
 from collections.abc import Callable, Mapping
 from dataclasses import dataclass
 from datetime import date
-from typing import Any
 
 import httpx
 
@@ -16,7 +15,6 @@ class Context:
     client: httpx.Client
     today: date
     env: Mapping[str, str]
-    bq_client_factory: Callable[[], Any] | None = None
 
 
 @dataclass(frozen=True)
