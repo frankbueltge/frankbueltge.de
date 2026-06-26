@@ -1,10 +1,18 @@
-/** Frontend-Typen, spiegeln das kanonische Pipeline-Schema (schema_version 1). */
+/** Frontend-Typen, spiegeln das kanonische Pipeline-Schema (schema_version 2). */
 export type ProtokollStatus = 'ok' | 'unavailable' | 'implausible'
 export type ComparisonLabel = 'prev_day' | 'prev_month' | 'prev_year_day' | 'prev_observation_day'
 
 export interface ProtokollComparison {
   label: ComparisonLabel
   value: number
+}
+
+/** Ein dokumentiertes Großereignis mit Todesopfern (nur TOP „Verluste"). */
+export interface LossEvent {
+  date: string
+  label_de: string
+  label_en: string
+  deaths: number
 }
 
 export interface ProtokollEntry {
@@ -20,6 +28,7 @@ export interface ProtokollEntry {
   label: string | null
   record: boolean
   note: string | null
+  events?: LossEvent[] | null
 }
 
 export interface ProtokollDay {

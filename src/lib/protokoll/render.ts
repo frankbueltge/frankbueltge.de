@@ -40,6 +40,11 @@ const STR = {
       monthly: 'monatliche Erhebung', periodic: 'periodische Erhebung',
       computed: 'Schätzung/Extrapolation',
     } as Record<string, string>,
+    lossesIntro: 'In den vergangenen sieben Tagen wurden {n} Großereignisse mit Todesopfern verzeichnet:',
+    lossesIntroOne: 'In den vergangenen sieben Tagen wurde ein Großereignis mit Todesopfern verzeichnet:',
+    lossesNone: 'In den vergangenen sieben Tagen wurde kein Großereignis mit Todesopfern (≥ 25) verzeichnet.',
+    lossesClosing: 'Zu Protokoll genommen.',
+    fatalities: 'Todesopfer',
   },
   en: {
     minutesOf: 'Minutes of the session of {date}.',
@@ -66,6 +71,11 @@ const STR = {
       monthly: 'monthly survey', periodic: 'periodic survey',
       computed: 'estimate/extrapolation',
     } as Record<string, string>,
+    lossesIntro: 'In the past seven days, {n} major events with fatalities are recorded:',
+    lossesIntroOne: 'In the past seven days, one major event with fatalities is recorded:',
+    lossesNone: 'In the past seven days, no major event with fatalities (≥ 25) was recorded.',
+    lossesClosing: 'Entered into the record.',
+    fatalities: 'fatalities',
   },
 } as const
 
@@ -149,6 +159,36 @@ function renderTop(top: AgendaTop, byId: Map<string, ProtokollEntry>, locale: Lo
   }
 }
 
+function fmtCount(n: number, locale: Locale): string {
+  return new Intl.NumberFormat(NUM_LOCALE[locale], { maximumFractionDigits: 0 }).format(n)
+}
+
+/** TOP „Verluste": Liste statt Skalar, Schlusszeile „Zu Protokoll genommen." — bezeugt, nicht
+ *  vertagt. Fehlt der Eintrag (Altbestand vor Schema 2) oder ist die Quelle aus, entfällt der TOP. */
+function renderVerluste(top: AgendaTop, e: ProtokollEntry | undefined, locale: Locale): RenderedTop | null {
+  if (!e || e.status !== 'ok') return null
+  const s = STR[locale]
+  const events = e.events ?? []
+  const lines: string[] = []
+  if (events.length === 0) {
+    lines.push(s.lossesNone)
+  } else {
+    lines.push(
+      (events.length === 1 ? s.lossesIntroOne : s.lossesIntro).replace('{n}', fmtCount(events.length, locale)),
+    )
+    for (const ev of events) {
+      const label = locale === 'de' ? ev.label_de : ev.label_en
+      lines.push(`— ${fmtDateLong(ev.date, locale)}: ${label}, ${fmtCount(ev.deaths, locale)} ${s.fatalities}.`)
+    }
+  }
+  return {
+    heading: `${s.top} ${top.n} — ${top.title[locale]}.`,
+    lines,
+    sources: [sourceLine(e, locale)],
+    closing: s.lossesClosing,
+  }
+}
+
 export function renderDay(day: ProtokollDay, locale: Locale): RenderedDay {
   const s = STR[locale]
   const byId = new Map(day.entries.map((e) => [e.top_id, e]))
@@ -163,7 +203,13 @@ export function renderDay(day: ProtokollDay, locale: Locale): RenderedDay {
   ]
   return {
     kopf,
-    tops: AGENDA.map((top) => renderTop(top, byId, locale)),
+    tops: AGENDA.flatMap((top) => {
+      if (top.entries[0]?.id === 'verluste') {
+        const r = renderVerluste(top, byId.get('verluste'), locale)
+        return r ? [r] : []
+      }
+      return [renderTop(top, byId, locale)]
+    }),
     schluss: [s.notClosed, s.next],
     meta: `Registerfassung ${TEMPLATE_VERSION} · Pipeline ${day.pipeline_version} · Schema ${day.schema_version}`,
   }

@@ -8,7 +8,7 @@ function entry(partial: Partial<ProtokollEntry>): ProtokollEntry {
   return {
     top_id: 'co2', status: 'ok', unit: 'ppm', cadence: 'daily', source: SRC,
     retrieved_at: '2026-06-12T03:30:00Z', value: null, as_of: null,
-    comparison: null, label: null, record: false, note: null, ...partial,
+    comparison: null, label: null, record: false, note: null, events: null, ...partial,
   }
 }
 
@@ -29,6 +29,12 @@ const DAY: ProtokollDay = {
             comparison: { label: 'prev_observation_day', value: 1.92 } }),
     entry({ top_id: 'attention', unit: 'Aufrufe', value: 812_345, as_of: '2026-06-11',
             label: 'Deep sea mining' }),
+    entry({ top_id: 'verluste', unit: 'Todesopfer', as_of: '2026-06-12',
+            source: { name: 'Wikidata (P1120, Anzahl der Todesopfer)', url: 'https://www.wikidata.org/', license: 'CC0' },
+            events: [
+              { date: '2026-06-10', label_de: 'Zugunglück bei Quetta', label_en: 'Quetta train derailment', deaths: 67 },
+              { date: '2026-06-08', label_de: 'Brand in einer Feuerwerksfabrik', label_en: 'Fireworks factory fire', deaths: 37 },
+            ] }),
   ],
 }
 
@@ -91,9 +97,20 @@ describe('renderDay de', () => {
     )
   })
 
+  it('TOP 13 Verluste: dokumentiert, nicht gewertet — „Zu Protokoll genommen.“', () => {
+    expect(top(13).heading).toBe('TOP 13 — Verluste.')
+    expect(top(13).lines).toEqual([
+      'In den vergangenen sieben Tagen wurden 2 Großereignisse mit Todesopfern verzeichnet:',
+      '— 10. Juni 2026: Zugunglück bei Quetta, 67 Todesopfer.',
+      '— 8. Juni 2026: Brand in einer Feuerwerksfabrik, 37 Todesopfer.',
+    ])
+    expect(top(13).closing).toBe('Zu Protokoll genommen.')
+    expect(top(13).sources[0]).toContain('Quelle: Wikidata (P1120, Anzahl der Todesopfer),')
+  })
+
   it('Schluss + Meta', () => {
     expect(r.schluss).toEqual(['Die Sitzung wurde nicht geschlossen.', 'Nächste Sitzung: morgen.'])
-    expect(r.meta).toBe('Registerfassung 1.0.0 · Pipeline 0.1.0 · Schema 1')
+    expect(r.meta).toBe('Registerfassung 1.1.0 · Pipeline 0.1.0 · Schema 1')
   })
 })
 
@@ -114,5 +131,45 @@ describe('renderDay en', () => {
       'Value outside the plausibility corridor — finding under reserve: 8,000 USD/barrel.',
     ])
     expect(r.schluss).toEqual(['The session was not closed.', 'Next session: tomorrow.'])
+  })
+
+  it('Item 13 Losses: register, witnessed not adjourned', () => {
+    const v = r.tops[12]
+    expect(v.heading).toBe('Item 13 — Losses.')
+    expect(v.lines).toEqual([
+      'In the past seven days, 2 major events with fatalities are recorded:',
+      '— 10 June 2026: Quetta train derailment, 67 fatalities.',
+      '— 8 June 2026: Fireworks factory fire, 37 fatalities.',
+    ])
+    expect(v.closing).toBe('Entered into the record.')
+  })
+})
+
+describe('renderDay Verluste — Sonderfälle', () => {
+  const base = {
+    date: '2026-06-12', generated_at: '2026-06-12T03:30:00Z',
+    schema_version: '2', pipeline_version: '0.1.0',
+  }
+  const vTop = (day: ProtokollDay, locale: 'de' | 'en') =>
+    renderDay(day, locale).tops.find((t) => t.heading.endsWith('Verluste.') || t.heading.endsWith('Losses.'))
+
+  it('keine Ereignisse → ehrliche Leermeldung', () => {
+    const day = { ...base, entries: [entry({ top_id: 'verluste', unit: 'Todesopfer', as_of: '2026-06-12', events: [] })] } as ProtokollDay
+    expect(vTop(day, 'de')!.lines).toEqual([
+      'In den vergangenen sieben Tagen wurde kein Großereignis mit Todesopfern (≥ 25) verzeichnet.',
+    ])
+  })
+
+  it('ein Ereignis → Singular', () => {
+    const day = { ...base, entries: [entry({ top_id: 'verluste', unit: 'Todesopfer', as_of: '2026-06-12',
+      events: [{ date: '2026-06-11', label_de: 'Grubenunglück', label_en: 'Mine disaster', deaths: 47 }] })] } as ProtokollDay
+    expect(vTop(day, 'de')!.lines[0]).toBe('In den vergangenen sieben Tagen wurde ein Großereignis mit Todesopfern verzeichnet:')
+  })
+
+  it('fehlender Eintrag (Altbestand) oder Quelle aus → TOP entfällt', () => {
+    const old = { ...base, schema_version: '1', entries: [entry({ top_id: 'co2', value: 1 })] } as ProtokollDay
+    expect(vTop(old, 'de')).toBeUndefined()
+    const down = { ...base, entries: [entry({ top_id: 'verluste', status: 'unavailable', unit: 'Todesopfer', note: 'HTTP 503' })] } as ProtokollDay
+    expect(vTop(down, 'de')).toBeUndefined()
   })
 })

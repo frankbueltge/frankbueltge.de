@@ -1,7 +1,7 @@
 import type { Locale } from '@/lib/site'
 
 /** Registerfassung: bei jeder Template-Änderung erhöhen (steht auf jeder Seite). */
-export const TEMPLATE_VERSION = '1.0.0'
+export const TEMPLATE_VERSION = '1.1.0'
 
 type L10n = Record<Locale, string>
 
@@ -80,5 +80,11 @@ export const AGENDA: AgendaTop[] = [
     { id: 'attention', phrase: {
       de: 'Gegenstand der größten Aufmerksamkeit (englischsprachige Wikipedia): „{label}“ — {value} Aufrufe.',
       en: 'Object of greatest attention (English-language Wikipedia): "{label}" — {value} views.' } },
+  ] },
+  // TOP 13 wird listengerendert (renderVerluste), nicht über das phrase-Template — die
+  // phrase bleibt leer und ungenutzt. Schlusszeile bewusst „Zu Protokoll genommen.",
+  // nicht „vertagt": dieser eine Punkt wird bezeugt.
+  { n: 13, title: { de: 'Verluste', en: 'Losses' }, entries: [
+    { id: 'verluste', phrase: { de: '', en: '' } },
   ] },
 ]

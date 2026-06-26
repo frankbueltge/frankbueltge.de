@@ -5,7 +5,7 @@ import json
 from dataclasses import asdict, dataclass
 from typing import Literal
 
-SCHEMA_VERSION = "1"
+SCHEMA_VERSION = "2"  # v2: TOP „Verluste" — Entry.events (Liste dokumentierter Großereignisse)
 
 Status = Literal["ok", "unavailable", "implausible"]
 Cadence = Literal["daily", "realtime", "monthly", "periodic", "computed"]
@@ -35,6 +35,15 @@ class Measurement:
 
 
 @dataclass(frozen=True)
+class LossEvent:
+    """Ein Großereignis mit Todesopfern — fürs Protokoll dokumentiert, nie gewertet."""
+    date: str
+    label_de: str
+    label_en: str
+    deaths: int
+
+
+@dataclass(frozen=True)
 class Entry:
     top_id: str
     status: Status
@@ -48,6 +57,7 @@ class Entry:
     label: str | None = None
     record: bool = False
     note: str | None = None
+    events: tuple[LossEvent, ...] | None = None  # nur TOP „Verluste"
 
 
 @dataclass(frozen=True)
