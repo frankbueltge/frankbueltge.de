@@ -8,8 +8,8 @@ from protokoll.parallaxe.extract_llm import ExtractionError, extract_omissions
 
 
 @pytest.fixture(autouse=True)
-def _no_token_no_sleep(monkeypatch):
-    monkeypatch.setattr(ex, "_access_token", lambda refresh=False: "fake-token")
+def _key_and_no_sleep(monkeypatch):
+    monkeypatch.setenv("GEMINI_API_KEY", "test-key")
     monkeypatch.setattr(ex.time, "sleep", lambda s: None)
 
 
@@ -43,9 +43,20 @@ def test_extract_omissions_returns_parsed_dict():
     assert "[ru] text-b" in body_text
     assert sent["body"]["generationConfig"]["temperature"] == 0
     assert sent["body"]["generationConfig"]["responseMimeType"] == "application/json"
-    assert sent["headers"]["authorization"] == "Bearer fake-token"
-    assert "x-goog-user-project" in sent["headers"]
+    # AI-Studio-Auth per API-Key-Header (kein Bearer-Token, kein x-goog-user-project, kein GCP).
+    assert sent["headers"]["x-goog-api-key"] == "test-key"
+    assert "authorization" not in sent["headers"]
+    assert "generativelanguage.googleapis.com" in sent["url"]
     assert "gemini-2.5-flash" in sent["url"]
+
+
+def test_extract_omissions_raises_without_api_key(monkeypatch):
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+    monkeypatch.delenv("GOOGLE_API_KEY", raising=False)
+    client = httpx.Client(transport=httpx.MockTransport(
+        lambda req: _gemini_response({"lemma": {}, "claims": []})))
+    with pytest.raises(ExtractionError):
+        extract_omissions({"en": "text"}, client=client)
 
 
 def test_extract_omissions_raises_when_keys_missing():
@@ -69,30 +80,3 @@ def test_extract_omissions_retries_on_429_then_succeeds():
     out = extract_omissions({"en": "text"}, client=client)
     assert out == parsed
     assert state["calls"] == 2
-
-
-def test_fetch_token_prefers_metadata_server(monkeypatch):
-    """In Cloud Run liefert der Metadaten-Server den Token — die gcloud-CLI wird nicht berührt
-    (sie existiert im Slim-Image nicht). Genau dieser Pfad fehlte und ließ den Nacht-Job scheitern."""
-    captured = {}
-
-    def fake_get(url, headers=None, timeout=None):
-        captured["url"] = url
-        captured["headers"] = headers or {}
-        return httpx.Response(200, json={"access_token": "meta-token", "expires_in": 3599})
-
-    monkeypatch.setattr(ex.httpx, "get", fake_get)
-    monkeypatch.setattr(ex.subprocess, "check_output",
-                        lambda *a, **k: pytest.fail("gcloud darf nicht aufgerufen werden"))
-    assert ex._fetch_token() == "meta-token"
-    assert captured["headers"]["Metadata-Flavor"] == "Google"
-
-
-def test_fetch_token_falls_back_to_gcloud(monkeypatch):
-    """Lokal ist kein Metadaten-Server erreichbar — dann greift die gcloud-CLI."""
-    def fake_get(*a, **k):
-        raise httpx.ConnectError("kein Metadaten-Server")
-
-    monkeypatch.setattr(ex.httpx, "get", fake_get)
-    monkeypatch.setattr(ex.subprocess, "check_output", lambda *a, **k: b"cli-token\n")
-    assert ex._fetch_token() == "cli-token"
