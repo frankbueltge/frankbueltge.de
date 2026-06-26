@@ -12,7 +12,7 @@ _NAME_CONFIDENCE = re.compile(r"\s+\d{1,3}%$")  # GFW appends a match score, e.g
 def _clean_name(name: str) -> str:
     return _NAME_CONFIDENCE.sub("", name).strip() or "—"
 
-GFW_VESSEL = "https://globalfishingwatch.org/vessel/{id}"
+GFW_VESSEL = "https://globalfishingwatch.org/vessel-viewer/{id}"
 SOURCE = {
     "name": "Global Fishing Watch — Events API (AIS gaps)",
     "url": "https://globalfishingwatch.org/our-apis/",
