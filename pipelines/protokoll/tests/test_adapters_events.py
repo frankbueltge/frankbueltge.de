@@ -86,6 +86,6 @@ def test_attention_all_meta_pages_raises():
         {"article": "Main_Page", "views": 5_000_000},
         {"article": "Special:Search", "views": 1_200_000},
     ]}]})
-    with pytest.raises(ValueError):
+    with pytest.raises(SourceUnavailable):  # alle Tage nur Meta-Seiten → „Feststellung entfällt"
         attention.measure(ctx_for(lambda req: httpx.Response(
             200, text=body, headers={"content-type": "application/json"})))
