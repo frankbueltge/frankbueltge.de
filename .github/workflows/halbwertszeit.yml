@@ -25,7 +25,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Pipeline-Paket installieren (Basis: httpx)
+      - name: "Pipeline-Paket installieren (Basis: httpx)"
         run: pip install --no-cache-dir ./pipelines/protokoll
       - name: Half-Life laufen (schreibt, committet nicht)
         run: python -m protokoll.halbwertszeit.run --dry-run --repo-root .
