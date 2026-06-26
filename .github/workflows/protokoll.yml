@@ -1,0 +1,59 @@
+name: Protokoll nightly
+
+# „The Protocol" — das Hauptprotokoll (die Tagesordnung der Welt), inkl. TOP „Verluste".
+# Schreibt src/content/protokoll/<jahr>/<datum>.json und committet zurück (→ Rebuild).
+# Ersetzt den früheren Cloud-Run-Job (gleiches 03:30-UTC-Fenster).
+#
+# Secrets (Settings → Secrets and variables → Actions):
+#   FIRMS_MAP_KEY — NASA FIRMS (TOP „fires"); fehlt er, entfällt nur dieser TOP
+#   EIA_API_KEY   — EIA Energie  (TOP „oil");   fehlt er, entfällt nur dieser TOP
+#
+# Bewusst OHNE GCP: Paket wird ohne [bq] installiert, daher entfällt der Konflikt-TOP
+# („Feststellung entfällt") — bis Schritt 2 ihn auf GDELT-Rohdateien (ohne GCP) umstellt.
+
+on:
+  schedule:
+    - cron: '30 3 * * *' # täglich 03:30 UTC (wie zuvor der Cloud-Run-Job)
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: protokoll
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # volle History → git pull --rebase im Commit-Schritt funktioniert
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Pipeline-Paket installieren (ohne [bq] → kein GCP)
+        run: pip install --no-cache-dir ./pipelines/protokoll
+      - name: Protokoll laufen (schreibt, committet nicht)
+        env:
+          FIRMS_MAP_KEY: ${{ secrets.FIRMS_MAP_KEY }}
+          EIA_API_KEY: ${{ secrets.EIA_API_KEY }}
+        run: python -m protokoll.run --dry-run --repo-root .
+      - name: Committen
+        run: |
+          git config user.name "Protokollführung"
+          git config user.email "protokoll@frankbueltge.de"
+          git add src/content/protokoll 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "Keine Änderungen."; exit 0
+          fi
+          git commit -m "protokoll: Sitzung vom $(date -u +%F)"
+          # Gegen Push-Races (mehrere nächtliche Cron-Commits): rebasen + mehrfach versuchen.
+          for i in 1 2 3 4 5; do
+            if git pull --rebase --autostash origin main && git push origin HEAD:main; then
+              echo "Gepusht."; exit 0
+            fi
+            echo "Push-Versuch $i fehlgeschlagen, neu …"; sleep 5
+          done
+          echo "::error::Push nach 5 Versuchen fehlgeschlagen"; exit 1
