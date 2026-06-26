@@ -138,20 +138,6 @@ export const WERKE: Werk[] = [
     },
   },
   {
-    id: 'halbwertszeit',
-    title: 'Half-Life',
-    subtitle: {
-      de: 'Wie schnell die Aufmerksamkeit für Katastrophen abklingt',
-      en: 'How fast attention to disasters fades',
-    },
-    status: 'live',
-    href: '/halbwertszeit',
-    description: {
-      de: 'Für jedes Großereignis mit Todesopfern misst eine Pipeline, wie schnell die Aufmerksamkeit zerfällt — Halbwertszeit für Halbwertszeit, neben den Konstanten der Physik. Aufgenommen wird per veröffentlichter Regel; niemand wählt aus.',
-      en: 'For every major event with fatalities, a pipeline measures how quickly attention decays — half-life by half-life, next to the constants of physics. Intake follows a published rule; nobody selects.',
-    },
-  },
-  {
     id: 'parallaxe',
     title: 'Iceberg Theory',
     subtitle: {

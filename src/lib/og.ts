@@ -20,10 +20,6 @@ export const OG_PAGES: Record<string, { title: string; description: string }> = 
     title: 'The Protocol',
     description: 'Tägliche Kennzahlen aus zwölf offenen Quellen',
   },
-  halbwertszeit: {
-    title: 'Half-Life',
-    description: 'Wie schnell die Aufmerksamkeit für Katastrophen abklingt',
-  },
   parallax: {
     title: 'Iceberg Theory',
     description: 'Wie sich Wikipedia-Sprachversionen über umstrittene Themen unterscheiden',
@@ -70,7 +66,6 @@ export function ogSlug(pathname: string): keyof typeof OG_PAGES {
   if (p.startsWith('/ueber') || p.startsWith('/about')) return 'about'
   if (p.startsWith('/work') || p.startsWith('/projekte')) return 'projects'
   if (p.startsWith('/protokoll')) return 'protokoll'
-  if (p.startsWith('/halbwertszeit')) return 'halbwertszeit'
   if (p.startsWith('/parallaxe')) return 'parallax'
   if (p.startsWith('/praemie') || p.startsWith('/police') || p.startsWith('/werke/praemie')) return 'policy'
   if (p.startsWith('/consensus') || p.startsWith('/werke/consensus')) return 'consensus'

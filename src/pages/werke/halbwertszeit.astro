@@ -1,9 +1,0 @@
----
-import Page from '@/layouts/Page.astro'
-import MethodenblattHalbwertszeit from '@/components/pages/MethodenblattHalbwertszeit.astro'
-import { t } from '@/i18n/ui'
-const locale = 'en' as const
----
-<Page title={`${t(locale, 'prot.method')} — ${t(locale, 'hw.title')} | Frank Bültge`} description={t(locale, 'hw.sub')}>
-  <MethodenblattHalbwertszeit locale={locale} />
-</Page>
