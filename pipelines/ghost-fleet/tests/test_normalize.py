@@ -19,7 +19,7 @@ def test_normalize_full():
     assert e["regions"]["no_take"] is True and e["regions"]["mpa"] is True
     assert e["regions"]["eez"] == ["8314"] and e["regions"]["high_seas"] is False
     assert e["on"] == {"lat": 15.1, "lon": 146.2}
-    assert e["gfw_url"] == "https://globalfishingwatch.org/vessel-viewer/v1"
+    assert e["gfw_url"] == "https://globalfishingwatch.org/map/vessel/v1"
 
 
 def test_normalize_missing_vessel_returns_none():
