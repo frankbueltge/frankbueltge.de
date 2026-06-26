@@ -1,0 +1,15 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import { SITE, type Locale } from '@/lib/site'
+
+const locale = (Astro.currentLocale ?? 'de') as Locale
+const de = locale === 'de'
+const aboutUrl = getRelativeLocaleUrl(locale, '/about')
+---
+<aside class="mx-auto max-w-3xl px-4 pb-6 text-xs text-fg-faint">
+  <p>
+    {de ? 'Ein Messinstrument von ' : 'An instrument by '}
+    <a href={aboutUrl} rel="author" class="underline transition-colors hover:text-fg">{SITE.name}</a>,
+    {SITE.role[locale]} — {de ? 'Methode und Quellen offengelegt.' : 'method and sources disclosed.'}
+  </p>
+</aside>
