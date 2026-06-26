@@ -38,3 +38,12 @@ def test_run_filters_and_picks():
     assert rec["pick"] == "keep1"          # no-take outranks mpa
     assert rec["index"]["total"] == 4242   # passed through from the API
     assert rec["window"]["examined"] == 2
+
+
+def test_run_excludes_anonymous_vessel_from_case():
+    anon = raw("anon", "2026-06-24T00:00:00Z", 100, nt=True)  # would outrank keep1 by duration
+    anon["vessel"] = {"id": "vanon"}  # no name → normalised to "—"
+    rec = run(client=_client([anon, *RAWS]), token="T", today=date(2026, 6, 25))
+    ids = [e["id"] for e in rec["events"]]
+    assert "anon" not in ids and rec["pick"] == "keep1"   # anonymous excluded from the case
+    assert rec["window"]["examined"] == 3                 # but still counted in the index window

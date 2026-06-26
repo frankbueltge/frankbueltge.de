@@ -20,6 +20,12 @@ def _num(x) -> float | None:
         return None
 
 
+def _coord(x) -> float | None:
+    """GFW returns on/off positions sometimes as numbers, sometimes as strings."""
+    n = _num(x)
+    return round(n, 4) if n is not None else None
+
+
 def normalize(raw: dict) -> dict | None:
     """Map a raw GFW gap event to our clean event shape; None if essentials missing."""
     if not isinstance(raw, dict):
@@ -44,8 +50,8 @@ def normalize(raw: dict) -> dict | None:
         "start": start,
         "end": end,
         "duration_hours": round(dur, 1),
-        "off": {"lat": off.get("lat"), "lon": off.get("lon")},
-        "on": {"lat": on.get("lat"), "lon": on.get("lon")},
+        "off": {"lat": _coord(off.get("lat")), "lon": _coord(off.get("lon"))},
+        "on": {"lat": _coord(on.get("lat")), "lon": _coord(on.get("lon"))},
         "regions": {
             "mpa": bool(regions.get("mpa")),
             "no_take": bool(regions.get("mpaNoTake")),

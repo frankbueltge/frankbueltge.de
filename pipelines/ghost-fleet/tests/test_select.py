@@ -43,7 +43,8 @@ def test_rank_deterministic():
 
 
 def test_index():
-    evs = [ev(no_take=True, mpa=True, dur=10), ev(high=True, dur=5)]
+    evs = [ev(no_take=True, mpa=True, dur=10), ev(high=True, dur=5), ev(eez=["8"], dur=3)]
     i = index(evs, total=99)
-    assert i["total"] == 99 and i["dark_hours_examined"] == 15.0
-    assert i["in_mpa"] == 1 and i["in_no_take"] == 1 and i["on_high_seas"] == 1
+    assert i["total"] == 99 and i["dark_hours_examined"] == 18.0
+    assert i["in_mpa"] == 1 and i["in_no_take"] == 1
+    assert i["on_high_seas"] == 1 and i["in_eez"] == 1
