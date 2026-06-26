@@ -47,6 +47,16 @@ const protokoll = defineCollection({
         label: z.string().nullable().default(null),
         record: z.boolean().default(false),
         note: z.string().nullable().default(null),
+        // Schema 2: TOP „Verluste" — Liste dokumentierter Großereignisse (sonst null).
+        events: z
+          .array(z.object({
+            date: z.string(),
+            label_de: z.string(),
+            label_en: z.string(),
+            deaths: z.number(),
+          }))
+          .nullable()
+          .default(null),
       }),
     ),
   }),
