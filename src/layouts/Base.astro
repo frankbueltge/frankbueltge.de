@@ -7,6 +7,7 @@ import '@/styles/global.css'
 import { SITE, type Locale } from '@/lib/site'
 import { t } from '@/i18n/ui'
 import { ogSlug } from '@/lib/og'
+import { workForPath, workJsonLd } from '@/lib/structured-data'
 
 // Skin fest auf mono (data-skin am <html>) — der Zyklus ist stillgelegt. Skins
 // + SkinSwitcher bleiben im Repo; Reaktivierung = SkinSwitcher wieder mounten
@@ -50,6 +51,9 @@ const website = {
   inLanguage: locale === 'de' ? 'de-DE' : 'en',
   publisher: { '@id': `${SITE.url}/#person` },
 }
+// Per-instrument CreativeWork, attributed to Frank — only on work pages.
+const work = workForPath(Astro.url.pathname)
+const workLd = work ? workJsonLd(work, locale, canonical) : null
 ---
 
 <!doctype html>
@@ -91,6 +95,7 @@ const website = {
 
     <script type="application/ld+json" set:html={JSON.stringify(person)} />
     <script type="application/ld+json" set:html={JSON.stringify(website)} />
+    {workLd && <script type="application/ld+json" set:html={JSON.stringify(workLd)} />}
   </head>
 
   <body class="flex min-h-dvh flex-col">

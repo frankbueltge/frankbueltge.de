@@ -2,6 +2,8 @@
 import Base from './Base.astro'
 import TopBar from '@/components/TopBar.astro'
 import Footer from '@/components/Footer.astro'
+import AuthorByline from '@/components/AuthorByline.astro'
+import { workForPath } from '@/lib/structured-data'
 
 interface Props {
   title: string
@@ -9,10 +11,12 @@ interface Props {
   noindex?: boolean
 }
 const { title, description, noindex } = Astro.props
+const isWork = workForPath(Astro.url.pathname) != null
 ---
 
 <Base title={title} description={description} noindex={noindex}>
   <TopBar />
   <slot />
+  {isWork && <AuthorByline />}
   <Footer />
 </Base>
