@@ -29,9 +29,11 @@ cd pipelines/protokoll && source .venv/bin/activate && pytest -q
 Astro 5, statisch, zweisprachig (de unter `/`, en unter `/en`), Tailwind v4,
 Mono-Skin fest. **Git ist das Archiv:** Pipelines committen versionierte
 JSON-Snapshots ins Repo (kein dynamisches Lesen aus Cloud-Diensten zur Laufzeit).
-Die Protokoll-Pipeline (`pipelines/protokoll/`, Python 3.12, Cloud Run Job, 03:30 UTC)
-schreibt täglich `src/content/protokoll/<jahr>/<datum>.json` per GitHub-API-Commit
-(Autorin „Protokollführung") → Pages-Rebuild.
+Die Protokoll-Pipelines (`pipelines/protokoll/`, Python 3.12) laufen als nächtliche
+**GitHub-Actions-Workflows** und schreiben täglich `src/content/protokoll/<jahr>/<datum>.json`,
+`src/data/praemie/police.json` und `src/data/parallaxe/register.json`, committet als Autorin
+„Protokollführung" → Pages-Rebuild. **Kein GCP:** Konflikt-TOP via GDELT-Rohdateien (HTTP),
+Parallaxe via Gemini-AI-Studio-Key (statt BigQuery/Vertex).
 
 ## Experimente — verbindliche Regeln
 
@@ -73,6 +75,9 @@ schreibt täglich `src/content/protokoll/<jahr>/<datum>.json` per GitHub-API-Com
 
 ## Deployment
 
-GCP-Runbook: `pipelines/protokoll/README.md` (Cloud Run Job + Scheduler + Secret Manager).
-Secrets: GitHub-Fine-Grained-PAT (nur dieses Repo, Contents R/W), FIRMS_MAP_KEY, EIA_API_KEY.
-Site-Hosting: statisch (dist/), Rebuild-Trigger ist der nächtliche Commit.
+Runbook: `pipelines/protokoll/README.md`. Pipelines = **GitHub-Actions-Workflows**
+(`.github/workflows/{protokoll,praemie,parallaxe}.yml`, nächtlich), kein GCP. Secrets
+(GitHub → Actions): `FIRMS_MAP_KEY`, `EIA_API_KEY`, `GEMINI_API_KEY` (Parallaxe,
+AI-Studio-Free-Tier), `CF` (Cloudflare). Site: statisch (dist/) auf Cloudflare Pages via
+`deploy-cf.yml`; Rebuild-Trigger ist der `workflow_run` nach jedem Nightly (Push mit
+eingebautem GITHUB_TOKEN löst `on: push` nicht aus).
