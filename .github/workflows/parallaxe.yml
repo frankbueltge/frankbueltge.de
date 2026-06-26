@@ -1,0 +1,51 @@
+name: Parallaxe nightly
+
+# Werk „Parallaxe — Was jede Sprache verschweigt": je Streitthema ein Gemini-Aufruf
+# (AI-Studio-API, kein GCP/Vertex), committet src/data/parallaxe/register.json (→ Rebuild).
+# Ersetzt den Cloud-Run-Job. Secret: GEMINI_API_KEY (kostenloser AI-Studio-Key).
+#
+# NOCH OHNE schedule: erst nach gesetztem Key + erfolgreichem Test-Lauf wird der Cron
+# (30 5 * * * UTC) ergänzt und der Cloud-Run-Scheduler parallaxe-nightly pausiert (Cutover).
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: parallaxe
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Pipeline-Paket installieren
+        run: pip install --no-cache-dir ./pipelines/protokoll
+      - name: Parallaxe laufen (schreibt, committet nicht)
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python -m protokoll.parallaxe.run --dry-run --repo-root .
+      - name: Committen
+        run: |
+          git config user.name "Protokollführung"
+          git config user.email "protokoll@frankbueltge.de"
+          git add src/data/parallaxe 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "Keine Änderungen."; exit 0
+          fi
+          git commit -m "parallaxe: Messung vom $(date -u +%F)"
+          for i in 1 2 3 4 5; do
+            if git pull --rebase --autostash origin main && git push origin HEAD:main; then
+              echo "Gepusht."; exit 0
+            fi
+            echo "Push-Versuch $i fehlgeschlagen, neu …"; sleep 5
+          done
+          echo "::error::Push nach 5 Versuchen fehlgeschlagen"; exit 1
