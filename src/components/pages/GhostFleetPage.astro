@@ -1,0 +1,95 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import { t } from '@/i18n/ui'
+import type { Locale } from '@/lib/site'
+import type { GhostFleetData, GfEvent } from '@/lib/ghost-fleet/types'
+import { darkLabel, coord, regionLabel, dateLabel } from '@/lib/ghost-fleet/format'
+import data from '@/data/ghost-fleet/latest.json'
+
+interface Props { locale: Locale }
+const { locale } = Astro.props
+const de = locale === 'de'
+const d = data as unknown as GhostFleetData
+const pending = d.events.length === 0
+const pick: GfEvent | null = d.pick ? d.events.find((e) => e.id === d.pick) ?? null : null
+const rest = d.events.filter((e) => e.id !== d.pick)
+const methodUrl = getRelativeLocaleUrl(locale, '/werke/ghost-fleet')
+const darkDays = Math.round(d.index.dark_hours_examined / 24)
+const protectedCount = d.index.in_no_take + d.index.in_mpa
+---
+
+<article class="ghost-fleet mx-auto max-w-3xl px-4 py-14">
+  <header class="mb-10">
+    <h1 class="text-[clamp(30px,6vw,56px)] font-bold">The Ghost Fleet</h1>
+    <p class="mt-2 max-w-xl text-fg-muted">{t(locale, 'gf.sub')}</p>
+    <p class="mt-1 font-mono text-xs text-fg-faint">{dateLabel(d.date, locale)}</p>
+  </header>
+
+  {pending ? (
+    <p class="mb-12 text-fg-muted">{t(locale, 'gf.empty')}</p>
+  ) : (
+    <>
+      {pick && (
+        <section class="mb-12 border-l-2 border-accent/60 pl-5">
+          <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+            {de ? 'Der Fall des Tages' : 'The case of the day'}
+          </p>
+          <p class="mt-2 text-lg font-semibold">{pick.vessel.name} <span class="font-mono text-sm text-fg-faint">({pick.vessel.flag})</span></p>
+          <p class="mt-3 leading-snug text-fg-muted">
+            {de
+              ? `Ein ${pick.vessel.type === 'fishing' ? 'Fischereischiff' : 'Schiff'} unter Flagge ${pick.vessel.flag} schaltete seinen Transponder ${darkLabel(pick.duration_hours, locale)} lang ab — verschwunden bei ${coord(pick.off)}, wieder aufgetaucht bei ${coord(pick.on)}, in ${regionLabel(pick.regions, locale)}.`
+              : `A ${pick.vessel.type === 'fishing' ? 'fishing vessel' : 'vessel'} flagged ${pick.vessel.flag} switched off its transponder for ${darkLabel(pick.duration_hours, locale)} — vanished at ${coord(pick.off)}, resurfaced at ${coord(pick.on)}, in ${regionLabel(pick.regions, locale)}.`}
+          </p>
+          <p class="mt-3 font-mono text-xs">
+            <a class="underline transition-colors hover:text-fg" href={pick.gfw_url} target="_blank" rel="noopener">{de ? 'bei Global Fishing Watch ↗' : 'on Global Fishing Watch ↗'}</a>
+          </p>
+        </section>
+      )}
+
+      <section class="mb-12 border-l-2 border-line pl-5">
+        <div class="flex items-baseline gap-4">
+          <p class="text-[clamp(36px,7vw,64px)] font-bold tabular-nums">{d.index.in_eez}</p>
+          <p class="max-w-sm text-sm leading-snug text-fg-muted">
+            {de
+              ? `Schiffe wurden zuletzt in nationalen Hoheitsgewässern dunkel — von ${d.window.examined} geprüften Abschaltungen (${d.index.total.toLocaleString('de-DE')} im Zeitfenster).`
+              : `ships went dark inside national waters lately — of ${d.window.examined} disappearances examined (${d.index.total.toLocaleString('en-GB')} in the window).`}
+          </p>
+        </div>
+        <p class="mt-3 text-sm leading-relaxed">
+          {de
+            ? `Zusammen rund ${darkDays.toLocaleString('de-DE')} Schiff-Tage Funkstille.`
+            : `Together about ${darkDays.toLocaleString('en-GB')} vessel-days of darkness.`}
+          {protectedCount > 0 && (
+            <span> {de ? `Davon ${protectedCount} in einem Meeresschutzgebiet.` : `${protectedCount} of them inside a marine protected area.`}</span>
+          )}
+        </p>
+      </section>
+
+      {rest.length > 0 && (
+        <section class="mb-12 border-t border-line pt-6">
+          <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+            {de ? 'Weitere Verschwundene' : 'Others gone dark'}
+          </p>
+          <ul class="mt-3 space-y-1.5">
+            {rest.slice(0, 10).map((e) => (
+              <li class="flex flex-wrap items-baseline gap-x-3 text-sm">
+                <span class="text-fg-muted">{e.vessel.name} <span class="font-mono text-xs text-fg-faint">({e.vessel.flag})</span></span>
+                <span class="font-mono text-xs text-fg-faint">{darkLabel(e.duration_hours, locale)} · {regionLabel(e.regions, locale)}</span>
+                <a class="font-mono text-xs underline transition-colors hover:text-fg" href={e.gfw_url} target="_blank" rel="noopener">↗</a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+    </>
+  )}
+
+  <p class="border-t border-line pt-6 text-xs leading-relaxed text-fg-faint">
+    {de
+      ? '„Absichtlich" ist eine Schätzung von Global Fishing Watch (ML), kein Beweis — Abschalten kann legitime Gründe haben (etwa Piraterie-Zonen). Dieses Instrument erhebt keinen Vorwurf gegen ein Schiff oder einen Staat. Es erfasst nur offshore, gut beobachtete Abschaltungen.'
+      : '„Intentional" is an estimate by Global Fishing Watch (ML), not proof — disabling can have legitimate reasons (e.g. piracy zones). This instrument makes no accusation against any vessel or state. It captures only offshore, well-observed disabling.'}
+    <a href={methodUrl} class="ml-1 underline transition-colors hover:text-fg">
+      {de ? 'Methodenblatt' : 'Method sheet'} →
+    </a>
+  </p>
+</article>

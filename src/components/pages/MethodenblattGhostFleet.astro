@@ -1,0 +1,98 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import type { Locale } from '@/lib/site'
+
+interface Props { locale: Locale }
+const { locale } = Astro.props
+const de = locale === 'de'
+const workUrl = getRelativeLocaleUrl(locale, '/ghost-fleet')
+
+const txt = {
+  h1: de ? 'Methodenblatt — The Ghost Fleet' : 'Method sheet — The Ghost Fleet',
+  revealHead: de ? 'Worum es geht' : 'What this is',
+  reveal: de
+    ? 'Das AIS-Bild der Meere wirkt lückenlos. Es ist es nicht — Schiffe schalten ihren Transponder bewusst ab, um zu verschwinden. Dieses Instrument zählt die absichtliche Funkstille und hebt den markantesten Fall des Tages hervor: ein benanntes Schiff, das tage- bis wochenlang in fremden Hoheitsgewässern (oder auf hoher See) dunkel wurde und andernorts wieder auftauchte.'
+    : 'The AIS picture of the seas looks complete. It is not — ships switch off their transponder on purpose to vanish. This instrument counts the deliberate radio silence and surfaces the day\'s most striking case: a named vessel that went dark for days or weeks inside foreign national waters (or on the high seas) and resurfaced elsewhere.',
+  s1: de ? '1. Quellen & Lizenzen' : '1. Sources & licences',
+  s1body: de
+    ? 'Global Fishing Watch, Events-API (AIS-„gap"-/Disabling-Events), Bearer-Token, nicht-kommerziell mit Attributionspflicht. GFW liefert nur hoch-konfidente, als absichtlich eingestufte Abschaltungen: ≥ 12 h, ≥ 50 sm vor der Küste, gute Satellitenabdeckung. Jeder Fall verlinkt das GFW-Vessel.'
+    : 'Global Fishing Watch, Events API (AIS „gap"/disabling events), Bearer token, non-commercial with attribution. GFW returns only high-confidence, intentional-classified disabling: ≥ 12 h, ≥ 50 nm offshore, good satellite coverage. Every case links the GFW vessel.',
+  s2: de ? '2. Kadenz' : '2. Cadence',
+  s2body: de
+    ? 'Täglich. Fenster: Abschaltungen, die in den letzten 7 Tagen endeten (vollständige Verschwinde-und-Rückkehr-Geschichten). Kanonisches Artefakt: versionierte JSON in src/data/ghost-fleet/ — Git ist das Archiv.'
+    : 'Daily. Window: disabling events that ended in the last 7 days (complete vanish-and-return stories). Canonical artefact: versioned JSON in src/data/ghost-fleet/ — git is the archive.',
+  s3: de ? '3. Verarbeitung' : '3. Processing',
+  s3body: de
+    ? 'GFW-Events abrufen (paginiert, gekappt) → normalisieren → filtern (Ende im Fenster, plausible Dauer) → Index (wie viele, wie viele in nationalen EEZ / auf hoher See / in Schutzgebieten, Summe Dunkel-Stunden) → Fall des Tages nach Region-Brisanz, dann Dauer. Index zählt alle geprüften; der Fall und die Liste zeigen benannte Schiffe.'
+    : 'Fetch GFW events (paginated, capped) → normalise → filter (ended in window, plausible duration) → index (how many, how many in national EEZs / on the high seas / in protected areas, total dark-hours) → case of the day by region brisance, then duration. The index counts all examined; the case and list show named vessels.',
+  aiHead: de ? 'KI/ML — offengelegt' : 'AI/ML — disclosed',
+  aiBody: de
+    ? 'Die Einstufung „absichtlich" stammt aus GFWs Machine-Learning-Modell und ist eine Wahrscheinlichkeit, kein Beweis (GFW sagt „likely"). Wir geben das offen weiter und erheben keinen Vorwurf. Unsere eigene Verarbeitung ist rein symbolisch (Filter, Region-Gewicht, Aggregate), kein LLM.'
+    : 'The „intentional" label comes from GFW\'s machine-learning model and is a probability, not proof (GFW says „likely"). We pass that on openly and make no accusation. Our own processing is purely symbolic (filters, region weight, aggregates), no LLM.',
+  s4: de ? '4. Grenzen der Methode' : '4. Limits of the method',
+  s4items: de
+    ? [
+        '„Absichtlich" ist ML-geschätzt, nicht bewiesen; Abschalten kann legitime Gründe haben (z. B. Piraterie-Zonen). Kein Illegalitäts-Vorwurf gegen Schiff oder Staat.',
+        'Nur offshore (≥ 50 sm) und gut beobachtet: küstennahe Abschaltungen fehlen — deshalb erscheinen Meeresschutzgebiete (meist küstennah) fast nie; gemessen wird das offene Meer.',
+        'Nur AIS: Schiffe, die nie senden („dark by default"), erscheinen gar nicht.',
+        'Region-Zuordnung ist die der Verschwinde-Position; EEZ werden als Kennziffern geliefert, nicht als Ländernamen (in v1 nicht aufgelöst).',
+        'Cluster spiegeln auch die Satellitenabdeckung, nicht nur das Verhalten.',
+      ]
+    : [
+        '„Intentional" is ML-estimated, not proof; disabling can have legitimate reasons (e.g. piracy zones). No claim of illegality against vessel or state.',
+        'Only offshore (≥ 50 nm) and well-observed: nearshore disabling is missing — so marine protected areas (mostly coastal) almost never appear; what is measured is the open sea.',
+        'AIS only: vessels that never transmit („dark by default") do not appear at all.',
+        'Region attribution is that of the vanishing position; EEZs come as numeric ids, not country names (not resolved in v1).',
+        'Clusters reflect satellite coverage too, not only behaviour.',
+      ],
+  s5: de ? '5. Compute-Fußabdruck' : '5. Compute footprint',
+  s5body: de
+    ? 'Wenige paginierte API-Abrufe pro Tag mit Token, kein LLM. Die Site ist statisch.'
+    : 'A few paginated API fetches per day with a token, no LLM. The site is static.',
+  s6: de ? '6. Änderungsprotokoll' : '6. Change log',
+  s6items: de
+    ? ['v1 (2026-06) — Erstfassung: GFW-gap-Events, Fenster 7 Tage, Index + Fall des Tages, EEZ/Hohe-See-Fokus, Schutzgebiet als Sonderfall-Marker.']
+    : ['v1 (2026-06) — first edition: GFW gap events, 7-day window, index + case of the day, EEZ/high-seas focus, protected area as a special-case marker.'],
+  toWork: de ? 'Zum Experiment' : 'To the experiment',
+}
+---
+
+<div class="mx-auto max-w-2xl px-4 py-14">
+  <h1 class="mb-8 text-xl font-semibold">{txt.h1}</h1>
+
+  <section class="mb-10 border border-line bg-panel/60 p-5">
+    <h2 class="mb-2 font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">{txt.revealHead}</h2>
+    <p class="leading-relaxed">{txt.reveal}</p>
+  </section>
+
+  <section class="mb-8"><h2 class="mb-2 font-semibold">{txt.s1}</h2><p class="leading-relaxed text-fg-muted">{txt.s1body}</p></section>
+  <section class="mb-8"><h2 class="mb-2 font-semibold">{txt.s2}</h2><p class="leading-relaxed text-fg-muted">{txt.s2body}</p></section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s3}</h2>
+    <p class="leading-relaxed text-fg-muted">{txt.s3body}</p>
+    <p class="mt-2">
+      <a href="https://github.com/frankbueltge/frankbueltge.de/tree/main/pipelines/ghost-fleet"
+        class="font-mono text-xs text-fg-faint transition-colors hover:text-fg" rel="noopener">→ pipelines/ghost-fleet</a>
+    </p>
+  </section>
+
+  <section class="mb-8 border-l-2 border-line pl-4">
+    <h2 class="mb-2 font-semibold">{txt.aiHead}</h2>
+    <p class="leading-relaxed text-fg-muted">{txt.aiBody}</p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s4}</h2>
+    <ul class="list-disc space-y-1 pl-5 text-fg-muted">{txt.s4items.map((i) => <li>{i}</li>)}</ul>
+  </section>
+
+  <section class="mb-8"><h2 class="mb-2 font-semibold">{txt.s5}</h2><p class="leading-relaxed text-fg-muted">{txt.s5body}</p></section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s6}</h2>
+    <ul class="list-disc space-y-1 pl-5 text-fg-muted">{txt.s6items.map((i) => <li>{i}</li>)}</ul>
+  </section>
+
+  <a href={workUrl} class="text-sm text-fg-muted transition-colors hover:text-fg">→ {txt.toWork}</a>
+</div>
