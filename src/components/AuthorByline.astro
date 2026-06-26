@@ -2,7 +2,7 @@
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import { SITE, type Locale } from '@/lib/site'
 
-const locale = (Astro.currentLocale ?? 'de') as Locale
+const locale = (Astro.currentLocale ?? 'en') as Locale
 const de = locale === 'de'
 const aboutUrl = getRelativeLocaleUrl(locale, '/about')
 ---

@@ -6,7 +6,7 @@ import { SITE, type Locale } from '@/lib/site'
 
 interface Props { slug: string }
 const { slug } = Astro.props
-const locale = (Astro.currentLocale ?? 'de') as Locale
+const locale = (Astro.currentLocale ?? 'en') as Locale
 const p = getProject(slug)!
 ---
 

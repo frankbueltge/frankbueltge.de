@@ -18,7 +18,7 @@ interface Props {
   noindex?: boolean
 }
 const { title, description, noindex } = Astro.props
-const locale = (Astro.currentLocale ?? 'de') as Locale
+const locale = (Astro.currentLocale ?? 'en') as Locale
 
 // canonical + hreflang via Astro's config-aware locale URLs (de at /, en at /en; x-default → de)
 const pathNoLocale = Astro.url.pathname.replace(/^\/de/, '') || '/'

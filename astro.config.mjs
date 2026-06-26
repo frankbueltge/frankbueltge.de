@@ -4,14 +4,15 @@ import sitemap from '@astrojs/sitemap'
 import mdx from '@astrojs/mdx'
 import tailwindcss from '@tailwindcss/vite'
 
-// Bilingual DE/EN, both locales prefixed (/de, /en) for unambiguous hreflang/canonical.
+// Bilingual EN/DE: EN is default at root (unprefixed), DE under /de. No browser detection —
+// every visitor lands on EN; /de is manual only (language toggle in TopBar).
 // Astro ships the content layer as static HTML (top CWV, crawlable); WebGL lives in islands.
 export default defineConfig({
   site: 'https://frankbueltge.de',
   i18n: {
     defaultLocale: 'en',
     locales: ['en', 'de'],
-    // English at /, German at /de — hreflang handles parity; /en/* → / via vercel.json-Redirects.
+    // English at /, German at /de — hreflang handles parity; /en/* → / via public/_redirects (Cloudflare).
     routing: { prefixDefaultLocale: false },
   },
   // Tages-Snapshots (/protokoll/<datum>) sind noindex + aus der Sitemap — dünn & wächst
