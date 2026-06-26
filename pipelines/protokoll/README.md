@@ -1,83 +1,63 @@
 # Protokoll-Pipeline — Runbook
 
-Nächtlicher Cloud Run Job. Schreibt `src/content/protokoll/<jahr>/<datum>.json`
-per GitHub-Commit (Autorin „Protokollführung") → Pages-Rebuild.
+Läuft als **nächtliche GitHub-Actions-Workflows** (kein GCP). Jeder Lauf schreibt sein JSON
+ins Repo und committet als Autorin „Protokollführung" → Cloudflare-Pages-Rebuild.
+
+> Historie: Bis Juni 2026 lief das als Cloud-Run-Jobs (BigQuery für den Konflikt-TOP,
+> Vertex AI für Parallaxe). Migriert auf GitHub Actions, BigQuery → GDELT-Rohdateien (HTTP),
+> Vertex → Gemini AI-Studio-API. Cloud Run ist abgeschaltet.
+
+## Workflows
+
+| Workflow | Zeit (UTC) | Schreibt | Secrets |
+|---|---|---|---|
+| `.github/workflows/protokoll.yml` | 03:30 | `src/content/protokoll/<jahr>/<datum>.json` (inkl. TOP Verluste & Konflikt) | `FIRMS_MAP_KEY`, `EIA_API_KEY` |
+| `.github/workflows/praemie.yml`   | 04:00 | `src/data/praemie/police.json` | — |
+| `.github/workflows/parallaxe.yml` | 05:30 | `src/data/parallaxe/register.json` | `GEMINI_API_KEY` |
+
+Alle installieren `./pipelines/protokoll`, laufen mit `--dry-run --repo-root .` (schreiben,
+committen nicht) und committen anschließend per `git push` (Autorin „Protokollführung").
+Der Deploy nach Cloudflare passiert über `deploy-cf.yml` (`workflow_run`-Trigger nach jedem
+Nightly — ein Push mit dem eingebauten `GITHUB_TOKEN` löst `on: push` nicht aus).
+
+**Kein GCP mehr:** Der Konflikt-TOP holt GDELT-2.0-Events aus den öffentlichen Rohdateien per
+HTTP (96 Viertelstunden-Dateien/Tag, kein BigQuery); Parallaxe ruft Gemini über die
+AI-Studio-API (`generativelanguage`, `GEMINI_API_KEY`, kostenloser Tier) statt Vertex.
 
 ## Lokal
 
 ```bash
 python3 -m venv .venv && source .venv/bin/activate
-pip install -e ".[dev,bq]"
+pip install -e ".[dev]"
 pytest -q
-# Trockenlauf (schreibt ins Repo, committet nichts):
+# Trockenlauf (schreibt ins Repo-Ziel, committet nichts):
 export FIRMS_MAP_KEY=... EIA_API_KEY=...
 python -m protokoll.run --dry-run --repo-root ../..
+# Parallaxe lokal:
+export GEMINI_API_KEY=...
+python -m protokoll.parallaxe.run --dry-run --repo-root ../..
 ```
 
-Ohne Keys/GCP-Login laufen die betroffenen TOPs auf „Feststellung entfällt" —
-amtlich korrekt, aber für echte Sitzungen Keys setzen und
-`gcloud auth application-default login` ausführen (GDELT).
+Ohne Keys laufen die betroffenen TOPs auf „Feststellung entfällt" — amtlich korrekt.
 
-## GCP-Deploy (einmalig)
+## Secrets (GitHub → Settings → Secrets and variables → Actions)
 
-```bash
-PROJECT=<PROJECT_ID>; REGION=europe-west1
-gcloud config set project $PROJECT
-gcloud services enable run.googleapis.com cloudscheduler.googleapis.com \
-  artifactregistry.googleapis.com cloudbuild.googleapis.com \
-  bigquery.googleapis.com secretmanager.googleapis.com
+- `FIRMS_MAP_KEY` — NASA FIRMS (TOP „fires")
+- `EIA_API_KEY` — EIA Energie (TOP „oil")
+- `GEMINI_API_KEY` — Google AI Studio (Parallaxe-LLM), kostenloser Tier
+- `CF` — Cloudflare-API-Token (Deploy); Account-ID steht in `deploy-cf.yml`
 
-gcloud artifacts repositories create werke --repository-format=docker --location=$REGION
-
-# Service Account + Rechte
-gcloud iam service-accounts create protokoll-runner
-SA=protokoll-runner@$PROJECT.iam.gserviceaccount.com
-gcloud projects add-iam-policy-binding $PROJECT --member=serviceAccount:$SA \
-  --role=roles/bigquery.jobUser
-gcloud projects add-iam-policy-binding $PROJECT --member=serviceAccount:$SA \
-  --role=roles/secretmanager.secretAccessor
-gcloud projects add-iam-policy-binding $PROJECT --member=serviceAccount:$SA \
-  --role=roles/run.invoker
-
-# Secrets (GitHub Fine-Grained PAT: nur dieses Repo, Contents Read/Write)
-echo -n "<github-pat>"  | gcloud secrets create protokoll-github-token --data-file=-
-echo -n "<firms-key>"   | gcloud secrets create protokoll-firms-key  --data-file=-
-echo -n "<eia-key>"     | gcloud secrets create protokoll-eia-key    --data-file=-
-
-# Build + Job
-gcloud builds submit . --tag $REGION-docker.pkg.dev/$PROJECT/werke/protokoll:latest
-gcloud run jobs create protokoll \
-  --image $REGION-docker.pkg.dev/$PROJECT/werke/protokoll:latest \
-  --region $REGION --service-account $SA --max-retries 1 --task-timeout 10m \
-  --set-secrets "GITHUB_TOKEN=protokoll-github-token:latest,FIRMS_MAP_KEY=protokoll-firms-key:latest,EIA_API_KEY=protokoll-eia-key:latest" \
-  --set-env-vars "GITHUB_REPO=frankbueltge/frankbueltge.de"
-
-# Nächtlich 03:30 UTC
-gcloud scheduler jobs create http protokoll-nightly --location $REGION \
-  --schedule "30 3 * * *" --time-zone "Etc/UTC" --http-method POST \
-  --uri "https://run.googleapis.com/v2/projects/$PROJECT/locations/$REGION/jobs/protokoll:run" \
-  --oauth-service-account-email $SA
-
-# Budget-Alert (Console): Billing → Budgets → 10 EUR/Monat, Alarm bei 50/90/100 %.
-```
-
-## Update deployen
+## Manueller Lauf / Test
 
 ```bash
-gcloud builds submit . --tag $REGION-docker.pkg.dev/$PROJECT/werke/protokoll:latest
-gcloud run jobs update protokoll --image $REGION-docker.pkg.dev/$PROJECT/werke/protokoll:latest --region $REGION
-```
-
-## Manueller Lauf / Backfill
-
-```bash
-gcloud run jobs execute protokoll --region $REGION            # heute
-gcloud run jobs execute protokoll --region $REGION --args="--date,2026-06-10"
+gh workflow run praemie.yml     # sicher: police.json wird täglich überschrieben
+gh workflow run parallaxe.yml   # sicher: register.json wird täglich überschrieben
+# protokoll NICHT von Hand auslösen, wenn der heutige Tag schon committet ist
+# (Archiv-Regel: committete Tagesprotokolle werden nie editiert). Erster Lauf = nächtlich.
 ```
 
 ## Redaktionelle Pflege
 
 - `src/protokoll/data/refugees.json`: bei UNHCR-Global-Trends-Veröffentlichung aktualisieren.
 - `src/protokoll/data/food.json`: monatlich nach FAO-FPI-Release aktualisieren.
-- `src/protokoll/data/../adapters/population.py`: Konstanten nach neuer UN-WPP-Revision prüfen (Warnung ab 2027-07-01).
-- Danach: neues Image deployen (s. o.).
+- `src/protokoll/adapters/population.py`: Konstanten nach neuer UN-WPP-Revision prüfen.
