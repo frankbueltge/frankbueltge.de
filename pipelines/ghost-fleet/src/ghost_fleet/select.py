@@ -56,7 +56,8 @@ def index(events: list[dict], total: int) -> dict:
     return {
         "total": total,
         "dark_hours_examined": round(sum(e["duration_hours"] for e in events), 1),
+        "in_eez": sum(1 for e in events if e["regions"]["eez"]),
+        "on_high_seas": sum(1 for e in events if e["regions"]["high_seas"]),
         "in_mpa": sum(1 for e in events if e["regions"]["mpa"]),
         "in_no_take": sum(1 for e in events if e["regions"]["no_take"]),
-        "on_high_seas": sum(1 for e in events if e["regions"]["high_seas"]),
     }

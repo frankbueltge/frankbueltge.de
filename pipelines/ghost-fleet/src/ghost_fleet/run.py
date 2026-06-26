@@ -29,9 +29,12 @@ def run(*, client: httpx.Client, token: str, today: date) -> dict:
     raw, total = fetch_gaps(token, client=client, start=start, end=end, cap=CAP)
     norm = [n for n in (build.normalize(r) for r in raw) if n]
     filtered = [e for e in norm if select.ended_within(e, today) and select.plausible(e)]
-    idx = select.index(filtered, total)
-    pick = select.rank(filtered)
-    top = sorted(filtered, key=lambda e: (-select.salience(e), e["id"]))[:TOP_N]
+    idx = select.index(filtered, total)  # honest counts over ALL examined
+    # The case + the displayed list use named vessels only (an anonymous gap is a
+    # weak forensic case); the index above still counts every examined disappearance.
+    named = [e for e in filtered if e["vessel"]["name"] != "—"]
+    pick = select.rank(named)
+    top = sorted(named, key=lambda e: (-select.salience(e), e["id"]))[:TOP_N]
     window = {
         "from": start, "to": end, "ended_within_days": select.WINDOW_DAYS,
         "examined": len(filtered), "capped": len(raw) >= CAP,

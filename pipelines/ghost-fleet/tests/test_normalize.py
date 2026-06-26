@@ -28,3 +28,8 @@ def test_normalize_missing_vessel_returns_none():
 
 def test_normalize_missing_duration_returns_none():
     assert normalize({**RAW, "gap": {"offPosition": {}, "onPosition": {}}}) is None
+
+
+def test_normalize_coerces_string_coords():
+    e = normalize({**RAW, "gap": {**RAW["gap"], "onPosition": {"lat": "-8.8", "lon": "-176.3"}}})
+    assert e["on"]["lat"] == -8.8 and isinstance(e["on"]["lat"], float)
