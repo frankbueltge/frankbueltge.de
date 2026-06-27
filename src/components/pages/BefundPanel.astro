@@ -1,0 +1,190 @@
+---
+// „Der Befund" — die aufgeklappte Datum-Ansicht je Größe. Geteilte Signatur (Monument,
+// Korridor-Band, selbst-zeichnender Verlauf, Befund-Satz, Beleg) + Akzent je Familie.
+// Bewusst über den Mono-Skin hinaus (Künstlerentscheidung 2026-06-27) — aber jede Markierung
+// ein echter, gemessener Wert; Korridor/Tiefenzeit sind belegte Referenzen, keine Erfindung.
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import type { Locale } from '@/lib/site'
+import type { ProtokollEntry } from '@/lib/protokoll/types'
+import { AGENDA } from '@/lib/protokoll/agenda'
+import { CORRIDORS, DEEPTIME_CO2, FAMILY, POLARITY, befundSatz, corridorPosition } from '@/lib/protokoll/befund'
+import { areaPath, linePath } from '@/lib/protokoll/series'
+
+interface Props {
+  topId: string
+  title: string
+  entry: ProtokollEntry
+  series: { date: string; value: number }[]
+  labelHistory?: { date: string; label: string }[]
+  locale: Locale
+}
+const { topId, title, entry: e, series, labelHistory, locale } = Astro.props
+const de = locale === 'de'
+
+const n = AGENDA.find((t) => t.entries.some((x) => x.id === topId))?.n
+const corridor = CORRIDORS[topId] ?? null
+const family = FAMILY[topId] ?? null
+const polarity = POLARITY[topId] ?? 'neutral'
+const named = family === 'named'
+
+const vals = series.map((p) => p.value)
+const hasVal = e.value != null
+const vmax = vals.length ? Math.max(...vals) : null
+const vmin = vals.length ? Math.min(...vals) : null
+const mean = vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : null
+const flat = vals.length >= 2 && vmax === vmin
+const drawable = vals.length >= 2 && !flat
+
+const satz = corridor ? befundSatz(vals, corridor, de) : ''
+const pos = corridor && hasVal ? corridorPosition(e.value!, corridor) : null
+const alarm = pos == null ? 0 : polarity === 'high' ? pos : polarity === 'low' ? 1 - pos : 0
+// Der Marker rötet sich, je näher der Wert dem belastenden Extrem des Korridors kommt.
+const markerColor = `color-mix(in oklab, rgb(var(--rgb-accent)), #d9533b ${Math.round(alarm * 100)}%)`
+
+const BW = 720
+const BH = 200
+const span = vmax != null && vmin != null ? (vmax - vmin) || 1 : 1
+const yOf = (v: number) => BH - ((v - (vmin ?? 0)) / span) * (BH - 2) - 1
+
+const nf = new Intl.NumberFormat(de ? 'de-DE' : 'en-GB', { maximumFractionDigits: 2 })
+const nfCompact = new Intl.NumberFormat(de ? 'de-DE' : 'en-GB', { notation: 'compact', maximumFractionDigits: 1 })
+const fmtVal = (v: number) => (Math.abs(v) >= 100_000 ? nfCompact.format(v) : nf.format(v))
+const UNIT_EN: Record<string, string> = {
+  Detektionen: 'detections', Beben: 'quakes', Menschen: 'people', Aufrufe: 'views',
+  Ereignisse: 'events', Punkte: 'points', 'Mio. km²': 'M km²', 'USD/Barrel': 'USD/bbl',
+}
+const unit = !e.unit ? '' : de ? e.unit : (UNIT_EN[e.unit] ?? e.unit)
+const dateShort = (iso: string) =>
+  new Intl.DateTimeFormat(de ? 'de-DE' : 'en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' })
+    .format(new Date(`${iso}T00:00:00Z`))
+
+const methodUrl = getRelativeLocaleUrl(locale, '/werke/protokoll')
+
+// Familien-Akzentzeile — aus echten Daten gerechnet.
+let flourish = ''
+if (hasVal && vals.length && mean != null) {
+  if (topId === 'co2') flourish = de ? DEEPTIME_CO2.note.de : DEEPTIME_CO2.note.en
+  else if (family === 'intensity' && mean > 0)
+    flourish = de ? `Das ${nf.format(e.value! / mean)}-fache des Mittels im Zeitraum.` : `${nf.format(e.value! / mean)}× the period mean.`
+  else if (family === 'stock' && vals.length >= 2) {
+    const g = e.value! - vals[0]
+    flourish = de
+      ? `Veränderung seit Beginn der Aufzeichnung: ${g >= 0 ? '+' : ''}${fmtVal(g)} ${unit}.`
+      : `Change since records began here: ${g >= 0 ? '+' : ''}${fmtVal(g)} ${unit}.`
+  }
+}
+
+const parade = named && labelHistory ? [...labelHistory].reverse().slice(0, 12) : []
+
+const T = {
+  range: de ? 'plausibler Bereich' : 'plausible range',
+  course: de ? 'Verlauf im verzeichneten Zeitraum' : 'course over the recorded period',
+  fewReadings: de ? 'zu wenige Messungen für einen Verlauf' : 'too few readings for a trend',
+  noReading: de ? 'keine Messung' : 'no reading',
+  mean: de ? 'Mittel' : 'mean',
+  parade: de ? 'Worauf die Welt zuvor schaute' : 'What the world looked at before',
+  source: de ? 'Quelle' : 'source',
+  asOf: de ? 'Stand' : 'as of',
+  retrieved: de ? 'erhoben' : 'retrieved',
+  method: de ? 'Methodenblatt' : 'Method sheet',
+}
+const retrievedShort = e.retrieved_at ? e.retrieved_at.slice(0, 10) : null
+---
+
+<div class="befund mt-5 border-t border-line pt-6">
+  <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-fg-faint">{n ? `TOP ${n} · ` : ''}{title}</p>
+
+  {/* Monument + Befund-Satz */}
+  <div class="mt-2 flex flex-wrap items-end justify-between gap-x-6 gap-y-2">
+    {named ? (
+      <p class="min-w-0 text-[clamp(22px,3.4vw,34px)] font-bold leading-tight tracking-tight">
+        {e.label ?? '—'}
+        {hasVal && <span class="mt-1 block font-mono text-xs font-normal text-fg-muted">{fmtVal(e.value!)} {unit}</span>}
+      </p>
+    ) : hasVal ? (
+      <p class="text-[clamp(40px,7vw,72px)] font-bold leading-none tracking-tight tabular-nums">
+        {fmtVal(e.value!)}<span class="ml-2 text-[0.32em] font-semibold text-fg-muted">{unit}</span>
+      </p>
+    ) : (
+      <p class="text-3xl font-semibold text-fg-faint">—</p>
+    )}
+    {satz && <p class="font-mono text-sm font-medium" style={`color:${markerColor}`}>{satz}</p>}
+  </div>
+
+  {/* Korridor-Band — Lage im plausiblen Bereich */}
+  {corridor && hasVal && pos != null && (
+    <div class="mt-6">
+      <div class="relative h-2 rounded-full bg-line">
+        <div class="absolute top-1/2 h-4 w-1.5 -translate-y-1/2 rounded-full"
+          style={`left:calc(${(pos * 100).toFixed(1)}% - 3px);background:${markerColor}`}></div>
+      </div>
+      <div class="mt-1.5 flex justify-between font-mono text-[10px] text-fg-faint">
+        <span>{fmtVal(corridor[0])}</span>
+        <span class="uppercase tracking-wider">{T.range}</span>
+        <span>{fmtVal(corridor[1])}</span>
+      </div>
+    </div>
+  )}
+
+  {/* Verlauf — zeichnet sich beim Aufklappen einmal selbst (echter Pfad) */}
+  {drawable ? (
+    <figure class="mt-6">
+      <svg viewBox={`0 0 ${BW} ${BH}`} class="w-full overflow-visible" role="img"
+        aria-label={`${T.course}: ${dateShort(series[0].date)} – ${dateShort(series[series.length - 1].date)}`}>
+        {family === 'deviation' && mean != null && (
+          <line x1="0" x2={BW} y1={yOf(mean).toFixed(1)} y2={yOf(mean).toFixed(1)}
+            stroke="rgb(var(--rgb-fg-faint, 120 120 120))" stroke-width="1" stroke-dasharray="3 4" opacity="0.5" />
+        )}
+        <path d={areaPath(vals, BW, BH)} fill="rgb(var(--rgb-accent))" fill-opacity="0.08" stroke="none" />
+        <path class="befund-curve" pathLength="1" d={linePath(vals, BW, BH)} fill="none"
+          stroke="rgb(var(--rgb-accent))" stroke-width="2" vector-effect="non-scaling-stroke" />
+        <circle cx={BW} cy={yOf(vals[vals.length - 1]).toFixed(1)} r="3.5" style={`fill:${markerColor}`} />
+      </svg>
+      <figcaption class="mt-1.5 flex justify-between font-mono text-[10px] text-fg-faint">
+        <span>{dateShort(series[0].date)}</span>
+        {family === 'deviation' && mean != null && <span>{T.mean}: {fmtVal(mean)} {unit}</span>}
+        <span>{vmin != null && vmax != null ? `${fmtVal(vmin)}–${fmtVal(vmax)} ${unit}` : ''}</span>
+        <span>{dateShort(series[series.length - 1].date)}</span>
+      </figcaption>
+    </figure>
+  ) : (
+    <p class="mt-6 text-sm text-fg-faint">{hasVal ? T.fewReadings : T.noReading}</p>
+  )}
+
+  {flourish && <p class="mt-5 max-w-2xl text-sm leading-relaxed text-fg-muted">{flourish}</p>}
+
+  {/* Attention: Parade der Vortage */}
+  {parade.length > 0 && (
+    <div class="mt-5">
+      <p class="font-mono text-[10px] uppercase tracking-wider text-fg-faint">{T.parade}</p>
+      <ol class="mt-2 space-y-1">
+        {parade.map((p) => (
+          <li class="flex gap-3 text-sm">
+            <span class="w-14 shrink-0 font-mono text-[11px] text-fg-faint">{dateShort(p.date)}</span>
+            <span class="text-fg-muted">{p.label}</span>
+          </li>
+        ))}
+      </ol>
+    </div>
+  )}
+
+  {e.note && <p class="mt-5 text-sm text-fg-muted">{e.note}</p>}
+
+  {/* Beleg-Stempel */}
+  <div class="mt-6 border-t border-line pt-3 font-mono text-[10px] text-fg-faint">
+    <span class="uppercase tracking-wider">{T.source}:</span>{' '}
+    <a href={e.source.url} target="_blank" rel="noopener" class="underline decoration-line underline-offset-2 transition-colors hover:text-fg">{e.source.name}</a>
+    {e.source.license && <span> · {e.source.license}</span>}
+    {e.as_of && <span> · {T.asOf} {e.as_of}</span>}
+    {retrievedShort && <span> · {T.retrieved} {retrievedShort}</span>}
+    {' · '}<a href={methodUrl} class="underline decoration-line underline-offset-2 transition-colors hover:text-fg">{T.method} →</a>
+  </div>
+</div>
+
+<style>
+  @keyframes befund-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+  .befund-curve { stroke-dasharray: 1; animation: befund-draw 0.9s ease-out both; }
+  @media (prefers-reduced-motion: reduce) {
+    .befund-curve { animation: none; }
+  }
+</style>
