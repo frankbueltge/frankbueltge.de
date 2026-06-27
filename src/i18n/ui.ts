@@ -10,11 +10,11 @@ export const ui = {
     'nav.contact': 'Kontakt',
     'nav.menu': 'Menü öffnen',
 
-    'meta.home.title': 'Frank Bültge — Data & AI Engineer',
-    'meta.home.desc': 'Frank Bültge — Data & AI Engineer. Ein öffentliches Experimentierfeld mit Daten und Code: Versuche und erste Annäherungen, praxisbasiert, auf dem Weg zu einer künstlerischen Forschung.',
+    'meta.home.title': 'Data Engineering & Analytics meets Artistic Research',
+    'meta.home.desc': 'Frank Bültge — Data Engineering & Analytics meets Artistic Research. Ein öffentliches Experimentierfeld mit Daten, Code und KI: Versuche und erste Annäherungen, praxisbasiert, auf dem Weg zu einer künstlerischen Forschung.',
 
-    'hero.roleLead': 'Data & AI Engineer',
-    'hero.roleRest': ' — ich baue Dateninfrastruktur und experimentiere mit Daten und Code.',
+    'hero.roleLead': 'Data Engineering & Analytics meets Artistic Research',
+    'hero.roleRest': ' — ich baue Dateninfrastruktur und experimentiere mit Daten, Code und KI.',
     'home.protokollLink': 'Vollständiges Protokoll',
     'home.beruflich': 'Eigene Projekte',
     'home.beruflichLead': 'Neben dem Beruf — eigene Projekte an der Schnittstelle von Daten, KI und Gestaltung.',
@@ -122,11 +122,11 @@ export const ui = {
     'nav.contact': 'Contact',
     'nav.menu': 'Open menu',
 
-    'meta.home.title': 'Frank Bültge — Data & AI Engineer',
-    'meta.home.desc': 'Frank Bültge — Data & AI Engineer. A public field for experiments with data and code: attempts and first approaches, practice-based, on the way toward artistic research.',
+    'meta.home.title': 'Data Engineering & Analytics meets Artistic Research',
+    'meta.home.desc': 'Frank Bültge — Data Engineering & Analytics meets Artistic Research. A public field for experiments with data, code and AI: attempts and first approaches, practice-based, on the way toward artistic research.',
 
-    'hero.roleLead': 'Data & AI Engineer',
-    'hero.roleRest': ' — I build data infrastructure and experiment with data and code.',
+    'hero.roleLead': 'Data Engineering & Analytics meets Artistic Research',
+    'hero.roleRest': ' — I build data infrastructure and experiment with data, code and AI.',
     'home.protokollLink': 'Full minutes',
     'home.beruflich': 'Side projects',
     'home.beruflichLead': 'Alongside the day job — my own projects at the intersection of data, AI and design.',
