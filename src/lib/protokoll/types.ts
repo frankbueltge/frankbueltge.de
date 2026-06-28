@@ -29,6 +29,15 @@ export interface ProtokollEntry {
   record: boolean
   note: string | null
   events?: LossEvent[] | null
+  trend: 'worsened' | 'improved' | 'unchanged' | null
+}
+
+export interface ProtokollIndex {
+  eligible: number
+  established: number
+  improved: number
+  worsened: number
+  unchanged: number
 }
 
 export interface ProtokollDay {
@@ -37,4 +46,5 @@ export interface ProtokollDay {
   schema_version: string
   pipeline_version: string
   entries: ProtokollEntry[]
+  index: ProtokollIndex | null
 }

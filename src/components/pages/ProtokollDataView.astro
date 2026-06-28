@@ -110,6 +110,13 @@ const txt = {
     )}
     <p class="mt-4 max-w-2xl text-fg-muted">{txt.intro}</p>
     {oldest && <p class="mt-2 font-mono text-xs text-fg-faint">{txt.count(metricTops.length, dateShort(oldest.date))}</p>}
+    {latest?.index && latest.index.established > 0 && (
+      <p class="mt-4 max-w-2xl font-mono text-sm text-fg">
+        {de
+          ? `Indexfähige Punkte: ${latest.index.eligible} · mit etabliertem Trend: ${latest.index.established} · gegen den Jahrestrend verbessert: ${latest.index.improved} · verschlechtert: ${latest.index.worsened}. Beschluss: vertagt.`
+          : `Index-eligible items: ${latest.index.eligible} · with established trend: ${latest.index.established} · improved against the yearly trend: ${latest.index.improved} · worsened: ${latest.index.worsened}. Resolution: adjourned.`}
+      </p>
+    )}
   </header>
 
   <div class="grid items-start gap-4 sm:grid-cols-2 lg:grid-cols-3">

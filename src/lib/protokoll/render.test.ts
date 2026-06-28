@@ -8,13 +8,14 @@ function entry(partial: Partial<ProtokollEntry>): ProtokollEntry {
   return {
     top_id: 'co2', status: 'ok', unit: 'ppm', cadence: 'daily', source: SRC,
     retrieved_at: '2026-06-12T03:30:00Z', value: null, as_of: null,
-    comparison: null, label: null, record: false, note: null, events: null, ...partial,
+    comparison: null, label: null, record: false, note: null, events: null, trend: null, ...partial,
   }
 }
 
 const DAY: ProtokollDay = {
   date: '2026-06-12', generated_at: '2026-06-12T03:30:00Z',
   schema_version: '1', pipeline_version: '0.1.0',
+  index: null,
   entries: [
     entry({ top_id: 'co2', value: 427.3, as_of: '2026-06-10',
             comparison: { label: 'prev_year_day', value: 424.52 }, record: true }),
