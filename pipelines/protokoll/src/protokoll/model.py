@@ -5,7 +5,7 @@ import json
 from dataclasses import asdict, dataclass
 from typing import Literal
 
-SCHEMA_VERSION = "2"  # v2: TOP „Verluste" — Entry.events (Liste dokumentierter Großereignisse)
+SCHEMA_VERSION = "3"  # v3: Vertagungs-Index — Entry.trend + DayRecord.index
 
 Status = Literal["ok", "unavailable", "implausible"]
 Cadence = Literal["daily", "realtime", "monthly", "periodic", "computed"]
@@ -32,6 +32,7 @@ class Measurement:
     comparison: Comparison | None = None
     label: str | None = None  # z. B. Wikipedia-Artikeltitel
     record: bool = False  # Höchststand seit Aufzeichnungsbeginn
+    trend: Literal["worsened", "improved", "unchanged"] | None = None  # vs. 12-Monats-Trend
 
 
 @dataclass(frozen=True)
@@ -58,6 +59,17 @@ class Entry:
     record: bool = False
     note: str | None = None
     events: tuple[LossEvent, ...] | None = None  # nur TOP „Verluste"
+    trend: Literal["worsened", "improved", "unchanged"] | None = None  # nur indexfähige TOPs
+
+
+@dataclass(frozen=True)
+class DayIndex:
+    """Der Vertagungs-Index: Zählung über indexfähige TOPs mit etabliertem Trend."""
+    eligible: int      # indexfähige TOPs im Tagesatz
+    established: int    # davon mit etabliertem 12-Monats-Trend
+    improved: int
+    worsened: int
+    unchanged: int
 
 
 @dataclass(frozen=True)
@@ -67,6 +79,7 @@ class DayRecord:
     schema_version: str
     pipeline_version: str
     entries: tuple[Entry, ...]
+    index: DayIndex | None = None
 
 
 def day_record_to_json(record: DayRecord) -> str:
