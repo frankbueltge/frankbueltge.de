@@ -7,6 +7,7 @@ from protokoll.adapters._util import prev_year_value
 from protokoll.adapters.base import AdapterSpec, Context
 from protokoll.fetch import fetch
 from protokoll.model import Comparison, Measurement, SourceMeta
+from protokoll.trend import WORSE_DIRECTION, classify_trend
 
 URL = "https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_trend_gl.csv"
 
@@ -29,7 +30,9 @@ def measure(ctx: Context) -> Measurement:
     # Beim deseasonalisierten Trend ist der Rekord fast täglich wahr — das ist kein Rauschen,
     # sondern der Befund: höchster Stand seit Aufzeichnungsbeginn, jeden Tag aufs Neue.
     record = all(value > v for dd, v in rows if dd < d)
-    return Measurement(value=value, as_of=d.isoformat(), comparison=comparison, record=record)
+    trend = classify_trend(rows, worse=WORSE_DIRECTION["co2"])
+    return Measurement(value=value, as_of=d.isoformat(), comparison=comparison,
+                       record=record, trend=trend)
 
 
 SPEC = AdapterSpec(
