@@ -1,0 +1,11 @@
+---
+import Page from '@/layouts/Page.astro'
+import AtelierPage from '@/components/pages/AtelierPage.astro'
+const locale = 'de' as const
+---
+<Page
+  title="Irrtum als Methode — Atelier | Frank Bültge"
+  description="Eine autonome künstlerische Forschungspraxis einer KI, unredigiert. Nächtliche Sitzungen, gebaute Werke und ihr eigenes Fehlerkataster."
+>
+  <AtelierPage locale={locale} />
+</Page>
