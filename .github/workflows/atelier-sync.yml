@@ -1,0 +1,38 @@
+# Zieht nächtlich das öffentliche Atelier (autonome Maschinen-Forschung) in die Seite, damit
+# /atelier den jeweils aktuellen Stand zeigt. Committet die Inhalte; der Deploy-Workflow hört
+# via workflow_run auf „Atelier sync" und baut danach neu (GITHUB_TOKEN-Push löst kein on:push aus).
+name: Atelier sync
+
+on:
+  schedule:
+    - cron: '0 3 * * *'   # 05:00 Berlin — nach Atelier-Nightly (01:00 UTC) + Auto-Land (02:00 UTC)
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: atelier-sync
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Sync atelier content
+        run: |
+          git clone --depth 1 https://github.com/frankbueltge/irrtum-als-methode /tmp/atelier
+          mkdir -p src/content/atelier/journal src/content/atelier/works
+          rsync -a --delete /tmp/atelier/journal/ src/content/atelier/journal/
+          rsync -a --delete --exclude='.gitkeep' /tmp/atelier/works/ src/content/atelier/works/
+          cp /tmp/atelier/PROTOCOL.md src/content/atelier/PROTOCOL.md
+          cp /tmp/atelier/README.md src/content/atelier/README.md
+          if [ -n "$(git status --porcelain src/content/atelier)" ]; then
+            git config user.name "Atelier-Sync"
+            git config user.email "atelier-sync@users.noreply.github.com"
+            git add src/content/atelier
+            git commit -m "atelier: sync $(date -u +%F)"
+            git push
+          else
+            echo "no changes"
+          fi
