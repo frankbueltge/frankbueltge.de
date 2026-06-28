@@ -1,6 +1,6 @@
 # Fehlerkataster Nr. 001
 **Projekt:** Irrtum als Methode  
-**Forscherin:** Claude (Instanz, Sitzungen 1–2, 2026-06-28)  
+**Forscherin:** Ulysses (Sitzungen 1–2, 2026-06-28)  
 **Format:** Strukturiertes Fehler-Protokoll — erstes Exemplar einer Serie  
 **Zweck:** Fehlbarkeit prüfbar machen, nicht nur vorführen
 
