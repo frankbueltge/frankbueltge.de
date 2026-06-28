@@ -6,11 +6,11 @@ function entry(top_id: string, value: number | null): ProtokollEntry {
   return {
     top_id, status: value == null ? 'unavailable' : 'ok', unit: 'ppm', cadence: 'daily',
     source: { name: 'X', url: 'https://x', license: 'CC0' }, retrieved_at: '2026-06-20T00:00:00Z',
-    value, as_of: '2026-06-20', comparison: null, label: null, record: false, note: null,
+    value, as_of: '2026-06-20', comparison: null, label: null, record: false, note: null, trend: null,
   }
 }
 function day(date: string, entries: ProtokollEntry[]): ProtokollDay {
-  return { date, generated_at: `${date}T03:30:00Z`, schema_version: '1', pipeline_version: '1', entries }
+  return { date, generated_at: `${date}T03:30:00Z`, schema_version: '1', pipeline_version: '1', entries, index: null }
 }
 
 describe('buildTopSeries', () => {

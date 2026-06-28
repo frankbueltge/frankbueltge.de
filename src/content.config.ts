@@ -57,8 +57,21 @@ const protokoll = defineCollection({
           }))
           .nullable()
           .default(null),
+        // Schema 3: Trend gegen 12-Monats-Trend (nur indexfähige TOPs, sonst null).
+        trend: z.enum(['worsened', 'improved', 'unchanged']).nullable().default(null),
       }),
     ),
+    // Schema 3: Vertagungs-Index (fehlt in v2-Tagen → null).
+    index: z
+      .object({
+        eligible: z.number(),
+        established: z.number(),
+        improved: z.number(),
+        worsened: z.number(),
+        unchanged: z.number(),
+      })
+      .nullable()
+      .default(null),
   }),
 })
 
