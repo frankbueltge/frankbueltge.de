@@ -28,9 +28,11 @@ const fmt = (iso: string) =>
             </h2>
             <p class="mt-1.5 text-sm leading-relaxed text-fg-muted">{werk.description[locale]}</p>
           </a>
-          <a href={getRelativeLocaleUrl(locale, `/werke/${werk.id}`)} class="mt-2 inline-block font-mono text-xs text-fg-faint transition-colors hover:text-fg">
-            {t(locale, 'prot.method')} →
-          </a>
+          {werk.methodHref !== null && (
+            <a href={getRelativeLocaleUrl(locale, werk.methodHref ?? `/werke/${werk.id}`)} class="mt-2 inline-block font-mono text-xs text-fg-faint transition-colors hover:text-fg">
+              {t(locale, 'prot.method')} →
+            </a>
+          )}
         </li>
       ))}
     </ul>

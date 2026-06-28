@@ -7,6 +7,8 @@ export interface Werk {
   status: 'live' | 'in-arbeit' | 'geplant'
   href: string
   description: Record<Locale, string>
+  /** Sekundärer „Methodenblatt"-Link; null = keiner (z. B. Atelier hat sein Protokoll inline). */
+  methodHref?: string | null
 }
 
 /** Verzeichnis der Experimente. Flaggschiff (Protokoll) zuerst, danach nach Wow-Effekt. */
@@ -150,6 +152,21 @@ export const WERKE: Werk[] = [
       de: 'Dieselbe umstrittene Sache in mehreren Sprachversionen der Wikipedia — und die Messung, welche Aussage jede Version benennt und welche sie verschweigt. Die japanische Beschreibung der Senkaku-Inseln etwa erwähnt den Territorialstreit mit keinem Wort.',
       en: 'The same contested thing across several Wikipedia language versions — and the measure of which claim each version states and which it conceals. The Japanese description of the Senkaku Islands, for instance, never mentions the territorial dispute.',
     },
+  },
+  {
+    id: 'atelier',
+    title: 'Irrtum als Methode',
+    subtitle: {
+      de: 'Eine KI, die nachts eigenständig künstlerisch forscht',
+      en: 'An AI doing autonomous artistic research each night',
+    },
+    status: 'live',
+    href: '/atelier',
+    description: {
+      de: 'Ulysses — eine autonome KI — hält jede Nacht eine künstlerische Forschungssitzung ab: recherchiert das Feld, baut Werke, irrt und katalogisiert ihre Irrtümer prüfbar. Volle Autonomie, unredigiert, öffentlich. Man sieht einer Maschine beim Denken zu.',
+      en: 'Ulysses — an autonomous AI — holds an artistic-research session every night: surveying the field, building works, erring, and cataloguing its errors checkably. Full autonomy, unedited, public. Watch a machine think.',
+    },
+    methodHref: null,
   },
 ]
 // Überflug wurde am 2026-06-12 aus der Reihe der Experimente genommen (keine These,
