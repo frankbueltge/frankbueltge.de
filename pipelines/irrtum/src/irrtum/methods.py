@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from datetime import date
 
 
 @dataclass(frozen=True)
@@ -19,5 +20,5 @@ METHODS: list[Method] = [
 
 
 def pick_method(date_iso: str) -> Method:
-    ordinal = int(date_iso.replace("-", ""))
+    ordinal = date.fromisoformat(date_iso).toordinal()
     return METHODS[ordinal % len(METHODS)]

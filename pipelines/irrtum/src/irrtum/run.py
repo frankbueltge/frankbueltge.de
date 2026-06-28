@@ -4,7 +4,7 @@ from __future__ import annotations
 import argparse
 import os
 import sys
-from datetime import date, timezone
+from datetime import date
 from pathlib import Path
 
 import httpx
@@ -34,9 +34,12 @@ def main(argv: list[str] | None = None) -> int:
         print("kein Finding (zu wenig Überlappung) — Sitzung entfällt", file=sys.stderr)
         return 1
 
+    payload = session_to_json(session)
+    if args.dry_run:
+        print(payload, end="")
+        return 0
     out = root / "src" / "data" / "irrtum"
     out.mkdir(parents=True, exist_ok=True)
-    payload = session_to_json(session)
     (out / f"{today}.json").write_text(payload, encoding="utf-8")
     (out / "latest.json").write_text(payload, encoding="utf-8")
     print(f"geschrieben: src/data/irrtum/{today}.json — verdict={session.verdict}")
