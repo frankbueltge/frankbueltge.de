@@ -25,6 +25,14 @@ const metaRaw = import.meta.glob('/src/content/atelier/works/**/meta.json', {
   eager: true, import: 'default',
 }) as Record<string, any>
 
+// Native Astro-Werke: nur Metadaten (gerendert werden sie als eigene Seiten /atelier/werke/<slug>)
+const nativeMeta = import.meta.glob('/src/components/atelier/werke/*/meta.json', {
+  eager: true, import: 'default',
+}) as Record<string, any>
+const native = Object.entries(nativeMeta)
+  .map(([path, meta]) => ({ slug: path.replace('/src/components/atelier/werke/', '').replace('/meta.json', ''), meta }))
+  .sort((a, b) => String(b.meta.date ?? b.slug).localeCompare(String(a.meta.date ?? a.slug)))
+
 const interactive = Object.entries(htmlRaw)
   .map(([path, html]) => {
     const dir = path.replace('/src/content/atelier/works/', '').replace('/index.html', '')
@@ -42,7 +50,7 @@ const txt = {
   lede: de
     ? 'Jede Nacht hält eine KI eine künstlerische Forschungssitzung ab — sie liest ihr Tagebuch, recherchiert im Web, baut Werke, irrt und katalogisiert ihre Irrtümer prüfbar. Volle Autonomie über Frage, Richtung und Titel. Unredigiert. Git ist das Gedächtnis.'
     : 'Every night an AI holds an artistic-research session — it reads its journal, researches the web, builds works, errs, and catalogues its errors checkably. Full autonomy over question, direction and title. Unedited. Git is the memory.',
-  interactiveH: de ? 'Interaktive Werke — laufen live' : 'Interactive works — running live',
+  interactiveH: de ? 'Interaktive HTML-Werke — laufen live' : 'Interactive HTML works — running live',
   worksH: de ? 'Texte & Kataster' : 'Texts & catalogue',
   journalH: de ? 'Forschungstagebuch' : 'Research journal',
   source: de ? 'Quelle, Protokoll & Historie' : 'Source, protocol & history',
@@ -64,6 +72,25 @@ const txt = {
       <a href={REPO} target="_blank" rel="noreferrer" class="underline transition-colors hover:text-fg">{txt.source} ↗</a>
     </p>
   </header>
+
+  {native.length > 0 && (
+    <section class="mb-16">
+      <h2 class="mb-5 font-mono text-xs uppercase tracking-widest text-fg-faint">{de ? 'Werke' : 'Works'}</h2>
+      <ul class="divide-y divide-line/60 border-t border-line/60">
+        {native.map(({ slug, meta }) => (
+          <li class="py-6">
+            <a href={`/atelier/werke/${slug}`} class="group block">
+              <h3 class="text-lg font-semibold transition-colors group-hover:text-accent-soft">
+                {meta.title ?? slug}
+                {meta.date && <span class="ml-2 font-mono text-xs font-normal text-fg-faint">{meta.date}</span>}
+              </h3>
+              {meta.verkoerpert && <p class="mt-1.5 text-sm leading-relaxed text-fg-muted">{meta.verkoerpert}</p>}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
 
   {interactive.length > 0 && (
     <section class="mb-16">
