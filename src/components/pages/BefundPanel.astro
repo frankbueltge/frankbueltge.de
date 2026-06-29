@@ -59,6 +59,9 @@ const dateShort = (iso: string) =>
     .format(new Date(`${iso}T00:00:00Z`))
 
 const methodUrl = getRelativeLocaleUrl(locale, '/werke/protokoll')
+// CSP-sichere Marker-Farbe + Position: Werte sind build-time statisch (SSG);
+// als roher <style>-Block emittiert → hashbar, kein inline-style="".
+const markerLeft = `calc(${((pos ?? 0) * 100).toFixed(1)}% - 3px)`
 
 // Familien-Akzentzeile — aus echten Daten gerechnet.
 let flourish = ''
@@ -91,7 +94,12 @@ const T = {
 const retrievedShort = e.retrieved_at ? e.retrieved_at.slice(0, 10) : null
 ---
 
-<div class="befund mt-5 border-t border-line pt-6">
+<Fragment set:html={`<style>
+  .befund-instance-${topId} .befund-marker-text { color: ${markerColor}; }
+  .befund-instance-${topId} .befund-marker-dot  { left: ${markerLeft}; background: ${markerColor}; }
+  .befund-instance-${topId} .befund-marker-circle { fill: ${markerColor}; }
+</style>`} />
+<div class={`befund befund-instance-${topId} mt-5 border-t border-line pt-6`}>
   <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-fg-faint">{n ? `TOP ${n} · ` : ''}{title}</p>
 
   {/* Monument + Befund-Satz */}
@@ -108,15 +116,14 @@ const retrievedShort = e.retrieved_at ? e.retrieved_at.slice(0, 10) : null
     ) : (
       <p class="text-3xl font-semibold text-fg-faint">—</p>
     )}
-    {satz && <p class="font-mono text-sm font-medium" style={`color:${markerColor}`}>{satz}</p>}
+    {satz && <p class="befund-marker-text font-mono text-sm font-medium">{satz}</p>}
   </div>
 
   {/* Korridor-Band — Lage im plausiblen Bereich */}
   {corridor && hasVal && pos != null && (
     <div class="mt-6">
       <div class="relative h-2 rounded-full bg-line">
-        <div class="absolute top-1/2 h-4 w-1.5 -translate-y-1/2 rounded-full"
-          style={`left:calc(${(pos * 100).toFixed(1)}% - 3px);background:${markerColor}`}></div>
+        <div class="befund-marker-dot absolute top-1/2 h-4 w-1.5 -translate-y-1/2 rounded-full"></div>
       </div>
       <div class="mt-1.5 flex justify-between font-mono text-[10px] text-fg-faint">
         <span>{fmtVal(corridor[0])}</span>
@@ -138,7 +145,7 @@ const retrievedShort = e.retrieved_at ? e.retrieved_at.slice(0, 10) : null
         <path d={areaPath(vals, BW, BH)} fill="rgb(var(--rgb-accent))" fill-opacity="0.08" stroke="none" />
         <path class="befund-curve" pathLength="1" d={linePath(vals, BW, BH)} fill="none"
           stroke="rgb(var(--rgb-accent))" stroke-width="2" vector-effect="non-scaling-stroke" />
-        <circle cx={BW} cy={yOf(vals[vals.length - 1]).toFixed(1)} r="3.5" style={`fill:${markerColor}`} />
+        <circle class="befund-marker-circle" cx={BW} cy={yOf(vals[vals.length - 1]).toFixed(1)} r="3.5" />
       </svg>
       <figcaption class="mt-1.5 flex justify-between font-mono text-[10px] text-fg-faint">
         <span>{dateShort(series[0].date)}</span>
