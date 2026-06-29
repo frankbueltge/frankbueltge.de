@@ -1,8 +1,8 @@
 ---
 // Atelier — die öffentliche Ausstellung der autonomen Maschinen-Forschung „Irrtum als Methode".
 // Rendert das Forschungstagebuch (journal/), die interaktiven Werke (works/<datum>-<name>/index.html,
-// live in einem isolierten Sandbox-iframe) und die Text-Werke (works/*.md) aus der nächtlich
-// synchronisierten Content-Collection. Unredigiert. Inhalt kommt aus dem Atelier-Repo.
+// live in einem isolierten Sandbox-iframe als same-origin-Standalone) und die Text-Werke (works/*.md)
+// aus der nächtlich synchronisierten Content-Collection. Unredigiert. Inhalt kommt aus dem Atelier-Repo.
 import { getCollection, render } from 'astro:content'
 import type { Locale } from '@/lib/site'
 
@@ -17,11 +17,10 @@ const mdWorks = all.filter((e) => e.id.startsWith('works/')).sort((a, b) => a.id
 const journalR = await Promise.all(journal.map(async (e) => ({ id: e.id, Content: (await render(e)).Content })))
 const mdWorksR = await Promise.all(mdWorks.map(async (e) => ({ id: e.id, Content: (await render(e)).Content })))
 
-// Interaktive Werke (HTML/JS) — Rohinhalt + Metadaten zur Build-Zeit aus dem works/-Baum laden.
-const htmlRaw = import.meta.glob('/src/content/atelier/works/**/index.html', {
-  eager: true, query: '?raw', import: 'default',
-}) as Record<string, string>
-const metaRaw = import.meta.glob('/src/content/atelier/works/**/meta.json', {
+// Interaktive Werke (HTML/JS) — Metadaten aus dem content-Baum; die HTML-Datei selbst wird als
+// Standalone unter /atelier/werke-html/<slug>/ ausgeliefert (kein srcdoc — erbt keine parent-CSP).
+// Nur works/ mit meta.json sind HTML-Werke; .md-Werke haben kein meta.json.
+const metaRaw = import.meta.glob('/src/content/atelier/works/*/meta.json', {
   eager: true, import: 'default',
 }) as Record<string, any>
 
@@ -33,13 +32,12 @@ const native = Object.entries(nativeMeta)
   .map(([path, meta]) => ({ slug: path.replace('/src/components/atelier/werke/', '').replace('/meta.json', ''), meta }))
   .sort((a, b) => String(b.meta.date ?? b.slug).localeCompare(String(a.meta.date ?? a.slug)))
 
-const interactive = Object.entries(htmlRaw)
-  .map(([path, html]) => {
-    const dir = path.replace('/src/content/atelier/works/', '').replace('/index.html', '')
-    const meta = metaRaw[path.replace('/index.html', '/meta.json')] ?? {}
-    return { dir, html, meta }
+const interactive = Object.entries(metaRaw)
+  .map(([path, meta]) => {
+    const slug = path.replace('/src/content/atelier/works/', '').replace('/meta.json', '')
+    return { slug, meta }
   })
-  .sort((a, b) => String(b.meta.date ?? b.dir).localeCompare(String(a.meta.date ?? a.dir)))
+  .sort((a, b) => String(b.meta.date ?? b.slug).localeCompare(String(a.meta.date ?? a.slug)))
 
 const REPO = 'https://github.com/frankbueltge/irrtum-als-methode'
 const dayLabel = (id: string) => id.replace('journal/', '').replace(/\.md$/, '')
@@ -95,11 +93,11 @@ const txt = {
   {interactive.length > 0 && (
     <section class="mb-16">
       <h2 class="mb-5 font-mono text-xs uppercase tracking-widest text-fg-faint">{txt.interactiveH}</h2>
-      {interactive.map(({ dir, html, meta }) => (
+      {interactive.map(({ slug, meta }) => (
         <article class="mb-12 rounded-[16px] border border-line bg-panel panel-raised p-6">
           <header class="mb-4">
             <h3 class="text-lg font-semibold">
-              {meta.title ?? dir}
+              {meta.title ?? slug}
               {meta.date && <span class="ml-2 font-mono text-xs font-normal text-fg-faint">{meta.date}</span>}
             </h3>
             {meta.verkoerpert && <p class="mt-2 text-sm leading-relaxed text-fg-muted">{meta.verkoerpert}</p>}
@@ -111,23 +109,24 @@ const txt = {
           </header>
 
           {/*
-            SICHERHEIT: sandbox="allow-scripts" OHNE allow-same-origin → der eingebettete,
-            maschinengenerierte Code läuft mit undurchsichtigem (null) Origin. Er kann damit
-            weder Cookies/Storage noch das DOM von frankbueltge.de lesen, nicht das Top-Fenster
-            navigieren und nichts nach außen senden. NIEMALS allow-same-origin ergänzen — das
-            höbe die Isolation auf. Zusätzlich sind die Werke verifiziert ohne externe Calls.
+            SICHERHEIT: Standalone same-origin-Datei unter /atelier/werke-html/<slug>/ —
+            separates Dokument erbt die parent-<meta>-CSP NICHT. sandbox="allow-scripts"
+            OHNE allow-same-origin → null-Origin, kein Zugriff auf Cookies/Storage/DOM von
+            frankbueltge.de. Pfad-spezifische CSP in _headers erlaubt Inline-Scripts des
+            Werks, blockt fetch/connect (kein Exfiltrations-Kanal).
+            NIEMALS allow-same-origin ergänzen — das höbe die Isolation auf.
           */}
           <iframe
-            srcdoc={html}
+            src={`/atelier/werke-html/${slug}/`}
             sandbox="allow-scripts"
             loading="lazy"
-            title={meta.title ?? dir}
+            title={meta.title ?? slug}
             class="block h-[600px] w-full resize-y overflow-auto rounded-[10px] border border-line bg-white"
           ></iframe>
 
           <div class="mt-3 flex flex-wrap items-center justify-between gap-2 font-mono text-[11px] text-fg-faint">
             <span>{txt.sandboxNote}</span>
-            <a href={`${REPO}/tree/main/works/${dir}`} target="_blank" rel="noreferrer" class="underline hover:text-fg">{txt.sourceCode} ↗</a>
+            <a href={`${REPO}/tree/main/works/${slug}`} target="_blank" rel="noreferrer" class="underline hover:text-fg">{txt.sourceCode} ↗</a>
           </div>
 
           {Array.isArray(meta.quellen) && meta.quellen.length > 0 && (

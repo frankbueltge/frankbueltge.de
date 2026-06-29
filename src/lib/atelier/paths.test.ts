@@ -31,10 +31,10 @@ describe('siteTargets', () => {
       { from: 'data.json',  to: 'src/components/atelier/werke/drei/data.json' },
     ])
   })
-  it('maps an html work into the content tree', () => {
+  it('maps an html work: index.html → public/atelier/werke-html/, meta.json stays in content tree', () => {
     const w = { slug: 'alt', kind: 'html' as const, files: ['index.html', 'meta.json'] }
     expect(siteTargets(w)).toEqual([
-      { from: 'index.html', to: 'src/content/atelier/works/alt/index.html' },
+      { from: 'index.html', to: 'public/atelier/werke-html/alt/index.html' },
       { from: 'meta.json',  to: 'src/content/atelier/works/alt/meta.json' },
     ])
   })

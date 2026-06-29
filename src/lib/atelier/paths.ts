@@ -15,7 +15,12 @@ export function classifyWork(slug: string, fileNames: string[]): ClassifiedWork 
 
 export function siteTargets(work: ClassifiedWork): FileMap[] {
   if (work.kind === 'html') {
-    return work.files.map((f) => ({ from: f, to: `src/content/atelier/works/${work.slug}/${f}` }))
+    return work.files.map((f) => ({
+      from: f,
+      to: f === 'index.html'
+        ? `public/atelier/werke-html/${work.slug}/index.html`
+        : `src/content/atelier/works/${work.slug}/${f}`,
+    }))
   }
   // astro: whole dir → components/atelier/werke/<slug>/, work.astro → index.astro
   return work.files.map((f) => ({
