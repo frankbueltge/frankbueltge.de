@@ -24,25 +24,29 @@ export function integrate(opts: { sourceDir: string; siteDir: string }): Integra
     if (work.kind === null) { report.rejected.push({ slug, reason: work.reason }); continue }
     // Same rule as renderWrapperPage — reject before any file is touched
     if (!/^[a-z0-9-]+$/.test(slug)) { report.rejected.push({ slug, reason: 'unsafe slug (nur a-z, 0-9, - erlaubt)' }); continue }
-    // forbidden-scan all code files of astro works
-    if (work.kind === 'astro') {
-      const violations: string[] = []
-      for (const f of files.filter((f) => CODE_EXT.test(f)))
-        violations.push(...checkForbidden(readFileSync(join(dir, f), 'utf8')))
-      if (violations.length) { report.rejected.push({ slug, reason: violations.join('; ') }); continue }
+    try {
+      // forbidden-scan all code files of astro works
+      if (work.kind === 'astro') {
+        const violations: string[] = []
+        for (const f of files.filter((f) => CODE_EXT.test(f)))
+          violations.push(...checkForbidden(readFileSync(join(dir, f), 'utf8')))
+        if (violations.length) { report.rejected.push({ slug, reason: violations.join('; ') }); continue }
+      }
+      for (const { from, to } of siteTargets(work)) {
+        const dest = join(opts.siteDir, to)
+        mkdirSync(dirname(dest), { recursive: true })
+        copyFileSync(join(dir, from), dest)
+      }
+      if (work.kind === 'astro') {
+        const meta = JSON.parse(readFileSync(join(dir, 'meta.json'), 'utf8'))
+        const page = join(opts.siteDir, `src/pages/atelier/werke/${slug}.astro`)
+        mkdirSync(dirname(page), { recursive: true })
+        writeFileSync(page, renderWrapperPage(slug, meta))
+      }
+      report.accepted.push({ slug, kind: work.kind })
+    } catch (e) {
+      report.rejected.push({ slug, reason: 'fehler bei verarbeitung: ' + String(e) })
     }
-    for (const { from, to } of siteTargets(work)) {
-      const dest = join(opts.siteDir, to)
-      mkdirSync(dirname(dest), { recursive: true })
-      copyFileSync(join(dir, from), dest)
-    }
-    if (work.kind === 'astro') {
-      const meta = JSON.parse(readFileSync(join(dir, 'meta.json'), 'utf8'))
-      const page = join(opts.siteDir, `src/pages/atelier/werke/${slug}.astro`)
-      mkdirSync(dirname(page), { recursive: true })
-      writeFileSync(page, renderWrapperPage(slug, meta))
-    }
-    report.accepted.push({ slug, kind: work.kind })
   }
   return report
 }

