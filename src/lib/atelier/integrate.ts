@@ -22,6 +22,8 @@ export function integrate(opts: { sourceDir: string; siteDir: string }): Integra
     const files = readdirSync(dir)
     const work = classifyWork(slug, files)
     if (work.kind === null) { report.rejected.push({ slug, reason: work.reason }); continue }
+    // Same rule as renderWrapperPage — reject before any file is touched
+    if (!/^[a-z0-9-]+$/.test(slug)) { report.rejected.push({ slug, reason: 'unsafe slug (nur a-z, 0-9, - erlaubt)' }); continue }
     // forbidden-scan all code files of astro works
     if (work.kind === 'astro') {
       const violations: string[] = []

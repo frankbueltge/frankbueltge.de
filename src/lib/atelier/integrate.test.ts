@@ -14,6 +14,8 @@ beforeEach(() => {
   mk('works/good/meta.json', JSON.stringify({ title: 'Good', verkoerpert: 'v' }))
   mk('works/evil/work.astro', `<script src="https://evil.example/x.js"></script>`)
   mk('works/evil/meta.json', JSON.stringify({ title: 'Evil' }))
+  mk('works/Bad_Slug/work.astro', `---\n---\n<p>bad</p>`)
+  mk('works/Bad_Slug/meta.json', JSON.stringify({ title: 'Bad' }))
 })
 afterEach(() => { rmSync(src, { recursive: true, force: true }); rmSync(site, { recursive: true, force: true }) })
 
@@ -30,5 +32,10 @@ describe('integrate', () => {
     const r = integrate({ sourceDir: src, siteDir: site })
     expect(r.rejected.find((x) => x.slug === 'evil')?.reason).toMatch(/external resource/)
     expect(existsSync(join(site, 'src/components/atelier/werke/evil/index.astro'))).toBe(false)
+  })
+  it('rejects a work with an unsafe slug before copying any files', () => {
+    const r = integrate({ sourceDir: src, siteDir: site })
+    expect(r.rejected.find((x) => x.slug === 'Bad_Slug')?.reason).toMatch(/unsafe slug/)
+    expect(existsSync(join(site, 'src/components/atelier/werke/Bad_Slug/index.astro'))).toBe(false)
   })
 })
