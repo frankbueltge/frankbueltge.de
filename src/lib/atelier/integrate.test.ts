@@ -38,4 +38,25 @@ describe('integrate', () => {
     expect(r.rejected.find((x) => x.slug === 'Bad_Slug')?.reason).toMatch(/unsafe slug/)
     expect(existsSync(join(site, 'src/components/atelier/werke/Bad_Slug/index.astro'))).toBe(false)
   })
+  it('rejects an astro work with missing meta.json without crashing, and still processes other works', () => {
+    const mk = (p: string, c: string) => { mkdirSync(join(src, p, '..'), { recursive: true }); writeFileSync(join(src, p), c) }
+    mk('works/no-meta/work.astro', `---\n---\n<p>no meta</p>`)
+    // no meta.json written — integrate must catch the ENOENT and continue
+    const r = integrate({ sourceDir: src, siteDir: site })
+    const rej = r.rejected.find((x) => x.slug === 'no-meta')
+    expect(rej).toBeDefined()
+    expect(rej?.reason).toMatch(/fehler bei verarbeitung/)
+    // other clean work must still be accepted
+    expect(r.accepted).toContainEqual({ slug: 'good', kind: 'astro' })
+  })
+  it('rejects an astro work with broken meta.json without crashing', () => {
+    const mk = (p: string, c: string) => { mkdirSync(join(src, p, '..'), { recursive: true }); writeFileSync(join(src, p), c) }
+    mk('works/bad-meta/work.astro', `---\n---\n<p>bad meta</p>`)
+    mk('works/bad-meta/meta.json', 'NOT VALID JSON {{{')
+    const r = integrate({ sourceDir: src, siteDir: site })
+    const rej = r.rejected.find((x) => x.slug === 'bad-meta')
+    expect(rej).toBeDefined()
+    expect(rej?.reason).toMatch(/fehler bei verarbeitung/)
+    expect(r.accepted).toContainEqual({ slug: 'good', kind: 'astro' })
+  })
 })

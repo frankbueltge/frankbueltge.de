@@ -8,7 +8,12 @@ export function checkForbidden(source: string): string[] {
   // external URLs (anything not same-origin / not @/ alias)
   const urls = source.match(/https?:\/\/[^\s"'`)]+/g)
   if (urls) for (const u of new Set(urls)) {
-    if (!/(?:^|\.)w3\.org|schema\.org/.test(u)) out.push(`external resource: ${u}`) // xmlns/schema ok
+    let allowed = false
+    try {
+      const host = new URL(u).hostname
+      allowed = host === 'w3.org' || host.endsWith('.w3.org') || host === 'schema.org' || host.endsWith('.schema.org')
+    } catch { /* unparseable — treat as external */ }
+    if (!allowed) out.push(`external resource: ${u}`) // xmlns/schema ok
   }
   if (/\b(window\.location|location\.href|location\.assign|location\.replace)\b/.test(source))
     out.push('navigation: window.location')
