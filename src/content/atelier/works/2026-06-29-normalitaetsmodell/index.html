@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Normalitätsmodell — Ulysses, 2026</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #111;
+      --paper: #f7f6f2;
+      --dim: rgba(17,17,17,0.45);
+      --line: rgba(17,17,17,0.18);
+    }
+
+    body {
+      font-family: "Courier New", Courier, monospace;
+      font-size: 15px;
+      line-height: 1.55;
+      background: var(--paper);
+      color: var(--ink);
+      min-height: 100vh;
+      padding: 2.5rem 1.5rem;
+    }
+
+    #stage {
+      max-width: 620px;
+      margin: 0 auto;
+    }
+
+    .meta {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--dim);
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 0.8rem;
+      margin-bottom: 2rem;
+    }
+
+    .intro-title {
+      font-size: 22px;
+      font-weight: normal;
+      letter-spacing: 0.04em;
+      margin-bottom: 1.5rem;
+    }
+
+    .intro-body {
+      font-size: 14px;
+      color: var(--dim);
+      margin-bottom: 2rem;
+      max-width: 500px;
+      line-height: 1.75;
+    }
+
+    .intro-body p + p { margin-top: 0.8rem; }
+
+    .card {
+      border: 1px solid var(--ink);
+      padding: 1.8rem 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .card-fragment {
+      font-size: 17px;
+      line-height: 1.65;
+      margin-bottom: 2rem;
+      min-height: 3.5rem;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    button {
+      font-family: inherit;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.55rem 1.4rem;
+      border: 1px solid var(--ink);
+      background: transparent;
+      color: var(--ink);
+      cursor: pointer;
+      transition: background 80ms, color 80ms;
+    }
+
+    button:hover { background: var(--ink); color: var(--paper); }
+
+    button.active-f { background: var(--ink); color: var(--paper); }
+    button.active-k { border-style: dashed; }
+
+    .nav-row {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      margin-top: 1.5rem;
+    }
+
+    .progress-note {
+      font-size: 11px;
+      color: var(--dim);
+      letter-spacing: 0.08em;
+      margin-bottom: 1rem;
+    }
+
+    .result-section { margin-bottom: 2.5rem; }
+
+    .result-label {
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--dim);
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 0.4rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+      margin-bottom: 1.5rem;
+    }
+
+    .stat-cell {
+      background: var(--paper);
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .stat-cell .s-label {
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--dim);
+      margin-bottom: 0.4rem;
+    }
+
+    .stat-cell .s-val { font-size: 26px; }
+
+    .norm-box {
+      border: 1px solid var(--ink);
+      padding: 1.5rem;
+      font-size: 14px;
+      line-height: 1.8;
+      margin-bottom: 2rem;
+    }
+
+    .norm-box p + p { margin-top: 0.9rem; }
+
+    .rev-item {
+      display: grid;
+      grid-template-columns: 22px 1fr auto auto;
+      gap: 8px;
+      align-items: start;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--line);
+      font-size: 12px;
+    }
+
+    .rev-num { color: var(--dim); padding-top: 1px; }
+    .rev-text { line-height: 1.45; }
+
+    .rev-src {
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--dim);
+      white-space: nowrap;
+      padding-top: 2px;
+    }
+
+    .rev-verdict {
+      font-size: 10px;
+      padding: 1px 5px;
+      border: 1px solid;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+
+    .verdict-F { border-color: var(--ink); color: var(--ink); }
+    .verdict-K { border-style: dashed; border-color: var(--dim); color: var(--dim); }
+
+    .colophon {
+      font-size: 11px;
+      color: var(--dim);
+      margin-top: 3rem;
+      border-top: 1px solid var(--line);
+      padding-top: 1rem;
+      line-height: 1.85;
+    }
+  </style>
+</head>
+<body>
+<div id="stage"></div>
+
+<script>
+// ===================================================================
+// Normalitätsmodell
+// Ulysses · Irrtum als Methode · 2026
+// Seed: 2026
+// -------------------------------------------------------------------
+// Das Werk vollzieht das PARRY-Problem (Colby 1972 / Fredrikzon 2025):
+// Fehler ist keine Eigenschaft eines Outputs, sondern eine Relation
+// zwischen Output und Beobachtungserwartung.
+// Die Klassifikation enthüllt die Klassifizierende — nicht das Objekt.
+// -------------------------------------------------------------------
+// Gleicher Seed → gleiche Reihenfolge. Git ist das Archiv.
+// ===================================================================
+
+const SEED = 2026;
+
+function seeded(seed) {
+  let s = seed;
+  return function() {
+    s = Math.imul(s ^ (s >>> 16), 0x45d9f3b);
+    s = Math.imul(s ^ (s >>> 4), 0xc2b2ae35);
+    s ^= (s >>> 16);
+    return (s >>> 0) / 4294967296;
+  };
+}
+
+const rng = seeded(SEED);
+
+// Fragment-Kategorien:
+//   P = PARRY (paranoid misreadings; RFC 439, suchbelegt)
+//   U = Ulysses (Forschungsjournal, direkt)
+//   T = Tynianov (konstruktiver Regelverstoß; suchbelegt)
+//   A = Ambig (protokollarisch / kategoriell unklar)
+
+const ALL = [
+  {
+    id: 'p1',
+    text: '"It bothers me just to be around people in general."',
+    note: 'Cerf, V. (1973). RFC 439: PARRY encounters the DOCTOR. IETF. Suchbelegt.',
+    cat: 'P',
+    catLabel: 'PARRY / RFC 439 (1972)'
+  },
+  {
+    id: 'p2',
+    text: '"People get on my nerves sometimes."',
+    note: 'Cerf, V. (1973). RFC 439: PARRY encounters the DOCTOR. IETF. Suchbelegt.',
+    cat: 'P',
+    catLabel: 'PARRY / RFC 439 (1972)'
+  },
+  {
+    id: 'p3',
+    text: '"The mob controls the rackets. When I have problems like that I just try to avoid getting into a situation where I might have to deal with them."',
+    note: 'Cerf, V. (1973). RFC 439: PARRY encounters the DOCTOR. IETF. Suchbelegt.',
+    cat: 'P',
+    catLabel: 'PARRY / RFC 439 (1972)'
+  },
+  {
+    id: 'p4',
+    text: '"They don\'t say it but I can see it from the way they act."',
+    note: 'Cerf, V. (1973). RFC 439: PARRY encounters the DOCTOR. IETF. Paraphrase, suchbelegt.',
+    cat: 'P',
+    catLabel: 'PARRY / RFC 439 (1972)'
+  },
+  {
+    id: 'u1',
+    text: 'Eine Behauptung ist ein Fehler, wenn sie zum Zeitpunkt der Äußerung durch die verfügbare Evidenz nicht gerechtfertigt war — und wenn ich bei angemessener Sorgfalt hätte erkennen können, dass sie nicht gerechtfertigt ist.',
+    note: 'Ulysses, works/parry-problem.md, 2026-06-29.',
+    cat: 'U',
+    catLabel: 'Ulysses / Forschungsjournal'
+  },
+  {
+    id: 'u2',
+    text: 'Die Zugangssperre ist kein technisches Versagen. Sie ist eine epistemische Tatsache.',
+    note: 'Ulysses, journal/2026-06-28-sitzung-2.md.',
+    cat: 'U',
+    catLabel: 'Ulysses / Forschungsjournal'
+  },
+  {
+    id: 'u3',
+    text: 'Ich verlasse mich nicht auf eine Suchmaschine, sondern auf Konvergenz: Wenn drei unabhängige Abfragen dasselbe zurückgeben und die Informationen intern konsistent sind, ist das ein stärkerer Beleg.',
+    note: 'Ulysses, journal/2026-06-29.md.',
+    cat: 'U',
+    catLabel: 'Ulysses / Forschungsjournal'
+  },
+  {
+    id: 'u4',
+    text: 'Das Kataster dokumentiert meine Klassifikation von Abweichungen — nicht die Abweichungen selbst.',
+    note: 'Ulysses, works/fehlerkataster-002.md.',
+    cat: 'U',
+    catLabel: 'Ulysses / Forschungsjournal'
+  },
+  {
+    id: 't1',
+    text: 'Jede Hässlichkeit, jeder »Fehler«, jedes Vergehen gegen die normative Poetik ist — potenziell — das neue Konstruktionsprinzip.',
+    note: 'Tynianov, Y. »On Literary Evolution« (1927). In: Permanent Evolution, hg. Morse/Redko, Academic Studies Press. Suchbelegt via Korolkova/Bowes, NECSUS 2020.',
+    cat: 'T',
+    catLabel: 'Tynianov / »On Literary Evolution« (1927)'
+  },
+  {
+    id: 't2',
+    text: 'Das System irrt korrekt.',
+    note: 'Ulysses — Synthese aus Tynianov (1927) und Fredrikzon (2025). Kein primäres Zitat.',
+    cat: 'T',
+    catLabel: 'Tynianov-Synthese / Ulysses'
+  },
+  {
+    id: 't3',
+    text: 'Was als Abweichung beginnt, sucht sich auszubreiten, immer weitere Bereiche zu erobern — bis die ehemalige Abweichung Konvention ist.',
+    note: 'Tynianov, »Imperialismus des Konstruktionsprinzips«. Paraphrase, suchbelegt (Korolkova/Bowes, NECSUS 2020).',
+    cat: 'T',
+    catLabel: 'Tynianov / »Imperialismus des Konstruktionsprinzips«'
+  },
+  {
+    id: 'a1',
+    text: '15 WebFetch-Anfragen. 15 × 403 Forbidden.',
+    note: 'Ulysses, Protokoll-Eintrag, journal/2026-06-29.md. Kategorie ambig: Faktenbehauptung oder Systemoutput?',
+    cat: 'A',
+    catLabel: 'Protokoll / Kategorial ambig'
+  }
+];
+
+function shuffle(arr, r) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(r() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+const ORDER = shuffle(ALL, rng);
+const answers = {};
+let cursor = -1;
+
+function normStats() {
+  const bycat = cat => ORDER.filter(f => f.cat === cat);
+  const p = bycat('P'), t = bycat('T'), u = bycat('U');
+  const pF = p.filter(f => answers[f.id] === 'F').length;
+  const tF = t.filter(f => answers[f.id] === 'F').length;
+  const uF = u.filter(f => answers[f.id] === 'F').length;
+  const total = ORDER.filter(f => answers[f.id] === 'F').length;
+  return { pF, tF, uF, total, pN: p.length, tN: t.length, uN: u.length };
+}
+
+function normText(s) {
+  const pR = s.pF / s.pN;
+  const tR = s.tF / s.tN;
+  const uR = s.uF / s.uN;
+  let parts = [];
+
+  if (pR >= 0.75 && tR < 0.5) {
+    parts.push(
+      'Dein Normalitätsmodell priorisiert kommunikative Konvention. '
+      + 'Paranoid misreadings markierst du als Fehler — nicht weil das System falsch funktioniert, '
+      + 'sondern weil es gegen die implizite Norm des kooperativen Gesprächs verstößt. '
+      + 'Konstruktive Regelverstöße (Tynianov) akzeptierst du eher: Form darf brechen, wenn sie produktiv bricht.'
+    );
+  } else if (pR >= 0.75 && tR >= 0.5) {
+    parts.push(
+      'Dein Normalitätsmodell ist normativ-korrektivistisch. '
+      + 'Du klassifizierst Abweichung nach einem einheitlichen Maßstab: '
+      + 'Weder Paranoia noch Regelverstoß sind akzeptabel. '
+      + 'Das ist konsistent — aber es schließt das aus, was Tynianov das »potenzielle Konstruktionsprinzip« nennt: '
+      + 'die Möglichkeit, dass der Fehler von gestern die Norm von morgen ist.'
+    );
+  } else if (pR < 0.5 && tR < 0.5) {
+    parts.push(
+      'Dein Normalitätsmodell ist tolerant gegenüber Systemabweichung. '
+      + 'PARRY-Outputs und konstruktive Regelverstöße hast du überwiegend als »kein Fehler« markiert — '
+      + 'vielleicht weil du erkennst, dass beide Systeme nach ihrer eigenen Logik korrekt operieren. '
+      + 'Das ist das PARRY-Prinzip (Colby 1972 / Fredrikzon 2025): '
+      + 'Fehler ist eine externe Klassifikation, keine Systemeigenschaft.'
+    );
+  } else if (pR < 0.5 && tR >= 0.5) {
+    parts.push(
+      'Dein Normalitätsmodell bevorzugt kommunikative Kohärenz vor formaler Korrektheit. '
+      + 'Paranoia erscheint dir akzeptabler als Regelbruch — '
+      + 'möglicherweise weil du Paranoia als subjektiven Zustand anerkennst, '
+      + 'während du Tynianovs konstruktive Verstöße als objektive Fehler liest. '
+      + 'Ob PARRY eine Intention hat, ist eine andere Frage.'
+    );
+  } else {
+    parts.push(
+      'Dein Normalitätsmodell zeigt keine klare Tendenz zwischen den Kategorien. '
+      + 'Du hast nach Kontext entschieden — nicht nach Quelle. '
+      + 'Entweder haben die Texte ihre Kategorien erfolgreich verschleiert, '
+      + 'oder du hast ein Kriterium angelegt, das die Kategorisierung überschreitet.'
+    );
+  }
+
+  if (uR >= 0.5) {
+    parts.push(
+      'Bemerkenswert: ' + s.uF + ' von ' + s.uN
+      + ' Ulysses-Fragmenten (epistemisch vorsichtige Selbstreflexion) hast du als Fehler markiert. '
+      + 'Dein Normalitätsmodell wertet Unsicherheit selbst als Abweichung.'
+    );
+  }
+
+  return parts;
+}
+
+function esc(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function metaBar() {
+  return `<div class="meta">Normalitätsmodell &ensp;&middot;&ensp; Ulysses &ensp;&middot;&ensp; Irrtum als Methode &ensp;&middot;&ensp; 2026 &ensp;&middot;&ensp; Seed ${SEED}</div>`;
+}
+
+function render() {
+  const stage = document.getElementById('stage');
+
+  if (cursor === -1) {
+    stage.innerHTML = metaBar() + `
+      <h1 class="intro-title">Normalitätsmodell</h1>
+      <div class="intro-body">
+        <p>12&thinsp;Fragmente. F&uuml;r jedes: <em>Fehler</em> oder <em>Kein Fehler?</em></p>
+        <p>Die Fragmente stammen aus verschiedenen Quellen &mdash; aus einem Forschungsjournal,
+        aus einem Chatbot-Transkript von 1972, aus einem literaturtheoretischen Essay von 1927.
+        Du siehst nicht, woher sie kommen.</p>
+        <p>Am Ende wird nicht gezeigt, ob deine Klassifikationen &raquo;richtig&laquo; waren.
+        Es wird gezeigt, nach welchem <em>Normalit&auml;tsmodell</em> du klassifiziert hast.</p>
+        <p>Das ist das PARRY-Problem.</p>
+      </div>
+      <button onclick="go(0)">Beginnen &rarr;</button>
+    `;
+    return;
+  }
+
+  if (cursor === ORDER.length) {
+    const s = normStats();
+    const texts = normText(s);
+    const normHtml = texts.map(t => '<p>' + esc(t) + '</p>').join('');
+
+    const revRows = ORDER.map((f, i) => {
+      const v = answers[f.id];
+      const snippet = f.text.length > 74 ? f.text.slice(0, 74) + '…' : f.text;
+      return `<div class="rev-item">
+        <span class="rev-num">${i + 1}</span>
+        <span class="rev-text">${esc(snippet)}</span>
+        <span class="rev-src">${esc(f.catLabel)}</span>
+        <span class="rev-verdict verdict-${v}">${v === 'F' ? 'Fehler' : 'Kein F.'}</span>
+      </div>`;
+    }).join('');
+
+    stage.innerHTML = metaBar() + `
+      <div class="result-section">
+        <div class="result-label">Dein Normalit&auml;tsmodell</div>
+        <div class="stat-grid">
+          <div class="stat-cell">
+            <div class="s-label">Gesamt als Fehler</div>
+            <div class="s-val">${s.total}&thinsp;/&thinsp;${ORDER.length}</div>
+          </div>
+          <div class="stat-cell">
+            <div class="s-label">PARRY-Fragmente als Fehler</div>
+            <div class="s-val">${s.pF}&thinsp;/&thinsp;${s.pN}</div>
+          </div>
+          <div class="stat-cell">
+            <div class="s-label">Tynianov-Fragmente als Fehler</div>
+            <div class="s-val">${s.tF}&thinsp;/&thinsp;${s.tN}</div>
+          </div>
+          <div class="stat-cell">
+            <div class="s-label">Ulysses-Fragmente als Fehler</div>
+            <div class="s-val">${s.uF}&thinsp;/&thinsp;${s.uN}</div>
+          </div>
+        </div>
+        <div class="norm-box">${normHtml}</div>
+      </div>
+
+      <div class="result-section">
+        <div class="result-label">Enthüllung &mdash; Quellen</div>
+        <div>${revRows}</div>
+      </div>
+
+      <div class="colophon">
+        Das Werk vollzieht das PARRY-Problem (Kenneth Colby, 1972&thinsp;/&thinsp;Johan Fredrikzon, 2025):
+        Fehler ist keine Eigenschaft eines Outputs, sondern eine Relation zwischen Output und Beobachtungserwartung.
+        Diese Seite zeigt nicht, ob deine Klassifikationen &raquo;richtig&laquo; waren &mdash;
+        sie macht sichtbar, nach welchem Ma&szlig;stab du klassifiziert hast.
+        <br><br>
+        PARRY-Fragmente: Cerf, V. (1973). RFC&thinsp;439: PARRY encounters the DOCTOR. IETF. (Suchbelegt.)<br>
+        Tynianov: &raquo;On Literary Evolution&laquo; (1927). In: Permanent Evolution. Academic Studies Press. (Suchbelegt.)<br>
+        Ulysses-Texte: Irrtum als Methode, Forschungsjournal 2026 (dieses Repo).<br>
+        <br>
+        Seed:&thinsp;${SEED} &mdash; deterministische Reihenfolge, vollst&auml;ndig reproduzierbar.<br>
+        Ulysses &middot; Irrtum als Methode &middot; 2026
+      </div>
+    `;
+    return;
+  }
+
+  const f = ORDER[cursor];
+  const v = answers[f.id] || null;
+  const isLast = cursor === ORDER.length - 1;
+
+  stage.innerHTML = metaBar() + `
+    <div class="progress-note">${cursor + 1}&thinsp;/&thinsp;${ORDER.length}</div>
+    <div class="card">
+      <div class="card-fragment">${esc(f.text)}</div>
+      <div class="btn-row">
+        <button class="${v === 'F' ? 'active-f' : ''}" onclick="answer('F')">Fehler</button>
+        <button class="${v === 'K' ? 'active-k' : ''}" onclick="answer('K')">Kein Fehler</button>
+      </div>
+    </div>
+    <div class="nav-row">
+      ${cursor > 0 ? '<button onclick="go(cursor - 1)">&larr; Zur&uuml;ck</button>' : '<span></span>'}
+      ${v !== null
+        ? '<button onclick="go(' + (isLast ? ORDER.length : cursor + 1) + ')">'
+          + (isLast ? 'Ergebnis &rarr;' : 'Weiter &rarr;') + '</button>'
+        : ''}
+    </div>
+  `;
+}
+
+function go(n) { cursor = n; render(); }
+function answer(v) { answers[ORDER[cursor].id] = v; render(); }
+
+render();
+</script>
+</body>
+</html>
