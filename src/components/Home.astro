@@ -20,7 +20,7 @@ const featured = [...projects].sort((a, b) => a.order - b.order)
     <!-- HERO — climate ridgeline behind the name -->
     <section class="relative col-span-12 flex min-h-[clamp(420px,64vh,640px)] items-end overflow-hidden rounded-[18px] border border-line bg-panel panel-raised">
       <HeroField />
-      <div aria-hidden class="pointer-events-none absolute inset-0" style="background: linear-gradient(90deg, rgb(var(--rgb-bg)) 2%, rgb(var(--rgb-bg)/0.55) 30%, transparent 70%), linear-gradient(0deg, rgb(var(--rgb-bg)) 2%, transparent 42%);"></div>
+      <div aria-hidden class="hero-gradient pointer-events-none absolute inset-0"></div>
       <div class="absolute right-5 top-5 flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.16em] text-fg-muted">
         <span class="dot-live h-[7px] w-[7px] rounded-full"></span>{t(locale, 'system.live')}
       </div>
@@ -61,3 +61,12 @@ const featured = [...projects].sort((a, b) => a.order - b.order)
 
   </div>
 </main>
+
+<style>
+  /* Hero-Gradient: bewusst als CSS-Klasse statt inline-style (CSP-sicher). */
+  .hero-gradient {
+    background:
+      linear-gradient(90deg, rgb(var(--rgb-bg)) 2%, rgb(var(--rgb-bg)/0.55) 30%, transparent 70%),
+      linear-gradient(0deg, rgb(var(--rgb-bg)) 2%, transparent 42%);
+  }
+</style>
