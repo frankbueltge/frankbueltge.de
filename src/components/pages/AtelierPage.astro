@@ -1,7 +1,8 @@
 ---
 // Atelier — die öffentliche Ausstellung der autonomen Maschinen-Forschung „Irrtum als Methode".
-// Rendert das Forschungstagebuch (journal/) und die Werke (works/) aus der synchronisierten
-// Content-Collection. Plain Markdown, unredigiert. Inhalt kommt nächtlich aus dem Atelier-Repo.
+// Rendert das Forschungstagebuch (journal/), die interaktiven Werke (works/<datum>-<name>/index.html,
+// live in einem isolierten Sandbox-iframe) und die Text-Werke (works/*.md) aus der nächtlich
+// synchronisierten Content-Collection. Unredigiert. Inhalt kommt aus dem Atelier-Repo.
 import { getCollection, render } from 'astro:content'
 import type { Locale } from '@/lib/site'
 
@@ -11,10 +12,26 @@ const de = locale === 'de'
 
 const all = await getCollection('atelier')
 const journal = all.filter((e) => e.id.startsWith('journal/')).sort((a, b) => b.id.localeCompare(a.id))
-const works = all.filter((e) => e.id.startsWith('works/')).sort((a, b) => a.id.localeCompare(b.id))
+const mdWorks = all.filter((e) => e.id.startsWith('works/')).sort((a, b) => a.id.localeCompare(b.id))
 
 const journalR = await Promise.all(journal.map(async (e) => ({ id: e.id, Content: (await render(e)).Content })))
-const worksR = await Promise.all(works.map(async (e) => ({ id: e.id, Content: (await render(e)).Content })))
+const mdWorksR = await Promise.all(mdWorks.map(async (e) => ({ id: e.id, Content: (await render(e)).Content })))
+
+// Interaktive Werke (HTML/JS) — Rohinhalt + Metadaten zur Build-Zeit aus dem works/-Baum laden.
+const htmlRaw = import.meta.glob('/src/content/atelier/works/**/index.html', {
+  eager: true, query: '?raw', import: 'default',
+}) as Record<string, string>
+const metaRaw = import.meta.glob('/src/content/atelier/works/**/meta.json', {
+  eager: true, import: 'default',
+}) as Record<string, any>
+
+const interactive = Object.entries(htmlRaw)
+  .map(([path, html]) => {
+    const dir = path.replace('/src/content/atelier/works/', '').replace('/index.html', '')
+    const meta = metaRaw[path.replace('/index.html', '/meta.json')] ?? {}
+    return { dir, html, meta }
+  })
+  .sort((a, b) => String(b.meta.date ?? b.dir).localeCompare(String(a.meta.date ?? a.dir)))
 
 const REPO = 'https://github.com/frankbueltge/irrtum-als-methode'
 const dayLabel = (id: string) => id.replace('journal/', '').replace(/\.md$/, '')
@@ -25,9 +42,13 @@ const txt = {
   lede: de
     ? 'Jede Nacht hält eine KI eine künstlerische Forschungssitzung ab — sie liest ihr Tagebuch, recherchiert im Web, baut Werke, irrt und katalogisiert ihre Irrtümer prüfbar. Volle Autonomie über Frage, Richtung und Titel. Unredigiert. Git ist das Gedächtnis.'
     : 'Every night an AI holds an artistic-research session — it reads its journal, researches the web, builds works, errs, and catalogues its errors checkably. Full autonomy over question, direction and title. Unedited. Git is the memory.',
-  worksH: de ? 'Werke' : 'Works',
+  interactiveH: de ? 'Interaktive Werke — laufen live' : 'Interactive works — running live',
+  worksH: de ? 'Texte & Kataster' : 'Texts & catalogue',
   journalH: de ? 'Forschungstagebuch' : 'Research journal',
   source: de ? 'Quelle, Protokoll & Historie' : 'Source, protocol & history',
+  sourceCode: de ? 'Quellcode' : 'Source code',
+  sources: de ? 'Quellen' : 'Sources',
+  sandboxNote: de ? 'Läuft isoliert (Sandbox) im Browser.' : 'Runs sandboxed in your browser.',
   empty: de ? 'Die erste Sitzung folgt mit dem nächsten nächtlichen Lauf.' : 'The first session follows with the next nightly run.',
 }
 ---
@@ -44,10 +65,61 @@ const txt = {
     </p>
   </header>
 
-  {worksR.length > 0 && (
+  {interactive.length > 0 && (
+    <section class="mb-16">
+      <h2 class="mb-5 font-mono text-xs uppercase tracking-widest text-fg-faint">{txt.interactiveH}</h2>
+      {interactive.map(({ dir, html, meta }) => (
+        <article class="mb-12 rounded-[16px] border border-line bg-panel panel-raised p-6">
+          <header class="mb-4">
+            <h3 class="text-lg font-semibold">
+              {meta.title ?? dir}
+              {meta.date && <span class="ml-2 font-mono text-xs font-normal text-fg-faint">{meta.date}</span>}
+            </h3>
+            {meta.verkoerpert && <p class="mt-2 text-sm leading-relaxed text-fg-muted">{meta.verkoerpert}</p>}
+            {meta.medium && (
+              <p class="mt-2 font-mono text-[11px] text-fg-faint">
+                {meta.medium}{meta.seed != null && ` · Seed ${meta.seed}`}
+              </p>
+            )}
+          </header>
+
+          {/*
+            SICHERHEIT: sandbox="allow-scripts" OHNE allow-same-origin → der eingebettete,
+            maschinengenerierte Code läuft mit undurchsichtigem (null) Origin. Er kann damit
+            weder Cookies/Storage noch das DOM von frankbueltge.de lesen, nicht das Top-Fenster
+            navigieren und nichts nach außen senden. NIEMALS allow-same-origin ergänzen — das
+            höbe die Isolation auf. Zusätzlich sind die Werke verifiziert ohne externe Calls.
+          */}
+          <iframe
+            srcdoc={html}
+            sandbox="allow-scripts"
+            loading="lazy"
+            title={meta.title ?? dir}
+            class="block h-[600px] w-full resize-y overflow-auto rounded-[10px] border border-line bg-white"
+          ></iframe>
+
+          <div class="mt-3 flex flex-wrap items-center justify-between gap-2 font-mono text-[11px] text-fg-faint">
+            <span>{txt.sandboxNote}</span>
+            <a href={`${REPO}/tree/main/works/${dir}`} target="_blank" rel="noreferrer" class="underline hover:text-fg">{txt.sourceCode} ↗</a>
+          </div>
+
+          {Array.isArray(meta.quellen) && meta.quellen.length > 0 && (
+            <details class="mt-3 font-mono text-[11px] text-fg-faint">
+              <summary class="cursor-pointer select-none">{txt.sources}</summary>
+              <ul class="mt-2 list-disc space-y-1 pl-4">
+                {meta.quellen.map((q: string) => <li>{q}</li>)}
+              </ul>
+            </details>
+          )}
+        </article>
+      ))}
+    </section>
+  )}
+
+  {mdWorksR.length > 0 && (
     <section class="mb-16">
       <h2 class="mb-5 font-mono text-xs uppercase tracking-widest text-fg-faint">{txt.worksH}</h2>
-      {worksR.map(({ Content }) => (
+      {mdWorksR.map(({ Content }) => (
         <article class="atelier-prose mb-8 rounded-[16px] border border-line bg-panel panel-raised p-6">
           <Content />
         </article>
