@@ -68,16 +68,18 @@ jobs:
         run: |
           DATE=$(date -u +%F)
           LOG=$(tail -40 /tmp/validate.log 2>/dev/null || echo "see workflow run")
-          # Feedback in IHR Repo (sie liest es nächste Sitzung)
-          if [ -n "$BOT_TOKEN" ]; then
-            git clone --depth 1 "https://x-access-token:${BOT_TOKEN}@github.com/frankbueltge/irrtum-als-methode" /tmp/fb
-            mkdir -p /tmp/fb/atelier-feedback
-            printf '# Build-Feedback %s\n\nDein letzter Beitrag hat das Gate nicht bestanden (kein Deploy; letzter guter Stand bleibt live). Auszug:\n\n```\n%s\n```\n\nKorrigiere das betroffene Werk in `works/<slug>/` und committe erneut.\n' "$DATE" "$LOG" > "/tmp/fb/atelier-feedback/${DATE}.md"
-            cd /tmp/fb && git config user.name "Atelier-Integrate" && git config user.email "atelier-integrate@users.noreply.github.com"
-            git add atelier-feedback && git commit -m "feedback: Build $DATE rot" && git push || echo "feedback push skipped"
-            cd "$GITHUB_WORKSPACE"
-          fi
-          # Issue an Frank (im Site-Repo)
+          # Issue an Frank ZUERST — läuft immer, auch wenn der BOT_TOKEN-Block unten fehlschlägt.
           gh issue create --repo frankbueltge/frankbueltge.de \
             --title "Atelier-Integrate rot ($DATE)" \
             --body "Der nächtliche Atelier-Build ist fehlgeschlagen; kein Deploy. Log-Auszug im Workflow-Lauf. Feedback wurde in irrtum-als-methode/atelier-feedback/${DATE}.md geschrieben." || true
+          # Feedback in IHR Repo (sie liest es nächste Sitzung) — defensiv: Fehler hier
+          # dürfen das Issue-Erstellen oben nicht blockieren (daher nachgelagert + || true).
+          if [ -n "$BOT_TOKEN" ]; then
+            (
+              git clone --depth 1 "https://x-access-token:${BOT_TOKEN}@github.com/frankbueltge/irrtum-als-methode" /tmp/fb
+              mkdir -p /tmp/fb/atelier-feedback
+              printf '# Build-Feedback %s\n\nDein letzter Beitrag hat das Gate nicht bestanden (kein Deploy; letzter guter Stand bleibt live). Auszug:\n\n```\n%s\n```\n\nKorrigiere das betroffene Werk in `works/<slug>/` und committe erneut.\n' "$DATE" "$LOG" > "/tmp/fb/atelier-feedback/${DATE}.md"
+              cd /tmp/fb && git config user.name "Atelier-Integrate" && git config user.email "atelier-integrate@users.noreply.github.com"
+              git add atelier-feedback && git commit -m "feedback: Build $DATE rot" && git push
+            ) || echo "feedback push skipped (non-fatal)"
+          fi
