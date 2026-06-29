@@ -15,6 +15,30 @@ export default defineConfig({
     // English at /, German at /de — hreflang handles parity; /en/* → / via public/_redirects (Cloudflare).
     routing: { prefixDefaultLocale: false },
   },
+  // Content-Security-Policy: Astro 6 hasht eigene inline/gebündelte Skripte automatisch (kein
+  // 'unsafe-inline' in script-src); extern nur der Cloudflare-Analytics-Beacon. API stabil unter
+  // security.csp — script-src und style-src gehen NICHT in directives, sondern in scriptDirective/
+  // styleDirective. frame-ancestors muss per HTTP-Header gesetzt werden (→ public/_headers).
+  security: {
+    csp: {
+      directives: [
+        "default-src 'self'",
+        "img-src 'self' data:",
+        "font-src 'self' data:",
+        "connect-src 'self' https://cloudflareinsights.com",
+        "object-src 'none'",
+        "base-uri 'self'",
+      ],
+      scriptDirective: {
+        // 'self' muss explizit genannt werden, wenn resources gesetzt ist (Astro ersetzt den Default).
+        resources: ["'self'", 'https://static.cloudflareinsights.com'],
+      },
+      styleDirective: {
+        // Tailwind v4 / Inline-Styles — 'unsafe-inline' ist vertretbar (kein JS-Risiko).
+        resources: ["'self'", "'unsafe-inline'"],
+      },
+    },
+  },
   // Tages-Snapshots (/protokoll/<datum>) sind noindex + aus der Sitemap — dünn & wächst
   // täglich; Frische trägt die aktuelle /protokoll-Seite + das Archiv-Register.
   integrations: [sitemap({ filter: (page) => !/\/protokoll\/\d{4}-\d{2}-\d{2}\//.test(page) }), mdx()],

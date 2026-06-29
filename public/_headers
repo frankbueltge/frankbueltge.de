@@ -1,0 +1,8 @@
+# public/_headers — Cloudflare Pages
+# frame-ancestors kann nicht per <meta http-equiv> gesetzt werden → muss als HTTP-Header kommen.
+# X-Frame-Options ist Legacy-Fallback für ältere Browser.
+/*
+  X-Frame-Options: SAMEORIGIN
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Content-Security-Policy: frame-ancestors 'self'
