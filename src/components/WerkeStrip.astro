@@ -17,7 +17,7 @@ const liveWerke = WERKE_CHRONO.filter((w) => w.status === 'live')
     {liveWerke.map((werk) => (
       <a href={getRelativeLocaleUrl(locale, werk.href)} class="group">
         <span class="font-semibold transition-opacity group-hover:opacity-70">{werk.title}</span>
-        {werk.live && <span class="ml-1.5 align-middle font-mono text-[10px] uppercase tracking-wider text-fg-faint"><span class="dot-live mr-0.5 inline-block h-[5px] w-[5px] rounded-full align-middle"></span>live</span>}
+        {werk.live && <span class="ml-1.5 align-middle font-mono text-[10px] uppercase tracking-wider text-fg-faint"><span class="dot-live mr-0.5 inline-block h-[5px] w-[5px] rounded-full align-middle"></span>live data</span>}
         <span class="text-sm text-fg-muted"> — {werk.subtitle[locale]}</span>
       </a>
     ))}
