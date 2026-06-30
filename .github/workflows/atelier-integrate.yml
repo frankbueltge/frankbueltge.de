@@ -7,8 +7,12 @@
 name: Atelier integrate
 
 on:
+  # Promptheit: sofort integrieren, sobald irrtum etwas auf main landet (Auto-Land oder
+  # manueller Tages-Lauf) — repo-übergreifend per repository_dispatch aus auto-land.yml.
+  repository_dispatch:
+    types: [irrtum-landed]
   schedule:
-    - cron: '0 3 * * *'   # 05:00 Berlin — nach Auto-Land (02:00 UTC)
+    - cron: '0 3 * * *'   # 05:00 Berlin — Sicherheitsnetz, falls der Dispatch ausfällt
   workflow_dispatch: {}
 
 permissions:
