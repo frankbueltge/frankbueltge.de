@@ -9,8 +9,7 @@ const aboutUrl = getRelativeLocaleUrl(locale, '/about')
 <aside class="mx-auto max-w-3xl px-4 pb-6 text-xs text-fg-faint">
   <p>
     {de ? 'Ein Messinstrument von ' : 'An instrument by '}
-    <a href={aboutUrl} rel="author" class="underline transition-colors hover:text-fg">{SITE.name}</a>,
-    {SITE.role[locale]} — {de ? 'Methode und Quellen offengelegt, ' : 'method and sources disclosed, '}
+    <a href={aboutUrl} rel="author" class="underline transition-colors hover:text-fg">{SITE.name}</a> — {de ? 'Methode und Quellen offengelegt, ' : 'method and sources disclosed, '}
     <a href={SITE.sourceCode} target="_blank" rel="noreferrer" class="underline transition-colors hover:text-fg">{de ? 'Quellcode offen' : 'source code open'}</a>.
   </p>
 </aside>
