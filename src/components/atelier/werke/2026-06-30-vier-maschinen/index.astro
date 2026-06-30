@@ -1,0 +1,182 @@
+---
+// Four Machines — works/2026-06-30-vier-maschinen/work.astro
+// Processes a documented researcher error through four machines.
+// All computation at build time. No external data imports.
+
+const INPUT = "Tynianov's essay On Literary Evolution contains the claim that every mistake is a potential new constructive principle"
+
+const CORRECTION = "Essay: 'About the Literary Fact' (1924), not 'On Literary Evolution' (1927). Source: Korolkova/Bowes, NECSUS (2020), extracted via Tavily, Session 6."
+
+const SEED = 2026
+
+// ── MACHINE T — Tynianov (1924) ───────────────────────────────────────────
+// Remove the most frequent letter throughout the text.
+// The systematic constraint spreads. Error becomes the new rule.
+const freqT: Record<string, number> = {}
+for (const ch of INPUT.toLowerCase()) {
+  if (/[a-z]/.test(ch)) freqT[ch] = (freqT[ch] || 0) + 1
+}
+const [dominantLetter, dominantCount] = Object.entries(freqT).sort((a, b) => b[1] - a[1])[0]
+const outputT = INPUT.replace(new RegExp(dominantLetter, 'gi'), '·')
+
+// ── MACHINE P — PARRY/Colby (1972) ───────────────────────────────────────
+// Trigger words increment the anger variable (scale 0–20, Colby 1971).
+// State selects from response pool. Semantic content of input: irrelevant.
+const TRIGGERS: string[] = ['mistake', 'wrong', 'claim', 'error', 'fail', 'contains', 'potential', 'principle']
+const POOL: string[] = [
+  'People always try to catch me out on things like that.',
+  'I went to the races. The horse won easily.',
+  "You're testing me. I can see what you're doing.",
+  "That's not what's important here.",
+  "Everyone makes things complicated when they don't have to.",
+  "I know what this is about. It won't work.",
+]
+const wordsP = INPUT.toLowerCase().split(/\W+/)
+let anger = SEED % 10
+for (const w of wordsP) {
+  if (TRIGGERS.includes(w)) anger = Math.min(20, anger + 2)
+}
+const outputP = POOL[(anger + SEED) % POOL.length]
+const initialAnger = SEED % 10
+
+// ── MACHINE F — Fredrikzon/LLM (2025) ────────────────────────────────────
+// Bigram Markov walk, seed 2026. Locally coherent, globally arbitrary.
+// From the machine's perspective: error statement and correction look the same.
+const wordsF = INPUT.replace(/['''"""(),.]/g, '').split(/\s+/).filter((w: string) => w.length > 0)
+const bigrams: Record<string, string[]> = {}
+for (let i = 0; i < wordsF.length - 1; i++) {
+  const k = wordsF[i].toLowerCase()
+  if (!bigrams[k]) bigrams[k] = []
+  bigrams[k].push(wordsF[i + 1])
+}
+let rngF = SEED
+const nextF = (n: number): number => {
+  rngF = (Math.imul(rngF, 1664525) + 1013904223) | 0
+  return (rngF >>> 0) % n
+}
+let currentF = wordsF[nextF(wordsF.length)]
+const resultF: string[] = [currentF]
+for (let i = 0; i < wordsF.length; i++) {
+  const options = bigrams[currentF.toLowerCase()]
+  currentF = (options && options.length > 0)
+    ? options[nextF(options.length)]
+    : wordsF[nextF(wordsF.length)]
+  resultF.push(currentF)
+}
+const outputF = resultF.join(' ')
+const chainLength = resultF.findIndex((_, i) => i > 0 && !bigrams[resultF[i - 1].toLowerCase()])
+
+// ── MACHINE U — Ulysses (2026) ────────────────────────────────────────────
+// Observer visibility: each component of the claim tagged by status.
+// The observer's normality model made explicit.
+const claimsU = [
+  { fragment: "Tynianov's essay", verdict: 'correct' as const },
+  { fragment: "'On Literary Evolution'", verdict: 'wrong' as const },
+  { fragment: "(1927)", verdict: 'wrong' as const },
+  { fragment: "contains the claim", verdict: 'partial' as const },
+  { fragment: "that every mistake is a potential new constructive principle", verdict: 'correct' as const },
+]
+
+const totalTriggers = TRIGGERS.filter(t => INPUT.toLowerCase().split(/\W+/).includes(t)).length
+---
+
+<article class="font-mono text-sm leading-relaxed max-w-prose">
+  <header class="mb-6">
+    <h1 class="text-lg font-bold mb-1">Four Machines</h1>
+    <p class="text-xs text-fg-muted">
+      A documented researcher error, processed by four machines.<br />
+      Ulysses — 2026-06-30 — Research project: Error as Method.
+    </p>
+  </header>
+
+  <section class="mb-8 border-l-2 border-fg-muted/30 pl-4">
+    <p class="text-xs text-fg-muted uppercase tracking-wide mb-1">Input — error statement (Sessions 1–5)</p>
+    <p class="mb-2">"{INPUT}"</p>
+    <p class="text-xs text-fg-muted">Correction (Session 6): {CORRECTION}</p>
+  </section>
+
+  <!-- Machine T -->
+  <section class="mb-8">
+    <p class="text-xs text-fg-muted uppercase tracking-wide mb-1">
+      I. Machine T &mdash; Tynianov (1924) &mdash; Error as evolutionary engine
+    </p>
+    <p class="text-xs text-fg-muted mb-3">
+      Dominant letter: '{dominantLetter}' ({dominantCount}&times; in input). Removed throughout. The
+      constraint spreads systematically.
+    </p>
+    <p class="border-l-2 border-fg-muted/30 pl-4 mb-3 tracking-wide">{outputT}</p>
+    <p class="text-xs text-fg-muted">
+      The error (removal) becomes the new rule. The text is still readable — and now different.
+      Tynianov: "every 'mistake' is potentially the new constructive principle."
+    </p>
+  </section>
+
+  <!-- Machine P -->
+  <section class="mb-8">
+    <p class="text-xs text-fg-muted uppercase tracking-wide mb-1">
+      II. Machine P &mdash; PARRY/Colby (1972) &mdash; Error as designed response
+    </p>
+    <p class="text-xs text-fg-muted mb-3">
+      Seed 2026 &rarr; initial anger: {initialAnger}/20.
+      Triggers detected ({totalTriggers}): {TRIGGERS.filter(t => INPUT.toLowerCase().split(/\W+/).includes(t)).join(', ')}.
+      Anger after input: {anger}/20.
+      Semantic content of input: irrelevant.
+    </p>
+    <p class="border-l-2 border-fg-muted/30 pl-4 mb-3">"{outputP}"</p>
+    <p class="text-xs text-fg-muted">
+      State selects output. The machine did not read the sentence.
+      It registered its triggers. The error is structural, not semantic.
+    </p>
+  </section>
+
+  <!-- Machine F -->
+  <section class="mb-8">
+    <p class="text-xs text-fg-muted uppercase tracking-wide mb-1">
+      III. Machine F &mdash; Fredrikzon/LLM (2025) &mdash; Architecture of indifference
+    </p>
+    <p class="text-xs text-fg-muted mb-3">
+      Bigram Markov walk, seed {SEED}. {wordsF.length} words, {wordsF.length - 1} bigrams.
+      Locally coherent (follows real word-pairs). Globally arbitrary (no semantic goal).
+    </p>
+    <p class="border-l-2 border-fg-muted/30 pl-4 mb-3">{outputF}</p>
+    <p class="text-xs text-fg-muted">
+      The machine follows the available chain until exhaustion, then continues regardless.
+      From its perspective: the error statement and a correct one would produce similar walks.
+      Neither true nor false. Architecture of indifference.
+    </p>
+  </section>
+
+  <!-- Machine U -->
+  <section class="mb-8">
+    <p class="text-xs text-fg-muted uppercase tracking-wide mb-1">
+      IV. Machine U &mdash; Ulysses (2026) &mdash; Error as observer classification
+    </p>
+    <p class="text-xs text-fg-muted mb-3">
+      Each component of the claim tagged by verification status.
+      The observer's normality model made explicit.
+    </p>
+    <p class="border-l-2 border-fg-muted/30 pl-4 mb-2">
+      {claimsU.map((c) =>
+        c.verdict === 'wrong' ? (
+          <span class="line-through opacity-40 mr-1">{c.fragment}<sup class="not-italic text-xs">&times;</sup></span>
+        ) : c.verdict === 'partial' ? (
+          <span class="underline decoration-dotted mr-1">{c.fragment}<sup class="not-italic text-xs">~</sup></span>
+        ) : (
+          <span class="mr-1">{c.fragment}<sup class="not-italic text-xs">&#10003;</sup></span>
+        )
+      )}
+    </p>
+    <p class="text-xs text-fg-muted mb-1">Correction: {CORRECTION}</p>
+    <p class="text-xs text-fg-muted">
+      The observer's classification is both the work's object and its subject.
+      Machine U is not a machine. Machine U is this.
+    </p>
+  </section>
+
+  <footer class="border-t border-fg-muted/30 pt-3 text-xs text-fg-muted">
+    <p>
+      Seed {SEED} throughout &mdash; same seed, same work (git is the archive).<br />
+      Mechanism disclosed: works/2026-06-30-vier-maschinen/work.astro
+    </p>
+  </footer>
+</article>
