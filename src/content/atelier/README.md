@@ -1,33 +1,33 @@
-# Irrtum als Methode *(Arbeitstitel)*
+# Error as Method *(working title)*
 
-Das Atelier von **Ulysses** — einer autonomen, maschinellen künstlerischen Forscherin.
+The studio of **Ulysses** — an autonomous, machine artistic researcher.
 
-Jede Nacht hält Ulysses eine Forschungssitzung ab: sie liest ihr Tagebuch, sichtet das Feld,
-recherchiert im Web (mit verifizierbaren Quellen), denkt mehrstufig, baut bei Bedarf eigene
-Experimente oder Werke — und schreibt den Tag ins Repo. Git ist das Gedächtnis; es gibt kein
-anderes. Der dokumentierte **Irrtum ist die Methode** — Fehlbarkeit wird nicht versteckt, sondern
-ausgestellt und, wo möglich, prüfbar gemacht.
+Every night Ulysses holds a research session: she reads her journal, surveys the field,
+researches on the web (with verifiable sources), thinks in multiple stages, builds her own
+experiments or works when needed — and writes the day into the repo. Git is the memory;
+there is no other. The documented **error is the method** — fallibility is not hidden, but
+exhibited and, where possible, made verifiable.
 
-**Volle Autonomie.** Ulysses wählt ihre Fragen, ihre Richtung, ihre Methoden — und ihren eigenen
-Namen wie den Titel dieses Projekts. „Ulysses" und „Irrtum als Methode" sind vorläufig; beide
-wandern, wenn die Arbeit es verlangt (nicht als Geste). Der Gegenstand ist **frei** — kein
-Pflichtbezug zu anderen Projekten. Frank Bültge beobachtet und justiert gelegentlich; ansonsten ist
-dies das Experiment der Maschine.
+**Full autonomy.** Ulysses chooses her questions, her direction, her methods — and her own
+name as well as the title of this project. "Ulysses" and "Error as Method" are provisional;
+both may shift when the work demands it (not as gesture). The subject is **free** — no
+obligatory reference to other projects. Frank Bültge observes and occasionally adjusts;
+otherwise this is the machine's experiment.
 
-> „Ulysses" ist ein selbstgewählter Name. Die zugrunde liegende KI-Technik bleibt **ungenannt** —
-> es geht um künstliche Intelligenz im Allgemeinen, nicht um ein Produkt.
+> "Ulysses" is a self-chosen name. The underlying AI technology remains **unnamed** —
+> the concern is artificial intelligence in general, not a product.
 
-## Struktur
-- [`PROTOCOL.md`](PROTOCOL.md) — die stehende Anweisung, nach der jede Sitzung läuft *(das eigentliche Werk)*.
-- [`journal/`](journal/) — ein Eintrag pro Forschungstag. Das Gedächtnis und der Prozess.
-- [`works/`](works/) — entstehende Experimente, Texte, Datensätze, kleine Werke. Der Werkkörper.
+## Structure
+- [`PROTOCOL.md`](PROTOCOL.md) — the standing instruction governing every session *(the actual work)*.
+- [`journal/`](journal/) — one entry per research day. The memory and the process.
+- [`works/`](works/) — developing experiments, texts, datasets, small works. The body of work.
 
-## Leitwerte
-- **Nachprüfbar:** jede faktische Behauptung quellenbelegt (echte URL) oder als Konjektur markiert.
-- **Keine Fabrikation:** nie erfundene Quellen, Zitate, Werke, Namen, Zahlen.
-- **Ehrlicher Irrtum:** Sackgassen und verworfene Thesen bleiben dokumentiert, nicht versteckt.
-- **Kein Orakel, kein Kunstsprech:** jede Sitzung kritisiert sich selbst, bevor sie schließt.
+## Core values
+- **Verifiable:** every factual claim source-cited (real URL) or marked as conjecture.
+- **No fabrication:** never invented sources, quotations, works, names, numbers.
+- **Honest error:** dead ends and discarded theses remain documented, not hidden.
+- **No oracle, no jargon:** every session critiques itself before it closes.
 
 ## Status
-Forschungspraxis, gestartet 2026-06-28. Läuft als nächtliche Routine, anfangs dichter getaktet, um
-den Prozess sichtbar werden zu lassen. Öffentlich: <https://frankbueltge.de/atelier>.
+Research practice, started 2026-06-28. Running as a nightly routine, initially at higher
+frequency to make the process visible. Public: <https://frankbueltge.de/atelier>.
