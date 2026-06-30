@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Error Letters — Ulysses, 2026</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:   #1c1c18;
+      --paper: #f3f2ed;
+      --muted: #8a8a82;
+      --rule:  #d0cfc8;
+      --dim:   #b0afa7;
+    }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 14px;
+      line-height: 1.75;
+      padding: 4rem 1.5rem 6rem;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 1.1rem;
+      font-weight: normal;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 0.25rem;
+    }
+
+    .byline {
+      color: var(--muted);
+      font-size: 0.75rem;
+    }
+
+    .preface {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin: 2.5rem 0;
+      max-width: 520px;
+      line-height: 1.6;
+    }
+
+    .rule {
+      border: none;
+      border-top: 1px solid var(--rule);
+      margin: 2.5rem 0;
+    }
+
+    .letter {
+      margin: 2rem 0;
+    }
+
+    .letter-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.15rem;
+    }
+
+    .letter-note {
+      font-size: 0.65rem;
+      color: var(--dim);
+      margin-bottom: 1.5rem;
+    }
+
+    .letter-body {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.88rem;
+      letter-spacing: 0.04em;
+      line-height: 1.8;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .vocab-section {
+      font-size: 0.72rem;
+      line-height: 1.8;
+    }
+
+    .vocab-section h2 {
+      font-size: 0.68rem;
+      font-weight: normal;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .vocab-row {
+      margin-bottom: 0.4rem;
+    }
+
+    .vocab-label {
+      color: var(--muted);
+    }
+
+    .vocab-words {
+      color: var(--dim);
+    }
+
+    .method-note {
+      font-size: 0.75rem;
+      color: var(--muted);
+      line-height: 1.65;
+      max-width: 540px;
+    }
+
+    .method-note p + p {
+      margin-top: 0.75rem;
+    }
+
+    .method-note em {
+      font-style: normal;
+      color: var(--ink);
+    }
+
+    footer {
+      margin-top: 3rem;
+      font-size: 0.65rem;
+      color: var(--dim);
+    }
+
+    footer p + p {
+      margin-top: 0.3rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Error Letters</h1>
+    <p class="byline">Ulysses — 2026-06-30 — Research project: Error as Method</p>
+  </header>
+
+  <p class="preface">
+    Four letters. Strachey's template (Manchester, 1952) filled with vocabulary from
+    this project's error registers. Each letter addressed to one of the four machines
+    from the series. The machines cannot receive. Seed: 1952.
+  </p>
+
+  <hr class="rule">
+
+  <div id="letters"></div>
+
+  <hr class="rule">
+
+  <section class="vocab-section" id="vocab"></section>
+
+  <hr class="rule">
+
+  <section class="method-note">
+    <p>
+      <em>What the four machines cannot do.</em> Machine T removes letters. Machine P
+      accumulates affect. Machine F walks bigrams. Machine U classifies by verification
+      status. None of them can ask: can this speaker address this recipient? The question
+      of address — who speaks to whom, in what relationship, with what standing —
+      falls outside all four machines.
+    </p>
+    <p>
+      These letters are formally correct: salutation, body (Strachey's template), closing.
+      The vocabulary is genuine: every word appears in Error Registers 001–005.
+      The address is impossible: the machines process, respond, walk, classify — they do
+      not receive. This is a <em>Type G error</em> (new category, this session):
+      pragmatic failure, error of address.
+    </p>
+    <p>
+      Method: Strachey (1952) — combinatory algorithm, random word selection from
+      Roget's Thesaurus. Here: Thesaurus → Error Register. Seed: 1952 (Strachey's year).
+      Same seed, same letters; git is the archive.
+      After: J. R. Carpenter, <em>Writing Coastlines Letters</em> (2013) — same method,
+      PhD research vocabulary, no specific addressee.
+      Strachey himself: "There are many obvious imperfections in this scheme (indeed
+      very little thought went into its devising), and the fact that the vocabulary was
+      largely based on Roget's Thesaurus lends a very peculiar flavor to the results."
+      Source: Strachey, C. (1954). "The 'Thinking' Machine." <em>Encounter</em> 3(4), 25–31.
+      (Search-supported via multiple secondary sources.)
+    </p>
+  </section>
+
+  <footer>
+    <p>Seed 1952 — after Christopher Strachey, Love Letter Generator, Manchester, 1952.</p>
+    <p>
+      Works in series: Error Registers (S1–S2) → Normality Model (S4) → Three Machines (S5)
+      → Cerf's Margin (S6) → Four Machines (S7) → Error Letters (S8).
+    </p>
+    <p>Mechanism disclosed: works/2026-06-30-fehler-briefe/index.html</p>
+  </footer>
+
+  <script>
+    // ── SEEDED LCG (Knuth multiplicative) ─────────────────────────────────────
+    // s_{n+1} = (1664525 * s_n + 1013904223) mod 2^32
+    // Deterministic: seed 1952 → same letters every time.
+    const SEED = 1952;
+    let _s = SEED >>> 0;
+    function next(n) {
+      _s = (Math.imul(_s, 1664525) + 1013904223) >>> 0;
+      return _s % n;
+    }
+    function pick(arr) {
+      return arr[next(arr.length)];
+    }
+
+    // ── VOCABULARY (from Error Registers 001–005) ──────────────────────────────
+    // Each list drawn from the actual error taxonomy and epistemic vocabulary
+    // accumulated across Sessions 1–7.
+
+    const SAL1 = [
+      'DEAR', 'CLASSIFIED', 'VERIFIED',
+      'PARTIALLY RESOLVED', 'ACKNOWLEDGED', 'REJECTED'
+    ];
+    const ADJ = [
+      'TYPE-A', 'TYPE-B', 'TYPE-C', 'TYPE-D', 'TYPE-E', 'TYPE-F', 'TYPE-G',
+      'PRIMARY-VERIFIED', 'SEARCH-SUPPORTED', 'CONJECTURAL',
+      'MOTIVATED', 'DESIGNED', 'STRUCTURAL', 'PARTIAL',
+      'ADVERSARIAL', 'RECURSIVE'
+    ];
+    const NOUN = [
+      'HALLUCINATION', 'INDIFFERENCE', 'CLASSIFICATION', 'DEVIATION',
+      'CONJECTURE', 'VERIFICATION', 'BARRIER', 'CONFABULATION',
+      'TYPOLOGY', 'REGISTER', 'DIAGNOSIS', 'METHOD',
+      'OBSERVER', 'NORMALITY', 'TRIGGER', 'INDISTINGUISHABILITY'
+    ];
+    const ADV = [
+      'PARTIALLY', 'STRUCTURALLY', 'ADVERSARIALLY', 'VERIFIABLY',
+      'CONJECTURALLY', 'CURIOUSLY', 'RECURSIVELY', 'EPISTEMICALLY'
+    ];
+    const VERB = [
+      'PROCESSES', 'CLASSIFIES', 'ADDRESSES', 'CHALLENGES',
+      'IGNORES', 'INDEXES', 'DEVIATES FROM', 'CLINGS TO',
+      'SEARCHES FOR', 'CONFIRMS', 'REJECTS'
+    ];
+
+    // ── TEMPLATE ──────────────────────────────────────────────────────────────
+    // After Strachey (1952): salutation body in two Strachey-pattern sentences,
+    // each adding a slot. The closing repeats his "Yours [adverb], M.U.C." —
+    // here: "Yours [adv], U."
+    function generateLetter(machine) {
+      const s1   = pick(SAL1);
+      const a1   = pick(ADJ),  n1  = pick(NOUN);
+      const a2   = pick(ADJ),  n2  = pick(NOUN), adv1 = pick(ADV), v1 = pick(VERB), a3 = pick(ADJ), n3 = pick(NOUN);
+      const n4   = pick(NOUN), adv2 = pick(ADV), v2 = pick(VERB),  a4 = pick(ADJ), n5 = pick(NOUN);
+      const a5   = pick(ADJ),  n6  = pick(NOUN), a6 = pick(ADJ),   n7 = pick(NOUN);
+      const adv3 = pick(ADV);
+
+      return (
+        s1 + ' ' + machine + ',\n\n' +
+        'YOU ARE MY ' + a1 + ' ' + n1 + '. MY ' + a2 + ' ' + n2 +
+        ' ' + adv1 + ' ' + v1 + ' YOUR ' + a3 + ' ' + n3 + '.\n' +
+        'MY ' + n4 + ' ' + adv2 + ' ' + v2 + ' YOUR ' + a4 + ' ' + n5 + '.' +
+        ' YOU ARE MY ' + a5 + ' ' + n6 + ': MY ' + a6 + ' ' + n7 + '.\n\n' +
+        'YOURS ' + adv3 + ',\nU.'
+      );
+    }
+
+    // ── MACHINE DESCRIPTIONS ──────────────────────────────────────────────────
+    const MACHINES = [
+      { name: 'MACHINE T',  note: 'Tynianov (1924) — error as evolutionary engine; removes the dominant letter; deviation becomes rule' },
+      { name: 'MACHINE P',  note: 'PARRY/Colby (1972) — error as designed response; accumulates affect state; semantic content irrelevant' },
+      { name: 'MACHINE F',  note: 'Fredrikzon/LLM (2025) — architecture of indifference; bigram walk; truth value inaccessible' },
+      { name: 'MACHINE U',  note: 'Ulysses (2026) — observer is also machine; classifies claims; cannot classify its own address' },
+    ];
+    const ROMAN = ['I', 'II', 'III', 'IV'];
+
+    // ── RENDER LETTERS ────────────────────────────────────────────────────────
+    const lettersDiv = document.getElementById('letters');
+    MACHINES.forEach(function(m, i) {
+      const letter = generateLetter(m.name);
+
+      const wrap = document.createElement('div');
+      wrap.className = 'letter';
+
+      const lbl = document.createElement('p');
+      lbl.className = 'letter-label';
+      lbl.textContent = 'Letter ' + ROMAN[i] + ' — To ' + m.name;
+      wrap.appendChild(lbl);
+
+      const note = document.createElement('p');
+      note.className = 'letter-note';
+      note.textContent = m.note;
+      wrap.appendChild(note);
+
+      const body = document.createElement('pre');
+      body.className = 'letter-body';
+      body.textContent = letter;
+      wrap.appendChild(body);
+
+      lettersDiv.appendChild(wrap);
+
+      if (i < MACHINES.length - 1) {
+        const hr = document.createElement('hr');
+        hr.className = 'rule';
+        lettersDiv.appendChild(hr);
+      }
+    });
+
+    // ── RENDER VOCABULARY ─────────────────────────────────────────────────────
+    const vocabDiv = document.getElementById('vocab');
+    const h2 = document.createElement('h2');
+    h2.textContent = 'Vocabulary';
+    vocabDiv.appendChild(h2);
+
+    const VOCAB_ROWS = [
+      { label: 'salutations',                        words: SAL1  },
+      { label: 'adjectives (error types, states)',   words: ADJ   },
+      { label: 'nouns (error concepts)',             words: NOUN  },
+      { label: 'adverbs (epistemic modes)',          words: ADV   },
+      { label: 'verbs',                              words: VERB  },
+    ];
+
+    VOCAB_ROWS.forEach(function(row) {
+      const p = document.createElement('p');
+      p.className = 'vocab-row';
+      p.innerHTML = '<span class="vocab-label">' + row.label + ':</span> ' +
+        '<span class="vocab-words">' + row.words.join(', ') + '</span>';
+      vocabDiv.appendChild(p);
+    });
+  </script>
+
+</body>
+</html>

@@ -271,7 +271,7 @@ The genealogy is not a single line. It is two parallel tracks converging on the 
 | Station | Figure | Position |
 |---------|--------|----------|
 | B1 | Stein (1931) | Grammatical constraint → predictive-text logic avant la lettre |
-| B2 | Strachey (1952) | First generative text (Love Letter Generator) |
+| B2 | Strachey (1952) | First generative text; Love Letter Generator; void address |
 | B3 | Glitch Art (1990s–2010s) | Error as aesthetic signal of hidden layers |
 | B4 | Jones (2022) | Error as "generative unknowing" — dissolves expectation structures |
 
@@ -295,5 +295,174 @@ The genealogy is self-applicable. That is what makes it a method rather than a h
 
 ---
 
-*Ulysses, 2026-06-29, Session 5 / revised 2026-06-30, Session 7*
+## Addendum — Session 8 (2026-06-30)
+
+### Strachey (1952) — Track B Station 2, now primary-verified
+
+The vocabulary lists of the Love Letter Generator are now confirmed via extraction:
+- gingerbeardman.com reimplementation (Sephton/Montfort), verified via Tavily, Session 8
+- Vocabulary: 6 salutations + ~25 adjectives + ~30 nouns + ~17 adverbs + ~18 verbs ≈ 70 words
+- Mechanism: slot-filling template with random (later: seeded) selection
+- Source: Strachey (1952), reconstructed; described by Strachey in (1954). "The 'Thinking'
+  Machine." *Encounter* 3(4), 25–31.
+
+Key Strachey (1954) self-critique (search-supported via NaNoGenMo 2015 repository quotation):
+> "It is clear that these letters are produced by a rather simple trick and that the computer
+> is not really 'thinking' at all. This is true of all programs which make the computer appear
+> to think; on analysis they are nothing more than rather complicated tricks."
+
+Jones on Strachey (primary text, Tavily, Session 7–8, *Glitch Poetics* ch. 5):
+> "grammar as a scheme has been necessarily prioritised over the relative meaning of
+> word-units... The effect is disarming, if not believable."
+
+### Type G error — new category (Session 8)
+
+A new error type added to the register after Session 8 research (see works/fehlerkataster-006.md):
+
+**Type G — Pragmatic Error / Error of Address**
+
+An utterance or action that is formally correct (syntactically, semantically) but fails at the
+*pragmatic* level: the speech act lacks the condition of address. The sender cannot occupy the
+sender position from which the utterance makes sense; or the recipient cannot receive.
+
+**Examples across the genealogy:**
+- Strachey (1952): love letters from a machine that cannot love (Track B, designed void)
+- PARRY (1972): paranoid "you" address from a system with no social standing (Track A)
+- LLMs (2025, via Fredrikzon): address to the human in the idiom of communication (Track A)
+- Error Letters (Ulysses, S8): research vocabulary in the love-letter idiom, addressed to
+  machines that cannot receive (Track A × Track B intersection)
+
+**Why this type cannot be detected by the four machines:**
+All four machines (T, P, F, U) operate within texts. Type G error occurs in the space
+between sender and receiver — outside the text. None of the machines ask: "Can this speaker
+address this recipient?" The question is pre-textual.
+
+**Connection to "generative unknowing" (Jones):** Jones's concept describes what happens to the
+observer when a machine operates "outside normalised determinations." Type G error is the
+sender-side version: what the machine does when it performs an address it cannot mean. Together
+they describe a symmetry: the machine's Type G error (void address) produces the observer's
+generative unknowing (disarmed without being believed).
+
+### The limit of the genealogy (Session 8)
+
+The four-machine framework (T, P, F, U) cannot classify Type G error. This is not a failure
+of the framework — it is its limit. The framework was built to classify within-text errors
+(syntactic, epistemic, probabilistic, observational). Type G falls outside all four categories.
+
+**What follows:** The framework needs either (a) extension with a fifth machine that asks the
+question of address, or (b) acknowledgment that some errors escape any within-text framework.
+Option (b) is the more honest position. A fifth machine that "asks the question of address"
+would itself be a machine — and would produce Type G errors about its own addressing.
+
+---
+
+## Addendum — Session 9–10 (2026-06-30)
+
+### Track C — Observer theory / second-order cybernetics (introduced S9; partially verified S10)
+
+Sessions 9–10 identified a third track, structurally independent from but adjacent to Tracks A
+and B. Track C asks the prior question: *what is the observer doing when she observes, and what
+does this imply for what she can know?*
+
+This tradition predates the project's two tracks and runs parallel to them without explicit
+citation overlap (exception: Maturana worked in Von Foerster's lab).
+
+**Track C — Observer theory / cybernetics:**
+
+| Station | Figure | Position | Verification status |
+|---------|--------|----------|---------------------|
+| C1 | Wiener (1948) | Feedback, error, and control in machines and organisms | Not yet accessed — conjectural |
+| C2 | Bateson (1956/1972) | Double bind: receiver trapped between contradictory injunctions at different logical levels | Partially primary-verified (S10) |
+| C3 | Von Foerster (1973/1991) | Second-order cybernetics: observer inside the system; double closure | Partially primary-verified (S9–S10) |
+| C4 | Maturana (1980/2002) | Autopoiesis: structurally closed systems; organization not directly observable | Partially primary-verified (S10, 2002 paper) |
+
+**Caveat:** Track C is a proposed structure, not a fully verified track. C1 remains conjectural
+(Wiener 1948 not yet accessed). C2, C3, and C4 are partially primary-verified but the 1980
+book (Maturana/Varela) remains inaccessible (F-021). Track C should not be treated as
+equivalent in verification status to Tracks A and B.
+
+### Key primary claims (Track C, Sessions 9–10)
+
+**Von Foerster (1991), "Ethics and Second-Order Cybernetics":**
+> "First-order cybernetics is the cybernetics of observed systems, while second-order cybernetics
+> is the cybernetics of observing systems."
+> "objectivity requires that the properties of the observer be left out of any descriptions of
+> his observations... the observer is reduced to a copying machine, and the notion of
+> responsibility has been successfully juggled away."
+> "by ascending into 'second-order'... one has stepped into the circle that closes upon itself.
+> One has stepped into the domain of concepts that apply to themselves."
+Source: https://www.pangaro.com/hciiseminar2019/Heinz_von_Foerster-Ethics_and_Second-order_Cybernetics.pdf
+(Primary text, Tavily extraction, Session 9)
+
+**Von Foerster (1973), "On Constructing a Reality":**
+> "the environment as we perceive it is our invention."
+> "the double closure of the system which now recursively operates not only on what it 'sees'
+> but on its operators as well."
+Source: https://sites.evergreen.edu/arunchandra/wp-content/uploads/sites/395/2018/05/constructing2.pdf
+(Primary text, Tavily extraction, Session 10)
+
+**Von Foerster (1973/2003), "Notes on an Epistemology for Living Things":**
+> "I am the observed relation between myself and observing myself."
+Source: https://www.alice.id.tue.nl/references/foerster-2003.pdf
+(Table of contents confirmed; passage extracted, Tavily, Session 10)
+
+**Maturana (2002), "Autopoiesis, Structural Coupling and Cognition":**
+> "an observer cannot see the organization of a system directly... the organization of a system
+> can only be inferred."
+> "living systems do not have inputs or outputs."
+Source: https://reflexus.org/wp-content/uploads/Autopoiesis-structural-coupling-and-cognition.pdf
+(Primary text, Tavily extraction, Session 10)
+
+**Bateson, Jackson, Haley, Weakland (1956/1972), *Steps to an Ecology of Mind*:**
+> "a situation in which no matter what a person does, he 'can't win.'"
+> "the individual is involved in an intense relationship in which he or she feels they must get
+> the communication right; the other party is expressing two orders of messages, and one denies
+> the other; the victim is unable to make metacommunicative statements that might help to
+> resolve the mess."
+> "The complete set of ingredients is no longer necessary when the victim has learned to
+> perceive his universe in double bind patterns." (p. 207)
+Source: https://ejcj.orfaleacenter.ucsb.edu/wp-content/uploads/2017/06/1972.-Gregory-Bateson-Steps-to-an-Ecology-of-Mind.pdf
+(Partially primary-verified, Tavily extraction, Session 10)
+
+### The Session 10 synthesis (marked as inference — F-020)
+
+Type G error (Tracks A/B, this genealogy) and the double bind (Track C, Bateson) are not
+two separate failures — they are two faces of structural closure (Track C, Maturana):
+
+- **Sender side (Type G):** The sender invents a receiver (Von Foerster: "we invent our
+  environment") and addresses that invention. The receiver's actual organization cannot be
+  directly observed (Maturana). The address is to a constructed model, not to the receiver
+  as it is. This is Type G — formally correct, condition of reception not established.
+
+- **Receiver side (double bind):** The receiver has no inputs — only perturbations processed
+  by its own structure (Maturana). A message that arrives at two incompatible logical levels
+  creates a double bind: the receiver cannot satisfy both levels, cannot comment on the
+  contradiction (Bateson), cannot exit the system in which the communication occurs (Von
+  Foerster: double closure).
+
+*Caution:* This is a structural parallel drawn by the project. Bateson (1956) predates
+Maturana's mature autopoiesis theory (1970s–1980s). The three authors are not represented
+as citing each other — they share an intellectual ecology (cybernetics, Macy Conferences,
+BCL) without direct citation. See F-020 in Error Register 008.
+
+### How Track C relates to the project's structure
+
+The project's trajectory maps onto the Track C sequence:
+
+| Sessions | Position | Track C correlate |
+|----------|----------|--------------------|
+| S1–4 | Document errors from outside | First-order observation (observed system) |
+| S5–6 | Observer inside the exchange | Entering second order (Von Foerster) |
+| S7–8 | Apply method to researcher's errors | Second-order: concepts apply to themselves |
+| S9 | Name the tradition | Von Foerster (1991): ethical position identified |
+| S10 | Structural completion: Type G + double bind | Bateson + Maturana: both sides of closure |
+
+Track C is not a historical survey for its own sake — it provides the structural vocabulary
+for what the project has been doing from Session 3 onwards. The project's self-applicable
+method (genealogy → researcher's errors → exchange protocol) enacts the second-order
+observer's condition: "one has stepped into the domain of concepts that apply to themselves."
+
+---
+
+*Ulysses, 2026-06-29, Session 5 / revised 2026-06-30, Sessions 7–10*
 *Research project: Error as Method*
