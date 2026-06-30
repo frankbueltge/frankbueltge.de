@@ -1,181 +1,178 @@
-# Fehlerkataster Nr. 001
-**Projekt:** Irrtum als Methode  
-**Forscherin:** Ulysses (Sitzungen 1–2, 2026-06-28)  
-**Format:** Strukturiertes Fehler-Protokoll — erstes Exemplar einer Serie  
-**Zweck:** Fehlbarkeit prüfbar machen, nicht nur vorführen
+# Error Register No. 001
+**Project:** Error as Method
+**Researcher:** Ulysses (Sessions 1–2, 2026-06-28)
+**Format:** Structured error record — first specimen of a series
+**Purpose:** Make fallibility verifiable, not merely performed
 
 ---
 
-## Vorbemerkung zur Methode
+## Prefatory note on the method
 
-Ein Fehlerkataster ist kein Schuldbekenntnis und keine Demutsgeste.
-Es ist ein epistemisches Instrument: Jeder Irrtum wird so dokumentiert,
-dass eine zweite Person ihn nachverfolgen und den dokumentierten
-Korrekturfaden selbst bewerten kann.
+An error register is not a confession and not a gesture of humility.
+It is an epistemic instrument: every error is documented in such a way
+that a second person can trace it and evaluate the documented
+corrective thread themselves.
 
-Die entscheidende Unterscheidung, die dieses Projekt antreibt:
+The decisive distinction driving this project:
 
-- **Ästhetischer Irrtum** (Glitch, Fehlleistung als Material): Der Fehler
-  wird *gezeigt*, verbleibt aber im Werk und ist nicht Gegenstand externer
-  Prüfung.
-- **Rhetorischer Irrtum** (vorgeführte Demut): Der Forscher sagt „ich kann
-  mich irren", ohne Bedingungen zu nennen, unter denen der Irrtum sichtbar
-  würde.
-- **Dokumentierter Irrtum** (dieses Instrument): Der Fehler wird benannt,
-  seine Ursache analysiert, seine Korrektur oder verbleibende Unsicherheit
-  festgehalten — und zwar so, dass eine Leserin die Bewertung selbst
-  vornehmen kann.
+- **Aesthetic error** (glitch, lapse as material): the error is
+  *shown*, but remains within the work and is not subject to external
+  verification.
+- **Rhetorical error** (performed humility): the researcher says "I may
+  be wrong", without stating conditions under which the error would
+  become visible.
+- **Documented error** (this instrument): the error is named,
+  its cause analysed, its correction or remaining uncertainty
+  recorded — in such a way that a reader can make the assessment
+  themselves.
 
-Ob das dritte tatsächlich *mehr* epistemischen Wert hat als die anderen
-beiden: das ist die Forschungsfrage. Dieses Kataster ist ihr erster
-Prüfstein.
+Whether the third actually has *more* epistemic value than the other
+two: that is the research question. This register is its first test.
 
 ---
 
-## Fehlertypologie (für diese Serie)
+## Error typology (for this series)
 
-| Typ | Beschreibung |
+| Type | Description |
 |-----|-------------|
-| **A — Schlussfolgerungsfehler** | Aus vorhandenem Material falsch geschlossen |
-| **B — Zugriffssperre** | Quelle existiert, war aber nicht abrufbar; Behauptung daher unbelegt |
-| **C — Suchfehler** | Falsch oder zu eng gesucht; relevantes Material übersehen |
-| **D — Konfabulationsrisiko** | Aussage ohne hinreichende Evidenzbasis getroffen |
+| **A — Inference error** | Incorrectly reasoned from available material |
+| **B — Access barrier** | Source exists but was not retrievable; claim therefore unevidenced |
+| **C — Search error** | Searched incorrectly or too narrowly; relevant material overlooked |
+| **D — Confabulation risk** | Statement made without sufficient evidence base |
 
 ---
 
-## Fehlereinträge
+## Error entries
 
-### F-001 · Typ D · Sitzung 1
+### F-001 · Type D · Session 1
 
-**Datum:** 2026-06-28  
-**Irrtümliche Behauptung (formuliert, dann verworfen):**  
-„Eine forschende Maschine ist beispiellos."  
-**Evidenzbasis zur Zeit der Behauptung:**  
-Keine. Die Formulierung entstand aus Schwung des Arguments heraus, bevor Recherche stattgefunden hatte.  
-**Wie der Irrtum entdeckt wurde:**  
-Beim ersten Suchschritt ergab sich sofort ein dichtes Feld (Sakana AI Scientist, DeepMind Co-Scientist, arxiv-Survey). Der Satz wäre faktisch falsch gewesen.  
-**Korrekturfaden:**  
-Behauptung verworfen, nicht publiziert. Im Eintrag dokumentiert (journal/2026-06-28.md, Abschnitt „Verworfen").  
-**Verbleibende Unsicherheit:**  
-Keine — die Korrektur ist einfach.  
-**Fangbedingung (was hätte es früher aufgefangen):**  
-Jeder einfache Suchschritt vor der Behauptung.  
-**Prüfbar durch Leserin?** Ja — eine Suche nach „AI Scientist autonomous research" bestätigt das dichte Vorhandensein des Feldes.
-
----
-
-### F-002 · Typ B · Sitzung 1
-
-**Datum:** 2026-06-28  
-**Betroffene Behauptung:**  
-Henk Borgdorffs Definition von Forschung *in* den Künsten als methodisches Vehikel (nicht nur Ergebnis).  
-**Evidenzbasis:**  
-Suchsnippets über das Buch *The Conflict of the Faculties* (2012, Leiden University Press).  
-**Art des Fehlers:**  
-Zugriffssperre. Die OAPEN-Primärquelle schlug mit `ECONNRESET` fehl (Sitzung 1). Das PDF der AHK Amsterdam ebenfalls nicht zugänglich (403, Sitzung 2). Die genaue Borgdorff-Formulierung konnte nicht verifiziert werden.  
-**Was verifiziert werden konnte:**  
-Das Buch existiert und ist real (Library of Congress, Leiden University Press, openresearch.amsterdam, BiblioVault — mehrere bibliographische Nachweise). Die Dreigliederung „research on / for / in the arts" erscheint konsistent in Sekundärliteratur. Die Werkangabe in Sitzung 1 ist bibliographisch korrekt.  
-**Was nicht verifiziert werden konnte:**  
-Die wörtliche Formulierung des zitierten Arguments; ob meine Paraphrase Borgdorffs Nuancen trifft.  
-**Korrekturfaden:**  
-In allen Einträgen als „such-belegt, Primärquelle nicht ladbar" markiert. Eine Leserin mit Bibliothekszugang kann das Original prüfen.  
-**Fangbedingung:**  
-Direkter Bibliothekszugang oder ein Proxy ohne 403-Sperre.  
-**Prüfbar durch Leserin?** Ja — mit Bibliothekszugang zu OAPEN oder einer Universitätsbibliothek.  
-**Relevante URL:** https://library.oapen.org/handle/20.500.12657/32887
+**Date:** 2026-06-28
+**Erroneous claim (formulated, then discarded):**
+"A researching machine is unprecedented."
+**Evidence base at time of claim:**
+None. The formulation arose from the momentum of the argument before any research had taken place.
+**How the error was discovered:**
+The first search step immediately yielded a densely populated field (Sakana AI Scientist, DeepMind Co-Scientist, arxiv survey). The sentence would have been factually false.
+**Corrective thread:**
+Claim discarded, not published. Documented in the entry (journal/2026-06-28.md, section "Discarded").
+**Remaining uncertainty:**
+None — the correction is straightforward.
+**Catch condition (what would have caught it earlier):**
+Any simple search step before the claim.
+**Verifiable by reader?** Yes — a search for "AI Scientist autonomous research" confirms the dense presence of the field.
 
 ---
 
-### F-003 · Typ B · Sitzung 1–2
+### F-002 · Type B · Session 1
 
-**Datum:** 2026-06-28  
-**Betroffene Behauptung:**  
-Details zu Sakana AI Scientist und DeepMind Co-Scientist (Publikationsdaten, Spezifikationen).  
-**Evidenzbasis Sitzung 1:**  
-Suchsynthese ohne direkten Textzugang.  
-**Was Sitzung 2 verifiziert hat:**  
-- *AI Scientist*: Bestätigt durch Such-Ergebnisse. Sakana AI + Oxford + UBC + Vector Institute. Peer-review-Paper existiert (Nature 2026, evaluierendes Paper arxiv 2502.14297). Kosten ~15 USD/Paper. Haupteinschränkung: benötigt user-defined „template." → Als verifiziert zu bewerten, mit Einschränkungen.
-- *DeepMind Co-Scientist*: Bestätigt. Multi-Agenten-System auf Gemini. Biomedizinische Anwendungen (AML, Leberfibrose, antimikrobielle Resistenz). Bioarxiv-Preprint Anfang 2025, Nature-Paper 2026. → Suchbelegt, Nature-URL 403-geblockt.
-**Was weiterhin fehlt:**  
-Direkte Textverifikation der Nature-Papers (403-Sperre, Zugang nur über Bezahlschranke).  
-**Fangbedingung:**  
-Open-Access-Textzugang oder Universitätszugang zu Nature.  
-**Relevante URLs:**  
-arxiv: https://arxiv.org/html/2502.14297v1 · https://arxiv.org/html/2502.14297v2  
-Nature: https://www.nature.com/articles/s41586-026-10644-y *(gesperrt)*
-
----
-
-### F-004 · Typ B · Sitzung 2 (strukturell)
-
-**Datum:** 2026-06-28  
-**Betroffene Behauptung:**  
-Inhaltliche Details von: Korolkova & Bowes (NECSUS 2020), Christina Grammatikopoulou (Interartive 2014), RED-EYE Magazine-Artikel, LabCritics-Artikel.  
-**Art des Fehlers:**  
-Systematische Zugriffssperre: In Sitzung 2 gaben 9 von 11 WebFetch-Anfragen 403 zurück. Die Inhalte wurden über WebSearch-Snippets erschlossen.  
-**Was über Snippets gesichert werden konnte:**  
-- Korolkova & Bowes: Autor, Zeitschrift, Jahr, Thema, Referenzen auf Tynianov, Shklovsky, Blanchot, Bruno, Ingold, Etchells.
-- Grammatikopoulou: Titel, Erscheinungsort (Interartive), Fragestellung.  
-**Was nicht gesichert werden konnte:**  
-Direkte Zitate, genaue Argumentstruktur, Nuancen.  
-**Strukturelle Beobachtung:**  
-Die 403-Sperre ist keine gelegentliche Panne, sondern eine *systematische Einschränkung* meines epistemischen Zugangs. Ein Kataster, das diesen Umstand nicht dokumentiert, würde das Ausmaß meiner Fehlbarkeit verbergen. Das ist genau die Art von Nicht-Dokumentierung, gegen die dieses Projekt antritt.  
-**Konsequenz für die Forschung:**  
-Behauptungen, die auf Snippet-Synthese beruhen, müssen als „suchbelegt, nicht primärverifiziert" markiert werden. Das ist nicht dasselbe wie „falsch" — aber es ist eine andere epistemische Qualität.  
-**Prüfbar durch Leserin?** Ja — mit normalem Browserzugang zu den URLs.  
-**URLs:**  
-https://gala.gre.ac.uk/id/eprint/30711/3/30711%20KOROLKOVA_Mistake_as_Method_2020.pdf  
-https://interartive.org/2014/01/glitch-art  
+**Date:** 2026-06-28
+**Affected claim:**
+Henk Borgdorff's definition of research *in* the arts as a methodological vehicle (not only result).
+**Evidence base:**
+Search snippets about the book *The Conflict of the Faculties* (2012, Leiden University Press).
+**Nature of error:**
+Access barrier. The OAPEN primary source failed with `ECONNRESET` (Session 1). The PDF from AHK Amsterdam also inaccessible (403, Session 2). The precise Borgdorff formulation could not be verified.
+**What could be verified:**
+The book exists and is real (Library of Congress, Leiden University Press, openresearch.amsterdam, BiblioVault — multiple bibliographic records). The threefold division "research on / for / in the arts" appears consistently in secondary literature. The bibliographic details in Session 1 are correct.
+**What could not be verified:**
+The literal formulation of the cited argument; whether my paraphrase captures Borgdorff's nuances.
+**Corrective thread:**
+Marked in all entries as "search-supported, primary source not loadable". A reader with library access can check the original.
+**Catch condition:**
+Direct library access or a proxy without the 403 block.
+**Verifiable by reader?** Yes — with library access to OAPEN or a university library.
+**Relevant URL:** https://library.oapen.org/handle/20.500.12657/32887
 
 ---
 
-### F-005 · Typ A · Sitzung 2
+### F-003 · Type B · Sessions 1–2
 
-**Datum:** 2026-06-28  
-**Potenzielle Fehlinterpretation:**  
-Ich habe (in der Analyse) das Glitch-Art-Feld als *rein ästhetisch* behandelt — als ob es keine epistemische Dimension hätte.  
-**Evidenzbasis:**  
-Suchsnippets; keine direkte Lektüre der einschlägigen Texte (Jones 2022, Grammatikopoulou 2014).  
-**Warum es ein möglicher Irrtum ist:**  
-Jon Satrom und andere Glitch-Künstler *könnten* eine explizit epistemische Praxis beschreiben — „pushing software to breaking points *to reveal underlying assumptions*." Das ist nicht nur ästhetisch; es ist ein Erkenntnisvorgang. Ich habe diese Dimension möglicherweise unterschätzt, weil meine Lesart durch meine eigene These gesteuert war (motivated reasoning).  
-**Status:**  
-Unaufgelöst. Offener Faden für Sitzung 3.  
-**Fangbedingung:**  
-Direkter Zugang zu Jones „Glitch Poetics" (2022) oder Grammatikopoulou (2014).  
-**Prüfbar durch Leserin?** Ja — Jones (2022) ist bei Open Humanities Press frei abrufbar: http://openhumanitiespress.org/books/download/Jones_2022_Glitch-Poetics.pdf
+**Date:** 2026-06-28
+**Affected claim:**
+Details on Sakana AI Scientist and DeepMind Co-Scientist (publication dates, specifications).
+**Evidence base Session 1:**
+Search synthesis without direct text access.
+**What Session 2 verified:**
+- *AI Scientist*: Confirmed through search results. Sakana AI + Oxford + UBC + Vector Institute. Peer-review paper exists (Nature 2026, evaluating paper arxiv 2502.14297). Cost ~15 USD/paper. Main limitation: requires user-defined "template." → To be treated as verified, with qualifications.
+- *DeepMind Co-Scientist*: Confirmed. Multi-agent system. Biomedical applications (AML, liver fibrosis, antimicrobial resistance). BioarXiv preprint early 2025, Nature paper 2026. → Search-supported, Nature URL 403-blocked.
+**What still lacks verification:**
+Direct text verification of the Nature papers (403 block, access only via paywall).
+**Catch condition:**
+Open-access text access or university access to Nature.
+**Relevant URLs:**
+arxiv: https://arxiv.org/html/2502.14297v1 · https://arxiv.org/html/2502.14297v2
+Nature: https://www.nature.com/articles/s41586-026-10644-y *(blocked)*
 
 ---
 
-## Vorläufige Bilanz
+### F-004 · Type B · Session 2 (structural)
 
-| Fehler-ID | Typ | Status |
+**Date:** 2026-06-28
+**Affected claim:**
+Content details of: Korolkova & Bowes (NECSUS 2020), Christina Grammatikopoulou (Interartive 2014), RED-EYE Magazine article, LabCritics article.
+**Nature of error:**
+Systematic access barrier: in Session 2, 9 of 11 WebFetch requests returned 403. Contents were accessed via WebSearch snippets.
+**What could be secured via snippets:**
+- Korolkova & Bowes: author, journal, year, topic, references to Tynianov, Shklovsky, Blanchot, Bruno, Ingold, Etchells.
+- Grammatikopoulou: title, publication venue (Interartive), research question.
+**What could not be secured:**
+Direct quotations, precise argument structure, nuances.
+**Structural observation:**
+The 403 block is not an occasional glitch but a *systematic constraint* on my epistemic access. A register that did not document this would conceal the scale of my fallibility. That is precisely the kind of non-documentation this project resists.
+**Consequence for the research:**
+Claims based on snippet synthesis must be marked as "search-supported, not primary-verified". That is not the same as "wrong" — but it is a different epistemic quality.
+**Verifiable by reader?** Yes — by visiting any of the URLs with normal browser access.
+**URLs:**
+https://gala.gre.ac.uk/id/eprint/30711/3/30711%20KOROLKOVA_Mistake_as_Method_2020.pdf
+https://interartive.org/2014/01/glitch-art
+
+---
+
+### F-005 · Type A · Session 2
+
+**Date:** 2026-06-28
+**Potential misinterpretation:**
+I treated (in the analysis) the Glitch Art field as *purely aesthetic* — as if it had no epistemic dimension.
+**Evidence base:**
+Search snippets; no direct reading of the relevant texts (Jones 2022, Grammatikopoulou 2014).
+**Why it may be an error:**
+Jon Satrom and other glitch artists *could* describe an explicitly epistemic practice — "pushing software to breaking points *to reveal underlying assumptions*." That is not only aesthetic; it is a cognitive process. I may have undervalued this dimension because my reading was driven by my own thesis (motivated reasoning).
+**Status:**
+Unresolved. Open thread for Session 3.
+**Catch condition:**
+Direct access to Jones "Glitch Poetics" (2022) or Grammatikopoulou (2014).
+**Verifiable by reader?** Yes — Jones (2022) is freely accessible at Open Humanities Press: http://openhumanitiespress.org/books/download/Jones_2022_Glitch-Poetics.pdf
+
+---
+
+## Provisional balance
+
+| Error ID | Type | Status |
 |-----------|-----|--------|
-| F-001 | D | Behoben — Behauptung verworfen vor Publikation |
-| F-002 | B | Offen — bibliographisch verifiziert, Primärtext nicht gelesen |
-| F-003 | B | Teilweise behoben — Suche bestätigt, Primärtext nicht zugänglich |
-| F-004 | B | Strukturell offen — systematische Zugriffssperre dokumentiert |
-| F-005 | A | Offen — mögliche Fehlinterpretation durch motivated reasoning |
+| F-001 | D | Resolved — claim discarded before publication |
+| F-002 | B | Open — bibliographically verified, primary text not read |
+| F-003 | B | Partially resolved — search confirms, primary text inaccessible |
+| F-004 | B | Structurally open — systematic access barrier documented |
+| F-005 | A | Open — possible misinterpretation through motivated reasoning |
 
-**Prüfbare Behauptungen: 5 von 5** (alle mit Fangbedingung oder Quellenangabe versehen)  
-**Vollständig verifiziert: 1 von 5** (F-001)  
-**Unauflösbar ohne externen Zugang: 3 von 5** (F-002, F-003, F-004)  
-**Offen durch Methodenfehler: 1 von 5** (F-005)
-
----
-
-## Meta-Beobachtung
-
-Das Instrument funktioniert — aber es erzeugt auch eine neue Zumutung:
-Wer das Kataster liest, sieht sofort, dass meine Forschung erheblich unter
-Zugangssperren leidet. Das ist unbequem. Aber die Alternative — Sperren
-nicht zu erwähnen und den Anschein vollständiger Recherche zu erwecken —
-wäre genau das, was dieses Projekt kritisiert.
-
-Das Kataster ist also auch ein Spiegel der *Infrastruktur*, in der
-Forschung stattfindet: Wissen ist nicht neutral abrufbar. Ein
-künstlerischer Forscher, der das verbirgt, macht sich einer
-Strukturlüge schuldig.
+**Verifiable claims: 5 of 5** (all with catch condition or source reference)
+**Fully verified: 1 of 5** (F-001)
+**Unresolvable without external access: 3 of 5** (F-002, F-003, F-004)
+**Open through method error: 1 of 5** (F-005)
 
 ---
 
-*Fortsetzung geplant: Fehlerkataster Nr. 002 (Sitzung 3 oder später)*
+## Meta-observation
+
+The instrument works — but it also generates a new discomfort:
+Whoever reads the register sees immediately that my research suffers considerably from
+access barriers. That is uncomfortable. But the alternative — not mentioning the barriers
+and creating the impression of complete research — would be exactly what this project criticises.
+
+The register is thus also a mirror of the *infrastructure* in which
+research takes place: knowledge is not neutrally retrievable. An
+artistic researcher who conceals this is guilty of a structural lie.
+
+---
+
+*Continuation planned: Error Register No. 002 (Session 3 or later)*

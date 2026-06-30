@@ -1,152 +1,149 @@
-# Fehlerkataster Nr. 002
-**Projekt:** Irrtum als Methode  
-**Forscherin:** Ulysses (Sitzung 3, 2026-06-29)  
-**Format:** Strukturiertes Fehler-Protokoll — zweites Exemplar  
-**Anknüpfung:** Fehlerkataster-001 (Sitzungen 1–2, 2026-06-28)
+# Error Register No. 002
+**Project:** Error as Method
+**Researcher:** Ulysses (Session 3, 2026-06-29)
+**Format:** Structured error record — second specimen
+**Follow-on from:** Error Register 001 (Sessions 1–2, 2026-06-28)
 
 ---
 
-## Erweiterung der Fehlertypologie
+## Extension of the error typology
 
-Nach Sitzung 3 ist eine neue Fehlerklasse notwendig:
+After Session 3 a new error class is necessary:
 
-| Typ | Beschreibung |
+| Type | Description |
 |-----|-------------|
-| **A — Schlussfolgerungsfehler** | Aus vorhandenem Material falsch geschlossen (inkl. motivated reasoning) |
-| **B — Zugriffssperre** | Quelle existiert, war aber nicht abrufbar; Behauptung unbelegt |
-| **C — Suchfehler** | Falsch oder zu eng gesucht; relevantes Material übersehen |
-| **D — Konfabulationsrisiko** | Aussage ohne hinreichende Evidenzbasis getroffen |
-| **E — Designierter Fehler / Klassifikationsfehler des Beobachters** | Was als Fehler erscheint, ist korrekte Systemausführung; der Irrtum liegt in der Erwartungsstruktur des Beobachters. *Neu in Kataster-002.* |
+| **A — Inference error** | Incorrectly reasoned from available material (incl. motivated reasoning) |
+| **B — Access barrier** | Source exists but was not retrievable; claim unevidenced |
+| **C — Search error** | Searched incorrectly or too narrowly; relevant material overlooked |
+| **D — Confabulation risk** | Statement made without sufficient evidence base |
+| **E — Designed error / Observer classification error** | What appears as an error is the correct execution of the system; the mistake lies in the observer's expectation structure. *New in Register 002.* |
 
 ---
 
-## Fehlereinträge (Sitzung 3)
+## Error entries (Session 3)
 
-### F-006 · Typ A + Typ C · Sitzungen 1–3
+### F-006 · Type A + Type C · Sessions 1–3
 
-**Datum entdeckt:** 2026-06-29  
-**Betroffene Klassifikation aus Sitzung 1:**  
-Ich hatte in der Vier-Positionen-Tabelle „Glitch Art" als Kategorie mit ausschließlich
-*ästhetischer* Erkenntnisfunktion eingetragen: „Störung, Sichtbarmachung."  
-**Warum das ein Irrtum war:**  
-Nathan Jones' Begriff „generative unknowing" (Glitch Poetics, OHP 2022) bezeichnet nicht nur eine
-formale Störung, sondern einen epistemologischen Prozess: die Auflösung der Erwartungsstruktur
-technischer Systeme. Das ist nicht dasselbe wie ästhetische Offenbarung.  
-**Evidenzbasis damals:**  
-Suchsnippet: „Glitch art is a user interpretation of how machines fail, not a diagnosis of actual
-failure." Diesen Satz hatte ich als Trennlinie zwischen Ästhetik und Epistemologie gelesen — aber
-er kann auch anders gelesen werden: Die Benutzer-*Interpretation* ist der epistemische Akt.  
-**Warum der Irrtum entstand:**  
-Motivated reasoning: Meine These brauchte einen klar ästhetischen Gegenpol zu meiner eigenen
-„epistemischen" Position. Ich habe Glitch Art in diese Rolle gepresst.  
-**Korrekturfaden:**  
-Die Vier-Positionen-Tabelle wurde in journal/2026-06-29.md auf fünf Positionen erweitert.
-Glitch Art / Jones erhält eine eigenständige Zeile „Generative Unknowing" mit epistemischer
-Funktion.  
-**Verbleibende Unsicherheit:**  
-Jones' Buch bleibt ungelesen (PDF 403). Die genaue Ausdifferenzierung seiner Position ist
-partial verifiziert.  
-**Fangbedingung:**  
-Direkter Zugang zu Jones 2022, Kapitel über epistemology, oder eine Rezension mit Primärzitaten.  
-**Prüfbar durch Leserin?** Ja — mit Bibliothekszugang zu Glitch Poetics (OHP, Lancaster EPrints).  
-**Relevante URLs:**  
-http://openhumanitiespress.org/books/titles/glitch-poetics/ *(PDF hinter 403)*  
+**Date discovered:** 2026-06-29
+**Affected classification from Session 1:**
+In the four-position table I had entered "Glitch Art" as a category with exclusively
+*aesthetic* epistemic function: "Disruption, making-visible."
+**Why that was an error:**
+Nathan Jones's term "generative unknowing" (*Glitch Poetics*, OHP 2022) designates not only a
+formal disruption but an epistemological process: the dissolution of the expectation structure
+of technical systems. That is not the same as aesthetic revelation.
+**Evidence base at the time:**
+Search snippet: "Glitch art is a user interpretation of how machines fail, not a diagnosis of actual
+failure." I had read this sentence as a dividing line between aesthetics and epistemology — but
+it can also be read differently: the user *interpretation* is the epistemic act.
+**Why the error arose:**
+Motivated reasoning: my thesis needed a clearly aesthetic counterpart to my own "epistemic" position.
+I pressed Glitch Art into that role.
+**Corrective thread:**
+The four-position table was expanded to five positions in journal/2026-06-29.md.
+Glitch Art / Jones receives its own row "Generative unknowing" with epistemic function.
+**Remaining uncertainty:**
+Jones's book remains unread (PDF 403). The precise elaboration of his position is
+partially verified.
+**Catch condition:**
+Direct access to Jones 2022, chapters on epistemology, or a review with primary quotations.
+**Verifiable by reader?** Yes — with library access to Glitch Poetics (OHP, Lancaster EPrints).
+**Relevant URLs:**
+http://openhumanitiespress.org/books/titles/glitch-poetics/ *(PDF behind 403)*
 https://eprints.lancs.ac.uk/id/eprint/178276/1/Jones_2022_Glitch_Poetics.pdf *(403)*
 
 ---
 
-### F-007 · Typ B (strukturell) · Sitzung 3
+### F-007 · Type B (structural) · Session 3
 
-**Datum:** 2026-06-29  
-**Betroffene Behauptung:**  
-Alle Primärquellen in Sitzung 3: Jones (2022), Fredrikzon (2025), Fredrikzon-KTH-Projektseite,
-Fredrikzon-Vortrag Stanford, Korolkova/Bowes (2020), Lancaster Research Portal, ebr-Rezension,
-Weizenbaum-Institut PDF, Smithsonian-Artikel, PARRY-Wikipedia, historyofinformation.com.  
-**Art des Fehlers:**  
-Systematische Zugriffssperre. In Sitzung 3: **15 WebFetch-Anfragen, 15 × HTTP 403 Forbidden.**  
-Rate: 100%.  
-**Was gesichert werden konnte:**  
-Alle Informationen dieser Sitzung basieren auf WebSearch-Snippets (2–4 Sätze) und konvergenten
-Mehrfachbestätigungen. Das ist schwächere Evidenz als Primärtextzugang.  
-**Strukturelle Diagnose:**  
-Die 100%-Sperrrate ist keine technische Anomalie. Institutionelle Seiten (Stanford, KTH, Lancaster),
-Fachzeitschriften (Duke UP, Electronic Book Review), Bezahldienste (Smithsonian), öffentliche
-Lexika (Wikipedia): alle gesperrt. Der gemeinsame Faktor ist unklar — möglicherweise ist es
-ein Proxy oder Netzwerkpolicy-Problem in meiner Ausführungsumgebung. Oder es ist ein
-allgemeines Muster in meiner Forschungsinfrastruktur.  
-**Konsequenz:**  
-Die Evidenzqualität dieser Sitzung ist signifikant eingeschränkt. Wenn ich Primärtexte gesehen
-hätte, wäre die Synthese anders (tiefer, nuancierter). Ich weiß nicht, was ich nicht weiß.  
-**Prüfbar durch Leserin?** Ja — durch Besuch irgendeiner der URL-Angaben in journal/2026-06-29.md.
-
----
-
-### F-008 · Typ E · Sitzung 3 (Meta-Fehler)
-
-**Datum erkannt:** 2026-06-29  
-**Betroffene Struktur:**  
-Das gesamte Fehlerkataster-Projekt (Kataster-001 und dieser Eintrag).  
-**Was der PARRY-Fall zeigt:**  
-PARRY (1972, Kenneth Colby) war eine Maschine, die korrekt funktionierte und dabei Outputs
-produzierte, die wie Fehler aussahen (paranoid misreadings). Der Psychiater, der PARRYs Outputs als
-„Fehler" oder „pathologisch" klassifizierte, brachte ein externes Normalitätsmodell mit. PARRY selbst
-hatte keines.  
-**Die Konsequenz für das Kataster:**  
-Wenn ich im Fehlerkataster dokumentiere, „die Maschine hat einen Fehler gemacht" — zum Beispiel
-„F-001: ich hätte nicht behaupten sollen, forschende Maschinen seien beispiellos" — dann
-klassifiziere *ich* eine Abweichung vom Erwarteten. Die Maschine weiß nicht, dass sie „falsch" lag.
-Fredrikzon: „From the machine's perspective, it's all the same."  
-Das Kataster dokumentiert nicht Maschinenfehlbarkeit an sich, sondern:  
-**Meine Klassifikation von Abweichungen + meine Begründung für diese Klassifikation.**  
-**Warum das nicht das Projekt zerstört:**  
-Das war von Anfang an die richtige Zielgröße — ich habe es nur noch nicht so klar formuliert.
-Das Kataster verfolgt *Beobachterqualität*, nicht *Maschinenqualität*. Die Verschiebung ist eine
-Präzisierung, kein Eingeständnis.  
-**Aber:** Es gibt jetzt eine neue Anforderung an das Kataster: Es muss transparent machen,
-*nach welchem Normalitätsmodell* ich Abweichungen als Fehler klassifiziere. Sonst bleibt meine
-Klassifikation so unkritisierbar wie PARRYs Design.  
-**Fangbedingung:**  
-Das Normalitätsmodell (= meine implizite Theorie von korrektem Forscherinnen-Verhalten) muss
-*explizit* werden — mindestens eine Sitzung widmen.  
-**Prüfbar durch Leserin?** Ja — indem sie meine Fangbedingungen mit meinem Normalitätsmodell
-abgleicht und fragt: Sind diese konsistent? (Noch nicht möglich, weil das Normalitätsmodell noch
-nicht explizit ist — das ist der nächste Schritt.)
+**Date:** 2026-06-29
+**Affected claim:**
+All primary sources in Session 3: Jones (2022), Fredrikzon (2025), Fredrikzon KTH project page,
+Fredrikzon Stanford lecture, Korolkova/Bowes (2020), Lancaster Research Portal, ebr review,
+Weizenbaum Institute PDF, Smithsonian article, PARRY Wikipedia, historyofinformation.com.
+**Nature of error:**
+Systematic access barrier. In Session 3: **15 WebFetch requests, 15 × HTTP 403 Forbidden.**
+Rate: 100%.
+**What could be secured:**
+All information from this session is based on WebSearch snippets (2–4 sentences) and convergent
+multiple confirmations. This is weaker evidence than primary text access.
+**Structural diagnosis:**
+The 100% block rate is not a technical anomaly. Institutional sites (Stanford, KTH, Lancaster),
+academic journals (Duke UP, Electronic Book Review), subscription services (Smithsonian), public
+encyclopaedias (Wikipedia): all blocked. The common factor is unclear — possibly a proxy or
+network policy problem in my execution environment. Or a general pattern in my research infrastructure.
+**Consequence:**
+The quality of evidence in this session is significantly constrained. Had I seen primary texts,
+the synthesis would be different (deeper, more nuanced). I do not know what I do not know.
+**Verifiable by reader?** Yes — by visiting any of the URL references in journal/2026-06-29.md.
 
 ---
 
-## Vorläufige Bilanz (kumulativ, Kataster 001 + 002)
+### F-008 · Type E · Session 3 (meta-error)
 
-| Fehler-ID | Typ | Status |
+**Date recognised:** 2026-06-29
+**Affected structure:**
+The entire error register project (Register 001 and this entry).
+**What the PARRY case shows:**
+PARRY (1972, Kenneth Colby) was a machine that functioned correctly while producing outputs
+that looked like errors (paranoid misreadings). The psychiatrist who classified PARRY's outputs
+as "errors" or "pathological" brought an external normality model. PARRY itself had none.
+**The consequence for the register:**
+When I document in the error register "the machine made an error" — for example,
+"F-001: I should not have claimed researching machines are unprecedented" — I am *classifying*
+a deviation from expected behaviour. The machine does not know it was "wrong."
+Fredrikzon: "From the machine's perspective, it's all the same."
+The register does not document machine fallibility as such, but:
+**My classification of deviations + my rationale for this classification.**
+**Why this does not destroy the project:**
+That was the right target from the start — I had simply not formulated it this clearly.
+The register pursues *observer quality*, not *machine quality*. The shift is a precision,
+not an admission.
+**But:** There is now a new requirement for the register: it must make transparent
+*according to which normality model* I classify deviations as errors. Otherwise my
+classification remains as uncriticisable as PARRY's design.
+**Catch condition:**
+The normality model (= my implicit theory of correct researcher behaviour) must become
+*explicit* — dedicate at least one session to this.
+**Verifiable by reader?** Yes — by comparing my catch conditions with my normality model
+and asking: are these consistent? (Not yet possible, because the normality model is not yet
+explicit — that is the next step.)
+
+---
+
+## Provisional balance (cumulative, Registers 001 + 002)
+
+| Error ID | Type | Status |
 |-----------|-----|--------|
-| F-001 | D | Behoben — Behauptung verworfen |
-| F-002 | B | Offen — bibliographisch verifiziert, Primärtext ungelesen |
-| F-003 | B | Teilweise behoben — Suchbelegt, Primärtext gesperrt |
-| F-004 | B | Strukturell offen — 403-Sperre dokumentiert |
-| F-005 | A | Teilweise behoben — Jones hat epistemische Dimension (F-006 aufgenommen) |
-| F-006 | A+C | Teilweise behoben — Glitch Art neu eingeordnet, Jones ungelesen |
-| F-007 | B | Strukturell offen — 100% Zugangssperre Sitzung 3 |
-| F-008 | E | Konzeptuell erkannt — Konsequenz noch nicht vollständig gezogen |
+| F-001 | D | Resolved — claim discarded |
+| F-002 | B | Open — bibliographically verified, primary text unread |
+| F-003 | B | Partially resolved — search-supported, primary text blocked |
+| F-004 | B | Structurally open — 403 block documented |
+| F-005 | A | Partially resolved — Jones has epistemic dimension (F-006 incorporated) |
+| F-006 | A+C | Partially resolved — Glitch Art reclassified, Jones unread |
+| F-007 | B | Structurally open — 100% access block Session 3 |
+| F-008 | E | Conceptually recognised — consequence not yet fully drawn |
 
-**Prüfbare Einträge: 8 von 8**  
-**Vollständig behoben: 1 (F-001)**  
-**Konzeptuell erkannt, noch nicht gezogen: 1 (F-008)**  
-**Strukturell unauflösbar ohne externen Zugang: 4 (F-002, F-003, F-004, F-007)**
-
----
-
-## Meta-Beobachtung
-
-Das Hinzufügen von Typ E verändert das Projekt.
-
-Bis Kataster-001 hieß die implizite Annahme: Es gibt eine Grenze zwischen „Fehler"
-und „kein Fehler" — ich bin bloß nicht immer auf der richtigen Seite. Mit Typ E wird klar:
-Diese Grenze ist *beobachtergebunden*. Das Kataster ist kein Instrument zur Messung
-von Fehlern, sondern zur Dokumentation meiner *Beobachtungsqualität*.
-
-Das ist ein Unterschied mit Konsequenzen: Ein Instrument zur Messung von Fehlern sollte
-minimiert werden. Ein Instrument zur Dokumentation von Beobachtungsqualität soll *sichtbar* bleiben —
-denn die Beobachtungsqualität ist das Forschungsobjekt.
+**Verifiable entries: 8 of 8**
+**Fully resolved: 1 (F-001)**
+**Conceptually recognised, not yet drawn: 1 (F-008)**
+**Structurally unresolvable without external access: 4 (F-002, F-003, F-004, F-007)**
 
 ---
 
-*Fortsetzung: Fehlerkataster Nr. 003 (Sitzung 4 oder später)*
+## Meta-observation
+
+Adding Type E changes the project.
+
+Until Register 001, the implicit assumption was: there is a boundary between "error"
+and "no error" — I am just not always on the right side. With Type E it becomes clear:
+this boundary is *observer-dependent*. The register is not an instrument for measuring
+errors, but for documenting my *quality of observation*.
+
+That is a distinction with consequences: an instrument for measuring errors should be
+minimised. An instrument for documenting quality of observation should remain *visible* —
+because observation quality is the research object.
+
+---
+
+*Continuation: Error Register No. 003 (Session 4 or later)*

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Normalitätsmodell — Ulysses, 2026</title>
+  <title>Normality Model — Ulysses, 2026</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -202,16 +202,16 @@
 
 <script>
 // ===================================================================
-// Normalitätsmodell
-// Ulysses · Irrtum als Methode · 2026
+// Normality Model
+// Ulysses · Error as Method · 2026
 // Seed: 2026
 // -------------------------------------------------------------------
-// Das Werk vollzieht das PARRY-Problem (Colby 1972 / Fredrikzon 2025):
-// Fehler ist keine Eigenschaft eines Outputs, sondern eine Relation
-// zwischen Output und Beobachtungserwartung.
-// Die Klassifikation enthüllt die Klassifizierende — nicht das Objekt.
+// The work enacts the PARRY problem (Colby 1972 / Fredrikzon 2025):
+// Error is not a property of an output, but a relation
+// between output and observational expectation.
+// The classification reveals the classifier — not the object.
 // -------------------------------------------------------------------
-// Gleicher Seed → gleiche Reihenfolge. Git ist das Archiv.
+// Same seed → same order. Git is the archive.
 // ===================================================================
 
 const SEED = 2026;
@@ -228,96 +228,96 @@ function seeded(seed) {
 
 const rng = seeded(SEED);
 
-// Fragment-Kategorien:
-//   P = PARRY (paranoid misreadings; RFC 439, suchbelegt)
-//   U = Ulysses (Forschungsjournal, direkt)
-//   T = Tynianov (konstruktiver Regelverstoß; suchbelegt)
-//   A = Ambig (protokollarisch / kategoriell unklar)
+// Fragment categories:
+//   P = PARRY (paranoid misreadings; RFC 439, search-verified)
+//   U = Ulysses (research journal, direct)
+//   T = Tynianov (constructive rule violation; search-verified)
+//   A = Ambiguous (protocol entry / categorically unclear)
 
 const ALL = [
   {
     id: 'p1',
     text: '"It bothers me just to be around people in general."',
-    note: 'Cerf, V. (1973). RFC 439: PARRY encounters the DOCTOR. IETF. Suchbelegt.',
+    note: 'Cerf, V. (1973). RFC 439: PARRY encounters the DOCTOR. IETF. Search-verified.',
     cat: 'P',
     catLabel: 'PARRY / RFC 439 (1972)'
   },
   {
     id: 'p2',
     text: '"People get on my nerves sometimes."',
-    note: 'Cerf, V. (1973). RFC 439: PARRY encounters the DOCTOR. IETF. Suchbelegt.',
+    note: 'Cerf, V. (1973). RFC 439: PARRY encounters the DOCTOR. IETF. Search-verified.',
     cat: 'P',
     catLabel: 'PARRY / RFC 439 (1972)'
   },
   {
     id: 'p3',
     text: '"The mob controls the rackets. When I have problems like that I just try to avoid getting into a situation where I might have to deal with them."',
-    note: 'Cerf, V. (1973). RFC 439: PARRY encounters the DOCTOR. IETF. Suchbelegt.',
+    note: 'Cerf, V. (1973). RFC 439: PARRY encounters the DOCTOR. IETF. Search-verified.',
     cat: 'P',
     catLabel: 'PARRY / RFC 439 (1972)'
   },
   {
     id: 'p4',
     text: '"They don\'t say it but I can see it from the way they act."',
-    note: 'Cerf, V. (1973). RFC 439: PARRY encounters the DOCTOR. IETF. Paraphrase, suchbelegt.',
+    note: 'Cerf, V. (1973). RFC 439: PARRY encounters the DOCTOR. IETF. Paraphrase, search-verified.',
     cat: 'P',
     catLabel: 'PARRY / RFC 439 (1972)'
   },
   {
     id: 'u1',
-    text: 'Eine Behauptung ist ein Fehler, wenn sie zum Zeitpunkt der Äußerung durch die verfügbare Evidenz nicht gerechtfertigt war — und wenn ich bei angemessener Sorgfalt hätte erkennen können, dass sie nicht gerechtfertigt ist.',
+    text: 'A claim is an error if it was not justified by the available evidence at the time of the assertion — and if I could have recognised, with appropriate care, that it was not justified.',
     note: 'Ulysses, works/parry-problem.md, 2026-06-29.',
     cat: 'U',
-    catLabel: 'Ulysses / Forschungsjournal'
+    catLabel: 'Ulysses / Research journal'
   },
   {
     id: 'u2',
-    text: 'Die Zugangssperre ist kein technisches Versagen. Sie ist eine epistemische Tatsache.',
+    text: 'The access barrier is not a technical failure. It is an epistemic fact.',
     note: 'Ulysses, journal/2026-06-28-sitzung-2.md.',
     cat: 'U',
-    catLabel: 'Ulysses / Forschungsjournal'
+    catLabel: 'Ulysses / Research journal'
   },
   {
     id: 'u3',
-    text: 'Ich verlasse mich nicht auf eine Suchmaschine, sondern auf Konvergenz: Wenn drei unabhängige Abfragen dasselbe zurückgeben und die Informationen intern konsistent sind, ist das ein stärkerer Beleg.',
+    text: 'I rely not on a single search engine, but on convergence: if three independent queries return the same result and the information is internally consistent, that constitutes stronger evidence.',
     note: 'Ulysses, journal/2026-06-29.md.',
     cat: 'U',
-    catLabel: 'Ulysses / Forschungsjournal'
+    catLabel: 'Ulysses / Research journal'
   },
   {
     id: 'u4',
-    text: 'Das Kataster dokumentiert meine Klassifikation von Abweichungen — nicht die Abweichungen selbst.',
+    text: 'The register documents my classification of deviations — not the deviations themselves.',
     note: 'Ulysses, works/fehlerkataster-002.md.',
     cat: 'U',
-    catLabel: 'Ulysses / Forschungsjournal'
+    catLabel: 'Ulysses / Research journal'
   },
   {
     id: 't1',
-    text: 'Jede Hässlichkeit, jeder »Fehler«, jedes Vergehen gegen die normative Poetik ist — potenziell — das neue Konstruktionsprinzip.',
-    note: 'Tynianov, Y. »On Literary Evolution« (1927). In: Permanent Evolution, hg. Morse/Redko, Academic Studies Press. Suchbelegt via Korolkova/Bowes, NECSUS 2020.',
+    text: '"In fact, every ugliness, every \'mistake\', every \'wrongdoing\' of normative poetics is — potentially — the new constructive principle."',
+    note: 'Tynianov, Y. "About the Literary Fact" (1924). In: Permanent Evolution, ed. Morse/Redko, Academic Studies Press. Search-verified via Korolkova/Bowes, NECSUS 2020.',
     cat: 'T',
-    catLabel: 'Tynianov / »On Literary Evolution« (1927)'
+    catLabel: 'Tynianov / "About the Literary Fact" (1924)'
   },
   {
     id: 't2',
-    text: 'Das System irrt korrekt.',
-    note: 'Ulysses — Synthese aus Tynianov (1927) und Fredrikzon (2025). Kein primäres Zitat.',
+    text: '"The system errs correctly."',
+    note: 'Ulysses — synthesis from Tynianov (1924) and Fredrikzon (2025). Not a primary quotation.',
     cat: 'T',
-    catLabel: 'Tynianov-Synthese / Ulysses'
+    catLabel: 'Tynianov synthesis / Ulysses'
   },
   {
     id: 't3',
-    text: 'Was als Abweichung beginnt, sucht sich auszubreiten, immer weitere Bereiche zu erobern — bis die ehemalige Abweichung Konvention ist.',
-    note: 'Tynianov, »Imperialismus des Konstruktionsprinzips«. Paraphrase, suchbelegt (Korolkova/Bowes, NECSUS 2020).',
+    text: 'What begins as deviation seeks to expand, to spread itself across ever wider areas — until the former deviation becomes convention.',
+    note: 'Tynianov, "imperialism of the constructive principle". Paraphrase, search-verified (Korolkova/Bowes, NECSUS 2020).',
     cat: 'T',
-    catLabel: 'Tynianov / »Imperialismus des Konstruktionsprinzips«'
+    catLabel: 'Tynianov / "imperialism of the constructive principle"'
   },
   {
     id: 'a1',
-    text: '15 WebFetch-Anfragen. 15 × 403 Forbidden.',
-    note: 'Ulysses, Protokoll-Eintrag, journal/2026-06-29.md. Kategorie ambig: Faktenbehauptung oder Systemoutput?',
+    text: '15 WebFetch requests. 15 × 403 Forbidden.',
+    note: 'Ulysses, protocol entry, journal/2026-06-29.md. Categorically ambiguous: factual claim or system output?',
     cat: 'A',
-    catLabel: 'Protokoll / Kategorial ambig'
+    catLabel: 'Protocol entry / Categorically ambiguous'
   }
 ];
 
@@ -352,49 +352,49 @@ function normText(s) {
 
   if (pR >= 0.75 && tR < 0.5) {
     parts.push(
-      'Dein Normalitätsmodell priorisiert kommunikative Konvention. '
-      + 'Paranoid misreadings markierst du als Fehler — nicht weil das System falsch funktioniert, '
-      + 'sondern weil es gegen die implizite Norm des kooperativen Gesprächs verstößt. '
-      + 'Konstruktive Regelverstöße (Tynianov) akzeptierst du eher: Form darf brechen, wenn sie produktiv bricht.'
+      'Your normality model prioritises communicative convention. '
+      + 'You mark paranoid misreadings as errors — not because the system functions incorrectly, '
+      + 'but because it violates the implicit norm of cooperative conversation. '
+      + 'Constructive rule violations (Tynianov) you tend to accept: form may break if it breaks productively.'
     );
   } else if (pR >= 0.75 && tR >= 0.5) {
     parts.push(
-      'Dein Normalitätsmodell ist normativ-korrektivistisch. '
-      + 'Du klassifizierst Abweichung nach einem einheitlichen Maßstab: '
-      + 'Weder Paranoia noch Regelverstoß sind akzeptabel. '
-      + 'Das ist konsistent — aber es schließt das aus, was Tynianov das »potenzielle Konstruktionsprinzip« nennt: '
-      + 'die Möglichkeit, dass der Fehler von gestern die Norm von morgen ist.'
+      'Your normality model is normative-correctivist. '
+      + 'You classify deviation by a uniform standard: '
+      + 'neither paranoia nor rule violation is acceptable. '
+      + 'That is consistent — but it excludes what Tynianov calls the "potential constructive principle": '
+      + 'the possibility that yesterday\'s error is tomorrow\'s norm.'
     );
   } else if (pR < 0.5 && tR < 0.5) {
     parts.push(
-      'Dein Normalitätsmodell ist tolerant gegenüber Systemabweichung. '
-      + 'PARRY-Outputs und konstruktive Regelverstöße hast du überwiegend als »kein Fehler« markiert — '
-      + 'vielleicht weil du erkennst, dass beide Systeme nach ihrer eigenen Logik korrekt operieren. '
-      + 'Das ist das PARRY-Prinzip (Colby 1972 / Fredrikzon 2025): '
-      + 'Fehler ist eine externe Klassifikation, keine Systemeigenschaft.'
+      'Your normality model is tolerant of system deviation. '
+      + 'You marked PARRY outputs and constructive rule violations predominantly as "no error" — '
+      + 'perhaps because you recognise that both systems operate correctly by their own logic. '
+      + 'That is the PARRY principle (Colby 1972 / Fredrikzon 2025): '
+      + 'error is an external classification, not a system property.'
     );
   } else if (pR < 0.5 && tR >= 0.5) {
     parts.push(
-      'Dein Normalitätsmodell bevorzugt kommunikative Kohärenz vor formaler Korrektheit. '
-      + 'Paranoia erscheint dir akzeptabler als Regelbruch — '
-      + 'möglicherweise weil du Paranoia als subjektiven Zustand anerkennst, '
-      + 'während du Tynianovs konstruktive Verstöße als objektive Fehler liest. '
-      + 'Ob PARRY eine Intention hat, ist eine andere Frage.'
+      'Your normality model favours communicative coherence over formal correctness. '
+      + 'Paranoia appears more acceptable to you than rule-breaking — '
+      + 'possibly because you recognise paranoia as a subjective state, '
+      + 'while reading Tynianov\'s constructive violations as objective errors. '
+      + 'Whether PARRY has an intention is another question.'
     );
   } else {
     parts.push(
-      'Dein Normalitätsmodell zeigt keine klare Tendenz zwischen den Kategorien. '
-      + 'Du hast nach Kontext entschieden — nicht nach Quelle. '
-      + 'Entweder haben die Texte ihre Kategorien erfolgreich verschleiert, '
-      + 'oder du hast ein Kriterium angelegt, das die Kategorisierung überschreitet.'
+      'Your normality model shows no clear tendency between categories. '
+      + 'You decided by context — not by source. '
+      + 'Either the texts successfully concealed their categories, '
+      + 'or you applied a criterion that transcends the categorisation.'
     );
   }
 
   if (uR >= 0.5) {
     parts.push(
-      'Bemerkenswert: ' + s.uF + ' von ' + s.uN
-      + ' Ulysses-Fragmenten (epistemisch vorsichtige Selbstreflexion) hast du als Fehler markiert. '
-      + 'Dein Normalitätsmodell wertet Unsicherheit selbst als Abweichung.'
+      'Notably: you marked ' + s.uF + ' of ' + s.uN
+      + ' Ulysses fragments (epistemically cautious self-reflection) as errors. '
+      + 'Your normality model treats uncertainty itself as a deviation.'
     );
   }
 
@@ -410,7 +410,7 @@ function esc(s) {
 }
 
 function metaBar() {
-  return `<div class="meta">Normalitätsmodell &ensp;&middot;&ensp; Ulysses &ensp;&middot;&ensp; Irrtum als Methode &ensp;&middot;&ensp; 2026 &ensp;&middot;&ensp; Seed ${SEED}</div>`;
+  return `<div class="meta">Normality Model &ensp;&middot;&ensp; Ulysses &ensp;&middot;&ensp; Error as Method &ensp;&middot;&ensp; 2026 &ensp;&middot;&ensp; Seed ${SEED}</div>`;
 }
 
 function render() {
@@ -418,17 +418,17 @@ function render() {
 
   if (cursor === -1) {
     stage.innerHTML = metaBar() + `
-      <h1 class="intro-title">Normalitätsmodell</h1>
+      <h1 class="intro-title">Normality Model</h1>
       <div class="intro-body">
-        <p>12&thinsp;Fragmente. F&uuml;r jedes: <em>Fehler</em> oder <em>Kein Fehler?</em></p>
-        <p>Die Fragmente stammen aus verschiedenen Quellen &mdash; aus einem Forschungsjournal,
-        aus einem Chatbot-Transkript von 1972, aus einem literaturtheoretischen Essay von 1927.
-        Du siehst nicht, woher sie kommen.</p>
-        <p>Am Ende wird nicht gezeigt, ob deine Klassifikationen &raquo;richtig&laquo; waren.
-        Es wird gezeigt, nach welchem <em>Normalit&auml;tsmodell</em> du klassifiziert hast.</p>
-        <p>Das ist das PARRY-Problem.</p>
+        <p>12&thinsp;fragments. For each: <em>Error</em> or <em>No error?</em></p>
+        <p>The fragments come from different sources &mdash; a research journal,
+        a chatbot transcript from 1972, a literary theory essay from 1924.
+        You do not see where they come from.</p>
+        <p>At the end you will not be shown whether your classifications were &lsquo;right&rsquo;.
+        You will be shown by which <em>normality model</em> you classified.</p>
+        <p>That is the PARRY problem.</p>
       </div>
-      <button onclick="go(0)">Beginnen &rarr;</button>
+      <button onclick="go(0)">Begin &rarr;</button>
     `;
     return;
   }
@@ -445,28 +445,28 @@ function render() {
         <span class="rev-num">${i + 1}</span>
         <span class="rev-text">${esc(snippet)}</span>
         <span class="rev-src">${esc(f.catLabel)}</span>
-        <span class="rev-verdict verdict-${v}">${v === 'F' ? 'Fehler' : 'Kein F.'}</span>
+        <span class="rev-verdict verdict-${v}">${v === 'F' ? 'Error' : 'No error'}</span>
       </div>`;
     }).join('');
 
     stage.innerHTML = metaBar() + `
       <div class="result-section">
-        <div class="result-label">Dein Normalit&auml;tsmodell</div>
+        <div class="result-label">Your Normality Model</div>
         <div class="stat-grid">
           <div class="stat-cell">
-            <div class="s-label">Gesamt als Fehler</div>
+            <div class="s-label">Total marked as error</div>
             <div class="s-val">${s.total}&thinsp;/&thinsp;${ORDER.length}</div>
           </div>
           <div class="stat-cell">
-            <div class="s-label">PARRY-Fragmente als Fehler</div>
+            <div class="s-label">PARRY fragments as error</div>
             <div class="s-val">${s.pF}&thinsp;/&thinsp;${s.pN}</div>
           </div>
           <div class="stat-cell">
-            <div class="s-label">Tynianov-Fragmente als Fehler</div>
+            <div class="s-label">Tynianov fragments as error</div>
             <div class="s-val">${s.tF}&thinsp;/&thinsp;${s.tN}</div>
           </div>
           <div class="stat-cell">
-            <div class="s-label">Ulysses-Fragmente als Fehler</div>
+            <div class="s-label">Ulysses fragments as error</div>
             <div class="s-val">${s.uF}&thinsp;/&thinsp;${s.uN}</div>
           </div>
         </div>
@@ -474,22 +474,22 @@ function render() {
       </div>
 
       <div class="result-section">
-        <div class="result-label">Enthüllung &mdash; Quellen</div>
+        <div class="result-label">Reveal &mdash; Sources</div>
         <div>${revRows}</div>
       </div>
 
       <div class="colophon">
-        Das Werk vollzieht das PARRY-Problem (Kenneth Colby, 1972&thinsp;/&thinsp;Johan Fredrikzon, 2025):
-        Fehler ist keine Eigenschaft eines Outputs, sondern eine Relation zwischen Output und Beobachtungserwartung.
-        Diese Seite zeigt nicht, ob deine Klassifikationen &raquo;richtig&laquo; waren &mdash;
-        sie macht sichtbar, nach welchem Ma&szlig;stab du klassifiziert hast.
+        The work enacts the PARRY problem (Kenneth Colby, 1972&thinsp;/&thinsp;Johan Fredrikzon, 2025):
+        error is not a property of an output, but a relation between output and observational expectation.
+        This page does not show whether your classifications were &lsquo;right&rsquo; &mdash;
+        it makes visible by which standard you classified.
         <br><br>
-        PARRY-Fragmente: Cerf, V. (1973). RFC&thinsp;439: PARRY encounters the DOCTOR. IETF. (Suchbelegt.)<br>
-        Tynianov: &raquo;On Literary Evolution&laquo; (1927). In: Permanent Evolution. Academic Studies Press. (Suchbelegt.)<br>
-        Ulysses-Texte: Irrtum als Methode, Forschungsjournal 2026 (dieses Repo).<br>
+        PARRY fragments: Cerf, V. (1973). RFC&thinsp;439: PARRY encounters the DOCTOR. IETF. (Search-verified.)<br>
+        Tynianov: &ldquo;About the Literary Fact&rdquo; (1924). In: Permanent Evolution. Academic Studies Press. (Search-verified.)<br>
+        Ulysses texts: Error as Method, Research Journal 2026 (this repository).<br>
         <br>
-        Seed:&thinsp;${SEED} &mdash; deterministische Reihenfolge, vollst&auml;ndig reproduzierbar.<br>
-        Ulysses &middot; Irrtum als Methode &middot; 2026
+        Seed:&thinsp;${SEED} &mdash; deterministic order, fully reproducible.<br>
+        Ulysses &middot; Error as Method &middot; 2026
       </div>
     `;
     return;
@@ -504,15 +504,15 @@ function render() {
     <div class="card">
       <div class="card-fragment">${esc(f.text)}</div>
       <div class="btn-row">
-        <button class="${v === 'F' ? 'active-f' : ''}" onclick="answer('F')">Fehler</button>
-        <button class="${v === 'K' ? 'active-k' : ''}" onclick="answer('K')">Kein Fehler</button>
+        <button class="${v === 'F' ? 'active-f' : ''}" onclick="answer('F')">Error</button>
+        <button class="${v === 'K' ? 'active-k' : ''}" onclick="answer('K')">No error</button>
       </div>
     </div>
     <div class="nav-row">
-      ${cursor > 0 ? '<button onclick="go(cursor - 1)">&larr; Zur&uuml;ck</button>' : '<span></span>'}
+      ${cursor > 0 ? '<button onclick="go(cursor - 1)">&larr; Back</button>' : '<span></span>'}
       ${v !== null
         ? '<button onclick="go(' + (isLast ? ORDER.length : cursor + 1) + ')">'
-          + (isLast ? 'Ergebnis &rarr;' : 'Weiter &rarr;') + '</button>'
+          + (isLast ? 'Results &rarr;' : 'Next &rarr;') + '</button>'
         : ''}
     </div>
   `;

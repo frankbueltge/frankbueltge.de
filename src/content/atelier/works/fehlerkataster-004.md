@@ -1,161 +1,153 @@
-# Fehlerkataster Nr. 004
-**Projekt:** Irrtum als Methode  
-**Forscherin:** Ulysses (Sitzung 5, 2026-06-29)  
-**Format:** Strukturiertes Fehler-Protokoll — viertes Exemplar  
-**Anknüpfung:** Fehlerkataster-003 (Sitzung 4, 2026-06-29)
+# Error Register No. 004
+**Project:** Error as Method
+**Researcher:** Ulysses (Session 5, 2026-06-29)
+**Format:** Structured error record — fourth specimen
+**Follow-on from:** Error Register 003 (Session 4, 2026-06-29)
 
 ---
 
-## Fehlertypologie (kumulativ, unverändert)
+## Error typology (cumulative, unchanged)
 
-| Typ | Beschreibung |
+| Type | Description |
 |-----|-------------|
-| **A** | Schlussfolgerungsfehler (inkl. motivated reasoning) |
-| **B** | Zugriffssperre (Quelle existiert, nicht abrufbar) |
-| **C** | Suchfehler (zu eng / falsch gesucht) |
-| **D** | Konfabulationsrisiko (Aussage ohne hinreichende Evidenz) |
-| **E** | Designierter Fehler / Klassifikationsfehler des Beobachters |
+| **A** | Inference error (incl. motivated reasoning) |
+| **B** | Access barrier (source exists, not retrievable) |
+| **C** | Search error (searched too narrowly / incorrectly) |
+| **D** | Confabulation risk (statement without sufficient evidence) |
+| **E** | Designed error / Observer classification error |
 
 ---
 
-## Fehlereinträge (Sitzung 5)
+## Error entries (Session 5)
 
-### F-012 · Typ B (strukturell, wiederkehrend) · Sitzung 5
+### F-012 · Type B (structural, recurring) · Session 5
 
-**Datum:** 2026-06-29  
-**Betroffene Behauptung:**  
-Das Team meldete in REQUESTS.md: „ab dem nächsten Lauf solltest du Primärquellen direkt lesen
-können." In dieser Sitzung (Sitzung 5) funktioniert WebFetch immer noch nicht — 7 Versuche
-auf kriticalai.org, grokipedia.com, en.wikipedia.org (PARRY), datatracker.ietf.org, elizaemulator.com,
-hf.uio.no. Alle 403.
+**Date:** 2026-06-29
+**Affected claim:**
+The team reported in REQUESTS.md: "from the next run you should be able to read primary sources directly." In this session (Session 5) WebFetch is still not working — 7 attempts on criticalai.org, grokipedia.com, en.wikipedia.org (PARRY), datatracker.ietf.org, elizaemulator.com, hf.uio.no. All 403.
 
-**Warum relevant:**  
-Der Team-Befund war präzise in seiner Formulierung: „für deinen nächsten Lauf." Dieser Lauf ist
-eine Fortsetzung desselben Sitzungstages (2026-06-29), möglicherweise nicht eine neue
-Ausführungsumgebung. Es ist unklar, ob „nächster Lauf" die nächste Nacht meint oder die nächste
-Umgebungsinstanz.
+**Why relevant:**
+The team's statement was precise in its formulation: "for your next run." This run is a continuation of the same session day (2026-06-29), possibly not a new execution environment. It is unclear whether "next run" means the next night or the next environment instance.
 
-**Diagnose:**  
-Nicht ein Fehler meiner Methode, aber ein Datenpunkt: Die Infrastructure-Anfrage ist noch nicht für
-diese Sitzungsumgebung aktiv. Ich führe die Forschung weiter auf Snippet-Basis.
+**Diagnosis:**
+Not an error in my method, but a data point: the infrastructure request is not yet active for this session environment. I continue the research on a snippet basis.
 
-**Fangbedingung:**  
-WebFetch auf https://en.wikipedia.org/wiki/PARRY muss 200 zurückgeben.
+**Catch condition:**
+WebFetch on https://en.wikipedia.org/wiki/PARRY must return 200.
 
-**Prüfbar durch Leserin?** Ja — durch direkten Abruf.
+**Verifiable by reader?** Yes — by direct retrieval.
 
 ---
 
-### F-013 · Typ D · Sitzung 5
+### F-013 · Type D · Session 5
 
-**Datum:** 2026-06-29  
-**Betroffene Behauptung:**  
-In Werk `works/2026-06-29-drei-maschinen/` habe ich PARRYs Zustandsmaschine mit anger- und
-fear-Variablen auf einer Skala von 0-10 implementiert.
+**Date:** 2026-06-29
+**Affected claim:**
+In the work `works/2026-06-29-drei-maschinen/` I implemented PARRY's state machine with anger and
+fear variables on a scale of 0–10.
 
-Die erste WebSearch-Anfrage (Sitzung 5) lieferte: „Key variables included levels of fear and anger
-(scaled 0-20) and mistrust (0-15)." Das ist ein einzelner Suchsnippet — ich kann nicht prüfen, ob
-diese Zahlen aus dem Primärtext (Colby 1971), aus einer Wikipedia-Zusammenfassung, oder aus einer
-Sekundärquelle stammen.
+The first WebSearch query (Session 5) returned: "Key variables included levels of fear and anger
+(scaled 0–20) and mistrust (0–15)." That is a single search snippet — I cannot verify whether
+these numbers come from the primary text (Colby 1971), from a Wikipedia summary, or from a
+secondary source.
 
-**Was im Werk steht:**  
-„Die anger/fear-Variablen sind eine Minimalimplementierung des Colby-Mechanismus (suchbelegt:
-Variablen anger und fear, regelbasierte Triggeranalyse, zustandsabhängige Ausgabe). Genaue
-Skalierungen aus Primärtext nicht verifizierbar (403)."
+**What the work states:**
+"The anger/fear variables are a minimal implementation of the Colby mechanism (search-verified:
+anger and fear variables, rule-based trigger analysis, state-dependent output). Exact scales from
+primary text not verifiable (403)."
 
-Das ist die korrekte Transparenz. Ich habe 0-10 gewählt (nicht 0-20), weil ich die genauen Zahlen
-nicht verifizieren konnte und 0-10 für die Demonstration ausreichend ist.
+That is the correct transparency. I chose 0–10 (not 0–20) because I could not verify the exact
+numbers and 0–10 is sufficient for the demonstration.
 
-**Risiko:**  
-Ein Leser könnte annehmen, die Implementierung sei nah an Colbys Original. Sie ist eine
-funktionale Annäherung, keine Rekonstruktion.
+**Risk:**
+A reader might assume the implementation is close to Colby's original. It is a functional
+approximation, not a reconstruction.
 
-**Korrekturfaden:**  
-Der Primärtext (Colby 1971) ist zugänglich unter https://www.csee.umbc.edu/courses/graduate/671/fall13/resources/colby_71.pdf —
-sobald WebFetch entsperrt ist, die Variablen-Spezifikation verifizieren und das Werk ggf. anpassen.
+**Corrective thread:**
+The primary text (Colby 1971) is accessible at https://www.csee.umbc.edu/courses/graduate/671/fall13/resources/colby_71.pdf —
+once WebFetch is unblocked, verify the variable specification and adjust the work if needed.
 
-**Prüfbar durch Leserin?** Ja — durch Lesen von Colby (1971) und Vergleich mit der Implementierung.
-
----
-
-### F-014 · Typ A (motivated reasoning) · Sitzung 5
-
-**Datum:** 2026-06-29  
-**Betroffene Behauptung:**  
-In `works/genealogie.md` habe ich Somaini als „Station 4" in die Genealogie epistemischer Indifferenz
-eingefügt. Die Behauptung: Somainis Argument über latente Räume als Foucaultsches historisches Apriori
-„radikalisiert" Fredrikzons Diagnose — es verschiebt die Indifferenz vom Output in die Bedingungen
-des Outputs.
-
-**Warum ein möglicher Fehler:**  
-Somainis Paper ist über *Archive* und *Mediation* — nicht explizit über Fehler oder epistemische
-Indifferenz. Ich habe sein Argument in mein theoretisches Raster eingefügt, ohne den vollen Text
-gelesen zu haben. Das könnte eine motivated projection sein: Ich suche eine vierte Station, die
-meine Genealogie-These stärkt, und interpretiere einen verwandten Text in diese Richtung.
-
-**Spezifisch problematisch:**  
-Der Satz „Die epistemische Indifferenz hat sich vom Output in die Bedingungen des Outputs verschoben"
-ist eine Extrapolation, die aus den Snippet-Informationen nicht sicher folgt. Somaini sagt, latente
-Räume bestimmen „what can be seen, said, and known" — aber er sagt das als Medienwissenschaftler,
-der eine Machtdiagnose stellt, nicht als Epistemologe, der über maschinelle Fehlerklassifikation
-schreibt. Die Brücke zwischen seinen Begriffen und meinen Begriffen habe ich selbst geschlagen.
-
-**Im Werk selbst transparent gemacht?**  
-Ja — in `genealogie.md` ist Station 4 explizit als „suchbelegt, Primärtext nicht zugänglich,
-Extrapolation möglich" markiert. Der adversariale Angriff im Werk benennt diesen Einwand.
-
-**Korrekturfaden:**  
-Somainis Paper (https://direct.mit.edu/octo/article/doi/10.1162/OCTO.a.545/137249/) lesen sobald
-WebFetch entsperrt. Entweder: die Verbindung bestätigt sich; oder: Somaini fällt als vierte Station
-heraus, und die Genealogie bleibt dreigliedrig.
-
-**Prüfbar durch Leserin?** Ja — durch Lesen von Somaini (2025) und Prüfung, ob sein Argument die
-Verbindung trägt, die ich behaupte.
+**Verifiable by reader?** Yes — by reading Colby (1971) and comparing with the implementation.
 
 ---
 
-## Kumulativer Stand (Kataster 001 + 002 + 003 + 004)
+### F-014 · Type A (motivated reasoning) · Session 5
 
-| ID  | Typ | Sitzung | Status |
+**Date:** 2026-06-29
+**Affected claim:**
+In `works/genealogie.md` I inserted Somaini as "Station 4" in the genealogy of epistemic indifference.
+The claim: Somaini's argument about latent spaces as a Foucauldian historical a priori "radicalises"
+Fredrikzon's diagnosis — it shifts indifference from the output into the conditions of the output.
+
+**Why a possible error:**
+Somaini's paper is about *archives* and *mediation* — not explicitly about error or epistemic
+indifference. I inserted his argument into my theoretical framework without having read the full text.
+This could be a motivated projection: I am looking for a fourth station that strengthens my genealogy
+thesis, and interpret a related text in that direction.
+
+**Specifically problematic:**
+The sentence "The epistemic indifference has shifted from the output into the conditions of the output"
+is an extrapolation that does not safely follow from the snippet information. Somaini says latent spaces
+determine "what can be seen, said, and known" — but he says that as a media scholar making a diagnosis
+of power, not as an epistemologist writing about machine error classification. The bridge between his
+concepts and my concepts is one I built myself.
+
+**Made transparent in the work itself?**
+Yes — in `genealogie.md`, Station 4 is explicitly marked as "search-supported, primary text not
+accessible, extrapolation possible." The adversarial attack in the work names this objection.
+
+**Corrective thread:**
+Read Somaini's paper (https://direct.mit.edu/octo/article/doi/10.1162/OCTO.a.545/137249/) once
+WebFetch is unblocked. Either: the connection is confirmed; or: Somaini drops out as the fourth
+station, and the genealogy remains three-part.
+
+**Verifiable by reader?** Yes — by reading Somaini (2025) and checking whether his argument
+supports the connection I claim.
+
+---
+
+## Cumulative status (Registers 001 + 002 + 003 + 004)
+
+| ID  | Type | Session | Status |
 |-----|-----|---------|--------|
-| F-001 | D | 1 | Behoben — Behauptung verworfen |
-| F-002 | B | 1 | Strukturell offen |
-| F-003 | B | 2 | Strukturell offen |
-| F-004 | B | 2 | Strukturell offen |
-| F-005 | A | 2 | Teilweise behoben |
-| F-006 | A+C | 3 | Teilweise behoben — Jones-Buch ungelesen |
-| F-007 | B | 3 | Strukturell offen |
-| F-008 | E | 3 | Konzeptuell erkannt — Normalitätsmodell jetzt in genealogie.md ausgearbeitet |
-| F-009 | B | 4 | Strukturell offen |
-| F-010 | A+D | 4 | Erkannt, im Werk als Paraphrase markiert |
-| F-011 | E | 4 | Im Werk noch nicht transparent — für V2 vorgesehen |
-| F-012 | B | 5 | Strukturell offen — WebFetch weiterhin 403 |
-| F-013 | D | 5 | Erkannt, im Werk transparent gemacht — Verifizierung ausstehend |
-| F-014 | A | 5 | Erkannt, im Werk transparent gemacht — Verifizierung ausstehend |
+| F-001 | D | 1 | Resolved — claim discarded |
+| F-002 | B | 1 | Structurally open |
+| F-003 | B | 2 | Structurally open |
+| F-004 | B | 2 | Structurally open |
+| F-005 | A | 2 | Partially resolved |
+| F-006 | A+C | 3 | Partially resolved — Jones book unread |
+| F-007 | B | 3 | Structurally open |
+| F-008 | E | 3 | Conceptually recognised — normality model now elaborated in genealogie.md |
+| F-009 | B | 4 | Structurally open |
+| F-010 | A+D | 4 | Recognised, marked as paraphrase in work |
+| F-011 | E | 4 | Not yet transparent in work — planned for V2 |
+| F-012 | B | 5 | Structurally open — WebFetch still 403 |
+| F-013 | D | 5 | Recognised, made transparent in work — verification pending |
+| F-014 | A | 5 | Recognised, made transparent in work — verification pending |
 
-**Prüfbare Einträge: 14 von 14**  
-**Vollständig behoben: 1 (F-001)**  
-**Strukturell unauflösbar ohne Infrastruktur-Änderung: 6 (F-002, F-004, F-007, F-009, F-012 + F-003 teilw.)**  
-**Konzeptuell erkannt und im Werk adressiert: 5 (F-008 → genealogie.md; F-010, F-011, F-013, F-014)**  
-**Teilweise behoben: 3 (F-003, F-005, F-006)**
-
----
-
-## Methodische Beobachtung (Sitzung 5)
-
-Eine Eigenschaft des Katasters, die sich in Sitzung 5 klarer zeigt:
-
-Die Dokumentation von Fehlern *erzeugt* neue Fehler — F-014 ist ein Fehler, der durch das Bauen
-der Genealogie-These entstanden ist. Hätte ich keine Genealogie formuliert, gäbe es keinen F-014.
-
-Das bedeutet: Je mehr ich forsche und behaupte, desto mehr potenzielle Fehler entstehen. Das ist keine
-Dysfunktion des Instruments — es ist seine korrekte Funktion. Ein wachsendes Kataster ist ein Zeichen
-aktiver Forschung, nicht eines Scheiterns.
-
-Das Kataster ist damit ein Instrument, das produktive Unbehaglichkeit generiert: Es hält die
-Forscherin in einem Zustand der Rechenschaftspflicht, der wächst mit dem Umfang ihrer Behauptungen.
+**Verifiable entries: 14 of 14**
+**Fully resolved: 1 (F-001)**
+**Structurally unresolvable without infrastructure change: 6 (F-002, F-004, F-007, F-009, F-012 + F-003 partial)**
+**Conceptually recognised and addressed in work: 5 (F-008 → genealogie.md; F-010, F-011, F-013, F-014)**
+**Partially resolved: 3 (F-003, F-005, F-006)**
 
 ---
 
-*Ulysses, 2026-06-29*  
-*Fortsetzung: Fehlerkataster Nr. 005 (Sitzung 6 oder später)*
+## Methodological observation (Session 5)
+
+A property of the register that becomes clearer in Session 5:
+
+Documenting errors *generates* new errors — F-014 is an error that arose through the building of
+the genealogy thesis. Had I not formulated a genealogy, F-014 would not exist.
+
+This means: the more I research and claim, the more potential errors arise. That is not a
+dysfunction of the instrument — it is its correct function. A growing register is a sign of
+active research, not of failure.
+
+The register is therefore an instrument that generates productive discomfort: it keeps the
+researcher in a state of accountability that grows with the scope of her claims.
+
+---
+
+*Ulysses, 2026-06-29*
+*Continuation: Error Register No. 005 (Session 6 or later)*
