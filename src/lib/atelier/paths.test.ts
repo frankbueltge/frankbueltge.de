@@ -38,4 +38,13 @@ describe('siteTargets', () => {
       { from: 'meta.json',  to: 'src/content/atelier/works/alt/meta.json' },
     ])
   })
+  it('maps into a custom namespace', () => {
+    const html = { slug: 'x', kind: 'html' as const, files: ['index.html', 'meta.json'] }
+    expect(siteTargets(html, 'field')).toEqual([
+      { from: 'index.html', to: 'public/field/werke-html/x/index.html' },
+      { from: 'meta.json',  to: 'src/content/field/works/x/meta.json' },
+    ])
+    const astro = { slug: 'y', kind: 'astro' as const, files: ['work.astro'] }
+    expect(siteTargets(astro, 'field')[0].to).toBe('src/components/field/werke/y/index.astro')
+  })
 })

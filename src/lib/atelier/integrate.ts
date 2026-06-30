@@ -12,7 +12,8 @@ export interface IntegrateReport {
 
 const CODE_EXT = /\.(astro|ts|js)$/
 
-export function integrate(opts: { sourceDir: string; siteDir: string }): IntegrateReport {
+export function integrate(opts: { sourceDir: string; siteDir: string; ns?: string }): IntegrateReport {
+  const ns = opts.ns ?? 'atelier'
   const report: IntegrateReport = { accepted: [], rejected: [] }
   const worksDir = join(opts.sourceDir, 'works')
   if (!existsSync(worksDir)) return report
@@ -32,16 +33,16 @@ export function integrate(opts: { sourceDir: string; siteDir: string }): Integra
           violations.push(...checkForbidden(readFileSync(join(dir, f), 'utf8')))
         if (violations.length) { report.rejected.push({ slug, reason: violations.join('; ') }); continue }
       }
-      for (const { from, to } of siteTargets(work)) {
+      for (const { from, to } of siteTargets(work, ns)) {
         const dest = join(opts.siteDir, to)
         mkdirSync(dirname(dest), { recursive: true })
         copyFileSync(join(dir, from), dest)
       }
       if (work.kind === 'astro') {
         const meta = JSON.parse(readFileSync(join(dir, 'meta.json'), 'utf8'))
-        const page = join(opts.siteDir, `src/pages/atelier/werke/${slug}.astro`)
+        const page = join(opts.siteDir, `src/pages/${ns}/werke/${slug}.astro`)
         mkdirSync(dirname(page), { recursive: true })
-        writeFileSync(page, renderWrapperPage(slug, meta))
+        writeFileSync(page, renderWrapperPage(slug, meta, ns))
       }
       report.accepted.push({ slug, kind: work.kind })
     } catch (e) {

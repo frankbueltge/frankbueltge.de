@@ -13,18 +13,18 @@ export function classifyWork(slug: string, fileNames: string[]): ClassifiedWork 
   return { slug, kind: null, reason: 'no work.astro or index.html' }
 }
 
-export function siteTargets(work: ClassifiedWork): FileMap[] {
+export function siteTargets(work: ClassifiedWork, ns = 'atelier'): FileMap[] {
   if (work.kind === 'html') {
     return work.files.map((f) => ({
       from: f,
       to: f === 'index.html'
-        ? `public/atelier/werke-html/${work.slug}/index.html`
-        : `src/content/atelier/works/${work.slug}/${f}`,
+        ? `public/${ns}/werke-html/${work.slug}/index.html`
+        : `src/content/${ns}/works/${work.slug}/${f}`,
     }))
   }
-  // astro: whole dir → components/atelier/werke/<slug>/, work.astro → index.astro
+  // astro: whole dir → components/<ns>/werke/<slug>/, work.astro → index.astro
   return work.files.map((f) => ({
     from: f,
-    to: `src/components/atelier/werke/${work.slug}/${f === 'work.astro' ? 'index.astro' : f}`,
+    to: `src/components/${ns}/werke/${work.slug}/${f === 'work.astro' ? 'index.astro' : f}`,
   }))
 }
