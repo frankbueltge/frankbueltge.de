@@ -82,7 +82,7 @@ const txt = {
                 {meta.title ?? slug}
                 {meta.date && <span class="ml-2 font-mono text-xs font-normal text-fg-faint">{meta.date}</span>}
               </h3>
-              {meta.verkoerpert && <p class="mt-1.5 text-sm leading-relaxed text-fg-muted">{meta.verkoerpert}</p>}
+              {(meta.embodies ?? meta.verkoerpert) && <p class="mt-1.5 text-sm leading-relaxed text-fg-muted">{meta.embodies ?? meta.verkoerpert}</p>}
             </a>
           </li>
         ))}
@@ -100,7 +100,7 @@ const txt = {
               {meta.title ?? slug}
               {meta.date && <span class="ml-2 font-mono text-xs font-normal text-fg-faint">{meta.date}</span>}
             </h3>
-            {meta.verkoerpert && <p class="mt-2 text-sm leading-relaxed text-fg-muted">{meta.verkoerpert}</p>}
+            {(meta.embodies ?? meta.verkoerpert) && <p class="mt-2 text-sm leading-relaxed text-fg-muted">{meta.embodies ?? meta.verkoerpert}</p>}
             {meta.medium && (
               <p class="mt-2 font-mono text-[11px] text-fg-faint">
                 {meta.medium}{meta.seed != null && ` · Seed ${meta.seed}`}
