@@ -31,12 +31,18 @@ jobs:
       - name: Clone atelier repo
         run: git clone --depth 1 https://github.com/frankbueltge/irrtum-als-methode /tmp/atelier
 
-      - name: Integrate works (html + astro) + sync journal/docs
+      - name: Integrate works (html + astro + md) + sync journal/docs
         run: |
-          mkdir -p src/content/atelier/journal src/content/atelier/works
+          # Voller Reset der generierten Werk-Ausgaben → die Seite spiegelt irrtum exakt
+          # (entfernte/umbenannte Werke hinterlassen keine Orphans).
+          rm -rf src/content/atelier/works src/components/atelier/werke src/pages/atelier/werke public/atelier/werke-html
+          mkdir -p src/content/atelier/journal src/content/atelier/works src/components/atelier/werke
+          touch src/components/atelier/werke/.gitkeep
+          # Journal spiegeln (entfernt gelöschte Einträge)
           rsync -a --delete /tmp/atelier/journal/ src/content/atelier/journal/
-          # Integrator mappt NUR erlaubte Pfade: HTML-Werke → content, Astro-Werke →
-          # components + generierte Wrapper-Seiten; Rejects werden nicht kopiert.
+          # Markdown-Werke (fehlerkataster, genealogie, parry-problem …)
+          cp /tmp/atelier/works/*.md src/content/atelier/works/ 2>/dev/null || true
+          # HTML-/Astro-Werk-Verzeichnisse via Integrator (Pfad-Grenze erzwungen)
           npx tsx scripts/atelier/integrate.ts /tmp/atelier . > /tmp/report.json
           cat /tmp/report.json
           for f in PROTOCOL.md README.md REQUESTS.md; do [ -f "/tmp/atelier/$f" ] && cp "/tmp/atelier/$f" "src/content/atelier/$f" || true; done
@@ -53,7 +59,7 @@ jobs:
           if [ -n "$(git status --porcelain src/content/atelier src/components/atelier src/pages/atelier public/atelier/werke-html)" ]; then
             git config user.name "Atelier-Integrate"
             git config user.email "atelier-integrate@users.noreply.github.com"
-            git add src/content/atelier src/components/atelier src/pages/atelier public/atelier/werke-html
+            git add -A src/content/atelier src/components/atelier src/pages/atelier public/atelier/werke-html
             git commit -m "atelier: integrate $(date -u +%F)"
             git push
           else
