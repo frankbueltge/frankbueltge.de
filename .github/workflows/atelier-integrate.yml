@@ -50,10 +50,10 @@ jobs:
       - name: Commit + let deploy-cf rebuild (on success)
         if: success()
         run: |
-          if [ -n "$(git status --porcelain src/content/atelier src/components/atelier src/pages/atelier)" ]; then
+          if [ -n "$(git status --porcelain src/content/atelier src/components/atelier src/pages/atelier public/atelier/werke-html)" ]; then
             git config user.name "Atelier-Integrate"
             git config user.email "atelier-integrate@users.noreply.github.com"
-            git add src/content/atelier src/components/atelier src/pages/atelier
+            git add src/content/atelier src/components/atelier src/pages/atelier public/atelier/werke-html
             git commit -m "atelier: integrate $(date -u +%F)"
             git push
           else
