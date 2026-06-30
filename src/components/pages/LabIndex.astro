@@ -2,7 +2,7 @@
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import { t } from '@/i18n/ui'
 import { getLabPosts } from '@/lib/lab'
-import { WERKE } from '@/data/werke'
+import { WERKE_CHRONO } from '@/data/werke'
 import type { Locale } from '@/lib/site'
 
 const locale = (Astro.currentLocale ?? 'en') as Locale
@@ -20,11 +20,12 @@ const fmt = (iso: string) =>
     <p class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">{t(locale, 'werke.kicker')} · {t(locale, 'werke.title')}</p>
     <p class="mt-3 max-w-2xl leading-relaxed text-fg-muted">{t(locale, 'werke.sub')}</p>
     <ul class="mt-8 divide-y divide-line/60 border-t border-line/60">
-      {WERKE.map((werk) => (
+      {WERKE_CHRONO.map((werk) => (
         <li class="py-7">
           <a href={getRelativeLocaleUrl(locale, werk.href)} class="group block">
             <h2 class="text-lg font-semibold transition-colors group-hover:text-accent-soft">
               {werk.title}<span class="font-normal text-fg-faint"> — {werk.subtitle[locale]}</span>
+              {werk.live && <span class="ml-2 align-middle font-mono text-[10px] uppercase tracking-wider text-fg-faint"><span class="dot-live mr-0.5 inline-block h-[5px] w-[5px] rounded-full align-middle"></span>live</span>}
             </h2>
             <p class="mt-1.5 text-sm leading-relaxed text-fg-muted">{werk.description[locale]}</p>
           </a>

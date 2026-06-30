@@ -3,11 +3,12 @@
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import { t } from '@/i18n/ui'
 import type { Locale } from '@/lib/site'
-import { GEPLANT, WERKE } from '@/data/werke'
+import { GEPLANT, WERKE_CHRONO } from '@/data/werke'
 
 interface Props { locale: Locale }
 const { locale } = Astro.props
-const liveWerke = WERKE.filter((w) => w.id !== 'protokoll' && w.status === 'live')
+// Chronologisch, jüngstes zuerst — keine Sonderstellung (The Protocol steht als ältestes mit drin).
+const liveWerke = WERKE_CHRONO.filter((w) => w.status === 'live')
 ---
 
 <div class="rounded-[14px] border border-line bg-panel panel-raised p-6">
@@ -16,6 +17,7 @@ const liveWerke = WERKE.filter((w) => w.id !== 'protokoll' && w.status === 'live
     {liveWerke.map((werk) => (
       <a href={getRelativeLocaleUrl(locale, werk.href)} class="group">
         <span class="font-semibold transition-opacity group-hover:opacity-70">{werk.title}</span>
+        {werk.live && <span class="ml-1.5 align-middle font-mono text-[10px] uppercase tracking-wider text-fg-faint"><span class="dot-live mr-0.5 inline-block h-[5px] w-[5px] rounded-full align-middle"></span>live</span>}
         <span class="text-sm text-fg-muted"> — {werk.subtitle[locale]}</span>
       </a>
     ))}

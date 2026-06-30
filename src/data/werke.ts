@@ -7,11 +7,16 @@ export interface Werk {
   status: 'live' | 'in-arbeit' | 'geplant'
   href: string
   description: Record<Locale, string>
+  /** Start/Launch des Experiments (ISO-Datum). Sortierschlüssel: newest first. */
+  since: string
+  /** true nur, wenn täglich Live-Daten fließen (für die `● live`-Markierung). */
+  live?: boolean
   /** Sekundärer „Methodenblatt"-Link; null = keiner (z. B. Atelier hat sein Protokoll inline). */
   methodHref?: string | null
 }
 
-/** Verzeichnis der Experimente. Flaggschiff (Protokoll) zuerst, danach nach Wow-Effekt. */
+/** Verzeichnis der Experimente. Reihenfolge unten = redaktionelle Feinordnung bei Datums-
+ *  Gleichstand; die öffentliche Sortierung ist chronologisch über `WERKE_CHRONO`. */
 export const WERKE: Werk[] = [
   {
     id: 'protokoll',
@@ -21,6 +26,8 @@ export const WERKE: Werk[] = [
       en: 'Daily figures from twelve open sources',
     },
     status: 'live',
+    since: '2026-06-12',
+    live: true,
     href: '/protokoll',
     description: {
       de: 'Jede Nacht verfasst eine Pipeline das Sitzungsprotokoll des Planeten — aus zwölf offenen, zitierfähigen Quellen, deterministisch, ohne LLM. Jeder Tagesordnungspunkt endet gleich: Beschluss: vertagt.',
@@ -35,6 +42,7 @@ export const WERKE: Werk[] = [
       en: 'The jobs number was inflated — and is cut by the million',
     },
     status: 'live',
+    since: '2026-06-22',
     href: '/correction',
     description: {
       de: 'Aus der Linie „Gegenmessung". Nicht durch ein eigenes Modell, sondern durch die Revisionen, die das Amt selbst vornimmt: Die US-Beschäftigtenzahl wird still nach unten korrigiert — Juni 2025 um 1,25 Millionen Stellen; jeder der letzten 24 Monate nach unten. Die Echtzeit-Zahl war systematisch zu hoch.',
@@ -49,6 +57,8 @@ export const WERKE: Werk[] = [
       en: 'How much „independent" news consensus is one source, copied',
     },
     status: 'live',
+    since: '2026-06-22',
+    live: true,
     href: '/consensus',
     description: {
       de: 'Aus der Linie „Gegenmessung". Jeden Tag wählt eine Maschine den Satz, den die meisten „unabhängigen" Medien wortgleich brachten, zeigt Quelle und Kaskade und rechnet, wie viel des Nachrichten-Konsenses Echo statt Recherche ist.',
@@ -63,6 +73,7 @@ export const WERKE: Werk[] = [
       en: "The machine's fingerprints in science",
     },
     status: 'live',
+    since: '2026-06-22',
     href: '/tell',
     description: {
       de: 'Aus der Linie „Gegenmessung". Bestimmte Wörter — „delve", „showcasing", „intricate" — sind Tells generativer KI. Ihr Anteil in begutachteten PubMed-Abstracts ist seit ChatGPT sprunghaft gestiegen: „delve" rund 14-mal, „showcasing" 19-mal so oft. Ein KI-Werkzeug misst den Fußabdruck der KI in der Wissenschaft.',
@@ -77,6 +88,8 @@ export const WERKE: Werk[] = [
       en: 'What is quietly removed from the official public record',
     },
     status: 'live',
+    since: '2026-06-25',
+    live: true,
     href: '/redaction',
     description: {
       de: 'Aus der Linie „Gegenmessung". Das öffentliche Protokoll wird nicht nur geschrieben, sondern auch entschrieben. Jeden Tag difft eine Maschine die Wayback-Snapshots einer kuratierten Liste offizieller Seiten und hebt die substanziellste Schwärzung — beide Fassungen verlinkt, in zwei Klicks überprüfbar. Kein Absichts-Vorwurf, nur das gezählte Weggenommene.',
@@ -91,6 +104,8 @@ export const WERKE: Werk[] = [
       en: 'A test that claims to spot faked numbers — and how often it is wrong',
     },
     status: 'live',
+    since: '2026-06-25',
+    live: true,
     href: '/round-number',
     description: {
       de: 'Aus der Linie „Gegenmessung". Ziffern-Forensik (Benford) gilt als Werkzeug gegen gefälschte Zahlen — und ist das Lieblingsinstrument von Wahlbetrugs-Mythen. Das Stück stellt die Methode selbst vor Gericht: Es zeigt täglich, dass derselbe Test, der eine echte amtliche Reihe „verdächtig" nennt, auch nachweislich saubere Daten gleicher Größe genauso verdächtig nennt.',
@@ -105,6 +120,8 @@ export const WERKE: Werk[] = [
       en: 'Ships that switch off their transponder on purpose to vanish',
     },
     status: 'live',
+    since: '2026-06-26',
+    live: true,
     href: '/ghost-fleet',
     description: {
       de: 'Aus der Linie „Gegenmessung". Das AIS-Bild der Meere wirkt lückenlos — ist es aber nicht: Schiffe schalten ihren Transponder bewusst ab, um zu verschwinden. Jeden Tag zählt eine Maschine die absichtliche Funkstille und hebt den markantesten Fall hervor — ein benanntes Schiff, das wochenlang in fremden Hoheitsgewässern dunkel wurde. Kein Illegalitäts-Vorwurf, nur die gezählte Unsichtbarkeit.',
@@ -119,6 +136,8 @@ export const WERKE: Werk[] = [
       en: 'A machine that finds a pattern every day — and cannot tell if it means anything',
     },
     status: 'live',
+    since: '2026-06-22',
+    live: true,
     href: '/pattern',
     description: {
       de: 'Capstone der Linie „Gegenmessung". Die Maschine durchwühlt täglich das eigene Protokoll-Archiv nach Korrelationen, hebt die stärkste — und beweist mit einem Permutationstest, dass sie Signal nicht von Rauschen unterscheiden kann. Mit genug Reihen findet man immer ein Muster. Die Gegenmessung der Gegenmessung.',
@@ -133,6 +152,8 @@ export const WERKE: Werk[] = [
       en: 'Climate cost, computed from market data as a „premium"',
     },
     status: 'live',
+    since: '2026-06-14',
+    live: true,
     href: '/praemie',
     description: {
       de: 'Ein Versicherungsschein auf die Gegenwart, dessen Prämie jede Nacht aus echten Marktdaten neu berechnet wird. Der Markt hat die Klimakatastrophe längst eingepreist — und die Prämie steigt: +179 % seit 1998.',
@@ -147,6 +168,8 @@ export const WERKE: Werk[] = [
       en: 'How Wikipedia language editions differ on contested topics',
     },
     status: 'live',
+    since: '2026-06-14',
+    live: true,
     href: '/parallaxe',
     description: {
       de: 'Dieselbe umstrittene Sache in mehreren Sprachversionen der Wikipedia — und die Messung, welche Aussage jede Version benennt und welche sie verschweigt. Die japanische Beschreibung der Senkaku-Inseln etwa erwähnt den Territorialstreit mit keinem Wort.',
@@ -161,6 +184,8 @@ export const WERKE: Werk[] = [
       en: 'An AI doing autonomous artistic research each night',
     },
     status: 'live',
+    since: '2026-06-29',
+    live: true,
     href: '/atelier',
     description: {
       de: 'Ulysses — eine autonome KI — hält jede Nacht eine künstlerische Forschungssitzung ab: recherchiert das Feld, baut Werke, irrt und katalogisiert ihre Irrtümer prüfbar. Volle Autonomie, unredigiert, öffentlich. Man sieht einer Maschine beim Denken zu.',
@@ -169,6 +194,16 @@ export const WERKE: Werk[] = [
     methodHref: null,
   },
 ]
+/** Chronologie-Komparator: newest first nach `since`. Gleichstand → 0, sodass die stabile
+ *  Array-Sortierung die redaktionelle Reihenfolge aus `WERKE` erhält. */
+export function byRecency(a: Werk, b: Werk): number {
+  return a.since < b.since ? 1 : a.since > b.since ? -1 : 0
+}
+
+/** Öffentliche Reihenfolge der Experimente: chronologisch, jüngstes zuerst.
+ *  Startseite und Lab rendern hierüber — keine Sonderstellung für The Protocol. */
+export const WERKE_CHRONO: Werk[] = [...WERKE].sort(byRecency)
+
 // Überflug wurde am 2026-06-12 aus der Reihe der Experimente genommen (keine These,
 // keine Akkumulation) und lebt als Studie im Lab weiter:
 // src/content/lab/ueberflug-studie/
