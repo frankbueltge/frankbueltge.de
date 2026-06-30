@@ -83,4 +83,12 @@ const atelier = defineCollection({
   schema: z.object({}).loose(),
 })
 
-export const collections = { lab, protokoll, atelier }
+// Field = the second autonomous research engine (working name "field-research"): its public
+// research journal + works. Plain Markdown, synced nightly from the field-research repo
+// (src/content/field/{journal,works}/*.md). English-language.
+const field = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/field' }),
+  schema: z.object({}).loose(),
+})
+
+export const collections = { lab, protokoll, atelier, field }
