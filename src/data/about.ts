@@ -10,8 +10,8 @@ export type About = {
 const de: About = {
   metaTitle: 'Über Frank Bültge — Data & AI Engineer',
   metaDesc:
-    'Frank Bültge — Data & AI Engineer. Ein öffentliches Experimentierfeld mit Daten und Code: Versuche und erste Annäherungen, praxisbasiert, auf dem Weg zu einer künstlerischen Forschung.',
-  lede: 'Ich arbeite mit Daten. Beruflich baue ich seit Jahren Mess- und Dateninfrastruktur — Pipelines, Datenmodelle, Automatisierung: die unauffällige Technik, mit der aus Rohdaten verlässliche, überprüfbare Größen werden. Diese Seite ist nicht dieser Beruf. Sie ist mein öffentliches Experimentierfeld — und mein praxisbasierter Weg hin zu einer künstlerischen Forschung. Was hier steht, sind Versuche und erste Annäherungen, kein fertiges Werk.',
+    'Frank Bültge — Data & AI Engineer. Ein öffentliches Experimentierfeld mit Daten und Code: kleine Experimente, die etwas aus offenen Quellen messen, ihre Quellen nennen und offenlegen, wie sie gemacht sind.',
+  lede: 'Ich arbeite mit Daten. Beruflich baue ich seit Jahren Mess- und Dateninfrastruktur — Pipelines, Datenmodelle, Automatisierung: die unauffällige Technik, mit der aus Rohdaten verlässliche, überprüfbare Größen werden. Diese Seite ist nicht dieser Beruf. Sie ist mein öffentliches Experimentierfeld: Hier untersuche ich öffentlich, was Messung sichtbar macht und was sie übersieht. Was hier steht, sind Versuche und erste Annäherungen, kein fertiges Werk.',
   sections: [
     {
       heading: 'Worum es geht',
@@ -22,7 +22,7 @@ const de: About = {
     {
       heading: 'Hintergrund',
       paragraphs: [
-        'Der Weg zur künstlerischen Forschung ist für mich keine neue Richtung, sondern eine Wiederaufnahme — aber ein Weg, kein Ankommen. Lange habe ich nicht künstlerisch geforscht, sondern mit Daten, Messung und Technik gearbeitet. Diese Jahre waren kein Umweg: Sie haben das Material und das Handwerk gebracht, mit dem ich die alte Frage heute praxisbasiert bearbeiten kann.',
+        'Die Frage, was Messung zeigt und was sie verschweigt, beschäftigt mich seit langem. Lange habe ich sie nicht öffentlich verfolgt, sondern mit Daten, Messung und Technik gearbeitet. Diese Jahre waren kein Umweg: Sie haben das Material und das Handwerk gebracht, mit dem ich die alte Frage heute praxisbasiert bearbeiten kann.',
       ],
     },
     {
@@ -43,8 +43,8 @@ const de: About = {
 const en: About = {
   metaTitle: 'About Frank Bültge — Data & AI Engineer',
   metaDesc:
-    'Frank Bültge — Data & AI Engineer. A public field for experiments with data and code: attempts and first approaches, practice-based, on the way toward artistic research.',
-  lede: 'I work with data. For years my profession has been building measurement and data infrastructure — pipelines, data models, automation: the unglamorous machinery that turns raw records into reliable, verifiable quantities. This site is not that job. It is my public field for experiments — and my practice-based path toward artistic research. What you find here are attempts and first approaches, not a finished body of work.',
+    'Frank Bültge — Data & AI Engineer. A public field for experiments with data and code: small experiments that measure something from open sources, name their sources, and disclose how they are made.',
+  lede: 'I work with data. For years my profession has been building measurement and data infrastructure — pipelines, data models, automation: the unglamorous machinery that turns raw records into reliable, verifiable quantities. This site is not that job. It is my public field for experiments: here I probe, in the open, what measurement makes visible and what it overlooks. What you find here are attempts and first approaches, not a finished body of work.',
   sections: [
     {
       heading: 'What it is about',
@@ -55,7 +55,7 @@ const en: About = {
     {
       heading: 'Background',
       paragraphs: [
-        'The path toward artistic research is not a new direction for me but a return — yet a path, not an arrival. For a long stretch I did not do artistic research; I worked with data, measurement, and technology. Those years were not a detour: they supplied the material and the craft with which I can now work on the old question in a practice-based way.',
+        'The question of what measurement shows and what it leaves out has occupied me for a long time. For a long stretch I did not pursue it in public; I worked with data, measurement, and technology. Those years were not a detour: they supplied the material and the craft with which I can now work on that old question in a practice-based way.',
       ],
     },
     {
