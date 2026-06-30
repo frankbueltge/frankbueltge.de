@@ -20,12 +20,6 @@ const de: About = {
       ],
     },
     {
-      heading: 'Hintergrund',
-      paragraphs: [
-        'Die Frage, was Messung zeigt und was sie verschweigt, beschäftigt mich seit langem. Lange habe ich sie nicht öffentlich verfolgt, sondern mit Daten, Messung und Technik gearbeitet. Diese Jahre waren kein Umweg: Sie haben das Material und das Handwerk gebracht, mit dem ich die alte Frage heute praxisbasiert bearbeiten kann.',
-      ],
-    },
-    {
       heading: 'Beruf als Fundament',
       paragraphs: [
         'Die berufliche Datenpraxis bleibt wichtig — als methodisches Fundament, nicht als Schaufenster. Sie sorgt dafür, dass eine Messung haltbar, quelliert und nachvollziehbar ist. Den beruflichen Teil halte ich davon getrennt.',
@@ -50,12 +44,6 @@ const en: About = {
       heading: 'What it is about',
       paragraphs: [
         'What interests me is what measurement makes visible and what it overlooks — and the invisible infrastructure behind it: sources, standards, computational paths, archives. Out of this come small, ongoing experiments that try to measure something from open data sources, name their sources, and disclose how they are made.',
-      ],
-    },
-    {
-      heading: 'Background',
-      paragraphs: [
-        'The question of what measurement shows and what it leaves out has occupied me for a long time. For a long stretch I did not pursue it in public; I worked with data, measurement, and technology. Those years were not a detour: they supplied the material and the craft with which I can now work on that old question in a practice-based way.',
       ],
     },
     {
