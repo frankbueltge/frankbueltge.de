@@ -14,4 +14,9 @@ describe('renderWrapperPage', () => {
   it('escapes nothing into code (slug is path-segment safe)', () => {
     expect(() => renderWrapperPage('a/b', {})).toThrow(/slug/)
   })
+  it('targets a custom namespace', () => {
+    const out = renderWrapperPage('w', { title: 'W' }, 'field')
+    expect(out).toContain("import Work from '@/components/field/werke/w/index.astro'")
+    expect(out).toContain('— Field |')
+  })
 })

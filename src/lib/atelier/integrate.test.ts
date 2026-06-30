@@ -59,4 +59,10 @@ describe('integrate', () => {
     expect(rej?.reason).toMatch(/fehler bei verarbeitung/)
     expect(r.accepted).toContainEqual({ slug: 'good', kind: 'astro' })
   })
+  it('integrates into a custom namespace', () => {
+    const r = integrate({ sourceDir: src, siteDir: site, ns: 'field' })
+    expect(r.accepted).toContainEqual({ slug: 'good', kind: 'astro' })
+    expect(existsSync(join(site, 'src/components/field/werke/good/index.astro'))).toBe(true)
+    expect(existsSync(join(site, 'src/pages/field/werke/good.astro'))).toBe(true)
+  })
 })
