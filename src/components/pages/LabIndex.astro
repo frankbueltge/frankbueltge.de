@@ -25,7 +25,7 @@ const fmt = (iso: string) =>
           <a href={getRelativeLocaleUrl(locale, werk.href)} class="group block">
             <h2 class="text-lg font-semibold transition-colors group-hover:text-accent-soft">
               {werk.title}<span class="font-normal text-fg-faint"> — {werk.subtitle[locale]}</span>
-              {werk.live && <span class="ml-2 align-middle font-mono text-[10px] uppercase tracking-wider text-fg-faint"><span class="dot-live mr-0.5 inline-block h-[5px] w-[5px] rounded-full align-middle"></span>live</span>}
+              {werk.live && <span class="ml-2 align-middle font-mono text-[10px] uppercase tracking-wider text-fg-faint"><span class="dot-live mr-0.5 inline-block h-[5px] w-[5px] rounded-full align-middle"></span>live data</span>}
             </h2>
             <p class="mt-1.5 text-sm leading-relaxed text-fg-muted">{werk.description[locale]}</p>
           </a>
