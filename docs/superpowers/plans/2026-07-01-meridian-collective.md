@@ -203,7 +203,7 @@ def test_recall_ranks_relevant_chunk_first():
 > - **Identity decided:** the collective keeps **Meridian**; PROTOCOL.md's identity paragraph self-amended as designed. Core roles keep their functional names.
 > - WORKBOARD populated (8 grandfathered works + 4 proposals), memory/ curated (claims, open-questions, discarded, first dossier), `memory/index.jsonl` NOT committed, integrate chain green (23:08Z success), /field clean.
 > - Bonus: the session recovered Session 08's journal entry (lost to a parallel git recovery) verbatim from commit `37d1b54`, marked as restoration.
-> - **⚠️ Amendment 3 still open:** no gauntlet ran (consolidate move), so the Verifier's own web-tool access remains unverified — check on the first verify/gauntlet session (likely session 02).
+> - **✅ Amendment 3 RESOLVED (2026-07-02, probe2):** a spawned sub-agent retrieved an arXiv paper title via its own MCP tool call (SUBAGENT-WEB: OK, tool mcp__Arxiv__get_paper_data) — sub-agents inherit the research connectors, so the Verifier can fetch sources independently. The constitution's conductor-fetches fallback remains as a safety net only.
 
 
 **Files:** none (cloud run).
