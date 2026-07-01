@@ -9,11 +9,21 @@ EASYPRIVACY = """! Kommentar
 ||sub.metrics.example^
 """
 
-TDS = {"trackers": {
-    "liveramp.com": {"owner": {"name": "LiveRamp, Inc.", "displayName": "LiveRamp"}},
-    "adnxs.com": {"owner": {"displayName": "Xandr"}},
-    "kaputt.example": {"owner": {}},
-}}
+TDS = {
+    "trackers": {
+        "adnxs.com": {"owner": {"displayName": "Xandr"}},
+        "kaputt.example": {"owner": {}},
+    },
+    "entities": {
+        "LiveRamp": {"displayName": "LiveRamp"},
+        "AdTech Corp": {},
+    },
+    "domains": {
+        "liveramp.com": "LiveRamp",
+        "rlcdn.com": "LiveRamp",
+        "adtech.example": "AdTech Corp",
+    },
+}
 
 
 def test_registrable_domain():
@@ -28,15 +38,37 @@ def test_parse_easyprivacy_only_domain_rules():
     assert d == frozenset({"tracker.example", "stats.example", "sub.metrics.example"})
 
 
-def test_parse_tds_maps_domain_to_display_name():
-    m = parse_tds(TDS)
-    assert m == {"liveramp.com": "LiveRamp", "adnxs.com": "Xandr"}
+def test_parse_tds_tracker_domains_is_narrow():
+    tds = parse_tds(TDS)
+    assert tds.tracker_domains == frozenset({"adnxs.com", "kaputt.example"})
+
+
+def test_parse_tds_entity_map_is_broad():
+    tds = parse_tds(TDS)
+    assert tds.entity_map == {
+        "liveramp.com": "LiveRamp",
+        "rlcdn.com": "LiveRamp",
+        "adnxs.com": "Xandr",
+        "adtech.example": "AdTech Corp",
+    }
 
 
 def test_classify_third_party_trackers_entities():
+    tds = parse_tds(TDS)
+    easyprivacy = frozenset({"tracker.example", "liveramp.com"})
     c = classify("sciencedirect.com",
                  ["www.sciencedirect.com", "pixel.liveramp.com", "cdn.harmlos.example", "tracker.example"],
-                 frozenset({"tracker.example"}), {"liveramp.com": "LiveRamp"})
+                 easyprivacy, tds)
     assert c.third_party_hosts == frozenset({"pixel.liveramp.com", "cdn.harmlos.example", "tracker.example"})
     assert c.tracker_hosts == frozenset({"pixel.liveramp.com", "tracker.example"})
     assert c.entities == frozenset({"LiveRamp"})
+
+
+def test_classify_tds_tracker_domains_without_easyprivacy_entry():
+    tds = parse_tds(TDS)
+    c = classify("sciencedirect.com",
+                 ["ads.adnxs.com"],
+                 frozenset(), tds)
+    assert c.third_party_hosts == frozenset({"ads.adnxs.com"})
+    assert c.tracker_hosts == frozenset({"ads.adnxs.com"})
+    assert c.entities == frozenset({"Xandr"})

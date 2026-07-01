@@ -36,14 +36,46 @@ def parse_easyprivacy(text: str) -> frozenset[str]:
     return frozenset(domains)
 
 
-def parse_tds(tds: dict) -> dict[str, str]:
-    out: dict[str, str] = {}
+@dataclass(frozen=True)
+class TdsData:
+    """Zwei getrennte Auswertungen der DuckDuckGo-TDS-Datei.
+
+    Tracker-Erkennung (eng): nur die `trackers`-Sektion — das sind die
+    Domains, für die die TDS konkrete Block-Regeln definiert.
+    Firmen-Zuordnung (breit): `trackers`-Owner UND die separate
+    `domains`-Sektion (Domain -> Entity), aufgelöst über `entities`
+    (Entity -> Anzeigename). Reale TDS-Dateien listen viele Firmen
+    (z. B. LiveRamp) nur breit, nicht in `trackers` — wer nur die enge
+    Sektion liest, verpasst genau die Akteure, die benannt werden müssen.
+    """
+    tracker_domains: frozenset[str]
+    entity_map: dict[str, str]
+
+
+def parse_tds(tds: dict) -> TdsData:
+    """Tracker-Erkennung eng (trackers-Keys), Firmen-Zuordnung breit
+    (trackers-Owner ∪ domains-Sektion via entities). Bei Konflikt
+    gewinnt der trackers-Owner (spezifischer als die breite domains-Zuordnung).
+    """
+    tracker_domains = frozenset(
+        domain.lower() for domain in (tds.get("trackers") or {}).keys()
+    )
+
+    entities = tds.get("entities") or {}
+    entity_map: dict[str, str] = {}
+
+    # (b) breite domains-Sektion zuerst befüllen, (a) trackers-Owner überschreibt danach.
+    for domain, entity_name in (tds.get("domains") or {}).items():
+        display_name = (entities.get(entity_name) or {}).get("displayName") or entity_name
+        entity_map[domain.lower()] = display_name
+
     for domain, info in (tds.get("trackers") or {}).items():
         owner = (info or {}).get("owner") or {}
         name = owner.get("displayName") or owner.get("name")
         if name:
-            out[domain.lower()] = name
-    return out
+            entity_map[domain.lower()] = name
+
+    return TdsData(tracker_domains=tracker_domains, entity_map=entity_map)
 
 
 def _domain_chain(host: str) -> list[str]:
@@ -67,7 +99,7 @@ class Classification:
 
 
 def classify(first_party_domain: str, hosts: Iterable[str],
-             easyprivacy: frozenset[str], entity_map: dict[str, str]) -> Classification:
+             easyprivacy: frozenset[str], tds: TdsData) -> Classification:
     third: set[str] = set()
     trackers: set[str] = set()
     entities: set[str] = set()
@@ -77,10 +109,10 @@ def classify(first_party_domain: str, hosts: Iterable[str],
             continue
         third.add(h)
         chain = _domain_chain(h)
-        if any(c in easyprivacy for c in chain) or any(c in entity_map for c in chain):
+        if any(c in easyprivacy for c in chain) or any(c in tds.tracker_domains for c in chain):
             trackers.add(h)
         for c in chain:
-            if c in entity_map:
-                entities.add(entity_map[c])
+            if c in tds.entity_map:
+                entities.add(tds.entity_map[c])
                 break
     return Classification(frozenset(third), frozenset(trackers), frozenset(entities))
