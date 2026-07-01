@@ -72,3 +72,21 @@ def test_classify_tds_tracker_domains_without_easyprivacy_entry():
     assert c.third_party_hosts == frozenset({"ads.adnxs.com"})
     assert c.tracker_hosts == frozenset({"ads.adnxs.com"})
     assert c.entities == frozenset({"Xandr"})
+
+
+def test_classify_entity_without_tracker_status():
+    # Kernverhalten des TdsData-Umbaus: Firmen-Zuordnung ist unabhängig vom Tracker-Status.
+    tds = parse_tds(TDS)
+    c = classify("example.org", ["cdn.rlcdn.com"], frozenset(), tds)
+    assert c.entities == frozenset({"LiveRamp"})
+    assert c.tracker_hosts == frozenset()
+    assert c.third_party_hosts == frozenset({"cdn.rlcdn.com"})
+
+
+def test_parse_tds_trackers_owner_wins_over_domains():
+    tds = parse_tds({
+        "trackers": {"adnxs.com": {"owner": {"displayName": "Xandr"}}},
+        "entities": {"Falschname": {"displayName": "Falschname"}},
+        "domains": {"adnxs.com": "Falschname"},
+    })
+    assert tds.entity_map["adnxs.com"] == "Xandr"
