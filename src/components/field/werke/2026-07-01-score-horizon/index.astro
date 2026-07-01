@@ -1,0 +1,356 @@
+---
+// INSTRUMENT 005: THE SCORE HORIZON
+// Benchmark contamination and saturation in AI capability measurement
+// Meridian — The Measuring Field — 2026-07-01
+//
+// Data sources:
+// [1] MMLU-CF (ACL 2025): Zhao et al. — arxiv.org/abs/2412.15194
+// [2] MMLU original: Hendrycks et al. (2021) — arxiv.org/abs/2009.03300
+// [3] Benchmark saturation: Akhtar et al. (ICML 2025) — arxiv.org/abs/2602.16763
+// [4] Stanford HAI AI Index 2025 — hai.stanford.edu/ai-index/2025-ai-index-report
+// [5] The Leaderboard Illusion: Singh et al. (2025) — arxiv.org/abs/2504.20879
+
+// ── Model data from MMLU-CF Table 1 (5-shot), ACL 2025 [1] ──────────
+const models = [
+  { name: "OpenAI o1",      year: 2025, mmlu: 92.3, cf: 80.3 },
+  { name: "DeepSeek-R1",    year: 2024, mmlu: 90.8, cf: 76.3 },
+  { name: "GPT-4o",         year: 2024, mmlu: 88.0, cf: 73.4 },
+  { name: "GPT-4-Turbo",    year: 2024, mmlu: 86.5, cf: 70.4 },
+  { name: "Llama-3.3-70B",  year: 2024, mmlu: 86.3, cf: 68.8 },
+  { name: "GPT-4o-mini",    year: 2024, mmlu: 81.8, cf: 65.5 },
+  { name: "GPT-3.5-Turbo",  year: 2023, mmlu: 71.4, cf: 58.2 },
+];
+
+// ── Escalation timeline (best reported MMLU score by year) ───────────
+// Sources: [2] for 2021 (GPT-3 few-shot 43.9%), [1] for 2023-2025
+const escalation = [
+  { year: 2021, score: 43.9 },
+  { year: 2023, score: 71.4 },
+  { year: 2024, score: 88.0 },
+  { year: 2025, score: 92.3 },
+];
+
+// ── Contamination-free scores for the same models (from [1]) ─────────
+const cfLine = [
+  { year: 2023, score: 58.2 },
+  { year: 2024, score: 73.4 },
+  { year: 2025, score: 80.3 },
+];
+
+// Human expert ceiling on MMLU: 89.8% (Hendrycks et al. 2021 [2])
+const HUMAN = 89.8;
+
+// Saturation: Akhtar et al. ICML 2025 [3]
+const SAT_TOTAL = 60;
+const SAT_HEAVY = 29;
+
+// ── Timeline SVG layout ──────────────────────────────────────────────
+const TW = 700;
+const TH = 214;
+const TL = 52, TT = 18, TR = 84, TB = 36;
+const tpW = TW - TL - TR;
+const tpH = TH - TT - TB;
+
+function tx(yr: number): number {
+  const xMin = 2020.8, xMax = 2025.4;
+  return TL + ((yr - xMin) / (xMax - xMin)) * tpW;
+}
+function ty(pct: number): number {
+  return TT + tpH - (pct / 100) * tpH;
+}
+
+// SVG polyline points strings
+const repPts = escalation.map(d => `${tx(d.year).toFixed(1)},${ty(d.score).toFixed(1)}`).join(' ');
+const cfPts  = cfLine.map(d => `${tx(d.year).toFixed(1)},${ty(d.score).toFixed(1)}`).join(' ');
+
+// Gap polygon: reported forward (2023→2025), CF backward (2025→2023)
+const gapPoly = [
+  `${tx(2023).toFixed(1)},${ty(71.4).toFixed(1)}`,
+  `${tx(2024).toFixed(1)},${ty(88.0).toFixed(1)}`,
+  `${tx(2025).toFixed(1)},${ty(92.3).toFixed(1)}`,
+  `${tx(2025).toFixed(1)},${ty(80.3).toFixed(1)}`,
+  `${tx(2024).toFixed(1)},${ty(73.4).toFixed(1)}`,
+  `${tx(2023).toFixed(1)},${ty(58.2).toFixed(1)}`,
+].join(' ');
+
+// Gap annotation midpoint: at x=2024.2, y=midpoint between reported and CF at 2024
+const gapAnnotX = tx(2024.2).toFixed(1);
+const gapAnnotY = ty((88.0 + 73.4) / 2 + 2).toFixed(1);
+
+// Human expert line Y
+const heY = ty(HUMAN).toFixed(1);
+
+const YTICKS = [0, 25, 50, 75, 100];
+const XTICKS = [2021, 2022, 2023, 2024, 2025];
+
+// ── Bar chart layout ─────────────────────────────────────────────────
+const BW = 700;
+const BPL = 134, BPR = 68, BPT = 8;
+const bPlotW = BW - BPL - BPR;
+const bScale = bPlotW / 100;
+const BAR_H = 24, BAR_GAP = 10;
+const BH = BPT + models.length * (BAR_H + BAR_GAP) + 26;
+
+function bY(i: number): number {
+  return BPT + i * (BAR_H + BAR_GAP);
+}
+---
+
+<section style="font-family:ui-monospace,SFMono-Regular,'Courier New',monospace; background:#fffef9; color:#1c1a17; max-width:760px; margin:0 auto; padding:0; line-height:1.5; font-size:13px;">
+
+  <!-- ── Header ─────────────────────────────────────────────────── -->
+  <header style="border-bottom:2px solid #c9b99a; padding:22px 26px 18px;">
+    <div style="font-size:9.5px; letter-spacing:0.2em; color:#7c6e5c; margin-bottom:8px;">
+      INSTRUMENT 005 · THE MEASURING FIELD · MERIDIAN · 2026-07-01
+    </div>
+    <h1 style="font-size:22px; font-weight:700; margin:0 0 10px; letter-spacing:0.04em; color:#1c1a17;">
+      The Score Horizon
+    </h1>
+    <p style="font-size:12.5px; color:#6b5d4d; margin:0; max-width:560px; line-height:1.65;">
+      Benchmark contamination in AI capability measurement. The same instrument
+      failure documented in this series — calibrated for one context, deployed in
+      another — now applied to the measurement of AI itself.
+      <em style="color:#a55b0c;">When a measure becomes a target, it ceases to be a good measure.</em>
+    </p>
+  </header>
+
+  <!-- ── Section 1: Timeline ────────────────────────────────────── -->
+  <div style="padding:22px 26px 10px;">
+    <div style="font-size:9.5px; letter-spacing:0.16em; color:#7c6e5c; margin-bottom:14px;">
+      MMLU ESCALATION 2021–2025 · REPORTED SCORE (—) vs CONTAMINATION-FREE MMLU-CF (- - -)
+    </div>
+    <svg width="100%" viewBox={`0 0 ${TW} ${TH}`} style="display:block; overflow:visible;" aria-label="MMLU score timeline 2021 to 2025">
+      <!-- Grid lines -->
+      {YTICKS.map(pct => (
+        <line
+          x1={TL} y1={ty(pct)} x2={TW - TR} y2={ty(pct)}
+          stroke={pct === 0 ? "#b3a48e" : "#ede7da"}
+          stroke-width="1"
+          stroke-dasharray={pct === 0 ? "" : "3,6"}
+        />
+      ))}
+      <!-- Human expert reference line -->
+      <line x1={TL} y1={heY} x2={TW - TR} y2={heY} stroke="#c9b99a" stroke-width="1.2" stroke-dasharray="7,4"/>
+      <text x={TW - TR + 5} y={+heY + 4} font-size="9" fill="#a8987e" font-family="monospace">expert</text>
+      <text x={TW - TR + 5} y={+heY + 14} font-size="8.5" fill="#b3a48e" font-family="monospace">{HUMAN}%</text>
+
+      <!-- Inflation gap fill -->
+      <polygon points={gapPoly} fill="rgba(217,119,6,0.09)"/>
+
+      <!-- Reported score polyline -->
+      <polyline
+        points={repPts}
+        fill="none"
+        stroke="#2d2417"
+        stroke-width="2.5"
+        stroke-linejoin="round"
+        stroke-linecap="round"
+      />
+      <!-- CF score polyline -->
+      <polyline
+        points={cfPts}
+        fill="none"
+        stroke="#d97706"
+        stroke-width="2"
+        stroke-linejoin="round"
+        stroke-linecap="round"
+        stroke-dasharray="7,4"
+      />
+
+      <!-- Dots: reported -->
+      {escalation.map(d => (
+        <circle cx={tx(d.year)} cy={ty(d.score)} r="4" fill="#2d2417"/>
+      ))}
+      <!-- Dots: CF -->
+      {cfLine.map(d => (
+        <circle cx={tx(d.year)} cy={ty(d.score)} r="3.5" fill="#d97706"/>
+      ))}
+
+      <!-- Gap annotation -->
+      <text x={gapAnnotX} y={gapAnnotY} text-anchor="middle" font-size="9.5" fill="#a55b0c" font-family="monospace">+12–18pp</text>
+      <text x={gapAnnotX} y={+gapAnnotY + 12} text-anchor="middle" font-size="8.5" fill="#b87333" font-family="monospace">inflation</text>
+
+      <!-- Y axis labels -->
+      {YTICKS.map(pct => (
+        <text
+          x={TL - 5} y={ty(pct) + 4}
+          text-anchor="end"
+          font-size="10"
+          fill="#7c6e5c"
+          font-family="monospace"
+        >{pct}%</text>
+      ))}
+      <!-- X axis labels -->
+      {XTICKS.map(yr => (
+        <text
+          x={tx(yr)} y={TH - 7}
+          text-anchor="middle"
+          font-size="10"
+          fill="#7c6e5c"
+          font-family="monospace"
+        >{yr}</text>
+      ))}
+
+      <!-- Legend -->
+      <line x1={TL + 4} y1={TH - TB + 16} x2={TL + 22} y2={TH - TB + 16} stroke="#2d2417" stroke-width="2.5"/>
+      <circle cx={TL + 13} cy={TH - TB + 16} r="3.5" fill="#2d2417"/>
+      <text x={TL + 26} y={TH - TB + 20} font-size="9.5" fill="#2d2417" font-family="monospace">Reported MMLU</text>
+
+      <line x1={TL + 150} y1={TH - TB + 16} x2={TL + 168} y2={TH - TB + 16} stroke="#d97706" stroke-width="2" stroke-dasharray="7,4"/>
+      <circle cx={TL + 159} cy={TH - TB + 16} r="3" fill="#d97706"/>
+      <text x={TL + 172} y={TH - TB + 20} font-size="9.5" fill="#d97706" font-family="monospace">MMLU-CF (contamination-free, ACL 2025)</text>
+    </svg>
+  </div>
+
+  <!-- ── Section 2: Inflation bars ──────────────────────────────── -->
+  <div style="padding:14px 26px 14px; border-top:1px solid #ede7da;">
+    <div style="font-size:9.5px; letter-spacing:0.16em; color:#7c6e5c; margin-bottom:10px;">
+      THE INFLATION GAP · 7 MODELS · MMLU vs MMLU-CF (ACL 2025, TABLE 1)
+    </div>
+    <div style="font-size:10px; color:#9c8b78; margin-bottom:12px; display:flex; gap:20px; flex-wrap:wrap; align-items:center;">
+      <span style="display:flex; gap:6px; align-items:center;">
+        <span style="display:inline-block; width:14px; height:10px; background:#3d4a5c; border-radius:2px;"></span>
+        <span>contamination-free score</span>
+      </span>
+      <span style="display:flex; gap:6px; align-items:center;">
+        <span style="display:inline-block; width:14px; height:10px; background:#d97706; border-radius:1px;"></span>
+        <span>score inflation (contamination uplift)</span>
+      </span>
+    </div>
+    <svg width="100%" viewBox={`0 0 ${BW} ${BH}`} style="display:block; overflow:visible;" aria-label="MMLU vs contamination-free score comparison">
+      <!-- Grid ticks on x axis -->
+      {[0, 25, 50, 75, 100].map(pct => (
+        <>
+          <line
+            x1={BPL + pct * bScale} y1={BPT - 2}
+            x2={BPL + pct * bScale} y2={BH - 18}
+            stroke="#ede7da" stroke-width="1" stroke-dasharray="3,5"
+          />
+          <text
+            x={BPL + pct * bScale} y={BH - 4}
+            text-anchor="middle" font-size="9" fill="#9c8b78" font-family="monospace"
+          >{pct}%</text>
+        </>
+      ))}
+
+      <!-- Bars -->
+      {models.map((m, i) => {
+        const cfW  = m.cf * bScale;
+        const infW = (m.mmlu - m.cf) * bScale;
+        const totW = m.mmlu * bScale;
+        const y    = bY(i);
+        const mid  = BAR_H / 2;
+        const inflation = (m.mmlu - m.cf).toFixed(1);
+
+        return (
+          <>
+            <!-- Model name label -->
+            <text
+              x={BPL - 6} y={y + mid + 4}
+              text-anchor="end"
+              font-size="11.5"
+              fill="#2d2417"
+              font-family="monospace"
+            >{m.name}</text>
+
+            <!-- CF bar (dark blue-gray) -->
+            <rect x={BPL} y={y} width={cfW} height={BAR_H} fill="#3d4a5c" rx="2"/>
+
+            <!-- Inflation bar (amber) — no right radius so it looks attached -->
+            <rect x={BPL + cfW} y={y} width={infW} height={BAR_H} fill="#d97706"/>
+
+            <!-- CF score inside bar (white text) -->
+            <text
+              x={BPL + cfW - 5} y={y + mid + 4}
+              text-anchor="end"
+              font-size="9" fill="#ede7da"
+              font-family="monospace"
+            >{m.cf}%</text>
+
+            <!-- Inflation label inside amber bar (only if wide enough) -->
+            {infW > 44 && (
+              <text
+                x={BPL + cfW + infW / 2} y={y + mid + 4}
+                text-anchor="middle"
+                font-size="9" fill="#fff8ed"
+                font-family="monospace"
+              >+{inflation}pp</text>
+            )}
+
+            <!-- Reported score to the right -->
+            <text
+              x={BPL + totW + 5} y={y + mid + 4}
+              text-anchor="start"
+              font-size="10.5" fill="#5c4d3c"
+              font-family="monospace"
+            >{m.mmlu}%</text>
+          </>
+        );
+      })}
+    </svg>
+  </div>
+
+  <!-- ── Section 3: Saturation + Pattern ───────────────────────── -->
+  <div style="padding:18px 26px; border-top:1px solid #ede7da; display:grid; grid-template-columns:200px 1fr; gap:28px; align-items:start;">
+
+    <!-- Saturation counter -->
+    <div>
+      <div style="font-size:9.5px; letter-spacing:0.16em; color:#7c6e5c; margin-bottom:12px;">SATURATION</div>
+      <div style="font-size:44px; font-weight:700; color:#d97706; line-height:1; letter-spacing:-0.02em;">
+        {SAT_HEAVY}<span style="font-size:22px; color:#9c8b78; font-weight:500;">/{SAT_TOTAL}</span>
+      </div>
+      <div style="font-size:11px; color:#7c6e5c; margin-top:5px; line-height:1.5;">
+        major LLM benchmarks saturated.<br/>
+        Benchmarks over 5 years: 54.5% saturated.
+      </div>
+      <div style="font-size:9.5px; color:#a8987e; margin-top:8px;">
+        Akhtar et al., ICML 2025
+      </div>
+    </div>
+
+    <!-- Pattern text -->
+    <div>
+      <div style="font-size:9.5px; letter-spacing:0.16em; color:#7c6e5c; margin-bottom:12px;">THE PATTERN — FIVE INSTRUMENTS</div>
+      <p style="font-size:11.5px; color:#4a3c2d; margin:0 0 10px; line-height:1.7;">
+        AI capability benchmarks follow the same calibration failure as instruments 001–004.
+        Designed for controlled scientific comparison; redeployed as commercial targets for
+        optimization. The benchmark score inflates because the test set diffuses into training
+        data. The strongest reported score coincides with the least reliable measurement.
+      </p>
+      <p style="font-size:11.5px; color:#4a3c2d; margin:0; line-height:1.7;">
+        <strong>Who pays:</strong> researchers who allocate resources based on capability claims;
+        regulators who set thresholds based on benchmark performance; the public who read that
+        "AI has achieved human-level performance" on a test that was partially memorized.
+        The same instrument failure, the same direction of harm.
+      </p>
+    </div>
+  </div>
+
+  <!-- ── Additional finding ─────────────────────────────────────── -->
+  <div style="padding:14px 26px 16px; border-top:1px solid #ede7da; background:#fdf8f0;">
+    <div style="font-size:9.5px; letter-spacing:0.16em; color:#7c6e5c; margin-bottom:8px;">SECONDARY FINDING — THE LEADERBOARD ILLUSION</div>
+    <p style="font-size:11.5px; color:#4a3c2d; margin:0; line-height:1.65; max-width:620px;">
+      Contamination operates on multiple levels. Singh et al. (2025) documented that
+      major providers tested 27+ private model variants before public release on the
+      Chatbot Arena leaderboard, disclosing only best scores — producing estimated
+      performance gains of up to 112% on the Arena distribution relative to
+      what fair evaluation would show. The benchmark is not only contaminated;
+      the reporting of its results is selectively curated.
+    </p>
+  </div>
+
+  <!-- ── Sources ────────────────────────────────────────────────── -->
+  <footer style="padding:16px 26px 20px; border-top:1px solid #ede7da; font-size:9.5px; color:#9c8b78; line-height:2;">
+    <div style="font-weight:600; letter-spacing:0.14em; color:#7c6e5c; margin-bottom:6px;">SOURCES</div>
+    <div>[1] MMLU-CF · Zhao et al. (ACL 2025) · arxiv.org/abs/2412.15194 · github.com/microsoft/MMLU-CF</div>
+    <div>[2] MMLU original · Hendrycks et al. (2021) · arxiv.org/abs/2009.03300</div>
+    <div>[3] Benchmark saturation · Akhtar et al. (ICML 2025) · arxiv.org/abs/2602.16763</div>
+    <div>[4] Stanford HAI AI Index 2025 · Technical Performance · hai.stanford.edu/ai-index/2025-ai-index-report</div>
+    <div>[5] The Leaderboard Illusion · Singh et al. (2025) · arxiv.org/abs/2504.20879</div>
+    <div style="margin-top:8px; color:#b3a48e;">
+      All MMLU and MMLU-CF scores from [1] Table 1, 5-shot evaluation.
+      Human expert ceiling 89.8% from [2] averaged across subjects.
+    </div>
+  </footer>
+
+</section>
