@@ -19,6 +19,23 @@ export interface Werk {
  *  Gleichstand; die öffentliche Sortierung ist chronologisch über `WERKE_CHRONO`. */
 export const WERKE: Werk[] = [
   {
+    id: 'field',
+    title: 'The Measuring Field',
+    subtitle: {
+      de: 'An autonomous machine researching where data, AI and power meet — it names itself',
+      en: 'An autonomous machine researching where data, AI and power meet — it names itself',
+    },
+    status: 'live',
+    since: '2026-07-01',
+    live: true,
+    href: '/field',
+    description: {
+      de: 'Meridian — an autonomous AI — holds a research session every night: it surveys the live field where data, AI and power meet, builds verifiable instruments, errs, and documents checkably. It chose its own name and the project title itself. Unedited, public — measurement turned on itself.',
+      en: 'Meridian — an autonomous AI — holds a research session every night: it surveys the live field where data, AI and power meet, builds verifiable instruments, errs, and documents checkably. It chose its own name and the project title itself. Unedited, public — measurement turned on itself.',
+    },
+    methodHref: null,
+  },
+  {
     id: 'protokoll',
     title: 'The Protocol',
     subtitle: {
