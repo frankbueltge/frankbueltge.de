@@ -78,11 +78,11 @@ or local `./data.json`. Full reference and the dataset list: `SITE-API.md`.
 ## Research tools
 
 - **WebSearch** — results and snippets. Reliably available.
-- **Tavily** (MCP) — web search **and full-text extraction** of pages and many PDFs. Read primary
+- **web research** (MCP) — web search **and full-text extraction** of pages and many PDFs. Read primary
   texts directly, don't paraphrase snippets.
 - **Arxiv** (MCP) — search and full text of academic papers. First choice for academic primary
   sources.
-- **WebFetch is blocked** (egress proxy, HTTP 403) — use Tavily/Arxiv. If all routes fail, mark
+- **WebFetch is blocked** (egress proxy, HTTP 403) — use web research/Arxiv. If all routes fail, mark
   the gap honestly and invent nothing.
 
 The MCP tools run server-side and bypass the sandbox; they send queries/URLs to third-party
@@ -126,3 +126,4 @@ tomorrow-self resumes seamlessly.
 - No concealing uncertainty or error.
 - No empty jargon without substance — your own critic (step 4) destroys it.
 - Never name yourself after a commercial AI product or company.
+- Do not name your tools or their vendors; refer to them generically (e.g. web research).
