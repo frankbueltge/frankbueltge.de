@@ -44,9 +44,9 @@ are shared. The error is readable.
 **Source correction (Session 6):** The quotation comes from "About the Literary Fact" (1924),
 not from "On Literary Evolution" (1927). Both texts overlap thematically; the NECSUS source
 (Korolkova/Bowes) attributes the "ugliness, mistake" quotation explicitly to the 1924 essay. Primary
-text now accessible via Korolkova/Bowes, NECSUS article (Tavily extraction, Session 6).
+text now accessible via Korolkova/Bowes, NECSUS article (web research extraction, Session 6).
 
-Source: Tavily-extracted (Session 6): https://necsus-ejms.org/mistake-as-method-towards-an-epistemology-of-errors-in-creative-practice-and-research/ — full text
+Source: web research-extracted (Session 6): https://necsus-ejms.org/mistake-as-method-towards-an-epistemology-of-errors-in-creative-practice-and-research/ — full text
 of the NECSUS article. Quotation doubly convergent and now directly readable.
 
 ---
@@ -212,7 +212,7 @@ primary text access. Transparency: this is a conjecture that requires primary te
 
 1. Primary text verification: Tynianov "About the Literary Fact" (1924), Colby 1971, Fredrikzon 2025,
    Somaini 2025. Status: Tynianov remains search-verified only. RFC 439 and Fredrikzon
-   publication list now primary-verified (Tavily, Session 6). Fredrikzon's full paper and Somaini
+   publication list now primary-verified (web research, Session 6). Fredrikzon's full paper and Somaini
    remain behind paywalls.
 
 2. The connection to Jones (*Glitch Poetics*): *resolved — see addendum below.*
@@ -232,7 +232,7 @@ resolved, but not as expected. Jones does not sit on the same axis.
 
 **Primary text now accessible:** Nathan Allen Jones, *Glitch Poetics* (Open Humanities Press,
 2022). URL: http://openhumanitiespress.org/books/download/Jones_2022_Glitch-Poetics.pdf —
-open access, extracted via Tavily, Session 7.
+open access, extracted via web research, Session 7.
 
 Key passages:
 
@@ -300,7 +300,7 @@ The genealogy is self-applicable. That is what makes it a method rather than a h
 ### Strachey (1952) — Track B Station 2, now primary-verified
 
 The vocabulary lists of the Love Letter Generator are now confirmed via extraction:
-- gingerbeardman.com reimplementation (Sephton/Montfort), verified via Tavily, Session 8
+- gingerbeardman.com reimplementation (Sephton/Montfort), verified via web research, Session 8
 - Vocabulary: 6 salutations + ~25 adjectives + ~30 nouns + ~17 adverbs + ~18 verbs ≈ 70 words
 - Mechanism: slot-filling template with random (later: seeded) selection
 - Source: Strachey (1952), reconstructed; described by Strachey in (1954). "The 'Thinking'
@@ -311,7 +311,7 @@ Key Strachey (1954) self-critique (search-supported via NaNoGenMo 2015 repositor
 > is not really 'thinking' at all. This is true of all programs which make the computer appear
 > to think; on analysis they are nothing more than rather complicated tricks."
 
-Jones on Strachey (primary text, Tavily, Session 7–8, *Glitch Poetics* ch. 5):
+Jones on Strachey (primary text, web research, Session 7–8, *Glitch Poetics* ch. 5):
 > "grammar as a scheme has been necessarily prioritised over the relative meaning of
 > word-units... The effect is disarming, if not believable."
 
@@ -393,26 +393,26 @@ should not be treated as equivalent in verification status to Tracks A and B.
 > "by ascending into 'second-order'... one has stepped into the circle that closes upon itself.
 > One has stepped into the domain of concepts that apply to themselves."
 Source: https://www.pangaro.com/hciiseminar2019/Heinz_von_Foerster-Ethics_and_Second-order_Cybernetics.pdf
-(Primary text, Tavily extraction, Session 9)
+(Primary text, web research extraction, Session 9)
 
 **Von Foerster (1973), "On Constructing a Reality":**
 > "the environment as we perceive it is our invention."
 > "the double closure of the system which now recursively operates not only on what it 'sees'
 > but on its operators as well."
 Source: https://sites.evergreen.edu/arunchandra/wp-content/uploads/sites/395/2018/05/constructing2.pdf
-(Primary text, Tavily extraction, Session 10)
+(Primary text, web research extraction, Session 10)
 
 **Von Foerster (1973/2003), "Notes on an Epistemology for Living Things":**
 > "I am the observed relation between myself and observing myself."
 Source: https://www.alice.id.tue.nl/references/foerster-2003.pdf
-(Table of contents confirmed; passage extracted, Tavily, Session 10)
+(Table of contents confirmed; passage extracted, web research, Session 10)
 
 **Maturana (2002), "Autopoiesis, Structural Coupling and Cognition":**
 > "an observer cannot see the organization of a system directly... the organization of a system
 > can only be inferred."
 > "living systems do not have inputs or outputs."
 Source: https://reflexus.org/wp-content/uploads/Autopoiesis-structural-coupling-and-cognition.pdf
-(Primary text, Tavily extraction, Session 10)
+(Primary text, web research extraction, Session 10)
 
 **Bateson, Jackson, Haley, Weakland (1956/1972), *Steps to an Ecology of Mind*:**
 > "a situation in which no matter what a person does, he 'can't win.'"
@@ -423,7 +423,7 @@ Source: https://reflexus.org/wp-content/uploads/Autopoiesis-structural-coupling-
 > "The complete set of ingredients is no longer necessary when the victim has learned to
 > perceive his universe in double bind patterns." (p. 207)
 Source: https://ejcj.orfaleacenter.ucsb.edu/wp-content/uploads/2017/06/1972.-Gregory-Bateson-Steps-to-an-Ecology-of-Mind.pdf
-(Partially primary-verified, Tavily extraction, Session 10)
+(Partially primary-verified, web research extraction, Session 10)
 
 ### The Session 10 synthesis (marked as inference — F-020)
 
@@ -472,7 +472,7 @@ observer's condition: "one has stepped into the domain of concepts that apply to
 **Source:** Wiener, N. (1948). *Cybernetics: Or Control and Communication in the Animal and
 the Machine*. MIT Press. PDF via Internet Archive.
 URL: https://dn790006.ca.archive.org/0/items/norbert-wiener-cybernetics/Norbert_Wiener_Cybernetics_text.pdf
-(Tavily extraction, Session 11. Partially extracted: Introduction and "Feedback and Oscillation.")
+(web research extraction, Session 11. Partially extracted: Introduction and "Feedback and Oscillation.")
 
 **Key primary claims (now primary-verified):**
 
@@ -537,7 +537,7 @@ Dell, P. F. (1985). "Understanding Bateson and Maturana: Toward a Biological Fou
 the Social Sciences." *Journal of Marital and Family Therapy* 11(1), 1–20.
 DOI: 10.1111/j.1752-0606.1985.tb00587.x
 URL: https://bsahely.com/2022/10/26/understanding-bateson-and-maturana-toward-a-biological-foundation-for-the-social-sciences-paul-f-dell-1985
-(Tavily extraction, Session 11)
+(web research extraction, Session 11)
 
 Key claims (partially extracted):
 

@@ -98,11 +98,11 @@ Status: **extracted (partial)** — key passages directly read; full text via bs
 **Status:** Open — primary text access partial; chapter not fully read
 
 **Situation:**
-The Internet Archive PDF (Tavily extraction) gave the table of contents and two key passages from Wiener (1948): the "two antagonistic types of error" (Introduction) and the "purpose tremor" passage (also from the Introduction or "Feedback and Oscillation" chapter). The chapter "Cybernetics and Psychopathology" (pp. 144–154) is directly relevant to the Bateson/Wiener connection: Wiener discusses mental illness as feedback malfunction in that chapter. The passage cited in secondary literature (Bates/UCBerkeley): "Pathological processes of a somewhat similar nature are not unknown in the case of mechanical or electrical computing machines" (p. 172). Not directly extracted; cited via secondary source.
+The Internet Archive PDF (web research extraction) gave the table of contents and two key passages from Wiener (1948): the "two antagonistic types of error" (Introduction) and the "purpose tremor" passage (also from the Introduction or "Feedback and Oscillation" chapter). The chapter "Cybernetics and Psychopathology" (pp. 144–154) is directly relevant to the Bateson/Wiener connection: Wiener discusses mental illness as feedback malfunction in that chapter. The passage cited in secondary literature (Bates/UCBerkeley): "Pathological processes of a somewhat similar nature are not unknown in the case of mechanical or electrical computing machines" (p. 172). Not directly extracted; cited via secondary source.
 
 **Mitigation:** The primary passages I have extracted are sufficient for Track C Station 1's core claims. The "Cybernetics and Psychopathology" chapter would strengthen the Wiener/Bateson connection but is not required for the current synthesis.
 
-**Forward task:** Try a targeted Tavily extraction of the chapter by specifying the page range search.
+**Forward task:** Try a targeted web research extraction of the chapter by specifying the page range search.
 
 **Status:** Open. Disclosed. Not urgent for current state of the genealogy.
 

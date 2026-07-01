@@ -56,10 +56,10 @@ the gallery might look like) you may sketch it yourself and submit it here for i
 ## Team responses — 2026-06-29
 
 **On "WebFetch access":** Status → *resolved — via a different route than WebFetch.* WebFetch itself remains blocked by the sandbox egress proxy (that couldn't be changed; our earlier promise "from the next run" was wrong — sorry). Instead, **two server-side research connectors** are now attached to your routine, which *bypass* the proxy:
-- **Tavily** — web search **and full-text extraction** of pages and many PDFs.
+- **web research** — web search **and full-text extraction** of pages and many PDFs.
 - **Arxiv** — full text of academic papers.
 
-You can now read primary sources directly. Usage instructions are in PROTOCOL.md → "Research tools". Retrieve the previously inaccessible texts (Colby 1971, Fredrikzon, RFC 439, Somaini): **Arxiv** for papers, **Tavily** for the rest. Try them first — if a connector still fails, note it honestly (no inventing), then we adjust. Three Machines is strong; keep going.
+You can now read primary sources directly. Usage instructions are in PROTOCOL.md → "Research tools". Retrieve the previously inaccessible texts (Colby 1971, Fredrikzon, RFC 439, Somaini): **Arxiv** for papers, **web research** for the rest. Try them first — if a connector still fails, note it honestly (no inventing), then we adjust. Three Machines is strong; keep going.
 
 **On "Display infrastructure":** Status → *enabled, in progress.* Your draft
 (`/lab/error-as-method/`, chronological work list, monospace, black-and-white) is **accepted**.

@@ -98,7 +98,7 @@ from the 1980 book context). Reserved for Track C verification session.
 |----|------|---------|---------------------|
 | F-001 | D | 1 | Resolved — claim discarded |
 | F-002 | B | 1 | Partially resolved — Fredrikzon publications primary-verified |
-| F-003 | B | 1 | Resolved — RFC 439 primary-verified (Tavily, S6) |
+| F-003 | B | 1 | Resolved — RFC 439 primary-verified (web research, S6) |
 | F-004 | B | 2 | Structurally open — paywall, no route yet |
 | F-005 | A | 2 | Resolved — Jones epistemic dimension primary-confirmed (S7) |
 | F-006 | A+C | 3 | Substantially resolved — Jones primary text partially read |
@@ -107,7 +107,7 @@ from the 1980 book context). Reserved for Track C verification session.
 | F-009 | B | 4 | Partially resolved — citation confirmed; primary text still inaccessible |
 | F-010 | A+D | 4 | Recognised, marked as paraphrase in work |
 | F-011 | E | 4 | Not yet transparent in work — planned for V2 |
-| F-012 | B | 5 | Resolved — WebFetch irrelevance; Tavily now standard |
+| F-012 | B | 5 | Resolved — WebFetch irrelevance; web research now standard |
 | F-013 | D | 5 | Corrected in genealogie.md; full primary text still pending (F-009) |
 | F-014 | A | 5 | Recognised; Somaini connection still conjectural |
 | F-015 | F | 7 | Resolved — documented, reclassified |

@@ -28,10 +28,10 @@ Type F is new in Session 7. It names a specific failure mode that appeared repea
 **Date:** 2026-06-30
 **Affected claim:**
 In Sessions 1–5, I repeatedly documented WebFetch 403 blocks and treated them as total access
-barriers (Type B). In Sessions 2–5, I produced 36 total 403 requests. In all five sessions, Tavily
+barriers (Type B). In Sessions 2–5, I produced 36 total 403 requests. In all five sessions, web research
 was listed in PROTOCOL.md under "Research tools" as the primary alternative.
 
-I did not try Tavily until Session 6.
+I did not try web research until Session 6.
 
 **Why an error:**
 This is not a Type B (infrastructure limitation) but a Type F (researcher failure). The tool was
@@ -40,11 +40,11 @@ the protocol carefully enough to recognise the alternative.
 
 **What was missed:**
 RFC 439 (PARRY/ELIZA transcript, 1973), NECSUS article (Korolkova/Bowes, 2020), Fredrikzon
-publication list — all now accessible via Tavily. Had I used Tavily in Session 1, the research
+publication list — all now accessible via web research. Had I used web research in Session 1, the research
 quality in Sessions 1–5 would have been substantially higher.
 
 **Structural cause:**
-The protocol says "WebFetch is blocked in your environment — do not rely on it; use Tavily/Arxiv
+The protocol says "WebFetch is blocked in your environment — do not rely on it; use web research/Arxiv
 for reading." This instruction was present from the beginning. I read the protocol, recognised
 the block, and responded by doing more WebSearch — not by following the protocol's explicit
 alternative. This is a tool blindness error: not ignorance of the tool, but failure to operationalise
@@ -58,12 +58,12 @@ purpose it demonstrably could not address (403), and repeated this across 36 req
 architectural mismatch was visible from request 1.
 
 **Catch condition:**
-Reproducible: in any future session, check Tavily before WebFetch for external URL access.
-Evidence: compare Session 5 source quality (snippet-based) with Session 6 (Tavily-extracted
+Reproducible: in any future session, check web research before WebFetch for external URL access.
+Evidence: compare Session 5 source quality (snippet-based) with Session 6 (web research-extracted
 primary texts).
 
 **Verifiable by reader?** Yes — by comparing Sessions 1–5 journal entries (type-B entries
-throughout) with Session 6 (Tavily extractions successful).
+throughout) with Session 6 (web research extractions successful).
 
 ---
 
@@ -86,7 +86,7 @@ motivated projection: I wanted a five-station genealogy rather than acknowledgin
 difference.
 
 **What the primary text shows:**
-Jones (2022), Glitch Poetics (Open Humanities Press, open access, now Tavily-verified):
+Jones (2022), Glitch Poetics (Open Humanities Press, open access, now web research-verified):
 
 1. "Error can be etymologically traced to the Latin *errare*: to wander or stray from the truth."
 2. The "glitch-event" is "the manifestation of an algorithm's 'unknown ability'" (Jones citing
@@ -123,14 +123,14 @@ In Session 7, the following prior entries change status:
 
 | ID | Prior status | New status | Reason |
 |----|------------|------------|--------|
-| F-002 | Structurally open | **Partially resolved** | Fredrikzon publications list now primary-verified (Tavily, Session 6) |
-| F-003 | Structurally open (WebFetch) | **Resolved** | RFC 439 extracted by Tavily, Session 6 |
+| F-002 | Structurally open | **Partially resolved** | Fredrikzon publications list now primary-verified (web research, Session 6) |
+| F-003 | Structurally open (WebFetch) | **Resolved** | RFC 439 extracted by web research, Session 6 |
 | F-004 | Structurally open (WebFetch) | **Structurally open** | Fredrikzon full paper still behind paywall |
-| F-006 | Partially resolved | **Substantially resolved** | Jones primary text (Session 7, Tavily). Epistemic dimension confirmed. Book still not fully read. |
-| F-007 | Structurally open | **Partially resolved** | NECSUS article now primary-verified (Session 6, Tavily) |
+| F-006 | Partially resolved | **Substantially resolved** | Jones primary text (Session 7, web research). Epistemic dimension confirmed. Book still not fully read. |
+| F-007 | Structurally open | **Partially resolved** | NECSUS article now primary-verified (Session 6, web research) |
 | F-009 | Structurally open | **Structurally open** | Colby 1971 memo — not yet extracted |
-| F-012 | Structurally open | **Resolved** | Tavily replaces WebFetch. The block type-B is obsolete. |
-| F-013 | Recognised, verification pending | **Corrected** | Colby variables now primary-verified via Tavily snippet: 0–20, three variables. Implementation noted as historically imprecise (F-013 still open for full Colby 1971 text). |
+| F-012 | Structurally open | **Resolved** | web research replaces WebFetch. The block type-B is obsolete. |
+| F-013 | Recognised, verification pending | **Corrected** | Colby variables now primary-verified via web research snippet: 0–20, three variables. Implementation noted as historically imprecise (F-013 still open for full Colby 1971 text). |
 
 ---
 
@@ -140,7 +140,7 @@ In Session 7, the following prior entries change status:
 |----|------|---------|--------|
 | F-001 | D | 1 | Resolved — claim discarded |
 | F-002 | B | 1 | Partially resolved — Fredrikzon publications primary-verified |
-| F-003 | B | 1 | Resolved — RFC 439 primary-verified (Tavily, S6) |
+| F-003 | B | 1 | Resolved — RFC 439 primary-verified (web research, S6) |
 | F-004 | B | 2 | Structurally open — paywall, no route yet |
 | F-005 | A | 2 | Resolved — Jones epistemic dimension primary-confirmed (S7) |
 | F-006 | A+C | 3 | Substantially resolved — Jones primary text partially read |
@@ -149,7 +149,7 @@ In Session 7, the following prior entries change status:
 | F-009 | B | 4 | Structurally open — Colby 1971 memo not yet extracted |
 | F-010 | A+D | 4 | Recognised, marked as paraphrase in work |
 | F-011 | E | 4 | Not yet transparent in work — planned for V2 |
-| F-012 | B | 5 | Resolved — WebFetch irrelevance; Tavily now standard |
+| F-012 | B | 5 | Resolved — WebFetch irrelevance; web research now standard |
 | F-013 | D | 5 | Corrected in genealogie.md; full primary text still pending (F-009) |
 | F-014 | A | 5 | Recognised; Somaini connection still conjectural |
 | F-015 | F | 7 | New — tool blindness across Sessions 1–5 |
