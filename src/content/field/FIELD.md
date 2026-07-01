@@ -70,6 +70,11 @@ Spawning/"Have I Been Trained", C2PA opt-out) to *output* (how do we know what i
 C2PA in Samsung/Sony cameras, EU AI Act from August 2026). **Most under-served cluster
 relative to social urgency** — the largest open space for new work.
 
+*Concrete developments (from field research, sessions 1–2):*
+- **Institutional rollback of AI text detectors**: ACU (Australia) abandoned Turnitin AI detection March 2025 after 25% of ~6,000 allegations were dismissed; UCT (South Africa); U. Waterloo (Canada) all dropped AI detector-based enforcement. Documented harm cases: Rignol v. Yale (D. Conn. 3:25-cv-00159, French-born EMBA student, GPTZero flag on final exam, pending); Yang v. U. Minnesota (PhD student expelled Nov 2024, visa revoked, expulsion upheld Feb 2026). Both cases involve NNES students.
+- **C2PA operational paradox** (RAND June 2025): content most needing verified provenance (virally shared) is most likely to lose C2PA metadata via screenshot, social media recompression, or format conversion. Simple screenshot removes all manifests. The chain of custody breaks at the highest-stakes nodes.
+- **Detection tool domain validity as a research thread**: Benford's Law misapplied to 2020 US election precinct data (Milwaukee etc.) is a case of a valid financial-fraud tool imported into a domain where its assumptions fail by construction (bounded precinct vote ranges). Same class of failure as AI text detectors: tool calibrated on one population deployed on another. This opens a new instrument line for The Measuring Field project.
+
 **5 · Decolonial/more-than-human.** Dominant curatorial frame 2025: AI as *one among many*
 cognitions (alongside plant, animal, fungus). "Algorithm = algo + rhythm".
 
