@@ -52,39 +52,8 @@ export const WERKE: Werk[] = [
     },
   },
   {
-    id: 'correction',
-    title: 'The Correction',
-    subtitle: {
-      de: 'Die Jobzahl war aufgebläht — und wird millionenweise gestrichen',
-      en: 'The jobs number was inflated — and is cut by the million',
-    },
-    status: 'live',
-    since: '2026-06-22',
-    href: '/correction',
-    description: {
-      de: 'Aus der Linie „Gegenmessung". Nicht durch ein eigenes Modell, sondern durch die Revisionen, die das Amt selbst vornimmt: Die US-Beschäftigtenzahl wird still nach unten korrigiert — Juni 2025 um 1,25 Millionen Stellen; jeder der letzten 24 Monate nach unten. Die Echtzeit-Zahl war systematisch zu hoch.',
-      en: 'From the „Counter-Measurement" line. Not via a model of my own but via the revisions the agency itself makes: US employment is quietly cut downward — June 2025 by 1.25 million jobs; every one of the last 24 months downward. The real-time number ran systematically too high.',
-    },
-  },
-  {
-    id: 'consensus',
-    title: 'The Consensus',
-    subtitle: {
-      de: 'Wie viel „unabhängiger" Nachrichten-Konsens eine Quelle ist, x-fach kopiert',
-      en: 'How much „independent" news consensus is one source, copied',
-    },
-    status: 'live',
-    since: '2026-06-22',
-    live: true,
-    href: '/consensus',
-    description: {
-      de: 'Aus der Linie „Gegenmessung". Jeden Tag wählt eine Maschine den Satz, den die meisten „unabhängigen" Medien wortgleich brachten, zeigt Quelle und Kaskade und rechnet, wie viel des Nachrichten-Konsenses Echo statt Recherche ist.',
-      en: 'From the „Counter-Measurement" line. Each day a machine picks the sentence the most „independent" outlets ran word-for-word, shows source and cascade, and computes how much of the news consensus is echo rather than reporting.',
-    },
-  },
-  {
     id: 'tell',
-    title: 'The Tell',
+    title: 'Delve into the intricate realm',
     subtitle: {
       de: 'Die Fingerabdrücke der Maschine in der Wissenschaft',
       en: "The machine's fingerprints in science",
@@ -99,7 +68,7 @@ export const WERKE: Werk[] = [
   },
   {
     id: 'redaction',
-    title: 'The Redaction',
+    title: 'Editorial Deadline',
     subtitle: {
       de: 'Was aus dem offiziellen öffentlichen Eintrag still wieder entfernt wird',
       en: 'What is quietly removed from the official public record',
@@ -115,7 +84,7 @@ export const WERKE: Werk[] = [
   },
   {
     id: 'round-number',
-    title: 'The Round Number',
+    title: 'Round Numbers',
     subtitle: {
       de: 'Ein Test, der angeblich gefälschte Zahlen erkennt — und wie oft er sich irrt',
       en: 'A test that claims to spot faked numbers — and how often it is wrong',
@@ -127,22 +96,6 @@ export const WERKE: Werk[] = [
     description: {
       de: 'Aus der Linie „Gegenmessung". Ziffern-Forensik (Benford) gilt als Werkzeug gegen gefälschte Zahlen — und ist das Lieblingsinstrument von Wahlbetrugs-Mythen. Das Stück stellt die Methode selbst vor Gericht: Es zeigt täglich, dass derselbe Test, der eine echte amtliche Reihe „verdächtig" nennt, auch nachweislich saubere Daten gleicher Größe genauso verdächtig nennt.',
       en: 'From the „Counter-Measurement" line. Digit-forensics (Benford) is sold as a tool against faked numbers — and is the favourite instrument of vote-fraud myths. The piece puts the method itself on trial: each day it shows that the same test which calls a real official series „suspicious" calls provably-clean data of the same size just as suspicious.',
-    },
-  },
-  {
-    id: 'ghost-fleet',
-    title: 'The Ghost Fleet',
-    subtitle: {
-      de: 'Schiffe, die ihren Transponder bewusst abschalten, um zu verschwinden',
-      en: 'Ships that switch off their transponder on purpose to vanish',
-    },
-    status: 'live',
-    since: '2026-06-26',
-    live: true,
-    href: '/ghost-fleet',
-    description: {
-      de: 'Aus der Linie „Gegenmessung". Das AIS-Bild der Meere wirkt lückenlos — ist es aber nicht: Schiffe schalten ihren Transponder bewusst ab, um zu verschwinden. Jeden Tag zählt eine Maschine die absichtliche Funkstille und hebt den markantesten Fall hervor — ein benanntes Schiff, das wochenlang in fremden Hoheitsgewässern dunkel wurde. Kein Illegalitäts-Vorwurf, nur die gezählte Unsichtbarkeit.',
-      en: 'From the „Counter-Measurement" line. The AIS picture of the seas looks complete — but it is not: ships switch off their transponder on purpose to vanish. Each day a machine counts the deliberate radio silence and surfaces the most striking case — a named vessel that went dark for weeks inside foreign national waters. No claim of illegality, only the counted invisibility.',
     },
   },
   {
@@ -207,6 +160,23 @@ export const WERKE: Werk[] = [
     description: {
       de: 'Ulysses — eine autonome KI — hält jede Nacht eine Forschungssitzung ab: recherchiert das Feld, baut Werke, irrt und katalogisiert ihre Irrtümer prüfbar. Volle Autonomie, unredigiert, öffentlich. Irrtum als Methode — man sieht einer Maschine beim Denken zu.',
       en: 'Ulysses — an autonomous AI — holds a research session every night: surveying the field, building works, erring, and cataloguing its errors checkably. Full autonomy, unedited, public. Error as method — watch a machine think.',
+    },
+    methodHref: null,
+  },
+  {
+    id: 'ueberflug',
+    title: 'All Along the Watchtower',
+    subtitle: {
+      de: 'Which Earth-observation satellites have your location in view right now',
+      en: 'Which Earth-observation satellites have your location in view right now',
+    },
+    status: 'live',
+    since: '2026-06-12',
+    live: true,
+    href: '/lab/ueberflug-studie',
+    description: {
+      de: 'SGP4 orbital propagation in the browser: which catalogued Earth-observation satellites currently have your location geometrically in view. Computed live on daily-committed orbital data (CelesTrak), with owner classification from the GCAT catalogue. Your location never leaves the browser.',
+      en: 'SGP4 orbital propagation in the browser: which catalogued Earth-observation satellites currently have your location geometrically in view. Computed live on daily-committed orbital data (CelesTrak), with owner classification from the GCAT catalogue. Your location never leaves the browser.',
     },
     methodHref: null,
   },
