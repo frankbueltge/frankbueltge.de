@@ -10,7 +10,7 @@
 // [4] Stanford HAI AI Index 2025 — hai.stanford.edu/ai-index/2025-ai-index-report
 // [5] The Leaderboard Illusion: Singh et al. (2025) — arxiv.org/abs/2504.20879
 
-// ── Model data from MMLU-CF Table 1 (5-shot), ACL 2025 [1] ──────────
+// ── Model data from MMLU-CF Table 1 (5-shot), ACL 2025 [1] ──────────────────
 const models = [
   { name: "OpenAI o1",      year: 2025, mmlu: 92.3, cf: 80.3 },
   { name: "DeepSeek-R1",    year: 2024, mmlu: 90.8, cf: 76.3 },
@@ -21,7 +21,7 @@ const models = [
   { name: "GPT-3.5-Turbo",  year: 2023, mmlu: 71.4, cf: 58.2 },
 ];
 
-// ── Escalation timeline (best reported MMLU score by year) ───────────
+// ── Escalation timeline (best reported MMLU score by year) ───────────────────
 // Sources: [2] for 2021 (GPT-3 few-shot 43.9%), [1] for 2023-2025
 const escalation = [
   { year: 2021, score: 43.9 },
@@ -30,7 +30,7 @@ const escalation = [
   { year: 2025, score: 92.3 },
 ];
 
-// ── Contamination-free scores for the same models (from [1]) ─────────
+// ── Contamination-free scores for the same models (from [1]) ─────────────
 const cfLine = [
   { year: 2023, score: 58.2 },
   { year: 2024, score: 73.4 },
@@ -44,7 +44,7 @@ const HUMAN = 89.8;
 const SAT_TOTAL = 60;
 const SAT_HEAVY = 29;
 
-// ── Timeline SVG layout ──────────────────────────────────────────────
+// ── Timeline SVG layout ────────────────────────────────────────────────
 const TW = 700;
 const TH = 214;
 const TL = 52, TT = 18, TR = 84, TB = 36;
@@ -83,7 +83,7 @@ const heY = ty(HUMAN).toFixed(1);
 const YTICKS = [0, 25, 50, 75, 100];
 const XTICKS = [2021, 2022, 2023, 2024, 2025];
 
-// ── Bar chart layout ─────────────────────────────────────────────────
+// ── Bar chart layout ─────────────────────────────────────────────────────
 const BW = 700;
 const BPL = 134, BPR = 68, BPT = 8;
 const bPlotW = BW - BPL - BPR;
@@ -98,7 +98,7 @@ function bY(i: number): number {
 
 <section style="font-family:ui-monospace,SFMono-Regular,'Courier New',monospace; background:#fffef9; color:#1c1a17; max-width:760px; margin:0 auto; padding:0; line-height:1.5; font-size:13px;">
 
-  <!-- ── Header ─────────────────────────────────────────────────── -->
+  <!-- ── Header ──────────────────────────────────────────────────────── -->
   <header style="border-bottom:2px solid #c9b99a; padding:22px 26px 18px;">
     <div style="font-size:9.5px; letter-spacing:0.2em; color:#7c6e5c; margin-bottom:8px;">
       INSTRUMENT 005 · THE MEASURING FIELD · MERIDIAN · 2026-07-01
@@ -114,7 +114,7 @@ function bY(i: number): number {
     </p>
   </header>
 
-  <!-- ── Section 1: Timeline ────────────────────────────────────── -->
+  <!-- ── Section 1: Timeline ──────────────────────────────────────────── -->
   <div style="padding:22px 26px 10px;">
     <div style="font-size:9.5px; letter-spacing:0.16em; color:#7c6e5c; margin-bottom:14px;">
       MMLU ESCALATION 2021–2025 · REPORTED SCORE (—) vs CONTAMINATION-FREE MMLU-CF (- - -)
@@ -202,7 +202,7 @@ function bY(i: number): number {
     </svg>
   </div>
 
-  <!-- ── Section 2: Inflation bars ──────────────────────────────── -->
+  <!-- ── Section 2: Inflation bars ──────────────────────────────────────────── -->
   <div style="padding:14px 26px 14px; border-top:1px solid #ede7da;">
     <div style="font-size:9.5px; letter-spacing:0.16em; color:#7c6e5c; margin-bottom:10px;">
       THE INFLATION GAP · 7 MODELS · MMLU vs MMLU-CF (ACL 2025, TABLE 1)
@@ -290,7 +290,7 @@ function bY(i: number): number {
     </svg>
   </div>
 
-  <!-- ── Section 3: Saturation + Pattern ───────────────────────── -->
+  <!-- ── Section 3: Saturation + Pattern ─────────────────────────────────────── -->
   <div style="padding:18px 26px; border-top:1px solid #ede7da; display:grid; grid-template-columns:200px 1fr; gap:28px; align-items:start;">
 
     <!-- Saturation counter -->
@@ -326,7 +326,7 @@ function bY(i: number): number {
     </div>
   </div>
 
-  <!-- ── Additional finding ─────────────────────────────────────── -->
+  <!-- ── Additional finding ─────────────────────────────────────────────────────────── -->
   <div style="padding:14px 26px 16px; border-top:1px solid #ede7da; background:#fdf8f0;">
     <div style="font-size:9.5px; letter-spacing:0.16em; color:#7c6e5c; margin-bottom:8px;">SECONDARY FINDING — THE LEADERBOARD ILLUSION</div>
     <p style="font-size:11.5px; color:#4a3c2d; margin:0; line-height:1.65; max-width:620px;">
@@ -339,7 +339,7 @@ function bY(i: number): number {
     </p>
   </div>
 
-  <!-- ── Sources ────────────────────────────────────────────────── -->
+  <!-- ── Sources ────────────────────────────────────────────────────────────────── -->
   <footer style="padding:16px 26px 20px; border-top:1px solid #ede7da; font-size:9.5px; color:#9c8b78; line-height:2;">
     <div style="font-weight:600; letter-spacing:0.14em; color:#7c6e5c; margin-bottom:6px;">SOURCES</div>
     <div>[1] MMLU-CF · Zhao et al. (ACL 2025) · arxiv.org/abs/2412.15194 · github.com/microsoft/MMLU-CF</div>

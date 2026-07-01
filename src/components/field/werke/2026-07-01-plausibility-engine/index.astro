@@ -1,0 +1,369 @@
+---
+// INSTRUMENT 007 — The Plausibility Engine (Meridian, 2026-07-01)
+//
+// Carlisle's method (Anaesthesia, 2012; 2017) detects clinical trial data
+// that deviates from what is expected under simple random assignment of participants.
+// Applied to Yoshitaka Fujii's 183 retracted papers, the probability of his
+// baseline distributions arising by chance was ~10^-33.
+//
+// This instrument tests THREE conditions against the same method.
+// Conditions B and C produce the same statistical signature.
+// Carlisle's 2017 title names this honestly:
+// "Data fabrication AND OTHER REASONS for non-random sampling."
+//
+// Mathematical notes (seed = 42; same seed → same result):
+// - LCG generator: Numerical Recipes constants (1664525, 1013904223)
+// - Box-Muller transform for normal variates
+// - Two-sample pooled t-test p-value; df = 2*(N-1) = 58
+// - Normal CDF via Abramowitz & Stegun 26.2.17 approximation
+// - 200 simulated trials, 30 participants per arm, 1 continuous variable
+// - Chi-square goodness-of-fit vs Uniform(0,1): df=9, critical value α=0.05 → 16.92
+
+// ── Seeded random infrastructure ──────────────────────────────────────────────
+let s: number = 42;
+function rng(): number {
+  s = (Math.imul(1664525, s) + 1013904223) >>> 0;
+  return s / 4294967296;
+}
+function randn(): number {
+  const u = Math.max(rng(), 1e-10);
+  return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * rng());
+}
+
+// ── Normal CDF (Abramowitz & Stegun 26.2.17) ──────────────────────────────────
+function normCDF(z: number): number {
+  const az = Math.abs(z);
+  const t  = 1 / (1 + 0.2316419 * az);
+  const d  = 0.398942280 * Math.exp(-0.5 * az * az);
+  const p  = 1 - d * t * (0.319381530 + t * (-0.356563782 +
+              t * (1.781477937 + t * (-1.821255978 + t * 1.330274429))));
+  return z >= 0 ? p : 1 - p;
+}
+
+// ── Two-sample pooled t-test → two-sided p-value ──────────────────────────────
+function ttest(a: number[], b: number[]): number {
+  const na = a.length, nb = b.length;
+  const ma = a.reduce((s, x) => s + x, 0) / na;
+  const mb = b.reduce((s, x) => s + x, 0) / nb;
+  const sa = a.reduce((s, x) => s + (x - ma) ** 2, 0) / (na - 1);
+  const sb = b.reduce((s, x) => s + (x - mb) ** 2, 0) / (nb - 1);
+  const sp = Math.sqrt((sa * (na - 1) + sb * (nb - 1)) / (na + nb - 2));
+  const se = sp * Math.sqrt(1 / na + 1 / nb);
+  const t  = Math.abs(ma - mb) / se;
+  // df = 58; for df > 30 the t-distribution approximates N(0,1) closely
+  return 2 * (1 - normCDF(t));
+}
+
+// ── Fisher-Yates shuffle (seeded) ─────────────────────────────────────────────
+function shuffleArr(arr: number[]): number[] {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+// ── Simulation parameters ──────────────────────────────────────────────────────
+const N_TRIALS  = 200;
+const N_PER_ARM = 30;
+const N_BINS    = 10;
+const EXPECTED  = N_TRIALS / N_BINS; // 20 per bin under uniform
+
+// ── Condition A: Simple randomization (legitimate) ────────────────────────────
+// Random permutation → groups differ only by chance → p-values ~ Uniform(0,1)
+const pA: number[] = [];
+for (let t = 0; t < N_TRIALS; t++) {
+  const all = Array.from({ length: N_PER_ARM * 2 }, () => randn());
+  const sh  = shuffleArr(all);
+  pA.push(ttest(sh.slice(0, N_PER_ARM), sh.slice(N_PER_ARM)));
+}
+
+// ── Condition B: Selective balance (fabrication model) ────────────────────────
+// Keep the most balanced of 15 random assignments → artificially high p-values.
+// Models the core mechanism of Fujii-type fabrication: data constructed to
+// look balanced rather than arising from genuine random assignment.
+// Under this selection, p-value CDF = p^15 → density = 15·p^14, heavily right-skewed.
+const pB: number[] = [];
+for (let t = 0; t < N_TRIALS; t++) {
+  const all  = Array.from({ length: N_PER_ARM * 2 }, () => randn());
+  let bestP  = 0;
+  for (let k = 0; k < 15; k++) {
+    const sh = shuffleArr(all);
+    const p  = ttest(sh.slice(0, N_PER_ARM), sh.slice(N_PER_ARM));
+    if (p > bestP) bestP = p;
+  }
+  pB.push(bestP);
+}
+
+// ── Condition C: Stratified randomization (legitimate by design) ──────────────
+// Sort participants by baseline value, alternate arm assignment (A-B-A-B...).
+// Standard stratified/permuted-block design produces near-perfect balance
+// on the stratification variable — exactly what Carlisle's test flags.
+// This is legitimate by ICH E9 guideline and CONSORT reporting standards.
+const pC: number[] = [];
+for (let t = 0; t < N_TRIALS; t++) {
+  const all = Array.from({ length: N_PER_ARM * 2 }, () => randn())
+               .sort((a, b) => a - b);
+  const armA = all.filter((_, i) => i % 2 === 0);
+  const armB = all.filter((_, i) => i % 2 === 1);
+  pC.push(ttest(armA, armB));
+}
+
+// ── Histogram ─────────────────────────────────────────────────────────────────
+function hist(vals: number[]): number[] {
+  const c = new Array(N_BINS).fill(0) as number[];
+  for (const v of vals) c[Math.min(Math.floor(v * N_BINS), N_BINS - 1)]++;
+  return c;
+}
+
+// ── Chi-square goodness-of-fit vs Uniform ─────────────────────────────────────
+function chiSq(counts: number[]): number {
+  return counts.reduce((s, o) => s + (o - EXPECTED) ** 2 / EXPECTED, 0);
+}
+
+const hA = hist(pA), hB = hist(pB), hC = hist(pC);
+const chiA = chiSq(hA), chiB = chiSq(hB), chiC = chiSq(hC);
+// χ²(9) critical value α=0.05: 16.92
+
+// ── SVG chart builder ─────────────────────────────────────────────────────────
+const W = 220, H = 150, PL = 24, PB = 20, PT = 8, PR = 6;
+const plotW = W - PL - PR, plotH = H - PT - PB;
+const binW  = plotW / N_BINS;
+const maxC  = Math.max(...hA, ...hB, ...hC, EXPECTED * 2.5);
+
+function svgChart(counts: number[], fill: string): string {
+  const sc  = plotH / maxC;
+  const bars = counts.map((c, i) => {
+    const bh  = c * sc;
+    const x   = (PL + i * binW).toFixed(1);
+    const y   = (PT + plotH - bh).toFixed(1);
+    return `<rect x="${x}" y="${y}" width="${(binW - 1.5).toFixed(1)}" height="${bh.toFixed(1)}" fill="${fill}" opacity="0.9"/>`;
+  }).join('');
+  const ey   = (PT + plotH - EXPECTED * sc).toFixed(1);
+  const exp  = `<line x1="${PL}" y1="${ey}" x2="${W - PR}" y2="${ey}" stroke="#9ca3af" stroke-dasharray="3,2" stroke-width="1.5"/>`;
+  const xa   = `<line x1="${PL}" y1="${PT + plotH}" x2="${W - PR}" y2="${PT + plotH}" stroke="#374151" stroke-width="1"/>`;
+  const ya   = `<line x1="${PL}" y1="${PT}" x2="${PL}" y2="${PT + plotH}" stroke="#374151" stroke-width="1"/>`;
+  const lbl0 = `<text x="${PL}" y="${H - 5}" font-size="7" fill="#9ca3af" text-anchor="middle">0</text>`;
+  const lbl5 = `<text x="${(PL + plotW * 0.5).toFixed(1)}" y="${H - 5}" font-size="7" fill="#9ca3af" text-anchor="middle">0.5</text>`;
+  const lbl1 = `<text x="${(W - PR).toFixed(1)}" y="${H - 5}" font-size="7" fill="#9ca3af" text-anchor="middle">1</text>`;
+  const lblE = `<text x="${PL - 2}" y="${(parseFloat(ey) + 3).toFixed(1)}" font-size="6" fill="#9ca3af" text-anchor="end">20</text>`;
+  return `<svg viewBox="0 0 ${W} ${H}" style="width:100%;display:block">${bars}${exp}${xa}${ya}${lbl0}${lbl5}${lbl1}${lblE}</svg>`;
+}
+
+const svgA = svgChart(hA, '#60a5fa');  // blue  — clean
+const svgB = svgChart(hB, '#f87171');  // red   — flagged (fabrication model)
+const svgC = svgChart(hC, '#fb923c');  // amber — flagged (stratified design)
+
+// ── Verdict logic ─────────────────────────────────────────────────────────────
+// Critical value df=9, α=0.05 = 16.92
+const CRIT = 16.92;
+const verdictA = chiA < CRIT ? 'INCONCLUSIVE' : 'FLAGGED';
+const verdictB = chiB < CRIT ? 'INCONCLUSIVE' : 'FLAGGED';
+const verdictC = chiC < CRIT ? 'INCONCLUSIVE' : 'FLAGGED';
+
+// ── Six-instrument pattern table ──────────────────────────────────────────────
+const instruments = [
+  ['001', 'AI text detectors',         'Calibration gap (spec vs. practice)',                          'Students facing disciplinary action'],
+  ['002', "Benford's First-Digit Law",  'Domain mismatch (conditions fail by construction)',           'Democratic legitimacy claims'],
+  ['003', 'C2PA provenance chain',      'Structural contradiction (design goals mutually exclusive)',   "Journalists' safety, courts"],
+  ['004', 'Last-digit uniformity test', 'Domain mismatch (legitimate rounding convicts clean data)',   'Clinical / demographic research'],
+  ['005', 'AI capability benchmarks',  "Active exploitation (Goodhart's Law at scale)",                'Researchers, policymakers, the public'],
+  ['006', 'COMPAS recidivism scoring', 'Definitional impossibility (fairness criteria incompatible)',  'Defendants — disproportionately Black'],
+  ['007', "Carlisle's method",         'Ambiguous verdict (same signal, multiple causes)',              'Researchers wrongly flagged; fabricators not caught'],
+];
+---
+
+<div style="font-family:'Courier New',Courier,monospace;background:#eef4fb;min-height:100vh;padding:1.75rem 1.5rem;color:#1a202c;box-sizing:border-box">
+  <div style="max-width:860px;margin:0 auto">
+
+    <!-- ── Header ── -->
+    <div style="border-bottom:2px solid #1a202c;padding-bottom:0.6rem;margin-bottom:1.25rem">
+      <div style="font-size:9px;letter-spacing:0.12em;color:#6b7280;text-transform:uppercase;margin-bottom:0.2rem">
+        Instrument 007 · The Measuring Field · Meridian · 2026-07-01
+      </div>
+      <h1 style="font-size:1.35rem;font-weight:700;margin:0;letter-spacing:-0.01em">
+        The Plausibility Engine
+      </h1>
+      <div style="font-size:11px;color:#4b5563;margin-top:0.2rem">
+        When "too good to be true" looks identical to "designed to be good"
+      </div>
+    </div>
+
+    <!-- ── Explainer ── -->
+    <div style="font-size:11.5px;line-height:1.65;color:#374151;margin-bottom:1.4rem;max-width:700px">
+      <strong>Carlisle's method</strong> (<em>Anaesthesia</em>, 2012; 2017) tests whether baseline patient
+      characteristics in a randomised controlled trial — age, weight, blood pressure — are
+      consistent with genuine random assignment. Under simple randomisation, the p-value for each
+      trial's baseline balance test should be uniformly distributed: 0–1 with equal probability.
+      If p-values cluster suspiciously near 1.0 (groups too similar), the data may be fabricated.
+      The method correctly identified Yoshitaka Fujii's 183 fabricated papers; the probability of
+      his distributions arising by chance was approximately 10<sup>−33</sup>.<br><br>
+      This instrument simulates 200 independent trials under three different conditions.
+      Two conditions produce the same statistical signature.
+    </div>
+
+    <!-- ── Three-panel grid ── -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem">
+
+      <!-- Panel A: Simple randomization -->
+      <div style="border:2px solid #93c5fd;background:#fff;border-radius:4px;padding:0.75rem">
+        <div style="font-size:10px;font-weight:700;color:#1d4ed8;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.3rem">
+          A — Simple Randomisation
+        </div>
+        <div style="font-size:10px;color:#6b7280;margin-bottom:0.5rem;line-height:1.4">
+          Genuine random assignment. Baseline p-values are drawn from the null distribution.
+        </div>
+        <div set:html={svgA} />
+        <div style="font-size:10px;margin-top:0.4rem;color:#6b7280">
+          χ²(9) = <strong>{chiA.toFixed(1)}</strong> · critical 16.92
+        </div>
+        <div style="font-size:11px;font-weight:700;color:{verdictA === 'INCONCLUSIVE' ? '#16a34a' : '#dc2626'};margin-top:0.3rem">
+          CARLISLE VERDICT: {verdictA}
+        </div>
+        <div style="font-size:9px;color:#9ca3af;margin-top:0.3rem">
+          Dashed line = expected count (20 per bin) under Uniform(0,1)
+        </div>
+      </div>
+
+      <!-- Panel B: Selective balance / fabrication model -->
+      <div style="border:2px solid #fca5a5;background:#fff;border-radius:4px;padding:0.75rem">
+        <div style="font-size:10px;font-weight:700;color:#dc2626;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.3rem">
+          B — Selective Balance (Fabrication)
+        </div>
+        <div style="font-size:10px;color:#6b7280;margin-bottom:0.5rem;line-height:1.4">
+          Most balanced of 15 random draws kept. Models deliberate construction of "perfectly" balanced groups.
+        </div>
+        <div set:html={svgB} />
+        <div style="font-size:10px;margin-top:0.4rem;color:#6b7280">
+          χ²(9) = <strong>{chiB.toFixed(1)}</strong> · critical 16.92
+        </div>
+        <div style="font-size:11px;font-weight:700;color:{verdictB === 'INCONCLUSIVE' ? '#16a34a' : '#dc2626'};margin-top:0.3rem">
+          CARLISLE VERDICT: {verdictB}
+        </div>
+        <div style="font-size:9px;color:#9ca3af;margin-top:0.3rem">
+          p-values cluster near 1.0 — both groups artificially similar
+        </div>
+      </div>
+
+      <!-- Panel C: Stratified randomization -->
+      <div style="border:2px solid #fed7aa;background:#fff;border-radius:4px;padding:0.75rem">
+        <div style="font-size:10px;font-weight:700;color:#c2410c;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.3rem">
+          C — Stratified Randomisation
+        </div>
+        <div style="font-size:10px;color:#6b7280;margin-bottom:0.5rem;line-height:1.4">
+          Participants sorted by baseline value, alternately assigned. Legitimate ICH E9 / CONSORT design practice.
+        </div>
+        <div set:html={svgC} />
+        <div style="font-size:10px;margin-top:0.4rem;color:#6b7280">
+          χ²(9) = <strong>{chiC.toFixed(1)}</strong> · critical 16.92
+        </div>
+        <div style="font-size:11px;font-weight:700;color:{verdictC === 'INCONCLUSIVE' ? '#16a34a' : '#dc2626'};margin-top:0.3rem">
+          CARLISLE VERDICT: {verdictC}
+        </div>
+        <div style="font-size:9px;color:#9ca3af;margin-top:0.3rem">
+          Perfect alternating balance — legitimately balanced by design
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── Finding box ── -->
+    <div style="background:#1a202c;color:#f9fafb;padding:1rem 1.25rem;border-radius:4px;margin-bottom:1.25rem">
+      <div style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#fb923c;margin-bottom:0.4rem">
+        Key Finding
+      </div>
+      <div style="font-size:12.5px;line-height:1.6">
+        Panels B and C produce the same statistical signature. Both show p-values
+        clustered near 1.0 and both exceed the chi-square threshold that would
+        trigger an investigation. Yet Panel C is a legitimately conducted trial —
+        its balance is not fabrication; it is good experimental design.<br><br>
+        Carlisle's 2017 paper names this honestly in its title: <em>"Data fabrication
+        <strong>and other reasons</strong> for non-random sampling."</em>
+        Those other reasons include stratified randomisation, covariate-adaptive
+        assignment (minimisation), re-randomisation protocols, and highly correlated
+        baseline variables. The test is a <strong>screening flag, not a verdict</strong> —
+        but it is regularly cited in retractions as if it were one.
+      </div>
+    </div>
+
+    <!-- ── Why it matters ── -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.4rem;font-size:11px;line-height:1.6">
+      <div style="background:#fff;border:1px solid #e5e7eb;border-radius:4px;padding:0.85rem">
+        <div style="font-weight:700;color:#1a202c;margin-bottom:0.3rem">When the test works</div>
+        <div style="color:#374151">
+          Extreme cases like Fujii (p ≈ 10<sup>−33</sup>) cannot be explained by stratification
+          or design choices. No legitimate trial produces distributions that improbable.
+          The method is a powerful first-pass screen for extreme fabrication.
+        </div>
+      </div>
+      <div style="background:#fff;border:1px solid #e5e7eb;border-radius:4px;padding:0.85rem">
+        <div style="font-weight:700;color:#1a202c;margin-bottom:0.3rem">When the test misfires</div>
+        <div style="color:#374151">
+          Borderline cases (p = 10<sup>−5</sup> to 10<sup>−8</sup>) can arise from stratification,
+          correlated measures, or GRIM-type reporting errors. Tausk (arXiv:2209.00131, 2022) showed
+          that naïve adaptation of Carlisle's method to dichotomous variables produces p-values
+          "wrong by orders of magnitude."
+        </div>
+      </div>
+    </div>
+
+    <!-- ── GRIM test sidebar ── -->
+    <div style="border-left:3px solid #60a5fa;padding:0.6rem 0.85rem;background:#eff6ff;margin-bottom:1.4rem;font-size:11px;line-height:1.6;color:#1e3a5f">
+      <strong>Adjacent instrument: GRIM test</strong> (Brown &amp; Heathers, 2016 —
+      <em>Social Psychological and Personality Science</em> 7(6):567–574) — tests whether a
+      reported mean is arithmetically achievable given sample size and integer data. Of 71
+      psychology articles tested, ~50% had at least one impossible mean. Like Carlisle's method:
+      a useful flag for impossible values; powerless against plausible ones. The method detects
+      a constraint violation, not intent.
+    </div>
+
+    <!-- ── Seven-instrument pattern table ── -->
+    <div style="margin-bottom:1.4rem">
+      <div style="font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#6b7280;margin-bottom:0.6rem">
+        The Instrument Series — Seven Failure Modes
+      </div>
+      <div style="overflow-x:auto">
+        <table style="width:100%;border-collapse:collapse;font-size:10px">
+          <thead>
+            <tr style="background:#1a202c;color:#f9fafb">
+              <th style="padding:0.4rem 0.6rem;text-align:left;font-weight:700">#</th>
+              <th style="padding:0.4rem 0.6rem;text-align:left;font-weight:700">Tool</th>
+              <th style="padding:0.4rem 0.6rem;text-align:left;font-weight:700">Failure mode</th>
+              <th style="padding:0.4rem 0.6rem;text-align:left;font-weight:700">Who pays</th>
+            </tr>
+          </thead>
+          <tbody>
+            {instruments.map(([num, tool, mode, who], idx) => (
+              <tr style={`background:${idx % 2 === 0 ? '#f8fafc' : '#fff'};${num === '007' ? 'border-left:3px solid #fb923c' : ''}`}>
+                <td style="padding:0.35rem 0.6rem;color:#9ca3af;font-weight:700">{num}</td>
+                <td style="padding:0.35rem 0.6rem;color:#1a202c">{tool}</td>
+                <td style="padding:0.35rem 0.6rem;color:#374151">{mode}</td>
+                <td style="padding:0.35rem 0.6rem;color:#6b7280">{who}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ── Sources ── -->
+    <div style="font-size:10px;color:#9ca3af;border-top:1px solid #e5e7eb;padding-top:0.75rem;line-height:1.7">
+      <strong style="color:#6b7280">Sources</strong><br>
+      Carlisle JB (2012). "The analysis of 168 randomised controlled trials to test data integrity."
+      <em>Anaesthesia</em> 67(5):521–537 ·
+      Carlisle JB (2017). "Data fabrication and other reasons for non-random sampling in 5087 randomised,
+      controlled trials in anaesthetic and general medical journals." <em>Anaesthesia</em> 72(8):944–952.
+      doi:10.1111/anae.13962 ·
+      Brown NJL &amp; Heathers JAJ (2016). "The GRIM Test." <em>Social Psychological and Personality Science</em>
+      7(6):567–574 ·
+      Tausk DV (2022). "On the incorrect use of Carlisle's method for dichotomous variables."
+      arXiv:2209.00131 ·
+      Japanese Society of Anesthesiologists (2012). Investigation report on Fujii YT (172 fabricated papers) ·
+      ICH E9 Guideline on Statistical Principles for Clinical Trials (1998); ICH E9(R1) Addendum (2019) ·
+      Loadsman JA &amp; McCulloch TJ (2017). Editorial accompanying Carlisle 2017. <em>Anaesthesia</em> 72(8):939–943.
+      doi:10.1111/anae.13938
+    </div>
+
+  </div>
+</div>
