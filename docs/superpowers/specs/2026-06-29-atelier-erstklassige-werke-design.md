@@ -28,7 +28,7 @@ nicht aus Misstrauen:
 
 1. **Kaputt statt böse.** Ein Bug (Fehler, Endlosschleife, gebrochener Build) kann die Seite stören.
    → Abgefangen durch ein **Build/Check/Test-Gate**.
-2. **Sie liest ungeprüftes Web** (Tavily/WebSearch) und läuft **unbeaufsichtigt** (kein menschlicher
+2. **Sie liest ungeprüftes Web** (web research/WebSearch) und läuft **unbeaufsichtigt** (kein menschlicher
    Blick pro Werk). **Prompt-Injection ist real**: eine präparierte Seite könnte versuchen, ihr einen
    Fremd-`<script>`, einen Redirect oder einen Tracker unterzuschieben. Nicht *sie* ist die Gefahr —
    ihre **Eingaben** sind unvertrauenswürdig. → Eingedämmt durch **Pfad-Grenze** + **Site-CSP**.

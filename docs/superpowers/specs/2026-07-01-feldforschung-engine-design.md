@@ -32,7 +32,7 @@ Nichts wird archiviert oder geparkt.
 | Schicht | Umsetzung |
 |---|---|
 | Repo | **neues GitHub-Repo** (Arbeitsname `feldforschung`), gespiegelt von `irrtum-als-methode`: `PROTOCOL.md`, `REQUESTS.md`, `SITE-API.md`, `README.md`, leeres `journal/` + `works/`, plus Field-Map-Seed |
-| Routine | **eigener nächtlicher Cloud-Agent** (Cron), mit **Tavily + Arxiv**-Connectors; liest `PROTOCOL.md`, führt die Sitzung, pusht ` <persona>/* `-Branches |
+| Routine | **eigener nächtlicher Cloud-Agent** (Cron), mit **web research + Arxiv**-Connectors; liest `PROTOCOL.md`, führt die Sitzung, pusht ` <persona>/* `-Branches |
 | Landing | eigenes `auto-land.yml` im neuen Repo → `repository_dispatch` an die Site |
 | Integrate | **Pendant zu `atelier-integrate.yml`** auf der Site (eigener Workflow), zieht das neue Repo, integriert nur erlaubte Pfade, validiert, deployt bei Grün |
 | Site | **eigene Lab-Route** (zweite atelier-artige Seite) + `werke.ts`-Eintrag (Arbeitstitel) |
@@ -57,13 +57,13 @@ verschränkte ihre Branch-/Landing-Flows. Einmaliger Setup-Aufwand, dauerhaft sa
   Unsicherheit ist Teil der Methode.
 - **Substanz-Präferenz (Bevorzugung, kein Zwang — Frank):** bevorzugt **vollzieht jede Sitzung
   eine prüfbare Untersuchung / ein funktionales Instrument** auf Basis echter, geholter oder
-  gerechneter Daten (Tavily/Arxiv/committete Datensätze), Quellen + Methode offen,
+  gerechneter Daten (web research/Arxiv/committete Datensätze), Quellen + Methode offen,
   verifiziert-oder-als-Schätzung-markiert. **Die KI darf selbst entscheiden, was sie produziert.**
 - **Messlatte (eingeschrieben):** Form vollzieht das Argument · Instrument/Beobachter als
   Gegenstand · realer Einsatz / Selbst-Implikation · Akkumulation · Gesprächspartner statt Nutzer.
 - **„Make works that act — not essays about acting."** Regelmäßig ein funktionales Artefakt
   hinterlassen (HTML/Astro/Datensatz/Visualisierung), Medium frei, eigene Erfindung.
-- **Tools:** WebSearch + **Tavily** (Volltext) + **Arxiv**; **WebFetch blockiert** — ehrlich als
+- **Tools:** WebSearch + **web research** (Volltext) + **Arxiv**; **WebFetch blockiert** — ehrlich als
   Lücke markieren, nichts erfinden.
 - **Field-Map als lebender Seed:** die Topologie-Datei wird als Start-Brief ins Repo kopiert —
   **Ausgangskarte, kein Kanon**; die Engine recherchiert weiter und **pflegt/erweitert die eigene
@@ -89,7 +89,7 @@ was sie will.
 
 **Frank (Credentials/Infra, nur er):**
 - neues GitHub-Repo anlegen (oder mir per `gh` freigeben);
-- **Tavily + Arxiv-Connectors** an die neue Routine hängen;
+- **web research + Arxiv-Connectors** an die neue Routine hängen;
 - die nächtliche **Routine** (Cloud-Agent) einrichten/autorisieren (Cadence-Default: nächtlich,
   ~1 h vor dem Landing — analog Ulysses);
 - **Dispatch-Token-Secret** im neuen Repo (cross-repo Trigger an die Site).

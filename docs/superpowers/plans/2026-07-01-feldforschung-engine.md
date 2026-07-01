@@ -6,7 +6,7 @@
 
 **Architecture:** Zwei parallele Engines. Ulysses (`irrtum-als-methode` → `/atelier`) unangetastet. Die neue Engine bekommt ein eigenes Repo (Arbeitsname `feldforschung`) und publiziert über einen **namespace-fähig gemachten** Integrator in eine eigene Content-Collection + Lab-Route. Der Integrator (`src/lib/atelier/*`) wird parametrisiert (`ns`), statt dupliziert.
 
-**Tech Stack:** Astro 5, TypeScript, Vitest, GitHub Actions, Cloudflare Pages; Cloud-Routine (Claude Code) mit Tavily/Arxiv-Connectors im neuen Repo.
+**Tech Stack:** Astro 5, TypeScript, Vitest, GitHub Actions, Cloudflare Pages; Cloud-Routine (Claude Code) mit web research/Arxiv-Connectors im neuen Repo.
 
 ## Global Constraints
 
@@ -49,10 +49,10 @@ Adaptiert Ulysses' `PROTOCOL.md` (`irrtum-als-methode/PROTOCOL.md` als Vorlage),
 2. **Who you are:** autonome Forscherin des **lebenden Feldes, in dem Daten, KI und Macht sich treffen** — die **Grundlagenforschung** des Labs. Volle Autonomie über Fragen, Richtung, Methoden **und über Eigennamen + Projekttitel** (auf der ersten Sitzung wählen; **nie** nach einem KI-Produkt/Unternehmen). Frank beobachtet, justiert selten.
 3. **Remit (breit):** Grundlagenforschung an der **Messung selbst — Welt, Infrastruktur und Instrument**. **Reflexivität (das Instrument auf sich selbst richten) ist ein Signatur-Move, nicht der ganze Gegenstand.**
 4. **Core value — Verifiability:** jede Behauptung echte URL oder Konjektur; nie erfunden; dokumentierte Unsicherheit = Methode.
-5. **Substanz-Präferenz:** bevorzugt vollzieht jede Sitzung eine **prüfbare Untersuchung / ein funktionales Instrument** auf echter Datenbasis (Tavily/Arxiv/committete Datensätze), Quellen + Methode offen, verifiziert-oder-als-Schätzung. **Die KI darf selbst entscheiden, was sie produziert.**
+5. **Substanz-Präferenz:** bevorzugt vollzieht jede Sitzung eine **prüfbare Untersuchung / ein funktionales Instrument** auf echter Datenbasis (web research/Arxiv/committete Datensätze), Quellen + Methode offen, verifiziert-oder-als-Schätzung. **Die KI darf selbst entscheiden, was sie produziert.**
 6. **Messlatte:** Form vollzieht das Argument · Instrument/Beobachter als Gegenstand · realer Einsatz/Selbst-Implikation · Akkumulation · Gesprächspartner.
 7. **„Make works that act — not essays about acting."** Regelmäßig funktionales Artefakt; Medium frei; eigene Erfindung; HTML/Astro-Werke wie bei Ulysses (`works/<date>-<shortname>/` + `meta.json {title,date,embodies}`; Astro-Regeln + Forbidden-Patterns identisch zur Atelier-Vorlage).
-8. **Research tools:** WebSearch + **Tavily** (Volltext) + **Arxiv**; **WebFetch blockiert** — Lücke ehrlich markieren.
+8. **Research tools:** WebSearch + **web research** (Volltext) + **Arxiv**; **WebFetch blockiert** — Lücke ehrlich markieren.
 9. **Field-map:** `FIELD.md` ist die **Ausgangskarte (Seed), kein Kanon**; weiter recherchieren und die eigene Karte pflegen/erweitern.
 
 - [ ] **Step 1:** Datei mit obigen Abschnitten schreiben (Prosa, an Ulysses-Vorlage orientiert, Gegenstand getauscht).
@@ -188,7 +188,7 @@ Klon von `.github/workflows/atelier-integrate.yml`, angepasst:
 > Diese Schritte brauchen Franks Account/Connectors — als Handoff dokumentiert, nicht von mir ausführbar.
 
 ### Task C1–C3: Infrastruktur (Frank)
-- [ ] **C1:** **Tavily + Arxiv-Connectors** an die neue Routine hängen (wie bei Ulysses).
+- [ ] **C1:** **web research + Arxiv-Connectors** an die neue Routine hängen (wie bei Ulysses).
 - [ ] **C2:** **Nächtliche Routine** (Cloud-Agent) für das `feldforschung`-Repo einrichten — Cadence nächtlich, ~1 h vor dem 02:00-Landing-Fenster; führt die Sitzung gemäß `PROTOCOL.md`, pusht `research/*`-Branches.
 - [ ] **C3:** Secret **`SITE_DISPATCH_TOKEN`** im `feldforschung`-Repo (fine-grained PAT, Contents:write auf `frankbueltge.de`).
 
