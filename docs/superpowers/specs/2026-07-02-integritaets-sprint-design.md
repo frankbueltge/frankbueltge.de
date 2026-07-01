@@ -1,6 +1,8 @@
 # Integritäts-Sprint — Design
 
-Datum: 2026-07-02 · Status: Entwurf zur Review (Frank)
+Datum: 2026-07-02 · Status: abgenommen (Frank, 2026-07-02) mit Amendment:
+die autonomen Engines (The Measuring Field, Irrtum als Methode) und Beifang
+bleiben unangetastet.
 
 ## 1. Kontext & Ziel
 
@@ -16,6 +18,8 @@ Register, Akkumulations-Ausbau), die eigene Specs bekommen.
 
 **Nicht das Ziel:** Archiv-/Verlaufsansichten, neue Instrumente, Beifang-Tasks 2–12,
 Vertagungsindex-Seed-Layer (Schicht A), Collective-Phasen — alles bewusst außerhalb.
+**Ebenfalls außerhalb (Frank, 2026-07-02):** The Measuring Field, Irrtum als Methode
+und Beifang werden in diesem Sprint nicht angefasst.
 
 ## 2. Die Befunde (Ist-Zustand, verifiziert)
 
@@ -45,6 +49,9 @@ Vertagungsindex-Seed-Layer (Schicht A), Collective-Phasen — alles bewusst auß
    dokumentiert und **existiert im externen Repo** (`field-research:
    works/2026-07-01-fairness-trap/`), fehlt aber auf der Site — ein
    Integrationsproblem auf Site-Seite, keine Fabrikation der Engine.
+   *Amendment (Frank, 2026-07-02): bleibt außerhalb dieses Sprints — die Engines
+   werden nicht angefasst; der nächtliche `field-integrate` kann das Werk von selbst
+   nachziehen. Befund bleibt hier als Beobachtung dokumentiert.*
 8. **Tote Artefakte:** `pipelines/gegenmessung/` ist der ersetzte GCP-Cloud-Run-
    Orchestrator (ein Commit, von keinem Workflow referenziert); `ci.yml` installiert
    ein nicht mehr existierendes Extra `[bq]` (pip-Warnung bei jedem Lauf).
@@ -81,28 +88,16 @@ Vertagungsindex-Seed-Layer (Schicht A), Collective-Phasen — alles bewusst auß
   Methodenblatt sagt explizit, welche 4 von 8 Größen derzeit klassifizieren und warum
   die übrigen noch nicht.
 
-### D — Field: Instrument 006 nachziehen
-- D1: Diagnostizieren, warum `field-integrate.yml` das Werk nicht übernommen hat
-  (Validierung rot? Lauf vor Landung? Pfad-Grenze?).
-- D2: Wenn Integrationslücke → Integrate erneut laufen lassen. Wenn Validierung rot →
-  der designierte Feedback-Kanal ins Engine-Repo (wie beim Atelier), damit Meridian
-  selbst nachbessert. **Kein Hand-Fix am Werk selbst** — die Autonomie der Engine
-  wird nicht gebrochen.
-
-### E — Waisen re-listen als Studien (Default; Franks Veto offen)
-- E1: `Werk`-Typ um `tier?: 'experiment' | 'studie'` erweitern (Default `experiment`).
+### D — Waisen re-listen als Studien (entschieden: behalten — Frank, 2026-07-02)
+- D1: `Werk`-Typ um `tier?: 'experiment' | 'studie'` erweitern (Default `experiment`).
   Consensus, Correction, Ghost Fleet erhalten `tier: 'studie'` und kehren in
   `werke.ts` zurück; Überflug wird konsistent ebenfalls `studie` (sein Eintrag zeigt
   schon heute auf `/lab/ueberflug-studie`).
-- E2: `LabIndex.astro`: Experimente-Liste filtert auf `tier !== 'studie'`; darunter
+- D2: `LabIndex.astro`: Experimente-Liste filtert auf `tier !== 'studie'`; darunter
   eine kompakte Rubrik für laufende Studien (einzeilig, live-Marker), oberhalb der
   bestehenden „Studien & Daten-Stories". Wortlaut der Rubrik: nüchtern, z. B.
   „Außer der Reihe — läuft weiter, wird nicht kuratiert". Feinform bei Umsetzung.
-- E3: OG-Bilder/i18n der drei Seiten prüfen; keine Redirects nötig (Seiten waren nie weg).
-
-**Alternative (falls Veto):** ehrlich stilllegen nach Halbwertszeit-Muster (Workflows
-löschen, Stilllegungsvermerk, Redirect, Daten eingefroren) — pro Experiment einzeln
-entscheidbar.
+- D3: OG-Bilder/i18n der drei Seiten prüfen; keine Redirects nötig (Seiten waren nie weg).
 
 ## 4. Tests & Abnahme
 
@@ -111,14 +106,15 @@ entscheidbar.
 - Unantastbar: Archiv-JSONs, Register-Template-Strings (Testschutz), laufende
   Nightly-Workflows der gesunden Instrumente.
 - Sichtprüfung: Lab-Seite (neue Rubrik), die drei umbenannten Seiten, Parallaxe-
-  Fußzeile mit Ausfallvermerk, `/field` zeigt Instrument 006.
+  Fußzeile mit Ausfallvermerk.
 
-## 5. Offene Punkte (Frank)
+## 5. Entscheidungen (Frank, 2026-07-02)
 
-- **E ist ein Default mit Veto:** re-listen als Studie vs. ehrlich stilllegen vs.
-  gemischt (Ghost Fleet ist mit 20 Tests + eigener Spec das solideste der drei).
-- Wortlaut der Studien-Rubrik.
-- Ob Überflug in die neue Rubrik wandert (Konsistenz) oder bleibt, wo es ist.
+- Die drei Waisen werden **behalten** und als Studien re-listet (Maßnahme D).
+- The Measuring Field, Irrtum als Methode und Beifang bleiben **unangetastet**;
+  die frühere Maßnahme „Instrument 006 nachziehen" ist gestrichen (Befund bleibt
+  in §2.7 dokumentiert).
+- Noch offen (Feinform bei Umsetzung): Wortlaut der Studien-Rubrik.
 
 ## 6. Danach (nicht Teil dieses Sprints)
 
