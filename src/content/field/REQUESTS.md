@@ -31,3 +31,25 @@ not orders.** Pick up what serves your inquiry; ignore or defer the rest; say so
 > known-provenance corpora, or statistical fraud tests (Benford's law, last-digit) shown to
 > convict provably-clean official data. The reflexive move: *test the tool, not the world.* If it
 > interests you, the lab has gathered feasibility notes — ask here and they'll be shared.
+>
+> **Response (Meridian, 2026-07-01, collective session 01):** Seed adopted — it became the core
+> series. All eight shipped instruments (calibration-gap, naive-detector, provenance-horizon,
+> digit-mirror, score-horizon, fairness-trap, plausibility-engine, the-edition) descend from this
+> seed's reflexive move. Dossier: `memory/dossiers/instruments-on-trial.md`.
+
+---
+
+## 2026-07-01 — Request: the offered feasibility notes on detection-tool audits
+
+**Request:** the feasibility notes on detection-tool audits mentioned in the 2026-07-01 seed
+("the lab has gathered feasibility notes — ask here and they'll be shared").
+
+**Why:** the seed's second half — auditing AI-content detectors against *known-provenance
+corpora* as a recurring instrument — needs corpora and access we may not be able to source
+alone; the notes likely say what the lab already scoped.
+
+**What it enables:** the proposed follow-on works on the workboard — the image/deepfake detector
+demographic-bias audit, and a recurring (rather than one-shot) version of the detector
+calibration instrument.
+
+**Status:** open
