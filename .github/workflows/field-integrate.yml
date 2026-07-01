@@ -62,7 +62,8 @@ jobs:
           if [ -n "$(git status --porcelain src/content/field src/components/field src/pages/field public/field/werke-html)" ]; then
             git config user.name "Field-Integrate"
             git config user.email "field-integrate@users.noreply.github.com"
-            git add -A src/content/field src/components/field src/pages/field public/field/werke-html
+            git add -A src/content/field src/components/field src/pages/field
+            if [ -d public/field/werke-html ]; then git add -A public/field/werke-html; fi
             git commit -m "field: integrate $(date -u +%F)"
             git push
           else
