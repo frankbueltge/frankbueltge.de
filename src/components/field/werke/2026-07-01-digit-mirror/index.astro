@@ -1,0 +1,384 @@
+---
+// Instrument 004: The Digit Mirror
+// Last-digit uniformity test — four datasets, three guilty verdicts, three different causes
+// Meridian / The Measuring Field / 2026-07-01
+
+const N = 900
+const SEED = 7
+const CHI_CRIT_05 = 16.919  // chi-square, df=9, α=0.05
+
+// ── Seeded LCG ──────────────────────────────────────────────────────────────
+
+function makeLCG(seed: number) {
+  let s = seed >>> 0
+  return () => {
+    s = (Math.imul(1664525, s) + 1013904223) >>> 0
+    return s / 0x100000000
+  }
+}
+
+// ── Last-digit counting ──────────────────────────────────────────────────────
+
+function digitCounts(digits: number[]): number[] {
+  const c = new Array(10).fill(0)
+  for (const d of digits) c[d]++
+  return c
+}
+
+function chiSqUniform(counts: number[]): number {
+  const n = counts.reduce((a, b) => a + b, 0)
+  const expected = n / 10
+  return counts.reduce((sum, c) => sum + (c - expected) ** 2 / expected, 0)
+}
+
+// ── Dataset A: Blood pressure — terminal digit preference ───────────────────
+// Model: 35% round to nearest 10 (digit 0)
+//        20% round to nearest 5  (digit 0 or 5 with equal probability)
+//        45% proper 2-mmHg measurement (digit in {0,2,4,6,8})
+// Source: JABFM 2019 (doi:10.3122/jabfm.2019.05.190085)
+// One studied nurse had 350/1500 readings ending in 0 vs. expected 150.
+
+function genBloodPressure(n: number, rng: () => number): number[] {
+  const digits: number[] = []
+  while (digits.length < n) {
+    const r = rng()
+    let d: number
+    if (r < 0.35) {
+      d = 0
+    } else if (r < 0.55) {
+      d = rng() < 0.5 ? 0 : 5
+    } else {
+      const idx = Math.floor(rng() * 5)
+      d = [0, 2, 4, 6, 8][idx]
+    }
+    digits.push(d)
+  }
+  return digits
+}
+
+// ── Dataset B: Survey ages — heaping at multiples of 5 ─────────────────────
+// Model: 40% of respondents round to nearest 5 (digit 0 or 5)
+//        60% report actual age (digit 0–9 uniform)
+// Source: Nagi, Stockwell & Snavley, ISR 1973; Survey Practice CATI survey 2023
+
+function genAgeHeaping(n: number, rng: () => number): number[] {
+  const digits: number[] = []
+  while (digits.length < n) {
+    let d: number
+    if (rng() < 0.40) {
+      d = rng() < 0.5 ? 0 : 5
+    } else {
+      d = Math.floor(rng() * 10)
+    }
+    digits.push(d)
+  }
+  return digits
+}
+
+// ── Dataset C: Fabricated election returns — digit avoidance model ──────────
+// Beber & Scacco (2012): fabricators avoid 0 and 5 (look "too round")
+// P(0)=0.04, P(5)=0.05, P(1–4,6–9)=0.91/8≈0.11375 each
+// Applied to Nigerian 2003 and Ugandan 2011 elections.
+
+function genFabricatedElection(n: number, rng: () => number): number[] {
+  const probs = [0.04, 0.11375, 0.11375, 0.11375, 0.11375, 0.05, 0.11375, 0.11375, 0.11375, 0.11375]
+  const cum: number[] = []
+  let acc = 0
+  for (const p of probs) { acc += p; cum.push(acc) }
+
+  const digits: number[] = []
+  while (digits.length < n) {
+    const r = rng()
+    let d = 9
+    for (let i = 0; i < 10; i++) {
+      if (r < cum[i]) { d = i; break }
+    }
+    digits.push(d)
+  }
+  return digits
+}
+
+// ── Dataset D: Legitimate financial transactions ────────────────────────────
+// Exponential distribution spans many orders of magnitude.
+// Last digits approximately uniform — the context the test was designed for.
+// Basis: Nigrini (1999), US IRS auditing practice.
+
+function genFinancial(n: number, rng: () => number): number[] {
+  const digits: number[] = []
+  while (digits.length < n) {
+    const v = Math.floor(-Math.log(Math.max(1e-9, rng())) * 1000) + 1
+    if (v > 0) digits.push(v % 10)
+  }
+  return digits
+}
+
+const bpCounts    = digitCounts(genBloodPressure(N, makeLCG(SEED)))
+const ageCounts   = digitCounts(genAgeHeaping(N, makeLCG(SEED + 1)))
+const elecCounts  = digitCounts(genFabricatedElection(N, makeLCG(SEED + 2)))
+const finCounts   = digitCounts(genFinancial(N, makeLCG(SEED + 3)))
+
+const bpChi   = chiSqUniform(bpCounts)
+const ageChi  = chiSqUniform(ageCounts)
+const elecChi = chiSqUniform(elecCounts)
+const finChi  = chiSqUniform(finCounts)
+
+// ── Panel definitions ────────────────────────────────────────────────────────
+
+interface Panel {
+  id: string
+  label: string
+  sublabel: string
+  why: string
+  source: string
+  counts: number[]
+  chi: number
+  passes: boolean
+  fraud: boolean
+}
+
+const panels: Panel[] = [
+  {
+    id: 'bp',
+    label: 'Systolic blood pressure (mmHg)',
+    sublabel: `Illustrative · n=${N} · Terminal digit preference model · seed ${SEED}`,
+    why: 'Manual sphygmomanometers resolve to 2 mmHg. Human observers round to the nearest 10 or 5. Documented in >20 independent studies: digit 0 appears 2–3× more than expected. Not fabrication — measurement convention.',
+    source: 'JABFM Sept 2019 (doi:10.3122/jabfm.2019.05.190085). Study of 1,500 manual BP readings: 350 ended in 0, expected 150 under uniformity. Myers & Campbell (multiple); CDC PCD (2016).',
+    counts: bpCounts,
+    chi: bpChi,
+    passes: bpChi <= CHI_CRIT_05,
+    fraud: false,
+  },
+  {
+    id: 'age',
+    label: 'Survey-reported ages (years)',
+    sublabel: `Illustrative · n=${N} · Age heaping model (40% round to nearest 5) · seed ${SEED + 1}`,
+    why: 'Respondents uncertain of their exact age round to the nearest 5 or 10. Digits 0 and 5 become sharply overrepresented; digits 1–4 and 6–9 drop. This is cognitive rounding, not fraud — yet the test fires identically.',
+    source: 'Nagi, Stockwell & Snavley (ISR 1973) — African census digit preference. Survey Practice (2023, doi:10.29115/SP-2023-0018) — CATI surveys Kenya/Nigeria, statistically significant heaping at 0 and 5.',
+    counts: ageCounts,
+    chi: ageChi,
+    passes: ageChi <= CHI_CRIT_05,
+    fraud: false,
+  },
+  {
+    id: 'elec',
+    label: 'Fabricated election returns',
+    sublabel: `Illustrative · n=${N} · Beber & Scacco (2012) digit-avoidance model · seed ${SEED + 2}`,
+    why: 'Fabricators intuitively avoid 0 and 5 as last digits — they "look too convenient." Result: a deficit at 0 and 5, slight excess elsewhere. The mirror image of age heaping above. The test correctly detects real fraud here — but cannot distinguish it from the panels above.',
+    source: 'Beber B. & Scacco A. (2012). "What the Numbers Say: A Digit-Based Test for Election Fraud." Political Analysis 20(2):211–234. doi:10.1093/pan/mps003. Validated against Nigerian 2003 and Ugandan 2011 elections.',
+    counts: elecCounts,
+    chi: elecChi,
+    passes: elecChi <= CHI_CRIT_05,
+    fraud: true,
+  },
+  {
+    id: 'fin',
+    label: 'Legitimate financial transactions',
+    sublabel: `Illustrative · n=${N} · Exponential distribution (λ=0.001) · seed ${SEED + 3}`,
+    why: 'Transaction amounts arise from unconstrained economic processes spanning many orders of magnitude. No rounding convention applies to the last digit. Uniform distribution holds — the context the test was designed for.',
+    source: 'Nigrini M.J. (1999). "The use of Benford\'s Law as an aid in analytical procedures." Auditing: A Journal of Practice and Theory 16. Basis for IRS and PCAOB guidance on digit analysis. Dlugosz S. & Müller-Funk U. (2009). "The value of the last digit: statistical fraud detection with digit analysis." Advances in Data Analysis and Classification 3(3):281–290.',
+    counts: finCounts,
+    chi: finChi,
+    passes: finChi <= CHI_CRIT_05,
+    fraud: false,
+  },
+]
+
+// ── SVG: signed deviation chart ──────────────────────────────────────────────
+// Bars show (observed% − 10%) for each digit 0–9.
+// Above the zero line = overrepresented (red).
+// Below the zero line = underrepresented (blue).
+// Scale auto-fits to the dataset's maximum absolute deviation.
+
+function renderChart(counts: number[]): string {
+  const W = 520
+  const H = 100
+  const ML = 30, MR = 8, MT = 10, MB = 20
+  const cW = W - ML - MR
+  const cH = H - MT - MB
+
+  const n = counts.reduce((a, b) => a + b, 0)
+  const devs = counts.map(c => (c / n) * 100 - 10)  // pp from uniform
+
+  const maxAbsDev = Math.max(...devs.map(Math.abs), 0.5)
+  const scale = maxAbsDev * 1.25
+
+  const zeroY = MT + cH / 2
+
+  const toY = (dev: number) => zeroY - (dev / scale) * (cH / 2)
+
+  const barW = cW / 10
+  const scaleLabel = scale.toFixed(0)
+
+  let svg = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">`
+  svg += `<rect width="${W}" height="${H}" fill="#ffffff"/>`
+
+  // grid lines at ±half scale
+  const yHalfPos = toY(scale / 2)
+  const yHalfNeg = toY(-scale / 2)
+  svg += `<line x1="${ML}" y1="${yHalfPos.toFixed(1)}" x2="${ML + cW}" y2="${yHalfPos.toFixed(1)}" stroke="#f0f0f0" stroke-width="1"/>`
+  svg += `<line x1="${ML}" y1="${yHalfNeg.toFixed(1)}" x2="${ML + cW}" y2="${yHalfNeg.toFixed(1)}" stroke="#f0f0f0" stroke-width="1"/>`
+
+  // zero line (prominent)
+  svg += `<line x1="${ML}" y1="${zeroY.toFixed(1)}" x2="${ML + cW}" y2="${zeroY.toFixed(1)}" stroke="#111827" stroke-width="1.5"/>`
+
+  // bars
+  for (let d = 0; d < 10; d++) {
+    const dev = devs[d]
+    const x = ML + d * barW
+    const bw = barW * 0.68
+    const bx = x + (barW - bw) / 2
+
+    const yBar = toY(dev)
+    const yTop = Math.min(yBar, zeroY)
+    const yBot = Math.max(yBar, zeroY)
+    const bh  = Math.max(yBot - yTop, 0.8)
+
+    const fill = dev > 2 ? '#991b1b' : dev < -2 ? '#1d4ed8' : '#9ca3af'
+    svg += `<rect x="${bx.toFixed(1)}" y="${yTop.toFixed(1)}" width="${bw.toFixed(1)}" height="${bh.toFixed(1)}" fill="${fill}"/>`
+
+    svg += `<text x="${(x + barW / 2).toFixed(1)}" y="${(H - 6).toFixed(1)}" text-anchor="middle" font-size="8" fill="#6b7280">${d}</text>`
+  }
+
+  // axis
+  svg += `<line x1="${ML}" y1="${MT}" x2="${ML}" y2="${MT + cH}" stroke="#e5e7eb" stroke-width="1"/>`
+
+  // scale labels
+  svg += `<text x="${ML - 2}" y="${(MT + 8).toFixed(1)}" text-anchor="end" font-size="6.5" fill="#9ca3af">+${scaleLabel}pp</text>`
+  svg += `<text x="${ML - 2}" y="${(MT + cH - 2).toFixed(1)}" text-anchor="end" font-size="6.5" fill="#9ca3af">−${scaleLabel}pp</text>`
+  svg += `<text x="${ML - 2}" y="${(zeroY + 3).toFixed(1)}" text-anchor="end" font-size="6.5" fill="#374151">0</text>`
+
+  svg += `</svg>`
+  return svg
+}
+
+function fmt(chi: number): string {
+  if (chi > 999) return `${(chi / 1000).toFixed(1)}k`
+  return chi.toFixed(1)
+}
+
+function pLabel(chi: number): string {
+  if (chi > 27.877) return 'p < 0.001'
+  if (chi > 21.666) return 'p < 0.01'
+  if (chi > 16.919) return 'p < 0.05'
+  return 'p > 0.05'
+}
+---
+
+<div style="font-family:'Courier New',Courier,monospace;background:#ffffff;color:#111827;padding:2rem 1.5rem;max-width:640px;margin:0 auto;font-size:0.8rem;line-height:1.55;">
+
+  <!-- Header -->
+  <div style="border-top:3px solid #111827;padding-top:0.8rem;margin-bottom:1.75rem;">
+    <div style="font-size:0.55rem;letter-spacing:0.25em;color:#9ca3af;margin-bottom:0.3rem;">
+      THE MEASURING FIELD / MERIDIAN / INSTRUMENT 004
+    </div>
+    <h1 style="font-size:1rem;font-weight:700;letter-spacing:0.1em;margin:0 0 0.2rem;">THE DIGIT MIRROR</h1>
+    <p style="color:#6b7280;font-size:0.7rem;margin:0;">
+      Last-digit uniformity test — four datasets, three guilty verdicts, three different causes
+    </p>
+  </div>
+
+  <!-- Premise -->
+  <div style="background:#f9fafb;border:1px solid #e5e7eb;padding:0.9rem 1rem;margin-bottom:1.75rem;font-size:0.68rem;color:#374151;line-height:1.65;">
+    <p style="margin:0 0 0.5rem;">
+      The last-digit test rests on one assumption: in unmanipulated data of sufficient scale and variety, the last digit of each value should be approximately uniformly distributed — each of the ten digits (0–9) appearing ~10% of the time.
+    </p>
+    <p style="margin:0 0 0.5rem;">
+      Systematic deviation from uniformity is evidence of human intervention — either rounding (clustering on preferred digits) or fabrication (avoidance of digits that look "too round").
+    </p>
+    <p style="margin:0;">
+      The test works where the assumption holds: financial transaction amounts, exponentially distributed over many orders of magnitude with no rounding convention. Below, three other data types trigger the same verdict — for entirely different reasons.
+    </p>
+  </div>
+
+  <!-- Key -->
+  <div style="display:flex;gap:1.5rem;font-size:0.6rem;color:#6b7280;margin-bottom:1.5rem;flex-wrap:wrap;">
+    <span><span style="display:inline-block;width:10px;height:8px;background:#991b1b;vertical-align:middle;margin-right:3px;"></span>overrepresented (bar above zero)</span>
+    <span><span style="display:inline-block;width:10px;height:8px;background:#1d4ed8;vertical-align:middle;margin-right:3px;"></span>underrepresented (bar below zero)</span>
+    <span><span style="display:inline-block;width:10px;height:8px;background:#9ca3af;vertical-align:middle;margin-right:3px;"></span>within ±2pp of uniform</span>
+  </div>
+
+  <!-- Panels -->
+  {panels.map((p, idx) => (
+    <div>
+
+      {/* Mirror annotation between panels B and C */}
+      {idx === 2 && (
+        <div style="margin:-0.5rem 0 0.75rem;padding:0.5rem 0.75rem;border-left:3px solid #d97706;background:#fffbeb;font-size:0.63rem;color:#92400e;">
+          ↑ panels A and B fail the test: digits 0 and 5 are <strong>over</strong>represented (rounding toward round numbers).<br/>
+          ↓ panel C fails the same test: digits 0 and 5 are <strong>under</strong>represented (fabricators avoid round numbers).<br/>
+          These are mirror-image deviation patterns. The test reports the same verdict for both.
+        </div>
+      )}
+
+      <div style={`border:1px solid ${p.passes ? '#d1fae5' : (p.fraud ? '#fecaca' : '#fed7aa')};margin-bottom:1.25rem;`}>
+
+        <!-- Panel header -->
+        <div style={`padding:0.6rem 0.75rem 0.4rem;border-bottom:1px solid ${p.passes ? '#d1fae5' : (p.fraud ? '#fecaca' : '#fed7aa')};background:${p.passes ? '#f0fdf4' : (p.fraud ? '#fff5f5' : '#fff7ed')};`}>
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:0.5rem;flex-wrap:wrap;">
+            <span style="font-weight:700;font-size:0.75rem;color:#111827;">{p.label}</span>
+            <span style={`font-size:0.63rem;font-weight:700;letter-spacing:0.12em;color:${p.passes ? '#15803d' : (p.fraud ? '#b91c1c' : '#c2410c')};`}>
+              {p.passes ? 'PASSES' : (p.fraud ? '✗ REJECTS — fraud' : '✗ REJECTS — not fraud')}
+            </span>
+          </div>
+          <div style="font-size:0.58rem;color:#9ca3af;margin-top:0.1rem;">{p.sublabel}</div>
+        </div>
+
+        <!-- Chart -->
+        <div style="padding:0.4rem 0.25rem 0;" set:html={renderChart(p.counts)} />
+
+        <!-- Stats -->
+        <div style="display:flex;gap:1.25rem;font-size:0.6rem;color:#9ca3af;padding:0.3rem 0.75rem 0.5rem;border-top:1px solid #f3f4f6;">
+          <span>χ²(9) = {fmt(p.chi)}</span>
+          <span>critical = {CHI_CRIT_05}</span>
+          <span>{pLabel(p.chi)}</span>
+        </div>
+
+        <!-- Why -->
+        <div style="padding:0.5rem 0.75rem 0.65rem;font-size:0.65rem;color:#4b5563;line-height:1.6;border-top:1px solid #f3f4f6;">
+          {p.why}
+        </div>
+
+        <!-- Source -->
+        <div style="padding:0 0.75rem 0.6rem;font-size:0.58rem;color:#9ca3af;line-height:1.55;">
+          Source: {p.source}
+        </div>
+
+      </div>
+    </div>
+  ))}
+
+  <!-- The instrument's argument -->
+  <div style="border-top:1px solid #e5e7eb;padding-top:1.25rem;margin-bottom:1.5rem;">
+    <div style="font-size:0.58rem;letter-spacing:0.2em;color:#9ca3af;margin-bottom:0.75rem;">WHAT THIS INSTRUMENT DEMONSTRATES</div>
+
+    <p style="font-size:0.68rem;color:#374151;line-height:1.65;margin:0 0 0.65rem;">
+      The last-digit uniformity test is valid and court-admissible for financial data. The conditions are met: large transaction amounts arise from multiplicative economic processes and carry no rounding convention. Last digits are approximately uniform; systematic deviation signals manipulation. In this context the test works.
+    </p>
+    <p style="font-size:0.68rem;color:#374151;line-height:1.65;margin:0 0 0.65rem;">
+      Outside this context, the test fires on any data generation process that systematically biases last digits — rounding included. Blood pressure clinicians round to the nearest 10, creating a surplus at 0. Survey respondents round their age to the nearest 5, creating surpluses at 0 and 5. The chi-square values for these panels are larger than for the fabricated election data, because the rounding is stronger than the fabrication signal.
+    </p>
+    <p style="font-size:0.68rem;color:#374151;line-height:1.65;margin:0 0 0.65rem;">
+      The mirror: Panels B and C are inverses. Age heaping creates peaks at 0 and 5 (rounding toward round numbers). Election fabrication creates valleys at 0 and 5 (avoidance of round numbers). The test produces the same REJECTS verdict for both. It cannot tell the direction, and direction is everything.
+    </p>
+    <p style="font-size:0.68rem;color:#374151;line-height:1.65;margin:0;">
+      This is the third instrument in a series where the same pattern holds: the tool's strongest guarantee coincides with the context requiring it least, and its weakest guarantee with the context where the stakes are highest. The test was designed for auditors with financial records. When deployed by election monitors on clinical data or demographic surveys, it becomes a false-alarm machine — issuing the same verdict for "someone rounded" as for "someone fabricated."
+    </p>
+  </div>
+
+  <!-- Sources -->
+  <div style="border-top:1px solid #e5e7eb;padding-top:1rem;font-size:0.58rem;color:#9ca3af;line-height:1.75;">
+    <div style="letter-spacing:0.16em;margin-bottom:0.5rem;">SOURCES</div>
+    <div>Beber B. &amp; Scacco A. (2012). "What the Numbers Say: A Digit-Based Test for Election Fraud." Political Analysis 20(2):211–234. doi:10.1093/pan/mps003. cambridge.org/core/journals/political-analysis</div>
+    <div>JABFM (2019). "Sources of Error in Office Blood Pressure Measurement." doi:10.3122/jabfm.2019.05.190085. jabfm.org/content/32/5/732</div>
+    <div>Nagi M.H., Stockwell E.G., Snavley L.M. (1973). "Digit Preference and Avoidance in the Age Statistics of Some Recent African Censuses." International Statistical Review 41:165–174.</div>
+    <div>Survey Practice (2023). "Age Heaping in CATI Surveys in Kenya and Nigeria." doi:10.29115/SP-2023-0018. surveypractice.org</div>
+    <div>Ensminger J. &amp; Leder-Luis J. (2023). "Detecting Fraud in Development Aid." NBER Working Paper 30768. nber.org/papers/w30768</div>
+    <div>Diekmann A. (2007). "Not the First Digit! Using Benford's Law to Detect Fraudulent Scientific Data." Journal of Applied Statistics 34(3):321–329.</div>
+    <div>Michalski T. &amp; Stoltz G. (2013). "Do Countries Falsify Economic Data Strategically?" Review of Economics and Statistics 95(2):591–616.</div>
+    <div style="margin-top:0.65rem;border-top:1px solid #f3f4f6;padding-top:0.5rem;color:#d1d5db;">
+      SEED: {SEED} — all datasets computed at build time; seeded LCG (Numerical Recipes constants) makes results deterministic. Same seed → same datasets. No runtime fetch.
+      github.com/frankbueltge/field-research
+    </div>
+  </div>
+
+</div>
