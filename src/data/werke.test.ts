@@ -19,8 +19,8 @@ describe('byRecency (newest first, stable ties)', () => {
 })
 
 describe('WERKE_CHRONO', () => {
-  it('leads with the atelier (newest experiment)', () => {
-    expect(WERKE_CHRONO[0].id).toBe('atelier')
+  it('leads with the newest experiment (field)', () => {
+    expect(WERKE_CHRONO[0].id).toBe('field')
   })
   it('ends with The Protocol (oldest experiment)', () => {
     expect(WERKE_CHRONO[WERKE_CHRONO.length - 1].id).toBe('protokoll')
