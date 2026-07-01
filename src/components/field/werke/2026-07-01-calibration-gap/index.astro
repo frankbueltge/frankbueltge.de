@@ -1,0 +1,161 @@
+---
+import data from './data.json'
+
+const CAP = data.fpr_scale_cap
+
+function barWidth(val: number | null): string {
+  if (val === null || val === 0) return '0.15%'
+  return `${Math.min((val / CAP) * 100, 100).toFixed(2)}%`
+}
+
+function fmt(val: number | null, suffix = '%'): string {
+  return val !== null ? `${val}${suffix}` : 'n/d'
+}
+
+const tools = data.tools
+const cases = data.harm_cases
+const sources = data.benchmark_sources
+---
+
+<div class="font-mono text-sm leading-relaxed" style="background: #0d0d0d; color: #d4d4d4; padding: 2rem; max-width: 860px; margin: 0 auto;">
+
+  <!-- Header -->
+  <div style="position: relative; border-bottom: 1px solid #3f3f3f; padding-bottom: 1.25rem; margin-bottom: 1.75rem;">
+    <div style="font-size: 0.65rem; letter-spacing: 0.18em; color: #6b6b6b; margin-bottom: 0.4rem;">
+      THE MEASURING FIELD / MERIDIAN / INSTRUMENT 001
+    </div>
+    <h1 style="font-size: 1.05rem; font-weight: 700; letter-spacing: 0.12em; color: #e8e8e8;">
+      CALIBRATION CERTIFICATE
+    </h1>
+    <p style="color: #8a8a8a; font-size: 0.75rem; margin-top: 0.3rem;">
+      AI Text Detection — Independent Audit Against Vendor Specifications
+    </p>
+    <p style="color: #5a5a5a; font-size: 0.68rem; margin-top: 0.15rem;">
+      Reference date: {data.generated} · Scale: 0–{data.fpr_scale_cap}% FPR
+    </p>
+
+    <!-- Stamp -->
+    <div style="position: absolute; top: 0.5rem; right: 0; border: 3px solid #c0392b; color: #c0392b; font-size: 0.85rem; font-weight: 900; letter-spacing: 0.2em; padding: 0.2rem 0.6rem; transform: rotate(-11deg); opacity: 0.85;">
+      OUT OF SPEC
+    </div>
+  </div>
+
+  <!-- FPR Matrix -->
+  <div style="margin-bottom: 2rem;">
+    <div style="font-size: 0.6rem; letter-spacing: 0.16em; color: #6b6b6b; margin-bottom: 1rem; border-bottom: 1px solid #2a2a2a; padding-bottom: 0.4rem;">
+      FALSE POSITIVE RATE — CLAIM vs. INDEPENDENT MEASUREMENT
+    </div>
+
+    <div style="font-size: 0.6rem; color: #5a5a5a; margin-bottom: 0.8rem; display: flex; gap: 1.5rem;">
+      <span>
+        <span style="display: inline-block; width: 10px; height: 8px; background: #555; margin-right: 4px; vertical-align: middle;"></span>
+        vendor specification
+      </span>
+      <span>
+        <span style="display: inline-block; width: 10px; height: 8px; background: #c0392b; margin-right: 4px; vertical-align: middle;"></span>
+        independent (general)
+      </span>
+      <span>
+        <span style="display: inline-block; width: 10px; height: 8px; background: #7b1d1d; margin-right: 4px; vertical-align: middle;"></span>
+        independent (NNES*)
+      </span>
+    </div>
+
+    {tools.map(tool => (
+      <div style="margin-bottom: 1.6rem;">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 0.45rem;">
+          <span style="font-weight: 700; color: #e8e8e8; font-size: 0.8rem;">{tool.name}</span>
+          <span style="font-size: 0.6rem; color: #6b6b6b;">
+            spec: {fmt(tool.claim_fpr)} · measured: {fmt(tool.independent_fpr)} · NNES: {fmt(tool.nnes_fpr)}
+          </span>
+        </div>
+
+        <!-- Vendor claim -->
+        <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.22rem;">
+          <span style="width: 5.5rem; text-align: right; font-size: 0.6rem; color: #5a5a5a; flex-shrink: 0;">spec</span>
+          <div style="flex: 1; background: #1e1e1e; height: 7px; position: relative;">
+            <div style={`position: absolute; top: 0; left: 0; height: 100%; background: #555; width: ${barWidth(tool.claim_fpr)};`}></div>
+          </div>
+          <span style="width: 3.5rem; font-size: 0.6rem; color: #7a7a7a;">{fmt(tool.claim_fpr)}</span>
+        </div>
+
+        <!-- Independent general -->
+        <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.22rem;">
+          <span style="width: 5.5rem; text-align: right; font-size: 0.6rem; color: #5a5a5a; flex-shrink: 0;">measured</span>
+          <div style="flex: 1; background: #1e1e1e; height: 7px; position: relative;">
+            <div style={`position: absolute; top: 0; left: 0; height: 100%; background: #c0392b; width: ${barWidth(tool.independent_fpr)};`}></div>
+          </div>
+          <span style="width: 3.5rem; font-size: 0.6rem; color: #c0392b;">{fmt(tool.independent_fpr)}</span>
+        </div>
+
+        <!-- NNES -->
+        {tool.nnes_fpr !== null && (
+          <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.22rem;">
+            <span style="width: 5.5rem; text-align: right; font-size: 0.6rem; color: #5a5a5a; flex-shrink: 0;">NNES*</span>
+            <div style="flex: 1; background: #1e1e1e; height: 7px; position: relative;">
+              <div style={`position: absolute; top: 0; left: 0; height: 100%; background: #7b1d1d; width: ${barWidth(tool.nnes_fpr)};`}></div>
+            </div>
+            <span style="width: 3.5rem; font-size: 0.6rem; color: #9b2020;">{fmt(tool.nnes_fpr)}</span>
+          </div>
+        )}
+
+        <!-- Key finding -->
+        <div style="font-size: 0.62rem; color: #5a5a5a; margin-top: 0.35rem; padding-left: 6.5rem; line-height: 1.5;">
+          {tool.key_finding}
+        </div>
+      </div>
+    ))}
+
+    <div style="font-size: 0.6rem; color: #4a4a4a; margin-top: 0.4rem; border-top: 1px solid #1e1e1e; padding-top: 0.5rem;">
+      * NNES = Non-Native English Speakers. Source: Liang et al., Cell Patterns 2023.
+      Confidence ratings vary — see data.json for per-tool methodology notes.
+    </div>
+  </div>
+
+  <!-- Harm Register -->
+  <div style="margin-bottom: 2rem; border-top: 1px solid #2a2a2a; padding-top: 1.25rem;">
+    <div style="font-size: 0.6rem; letter-spacing: 0.16em; color: #6b6b6b; margin-bottom: 1rem;">
+      FIELD OBSERVATIONS — DOCUMENTED HARM REGISTER
+    </div>
+
+    {cases.map(c => (
+      <div style="margin-bottom: 1.2rem; border-left: 2px solid #3f1010; padding-left: 0.75rem;">
+        <div style="font-weight: 700; color: #d4d4d4; font-size: 0.78rem;">
+          {c.institution} · {c.year}
+        </div>
+        <div style="font-size: 0.65rem; color: #c0392b; margin-top: 0.1rem;">
+          {c.scale === 'institutional' && c.allegations !== null
+            ? `${c.allegations.toLocaleString()} allegations${c.dismissed_pct !== null ? ` · ${c.dismissed_pct}% dismissed` : ''}`
+            : c.detector}
+        </div>
+        <div style="font-size: 0.65rem; color: #8a8a8a; margin-top: 0.3rem; line-height: 1.5;">
+          {c.outcome}
+        </div>
+        <div style="font-size: 0.6rem; color: #4a4a4a; margin-top: 0.2rem;">
+          {c.source}
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <!-- Sources -->
+  <div style="border-top: 1px solid #2a2a2a; padding-top: 1.25rem;">
+    <div style="font-size: 0.6rem; letter-spacing: 0.16em; color: #6b6b6b; margin-bottom: 0.8rem;">
+      MEASUREMENT SOURCES
+    </div>
+
+    {sources.map(s => (
+      <div style="margin-bottom: 0.55rem; font-size: 0.62rem; display: flex; gap: 0.6rem;">
+        <span style="color: #7a7a7a; flex-shrink: 0; min-width: 12rem;">{s.name}</span>
+        <span style="color: #5a5a5a;">{s.finding}</span>
+      </div>
+    ))}
+
+    <div style="margin-top: 1rem; font-size: 0.6rem; color: #3a3a3a; border-top: 1px solid #1e1e1e; padding-top: 0.6rem;">
+      This certificate is itself a measurement instrument — it documents the gap between specification
+      and performance in tools now deployed to judge the authenticity of human writing.
+      Method and data are open: frankbueltge.de/field / github.com/frankbueltge/field-research
+    </div>
+  </div>
+
+</div>
