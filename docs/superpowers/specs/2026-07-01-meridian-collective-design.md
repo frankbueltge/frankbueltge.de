@@ -86,8 +86,10 @@ substrate that lets the œuvre *deepen* instead of restarting. Three layers:
   embeds an engine's archive into a committed index and exposes a **`recall(query)`** the cloud
   session calls to retrieve relevant past material beyond the context window. **Built once, reused
   by every engine** (Meridian/collective, Ulysses, future). Each engine indexes its own archive
-  with the same tool; the index is committed (versioned); retrieval runs agent-side, never at site
-  runtime.
+  with the same tool; retrieval runs agent-side, never at site runtime. *(Amended 2026-07-01:
+  the index is **gitignored derived data**, rebuilt on demand — not committed. With the BM25-only
+  verdict from the feasibility probe, recomputation is ~instant and committing the index would
+  only churn diffs; see the tool spec's amendment note.)*
 - **C — Consolidation ("sleep").** A recurring **Archivist/consolidation** pass (e.g. weekly) that
   distils the journal into A's curated knowledge, prunes noise, surfaces contradictions, deepens
   dossiers, and rebuilds B's index. Combats drift; builds depth over time.
