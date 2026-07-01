@@ -1,0 +1,192 @@
+---
+// INSTRUMENT 003 — The Provenance Horizon
+// C2PA content provenance: chain-of-custody audit across four distribution scenarios
+// Meridian / The Measuring Field / 2026-07-01
+
+type NodeStatus = 'intact' | 'stripped' | 'absent' | 'forged' | 'exposed'
+
+interface ChainNode { label: string; status: NodeStatus; note: string }
+interface Scenario   { id: string; heading: string; verdict: string; nodes: ChainNode[] }
+
+const SCENARIOS: Scenario[] = [
+  {
+    id: 'professional',
+    heading: 'A — Professional newsroom (controlled pipeline)',
+    verdict: 'CHAIN INTACT',
+    nodes: [
+      { label: 'CAPTURE', status: 'intact',  note: 'C2PA-enabled camera|device cert signed at capture' },
+      { label: 'EDIT',    status: 'intact',  note: 'Photoshop appends new|assertion; chain extended' },
+      { label: 'CDN',     status: 'intact',  note: 'C2PA-aware CDN|manifest preserved end-to-end' },
+      { label: 'VERIFY',  status: 'intact',  note: 'Full chain readable|origin confirmed' },
+    ],
+  },
+  {
+    id: 'social',
+    heading: 'B — Social media distribution (open ecosystem)',
+    verdict: 'CHAIN BROKEN',
+    nodes: [
+      { label: 'CAPTURE',    status: 'intact',   note: 'Manifest present|and signed' },
+      { label: 'PLATFORM',   status: 'stripped', note: 'FB / IG / X re-encodes|ALL metadata stripped' },
+      { label: 'SCREENSHOT', status: 'stripped', note: 'Any remaining|manifest removed' },
+      { label: 'RESHARE',    status: 'absent',   note: 'No provenance|signal present' },
+      { label: 'VERIFY',     status: 'absent',   note: 'Stripped or never signed?|Indistinguishable.' },
+    ],
+  },
+  {
+    id: 'forgery',
+    heading: 'C — Adversarial forgery (Hacker Factor, demonstrated 2025)',
+    verdict: 'CHAIN VALID — CONTENT FALSE',
+    nodes: [
+      { label: 'ACQUIRE', status: 'forged', note: 'Any image|acquired by adversary' },
+      { label: 'SIGN',    status: 'forged', note: 'c2patool + X.509 cert|~$289/yr for trusted cert' },
+      { label: 'CLAIM',   status: 'forged', note: 'Manifest assigns|any named creator + timestamp' },
+      { label: 'VERIFY',  status: 'forged', note: 'Result: VALID|No evidence of tampering' },
+    ],
+  },
+  {
+    id: 'privacy',
+    heading: 'D — Privacy exposure (journalist in sensitive context)',
+    verdict: 'CHAIN INTACT — IDENTITY EXPOSED',
+    nodes: [
+      { label: 'CAPTURE',  status: 'exposed', note: 'Camera cert embeds|device serial → journalist' },
+      { label: 'PUBLISH',  status: 'exposed', note: 'Published anonymously|device ID remains in manifest' },
+      { label: 'FETCH',    status: 'exposed', note: 'Manifest retrieval logs|IP + timestamp + device' },
+      { label: 'EXPOSURE', status: 'exposed', note: 'Device serial → purchase|record → identity confirmed' },
+    ],
+  },
+]
+
+interface StatusProps { fill: string; stroke: string; sym: string }
+
+const SP: Record<NodeStatus, StatusProps> = {
+  intact:   { fill: '#d1fae5', stroke: '#059669', sym: 'OK' },
+  stripped: { fill: '#fee2e2', stroke: '#dc2626', sym: 'XX' },
+  absent:   { fill: '#f3f4f6', stroke: '#9ca3af', sym: '??' },
+  forged:   { fill: '#fef3c7', stroke: '#b45309', sym: '!!' },
+  exposed:  { fill: '#ede9fe', stroke: '#7c3aed', sym: '/>' },
+}
+
+function vColor(v: string): string {
+  if (v === 'CHAIN INTACT') return '#065f46'
+  if (v === 'CHAIN BROKEN') return '#991b1b'
+  if (v.includes('CONTENT FALSE')) return '#92400e'
+  return '#5b21b6'
+}
+
+function chainSVG(s: Scenario): string {
+  const ns = s.nodes
+  const n = ns.length
+  const W = 820, PL = 75, PR = 75
+  const IW = W - PL - PR
+  const CY = 50, R = 22, H = 130
+  const cx = (i: number) => PL + Math.round(i * IW / (n - 1))
+
+  const parts: string[] = []
+
+  for (let i = 0; i < n - 1; i++) {
+    const x1 = cx(i) + R
+    const x2 = cx(i + 1) - R
+    const s1 = ns[i].status
+    const s2 = ns[i + 1].status
+    const broken = s1 === 'stripped' || s1 === 'absent' || s2 === 'stripped' || s2 === 'absent'
+    const amber = !broken && (s1 === 'forged'  || s2 === 'forged')
+    const violet = !broken && !amber && (s1 === 'exposed' || s2 === 'exposed')
+
+    const stroke = broken ? '#d1d5db' : amber ? '#b45309' : violet ? '#7c3aed' : '#059669'
+    const dash = broken ? ' stroke-dasharray="5 4"' : ''
+    parts.push(`<line x1="${x1}" y1="${CY}" x2="${x2}" y2="${CY}" stroke="${stroke}" stroke-width="2.5"${dash}/>`)
+  }
+
+  for (let i = 0; i < n; i++) {
+    const node = ns[i]
+    const p = SP[node.status]
+    const x = cx(i)
+
+    parts.push(`<text x="${x}" y="${CY - R - 8}" text-anchor="middle" font-family="monospace" font-size="8.5" font-weight="700" fill="#374151" letter-spacing="0.08em">${node.label}</text>`)
+    parts.push(`<circle cx="${x}" cy="${CY}" r="${R}" fill="${p.fill}" stroke="${p.stroke}" stroke-width="2.5"/>`)
+    parts.push(`<text x="${x}" y="${CY + 4}" text-anchor="middle" font-family="monospace" font-size="9" font-weight="700" fill="${p.stroke}">${p.sym}</text>`)
+
+    node.note.split('|').forEach((line: string, j: number) => {
+      parts.push(`<text x="${x}" y="${CY + R + 14 + j * 12}" text-anchor="middle" font-family="monospace" font-size="7.5" fill="#6b7280">${line.trim()}</text>`)
+    })
+  }
+
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%" style="display:block;overflow:visible;">${parts.join('')}</svg>`
+}
+
+// Precompute scenario blocks as HTML strings to keep template simple
+const scenarioHTMLBlocks: string[] = SCENARIOS.map((s: Scenario) => {
+  const bc = vColor(s.verdict)
+  return `<div style="margin-bottom:2rem;border-left:3px solid ${bc};padding-left:1rem;">
+  <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:0.55rem;flex-wrap:wrap;gap:0.5rem;">
+    <span style="font-size:0.72rem;font-weight:700;color:#374151;letter-spacing:0.04em;">${s.heading}</span>
+    <span style="font-size:0.62rem;font-weight:700;color:${bc};letter-spacing:0.1em;white-space:nowrap;">${s.verdict}</span>
+  </div>
+  ${chainSVG(s)}
+</div>`
+})
+
+const allScenariosHTML = scenarioHTMLBlocks.join('\n')
+---
+
+<div style="background:#fafafa;color:#111827;font-family:monospace;max-width:900px;margin:0 auto;padding:1.5rem 2rem;">
+
+  <!-- Header -->
+  <div style="background:#111827;color:#f9fafb;padding:1.25rem 1.5rem;margin:-1.5rem -2rem 2rem -2rem;">
+    <div style="font-size:0.6rem;letter-spacing:0.2em;color:#6b7280;margin-bottom:0.35rem;">THE MEASURING FIELD / MERIDIAN / INSTRUMENT 003</div>
+    <h1 style="font-size:1.1rem;font-weight:700;letter-spacing:0.12em;margin:0 0 0.3rem 0;">THE PROVENANCE HORIZON</h1>
+    <p style="font-size:0.72rem;color:#9ca3af;margin:0;">C2PA Content Provenance — Chain-of-Custody Audit Across Four Distribution Scenarios</p>
+  </div>
+
+  <!-- Legend -->
+  <div style="display:flex;flex-wrap:wrap;gap:1rem;font-size:0.67rem;margin-bottom:1.75rem;color:#374151;">
+    <span><span style="display:inline-block;width:10px;height:10px;background:#d1fae5;border:2px solid #059669;border-radius:50%;vertical-align:middle;margin-right:4px;"></span>OK — manifest intact and valid</span>
+    <span><span style="display:inline-block;width:10px;height:10px;background:#fee2e2;border:2px solid #dc2626;border-radius:50%;vertical-align:middle;margin-right:4px;"></span>XX — manifest stripped by pipeline</span>
+    <span><span style="display:inline-block;width:10px;height:10px;background:#f3f4f6;border:2px solid #9ca3af;border-radius:50%;vertical-align:middle;margin-right:4px;"></span>?? — absent: stripped or never signed (ambiguous)</span>
+    <span><span style="display:inline-block;width:10px;height:10px;background:#fef3c7;border:2px solid #b45309;border-radius:50%;vertical-align:middle;margin-right:4px;"></span>!! — forged: valid chain, false content</span>
+    <span><span style="display:inline-block;width:10px;height:10px;background:#ede9fe;border:2px solid #7c3aed;border-radius:50%;vertical-align:middle;margin-right:4px;"></span>/&gt; — exposed: chain leaks creator identity</span>
+  </div>
+
+  <!-- Chain diagrams (precomputed) -->
+  <div set:html={allScenariosHTML} />
+
+  <!-- Structural contradiction -->
+  <div style="border-top:1px solid #e5e7eb;margin-top:0.5rem;padding-top:1.25rem;">
+    <div style="font-size:0.6rem;letter-spacing:0.15em;color:#6b7280;margin-bottom:0.9rem;">STRUCTURAL CONTRADICTION — THE THREE DESIGN GOALS CANNOT BE SIMULTANEOUSLY SATISFIED</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.75rem;margin-bottom:1.25rem;">
+      <div style="border:1px solid #e5e7eb;padding:0.75rem;">
+        <div style="font-size:0.6rem;font-weight:700;letter-spacing:0.12em;color:#059669;margin-bottom:0.35rem;">PROVENANCE GOAL</div>
+        <div style="font-size:0.7rem;color:#374151;line-height:1.5;">Bind content to creator identity. Requires strong identity assertion in the manifest — device certificates, signer credentials.</div>
+      </div>
+      <div style="border:1px solid #e5e7eb;padding:0.75rem;">
+        <div style="font-size:0.6rem;font-weight:700;letter-spacing:0.12em;color:#b45309;margin-bottom:0.35rem;">DURABILITY GOAL</div>
+        <div style="font-size:0.7rem;color:#374151;line-height:1.5;">Survive all distribution paths. Requires watermarks, fingerprints, cloud storage, and end-to-end platform compliance — unrealistic in open ecosystems.</div>
+      </div>
+      <div style="border:1px solid #e5e7eb;padding:0.75rem;">
+        <div style="font-size:0.6rem;font-weight:700;letter-spacing:0.12em;color:#7c3aed;margin-bottom:0.35rem;">PRIVACY GOAL</div>
+        <div style="font-size:0.7rem;color:#374151;line-height:1.5;">Protect creator identity. Requires decoupling content from its creator — directly contradicting the provenance goal. Pseudonymous certificates exist in spec; rarely implemented.</div>
+      </div>
+    </div>
+
+    <div style="font-size:0.72rem;color:#6b7280;line-height:1.65;border-left:2px solid #e5e7eb;padding-left:0.85rem;margin-bottom:1.5rem;">
+      <strong style="color:#374151;">Finding:</strong> The same structural pattern holds across all three instruments in this series. INSTRUMENT 001 showed AI text detectors calibrated for vendor test corpora fail on the actual deployment population (non-native English speakers). INSTRUMENT 002 showed Benford's Law calibrated for multiplicative financial data convicts clean bounded election data. INSTRUMENT 003 shows C2PA calibrated for closed professional newsroom pipelines fails in open social media ecosystems — and provides its strongest guarantee precisely where provenance is least in doubt (Scenario A), while failing, inverting, or structurally contradicting its goals in Scenarios B, C, and D. <em>The strongest guarantee and the lowest need coincide; the highest need and the weakest guarantee coincide.</em>
+    </div>
+  </div>
+
+  <!-- Sources -->
+  <div style="border-top:1px solid #e5e7eb;padding-top:1rem;font-size:0.63rem;color:#9ca3af;line-height:1.8;">
+    <div style="font-size:0.6rem;font-weight:700;letter-spacing:0.12em;color:#6b7280;margin-bottom:0.4rem;">SOURCES</div>
+    <div>RAND Corp., "Overpromising on Digital Provenance and Security" (Jun 4, 2025) — rand.org/pubs/commentary/2025/06/overpromising-on-digital-provenance-and-security.html</div>
+    <div>Hacker Factor, "C2PA's Worst Case Scenario" (2025) — hackerfactor.com/blog/index.php?/archives/1013-C2PAs-Worst-Case-Scenario.html</div>
+    <div>Hacker Factor, "What C2PA Provides" — hackerfactor.com/blog/index.php?/archives/1073-What-C2PA-Provides.html</div>
+    <div>World Privacy Forum, "Privacy, Identity and Trust in C2PA" (2025) — worldprivacyforum.org/posts/privacy-identity-and-trust-in-c2pa</div>
+    <div>arxiv.org/abs/2604.24890 — "Verifying Provenance of Digital Media: Why the C2PA Specifications Are Not Ready for High-Stakes Applications" (2026)</div>
+    <div>Mohamed Badr Taddist, "Privacy Vulnerabilities in C2PA Content Provenance Systems" (SMPTE MTS2025, Oct 2025)</div>
+    <div>Digimarc, "Safeguarding Public Trust Thanks to C2PA and Digital Watermarks" (2025) — digimarc.com/blog/safeguarding-public-trust-thanks-c2pa-and-digital-watermarks</div>
+    <div>Fortune, "Big Tech sees C2PA as a way to combat deepfakes, but the standard puts user privacy on the line" (Sep 2025)</div>
+    <div>C2PA Security Considerations v2.4 — spec.c2pa.org/specifications/specifications/2.4/security/Security_Considerations.html</div>
+    <div>OpenAI, "C2PA Meta Data in DALL-E 3 Images" — community.openai.com/t/c2pa-meta-data-in-dall-e-3-images/617061</div>
+  </div>
+
+</div>
