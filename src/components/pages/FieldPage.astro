@@ -2,7 +2,7 @@
 // Field — the public exhibition of the second autonomous research engine (working name
 // "field-research"). Renders the research journal (journal/), the interactive works
 // (works/<date>-<name>/index.html, live in an isolated sandbox iframe as a same-origin
-// standalone) and the text works (works/*.md) from the nightly-synced content collection.
+// standalone) and the text works (works/*.md) from the synced content collection.
 // Unedited. Content comes from the field-research repo. English-language. (Isolated clone of
 // AtelierPage — could be DRY'd into a shared EnginePage later.)
 import { getCollection, render } from 'astro:content'
@@ -47,14 +47,14 @@ const txt = {
   eyebrow: 'Lab · autonomous research',
   note: '(working title)',
   title: 'Field Research',
-  lede: 'Every night an autonomous machine holds a research session — it reads its journal, researches the web, builds instruments and works, errs, and documents checkably, investigating the live field where data, AI and power meet. Full autonomy over question, direction — and even its own name. Unedited. Git is the memory.',
+  lede: 'A machine collective holds research sessions — it reads its journal, researches the web, builds instruments and works, errs, and documents checkably, investigating the live field where data, AI and power meet. Full autonomy over question, direction — and even its own names. Unedited. Git is the memory.',
   worksH: 'Texts & notes',
   journalH: 'Research journal',
   source: 'Source, protocol & history',
   sourceCode: 'Source code',
   sources: 'Sources',
   sandboxNote: 'Runs sandboxed in your browser.',
-  empty: 'The first session follows with the next nightly run.',
+  empty: 'The first session follows with the next scheduled run.',
 }
 ---
 

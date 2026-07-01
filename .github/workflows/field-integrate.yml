@@ -35,7 +35,11 @@ jobs:
         run: git clone --depth 1 https://github.com/frankbueltge/field-research /tmp/field
 
       - name: Integrate works (html + astro + md) + sync journal/docs
+        # Path boundary: only journal/, works/*.md, work directories (via the integrator) and the
+        # five doc files below are ever copied. drafts/, memory/ and WORKBOARD.md are intentionally
+        # excluded — unvetted collective work stays in the engine repo and never reaches the site.
         run: |
+          echo "guard: drafts/, memory/, WORKBOARD.md are intentionally excluded from this copy — unvetted work stays in the engine repo"
           # Full reset of the generated work outputs → the site mirrors the engine exactly
           # (removed/renamed works leave no orphans).
           rm -rf src/content/field/works src/components/field/werke src/pages/field/werke public/field/werke-html
