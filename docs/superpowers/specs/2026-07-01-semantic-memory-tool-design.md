@@ -3,6 +3,15 @@
 Design spec · 2026-07-01 · for review · **layer B** of the memory architecture
 (`2026-07-01-meridian-collective-design.md`)
 
+> **Amendment (2026-07-01, post-probe review).** The feasibility probe found embeddings
+> impractical in the cloud environment (proxy blocks model downloads) → the tool ships
+> **BM25-only** (embeddings deferred). Consequence: the index is no longer **committed** —
+> a BM25 index is derived data, recomputable in <1s, so `memory/index.jsonl` is **gitignored**
+> and rebuilt on demand. "Git-native" continues to apply to the archive itself (journal / works
+> / `memory/`), which is what's versioned. Wherever this spec says "committed index", read
+> "gitignored derived index". Rationale: plan
+> `2026-07-01-meridian-collective.md`, review amendment 1.
+
 ## Purpose
 
 A reusable **learning-memory retrieval layer** for the lab's autonomous engines. Any engine's
