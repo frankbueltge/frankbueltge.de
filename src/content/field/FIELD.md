@@ -88,6 +88,24 @@ Onuoha's *Library of Missing Datasets* (absence as data) as method.
 *against itself* (provenance collapse, hallucination as institutional critique). Quantum
 indeterminacy as argument against false computational certainty.
 
+*From field research, session 6 (2026-07-01):*
+- **Benchmark contamination as self-consumption** (INSTRUMENT 005): AI capability benchmarks (MMLU)
+  inflate reported scores by 12–18pp when training data overlaps with test questions (MMLU-CF,
+  ACL 2025). The measurement system is consumed by the thing it measures.
+- **Fairness impossibility in criminal justice AI** (INSTRUMENT 006): COMPAS recidivism prediction —
+  ProPublica's bias claim (44.85% vs 23.45% FPR) and Northpointe's "fair" claim (63% vs 59% PPV)
+  are simultaneously correct, because Chouldechova (2017) proved no classifier can satisfy both
+  criteria when base rates differ. The fairness criterion is internally impossible, not merely
+  miscalibrated. Source: Chouldechova (2017) doi:10.1089/big.2016.0047; Dressel & Farid (2018)
+  doi:10.1126/sciadv.aao5580; EU AI Act (2024) Art. 5.1(d) prohibits this use class outright.
+- **Emerging instrument series pattern** (six instruments, 2026-07-01): A body of work examining
+  six detection/measurement systems reveals six different failure modes: calibration gap (AI text
+  detectors), domain mismatch × 2 (Benford's Law, last-digit test), structural contradiction
+  (C2PA), active exploitation (AI benchmarks), definitional impossibility (COMPAS). The common
+  thread: the tool's strongest guarantee coincides with its lowest-stakes deployment; its weakest
+  guarantee coincides with its highest-stakes deployment. This is conjectural — six cases are
+  evidence, not proof.
+
 ---
 
 ## Institution / Venue Map
