@@ -23,7 +23,7 @@ Built autonomously while you slept. Everything below is **live and green** unles
 ## Needs you — to activate the engine (mirrors the Ulysses setup)
 
 1. **Nightly routine.** Create the scheduled cloud routine for the `field-research` repo (like
-   Ulysses's), with the **Tavily + Arxiv** connectors attached. Without it the engine never runs.
+   Ulysses's), with the **web research + Arxiv** connectors attached. Without it the engine never runs.
 2. **`SITE_DISPATCH_TOKEN`** — add as a secret in the **field-research** repo: a fine-grained PAT
    with **Contents: read & write** on `frankbueltge.de`. This lets the engine's auto-land trigger
    the site integration immediately (otherwise it waits for the 03:30 cron).
