@@ -1,20 +1,14 @@
 ---
-title: 'Studie: Überflug'
-description: 'SGP4 im Browser — welche Erdbeobachtungssatelliten einen Standort gerade im Sichtfeld haben. Eine technische Etüde, kein Kunstwerk.'
+title: 'All Along the Watchtower'
+description: 'SGP4 im Browser — welche Erdbeobachtungssatelliten einen Standort gerade im Sichtfeld haben.'
 date: '2026-06-12'
 tags: ['studie', 'satelliten', 'orbital', 'sgp4']
 ---
 
 import UeberflugIsland from '@/components/ueberflug/UeberflugIsland.astro'
 
-Diese Studie begann als Kandidat für die Experimente — und wurde aussortiert.
-Der Grund ist das Aufnahme-Kriterium selbst: Ein Experiment erhebt eine
-überprüfbare Behauptung über die Welt. Diese Seite behauptet nichts. Sie zeigt nur,
-was hunderte Tracker-Seiten auch zeigen können: welche katalogisierten
-Erdbeobachtungssatelliten einen Standort geometrisch im Sichtfeld haben. Das ist eine
-Auskunft, keine These — eine App, kein eigenständiges Experiment.
-
-Als Etüde bleibt sie trotzdem hier, denn das Handwerk trägt: Bahnpropagation (SGP4)
+Welche katalogisierten Erdbeobachtungssatelliten haben einen Standort gerade
+geometrisch im Sichtfeld? Das Handwerk trägt: Bahnpropagation (SGP4)
 läuft vollständig im Browser auf täglich aktualisierten, committeten Bahndaten
 (CelesTrak, OMM/JSON) mit Eigentümer-Klassifikation aus McDowells GCAT (CC-BY 4.0).
 Der Standort verlässt den Browser nie — nichts wird gespeichert, nichts gesendet.
@@ -23,9 +17,8 @@ ab 35°; beides ist Geometrie, keine Aufnahme. Geheime Satelliten fehlen im Kata
 
 <UeberflugIsland locale="de" />
 
-**Offene Frage, falls daraus je ein eigenständiges Experiment werden soll:** Nicht der Blick nach oben ist
-interessant, sondern seine Veränderung — die Verdichtung des Blicks. Die tägliche
-Snapshot-Pipeline könnte statt zu überschreiben eine Zeitreihe führen: Wie schnell
-füllt sich der Orbit mit Beobachtern, wie verschiebt sich das Verhältnis von
-kommerziell zu militärisch, Jahr für Jahr. Das wäre eine messbare These. Bis jemand
-sie braucht, bleibt dies eine Studie.
+**Offene Richtung:** Nicht der Blick nach oben ist interessant, sondern seine
+Veränderung — die Verdichtung des Blicks. Die tägliche Snapshot-Pipeline könnte statt
+zu überschreiben eine Zeitreihe führen: Wie schnell füllt sich der Orbit mit
+Beobachtern, wie verschiebt sich das Verhältnis von kommerziell zu militärisch, Jahr
+für Jahr. Das wäre eine messbare These.

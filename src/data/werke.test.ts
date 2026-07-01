@@ -22,8 +22,8 @@ describe('WERKE_CHRONO', () => {
   it('leads with the newest experiment (field)', () => {
     expect(WERKE_CHRONO[0].id).toBe('field')
   })
-  it('ends with The Protocol (oldest experiment)', () => {
-    expect(WERKE_CHRONO[WERKE_CHRONO.length - 1].id).toBe('protokoll')
+  it('ends with Überflug (placed last)', () => {
+    expect(WERKE_CHRONO[WERKE_CHRONO.length - 1].id).toBe('ueberflug')
   })
   it('contains every experiment exactly once', () => {
     expect(WERKE_CHRONO).toHaveLength(WERKE.length)
