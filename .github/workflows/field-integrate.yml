@@ -65,6 +65,7 @@ jobs:
             git add -A src/content/field src/components/field src/pages/field
             if [ -d public/field/werke-html ]; then git add -A public/field/werke-html; fi
             git commit -m "field: integrate $(date -u +%F)"
+            git pull --rebase --autostash origin main
             git push
           else
             echo "no changes"
