@@ -69,6 +69,32 @@ The conductor reads the workboard + journal, then advances the œuvre — not ne
 **Site visibility (default):** `journal/` + matured `works/` live; raw `drafts/` stay in-repo,
 not on the site (only vetted work public). Optional later: a "workbench" view showing WIP.
 
+## Memory — the learning substrate (A + B + C)
+
+Flat chronological journals are a depth ceiling (context-window limits, lossy summaries,
+re-treading). Memory is necessary-but-not-sufficient for genuine novelty — but it is the
+substrate that lets the œuvre *deepen* instead of restarting. Three layers:
+
+- **A — Curated structured memory (in-repo, engine-specific).** Beyond the chronological journal,
+  a curated knowledge base maintained by an **Archivist** (core role): a *claims ledger*
+  (finding · confidence · sources · contradictions), *open questions*, *discarded-with-reason*,
+  *methods forged*, and per-thread *dossiers*. Sessions read the **curated** knowledge, not a raw
+  dump. Files under `memory/` (e.g. `memory/claims.md`, `memory/open-questions.md`,
+  `memory/discarded.md`, `memory/dossiers/<thread>.md`). Git-native, transparent.
+- **B — Semantic retrieval over the full archive (SHARED, reusable tool).** A standalone
+  **semantic-memory tool** — its own spec, `2026-07-01-semantic-memory-tool-design.md` — that
+  embeds an engine's archive into a committed index and exposes a **`recall(query)`** the cloud
+  session calls to retrieve relevant past material beyond the context window. **Built once, reused
+  by every engine** (Meridian/collective, Ulysses, future). Each engine indexes its own archive
+  with the same tool; the index is committed (versioned); retrieval runs agent-side, never at site
+  runtime.
+- **C — Consolidation ("sleep").** A recurring **Archivist/consolidation** pass (e.g. weekly) that
+  distils the journal into A's curated knowledge, prunes noise, surfaces contradictions, deepens
+  dossiers, and rebuilds B's index. Combats drift; builds depth over time.
+
+**Not now:** weight-level fine-tuning (the only "true" ML learning) — expensive and risks *model
+collapse* (Meridian's own subject); deferred.
+
 ## Verification / kill mechanic (load-bearing)
 
 - **Verifier:** every factual claim has a real, retrievable URL or is marked conjecture; stats
