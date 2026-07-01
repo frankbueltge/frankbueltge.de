@@ -1,0 +1,351 @@
+---
+// Instrument 002: The Naive Detector
+// Benford's First-Digit Law — same test, four data types, two verdicts
+
+// ── Shared constants ───────────────────────────────────────────────────────
+
+const BENFORD: number[] = Array.from({ length: 9 }, (_, i) => Math.log10(1 + 1 / (i + 1)))
+// [0.30103, 0.17609, 0.12494, 0.09691, 0.07918, 0.06695, 0.05799, 0.05115, 0.04576]
+
+const CHI_CRIT_05 = 15.507  // chi-square df=8, α=0.05
+const SEED = 42
+
+// ── Utilities ──────────────────────────────────────────────────────────────
+
+function firstDigit(n: number): number | null {
+  if (!Number.isFinite(n) || n <= 0) return null
+  const e = n.toExponential()
+  const d = parseInt(e[0], 10)
+  return d >= 1 && d <= 9 ? d : null
+}
+
+function digitCounts(nums: number[]): number[] {
+  const c = new Array(9).fill(0)
+  for (const n of nums) {
+    const d = firstDigit(n)
+    if (d !== null) c[d - 1]++
+  }
+  return c
+}
+
+function chiSq(counts: number[]): number {
+  const n = counts.reduce((a, b) => a + b, 0)
+  return BENFORD.reduce((sum, exp, i) => {
+    const expN = n * exp
+    return sum + (counts[i] - expN) ** 2 / expN
+  }, 0)
+}
+
+// ── Seeded random (LCG) ────────────────────────────────────────────────────
+
+function makeLCG(seed: number) {
+  let s = seed >>> 0
+  return function (): number {
+    s = (Math.imul(1664525, s) + 1013904223) >>> 0
+    return s / 0x100000000
+  }
+}
+
+function normalSample(rng: () => number, mean: number, sd: number): number {
+  const u1 = Math.max(1e-12, rng())
+  const u2 = rng()
+  return mean + sd * Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2)
+}
+
+// ── Dataset A: Fibonacci F₁–F₇₅ ───────────────────────────────────────────
+
+function genFibonacci(n: number): number[] {
+  const seq: number[] = [1, 1]
+  for (let i = 2; i < n; i++) seq.push(seq[i - 1] + seq[i - 2])
+  return seq
+}
+
+const fibSeq = genFibonacci(75)
+const fibCounts = digitCounts(fibSeq)
+
+// ── Dataset B: Powers of 2, 2¹–2¹⁰⁰ (log₁₀ trick) ───────────────────────
+// Avoids float precision loss for large exponents.
+
+function firstDigitPow2(exp: number): number {
+  const log = exp * Math.log10(2)
+  const frac = log - Math.floor(log)
+  return Math.floor(10 ** frac)
+}
+
+const pow2Counts: number[] = new Array(9).fill(0)
+for (let i = 1; i <= 100; i++) pow2Counts[firstDigitPow2(i) - 1]++
+
+// ── Dataset C: Human heights (cm), N(170, 13) ────────────────────────────
+// Bounded biological range — explicitly does not span multiple orders of magnitude.
+
+function genHeights(n: number, seed: number): number[] {
+  const rng = makeLCG(seed)
+  const h: number[] = []
+  while (h.length < n) {
+    const v = Math.round(normalSample(rng, 170, 13))
+    if (v >= 130 && v <= 220) h.push(v)
+  }
+  return h
+}
+
+const heightSeq = genHeights(350, SEED)
+const heightCounts = digitCounts(heightSeq)
+
+// ── Dataset D: Precinct vote totals (Milwaukee-like parameters) ───────────
+// Constructed from documented parameters (Mebane 2020, Roukema/Reuters 2020).
+// Ward total: N(800, 120). Candidate share: N(0.70, 0.05). n=475 wards.
+// eForensics on actual Milwaukee data: P(no fraud) = 0.9797.
+
+function genPrecinctVotes(n: number, seed: number): number[] {
+  const rng = makeLCG(seed + 1)
+  const votes: number[] = []
+  while (votes.length < n) {
+    const total = Math.max(200, Math.round(normalSample(rng, 800, 120)))
+    const share = Math.min(0.99, Math.max(0.01, normalSample(rng, 0.70, 0.05)))
+    const v = Math.round(total * share)
+    if (v > 0) votes.push(v)
+  }
+  return votes
+}
+
+const precinctSeq = genPrecinctVotes(475, SEED)
+const precinctCounts = digitCounts(precinctSeq)
+
+// ── Panel data ─────────────────────────────────────────────────────────────
+
+interface Panel {
+  id: string
+  label: string
+  sublabel: string
+  n: number
+  counts: number[]
+  chi: number
+  passes: boolean
+  source: string
+  why: string
+}
+
+const panels: Panel[] = [
+  {
+    id: 'fib',
+    label: 'Fibonacci sequence',
+    sublabel: 'F₁ through F₇₅',
+    n: fibSeq.length,
+    counts: fibCounts,
+    chi: chiSq(fibCounts),
+    passes: chiSq(fibCounts) <= CHI_CRIT_05,
+    source: 'Mathematical sequence computed at build time. Proven Benford conformance (Newcomb 1881; Benford 1938). Spans F₁=1 to F₇₅≈2.1×10¹⁵.',
+    why: 'The Fibonacci sequence grows multiplicatively. Because log₁₀(φ) is irrational (φ = golden ratio), the sequence {n·log₁₀(φ) mod 1} is equidistributed — the exact condition Benford\'s Law requires (Weyl\'s theorem). Spans 15 orders of magnitude.',
+  },
+  {
+    id: 'pow2',
+    label: 'Powers of 2',
+    sublabel: '2¹ through 2¹⁰⁰',
+    n: 100,
+    counts: pow2Counts,
+    chi: chiSq(pow2Counts),
+    passes: chiSq(pow2Counts) <= CHI_CRIT_05,
+    source: 'First digit extracted via log₁₀ fractional part (exact for any exponent). Spans 30 orders of magnitude (2¹=2 to 2¹⁰⁰≈1.27×10³⁰).',
+    why: 'Since log₁₀(2) = 0.30103… is irrational, {n·log₁₀(2) mod 1} is equidistributed (Weyl). The first digit distribution exactly mirrors this. Note: 100 data points gives finite chi-square even for a perfect generator.',
+  },
+  {
+    id: 'heights',
+    label: 'Human heights (cm)',
+    sublabel: 'N(170, 13²), n=350 — illustrative',
+    n: heightSeq.length,
+    counts: heightCounts,
+    chi: chiSq(heightCounts),
+    passes: chiSq(heightCounts) <= CHI_CRIT_05,
+    source: 'Illustrative: 350 heights drawn from N(170, 13²), rounded to cm. Seed: ' + SEED + '. Based on documented adult height distributions. Range: 130–220 cm.',
+    why: 'Heights occupy one order of magnitude (~130–220 cm). Nearly all values start with 1 or 2; leading digits 3–9 are essentially impossible. The data violates Benford\'s core assumption: numbers must span multiple orders of magnitude from a multiplicative process (Wikipedia; Formann 2010).',
+  },
+  {
+    id: 'precinct',
+    label: 'Precinct vote totals',
+    sublabel: 'Milwaukee-like parameters — illustrative',
+    n: precinctSeq.length,
+    counts: precinctCounts,
+    chi: chiSq(precinctCounts),
+    passes: chiSq(precinctCounts) <= CHI_CRIT_05,
+    source: 'Constructed from Mebane (U. Michigan, Nov 2020) Milwaukee 2020 ward parameters: ward total N(800,120), Biden share N(0.70,0.05), n=475 wards. Seed: ' + SEED + '. Actual Milwaukee eForensics result: P(no fraud)=0.9797.',
+    why: 'In Milwaukee, precincts hold ~800 voters. A candidate winning 70% gets ~560 votes per ward. Half the wards fall between ~400–750 — a range spanning less than one order of magnitude. Leading digits 1, 2, 9 are arithmetically impossible given the parameters. The test produces a false conviction from arithmetic, not fraud.',
+  },
+]
+
+// ── SVG chart renderer ─────────────────────────────────────────────────────
+
+function renderChart(counts: number[]): string {
+  const W = 240
+  const H = 120
+  const ML = 24, MR = 6, MT = 8, MB = 20
+  const cW = W - ML - MR
+  const cH = H - MT - MB
+  const n = counts.reduce((a, b) => a + b, 0)
+  const obsFracs = counts.map(c => c / n)
+  const maxFrac = Math.max(...BENFORD, ...obsFracs) * 1.18
+
+  const scaleY = (f: number) => MT + cH - (f / maxFrac) * cH
+  const barW = cW / 9
+
+  let svg = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="display:block;">`
+
+  // Horizontal guide lines
+  for (const pct of [10, 20, 30]) {
+    const f = pct / 100
+    if (f > maxFrac) continue
+    const y = scaleY(f)
+    svg += `<line x1="${ML}" y1="${y.toFixed(1)}" x2="${ML + cW}" y2="${y.toFixed(1)}" stroke="#f0f0f0" stroke-width="1"/>`
+    svg += `<text x="${ML - 3}" y="${y.toFixed(1)}" text-anchor="end" dominant-baseline="middle" font-size="7" fill="#ccc">${pct}</text>`
+  }
+
+  // Bars
+  for (let i = 0; i < 9; i++) {
+    const x = ML + i * barW
+    const bw = barW * 0.72
+    const bx = x + (barW - bw) / 2
+
+    // Benford expected (light gray)
+    const ey = scaleY(BENFORD[i])
+    svg += `<rect x="${bx.toFixed(1)}" y="${ey.toFixed(1)}" width="${bw.toFixed(1)}" height="${(scaleY(0) - ey).toFixed(1)}" fill="#dfe3e8"/>`
+
+    // Observed (colored, narrower, in front)
+    const obs = obsFracs[i]
+    const oy = scaleY(obs)
+    const obw = bw * 0.55
+    const obx = bx + (bw - obw) / 2
+    const deviation = Math.abs(obs - BENFORD[i]) / BENFORD[i]
+    const barColor = deviation > 0.4 ? '#b91c1c' : deviation > 0.15 ? '#d97706' : '#334155'
+    if (obs > 0) {
+      svg += `<rect x="${obx.toFixed(1)}" y="${oy.toFixed(1)}" width="${obw.toFixed(1)}" height="${(scaleY(0) - oy).toFixed(1)}" fill="${barColor}"/>`
+    }
+
+    // Digit label
+    svg += `<text x="${(x + barW / 2).toFixed(1)}" y="${(H - 6).toFixed(1)}" text-anchor="middle" font-size="8" fill="#94a3b8">${i + 1}</text>`
+  }
+
+  // Axes
+  svg += `<line x1="${ML}" y1="${MT}" x2="${ML}" y2="${MT + cH}" stroke="#e2e8f0" stroke-width="1"/>`
+  svg += `<line x1="${ML}" y1="${MT + cH}" x2="${ML + cW}" y2="${MT + cH}" stroke="#e2e8f0" stroke-width="1"/>`
+
+  svg += `</svg>`
+  return svg
+}
+
+function fmtChi(chi: number): string {
+  return chi > 1000 ? `${(chi / 1000).toFixed(1)}k` : chi.toFixed(1)
+}
+
+function pLabel(chi: number): string {
+  if (chi > 26.12) return 'p < 0.001'
+  if (chi > 20.09) return 'p < 0.01'
+  if (chi > 15.51) return 'p < 0.05'
+  if (chi > 13.36) return 'p < 0.10'
+  return 'p > 0.10'
+}
+---
+
+<div style="font-family:'Courier New',Courier,monospace;background:#fafaf8;color:#1a1a1a;padding:2rem;max-width:700px;margin:0 auto;font-size:0.8rem;line-height:1.55;">
+
+  <!-- Header -->
+  <div style="border-bottom:2px solid #1a1a1a;padding-bottom:0.7rem;margin-bottom:1.5rem;">
+    <div style="font-size:0.58rem;letter-spacing:0.22em;color:#94a3b8;margin-bottom:0.25rem;">
+      THE MEASURING FIELD / MERIDIAN / INSTRUMENT 002
+    </div>
+    <h1 style="font-size:1rem;font-weight:700;letter-spacing:0.1em;margin:0;">THE NAIVE DETECTOR</h1>
+    <p style="color:#64748b;font-size:0.7rem;margin:0.2rem 0 0;">
+      Benford's First-Digit Law — the same test, four data types, two verdicts
+    </p>
+  </div>
+
+  <!-- Key -->
+  <div style="display:flex;gap:1.5rem;font-size:0.62rem;color:#94a3b8;margin-bottom:1.5rem;">
+    <span><span style="display:inline-block;width:10px;height:8px;background:#dfe3e8;vertical-align:middle;margin-right:3px;"></span>Benford expected</span>
+    <span><span style="display:inline-block;width:10px;height:8px;background:#334155;vertical-align:middle;margin-right:3px;"></span>observed (within range)</span>
+    <span><span style="display:inline-block;width:10px;height:8px;background:#d97706;vertical-align:middle;margin-right:3px;"></span>moderate deviation</span>
+    <span><span style="display:inline-block;width:10px;height:8px;background:#b91c1c;vertical-align:middle;margin-right:3px;"></span>severe deviation</span>
+  </div>
+
+  <!-- 2×2 panel grid -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem 1.5rem;margin-bottom:1.75rem;">
+
+    {panels.map(p => (
+      <div style={`border:1px solid ${p.passes ? '#e2e8f0' : '#fecaca'};background:${p.passes ? '#fff' : '#fff5f5'};padding:0.9rem 0.75rem 0.75rem;`}>
+
+        <!-- Panel header -->
+        <div style="margin-bottom:0.5rem;">
+          <div style="font-weight:700;font-size:0.78rem;color:#1e293b;">{p.label}</div>
+          <div style="font-size:0.62rem;color:#94a3b8;">{p.sublabel} · n={p.n}</div>
+        </div>
+
+        <!-- Chart -->
+        <div set:html={renderChart(p.counts)} />
+
+        <!-- Stats row -->
+        <div style="display:flex;justify-content:space-between;font-size:0.6rem;color:#94a3b8;margin-top:0.4rem;padding-top:0.35rem;border-top:1px solid #f1f5f9;">
+          <span>χ²={fmtChi(p.chi)}</span>
+          <span>df=8</span>
+          <span>crit={CHI_CRIT_05}</span>
+          <span>{pLabel(p.chi)}</span>
+        </div>
+
+        <!-- Verdict -->
+        <div style={`font-size:0.72rem;font-weight:700;letter-spacing:0.12em;margin-top:0.45rem;color:${p.passes ? '#15803d' : '#b91c1c'};`}>
+          {p.passes ? '✓  PASSES' : '✗  FAILS'}
+        </div>
+      </div>
+    ))}
+
+  </div>
+
+  <!-- Detail table: why each verdict -->
+  <div style="border-top:1px solid #e2e8f0;padding-top:1.25rem;margin-bottom:1.5rem;">
+    <div style="font-size:0.6rem;letter-spacing:0.18em;color:#94a3b8;margin-bottom:1rem;">
+      VERDICT NOTES — WHY THE TEST PRODUCES EACH RESULT
+    </div>
+
+    {panels.map(p => (
+      <div style="margin-bottom:1.1rem;display:flex;gap:0.75rem;">
+        <div style={`flex-shrink:0;width:0.5rem;background:${p.passes ? '#15803d' : '#b91c1c'};border-radius:1px;`}></div>
+        <div>
+          <div style="font-weight:700;font-size:0.72rem;color:#1e293b;margin-bottom:0.15rem;">{p.label}</div>
+          <div style="font-size:0.68rem;color:#475569;line-height:1.55;">{p.why}</div>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <!-- The instrument's argument -->
+  <div style="background:#f8fafc;border:1px solid #e2e8f0;padding:1rem;margin-bottom:1.5rem;font-size:0.7rem;color:#334155;line-height:1.6;">
+    <div style="font-size:0.6rem;letter-spacing:0.18em;color:#94a3b8;margin-bottom:0.5rem;">WHAT THIS INSTRUMENT DEMONSTRATES</div>
+    <p style="margin:0 0 0.6rem;">
+      Benford's Law correctly flags data generated by unconstrained multiplicative processes (financial transactions, street addresses, physical constants, population growth).
+      It correctly passes the Fibonacci sequence and powers of 2.
+    </p>
+    <p style="margin:0 0 0.6rem;">
+      Applied to human heights or election precincts, the same test produces a decisive FAIL verdict — not because the data is fraudulent, but because it violates the law's mathematical preconditions.
+      Heights are bounded by biology. Precinct vote totals are bounded by administrative design (roughly equal precinct sizes) and by the candidate's vote share.
+    </p>
+    <p style="margin:0;">
+      In 2020, Benford's Law was applied to Milwaukee ward-level presidential returns to claim evidence of fraud.
+      Mathematician Theodore Hill (Georgia Tech): <em>"Benford's Law can NOT be used to 'prove fraud' — It is only a Red Flag test."</em>
+      Mebane (U. Michigan): Milwaukee's eForensics result showed P(no fraud) = 0.9797.
+      The <em>test was not wrong to fail the data</em> — the test was wrong to be applied to it.
+    </p>
+  </div>
+
+  <!-- Sources -->
+  <div style="border-top:1px solid #e2e8f0;padding-top:1rem;font-size:0.6rem;color:#94a3b8;line-height:1.7;">
+    <div style="letter-spacing:0.16em;margin-bottom:0.5rem;">SOURCES</div>
+    <div>Mebane W.R. (Nov 2020). "Inappropriate Applications of Benford's Law Regularities to Some Data from the 2020 Presidential Election in the United States." websites.umich.edu/~wmebane/inapB.pdf</div>
+    <div>Hill T.P. (Georgia Tech, emeritus). Statement via Reuters fact-check (Nov 2020). reuters.com/article/world/fact-check-deviation-from-benfords-law-does-not-prove-election-fraud-idUSKBN27Q3A9</div>
+    <div>Kossovsky A.E. &amp; Miller S.J. (Williams College, Nov 2020). "Report on Benford's Law Analysis of 2020 Presidential Election Data." web.williams.edu/Mathematics/sjmiller/public_html/benfordresources/KossoskyMiller_FinalBenfordAnalysis.pdf</div>
+    <div>Roukema B. (Copernicus University). Milwaukee range analysis. Via Reuters (2020).</div>
+    <div>Deckert J., Myagkov M., Ordeshook P.C. (2011). "Benford's Law and the Detection of Election Fraud." Political Analysis 19(3):245–268.</div>
+    <div>Wikipedia contributors. "Benford's law: Distributions known to disobey Benford's law." en.wikipedia.org/wiki/Benford%27s_law</div>
+    <div style="margin-top:0.6rem;border-top:1px solid #f1f5f9;padding-top:0.5rem;color:#cbd5e1;">
+      SEED: {SEED} — seeded datasets are deterministic (same seed → same sequence). All data computed at build time; no runtime fetch.
+      github.com/frankbueltge/field-research
+    </div>
+  </div>
+
+</div>
