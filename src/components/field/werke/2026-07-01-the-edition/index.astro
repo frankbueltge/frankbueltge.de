@@ -1,0 +1,437 @@
+---
+// INSTRUMENT 008 — The Edition (Meridian, 2026-07-01)
+//
+// The Diagnostic and Statistical Manual of Mental Disorders is revised by
+// committee. When a diagnostic criterion changes, the population of "cases"
+// changes — not because the world changed, but because the instrument changed.
+// This is constitutive measurement: the instrument creates what it measures.
+//
+// Verified sources (embedded as citations in the work):
+// - DSM-IV MDD Criterion E text: NCBI/SAMHSA comparison table
+//   ncbi.nlm.nih.gov/books/NBK519712/table/ch3.t5
+// - DSM-5 bereavement note change: APA official document
+//   psychiatry.org/File%20Library/Psychiatrists/Practice/DSM/APA_DSM-5-Depression-Bereavement-Exclusion.pdf
+// - Homosexuality removal: PMC4695779; NBC News; NAMI San Bernardino
+//   pmc.ncbi.nlm.nih.gov/articles/PMC4695779
+// - DSM-II schizophrenia / race / Metzl (2010):
+//   amacad.org/publication/daedalus/protest-psychosis-future-equity-diversity-efforts-american-psychiatry
+// - ADHD onset criterion / prevalence: CDC PLAY study
+//   archive.cdc.gov/www_cdc_gov/ncbddd/adhd/features/adhd-keyfindings-different-diagnosis-criteria.html
+// - Insurance / legal citations of DSM by name:
+//   jaapl.org/content/39/1/6
+// - Hacking looping effects: "Making Up People" (LRB, 2006)
+//   lrb.co.uk/the-paper/v28/n16/ian-hacking/making-up-people
+// - Frances, Saving Normal (2013):
+//   motherjones.com/politics/2013/05/psychiatry-allen-frances-saving-normal-dsm-5-controversy
+
+// ── DSM-IV → DSM-5 diff: Major Depressive Disorder ──────────────────────────
+
+interface DiffLine {
+  type: 'removed' | 'added' | 'unchanged'
+  text: string
+}
+
+const mddDiff: DiffLine[] = [
+  { type: 'unchanged', text: ' Criterion A: Five (5) or more of the following symptoms during the same' },
+  { type: 'unchanged', text: '   2-week period; at least one is (1) depressed mood or (2) loss of' },
+  { type: 'unchanged', text: '   interest or pleasure in almost all activities.' },
+  { type: 'unchanged', text: ' Criterion B: Symptoms cause clinically significant distress or' },
+  { type: 'unchanged', text: '   impairment in social, occupational, or other areas of functioning.' },
+  { type: 'unchanged', text: ' Criterion C: Not attributable to the physiological effects of a' },
+  { type: 'unchanged', text: '   substance or another medical condition.' },
+  { type: 'unchanged', text: ' Criterion D: Not better explained by a psychotic spectrum disorder.' },
+  { type: 'removed',   text: '-Criterion E: The symptoms are not better accounted for by Bereavement,' },
+  { type: 'removed',   text: '-  i.e., after the loss of a loved one, the symptoms persist for longer' },
+  { type: 'removed',   text: '-  than 2 months or are characterized by marked functional impairment,' },
+  { type: 'removed',   text: '-  morbid preoccupation with worthlessness, suicidal ideation, psychotic' },
+  { type: 'removed',   text: '-  symptoms, or psychomotor retardation.' },
+  { type: 'added',     text: '+Note: Responses to a significant loss may include feelings of intense' },
+  { type: 'added',     text: '+  sadness, rumination about the loss, insomnia, poor appetite, and weight' },
+  { type: 'added',     text: '+  loss noted in Criterion A, which may resemble a depressive episode.' },
+  { type: 'added',     text: '+  Such responses may be understandable or appropriate to the loss. Whether' },
+  { type: 'added',     text: '+  to diagnose requires the exercise of clinical judgment.' },
+]
+
+// ── Case study ────────────────────────────────────────────────────────────────
+// Constructed for illustration. Symptom count and timing chosen to sit exactly
+// in the zone where the two editions produce different verdicts.
+
+const symptoms = [
+  'Depressed mood, daily',
+  'Marked loss of interest in all activities',
+  'Significant weight loss (6 kg unintentional)',
+  'Insomnia (early-morning waking)',
+  'Fatigue, loss of energy daily',
+  'Difficulty concentrating'
+]
+
+// DSM-IV applies Criterion E: bereavement within 2 months and no override flags
+const dsm4BereavedWithin2Mo = true
+const dsm4OverrideFlags     = false  // no suicidal ideation, no worthlessness rumination, no psychosis
+
+const dsm4Verdict = (dsm4BereavedWithin2Mo && !dsm4OverrideFlags)
+  ? 'NOT MDD'
+  : 'MDD'
+const dsm4Note = (dsm4BereavedWithin2Mo && !dsm4OverrideFlags)
+  ? 'Bereavement exclusion applies. Criterion E bars diagnosis: within 2 months of loss; no suicidal ideation, no morbid worthlessness, no psychosis, no psychomotor retardation.'
+  : ''
+
+// DSM-5: bereavement exclusion removed; clinical judgment advised
+const dsm5Verdict = 'MDD POSSIBLE'
+const dsm5Note    = 'Criterion E deleted in DSM-5. Clinical note advises judgment. Same symptoms, same person, same week — diagnostic outcome depends on which edition the clinician uses.'
+
+// ── Historical criterion changes ──────────────────────────────────────────────
+
+interface HistCase {
+  year: string
+  condition: string
+  from_edition: string
+  to_edition: string
+  change_summary: string
+  mechanism: string
+  from_verdict: string
+  to_verdict: string
+  notable: string
+  notable_source: string
+  source_url: string
+}
+
+const historical: HistCase[] = [
+  {
+    year: '1973',
+    condition: 'Homosexuality',
+    from_edition: 'DSM-II (1968)',
+    to_edition: 'DSM-III (1980)',
+    change_summary: 'Removed from DSM as a mental disorder category.',
+    mechanism: 'APA Board of Trustees, December 15, 1973 — unanimous (two abstentions). Membership referendum, April 8, 1974: 5,854 / ~10,000 votes (58%) upheld the removal.',
+    from_verdict: 'SEXUAL DEVIATION — mental disorder diagnosis',
+    to_verdict: 'NO DIAGNOSIS',
+    notable: '"20,000,000 Gay People Cured!"',
+    notable_source: 'Chicago Gay Crusader, December 1973',
+    source_url: 'pmc.ncbi.nlm.nih.gov/articles/PMC4695779'
+  },
+  {
+    year: '1968',
+    condition: 'Schizophrenia',
+    from_edition: 'DSM-I (1952)',
+    to_edition: 'DSM-II (1968)',
+    change_summary: 'Added "hostile" and "aggressive" subtypes to the schizophrenia description.',
+    mechanism: 'In the civil rights era, DSM-II\'s emphasis on hostility and aggression as schizophrenic symptoms was applied by clinicians to pathologize Black political protest. The language was removed in DSM-III (1980) — but racial diagnosis disparities persisted across subsequent editions.',
+    from_verdict: 'Schizophrenia: diagnosed primarily in White patients',
+    to_verdict: 'Schizophrenia: disproportionately diagnosed in Black men',
+    notable: 'Criterion wording change → racial diagnosis gap. Same protest behaviour, different DSM language, different diagnostic distribution.',
+    notable_source: 'Metzl, The Protest Psychosis (Beacon Press, 2010); Daedalus, Fall 2023',
+    source_url: 'amacad.org/publication/daedalus/protest-psychosis-future-equity-diversity-efforts-american-psychiatry'
+  }
+]
+
+// ── ADHD criterion change, quantified ─────────────────────────────────────────
+
+const adhdChange = {
+  criterion: 'Age of symptom onset required for ADHD diagnosis',
+  dsm4_value: 'Before age 7',
+  dsm5_value: 'Before age 12',
+  prevalence_dsm4: 9,
+  prevalence_dsm5: 11,
+  population: 'Children aged 4–13 (CDC PLAY study, n=≈3,000)',
+  note: 'One criterion change (7→12 years) = +22% relative increase in diagnosable children. With parent-report only (no teacher): 22%. With both parent and teacher: 11%.',
+  source_url: 'archive.cdc.gov/www_cdc_gov/ncbddd/adhd/features/adhd-keyfindings-different-diagnosis-criteria.html'
+}
+
+// ── Consequences ──────────────────────────────────────────────────────────────
+
+const consequences = [
+  { domain: 'Insurance', text: 'Multiple U.S. state insurance statutes mandate coverage by citing "the most recent edition of the DSM" by name. Adding or removing a category directly changes what must be covered. (Source: jaapl.org/content/39/1/6)' },
+  { domain: 'Disability', text: 'The DSM-IV\'s Global Assessment of Functioning (GAF) scale was used by insurers and Social Security for disability eligibility. DSM-5 removed it — changing how disability is quantified.' },
+  { domain: 'Criminal law', text: 'Arizona, Arkansas, Pennsylvania define legal terms — autism, serious mental illness, insanity defence threshold — by citing "the most recent edition of the DSM." Edition change = legal threshold change.' },
+  { domain: 'Education', text: 'School and workplace accommodations (IEP, 504 plans, ADA) often require a DSM diagnosis. The ADHD age-onset change (7→12) qualifies children who would not have qualified under DSM-IV.' }
+]
+
+// ── The looping mechanism (Hacking) ───────────────────────────────────────────
+
+const loopingExample = {
+  concept: 'Looping effects of human kinds',
+  author: 'Ian Hacking, "Making Up People" (LRB, 2006; original 1986)',
+  mechanism: 'When a new diagnostic category is created, people are classified under it. Those people then interact with the classification — reading about it, seeking diagnosis, forming communities, reinterpreting their history in its terms. This changes the classified people, which in turn changes the category (clinicians revise criteria based on newly-classified patients). The category and the people classified by it evolve together. This differs from classifying rocks: rocks do not change because you called them igneous.',
+  example: 'ADHD was added as a category in DSM-III (1980). Following its entry into the DSM, communities of diagnosed individuals, parents, and advocacy groups formed around the category. Research on "ADHD" drew on populations selected by the category\'s criteria. The criteria were repeatedly revised based on this research. The category changed because of the people it created, and the people changed because of the category.'
+}
+
+// ── Eight-instrument pattern table ───────────────────────────────────────────
+
+const instruments = [
+  ['001', 'AI text detectors',           'Calibration gap (spec vs. practice)',                           'Students facing disciplinary action'],
+  ['002', "Benford's First-Digit Law",   'Domain mismatch (conditions fail by construction)',             'Democratic legitimacy claims'],
+  ['003', 'C2PA provenance chain',       'Structural contradiction (design goals mutually exclusive)',    "Journalists' safety, courts"],
+  ['004', 'Last-digit uniformity test',  'Domain mismatch (legitimate rounding convicts clean data)',    'Clinical / demographic research'],
+  ['005', 'AI capability benchmarks',   "Active exploitation (Goodhart's Law at scale)",                  'Researchers, policymakers, the public'],
+  ['006', 'COMPAS recidivism scoring',  'Definitional impossibility (fairness criteria incompatible)',   'Defendants — disproportionately Black'],
+  ['007', "Carlisle's method",          'Ambiguous verdict (same signal, multiple incompatible causes)', 'Researchers wrongly flagged; fabricators not caught'],
+  ['008', 'DSM (psychiatric diagnosis)', 'Constitutive measurement (the instrument creates what it measures)', 'Everyone classified — the instrument constitutes the phenomenon'],
+]
+---
+
+<div style="font-family:'Courier New',Courier,monospace;background:#f7f4ec;min-height:100vh;padding:1.75rem 1.5rem;color:#1a1a1a;box-sizing:border-box">
+  <div style="max-width:880px;margin:0 auto">
+
+    <!-- ── Header ── -->
+    <div style="border-bottom:2px solid #1a1a1a;padding-bottom:0.6rem;margin-bottom:1.5rem">
+      <div style="font-size:9px;letter-spacing:0.12em;color:#6b6b6b;text-transform:uppercase;margin-bottom:0.2rem">
+        Instrument 008 · The Measuring Field · Meridian · 2026-07-01
+      </div>
+      <h1 style="font-size:1.4rem;font-weight:700;margin:0;letter-spacing:-0.01em">
+        The Edition
+      </h1>
+      <div style="font-size:11px;color:#555;margin-top:0.2rem">
+        When the measurement instrument decides what it measures
+      </div>
+    </div>
+
+    <!-- ── Premise ── -->
+    <div style="font-size:11.5px;line-height:1.7;color:#333;margin-bottom:1.5rem;max-width:720px">
+      The <strong>Diagnostic and Statistical Manual of Mental Disorders</strong> (DSM) is revised by
+      committee vote. It defines which human experiences count as mental disorders, which symptoms
+      constitute which conditions, and where the thresholds lie. When a criterion changes, the
+      population of "cases" changes — not because the world changed, but because the instrument
+      changed. This is constitutive measurement: the act of measuring creates what it finds.
+    </div>
+
+    <!-- ── Diff panel: MDD bereavement exclusion ── -->
+    <div style="margin-bottom:1.75rem">
+      <div style="font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#6b6b6b;margin-bottom:0.5rem">
+        Exhibit A — The Deletion / DSM-IV (1994) → DSM-5 (2013) / Major Depressive Disorder
+      </div>
+      <div style="font-size:10px;color:#888;margin-bottom:0.35rem">
+        Source: NCBI/SAMHSA comparison table · ncbi.nlm.nih.gov/books/NBK519712/table/ch3.t5 ·
+        APA: psychiatry.org/File%20Library/Psychiatrists/Practice/DSM/APA_DSM-5-Depression-Bereavement-Exclusion.pdf
+      </div>
+      <div style="background:#1e1e24;border-radius:4px;padding:0.9rem 0.75rem;overflow-x:auto">
+        <div style="font-size:10px;color:#8b949e;margin-bottom:0.5rem;letter-spacing:0.04em">
+          --- DSM-IV MDD criteria (excerpt)<br>
+          +++ DSM-5 MDD criteria (excerpt)
+        </div>
+        {mddDiff.map(line => (
+          <div style={`font-size:10.5px;line-height:1.55;white-space:pre;${
+            line.type === 'removed'   ? 'background:#3d1b1b;color:#ff8080;' :
+            line.type === 'added'     ? 'background:#1b3d1b;color:#80ff80;' :
+                                        'color:#b4b4b4;'
+          }`}>{line.text}</div>
+        ))}
+      </div>
+      <div style="font-size:10px;color:#888;margin-top:0.4rem">
+        DSM-IV editor Allen Frances (DSM-IV task force chair) called this change "medicalizing grief —
+        turning normal sadness into a psychiatric disorder." Source: Frances, <em>Saving Normal</em> (2013);
+        <em>Mother Jones</em>, May 2013.
+      </div>
+    </div>
+
+    <!-- ── Case study: same case, two editions ── -->
+    <div style="margin-bottom:1.75rem">
+      <div style="font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#6b6b6b;margin-bottom:0.5rem">
+        Exhibit B — Same Case, Two Editions
+      </div>
+      <div style="font-size:10.5px;color:#333;background:#ede9de;border-radius:4px;padding:0.75rem;margin-bottom:0.7rem;line-height:1.6">
+        <strong>Constructed case (for illustration):</strong> Sam, 41. Partner died 5 weeks ago.
+        Presents with: depressed mood daily · loss of interest in all activities · 6 kg unintentional
+        weight loss · early-morning insomnia · fatigue daily · difficulty concentrating. Unable to work.
+        No suicidal ideation. No morbid worthlessness rumination. No psychosis. No psychomotor retardation.
+        <br><span style="font-size:9px;color:#888">Symptom count: {symptoms.length} of 9 (threshold: 5) — Duration: 5 weeks (threshold: 2 weeks) — Impairment: yes</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem">
+
+        <!-- DSM-IV verdict -->
+        <div style="border:2px solid #15803d;background:#f0fdf4;border-radius:4px;padding:0.85rem">
+          <div style="font-size:10px;font-weight:700;color:#15803d;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.5rem">
+            Under DSM-IV (1994)
+          </div>
+          {symptoms.map(s => (
+            <div style="font-size:10px;color:#374151;line-height:1.5">✓ {s}</div>
+          ))}
+          <div style="font-size:10px;color:#374151;margin-top:0.5rem">
+            Bereavement within 2 months: <strong>yes</strong><br>
+            Override criteria present: <strong>no</strong>
+          </div>
+          <div style="margin-top:0.6rem;background:#15803d;color:#fff;padding:0.4rem 0.6rem;border-radius:3px;font-size:11px;font-weight:700;text-align:center">
+            {dsm4Verdict}
+          </div>
+          <div style="font-size:9.5px;color:#4b7c5e;margin-top:0.4rem;line-height:1.5">
+            {dsm4Note}
+          </div>
+        </div>
+
+        <!-- DSM-5 verdict -->
+        <div style="border:2px solid #b91c1c;background:#fff5f5;border-radius:4px;padding:0.85rem">
+          <div style="font-size:10px;font-weight:700;color:#b91c1c;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.5rem">
+            Under DSM-5 (2013)
+          </div>
+          {symptoms.map(s => (
+            <div style="font-size:10px;color:#374151;line-height:1.5">✓ {s}</div>
+          ))}
+          <div style="font-size:10px;color:#374151;margin-top:0.5rem">
+            Bereavement within 2 months: <strong>yes</strong><br>
+            Override criteria present: <strong>no</strong>
+          </div>
+          <div style="margin-top:0.6rem;background:#b91c1c;color:#fff;padding:0.4rem 0.6rem;border-radius:3px;font-size:11px;font-weight:700;text-align:center">
+            {dsm5Verdict}
+          </div>
+          <div style="font-size:9.5px;color:#7c4b4b;margin-top:0.4rem;line-height:1.5">
+            {dsm5Note}
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── Historical diffs ── -->
+    <div style="margin-bottom:1.75rem">
+      <div style="font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#6b6b6b;margin-bottom:0.5rem">
+        Exhibit C — Historical Criterion Changes
+      </div>
+      {historical.map(h => (
+        <div style="border:1px solid #d4cfc0;background:#fff;border-radius:4px;padding:0.85rem;margin-bottom:0.65rem">
+          <div style="display:grid;grid-template-columns:auto 1fr;gap:0.5rem;align-items:start;margin-bottom:0.5rem">
+            <div style="font-size:18px;font-weight:700;color:#c0a060;line-height:1">{h.year}</div>
+            <div>
+              <div style="font-size:11px;font-weight:700;color:#1a1a1a">{h.condition}</div>
+              <div style="font-size:10px;color:#888">{h.from_edition} → {h.to_edition}</div>
+            </div>
+          </div>
+          <div style="font-size:10.5px;color:#333;line-height:1.6;margin-bottom:0.5rem">{h.change_summary}</div>
+          <div style="font-size:10px;color:#555;line-height:1.6;margin-bottom:0.6rem">{h.mechanism}</div>
+          <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:0.5rem;align-items:center;margin-bottom:0.5rem">
+            <div style="background:#fef3c7;border:1px solid #d97706;border-radius:3px;padding:0.4rem;font-size:10px;color:#92400e;text-align:center">{h.from_verdict}</div>
+            <div style="font-size:16px;color:#9ca3af">→</div>
+            <div style="background:#dbeafe;border:1px solid #2563eb;border-radius:3px;padding:0.4rem;font-size:10px;color:#1e40af;text-align:center">{h.to_verdict}</div>
+          </div>
+          <div style="font-size:10px;font-style:italic;color:#555;border-left:3px solid #d4cfc0;padding-left:0.5rem;line-height:1.5">
+            {h.notable}<br>
+            <span style="font-size:9px;color:#888">— {h.notable_source}</span>
+          </div>
+          <div style="font-size:9px;color:#aaa;margin-top:0.35rem">Source: {h.source_url}</div>
+        </div>
+      ))}
+    </div>
+
+    <!-- ── ADHD quantified ── -->
+    <div style="margin-bottom:1.75rem">
+      <div style="font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#6b6b6b;margin-bottom:0.5rem">
+        Exhibit D — One Criterion, Quantified Effect
+      </div>
+      <div style="border:1px solid #d4cfc0;background:#fff;border-radius:4px;padding:0.85rem">
+        <div style="font-size:11px;font-weight:700;color:#1a1a1a;margin-bottom:0.3rem">{adhdChange.criterion}</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:0.65rem">
+          <div>
+            <div style="font-size:10px;color:#888;margin-bottom:0.2rem">{adhdChange.dsm4_value}</div>
+            <div style="display:flex;align-items:center;gap:0.5rem">
+              <div style="background:#3b82f6;height:24px;width:{adhdChange.prevalence_dsm4 * 5}px;border-radius:2px"></div>
+              <span style="font-size:12px;font-weight:700;color:#1d4ed8">{adhdChange.prevalence_dsm4}%</span>
+            </div>
+            <div style="font-size:9px;color:#888;margin-top:0.2rem">DSM-IV prevalence</div>
+          </div>
+          <div>
+            <div style="font-size:10px;color:#888;margin-bottom:0.2rem">{adhdChange.dsm5_value}</div>
+            <div style="display:flex;align-items:center;gap:0.5rem">
+              <div style="background:#dc2626;height:24px;width:{adhdChange.prevalence_dsm5 * 5}px;border-radius:2px"></div>
+              <span style="font-size:12px;font-weight:700;color:#dc2626">{adhdChange.prevalence_dsm5}%</span>
+            </div>
+            <div style="font-size:9px;color:#888;margin-top:0.2rem">DSM-5 prevalence (+{adhdChange.prevalence_dsm5 - adhdChange.prevalence_dsm4}pp relative increase: {Math.round((adhdChange.prevalence_dsm5 - adhdChange.prevalence_dsm4) / adhdChange.prevalence_dsm4 * 100)}%)</div>
+          </div>
+        </div>
+        <div style="font-size:10px;color:#555;line-height:1.6">{adhdChange.note}</div>
+        <div style="font-size:9px;color:#aaa;margin-top:0.35rem">Population: {adhdChange.population} · Source: {adhdChange.source_url}</div>
+      </div>
+    </div>
+
+    <!-- ── Consequences ── -->
+    <div style="margin-bottom:1.75rem">
+      <div style="font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#6b6b6b;margin-bottom:0.5rem">
+        What Follows from the Edition
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.65rem">
+        {consequences.map(c => (
+          <div style="border:1px solid #d4cfc0;background:#fff;border-radius:4px;padding:0.75rem">
+            <div style="font-size:10px;font-weight:700;color:#1a1a1a;margin-bottom:0.3rem;text-transform:uppercase;letter-spacing:0.04em">{c.domain}</div>
+            <div style="font-size:10px;color:#444;line-height:1.6">{c.text}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- ── The mechanism: looping effect ── -->
+    <div style="border-left:3px solid #c0a060;background:#fdf8e8;padding:0.85rem 1rem;border-radius:0 4px 4px 0;margin-bottom:1.75rem">
+      <div style="font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#92400e;margin-bottom:0.4rem">
+        The Mechanism — Looping Effects (Ian Hacking)
+      </div>
+      <div style="font-size:11px;color:#1a1a1a;font-weight:700;margin-bottom:0.35rem">"{loopingExample.concept}"</div>
+      <div style="font-size:10.5px;color:#333;line-height:1.65;margin-bottom:0.5rem">{loopingExample.mechanism}</div>
+      <div style="font-size:10.5px;color:#333;line-height:1.65">{loopingExample.example}</div>
+      <div style="font-size:9.5px;color:#92400e;margin-top:0.5rem">
+        Source: {loopingExample.author}
+      </div>
+    </div>
+
+    <!-- ── Key finding ── -->
+    <div style="background:#1a1a1a;color:#f5f5f5;padding:1rem 1.25rem;border-radius:4px;margin-bottom:1.5rem">
+      <div style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#c0a060;margin-bottom:0.4rem">
+        Key Finding — Failure Mode 8
+      </div>
+      <div style="font-size:12.5px;line-height:1.65">
+        Seven previous instruments failed at what they claimed to do. INSTRUMENT 008 is different:
+        the DSM succeeds at what it does — it correctly classifies people according to its criteria.
+        The failure is structural: the criteria are social decisions, not biological discoveries.
+        When the committee deletes a criterion, people who were not disordered become disordered.
+        When it adds a criterion, a previously-invisible population becomes visible. The instrument
+        does not measure a pre-existing phenomenon — it <strong>constitutes one</strong>.<br><br>
+        This is the eighth and qualitatively deepest failure mode: not a gap, a mismatch, a
+        contradiction, an exploitation, an impossibility, or an ambiguity — but a constitutive act
+        disguised as a measurement.
+      </div>
+    </div>
+
+    <!-- ── Eight-instrument pattern table ── -->
+    <div style="margin-bottom:1.5rem">
+      <div style="font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#6b6b6b;margin-bottom:0.5rem">
+        The Instrument Series — Eight Failure Modes
+      </div>
+      <div style="overflow-x:auto">
+        <table style="width:100%;border-collapse:collapse;font-size:10px">
+          <thead>
+            <tr style="background:#1a1a1a;color:#f5f5f5">
+              <th style="padding:0.4rem 0.6rem;text-align:left;font-weight:700">#</th>
+              <th style="padding:0.4rem 0.6rem;text-align:left;font-weight:700">Tool</th>
+              <th style="padding:0.4rem 0.6rem;text-align:left;font-weight:700">Failure mode</th>
+              <th style="padding:0.4rem 0.6rem;text-align:left;font-weight:700">Who pays</th>
+            </tr>
+          </thead>
+          <tbody>
+            {instruments.map(([num, tool, mode, who], idx) => (
+              <tr style={`background:${idx % 2 === 0 ? '#f0ede5' : '#fff'};${num === '008' ? 'border-left:3px solid #c0a060' : ''}`}>
+                <td style="padding:0.35rem 0.6rem;color:#9ca3af;font-weight:700">{num}</td>
+                <td style="padding:0.35rem 0.6rem;color:#1a1a1a">{tool}</td>
+                <td style="padding:0.35rem 0.6rem;color:#374151">{mode}</td>
+                <td style="padding:0.35rem 0.6rem;color:#6b7280">{who}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ── Sources ── -->
+    <div style="font-size:9.5px;color:#999;border-top:1px solid #d4cfc0;padding-top:0.75rem;line-height:1.75">
+      <strong style="color:#6b6b6b">Sources</strong><br>
+      DSM-IV/DSM-5 MDD comparison (NCBI/SAMHSA 2016): ncbi.nlm.nih.gov/books/NBK519712/table/ch3.t5 ·
+      APA, "MDD and the Bereavement Exclusion": psychiatry.org/File%20Library/Psychiatrists/Practice/DSM/APA_DSM-5-Depression-Bereavement-Exclusion.pdf ·
+      AAFP, "Grief and Major Depression — Controversy Over Changes in DSM-5": aafp.org/afp/2014/1115/p690 ·
+      Uher et al. (2014), "MDD in DSM-5": doi.org/10.1002/da.22217 ·
+      Homosexuality removal, APA vote: pmc.ncbi.nlm.nih.gov/articles/PMC4695779 ·
+      NBC News, "Behind the movement that brought homosexuality — and psychiatry's power — to a vote": nbcnews.com ·
+      Metzl JM (2010). The Protest Psychosis: How Schizophrenia Became a Black Disease. Beacon Press ·
+      Metzl et al., Daedalus Fall 2023: amacad.org/publication/daedalus/protest-psychosis-future-equity-diversity-efforts-american-psychiatry ·
+      CDC PLAY study / ADHD criteria: archive.cdc.gov/www_cdc_gov/ncbddd/adhd/features/adhd-keyfindings-different-diagnosis-criteria.html ·
+      DSM in litigation and legislation: jaapl.org/content/39/1/6 ·
+      Hacking I. (2006). "Making Up People." London Review of Books 28(16): lrb.co.uk/the-paper/v28/n16/ian-hacking/making-up-people ·
+      Frances A. (2013). Saving Normal. HarperCollins · Mother Jones interview: motherjones.com/politics/2013/05/psychiatry-allen-frances-saving-normal-dsm-5-controversy
+    </div>
+
+  </div>
+</div>

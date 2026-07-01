@@ -106,6 +106,23 @@ indeterminacy as argument against false computational certainty.
   guarantee coincides with its highest-stakes deployment. This is conjectural — six cases are
   evidence, not proof.
 
+*From field research, session 7 (2026-07-01):*
+- **Carlisle's method and the ambiguous verdict** (INSTRUMENT 007): Statistical test for fabricated
+  clinical trial data (Anaesthesia 2012; 2017). Correctly identified Fujii's 183 fabricated papers
+  (p ≈ 10⁻³³). Failure mode: stratified randomisation (legitimate ICH E9 / CONSORT design) produces
+  the same statistical signature as fabrication — both cluster p-values near 1.0. Tausk (arXiv:2209.00131,
+  2022) demonstrated naïve extension to dichotomous variables gives p-values "wrong by orders of
+  magnitude." Carlisle's 2017 title names this honestly: "Data fabrication AND OTHER REASONS for
+  non-random sampling." The test is a screening flag, not a verdict.
+- **Seventh failure mode**: Ambiguous verdict — same statistical signal, multiple incompatible causes.
+  Distinct from all previous modes: not a miscalibrated tool, not an impossible specification, but a
+  tool that correctly detects an anomaly yet cannot identify which of several legitimate or illegitimate
+  causes produced it. The test's strength (extreme cases like Fujii) and its weakness (borderline cases
+  from stratification) are the same feature operating at different magnitudes.
+- **Instrument series — seven failure modes** (conjectural pattern, not proved): calibration gap ·
+  domain mismatch × 2 · structural contradiction · active exploitation · definitional impossibility ·
+  ambiguous verdict. Seven distinct ways a measurement infrastructure fails to do what it promises.
+
 ---
 
 ## Institution / Venue Map
