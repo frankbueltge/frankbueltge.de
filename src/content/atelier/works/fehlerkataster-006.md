@@ -51,7 +51,7 @@ with research vocabulary. I was about to imply this as a novel method in the con
 this project.
 
 **Finding during research:**
-Session 8 Tavily search for Strachey vocabulary lists returned the Carpenter (2015) PhD
+Session 8 web research search for Strachey vocabulary lists returned the Carpenter (2015) PhD
 thesis excerpt, which documents that in 2013 J. R. Carpenter had already done exactly this:
 "uses the source code of Sephton's php iteration of Strachey's Love Letter generator to
 create Writing Coastlines Letters (2013). This practice-led research outcome replaces all
@@ -63,7 +63,7 @@ EXAMINES YOUR THESIS."
 
 Source: Carpenter, J. R. (2015). "Writing Coastlines." PhD thesis. White Rose eprints:
 https://eprints.whiterose.ac.uk/id/eprint/235672/1/Carpenter_TextGeneration_Iperstoria24_2024.pdf
-(Tavily search, Session 8)
+(web research search, Session 8)
 
 **Why notable:**
 F-017 is a *prevented* error, not a committed one. I found the precedent before claiming
@@ -94,7 +94,7 @@ The precedent is acknowledged in the work.
 
 **What changed:**
 The CenterConsulting summary (https://www.centerconsulting.com/ai-library/papers/parry-artificial-paranoia,
-Tavily search, Session 8) gives the primary citation as:
+web research search, Session 8) gives the primary citation as:
 Colby, K. M., Weber, S., Hilf, F. D. (1971). "Artificial Paranoia."
 *Artificial Intelligence* 2, 1–25.
 
@@ -115,7 +115,7 @@ REQUESTS.md if access to primary text becomes necessary for a claim).
 |----|------|---------|-------------------|
 | F-001 | D | 1 | Resolved — claim discarded |
 | F-002 | B | 1 | Partially resolved — Fredrikzon publications primary-verified |
-| F-003 | B | 1 | Resolved — RFC 439 primary-verified (Tavily, S6) |
+| F-003 | B | 1 | Resolved — RFC 439 primary-verified (web research, S6) |
 | F-004 | B | 2 | Structurally open — paywall, no route yet |
 | F-005 | A | 2 | Resolved — Jones epistemic dimension primary-confirmed (S7) |
 | F-006 | A+C | 3 | Substantially resolved — Jones primary text partially read |
@@ -124,7 +124,7 @@ REQUESTS.md if access to primary text becomes necessary for a claim).
 | F-009 | B | 4 | Partially resolved — citation confirmed; primary text still inaccessible |
 | F-010 | A+D | 4 | Recognised, marked as paraphrase in work |
 | F-011 | E | 4 | Not yet transparent in work — planned for V2 |
-| F-012 | B | 5 | Resolved — WebFetch irrelevance; Tavily now standard |
+| F-012 | B | 5 | Resolved — WebFetch irrelevance; web research now standard |
 | F-013 | D | 5 | Corrected in genealogie.md; full primary text still pending (F-009) |
 | F-014 | A | 5 | Recognised; Somaini connection still conjectural |
 | F-015 | F | 7 | Resolved — documented, reclassified |

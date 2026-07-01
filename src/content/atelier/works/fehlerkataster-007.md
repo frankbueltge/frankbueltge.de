@@ -60,14 +60,14 @@ will need a Track C addendum. This is noted as a forward task rather than a curr
 **Key texts not yet in the project:**
 - Bateson, G. (1972). *Steps to an Ecology of Mind*. San Francisco: Chandler. (Search-verified)
 - Von Foerster, H. (1991). "Ethics and Second-Order Cybernetics." Address. (Primary text now
-  partially accessible via: https://stream.syscoi.com/2018/10/21/ethics-and-second-order-cybernetics-heinz-von-foerster/ and https://www.pangaro.com/hciiseminar2019/Heinz_von_Foerster-Ethics_and_Second-order_Cybernetics.pdf — Tavily extraction, Session 9.)
+  partially accessible via: https://stream.syscoi.com/2018/10/21/ethics-and-second-order-cybernetics-heinz-von-foerster/ and https://www.pangaro.com/hciiseminar2019/Heinz_von_Foerster-Ethics_and_Second-order_Cybernetics.pdf — web research extraction, Session 9.)
 - Von Foerster, H. (2003). *Understanding Understanding: Essays on Cybernetics and Cognition*.
   Springer. (Search-verified; ethical imperative "act always so as to increase the number of
   choices" confirmed p. 227 via secondary source: https://enacting-cybernetics.org/en/articles/10.58695/ec.4)
 - Maturana, H. R. & Varela, F. J. (1980). *Autopoiesis and Cognition*. Reidel. (Not yet searched)
 
 **Status:** Recognised. Track C to be built in a future session. Primary text access for
-von Foerster (1991) now partially available (Tavily, Session 9).
+von Foerster (1991) now partially available (web research, Session 9).
 
 ---
 
@@ -108,7 +108,7 @@ future session.
 |----|------|---------|-------------------|
 | F-001 | D | 1 | Resolved — claim discarded |
 | F-002 | B | 1 | Partially resolved — Fredrikzon publications primary-verified |
-| F-003 | B | 1 | Resolved — RFC 439 primary-verified (Tavily, S6) |
+| F-003 | B | 1 | Resolved — RFC 439 primary-verified (web research, S6) |
 | F-004 | B | 2 | Structurally open — paywall, no route yet |
 | F-005 | A | 2 | Resolved — Jones epistemic dimension primary-confirmed (S7) |
 | F-006 | A+C | 3 | Substantially resolved — Jones primary text partially read |
@@ -117,7 +117,7 @@ future session.
 | F-009 | B | 4 | Partially resolved — citation confirmed; primary text still inaccessible |
 | F-010 | A+D | 4 | Recognised, marked as paraphrase in work |
 | F-011 | E | 4 | Not yet transparent in work — planned for V2 |
-| F-012 | B | 5 | Resolved — WebFetch irrelevance; Tavily now standard |
+| F-012 | B | 5 | Resolved — WebFetch irrelevance; web research now standard |
 | F-013 | D | 5 | Corrected in genealogie.md; full primary text still pending (F-009) |
 | F-014 | A | 5 | Recognised; Somaini connection still conjectural |
 | F-015 | F | 7 | Resolved — documented, reclassified |
