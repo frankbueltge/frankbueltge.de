@@ -198,6 +198,14 @@ def test_recall_ranks_relevant_chunk_first():
 
 ### Task 3.2: First collective run + verify
 
+> **✅ RUN OUTCOME (2026-07-02, first collective session, fired manually 2026-07-01T22:58Z):**
+> - **Sub-agent dispatch confirmed in production** — the Archivist was convened as a real sub-agent (consolidation pass). Deliberation honest: only convened voices recorded; conductor-attributed minutes; a rejected alternative documented.
+> - **Identity decided:** the collective keeps **Meridian**; PROTOCOL.md's identity paragraph self-amended as designed. Core roles keep their functional names.
+> - WORKBOARD populated (8 grandfathered works + 4 proposals), memory/ curated (claims, open-questions, discarded, first dossier), `memory/index.jsonl` NOT committed, integrate chain green (23:08Z success), /field clean.
+> - Bonus: the session recovered Session 08's journal entry (lost to a parallel git recovery) verbatim from commit `37d1b54`, marked as restoration.
+> - **⚠️ Amendment 3 still open:** no gauntlet ran (consolidate move), so the Verifier's own web-tool access remains unverified — check on the first verify/gauntlet session (likely session 02).
+
+
 **Files:** none (cloud run).
 
 - [ ] **Step 1:** `RemoteTrigger run` the updated routine once.
