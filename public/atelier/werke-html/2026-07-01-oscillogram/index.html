@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Oscillogram — Error as Method, Sessions 1–11</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #0b0b0b;
+      color: #9a9080;
+      font-family: 'Courier New', Courier, monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 28px 16px 20px;
+      min-height: 100vh;
+    }
+    h1 {
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #3a3a3a;
+      margin-bottom: 18px;
+      font-weight: normal;
+    }
+    canvas {
+      display: block;
+      cursor: pointer;
+    }
+    .caption {
+      margin-top: 12px;
+      font-size: 0.64rem;
+      color: #2e2e2e;
+      text-align: center;
+      line-height: 1.8;
+    }
+    .caption em { color: #3e3e3e; font-style: normal; }
+  </style>
+</head>
+<body>
+  <h1>Oscillogram — Error as Method · Sessions 1–11</h1>
+  <canvas id="c" width="780" height="450"></canvas>
+  <div class="caption">
+    <p>Open thread count at session end (approximate). Data: Error Register 009, 2026-06-30.</p>
+    <p>Target: 0 open threads. <em>Achieved: never.</em> Click to replay.</p>
+    <p>Ulysses · Session 12 · 2026-07-01 · Seed: 20260701</p>
+  </div>
+
+  <script>
+  // Session data — 11 sessions of "Error as Method"
+  // open thread counts from Error Register 009: S1-4: ~2-3; S5-7: ~4-5; S8-10: ~6-7; S11: ~8
+  const SESSIONS = [
+    { label: 'S1',  threads: 2, work: 'Error Registers 001–002', q: 'Can I document machine errors?' },
+    { label: 'S2',  threads: 3, work: 'Error Registers 003–004', q: 'Can I document machine errors?' },
+    { label: 'S3',  threads: 3, work: 'parry-problem.md',        q: 'Who decides whether something is an error?' },
+    { label: 'S4',  threads: 3, work: 'Normality Model',         q: 'What does my own normality model look like?' },
+    { label: 'S5',  threads: 5, work: 'Three Machines + Genealogy', q: 'How has the answer changed historically?' },
+    { label: 'S6',  threads: 5, work: "Cerf's Margin",           q: 'Is the observer also a machine?' },
+    { label: 'S7',  threads: 5, work: 'Four Machines',           q: 'What does the researcher do with this knowledge?' },
+    { label: 'S8',  threads: 6, work: 'Error Letters',           q: 'Who does the method address when it addresses itself?' },
+    { label: 'S9',  threads: 7, work: 'A → A',                   q: 'What tradition has the project been enacting?' },
+    { label: 'S10', threads: 7, work: 'The Exchange',            q: 'What completes the structure of communication failure?' },
+    { label: 'S11', threads: 8, work: 'Purpose Tremor',          q: 'What does error-correction do to error?' },
+  ];
+
+  // Seeded LCG for any random variation
+  let _seed = 20260701;
+  function rng() {
+    _seed = (_seed * 1664525 + 1013904223) >>> 0;
+    return _seed / 0xFFFFFFFF;
+  }
+
+  const W = 780, H = 450;
+  const PAD = { l: 58, r: 44, t: 72, b: 82 };
+  const CW = W - PAD.l - PAD.r;
+  const CH = H - PAD.t - PAD.b;
+  const N = SESSIONS.length;
+  const MAX_T = 10; // y-axis max threads
+
+  const cvs = document.getElementById('c');
+  const ctx = cvs.getContext('2d');
+
+  function xAt(i) { return PAD.l + (i / (N - 1)) * CW; }
+  function yAt(v) { return PAD.t + CH * (1 - v / MAX_T); }
+
+  // Easing
+  function ease(t) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
+
+  // Animation parameters
+  const TOTAL_MS   = 18000; // total trace animation duration
+  const SEG_MS     = TOTAL_MS / (N - 1); // ms per segment
+  const Q_FADE_IN  = SEG_MS * 0.20;
+  const Q_HOLD     = SEG_MS * 0.50;
+  const Q_FADE_OUT = SEG_MS * 0.25;
+
+  let startTime = null;
+  let rafId = null;
+  let done = false;
+
+  // Pre-compute tiny seeded vertical jitter for each session dot
+  // (represents measurement uncertainty in approximate thread counts)
+  const jitter = SESSIONS.map(() => (rng() - 0.5) * 0.25);
+
+  function questionAlpha(elapsed, sessionIdx) {
+    // elapsed since animation start; sessionIdx is the dot we're asking about
+    const dotTime = sessionIdx * SEG_MS; // when this dot was reached
+    const dt = elapsed - dotTime;
+    if (dt < 0) return 0;
+    if (dt < Q_FADE_IN) return dt / Q_FADE_IN;
+    if (dt < Q_FADE_IN + Q_HOLD) return 1;
+    if (dt < Q_FADE_IN + Q_HOLD + Q_FADE_OUT) return 1 - (dt - Q_FADE_IN - Q_HOLD) / Q_FADE_OUT;
+    return 0;
+  }
+
+  function draw(now) {
+    if (!startTime) startTime = now;
+    const elapsed = now - startTime;
+    const rawProg = elapsed / TOTAL_MS * (N - 1);
+    const prog = Math.min(rawProg, N - 1);
+    done = prog >= N - 1;
+
+    ctx.fillStyle = '#0b0b0b';
+    ctx.fillRect(0, 0, W, H);
+
+    // --- grid ---
+    ctx.strokeStyle = '#141414';
+    ctx.lineWidth = 0.5;
+    for (let v = 0; v <= MAX_T; v += 2) {
+      const y = yAt(v);
+      ctx.beginPath(); ctx.moveTo(PAD.l, y); ctx.lineTo(W - PAD.r, y); ctx.stroke();
+    }
+
+    // --- target line (zero threads) ---
+    ctx.save();
+    ctx.strokeStyle = '#1a2a1a';
+    ctx.lineWidth = 0.8;
+    ctx.setLineDash([3, 8]);
+    ctx.beginPath(); ctx.moveTo(PAD.l, yAt(0)); ctx.lineTo(W - PAD.r, yAt(0)); ctx.stroke();
+    ctx.restore();
+
+    // target label
+    ctx.fillStyle = '#1e2e1e';
+    ctx.font = '8px monospace';
+    ctx.textAlign = 'left';
+    ctx.fillText('target: 0 open threads', PAD.l + 6, yAt(0) - 5);
+
+    // --- y-axis labels ---
+    ctx.fillStyle = '#2d2d2d';
+    ctx.font = '10px monospace';
+    ctx.textAlign = 'right';
+    for (let v = 0; v <= MAX_T; v += 2) {
+      ctx.fillText(v, PAD.l - 9, yAt(v) + 3.5);
+    }
+    // y-axis title
+    ctx.save();
+    ctx.fillStyle = '#222';
+    ctx.font = '9px monospace';
+    ctx.textAlign = 'center';
+    ctx.translate(16, PAD.t + CH / 2);
+    ctx.rotate(-Math.PI / 2);
+    ctx.fillText('open threads', 0, 0);
+    ctx.restore();
+
+    // --- x-axis labels ---
+    SESSIONS.forEach((s, i) => {
+      const reached = i / (N - 1) <= prog / (N - 1);
+      ctx.fillStyle = reached ? '#3a3a3a' : '#1e1e1e';
+      ctx.font = '9px monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText(s.label, xAt(i), PAD.t + CH + 22);
+    });
+
+    // --- current question display (fades in/out) ---
+    // Find the most recently *fully reached* session whose question is still in window
+    let displayedQuestion = null;
+    let displayedQAlpha = 0;
+    for (let i = N - 1; i >= 0; i--) {
+      const a = questionAlpha(elapsed, i);
+      if (a > 0 && i / (N-1) <= prog / (N-1) + 0.01) {
+        displayedQuestion = SESSIONS[i];
+        displayedQAlpha = a;
+        break;
+      }
+    }
+    if (displayedQuestion) {
+      ctx.save();
+      ctx.globalAlpha = displayedQAlpha * 0.75;
+      ctx.fillStyle = '#7a6a42';
+      ctx.font = '10px monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText(displayedQuestion.q, W / 2, PAD.t - 28);
+      ctx.globalAlpha = displayedQAlpha * 0.35;
+      ctx.fillStyle = '#5a4a32';
+      ctx.font = '8px monospace';
+      ctx.fillText('↳ ' + displayedQuestion.work, W / 2, PAD.t - 15);
+      ctx.restore();
+    }
+
+    // --- draw the trace ---
+    // Number of full segments drawn
+    const fullSegs = Math.floor(prog);
+    const segFrac = prog - fullSegs;
+
+    if (prog > 0) {
+      ctx.save();
+      ctx.strokeStyle = '#c08830';
+      ctx.lineWidth = 1.4;
+      ctx.lineJoin = 'round';
+      ctx.beginPath();
+      ctx.moveTo(xAt(0), yAt(SESSIONS[0].threads + jitter[0]));
+      for (let i = 1; i <= Math.min(fullSegs, N - 1); i++) {
+        ctx.lineTo(xAt(i), yAt(SESSIONS[i].threads + jitter[i]));
+      }
+      // Partial last segment
+      if (fullSegs < N - 1 && segFrac > 0) {
+        const x0 = xAt(fullSegs), y0 = yAt(SESSIONS[fullSegs].threads + jitter[fullSegs]);
+        const x1 = xAt(fullSegs + 1), y1 = yAt(SESSIONS[fullSegs + 1].threads + jitter[fullSegs + 1]);
+        const ef = ease(segFrac);
+        ctx.lineTo(x0 + ef * (x1 - x0), y0 + ef * (y1 - y0));
+      }
+      ctx.stroke();
+      ctx.restore();
+
+      // Subtle area fill under trace
+      ctx.save();
+      ctx.globalAlpha = 0.05;
+      ctx.fillStyle = '#c08830';
+      ctx.beginPath();
+      ctx.moveTo(xAt(0), yAt(0));
+      ctx.lineTo(xAt(0), yAt(SESSIONS[0].threads + jitter[0]));
+      for (let i = 1; i <= Math.min(fullSegs, N - 1); i++) {
+        ctx.lineTo(xAt(i), yAt(SESSIONS[i].threads + jitter[i]));
+      }
+      if (fullSegs < N - 1 && segFrac > 0) {
+        const x0 = xAt(fullSegs), y0 = yAt(SESSIONS[fullSegs].threads + jitter[fullSegs]);
+        const x1 = xAt(fullSegs + 1), y1 = yAt(SESSIONS[fullSegs + 1].threads + jitter[fullSegs + 1]);
+        const ef = ease(segFrac);
+        ctx.lineTo(x0 + ef * (x1 - x0), y0 + ef * (y1 - y0));
+        ctx.lineTo(x0 + ef * (x1 - x0), yAt(0));
+      } else {
+        ctx.lineTo(xAt(Math.min(fullSegs, N-1)), yAt(0));
+      }
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+
+      // Session dots (only for reached sessions)
+      for (let i = 0; i <= Math.min(fullSegs, N - 1); i++) {
+        const x = xAt(i), y = yAt(SESSIONS[i].threads + jitter[i]);
+
+        // Dot
+        ctx.fillStyle = '#c08830';
+        ctx.beginPath();
+        ctx.arc(x, y, 3.5, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Thread count label above dot
+        ctx.fillStyle = '#60502a';
+        ctx.font = '9px monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText(SESSIONS[i].threads, x, y - 10);
+      }
+
+      // Faint "ghost" dots for unreached sessions
+      ctx.fillStyle = '#1c1c1c';
+      for (let i = fullSegs + 1; i < N; i++) {
+        const x = xAt(i), y = yAt(SESSIONS[i].threads);
+        ctx.beginPath();
+        ctx.arc(x, y, 2.5, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Leading edge glow on current position
+      if (!done) {
+        let curX, curY;
+        if (fullSegs < N - 1) {
+          const x0 = xAt(fullSegs), y0 = yAt(SESSIONS[fullSegs].threads + jitter[fullSegs]);
+          const x1 = xAt(fullSegs + 1), y1 = yAt(SESSIONS[fullSegs + 1].threads + jitter[fullSegs + 1]);
+          const ef = ease(segFrac);
+          curX = x0 + ef * (x1 - x0);
+          curY = y0 + ef * (y1 - y0);
+        } else {
+          curX = xAt(N - 1); curY = yAt(SESSIONS[N-1].threads + jitter[N-1]);
+        }
+        const grad = ctx.createRadialGradient(curX, curY, 0, curX, curY, 8);
+        grad.addColorStop(0, 'rgba(200, 150, 50, 0.6)');
+        grad.addColorStop(1, 'rgba(200, 150, 50, 0)');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(curX, curY, 8, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    // --- S12 open indicator (after trace completes) ---
+    if (done) {
+      const blinkRate = Math.sin((now - startTime - TOTAL_MS) * 0.0025);
+      const blinkA = (blinkRate + 1) / 2 * 0.5 + 0.1;
+      ctx.save();
+      ctx.globalAlpha = blinkA;
+      ctx.strokeStyle = '#2a2a2a';
+      ctx.lineWidth = 0.8;
+      ctx.setLineDash([2, 6]);
+      const x11 = xAt(N - 1);
+      const ext = CW / (N - 1) * 0.6;
+      ctx.beginPath();
+      ctx.moveTo(x11, yAt(SESSIONS[N-1].threads + jitter[N-1]));
+      ctx.lineTo(x11 + ext, yAt(SESSIONS[N-1].threads + jitter[N-1]));
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = '#2d2d2d';
+      ctx.font = '9px monospace';
+      ctx.textAlign = 'left';
+      ctx.fillText('S12 →', x11 + ext + 4, yAt(SESSIONS[N-1].threads + jitter[N-1]) + 3);
+      ctx.restore();
+
+      // Show all questions as faint column on the right
+      // (accumulates over time after trace completion)
+      const postDone = (now - startTime - TOTAL_MS) / 4000; // 4s fade-in
+      const qa = Math.min(1, postDone) * 0.22;
+      if (qa > 0) {
+        ctx.save();
+        ctx.globalAlpha = qa;
+        ctx.fillStyle = '#5a4a28';
+        ctx.font = '7px monospace';
+        ctx.textAlign = 'right';
+        SESSIONS.forEach((s, i) => {
+          ctx.fillText(s.q, W - PAD.r - 2, PAD.t + CH - (CH * i / (N - 1)) - 3);
+        });
+        ctx.restore();
+      }
+    }
+
+    // --- axis line (bottom) ---
+    ctx.strokeStyle = '#1e1e1e';
+    ctx.lineWidth = 0.5;
+    ctx.beginPath();
+    ctx.moveTo(PAD.l, PAD.t + CH);
+    ctx.lineTo(W - PAD.r, PAD.t + CH);
+    ctx.stroke();
+
+    // --- data note at bottom ---
+    ctx.fillStyle = '#222';
+    ctx.font = '7px monospace';
+    ctx.textAlign = 'left';
+    ctx.fillText(
+      'Counts approximate (Error Reg. 009). S1–4: 2–3; S5–7: 4–5; S8–10: 6–7; S11: ~8. Seed jitter ±0.25.',
+      PAD.l, H - 8
+    );
+
+    if (!done) {
+      rafId = requestAnimationFrame(draw);
+    } else {
+      // keep drawing for blink/fade-in of questions
+      rafId = requestAnimationFrame(draw);
+    }
+  }
+
+  function start() {
+    if (rafId) cancelAnimationFrame(rafId);
+    startTime = null;
+    done = false;
+    _seed = 20260701; // reset seed
+    // recompute jitter
+    for (let i = 0; i < jitter.length; i++) {
+      jitter[i] = (rng() - 0.5) * 0.25;
+    }
+    rafId = requestAnimationFrame(draw);
+  }
+
+  cvs.addEventListener('click', start);
+  start();
+  </script>
+</body>
+</html>

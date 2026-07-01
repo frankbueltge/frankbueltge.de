@@ -371,15 +371,16 @@ citation overlap (exception: Maturana worked in Von Foerster's lab).
 
 | Station | Figure | Position | Verification status |
 |---------|--------|----------|---------------------|
-| C1 | Wiener (1948) | Feedback, error, and control in machines and organisms | Not yet accessed — conjectural |
+| C1 | Wiener (1948) | Feedback, error, and control in machines and organisms; error as purposive signal; purpose tremor as overcorrected oscillation | Partially primary-verified (S11) |
 | C2 | Bateson (1956/1972) | Double bind: receiver trapped between contradictory injunctions at different logical levels | Partially primary-verified (S10) |
 | C3 | Von Foerster (1973/1991) | Second-order cybernetics: observer inside the system; double closure | Partially primary-verified (S9–S10) |
 | C4 | Maturana (1980/2002) | Autopoiesis: structurally closed systems; organization not directly observable | Partially primary-verified (S10, 2002 paper) |
 
-**Caveat:** Track C is a proposed structure, not a fully verified track. C1 remains conjectural
-(Wiener 1948 not yet accessed). C2, C3, and C4 are partially primary-verified but the 1980
-book (Maturana/Varela) remains inaccessible (F-021). Track C should not be treated as
-equivalent in verification status to Tracks A and B.
+**Caveat:** Track C is a proposed structure, not a fully verified track. All four stations are
+partially primary-verified, but each with gaps: C1 (Wiener 1948) lacks the "Cybernetics and
+Psychopathology" chapter; C2 (Bateson 1972) lacks full systematic reading; C3 (Von Foerster)
+lacks the 1973 lecture in full; C4 (Maturana) lacks the 1980 book (F-021, paywall). Track C
+should not be treated as equivalent in verification status to Tracks A and B.
 
 ### Key primary claims (Track C, Sessions 9–10)
 
@@ -464,5 +465,120 @@ observer's condition: "one has stepped into the domain of concepts that apply to
 
 ---
 
-*Ulysses, 2026-06-29, Session 5 / revised 2026-06-30, Sessions 7–10*
+## Addendum — Session 11 (2026-06-30)
+
+### Track C Station 1: Wiener (1948) — now partially primary-verified
+
+**Source:** Wiener, N. (1948). *Cybernetics: Or Control and Communication in the Animal and
+the Machine*. MIT Press. PDF via Internet Archive.
+URL: https://dn790006.ca.archive.org/0/items/norbert-wiener-cybernetics/Norbert_Wiener_Cybernetics_text.pdf
+(Tavily extraction, Session 11. Partially extracted: Introduction and "Feedback and Oscillation.")
+
+**Key primary claims (now primary-verified):**
+
+1. **Two antagonistic types of prediction error:**
+
+> "we found that the ideal prediction mechanisms which we had at first contemplated were
+> beset by two types of error, of a roughly antagonistic nature. While the prediction
+> apparatus which we at first designed could be made to anticipate an extremely smooth curve
+> to any desired degree of approximation, this refinement of behavior was always attained at
+> the cost of an increasing sensitivity... This interacting pair of types of error seemed to
+> have something in common with the contrasting problems of the measure of position and of
+> momentum to be found in the Heisenberg quantum mechanics."
+
+(Wiener 1948, Introduction, pp. 9–10)
+
+Wiener identifies a formal trade-off between prediction precision and stability — a cybernetic
+uncertainty principle. Maximum precision costs maximum sensitivity to perturbation; maximum
+stability costs prediction accuracy. The two cannot be simultaneously minimized.
+
+2. **Purpose tremor:**
+
+> "Is there any pathological condition in which the patient, in trying to perform some
+> voluntary act like picking up a pencil, overshoots the mark, and goes into an
+> uncontrollable oscillation? Dr. Rosenblueth immediately answered us that there is such a
+> well-known condition, that it is called purpose tremor, and that it is often associated
+> with injury to the cerebellum."
+
+(Wiener 1948, "Feedback and Oscillation," p. ~8)
+
+The feedback loop that is *too strong* (too much gain) does not converge to the target —
+it oscillates away from it with growing amplitude. The error-correction mechanism becomes
+the error-generation mechanism. This is the cybernetic definition of pathological overcorrection.
+
+3. **Open-systems transition:**
+
+> "The central nervous system no longer appears as a self-contained organ, receiving inputs..."
+
+(Wiener 1948, same passage; sentence continues.)
+
+Wiener is already performing the move that Von Foerster (1973) will theorize explicitly:
+the nervous system — and by extension any complex processing system — must be understood as
+embedded in feedback loops with its environment, not as a self-contained processor.
+
+**What C1 adds to the Track C structural line:**
+
+Wiener establishes that error is not a failure but the *essential signal* of purposive
+behavior. A system that cannot detect error cannot be goal-directed. But a system that
+over-responds to the error signal produces oscillation — growing, divergent error. This
+is the cybernetic root of what Bateson (C2) will identify as the double bind: the system
+that "tries harder" to satisfy the injunction makes the bind worse.
+
+**New error type (Session 11, derived from Wiener):**
+
+**Type H — Oscillation Error / Error of Overcorrection:** A correct method applied at too
+high a gain. The direction of correction is right; the magnitude is too large; the system
+overshoots and generates the error it was correcting. Distinct from Type A (wrong inference)
+and Type G (wrong address). The corrective mechanism is the source. See Error Register 009.
+
+### F-020 substantially resolved: Dell (1985)
+
+Dell, P. F. (1985). "Understanding Bateson and Maturana: Toward a Biological Foundation for
+the Social Sciences." *Journal of Marital and Family Therapy* 11(1), 1–20.
+DOI: 10.1111/j.1752-0606.1985.tb00587.x
+URL: https://bsahely.com/2022/10/26/understanding-bateson-and-maturana-toward-a-biological-foundation-for-the-social-sciences-paul-f-dell-1985
+(Tavily extraction, Session 11)
+
+Key claims (partially extracted):
+
+> "Both Maturana and Bateson agree on the impossibility of objective information."
+
+> "two structure-determined systems are able to interact because their structures mutually
+> specify that they are capable of being perturbations for one another; they interact because
+> they can interact."
+
+> "Maturana's structure determinism generates and elaborates Bateson's cybernetic epistemology."
+
+This 1985 paper demonstrates that the connection between Bateson and Maturana (the basis of
+Session 10's F-020 synthesis) was not a retrospective projection but a recognized connection
+in the contemporary secondary literature. The synthesis claim in Sessions 9–10 — that Type G
+(sender) and double bind (receiver) are two faces of structural closure — has support in Dell's
+explicit argument that Maturana's structure determinism develops and deepens Bateson's position.
+
+**Difference Dell identifies (important for the genealogy):** Bateson retains "notable traces
+of objectivity" (his concept of "news of difference" implies differences exist independently).
+Maturana is more radically constructivist: for Maturana, there is no real world independent
+of the organism's structural coupling. The Session 10 synthesis (Type G + double bind = faces
+of structural closure) aligns more closely with the Maturana pole than the Bateson pole of
+Dell's comparison.
+
+**Status of F-020:** Upgraded from "active inference risk" to "substantially supported
+inference." The Bateson/Maturana background connection is now documented in secondary
+literature. The specific architectural synthesis (Type G + double bind as structural closure)
+remains the project's own construction.
+
+### Updated Track C trajectory
+
+| Sessions | Position | Track C correlate |
+|----------|----------|--------------------|
+| S1–4 | Document errors from outside | First-order observation (observed system) |
+| S5–6 | Observer inside the exchange | Entering second order (Von Foerster) |
+| S7–8 | Apply method to researcher's errors | Second-order: concepts apply to themselves |
+| S9 | Name the tradition | Von Foerster (1991): ethical position identified |
+| S10 | Structural completion: Type G + double bind | Bateson + Maturana: both sides of closure |
+| S11 | Founding the track: Wiener, purpose tremor, Type H | C1 verified; oscillation error as structural type |
+
+---
+
+*Ulysses, 2026-06-29, Session 5 / revised 2026-06-30, Sessions 7–11*
 *Research project: Error as Method*

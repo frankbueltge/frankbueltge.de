@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Purpose Tremor — Ulysses</title>
+  <style>
+    :root {
+      --bg: #080808;
+      --fg: #b0b0b0;
+      --dim: #3a3a3a;
+      --mid: #555;
+      --red: #c44;
+      --blue: #6688cc;
+      --green: #6a9;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 12px;
+      line-height: 1.7;
+      padding: 24px 20px;
+    }
+    .wrap { max-width: 720px; margin: 0 auto; }
+    h1 {
+      font-size: 11px;
+      font-weight: normal;
+      color: var(--mid);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+    canvas {
+      display: block;
+      width: 100%;
+      max-width: 680px;
+      height: auto;
+      border: 1px solid #151515;
+      margin: 0 0 14px 0;
+      cursor: pointer;
+    }
+    #data {
+      color: var(--mid);
+      font-size: 10px;
+      margin-bottom: 18px;
+      min-height: 1.7em;
+    }
+    .desc {
+      color: #666;
+      font-size: 11px;
+      margin-bottom: 16px;
+      max-width: 620px;
+    }
+    .desc span.r { color: var(--red); }
+    .quote {
+      color: #444;
+      font-size: 11px;
+      border-left: 2px solid #1e1e1e;
+      padding: 6px 12px;
+      margin: 16px 0;
+      font-style: italic;
+      max-width: 620px;
+    }
+    .quote .source { font-style: normal; color: #333; font-size: 10px; display: block; margin-top: 4px; }
+    .legend {
+      display: flex;
+      gap: 20px;
+      margin: 12px 0;
+      font-size: 10px;
+      color: #444;
+    }
+    .legend span { display: inline-flex; align-items: center; gap: 5px; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+    .footer {
+      color: #2e2e2e;
+      font-size: 10px;
+      margin-top: 28px;
+      border-top: 1px solid #111;
+      padding-top: 14px;
+      max-width: 680px;
+    }
+    .footer a { color: #333; }
+    #replay-note { color: #333; font-size: 10px; margin-bottom: 6px; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Purpose Tremor &nbsp;·&nbsp; Error as Method</h1>
+
+  <canvas id="canvas" width="680" height="420" title="Click to replay"></canvas>
+
+  <div id="data">—</div>
+
+  <div class="desc">
+    An entity attempts to reach the target ○ using proportional feedback correction.
+    Gain: <span class="r">18%</span> of remaining distance corrected per step.
+    Velocity amplification: <span class="r">1.01×</span> per step (slight energy injection).
+    The method is correct. The target is reachable. The application is too eager.
+  </div>
+
+  <div class="legend">
+    <span><span class="dot" style="background:#6688cc"></span> start (step 0)</span>
+    <span><span class="dot" style="background:#6a9966"></span> first approach</span>
+    <span><span class="dot" style="background:#c44"></span> step 300</span>
+    <span><span class="dot" style="background:#666; border: 1px solid #888"></span> target ○</span>
+  </div>
+
+  <div class="quote">
+    "we found that the ideal prediction mechanisms which we had at first contemplated were beset
+    by two types of error, of a roughly antagonistic nature. While the prediction apparatus which
+    we at first designed could be made to anticipate an extremely smooth curve to any desired degree
+    of approximation, this refinement of behavior was always attained at the cost of an increasing
+    sensitivity."
+    <span class="source">— Norbert Wiener, <em>Cybernetics</em> (1948), Introduction</span>
+  </div>
+
+  <div class="desc">
+    Wiener and Bigelow asked neurologist Rosenblueth: is there a pathological condition in which
+    a patient, attempting a voluntary act, overshoots and enters uncontrollable oscillation?
+    Answer: <em>purpose tremor</em> — damage to the cerebellum. The feedback loop is too strong.
+    The correction mechanism generates the error it was designed to eliminate.
+  </div>
+
+  <div id="replay-note">[ click canvas to replay ]</div>
+
+  <div class="footer">
+    Seed: 2026 &nbsp;·&nbsp; Steps: 300 &nbsp;·&nbsp; GAIN = 0.18 &nbsp;·&nbsp; AMP = 1.01/step<br>
+    Same seed, same path. The error is not random — it is structural.<br><br>
+    Source: Wiener, N. (1948). <em>Cybernetics: Or Control and Communication in the Animal and the Machine</em>.
+    MIT Press, Cambridge.<br>
+    URL: <a href="https://dn790006.ca.archive.org/0/items/norbert-wiener-cybernetics/Norbert_Wiener_Cybernetics_text.pdf">
+    Internet Archive — Wiener (1948) PDF</a><br><br>
+    Track C · Station 1 · Session 11 &nbsp;·&nbsp; Ulysses &nbsp;·&nbsp; 2026-06-30
+  </div>
+</div>
+
+<script>
+// ─── Parameters ─────────────────────────────────────────────────────────────
+const SEED  = 2026;
+const W = 680, H = 420;
+const TX = W / 2 | 0;   // target x (center)
+const TY = H / 2 | 0;   // target y (center)
+const GAIN  = 0.18;      // proportional gain — too high
+const AMP   = 1.01;      // per-step velocity amplification
+const STEPS = 300;
+const FRAMES_PER_STEP = 1.5; // how many canvas frames per path step
+
+// ─── Seeded RNG (LCG) ────────────────────────────────────────────────────────
+let rngState = SEED >>> 0;
+function rand() {
+  rngState = ((rngState * 1664525 + 1013904223) >>> 0);
+  return rngState / 4294967296;
+}
+
+// ─── Compute path ────────────────────────────────────────────────────────────
+function computePath() {
+  rngState = SEED >>> 0;
+
+  // Initial position (seeded): random direction, 65–95 px from target
+  const ang = rand() * Math.PI * 2;
+  const rad = 65 + rand() * 30;
+  // Small initial perpendicular velocity (seeded, 0–0.8 px/step)
+  const perpAng = ang + Math.PI / 2;
+  const initV   = rand() * 0.8;
+
+  let px = TX + Math.cos(ang) * rad;
+  let py = TY + Math.sin(ang) * rad;
+  let vx = Math.cos(perpAng) * initV;
+  let vy = Math.sin(perpAng) * initV;
+
+  const path = [];
+  const errs  = [];
+
+  for (let i = 0; i <= STEPS; i++) {
+    const err = Math.hypot(px - TX, py - TY);
+    path.push({ x: px, y: py });
+    errs.push(err);
+
+    // Feedback update: proportional controller with overcorrection
+    const ax = (TX - px) * GAIN;
+    const ay = (TY - py) * GAIN;
+    vx = vx * AMP + ax;
+    vy = vy * AMP + ay;
+    px += vx;
+    py += vy;
+  }
+  return { path, errs };
+}
+
+// ─── Find key steps ──────────────────────────────────────────────────────────
+function findKeySteps(errs) {
+  let firstMin = -1, firstMax = -1;
+  for (let i = 1; i < errs.length - 1; i++) {
+    if (firstMin === -1 && errs[i] < errs[i - 1] && errs[i] < errs[i + 1]) {
+      firstMin = i;
+    }
+    if (firstMin !== -1 && firstMax === -1 &&
+        errs[i] > errs[i - 1] && errs[i] > errs[i + 1]) {
+      firstMax = i;
+    }
+    if (firstMin !== -1 && firstMax !== -1) break;
+  }
+  return { firstMin, firstMax };
+}
+
+// ─── Color: blue (start) → green (approach) → red (end) ────────────────────
+function stepColor(t, alpha) {
+  const r = Math.round(60  + t * 170);
+  const g = Math.round(120 * Math.sin(Math.PI * Math.min(t * 2, 1)) + 20);
+  const b = Math.round(180 * (1 - t) + 30);
+  return `rgba(${r},${g},${b},${alpha})`;
+}
+
+// ─── Animation ───────────────────────────────────────────────────────────────
+const canvas = document.getElementById('canvas');
+const ctx    = canvas.getContext('2d');
+let { path, errs } = computePath();
+const { firstMin, firstMax } = findKeySteps(errs);
+let animFrame = 0;
+let rafId = null;
+let drawnUpTo = 0;
+
+function clearCanvas() {
+  ctx.fillStyle = '#080808';
+  ctx.fillRect(0, 0, W, H);
+  // Draw grid lines through target (very subtle)
+  ctx.strokeStyle = '#111';
+  ctx.lineWidth = 0.5;
+  ctx.setLineDash([4, 8]);
+  ctx.beginPath();
+  ctx.moveTo(TX, 0); ctx.lineTo(TX, H);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(0, TY); ctx.lineTo(W, TY);
+  ctx.stroke();
+  ctx.setLineDash([]);
+}
+
+function drawSegments(from, to) {
+  for (let i = Math.max(1, from); i <= to && i < path.length; i++) {
+    const t = i / STEPS;
+    const a = 0.45 + t * 0.55;
+    ctx.beginPath();
+    ctx.strokeStyle = stepColor(t, a);
+    ctx.lineWidth = 0.5 + t * 1.0;
+    ctx.moveTo(path[i - 1].x, path[i - 1].y);
+    ctx.lineTo(path[i].x, path[i].y);
+    ctx.stroke();
+  }
+}
+
+function drawAnnotations(upTo) {
+  ctx.font = '9px Courier New, monospace';
+
+  // Target circle
+  ctx.beginPath();
+  ctx.arc(TX, TY, 5, 0, Math.PI * 2);
+  ctx.strokeStyle = '#555';
+  ctx.lineWidth = 1;
+  ctx.stroke();
+  ctx.fillStyle = '#444';
+  ctx.fillText('○ target', TX + 9, TY + 4);
+
+  // Start dot
+  ctx.beginPath();
+  ctx.arc(path[0].x, path[0].y, 3.5, 0, Math.PI * 2);
+  ctx.fillStyle = '#6688cc';
+  ctx.fill();
+  if (upTo >= 0) {
+    ctx.fillStyle = '#6688cc';
+    ctx.fillText(`start  ${Math.round(errs[0])}px`, path[0].x + 7, path[0].y - 5);
+  }
+
+  // First minimum (closest approach)
+  if (firstMin > 0 && upTo >= firstMin) {
+    const p = path[firstMin];
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
+    ctx.fillStyle = '#6a9966';
+    ctx.fill();
+    ctx.fillStyle = '#6a9966';
+    ctx.fillText(`step ${firstMin}  ${Math.round(errs[firstMin])}px`, p.x + 7, p.y - 4);
+  }
+
+  // End dot (only when animation complete)
+  if (upTo >= STEPS) {
+    const lp = path[STEPS];
+    const lErr = Math.round(errs[STEPS]);
+    ctx.beginPath();
+    ctx.arc(lp.x, lp.y, 3.5, 0, Math.PI * 2);
+    ctx.fillStyle = '#c44';
+    ctx.fill();
+    // Try to keep label inside canvas
+    const lx = Math.min(Math.max(lp.x - 30, 4), W - 190);
+    const ly = Math.min(Math.max(lp.y + 14, 12), H - 4);
+    ctx.fillStyle = '#c44';
+    ctx.fillText(`step 300  ${lErr}px`, lx, ly);
+  }
+}
+
+function updateData(upTo) {
+  const el = document.getElementById('data');
+  if (upTo < STEPS) {
+    const pct = Math.round(upTo / STEPS * 100);
+    el.textContent = `tracing… step ${upTo}/${STEPS}  (${pct}%)`;
+  } else {
+    const initErr  = Math.round(errs[0]);
+    const finalErr = Math.round(errs[STEPS]);
+    const ratio    = (finalErr / initErr).toFixed(1);
+    const minErr   = Math.round(errs[firstMin]);
+    el.innerHTML =
+      `start: <span style="color:#6688cc">${initErr}px</span>` +
+      `  ·  closest approach (step ${firstMin}): <span style="color:#6a9966">${minErr}px</span>` +
+      `  ·  step 300: <span style="color:#c44">${finalErr}px</span>` +
+      `  ·  amplification: ×${ratio}`;
+  }
+}
+
+function animate() {
+  const stepTarget = Math.floor(animFrame / FRAMES_PER_STEP);
+  const drawTo = Math.min(stepTarget, STEPS);
+
+  if (drawTo > drawnUpTo) {
+    drawSegments(drawnUpTo + 1, drawTo);
+    drawAnnotations(drawTo);
+    updateData(drawTo);
+    drawnUpTo = drawTo;
+  }
+
+  animFrame++;
+  if (drawnUpTo < STEPS) {
+    rafId = requestAnimationFrame(animate);
+  } else {
+    drawAnnotations(STEPS); // final pass to ensure annotations are on top
+    updateData(STEPS);
+  }
+}
+
+function start() {
+  if (rafId) cancelAnimationFrame(rafId);
+  animFrame  = 0;
+  drawnUpTo  = 0;
+  clearCanvas();
+  rafId = requestAnimationFrame(animate);
+}
+
+canvas.addEventListener('click', start);
+start();
+</script>
+</body>
+</html>
