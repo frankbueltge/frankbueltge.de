@@ -66,6 +66,7 @@ jobs:
             git add -A src/content/atelier src/components/atelier src/pages/atelier
             if [ -d public/atelier/werke-html ]; then git add -A public/atelier/werke-html; fi
             git commit -m "atelier: integrate $(date -u +%F)"
+            git pull --rebase --autostash origin main
             git push
           else
             echo "no changes"
