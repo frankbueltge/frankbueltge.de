@@ -24,6 +24,11 @@
 
 > These run in the CCR cloud environment, not locally. Each is a one-off probe run via a temporary prompt on the field-research routine (or a scratch run). Results decide the build path.
 
+> **✅ PROBE OUTCOME (2026-07-01, throwaway routine, now disabled):**
+> - `SUBAGENT: OK` → **conductor + sub-agents is a GO.** Use the conductor variant throughout Phase 2; ignore the role-switching fallback.
+> - `EMBED: IMPRACTICAL` (proxy blocks model download, 403) → **memory tool B ships BM25-only.** BM25 is already the Phase 1 default; **skip Task 1.3** (embedding backend). Revisit embeddings later only if a server-side MCP embedding connector becomes available.
+> Phase 0 is therefore **complete** — proceed to Phase 1.
+
 ### Task 0.1: Probe — can a CCR session dispatch sub-agents?
 
 **Files:** none (a scratch cloud run).
