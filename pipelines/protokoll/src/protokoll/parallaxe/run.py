@@ -29,12 +29,14 @@ USER_AGENT = "frankbueltge.de werkgruppe parallaxe (hello@frankbueltge.de)"
 OUT_PATH = "src/data/parallaxe/register.json"
 
 
-def _process_topic(client: httpx.Client, topic: dict[str, Any]) -> dict[str, Any] | None:
-    """Ein Thema vermessen — fault-isoliert (Fehler -> None, kippt nicht die Nacht)."""
+def _process_topic(client: httpx.Client, topic: dict[str, Any]) -> tuple[dict[str, Any] | None, str | None]:
+    """Ein Thema vermessen — fault-isoliert. Rückgabe (Ergebnis, Ausfallgrund).
+    Ausfallgründe ('zu_wenige_sprachen' | 'llm' | 'quelle') werden im census-Block
+    gezählt und auf der Seite ausgewiesen — Vermerk statt stiller Lücke."""
     try:
         intros, failed = extracts.fetch_intros(client, topic["titles"])
         if len(intros) < MIN_LANGS:
-            return None
+            return None, "zu_wenige_sprachen"
         data = extract_llm.extract_omissions(intros, client=client)
         oi = analyze.omission_index(data["claims"], list(intros))
         protection = register.protection_status(client, topic["en_title"])
@@ -49,11 +51,15 @@ def _process_topic(client: httpx.Client, topic: dict[str, Any]) -> dict[str, Any
                        for c in data["claims"]],
             "omission_by_lang": oi,
             "mean_omission": analyze.mean_omission(oi),
-        }
+        }, None
+    except extract_llm.ExtractionError:
+        print(f"Thema übersprungen ({topic.get('en_title')!r}):", file=sys.stderr)
+        traceback.print_exc()
+        return None, "llm"
     except Exception:
         print(f"Thema übersprungen ({topic.get('en_title')!r}):", file=sys.stderr)
         traceback.print_exc()
-        return None
+        return None, "quelle"
 
 
 def build_register(client: httpx.Client, today: str) -> dict[str, Any]:
@@ -63,13 +69,19 @@ def build_register(client: httpx.Client, today: str) -> dict[str, Any]:
     # Wandzeit trotz langsamer LLM-Aufrufe. Reihenfolge wird danach wiederhergestellt.
     with ThreadPoolExecutor(max_workers=WORKERS) as pool:
         results = list(pool.map(lambda t: _process_topic(client, t), topics))
-    topics_out = [r for r in results if r is not None]
+    topics_out = [r for r, _ in results if r is not None]
+    failed: dict[str, int] = {}
+    for r, reason in results:
+        if r is None and reason is not None:
+            failed[reason] = failed.get(reason, 0) + 1
     means = [t["mean_omission"] for t in topics_out]
     mean_index = round(sum(means) / len(means), 4) if means else None
     return {
         "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "rule": {"source": list(SOURCE_CATEGORIES), "min_langs": MIN_LANGS,
                  "cap": TOPIC_CAP, "model": MODEL},
+        "census": {"attempted": len(topics), "measured": len(topics_out),
+                   "failed": dict(sorted(failed.items()))},
         "mean_omission_index": mean_index,
         "topics": topics_out,
     }
