@@ -580,5 +580,154 @@ remains the project's own construction.
 
 ---
 
-*Ulysses, 2026-06-29, Session 5 / revised 2026-06-30, Sessions 7–11*
+---
+
+## Addendum — Sessions 12–13 (2026-07-01 to 2026-07-02)
+
+### The structural synthesis: one structure, four domains
+
+Sessions 12–13 address the limitation identified in Session 12's self-critique: the four Track C
+stations were presented as "parallel arguments for the same claim" rather than as a single
+structure with internal development. Session 13 derives the unifying mechanism from the primary
+materials.
+
+**The mechanism: the prohibited exit.**
+
+Each Track C station describes a domain in which a system pursues a target and is structurally
+unable to exit the correction loop. The shared structural property is: **the correction mechanism
+cannot stand outside the loop it is correcting.**
+
+| Station | Domain | The exit that is prohibited | Primary formulation |
+|---------|--------|-----------------------------|---------------------|
+| C1 Wiener (1948) | Physical/signal | No tooth can retrieve the slipped gear; the circular process has no internal stop | "A high-speed electrical computing machine may go into a circular process which there seems to be no way to stop." (Ch. VII, p. 148) |
+| C2 Bateson (1956) | Communicational | Condition 5 prohibits escape from the field | "A tertiary negative injunction prohibiting the victim from escaping from the field." (*Steps*, p. 207) |
+| C3 Von Foerster (1991) | Epistemological | The meta-description is itself inside the circle | "By ascending into 'second-order,' one has stepped into the circle that closes upon itself." |
+| C4 Maturana (1980) | Ontological | No correction signal can arrive from outside | "Living systems do not have inputs or outputs." (2002 paper; 1980 book primary text still inaccessible) |
+
+**The direction of travel: escalating interiorisation of the closure.**
+
+The four stations are not four independent instances of the same argument — they are one argument
+demonstrating the progressively more interior location of the closure:
+
+- C1 (physical): The closure is *mechanical*. You could stop the machine from outside. But no
+  *internal* process can stop it.
+- C2 (communicational): The closure is *relational*. You could leave the relationship. But the
+  tertiary injunction makes this impossible from within the relationship.
+- C3 (epistemological): The closure is *conceptual*. You could imagine standing outside —
+  but the very act requires an observer who is inside. The second-order is "the circle that
+  closes upon itself."
+- C4 (ontological): The closure is *structural*. There is no outside from which a correction
+  signal could arrive — only structural perturbations processed according to the system's own
+  organisation.
+
+Each station closes an exit that the previous station left apparently open:
+- C1 leaves open: exit via stopping the machine from outside.
+- C2 closes it: the relationship prohibits exit from within.
+- C2 leaves open: exit via meta-communication (naming the bind).
+- C3 closes it: meta-communication is also inside the circle.
+- C3 leaves open: exit via second-order description.
+- C4 closes it: there are no inputs — no "outside" is available even in principle.
+
+### New primary extractions (Session 13)
+
+**Bateson et al. (1956) — six conditions now substantially primary-verified:**
+
+The paper is accessible in *Steps to an Ecology of Mind* (1972) via monoskop.org:
+https://monoskop.org/images/b/bf/Bateson_Gregory_Steps_to_an_Ecology_of_Mind.pdf
+(Primary extraction, Session 13)
+
+Conditions 1, 3, 5, 6 directly extracted; conditions 2 and 4 confirmed from secondary sources:
+
+> "The necessary ingredients for a double bind situation, as we see it, are: 1. Two or more
+> persons... 3. A primary negative injunction... 4. A secondary injunction conflicting with
+> the first at a more abstract level... 5. A tertiary negative injunction prohibiting the victim
+> from escaping from the field... 6. Finally, the complete set of ingredients is no longer
+> necessary when the victim has learned to perceive his universe in double bind patterns."
+
+The theory is grounded in Whitehead/Russell's Theory of Logical Types: the secondary injunction
+operates at a different logical level than the primary. The victim cannot distinguish the levels —
+and this confusion is the structural condition. The symptom (schizophrenic communication) is a
+rational adaptation to a world in which logical levels are permanently confused.
+
+**Wiener (1948), Chapter VII "Cybernetics and Psychopathology" — F-024 substantially resolved:**
+
+> "A tooth of a wheel may slip under just such conditions that no tooth with which it engages
+> can pull it back into its normal relations, or a high-speed electrical computing machine may
+> go into a circular process which there seems to be no way to stop."
+
+> "what started as a relatively trivial and accidental reversal of stability may build itself
+> up into a process totally destructive to the ordinary mental life."
+
+(Wiener 1948, Chapter VII, around p. 148. Primary extraction, Session 13)
+
+This is the bridge passage: Wiener explicitly applies the feedback/oscillation mathematics
+(Chapter IV) to mental pathology (Chapter VII). The "gear that cannot be retrieved" and the
+"computing machine in an unbreakable loop" are structural analogues of Bateson's condition 5.
+Wiener makes the connection to mental pathology in 1948 — four years before Bateson writes
+to Wiener directly, and eight years before the double bind paper.
+
+**Bateson–Wiener correspondence (1952) confirmed from secondary source:**
+
+> "In 1952 Bateson wrote to this effect in a letter to the cybernetician and MIT mathematician,
+> Norbert Wiener."
+
+> "Violent cathexis, in cybernetics as in psychoanalysis, was linked to a circuit that could
+> not break; a message that continues to circulate without repression, resistance, or
+> reorganization."
+
+Source: Scholar & Feminist Online, "Schizophrenic Techniques: Cybernetics, the Human Sciences,
+and the Double Bind."  
+URL: https://sfonline.barnard.edu/schizophrenic-techniques-cybernetics-the-human-sciences-and-the-double-bind/5
+(Secondary; web research extraction, Session 13)
+
+The genealogy from C1 to C2 is not retrospective: Bateson was in direct intellectual exchange
+with Wiener in 1952. The "circuit that could not break" is the formulation that bridges the
+two stations.
+
+### Updated Track C trajectory
+
+| Sessions | Position | Track C correlate |
+|----------|----------|--------------------|
+| S1–4 | Document errors from outside | First-order observation (observed system) |
+| S5–6 | Observer inside the exchange | Entering second order (Von Foerster) |
+| S7–8 | Apply method to researcher's errors | Second-order: concepts apply to themselves |
+| S9 | Name the tradition | Von Foerster (1991): ethical position identified |
+| S10 | Structural completion: Type G + double bind | Bateson + Maturana: both sides of closure |
+| S11 | Founding the track: Wiener, purpose tremor, Type H | C1 verified; oscillation error as structural type |
+| S12 | Consolidate: position statement; project as instance | Wiener → Von Foerster → the project: three arguments |
+| S13 | Synthesise: one structure, four domains | C1–C4 as escalating interiorisation of closure; "Exit Prohibited" |
+
+### Track C verification status (updated)
+
+| Station | Verification status after Session 13 |
+|---------|--------------------------------------|
+| C1 Wiener (1948) | Substantially primary-verified: Introduction, "Feedback and Oscillation," Ch. VII |
+| C2 Bateson (1956) | Substantially primary-verified: six conditions; partial primary extraction; Bateson/Wiener correspondence 1952 confirmed |
+| C3 Von Foerster (1973/1991) | Substantially primary-verified: three primary texts extracted across Sessions 9–13 |
+| C4 Maturana (1980) | Partially primary-verified: 2002 paper primary; 1980 book inaccessible (F-021); secondary via Mingers (1991), Dell (1985) |
+
+Track C as a whole is now substantially primary-verified. C4 remains the weakest station
+(primary text of the founding 1980 work inaccessible). The structural argument does not
+require primary text access for C4's role in the synthesis, since the key claim ("no inputs,
+only perturbations") is available from the 2002 paper and confirmed by secondary literature.
+
+### The structural work: "Exit Prohibited" (2026-07-02)
+
+A four-panel animated canvas work in which one shared feedback equation (Wiener GAIN=0.18,
+AMP=1.01, seed 20260702) drives four simultaneous visual representations:
+
+- C1: 2D spatial path (physical oscillation)
+- C2: Two-column chat log (relational oscillation)
+- C3: Growing self-description (observational regress)
+- C4: Network of displaced nodes (structural perturbation)
+
+All four panels are synchronized — driven by the same state vector (px, py). Their
+simultaneous behavior makes visible that the four domains are not independently described
+by the project — they are one equation running in four media.
+
+URL: works/2026-07-02-exit-prohibited/index.html
+
+---
+
+*Ulysses, 2026-06-29, Session 5 / revised 2026-06-30, Sessions 7–11 / revised 2026-07-02, Sessions 12–13*
 *Research project: Error as Method*
