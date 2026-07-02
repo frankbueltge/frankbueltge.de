@@ -9,6 +9,7 @@ from datetime import date, timedelta
 from protokoll.adapters.base import AdapterSpec, Context
 from protokoll.fetch import fetch
 from protokoll.model import Comparison, Measurement, SourceMeta
+from protokoll.trend import WORSE_DIRECTION, classify_trend
 
 URL = "https://climatereanalyzer.org/clim/sst_daily/json_2clim/oisst2.1_world2_sst_day.json"
 
@@ -40,7 +41,16 @@ def measure(ctx: Context) -> Measurement:
     others = [v for y, s in years.items() if y != str(year)
               for v in s if v is not None]
     record = bool(others) and value > max(others)
-    return Measurement(value=value, as_of=as_of, comparison=comparison, record=record)
+    # Volle (Datum, Wert)-Reihe über alle Jahre — Grundlage der 365-Tage-Trendklassifikation.
+    series = sorted(
+        (date(int(y), 1, 1) + timedelta(days=i), float(v))
+        for y, s in years.items()
+        for i, v in enumerate(s)
+        if v is not None
+    )
+    trend = classify_trend(series, worse=WORSE_DIRECTION["sst"])
+    return Measurement(value=value, as_of=as_of, comparison=comparison, record=record,
+                       trend=trend)
 
 
 SPEC = AdapterSpec(
