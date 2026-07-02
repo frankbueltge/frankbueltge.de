@@ -649,7 +649,8 @@ Capture-Aufruf mit Proxy:
 - Produces:
   - zod: `beifang`-Collection akzeptiert je Result optionale `leaks`, `leak_firmen`, `doi_leak` und je Run optionales `vantage` (rückwärtskompatibel zum alten Snapshot ohne diese Felder).
   - `types.ts`: `BeifangLeak`-Interface; `BeifangSiteResult` um `leaks?`, `leak_firmen?`, `doi_leak?`; `BeifangRun` um `vantage?`.
-  - `stats.ts`: `leakFindings(run): { publisher: string; hard: BeifangLeak[]; firmen: string[] }[]` (nur Verlage mit mind. einem harten DOI-Leak, Firmen distinct, sortiert) und `doiLeakEntities(run): string[]` (distinkte Firmen, die harte DOI empfangen, über alle Verlagsseiten).
+  - `stats.ts`: `leakFindings(run): { publisher: string; hard: BeifangLeak[]; firmen: string[]; hosts: string[] }[]` (nur Verlage mit mind. einem harten DOI-Leak; `firmen` = distinkte BENANNTE Empfänger-Firmen, `hosts` = distinkte Empfänger-Hosts OHNE benannte Firma — beide sortiert) und `doiLeakEntities(run): string[]` (distinkte benannte Firmen, die harte DOI empfangen).
+  - **Amendment (Realdaten aus dem Smoke-Lauf):** Run 1 zeigt DOI-Leaks an unbenannte Hosts (z. B. `content.readcube.com`, Springers eigenes Tool), NICHT an benannte Broker → `firmen` kann leer sein. Deshalb muss `hosts` existieren und die Darstellung darf nie „an ‚ ‘" (leer) rendern. Ehrlich statt überclaimt.
 
 - [ ] **Step 1: zod-Schema erweitern** — in `src/content.config.ts`, im `beifang`-`results`-Objekt (nach `retrieved_at`) ergänzen:
 ```ts
@@ -684,24 +685,33 @@ export interface BeifangLeak {
 import { leakFindings, doiLeakEntities } from './stats'
 import type { BeifangLeak } from './types'
 
-function hardDoi(host: string, firma: string): BeifangLeak {
+function hardDoi(host: string, firma: string | null): BeifangLeak {
   return { token: 'doi', signal: 'hard', form: 'klartext', kanal: 'query', host, firma, beweis: `https://${host}/?doi=x` }
 }
 
 describe('leakFindings/doiLeakEntities', () => {
-  it('führt nur Verlage mit hartem DOI-Leak, Firmen distinct', () => {
+  it('trennt benannte Firmen von unbenannten Hosts, nur Verlage mit hartem DOI-Leak', () => {
     const r = run([
       result({ publisher: 'springer-nature', doi_leak: true,
-               leaks: [hardDoi('pixel.liveramp.com', 'LiveRamp'), hardDoi('adnxs.com', 'Xandr')],
-               leak_firmen: ['LiveRamp', 'Xandr'] }),
+               leaks: [hardDoi('pixel.liveramp.com', 'LiveRamp'), hardDoi('content.readcube.com', null)],
+               leak_firmen: ['LiveRamp'] }),
       result({ panel_id: 'sn-02', publisher: 'springer-nature', doi_leak: false, leaks: [], leak_firmen: [] }),
       result({ panel_id: 'e-01', publisher: 'elsevier', blocked: { type: 'http', marker: '403' } }),
     ])
     const f = leakFindings(r)
     expect(f.map((x) => x.publisher)).toEqual(['springer-nature'])
-    expect(f[0].firmen).toEqual(['LiveRamp', 'Xandr'])
+    expect(f[0].firmen).toEqual(['LiveRamp'])            // benannte Broker
+    expect(f[0].hosts).toEqual(['content.readcube.com']) // unbenannte Empfänger
     expect(f[0].hard.length).toBe(2)
-    expect(doiLeakEntities(r)).toEqual(['LiveRamp', 'Xandr'])
+    expect(doiLeakEntities(r)).toEqual(['LiveRamp'])
+  })
+  it('Realfall: DOI-Leak nur an unbenannte Hosts → firmen leer, hosts gesetzt', () => {
+    const r = run([result({ publisher: 'springer-nature', doi_leak: true,
+                            leaks: [hardDoi('content.readcube.com', null)], leak_firmen: [] })])
+    const f = leakFindings(r)
+    expect(f[0].firmen).toEqual([])
+    expect(f[0].hosts).toEqual(['content.readcube.com'])
+    expect(doiLeakEntities(r)).toEqual([])
   })
   it('leerer Befund, wenn nichts leakt', () => {
     const r = run([result({ doi_leak: false, leaks: [], leak_firmen: [] })])
@@ -718,19 +728,22 @@ describe('leakFindings/doiLeakEntities', () => {
 ```ts
 import type { BeifangLeak } from './types'
 
-export function leakFindings(run: BeifangRun): { publisher: string; hard: BeifangLeak[]; firmen: string[] }[] {
-  const byPub = new Map<string, { hard: BeifangLeak[]; firmen: Set<string> }>()
+export function leakFindings(run: BeifangRun): { publisher: string; hard: BeifangLeak[]; firmen: string[]; hosts: string[] }[] {
+  const byPub = new Map<string, { hard: BeifangLeak[]; firmen: Set<string>; hosts: Set<string> }>()
   for (const r of usResults(run)) {
     if (r.group !== 'verlag' || !r.leaks) continue
     const hard = r.leaks.filter((l) => l.signal === 'hard' && l.token === 'doi')
     if (hard.length === 0) continue
-    const row = byPub.get(r.publisher) ?? { hard: [], firmen: new Set<string>() }
+    const row = byPub.get(r.publisher) ?? { hard: [], firmen: new Set<string>(), hosts: new Set<string>() }
     row.hard.push(...hard)
-    for (const l of hard) if (l.firma) row.firmen.add(l.firma)
+    for (const l of hard) {
+      if (l.firma) row.firmen.add(l.firma)   // benannter Broker
+      else row.hosts.add(l.host)             // unbenannter Empfänger (z. B. content.readcube.com)
+    }
     byPub.set(r.publisher, row)
   }
   return [...byPub.entries()]
-    .map(([publisher, v]) => ({ publisher, hard: v.hard, firmen: [...v.firmen].sort() }))
+    .map(([publisher, v]) => ({ publisher, hard: v.hard, firmen: [...v.firmen].sort(), hosts: [...v.hosts].sort() }))
     .sort((a, b) => b.hard.length - a.hard.length || a.publisher.localeCompare(b.publisher))
 }
 
@@ -777,10 +790,20 @@ Neue Sektion einfügen (nach dem Befund-der-Woche-Block, vor der Firmen-Tafel), 
               <div>
                 <p class="leading-relaxed">
                   <span class="font-semibold">{PUBLISHER_LABELS[f.publisher] ?? f.publisher}</span>{' '}
-                  {de
-                    ? `reicht deine DOI an ${f.firmen.join(', ')} weiter — vor jeder Einwilligung.`
-                    : `hands your DOI to ${f.firmen.join(', ')} — before any consent.`}
+                  {f.firmen.length > 0
+                    ? (de
+                        ? `reicht deine DOI an ${f.firmen.join(', ')} weiter — vor jeder Einwilligung.`
+                        : `hands your DOI to ${f.firmen.join(', ')} — before any consent.`)
+                    : (de
+                        ? `sendet deine DOI an Dritte (${f.hosts.join(', ')}) — vor jeder Einwilligung; kein benannter Datenhändler darunter in dieser Messung.`
+                        : `sends your DOI to third parties (${f.hosts.join(', ')}) — before any consent; no named data broker among them in this run.`)}
                 </p>
+                {f.firmen.length > 0 && f.hosts.length > 0 && (
+                  <p class="mt-1 text-sm text-fg-muted">
+                    {de ? `Außerdem an Hosts ohne benannte Firma: ${f.hosts.join(', ')}.`
+                        : `Also to hosts without a named company: ${f.hosts.join(', ')}.`}
+                  </p>
+                )}
                 <ul class="mt-2 space-y-2 text-sm">
                   {f.hard.map((l) => (
                     <li class="border-l-2 border-accent/60 pl-4">
@@ -800,8 +823,8 @@ Neue Sektion einfügen (nach dem Befund-der-Woche-Block, vor der Firmen-Tafel), 
         )}
         <p class="mt-4 font-mono text-[11px] text-fg-faint">
           {de
-            ? 'Hartes Signal: die DOI (eindeutig, auch als Hash fälschungssicher). Titel/Schlagwörter wären ein schwächeres Indiz und stehen im Archiv separat.'
-            : 'Hard signal: the DOI (unambiguous, tamper-proof even when hashed). Title/keywords would be a weaker indicator, kept separately in the archive.'}
+            ? 'Hartes Signal: die DOI (eindeutig, auch als Hash fälschungssicher). Der DOI-Resolver (doi.org) zählt nicht — er ist die Adresse, kein Empfänger. Titel/Schlagwörter wären ein schwächeres Indiz und stehen im Archiv separat.'
+            : 'Hard signal: the DOI (unambiguous, tamper-proof even when hashed). The DOI resolver (doi.org) does not count — it is the address, not a recipient. Title/keywords would be a weaker indicator, kept separately in the archive.'}
         </p>
       </section>
 ```
