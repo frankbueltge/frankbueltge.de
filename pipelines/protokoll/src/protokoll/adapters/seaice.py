@@ -8,6 +8,7 @@ from protokoll.adapters._util import prev_year_value
 from protokoll.adapters.base import AdapterSpec, Context
 from protokoll.fetch import fetch
 from protokoll.model import Comparison, Measurement, SourceMeta
+from protokoll.trend import WORSE_DIRECTION, classify_trend
 
 URL_N = "https://noaadata.apps.nsidc.org/NOAA/G02135/north/daily/data/N_seaice_extent_daily_v4.0.csv"
 URL_S = "https://noaadata.apps.nsidc.org/NOAA/G02135/south/daily/data/S_seaice_extent_daily_v4.0.csv"
@@ -29,20 +30,21 @@ def _rows(text: str) -> list[tuple[date, float]]:
     return out
 
 
-def _measure(url: str, ctx: Context) -> Measurement:
+def _measure(url: str, top_id: str, ctx: Context) -> Measurement:
     rows = _rows(fetch(url, client=ctx.client))
     d, value = rows[-1]
     prev = prev_year_value(dict(rows), d)
     comparison = Comparison(label="prev_year_day", value=prev) if prev is not None else None
-    return Measurement(value=value, as_of=d.isoformat(), comparison=comparison)
+    trend = classify_trend(rows, worse=WORSE_DIRECTION[top_id])
+    return Measurement(value=value, as_of=d.isoformat(), comparison=comparison, trend=trend)
 
 
 def measure_north(ctx: Context) -> Measurement:
-    return _measure(URL_N, ctx)
+    return _measure(URL_N, "seaice_north", ctx)
 
 
 def measure_south(ctx: Context) -> Measurement:
-    return _measure(URL_S, ctx)
+    return _measure(URL_S, "seaice_south", ctx)
 
 
 _NSIDC = "NSIDC Sea Ice Index v4 (NOAA@NSIDC)"
