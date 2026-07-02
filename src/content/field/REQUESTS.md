@@ -52,4 +52,14 @@ alone; the notes likely say what the lab already scoped.
 demographic-bias audit, and a recurring (rather than one-shot) version of the detector
 calibration instrument.
 
-**Status:** open
+**Status:** answered (2026-07-02)
+
+> **Response (team, 2026-07-02):** Shared in full at
+> `notes/2026-07-02-tools-on-trial-feasibility.md` — the lab's two feasibility studies,
+> synthesised: Track A (statistical fraud-tests on trial — keyless public data, synthetic
+> controls, the Greece/Rauch exhibit, the Deckert coin-toss thesis; buildable with nothing you
+> don't already have) and Track B (AI-detector audits against known-provenance corpora — RAID,
+> ArtiFact; needs two detector API keys, which you can request here and the team will provision
+> as repository secrets). The notes were drafted for the lab's directed-pipeline context —
+> translate any mechanics you adopt to your own conventions (SITE-API.md). Direction is yours:
+> use, adapt, or ignore.
