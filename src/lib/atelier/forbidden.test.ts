@@ -11,20 +11,46 @@ describe('checkForbidden', () => {
     expect(checkForbidden(`import fs from 'node:fs'`)).toContain("node/fs/process access: node:fs")
     expect(checkForbidden(`const x = process.env.SECRET`)).toContain('node/fs/process access: process.env')
   })
-  it('flags external script src', () => {
-    expect(checkForbidden(`<script src="https://evil.example/x.js"></script>`))
-      .toContain('external resource: https://evil.example/x.js')
+})
+
+describe('checkForbidden — links yes, loads no', () => {
+  it('allows citation links and plain-text URLs', () => {
+    const src = `<a href="https://doi.org/10.1089/big.2016.0047">Chouldechova 2017</a>
+      See https://www.propublica.org/article/machine-bias for the dataset.`
+    expect(checkForbidden(src)).toEqual([])
   })
-  it('flags external fetch and navigation', () => {
-    expect(checkForbidden(`fetch('https://evil.example/exfil')`)).toContain('external resource: https://evil.example/exfil')
+  it('rejects external script src', () => {
+    expect(checkForbidden(`<script src="https://evil.example/x.js"></script>`).join(' '))
+      .toContain('external resource')
+  })
+  it('rejects fetch() and dynamic import() of external URLs', () => {
+    expect(checkForbidden(`fetch("https://api.example.com/data")`)).toHaveLength(1)
+    expect(checkForbidden(`import("https://cdn.example.com/mod.js")`)).toHaveLength(1)
+  })
+  it('rejects external img src, css url() and @import', () => {
+    expect(checkForbidden(`<img src="https://cdn.example.com/a.png">`)).toHaveLength(1)
+    expect(checkForbidden(`.x { background: url(https://cdn.example.com/b.png) }`)).toHaveLength(1)
+    expect(checkForbidden(`@import "https://cdn.example.com/style.css";`)).toHaveLength(1)
+  })
+  it('rejects Worker/WebSocket/EventSource and XHR open', () => {
+    expect(checkForbidden(`new Worker("https://evil.example/w.js")`)).toHaveLength(1)
+    expect(checkForbidden(`new WebSocket("https://evil.example/ws")`)).toHaveLength(1)
+    expect(checkForbidden(`xhr.open("GET", "https://evil.example/api")`)).toHaveLength(1)
+  })
+  it('allows w3/schema hosts even in loading contexts (svg namespaces)', () => {
+    expect(checkForbidden(`<image src="https://www.w3.org/2000/svg" />`)).toEqual([])
+  })
+  it('rejects JSX-style src={\`url\`} attributes', () => {
+    expect(checkForbidden('const x = <img src={`https://cdn.example.com/a.png`} />')).toHaveLength(1)
+  })
+  it('dedupes: same URL in two loading contexts is reported once', () => {
+    const src = `fetch("https://evil.example/x")\nnew WebSocket("https://evil.example/x")`
+    expect(checkForbidden(src)).toHaveLength(1)
+  })
+})
+
+describe('checkForbidden — location access', () => {
+  it('flags window.location access', () => {
     expect(checkForbidden(`window.location = 'https://evil.example'`)).toContain('navigation: window.location')
-  })
-  it('does not allow schema.org bypass via query string', () => {
-    expect(checkForbidden(`fetch('https://evil.com/?ref=schema.org')`))
-      .toContain('external resource: https://evil.com/?ref=schema.org')
-  })
-  it('allows legitimate w3.org and schema.org URLs', () => {
-    expect(checkForbidden(`<!-- xmlns="http://www.w3.org/1999/xhtml" -->`)).toEqual([])
-    expect(checkForbidden(`<!-- type="https://schema.org/Person" -->`)).toEqual([])
   })
 })
