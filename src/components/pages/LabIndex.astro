@@ -2,7 +2,7 @@
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import { t } from '@/i18n/ui'
 import { getLabPosts } from '@/lib/lab'
-import { WERKE_CHRONO } from '@/data/werke'
+import { WERKE_EXPERIMENTE, WERKE_STUDIEN } from '@/data/werke'
 import type { Locale } from '@/lib/site'
 
 const locale = (Astro.currentLocale ?? 'en') as Locale
@@ -20,7 +20,7 @@ const fmt = (iso: string) =>
     <p class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">{t(locale, 'werke.kicker')} · {t(locale, 'werke.title')}</p>
     <p class="mt-3 max-w-2xl leading-relaxed text-fg-muted">{t(locale, 'werke.sub')}</p>
     <ul class="mt-8 divide-y divide-line/60 border-t border-line/60">
-      {WERKE_CHRONO.map((werk) => (
+      {WERKE_EXPERIMENTE.map((werk) => (
         <li class="py-7">
           <a href={getRelativeLocaleUrl(locale, werk.href)} class="group block">
             <h2 class="text-lg font-semibold transition-colors group-hover:text-accent-soft">
@@ -34,6 +34,23 @@ const fmt = (iso: string) =>
               {t(locale, 'prot.method')} →
             </a>
           )}
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <!-- Außer der Reihe — delistete Instrumente, die weiterlaufen und archivieren -->
+  <section class="mt-16">
+    <p class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">{t(locale, 'lab.running')}</p>
+    <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted">{t(locale, 'lab.runningSub')}</p>
+    <ul class="mt-6 divide-y divide-line/60 border-t border-line/60">
+      {WERKE_STUDIEN.map((werk) => (
+        <li class="py-4">
+          <a href={getRelativeLocaleUrl(locale, werk.href)} class="group block">
+            <span class="font-semibold transition-colors group-hover:text-accent-soft">{werk.title}</span>
+            <span class="text-sm text-fg-muted"> — {werk.subtitle[locale]}</span>
+            {werk.live && <span class="ml-2 align-middle font-mono text-[10px] uppercase tracking-wider text-fg-faint"><span class="dot-live mr-0.5 inline-block h-[5px] w-[5px] rounded-full align-middle"></span>live data</span>}
+          </a>
         </li>
       ))}
     </ul>
