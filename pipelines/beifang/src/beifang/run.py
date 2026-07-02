@@ -30,6 +30,9 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--date", default=None, help="YYYY-MM-DD (Default: heute UTC)")
     p.add_argument("--repo-root", required=True)
     p.add_argument("--limit", type=int, default=0, help="nur die ersten N Panel-Einträge (lokaler Test)")
+    p.add_argument("--vantage", default="github-actions",
+                   help="Messstandpunkt-Label (Spec §5): github-actions | vps | …")
+    p.add_argument("--proxy", default=None, help="optional: Proxy-URL für den Vantage")
     args = p.parse_args(argv)
     date_iso = args.date or datetime.now(timezone.utc).date().isoformat()
     root = Path(args.repo_root)
@@ -45,7 +48,7 @@ def main(argv: list[str] | None = None) -> int:
     for entry in entries:
         retrieved_at = utc_now_iso()
         try:
-            raw = capture_page(entry["url"])
+            raw = capture_page(entry["url"], proxy=args.proxy)
         except Exception as exc:
             results.append(site_result(entry, retrieved_at=retrieved_at,
                                        note=f"{type(exc).__name__}: {exc}"[:200]))
@@ -66,14 +69,15 @@ def main(argv: list[str] | None = None) -> int:
             continue
         first_party = registrable_domain(host)
         cls = classify(first_party, (r.host for r in raw.requests), easyprivacy, tds)
-        results.append(site_result(entry, retrieved_at=retrieved_at, raw=raw, cls=cls, note=goto_note))
+        results.append(site_result(entry, retrieved_at=retrieved_at, raw=raw, cls=cls,
+                                   note=goto_note, identity=entry.get("identity"), tds=tds))
         print(f"  {entry['id']}: {len(cls.tracker_hosts)} Tracker-Hosts, "
               f"{len(cls.entities)} Firmen")
 
     previous = load_previous(root, before=date_iso)
     runner = "github-actions" if os.environ.get("GITHUB_ACTIONS") == "true" else "lokal"
     record = assemble_run(date_iso=date_iso, panel_version=panel["version"], runner=runner,
-                          results=results, lists=lists_meta, previous=previous)
+                          vantage=args.vantage, results=results, lists=lists_meta, previous=previous)
     target = root / content_path(date_iso)
     if target.exists():
         print(f"{target} existiert bereits — Archiv unantastbar, kein Overwrite "

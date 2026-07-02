@@ -84,7 +84,7 @@ def test_load_previous_picks_latest_before(tmp_path):
 
 def test_assemble_run_has_eu_pending():
     rec = assemble_run(date_iso="2026-07-06", panel_version="2026-07-02", runner="test",
-                       results=[sr(note="x")],
+                       vantage="github-actions", results=[sr(note="x")],
                        lists={"easyprivacy": ListMeta("u", "t", "h")}, previous=None)
     assert rec.vantages["eu"].status == "ausstehend" and rec.vantages["eu"].results is None
     assert rec.vantages["us"].status == "ok"
@@ -126,3 +126,37 @@ def test_befund_median_delta_und_unveraendert():
     # unveraendert: Vorlauf identisch zum aktuellen Lauf
     prev_same = {"vantages": {"us": {"results": [asdict(r) for r in cur]}}}
     assert compute_befund(cur, prev_same).kind == "unveraendert"
+
+
+def test_site_result_computes_leaks_on_ok_path():
+    from beifang.capture import RawRequest
+    from beifang.classify import parse_tds
+    from beifang.assemble import site_result
+    tds = parse_tds({"trackers": {}, "entities": {"LiveRamp": {"displayName": "LiveRamp"}},
+                     "domains": {"liveramp.com": "LiveRamp"}})
+    doi = "10.1/x"
+    raw = RawCapture(final_url="https://www.sciencedirect.com/a", http_status=200,
+                     page_title="A", goto_error=None,
+                     requests=(RawRequest(url=f"https://pixel.liveramp.com/i?doi={doi}",
+                                          host="pixel.liveramp.com", resource_type="image",
+                                          bytes=1, post_data=None, referer=None),),
+                     cookies=())
+    r = site_result(ENTRY, retrieved_at="t", raw=raw,
+                    cls=Classification(frozenset({"pixel.liveramp.com"}), frozenset(), frozenset({"LiveRamp"})),
+                    identity={"doi": doi, "titel": None, "keywords": []}, tds=tds)
+    assert r.doi_leak is True
+    assert r.leak_firmen == ("LiveRamp",)
+    assert r.leaks[0].token == "doi" and r.leaks[0].firma == "LiveRamp"
+
+
+def test_blocked_result_nulls_leak_fields():
+    r = sr(raw=raw([("www.sciencedirect.com", 10)]),
+           blocked=Blocked(type="http", marker="403"))
+    assert r.leaks is None and r.leak_firmen is None and r.doi_leak is None
+
+
+def test_assemble_run_sets_vantage():
+    rec = assemble_run(date_iso="2026-07-13", panel_version="v", runner="test",
+                       vantage="vps", results=[sr(note="x")],
+                       lists={"easyprivacy": ListMeta("u", "t", "h")}, previous=None)
+    assert rec.vantage == "vps"

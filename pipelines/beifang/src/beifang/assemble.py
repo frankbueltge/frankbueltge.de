@@ -15,12 +15,14 @@ from urllib.parse import urlsplit
 from beifang import PIPELINE_VERSION
 from beifang.capture import RawCapture
 from beifang.classify import Classification, registrable_domain
+from beifang.leaks import find_leaks
 from beifang.model import (SCHEMA_VERSION, Befund, Blocked, ListMeta, RunRecord,
                            SiteResult, Vantage)
 
 _NULLED = dict(requests_total=None, third_party_hosts=None, third_party_requests=None,
                third_party_bytes=None, tracker_hosts=None, entities=None,
-               cookies_first_party=None, cookies_third_party=None)
+               cookies_first_party=None, cookies_third_party=None,
+               leaks=None, leak_firmen=None, doi_leak=None)
 
 
 def utc_now_iso() -> str:
@@ -29,7 +31,8 @@ def utc_now_iso() -> str:
 
 def site_result(entry: dict, *, retrieved_at: str, raw: RawCapture | None = None,
                 cls: Classification | None = None, blocked: Blocked | None = None,
-                note: str | None = None) -> SiteResult:
+                note: str | None = None, identity: dict | None = None,
+                tds=None) -> SiteResult:
     common = dict(panel_id=entry["id"], url=entry["url"], group=entry["group"],
                   publisher=entry["publisher"], retrieved_at=retrieved_at)
     if raw is None:  # Navigation gescheitert — Quelle nicht erreichbar
@@ -44,6 +47,9 @@ def site_result(entry: dict, *, retrieved_at: str, raw: RawCapture | None = None
     third_reqs = [r for r in raw.requests if registrable_domain(r.host) != final_domain]
     cookies_first = sum(1 for c in raw.cookies
                         if registrable_domain(c.domain) == final_domain)
+    leaks = find_leaks(identity, raw.requests, final_domain, tds) if tds is not None else ()
+    firmen = tuple(sorted({l.firma for l in leaks if l.firma}))
+    doi_leak = any(l.token == "doi" for l in leaks)
     return SiteResult(final_url=raw.final_url, final_domain=final_domain,
                       http_status=raw.http_status, blocked=None, note=note,
                       requests_total=len(raw.requests),
@@ -54,6 +60,7 @@ def site_result(entry: dict, *, retrieved_at: str, raw: RawCapture | None = None
                       entities=tuple(sorted(cls.entities)),
                       cookies_first_party=cookies_first,
                       cookies_third_party=len(raw.cookies) - cookies_first,
+                      leaks=leaks, leak_firmen=firmen, doi_leak=doi_leak,
                       **common)
 
 
@@ -124,7 +131,7 @@ def compute_befund(results: Sequence[SiteResult], previous: dict | None) -> Befu
     return Befund(kind="unveraendert")
 
 
-def assemble_run(*, date_iso: str, panel_version: str, runner: str,
+def assemble_run(*, date_iso: str, panel_version: str, runner: str, vantage: str,
                  results: Sequence[SiteResult], lists: dict[str, ListMeta],
                  previous: dict | None) -> RunRecord:
     vantages = {
@@ -133,5 +140,5 @@ def assemble_run(*, date_iso: str, panel_version: str, runner: str,
     }
     return RunRecord(date=date_iso, generated_at=utc_now_iso(),
                      schema_version=SCHEMA_VERSION, pipeline_version=PIPELINE_VERSION,
-                     panel_version=panel_version, runner=runner, lists=dict(lists),
+                     panel_version=panel_version, runner=runner, vantage=vantage, lists=dict(lists),
                      vantages=vantages, befund=compute_befund(results, previous))
