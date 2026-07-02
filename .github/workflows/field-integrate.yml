@@ -75,6 +75,25 @@ jobs:
             echo "no changes"
           fi
 
+      - name: Rejection feedback to the engine repo (green builds too)
+        if: success()
+        env:
+          BOT_TOKEN: ${{ secrets.FIELD_BOT_TOKEN }}
+        run: |
+          FEEDBACK=$(npx tsx scripts/atelier/rejection-feedback.ts /tmp/report.json field || true)
+          if [ -n "$FEEDBACK" ] && [ -n "$BOT_TOKEN" ]; then
+            DATE=$(date -u +%F)
+            (
+              git clone --depth 1 "https://x-access-token:${BOT_TOKEN}@github.com/frankbueltge/field-research" /tmp/fb-rej
+              mkdir -p /tmp/fb-rej/field-feedback
+              printf '%s\n' "$FEEDBACK" > "/tmp/fb-rej/field-feedback/${DATE}-rejections.md"
+              cd /tmp/fb-rej && git config user.name "Field-Integrate" && git config user.email "field-integrate@users.noreply.github.com"
+              git add field-feedback && git commit -m "feedback: works rejected at the gate ${DATE}" && git push
+            ) || echo "rejection feedback skipped (non-fatal)"
+          else
+            echo "no rejections (or no BOT_TOKEN) — nothing to feed back"
+          fi
+
       - name: On failure — feedback to the engine's repo + issue to Frank
         if: failure()
         env:
