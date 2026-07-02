@@ -76,7 +76,7 @@ Pro `SiteResult` neu ein `leaks`-Array; jeder Eintrag:
   kanal: "query" | "post" | "referer" | "pfad",
   host: "<empfangender Drittanbieter-Host>",
   firma: "<TDS-Entity oder null>",
-  beweis: "<der tatsächliche, redigierte Drittanbieter-Request-Ausschnitt>" }
+  beweis: "<der tatsächliche, um den Treffer zentrierte Drittanbieter-Request-Ausschnitt (≤300, nicht redigiert)>" }
 ```
 
 Plus pro Seite aggregiert: `leak_firmen` (distinkte Firmen, die Identität empfangen),
@@ -131,7 +131,7 @@ Verlauf, Methodenblatt-Link). **Neu** eine Sektion **„Was die Seite über dich
 - Pro erreichbarem Verlag die Leak-Funde, harte Signale zuerst.
 - Die Schlagzeile ist die eine Zeile, die haften bleibt: *„Auf Springer-Artikel X ging deine
   DOI im Klartext an Google Ads (Query-String) — bevor du irgendetwas geklickt hast."*
-- Der **echte Request als aufklappbarer Beweis** (`beweis`-Feld), mono, redigiert.
+- Der **echte Request als aufklappbarer Beweis** (`beweis`-Feld), mono, gekappt (nicht redigiert).
 - Weiche Signale (Titel/Keyword) klar als „schwächeres Indiz" gekennzeichnet, separat.
 - Leerzustand / „kein DOI-Leak auf den erreichbaren Seiten": ehrlich so benannt (auch ein Befund).
 
