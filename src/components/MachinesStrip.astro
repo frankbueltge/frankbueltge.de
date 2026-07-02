@@ -1,0 +1,41 @@
+---
+// Aus den Maschinen — die neuesten Werke über beide Engines hinweg, build-time aus den
+// integrierten meta.json. Aktualisiert sich mit jedem Integrate von selbst.
+// html-kind works (src/content/<ns>/works/*) haben KEINE eigene Seite — sie laufen nur als
+// iframe auf der Engine-Seite; latestWorks() verlinkt sie dorthin statt auf eine 404
+// (Review Task 5, 2026-07-02).
+import { t } from '@/i18n/ui'
+import type { Locale } from '@/lib/site'
+import { latestWorks, type EngineWorkMeta } from '@/lib/engines/latest'
+
+interface Props { locale: Locale }
+const { locale } = Astro.props
+
+const fieldMeta = import.meta.glob('/src/components/field/werke/*/meta.json', { eager: true, import: 'default' }) as Record<string, EngineWorkMeta>
+const atelierMeta = import.meta.glob('/src/components/atelier/werke/*/meta.json', { eager: true, import: 'default' }) as Record<string, EngineWorkMeta>
+const fieldHtmlMeta = import.meta.glob('/src/content/field/works/*/meta.json', { eager: true, import: 'default' }) as Record<string, EngineWorkMeta>
+const atelierHtmlMeta = import.meta.glob('/src/content/atelier/works/*/meta.json', { eager: true, import: 'default' }) as Record<string, EngineWorkMeta>
+
+const latest = latestWorks([
+  { ns: 'field', kind: 'astro', metas: fieldMeta },
+  { ns: 'field', kind: 'html', metas: fieldHtmlMeta },
+  { ns: 'atelier', kind: 'astro', metas: atelierMeta },
+  { ns: 'atelier', kind: 'html', metas: atelierHtmlMeta },
+], 4)
+---
+
+{latest.length > 0 && (
+  <div class="rounded-[14px] border border-line bg-panel panel-raised p-6">
+    <p class="mb-1 font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">{t(locale, 'machines.kicker')}</p>
+    <p class="mb-4 text-sm text-fg-muted">{t(locale, 'machines.lead')}</p>
+    <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      {latest.map((w) => (
+        <a href={w.href} class="group rounded-[10px] border border-line p-4 transition-colors hover:border-fg-faint">
+          <p class="font-mono text-[10px] uppercase tracking-[0.16em] text-fg-faint">{w.ns} · {w.date}</p>
+          <p class="mt-1 font-semibold leading-snug transition-opacity group-hover:opacity-70">{w.title}</p>
+          {w.blurb && <p class="mt-1 line-clamp-3 text-xs leading-relaxed text-fg-muted">{w.blurb}</p>}
+        </a>
+      ))}
+    </div>
+  </div>
+)}

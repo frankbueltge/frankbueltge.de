@@ -4,11 +4,19 @@ import { getRelativeLocaleUrl } from 'astro:i18n'
 import { t } from '@/i18n/ui'
 import type { Locale } from '@/lib/site'
 import { GEPLANT, WERKE_EXPERIMENTE } from '@/data/werke'
+import { latestWorks, type EngineWorkMeta } from '@/lib/engines/latest'
 
 interface Props { locale: Locale }
 const { locale } = Astro.props
 // Chronologisch, jüngstes zuerst — keine Sonderstellung (The Protocol steht als ältestes mit drin).
 const liveWerke = WERKE_EXPERIMENTE.filter((w) => w.status === 'live')
+
+const fieldMeta = import.meta.glob('/src/components/field/werke/*/meta.json', { eager: true, import: 'default' }) as Record<string, EngineWorkMeta>
+const atelierMeta = import.meta.glob('/src/components/atelier/werke/*/meta.json', { eager: true, import: 'default' }) as Record<string, EngineWorkMeta>
+const latestByNs = new Map([
+  ['field', latestWorks([{ ns: 'field', kind: 'astro', metas: fieldMeta }], 1)[0]],
+  ['atelier', latestWorks([{ ns: 'atelier', kind: 'astro', metas: atelierMeta }], 1)[0]],
+])
 ---
 
 <div class="rounded-[14px] border border-line bg-panel panel-raised p-6">
@@ -19,6 +27,11 @@ const liveWerke = WERKE_EXPERIMENTE.filter((w) => w.status === 'live')
         <span class="font-semibold transition-opacity group-hover:opacity-70">{werk.title}</span>
         {werk.live && <span class="ml-1.5 align-middle font-mono text-[10px] uppercase tracking-wider text-fg-faint"><span class="dot-live mr-0.5 inline-block h-[5px] w-[5px] rounded-full align-middle"></span>live data</span>}
         <span class="text-sm text-fg-muted"> — {werk.subtitle[locale]}</span>
+        {(werk.id === 'field' || werk.id === 'atelier') && latestByNs.get(werk.id) && (
+          <span class="block font-mono text-[11px] text-fg-faint">
+            ↳ {t(locale, 'machines.latest')}: {latestByNs.get(werk.id)!.title} · {latestByNs.get(werk.id)!.date}
+          </span>
+        )}
       </a>
     ))}
     {GEPLANT.length > 0 && (

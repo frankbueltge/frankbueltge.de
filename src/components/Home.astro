@@ -8,6 +8,7 @@ import { t } from '@/i18n/ui'
 import type { Locale } from '@/lib/site'
 import HeroField from '@/components/HeroField.astro'
 import WerkeStrip from '@/components/WerkeStrip.astro'
+import MachinesStrip from '@/components/MachinesStrip.astro'
 import { projects } from '@/data/projects'
 
 const locale = (Astro.currentLocale ?? 'en') as Locale
@@ -36,6 +37,11 @@ const featured = [...projects].sort((a, b) => a.order - b.order)
     <!-- Experimente — chronologisch, jüngstes zuerst -->
     <section class="col-span-12 mt-6">
       <WerkeStrip locale={locale} />
+    </section>
+
+    <!-- Aus den Maschinen — neueste Engine-Werke (Spec 2026-07-02-engine-presentation-design.md) -->
+    <section class="col-span-12 mt-4">
+      <MachinesStrip locale={locale} />
     </section>
 
     <!-- Eigene Projekte / Side Projects -->
