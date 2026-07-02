@@ -21,6 +21,17 @@ class Blocked:
 
 
 @dataclass(frozen=True)
+class Leak:
+    token: str           # "doi" | "titel" | "keyword"
+    signal: str          # "hard" | "soft"
+    form: str            # "klartext" | "url-kodiert" | "md5" | "sha1" | "sha256"
+    kanal: str           # "query" | "post" | "referer" | "pfad"
+    host: str            # empfangender Drittanbieter-Host
+    firma: str | None    # TDS-Entity oder None
+    beweis: str          # redigierter, gekappter Request-Ausschnitt
+
+
+@dataclass(frozen=True)
 class SiteResult:
     panel_id: str
     url: str
@@ -40,6 +51,9 @@ class SiteResult:
     cookies_first_party: int | None
     cookies_third_party: int | None
     retrieved_at: str
+    leaks: tuple[Leak, ...] | None
+    leak_firmen: tuple[str, ...] | None
+    doi_leak: bool | None
 
 
 @dataclass(frozen=True)
@@ -63,6 +77,7 @@ class RunRecord:
     pipeline_version: str
     panel_version: str
     runner: str          # "github-actions" | "lokal" — Mess-Standort ehrlich ausweisen (Spec §5)
+    vantage: str         # Messstandpunkt (Spec §5): "github-actions" | "vps" | ...
     lists: dict[str, ListMeta]
     vantages: dict[str, Vantage]
     befund: Befund
