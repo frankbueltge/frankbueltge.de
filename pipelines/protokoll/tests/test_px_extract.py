@@ -80,3 +80,19 @@ def test_extract_omissions_retries_on_429_then_succeeds():
     out = extract_omissions({"en": "text"}, client=client)
     assert out == parsed
     assert state["calls"] == 2
+
+
+def test_extract_omissions_exhausts_on_persistent_429_without_final_sleep(monkeypatch):
+    sleeps: list[float] = []
+    monkeypatch.setattr(ex.time, "sleep", lambda s: sleeps.append(s))
+    calls = {"n": 0}
+
+    def handler(req):
+        calls["n"] += 1
+        return httpx.Response(429, json={"error": "rate"})
+
+    client = httpx.Client(transport=httpx.MockTransport(handler))
+    with pytest.raises(ExtractionError, match="429"):
+        extract_omissions({"en": "text"}, client=client)
+    assert calls["n"] == 5                      # MAX_RETRIES Versuche
+    assert sleeps == [1.5, 3.0, 6.0, 12.0]      # exponentiell, KEIN Schlaf nach dem letzten
