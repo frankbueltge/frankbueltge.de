@@ -59,6 +59,19 @@ describe('integrate', () => {
     expect(rej?.reason).toMatch(/fehler bei verarbeitung/)
     expect(r.accepted).toContainEqual({ slug: 'good', kind: 'astro' })
   })
+  it('copies only allowlisted files and reports the rest as ignored', () => {
+    const mk = (p: string, c: string) => { mkdirSync(join(src, p, '..'), { recursive: true }); writeFileSync(join(src, p), c) }
+    mk('works/mixed/work.astro', `---\n---\n<p>ok</p>`)
+    mk('works/mixed/meta.json', JSON.stringify({ title: 'Mixed' }))
+    mk('works/mixed/README.md', '# notes')
+    mk('works/mixed/notes.py', 'print("hi")')
+    const r = integrate({ sourceDir: src, siteDir: site })
+    expect(r.accepted).toContainEqual({ slug: 'mixed', kind: 'astro', ignored: ['README.md', 'notes.py'] })
+    expect(existsSync(join(site, 'src/components/atelier/werke/mixed/index.astro'))).toBe(true)
+    expect(existsSync(join(site, 'src/components/atelier/werke/mixed/meta.json'))).toBe(true)
+    expect(existsSync(join(site, 'src/components/atelier/werke/mixed/README.md'))).toBe(false)
+    expect(existsSync(join(site, 'src/components/atelier/werke/mixed/notes.py'))).toBe(false)
+  })
   it('integrates into a custom namespace', () => {
     const r = integrate({ sourceDir: src, siteDir: site, ns: 'field' })
     expect(r.accepted).toContainEqual({ slug: 'good', kind: 'astro' })
