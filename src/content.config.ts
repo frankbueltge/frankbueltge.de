@@ -75,6 +75,48 @@ const protokoll = defineCollection({
   }),
 })
 
+// Beifang = wöchentliche Zensus-Snapshots der Gegenmessung (src/content/beifang/<jahr>/<datum>.json).
+// Prosa (Befund-Sätze, „Feststellung entfällt") entsteht erst im Renderer — JSON ist das Archiv.
+const beifang = defineCollection({
+  loader: glob({ pattern: '**/*.json', base: './src/content/beifang' }),
+  schema: z.object({
+    date: z.string(),
+    generated_at: z.string(),
+    schema_version: z.string(),
+    pipeline_version: z.string(),
+    panel_version: z.string(),
+    runner: z.string(),
+    lists: z.record(z.string(), z.object({
+      source_url: z.string(), retrieved_at: z.string(), sha256: z.string(),
+    })),
+    vantages: z.record(z.string(), z.object({
+      status: z.string(),
+      note: z.string().nullable(),
+      results: z.array(z.object({
+        panel_id: z.string(),
+        url: z.string(),
+        final_url: z.string().nullable(),
+        final_domain: z.string().nullable(),
+        group: z.string(),
+        publisher: z.string(),
+        http_status: z.number().nullable(),
+        blocked: z.object({ type: z.string(), marker: z.string().nullable() }).nullable(),
+        note: z.string().nullable(),
+        requests_total: z.number().nullable(),
+        third_party_hosts: z.number().nullable(),
+        third_party_requests: z.number().nullable(),
+        third_party_bytes: z.number().nullable(),
+        tracker_hosts: z.array(z.string()).nullable(),
+        entities: z.array(z.string()).nullable(),
+        cookies_first_party: z.number().nullable(),
+        cookies_third_party: z.number().nullable(),
+        retrieved_at: z.string(),
+      })).nullable(),
+    })),
+    befund: z.object({ kind: z.string(), params: z.record(z.string(), z.unknown()) }),
+  }),
+})
+
 // Atelier = das öffentliche Forschungstagebuch + Werke der autonomen Maschinen-Forscherin
 // („Irrtum als Methode"). Plain Markdown ohne Frontmatter, nächtlich aus dem Atelier-Repo
 // synchronisiert (src/content/atelier/{journal,works}/*.md, PROTOCOL.md, README.md).
@@ -91,4 +133,4 @@ const field = defineCollection({
   schema: z.object({}).loose(),
 })
 
-export const collections = { lab, protokoll, atelier, field }
+export const collections = { lab, protokoll, atelier, field, beifang }
