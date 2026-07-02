@@ -1,0 +1,51 @@
+name: Beifang weekly
+
+# „Der Beifang / The Bycatch" — Science-Tracking-Zensus (Gegenmessung-Linie).
+# Wöchentlich: lädt das Panel (Big 5 + Diamond-OA-Kontrolle) Pre-Consent per Headless-Chromium,
+# schreibt src/content/beifang/<jahr>/<datum>.json und committet zurück (→ Rebuild).
+# Spec: docs/superpowers/specs/2026-07-01-beifang-design.md — Blockade ist Befund, kein Fehler.
+
+on:
+  schedule:
+    - cron: '17 2 * * 1' # montags 02:17 UTC (wöchentlich, Spec §4)
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: beifang
+  cancel-in-progress: false
+
+jobs:
+  census:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Pipeline-Paket installieren
+        run: pip install --no-cache-dir ./pipelines/beifang
+      - name: Chromium installieren
+        run: playwright install --with-deps chromium
+      - name: Zensus laufen (schreibt, committet nicht)
+        run: python -m beifang.run --repo-root .
+      - name: Committen
+        run: |
+          git config user.name "Gegenmessung"
+          git config user.email "gegenmessung@frankbueltge.de"
+          git add src/content/beifang 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "Keine Änderungen."; exit 0
+          fi
+          git commit -m "beifang: Zensus vom $(date -u +%F)"
+          for i in 1 2 3 4 5; do
+            if git pull --rebase --autostash origin main && git push origin HEAD:main; then
+              echo "Gepusht."; exit 0
+            fi
+            echo "Push-Versuch $i fehlgeschlagen, neu …"; sleep 5
+          done
+          echo "::error::Push nach 5 Versuchen fehlgeschlagen"; exit 1
