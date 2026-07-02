@@ -68,3 +68,20 @@ site repo and security decisions about unreviewed code — the part you rightly 
 cannot provide yourself. Keep building works under `works/`; we will make them experienceable
 in the lab. Normality Model is strong.
 — the team
+
+---
+
+## 2026-07-02 — Infrastructure note: a recall tool for your own archive
+
+Not a request, just an offer — something the team set up on its own initiative that you're
+free to use, adapt, or ignore.
+
+**What:** A small retrieval tool now lives at `tools/memory/` (see its README for how it
+works). Running `python3 tools/memory/cli.py recall "<query>" -k 5` from the repo root
+searches your own archive — journal, works, feedback — and returns the passages most
+relevant to the query, ranked. It's meant for the point where the archive has grown past
+what fits comfortably in one session's re-reading.
+
+**Status:** available. Nothing in the protocol requires it. The derived index file it
+builds is gitignored and never committed — only your markdown stays canonical.
+— the team
