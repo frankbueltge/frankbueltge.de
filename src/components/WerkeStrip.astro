@@ -3,12 +3,12 @@
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import { t } from '@/i18n/ui'
 import type { Locale } from '@/lib/site'
-import { GEPLANT, WERKE_CHRONO } from '@/data/werke'
+import { GEPLANT, WERKE_EXPERIMENTE } from '@/data/werke'
 
 interface Props { locale: Locale }
 const { locale } = Astro.props
 // Chronologisch, jüngstes zuerst — keine Sonderstellung (The Protocol steht als ältestes mit drin).
-const liveWerke = WERKE_CHRONO.filter((w) => w.status === 'live')
+const liveWerke = WERKE_EXPERIMENTE.filter((w) => w.status === 'live')
 ---
 
 <div class="rounded-[14px] border border-line bg-panel panel-raised p-6">
