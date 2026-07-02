@@ -95,3 +95,11 @@ def test_parse_tds_trackers_owner_wins_over_domains():
         "domains": {"adnxs.com": "Falschname"},
     })
     assert tds.entity_map["adnxs.com"] == "Xandr"
+
+
+def test_entity_for_maps_host_via_chain():
+    from beifang.classify import entity_for
+    tds = parse_tds(TDS)
+    assert entity_for("pixel.rlcdn.com", tds) == "LiveRamp"
+    assert entity_for("adnxs.com", tds) == "Xandr"
+    assert entity_for("cdn.unbekannt.example", tds) is None
