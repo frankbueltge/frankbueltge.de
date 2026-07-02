@@ -139,3 +139,9 @@ export function doiLeakEntities(run: BeifangRun): string[] {
   for (const f of leakFindings(run)) for (const name of f.firmen) firmen.add(name)
   return [...firmen].sort()
 }
+
+/** Unterscheidet "Leak-Audit lief nicht" (reiner v1-Zensus, leaks-Feld fehlt überall) von
+ *  "Audit lief, keine Funde" — sonst wäre ein nicht gemessener Lauf fälschlich als "sauber" markiert. */
+export function leakAuditRan(run: BeifangRun): boolean {
+  return usResults(run).some((r) => r.leaks != null)
+}

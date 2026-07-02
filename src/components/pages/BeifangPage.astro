@@ -8,7 +8,7 @@ import { t } from '@/i18n/ui'
 import { getBeifangRuns } from '@/lib/beifang/data'
 import { renderBefund } from '@/lib/beifang/befund'
 import { PUBLISHER_LABELS } from '@/lib/beifang/types'
-import { blockadeStats, entityTable, groupMedians, leakFindings, publisherMedians, sparkPath, timeline, usResults } from '@/lib/beifang/stats'
+import { blockadeStats, entityTable, groupMedians, leakAuditRan, leakFindings, publisherMedians, sparkPath, timeline, usResults } from '@/lib/beifang/stats'
 
 interface Props { locale: 'de' | 'en' }
 const { locale } = Astro.props
@@ -16,6 +16,7 @@ const de = locale === 'de'
 const runs = await getBeifangRuns()
 const latest = runs[0]
 const leaks = latest ? leakFindings(latest) : []
+const auditRan = latest ? leakAuditRan(latest) : false
 const methodUrl = getRelativeLocaleUrl(locale, '/werke/beifang')
 const gm = latest ? groupMedians(latest) : null
 const pm = latest ? publisherMedians(latest) : {}
@@ -138,7 +139,13 @@ const euStatusText = latest
       {/* Was die Seite über dich verrät — der Identitäts-Leak (hartes Signal: DOI) */}
       <section class="mb-12">
         <h2 class="mb-3 font-semibold">{de ? 'Was die Seite über dich verrät' : 'What the page reveals about you'}</h2>
-        {leaks.length === 0 ? (
+        {!auditRan ? (
+          <p class="text-fg-muted">
+            {de
+              ? 'Der Leak-Audit lief in dieser Sitzung noch nicht — dieser Lauf war reiner Tracker-Zensus. Der Identitäts-Nachweis beginnt mit dem nächsten Lauf.'
+              : 'The leak audit did not run in this session — this run was a plain tracker census. Identity detection begins with the next run.'}
+          </p>
+        ) : leaks.length === 0 ? (
           <p class="text-fg-muted">
             {de
               ? 'Auf den erreichbaren Seiten kein nachweisbarer DOI-Leak an Dritte — auch das ist ein Befund (und gilt nur für das Messbare; das Gros der Verlagsseiten verweigert die Messung).'

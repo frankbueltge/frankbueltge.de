@@ -160,3 +160,19 @@ def test_assemble_run_sets_vantage():
                        vantage="vps", results=[sr(note="x")],
                        lists={"easyprivacy": ListMeta("u", "t", "h")}, previous=None)
     assert rec.vantage == "vps"
+
+
+def test_site_result_null_leaks_when_no_identity():
+    from beifang.capture import RawCapture, RawRequest
+    from beifang.classify import parse_tds
+    from beifang.assemble import site_result
+    tds = parse_tds({"trackers": {}, "entities": {}, "domains": {}})
+    raw = RawCapture(final_url="https://www.sciencedirect.com/a", http_status=200, page_title="A",
+                     goto_error=None,
+                     requests=(RawRequest(url="https://x.example/?doi=10.1/x", host="x.example",
+                                          resource_type="script", bytes=1, post_data=None, referer=None),),
+                     cookies=())
+    r = site_result(ENTRY, retrieved_at="t", raw=raw,
+                    cls=Classification(frozenset({"x.example"}), frozenset(), frozenset()),
+                    identity=None, tds=tds)
+    assert r.leaks is None and r.leak_firmen is None and r.doi_leak is None

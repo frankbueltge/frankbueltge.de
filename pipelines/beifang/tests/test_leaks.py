@@ -116,3 +116,18 @@ def test_doi_resolver_is_not_a_leak():
                                req(f"https://dx.doi.org/{DOI}")],
                        "nature.com", TDSD)
     assert leaks == ()
+
+
+def test_doi_klartext_and_url_kodiert_cooccur_same_channel():
+    from urllib.parse import quote
+    enc = quote(DOI, safe="")
+    leaks = find_leaks(IDENT, [req(f"https://adnxs.com/x?a={DOI}&b={enc}")], "sciencedirect.com", TDSD)
+    fs = {l.form for l in leaks if l.token == "doi"}
+    assert "klartext" in fs and "url-kodiert" in fs
+
+
+def test_title_only_encoded_is_labeled_url_kodiert():
+    leaks = find_leaks(IDENT, [req("https://adnxs.com/x?t=Machine%20learning%20for%20protein%20folding%20at%20scale")],
+                       "sciencedirect.com", TDSD)
+    titel = [l for l in leaks if l.token == "titel"]
+    assert titel and titel[0].form == "url-kodiert"

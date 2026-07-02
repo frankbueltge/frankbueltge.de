@@ -44,6 +44,12 @@ keine Laufzeit-Downloads:
 .venv/bin/python -m beifang.lists_fetch  # holt EasyPrivacy + DuckDuckGo-TDS
 ```
 
+Nach jedem (Wieder-)Aufbau des Panels: `.venv/bin/python -m beifang.identity` laufen lassen,
+um die Leseidentität (Titel/Schlagwörter via Crossref) je Panel-Eintrag (wieder) anzuhängen —
+**ohne diesen Schritt fehlt jedem Eintrag `identity`, und der Leak-Audit ist entwaffnet**
+(die Leak-Felder werden dann null — fehlende Identität heißt "Audit konnte nicht laufen",
+nicht "sauber gemessen").
+
 Änderungen an Panel oder Listen sind bewusste, sichtbare Commits — nie Teil des
 Wochenlaufs. Panel-Änderungen (tote URLs, Ersatz) bekommen einen Log-Eintrag in
 `panel["log"]`, damit die Zeitreihe interpretierbar bleibt.

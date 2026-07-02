@@ -104,7 +104,7 @@ describe('timeline/sparkPath', () => {
   })
 })
 
-import { leakFindings, doiLeakEntities } from './stats'
+import { leakFindings, doiLeakEntities, leakAuditRan } from './stats'
 import type { BeifangLeak } from './types'
 
 function hardDoi(host: string, firma: string | null): BeifangLeak {
@@ -139,5 +139,14 @@ describe('leakFindings/doiLeakEntities', () => {
     const r = run([result({ doi_leak: false, leaks: [], leak_firmen: [] })])
     expect(leakFindings(r)).toEqual([])
     expect(doiLeakEntities(r)).toEqual([])
+  })
+})
+
+describe('leakAuditRan', () => {
+  it('false wenn kein Result Leak-Felder trägt (reiner v1-Zensus)', () => {
+    expect(leakAuditRan(run([result({ doi_leak: undefined, leaks: undefined })]))).toBe(false)
+  })
+  it('true sobald ein Result ein leaks-Array (auch leer) trägt', () => {
+    expect(leakAuditRan(run([result({ leaks: [] })]))).toBe(true)
   })
 })
