@@ -79,3 +79,16 @@ def test_limit_caps_entries(tmp_path, monkeypatch):
     run_mod.main(["--date", "2026-07-06", "--repo-root", str(tmp_path), "--limit", "2"])
     data = json.loads((tmp_path / "src/content/beifang/2026/2026-07-06.json").read_text())
     assert len(data["vantages"]["us"]["results"]) == 2
+
+
+def test_run_threads_identity_and_vantage(tmp_path, monkeypatch):
+    monkeypatch.setattr(run_mod, "capture_page", fake_capture)
+    monkeypatch.setattr(run_mod, "load_panel", lambda: {"version": "v", "entries": [
+        {"id": "springer-nature-01", "group": "verlag", "publisher": "springer-nature",
+         "url": "https://doi.org/10.1/x", "expected_domain": "nature.com",
+         "identity": {"doi": "10.1/x", "titel": None, "keywords": []}}]})
+    code = run_mod.main(["--date", "2026-07-13", "--repo-root", str(tmp_path), "--vantage", "vps"])
+    assert code == 0
+    import json as _j
+    data = _j.loads((tmp_path / "src/content/beifang/2026/2026-07-13.json").read_text())
+    assert data["vantage"] == "vps"
