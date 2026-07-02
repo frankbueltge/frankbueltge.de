@@ -7,9 +7,9 @@ from beifang.capture import RawCapture
 def fake_capture(url, **kwargs):
     if "kontrolle-blockiert" in url:
         return RawCapture(final_url=url, http_status=403, page_title="Access Denied",
-                          requests=(), cookies=())
+                          requests=(), cookies=(), goto_error=None)
     return RawCapture(final_url="https://www.sciencedirect.com/x", http_status=200,
-                      page_title="Artikel", requests=(), cookies=())
+                      page_title="Artikel", requests=(), cookies=(), goto_error=None)
 
 
 def test_run_writes_snapshot(tmp_path, monkeypatch):
@@ -31,6 +31,43 @@ def test_run_writes_snapshot(tmp_path, monkeypatch):
     blocked = next(r for r in results if r["panel_id"] == "sage-01")
     assert blocked["blocked"]["type"] == "http" and blocked["tracker_hosts"] is None
     assert data["befund"]["kind"] == "baseline"
+
+
+def test_navigation_to_blank_is_failed_measurement(tmp_path, monkeypatch):
+    def fake_capture_blank(url, **kwargs):
+        return RawCapture(final_url="about:blank", http_status=None, page_title="",
+                          requests=(), cookies=(), goto_error="TimeoutError: x")
+
+    monkeypatch.setattr(run_mod, "capture_page", fake_capture_blank)
+    monkeypatch.setattr(run_mod, "load_panel", lambda: {
+        "version": "v",
+        "entries": [
+            {"id": "elsevier-01", "group": "verlag", "publisher": "elsevier",
+             "url": "https://doi.org/10.x", "expected_domain": "sciencedirect.com"},
+        ]})
+    code = run_mod.main(["--date", "2026-07-06", "--repo-root", str(tmp_path)])
+    assert code == 0
+    out = tmp_path / "src/content/beifang/2026/2026-07-06.json"
+    data = json.loads(out.read_text())
+    r = data["vantages"]["us"]["results"][0]
+    # about:blank hat keinen Hostnamen -> gescheiterte Navigation, kein fabriziertes Ergebnis
+    assert r["final_url"] is None and r["final_domain"] is None
+    assert r["tracker_hosts"] is None and r["requests_total"] is None
+    assert "TimeoutError" in r["note"]
+
+
+def test_existing_snapshot_is_never_overwritten(tmp_path, monkeypatch):
+    monkeypatch.setattr(run_mod, "capture_page", fake_capture)
+    monkeypatch.setattr(run_mod, "load_panel", lambda: {"version": "v", "entries": [
+        {"id": "elsevier-01", "group": "verlag", "publisher": "elsevier",
+         "url": "https://doi.org/10.x", "expected_domain": "sciencedirect.com"},
+    ]})
+    target = tmp_path / "src/content/beifang/2026/2026-07-06.json"
+    target.parent.mkdir(parents=True)
+    target.write_text("SENTINEL", encoding="utf-8")
+    code = run_mod.main(["--date", "2026-07-06", "--repo-root", str(tmp_path)])
+    assert code == 0
+    assert target.read_text(encoding="utf-8") == "SENTINEL"
 
 
 def test_limit_caps_entries(tmp_path, monkeypatch):

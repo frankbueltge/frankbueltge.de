@@ -36,6 +36,7 @@ class RawCapture:
     page_title: str
     requests: tuple[RawRequest, ...]
     cookies: tuple[RawCookie, ...]
+    goto_error: str | None
 
 
 def detect_blocked(http_status: int | None, page_title: str) -> Blocked | None:
@@ -63,11 +64,14 @@ def capture_page(url: str, *, timeout_s: float = 60.0, settle_s: float = 8.0,
         page.on("response", lambda resp: responses.append(resp))  # im Handler keine API-Aufrufe (sync-API-Regel)
 
         status: int | None = None
+        goto_error: str | None = None
         try:
             main = page.goto(url, timeout=timeout_s * 1000, wait_until="load")
             status = main.status if main else None
-        except Exception:
-            pass  # Timeout/Abbruch: was bis hier lief, wird trotzdem protokolliert
+        except Exception as exc:
+            # Timeout/Abbruch: was bis hier lief, wird trotzdem protokolliert — der
+            # Fehlertext wandert als goto_error mit, statt still zu verschwinden.
+            goto_error = f"{type(exc).__name__}: {exc}"[:200]
         page.wait_for_timeout(settle_s * 1000)
 
         reqs: list[RawRequest] = []
@@ -88,4 +92,4 @@ def capture_page(url: str, *, timeout_s: float = 60.0, settle_s: float = 8.0,
                         for c in context.cookies())
         browser.close()
     return RawCapture(final_url=final_url, http_status=status, page_title=title,
-                      requests=tuple(reqs), cookies=cookies)
+                      requests=tuple(reqs), cookies=cookies, goto_error=goto_error)

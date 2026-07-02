@@ -17,7 +17,8 @@ def raw(host_pairs):
                                                 resource_type="script", bytes=b)
                                      for h, b in host_pairs),
                       cookies=(RawCookie(name="s", domain="sciencedirect.com"),
-                               RawCookie(name="t", domain="tracker.example")))
+                               RawCookie(name="t", domain="tracker.example")),
+                      goto_error=None)
 
 
 def sr(**over):

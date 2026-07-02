@@ -26,13 +26,25 @@ def parse_easyprivacy(text: str) -> frozenset[str]:
         if not line.startswith("||"):
             continue
         rule = line[2:]
-        for sep in ("^", "/", "$"):
-            idx = rule.find(sep)
-            if idx != -1:
-                rule = rule[:idx]
-        if not rule or "*" in rule or "." not in rule:
+        dollar = rule.find("$")
+        pattern, options = (rule[:dollar], rule[dollar:]) if dollar != -1 else (rule, "")
+        # Nur Whole-Domain-Anker akzeptieren: das URL-Muster (vor $-Optionen) darf nur
+        # aus der Domain bestehen, optional mit einem einzelnen abschließenden "^"
+        # (Trennzeichen-Platzhalter — laut ABP-Syntax kein Domain-Ende; folgt danach
+        # weiteres Muster wie "*.bmp?", ist es keine Domain-Regel). Ein "/" irgendwo im
+        # Muster macht es zu einer Pfad-Regel (z. B. ||cloudfront.net/analytics.js) —
+        # die trifft nur einen Pfad, ggf. auf einem geteilten CDN-Host, nie die Domain.
+        if "/" in pattern:
             continue
-        domains.add(rule.lower())
+        caret = pattern.find("^")
+        if caret != -1 and caret != len(pattern) - 1:
+            continue
+        if "domain=" in options:
+            continue  # auf andere Seiten beschränkte Ausnahme, keine generelle Domain-Regel
+        domain = pattern[:-1] if pattern.endswith("^") else pattern
+        if not domain or "*" in domain or "." not in domain:
+            continue
+        domains.add(domain.lower())
     return frozenset(domains)
 
 
