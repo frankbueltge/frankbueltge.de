@@ -3,19 +3,14 @@
 // "field-research"). Renders the research journal (journal/), the interactive works
 // (works/<date>-<name>/index.html, live in an isolated sandbox iframe as a same-origin
 // standalone) and the text works (works/*.md) from the synced content collection.
-// Unedited. Content comes from the field-research repo. English-language. (Isolated clone of
-// AtelierPage — could be DRY'd into a shared EnginePage later.)
-import { getCollection, render } from 'astro:content'
-import { sortJournal, sortWorks } from '@/lib/atelier/sort'
+// Unedited. Content comes from the field-research repo. English-language.
+// Thin wrapper: collection access + globs stay here (they resolve per call site), the shared
+// markup lives in EnginePage.
+import { getCollection } from 'astro:content'
+import { sortWorks } from '@/lib/atelier/sort'
+import EnginePage, { type EngineConfig } from '@/components/pages/EnginePage.astro'
 
 const all = await getCollection('field')
-// Journal newest-first (numeric: session-10 before session-9, date entries at the bottom of their day).
-const journal = sortJournal(all.filter((e) => e.id.startsWith('journal/')))
-// Texts newest-first.
-const mdWorks = all.filter((e) => e.id.startsWith('works/')).sort((a, b) => b.id.localeCompare(a.id))
-
-const journalR = await Promise.all(journal.map(async (e) => ({ id: e.id, Content: (await render(e)).Content })))
-const mdWorksR = await Promise.all(mdWorks.map(async (e) => ({ id: e.id, Content: (await render(e)).Content })))
 
 // Works — one chronological gallery from two sources, newest-first, so the actually newest work
 // always leads:
@@ -40,136 +35,27 @@ const works = sortWorks([
   })),
 ])
 
-const REPO = 'https://github.com/frankbueltge/field-research'
-const dayLabel = (id: string) => id.replace('journal/', '').replace(/\.md$/, '')
-
-const txt = {
-  eyebrow: 'Lab · autonomous research',
-  note: '(working title)',
-  title: 'Field Research',
-  lede: 'A machine collective holds research sessions — it reads its journal, researches the web, builds instruments and works, errs, and documents checkably, investigating the live field where data, AI and power meet. Full autonomy over question, direction — and even its own names. Unedited. Git is the memory.',
-  worksH: 'Texts & notes',
-  journalH: 'Research journal',
-  source: 'Source, protocol & history',
-  sourceCode: 'Source code',
-  sources: 'Sources',
-  sandboxNote: 'Runs sandboxed in your browser.',
-  empty: 'The first session follows with the next scheduled run.',
+const config: EngineConfig = {
+  ns: 'field',
+  repo: 'https://github.com/frankbueltge/field-research',
+  txt: {
+    eyebrow: 'Lab · autonomous research',
+    note: '(working title)',
+    title: 'Field Research',
+    lede: 'A machine collective holds research sessions — it reads its journal, researches the web, builds instruments and works, errs, and documents checkably, investigating the live field where data, AI and power meet. Full autonomy over question, direction — and even its own names. Unedited. Git is the memory.',
+    worksH: 'Texts & notes',
+    journalH: 'Research journal',
+    source: 'Source, protocol & history',
+    sourceCode: 'Source code',
+    sources: 'Sources',
+    sandboxNote: 'Runs sandboxed in your browser.',
+    empty: 'The first session follows with the next scheduled run.',
+    constitution: 'Constitution',
+    teamChannel: 'Team channel',
+    worksSectionH: 'Works',
+    openWork: 'Open work',
+  },
 }
 ---
 
-<div class="mx-auto max-w-3xl px-4 py-14">
-  <header class="mb-12">
-    <p class="font-mono text-xs uppercase tracking-[0.2em] text-fg-faint">{txt.eyebrow}</p>
-    <h1 class="mt-2 text-[clamp(30px,7vw,52px)] font-bold leading-none tracking-tight">
-      {txt.title} <span class="align-middle text-base font-normal text-fg-faint">{txt.note}</span>
-    </h1>
-    <p class="mt-4 text-pretty text-fg-muted">{txt.lede}</p>
-    <p class="mt-3 font-mono text-xs text-fg-faint">
-      <a href={REPO} target="_blank" rel="noreferrer" class="underline transition-colors hover:text-fg">{txt.source} ↗</a>
-    </p>
-  </header>
-
-  {works.length > 0 && (
-    <section class="mb-16">
-      <h2 class="mb-5 font-mono text-xs uppercase tracking-widest text-fg-faint">Works</h2>
-      {works.map(({ slug, kind, meta }) => kind === 'astro' ? (
-        <article class="mb-12 rounded-[16px] border border-line bg-panel panel-raised p-6">
-          <a href={`/field/werke/${slug}`} class="group block">
-            <h3 class="text-lg font-semibold transition-colors group-hover:text-accent-soft">
-              {meta.title ?? slug}
-              {meta.date && <span class="ml-2 font-mono text-xs font-normal text-fg-faint">{meta.date}</span>}
-            </h3>
-            {(meta.embodies ?? meta.verkoerpert) && <p class="mt-1.5 text-sm leading-relaxed text-fg-muted">{meta.embodies ?? meta.verkoerpert}</p>}
-            <span class="mt-3 inline-block font-mono text-[11px] text-fg-faint underline transition-colors group-hover:text-fg">Open work →</span>
-          </a>
-        </article>
-      ) : (
-        <article class="mb-12 rounded-[16px] border border-line bg-panel panel-raised p-6">
-          <header class="mb-4">
-            <h3 class="text-lg font-semibold">
-              {meta.title ?? slug}
-              {meta.date && <span class="ml-2 font-mono text-xs font-normal text-fg-faint">{meta.date}</span>}
-            </h3>
-            {(meta.embodies ?? meta.verkoerpert) && <p class="mt-2 text-sm leading-relaxed text-fg-muted">{meta.embodies ?? meta.verkoerpert}</p>}
-            {meta.medium && (
-              <p class="mt-2 font-mono text-[11px] text-fg-faint">
-                {meta.medium}{meta.seed != null && ` · Seed ${meta.seed}`}
-              </p>
-            )}
-          </header>
-
-          {/*
-            SECURITY: standalone same-origin file under /field/werke-html/<slug>/ —
-            a separate document does NOT inherit the parent <meta> CSP. sandbox="allow-scripts"
-            WITHOUT allow-same-origin → null origin, no access to cookies/storage/DOM of
-            frankbueltge.de. Path-specific CSP in _headers allows the work's inline scripts,
-            blocks fetch/connect (no exfiltration channel).
-            NEVER add allow-same-origin — that would lift the isolation.
-          */}
-          <iframe
-            src={`/field/werke-html/${slug}/`}
-            sandbox="allow-scripts"
-            loading="lazy"
-            title={meta.title ?? slug}
-            class="block h-[600px] w-full resize-y overflow-auto rounded-[10px] border border-line bg-white"
-          ></iframe>
-
-          <div class="mt-3 flex flex-wrap items-center justify-between gap-2 font-mono text-[11px] text-fg-faint">
-            <span>{txt.sandboxNote}</span>
-            <a href={`${REPO}/tree/main/works/${slug}`} target="_blank" rel="noreferrer" class="underline hover:text-fg">{txt.sourceCode} ↗</a>
-          </div>
-
-          {Array.isArray(meta.quellen) && meta.quellen.length > 0 && (
-            <details class="mt-3 font-mono text-[11px] text-fg-faint">
-              <summary class="cursor-pointer select-none">{txt.sources}</summary>
-              <ul class="mt-2 list-disc space-y-1 pl-4">
-                {meta.quellen.map((q: string) => <li>{q}</li>)}
-              </ul>
-            </details>
-          )}
-        </article>
-      ))}
-    </section>
-  )}
-
-  {mdWorksR.length > 0 && (
-    <section class="mb-16">
-      <h2 class="mb-5 font-mono text-xs uppercase tracking-widest text-fg-faint">{txt.worksH}</h2>
-      {mdWorksR.map(({ Content }) => (
-        <article class="field-prose mb-8 rounded-[16px] border border-line bg-panel panel-raised p-6">
-          <Content />
-        </article>
-      ))}
-    </section>
-  )}
-
-  <section>
-    <h2 class="mb-5 font-mono text-xs uppercase tracking-widest text-fg-faint">{txt.journalH}</h2>
-    {journalR.length === 0 && <p class="text-fg-faint">{txt.empty}</p>}
-    {journalR.map(({ id, Content }) => (
-      <article class="field-prose mb-12 border-t border-line pt-6">
-        <p class="mb-3 font-mono text-[11px] uppercase tracking-wider text-fg-faint">{dayLabel(id)}</p>
-        <Content />
-      </article>
-    ))}
-  </section>
-</div>
-
-<style>
-  .field-prose :global(h1) { font-size: 1.45rem; font-weight: 700; line-height: 1.2; margin: 0.1em 0 0.5em; }
-  .field-prose :global(h2) { font-size: 1.12rem; font-weight: 600; margin: 1.5em 0 0.4em; }
-  .field-prose :global(h3) { font-size: 1rem; font-weight: 600; margin: 1.2em 0 0.3em; }
-  .field-prose :global(p) { margin: 0.6em 0; line-height: 1.66; }
-  .field-prose :global(ul), .field-prose :global(ol) { margin: 0.6em 0 0.6em 1.25em; list-style: revert; }
-  .field-prose :global(li) { margin: 0.25em 0; line-height: 1.55; }
-  .field-prose :global(a) { text-decoration: underline; text-underline-offset: 2px; }
-  .field-prose :global(strong) { font-weight: 600; }
-  .field-prose :global(em) { font-style: italic; }
-  .field-prose :global(code) { font-family: ui-monospace, SFMono-Regular, monospace; font-size: 0.85em; }
-  .field-prose :global(hr) { border: 0; border-top: 1px solid color-mix(in srgb, currentColor 20%, transparent); margin: 1.4em 0; }
-  .field-prose :global(blockquote) { border-left: 2px solid color-mix(in srgb, currentColor 30%, transparent); padding-left: 1em; margin: 0.8em 0; opacity: 0.9; }
-  .field-prose :global(table) { width: 100%; border-collapse: collapse; font-size: 0.82em; margin: 0.9em 0; display: block; overflow-x: auto; }
-  .field-prose :global(th), .field-prose :global(td) { border: 1px solid color-mix(in srgb, currentColor 20%, transparent); padding: 0.35em 0.55em; text-align: left; vertical-align: top; }
-  .field-prose :global(th) { font-weight: 600; }
-</style>
+<EnginePage config={config} all={all} works={works} />

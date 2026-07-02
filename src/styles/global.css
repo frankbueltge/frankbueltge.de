@@ -341,3 +341,20 @@ body {
 :root[data-skin='brutalism'] h1 { text-transform: none; font-weight: 700; }
 :root[data-skin='brutalism'] a { text-decoration: underline; }
 :root[data-skin='brutalism'] .vignette { display: none; }
+
+/* ── Engine prose — rendered markdown in the engine pages (field, atelier journals & works) ── */
+.engine-prose h1 { font-size: 1.45rem; font-weight: 700; line-height: 1.2; margin: 0.1em 0 0.5em; }
+.engine-prose h2 { font-size: 1.12rem; font-weight: 600; margin: 1.5em 0 0.4em; }
+.engine-prose h3 { font-size: 1rem; font-weight: 600; margin: 1.2em 0 0.3em; }
+.engine-prose p { margin: 0.6em 0; line-height: 1.66; }
+.engine-prose ul, .engine-prose ol { margin: 0.6em 0 0.6em 1.25em; list-style: revert; }
+.engine-prose li { margin: 0.25em 0; line-height: 1.55; }
+.engine-prose a { text-decoration: underline; text-underline-offset: 2px; }
+.engine-prose strong { font-weight: 600; }
+.engine-prose em { font-style: italic; }
+.engine-prose code { font-family: ui-monospace, SFMono-Regular, monospace; font-size: 0.85em; }
+.engine-prose hr { border: 0; border-top: 1px solid color-mix(in srgb, currentColor 20%, transparent); margin: 1.4em 0; }
+.engine-prose blockquote { border-left: 2px solid color-mix(in srgb, currentColor 30%, transparent); padding-left: 1em; margin: 0.8em 0; opacity: 0.9; }
+.engine-prose table { width: 100%; border-collapse: collapse; font-size: 0.82em; margin: 0.9em 0; display: block; overflow-x: auto; }
+.engine-prose th, .engine-prose td { border: 1px solid color-mix(in srgb, currentColor 20%, transparent); padding: 0.35em 0.55em; text-align: left; vertical-align: top; }
+.engine-prose th { font-weight: 600; }

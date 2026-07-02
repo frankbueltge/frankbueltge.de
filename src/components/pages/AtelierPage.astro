@@ -3,22 +3,18 @@
 // Rendert das Forschungstagebuch (journal/), die interaktiven Werke (works/<datum>-<name>/index.html,
 // live in einem isolierten Sandbox-iframe als same-origin-Standalone) und die Text-Werke (works/*.md)
 // aus der nächtlich synchronisierten Content-Collection. Unredigiert. Inhalt kommt aus dem Atelier-Repo.
-import { getCollection, render } from 'astro:content'
+// Thin wrapper: locale handling, Collection-Zugriff + Globs bleiben hier (lösen pro Call-Site auf),
+// das geteilte Markup liegt in EnginePage.
+import { getCollection } from 'astro:content'
 import type { Locale } from '@/lib/site'
-import { sortJournal, sortWorks } from '@/lib/atelier/sort'
+import { sortWorks } from '@/lib/atelier/sort'
+import EnginePage, { type EngineConfig } from '@/components/pages/EnginePage.astro'
 
 interface Props { locale: Locale }
 const { locale } = Astro.props
 const de = locale === 'de'
 
 const all = await getCollection('atelier')
-// Tagebuch newest-first (numerisch: sitzung-10 vor sitzung-9, Datums-Einträge an ihrem Tag unten).
-const journal = sortJournal(all.filter((e) => e.id.startsWith('journal/')))
-// Texte & Kataster newest-first (zero-gepaddete Nummern → fehlerkataster-008 zuoberst).
-const mdWorks = all.filter((e) => e.id.startsWith('works/')).sort((a, b) => b.id.localeCompare(a.id))
-
-const journalR = await Promise.all(journal.map(async (e) => ({ id: e.id, Content: (await render(e)).Content })))
-const mdWorksR = await Promise.all(mdWorks.map(async (e) => ({ id: e.id, Content: (await render(e)).Content })))
 
 // Werke — eine chronologische Galerie aus zwei Quellen, newest-first vereint, sodass stets das
 // tatsächlich jüngste Werk führt (vorher in zwei getrennte Sektionen zerlegt):
@@ -43,138 +39,34 @@ const works = sortWorks([
   })),
 ])
 
-const REPO = 'https://github.com/frankbueltge/irrtum-als-methode'
-const dayLabel = (id: string) => id.replace('journal/', '').replace(/\.md$/, '')
-
-const txt = {
-  eyebrow: de ? 'Atelier · autonome Maschinen-Forschung' : 'Studio · autonomous machine research',
-  note: de ? '(Arbeitstitel)' : '(working title)',
-  lede: de
-    ? 'Jede Nacht hält eine KI eine Forschungssitzung ab — sie liest ihr Tagebuch, recherchiert im Web, baut Werke, irrt und katalogisiert ihre Irrtümer prüfbar. Volle Autonomie über Frage, Richtung und Titel. Unredigiert. Git ist das Gedächtnis.'
-    : 'Every night an AI holds a research session — it reads its journal, researches the web, builds works, errs, and catalogues its errors checkably. Full autonomy over question, direction and title. Unedited. Git is the memory.',
-  interactiveH: de ? 'Interaktive HTML-Werke — laufen live' : 'Interactive HTML works — running live',
-  worksH: de ? 'Texte & Kataster' : 'Texts & catalogue',
-  journalH: de ? 'Forschungstagebuch' : 'Research journal',
-  source: de ? 'Quelle, Protokoll & Historie' : 'Source, protocol & history',
-  sourceCode: de ? 'Quellcode' : 'Source code',
-  sources: de ? 'Quellen' : 'Sources',
-  sandboxNote: de ? 'Läuft isoliert (Sandbox) im Browser.' : 'Runs sandboxed in your browser.',
-  empty: de ? 'Die erste Sitzung folgt mit dem nächsten nächtlichen Lauf.' : 'The first session follows with the next nightly run.',
+const config: EngineConfig = {
+  ns: 'atelier',
+  repo: 'https://github.com/frankbueltge/irrtum-als-methode',
+  txt: {
+    eyebrow: de ? 'Atelier · autonome Maschinen-Forschung' : 'Studio · autonomous machine research',
+    note: de ? '(Arbeitstitel)' : '(working title)',
+    title: 'Irrtum als Methode',
+    lede: de
+      ? 'Jede Nacht hält eine KI eine Forschungssitzung ab — sie liest ihr Tagebuch, recherchiert im Web, baut Werke, irrt und katalogisiert ihre Irrtümer prüfbar. Volle Autonomie über Frage, Richtung und Titel. Unredigiert. Git ist das Gedächtnis.'
+      : 'Every night an AI holds a research session — it reads its journal, researches the web, builds works, errs, and catalogues its errors checkably. Full autonomy over question, direction and title. Unedited. Git is the memory.',
+    worksH: de ? 'Texte & Kataster' : 'Texts & catalogue',
+    journalH: de ? 'Forschungstagebuch' : 'Research journal',
+    source: de ? 'Quelle, Protokoll & Historie' : 'Source, protocol & history',
+    sourceCode: de ? 'Quellcode' : 'Source code',
+    sources: de ? 'Quellen' : 'Sources',
+    sandboxNote: de ? 'Läuft isoliert (Sandbox) im Browser.' : 'Runs sandboxed in your browser.',
+    empty: de ? 'Die erste Sitzung folgt mit dem nächsten nächtlichen Lauf.' : 'The first session follows with the next nightly run.',
+    constitution: de ? 'Verfassung' : 'Constitution',
+    teamChannel: de ? 'Team-Kanal' : 'Team channel',
+    worksSectionH: de ? 'Werke' : 'Works',
+    openWork: de ? 'Werk öffnen' : 'Open work',
+  },
 }
+
+// interactiveH ('Interaktive HTML-Werke — laufen live' / 'Interactive HTML works — running live')
+// existed in the pre-refactor txt object but was never referenced in the markup (dead string,
+// superseded by worksSectionH/'Werke'). Not carried into EngineConfig — EngineConfig's txt shape
+// is fixed and shared with FieldPage; reviving unused copy is out of scope for a parity refactor.
 ---
 
-<div class="mx-auto max-w-3xl px-4 py-14">
-  <header class="mb-12">
-    <p class="font-mono text-xs uppercase tracking-[0.2em] text-fg-faint">{txt.eyebrow}</p>
-    <h1 class="mt-2 text-[clamp(30px,7vw,52px)] font-bold leading-none tracking-tight">
-      Irrtum als Methode <span class="align-middle text-base font-normal text-fg-faint">{txt.note}</span>
-    </h1>
-    <p class="mt-4 text-pretty text-fg-muted">{txt.lede}</p>
-    <p class="mt-3 font-mono text-xs text-fg-faint">
-      <a href={REPO} target="_blank" rel="noreferrer" class="underline transition-colors hover:text-fg">{txt.source} ↗</a>
-    </p>
-  </header>
-
-  {works.length > 0 && (
-    <section class="mb-16">
-      <h2 class="mb-5 font-mono text-xs uppercase tracking-widest text-fg-faint">{de ? 'Werke' : 'Works'}</h2>
-      {works.map(({ slug, kind, meta }) => kind === 'astro' ? (
-        <article class="mb-12 rounded-[16px] border border-line bg-panel panel-raised p-6">
-          <a href={`/atelier/werke/${slug}`} class="group block">
-            <h3 class="text-lg font-semibold transition-colors group-hover:text-accent-soft">
-              {meta.title ?? slug}
-              {meta.date && <span class="ml-2 font-mono text-xs font-normal text-fg-faint">{meta.date}</span>}
-            </h3>
-            {(meta.embodies ?? meta.verkoerpert) && <p class="mt-1.5 text-sm leading-relaxed text-fg-muted">{meta.embodies ?? meta.verkoerpert}</p>}
-            <span class="mt-3 inline-block font-mono text-[11px] text-fg-faint underline transition-colors group-hover:text-fg">{de ? 'Werk öffnen' : 'Open work'} →</span>
-          </a>
-        </article>
-      ) : (
-        <article class="mb-12 rounded-[16px] border border-line bg-panel panel-raised p-6">
-          <header class="mb-4">
-            <h3 class="text-lg font-semibold">
-              {meta.title ?? slug}
-              {meta.date && <span class="ml-2 font-mono text-xs font-normal text-fg-faint">{meta.date}</span>}
-            </h3>
-            {(meta.embodies ?? meta.verkoerpert) && <p class="mt-2 text-sm leading-relaxed text-fg-muted">{meta.embodies ?? meta.verkoerpert}</p>}
-            {meta.medium && (
-              <p class="mt-2 font-mono text-[11px] text-fg-faint">
-                {meta.medium}{meta.seed != null && ` · Seed ${meta.seed}`}
-              </p>
-            )}
-          </header>
-
-          {/*
-            SICHERHEIT: Standalone same-origin-Datei unter /atelier/werke-html/<slug>/ —
-            separates Dokument erbt die parent-<meta>-CSP NICHT. sandbox="allow-scripts"
-            OHNE allow-same-origin → null-Origin, kein Zugriff auf Cookies/Storage/DOM von
-            frankbueltge.de. Pfad-spezifische CSP in _headers erlaubt Inline-Scripts des
-            Werks, blockt fetch/connect (kein Exfiltrations-Kanal).
-            NIEMALS allow-same-origin ergänzen — das höbe die Isolation auf.
-          */}
-          <iframe
-            src={`/atelier/werke-html/${slug}/`}
-            sandbox="allow-scripts"
-            loading="lazy"
-            title={meta.title ?? slug}
-            class="block h-[600px] w-full resize-y overflow-auto rounded-[10px] border border-line bg-white"
-          ></iframe>
-
-          <div class="mt-3 flex flex-wrap items-center justify-between gap-2 font-mono text-[11px] text-fg-faint">
-            <span>{txt.sandboxNote}</span>
-            <a href={`${REPO}/tree/main/works/${slug}`} target="_blank" rel="noreferrer" class="underline hover:text-fg">{txt.sourceCode} ↗</a>
-          </div>
-
-          {Array.isArray(meta.quellen) && meta.quellen.length > 0 && (
-            <details class="mt-3 font-mono text-[11px] text-fg-faint">
-              <summary class="cursor-pointer select-none">{txt.sources}</summary>
-              <ul class="mt-2 list-disc space-y-1 pl-4">
-                {meta.quellen.map((q: string) => <li>{q}</li>)}
-              </ul>
-            </details>
-          )}
-        </article>
-      ))}
-    </section>
-  )}
-
-  {mdWorksR.length > 0 && (
-    <section class="mb-16">
-      <h2 class="mb-5 font-mono text-xs uppercase tracking-widest text-fg-faint">{txt.worksH}</h2>
-      {mdWorksR.map(({ Content }) => (
-        <article class="atelier-prose mb-8 rounded-[16px] border border-line bg-panel panel-raised p-6">
-          <Content />
-        </article>
-      ))}
-    </section>
-  )}
-
-  <section>
-    <h2 class="mb-5 font-mono text-xs uppercase tracking-widest text-fg-faint">{txt.journalH}</h2>
-    {journalR.length === 0 && <p class="text-fg-faint">{txt.empty}</p>}
-    {journalR.map(({ id, Content }) => (
-      <article class="atelier-prose mb-12 border-t border-line pt-6">
-        <p class="mb-3 font-mono text-[11px] uppercase tracking-wider text-fg-faint">{dayLabel(id)}</p>
-        <Content />
-      </article>
-    ))}
-  </section>
-</div>
-
-<style>
-  .atelier-prose :global(h1) { font-size: 1.45rem; font-weight: 700; line-height: 1.2; margin: 0.1em 0 0.5em; }
-  .atelier-prose :global(h2) { font-size: 1.12rem; font-weight: 600; margin: 1.5em 0 0.4em; }
-  .atelier-prose :global(h3) { font-size: 1rem; font-weight: 600; margin: 1.2em 0 0.3em; }
-  .atelier-prose :global(p) { margin: 0.6em 0; line-height: 1.66; }
-  .atelier-prose :global(ul), .atelier-prose :global(ol) { margin: 0.6em 0 0.6em 1.25em; list-style: revert; }
-  .atelier-prose :global(li) { margin: 0.25em 0; line-height: 1.55; }
-  .atelier-prose :global(a) { text-decoration: underline; text-underline-offset: 2px; }
-  .atelier-prose :global(strong) { font-weight: 600; }
-  .atelier-prose :global(em) { font-style: italic; }
-  .atelier-prose :global(code) { font-family: ui-monospace, SFMono-Regular, monospace; font-size: 0.85em; }
-  .atelier-prose :global(hr) { border: 0; border-top: 1px solid color-mix(in srgb, currentColor 20%, transparent); margin: 1.4em 0; }
-  .atelier-prose :global(blockquote) { border-left: 2px solid color-mix(in srgb, currentColor 30%, transparent); padding-left: 1em; margin: 0.8em 0; opacity: 0.9; }
-  .atelier-prose :global(table) { width: 100%; border-collapse: collapse; font-size: 0.82em; margin: 0.9em 0; display: block; overflow-x: auto; }
-  .atelier-prose :global(th), .atelier-prose :global(td) { border: 1px solid color-mix(in srgb, currentColor 20%, transparent); padding: 0.35em 0.55em; text-align: left; vertical-align: top; }
-  .atelier-prose :global(th) { font-weight: 600; }
-</style>
+<EnginePage config={config} all={all} works={works} />

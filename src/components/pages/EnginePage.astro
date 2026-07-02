@@ -1,0 +1,154 @@
+---
+// EnginePage — shared presentation for the autonomous research engine pages (field, atelier).
+// Renders the research journal (journal/), the interactive works (works/<date>-<name>/index.html,
+// live in an isolated sandbox iframe as a same-origin standalone) and the text works (works/*.md)
+// from the synced content collection. Unedited. Content comes from the engine's own repo.
+// Parametrised by EngineConfig — callers (FieldPage, AtelierPage) own collection access
+// (getCollection + import.meta.glob cannot move here, they resolve at build time per call site)
+// and pass the merged `all` entries and sorted `works` array in.
+import { render } from 'astro:content'
+import { sortJournal } from '@/lib/atelier/sort'
+
+export interface EngineConfig {
+  ns: 'field' | 'atelier'
+  repo: string
+  txt: {
+    eyebrow: string
+    note: string
+    title: string
+    lede: string
+    worksH: string
+    journalH: string
+    source: string
+    sourceCode: string
+    sources: string
+    sandboxNote: string
+    empty: string
+    constitution: string
+    teamChannel: string
+    worksSectionH: string
+    openWork: string
+  }
+}
+
+interface Props {
+  config: EngineConfig
+  all: any[]
+  works: { slug: string; kind: 'html' | 'astro'; date?: string; meta: any }[]
+}
+
+const { config, all, works } = Astro.props
+const { txt } = config
+
+// Journal newest-first (numeric: session-10 before session-9, date entries at the bottom of their day).
+const journal = sortJournal(all.filter((e) => e.id.startsWith('journal/')))
+// Texts newest-first.
+const mdWorks = all.filter((e) => e.id.startsWith('works/')).sort((a, b) => b.id.localeCompare(a.id))
+
+const journalR = await Promise.all(journal.map(async (e) => ({ id: e.id, Content: (await render(e)).Content })))
+const mdWorksR = await Promise.all(mdWorks.map(async (e) => ({ id: e.id, Content: (await render(e)).Content })))
+
+const dayLabel = (id: string) => id.replace('journal/', '').replace(/\.md$/, '')
+---
+
+<div class="mx-auto max-w-3xl px-4 py-14">
+  <header class="mb-12">
+    <p class="font-mono text-xs uppercase tracking-[0.2em] text-fg-faint">{txt.eyebrow}</p>
+    <h1 class="mt-2 text-[clamp(30px,7vw,52px)] font-bold leading-none tracking-tight">
+      {txt.title} <span class="align-middle text-base font-normal text-fg-faint">{txt.note}</span>
+    </h1>
+    <p class="mt-4 text-pretty text-fg-muted">{txt.lede}</p>
+    <p class="mt-3 font-mono text-xs text-fg-faint">
+      <a href={config.repo} target="_blank" rel="noreferrer" class="underline transition-colors hover:text-fg">{txt.source} ↗</a>
+    </p>
+    <p class="mt-1 font-mono text-xs text-fg-faint">
+      <a href={`/${config.ns}/protocol`} class="underline transition-colors hover:text-fg">{txt.constitution}</a>
+      · <a href={`/${config.ns}/requests`} class="underline transition-colors hover:text-fg">{txt.teamChannel}</a>
+    </p>
+  </header>
+
+  {works.length > 0 && (
+    <section class="mb-16">
+      <h2 class="mb-5 font-mono text-xs uppercase tracking-widest text-fg-faint">{txt.worksSectionH}</h2>
+      {works.map(({ slug, kind, meta }) => kind === 'astro' ? (
+        <article class="mb-12 rounded-[16px] border border-line bg-panel panel-raised p-6">
+          <a href={`/${config.ns}/werke/${slug}`} class="group block">
+            <h3 class="text-lg font-semibold transition-colors group-hover:text-accent-soft">
+              {meta.title ?? slug}
+              {meta.date && <span class="ml-2 font-mono text-xs font-normal text-fg-faint">{meta.date}</span>}
+            </h3>
+            {(meta.embodies ?? meta.verkoerpert) && <p class="mt-1.5 text-sm leading-relaxed text-fg-muted">{meta.embodies ?? meta.verkoerpert}</p>}
+            <span class="mt-3 inline-block font-mono text-[11px] text-fg-faint underline transition-colors group-hover:text-fg">{txt.openWork} →</span>
+          </a>
+        </article>
+      ) : (
+        <article class="mb-12 rounded-[16px] border border-line bg-panel panel-raised p-6">
+          <header class="mb-4">
+            <h3 class="text-lg font-semibold">
+              {meta.title ?? slug}
+              {meta.date && <span class="ml-2 font-mono text-xs font-normal text-fg-faint">{meta.date}</span>}
+            </h3>
+            {(meta.embodies ?? meta.verkoerpert) && <p class="mt-2 text-sm leading-relaxed text-fg-muted">{meta.embodies ?? meta.verkoerpert}</p>}
+            {meta.medium && (
+              <p class="mt-2 font-mono text-[11px] text-fg-faint">
+                {meta.medium}{meta.seed != null && ` · Seed ${meta.seed}`}
+              </p>
+            )}
+          </header>
+
+          {/*
+            SECURITY: standalone same-origin file under /{ns}/werke-html/<slug>/ —
+            a separate document does NOT inherit the parent <meta> CSP. sandbox="allow-scripts"
+            WITHOUT allow-same-origin → null origin, no access to cookies/storage/DOM of
+            frankbueltge.de. Path-specific CSP in _headers allows the work's inline scripts,
+            blocks fetch/connect (no exfiltration channel).
+            NEVER add allow-same-origin — that would lift the isolation.
+          */}
+          <iframe
+            src={`/${config.ns}/werke-html/${slug}/`}
+            sandbox="allow-scripts"
+            loading="lazy"
+            title={meta.title ?? slug}
+            class="block h-[600px] w-full resize-y overflow-auto rounded-[10px] border border-line bg-white"
+          ></iframe>
+
+          <div class="mt-3 flex flex-wrap items-center justify-between gap-2 font-mono text-[11px] text-fg-faint">
+            <span>{txt.sandboxNote}</span>
+            <a href={`${config.repo}/tree/main/works/${slug}`} target="_blank" rel="noreferrer" class="underline hover:text-fg">{txt.sourceCode} ↗</a>
+          </div>
+
+          {Array.isArray(meta.quellen) && meta.quellen.length > 0 && (
+            <details class="mt-3 font-mono text-[11px] text-fg-faint">
+              <summary class="cursor-pointer select-none">{txt.sources}</summary>
+              <ul class="mt-2 list-disc space-y-1 pl-4">
+                {meta.quellen.map((q: string) => <li>{q}</li>)}
+              </ul>
+            </details>
+          )}
+        </article>
+      ))}
+    </section>
+  )}
+
+  {mdWorksR.length > 0 && (
+    <section class="mb-16">
+      <h2 class="mb-5 font-mono text-xs uppercase tracking-widest text-fg-faint">{txt.worksH}</h2>
+      {mdWorksR.map(({ Content }) => (
+        <article class="engine-prose mb-8 rounded-[16px] border border-line bg-panel panel-raised p-6">
+          <Content />
+        </article>
+      ))}
+    </section>
+  )}
+
+  <section>
+    <h2 class="mb-5 font-mono text-xs uppercase tracking-widest text-fg-faint">{txt.journalH}</h2>
+    {journalR.length === 0 && <p class="text-fg-faint">{txt.empty}</p>}
+    {journalR.map(({ id, Content }) => (
+      <article class="engine-prose mb-12 border-t border-line pt-6">
+        <p class="mb-3 font-mono text-[11px] uppercase tracking-wider text-fg-faint">{dayLabel(id)}</p>
+        <Content />
+      </article>
+    ))}
+  </section>
+</div>
