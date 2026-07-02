@@ -15,7 +15,7 @@ from protokoll.parallaxe.prompt import PROMPT
 
 API_BASE = "https://generativelanguage.googleapis.com/v1beta/models"
 RETRY_STATUSES = (429, 500, 503)
-MAX_RETRIES = 3
+MAX_RETRIES = 5
 RETRY_DELAY_S = 1.5
 
 
@@ -48,11 +48,11 @@ def extract_omissions(lang_to_text: dict[str, str], *, client: httpx.Client) -> 
     headers = {"Content-Type": "application/json", "x-goog-api-key": _api_key()}
 
     last_status: int | None = None
-    for _ in range(MAX_RETRIES):
+    for attempt in range(MAX_RETRIES):
         resp = client.post(_endpoint(), headers=headers, json=body, timeout=120.0)
         if resp.status_code in RETRY_STATUSES:
             last_status = resp.status_code
-            time.sleep(RETRY_DELAY_S)
+            time.sleep(RETRY_DELAY_S * (2 ** attempt))
             continue
         if resp.status_code != 200:
             raise ExtractionError(f"Gemini HTTP {resp.status_code}")
