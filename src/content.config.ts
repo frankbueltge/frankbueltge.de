@@ -90,14 +90,14 @@ const beifang = defineCollection({
       source_url: z.string(), retrieved_at: z.string(), sha256: z.string(),
     })),
     vantages: z.record(z.string(), z.object({
-      status: z.string(),
+      status: z.enum(['ok', 'ausstehend', 'entfallen']),
       note: z.string().nullable(),
       results: z.array(z.object({
         panel_id: z.string(),
         url: z.string(),
         final_url: z.string().nullable(),
         final_domain: z.string().nullable(),
-        group: z.string(),
+        group: z.enum(['verlag', 'kontrolle']),
         publisher: z.string(),
         http_status: z.number().nullable(),
         blocked: z.object({ type: z.string(), marker: z.string().nullable() }).nullable(),
