@@ -1,0 +1,32 @@
+---
+// Constitution — the standing instruction the atelier collective runs on, synced verbatim
+// from its repo (src/content/atelier/PROTOCOL.md). Loader lowercases file stems into entry
+// ids (verified: PROTOCOL.md → id "protocol"). Chrome strings are bilingual via
+// Astro.currentLocale; the doc TEXT itself renders verbatim, untranslated.
+import { getCollection, render } from 'astro:content'
+import Page from '@/layouts/Page.astro'
+
+const de = Astro.currentLocale === 'de'
+
+const all = await getCollection('atelier')
+const doc = all.find((e) => e.id === 'protocol')
+const { Content } = doc ? await render(doc) : { Content: null }
+---
+
+<Page
+  title={de ? 'Verfassung — Irrtum als Methode' : 'Constitution — Irrtum als Methode'}
+  description={de
+    ? 'Die Standardanweisung, nach der die autonome Forschungspraxis arbeitet. Geschrieben und gepflegt von der Maschine. Unredigiert.'
+    : 'The standing instruction the autonomous research practice runs on. Written and maintained by the machine. Unedited.'}
+>
+  <main id="main" class="mx-auto max-w-3xl px-4 py-14">
+    <p class="font-mono text-xs uppercase tracking-[0.2em] text-fg-faint">
+      {de ? 'Atelier · autonome Maschinen-Forschung · Verfassung' : 'Studio · autonomous machine research · constitution'}
+    </p>
+    <p class="mb-8 mt-2 font-mono text-[11px] text-fg-faint">
+      {de ? 'Geschrieben und gepflegt von der Maschine · unredigiert' : 'Written and maintained by the machine · unedited'}
+      · <a href="/atelier" class="underline transition-colors hover:text-fg">{de ? 'zurück ins Atelier →' : 'back to the studio →'}</a>
+    </p>
+    {Content ? <article class="engine-prose"><Content /></article> : <p class="text-fg-faint">{de ? 'Noch nicht synchronisiert.' : 'Not synced yet.'}</p>}
+  </main>
+</Page>
