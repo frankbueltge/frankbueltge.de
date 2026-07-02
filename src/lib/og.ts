@@ -37,7 +37,7 @@ export const OG_PAGES: Record<string, { title: string; description: string }> = 
     description: 'Die Jobzahl war aufgebläht — und wird millionenweise gestrichen',
   },
   tell: {
-    title: 'The Tell',
+    title: 'Delve into the intricate realm',
     description: 'Die Fingerabdrücke der Maschine in der Wissenschaft — „delve" 14× seit ChatGPT',
   },
   pattern: {
@@ -45,11 +45,11 @@ export const OG_PAGES: Record<string, { title: string; description: string }> = 
     description: 'Eine Maschine, die jeden Tag ein Muster findet — und nicht weiß, ob es etwas bedeutet',
   },
   redaction: {
-    title: 'The Redaction',
+    title: 'Editorial Deadline',
     description: 'Was aus dem offiziellen öffentlichen Eintrag still wieder entfernt wird',
   },
   'round-number': {
-    title: 'The Round Number',
+    title: 'Round Numbers',
     description: 'Ein Test, der angeblich gefälschte Zahlen erkennt — und wie oft er sich irrt',
   },
   'ghost-fleet': {
