@@ -25,13 +25,13 @@ export default defineConfig({
         "default-src 'self'",
         "img-src 'self' data:",
         "font-src 'self' data:",
-        "connect-src 'self' https://cloudflareinsights.com",
+        "connect-src 'self'",
         "object-src 'none'",
         "base-uri 'self'",
       ],
       scriptDirective: {
         // 'self' muss explizit genannt werden, wenn resources gesetzt ist (Astro ersetzt den Default).
-        resources: ["'self'", 'https://static.cloudflareinsights.com'],
+        resources: ["'self'"],
       },
       styleDirective: {
         // Tailwind v4 / Inline-Styles — 'unsafe-inline' ist vertretbar (kein JS-Risiko).

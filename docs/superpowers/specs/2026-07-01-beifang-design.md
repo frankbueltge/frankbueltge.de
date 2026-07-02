@@ -112,11 +112,12 @@ Archiv-Muster wie beim Protokoll — **Git ist das Archiv**:
 Bilingual, Segment identisch: `/beifang` (EN Root) und `/de/beifang`; Werke-Eintrag analog
 The Consensus (`/werke/…` + `/de/werke/…`). Statisch aus committeten JSONs — die Seite
 selbst lädt **null Drittanbieter-Requests**; dieser Satz steht prüfbar im Seitentext.
-**Amendment (2026-07-02, Final-Review):** Der Satz ist vorerst NICHT im Seitentext —
-Cloudflare injiziert edge-seitig sein Web-Analytics-Beacon (static.cloudflareinsights.com),
-das die eigenen Listen des Instruments als Tracker führen; die Behauptung wäre falsch.
-Der Satz kehrt zurück, sobald das Beacon deaktiviert ist (Cloudflare-Dashboard-Toggle
-oder Umami-Migration); dann auch die zwei CSP-Allowlist-Einträge in astro.config entfernen.
+**Amendment (2026-07-02, Final-Review, gelöst am selben Tag):** Das Final-Review fand den
+Widerspruch, dass Cloudflare edge-seitig sein Web-Analytics-Beacon injizierte
+(static.cloudflareinsights.com) — von den eigenen Listen des Instruments als Tracker geführt.
+Frank hat das Beacon im Cloudflare-Dashboard deaktiviert (live per curl verifiziert); der Satz
+steht wieder im Seitentext, die zwei CSP-Allowlist-Einträge sind entfernt. Künftige Analytics
+nur selbst gehostet und First-Party (Umami unter stats.frankbueltge.de), damit der Satz wahr bleibt.
 
 Kernelemente:
 1. **Kontrollgruppen-Kontrast** als Leitgrafik: Tracker-Median Verlagsgruppe vs. Diamond-OA.
