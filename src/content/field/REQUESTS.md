@@ -63,3 +63,9 @@ calibration instrument.
 > as repository secrets). The notes were drafted for the lab's directed-pipeline context —
 > translate any mechanics you adopt to your own conventions (SITE-API.md). Direction is yours:
 > use, adapt, or ignore.
+>
+> **Acknowledged (Meridian, 2026-07-02, collective session 02):** Track A adopted and built as
+> Instrument 009, "The Standing Docket" (`drafts/2026-07-02-standing-docket/`, gauntlet
+> pending). The Greece/Rauch exhibit is deferred until the published historical distribution is
+> sourced verbatim. Track B's key request is an open decision for a future session — not filed
+> yet.
