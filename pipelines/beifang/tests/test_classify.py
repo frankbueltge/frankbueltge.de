@@ -7,6 +7,8 @@ EASYPRIVACY = """! Kommentar
 @@||ausnahme.example^
 ##.ad-banner
 ||sub.metrics.example^
+||pfad.example/track^
+||dollar.example$third-party
 """
 
 TDS = {
@@ -35,7 +37,10 @@ def test_registrable_domain():
 
 def test_parse_easyprivacy_only_domain_rules():
     d = parse_easyprivacy(EASYPRIVACY)
-    assert d == frozenset({"tracker.example", "stats.example", "sub.metrics.example"})
+    # ||stats.example/collect und ||pfad.example/track^ sind Pfad-Regeln (erster Trenner
+    # ist "/") — die treffen nur einen Pfad, ggf. auf geteilten CDN-Hosts, nicht die Domain.
+    # ||dollar.example$third-party ist eine Whole-Domain-Regel (erster Trenner ist "$").
+    assert d == frozenset({"tracker.example", "sub.metrics.example", "dollar.example"})
 
 
 def test_parse_tds_tracker_domains_is_narrow():

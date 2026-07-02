@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { entityTable, groupMedians, median, sparkPath, timeline } from './stats'
+import { entityTable, groupMedians, median, publisherMedians, sparkPath, timeline } from './stats'
 import type { BeifangRun, BeifangSiteResult } from './types'
 
 function result(over: Partial<BeifangSiteResult>): BeifangSiteResult {
@@ -35,6 +35,24 @@ describe('median/groupMedians', () => {
       result({ panel_id: 'k-01', group: 'kontrolle', publisher: 'kommges', tracker_hosts: [] }),
     ])
     expect(groupMedians(r)).toEqual({ verlag: 2, kontrolle: 0 })
+  })
+})
+
+describe('publisherMedians', () => {
+  it('vollständig blockierter Verlag bleibt sichtbar (null), nicht verschwunden', () => {
+    const r = run([
+      result({ publisher: 'elsevier', blocked: { type: 'http', marker: '403' }, tracker_hosts: null }),
+      result({ panel_id: 'x-02', publisher: 'elsevier', blocked: { type: 'http', marker: '403' }, tracker_hosts: null }),
+    ])
+    expect(publisherMedians(r)).toEqual({ elsevier: null })
+  })
+  it('gemischter Verlag: Median nur aus unblockierten Messungen', () => {
+    const r = run([
+      result({ panel_id: 's-01', publisher: 'sage', tracker_hosts: ['a', 'b'] }),
+      result({ panel_id: 's-02', publisher: 'sage', tracker_hosts: ['a'] }),
+      result({ panel_id: 's-03', publisher: 'sage', blocked: { type: 'http', marker: '403' }, tracker_hosts: null }),
+    ])
+    expect(publisherMedians(r)).toEqual({ sage: 1.5 })
   })
 })
 

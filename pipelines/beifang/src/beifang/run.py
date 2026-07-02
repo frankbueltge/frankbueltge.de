@@ -51,14 +51,22 @@ def main(argv: list[str] | None = None) -> int:
                                        note=f"{type(exc).__name__}: {exc}"[:200]))
             print(f"  {entry['id']}: FEHLER {type(exc).__name__}", file=sys.stderr)
             continue
+        host = urlsplit(raw.final_url).hostname or ""
+        if not host:  # Navigation gescheitert (u. a. about:blank) — keine Quelle erreicht
+            note = raw.goto_error or "navigation-failed"
+            results.append(site_result(entry, retrieved_at=retrieved_at, note=note))
+            print(f"  {entry['id']}: FEHLER Navigation gescheitert ({note})", file=sys.stderr)
+            continue
+        goto_note = f"goto: {raw.goto_error}"[:200] if raw.goto_error else None
         blocked = detect_blocked(raw.http_status, raw.page_title)
         if blocked is not None:
-            results.append(site_result(entry, retrieved_at=retrieved_at, raw=raw, blocked=blocked))
+            results.append(site_result(entry, retrieved_at=retrieved_at, raw=raw, blocked=blocked,
+                                       note=goto_note))
             print(f"  {entry['id']}: BLOCKIERT ({blocked.type} {blocked.marker})", file=sys.stderr)
             continue
-        first_party = registrable_domain(urlsplit(raw.final_url).hostname or "")
+        first_party = registrable_domain(host)
         cls = classify(first_party, (r.host for r in raw.requests), easyprivacy, tds)
-        results.append(site_result(entry, retrieved_at=retrieved_at, raw=raw, cls=cls))
+        results.append(site_result(entry, retrieved_at=retrieved_at, raw=raw, cls=cls, note=goto_note))
         print(f"  {entry['id']}: {len(cls.tracker_hosts)} Tracker-Hosts, "
               f"{len(cls.entities)} Firmen")
 
@@ -67,6 +75,10 @@ def main(argv: list[str] | None = None) -> int:
     record = assemble_run(date_iso=date_iso, panel_version=panel["version"], runner=runner,
                           results=results, lists=lists_meta, previous=previous)
     target = root / content_path(date_iso)
+    if target.exists():
+        print(f"{target} existiert bereits — Archiv unantastbar, kein Overwrite "
+              f"(Lauf übersprungen).", file=sys.stderr)
+        return 0
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(run_record_to_json(record), encoding="utf-8")
     print(f"geschrieben: {target}")

@@ -23,6 +23,23 @@ const blocked = latest ? blockedResults(latest) : []
 const series = timeline(runs)
 const maxY = Math.max(1, ...series.flatMap((p) => [p.verlag ?? 0, p.kontrolle ?? 0]))
 const okCount = latest ? usResults(latest).filter((r) => r.blocked === null && r.note === null).length : 0
+
+// EU-Messpunkt-Vermerk: 'entfallen' ist ein eigener Zustand (Ausfall in dieser Sitzung),
+// kein Synonym für 'ausstehend' (noch nicht aufgebaut) — beide brauchen eigenen Wortlaut.
+const EU_STATUS_TEXT: Record<string, { de: string; en: string }> = {
+  ok: { de: 'aktiv', en: 'active' },
+  ausstehend: {
+    de: 'ausstehend — gemessen wird bisher nur aus US-Rechenzentrumssicht; die EU-Spalte folgt, sobald der Messpunkt steht.',
+    en: 'pending — measurements so far are from a US datacenter vantage only; the EU column follows once the vantage exists.',
+  },
+  entfallen: {
+    de: 'entfallen — der EU-Messpunkt war in dieser Sitzung nicht erreichbar; Feststellung entfällt.',
+    en: 'omitted — the EU vantage was unreachable this run; no determination.',
+  },
+}
+const euStatusText = latest
+  ? (EU_STATUS_TEXT[latest.vantages.eu.status] ?? EU_STATUS_TEXT.ausstehend)[de ? 'de' : 'en']
+  : null
 ---
 
 <article class="beifang mx-auto max-w-3xl px-4 py-14">
@@ -53,7 +70,7 @@ const okCount = latest ? usResults(latest).filter((r) => r.blocked === null && r
               { y: 38, v: gm.kontrolle, label: de ? 'Diamond-OA-Kontrolle' : 'Diamond-OA control' },
             ].map(({ y, v, label }) => {
               const barMax = Math.max(gm.verlag!, gm.kontrolle!, 1)
-              const w = Math.round((v! / barMax) * 400)
+              const w = Math.round((v! / barMax) * 340)
               return (
                 <>
                   <text x="0" y={y + 14} font-size="12" fill="currentColor">{label}</text>
@@ -154,9 +171,7 @@ const okCount = latest ? usResults(latest).filter((r) => r.blocked === null && r
       {/* EU-Spalte: sichtbar ausstehend (Spec §4/§6) */}
       <section class="mb-12">
         <p class="text-sm text-fg-muted">
-          {de
-            ? `EU-Messpunkt: ${latest.vantages.eu.status === 'ok' ? 'aktiv' : 'ausstehend — gemessen wird bisher nur aus US-Rechenzentrumssicht; die EU-Spalte folgt, sobald der Messpunkt steht.'}`
-            : `EU vantage: ${latest.vantages.eu.status === 'ok' ? 'active' : 'pending — measurements so far are from a US datacenter vantage only; the EU column follows once the vantage exists.'}`}
+          {de ? `EU-Messpunkt: ${euStatusText}` : `EU vantage: ${euStatusText}`}
         </p>
       </section>
 

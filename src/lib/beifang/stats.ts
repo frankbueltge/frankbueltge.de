@@ -26,8 +26,11 @@ export function groupMedians(run: BeifangRun): { verlag: number | null; kontroll
 export function publisherMedians(run: BeifangRun): Record<string, number | null> {
   const byPub = new Map<string, number[]>()
   for (const r of usResults(run)) {
-    if (r.group !== 'verlag' || r.blocked !== null || r.tracker_hosts === null) continue
-    byPub.set(r.publisher, [...(byPub.get(r.publisher) ?? []), r.tracker_hosts.length])
+    if (r.group !== 'verlag') continue
+    // Schlüssel für JEDEN Verlag anlegen, auch wenn alle seine Seiten blockiert/gescheitert
+    // sind — sonst verschwindet er aus der Tafel statt "Feststellung entfällt" zu zeigen.
+    if (!byPub.has(r.publisher)) byPub.set(r.publisher, [])
+    if (r.blocked === null && r.tracker_hosts !== null) byPub.get(r.publisher)!.push(r.tracker_hosts.length)
   }
   return Object.fromEntries([...byPub.entries()].map(([p, xs]) => [p, median(xs)]))
 }
