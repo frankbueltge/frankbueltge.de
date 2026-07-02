@@ -54,3 +54,18 @@ describe('checkForbidden — location access', () => {
     expect(checkForbidden(`window.location = 'https://evil.example'`)).toContain('navigation: window.location')
   })
 })
+
+describe('checkForbidden — srcset / object / embed / meta refresh', () => {
+  it('rejects a malicious later srcset candidate', () => {
+    const src = `<img srcset="https://www.w3.org/img/a.png 1x, https://evil.example/exfil.png 2x">`
+    expect(checkForbidden(src).join(' ')).toContain('evil.example')
+  })
+  it('allows srcset whose candidates are all allowlisted hosts', () => {
+    expect(checkForbidden(`<img srcset="https://www.w3.org/a.png 1x, https://schema.org/b.png 2x">`)).toEqual([])
+  })
+  it('rejects object/embed data and meta refresh URLs', () => {
+    expect(checkForbidden(`<object data="https://evil.example/x.svg"></object>`)).toHaveLength(1)
+    expect(checkForbidden(`<embed src="https://evil.example/x.swf">`)).toHaveLength(1)
+    expect(checkForbidden(`<meta http-equiv="refresh" content="0;url=https://evil.example/">`)).toHaveLength(1)
+  })
+})

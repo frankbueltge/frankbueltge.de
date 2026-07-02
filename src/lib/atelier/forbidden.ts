@@ -5,14 +5,22 @@
 // engines' constitutions REQUIRE retrievable source URLs.
 
 const LOADING_CONTEXTS: { re: RegExp; label: string }[] = [
-  { re: /\b(?:src|srcset|poster)\s*=\s*\{?\s*["'`]?(https?:\/\/[^"'`\s>})]+)/g, label: 'resource attribute' },
+  { re: /\b(?:src|poster)\s*=\s*\{?\s*["'`]?(https?:\/\/[^"'`\s>})]+)/g, label: 'resource attribute' },
   { re: /<link\b[^>]*\bhref\s*=\s*["']?(https?:\/\/[^"'\s>]+)/g, label: 'link href' },
   { re: /@import\s+(?:url\(\s*)?["']?(https?:\/\/[^"'\s)]+)/g, label: '@import' },
   { re: /\burl\(\s*["']?(https?:\/\/[^"')\s]+)/g, label: 'css url()' },
   { re: /\b(?:fetch|import)\s*\(\s*["'`](https?:\/\/[^"'`]+)/g, label: 'fetch/import()' },
   { re: /\bnew\s+(?:Worker|SharedWorker|WebSocket|EventSource)\s*\(\s*["'`](https?:\/\/[^"'`]+)/g, label: 'worker/socket' },
   { re: /\.open\s*\(\s*["'][A-Za-z]+["']\s*,\s*["'](https?:\/\/[^"']+)/g, label: 'xhr open' },
+  { re: /<(?:object|embed)\b[^>]*\b(?:data|src)\s*=\s*["']?(https?:\/\/[^"'\s>]+)/g, label: 'object/embed' },
 ]
+
+// srcset can carry multiple comma-separated URL candidates (e.g. `a.png 1x, b.png 2x`);
+// the other resource-attribute regex only ever captures the first, so it is scanned separately here.
+const SRCSET_ATTR_RE = /\bsrcset\s*=\s*["']([^"']+)["']/g
+const URL_IN_VALUE_RE = /https?:\/\/[^\s,"'`]+/g
+
+const META_REFRESH_RE = /<meta\b[^>]*http-equiv\s*=\s*["']?refresh["']?[^>]*\burl\s*=\s*(https?:\/\/[^"'\s>]+)/gi
 
 function hostAllowed(u: string): boolean {
   try {
@@ -36,6 +44,22 @@ export function checkForbidden(source: string): string[] {
         flagged.add(url)
         out.push(`external resource (${label}): ${url}`)
       }
+    }
+  }
+  for (const attr of source.matchAll(SRCSET_ATTR_RE)) {
+    for (const urlMatch of attr[1].matchAll(URL_IN_VALUE_RE)) {
+      const url = urlMatch[0]
+      if (!hostAllowed(url) && !flagged.has(url)) {
+        flagged.add(url)
+        out.push(`external resource (resource attribute): ${url}`)
+      }
+    }
+  }
+  for (const m of source.matchAll(META_REFRESH_RE)) {
+    const url = m[1]
+    if (!hostAllowed(url) && !flagged.has(url)) {
+      flagged.add(url)
+      out.push(`external resource (meta refresh): ${url}`)
     }
   }
   if (/\b(window\.location|location\.href|location\.assign|location\.replace)\b/.test(source))
