@@ -112,3 +112,30 @@ export function sparkPath(values: (number | null)[], w: number, h: number, max: 
   })
   return path
 }
+
+import type { BeifangLeak } from './types'
+
+export function leakFindings(run: BeifangRun): { publisher: string; hard: BeifangLeak[]; firmen: string[]; hosts: string[] }[] {
+  const byPub = new Map<string, { hard: BeifangLeak[]; firmen: Set<string>; hosts: Set<string> }>()
+  for (const r of usResults(run)) {
+    if (r.group !== 'verlag' || !r.leaks) continue
+    const hard = r.leaks.filter((l) => l.signal === 'hard' && l.token === 'doi')
+    if (hard.length === 0) continue
+    const row = byPub.get(r.publisher) ?? { hard: [], firmen: new Set<string>(), hosts: new Set<string>() }
+    row.hard.push(...hard)
+    for (const l of hard) {
+      if (l.firma) row.firmen.add(l.firma)   // benannter Broker
+      else row.hosts.add(l.host)             // unbenannter Empfänger (z. B. content.readcube.com)
+    }
+    byPub.set(r.publisher, row)
+  }
+  return [...byPub.entries()]
+    .map(([publisher, v]) => ({ publisher, hard: v.hard, firmen: [...v.firmen].sort(), hosts: [...v.hosts].sort() }))
+    .sort((a, b) => b.hard.length - a.hard.length || a.publisher.localeCompare(b.publisher))
+}
+
+export function doiLeakEntities(run: BeifangRun): string[] {
+  const firmen = new Set<string>()
+  for (const f of leakFindings(run)) for (const name of f.firmen) firmen.add(name)
+  return [...firmen].sort()
+}

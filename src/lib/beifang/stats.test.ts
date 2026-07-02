@@ -103,3 +103,41 @@ describe('timeline/sparkPath', () => {
     expect(sparkPath([0, null, 10], 100, 20, 10)).toBe('M0,20M100,0')
   })
 })
+
+import { leakFindings, doiLeakEntities } from './stats'
+import type { BeifangLeak } from './types'
+
+function hardDoi(host: string, firma: string | null): BeifangLeak {
+  return { token: 'doi', signal: 'hard', form: 'klartext', kanal: 'query', host, firma, beweis: `https://${host}/?doi=x` }
+}
+
+describe('leakFindings/doiLeakEntities', () => {
+  it('trennt benannte Firmen von unbenannten Hosts, nur Verlage mit hartem DOI-Leak', () => {
+    const r = run([
+      result({ publisher: 'springer-nature', doi_leak: true,
+               leaks: [hardDoi('pixel.liveramp.com', 'LiveRamp'), hardDoi('content.readcube.com', null)],
+               leak_firmen: ['LiveRamp'] }),
+      result({ panel_id: 'sn-02', publisher: 'springer-nature', doi_leak: false, leaks: [], leak_firmen: [] }),
+      result({ panel_id: 'e-01', publisher: 'elsevier', blocked: { type: 'http', marker: '403' } }),
+    ])
+    const f = leakFindings(r)
+    expect(f.map((x) => x.publisher)).toEqual(['springer-nature'])
+    expect(f[0].firmen).toEqual(['LiveRamp'])            // benannte Broker
+    expect(f[0].hosts).toEqual(['content.readcube.com']) // unbenannte Empfänger
+    expect(f[0].hard.length).toBe(2)
+    expect(doiLeakEntities(r)).toEqual(['LiveRamp'])
+  })
+  it('Realfall: DOI-Leak nur an unbenannte Hosts → firmen leer, hosts gesetzt', () => {
+    const r = run([result({ publisher: 'springer-nature', doi_leak: true,
+                            leaks: [hardDoi('content.readcube.com', null)], leak_firmen: [] })])
+    const f = leakFindings(r)
+    expect(f[0].firmen).toEqual([])
+    expect(f[0].hosts).toEqual(['content.readcube.com'])
+    expect(doiLeakEntities(r)).toEqual([])
+  })
+  it('leerer Befund, wenn nichts leakt', () => {
+    const r = run([result({ doi_leak: false, leaks: [], leak_firmen: [] })])
+    expect(leakFindings(r)).toEqual([])
+    expect(doiLeakEntities(r)).toEqual([])
+  })
+})

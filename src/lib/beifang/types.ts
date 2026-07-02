@@ -5,6 +5,16 @@ export interface BeifangBlocked {
   marker: string | null
 }
 
+export interface BeifangLeak {
+  token: string
+  signal: string
+  form: string
+  kanal: string
+  host: string
+  firma: string | null
+  beweis: string
+}
+
 export interface BeifangSiteResult {
   panel_id: string
   url: string
@@ -24,6 +34,9 @@ export interface BeifangSiteResult {
   cookies_first_party: number | null
   cookies_third_party: number | null
   retrieved_at: string
+  leaks?: BeifangLeak[] | null
+  leak_firmen?: string[] | null
+  doi_leak?: boolean | null
 }
 
 export interface BeifangVantage {
@@ -44,6 +57,7 @@ export interface BeifangRun {
   pipeline_version: string
   panel_version: string
   runner: string
+  vantage?: string
   lists: Record<string, { source_url: string; retrieved_at: string; sha256: string }>
   vantages: Record<string, BeifangVantage>
   befund: BeifangBefund
