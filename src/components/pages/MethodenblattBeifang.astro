@@ -28,6 +28,10 @@ const txt = {
   s4body: de
     ? 'Headless-Chromium über Playwright, Standard-Browserprofil, keine Interaktion (kein Consent-Klick, kein Scroll), festes Nachlade-Fenster — gemessen wird der Pre-Consent-Zustand. Die Klassifikation läuft zweistufig: Tracker-Erkennung eng ist die Vereinigung aus EasyPrivacy und den Keys der TDS-„trackers"-Sektion; Firmen-Zuordnung breit ist die Domain-zu-Firma-Zuordnung aus den TDS-Sektionen „domains"/„entities", ergänzt um die Owner-Angaben aus „trackers". Kein Match in beiden Stufen ⇒ unklassifiziert, nie geraten. Erfasste Kennzahlen je Seite: Drittanbieter-Hosts, -Requests, -Bytes, erkannte Tracker-Hosts, zugeordnete Firmen, Cookies (First-/Third-Party).'
     : 'Headless Chromium via Playwright, default browser profile, no interaction (no consent click, no scroll), a fixed reload window — the pre-consent state is what gets measured. Classification runs in two tiers: narrow tracker detection is the union of EasyPrivacy and the keys of the TDS "trackers" section; broad company attribution is the domain-to-company mapping from the TDS "domains"/"entities" sections, augmented with the owner data from "trackers". No match at either tier ⇒ unclassified, never guessed. Metrics captured per page: third-party hosts, requests, bytes, detected tracker hosts, attributed companies, cookies (first-/third-party).',
+  s4leakLabel: de ? 'Leak-Nachweis (pre-consent):' : 'DOI leak evidence (pre-consent):',
+  s4leak: de
+    ? 'Für jede erreichbare Seite wird geprüft, ob die DOI (Kennung des Artikels) den ausgehenden Drittanbieter-Requests beiliegt — im Klartext, URL-kodiert oder als md5/sha1/sha256. Ein Hash-Treffer der DOI ist fälschungssicher. Titel/Schlagwörter gelten als schwächeres Signal (ganzer Phrasenabgleich, keine Einzelwörter). Da alles vor jeder Einwilligung gemessen wird, ist ein solcher Leak zugleich ein Pre-Consent-Verstoß.'
+    : 'For every reachable page, the outgoing third-party requests are checked for whether the DOI (the article\'s identifier) rides along — in plain text, URL-encoded, or as an md5/sha1/sha256 hash. A DOI hash match is tamper-proof. Title/keywords count as a weaker signal (whole-phrase match only, never single words). Since everything is measured before any consent, such a leak is at the same time a pre-consent violation.',
   s5: de ? '5. Grenzen der Methode' : '5. Limits of the method',
   s5items: de
     ? [
@@ -36,6 +40,7 @@ const txt = {
         'Ein festes Panel misst diese 60 Seiten, nicht „den Verlag" als Ganzes.',
         'Der Listen-Abgleich erkennt nur Bekanntes — kein Fingerprinting-Nachweis in v1.',
         'Blockaden werden ausgewiesen, nie umgangen — eine Blockade ist selbst ein Befund.',
+        'Vantage als Messgröße: Gemessen wird aus einem Rechenzentrums-Standpunkt (v2: GitHub Actions); der Standpunkt steht im Snapshot („vantage"). Die Blockade ist IP-basiert und kategorisch — ein residentiellerer Standpunkt (geplanter VPS) ist der nächste Hebel, kein Schranken-Umgehen.',
       ]
     : [
         'Measures from a US datacenter vantage; the EU vantage point is still pending and will be retrofitted once it exists.',
@@ -43,6 +48,7 @@ const txt = {
         'A fixed panel measures these 60 pages, not „the publisher" as a whole.',
         'List matching detects only the known — no fingerprinting evidence in v1.',
         'Blockades are disclosed, never circumvented — a blockade is itself a finding.',
+        'Vantage as a measurement variable: measured from a datacenter vantage point (v2: GitHub Actions); the vantage is recorded in the snapshot ("vantage"). The blockade is IP-based and categorical — a more residential vantage (a planned VPS) is the next lever, not a way around the barrier.',
       ],
   s6: de ? '6. Compute-Fußabdruck' : '6. Compute footprint',
   s6body: de
@@ -50,8 +56,14 @@ const txt = {
     : 'About 60 page loads per week, one GitHub Actions job running a few minutes. The exact figure will be quantified after the first run.',
   s7: de ? '7. Änderungsprotokoll' : '7. Change log',
   s7items: de
-    ? ['Startfassung (2026-07-02) — Panel: Big 5 × 10 vs. 10 Diamond-OA-Kontrolle, EasyPrivacy + DuckDuckGo-TDS, US-Blickwinkel.']
-    : ['First edition (2026-07-02) — panel: Big 5 × 10 vs. 10 diamond-OA control, EasyPrivacy + DuckDuckGo TDS, US vantage.'],
+    ? [
+        'Startfassung (2026-07-02) — Panel: Big 5 × 10 vs. 10 Diamond-OA-Kontrolle, EasyPrivacy + DuckDuckGo-TDS, US-Blickwinkel.',
+        '2026-07-02: Leak-Audit ergänzt (Identitäts-Exfiltration statt reinem Tracker-Zensus).',
+      ]
+    : [
+        'First edition (2026-07-02) — panel: Big 5 × 10 vs. 10 diamond-OA control, EasyPrivacy + DuckDuckGo TDS, US vantage.',
+        '2026-07-02: leak audit added (identity exfiltration instead of a pure tracker census).',
+      ],
   s7note: de
     ? 'Weitere Panel- bzw. Listenänderungen erscheinen hier — protokolliert im committeten panel.json (log).'
     : 'Further panel or list changes appear here — logged in the committed panel.json (log).',
@@ -84,6 +96,7 @@ const txt = {
   <section class="mb-8">
     <h2 class="mb-2 font-semibold">{txt.s4}</h2>
     <p class="leading-relaxed text-fg-muted">{txt.s4body}</p>
+    <p class="mt-2 leading-relaxed text-fg-muted"><span class="font-semibold text-fg">{txt.s4leakLabel}</span> {txt.s4leak}</p>
     <p class="mt-2">
       <a href="https://github.com/frankbueltge/frankbueltge.de/tree/main/pipelines/beifang"
         class="font-mono text-xs text-fg-faint transition-colors hover:text-fg" rel="noopener">→ pipelines/beifang</a>

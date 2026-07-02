@@ -8,13 +8,14 @@ import { t } from '@/i18n/ui'
 import { getBeifangRuns } from '@/lib/beifang/data'
 import { renderBefund } from '@/lib/beifang/befund'
 import { PUBLISHER_LABELS } from '@/lib/beifang/types'
-import { blockadeStats, entityTable, groupMedians, publisherMedians, sparkPath, timeline, usResults } from '@/lib/beifang/stats'
+import { blockadeStats, entityTable, groupMedians, leakFindings, publisherMedians, sparkPath, timeline, usResults } from '@/lib/beifang/stats'
 
 interface Props { locale: 'de' | 'en' }
 const { locale } = Astro.props
 const de = locale === 'de'
 const runs = await getBeifangRuns()
 const latest = runs[0]
+const leaks = latest ? leakFindings(latest) : []
 const methodUrl = getRelativeLocaleUrl(locale, '/werke/beifang')
 const gm = latest ? groupMedians(latest) : null
 const pm = latest ? publisherMedians(latest) : {}
@@ -132,6 +133,59 @@ const euStatusText = latest
       <section class="mb-12 border-l-2 border-accent/60 pl-5">
         <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">{de ? 'Befund der Woche' : 'Finding of the week'}</p>
         <p class="mt-2 leading-relaxed">{renderBefund(latest.befund, locale)}</p>
+      </section>
+
+      {/* Was die Seite über dich verrät — der Identitäts-Leak (hartes Signal: DOI) */}
+      <section class="mb-12">
+        <h2 class="mb-3 font-semibold">{de ? 'Was die Seite über dich verrät' : 'What the page reveals about you'}</h2>
+        {leaks.length === 0 ? (
+          <p class="text-fg-muted">
+            {de
+              ? 'Auf den erreichbaren Seiten kein nachweisbarer DOI-Leak an Dritte — auch das ist ein Befund (und gilt nur für das Messbare; das Gros der Verlagsseiten verweigert die Messung).'
+              : 'No demonstrable DOI leak to third parties on the reachable pages — itself a finding (and only for what is measurable; most publisher pages refuse measurement).'}
+          </p>
+        ) : (
+          <div class="space-y-5">
+            {leaks.map((f) => (
+              <div>
+                <p class="leading-relaxed">
+                  <span class="font-semibold">{PUBLISHER_LABELS[f.publisher] ?? f.publisher}</span>{' '}
+                  {f.firmen.length > 0
+                    ? (de
+                        ? `reicht deine DOI an ${f.firmen.join(', ')} weiter — vor jeder Einwilligung.`
+                        : `hands your DOI to ${f.firmen.join(', ')} — before any consent.`)
+                    : (de
+                        ? `sendet deine DOI an Dritte (${f.hosts.join(', ')}) — vor jeder Einwilligung; kein benannter Datenhändler darunter in dieser Messung.`
+                        : `sends your DOI to third parties (${f.hosts.join(', ')}) — before any consent; no named data broker among them in this run.`)}
+                </p>
+                {f.firmen.length > 0 && f.hosts.length > 0 && (
+                  <p class="mt-1 text-sm text-fg-muted">
+                    {de ? `Außerdem an Hosts ohne benannte Firma: ${f.hosts.join(', ')}.`
+                        : `Also to hosts without a named company: ${f.hosts.join(', ')}.`}
+                  </p>
+                )}
+                <ul class="mt-2 space-y-2 text-sm">
+                  {f.hard.map((l) => (
+                    <li class="border-l-2 border-accent/60 pl-4">
+                      <span class="font-mono text-xs text-fg-muted">
+                        {l.firma ?? l.host} · {l.form} · {l.kanal}
+                      </span>
+                      <details class="mt-1">
+                        <summary class="cursor-pointer text-fg-faint">{de ? 'Beweis' : 'Evidence'}</summary>
+                        <code class="mt-1 block overflow-x-auto whitespace-pre-wrap break-all bg-line/30 p-2 text-[11px]">{l.beweis}</code>
+                      </details>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        )}
+        <p class="mt-4 font-mono text-[11px] text-fg-faint">
+          {de
+            ? 'Hartes Signal: die DOI (eindeutig, auch als Hash fälschungssicher). Der DOI-Resolver (doi.org) zählt nicht — er ist die Adresse, kein Empfänger. Titel/Schlagwörter wären ein schwächeres Indiz und stehen im Archiv separat.'
+            : 'Hard signal: the DOI (unambiguous, tamper-proof even when hashed). The DOI resolver (doi.org) does not count — it is the address, not a recipient. Title/keywords would be a weaker indicator, kept separately in the archive.'}
+        </p>
       </section>
 
       {/* Firmen-Tafel */}
