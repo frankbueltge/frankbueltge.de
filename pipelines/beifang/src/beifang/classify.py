@@ -128,3 +128,12 @@ def classify(first_party_domain: str, hosts: Iterable[str],
                 entities.add(tds.entity_map[c])
                 break
     return Classification(frozenset(third), frozenset(trackers), frozenset(entities))
+
+
+def entity_for(host: str, tds: TdsData) -> str | None:
+    """Firma, die einen Host betreibt — über die Domain-Kette gegen die breite
+    TDS-Entity-Map. None, wenn keine Firma zugeordnet ist (nicht raten)."""
+    for c in _domain_chain(host.lower()):
+        if c in tds.entity_map:
+            return tds.entity_map[c]
+    return None
