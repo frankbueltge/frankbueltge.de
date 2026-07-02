@@ -1,0 +1,89 @@
+import json
+
+from beifang.assemble import assemble_run, compute_befund, load_previous, site_result
+from beifang.capture import RawCapture, RawCookie, RawRequest
+from beifang.classify import Classification
+from beifang.model import Blocked, ListMeta, SiteResult
+
+ENTRY = {"id": "elsevier-01", "group": "verlag", "publisher": "elsevier",
+         "url": "https://doi.org/10.x", "expected_domain": "sciencedirect.com"}
+
+
+def raw(host_pairs):
+    return RawCapture(final_url="https://www.sciencedirect.com/a", http_status=200,
+                      page_title="Artikel",
+                      requests=tuple(RawRequest(url=f"https://{h}/x", host=h,
+                                                resource_type="script", bytes=b)
+                                     for h, b in host_pairs),
+                      cookies=(RawCookie(name="s", domain="sciencedirect.com"),
+                               RawCookie(name="t", domain="tracker.example")))
+
+
+def sr(**over):
+    defaults = dict(entry=ENTRY, retrieved_at="2026-07-06T02:00:00Z")
+    defaults.update(over)
+    return site_result(**defaults)
+
+
+def test_site_result_ok_counts():
+    r = sr(raw=raw([("www.sciencedirect.com", 100), ("tracker.example", 50), ("cdn.example", None)]),
+           cls=Classification(frozenset({"tracker.example", "cdn.example"}),
+                              frozenset({"tracker.example"}), frozenset({"TrackCo"})))
+    assert r.final_domain == "sciencedirect.com"
+    assert r.requests_total == 3
+    assert r.third_party_hosts == 2 and r.third_party_requests == 2
+    assert r.third_party_bytes == 50
+    assert r.tracker_hosts == ("tracker.example",) and r.entities == ("TrackCo",)
+    assert r.cookies_first_party == 1 and r.cookies_third_party == 1
+
+
+def test_site_result_blocked_nulls_metrics():
+    r = sr(raw=raw([("www.sciencedirect.com", 10)]),
+           blocked=Blocked(type="http", marker="403"))
+    assert r.blocked == Blocked(type="http", marker="403")
+    assert r.tracker_hosts is None and r.requests_total is None and r.entities is None
+
+
+def test_site_result_failed_navigation():
+    r = sr(note="TimeoutError: …")
+    assert r.final_url is None and r.http_status is None and r.tracker_hosts is None
+
+
+def test_befund_baseline_then_new_entity():
+    cur = [sr(raw=raw([("pixel.liveramp.com", 1)]),
+              cls=Classification(frozenset({"pixel.liveramp.com"}),
+                                 frozenset({"pixel.liveramp.com"}), frozenset({"LiveRamp"})))]
+    assert compute_befund(cur, None).kind == "baseline"
+    prev = {"vantages": {"us": {"results": [
+        {"panel_id": "elsevier-01", "group": "verlag", "publisher": "elsevier",
+         "blocked": None, "tracker_hosts": [], "entities": []}]}}}
+    b = compute_befund(cur, prev)
+    assert b.kind == "entity_neu" and b.params == {"entity": "LiveRamp", "pages": 1}
+
+
+def test_befund_new_blockade_beats_entity():
+    cur = [sr(raw=raw([]), blocked=Blocked(type="challenge", marker="captcha"))]
+    prev = {"vantages": {"us": {"results": [
+        {"panel_id": "elsevier-01", "group": "verlag", "publisher": "elsevier",
+         "blocked": None, "tracker_hosts": [], "entities": []}]}}}
+    b = compute_befund(cur, prev)
+    assert b.kind == "blockade_neu" and b.params["publisher"] == "elsevier"
+
+
+def test_load_previous_picks_latest_before(tmp_path):
+    d = tmp_path / "src/content/beifang/2026"
+    d.mkdir(parents=True)
+    (d / "2026-06-29.json").write_text(json.dumps({"date": "2026-06-29"}))
+    (d / "2026-07-06.json").write_text(json.dumps({"date": "2026-07-06"}))
+    assert load_previous(tmp_path, before="2026-07-06")["date"] == "2026-06-29"
+    assert load_previous(tmp_path, before="2026-06-29") is None
+
+
+def test_assemble_run_has_eu_pending():
+    rec = assemble_run(date_iso="2026-07-06", panel_version="2026-07-02", runner="test",
+                       results=[sr(note="x")],
+                       lists={"easyprivacy": ListMeta("u", "t", "h")}, previous=None)
+    assert rec.vantages["eu"].status == "ausstehend" and rec.vantages["eu"].results is None
+    assert rec.vantages["us"].status == "ok"
+    assert rec.runner == "test"
+    assert rec.befund.kind == "baseline"
