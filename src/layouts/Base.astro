@@ -120,7 +120,9 @@ const workLd = work ? workJsonLd(work, locale, canonical) : null
       }
     </script>
 
-    {/* Web Analytics: Cloudflare injiziert den Beacon edge-seitig (Automatic Setup,
-        proxied) — cookielos/anonym, kein Code nötig. Beacon hier nur falls je explizit gewünscht. */}
+    {/* Web Analytics: bewusst KEINE — das CF-Beacon wurde 2026-07-02 deaktiviert
+        (widersprach der Beifang-Behauptung „null Drittanbieter-Requests"; die eigenen
+        Tracker-Listen führten es als Tracker). Geplant: selbst gehostetes Umami unter
+        stats.frankbueltge.de (First-Party) — erst dann wieder ein Script hier. */}
   </body>
 </html>

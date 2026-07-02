@@ -178,8 +178,8 @@ const euStatusText = latest
       <footer class="mt-12 border-t border-line pt-6">
         <p class="font-mono text-xs text-fg-faint">
           {de
-            ? `Sitzung vom ${latest.date} · ${okCount} Seiten gemessen · Panel ${latest.panel_version}`
-            : `Run of ${latest.date} · ${okCount} pages measured · panel ${latest.panel_version}`}
+            ? `Sitzung vom ${latest.date} · ${okCount} Seiten gemessen · Panel ${latest.panel_version} · Diese Seite lädt null Drittanbieter-Requests.`
+            : `Run of ${latest.date} · ${okCount} pages measured · panel ${latest.panel_version} · This page loads zero third-party requests.`}
         </p>
         <nav class="mt-2">
           <a href={methodUrl} class="font-mono text-xs text-fg-faint transition-colors hover:text-fg">{t(locale, 'prot.method')} →</a>
