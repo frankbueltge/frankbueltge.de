@@ -18,6 +18,13 @@ export interface ParallaxeTopic {
   mean_omission: number
 }
 
+/** Ausfall-Zensus eines Laufs: Vermerk statt stiller Lücke. */
+export interface ParallaxeCensus {
+  attempted: number
+  measured: number
+  failed: Record<string, number>
+}
+
 export interface ParallaxeRegister {
   generated_at: string
   rule: {
@@ -26,6 +33,8 @@ export interface ParallaxeRegister {
     cap: number
     model: string
   }
+  /** Ab 2026-07 vorhanden; ältere Register haben den Block nicht. */
+  census?: ParallaxeCensus
   mean_omission_index: number | null
   topics: ParallaxeTopic[]
 }

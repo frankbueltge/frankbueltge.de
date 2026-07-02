@@ -34,6 +34,10 @@ const txt = {
   dataAsOf: de ? 'Messstand' : 'Measured as of',
   model: de ? 'Extraktion' : 'Extraction',
   method: de ? 'Methodenblatt' : 'Method sheet',
+  censusNote: (attempted: number, measured: number) =>
+    de
+      ? `Vermerk: ${attempted - measured} von ${attempted} Themen heute ohne Feststellung — Ausfall, nicht überbrückt.`
+      : `Note: ${attempted - measured} of ${attempted} topics without a finding today — failure, not bridged.`,
 }
 
 // Anzahl „verschweigt" je Aussage — die Auslassung steht voran.
@@ -133,6 +137,9 @@ const cellLabel = (m: ClaimMark) => (de ? CLAIM_MARK[m].de : CLAIM_MARK[m].en)
   })}
 
   <footer class="mt-12 border-t border-line pt-6 font-mono text-xs text-fg-faint">
+    {reg.census && reg.census.measured < reg.census.attempted && (
+      <p class="mb-2">{txt.censusNote(reg.census.attempted, reg.census.measured)}</p>
+    )}
     {txt.dataAsOf}: {reg.generated_at} · {txt.model}: {reg.rule.model} · Wikipedia (CC BY-SA) ·
     <a href={methodUrl} class="transition-colors hover:text-fg">{txt.method}</a>
   </footer>
