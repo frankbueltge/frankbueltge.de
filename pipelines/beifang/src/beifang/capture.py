@@ -21,6 +21,8 @@ class RawRequest:
     host: str
     resource_type: str
     bytes: int | None
+    post_data: str | None
+    referer: str | None
 
 
 @dataclass(frozen=True)
@@ -80,9 +82,19 @@ def capture_page(url: str, *, timeout_s: float = 60.0, settle_s: float = 8.0,
                 size = len(resp.body())
             except Exception:
                 size = None  # Redirects/abgebrochene Responses haben keinen Body
-            req_url = resp.request.url
+            req = resp.request
+            req_url = req.url
+            try:
+                post = req.post_data  # None bei GET; Playwright kann werfen
+            except Exception:
+                post = None
+            try:
+                referer = req.headers.get("referer")
+            except Exception:
+                referer = None
             reqs.append(RawRequest(url=req_url, host=urlsplit(req_url).hostname or "",
-                                   resource_type=resp.request.resource_type, bytes=size))
+                                   resource_type=req.resource_type, bytes=size,
+                                   post_data=post, referer=referer))
         try:
             title = page.title()
         except Exception:
