@@ -42,7 +42,7 @@ Vier überprüfbare Teilbehauptungen:
 
 ## 3. Panel (fest, versioniert)
 
-`pipelines/beifang/panel.json`, committet, mit voller Provenienz je Eintrag
+`pipelines/beifang/src/beifang/data/panel.json`, committet, mit voller Provenienz je Eintrag
 (URL, DOI, Verlag/Journal, Gruppe, Auswahlkriterium, Aufnahmedatum):
 
 - **Verlagsgruppe:** 5 Verlage × 10 Artikelseiten — Elsevier (ScienceDirect),
@@ -129,12 +129,13 @@ Visualisierung nach `2026-06-20-visualisierungs-standard-design.md`; Wortlaut/Ra
 
 ```
 pipelines/beifang/
-  panel.json          # das Panel (§ 3)
-  lists/              # committete EasyPrivacy-/Entity-Listen (versioniert)
   src/beifang/
+    data/panel.json   # das Panel (§ 3) — package-data, wandert mit der Installation
+    data/lists/       # committete EasyPrivacy-/Entity-Listen (versioniert)
     capture.py        # Playwright-Lauf: URL → Request-/Cookie-Protokoll
     classify.py       # Host-Matching (EasyPrivacy) + Entity-Zuordnung
     assemble.py       # Lauf-Snapshot bauen, Befund der Woche, Vergleich Vorlauf
+    run.py            # CLI; panel.py/lists_fetch.py = Einmal-Werkzeuge für Panel/Listen
   tests/              # pytest; Fixtures = aufgezeichnete Request-Protokolle
 ```
 
