@@ -14,7 +14,8 @@ def raw(host_pairs):
     return RawCapture(final_url="https://www.sciencedirect.com/a", http_status=200,
                       page_title="Artikel",
                       requests=tuple(RawRequest(url=f"https://{h}/x", host=h,
-                                                resource_type="script", bytes=b)
+                                                resource_type="script", bytes=b,
+                                                post_data=None, referer=None)
                                      for h, b in host_pairs),
                       cookies=(RawCookie(name="s", domain="sciencedirect.com"),
                                RawCookie(name="t", domain="tracker.example")),

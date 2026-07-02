@@ -46,3 +46,12 @@ def test_capture_records_cross_host_requests_and_title(server):
     assert cap.page_title == "Testseite"
     gif = next(r for r in cap.requests if r.url.endswith("/pixel.gif"))
     assert gif.bytes == 6
+
+
+@pytest.mark.browser
+def test_capture_records_referer_on_subrequests(server):
+    port = server.server_port
+    cap = capture_page(f"http://127.0.0.1:{port}/", timeout_s=20.0, settle_s=1.0)
+    sub = [r for r in cap.requests if r.url.endswith(("/t.js", "/pixel.gif"))]
+    assert sub, "keine Sub-Requests erfasst"
+    assert any(r.referer and "127.0.0.1" in r.referer for r in sub)
