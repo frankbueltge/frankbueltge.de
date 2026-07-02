@@ -86,6 +86,7 @@ const beifang = defineCollection({
     pipeline_version: z.string(),
     panel_version: z.string(),
     runner: z.string(),
+    vantage: z.string().optional(),
     lists: z.record(z.string(), z.object({
       source_url: z.string(), retrieved_at: z.string(), sha256: z.string(),
     })),
@@ -111,6 +112,12 @@ const beifang = defineCollection({
         cookies_first_party: z.number().nullable(),
         cookies_third_party: z.number().nullable(),
         retrieved_at: z.string(),
+        leaks: z.array(z.object({
+          token: z.string(), signal: z.string(), form: z.string(), kanal: z.string(),
+          host: z.string(), firma: z.string().nullable(), beweis: z.string(),
+        })).nullable().optional(),
+        leak_firmen: z.array(z.string()).nullable().optional(),
+        doi_leak: z.boolean().nullable().optional(),
       })).nullable(),
     })),
     befund: z.object({ kind: z.string(), params: z.record(z.string(), z.unknown()) }),
