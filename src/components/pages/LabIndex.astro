@@ -6,7 +6,9 @@ import { WERKE_EXPERIMENTE, WERKE_STUDIEN } from '@/data/werke'
 import type { Locale } from '@/lib/site'
 
 const locale = (Astro.currentLocale ?? 'en') as Locale
-const posts = await getLabPosts(locale)
+// Studien, die schon in der „Außer der Reihe"-Rubrik stehen, nicht doppelt listen.
+const studienHrefs = new Set(WERKE_STUDIEN.map((w) => w.href))
+const posts = (await getLabPosts(locale)).filter(({ slug }) => !studienHrefs.has(`/lab/${slug}`))
 const fmt = (iso: string) =>
   new Date(iso).toLocaleDateString(locale === 'de' ? 'de-DE' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' })
 ---
