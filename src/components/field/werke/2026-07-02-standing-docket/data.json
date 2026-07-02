@@ -1,0 +1,205 @@
+{
+  "instrument": "009-standing-docket",
+  "detector_version": "digit-tests-v1",
+  "trials": [
+    {
+      "trial_id": 1,
+      "date": "2026-07-02",
+      "seed_disclosure": {
+        "synthetic_benford": 42,
+        "synthetic_human": 43,
+        "generator": "random.Random(seed) -- Python stdlib Mersenne Twister"
+      },
+      "detector_version": "digit-tests-v1",
+      "controls": [
+        {
+          "name": "synthetic_benford",
+          "n": 200,
+          "n_gate": "IN-SPEC",
+          "tests": {
+            "first_digit_chi2": {
+              "stat": 8.198151774498776,
+              "df": 8,
+              "p": 0.41435748442364884,
+              "flagged": false
+            },
+            "first_digit_mad": {
+              "stat": 0.020215273838284697,
+              "cutoff": 0.015,
+              "conformity_label": "nonconformity",
+              "flagged": true
+            },
+            "second_digit_chi2": {
+              "n": 200,
+              "stat": 11.044691386609628,
+              "df": 9,
+              "p": 0.27265800919177946,
+              "flagged": false
+            },
+            "last_digit_chi2": {
+              "n": 162,
+              "n_excluded_below_1000": 38,
+              "stat": 13.679012345679014,
+              "df": 9,
+              "p": 0.1342102597017825,
+              "flagged": false
+            }
+          },
+          "chi2_mad_disagree": true,
+          "convicted": false,
+          "behaved_as_expected": true
+        },
+        {
+          "name": "synthetic_human",
+          "n": 200,
+          "n_gate": "IN-SPEC",
+          "tests": {
+            "first_digit_chi2": {
+              "stat": 238.13932477902762,
+              "df": 8,
+              "p": 5.609732411534031e-47,
+              "flagged": true
+            },
+            "first_digit_mad": {
+              "stat": 0.10754888985244862,
+              "cutoff": 0.015,
+              "conformity_label": "nonconformity",
+              "flagged": true
+            },
+            "second_digit_chi2": {
+              "n": 200,
+              "stat": 8.46558647071419,
+              "df": 9,
+              "p": 0.4879902998848479,
+              "flagged": false
+            },
+            "last_digit_chi2": {
+              "n": 167,
+              "n_excluded_below_1000": 33,
+              "stat": 44.91616766467066,
+              "df": 9,
+              "p": 9.56194772927688e-07,
+              "flagged": true
+            }
+          },
+          "chi2_mad_disagree": false,
+          "convicted": true,
+          "behaved_as_expected": true
+        }
+      ],
+      "series": [
+        {
+          "source": "World Bank",
+          "indicator": "SP.POP.TOTL",
+          "indicator_label": "Population, total",
+          "indicator_date": "2023",
+          "snapshot_date": "2026-07-02",
+          "n": 217,
+          "n_gate": "IN-SPEC",
+          "tests": {
+            "first_digit_chi2": {
+              "stat": 7.608318578890408,
+              "df": 8,
+              "p": 0.4726342748217067,
+              "flagged": false
+            },
+            "first_digit_mad": {
+              "stat": 0.0152124949869302,
+              "cutoff": 0.015,
+              "conformity_label": "nonconformity",
+              "flagged": true
+            },
+            "second_digit_chi2": {
+              "n": 217,
+              "stat": 18.09683407971982,
+              "df": 9,
+              "p": 0.0340665690451663,
+              "flagged": true
+            },
+            "last_digit_chi2": {
+              "n": 217,
+              "n_excluded_below_1000": 0,
+              "stat": 9.221198156682027,
+              "df": 9,
+              "p": 0.41711144508165776,
+              "flagged": false
+            }
+          },
+          "chi2_mad_disagree": true,
+          "convicted": true
+        },
+        {
+          "source": "World Bank",
+          "indicator": "NY.GDP.MKTP.CD",
+          "indicator_label": "GDP (current US$)",
+          "indicator_date": "2023",
+          "snapshot_date": "2026-07-02",
+          "n": 204,
+          "n_gate": "IN-SPEC",
+          "tests": {
+            "first_digit_chi2": {
+              "stat": 10.03274051271847,
+              "df": 8,
+              "p": 0.2627354781056503,
+              "flagged": false
+            },
+            "first_digit_mad": {
+              "stat": 0.018491290344429617,
+              "cutoff": 0.015,
+              "conformity_label": "nonconformity",
+              "flagged": true
+            },
+            "second_digit_chi2": {
+              "n": 204,
+              "stat": 7.242883903510445,
+              "df": 9,
+              "p": 0.6118478374729401,
+              "flagged": false
+            },
+            "last_digit_chi2": {
+              "n": 204,
+              "n_excluded_below_1000": 0,
+              "stat": 14.039215686274508,
+              "df": 9,
+              "p": 0.1209370722689277,
+              "flagged": false
+            }
+          },
+          "chi2_mad_disagree": true,
+          "convicted": false
+        }
+      ],
+      "verdict": {
+        "clean_real_series_flagged": [
+          "SP.POP.TOTL"
+        ],
+        "tests_disagreeing": [
+          "SP.POP.TOTL",
+          "NY.GDP.MKTP.CD"
+        ]
+      }
+    }
+  ],
+  "cumulative": {
+    "trial_count": 1,
+    "clean_real_series_tested": 2,
+    "clean_real_series_convicted": 1,
+    "false_conviction_rate_on_clean_real_data": 0.5,
+    "per_test_conviction_counts_on_clean_data": {
+      "first_digit_chi2": 0,
+      "first_digit_mad": 2,
+      "second_digit_chi2": 1,
+      "last_digit_chi2": 0
+    },
+    "detection_rate_on_synthetic_fraud": 1.0,
+    "clear_rate_on_synthetic_benford": 1.0,
+    "chi2_mad_conflict_rate": 0.75,
+    "expected_false_conviction_rate_by_chance_alpha": {
+      "first_digit_chi2": 0.05,
+      "second_digit_chi2": 0.05,
+      "last_digit_chi2": 0.05
+    },
+    "expected_familywise_rate_by_chance": 0.18549375000000012,
+    "note": "expected_false_conviction_rate_by_chance_alpha is the per-test significance threshold (alpha=0.05), i.e. the false-positive rate expected on truly clean data from that single test alone by chance. But each series here is put through 4 tests (3 chi2 tests + 1 MAD check), so the chance that AT LEAST ONE test flags a truly clean series is higher than 0.05: assuming independence, 1-(1-0.05)^4 = 0.185494 (stored as expected_familywise_rate_by_chance). This is arithmetic, not an empirical claim -- it is the theoretical baseline the observed false_conviction_rate_on_clean_real_data should be compared against, not zero."
+  }
+}

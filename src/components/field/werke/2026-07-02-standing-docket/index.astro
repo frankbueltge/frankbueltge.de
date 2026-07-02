@@ -1,0 +1,586 @@
+---
+// Instrument 009: The Standing Docket
+// A recurring, append-only ledger that puts three digit-based fraud tests
+// on trial against real World Bank data and two seeded synthetic controls.
+// Meridian / The Measuring Field / 2026-07-02
+//
+// All numbers below are read from ./data.json, which is written at build
+// time by runner.py from the committed raw snapshots in ./data/raw/ plus
+// two seeded synthetic generators. Nothing here is computed anew except
+// display formatting (percentages, rounding, exponent notation).
+
+import rawData from "./data.json";
+
+const data: any = rawData;
+const trials: any[] = data.trials || [];
+const cumulative: any = data.cumulative || {};
+
+const CHI2_TESTS = ["first_digit_chi2", "second_digit_chi2", "last_digit_chi2"];
+const TEST_LABELS: Record<string, string> = {
+  first_digit_chi2: "1st-digit chi2",
+  first_digit_mad: "1st-digit MAD",
+  second_digit_chi2: "2nd-digit chi2",
+  last_digit_chi2: "last-digit chi2",
+};
+
+function pct(x: number | null | undefined, digits = 1): string {
+  if (x === null || x === undefined) return "n/a";
+  return (x * 100).toFixed(digits) + "%";
+}
+
+function formatP(p: number | null | undefined): string {
+  if (p === null || p === undefined) return "n/a";
+  if (p < 0.0001) return p.toExponential(2);
+  return p.toFixed(4);
+}
+
+function formatStat(stat: number | null | undefined): string {
+  if (stat === null || stat === undefined) return "n/a";
+  return stat.toFixed(3);
+}
+
+function anyChi2Flagged(tests: any): boolean {
+  return CHI2_TESTS.some((name) => tests[name] && tests[name].flagged);
+}
+
+function stampFor(row: any): "OUT-OF-SPEC" | "CONVICTED" | "CLEARED" {
+  if (row.n_gate === "OUT-OF-SPEC") return "OUT-OF-SPEC";
+  return anyChi2Flagged(row.tests) ? "CONVICTED" : "CLEARED";
+}
+
+function rowLabel(row: any): string {
+  if (row.kind === "control") {
+    return row.name === "synthetic_benford"
+      ? "SYNTHETIC CONTROL -- Benford-by-construction"
+      : "SYNTHETIC CONTROL -- modeled human fabrication";
+  }
+  return `${row.indicator_label} (${row.indicator}) -- ${row.source}, ${row.indicator_date}`;
+}
+
+// Build the flat, append-downward row list: within each trial, controls
+// are scored (and rendered) before the real series, oldest trial first.
+const allRows: any[] = [];
+for (const trial of trials) {
+  for (const c of trial.controls || []) {
+    allRows.push({ kind: "control", trial_id: trial.trial_id, date: trial.date, ...c });
+  }
+  for (const s of trial.series || []) {
+    allRows.push({ kind: "series", trial_id: trial.trial_id, date: trial.date, ...s });
+  }
+}
+
+const alphaPerTest = cumulative.expected_false_conviction_rate_by_chance_alpha || {};
+const alphaValue: number = alphaPerTest.first_digit_chi2 ?? 0.05;
+
+// Pilot gate: below this many clean-series scorings, the cumulative rates
+// are not statistically distinguishable from the chance baseline and the
+// scoreboard says so on its face. The floor is a declared convention of
+// this instrument, not a statistical constant.
+const PILOT_FLOOR = 10;
+const cleanTested: number = cumulative.clean_real_series_tested ?? 0;
+const famRate: number = cumulative.expected_familywise_rate_by_chance ?? 0;
+// Chance of at least one false conviction across ALL clean scorings so far,
+// under the disclosed familywise baseline (independence assumed).
+const pAnyByChance: number = cleanTested > 0 ? 1 - Math.pow(1 - famRate, cleanTested) : 0;
+---
+
+<section class="docket">
+  <header class="docket-header">
+    <div class="kicker">THE MEASURING FIELD / MERIDIAN / INSTRUMENT 009</div>
+    <h1>THE STANDING DOCKET</h1>
+    <p class="tagline">
+      Three digit-based fraud tests, on trial against real official data and two seeded controls.
+      A single row is a demo. The accumulating stack is a rate.
+    </p>
+    <p class="fixed-copy">This ledger convicts the tests, not the countries.</p>
+  </header>
+
+  <section class="scoreboard" aria-label="cumulative conviction record">
+    <div class="scoreboard-title">CUMULATIVE CONVICTION RECORD -- {cumulative.trial_count} trial(s), {cumulative.clean_real_series_tested} real-series scorings</div>
+    {cleanTested < PILOT_FLOOR && (
+      <div class="pilot-banner">
+        PILOT STAGE -- {cleanTested} clean-series scoring(s) on record (declared floor: {PILOT_FLOOR}).
+        At this sample size the rates below are not statistically distinguishable from the chance
+        baseline: the chance of at least one false conviction across {cleanTested} clean scorings is
+        already {pct(pAnyByChance)} by chance alone. Read the stamps; the rates stay silent until
+        the stack is tall enough to speak.
+      </div>
+    )}
+    <div class="scoreboard-grid">
+      <div class="stat">
+        <div class="stat-label">false-conviction rate, clean real data</div>
+        <div class="stat-value">{pct(cumulative.false_conviction_rate_on_clean_real_data)}</div>
+        <div class="stat-sub">expected by chance (familywise, 4 tests/series): {pct(cumulative.expected_familywise_rate_by_chance)}</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">detection rate, synthetic fraud control</div>
+        <div class="stat-value">{pct(cumulative.detection_rate_on_synthetic_fraud)}</div>
+        <div class="stat-sub">synthetic_human, any chi2 test flags</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">clear rate, synthetic Benford control</div>
+        <div class="stat-value">{pct(cumulative.clear_rate_on_synthetic_benford)}</div>
+        <div class="stat-sub">synthetic_benford, no chi2 test flags</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">chi2 / MAD conflict rate</div>
+        <div class="stat-value">{pct(cumulative.chi2_mad_conflict_rate)}</div>
+        <div class="stat-sub">first-digit chi2 and MAD disagree on the verdict</div>
+      </div>
+    </div>
+    <div class="scoreboard-note">
+      Per-test expected false-conviction rate by chance (alpha = {alphaValue}): {pct(alphaValue)} each,
+      for {CHI2_TESTS.length} chi2 tests. With {Object.keys(TEST_LABELS).length} tests scored per series
+      (3 chi2 + 1 MAD), the familywise chance of at least one false flag on a truly clean series is
+      1-(1-{alphaValue})^{Object.keys(TEST_LABELS).length} = {pct(cumulative.expected_familywise_rate_by_chance)}.
+      This is arithmetic, not an empirical claim -- it is the baseline the observed rate above should be read against.
+      Across all {cleanTested} clean-series scoring(s) so far, the chance of at least one false conviction
+      by chance alone is 1-(1-{famRate.toFixed(3)})^{cleanTested} = {pct(pAnyByChance)}.
+    </div>
+  </section>
+
+  <section class="disclosure">
+    <div class="disclosure-title">DISCLOSURE</div>
+    <p>
+      Synthetic controls generated with <code>random.Random(seed)</code> -- synthetic_benford seed 42,
+      synthetic_human seed 43, N=200 each, deterministic. Real series: World Bank indicators
+      SP.POP.TOTL (population, total, 2023) and NY.GDP.MKTP.CD (GDP, current US$, 2023), snapshot date
+      2026-07-02, filtered to 217 / 204 real countries (aggregates excluded). p-values computed via a
+      self-written regularized incomplete gamma function, not a validated statistics library
+      (unit-tested against textbook chi-squared critical values -- see README.md).
+    </p>
+    <p>
+      N-gate: verdicts are only considered valid for 100 &le; N &le; 10000. Outside that range a row is
+      stamped OUT-OF-SPEC regardless of test outcome.
+    </p>
+    <p>
+      "Clean" is an assumption from provenance, not a proven absence of manipulation -- governments do
+      manipulate official statistics (Briviba, Frey, Moser &amp; Bieri 2024, "Governments manipulate
+      official Statistics: Institutions matter", <em>European Journal of Political Economy</em>). The
+      defendants in this docket are the tests; the data is a witness assumed honest, and that assumption
+      is disclosed, not proven. The chi2/MAD disagreements recorded below also have a known mechanism:
+      the MAD statistic's expected value shrinks with sample size while Nigrini's cutoff is fixed, so the
+      cutoff over-rejects at N in the low hundreds (Cerqueti &amp; Lupi, "Severe testing of Benford's law",
+      arXiv:2202.05237). The ledger keeps the fixed cutoff deliberately: it tries the convention as
+      deployed in forensic practice, and counts how often it misfires.
+    </p>
+  </section>
+
+  <section class="citation">
+    <span class="citation-mark">&sect;</span>
+    Deckert, Myagkov &amp; Ordeshook (2011), on Benford's-Law-based election fraud detection: its
+    "success rate either way is essentially equivalent to a toss of a coin."
+    <span class="citation-url">https://www.cambridge.org/core/journals/political-analysis/article/benfords-law-and-the-detection-of-election-fraud/3B1D64E822371C461AF3C61CE91AAF6D</span>
+  </section>
+
+  <section class="ledger">
+    <div class="ledger-title">THE LEDGER -- oldest trial first, appends downward</div>
+
+    {trials.map((trial: any) => (
+      <div class="trial-block">
+        <div class="trial-head">
+          TRIAL {trial.trial_id} -- {trial.date} -- detector {trial.detector_version} -- seeds
+          synthetic_benford={trial.seed_disclosure?.synthetic_benford},
+          synthetic_human={trial.seed_disclosure?.synthetic_human}
+        </div>
+
+        {(trial.controls || []).map((row: any) => {
+          const stamp = stampFor(row);
+          return (
+            <div class="row">
+              <div class="row-top">
+                <span class="row-label">{rowLabel({ kind: "control", ...row })}</span>
+                <span class={`stamp stamp-${stamp.replace(/[^A-Z]/g, "")}`}>{stamp}</span>
+              </div>
+              <div class="row-meta">
+                n={row.n} -- N-gate: {row.n_gate} -- expected behavior:{" "}
+                {row.behaved_as_expected ? "matched (behaved as expected)" : "MISMATCH -- did not behave as expected"}
+              </div>
+              <div class="row-tests">
+                {Object.keys(TEST_LABELS).map((tn) => {
+                  const t = row.tests[tn];
+                  return (
+                    <span class={`test-chip ${t.flagged ? "flagged" : "clean"}`}>
+                      {TEST_LABELS[tn]}: stat={formatStat(t.stat)}
+                      {t.p !== undefined ? ` p=${formatP(t.p)}` : ""}
+                      {" "}[{t.flagged ? "FLAG" : "clear"}]
+                    </span>
+                  );
+                })}
+              </div>
+              <div class="row-flag">chi2/MAD disagree: {row.chi2_mad_disagree ? "yes" : "no"}</div>
+            </div>
+          );
+        })}
+
+        {(trial.series || []).map((row: any) => {
+          const stamp = stampFor(row);
+          return (
+            <div class="row row-series">
+              <div class="row-top">
+                <span class="row-label">{rowLabel({ kind: "series", ...row })}</span>
+                <span class={`stamp stamp-${stamp.replace(/[^A-Z]/g, "")}`}>{stamp}</span>
+              </div>
+              <div class="row-meta">
+                n={row.n} -- N-gate: {row.n_gate} -- snapshot {row.snapshot_date}
+              </div>
+              <div class="row-tests">
+                {Object.keys(TEST_LABELS).map((tn) => {
+                  const t = row.tests[tn];
+                  return (
+                    <span class={`test-chip ${t.flagged ? "flagged" : "clean"}`}>
+                      {TEST_LABELS[tn]}: stat={formatStat(t.stat)}
+                      {t.p !== undefined ? ` p=${formatP(t.p)}` : ""}
+                      {" "}[{t.flagged ? "FLAG" : "clear"}]
+                    </span>
+                  );
+                })}
+              </div>
+              <div class="row-flag">chi2/MAD disagree: {row.chi2_mad_disagree ? "yes" : "no"}</div>
+            </div>
+          );
+        })}
+
+        <div class="trial-verdict">
+          verdict -- flagged real series: {(trial.verdict?.clean_real_series_flagged || []).length
+            ? trial.verdict.clean_real_series_flagged.join(", ")
+            : "none"}
+          {" "}-- chi2/MAD disagreement: {(trial.verdict?.tests_disagreeing || []).length
+            ? trial.verdict.tests_disagreeing.join(", ")
+            : "none"}
+        </div>
+      </div>
+    ))}
+  </section>
+
+  <section class="method-note">
+    <div class="method-title">WHAT THIS INSTRUMENT DEMONSTRATES</div>
+    <p>
+      Three tests, one clean data source of known provenance, two known-truth synthetic controls.
+      The controls exist so the tests have a chance to prove themselves before they are trusted to
+      judge anything real: synthetic_benford is Benford-by-construction and should clear; synthetic_human
+      is a modeled caricature of digit-avoidance fabrication and should convict. Only after the controls
+      behave as expected does a verdict on real data mean anything -- and even then, this ledger's job is
+      to track how often the tests convict, disagree with each other, and drift from their own
+      chance baseline, not to accuse any country of anything. A single trial is one demo of the tests
+      on one day's snapshot; the value is in the stack that accumulates as more trials, more indicators,
+      and more snapshot dates are appended below.
+    </p>
+    <p class="critique-ref">
+      This work ships with its own strongest objection: the hostile critique (Interlocutor) is
+      published in the collective's journal entry of the shipping date, 2026-07-02.
+    </p>
+  </section>
+</section>
+
+<style>
+  .docket {
+    font-family: "Courier Prime", "Courier New", monospace;
+    background-color: #f7f3d7;
+    background-image:
+      repeating-linear-gradient(
+        to bottom,
+        transparent,
+        transparent 26px,
+        rgba(140, 120, 70, 0.28) 27px
+      ),
+      linear-gradient(
+        to right,
+        transparent 0,
+        transparent 54px,
+        rgba(190, 60, 60, 0.35) 55px,
+        rgba(190, 60, 60, 0.35) 56px,
+        transparent 57px
+      );
+    color: #2b2510;
+    padding: 1.75rem 1.25rem 2.5rem 3.25rem;
+    max-width: 760px;
+    margin: 0 auto;
+    font-size: 0.78rem;
+    line-height: 1.55;
+  }
+
+  .docket-header {
+    border-bottom: 2px solid #2b2510;
+    padding-bottom: 0.85rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .kicker {
+    font-size: 0.55rem;
+    letter-spacing: 0.22em;
+    color: #7a6a3a;
+    margin-bottom: 0.35rem;
+  }
+
+  h1 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    margin: 0 0 0.35rem;
+  }
+
+  .tagline {
+    font-size: 0.72rem;
+    color: #4b4325;
+    margin: 0 0 0.6rem;
+  }
+
+  .fixed-copy {
+    font-weight: 700;
+    font-size: 0.82rem;
+    margin: 0;
+    padding: 0.4rem 0.6rem;
+    border: 1.5px solid #2b2510;
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.35);
+  }
+
+  .scoreboard {
+    border: 2px solid #2b2510;
+    background: rgba(255, 255, 255, 0.45);
+    padding: 0.85rem 0.95rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .scoreboard-title {
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    font-weight: 700;
+    margin-bottom: 0.6rem;
+    color: #2b2510;
+  }
+
+  .scoreboard-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.7rem 1rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .stat-label {
+    font-size: 0.6rem;
+    color: #5c5230;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .stat-value {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #2b2510;
+  }
+
+  .stat-sub {
+    font-size: 0.58rem;
+    color: #7a6a3a;
+  }
+
+  .pilot-banner {
+    border: 2px dashed #6b6b6b;
+    color: #4b4325;
+    background: rgba(107, 107, 107, 0.05);
+    padding: 0.5rem 0.6rem;
+    margin-bottom: 0.7rem;
+    font-size: 0.6rem;
+    letter-spacing: 0.03em;
+    line-height: 1.6;
+  }
+
+  .scoreboard-note {
+    font-size: 0.6rem;
+    color: #4b4325;
+    border-top: 1px dashed #b8a86a;
+    padding-top: 0.5rem;
+    line-height: 1.6;
+  }
+
+  .disclosure,
+  .citation,
+  .method-note {
+    font-size: 0.65rem;
+    color: #3a3418;
+    margin-bottom: 1.1rem;
+    line-height: 1.65;
+  }
+
+  .disclosure-title,
+  .ledger-title,
+  .method-title {
+    font-size: 0.58rem;
+    letter-spacing: 0.16em;
+    font-weight: 700;
+    color: #5c5230;
+    margin-bottom: 0.4rem;
+  }
+
+  .citation {
+    border-left: 3px solid #7a6a3a;
+    padding: 0.5rem 0.75rem;
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+  .citation-mark {
+    font-weight: 700;
+    margin-right: 0.25rem;
+  }
+
+  .citation-url {
+    display: block;
+    font-size: 0.56rem;
+    color: #6b5f38;
+    word-break: break-all;
+    margin-top: 0.3rem;
+  }
+
+  .ledger {
+    margin-bottom: 1.25rem;
+  }
+
+  .trial-block {
+    border: 1px solid #b8a86a;
+    background: rgba(255, 255, 255, 0.25);
+    margin-bottom: 1rem;
+    padding: 0.7rem 0.8rem 0.5rem;
+  }
+
+  .trial-head {
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: #2b2510;
+    border-bottom: 1px dashed #b8a86a;
+    padding-bottom: 0.4rem;
+    margin-bottom: 0.6rem;
+    letter-spacing: 0.02em;
+  }
+
+  .row {
+    border-top: 1px solid rgba(140, 120, 70, 0.4);
+    padding: 0.5rem 0 0.55rem;
+  }
+
+  .row:first-of-type {
+    border-top: none;
+  }
+
+  .row-series {
+    background: rgba(255, 255, 255, 0.25);
+  }
+
+  .row-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .row-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #2b2510;
+  }
+
+  .row-meta,
+  .row-flag {
+    font-size: 0.58rem;
+    color: #6b5f38;
+    margin-top: 0.2rem;
+  }
+
+  .row-tests {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.4rem;
+  }
+
+  .test-chip {
+    font-size: 0.56rem;
+    padding: 0.15rem 0.35rem;
+    border: 1px solid #b8a86a;
+    background: rgba(255, 255, 255, 0.4);
+    white-space: nowrap;
+  }
+
+  .test-chip.flagged {
+    border-color: #9a2b2b;
+    color: #7a1f1f;
+  }
+
+  .test-chip.clean {
+    border-color: #2f6b3a;
+    color: #24512c;
+  }
+
+  .stamp {
+    font-weight: 700;
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    padding: 0.12rem 0.5rem;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 2px;
+    transform: rotate(-3deg);
+    display: inline-block;
+  }
+
+  .stamp-CONVICTED {
+    color: #9a2b2b;
+    border-color: #9a2b2b;
+    background: rgba(154, 43, 43, 0.06);
+  }
+
+  .stamp-CLEARED {
+    color: #2f6b3a;
+    border-color: #2f6b3a;
+    background: rgba(47, 107, 58, 0.06);
+  }
+
+  .stamp-OUTOFSPEC {
+    color: #6b6b6b;
+    border-color: #6b6b6b;
+    border-style: dashed;
+    background: repeating-linear-gradient(
+      45deg,
+      rgba(107, 107, 107, 0.08),
+      rgba(107, 107, 107, 0.08) 4px,
+      transparent 4px,
+      transparent 8px
+    );
+    transform: rotate(-6deg);
+  }
+
+  .trial-verdict {
+    font-size: 0.6rem;
+    color: #4b4325;
+    border-top: 1px dashed #b8a86a;
+    margin-top: 0.5rem;
+    padding-top: 0.4rem;
+  }
+
+  .method-note p {
+    margin: 0;
+  }
+
+  .method-note .critique-ref {
+    margin-top: 0.6rem;
+    font-style: italic;
+    color: #5c5230;
+  }
+
+  code {
+    font-family: "Courier Prime", "Courier New", monospace;
+    background: rgba(0, 0, 0, 0.06);
+    padding: 0 0.2rem;
+  }
+
+  @media (max-width: 560px) {
+    .scoreboard-grid {
+      grid-template-columns: 1fr;
+    }
+    .docket {
+      padding-left: 2.25rem;
+    }
+  }
+</style>

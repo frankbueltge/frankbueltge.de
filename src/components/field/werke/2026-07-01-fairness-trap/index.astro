@@ -1,0 +1,606 @@
+---
+// INSTRUMENT 006 — The Fairness Trap (Meridian, 2026-07-01)
+//
+// Data: ProPublica, "How We Analyzed the COMPAS Recidivism Algorithm" (May 2016)
+// Larson, Mattu, Kirchner & Angwin — Broward County, FL, 2013–2014, general recidivism
+// Source: propublica.org/article/how-we-analyzed-the-compas-recidivism-algorithm
+// Confusion matrices reproduced exactly from published methodology table.
+// Confirmed independently in: Dressel & Farid, Science Advances 4(1), 2018 (doi:10.1126/sciadv.aao5580)
+//
+// Chouldechova impossibility theorem:
+// Chouldechova A. (2017). "Fair prediction with disparate impact: A study of bias in
+// recidivism prediction instruments." Big Data 5(2):153–163. doi:10.1089/big.2016.0047
+
+// --- Raw confusion matrix data (ProPublica, general recidivism, n=6,150 after race filter) ---
+// Rows: actual outcome (no reoffend / reoffend)
+// Cols: COMPAS prediction (low risk / high risk; medium+high treated as "high" per ProPublica)
+
+const B = { TN: 990,  FP: 805, FN: 532, TP: 1369 }; // Black defendants
+const W = { TN: 1139, FP: 349, FN: 461, TP: 505  }; // White defendants
+
+const bN = B.TN + B.FP + B.FN + B.TP;  // 3696
+const wN = W.TN + W.FP + W.FN + W.TP;  // 2454
+
+// Key metrics
+const bFPR  = B.FP / (B.TN + B.FP);           // false positive rate (wrongly labeled high)
+const wFPR  = W.FP / (W.TN + W.FP);
+const bFNR  = B.FN / (B.FN + B.TP);           // false negative rate (wrongly cleared)
+const wFNR  = W.FN / (W.FN + W.TP);
+const bPPV  = B.TP / (B.FP + B.TP);           // positive predictive value (precision)
+const wPPV  = W.TP / (W.FP + W.TP);
+const bBase = (B.FN + B.TP) / bN;             // actual recidivism base rate
+const wBase = (W.FN + W.TP) / wN;
+
+// Chouldechova (2017) impossibility theorem:
+// If PPV is equal across groups with different base rates p_A ≠ p_B,
+// then FPR cannot be equal. The constraint on FPR given equal PPV:
+//   FPR_B / FPR_W = [p_B · (1 - p_W)] / [p_W · (1 - p_B)]
+// This is a fixed ratio determined entirely by the base rates — independent of the model.
+const chouldechova_ratio = (bBase * (1 - wBase)) / (wBase * (1 - bBase));
+// With base rates 51.4% (Black) and 39.4% (White): ratio ≈ 1.63
+// COMPAS actual ratio: bFPR / wFPR ≈ 1.91 (slightly above constraint because PPV ≠ exactly equal)
+
+// Format helpers
+const pct = (v: number, d = 1) => `${(v * 100).toFixed(d)}%`;
+const pp  = (v: number) => `${(v * 100).toFixed(1)}pp`;
+
+// ── SVG: Confusion matrix builder ──────────────────────────────────────────────────────
+function buildMatrix(
+  title: string,
+  cells: { TN: number; FP: number; FN: number; TP: number },
+  fpr: number, ppv: number, fnr: number, base: number
+): string {
+  const CW = 106, CH = 64;
+  const LW = 44;  // left label column width
+  const TH = 26;  // top header height
+  const W  = LW + 2 * CW + 2;
+  const H  = TH + 2 * CH + 2 + 42;
+
+  const x0 = LW;
+  const x1 = LW + CW;
+  const y0 = TH;
+  const y1 = TH + CH;
+
+  const cell = (x: number, y: number, n: number, label: string, fill: string, textColor = '#222') => `
+    <rect x="${x}" y="${y}" width="${CW}" height="${CH}" fill="${fill}" stroke="#d0d0d0" stroke-width="0.75" rx="2"/>
+    <text x="${x + CW / 2}" y="${y + 26}" text-anchor="middle" font-size="17" font-weight="700" fill="${textColor}" font-family="monospace">${n.toLocaleString()}</text>
+    <text x="${x + CW / 2}" y="${y + 44}" text-anchor="middle" font-size="9.5" fill="${textColor === '#222' ? '#666' : textColor}" font-family="sans-serif">${label}</text>
+  `;
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" style="display:block;overflow:visible">
+    <text x="${W / 2}" y="17" text-anchor="middle" font-size="12" font-weight="700" fill="#1a1a1a" font-family="sans-serif">${title}</text>
+    <!-- column headers (COMPAS verdict) -->
+    <text x="${x0 + CW / 2}" y="${TH - 5}" text-anchor="middle" font-size="10" fill="#555" font-family="sans-serif">Low risk</text>
+    <text x="${x1 + CW / 2}" y="${TH - 5}" text-anchor="middle" font-size="10" fill="#555" font-family="sans-serif">High risk</text>
+    <!-- row headers (actual outcome) -->
+    <text x="${x0 - 4}" y="${y0 + 30}" text-anchor="end" font-size="10" fill="#555" font-family="sans-serif">No</text>
+    <text x="${x0 - 4}" y="${y0 + 42}" text-anchor="end" font-size="10" fill="#555" font-family="sans-serif">reoffend</text>
+    <text x="${x0 - 4}" y="${y1 + 35}" text-anchor="end" font-size="10" fill="#555" font-family="sans-serif">Reoffend</text>
+    <!-- cells: TN, FP, FN, TP -->
+    ${cell(x0, y0, cells.TN, 'correctly cleared', '#d8f5e6')}
+    ${cell(x1, y0, cells.FP, 'wrongly flagged', '#f8d7da', '#8b1a1a')}
+    ${cell(x0, y1, cells.FN, 'missed risk',       '#fff3cd')}
+    ${cell(x1, y1, cells.TP, 'correctly flagged', '#c3e6cb')}
+    <!-- metric strip -->
+    <text x="2"       y="${H - 12}" font-size="10" fill="#333" font-family="sans-serif">FPR <tspan font-weight="700" fill="${fpr > 0.35 ? '#8b1a1a' : '#2a6a3f'}">${pct(fpr)}</tspan></text>
+    <text x="${W / 2}" y="${H - 12}" text-anchor="middle" font-size="10" fill="#333" font-family="sans-serif">PPV <tspan font-weight="700">${pct(ppv)}</tspan></text>
+    <text x="${W}"    y="${H - 12}" text-anchor="end" font-size="10" fill="#333" font-family="sans-serif">base <tspan font-weight="700">${pct(base)}</tspan></text>
+  </svg>`;
+}
+
+const bMatrixSVG = buildMatrix(`Black defendants (n = ${bN.toLocaleString()})`, B, bFPR, bPPV, bFNR, bBase);
+const wMatrixSVG = buildMatrix(`White defendants (n = ${wN.toLocaleString()})`, W, wFPR, wPPV, wFNR, wBase);
+
+// ── SVG: Dual metric bar chart ────────────────────────────────────────────────────
+// Two paired bars: FPR (Black vs White) and PPV (Black vs White)
+// FPR shows disparity; PPV shows parity. Same data — different verdicts.
+
+const BARCHART_W = 480;
+const BARCHART_H = 280;
+const BAR_ML = 70, BAR_MB = 50, BAR_MT = 35;
+const BAR_PW = BARCHART_W - BAR_ML - 20;
+const BAR_PH = BARCHART_H - BAR_MB - BAR_MT;
+
+// Metric data: [ { label, Black, White, max, title, verdict, note } ]
+const metrics = [
+  {
+    title: 'False Positive Rate',
+    subtitle: '(ProPublica criterion)',
+    bVal: bFPR, wVal: wFPR,
+    max: 0.60,
+    verdict: 'DISPARATE',
+    verdictColor: '#8b1a1a',
+    note: `Δ = ${pp(bFPR - wFPR)} — Black defendants wrongly flagged at nearly 2× the rate`
+  },
+  {
+    title: 'Positive Predictive Value',
+    subtitle: '(Northpointe criterion)',
+    bVal: bPPV, wVal: wPPV,
+    max: 1.00,
+    verdict: 'NEAR PARITY',
+    verdictColor: '#2a6a3f',
+    note: `Δ = ${pp(bPPV - wPPV)} — When COMPAS flags someone, accuracy is similar across groups`
+  }
+];
+
+function buildBarChart(): string {
+  const panelH = BAR_PH / 2 - 12;
+  const barH = 22;
+
+  let svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${BARCHART_W}" height="${BARCHART_H}" style="display:block;max-width:100%">`;
+  svg += `<text x="${BARCHART_W / 2}" y="22" text-anchor="middle" font-size="12" font-weight="700" fill="#1a1a1a" font-family="sans-serif">Same data — two metrics — two verdicts</text>`;
+
+  metrics.forEach((m, i) => {
+    const yBase = BAR_MT + i * (panelH + 28) + 16;
+    const maxW = BAR_PW - 80;
+
+    const bBarW = (m.bVal / m.max) * maxW;
+    const wBarW = (m.wVal / m.max) * maxW;
+
+    // Panel background
+    svg += `<rect x="${BAR_ML - 8}" y="${yBase}" width="${BAR_PW + 28}" height="${panelH}" fill="${i === 0 ? '#fdf4f4' : '#f4faf4'}" rx="3" stroke="${m.verdictColor}" stroke-width="0.5" stroke-opacity="0.4"/>`;
+
+    // Panel title
+    svg += `<text x="${BAR_ML}" y="${yBase + 14}" font-size="11" font-weight="700" fill="#1a1a1a" font-family="sans-serif">${m.title}</text>`;
+    svg += `<text x="${BAR_ML}" y="${yBase + 26}" font-size="9.5" fill="#777" font-family="sans-serif">${m.subtitle}</text>`;
+
+    // Verdict badge
+    svg += `<text x="${BARCHART_W - 16}" y="${yBase + 18}" text-anchor="end" font-size="11" font-weight="800" fill="${m.verdictColor}" font-family="sans-serif">${m.verdict}</text>`;
+
+    // Black bar
+    const by1 = yBase + 35;
+    svg += `<rect x="${BAR_ML}" y="${by1}" width="${bBarW}" height="${barH}" fill="${i === 0 ? '#8b1a1a' : '#2a6a4a'}" rx="2"/>`;
+    svg += `<text x="${BAR_ML - 4}" y="${by1 + 15}" text-anchor="end" font-size="10" fill="#333" font-family="sans-serif">Black</text>`;
+    svg += `<text x="${BAR_ML + bBarW + 5}" y="${by1 + 15}" font-size="11" font-weight="700" fill="${i === 0 ? '#8b1a1a' : '#2a6a4a'}" font-family="monospace">${pct(m.bVal)}</text>`;
+
+    // White bar
+    const by2 = by1 + barH + 8;
+    svg += `<rect x="${BAR_ML}" y="${by2}" width="${wBarW}" height="${barH}" fill="${i === 0 ? '#c07070' : '#6aaa7a'}" rx="2"/>`;
+    svg += `<text x="${BAR_ML - 4}" y="${by2 + 15}" text-anchor="end" font-size="10" fill="#333" font-family="sans-serif">White</text>`;
+    svg += `<text x="${BAR_ML + wBarW + 5}" y="${by2 + 15}" font-size="11" font-weight="700" fill="${i === 0 ? '#c07070' : '#6aaa7a'}" font-family="monospace">${pct(m.wVal)}</text>`;
+
+    // Note
+    svg += `<text x="${BAR_ML}" y="${by2 + barH + 14}" font-size="9.5" fill="#666" font-family="sans-serif" font-style="italic">${m.note}</text>`;
+  });
+
+  svg += `</svg>`;
+  return svg;
+}
+
+const barChartSVG = buildBarChart();
+
+// ── Pattern table ──────────────────────────────────────────────────────────────────────────
+const totalN = bN + wN;
+---
+
+<div class="fairness-trap-root">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    .fairness-trap-root {
+      font-family: 'Georgia', serif;
+      background: #f5f3f0;
+      color: #1a1a1a;
+      padding: 28px 24px 48px;
+      max-width: 1020px;
+      margin: 0 auto;
+      font-size: 15px;
+      line-height: 1.55;
+    }
+    .instrument-tag {
+      font-family: 'Courier New', monospace;
+      font-size: 0.75rem;
+      color: #888;
+      letter-spacing: 0.06em;
+      margin-bottom: 4px;
+    }
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 4px;
+      font-family: 'Georgia', serif;
+    }
+    .subtitle {
+      font-size: 0.95rem;
+      color: #555;
+      margin-bottom: 28px;
+      max-width: 680px;
+    }
+    .lead {
+      max-width: 720px;
+      margin-bottom: 28px;
+      font-size: 1rem;
+      line-height: 1.65;
+    }
+
+    /* Main layout */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      margin-bottom: 28px;
+    }
+    @media (max-width: 720px) {
+      .two-col { grid-template-columns: 1fr; }
+    }
+
+    .panel {
+      background: #fff;
+      border-radius: 4px;
+      padding: 20px 18px 16px;
+      border: 1px solid #e0ddd8;
+    }
+    .panel-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 14px;
+    }
+    .matrices-row {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    .matrix-wrap {
+      flex: 0 0 auto;
+    }
+
+    /* Key finding box */
+    .finding-box {
+      background: #1a1a1a;
+      color: #f0ede8;
+      border-radius: 4px;
+      padding: 18px 22px;
+      margin-bottom: 28px;
+    }
+    .finding-box .kicker {
+      font-family: 'Courier New', monospace;
+      font-size: 0.72rem;
+      color: #888;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+    .finding-box p {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+    .finding-box p:last-child { margin-bottom: 0; }
+    .finding-box strong { color: #e8c87a; }
+    .finding-box code {
+      font-family: 'Courier New', monospace;
+      font-size: 0.9em;
+      color: #9ab8d8;
+    }
+
+    /* Theorem block */
+    .theorem-block {
+      border-left: 3px solid #3a6fa8;
+      background: #f0f4fa;
+      padding: 14px 16px;
+      margin: 20px 0;
+      border-radius: 0 4px 4px 0;
+    }
+    .theorem-block .theorem-title {
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #3a6fa8;
+      margin-bottom: 8px;
+    }
+    .theorem-block p { font-size: 0.9rem; line-height: 1.6; margin-bottom: 6px; }
+    .theorem-block p:last-child { margin-bottom: 0; }
+
+    /* Stakes / who pays */
+    .stakes-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+      margin: 20px 0 28px;
+    }
+    @media (max-width: 720px) { .stakes-grid { grid-template-columns: 1fr; } }
+    .stake-card {
+      border: 1px solid #ddd;
+      background: #fff;
+      border-radius: 4px;
+      padding: 14px;
+    }
+    .stake-card .stake-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #555;
+      margin-bottom: 6px;
+    }
+    .stake-card p { font-size: 0.85rem; line-height: 1.55; color: #333; }
+
+    /* Pattern table */
+    .pattern-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.84rem;
+      margin: 20px 0;
+    }
+    .pattern-table th {
+      background: #eee;
+      font-weight: 700;
+      padding: 8px 10px;
+      text-align: left;
+      border-bottom: 2px solid #ccc;
+    }
+    .pattern-table td {
+      padding: 8px 10px;
+      border-bottom: 1px solid #e0e0e0;
+      vertical-align: top;
+    }
+    .pattern-table tr:last-child td { border-bottom: none; }
+    .highlight-row td { background: #fdf4f4; }
+
+    /* Section heading */
+    h2 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin: 28px 0 12px;
+      font-family: 'Georgia', serif;
+    }
+
+    /* Sources */
+    .sources {
+      font-size: 0.8rem;
+      color: #666;
+      line-height: 1.7;
+      margin-top: 28px;
+      border-top: 1px solid #ddd;
+      padding-top: 20px;
+    }
+    .sources a { color: #3a6fa8; }
+    .sources strong { color: #444; }
+
+    .footer-sig {
+      margin-top: 32px;
+      font-size: 0.8rem;
+      color: #aaa;
+      text-align: right;
+      font-family: 'Courier New', monospace;
+    }
+  </style>
+
+  <p class="instrument-tag">INSTRUMENT 006 — THE MEASURING FIELD — MERIDIAN — 2026-07-01</p>
+  <h1>The Fairness Trap</h1>
+  <p class="subtitle">
+    COMPAS recidivism prediction, Broward County, Florida, 2013–2014 — general recidivism (2-year) —
+    n = {totalN.toLocaleString()} (Black + White defendants from ProPublica's 7,214-person dataset) —
+    two definitions of fairness — one mathematical constraint
+  </p>
+
+  <p class="lead">
+    In May 2016, ProPublica published evidence that the COMPAS recidivism scoring tool was racially
+    biased: Black defendants who did not go on to reoffend were falsely labeled "high risk" at nearly
+    twice the rate of white defendants. Northpointe (the maker of COMPAS) replied that the tool was
+    fair: for any given score level, the rate of actual recidivism was the same regardless of race.
+    Both were correct. Alexandra Chouldechova proved in 2017 why: when base rates of recidivism
+    differ between groups, no scoring tool can simultaneously satisfy both definitions of fairness
+    unless it achieves near-perfect accuracy. The conflict is not political. It is mathematical.
+  </p>
+
+  <div class="two-col">
+    <!-- Left: Confusion matrices -->
+    <div class="panel">
+      <p class="panel-label">COMPAS predictions vs. actual outcomes (2-year follow-up)</p>
+      <div class="matrices-row">
+        <div class="matrix-wrap" set:html={bMatrixSVG} />
+        <div class="matrix-wrap" set:html={wMatrixSVG} />
+      </div>
+      <p style="font-size:0.78rem;color:#888;margin-top:14px;line-height:1.5;">
+        Confusion matrices from ProPublica methodology (Larson et al., 2016).
+        "High risk" = COMPAS score medium or high (≥ 4 of 10).
+        Red cells = false positives — defendants wrongly labeled as likely to reoffend.
+      </p>
+    </div>
+
+    <!-- Right: Bar charts + theorem -->
+    <div class="panel">
+      <p class="panel-label">Same data, two measurements, two verdicts</p>
+      <div set:html={barChartSVG} />
+
+      <div class="theorem-block" style="margin-top:18px;">
+        <p class="theorem-title">CHOULDECHOVA (2017) IMPOSSIBILITY THEOREM</p>
+        <p>
+          If base rates differ (<code>p<sub>B</sub> ≠ p<sub>W</sub></code>) and a classifier achieves
+          <strong>predictive parity</strong> (equal PPV), then
+          <strong>classification parity</strong> (equal FPR) cannot simultaneously hold — except for a
+          perfect classifier (FPR = FNR = 0 for all groups).
+        </p>
+        <p>
+          Formal result: if base rates differ (<code>p<sub>B</sub> ≠ p<sub>W</sub></code>), no classifier can
+          simultaneously achieve (1) equal FPR, (2) equal FNR, and (3) equal PPV — unless accuracy is perfect.
+          Any two of the three can be satisfied; the third must yield. This is not a design choice; it is
+          a mathematical consequence of different underlying prevalence.
+        </p>
+        <p>
+          COMPAS's data: base rates {pct(bBase)} (Black) vs. {pct(wBase)} (White); FPR gap of {pp(bFPR - wFPR)};
+          FNR gap of {pp(wFNR - bFNR)} (opposite direction); PPV gap of {pp(bPPV - wPPV)}.
+          Northpointe minimized the PPV gap (predictive parity). ProPublica highlighted the FPR gap
+          (equal error rates). Both were measuring real properties of the same classifier.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="finding-box">
+    <p class="kicker">FINDING</p>
+    <p>
+      <strong>Both ProPublica and Northpointe were correct</strong> — using their chosen metrics.
+      ProPublica measured false positive rates: Black defendants were flagged as high-risk without
+      reoffending at <strong>{pct(bFPR)}</strong>, vs. <strong>{pct(wFPR)}</strong> for white defendants.
+      Northpointe measured predictive value: COMPAS predicts recidivism with equal accuracy by race
+      (<strong>{pct(bPPV)}</strong> vs. <strong>{pct(wPPV)}</strong> PPV).
+    </p>
+    <p>
+      Chouldechova's theorem explains the coexistence: the base rate of actual recidivism differs
+      by group (<strong>{pct(bBase)}</strong> for Black defendants, <strong>{pct(wBase)}</strong> for
+      White defendants in this sample). Any calibrated scoring tool applied to a population with
+      unequal base rates will produce unequal error rates. The COMPAS disparity is a consequence of
+      calibration — not a deviation from it.
+    </p>
+    <p>
+      This is not a calibration <em>gap</em> (a tool performing worse than it claims). It is a
+      calibration <em>trap</em>: the criterion by which the tool is judged determines the verdict.
+      Choosing which fairness criterion to enforce is a political decision that the technical
+      specification cannot make.
+    </p>
+  </div>
+
+  <h2>Who pays</h2>
+
+  <div class="stakes-grid">
+    <div class="stake-card">
+      <p class="stake-title">Pretrial detention</p>
+      <p>
+        A high-risk COMPAS score increases the probability of pretrial detention. Of the 805 Black
+        defendants wrongly labeled high-risk, each faced a statistically higher chance of being held
+        before trial — and potentially losing employment, housing, or family stability as a result.
+      </p>
+    </div>
+    <div class="stake-card">
+      <p class="stake-title">Sentencing</p>
+      <p>
+        In <em>State v. Loomis</em> (Wis. 2016), the Wisconsin Supreme Court upheld COMPAS use in
+        sentencing while requiring a warning that it may not be used as "the determinative factor."
+        The court also noted COMPAS cannot be tested because its algorithm is proprietary.
+      </p>
+    </div>
+    <div class="stake-card">
+      <p class="stake-title">Jurisdictional scale</p>
+      <p>
+        COMPAS and similar tools are used in hundreds of U.S. jurisdictions. Partnership on AI (2021)
+        documented rapid expansion through "reform" mandates. The EU AI Act (2024) classifies
+        criminal-justice risk scoring as high-risk AI; it bans "criminal predisposition" profiling
+        as an unacceptable risk.
+      </p>
+    </div>
+  </div>
+
+  <h2>The instrument series — six instruments</h2>
+
+  <table class="pattern-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Tool</th>
+        <th>Designed for</th>
+        <th>Fails on</th>
+        <th>Who pays</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>001</td>
+        <td>AI text detectors</td>
+        <td>Native English writers, vendor test corpora</td>
+        <td>NNES students under academic assessment</td>
+        <td>Students facing disciplinary action</td>
+      </tr>
+      <tr>
+        <td>002</td>
+        <td>Benford's First-Digit Law</td>
+        <td>Multiplicative, unbounded financial data</td>
+        <td>Bounded election precinct vote counts</td>
+        <td>Democratic legitimacy claims</td>
+      </tr>
+      <tr>
+        <td>003</td>
+        <td>C2PA provenance chain</td>
+        <td>Closed professional newsroom pipelines</td>
+        <td>Open social media, adversarial actors</td>
+        <td>Journalists' safety, courts</td>
+      </tr>
+      <tr>
+        <td>004</td>
+        <td>Last-digit uniformity test</td>
+        <td>Financial transactions (no rounding convention)</td>
+        <td>Clinical BP measurement, survey age reporting</td>
+        <td>Clinical data integrity, demographic research</td>
+      </tr>
+      <tr>
+        <td>005</td>
+        <td>AI capability benchmarks</td>
+        <td>Controlled lab evaluation, uncontaminated data</td>
+        <td>Commercial leaderboard optimization</td>
+        <td>Researchers, policymakers, the public</td>
+      </tr>
+      <tr class="highlight-row">
+        <td>006</td>
+        <td>Recidivism risk scoring (COMPAS)</td>
+        <td>Equal predictive accuracy across groups</td>
+        <td>Cannot satisfy both fairness criteria simultaneously when base rates differ</td>
+        <td>Black defendants wrongly flagged; democratic accountability</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p style="font-size:0.85rem;color:#555;max-width:720px;margin-top:8px;">
+    Instrument 006 extends the series in a new direction: not a calibration gap (tool performing
+    worse than claimed) but a calibration trap — a mathematical impossibility built into the
+    fairness criteria themselves. The tool cannot satisfy both, and the choice of which to prioritize
+    is a value judgment the specification cannot make.
+  </p>
+
+  <div class="sources">
+    <strong>Primary sources</strong><br />
+    Larson J., Mattu S., Kirchner L. &amp; Angwin J. (2016). "How We Analyzed the COMPAS
+    Recidivism Algorithm." <em>ProPublica.</em> May 23, 2016.<br />
+    → <a href="https://www.propublica.org/article/how-we-analyzed-the-compas-recidivism-algorithm">
+      propublica.org/article/how-we-analyzed-the-compas-recidivism-algorithm</a><br />
+    → Dataset: <a href="https://github.com/propublica/compas-analysis">github.com/propublica/compas-analysis</a><br /><br />
+
+    Angwin J., Larson J., Mattu S. &amp; Kirchner L. (2016). "Machine Bias." <em>ProPublica.</em>
+    May 23, 2016.<br />
+    → <a href="https://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing">
+      propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing</a><br /><br />
+
+    Chouldechova A. (2017). "Fair prediction with disparate impact: A study of bias in recidivism
+    prediction instruments." <em>Big Data</em> 5(2):153–163.<br />
+    → <a href="https://doi.org/10.1089/big.2016.0047">doi:10.1089/big.2016.0047</a><br /><br />
+
+    Dressel J. &amp; Farid H. (2018). "The accuracy, fairness, and limits of predicting recidivism."
+    <em>Science Advances</em> 4(1):eaao5580. (Confirms ProPublica numbers; adds human accuracy comparison.)<br />
+    → <a href="https://doi.org/10.1126/sciadv.aao5580">doi:10.1126/sciadv.aao5580</a><br /><br />
+
+    Dieterich W., Mendoza C. &amp; Brennan T. (2016). "COMPAS Risk Scales: Demonstrating Accuracy
+    Equity and Predictive Parity." Northpointe (now Equivant) technical report.<br />
+    → <a href="https://www.documentcloud.org/documents/2998391-ProPublica-Commentary-Final-070616.html">
+      documentcloud.org/documents/2998391-ProPublica-Commentary-Final-070616.html</a><br /><br />
+
+    <strong>Legal &amp; institutional</strong><br />
+    <em>State v. Loomis</em>, 881 N.W.2d 749 (Wis. 2016). Wisconsin Supreme Court upholds COMPAS
+    use in sentencing, requires written advisement of limitations.<br />
+
+    EU AI Act, Regulation (EU) 2024/1689. Art. 5.1(d): bans AI for criminal predisposition profiling
+    as "unacceptable risk."<br />
+    → <a href="https://doi.org/10.3030/101135953">doi:10.3030/101135953</a><br /><br />
+
+    Partnership on AI (2021). "Report on Algorithmic Risk Assessment Tools in the U.S. Criminal
+    Justice System."<br />
+    → <a href="https://partnershiponai.org/wp-content/uploads/2021/08/Report-on-Algorithmic-Risk-Assessment-Tools.pdf">
+      partnershiponai.org/...</a><br /><br />
+
+    <strong>Secondary / impossibility theorem context</strong><br />
+    Kleinberg J., Mullainathan S. &amp; Raghavan M. (2016). "Inherent Trade-Offs in the Fair
+    Determination of Risk Scores." <em>ITCS 2017</em>. arXiv:1609.05807.<br />
+    → <a href="https://arxiv.org/abs/1609.05807">arxiv.org/abs/1609.05807</a><br />
+
+    Di Bello M. (2021). "Algorithmic Fairness — Impossibility Theorems." ASU course notes.<br />
+    → <a href="https://www.marcellodibello.com/algorithmicfairness/handout/impossibility.html">
+      marcellodibello.com/algorithmicfairness/handout/impossibility.html</a>
+  </div>
+
+  <p class="footer-sig">— Meridian · The Measuring Field · 2026-07-01</p>
+
+</div>
