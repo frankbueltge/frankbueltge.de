@@ -20,8 +20,8 @@ const txt = {
     : 'Daily sources are retrieved nightly (03:30 UTC). Sources with monthly or annual cadence never claim daily freshness: every finding states its measurement date ("As of: …"). UNHCR and FAO values are maintained editorially as versioned data files.',
   s3: de ? '3. Verarbeitung' : '3. Processing',
   s3body: de
-    ? `Jeder Satz ist deterministisch aus Daten erzeugt — Templates statt LLM, Registerfassung ${TEMPLATE_VERSION}, auf jeder Seite ausgewiesen. Das kanonische Artefakt ist die Tages-JSON-Datei im Repository (ein Commit pro Sitzung, Autorin „Protokollführung"); die Prosa ist Darstellung. Code öffentlich: pipelines/protokoll im Site-Repository. dbt-Lineage folgt mit den BigQuery-Experimenten.`
-    : `Every sentence is derived deterministically from data — templates, no LLM, register version ${TEMPLATE_VERSION}, stated on every page. The canonical artefact is the daily JSON file in the repository (one commit per session, author "Protokollführung"); the prose is presentation. Code is public: pipelines/protokoll in the site repository. dbt lineage follows with the BigQuery experiments.`,
+    ? `Jeder Satz ist deterministisch aus Daten erzeugt — Templates statt LLM, Registerfassung ${TEMPLATE_VERSION}, auf jeder Seite ausgewiesen. Das kanonische Artefakt ist die Tages-JSON-Datei im Repository (ein Commit pro Sitzung, Autorin „Protokollführung"); die Prosa ist Darstellung. Code öffentlich: pipelines/protokoll im Site-Repository; die Pipeline läuft als nächtlicher GitHub-Actions-Workflow (.github/workflows/protokoll.yml).`
+    : `Every sentence is derived deterministically from data — templates, no LLM, register version ${TEMPLATE_VERSION}, stated on every page. The canonical artefact is the daily JSON file in the repository (one commit per session, author "Protokollführung"); the prose is presentation. Code is public: pipelines/protokoll in the site repository; the pipeline runs as a nightly GitHub Actions workflow (.github/workflows/protokoll.yml).`,
   s4: de ? '4. Grenzen der Methode' : '4. Limits of the method',
   s4items: de
     ? [
@@ -33,6 +33,7 @@ const txt = {
         'Vergleichswerte bei Zins und Ölpreis beziehen sich auf den vorherigen Beobachtungstag — über Wochenenden und Feiertage liegt dieser weiter zurück.',
         'Vertreibung und Ernährung werden manuell nachgeführt; ihr Messstand ist stets ausgewiesen.',
         'Nicht erreichbare Quellen erscheinen als „Feststellung entfällt", unplausible Werte „unter Vorbehalt" — Ausfall wird nie still überbrückt.',
+        'Der Vertagungsindex klassifiziert derzeit 4 von 8 indexfähigen Größen gegen ihren 365-Tage-Trend (CO₂, Meereis Arktis und Antarktis, Ozean); Vertreibung, Ernährung, Konflikt und Feuer liefern noch keine ausreichende Historie und zählen als „Trend nicht etabliert".',
       ]
     : [
         'Attention uses the English-language Wikipedia as a proxy for global attention — a linguistic and cultural narrowing.',
@@ -43,15 +44,24 @@ const txt = {
         'Comparison values for interest and oil refer to the previous observation day — across weekends and holidays this lies further back.',
         'Displacement and Food are maintained manually; their measurement date is always stated.',
         'Unreachable sources appear as "finding omitted", implausible values "under reserve" — failure is never silently bridged.',
+        'The adjournment index currently classifies 4 of 8 index-eligible measures against their 365-day trend (CO₂, Arctic and Antarctic sea ice, ocean); displacement, food, conflict and fire do not yet provide sufficient history and count as "trend not established".',
       ],
   s5: de ? '5. Compute-Fußabdruck' : '5. Compute footprint',
   s5body: de
-    ? 'Ein Cloud-Run-Lauf pro Tag (< 60 s, 1 vCPU). Eine partitionierte BigQuery-Abfrage pro Tag mit harter Kostenobergrenze von 5 GB (≈ 0,5–1 GB verarbeitet, ≈ 25 GB/Monat — innerhalb des Gratiskontingents von 1 TB/Monat). Die Site selbst ist statisch; zur Laufzeit wird kein Cloud-Dienst gelesen.'
-    : 'One Cloud Run execution per day (< 60 s, 1 vCPU). One partitioned BigQuery query per day with a hard cost ceiling of 5 GB (≈ 0.5–1 GB processed, ≈ 25 GB/month — within the 1 TB/month free tier). The site itself is static; no cloud service is read at runtime.',
+    ? 'Ein GitHub-Actions-Lauf pro Tag auf einem Standard-Runner; alle Quellen werden direkt per HTTP abgerufen — kein Cloud-Warehouse, keine kostenpflichtige Abfrage. Die Site selbst ist statisch; zur Laufzeit wird kein Cloud-Dienst gelesen.'
+    : 'One GitHub Actions run per day on a standard runner; all sources are fetched directly over HTTP — no cloud warehouse, no metered query. The site itself is static; no cloud service is read at runtime.',
   s6: de ? '6. Änderungsprotokoll' : '6. Change log',
   s6items: de
-    ? [`Registerfassung ${TEMPLATE_VERSION} — Erstfassung, 12 Tagesordnungspunkte (13 Messwerte).`]
-    : [`Register version ${TEMPLATE_VERSION} — first edition, 12 agenda items (13 measurements).`],
+    ? [
+        `Registerfassung ${TEMPLATE_VERSION} — Erstfassung, 12 Tagesordnungspunkte (13 Messwerte).`,
+        'Befund (2026-06-27): ausklappbarer Befund je Messwert — Monumentwert, Korridorlage, Archivkurve, Serienvermerk.',
+        'Vertagungsindex (2026-06-28, Schema v3): Tages-JSON trägt je indexfähiger Größe eine Trend-Klassifikation und einen Sitzungsindex; Trend-Verdrahtung von Meereis und Ozean nachgezogen (2026-07-02).',
+      ]
+    : [
+        `Register version ${TEMPLATE_VERSION} — first edition, 12 agenda items (13 measurements).`,
+        'Befund (2026-06-27): expandable finding per measurement — monument value, corridor position, archive curve, streak note.',
+        'Adjournment index (2026-06-28, schema v3): the daily JSON carries a trend classification per index-eligible measure and a session index; sea-ice and ocean trend wiring added (2026-07-02).',
+      ],
   toWork: de ? 'Zum Werk' : 'To the work',
 }
 ---
