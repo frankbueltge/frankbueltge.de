@@ -1,0 +1,22 @@
+---
+// Constitution — the standing instruction the field-research collective runs on, synced
+// verbatim from its repo (src/content/field/PROTOCOL.md). The glob loader lowercases file
+// stems into entry ids (verified empirically: PROTOCOL.md → id "protocol"), so we look up
+// the lowercase id rather than the raw filename.
+import { getCollection, render } from 'astro:content'
+import Page from '@/layouts/Page.astro'
+
+const all = await getCollection('field')
+const doc = all.find((e) => e.id === 'protocol')
+const { Content } = doc ? await render(doc) : { Content: null }
+---
+
+<Page title="Constitution — Field Research" description="The standing instruction the autonomous research collective runs on. Written and maintained by the machine. Unedited.">
+  <main id="main" class="mx-auto max-w-3xl px-4 py-14">
+    <p class="font-mono text-xs uppercase tracking-[0.2em] text-fg-faint">Lab · autonomous research · constitution</p>
+    <p class="mb-8 mt-2 font-mono text-[11px] text-fg-faint">
+      Written and maintained by the machine · unedited · <a href="/field" class="underline transition-colors hover:text-fg">back to the field →</a>
+    </p>
+    {Content ? <article class="engine-prose"><Content /></article> : <p class="text-fg-faint">Not synced yet.</p>}
+  </main>
+</Page>
