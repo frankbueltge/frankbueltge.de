@@ -8,7 +8,7 @@ import { t } from '@/i18n/ui'
 import { getBeifangRuns } from '@/lib/beifang/data'
 import { renderBefund } from '@/lib/beifang/befund'
 import { PUBLISHER_LABELS } from '@/lib/beifang/types'
-import { blockedResults, entityTable, groupMedians, publisherMedians, sparkPath, timeline, usResults } from '@/lib/beifang/stats'
+import { blockadeStats, entityTable, groupMedians, publisherMedians, sparkPath, timeline, usResults } from '@/lib/beifang/stats'
 
 interface Props { locale: 'de' | 'en' }
 const { locale } = Astro.props
@@ -19,7 +19,7 @@ const methodUrl = getRelativeLocaleUrl(locale, '/werke/beifang')
 const gm = latest ? groupMedians(latest) : null
 const pm = latest ? publisherMedians(latest) : {}
 const entities = latest ? entityTable(latest).slice(0, 12) : []
-const blocked = latest ? blockedResults(latest) : []
+const blockade = latest ? blockadeStats(latest) : null
 const series = timeline(runs)
 const maxY = Math.max(1, ...series.flatMap((p) => [p.verlag ?? 0, p.kontrolle ?? 0]))
 const okCount = latest ? usResults(latest).filter((r) => r.blocked === null && r.note === null).length : 0
@@ -58,6 +58,36 @@ const euStatusText = latest
 
   {latest && (
     <>
+      {/* Leitbefund: die Verweigerung selbst. Wer jeden Leser trackt, sperrt den Prüfblick
+          aus — die Asymmetrie des Papers, als Zahl. Aggregiert je Verlag, nicht als Einzelliste. */}
+      {blockade && blockade.verlag.blocked > 0 && (
+        <section class="mb-12 border-l-2 border-accent/60 pl-5">
+          <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">{de ? 'Leitbefund' : 'Headline finding'}</p>
+          <p class="mt-2 text-2xl font-semibold leading-snug">
+            {de
+              ? `${blockade.verlag.blocked} von ${blockade.verlag.total} Verlagsseiten verweigern die Messung.`
+              : `${blockade.verlag.blocked} of ${blockade.verlag.total} publisher pages refuse the measurement.`}
+          </p>
+          <p class="mt-2 max-w-xl leading-relaxed text-fg-muted">
+            {de
+              ? `Dieselben Plattformen, die jeden Leser vermessen, sperren das Instrument aus, das nachschauen will — zum Vergleich blockieren ${blockade.kontrolle.blocked} von ${blockade.kontrolle.total} Kontrollseiten. Die Blockade ist kein Ausfall, sie ist der Befund.`
+              : `The same platforms that measure every reader lock out the instrument that wants to look — for comparison, ${blockade.kontrolle.blocked} of ${blockade.kontrolle.total} control pages block. The refusal is not a failure; it is the finding.`}
+          </p>
+          <ul class="mt-4 space-y-1 text-sm">
+            {blockade.verlag.byPublisher.map((p) => (
+              <li class="flex items-baseline justify-between gap-3 border-b border-line/60 py-1.5">
+                <span>{PUBLISHER_LABELS[p.publisher] ?? p.publisher}</span>
+                <span class="font-mono text-xs text-fg-faint">
+                  {p.blocked === 0
+                    ? (de ? `messbar (0/${p.total} blockiert)` : `measurable (0/${p.total} blocked)`)
+                    : `${p.blocked}/${p.total} ${de ? 'blockiert' : 'blocked'}`}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
       {/* Leitgrafik: Kontrollgruppen-Kontrast (zwei Balken, Werte sichtbar am Balken) */}
       <section class="mb-12">
         <h2 class="mb-3 font-semibold">{de ? 'Verlagsseiten vs. Kontrollgruppe' : 'Publisher pages vs. control group'}</h2>
@@ -128,23 +158,6 @@ const euStatusText = latest
           </table>
         </div>
       </section>
-
-      {/* Blockaden — Befund, kein Fehler */}
-      {blocked.length > 0 && (
-        <section class="mb-12 border-t border-line pt-6">
-          <h2 class="mb-3 font-semibold">{de ? 'Verweigerte Messungen' : 'Refused measurements'}</h2>
-          <ul class="space-y-1.5 text-sm">
-            {blocked.map((r) => (
-              <li class="text-fg-muted">
-                <span class="text-fg">{PUBLISHER_LABELS[r.publisher] ?? r.publisher}</span>{' '}
-                <span class="font-mono text-xs text-fg-faint">({r.panel_id})</span> — {de
-                  ? 'Der Verlag verweigert die Messung'
-                  : 'The publisher refuses the measurement'} <span class="font-mono text-xs">({r.blocked!.type} {r.blocked!.marker})</span>.
-              </li>
-            ))}
-          </ul>
-        </section>
-      )}
 
       {/* Zeitreihe (erst ab 2 Läufen als Grafik; vorher ehrlicher Satz) */}
       <section class="mb-12">

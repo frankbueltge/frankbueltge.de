@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { entityTable, groupMedians, median, publisherMedians, sparkPath, timeline } from './stats'
+import { blockadeStats, entityTable, groupMedians, median, publisherMedians, sparkPath, timeline } from './stats'
 import type { BeifangRun, BeifangSiteResult } from './types'
 
 function result(over: Partial<BeifangSiteResult>): BeifangSiteResult {
@@ -35,6 +35,28 @@ describe('median/groupMedians', () => {
       result({ panel_id: 'k-01', group: 'kontrolle', publisher: 'kommges', tracker_hosts: [] }),
     ])
     expect(groupMedians(r)).toEqual({ verlag: 2, kontrolle: 0 })
+  })
+})
+
+describe('blockadeStats', () => {
+  it('zählt Blockaden je Verlag + Gruppe, sortiert nach meisten Blockaden', () => {
+    const r = run([
+      result({ publisher: 'elsevier', blocked: { type: 'http', marker: '403' }, tracker_hosts: null }),
+      result({ panel_id: 'e-02', publisher: 'elsevier', blocked: { type: 'challenge', marker: 'captcha' }, tracker_hosts: null }),
+      result({ panel_id: 'sn-01', publisher: 'springer-nature', tracker_hosts: ['a'] }),
+      result({ panel_id: 'k-01', group: 'kontrolle', publisher: 'kommges', tracker_hosts: [] }),
+      result({ panel_id: 'k-02', group: 'kontrolle', publisher: 'first-monday', blocked: { type: 'http', marker: '403' }, tracker_hosts: null }),
+    ])
+    const b = blockadeStats(r)
+    expect(b.verlag).toEqual({
+      blocked: 2,
+      total: 3,
+      byPublisher: [
+        { publisher: 'elsevier', blocked: 2, total: 2 },
+        { publisher: 'springer-nature', blocked: 0, total: 1 },
+      ],
+    })
+    expect(b.kontrolle).toEqual({ blocked: 1, total: 2 })
   })
 })
 

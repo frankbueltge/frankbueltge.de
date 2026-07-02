@@ -53,6 +53,42 @@ export function blockedResults(run: BeifangRun): BeifangSiteResult[] {
   return usResults(run).filter((r) => r.blocked !== null)
 }
 
+/** Blockade-Quote je Gruppe + je Verlag. Die Verweigerung IST der Befund (Asymmetrie:
+ *  die Plattformen tracken jeden Leser total, sperren aber den Prüfblick aus) — deshalb
+ *  als Leitzahl, nicht als lange Einzelliste. */
+export interface BlockadeStats {
+  verlag: { blocked: number; total: number; byPublisher: { publisher: string; blocked: number; total: number }[] }
+  kontrolle: { blocked: number; total: number }
+}
+
+export function blockadeStats(run: BeifangRun): BlockadeStats {
+  const pub = new Map<string, { blocked: number; total: number }>()
+  let kBlocked = 0
+  let kTotal = 0
+  for (const r of usResults(run)) {
+    if (r.group === 'verlag') {
+      const row = pub.get(r.publisher) ?? { blocked: 0, total: 0 }
+      row.total += 1
+      if (r.blocked !== null) row.blocked += 1
+      pub.set(r.publisher, row)
+    } else {
+      kTotal += 1
+      if (r.blocked !== null) kBlocked += 1
+    }
+  }
+  const byPublisher = [...pub.entries()]
+    .map(([publisher, c]) => ({ publisher, ...c }))
+    .sort((a, b) => b.blocked - a.blocked || a.publisher.localeCompare(b.publisher))
+  return {
+    verlag: {
+      blocked: byPublisher.reduce((s, p) => s + p.blocked, 0),
+      total: byPublisher.reduce((s, p) => s + p.total, 0),
+      byPublisher,
+    },
+    kontrolle: { blocked: kBlocked, total: kTotal },
+  }
+}
+
 export function timeline(runs: BeifangRun[]): { date: string; verlag: number | null; kontrolle: number | null }[] {
   return [...runs]
     .sort((a, b) => a.date.localeCompare(b.date))
