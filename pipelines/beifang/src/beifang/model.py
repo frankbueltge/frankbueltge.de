@@ -28,7 +28,7 @@ class Leak:
     kanal: str           # "query" | "post" | "referer" | "pfad"
     host: str            # empfangender Drittanbieter-Host
     firma: str | None    # TDS-Entity oder None
-    beweis: str          # redigierter, gekappter Request-Ausschnitt
+    beweis: str          # gekappter Request-Ausschnitt (um den Treffer zentriert); NICHT redigiert — der leser-seitige Ad-Tech-Request enthält keine eigenen Secrets
 
 
 @dataclass(frozen=True)

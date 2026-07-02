@@ -47,9 +47,13 @@ def site_result(entry: dict, *, retrieved_at: str, raw: RawCapture | None = None
     third_reqs = [r for r in raw.requests if registrable_domain(r.host) != final_domain]
     cookies_first = sum(1 for c in raw.cookies
                         if registrable_domain(c.domain) == final_domain)
-    leaks = find_leaks(identity, raw.requests, final_domain, tds) if tds is not None else ()
-    firmen = tuple(sorted({l.firma for l in leaks if l.firma}))
-    doi_leak = any(l.token == "doi" for l in leaks)
+    if identity is None or tds is None:
+        # Leseidentität fehlt → der Audit konnte nicht laufen; null (nicht "sauber gemessen")
+        leaks = firmen = doi_leak = None
+    else:
+        leaks = find_leaks(identity, raw.requests, final_domain, tds)
+        firmen = tuple(sorted({l.firma for l in leaks if l.firma}))
+        doi_leak = any(l.token == "doi" for l in leaks)
     return SiteResult(final_url=raw.final_url, final_domain=final_domain,
                       http_status=raw.http_status, blocked=None, note=note,
                       requests_total=len(raw.requests),

@@ -30,7 +30,7 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--date", default=None, help="YYYY-MM-DD (Default: heute UTC)")
     p.add_argument("--repo-root", required=True)
     p.add_argument("--limit", type=int, default=0, help="nur die ersten N Panel-Einträge (lokaler Test)")
-    p.add_argument("--vantage", default="github-actions",
+    p.add_argument("--vantage", default=None,
                    help="Messstandpunkt-Label (Spec §5): github-actions | vps | …")
     p.add_argument("--proxy", default=None, help="optional: Proxy-URL für den Vantage")
     args = p.parse_args(argv)
@@ -71,13 +71,17 @@ def main(argv: list[str] | None = None) -> int:
         cls = classify(first_party, (r.host for r in raw.requests), easyprivacy, tds)
         results.append(site_result(entry, retrieved_at=retrieved_at, raw=raw, cls=cls,
                                    note=goto_note, identity=entry.get("identity"), tds=tds))
+        r = results[-1]
+        n_leaks = len(r.leaks) if r.leaks else 0
         print(f"  {entry['id']}: {len(cls.tracker_hosts)} Tracker-Hosts, "
-              f"{len(cls.entities)} Firmen")
+              f"{len(cls.entities)} Firmen, {n_leaks} Leaks"
+              + (" (DOI!)" if r.doi_leak else ""))
 
     previous = load_previous(root, before=date_iso)
     runner = "github-actions" if os.environ.get("GITHUB_ACTIONS") == "true" else "lokal"
+    vantage = args.vantage or runner
     record = assemble_run(date_iso=date_iso, panel_version=panel["version"], runner=runner,
-                          vantage=args.vantage, results=results, lists=lists_meta, previous=previous)
+                          vantage=vantage, results=results, lists=lists_meta, previous=previous)
     target = root / content_path(date_iso)
     if target.exists():
         print(f"{target} existiert bereits — Archiv unantastbar, kein Overwrite "

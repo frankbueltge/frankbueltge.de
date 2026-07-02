@@ -85,9 +85,11 @@ Plus pro Seite aggregiert: `leak_firmen` (distinkte Firmen, die Identität empfa
 
 **Der Beweis wandert ins Archiv:** `beweis` ist der reale beanstandete Request-Ausschnitt (die
 Drittanbieter-URL/der Body mit der DOI darin) — das Leave-behind, mit einem Klick prüfbar.
-Enthält **keine** Secrets: es ist der Leser-seitige Ad-Tech-Request, nicht unsere Keys. Query-
-Strings werden dennoch defensiv redigiert (bestehende Regel), falls je ein Token wie ein Key
-aussieht.
+Enthält **keine** Secrets: es ist der Leser-seitige Ad-Tech-Request, nicht unsere Keys. Der
+Beweis wird gekappt (≤300, um den Treffer zentriert), **nicht** redigiert: er ist der
+leser-seitige Ad-Tech-Request und enthält keine eigenen Secrets (unsere Keys erreichen den
+Browser-Kontext nie). Für url-kodierte/weiche Treffer ist der Beweis die dekodierte, lesbare
+Form desselben Requests.
 
 ## 5. Vantage als Messgröße (statt als Klage)
 

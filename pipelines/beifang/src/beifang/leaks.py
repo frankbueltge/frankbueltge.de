@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import hashlib
 from typing import Iterable
-from urllib.parse import unquote_plus, urlsplit
+from urllib.parse import quote, unquote_plus, urlsplit
 
 from beifang.capture import RawRequest
 from beifang.classify import TdsData, entity_for, registrable_domain
@@ -82,17 +82,28 @@ def find_leaks(identity: dict | None, requests: Iterable[RawRequest],
 
             if doi:
                 dl = doi.lower()
+                enc = quote(doi, safe="").lower()  # perzent-kodierte DOI-Form
                 if dl in low:
                     add("doi", "hard", "klartext", doi, raw)
-                elif dl in dec_low:
-                    add("doi", "hard", "url-kodiert", doi, dec)
+                if enc != dl and enc in low:
+                    add("doi", "hard", "url-kodiert", doi, dec)          # kodierte Kopie liegt (auch) vor
+                elif dl not in low and dl in dec_low:
+                    add("doi", "hard", "url-kodiert", doi, dec)          # nur nach unquote_plus sichtbar
                 for hexd, algo in doi_hashes.items():
                     if hexd in low:
                         add("doi", "hard", algo, hexd, raw)
-            if titel and len(titel) >= _TITEL_MIN and titel.lower() in dec_low:
-                add("titel", "soft", "klartext", titel, dec)
+            if titel and len(titel) >= _TITEL_MIN:
+                tl = titel.lower()
+                if tl in low:
+                    add("titel", "soft", "klartext", titel, raw)
+                elif tl in dec_low:
+                    add("titel", "soft", "url-kodiert", titel, dec)
             for kw in keywords:
-                if len(kw) >= _KEYWORD_MIN and kw.lower() in dec_low:
-                    add("keyword", "soft", "klartext", kw, dec)
+                if len(kw) >= _KEYWORD_MIN:
+                    kl = kw.lower()
+                    if kl in low:
+                        add("keyword", "soft", "klartext", kw, raw)
+                    elif kl in dec_low:
+                        add("keyword", "soft", "url-kodiert", kw, dec)
 
     return tuple(found[k] for k in sorted(found))
