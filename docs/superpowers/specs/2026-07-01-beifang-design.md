@@ -85,7 +85,8 @@ bleibt für immer aus dem Repo reproduzierbar. Listen-Updates erfolgen als sicht
 
 Archiv-Muster wie beim Protokoll — **Git ist das Archiv**:
 
-- `src/content/beifang/<jahr>/<datum>.json`, committet als „Protokollführung",
+- `src/content/beifang/<jahr>/<datum>.json`, committet als „Gegenmessung" (Workflow-Identität
+  der Linie; git-CLI-Commit im Workflow-Step, Live-Muster aller Pipelines),
   unantastbar (nie editieren; Korrekturen nur an der Darstellung).
 - Pro URL × Blickwinkel: Anzahl Drittanbieter-Hosts, erkannte Tracker-Hosts, zugeordnete
   Firmen (Entities), Cookie-Zahl (First-/Third-Party), Transfergröße gesamt/Dritte,
@@ -134,9 +135,11 @@ pipelines/beifang/
     capture.py        # Playwright-Lauf: URL → Request-/Cookie-Protokoll
     classify.py       # Host-Matching (EasyPrivacy) + Entity-Zuordnung
     assemble.py       # Lauf-Snapshot bauen, Befund der Woche, Vergleich Vorlauf
-    committer.py      # GitHub-Commit als „Protokollführung" (Muster protokoll)
   tests/              # pytest; Fixtures = aufgezeichnete Request-Protokolle
 ```
+
+Committen übernimmt der Workflow-Step (git-CLI); Panel & Listen liegen als package-data
+unter `src/beifang/data/`.
 
 - `classify.py` und `assemble.py` sind reine Funktionen über aufgezeichneten Fixtures —
   vollständig unit-getestet, kein Netz in Tests. `capture.py` wird gegen eine lokale
