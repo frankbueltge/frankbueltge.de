@@ -8,6 +8,7 @@
 // and pass the merged `all` entries and sorted `works` array in.
 import { render } from 'astro:content'
 import { sortJournal } from '@/lib/atelier/sort'
+import { splitSessions, sessionMeta, renderMarkdown } from '@/lib/engines/journal'
 
 export interface EngineConfig {
   ns: 'field' | 'atelier'
@@ -45,10 +46,16 @@ const journal = sortJournal(all.filter((e) => e.id.startsWith('journal/')))
 // Texts newest-first.
 const mdWorks = all.filter((e) => e.id.startsWith('works/')).sort((a, b) => b.id.localeCompare(a.id))
 
-const journalR = await Promise.all(journal.map(async (e) => ({ id: e.id, Content: (await render(e)).Content })))
 const mdWorksR = await Promise.all(mdWorks.map(async (e) => ({ id: e.id, Content: (await render(e)).Content })))
 
 const dayLabel = (id: string) => id.replace('journal/', '').replace(/\.md$/, '')
+
+const journalDays = journal.map((e) => {
+  const sessions = splitSessions(e.body ?? '')
+    .map((s) => ({ ...s, ...sessionMeta(s.text), html: renderMarkdown(s.text) }))
+    .reverse() // file order is chronological; display newest session first
+  return { id: e.id, sessions }
+})
 ---
 
 <div class="mx-auto max-w-3xl px-4 py-14">
@@ -142,13 +149,22 @@ const dayLabel = (id: string) => id.replace('journal/', '').replace(/\.md$/, '')
   )}
 
   <section>
-    <h2 class="mb-5 font-mono text-xs uppercase tracking-widest text-fg-faint">{txt.journalH}</h2>
-    {journalR.length === 0 && <p class="text-fg-faint">{txt.empty}</p>}
-    {journalR.map(({ id, Content }) => (
-      <article class="engine-prose mb-12 border-t border-line pt-6">
-        <p class="mb-3 font-mono text-[11px] uppercase tracking-wider text-fg-faint">{dayLabel(id)}</p>
-        <Content />
-      </article>
+    <h2 class="mb-5 font-mono text-xs uppercase tracking-widest text-fg-faint">{config.txt.journalH}</h2>
+    {journalDays.length === 0 && <p class="text-fg-faint">{config.txt.empty}</p>}
+    {journalDays.map(({ id, sessions }, dayIdx) => (
+      <div class="mb-10">
+        <p class="mb-3 border-t border-line pt-6 font-mono text-[11px] uppercase tracking-wider text-fg-faint">{dayLabel(id)}</p>
+        {sessions.map((s, i) => (
+          <details class="engine-session mb-3 rounded-[14px] border border-line bg-panel panel-raised" open={dayIdx === 0 && i === 0}>
+            <summary class="cursor-pointer select-none px-5 py-3.5">
+              <span class="font-semibold">{s.heading || dayLabel(id)}</span>
+              {s.move && <span class="ml-2 inline-block rounded border border-line px-1.5 py-0.5 align-middle font-mono text-[10px] uppercase tracking-wider text-fg-muted">{s.move}</span>}
+              {s.voices && <span class="mt-1 block font-mono text-[11px] normal-case tracking-normal text-fg-faint">Convened: {s.voices}</span>}
+            </summary>
+            <div class="engine-prose border-t border-line px-5 pb-5 pt-2" set:html={s.html} />
+          </details>
+        ))}
+      </div>
     ))}
   </section>
 </div>

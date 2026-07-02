@@ -358,3 +358,13 @@ body {
 .engine-prose table { width: 100%; border-collapse: collapse; font-size: 0.82em; margin: 0.9em 0; display: block; overflow-x: auto; }
 .engine-prose th, .engine-prose td { border: 1px solid color-mix(in srgb, currentColor 20%, transparent); padding: 0.35em 0.55em; text-align: left; vertical-align: top; }
 .engine-prose th { font-weight: 600; }
+
+/* Engine journal — session cards + restrained deliberation highlighting */
+.engine-session > summary { list-style: none; }
+.engine-session > summary::-webkit-details-marker { display: none; }
+.engine-session > summary::before { content: '▸'; margin-right: 0.5em; font-size: 0.8em; opacity: 0.6; }
+.engine-session[open] > summary::before { content: '▾'; }
+.engine-prose h2.deliberation-mark {
+  border-left: 2px solid color-mix(in srgb, currentColor 45%, transparent);
+  padding-left: 0.6em;
+}
