@@ -108,3 +108,11 @@ def test_doi_md5_and_sha1_in_query():
 def test_doi_cleartext_in_path_channel():
     leaks = find_leaks(IDENT, [req(f"https://adnxs.com/collect/{DOI}")], "sciencedirect.com", TDSD)
     assert any(l.token == "doi" and l.kanal == "pfad" for l in leaks)
+
+
+def test_doi_resolver_is_not_a_leak():
+    # Der DOI-Resolver ist die Adresse des Artikels, nicht ein Datenempfänger.
+    leaks = find_leaks(IDENT, [req(f"https://doi.org/{DOI}"),
+                               req(f"https://dx.doi.org/{DOI}")],
+                       "nature.com", TDSD)
+    assert leaks == ()

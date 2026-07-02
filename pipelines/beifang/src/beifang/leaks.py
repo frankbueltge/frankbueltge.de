@@ -17,6 +17,7 @@ from beifang.model import Leak
 _BEWEIS_MAX = 300
 _TITEL_MIN = 20   # ganzer Titel als Phrase
 _KEYWORD_MIN = 12  # Schlagwort spezifisch genug, kein Allerweltswort
+_RESOLVER_HOSTS = frozenset({"doi.org"})  # der DOI-Resolver ist die Adresse, kein Empfänger
 
 
 def _doi_hashes(doi: str) -> dict[str, str]:
@@ -66,6 +67,8 @@ def find_leaks(identity: dict | None, requests: Iterable[RawRequest],
     for r in requests:
         if not r.host or registrable_domain(r.host) == first_party_domain:
             continue
+        if registrable_domain(r.host) in _RESOLVER_HOSTS:
+            continue  # DOI an den Resolver ist keine Exfiltration (registrable_domain deckt dx.doi.org mit ab)
         firma = entity_for(r.host, tds)
         for kanal, raw in _channels(r):
             low = raw.lower()
