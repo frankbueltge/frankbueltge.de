@@ -86,6 +86,9 @@ export const ui = {
     'werke.title': 'fortlaufend, jede Nacht neu',
     'werke.kicker': 'Experimente',
     'werke.sub': 'Laufende Experimente mit offenen Datenquellen — jedes nennt seine Quellen und legt offen, wie es gemacht ist.',
+    'machines.kicker': 'Aus den Maschinen',
+    'machines.lead': 'Die neuesten Werke der autonomen Engines',
+    'machines.latest': 'zuletzt',
 
     'about.title': 'Über mich',
     'about.elsewhere': 'Anderswo im Netz',
@@ -202,6 +205,9 @@ export const ui = {
     'werke.title': 'ongoing, refreshed each night',
     'werke.kicker': 'Experiments',
     'werke.sub': 'Ongoing experiments with open data sources — each names its sources and discloses how it is made.',
+    'machines.kicker': 'From the machines',
+    'machines.lead': 'The newest works of the autonomous engines',
+    'machines.latest': 'latest',
 
     'about.title': 'About',
     'about.elsewhere': 'Elsewhere on the web',
