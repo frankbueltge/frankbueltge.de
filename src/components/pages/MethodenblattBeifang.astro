@@ -1,0 +1,107 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import type { Locale } from '@/lib/site'
+
+interface Props { locale: Locale }
+const { locale } = Astro.props
+const de = locale === 'de'
+const workUrl = getRelativeLocaleUrl(locale, '/beifang')
+const kommgesUrl = 'https://journals.sub.uni-hamburg.de/hup2/kommges/article/view/1643'
+const easyprivacyLicenceUrl = 'https://easylist.to/pages/licence.html'
+const ddgTdsUrl = 'https://github.com/duckduckgo/tracker-blocklists'
+
+const txt = {
+  h1: de ? 'Methodenblatt — Der Beifang' : 'Method sheet — The Bycatch',
+  s1: de ? '1. Was das ist' : '1. What this is',
+  s1body: de
+    ? 'Zweites Instrument der Linie „Gegenmessung" (nach The Consensus). Es überprüft empirisch den Befund von Fadeeva, Blume, Matuszkiewicz und Wrzesinski (kommges 2024): wie viel Drittanbieter-Tracking eine wissenschaftliche Artikelseite lädt — bevor überhaupt einer Einwilligung zugestimmt wurde.'
+    : 'Second instrument in the „Counter-Measurement" line (after The Consensus). It empirically checks the finding of Fadeeva, Blume, Matuszkiewicz and Wrzesinski (kommges 2024): how much third-party tracking a scholarly article page loads — before any consent is given at all.',
+  s2: de ? '2. Quellen & Lizenzen' : '2. Sources & licences',
+  s2body: de
+    ? 'Panel: 60 Artikelseiten — die fünf größten Wissenschaftsverlage (Elsevier, Springer Nature, Wiley, Taylor & Francis, SAGE) mit je 10 Artikeln via Crossref, gegen 10 Diamond-OA-Journals als Kontrollgruppe, darunter der Anlass-Artikel selbst. Auswahlkriterium, wörtlich aus dem committeten Panel: „Verlagsgruppe: je Verlag die 10 jüngsten Artikel des OA-Flaggschiff-Journals (Crossref, type journal-article) zum Aufnahmezeitpunkt. Kontrollgruppe: je Diamond-OA-Journal der jüngste Artikel; kommges fest: der Anlass-Artikel (Fadeeva et al. 2024)." Zwei Kontroll-Tausche sind im committeten panel.json protokolliert (log): jdsr statt weizenbaum-journal, jtei statt zfdg — beide Ersatz-Journals sind DataCite- statt Crossref-registriert und damit für die Crossref-basierte Panel-Methodik unsichtbar. Tracker-Listen: EasyPrivacy (GPLv3/CC BY-SA 3.0 dual lizenziert) und die DuckDuckGo-Tracker-Blockliste (TDS). Listen-Stände (Abrufdatum, SHA-256) werden je Sitzung im Archiv mitgeführt.'
+    : 'Panel: 60 article pages — the five largest scholarly publishers (Elsevier, Springer Nature, Wiley, Taylor & Francis, SAGE) with 10 articles each via Crossref, against 10 diamond-OA journals as a control group, including the very article that prompted this instrument. Selection criterion, quoted verbatim from the committed panel: "Publisher group: for each publisher, the 10 most recent articles of the OA flagship journal (Crossref, type journal-article) at intake time. Control group: for each diamond-OA journal, its most recent article; kommges fixed: the prompting article (Fadeeva et al. 2024)." Two control-journal swaps are logged in the committed panel.json (log): jdsr in place of weizenbaum-journal, jtei in place of zfdg — both replacement journals are DataCite- rather than Crossref-registered and therefore invisible to the Crossref-based panel methodology. Tracker lists: EasyPrivacy (dual-licensed GPLv3/CC BY-SA 3.0) and the DuckDuckGo tracker blocklist (TDS). List states (retrieval date, SHA-256) travel with the archive per session.',
+  s3: de ? '3. Takt' : '3. Cadence',
+  s3body: de
+    ? 'Wöchentlich, montags 02:17 UTC, per GitHub Actions. Jeder Lauf schreibt genau einen Commit ins Archiv (src/content/beifang/‹jahr›/‹datum›.json), committet unter der Workflow-Identität „Gegenmessung". Archiv-JSONs sind unantastbar — nie editiert, nur die Darstellung wird korrigiert — und es gibt keinen Backfill vergangener Sitzungen.'
+    : 'Weekly, Mondays 02:17 UTC, via GitHub Actions. Each run writes exactly one commit to the archive (src/content/beifang/‹year›/‹date›.json), committed under the workflow identity „Gegenmessung" ("counter-measurement"). Archive JSONs are untouchable — never edited, only the display is corrected — and there is no backfill of past sessions.',
+  s4: de ? '4. Verarbeitung' : '4. Processing',
+  s4body: de
+    ? 'Headless-Chromium über Playwright, Standard-Browserprofil, keine Interaktion (kein Consent-Klick, kein Scroll), festes Nachlade-Fenster — gemessen wird der Pre-Consent-Zustand. Die Klassifikation läuft zweistufig: Tracker-Erkennung eng ist die Vereinigung aus EasyPrivacy und den Keys der TDS-„trackers"-Sektion; Firmen-Zuordnung breit ist die Domain-zu-Firma-Zuordnung aus den TDS-Sektionen „domains"/„entities", ergänzt um die Owner-Angaben aus „trackers". Kein Match in beiden Stufen ⇒ unklassifiziert, nie geraten. Erfasste Kennzahlen je Seite: Drittanbieter-Hosts, -Requests, -Bytes, erkannte Tracker-Hosts, zugeordnete Firmen, Cookies (First-/Third-Party).'
+    : 'Headless Chromium via Playwright, default browser profile, no interaction (no consent click, no scroll), a fixed reload window — the pre-consent state is what gets measured. Classification runs in two tiers: narrow tracker detection is the union of EasyPrivacy and the keys of the TDS "trackers" section; broad company attribution is the domain-to-company mapping from the TDS "domains"/"entities" sections, augmented with the owner data from "trackers". No match at either tier ⇒ unclassified, never guessed. Metrics captured per page: third-party hosts, requests, bytes, detected tracker hosts, attributed companies, cookies (first-/third-party).',
+  s5: de ? '5. Grenzen der Methode' : '5. Limits of the method',
+  s5items: de
+    ? [
+        'Misst aus US-Rechenzentrumssicht; der EU-Messpunkt steht noch aus und wird nachgerüstet, sobald er existiert.',
+        'Misst die öffentliche Artikelseite, nicht den institutionellen Zugriff (Uni-Netz, SeamlessAccess) — das Instrument liefert die Untergrenze.',
+        'Ein festes Panel misst diese 60 Seiten, nicht „den Verlag" als Ganzes.',
+        'Der Listen-Abgleich erkennt nur Bekanntes — kein Fingerprinting-Nachweis in v1.',
+        'Blockaden werden ausgewiesen, nie umgangen — eine Blockade ist selbst ein Befund.',
+      ]
+    : [
+        'Measures from a US datacenter vantage; the EU vantage point is still pending and will be retrofitted once it exists.',
+        'Measures the public article page, not institutional access (university network, SeamlessAccess) — the instrument gives the lower bound.',
+        'A fixed panel measures these 60 pages, not „the publisher" as a whole.',
+        'List matching detects only the known — no fingerprinting evidence in v1.',
+        'Blockades are disclosed, never circumvented — a blockade is itself a finding.',
+      ],
+  s6: de ? '6. Compute-Fußabdruck' : '6. Compute footprint',
+  s6body: de
+    ? 'Rund 60 Seitenaufrufe pro Woche, ein GitHub-Actions-Job von wenigen Minuten Laufzeit. Die genaue Zahl wird nach dem ersten Lauf beziffert.'
+    : 'About 60 page loads per week, one GitHub Actions job running a few minutes. The exact figure will be quantified after the first run.',
+  s7: de ? '7. Änderungsprotokoll' : '7. Change log',
+  s7items: de
+    ? ['Startfassung (2026-07-02) — Panel: Big 5 × 10 vs. 10 Diamond-OA-Kontrolle, EasyPrivacy + DuckDuckGo-TDS, US-Blickwinkel.']
+    : ['First edition (2026-07-02) — panel: Big 5 × 10 vs. 10 diamond-OA control, EasyPrivacy + DuckDuckGo TDS, US vantage.'],
+  s7note: de
+    ? 'Weitere Panel- bzw. Listenänderungen erscheinen hier — protokolliert im committeten panel.json (log).'
+    : 'Further panel or list changes appear here — logged in the committed panel.json (log).',
+  toWork: de ? 'Zum Experiment' : 'To the experiment',
+}
+---
+
+<div class="mx-auto max-w-2xl px-4 py-14">
+  <h1 class="mb-8 text-xl font-semibold">{txt.h1}</h1>
+
+  <section class="mb-10 border border-line bg-panel/60 p-5">
+    <h2 class="mb-2 font-semibold">{txt.s1}</h2>
+    <p class="leading-relaxed">{txt.s1body}</p>
+    <p class="mt-2">
+      <a href={kommgesUrl} class="font-mono text-xs text-fg-faint transition-colors hover:text-fg" rel="noopener">{kommgesUrl}</a>
+    </p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s2}</h2>
+    <p class="leading-relaxed text-fg-muted">{txt.s2body}</p>
+    <p class="mt-2 space-x-3">
+      <a href={easyprivacyLicenceUrl} class="font-mono text-xs text-fg-faint transition-colors hover:text-fg" rel="noopener">→ EasyPrivacy licence</a>
+      <a href={ddgTdsUrl} class="font-mono text-xs text-fg-faint transition-colors hover:text-fg" rel="noopener">→ DuckDuckGo TDS</a>
+    </p>
+  </section>
+
+  <section class="mb-8"><h2 class="mb-2 font-semibold">{txt.s3}</h2><p class="leading-relaxed text-fg-muted">{txt.s3body}</p></section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s4}</h2>
+    <p class="leading-relaxed text-fg-muted">{txt.s4body}</p>
+    <p class="mt-2">
+      <a href="https://github.com/frankbueltge/frankbueltge.de/tree/main/pipelines/beifang"
+        class="font-mono text-xs text-fg-faint transition-colors hover:text-fg" rel="noopener">→ pipelines/beifang</a>
+    </p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s5}</h2>
+    <ul class="list-disc space-y-1 pl-5 text-fg-muted">{txt.s5items.map((i) => <li>{i}</li>)}</ul>
+  </section>
+
+  <section class="mb-8"><h2 class="mb-2 font-semibold">{txt.s6}</h2><p class="leading-relaxed text-fg-muted">{txt.s6body}</p></section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s7}</h2>
+    <ul class="list-disc space-y-1 pl-5 text-fg-muted">{txt.s7items.map((i) => <li>{i}</li>)}</ul>
+    <p class="mt-2 text-sm text-fg-muted">{txt.s7note}</p>
+  </section>
+
+  <a href={workUrl} class="text-sm text-fg-muted transition-colors hover:text-fg">→ {txt.toWork}</a>
+</div>

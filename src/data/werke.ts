@@ -19,6 +19,18 @@ export interface Werk {
  *  Gleichstand; die öffentliche Sortierung ist chronologisch über `WERKE_CHRONO`. */
 export const WERKE: Werk[] = [
   {
+    id: 'beifang',
+    title: 'Der Beifang',
+    subtitle: { de: 'Science-Tracking, gemessen', en: 'Science tracking, measured' },
+    status: 'live',
+    since: '2026-07-02',
+    href: '/beifang',
+    description: {
+      de: 'Wöchentlicher Tracker-Zensus über Artikelseiten der fünf größten Wissenschaftsverlage — gegen zehn Diamond-OA-Journals als Kontrollgruppe, vor jeder Einwilligung, aus zwei Blickwinkeln.',
+      en: 'A weekly tracker census of article pages from the five largest scholarly publishers — against ten diamond-OA journals as a control group, before any consent, from two vantage points.',
+    },
+  },
+  {
     id: 'field',
     title: 'The Measuring Field',
     subtitle: {

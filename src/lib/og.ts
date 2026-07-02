@@ -56,6 +56,10 @@ export const OG_PAGES: Record<string, { title: string; description: string }> = 
     title: 'The Ghost Fleet',
     description: 'Schiffe, die ihren Transponder bewusst abschalten, um zu verschwinden',
   },
+  beifang: {
+    title: 'Der Beifang — The Bycatch',
+    description: 'Science-Tracking, gemessen · Science tracking, measured',
+  },
 }
 
 /** Pfad (mit/ohne /en, mit/ohne Trailing-Slash) → OG-Slug; Default 'home'. */
@@ -75,5 +79,6 @@ export function ogSlug(pathname: string): keyof typeof OG_PAGES {
   if (p.startsWith('/redaction') || p.startsWith('/werke/redaction')) return 'redaction'
   if (p.startsWith('/round-number') || p.startsWith('/werke/round-number')) return 'round-number'
   if (p.startsWith('/ghost-fleet') || p.startsWith('/werke/ghost-fleet')) return 'ghost-fleet'
+  if (p.startsWith('/beifang') || p.startsWith('/werke/beifang')) return 'beifang'
   return 'home'
 }
