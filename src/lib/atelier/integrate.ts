@@ -6,7 +6,7 @@ import { checkForbidden } from './forbidden'
 import { renderWrapperPage } from './wrapper'
 
 export interface IntegrateReport {
-  accepted: { slug: string; kind: 'html' | 'astro' }[]
+  accepted: { slug: string; kind: 'html' | 'astro'; ignored?: string[] }[]
   rejected: { slug: string; reason: string }[]
 }
 
@@ -29,7 +29,7 @@ export function integrate(opts: { sourceDir: string; siteDir: string; ns?: strin
       // forbidden-scan all code files of astro works
       if (work.kind === 'astro') {
         const violations: string[] = []
-        for (const f of files.filter((f) => CODE_EXT.test(f)))
+        for (const f of work.files.filter((f) => CODE_EXT.test(f)))
           violations.push(...checkForbidden(readFileSync(join(dir, f), 'utf8')))
         if (violations.length) { report.rejected.push({ slug, reason: violations.join('; ') }); continue }
       }
@@ -44,7 +44,7 @@ export function integrate(opts: { sourceDir: string; siteDir: string; ns?: strin
         mkdirSync(dirname(page), { recursive: true })
         writeFileSync(page, renderWrapperPage(slug, meta, ns))
       }
-      report.accepted.push({ slug, kind: work.kind })
+      report.accepted.push({ slug, kind: work.kind, ...(work.ignored.length ? { ignored: work.ignored } : {}) })
     } catch (e) {
       report.rejected.push({ slug, reason: 'fehler bei verarbeitung: ' + String(e) })
     }
