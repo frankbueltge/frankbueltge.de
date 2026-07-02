@@ -100,8 +100,10 @@ def compute_befund(results: Sequence[SiteResult], previous: dict | None) -> Befu
         pid = new_blocked[0]
         pub = next(r["publisher"] for r in cur if r["panel_id"] == pid)
         return Befund(kind="blockade_neu", params={"panel_id": pid, "publisher": pub})
-    # Priorität 2: neue Firma auf Verlagsseiten
-    prev_entities = {e for r in prev for e in (r.get("entities") or ())}
+    # Priorität 2: neue Firma auf Verlagsseiten (Baseline: nur Verlagsseiten des Vorlaufs —
+    # eine Firma, die bisher nur auf Kontrollseiten sichtbar war, ist auf Verlagsseiten neu)
+    prev_entities = {e for r in prev if r.get("group") == "verlag"
+                     for e in (r.get("entities") or ())}
     pages: dict[str, int] = {}
     for r in cur:
         if r["group"] != "verlag" or not r["entities"]:
@@ -115,7 +117,7 @@ def compute_befund(results: Sequence[SiteResult], previous: dict | None) -> Befu
     # Priorität 3: größte Median-Verschiebung je Verlag
     cur_m, prev_m = _tracker_medians(cur), _tracker_medians(prev)
     deltas = sorted(((abs(cur_m[p] - prev_m[p]), p) for p in cur_m if p in prev_m),
-                    reverse=True)
+                    key=lambda t: (-t[0], t[1]))  # Tie-Break: lexikographisch kleinster Verlag (wie Prio 1/2)
     if deltas and deltas[0][0] > 0:
         _, p = deltas[0]
         return Befund(kind="median_delta", params={"publisher": p, "von": prev_m[p], "zu": cur_m[p]})

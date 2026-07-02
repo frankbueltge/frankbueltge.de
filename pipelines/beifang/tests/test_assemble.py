@@ -1,4 +1,5 @@
 import json
+from dataclasses import asdict
 
 from beifang.assemble import assemble_run, compute_befund, load_previous, site_result
 from beifang.capture import RawCapture, RawCookie, RawRequest
@@ -87,3 +88,39 @@ def test_assemble_run_has_eu_pending():
     assert rec.vantages["us"].status == "ok"
     assert rec.runner == "test"
     assert rec.befund.kind == "baseline"
+
+
+def test_befund_entity_neu_baseline_nur_verlagsseiten():
+    # Firma war bisher NUR auf einer Kontrollseite — auf Verlagsseiten ist sie neu.
+    cur = [sr(raw=raw([("pixel.liveramp.com", 1)]),
+              cls=Classification(frozenset({"pixel.liveramp.com"}),
+                                 frozenset({"pixel.liveramp.com"}), frozenset({"LiveRamp"})))]
+    prev = {"vantages": {"us": {"results": [
+        {"panel_id": "elsevier-01", "group": "kontrolle", "publisher": "kommges",
+         "blocked": None, "tracker_hosts": [], "entities": ["LiveRamp"]},
+        {"panel_id": "elsevier-01", "group": "verlag", "publisher": "elsevier",
+         "blocked": None, "tracker_hosts": [], "entities": []}]}}}
+    b = compute_befund(cur, prev)
+    assert b.kind == "entity_neu" and b.params["entity"] == "LiveRamp"
+
+
+def test_befund_median_delta_und_unveraendert():
+    def tracked(panel_id, publisher, hosts):
+        entry = {"id": panel_id, "group": "verlag", "publisher": publisher,
+                 "url": "https://doi.org/10.x", "expected_domain": "sciencedirect.com"}
+        return site_result(entry, retrieved_at="t",
+                           raw=raw([(h, 1) for h in hosts]),
+                           cls=Classification(frozenset(hosts), frozenset(hosts), frozenset()))
+    cur = [tracked("elsevier-01", "elsevier", ["a.example", "b.example"]),
+           tracked("wiley-01", "wiley", ["a.example"])]
+    prev = {"vantages": {"us": {"results": [
+        {"panel_id": "elsevier-01", "group": "verlag", "publisher": "elsevier",
+         "blocked": None, "tracker_hosts": [], "entities": []},
+        {"panel_id": "wiley-01", "group": "verlag", "publisher": "wiley",
+         "blocked": None, "tracker_hosts": ["a.example"], "entities": []}]}}}
+    b = compute_befund(cur, prev)
+    assert b.kind == "median_delta"
+    assert b.params == {"publisher": "elsevier", "von": 0.0, "zu": 2.0}
+    # unveraendert: Vorlauf identisch zum aktuellen Lauf
+    prev_same = {"vantages": {"us": {"results": [asdict(r) for r in cur]}}}
+    assert compute_befund(cur, prev_same).kind == "unveraendert"
