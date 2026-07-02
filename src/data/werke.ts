@@ -13,6 +13,8 @@ export interface Werk {
   live?: boolean
   /** Sekundärer „Methodenblatt"-Link; null = keiner (z. B. Atelier hat sein Protokoll inline). */
   methodHref?: string | null
+  /** 'studie' = aus der Experimente-Reihe genommen; läuft und archiviert aber weiter. */
+  tier?: 'experiment' | 'studie'
 }
 
 /** Verzeichnis der Experimente. Reihenfolge unten = redaktionelle Feinordnung bei Datums-
@@ -191,6 +193,57 @@ export const WERKE: Werk[] = [
       en: 'SGP4 orbital propagation in the browser: which catalogued Earth-observation satellites currently have your location geometrically in view. Computed live on daily-committed orbital data (CelesTrak), with owner classification from the GCAT catalogue. Your location never leaves the browser.',
     },
     methodHref: null,
+    tier: 'studie',
+  },
+  {
+    id: 'consensus',
+    title: 'The Consensus',
+    subtitle: {
+      de: 'Wie viel „unabhängiger" Nachrichten-Konsens eine Quelle ist, x-fach kopiert',
+      en: 'How much „independent" news consensus is one source, copied',
+    },
+    status: 'live',
+    since: '2026-06-22',
+    live: true,
+    href: '/consensus',
+    description: {
+      de: 'Aus der Linie „Gegenmessung". Jeden Tag wählt eine Maschine den Satz, den die meisten „unabhängigen" Medien wortgleich brachten, zeigt Quelle und Kaskade und rechnet, wie viel des Nachrichten-Konsenses Echo statt Recherche ist.',
+      en: 'From the „Counter-Measurement" line. Each day a machine picks the sentence the most „independent" outlets ran word-for-word, shows source and cascade, and computes how much of the news consensus is echo rather than reporting.',
+    },
+    tier: 'studie',
+  },
+  {
+    id: 'correction',
+    title: 'The Correction',
+    subtitle: {
+      de: 'Die Jobzahl war aufgebläht — und wird millionenweise gestrichen',
+      en: 'The jobs number was inflated — and is cut by the million',
+    },
+    status: 'live',
+    since: '2026-06-22',
+    href: '/correction',
+    description: {
+      de: 'Aus der Linie „Gegenmessung". Nicht durch ein eigenes Modell, sondern durch die Revisionen, die das Amt selbst vornimmt: Die US-Beschäftigtenzahl wird still nach unten korrigiert — Juni 2025 um 1,25 Millionen Stellen; jeder der letzten 24 Monate nach unten. Die Echtzeit-Zahl war systematisch zu hoch.',
+      en: 'From the „Counter-Measurement" line. Not via a model of my own but via the revisions the agency itself makes: US employment is quietly cut downward — June 2025 by 1.25 million jobs; every one of the last 24 months downward. The real-time number ran systematically too high.',
+    },
+    tier: 'studie',
+  },
+  {
+    id: 'ghost-fleet',
+    title: 'The Ghost Fleet',
+    subtitle: {
+      de: 'Schiffe, die ihren Transponder bewusst abschalten, um zu verschwinden',
+      en: 'Ships that switch off their transponder on purpose to vanish',
+    },
+    status: 'live',
+    since: '2026-06-26',
+    live: true,
+    href: '/ghost-fleet',
+    description: {
+      de: 'Aus der Linie „Gegenmessung". Das AIS-Bild der Meere wirkt lückenlos — ist es aber nicht: Schiffe schalten ihren Transponder bewusst ab, um zu verschwinden. Jeden Tag zählt eine Maschine die absichtliche Funkstille und hebt den markantesten Fall hervor — ein benanntes Schiff, das wochenlang in fremden Hoheitsgewässern dunkel wurde. Kein Illegalitäts-Vorwurf, nur die gezählte Unsichtbarkeit.',
+      en: 'From the „Counter-Measurement" line. The AIS picture of the seas looks complete — but it is not: ships switch off their transponder on purpose to vanish. Each day a machine counts the deliberate radio silence and surfaces the most striking case — a named vessel that went dark for weeks inside foreign national waters. No claim of illegality, only the counted invisibility.',
+    },
+    tier: 'studie',
   },
 ]
 /** Chronologie-Komparator: newest first nach `since`. Gleichstand → 0, sodass die stabile
@@ -202,6 +255,10 @@ export function byRecency(a: Werk, b: Werk): number {
 /** Öffentliche Reihenfolge der Experimente: chronologisch, jüngstes zuerst.
  *  Startseite und Lab rendern hierüber — keine Sonderstellung für The Protocol. */
 export const WERKE_CHRONO: Werk[] = [...WERKE].sort(byRecency)
+
+/** Kuratierte Experimente-Reihe vs. Studien außer der Reihe — beide chronologisch. */
+export const WERKE_EXPERIMENTE: Werk[] = WERKE_CHRONO.filter((w) => w.tier !== 'studie')
+export const WERKE_STUDIEN: Werk[] = WERKE_CHRONO.filter((w) => w.tier === 'studie')
 
 // Überflug wurde am 2026-06-12 aus der Reihe der Experimente genommen (keine These,
 // keine Akkumulation) und lebt als Studie im Lab weiter:

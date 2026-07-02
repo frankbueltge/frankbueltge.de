@@ -1,6 +1,6 @@
 // src/data/werke.test.ts
 import { describe, it, expect } from 'vitest'
-import { WERKE, WERKE_CHRONO, byRecency } from './werke'
+import { WERKE, WERKE_CHRONO, WERKE_EXPERIMENTE, WERKE_STUDIEN, byRecency } from './werke'
 
 describe('byRecency (newest first, stable ties)', () => {
   it('sorts a newer "since" before an older one', () => {
@@ -31,5 +31,22 @@ describe('WERKE_CHRONO', () => {
   })
   it('every entry carries a "since" date', () => {
     for (const w of WERKE_CHRONO) expect(w.since).toMatch(/^\d{4}-\d{2}-\d{2}$/)
+  })
+})
+
+describe('tier split (Experimente vs. Studien)', () => {
+  it('lists the four studies, newest first', () => {
+    expect(WERKE_STUDIEN.map((w) => w.id)).toEqual([
+      'ghost-fleet',
+      'consensus',
+      'correction',
+      'ueberflug',
+    ])
+  })
+  it('keeps studies out of the experiments list', () => {
+    for (const w of WERKE_EXPERIMENTE) expect(w.tier).not.toBe('studie')
+  })
+  it('splits without losing entries', () => {
+    expect(WERKE_EXPERIMENTE.length + WERKE_STUDIEN.length).toBe(WERKE.length)
   })
 })
