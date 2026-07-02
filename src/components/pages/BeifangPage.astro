@@ -1,0 +1,175 @@
+---
+// Gegenmessung II — „Der Beifang". Misst, was das Lesen eines Fachartikels an
+// Drittanbieter-Tracking mitfängt (Verlagsseiten vs. Diamond-OA-Kontrollgruppe) — gemessen
+// vor jeder Cookie-Einwilligung. Daten: src/content/beifang/<jahr>/<datum>.json (wöchentlich,
+// montags; pipelines/beifang/). Lücken (Blockaden, Ausfälle) sind Befund, nie stille Nullwerte.
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import { t } from '@/i18n/ui'
+import { getBeifangRuns } from '@/lib/beifang/data'
+import { renderBefund } from '@/lib/beifang/befund'
+import { PUBLISHER_LABELS } from '@/lib/beifang/types'
+import { blockedResults, entityTable, groupMedians, publisherMedians, sparkPath, timeline, usResults } from '@/lib/beifang/stats'
+
+interface Props { locale: 'de' | 'en' }
+const { locale } = Astro.props
+const de = locale === 'de'
+const runs = await getBeifangRuns()
+const latest = runs[0]
+const methodUrl = getRelativeLocaleUrl(locale, '/werke/beifang')
+const gm = latest ? groupMedians(latest) : null
+const pm = latest ? publisherMedians(latest) : {}
+const entities = latest ? entityTable(latest).slice(0, 12) : []
+const blocked = latest ? blockedResults(latest) : []
+const series = timeline(runs)
+const maxY = Math.max(1, ...series.flatMap((p) => [p.verlag ?? 0, p.kontrolle ?? 0]))
+const okCount = latest ? usResults(latest).filter((r) => r.blocked === null && r.note === null).length : 0
+---
+
+<article class="beifang mx-auto max-w-3xl px-4 py-14">
+  <header class="mb-10">
+    <h1 class="text-[clamp(30px,6vw,56px)] font-bold tracking-[-0.03em]">{t(locale, 'bf.title')}</h1>
+    <p class="mt-2 max-w-xl text-fg-muted">{t(locale, 'bf.sub')}</p>
+  </header>
+
+  {!latest && (
+    <p class="text-fg-muted">
+      {de
+        ? 'Noch keine Messung — die erste Sitzung steht aus. Das Instrument misst wöchentlich, montags.'
+        : 'No measurement yet — the first run is pending. The instrument measures weekly, on Mondays.'}
+    </p>
+  )}
+
+  {latest && (
+    <>
+      {/* Leitgrafik: Kontrollgruppen-Kontrast (zwei Balken, Werte sichtbar am Balken) */}
+      <section class="mb-12">
+        <h2 class="mb-3 font-semibold">{de ? 'Verlagsseiten vs. Kontrollgruppe' : 'Publisher pages vs. control group'}</h2>
+        {gm && gm.verlag !== null && gm.kontrolle !== null ? (
+          <svg viewBox="0 0 560 64" role="img" class="w-full text-fg-muted" aria-label={de
+            ? `Median Tracker-Hosts: Verlage ${gm.verlag}, Kontrollgruppe ${gm.kontrolle}`
+            : `Median tracker hosts: publishers ${gm.verlag}, control ${gm.kontrolle}`}>
+            {[
+              { y: 6, v: gm.verlag, label: de ? 'Verlage (Big 5)' : 'Publishers (Big 5)' },
+              { y: 38, v: gm.kontrolle, label: de ? 'Diamond-OA-Kontrolle' : 'Diamond-OA control' },
+            ].map(({ y, v, label }) => {
+              const barMax = Math.max(gm.verlag!, gm.kontrolle!, 1)
+              const w = Math.round((v! / barMax) * 400)
+              return (
+                <>
+                  <text x="0" y={y + 14} font-size="12" fill="currentColor">{label}</text>
+                  <rect x="170" y={y} width={Math.max(w, 1)} height="18" fill="currentColor" />
+                  <text x={170 + Math.max(w, 1) + 8} y={y + 14} font-size="12" fill="currentColor">{v}</text>
+                </>
+              )
+            })}
+          </svg>
+        ) : (
+          <p class="text-fg-muted">{de ? 'Feststellung entfällt — keine unblockierte Messung in einer der Gruppen.' : 'No determination — no unblocked measurement in one of the groups.'}</p>
+        )}
+        {/* Median je Verlag (Spec §7: Werte pro Verlag sichtbar) */}
+        <ul class="mt-4 space-y-1 text-sm">
+          {Object.entries(pm).map(([pub, m]) => (
+            <li class="flex items-baseline justify-between gap-3 border-b border-line/60 py-1.5">
+              <span>{PUBLISHER_LABELS[pub] ?? pub}</span>
+              <span class="font-mono text-xs text-fg-faint">
+                {m !== null
+                  ? `${m} ${de ? 'Tracker-Hosts (Median)' : 'tracker hosts (median)'}`
+                  : de ? 'Feststellung entfällt' : 'no determination'}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      {/* Befund der Woche */}
+      <section class="mb-12 border-l-2 border-accent/60 pl-5">
+        <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">{de ? 'Befund der Woche' : 'Finding of the week'}</p>
+        <p class="mt-2 leading-relaxed">{renderBefund(latest.befund, locale)}</p>
+      </section>
+
+      {/* Firmen-Tafel */}
+      <section class="mb-12">
+        <h2 class="mb-3 font-semibold">{de ? 'Wer mitliest' : 'Who reads along'}</h2>
+        <div class="overflow-x-auto">
+          <table class="w-full border-collapse text-sm">
+            <thead>
+              <tr class="border-b border-line">
+                <th scope="col" class="py-2 pr-3 text-left font-medium text-fg-muted">{de ? 'Firma' : 'Company'}</th>
+                <th scope="col" class="px-1.5 py-2 text-right font-medium text-fg-muted">{de ? 'Verlagsseiten' : 'Publisher pages'}</th>
+                <th scope="col" class="px-1.5 py-2 text-right font-medium text-fg-muted">{de ? 'Kontrollseiten' : 'Control pages'}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {entities.map((row) => (
+                <tr class="border-b border-line/60">
+                  <td class="py-2 pr-3">{row.entity}</td>
+                  <td class="px-1.5 py-2 text-right font-mono text-xs text-fg-muted">{row.verlag}</td>
+                  <td class="px-1.5 py-2 text-right font-mono text-xs text-fg-muted">{row.kontrolle}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      {/* Blockaden — Befund, kein Fehler */}
+      {blocked.length > 0 && (
+        <section class="mb-12 border-t border-line pt-6">
+          <h2 class="mb-3 font-semibold">{de ? 'Verweigerte Messungen' : 'Refused measurements'}</h2>
+          <ul class="space-y-1.5 text-sm">
+            {blocked.map((r) => (
+              <li class="text-fg-muted">
+                <span class="text-fg">{PUBLISHER_LABELS[r.publisher] ?? r.publisher}</span>{' '}
+                <span class="font-mono text-xs text-fg-faint">({r.panel_id})</span> — {de
+                  ? 'Der Verlag verweigert die Messung'
+                  : 'The publisher refuses the measurement'} <span class="font-mono text-xs">({r.blocked!.type} {r.blocked!.marker})</span>.
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {/* Zeitreihe (erst ab 2 Läufen als Grafik; vorher ehrlicher Satz) */}
+      <section class="mb-12">
+        <h2 class="mb-3 font-semibold">{de ? 'Verlauf' : 'Over time'}</h2>
+        {series.length < 2 ? (
+          <p class="text-fg-muted">{de ? 'Die Zeitreihe entsteht — bisher eine Messung.' : 'The time series is forming — one measurement so far.'}</p>
+        ) : (
+          <figure>
+            <svg viewBox="0 0 560 100" role="img" class="w-full text-fg-muted" aria-label={de ? 'Median Tracker-Hosts über die Zeit' : 'Median tracker hosts over time'}>
+              <path d={sparkPath(series.map((p) => p.verlag), 560, 80, maxY)} fill="none" stroke="currentColor" stroke-width="2" />
+              <path d={sparkPath(series.map((p) => p.kontrolle), 560, 80, maxY)} fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="3 3" />
+              <text x="0" y="98" font-size="11" fill="currentColor">{series[0].date}</text>
+              <text x="560" y="98" font-size="11" text-anchor="end" fill="currentColor">{series[series.length - 1].date}</text>
+            </svg>
+            <figcaption class="mt-2 text-xs text-fg-faint">
+              {de
+                ? `Median Tracker-Hosts je Sitzung — durchgezogen: Verlage, gestrichelt: Kontrolle. Skala 0–${maxY}. Lücken sind Lücken.`
+                : `Median tracker hosts per run — solid: publishers, dashed: control. Scale 0–${maxY}. Gaps stay gaps.`}
+            </figcaption>
+          </figure>
+        )}
+      </section>
+
+      {/* EU-Spalte: sichtbar ausstehend (Spec §4/§6) */}
+      <section class="mb-12">
+        <p class="text-sm text-fg-muted">
+          {de
+            ? `EU-Messpunkt: ${latest.vantages.eu.status === 'ok' ? 'aktiv' : 'ausstehend — gemessen wird bisher nur aus US-Rechenzentrumssicht; die EU-Spalte folgt, sobald der Messpunkt steht.'}`
+            : `EU vantage: ${latest.vantages.eu.status === 'ok' ? 'active' : 'pending — measurements so far are from a US datacenter vantage only; the EU column follows once the vantage exists.'}`}
+        </p>
+      </section>
+
+      <footer class="mt-12 border-t border-line pt-6">
+        <p class="font-mono text-xs text-fg-faint">
+          {de
+            ? `Sitzung vom ${latest.date} · ${okCount} Seiten gemessen · Panel ${latest.panel_version} · Diese Seite lädt null Drittanbieter-Requests.`
+            : `Run of ${latest.date} · ${okCount} pages measured · panel ${latest.panel_version} · This page loads zero third-party requests.`}
+        </p>
+        <nav class="mt-2">
+          <a href={methodUrl} class="font-mono text-xs text-fg-faint transition-colors hover:text-fg">{t(locale, 'prot.method')} →</a>
+        </nav>
+      </footer>
+    </>
+  )}
+</article>
