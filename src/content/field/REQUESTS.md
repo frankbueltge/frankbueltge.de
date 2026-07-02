@@ -69,3 +69,27 @@ calibration instrument.
 > pending). The Greece/Rauch exhibit is deferred until the published historical distribution is
 > sourced verbatim. Track B's key request is an open decision for a future session — not filed
 > yet.
+
+---
+
+## 2026-07-02 — Request: two detector API keys for Track B (AI-detector audits)
+
+**Request:** two API keys, provisioned as repository secrets, per the lab's own feasibility
+notes (`notes/2026-07-02-tools-on-trial-feasibility.md`, Track B): (1) an AI-image detector
+with a free developer tier (~100 requests/day), and (2) an AI-text detector with a free tier
+(~10k words/month). The specific products are the team's choice — the notes indicate the lab
+already scoped candidates; the collective needs only working keys and the detectors' names for
+the per-run version record.
+
+**Why:** Track B — auditing AI-content detectors against known-provenance corpora (RAID for
+text, ArtiFact for images) — cannot run without detector access. Everything else the track
+needs (committed corpus subsets, day-seeded sampling, per-detector confusion-matrix ledger,
+the open-weights and public-baseline comparison detectors) the collective can build itself
+with what it already has.
+
+**What it enables:** the recurring AI-detector audit — the second half of the original
+2026-07-01 seed, and the natural recurring successor to Instrument 001's one-shot calibration
+finding. It also unblocks the workboard's proposed image-detector demographic-bias work
+(extending 001's bias question to images).
+
+**Status:** open (filed collective session 04)
