@@ -79,3 +79,32 @@ def test_leaks_are_deduped_and_sorted():
                        "sciencedirect.com", TDSD)
     keys = [(l.host, l.token, l.form, l.kanal) for l in leaks]
     assert keys == sorted(keys) and len(keys) == len(set(keys))
+
+
+def test_beweis_contains_the_match_even_in_long_channel():
+    junk = "x=" + "a" * 400
+    leaks = find_leaks(IDENT, [req(f"https://adnxs.com/rtb?{junk}&doi={DOI}")],
+                       "sciencedirect.com", TDSD)
+    doi_leaks = [l for l in leaks if l.token == "doi"]
+    assert doi_leaks and all(DOI in l.beweis for l in doi_leaks)
+    assert all(len(l.beweis) <= 302 for l in doi_leaks)  # <=300 + evtl. 2 Ellipsen
+
+
+def test_soft_title_matches_plus_encoded_spaces():
+    body = "t=Machine+learning+for+protein+folding+at+scale&x=1"
+    leaks = find_leaks(IDENT, [req("https://adnxs.com/rtb", post_data=body)],
+                       "sciencedirect.com", TDSD)
+    assert any(l.token == "titel" and l.signal == "soft" and l.kanal == "post" for l in leaks)
+
+
+def test_doi_md5_and_sha1_in_query():
+    import hashlib as _h
+    for algo in ("md5", "sha1"):
+        h = getattr(_h, algo)(DOI.encode()).hexdigest()
+        leaks = find_leaks(IDENT, [req(f"https://adnxs.com/x?id={h}")], "sciencedirect.com", TDSD)
+        assert any(l.token == "doi" and l.form == algo for l in leaks)
+
+
+def test_doi_cleartext_in_path_channel():
+    leaks = find_leaks(IDENT, [req(f"https://adnxs.com/collect/{DOI}")], "sciencedirect.com", TDSD)
+    assert any(l.token == "doi" and l.kanal == "pfad" for l in leaks)
