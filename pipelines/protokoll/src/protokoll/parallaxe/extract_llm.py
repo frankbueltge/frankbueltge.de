@@ -52,7 +52,8 @@ def extract_omissions(lang_to_text: dict[str, str], *, client: httpx.Client) -> 
         resp = client.post(_endpoint(), headers=headers, json=body, timeout=120.0)
         if resp.status_code in RETRY_STATUSES:
             last_status = resp.status_code
-            time.sleep(RETRY_DELAY_S * (2 ** attempt))
+            if attempt < MAX_RETRIES - 1:
+                time.sleep(RETRY_DELAY_S * (2 ** attempt))
             continue
         if resp.status_code != 200:
             raise ExtractionError(f"Gemini HTTP {resp.status_code}")
