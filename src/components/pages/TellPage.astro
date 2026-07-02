@@ -1,5 +1,5 @@
 ---
-// Gegenmessung III — „The Tell".
+// Gegenmessung III — „The Tell", öffentlich „Delve into the intricate realm".
 // Misst die synthetische Sättigung der Wissenschaft über die sprachlichen Fingerabdrücke
 // der Maschine (LLM-Tells). Daten: src/data/tell/latest.json (PubMed; pipelines/tell/).
 import { getRelativeLocaleUrl } from 'astro:i18n'
@@ -28,7 +28,7 @@ const cgX = xMax > xMin ? ((d.chatgpt_year - xMin) / (xMax - xMin)) * PCHART_W :
 
 <article class="tell mx-auto max-w-3xl px-4 py-14">
   <header class="mb-10">
-    <h1 class="text-[clamp(30px,6vw,56px)] font-bold tracking-[-0.03em]">The Tell</h1>
+    <h1 class="text-[clamp(30px,6vw,56px)] font-bold tracking-[-0.03em]">Delve into the intricate realm</h1>
     <p class="mt-2 max-w-xl text-fg-muted">{t(locale, 'tl.sub')}</p>
   </header>
 
