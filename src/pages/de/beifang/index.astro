@@ -1,0 +1,9 @@
+---
+import Page from '@/layouts/Page.astro'
+import BeifangPage from '@/components/pages/BeifangPage.astro'
+import { t } from '@/i18n/ui'
+const locale = 'de' as const
+---
+<Page title={`${t(locale, 'bf.title')} | Frank Bültge`} description={t(locale, 'bf.sub')}>
+  <BeifangPage {locale} />
+</Page>
