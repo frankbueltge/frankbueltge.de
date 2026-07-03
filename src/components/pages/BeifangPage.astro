@@ -136,14 +136,21 @@ const euStatusText = latest
         <p class="mt-2 leading-relaxed">{renderBefund(latest.befund, locale)}</p>
       </section>
 
-      {/* Was die Seite über dich verrät — der Identitäts-Leak (hartes Signal: DOI) */}
+      {/* Wohin die Artikel-Kennung (DOI) geht — Beobachtung je Messung, kein Rechtsurteil */}
       <section class="mb-12">
-        <h2 class="mb-3 font-semibold">{de ? 'Was die Seite über dich verrät' : 'What the page reveals about you'}</h2>
+        <h2 class="mb-3 font-semibold">{de ? 'Wohin die Artikel-Kennung (DOI) geht' : 'Where the article identifier (DOI) goes'}</h2>
         <p class="mb-4 max-w-xl leading-relaxed text-fg-muted">
           {de
-            ? 'Der Leak folgt dem eingebundenen Fremd-Skript, nicht dem Geschäftsmodell.'
-            : 'The leak follows the embedded third-party script, not the business model.'}
+            ? 'Beobachtung dieser Messung: Die DOI ging dorthin, wo Fremd-Skripte (Altmetric, Dimensions, Google Analytics u. ä.) eingebunden sind — bei Konzernverlag wie gebührenfreiem Journal. Sie folgt dem eingebundenen Skript, nicht dem Geschäftsmodell.'
+            : 'Observation from this measurement: the DOI went wherever third-party scripts (Altmetric, Dimensions, Google Analytics and the like) are embedded — at a corporate publisher just as at a fee-free journal. It follows the embedded script, not the business model.'}
         </p>
+        {auditRan && leaks.length > 0 && latest && (
+          <p class="mb-4 font-mono text-[11px] leading-relaxed text-fg-faint">
+            {de
+              ? `Einzelmessung vom ${latest.date}, aus einem US-Rechenzentrum (GitHub Actions), ohne Interaktion mit der Seite. Dokumentiert ist der jeweilige Request; die rechtliche Bewertung überlässt das Instrument dir.`
+              : `Single measurement of ${latest.date}, from a US datacenter (GitHub Actions), with no interaction with the page. What is documented is each request; the legal assessment is left to you.`}
+          </p>
+        )}
         {!auditRan ? (
           <p class="text-fg-muted">
             {de
@@ -167,11 +174,11 @@ const euStatusText = latest
                   )}{' '}
                   {f.firmen.length > 0
                     ? (de
-                        ? `reicht deine DOI an ${f.firmen.join(', ')} weiter — vor jeder Einwilligung.`
-                        : `hands your DOI to ${f.firmen.join(', ')} — before any consent.`)
+                        ? `— in dieser Messung enthielt ein ausgehender Request die DOI an ${f.firmen.join(', ')} (vor jeder Cookie-Einwilligung).`
+                        : `— in this measurement, an outgoing request carried the DOI to ${f.firmen.join(', ')} (before any cookie consent).`)
                     : (de
-                        ? `sendet deine DOI an Dritte (${f.hosts.join(', ')}) — vor jeder Einwilligung; kein benannter Datenhändler darunter in dieser Messung.`
-                        : `sends your DOI to third parties (${f.hosts.join(', ')}) — before any consent; no named data broker among them in this run.`)}
+                        ? `— in dieser Messung enthielt ein ausgehender Request die DOI an Dritte (${f.hosts.join(', ')}), vor jeder Cookie-Einwilligung; kein benannter Datenhändler darunter.`
+                        : `— in this measurement, an outgoing request carried the DOI to third parties (${f.hosts.join(', ')}), before any cookie consent; no named data broker among them.`)}
                 </p>
                 {f.firmen.length > 0 && f.hosts.length > 0 && (
                   <p class="mt-1 text-sm text-fg-muted">
