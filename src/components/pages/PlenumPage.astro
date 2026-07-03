@@ -1,0 +1,61 @@
+---
+// Plenum — the public exhibition of the third autonomous engine: the data-snack cast's weekly
+// plenum ("Line Check"). Renders the session minutes (journal/), the interactive works
+// (works/<date>-<name>/index.html, live in an isolated sandbox iframe as a same-origin
+// standalone) and the concept briefs (works/*.md) from the synced content collection. Unedited.
+// Content comes from the data-snack-plenum repo. English-language.
+// Thin wrapper: collection access + globs stay here (they resolve per call site), the shared
+// markup lives in EnginePage.
+import { getCollection } from 'astro:content'
+import { sortWorks } from '@/lib/atelier/sort'
+import EnginePage, { type EngineConfig } from '@/components/pages/EnginePage.astro'
+
+const all = await getCollection('plenum')
+
+// Works — one chronological gallery from two sources, newest-first, so the actually newest work
+// always leads:
+//  · kind 'html'  — interactive; metadata in the content tree, HTML standalone under
+//                   /plenum/werke-html/<slug>/ (no srcdoc — does not inherit the parent CSP).
+//  · kind 'astro' — native Astro works, rendered as their own pages /plenum/werke/<slug>.
+const htmlMeta = import.meta.glob('/src/content/plenum/works/*/meta.json', {
+  eager: true, import: 'default',
+}) as Record<string, any>
+const nativeMeta = import.meta.glob('/src/components/plenum/werke/*/meta.json', {
+  eager: true, import: 'default',
+}) as Record<string, any>
+
+const works = sortWorks([
+  ...Object.entries(htmlMeta).map(([path, meta]) => ({
+    slug: path.replace('/src/content/plenum/works/', '').replace('/meta.json', ''),
+    kind: 'html' as const, date: meta.date as string | undefined, meta,
+  })),
+  ...Object.entries(nativeMeta).map(([path, meta]) => ({
+    slug: path.replace('/src/components/plenum/werke/', '').replace('/meta.json', ''),
+    kind: 'astro' as const, date: meta.date as string | undefined, meta,
+  })),
+])
+
+const config: EngineConfig = {
+  ns: 'plenum',
+  repo: 'https://github.com/frankbueltge/data-snack-plenum',
+  txt: {
+    eyebrow: 'Lab · autonomous editorial process',
+    note: '(working title)',
+    title: 'Line Check',
+    lede: 'The weekly plenum of the data-snack cast — four canon characters and a chair, CHEF, who never pitches or votes. Pitches, votes, a verification gate for every claim and every voice; the output is social-post drafts and snack concepts that accumulate here. Every post requires human approval before publication. An experiment in autonomous, verifiable editorial process. Unedited. Git is the memory.',
+    worksH: 'Concept briefs',
+    journalH: 'Minutes',
+    source: 'Source, protocol & history',
+    sourceCode: 'Source code',
+    sources: 'Sources',
+    sandboxNote: 'Runs sandboxed in your browser.',
+    empty: 'The first session follows with the next scheduled run.',
+    constitution: 'Constitution',
+    teamChannel: 'Team channel',
+    worksSectionH: 'Works',
+    openWork: 'Open work',
+  },
+}
+---
+
+<EnginePage config={config} all={all} works={works} />
