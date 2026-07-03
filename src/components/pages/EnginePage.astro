@@ -1,17 +1,18 @@
 ---
-// EnginePage — shared presentation for the autonomous research engine pages (field, atelier).
-// Renders the research journal (journal/), the interactive works (works/<date>-<name>/index.html,
-// live in an isolated sandbox iframe as a same-origin standalone) and the text works (works/*.md)
-// from the synced content collection. Unedited. Content comes from the engine's own repo.
-// Parametrised by EngineConfig — callers (FieldPage, AtelierPage) own collection access
-// (getCollection + import.meta.glob cannot move here, they resolve at build time per call site)
-// and pass the merged `all` entries and sorted `works` array in.
+// EnginePage — shared presentation for the autonomous research engine pages (field, atelier,
+// plenum). Renders the research journal (journal/), the interactive works
+// (works/<date>-<name>/index.html, live in an isolated sandbox iframe as a same-origin
+// standalone) and the text works (works/*.md) from the synced content collection. Unedited.
+// Content comes from the engine's own repo. Parametrised by EngineConfig — callers (FieldPage,
+// AtelierPage, PlenumPage) own collection access (getCollection + import.meta.glob cannot move
+// here, they resolve at build time per call site) and pass the merged `all` entries and sorted
+// `works` array in.
 import { render } from 'astro:content'
 import { sortJournal } from '@/lib/atelier/sort'
 import { splitSessions, sessionMeta, renderMarkdown } from '@/lib/engines/journal'
 
 export interface EngineConfig {
-  ns: 'field' | 'atelier'
+  ns: 'field' | 'atelier' | 'plenum'
   repo: string
   txt: {
     eyebrow: string
