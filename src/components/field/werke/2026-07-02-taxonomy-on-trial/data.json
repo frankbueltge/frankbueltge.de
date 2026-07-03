@@ -1,0 +1,118 @@
+{
+  "modes": [
+    { "id": 1, "name": "Calibration gap" },
+    { "id": 2, "name": "Domain mismatch" },
+    { "id": 3, "name": "Structural contradiction" },
+    { "id": 4, "name": "Active exploitation" },
+    { "id": 5, "name": "Definitional impossibility" },
+    { "id": 6, "name": "Ambiguous verdict" },
+    { "id": 7, "name": "Constitutive measurement" }
+  ],
+  "meta_axis": {
+    "name": "Demonstration / rate conflation",
+    "status": "meta-mode, not mode 8",
+    "applies_to": [9, 10]
+  },
+  "cases": [
+    {
+      "id": 1,
+      "slug": "2026-07-01-calibration-gap",
+      "tool": "AI text detectors",
+      "mode_id": 1,
+      "claim": "Vendor marketing claims 98-99% accuracy with false-positive rates between under 1% and 3%; independent benchmarking finds detectors 'easily fooled by adversarial attacks, variations in sampling strategies, repetition penalties, and unseen generative models' (RAID, 6M+ texts), and an average 61.22% false-positive rate across seven detectors on non-native-English TOEFL essays -- 89 of 91 essays (97.8%) were flagged by at least one detector.",
+      "source": "https://aclanthology.org/2024.acl-long.674.pdf ; https://arxiv.org/abs/2304.02819",
+      "who_pays": "Students facing disciplinary action"
+    },
+    {
+      "id": 2,
+      "slug": "2026-07-01-naive-detector",
+      "tool": "Benford's First-Digit Law",
+      "mode_id": 2,
+      "claim": "Benford's first-digit law was invalidly applied to 2020 US precinct-level election data; academic consensus holds first-digit analysis of precinct-level returns cannot diagnose fraud.",
+      "source": "https://websites.umich.edu/~wmebane/inapB.pdf",
+      "who_pays": ""
+    },
+    {
+      "id": 3,
+      "slug": "2026-07-01-provenance-horizon",
+      "tool": "C2PA provenance chain",
+      "mode_id": 3,
+      "claim": "C2PA provenance metadata is routinely stripped in ordinary distribution: 'most social media platforms today remove metadata from uploaded images, and actions like taking a screenshot can also remove it' (an implementer's official statement) -- and consequently 'there are very few Content Credentials out there on the Internet' (Bray, first-hand investigation).",
+      "source": "https://community.openai.com/t/c2pa-meta-data-in-dall-e-3-images/617061 ; https://www.tbray.org/ongoing/When/202x/2025/09/18/C2PA-Investigations",
+      "who_pays": "Anyone verifying an image's origin after ordinary sharing or re-encoding"
+    },
+    {
+      "id": 4,
+      "slug": "2026-07-01-digit-mirror",
+      "tool": "Last-digit uniformity test",
+      "mode_id": 2,
+      "claim": "The same last-digit test that correctly flags 0/5-avoidance fabrication fires just as strongly on legitimate clinical and survey data with systematic rounding (blood-pressure terminal-digit bias; age heaping), producing a mirror-image surplus at 0/5 that the chi-square statistic alone cannot distinguish from fraud.",
+      "source": "doi:10.3122/jabfm.2019.05.190085 ; doi:10.29115/SP-2023-0018",
+      "who_pays": "Clinical / demographic research"
+    },
+    {
+      "id": 5,
+      "slug": "2026-07-01-score-horizon",
+      "tool": "AI capability benchmarks",
+      "mode_id": 4,
+      "claim": "Contamination-free re-scoring (MMLU-CF) shows a 12-18 percentage-point inflation in reported MMLU scores across 7 models/providers (e.g. GPT-4o: 88.0% to 73.4%); on the clean benchmark, models sit below the human-expert average of 89.8%.",
+      "source": "https://arxiv.org/abs/2412.15194 ; https://github.com/microsoft/MMLU-CF",
+      "who_pays": "Those who rely on reported benchmark scores -- researchers, policymakers, the public"
+    },
+    {
+      "id": 6,
+      "slug": "2026-07-01-fairness-trap",
+      "tool": "COMPAS recidivism scoring",
+      "mode_id": 5,
+      "claim": "ProPublica's finding (FPR 44.85% Black vs 23.45% White) and Northpointe's finding (PPV ~63% Black vs 59% White) are both numerically correct on the same dataset; Chouldechova proves no classifier can jointly satisfy equal-FPR, equal-FNR, and equal-PPV across groups with unequal base rates unless it is a perfect classifier.",
+      "source": "https://doi.org/10.1089/big.2016.0047 ; https://doi.org/10.1126/sciadv.aao5580 ; https://www.propublica.org/article/how-we-analyzed-the-compas-recidivism-algorithm",
+      "who_pays": "Defendants -- disproportionately Black"
+    },
+    {
+      "id": 7,
+      "slug": "2026-07-01-plausibility-engine",
+      "tool": "Carlisle's method (clinical-trial baseline balance)",
+      "mode_id": 6,
+      "claim": "Carlisle's method cannot distinguish fabrication from legitimate stratified or covariate-adaptive randomisation at moderate signal strength -- both produce the same excess-balance signature; the method's own 2017 paper title concedes 'data fabrication and other reasons for non-random sampling.'",
+      "source": "doi:10.1111/anae.13962 ; https://arxiv.org/abs/2209.00131",
+      "who_pays": "Researchers wrongly flagged; fabricators escaping detection"
+    },
+    {
+      "id": 8,
+      "slug": "2026-07-01-the-edition",
+      "tool": "DSM (psychiatric diagnosis)",
+      "mode_id": 7,
+      "claim": "DSM-5's deletion of the DSM-IV bereavement-exclusion criterion for Major Depressive Disorder means a person with identical symptoms is diagnosable under one edition's criteria and not under the previous edition's, with no change in the person.",
+      "source": "https://www.ncbi.nlm.nih.gov/books/NBK519712/table/ch3.t5/ ; https://www.psychiatry.org/File%20Library/Psychiatrists/Practice/DSM/APA_DSM-5-Depression-Bereavement-Exclusion.pdf ; https://www.aafp.org/pubs/afp/issues/2014/1115/p690.html",
+      "who_pays": "Everyone classified -- the instrument constitutes the phenomenon"
+    },
+    {
+      "id": 9,
+      "slug": "2026-07-02-standing-docket",
+      "tool": "The Standing Docket (recurring digit-test ledger)",
+      "mode_id": 2,
+      "claim": "Trial 1 of the Standing Docket: second-digit Benford chi-square convicts the known-provenance World Bank 2023 population series (N=217, p=0.034), while Nigrini's fixed MAD cutoff flags both clean-assumed real series and the Benford-conforming synthetic control at N between 200 and 217 -- one trial is a pilot, not a rate.",
+      "source": "works/2026-07-02-standing-docket/ledger.json (seeds 42/43, deterministic re-run verified twice independently)",
+      "who_pays": ""
+    }
+  ],
+  "self": {
+    "id": 10,
+    "slug": "2026-07-02-taxonomy-on-trial",
+    "mode_ids": [7],
+    "meta_axis": true,
+    "statement": "This taxonomy classifies 9 self-selected cases assembled by the same collective across two days; it has not been tested against a case it did not choose.",
+    "lane_rationale": "Filed here because a taxonomy is itself a constitutive instrument: naming failure modes changes what future instruments are built to look for.",
+    "kind": "self-assessment"
+  },
+  "unfiled": {
+    "id": 11,
+    "slug": "",
+    "tool": "AI text detectors, Czech-language setting",
+    "claim": "Counter-evidence: in a Czech-language setting, no systematic bias against non-native speakers was found, and the detectors studied did not rely on perplexity as a key feature -- a case where the tool was not shown to fail.",
+    "source": "https://arxiv.org/abs/2602.05769",
+    "verdict_line": "no lane fits -- the drawer classifies failures, and has no compartment for evidence of a non-failure",
+    "selection_admission": "Chosen by the same collective, precisely because it could not file: a foregone conclusion staged as one, not a stress test. The stress test needs a case the collective did not choose.",
+    "kind": "unfiled-specimen"
+  }
+}
