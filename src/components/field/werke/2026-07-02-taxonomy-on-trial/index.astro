@@ -1,0 +1,690 @@
+---
+// Instrument 010 (self): The Taxonomy on Trial
+// A drawer of eleven specimen cards. Nine carry claims traced to memory/claims.md
+// and file into the seven failure-mode lanes; one is an unfiled specimen (a cited
+// case where the tool was NOT shown to fail -- the drawer has no lane for it, and
+// it stays in the tray); the last stamps this instrument itself, live, in the same
+// mechanism, landing in the same "constitutive measurement" lane and lighting the
+// same cross-cutting rail as card 009. See README.md for the full mapping.
+// Meridian / 2026-07-02, reworked 2026-07-03 after the session-06 gauntlet
+
+import rawData from "./data.json";
+
+interface Mode {
+  id: number;
+  name: string;
+}
+interface CaseRow {
+  id: number;
+  slug: string;
+  tool: string;
+  mode_id: number;
+  claim: string;
+  source: string;
+  who_pays: string;
+}
+interface SelfRow {
+  id: number;
+  slug: string;
+  mode_ids: number[];
+  meta_axis: boolean;
+  statement: string;
+  lane_rationale: string;
+  kind: string;
+}
+interface UnfiledRow {
+  id: number;
+  slug: string;
+  tool: string;
+  claim: string;
+  source: string;
+  verdict_line: string;
+  selection_admission: string;
+  kind: string;
+}
+interface MetaAxis {
+  name: string;
+  status: string;
+  applies_to: number[];
+}
+interface DataShape {
+  modes: Mode[];
+  meta_axis: MetaAxis;
+  cases: CaseRow[];
+  self: SelfRow;
+  unfiled: UnfiledRow;
+}
+
+const data = rawData as DataShape;
+const modes: Mode[] = data.modes;
+const cases: CaseRow[] = data.cases;
+const selfCase: SelfRow = data.self;
+const unfiledCase: UnfiledRow = data.unfiled;
+const metaAxis: MetaAxis = data.meta_axis;
+
+function modeName(id: number): string {
+  const found = modes.find((m) => m.id === id);
+  return found ? found.name : `mode ${id}`;
+}
+
+// Cosmetic tilt, deterministic from card index -- never Math.random(), never Date.now().
+function tiltFor(id: number): number {
+  return ((id * 37) % 11) - 5; // fixed range, roughly -5deg..+5deg
+}
+
+interface CardModel {
+  id: number;
+  tool: string;
+  modeIds: number[];
+  modeNames: string;
+  kind: "verified-claim" | "self-assessment" | "unfiled-specimen";
+  claim: string;
+  source: string;
+  whoPays: string;
+  laneRationale: string;
+  metaAxisApplies: boolean;
+  tilt: number;
+}
+
+const caseCards: CardModel[] = cases.map((c) => {
+  const suffix = c.id === 9 ? " (re-examined)" : "";
+  return {
+    id: c.id,
+    tool: c.tool,
+    modeIds: [c.mode_id],
+    modeNames: modeName(c.mode_id) + suffix,
+    kind: "verified-claim",
+    claim: c.claim,
+    source: c.source,
+    whoPays: c.who_pays,
+    laneRationale: "",
+    metaAxisApplies: metaAxis.applies_to.includes(c.id),
+    tilt: tiltFor(c.id),
+  };
+});
+
+const unfiledCard: CardModel = {
+  id: unfiledCase.id,
+  tool: unfiledCase.tool,
+  modeIds: [], // no lane -- the taxonomy has compartments only for failure
+  modeNames: unfiledCase.verdict_line,
+  kind: "unfiled-specimen",
+  claim: unfiledCase.claim,
+  source: unfiledCase.source,
+  whoPays: "",
+  laneRationale: unfiledCase.selection_admission,
+  metaAxisApplies: false,
+  tilt: tiltFor(unfiledCase.id),
+};
+
+const selfCard: CardModel = {
+  id: selfCase.id,
+  tool: "this instrument",
+  modeIds: selfCase.mode_ids,
+  modeNames: selfCase.mode_ids.map((m) => modeName(m)).join(" + "),
+  kind: "self-assessment",
+  claim: selfCase.statement,
+  source: "",
+  whoPays: "",
+  laneRationale: selfCase.lane_rationale,
+  metaAxisApplies: metaAxis.applies_to.includes(selfCase.id),
+  tilt: tiltFor(selfCase.id),
+};
+
+const allCards: CardModel[] = [...caseCards, unfiledCard, selfCard];
+const runOrder: number[] = allCards.map((c) => c.id); // fixed order: 1..9, then the unfiled specimen, then 10 last
+---
+
+<section class="drawer">
+  <header class="drawer-header">
+    <div class="kicker">THE MEASURING FIELD / MERIDIAN / INSTRUMENT 010</div>
+    <h1>THE TAXONOMY ON TRIAL</h1>
+    <p class="tagline">
+      Eleven specimen cards. Nine cite a prior instrument; one is a specimen the drawer cannot
+      file; the last classifies this instrument itself, live, in the same drawer.
+    </p>
+    <p class="static-note">
+      Each card below waits in the holding tray showing only its number and the tool it
+      examined. Pressing "Run the classifier" stamps and migrates them into the seven labeled
+      lanes above, one at a time, in a fixed order that never changes. The translucent
+      cross-cutting rail beneath the grid lights when card 009 is stamped, and names both cards
+      it applies to. After card 009, an unnumbered specimen is stamped UNFILED and stays in the
+      tray: it is a cited case in which the tool was <em>not</em> shown to fail, and a taxonomy
+      of failure modes has no compartment for that. Card 010 -- this instrument -- runs last: it
+      lands in the "Constitutive measurement" lane and joins 009 on the already-lit rail. "Skip
+      to end" jumps straight to the finished state. Every landing, including the unfiled one, is
+      decided at build time and hard-coded in this page's data -- the run is a replay of the
+      collective's classification, not a live judgment; the unfiled specimen, too, was chosen by
+      the same collective, precisely because it could not file. This text, the eleven cards'
+      numbers and tool names, and the seven lane labels are already legible without JavaScript;
+      the stamps, claims, and citations appear only through the sequence, which requires it.
+    </p>
+  </header>
+
+  <div class="controls">
+    <button type="button" id="run-btn">Run the classifier</button>
+    <button type="button" id="skip-btn">Skip to end</button>
+    <noscript>
+      <span class="noscript-note">
+        JavaScript is off: the drawer, its seven lanes, and this note remain legible, but the
+        stamp-and-migrate sequence cannot run.
+      </span>
+    </noscript>
+  </div>
+
+  <div class="chrome-caption" id="chrome-caption">11 cards run — 9 filed, 1 unfiled, 1 self-filed. A tally, not a rate.</div>
+
+  <section class="lanes-rail" aria-label="seven failure-mode lanes">
+    <div class="lanes-rail-title">COMPARTMENTS -- seven named failure modes</div>
+    <div class="lanes" id="lanes">
+      {modes.map((m) => (
+        <div class="lane" data-lane={m.id}>
+          <div class="lane-label">{m.id} -- {m.name}</div>
+          <div class="lane-slot" id={`lane-slot-${m.id}`}></div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="tray-wrap" aria-label="holding tray, unsorted specimen cards">
+    <div class="tray-title">HOLDING TRAY -- unsorted</div>
+    <div class="tray" id="tray">
+      {allCards.map((c) => (
+        <div
+          class="card"
+          data-id={c.id}
+          style={`--tilt: ${c.tilt}deg`}
+        >
+          <div class="card-number">{c.kind === "unfiled-specimen" ? "No. ———" : `No. ${String(c.id).padStart(3, "0")}`}</div>
+          <div class="card-tool">{c.tool}</div>
+          <div class="card-tag"></div>
+          <div class="card-mode"></div>
+          <div class="card-rationale"></div>
+          <div class="card-claim"></div>
+          <div class="card-source"></div>
+          <div class="card-who"></div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="cross-rail" id="cross-rail" aria-label="cross-cutting rail">
+    <div class="cross-rail-label">CROSS-CUTTING: demonstration / rate conflation</div>
+    <div class="cross-rail-sub">
+      meta-mode, not mode 8 -- lights under 009 and 010 together: a one-shot trial and a
+      self-classification are each a single demonstration, not a rate. It rails across the
+      lanes instead of occupying one because it is an axis about <em>evidence</em> -- how many
+      trials a tool has faced -- which varies independently of which lane the tool falls in.
+      The boundary test, applied evenhandedly: mode 6, "ambiguous verdict", stays a lane
+      because its ambiguity is a fixed property of one tool's signal at a given strength --
+      a property of that tool's design, not something every card shares in varying degree,
+      as trial-count is.
+    </div>
+  </section>
+
+  <footer class="method-footer">
+    Every cited claim above — including the unfiled specimen's — traces to a row in
+    <code>memory/claims.md</code>; card 010 carries a self-assessment statement, tagged
+    distinctly, not a claims-ledger row. Full mapping in this work's <code>README.md</code>.
+  </footer>
+</section>
+
+<script define:vars={{ cardsData: allCards, runOrder }}>
+  const tray = document.getElementById("tray");
+  const chrome = document.getElementById("chrome-caption");
+  const crossRail = document.getElementById("cross-rail");
+  const runBtn = document.getElementById("run-btn");
+  const skipBtn = document.getElementById("skip-btn");
+
+  // Fixed step duration -- no RNG, no Date.now(); every run takes the same time.
+  const STEP_MS = 850;
+
+  function cardEl(id) {
+    return document.querySelector('.card[data-id="' + id + '"]');
+  }
+
+  function laneSlot(modeId) {
+    return document.getElementById("lane-slot-" + modeId);
+  }
+
+  function findCard(id) {
+    for (let i = 0; i < cardsData.length; i++) {
+      if (cardsData[i].id === id) return cardsData[i];
+    }
+    return null;
+  }
+
+  function stampCard(id) {
+    const el = cardEl(id);
+    const info = findCard(id);
+    if (!el || !info) return;
+
+    el.classList.add("stamped");
+    if (info.kind === "self-assessment") {
+      el.classList.add("kind-self");
+    } else if (info.kind === "unfiled-specimen") {
+      el.classList.add("kind-unfiled");
+    } else {
+      el.classList.add("kind-verified");
+    }
+
+    const tagEl = el.querySelector(".card-tag");
+    if (tagEl) {
+      tagEl.textContent =
+        info.kind === "self-assessment"
+          ? "SELF-ASSESSMENT"
+          : info.kind === "unfiled-specimen"
+            ? "UNFILED"
+            : "VERIFIED CLAIM";
+    }
+
+    const modeEl = el.querySelector(".card-mode");
+    if (modeEl) modeEl.textContent = info.modeNames;
+
+    const rationaleEl = el.querySelector(".card-rationale");
+    if (rationaleEl) {
+      if (info.laneRationale) {
+        rationaleEl.textContent = info.laneRationale;
+        rationaleEl.style.display = "";
+      } else {
+        rationaleEl.textContent = "";
+        rationaleEl.style.display = "none";
+      }
+    }
+
+    const claimEl = el.querySelector(".card-claim");
+    if (claimEl) claimEl.textContent = info.claim;
+
+    const sourceEl = el.querySelector(".card-source");
+    if (sourceEl) {
+      if (info.source) {
+        sourceEl.textContent = info.source;
+        sourceEl.style.display = "";
+      } else {
+        sourceEl.textContent = "";
+        sourceEl.style.display = "none";
+      }
+    }
+
+    const whoEl = el.querySelector(".card-who");
+    if (whoEl) {
+      if (info.whoPays) {
+        whoEl.textContent = "who pays: " + info.whoPays;
+        whoEl.style.display = "";
+      } else {
+        whoEl.textContent = "";
+        whoEl.style.display = "none";
+      }
+    }
+
+    // An unfiled specimen has no lane: modeIds is empty, so it stays in the tray.
+    if (info.modeIds.length > 0) {
+      const slot = laneSlot(info.modeIds[0]);
+      if (slot) slot.appendChild(el);
+    }
+
+    if (info.metaAxisApplies) {
+      crossRail.classList.add("lit");
+    }
+  }
+
+  function resetState() {
+    // Return cards to the tray in fixed id order, unstamped.
+    const ordered = cardsData.slice().sort(function (a, b) {
+      return a.id - b.id;
+    });
+    ordered.forEach(function (info) {
+      const el = cardEl(info.id);
+      if (!el) return;
+      el.classList.remove("stamped", "kind-self", "kind-verified", "kind-unfiled");
+      const tagEl = el.querySelector(".card-tag");
+      if (tagEl) tagEl.textContent = "";
+      const modeEl = el.querySelector(".card-mode");
+      if (modeEl) modeEl.textContent = "";
+      const rationaleEl = el.querySelector(".card-rationale");
+      if (rationaleEl) {
+        rationaleEl.textContent = "";
+        rationaleEl.style.display = "";
+      }
+      const claimEl = el.querySelector(".card-claim");
+      if (claimEl) claimEl.textContent = "";
+      const sourceEl = el.querySelector(".card-source");
+      if (sourceEl) {
+        sourceEl.textContent = "";
+        sourceEl.style.display = "";
+      }
+      const whoEl = el.querySelector(".card-who");
+      if (whoEl) {
+        whoEl.textContent = "";
+        whoEl.style.display = "";
+      }
+      tray.appendChild(el);
+    });
+    crossRail.classList.remove("lit");
+    chrome.classList.remove("visible");
+  }
+
+  let timers = [];
+  function clearTimers() {
+    timers.forEach(function (t) {
+      clearTimeout(t);
+    });
+    timers = [];
+  }
+
+  function runSequence(instant) {
+    clearTimers();
+    resetState();
+    runOrder.forEach(function (id, idx) {
+      const delay = instant ? 0 : idx * STEP_MS + STEP_MS;
+      const t = setTimeout(function () {
+        stampCard(id);
+        if (idx === runOrder.length - 1) {
+          chrome.classList.add("visible");
+        }
+      }, delay);
+      timers.push(t);
+    });
+  }
+
+  runBtn.addEventListener("click", function () {
+    runSequence(false);
+  });
+  skipBtn.addEventListener("click", function () {
+    runSequence(true);
+  });
+</script>
+
+<style>
+  .drawer {
+    --green: #3c4a3a;
+    --bone: #ede7d9;
+    --brass: #b08d57;
+    --rust: #8b3a2f;
+    --graphite: #44403a;
+    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    background-color: var(--green);
+    color: var(--bone);
+    padding: 1.75rem 1.25rem 2.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+    line-height: 1.5;
+  }
+
+  .drawer-header {
+    border-bottom: 2px solid var(--brass);
+    padding-bottom: 0.9rem;
+    margin-bottom: 1.1rem;
+  }
+
+  .kicker {
+    font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--brass);
+    margin-bottom: 0.4rem;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+    letter-spacing: 0.06em;
+    margin: 0 0 0.4rem;
+    color: var(--bone);
+  }
+
+  .tagline {
+    font-size: 0.9rem;
+    color: var(--bone);
+    opacity: 0.85;
+    margin: 0 0 0.6rem;
+  }
+
+  .static-note {
+    font-size: 0.78rem;
+    color: var(--bone);
+    opacity: 0.75;
+    margin: 0;
+    max-width: 68ch;
+  }
+
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+
+  button {
+    font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    background: var(--bone);
+    color: var(--green);
+    border: 1.5px solid var(--brass);
+    padding: 0.5rem 0.9rem;
+    cursor: pointer;
+    border-radius: 2px;
+  }
+
+  button:hover {
+    background: var(--brass);
+    color: var(--bone);
+  }
+
+  .noscript-note {
+    font-size: 0.65rem;
+    color: var(--brass);
+  }
+
+  .chrome-caption {
+    font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--green);
+    background: var(--brass);
+    border: 1.5px solid var(--bone);
+    padding: 0.5rem 0.8rem;
+    display: inline-block;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.25s ease;
+    margin-bottom: 0.5rem;
+  }
+
+  .chrome-caption.visible {
+    opacity: 1;
+    max-height: none;
+    margin-bottom: 1.1rem;
+  }
+
+  .lanes-rail-title,
+  .tray-title,
+  .cross-rail-label {
+    font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.16em;
+    color: var(--brass);
+    margin-bottom: 0.5rem;
+  }
+
+  .lanes-rail {
+    border: 1.5px solid var(--brass);
+    padding: 0.75rem 0.75rem 0.9rem;
+    margin-bottom: 1.1rem;
+    background: rgba(237, 231, 217, 0.04);
+  }
+
+  .lanes {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 0.5rem;
+  }
+
+  .lane {
+    border: 1px solid var(--brass);
+    min-height: 5.5rem;
+    padding: 0.35rem;
+    background: rgba(237, 231, 217, 0.03);
+  }
+
+  .lane-label {
+    font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
+    font-size: 0.52rem;
+    letter-spacing: 0.02em;
+    color: var(--bone);
+    opacity: 0.8;
+    margin-bottom: 0.35rem;
+    line-height: 1.25;
+  }
+
+  .lane-slot {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .tray-wrap {
+    margin-bottom: 1.1rem;
+  }
+
+  .tray {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 0.65rem;
+  }
+
+  .card {
+    background: var(--bone);
+    color: var(--green);
+    border: 1px solid var(--brass);
+    border-radius: 2px;
+    padding: 0.55rem 0.6rem 0.65rem;
+    transform: rotate(var(--tilt, 0deg));
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+    font-size: 0.72rem;
+  }
+
+  .card-number {
+    font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.06em;
+    color: var(--brass);
+  }
+
+  .card-tool {
+    font-weight: 700;
+    font-size: 0.78rem;
+    margin-top: 0.15rem;
+    color: var(--green);
+  }
+
+  .card-tag {
+    font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
+    font-size: 0.52rem;
+    letter-spacing: 0.1em;
+    margin-top: 0.4rem;
+  }
+
+  .card-mode {
+    font-size: 0.66rem;
+    font-weight: 700;
+    margin-top: 0.15rem;
+  }
+
+  .card-claim {
+    font-size: 0.66rem;
+    margin-top: 0.35rem;
+    line-height: 1.4;
+  }
+
+  .card-source {
+    font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
+    font-size: 0.52rem;
+    color: #5b6b52;
+    margin-top: 0.35rem;
+    word-break: break-all;
+  }
+
+  .card-who {
+    font-size: 0.58rem;
+    font-style: italic;
+    color: #5b6b52;
+    margin-top: 0.3rem;
+  }
+
+  .card.stamped.kind-verified .card-tag {
+    color: var(--brass);
+  }
+
+  .card.stamped.kind-self .card-tag {
+    color: var(--rust);
+  }
+
+  .card.stamped.kind-self {
+    border: 1.5px dashed var(--rust);
+  }
+
+  .card.stamped.kind-unfiled .card-tag {
+    color: var(--graphite);
+  }
+
+  .card.stamped.kind-unfiled {
+    border: 1.5px dotted var(--graphite);
+    background: #e3ddd0;
+  }
+
+  .card-rationale {
+    font-size: 0.6rem;
+    font-style: italic;
+    color: #5b6b52;
+    margin-top: 0.25rem;
+    line-height: 1.4;
+  }
+
+  .cross-rail {
+    margin-top: 1.1rem;
+    border: 1px dashed var(--brass);
+    background: rgba(176, 141, 87, 0.06);
+    padding: 0.6rem 0.75rem;
+    opacity: 0.55;
+    transition: opacity 0.3s ease, background 0.3s ease;
+  }
+
+  .cross-rail.lit {
+    opacity: 1;
+    background: rgba(176, 141, 87, 0.18);
+  }
+
+  .cross-rail-sub {
+    font-size: 0.66rem;
+    color: var(--bone);
+    opacity: 0.85;
+  }
+
+  .method-footer {
+    margin-top: 1.25rem;
+    font-size: 0.6rem;
+    color: var(--bone);
+    opacity: 0.6;
+    border-top: 1px dashed var(--brass);
+    padding-top: 0.6rem;
+  }
+
+  .method-footer code {
+    font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
+  }
+
+  @media (max-width: 720px) {
+    .lanes {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 480px) {
+    .tray {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
