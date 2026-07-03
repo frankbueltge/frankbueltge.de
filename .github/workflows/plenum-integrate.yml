@@ -1,0 +1,122 @@
+# .github/workflows/plenum-integrate.yml
+# Pulls the data-snack-plenum repo, integrates ONLY allowed paths (path boundary) into the
+# `plenum` namespace, validates check/test/build, and lets deploy-cf rebuild only on green. On
+# red: no deploy (last good state stays), a feedback file back into the engine's repo + an issue
+# to Frank. Sibling of field-integrate.yml / atelier-integrate.yml; same integrator, ns='plenum'.
+name: Plenum integrate
+
+on:
+  # Promptness: integrate immediately once the engine lands something on its main —
+  # cross-repo via repository_dispatch from the engine's auto-land.yml (once it sends one;
+  # SITE_DISPATCH_TOKEN-style PAT on their side, PAT-authenticated dispatch to this repo).
+  # Until that's wired up, the daily cron below covers integration on its own.
+  repository_dispatch:
+    types: [plenum-landed]
+  schedule:
+    - cron: '0 4 * * *'   # offset from atelier's 03:00 and field's 03:30
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: plenum-integrate
+
+jobs:
+  integrate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+
+      - name: Clone data-snack-plenum repo
+        run: git clone --depth 1 https://github.com/frankbueltge/data-snack-plenum /tmp/plenum
+
+      - name: Integrate works (html + astro + md) + sync journal/docs
+        # Path boundary: only journal/, works/*.md, work directories (via the integrator) and the
+        # five doc files below are ever copied. drafts/, memory/, queue/ and WORKBOARD.md are
+        # intentionally excluded — unvetted collective work stays in the engine repo and never
+        # reaches the site.
+        run: |
+          echo "guard: drafts/, memory/, queue/, WORKBOARD.md are intentionally excluded from this copy — unvetted work stays in the engine repo"
+          # Full reset of the generated work outputs → the site mirrors the engine exactly
+          # (removed/renamed works leave no orphans).
+          rm -rf src/content/plenum/works src/components/plenum/werke src/pages/plenum/werke public/plenum/werke-html
+          mkdir -p src/content/plenum/journal src/content/plenum/works src/components/plenum/werke
+          touch src/components/plenum/werke/.gitkeep
+          # Mirror the journal (removes deleted entries)
+          rsync -a --delete /tmp/plenum/journal/ src/content/plenum/journal/
+          # Markdown works (concept briefs)
+          cp /tmp/plenum/works/*.md src/content/plenum/works/ 2>/dev/null || true
+          # HTML/Astro work directories via the integrator (path boundary enforced), ns=plenum
+          npx tsx scripts/atelier/integrate.ts /tmp/plenum . plenum > /tmp/report.json
+          cat /tmp/report.json
+          for f in PROTOCOL.md README.md REQUESTS.md SITE-API.md MENU.md; do [ -f "/tmp/plenum/$f" ] && cp "/tmp/plenum/$f" "src/content/plenum/$f" || true; done
+
+      - name: Validate (check + test + build)
+        id: validate
+        run: |
+          set -o pipefail
+          { npm run check && npm test && npm run build; } 2>&1 | tee /tmp/validate.log
+
+      - name: Commit + let deploy-cf rebuild (on success)
+        if: success()
+        run: |
+          if [ -n "$(git status --porcelain src/content/plenum src/components/plenum src/pages/plenum public/plenum/werke-html)" ]; then
+            git config user.name "Plenum-Integrate"
+            git config user.email "plenum-integrate@users.noreply.github.com"
+            git add -A src/content/plenum src/components/plenum src/pages/plenum
+            if [ -d public/plenum/werke-html ]; then git add -A public/plenum/werke-html; fi
+            git commit -m "plenum: integrate $(date -u +%F)"
+            git pull --rebase --autostash origin main
+            git push
+          else
+            echo "no changes"
+          fi
+
+      - name: Rejection feedback to the engine repo (green builds too)
+        if: success()
+        env:
+          BOT_TOKEN: ${{ secrets.PLENUM_BOT_TOKEN }}
+        run: |
+          FEEDBACK=$(npx tsx scripts/atelier/rejection-feedback.ts /tmp/report.json plenum || true)
+          if [ -n "$FEEDBACK" ] && [ -n "$BOT_TOKEN" ]; then
+            DATE=$(date -u +%F)
+            (
+              git clone --depth 1 "https://x-access-token:${BOT_TOKEN}@github.com/frankbueltge/data-snack-plenum" /tmp/fb-rej
+              mkdir -p /tmp/fb-rej/plenum-feedback
+              printf '%s\n' "$FEEDBACK" > "/tmp/fb-rej/plenum-feedback/${DATE}-rejections.md"
+              cd /tmp/fb-rej && git config user.name "Plenum-Integrate" && git config user.email "plenum-integrate@users.noreply.github.com"
+              git add plenum-feedback && git commit -m "feedback: works rejected at the gate ${DATE}" && git push
+            ) || echo "rejection feedback skipped (non-fatal)"
+          else
+            echo "no rejections (or no BOT_TOKEN) — nothing to feed back"
+          fi
+
+      - name: On failure — feedback to the engine's repo + issue to Frank
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BOT_TOKEN: ${{ secrets.PLENUM_BOT_TOKEN }}
+        run: |
+          DATE=$(date -u +%F)
+          LOG=$(tail -40 /tmp/validate.log 2>/dev/null || echo "see workflow run")
+          # Issue to Frank FIRST — always runs, even if the BOT_TOKEN block below fails.
+          gh issue create --repo frankbueltge/frankbueltge.de \
+            --title "Plenum-Integrate red ($DATE)" \
+            --body "The nightly plenum build failed; no deploy. Log excerpt in the workflow run. Feedback was written to data-snack-plenum/plenum-feedback/${DATE}.md." || true
+          # Feedback into the engine's repo (it reads it next session) — defensive: errors here
+          # must not block the issue creation above (hence || true).
+          if [ -n "$BOT_TOKEN" ]; then
+            (
+              git clone --depth 1 "https://x-access-token:${BOT_TOKEN}@github.com/frankbueltge/data-snack-plenum" /tmp/fb
+              mkdir -p /tmp/fb/plenum-feedback
+              printf '# Build feedback %s\n\nYour last contribution did not pass the gate (no deploy; the last good state stays live). Excerpt:\n\n```\n%s\n```\n\nFix the affected work in `works/<slug>/` and commit again.\n' "$DATE" "$LOG" > "/tmp/fb/plenum-feedback/${DATE}.md"
+              cd /tmp/fb && git config user.name "Plenum-Integrate" && git config user.email "plenum-integrate@users.noreply.github.com"
+              git add plenum-feedback && git commit -m "feedback: build $DATE red" && git push
+            ) || echo "feedback push skipped (non-fatal)"
+          fi
