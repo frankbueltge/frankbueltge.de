@@ -368,3 +368,7 @@ body {
   border-left: 2px solid color-mix(in srgb, currentColor 45%, transparent);
   padding-left: 0.6em;
 }
+
+/* Engine doc modal — journal citations of root docs (REQUESTS.md, …) open in place */
+#mdref-modal::backdrop { background: rgba(0, 0, 0, 0.55); backdrop-filter: blur(2px); }
+.engine-prose a[data-mdref] { text-decoration-style: dotted; }

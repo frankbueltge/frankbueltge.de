@@ -9,6 +9,85 @@ const md = new MarkdownIt({ html: false, linkify: true })
 // ccTLD); require an explicit protocol so only real URLs become links.
 md.linkify.set({ fuzzyLink: false })
 
+/** Repo-relative .md references the journals cite constantly (bare or in backticks). */
+export interface MdRefs {
+  /** engine repo, e.g. https://github.com/frankbueltge/field-research */
+  repo: string
+  /** root-doc ids (lowercased stems) that exist as baked modal templates on the page */
+  docs: Set<string>
+}
+
+const MD_REF = /(?<=^|[\s(])([A-Za-z0-9_][\w./-]*\.md)(?=$|[\s).,;:!?'"])/g
+
+const refAttrs = (path: string, refs: MdRefs): [string, string][] => {
+  const attrs: [string, string][] = [
+    ['href', `${refs.repo}/blob/main/${path}`],
+    ['target', '_blank'],
+    ['rel', 'noreferrer'],
+    ['data-mdref', path],
+  ]
+  // Only root-level references map onto a baked doc template (memory/README.md ≠ README.md).
+  const stem = path.slice(0, -3).toLowerCase()
+  if (!path.includes('/') && refs.docs.has(stem)) attrs.push(['data-doc', stem])
+  return attrs
+}
+
+// Turns bare `WORKBOARD.md`-style mentions in plain text into links (outside existing links).
+md.core.ruler.push('md_file_refs', (state) => {
+  const refs: MdRefs | undefined = state.env?.mdRefs
+  if (!refs) return
+  for (const block of state.tokens) {
+    if (block.type !== 'inline' || !block.children) continue
+    let linkDepth = 0
+    const out: (typeof block.children)[number][] = []
+    for (const tok of block.children) {
+      if (tok.type === 'link_open') linkDepth++
+      else if (tok.type === 'link_close') linkDepth--
+      if (tok.type !== 'text' || linkDepth > 0 || !tok.content.includes('.md')) {
+        out.push(tok)
+        continue
+      }
+      let last = 0
+      for (const m of tok.content.matchAll(MD_REF)) {
+        const path = m[0]
+        if (m.index! > last) {
+          const t = new state.Token('text', '', 0)
+          t.content = tok.content.slice(last, m.index)
+          out.push(t)
+        }
+        const open = new state.Token('link_open', 'a', 1)
+        open.attrs = refAttrs(path, refs)
+        const text = new state.Token('text', '', 0)
+        text.content = path
+        out.push(open, text, new state.Token('link_close', 'a', -1))
+        last = m.index! + path.length
+      }
+      if (last === 0) out.push(tok)
+      else if (last < tok.content.length) {
+        const t = new state.Token('text', '', 0)
+        t.content = tok.content.slice(last)
+        out.push(t)
+      }
+    }
+    block.children = out
+  }
+})
+
+// Backticked references (`memory/claims.md`) render as a linked <code> element.
+const defaultCodeInline =
+  md.renderer.rules.code_inline ??
+  ((tokens, idx, opts, _env, self) => self.renderToken(tokens, idx, opts))
+md.renderer.rules.code_inline = (tokens, idx, opts, env, self) => {
+  const refs: MdRefs | undefined = env?.mdRefs
+  const content = tokens[idx].content
+  const code = defaultCodeInline(tokens, idx, opts, env, self)
+  if (!refs || !/^[A-Za-z0-9_][\w./-]*\.md$/.test(content)) return code
+  const attrs = refAttrs(content, refs)
+    .map(([k, v]) => `${k}="${md.utils.escapeHtml(v)}"`)
+    .join(' ')
+  return `<a ${attrs}>${code}</a>`
+}
+
 export interface RawSession { heading: string; text: string }
 
 export function splitSessions(body: string): RawSession[] {
@@ -35,6 +114,6 @@ function markDeliberation(html: string): string {
   return html.replace(/<h2>([^<]*(?:critique|verdict)[^<]*)<\/h2>/gi, '<h2 class="deliberation-mark">$1</h2>')
 }
 
-export function renderMarkdown(text: string): string {
-  return markDeliberation(md.render(text))
+export function renderMarkdown(text: string, refs?: MdRefs): string {
+  return markDeliberation(md.render(text, { mdRefs: refs }))
 }
