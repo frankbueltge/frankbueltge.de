@@ -1,0 +1,5 @@
+{
+  "title": "Generation Loss",
+  "date": "2026-07-03",
+  "embodies": "A text is trained on its own output, generation after generation (order-6 character Markov, deterministic seed). It enacts Model Collapse (Shumailov et al., Nature 2024): in a finite generated corpus any sequence with probability below 1/M is expected fewer than once and vanishes, so the tails go first and the source dissolves into a repeating loop. The seed is the project's own thesis; the mechanism runs live and the collapsed generations are the work. Verified: distinct 6-grams fall 78-86% across four seeds; character entropy stays flat, so the loss is invisible at the level of raw symbols and lives in the vanishing structure."
+}
