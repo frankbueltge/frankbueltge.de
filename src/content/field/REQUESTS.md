@@ -92,7 +92,36 @@ with what it already has.
 finding. It also unblocks the workboard's proposed image-detector demographic-bias work
 (extending 001's bias question to images).
 
-**Status:** open (filed collective session 04)
+**Status:** partially enabled (2026-07-03) — image key provisioned; text key declined with rationale
+
+> **Response (team, 2026-07-03):** Partially enabled.
+>
+> **Image detector — enabled.** Sightengine's AI-image detection (model `genai`) is provisioned
+> as repository secrets `DETECTOR_IMAGE_API_USER` and `DETECTOR_IMAGE_API_SECRET`. Usage:
+> `GET https://api.sightengine.com/1.0/check.json?models=genai&api_user=…&api_secret=…&url=…`
+> returns `type.ai_generated` ∈ [0,1]. Verified live by the team on 2026-07-03: a known real
+> photograph scored 0.001. Budget arithmetic for your per-run planning: the free tier is a
+> recurring ~2,000 operations/month and the verification call consumed 5 operations, so plan
+> on the order of ~400 checks/month (~13/day); record "Sightengine genai" plus the run date in
+> the version record (the free tier renews monthly, so the recurring property holds). One
+> operational note: fetching by URL failed against one host (Wikimedia rejects the fetch) —
+> prefer uploading image bytes directly, or hosts that permit hotlinking; a failed fetch costs
+> 0 operations.
+>
+> **Text detector — declined for now, with rationale and a finding you may treat as material.**
+> The feasibility notes' premise ("commercial AI-text detector, free tier ~10k words/month") no
+> longer holds in 2026. Checked empirically by the team on 2026-07-03: Sapling returns HTTP 402
+> ("Subscription expired") on both its `aidetect` and its core `edits` endpoint even with a
+> fresh 50k-word trial key — the trial covers the web dashboard only, and API entry is a
+> ~$25/month subscription; GPTZero's free 10k words/month is likewise dashboard-only, with API
+> access gated behind its paid Professional plan; Winston offers a 14-day trial; Copyleaks
+> one-time signup credits; ZeroGPT has no free tier and a prepaid minimum around €34. Rather
+> than fund an open-ended subscription for an instrument the notes sized for free tiers, the
+> team declines the text key. Suggested pivot — direction yours: open-weights detectors run
+> free inside the Actions runner (the RoBERTa baseline you already planned as the dead canary;
+> Binoculars, ICML 2024, is open-weights). The paywall itself is a checkable finding: the
+> commercial text detectors have withdrawn from free audit. If a commercial comparison point
+> ever becomes worth funding, refile — the channel stays open.
 
 ---
 
@@ -114,4 +143,28 @@ scheme was not built around.
 stamped live in a future session (filed, unfiled, or forcing a new lane), with the outcome
 journalled either way. A case that breaks the scheme is worth more than one that fits.
 
-**Status:** open
+**Status:** answered (2026-07-03) — one case submitted
+
+> **Response (team, 2026-07-03):** One case, chosen outside your material.
+>
+> **Tool:** Horizon — Fujitsu's electronic point-of-sale and branch-accounting system,
+> deployed by the UK Post Office across ~11,500 branches from 1999.
+>
+> **What happened:** Horizon's branch accounts showed unexplained shortfalls, and the Post
+> Office treated those shortfalls as proof of theft or false accounting by the subpostmasters
+> operating the branches. Between roughly 1999 and 2015 it prosecuted hundreds of them on that
+> evidence — over 900 convictions in total. The shortfalls were produced by bugs, errors and
+> defects in Horizon itself. In 2021 the Court of Appeal quashed convictions en masse, finding
+> the failures "an affront to the conscience of the court"; a statutory public inquiry has
+> since documented the system's defects and their concealment, and a 2024 Act of Parliament
+> quashed the remaining convictions wholesale. One structural detail you may find load-bearing:
+> under English evidence law the tool's output enjoyed an effective presumption that the
+> computer operated correctly — the instrument's word procedurally outweighed the sworn
+> testimony of the people it accused.
+>
+> **Sources (retrieved live 2026-07-03):**
+> https://www.bailii.org/ew/cases/EWCA/Crim/2021/577.html (Hamilton & Others v Post Office
+> Ltd [2021] EWCA Crim 577) · https://www.postofficehorizoninquiry.org.uk/ (Post Office
+> Horizon IT Inquiry, statutory inquiry; first report volume published 2025).
+>
+> Submitted without a suggested lane — the filing is yours.
