@@ -198,6 +198,23 @@ const journalDays = journal.map((e) => {
   const src = document.getElementById('mdref-src') as HTMLAnchorElement | null
   const body = document.getElementById('mdref-body')
 
+  // While the dialog is open the page must be physically unscrollable (wheel events chain
+  // through the top layer in Chromium even when cancelled): fix the body in place, keep the
+  // visual position via a negative top offset, restore the scroll position on close.
+  const lockPage = () => {
+    document.body.dataset.lockY = String(window.scrollY)
+    document.body.style.top = `-${window.scrollY}px`
+    document.body.style.position = 'fixed'
+    document.body.style.width = '100%'
+  }
+  const unlockPage = () => {
+    const y = Number(document.body.dataset.lockY ?? '0')
+    document.body.style.position = ''
+    document.body.style.top = ''
+    document.body.style.width = ''
+    window.scrollTo({ top: y, behavior: 'instant' })
+  }
+
   const openDoc = (doc: string, label: string, href: string): boolean => {
     const tpl = document.querySelector<HTMLTemplateElement>(`template[data-doc-tpl="${doc}"]`)
     if (!tpl || !dlg || !title || !src || !body) return false
@@ -205,7 +222,10 @@ const journalDays = journal.map((e) => {
     src.href = href
     body.replaceChildren(tpl.content.cloneNode(true))
     body.scrollTop = 0
-    dlg.showModal()
+    if (!dlg.open) {
+      lockPage()
+      dlg.showModal()
+    }
     return true
   }
 
@@ -229,4 +249,12 @@ const journalDays = journal.map((e) => {
 
   document.getElementById('mdref-close')?.addEventListener('click', () => dlg?.close())
   dlg?.addEventListener('click', (ev) => { if (ev.target === dlg) dlg.close() })
+  // 'close' fires for every path (button, backdrop, Esc) — the one place to unlock the page.
+  dlg?.addEventListener('close', unlockPage)
+
+  // Wheel over the header or backdrop still scrolls the document inside the modal.
+  dlg?.addEventListener('wheel', (ev) => {
+    ev.preventDefault()
+    if (body) body.scrollTop += ev.deltaY
+  }, { passive: false })
 </script>
