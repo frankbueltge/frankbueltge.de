@@ -58,3 +58,38 @@ describe('renderMarkdown', () => {
     expect(html).toContain('<a href="http://example.com"')
   })
 })
+
+describe('renderMarkdown with mdRefs', () => {
+  const refs = { repo: 'https://github.com/frankbueltge/field-research', docs: new Set(['requests', 'field']) }
+
+  it('links bare .md mentions to the repo, never to Moldovan domains', () => {
+    const html = renderMarkdown('Read on arrival: WORKBOARD.md, then memory/claims.md.', refs)
+    expect(html).toContain('href="https://github.com/frankbueltge/field-research/blob/main/WORKBOARD.md"')
+    expect(html).toContain('href="https://github.com/frankbueltge/field-research/blob/main/memory/claims.md"')
+    expect(html).not.toContain('http://WORKBOARD.md')
+    expect(html).toContain(', then ') // surrounding text survives the token split
+  })
+  it('marks root docs that exist as baked templates with data-doc', () => {
+    const html = renderMarkdown('REQUESTS.md and WORKBOARD.md', refs)
+    expect(html).toContain('data-doc="requests"')
+    expect(html).not.toContain('data-doc="workboard"') // not in the docs set
+  })
+  it('does not let path references shadow root docs (memory/REQUESTS.md gets no data-doc)', () => {
+    const html = renderMarkdown('see memory/REQUESTS.md', refs)
+    expect(html).toContain('/blob/main/memory/REQUESTS.md')
+    expect(html).not.toContain('data-doc')
+  })
+  it('wraps backticked references in a link around the code element', () => {
+    const html = renderMarkdown('per `notes/2026-07-02-feasibility.md` and `FIELD.md`', refs)
+    expect(html).toContain('<a href="https://github.com/frankbueltge/field-research/blob/main/notes/2026-07-02-feasibility.md"')
+    expect(html).toContain('><code>notes/2026-07-02-feasibility.md</code></a>')
+    expect(html).toContain('data-doc="field"')
+  })
+  it('leaves ordinary code spans and existing links untouched', () => {
+    const html = renderMarkdown('run `npm test`, see [x](https://example.com/REQUESTS.md)', refs)
+    expect(html).toContain('<code>npm test</code>')
+    expect(html).not.toContain('<a href="https://github.com/frankbueltge/field-research/blob/main/x')
+    const links = html.match(/<a /g) ?? []
+    expect(links).toHaveLength(1) // only the explicit markdown link
+  })
+})

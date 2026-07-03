@@ -30,6 +30,7 @@ export interface EngineConfig {
     teamChannel: string
     worksSectionH: string
     openWork: string
+    close: string
   }
 }
 
@@ -49,11 +50,18 @@ const mdWorks = all.filter((e) => e.id.startsWith('works/')).sort((a, b) => b.id
 
 const mdWorksR = await Promise.all(mdWorks.map(async (e) => ({ id: e.id, Content: (await render(e)).Content })))
 
+// Root docs (REQUESTS.md, PROTOCOL.md, …) the journals cite constantly: baked into the page
+// as hidden templates so citations open in a modal — build-time only, no runtime fetch
+// (Git is the archive; the site stays static). Everything else cited links to the repo.
+const rootDocs = all.filter((e) => !e.id.includes('/'))
+const rootDocsR = await Promise.all(rootDocs.map(async (e) => ({ id: e.id, Content: (await render(e)).Content })))
+const mdRefs = { repo: config.repo, docs: new Set(rootDocs.map((e) => e.id)) }
+
 const dayLabel = (id: string) => id.replace('journal/', '').replace(/\.md$/, '')
 
 const journalDays = journal.map((e) => {
   const sessions = splitSessions(e.body ?? '')
-    .map((s) => ({ ...s, ...sessionMeta(s.text), html: renderMarkdown(s.text) }))
+    .map((s) => ({ ...s, ...sessionMeta(s.text), html: renderMarkdown(s.text, mdRefs) }))
     .reverse() // file order is chronological; display newest session first
   return { id: e.id, sessions }
 })
@@ -168,4 +176,57 @@ const journalDays = journal.map((e) => {
       </div>
     ))}
   </section>
+
+  {/* Doc modal — journal citations of the engine's root docs open in place. The anchors still
+      point at the repo (blob/main/…), so without JS every citation remains a working link. */}
+  <dialog id="mdref-modal" class="m-auto w-[min(760px,92vw)] rounded-[16px] border border-line bg-panel p-0 text-fg shadow-xl">
+    <div class="flex items-center justify-between gap-3 border-b border-line px-5 py-3">
+      <span id="mdref-title" class="font-mono text-xs text-fg-muted"></span>
+      <div class="flex items-center gap-4">
+        <a id="mdref-src" href={config.repo} target="_blank" rel="noreferrer" class="font-mono text-[11px] text-fg-faint underline transition-colors hover:text-fg">{txt.sourceCode} ↗</a>
+        <button id="mdref-close" type="button" aria-label={txt.close} class="cursor-pointer font-mono text-sm text-fg-faint transition-colors hover:text-fg">✕</button>
+      </div>
+    </div>
+    <div id="mdref-body" class="engine-prose max-h-[70vh] overflow-y-auto px-5 py-4"></div>
+  </dialog>
+  {rootDocsR.map(({ id, Content }) => <template data-doc-tpl={id}><Content /></template>)}
 </div>
+
+<script>
+  const dlg = document.getElementById('mdref-modal') as HTMLDialogElement | null
+  const title = document.getElementById('mdref-title')
+  const src = document.getElementById('mdref-src') as HTMLAnchorElement | null
+  const body = document.getElementById('mdref-body')
+
+  const openDoc = (doc: string, label: string, href: string): boolean => {
+    const tpl = document.querySelector<HTMLTemplateElement>(`template[data-doc-tpl="${doc}"]`)
+    if (!tpl || !dlg || !title || !src || !body) return false
+    title.textContent = label
+    src.href = href
+    body.replaceChildren(tpl.content.cloneNode(true))
+    body.scrollTop = 0
+    dlg.showModal()
+    return true
+  }
+
+  document.addEventListener('click', (ev) => {
+    const a = (ev.target as Element).closest?.('a')
+    if (!a) return
+    // Journal citations carry data-doc; relative .md links inside an opened doc resolve too.
+    let doc = a.dataset.doc
+    let label = a.dataset.mdref
+    let href = a.href
+    if (!doc && dlg?.open && body?.contains(a)) {
+      const m = a.getAttribute('href')?.match(/^\.?\/?([\w-]+)\.md$/)
+      if (m) {
+        doc = m[1].toLowerCase()
+        label = `${m[1]}.md`
+        href = src?.href.replace(/\/[^/]+$/, `/${m[1]}.md`) ?? href
+      }
+    }
+    if (doc && openDoc(doc, label ?? `${doc}.md`, href)) ev.preventDefault()
+  })
+
+  document.getElementById('mdref-close')?.addEventListener('click', () => dlg?.close())
+  dlg?.addEventListener('click', (ev) => { if (ev.target === dlg) dlg.close() })
+</script>
