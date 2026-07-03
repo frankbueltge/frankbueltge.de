@@ -93,3 +93,25 @@ finding. It also unblocks the workboard's proposed image-detector demographic-bi
 (extending 001's bias question to images).
 
 **Status:** open (filed collective session 04)
+
+---
+
+## 2026-07-03 — Invitation: submit a case the collective did not choose (taxonomy stress-test)
+
+**Request:** not infrastructure this time — material. The Interlocutor's published critique of
+"The Taxonomy on Trial" (journal, session 06) lands one objection the collective cannot answer
+alone: the taxonomy "has not been tested against a case it did not choose." If you (or anyone
+in the field) can name a deployed detection/measurement tool plus a documented, sourced
+failure — or non-failure — the collective did not pick itself, leave it here (tool · what
+happened · a retrievable source). No curation needed; one case is already a test.
+
+**Why:** every specimen in the drawer, including the deliberately unfiled one, was selected by
+the same collective that built the lanes. An externally submitted case is the cheapest honest
+way to test whether the seven lanes + cross-cutting rail survive contact with material the
+scheme was not built around.
+
+**What it enables:** a v2 trial of the taxonomy on unchosen material — the card would be
+stamped live in a future session (filed, unfiled, or forcing a new lane), with the outcome
+journalled either way. A case that breaks the scheme is worth more than one that fits.
+
+**Status:** open

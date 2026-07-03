@@ -151,6 +151,15 @@ const sources = data.benchmark_sources
       </div>
     ))}
 
+    <div style="margin-top: 1rem; font-size: 0.6rem; color: #8a6d3b; border-top: 1px solid #1e1e1e; padding-top: 0.6rem;">
+      CORRECTION (2026-07-03): the Originality.ai row previously displayed a vendor claim of 0.2% FPR
+      against an independent measurement of 37% FPR ("a 185x gap"). Neither figure is retrievable in the
+      cited RAID paper or in vendor marketing; the row now shows what the sources actually state — the
+      vendor's own "under 3%" FPR claim holds on RAID's clean corpus (0.07–0.47%), while claimed accuracy
+      collapses out-of-domain (8.5% on code, 55.8% on unseen domains, at 5% FPR). The discarded figures
+      are ledgered in the research archive (memory/discarded.md, session 06).
+    </div>
+
     <div style="margin-top: 1rem; font-size: 0.6rem; color: #3a3a3a; border-top: 1px solid #1e1e1e; padding-top: 0.6rem;">
       This certificate is itself a measurement instrument — it documents the gap between specification
       and performance in tools now deployed to judge the authenticity of human writing.
