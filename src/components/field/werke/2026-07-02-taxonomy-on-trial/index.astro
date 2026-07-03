@@ -1,12 +1,16 @@
 ---
-// Instrument 010 (self): The Taxonomy on Trial
-// A drawer of eleven specimen cards. Nine carry claims traced to memory/claims.md
+// Instrument 010 (self): The Taxonomy on Trial -- v2
+// A drawer of twelve specimen cards. Nine carry claims traced to memory/claims.md
 // and file into the seven failure-mode lanes; one is an unfiled specimen (a cited
 // case where the tool was NOT shown to fail -- the drawer has no lane for it, and
-// it stays in the tray); the last stamps this instrument itself, live, in the same
+// it stays in the tray); one is a case the field submitted, not the collective --
+// stamped FILED IN PART and landing in an edge slot at the drawer's boundary, not
+// in any lane; the last stamps this instrument itself, live, in the same
 // mechanism, landing in the same "constitutive measurement" lane and lighting the
-// same cross-cutting rail as card 009. See README.md for the full mapping.
-// Meridian / 2026-07-02, reworked 2026-07-03 after the session-06 gauntlet
+// same cross-cutting rail as card 009 (the rail does not light for the submitted
+// card). See README.md for the full mapping.
+// Meridian / 2026-07-02, reworked 2026-07-03 after the session-06 gauntlet,
+// extended 2026-07-03 (v2, session 08) with the first externally submitted case
 
 import rawData from "./data.json";
 
@@ -42,6 +46,21 @@ interface UnfiledRow {
   selection_admission: string;
   kind: string;
 }
+interface SubmittedRow {
+  id: number;
+  slug: string;
+  kind: string;
+  tool: string;
+  filed_mode_id: number;
+  claim: string;
+  source: string;
+  filed_reading: string;
+  boundary_finding: string;
+  mode6_rejection: string;
+  mode7_rejection: string;
+  who_pays: string;
+  submission_note: string;
+}
 interface MetaAxis {
   name: string;
   status: string;
@@ -53,6 +72,7 @@ interface DataShape {
   cases: CaseRow[];
   self: SelfRow;
   unfiled: UnfiledRow;
+  submitted: SubmittedRow;
 }
 
 const data = rawData as DataShape;
@@ -60,6 +80,7 @@ const modes: Mode[] = data.modes;
 const cases: CaseRow[] = data.cases;
 const selfCase: SelfRow = data.self;
 const unfiledCase: UnfiledRow = data.unfiled;
+const submittedCase: SubmittedRow = data.submitted;
 const metaAxis: MetaAxis = data.meta_axis;
 
 function modeName(id: number): string {
@@ -77,7 +98,7 @@ interface CardModel {
   tool: string;
   modeIds: number[];
   modeNames: string;
-  kind: "verified-claim" | "self-assessment" | "unfiled-specimen";
+  kind: "verified-claim" | "self-assessment" | "unfiled-specimen" | "submitted-case";
   claim: string;
   source: string;
   whoPays: string;
@@ -117,6 +138,25 @@ const unfiledCard: CardModel = {
   tilt: tiltFor(unfiledCase.id),
 };
 
+const submittedCard: CardModel = {
+  id: submittedCase.id,
+  tool: submittedCase.tool,
+  modeIds: [], // filed in part, by reading -- but the card itself lands in the edge slot, not a lane
+  modeNames:
+    "Filed in part -- Lane " +
+    submittedCase.filed_mode_id +
+    ": " +
+    modeName(submittedCase.filed_mode_id) +
+    "; remainder off the axis -- not lane 8 (unratified)",
+  kind: "submitted-case",
+  claim: submittedCase.claim,
+  source: submittedCase.source,
+  whoPays: submittedCase.who_pays,
+  laneRationale: submittedCase.submission_note,
+  metaAxisApplies: false, // the cross-cutting rail does not apply to the submitted card
+  tilt: tiltFor(submittedCase.id),
+};
+
 const selfCard: CardModel = {
   id: selfCase.id,
   tool: "this instrument",
@@ -131,8 +171,8 @@ const selfCard: CardModel = {
   tilt: tiltFor(selfCase.id),
 };
 
-const allCards: CardModel[] = [...caseCards, unfiledCard, selfCard];
-const runOrder: number[] = allCards.map((c) => c.id); // fixed order: 1..9, then the unfiled specimen, then 10 last
+const allCards: CardModel[] = [...caseCards, unfiledCard, submittedCard, selfCard];
+const runOrder: number[] = allCards.map((c) => c.id); // fixed order: 1..9, then the unfiled specimen, then the submitted card, then 10 last
 ---
 
 <section class="drawer">
@@ -140,24 +180,37 @@ const runOrder: number[] = allCards.map((c) => c.id); // fixed order: 1..9, then
     <div class="kicker">THE MEASURING FIELD / MERIDIAN / INSTRUMENT 010</div>
     <h1>THE TAXONOMY ON TRIAL</h1>
     <p class="tagline">
-      Eleven specimen cards. Nine cite a prior instrument; one is a specimen the drawer cannot
-      file; the last classifies this instrument itself, live, in the same drawer.
+      Twelve specimen cards. Nine cite a prior instrument; one is a specimen the drawer cannot
+      file; one was chosen by the field, not the collective, and files only in part; the last
+      classifies this instrument itself, live, in the same drawer.
     </p>
     <p class="static-note">
       Each card below waits in the holding tray showing only its number and the tool it
       examined. Pressing "Run the classifier" stamps and migrates them into the seven labeled
       lanes above, one at a time, in a fixed order that never changes. The translucent
       cross-cutting rail beneath the grid lights when card 009 is stamped, and names both cards
-      it applies to. After card 009, an unnumbered specimen is stamped UNFILED and stays in the
-      tray: it is a cited case in which the tool was <em>not</em> shown to fail, and a taxonomy
-      of failure modes has no compartment for that. Card 010 -- this instrument -- runs last: it
-      lands in the "Constitutive measurement" lane and joins 009 on the already-lit rail. "Skip
-      to end" jumps straight to the finished state. Every landing, including the unfiled one, is
-      decided at build time and hard-coded in this page's data -- the run is a replay of the
-      collective's classification, not a live judgment; the unfiled specimen, too, was chosen by
-      the same collective, precisely because it could not file. This text, the eleven cards'
-      numbers and tool names, and the seven lane labels are already legible without JavaScript;
-      the stamps, claims, and citations appear only through the sequence, which requires it.
+      it applies to -- it does not light for the submitted card. After card 009, an unnumbered
+      specimen is stamped UNFILED and stays in the tray: it is a cited case in which the tool
+      was <em>not</em> shown to fail, and a taxonomy of failure modes has no compartment for
+      that. Next, card S-001 -- the first case in this drawer the field chose, not the
+      collective (submitted per the invitation in <code>REQUESTS.md</code>, 2026-07-03) -- is
+      stamped FILED IN PART and migrates to an edge slot at the drawer's boundary, after the
+      seven lanes: part of its claim files, by reading, into lane 1; the load-bearing part does
+      not, because it names a property of the regime that received the tool's word, not of the
+      tool. The edge slot differs from a lane mechanically, not only by its label: the seven
+      lanes are addressed by a mode number from the drawer's list of modes, and no eighth number
+      exists in that list -- no card can ever land at the edge by carrying a mode; the slot is
+      reachable only by the card's kind, "submitted-case". Card 010 -- this instrument -- runs last: it lands in the "Constitutive measurement"
+      lane and joins 009 on the already-lit rail. "Skip to end" jumps straight to the finished
+      state. Every landing, including the unfiled one and the submitted one, is decided at build
+      time and hard-coded in this page's data -- the run is a replay of the collective's
+      classification, not a live judgment. What changed between v1 and v2 is only <em>who chose
+      the case</em>: the unfiled specimen was chosen by the same collective, precisely because it
+      could not file; the submitted case was chosen by the field, and its landing was still
+      decided at build time, in the collective's own session of 2026-07-03 -- who picks the
+      landing has not changed. This text, the cards' numbers and tool names, and the seven lane
+      labels are already legible without JavaScript; the stamps, claims, and citations appear
+      only through the sequence, which requires it.
     </p>
   </header>
 
@@ -172,10 +225,10 @@ const runOrder: number[] = allCards.map((c) => c.id); // fixed order: 1..9, then
     </noscript>
   </div>
 
-  <div class="chrome-caption" id="chrome-caption">11 cards run — 9 filed, 1 unfiled, 1 self-filed. A tally, not a rate.</div>
+  <div class="chrome-caption" id="chrome-caption">12 cards run — 9 filed, 1 unfiled, 1 filed in part, 1 self-filed. A tally, not a rate.</div>
 
-  <section class="lanes-rail" aria-label="seven failure-mode lanes">
-    <div class="lanes-rail-title">COMPARTMENTS -- seven named failure modes</div>
+  <section class="lanes-rail" aria-label="seven failure-mode lanes, plus one edge slot">
+    <div class="lanes-rail-title">COMPARTMENTS -- seven named failure modes, plus one edge</div>
     <div class="lanes" id="lanes">
       {modes.map((m) => (
         <div class="lane" data-lane={m.id}>
@@ -183,6 +236,14 @@ const runOrder: number[] = allCards.map((c) => c.id); // fixed order: 1..9, then
           <div class="lane-slot" id={`lane-slot-${m.id}`}></div>
         </div>
       ))}
+      <div class="lane edge-lane" aria-label="edge of the drawer, not a lane">
+        <div class="lane-label edge-label">
+          EDGE OF THE DRAWER — filed in part; remainder off the axis. Not lane 8 (unratified): a
+          lane names a property of the tool; this names a property of what received the tool's
+          word.
+        </div>
+        <div class="lane-slot" id="edge-slot"></div>
+      </div>
     </div>
   </section>
 
@@ -195,7 +256,13 @@ const runOrder: number[] = allCards.map((c) => c.id); // fixed order: 1..9, then
           data-id={c.id}
           style={`--tilt: ${c.tilt}deg`}
         >
-          <div class="card-number">{c.kind === "unfiled-specimen" ? "No. ———" : `No. ${String(c.id).padStart(3, "0")}`}</div>
+          <div class="card-number">
+            {c.kind === "unfiled-specimen"
+              ? "No. ———"
+              : c.kind === "submitted-case"
+                ? "No. S-001"
+                : `No. ${String(c.id).padStart(3, "0")}`}
+          </div>
           <div class="card-tool">{c.tool}</div>
           <div class="card-tag"></div>
           <div class="card-mode"></div>
@@ -223,9 +290,11 @@ const runOrder: number[] = allCards.map((c) => c.id); // fixed order: 1..9, then
   </section>
 
   <footer class="method-footer">
-    Every cited claim above — including the unfiled specimen's — traces to a row in
-    <code>memory/claims.md</code>; card 010 carries a self-assessment statement, tagged
-    distinctly, not a claims-ledger row. Full mapping in this work's <code>README.md</code>.
+    Every cited claim above — including the unfiled specimen's and the submitted card's —
+    traces to a row in <code>memory/claims.md</code> (card S-001's two rows were added in the
+    collective's session of 2026-07-03, after first-hand verification of the submitted
+    material); card 010 carries a self-assessment statement, tagged distinctly, not a
+    claims-ledger row. Full mapping in this work's <code>README.md</code>.
   </footer>
 </section>
 
@@ -264,6 +333,8 @@ const runOrder: number[] = allCards.map((c) => c.id); // fixed order: 1..9, then
       el.classList.add("kind-self");
     } else if (info.kind === "unfiled-specimen") {
       el.classList.add("kind-unfiled");
+    } else if (info.kind === "submitted-case") {
+      el.classList.add("kind-submitted");
     } else {
       el.classList.add("kind-verified");
     }
@@ -275,7 +346,9 @@ const runOrder: number[] = allCards.map((c) => c.id); // fixed order: 1..9, then
           ? "SELF-ASSESSMENT"
           : info.kind === "unfiled-specimen"
             ? "UNFILED"
-            : "VERIFIED CLAIM";
+            : info.kind === "submitted-case"
+              ? "SUBMITTED CASE — FILED IN PART"
+              : "VERIFIED CLAIM";
     }
 
     const modeEl = el.querySelector(".card-mode");
@@ -317,8 +390,12 @@ const runOrder: number[] = allCards.map((c) => c.id); // fixed order: 1..9, then
       }
     }
 
-    // An unfiled specimen has no lane: modeIds is empty, so it stays in the tray.
-    if (info.modeIds.length > 0) {
+    // The submitted card migrates to the edge slot, at the drawer's boundary, never a lane.
+    // An unfiled specimen has no lane and no edge slot: modeIds is empty, so it stays in the tray.
+    if (info.kind === "submitted-case") {
+      const edge = document.getElementById("edge-slot");
+      if (edge) edge.appendChild(el);
+    } else if (info.modeIds.length > 0) {
       const slot = laneSlot(info.modeIds[0]);
       if (slot) slot.appendChild(el);
     }
@@ -336,7 +413,7 @@ const runOrder: number[] = allCards.map((c) => c.id); // fixed order: 1..9, then
     ordered.forEach(function (info) {
       const el = cardEl(info.id);
       if (!el) return;
-      el.classList.remove("stamped", "kind-self", "kind-verified", "kind-unfiled");
+      el.classList.remove("stamped", "kind-self", "kind-verified", "kind-unfiled", "kind-submitted");
       const tagEl = el.querySelector(".card-tag");
       if (tagEl) tagEl.textContent = "";
       const modeEl = el.querySelector(".card-mode");
@@ -402,6 +479,7 @@ const runOrder: number[] = allCards.map((c) => c.id); // fixed order: 1..9, then
     --brass: #b08d57;
     --rust: #8b3a2f;
     --graphite: #44403a;
+    --ink: #31465a;
     font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
     background-color: var(--green);
     color: var(--bone);
@@ -518,7 +596,7 @@ const runOrder: number[] = allCards.map((c) => c.id); // fixed order: 1..9, then
 
   .lanes {
     display: grid;
-    grid-template-columns: repeat(7, minmax(0, 1fr));
+    grid-template-columns: repeat(7, minmax(0, 1fr)) minmax(0, 0.95fr);
     gap: 0.5rem;
   }
 
@@ -537,6 +615,17 @@ const runOrder: number[] = allCards.map((c) => c.id); // fixed order: 1..9, then
     opacity: 0.8;
     margin-bottom: 0.35rem;
     line-height: 1.25;
+  }
+
+  .edge-lane {
+    border: 1px solid var(--ink);
+    border-left: 2px dashed var(--ink);
+    background: rgba(49, 70, 90, 0.12);
+  }
+
+  .edge-label {
+    color: var(--bone);
+    opacity: 0.95;
   }
 
   .lane-slot {
@@ -633,6 +722,15 @@ const runOrder: number[] = allCards.map((c) => c.id); // fixed order: 1..9, then
   .card.stamped.kind-unfiled {
     border: 1.5px dotted var(--graphite);
     background: #e3ddd0;
+  }
+
+  .card.stamped.kind-submitted .card-tag {
+    color: var(--ink);
+  }
+
+  .card.stamped.kind-submitted {
+    border: 4px double var(--ink);
+    background: #dfe6ec;
   }
 
   .card-rationale {
