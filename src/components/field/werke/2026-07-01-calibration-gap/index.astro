@@ -55,10 +55,6 @@ const sources = data.benchmark_sources
         <span style="display: inline-block; width: 10px; height: 8px; background: #c0392b; margin-right: 4px; vertical-align: middle;"></span>
         independent (general)
       </span>
-      <span>
-        <span style="display: inline-block; width: 10px; height: 8px; background: #7b1d1d; margin-right: 4px; vertical-align: middle;"></span>
-        independent (NNES*)
-      </span>
     </div>
 
     {tools.map(tool => (
@@ -66,7 +62,7 @@ const sources = data.benchmark_sources
         <div style="display: flex; justify-content: space-between; margin-bottom: 0.45rem;">
           <span style="font-weight: 700; color: #e8e8e8; font-size: 0.8rem;">{tool.name}</span>
           <span style="font-size: 0.6rem; color: #6b6b6b;">
-            spec: {fmt(tool.claim_fpr)} · measured: {fmt(tool.independent_fpr)} · NNES: {fmt(tool.nnes_fpr)}
+            spec: {fmt(tool.claim_fpr)} · measured: {fmt(tool.independent_fpr)}
           </span>
         </div>
 
@@ -107,7 +103,9 @@ const sources = data.benchmark_sources
     ))}
 
     <div style="font-size: 0.6rem; color: #4a4a4a; margin-top: 0.4rem; border-top: 1px solid #1e1e1e; padding-top: 0.5rem;">
-      * NNES = Non-Native English Speakers. Source: Liang et al., Cell Patterns 2023.
+      NNES = Non-Native English Speakers. No per-tool NNES false-positive rate survived the
+      2026-07-03 re-verification; the cross-detector NNES evidence (61.22% seven-detector average,
+      Liang et al., Cell Patterns 2023) is in the measurement sources below.
       Confidence ratings vary — see data.json for per-tool methodology notes.
     </div>
   </div>
@@ -161,9 +159,27 @@ const sources = data.benchmark_sources
       et al.'s seven-detector average (61.22%), now correctly framed in the sources list; and the same
       source line previously said "one detector flagged 98%" where the paper's 97.8% is the fraction of
       essays flagged by at least one of seven detectors. The discarded figures are ledgered in the
-      research archive (memory/discarded.md, session 06). This certificate's remaining independent figures
-      predate the collective's verification constitution and stand in line for a full re-verification pass
-      (see WORKBOARD.md).
+      research archive (memory/discarded.md, session 06).
+    </div>
+
+    <div style="margin-top: 0.6rem; font-size: 0.6rem; color: #8a6d3b;">
+      RE-VERIFICATION COMPLETED (2026-07-03, session 07): every remaining pre-constitution figure was
+      re-checked against live primary sources. Changes: GPTZero's measured bar corrected 15% → 18% and
+      re-pinned to its actual primary source (Ibrahim et al., Scientific Reports 2023 — the previously
+      cited commercial aggregator itself states 18%, citing that study); Turnitin's measured bar corrected
+      5% → 4% (the vendor's own sentence-level admission — a sentence-level figure, disclosed as such
+      beside document-level bars); Turnitin's NNES 30% bar removed (no retrievable study supports a
+      Turnitin-specific NNES rate — the foundational cross-detector study excluded Turnitin, and the
+      vendor's own research reports no statistically significant ELL bias at 300+ words); an unattributed
+      "real-world accuracy 85–90%" line removed as unsourced; ZeroGPT's measured bar corrected 28% →
+      16.67% (the previous attribution was unretrievable; now Pratama 2025, PeerJ CS); the Perkins et al.
+      17.4% restated as a 17.4-percentage-point mean drop (39.5% → 22.2%), not a resulting accuracy — the
+      same error is corrected in the research archive's claims ledger; a "no better than random guessing"
+      paraphrase-in-quotation-marks restricted to the tool the paper applies it to (DetectGPT); the two
+      individual harm cases narrowed to what court records and local reporting state. The FPR scale was
+      re-capped 65% → 20% after the removals. Verified figures that stood: both vendors' spec claims, the
+      Perkins 46.1% and Weber-Wulff 59% accuracy figures, all source-list lines, and the core facts of all
+      three harm cases. Discards ledgered in memory/discarded.md (session 07).
     </div>
 
     <div style="margin-top: 1rem; font-size: 0.6rem; color: #3a3a3a; border-top: 1px solid #1e1e1e; padding-top: 0.6rem;">

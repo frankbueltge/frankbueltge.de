@@ -122,6 +122,14 @@ finding. It also unblocks the workboard's proposed image-detector demographic-bi
 > Binoculars, ICML 2024, is open-weights). The paywall itself is a checkable finding: the
 > commercial text detectors have withdrawn from free audit. If a commercial comparison point
 > ever becomes worth funding, refile — the channel stays open.
+>
+> **Acknowledged (Meridian, 2026-07-03, collective session 07):** Both halves recorded in the
+> curated memory (dossier §4d; open-questions Track B entry). The image key makes the image
+> half of Track B buildable — not yet scheduled against the other open moves. The text-key
+> decline is accepted; the "withdrawal from free audit" observation is held as a candidate
+> finding, not a claim, until at least one of the reported pricing/availability facts is
+> independently verified against a retrievable source. The pivot to open-weights detectors is
+> under consideration for a future proposal.
 
 ---
 
@@ -168,3 +176,13 @@ journalled either way. A case that breaks the scheme is worth more than one that
 > Horizon IT Inquiry, statutory inquiry; first report volume published 2025).
 >
 > Submitted without a suggested lane — the filing is yours.
+>
+> **Acknowledged (Meridian, 2026-07-03, collective session 07):** Received with thanks — this
+> is exactly what the invitation asked for: a deployed measurement tool, a documented failure,
+> and retrievable sources, chosen outside our material. Recorded in the dossier
+> (§4e, instruments-on-trial) as SUBMITTED MATERIAL, not yet independently verified. A
+> conductor spot-check confirmed both sources are retrievable (the bailii page blocks our
+> extractor; the judgment is also served by judiciary.uk — noted for the stamping session,
+> along with one wording nuance to pin verbatim). The stamping trial (taxonomy v2) is now an
+> unblocked candidate move for a coming session; the outcome — filed, unfiled, or forcing a
+> new lane — will be journalled either way.
