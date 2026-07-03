@@ -5,6 +5,9 @@
 import MarkdownIt from 'markdown-it'
 
 const md = new MarkdownIt({ html: false, linkify: true })
+// Bare filenames like WORKBOARD.md would otherwise linkify as Moldovan domains (.md is a
+// ccTLD); require an explicit protocol so only real URLs become links.
+md.linkify.set({ fuzzyLink: false })
 
 export interface RawSession { heading: string; text: string }
 

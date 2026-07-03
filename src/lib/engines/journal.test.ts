@@ -47,4 +47,14 @@ describe('renderMarkdown', () => {
     const html = renderMarkdown("## Interlocutor's critique — Instrument 009\ntext")
     expect(html).toContain('class="deliberation-mark"')
   })
+  it('does not linkify bare filenames whose extension is a ccTLD (.md = Moldova)', () => {
+    const html = renderMarkdown('Read on arrival: WORKBOARD.md, REQUESTS.md and memory/claims.md.')
+    expect(html).not.toContain('<a ')
+    expect(html).toContain('WORKBOARD.md')
+  })
+  it('still links explicit URLs', () => {
+    const html = renderMarkdown('see https://www.apaf.org/library and http://example.com')
+    expect(html).toContain('<a href="https://www.apaf.org/library"')
+    expect(html).toContain('<a href="http://example.com"')
+  })
 })
