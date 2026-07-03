@@ -8,9 +8,9 @@
       "claim_accuracy": 99,
       "claim_fpr": 0.24,
       "independent_fpr": 15,
-      "nnes_fpr": 61,
+      "nnes_fpr": null,
       "confidence_independent": "medium",
-      "confidence_note": "Real-world FPR 15%: Ryne.ai, 100k+ texts (2025), via eyesift.com — commercial source, treat as indicative. NNES 61%: Liang et al., Cell Patterns 2023, peer-reviewed, high confidence.",
+      "confidence_note": "Real-world FPR 15%: Ryne.ai, 100k+ texts (2025), via eyesift.com — commercial source, treat as indicative. NNES bar removed 2026-07-03: the 61% previously shown here is Liang et al.'s SEVEN-DETECTOR AVERAGE (61.22%), not a GPTZero-specific rate; per-detector rates were not individually retrievable. The average now appears, correctly framed, in the measurement-sources list below.",
       "key_finding": "Under adversarial editing, accuracy across 7 detectors drops to 17.4% (Perkins et al., 2024). PeerJ 2025: flags 25% of NNES AI-assisted texts as 100% AI vs ~10% for native speakers."
     },
     {
@@ -53,7 +53,7 @@
       "name": "Liang et al. (2023)",
       "venue": "Cell Patterns (peer-reviewed)",
       "url": "https://arxiv.org/abs/2304.02819",
-      "finding": "Average 61.3% false positive rate on TOEFL essays; one detector flagged 98% of non-native English writing as AI-generated"
+      "finding": "Average 61.22% false positive rate across seven detectors on TOEFL essays; 89 of 91 essays (97.8%) flagged by at least one detector [corrected 2026-07-03: previously misstated as 'one detector flagged 98%' -- the 97.8% is a union statistic across all seven detectors]"
     },
     {
       "id": "dugan2024",
