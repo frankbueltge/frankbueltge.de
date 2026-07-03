@@ -115,23 +115,25 @@ export function sparkPath(values: (number | null)[], w: number, h: number, max: 
 
 import type { BeifangLeak } from './types'
 
-export function leakFindings(run: BeifangRun): { publisher: string; hard: BeifangLeak[]; firmen: string[]; hosts: string[] }[] {
-  const byPub = new Map<string, { hard: BeifangLeak[]; firmen: Set<string>; hosts: Set<string> }>()
+export function leakFindings(run: BeifangRun): { publisher: string; group: 'verlag' | 'kontrolle'; hard: BeifangLeak[]; firmen: string[]; hosts: string[] }[] {
+  const byPub = new Map<string, { group: 'verlag' | 'kontrolle'; hard: BeifangLeak[]; firmen: Set<string>; hosts: Set<string> }>()
   for (const r of usResults(run)) {
-    if (r.group !== 'verlag' || !r.leaks) continue
+    if (!r.leaks) continue
     const hard = r.leaks.filter((l) => l.signal === 'hard' && l.token === 'doi')
     if (hard.length === 0) continue
-    const row = byPub.get(r.publisher) ?? { hard: [], firmen: new Set<string>(), hosts: new Set<string>() }
+    const row = byPub.get(r.publisher) ?? { group: r.group, hard: [], firmen: new Set<string>(), hosts: new Set<string>() }
     row.hard.push(...hard)
     for (const l of hard) {
-      if (l.firma) row.firmen.add(l.firma)   // benannter Broker
-      else row.hosts.add(l.host)             // unbenannter Empfänger (z. B. content.readcube.com)
+      if (l.firma) row.firmen.add(l.firma)
+      else row.hosts.add(l.host)
     }
     byPub.set(r.publisher, row)
   }
   return [...byPub.entries()]
-    .map(([publisher, v]) => ({ publisher, hard: v.hard, firmen: [...v.firmen].sort(), hosts: [...v.hosts].sort() }))
-    .sort((a, b) => b.hard.length - a.hard.length || a.publisher.localeCompare(b.publisher))
+    .map(([publisher, v]) => ({ publisher, group: v.group, hard: v.hard, firmen: [...v.firmen].sort(), hosts: [...v.hosts].sort() }))
+    // Verlage zuerst (Hauptbefund), dann Kontrollgruppe (die Überraschung); je nach Trefferzahl.
+    .sort((a, b) => Number(a.group === 'kontrolle') - Number(b.group === 'kontrolle')
+      || b.hard.length - a.hard.length || a.publisher.localeCompare(b.publisher))
 }
 
 export function doiLeakEntities(run: BeifangRun): string[] {

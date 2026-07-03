@@ -30,8 +30,8 @@ const txt = {
     : 'Headless Chromium via Playwright, default browser profile, no interaction (no consent click, no scroll), a fixed reload window — the pre-consent state is what gets measured. Classification runs in two tiers: narrow tracker detection is the union of EasyPrivacy and the keys of the TDS "trackers" section; broad company attribution is the domain-to-company mapping from the TDS "domains"/"entities" sections, augmented with the owner data from "trackers". No match at either tier ⇒ unclassified, never guessed. Metrics captured per page: third-party hosts, requests, bytes, detected tracker hosts, attributed companies, cookies (first-/third-party).',
   s4leakLabel: de ? 'Leak-Nachweis (pre-consent):' : 'DOI leak evidence (pre-consent):',
   s4leak: de
-    ? 'Für jede erreichbare Seite wird geprüft, ob die DOI (Kennung des Artikels) den ausgehenden Drittanbieter-Requests beiliegt — im Klartext, URL-kodiert oder als md5/sha1/sha256. Ein Hash-Treffer der DOI ist fälschungssicher. Titel/Schlagwörter gelten als schwächeres Signal (ganzer Phrasenabgleich, keine Einzelwörter). Da alles vor jeder Einwilligung gemessen wird, ist ein solcher Leak zugleich ein Pre-Consent-Verstoß.'
-    : 'For every reachable page, the outgoing third-party requests are checked for whether the DOI (the article\'s identifier) rides along — in plain text, URL-encoded, or as an md5/sha1/sha256 hash. A DOI hash match is tamper-proof. Title/keywords count as a weaker signal (whole-phrase match only, never single words). Since everything is measured before any consent, such a leak is at the same time a pre-consent violation.',
+    ? 'Für jede erreichbare Seite wird geprüft, ob die DOI (Kennung des Artikels) den ausgehenden Drittanbieter-Requests beiliegt — im Klartext, URL-kodiert oder als md5/sha1/sha256. Ein Hash-Treffer der DOI ist fälschungssicher. Titel/Schlagwörter gelten als schwächeres Signal (ganzer Phrasenabgleich, keine Einzelwörter). Da alles vor jeder Einwilligung gemessen wird, ist ein solcher Leak zugleich ein Pre-Consent-Verstoß. Der Leak-Nachweis läuft auf beiden Gruppen (Verlage und Kontrolle). Der Befund ist strukturell — er folgt dem eingebundenen Fremd-Skript (z. B. Altmetric, Dimensions, Google Analytics), nicht dem Geschäftsmodell: Auch gebührenfreie Journals geben die DOI weiter, wenn sie solche Skripte einbinden.'
+    : 'For every reachable page, the outgoing third-party requests are checked for whether the DOI (the article\'s identifier) rides along — in plain text, URL-encoded, or as an md5/sha1/sha256 hash. A DOI hash match is tamper-proof. Title/keywords count as a weaker signal (whole-phrase match only, never single words). Since everything is measured before any consent, such a leak is at the same time a pre-consent violation. The leak audit runs on both groups (publishers and control). The finding is structural — it follows the embedded third-party script (e.g. Altmetric, Dimensions, Google Analytics), not the business model: even fee-free journals pass on the DOI once they embed such scripts.',
   s5: de ? '5. Grenzen der Methode' : '5. Limits of the method',
   s5items: de
     ? [
@@ -59,10 +59,12 @@ const txt = {
     ? [
         'Startfassung (2026-07-02) — Panel: Big 5 × 10 vs. 10 Diamond-OA-Kontrolle, EasyPrivacy + DuckDuckGo-TDS, US-Blickwinkel.',
         '2026-07-02: Leak-Audit ergänzt (Identitäts-Exfiltration statt reinem Tracker-Zensus).',
+        '2026-07-03: Kontrollgruppen-Leaks sichtbar; These präzisiert (der Leak folgt dem Skript, nicht dem Geschäftsmodell).',
       ]
     : [
         'First edition (2026-07-02) — panel: Big 5 × 10 vs. 10 diamond-OA control, EasyPrivacy + DuckDuckGo TDS, US vantage.',
         '2026-07-02: leak audit added (identity exfiltration instead of a pure tracker census).',
+        '2026-07-03: control-group leaks made visible; thesis sharpened (the leak follows the script, not the business model).',
       ],
   s7note: de
     ? 'Weitere Panel- bzw. Listenänderungen erscheinen hier — protokolliert im committeten panel.json (log).'

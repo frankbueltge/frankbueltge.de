@@ -139,6 +139,11 @@ const euStatusText = latest
       {/* Was die Seite über dich verrät — der Identitäts-Leak (hartes Signal: DOI) */}
       <section class="mb-12">
         <h2 class="mb-3 font-semibold">{de ? 'Was die Seite über dich verrät' : 'What the page reveals about you'}</h2>
+        <p class="mb-4 max-w-xl leading-relaxed text-fg-muted">
+          {de
+            ? 'Der Leak folgt dem eingebundenen Fremd-Skript, nicht dem Geschäftsmodell.'
+            : 'The leak follows the embedded third-party script, not the business model.'}
+        </p>
         {!auditRan ? (
           <p class="text-fg-muted">
             {de
@@ -156,7 +161,10 @@ const euStatusText = latest
             {leaks.map((f) => (
               <div>
                 <p class="leading-relaxed">
-                  <span class="font-semibold">{PUBLISHER_LABELS[f.publisher] ?? f.publisher}</span>{' '}
+                  <span class="font-semibold">{PUBLISHER_LABELS[f.publisher] ?? f.publisher}</span>
+                  {f.group === 'kontrolle' && (
+                    <span class="ml-2 rounded border border-line px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-wide text-fg-faint">{de ? 'Kontrollgruppe' : 'control group'}</span>
+                  )}{' '}
                   {f.firmen.length > 0
                     ? (de
                         ? `reicht deine DOI an ${f.firmen.join(', ')} weiter — vor jeder Einwilligung.`

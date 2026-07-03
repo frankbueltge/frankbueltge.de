@@ -140,6 +140,21 @@ describe('leakFindings/doiLeakEntities', () => {
     expect(leakFindings(r)).toEqual([])
     expect(doiLeakEntities(r)).toEqual([])
   })
+  it('führt jetzt auch Kontrollgruppen-Leaks (der Leak folgt dem Skript, nicht dem Geschäftsmodell)', () => {
+    const r = run([
+      result({ publisher: 'springer-nature', group: 'verlag', doi_leak: true,
+               leaks: [hardDoi('content.readcube.com', null)], leak_firmen: [] }),
+      result({ panel_id: 'joss-01', publisher: 'joss', group: 'kontrolle', doi_leak: true,
+               leaks: [hardDoi('api.altmetric.com', null), hardDoi('www.google-analytics.com', 'Google Analytics (Google)')],
+               leak_firmen: ['Google Analytics (Google)'] }),
+    ])
+    const f = leakFindings(r)
+    expect(f.map((x) => `${x.publisher}:${x.group}`)).toEqual(['springer-nature:verlag', 'joss:kontrolle'])
+    const joss = f.find((x) => x.publisher === 'joss')!
+    expect(joss.group).toBe('kontrolle')
+    expect(joss.firmen).toEqual(['Google Analytics (Google)'])
+    expect(joss.hosts).toEqual(['api.altmetric.com'])
+  })
 })
 
 describe('leakAuditRan', () => {
