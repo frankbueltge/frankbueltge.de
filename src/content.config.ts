@@ -140,4 +140,12 @@ const field = defineCollection({
   schema: z.object({}).loose(),
 })
 
-export const collections = { lab, protokoll, atelier, field, beifang }
+// Plenum = the third autonomous engine: the data-snack cast's weekly plenum ("Line Check").
+// Its public session minutes + concept briefs. Plain Markdown, synced nightly from the
+// data-snack-plenum repo (src/content/plenum/{journal,works}/*.md). English-language.
+const plenum = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/plenum' }),
+  schema: z.object({}).loose(),
+})
+
+export const collections = { lab, protokoll, atelier, field, plenum, beifang }
