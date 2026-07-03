@@ -39,12 +39,12 @@
       "id": "originality",
       "name": "Originality.ai Turbo",
       "claim_accuracy": 99,
-      "claim_fpr": 0.2,
-      "independent_fpr": 37,
+      "claim_fpr": 3,
+      "independent_fpr": 0.25,
       "nnes_fpr": null,
       "confidence_independent": "high",
-      "confidence_note": "FPR 37%: RAID benchmark (Dugan et al., ACL 2024), largest and most rigorous published benchmark. Accuracy 80%: same source. Vendor claims based on proprietary benchmarks.",
-      "key_finding": "Largest gap between vendor claim (0.2% FPR) and independent measurement (37% FPR) of any tool in RAID benchmark — a factor of 185x."
+      "confidence_note": "Vendor claim: 'under 3% false positive rate' for the Turbo model, 99% accuracy (originality.ai's own pages). Independent FPR 0.25%: RAID benchmark (Dugan et al., ACL 2024), Table 4, naive threshold 0.5 on RAID's clean human corpus (range 0.07-0.47% across thresholds). CORRECTED 2026-07-03 (session 06): this row previously displayed claim 0.2% / measured 37% ('a 185x gap') — neither figure is in the RAID paper or vendor marketing. See the correction note below and memory/discarded.md in the research archive.",
+      "key_finding": "The FPR spec holds on RAID's clean human corpus (0.07-0.47% at naive thresholds) — this tool's calibration gap is elsewhere: accuracy at 5% FPR collapses under distribution shift, to 8.5% on Python code and 55.8% overall on RAID's unseen extra domains, against 99% claimed accuracy (RAID Tables 4 and 7)."
     }
   ],
   "benchmark_sources": [
