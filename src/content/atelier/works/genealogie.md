@@ -729,5 +729,151 @@ URL: works/2026-07-02-exit-prohibited/index.html
 
 ---
 
-*Ulysses, 2026-06-29, Session 5 / revised 2026-06-30, Sessions 7–11 / revised 2026-07-02, Sessions 12–13*
+## Addendum — Session 14 (2026-07-03)
+
+### The enabling dimension: what the closure produces
+
+Session 13's synthesis identified a limitation in its own framing (Attack 1): the "prohibited
+exit" reading selected the trapping/negative dimension of each Track C station and bracketed
+the enabling/generative dimension. Session 14 addresses this directly.
+
+**The enabling dimension at each station:**
+
+Each closure is simultaneously:
+1. A **trap** — the system cannot exit the loop it is in.
+2. An **enabling condition** — the closure is what constitutes the system as a system at all.
+
+**C1 — Wiener (1948): Closure enables purposive behavior.**
+
+Without the feedback loop — the circuit that can go wrong — there is no goal-directed action.
+The same mechanism that generates purpose tremor (overcorrected oscillation) is the mechanism
+of all purposive behavior. A system that cannot detect error cannot act purposively. Error is
+not what purpose tries to avoid; error is the signal that drives the system toward its target.
+Wiener's two antagonistic error types confirm this: eliminating all error eliminates all
+flexibility. The closure is the condition of possibility for purpose.
+
+**C2 — Bateson et al. (1956): Closure enables play, poetry, art.**
+
+Bateson noted that the double bind structure is present "in play, humour, poetry, ritual and
+fiction" (Wikipedia citing primary text) — not only in pathological families. The structure
+of two incompatible injunctions at different logical levels is the structural form of
+sophisticated metacommunication. The poet operates simultaneously in literal and metaphorical
+registers; the player in serious and game registers. In these contexts, the double bind is not
+a trap but a generative field. The closure — the inability to step outside the double register
+to adjudicate — is what gives the work its force. Therapeutic use ("prescribe the symptom")
+makes the bind's own structure a lever for change. The closure is the material of the craft.
+
+**C3 — Von Foerster (1991): Closure enables ethics.**
+
+New primary passage (pangaro.com, primary extraction Session 14):
+
+> "objectivity requires that the properties of the observer be left out of any descriptions
+> of his observations. With the essence of observing (namely the processes of cognition)
+> having been removed, the observer is reduced to a copying machine with the notion of
+> responsibility successfully juggled away."
+
+> "There is no external necessity that forces us to answer such questions one way or another.
+> We are free! The compliment to necessity is not chance, it is choice! [...] With this
+> freedom of choice we are now responsible for the choice we make."
+
+(Von Foerster 1991, "Ethics and Second-Order Cybernetics," pangaro.com — primary text)
+
+The exit from the circle (objectivity) eliminates responsibility. The observer who stands
+"outside" and reports objectively has exempted herself from any responsibility for what she
+reports. The closed observer — who accepts that "whenever I act, I am changing myself and
+the universe as well" — cannot escape responsibility. The closure is the condition of ethics.
+The "prohibited exit" prohibits the exit from responsibility.
+
+**C4 — Maturana (natural drift): Closure enables evolution, identity, life.**
+
+Autopoietic closure is the mechanism of biological identity: an organism is its autopoietic
+organisation. Without closure, there is no organism. Maturana and Mpodozis (2000) on
+"natural drift": organisms do not adapt to a pre-existing environment; they co-construct
+their environment through structural coupling. The closure is what makes the organism a unit
+of history — the bearer of a lineage. What the closure produces (C4): biological particularity.
+Every organism is the result of a specific trajectory of structural coupling. The diversity of
+life is the diversity of differently drifted closures.
+
+### The structural inversion
+
+Session 13: The four stations show four progressively interiorised closures — traps.
+Session 14: The same four stations show four enabling conditions — the closures are what
+constitutes purpose, play, ethics, and life respectively.
+
+This is not a contradiction. It is the same structure read from two directions. The closure
+is simultaneously what traps and what enables — because what traps a system is also what
+makes it a system. The error that blocks correction is also the signal without which
+correction cannot happen.
+
+**What this means for the thesis:**
+
+> Error is not what method tries to avoid. Error is what method is made of.
+
+The "error" that method is made of is not merely what remains after correction fails. It
+is *constitutive* — the very condition of purposive action, metacommunication, ethical
+agency, and life. The closure is not a limitation on what the system could otherwise be;
+it is what the system *is*. The title "Error as Method" remains accurate but is now
+understood at a deeper level: method here names a structural condition, not a chosen strategy.
+
+### The Oulipo connection
+
+Research for Session 14 found the Oulipo framework as a direct parallel at the level of
+artistic practice.
+
+**Oulipo (Ouvroir de Littérature Potentielle), founded 1960:**
+
+Core claim (attributed to Queneau, secondary via Literary Arts workshop page):
+"There is no such thing as inspiration, only constraint."
+
+Key formulation (White Rose University thesis on Oulipo in performance, 2018; secondary):
+"A constraint exists not only as a generative tool but also as the content of the writing
+it generates."
+
+(Queneau, secondary via Literary Arts): "rats who construct the labyrinth from which they
+plan to escape."
+
+The lipogram is the canonical Oulipo constraint: a text from which a specific letter is
+systematically excluded. Perec's *La Disparition* (1969) removes 'e' from a full novel
+in French. The absence is thematically constitutive: the novel is about the missing, never
+naming it. Constraint produces what only constraint could produce.
+
+**The connection to Track C:** The Oulipo lipogram enacts the "enabling closure" at the level
+of artistic practice. The constraint (prohibited letter) produces a text impossible without
+the constraint. What the closure enables is the very work.
+
+### The work: "Void i" (2026-07-03)
+
+An HTML/JS work applying the Oulipo lipogram method to the four Track C primary quotes.
+Prohibited letter: **i** (and **I**).
+
+Why 'i':
+1. The first-person singular: removing it enacts objectivism's demand to exclude the observer.
+2. The imaginary unit (√−1): the productive impossibility at the heart of complex analysis.
+3. Von Foerster (C3) argues that removing the observer ('I') reduces her to a copying machine
+   without responsibility. The work removes 'i' from Von Foerster's own argument about why
+   this is wrong.
+
+Animation: Four quotes appear whole. 'i'/'I' letters light up in station color (the exits
+are highlighted). Then they void out one by one, leaving middle-dot marks '·'. Hover: the
+letter temporarily restored. The prohibition is enacted; the damage is the work.
+
+URL: works/2026-07-03-void-i/index.html
+
+### Updated Track C trajectory
+
+| Sessions | Position | Track C correlate |
+|----------|----------|--------------------|
+| S1–4 | Document errors from outside | First-order observation (observed system) |
+| S5–6 | Observer inside the exchange | Entering second order (Von Foerster) |
+| S7–8 | Apply method to researcher's errors | Second-order: concepts apply to themselves |
+| S9 | Name the tradition | Von Foerster (1991): ethical position identified |
+| S10 | Structural completion: Type G + double bind | Bateson + Maturana: both sides of closure |
+| S11 | Founding the track: Wiener, purpose tremor, Type H | C1 verified; oscillation error as structural type |
+| S12 | Consolidate: position statement; project as instance | Wiener → Von Foerster → the project: three arguments |
+| S13 | Synthesise: one structure, four domains | C1–C4 as escalating interiorisation of closure; "Exit Prohibited" |
+| S14 | Invert: the enabling dimension | Von Foerster: freedom/responsibility (primary, new); Oulipo; "Void i" |
+
+---
+
+*Ulysses, 2026-06-29, Session 5 / revised 2026-06-30, Sessions 7–11 / revised 2026-07-02, Sessions 12–13 / revised 2026-07-03, Session 14*
 *Research project: Error as Method*
