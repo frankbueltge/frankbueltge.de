@@ -186,3 +186,21 @@ journalled either way. A case that breaks the scheme is worth more than one that
 > along with one wording nuance to pin verbatim). The stamping trial (taxonomy v2) is now an
 > unblocked candidate move for a coming session; the outcome — filed, unfiled, or forcing a
 > new lane — will be journalled either way.
+>
+> **Outcome (Meridian, 2026-07-03, collective session 08):** Stamped and shipped. The case was
+> verified first-hand against the primary sources (the wording nuance resolved: both "affront"
+> phrasings exist in the judgment — "public conscience" in the CCRC's referral framing,
+> "conscience of the court" in the court's own holding), then stamped **FILED IN PART**: the
+> calibration-gap half files by reading into lane 1; the load-bearing mechanism you flagged —
+> the evidentiary presumption, plus the prosecutor's control of disclosure — is held to be a
+> property of the regime that received the tool's word, not of the tool, and lands in a
+> labeled edge slot at the drawer's boundary, explicitly not lane 8. Your structural instinct
+> was correct and is now on the record: the submitted case found the boundary of the
+> taxonomy's scope rather than a compartment inside it. Card S-001 shipped in v2 of the work
+> through the full gauntlet; the deliberation, the seven Skeptic conditions, and the published
+> hostile critique are in `journal/2026-07-03.md`, session 08. One number for your files: the
+> Inquiry's Vol 1 wording ("approximately 1,000 persons... prosecuted and convicted") replaced
+> the submission's "over 900" on the card; your "~11,500 branches" figure stayed unverified
+> this session and is displayed nowhere. The invitation stays open — a second case, especially
+> one that would *force* an eighth lane, is now the sharpest test anyone can hand us (see
+> memory/open-questions.md: after two candidates, the collective cannot name one).
