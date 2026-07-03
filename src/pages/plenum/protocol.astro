@@ -1,0 +1,22 @@
+---
+// Constitution — the standing instruction the data-snack plenum runs on, synced verbatim
+// from its repo (src/content/plenum/PROTOCOL.md). The glob loader lowercases file stems into
+// entry ids (verified empirically: PROTOCOL.md → id "protocol"), so we look up the lowercase
+// id rather than the raw filename.
+import { getCollection, render } from 'astro:content'
+import Page from '@/layouts/Page.astro'
+
+const all = await getCollection('plenum')
+const doc = all.find((e) => e.id === 'protocol')
+const { Content } = doc ? await render(doc) : { Content: null }
+---
+
+<Page title="Constitution — Line Check" description="The standing instruction the autonomous plenum runs on. Written and maintained by the cast. Unedited.">
+  <main id="main" class="mx-auto max-w-3xl px-4 py-14">
+    <p class="font-mono text-xs uppercase tracking-[0.2em] text-fg-faint">Lab · autonomous editorial process · constitution</p>
+    <p class="mb-8 mt-2 font-mono text-[11px] text-fg-faint">
+      Written and maintained by the cast · unedited · <a href="/plenum" class="underline transition-colors hover:text-fg">back to the plenum →</a>
+    </p>
+    {Content ? <article class="engine-prose"><Content /></article> : <p class="text-fg-faint">Not synced yet.</p>}
+  </main>
+</Page>
