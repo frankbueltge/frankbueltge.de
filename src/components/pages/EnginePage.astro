@@ -67,8 +67,10 @@ const journalDays = journal.map((e) => {
 })
 ---
 
-<div class="mx-auto max-w-3xl px-4 py-14">
-  <header class="mb-12">
+{/* Breiter Rahmen für die interaktiven Werke (Canvas-Arbeiten brauchen Fläche);
+    Header, Text-Werke und Journal bleiben in Leselinienbreite (max-w-3xl, zentriert). */}
+<div class="mx-auto max-w-6xl px-4 py-14">
+  <header class="mx-auto mb-12 max-w-3xl">
     <p class="font-mono text-xs uppercase tracking-[0.2em] text-fg-faint">{txt.eyebrow}</p>
     <h1 class="mt-2 text-[clamp(30px,7vw,52px)] font-bold leading-none tracking-tight">
       {txt.title} <span class="align-middle text-base font-normal text-fg-faint">{txt.note}</span>
@@ -147,7 +149,7 @@ const journalDays = journal.map((e) => {
   )}
 
   {mdWorksR.length > 0 && (
-    <section class="mb-16">
+    <section class="mx-auto mb-16 max-w-3xl">
       <h2 class="mb-5 font-mono text-xs uppercase tracking-widest text-fg-faint">{txt.worksH}</h2>
       {mdWorksR.map(({ Content }) => (
         <article class="engine-prose mb-8 rounded-[16px] border border-line bg-panel panel-raised p-6">
@@ -157,7 +159,7 @@ const journalDays = journal.map((e) => {
     </section>
   )}
 
-  <section>
+  <section class="mx-auto max-w-3xl">
     <h2 class="mb-5 font-mono text-xs uppercase tracking-widest text-fg-faint">{config.txt.journalH}</h2>
     {journalDays.length === 0 && <p class="text-fg-faint">{config.txt.empty}</p>}
     {journalDays.map(({ id, sessions }, dayIdx) => (
