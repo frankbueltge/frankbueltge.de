@@ -114,23 +114,43 @@ export function sparkPath(values: (number | null)[], w: number, h: number, max: 
 }
 
 import type { BeifangLeak } from './types'
+import { infraFor } from './infra'
 
-export function leakFindings(run: BeifangRun): { publisher: string; group: 'verlag' | 'kontrolle'; hard: BeifangLeak[]; firmen: string[]; hosts: string[] }[] {
-  const byPub = new Map<string, { group: 'verlag' | 'kontrolle'; hard: BeifangLeak[]; firmen: Set<string>; hosts: Set<string> }>()
+/** Ein benannter Leak-Empfänger. `tracker` = von der Pipeline (TDS/EasyPrivacy) benannt;
+ *  die übrigen Kategorien stammen aus der kuratierten Wissenschafts-Infra-Liste (infra.ts). */
+export interface LeakReceiver {
+  name: string
+  kategorie: 'metrik-broker' | 'self-hosted-analytics' | 'verlagseigen' | 'tracker'
+  eigentuemer: string | null
+}
+
+export function leakFindings(run: BeifangRun): { publisher: string; group: 'verlag' | 'kontrolle'; hard: BeifangLeak[]; empfaenger: LeakReceiver[]; hosts: string[] }[] {
+  const byPub = new Map<string, { group: 'verlag' | 'kontrolle'; hard: BeifangLeak[]; empfaenger: Map<string, LeakReceiver>; hosts: Set<string> }>()
   for (const r of usResults(run)) {
     if (!r.leaks) continue
     const hard = r.leaks.filter((l) => l.signal === 'hard' && l.token === 'doi')
     if (hard.length === 0) continue
-    const row = byPub.get(r.publisher) ?? { group: r.group, hard: [], firmen: new Set<string>(), hosts: new Set<string>() }
+    const row = byPub.get(r.publisher) ?? { group: r.group, hard: [], empfaenger: new Map<string, LeakReceiver>(), hosts: new Set<string>() }
     row.hard.push(...hard)
     for (const l of hard) {
-      if (l.firma) row.firmen.add(l.firma)
-      else row.hosts.add(l.host)
+      // Auflösung: erst die von der Pipeline gesetzte TDS-Firma, dann die kuratierte Liste,
+      // sonst bleibt der Host ehrlich unbenannt.
+      if (l.firma) {
+        row.empfaenger.set(l.firma, { name: l.firma, kategorie: 'tracker', eigentuemer: null })
+      } else {
+        const e = infraFor(l.host)
+        if (e) row.empfaenger.set(e.firma, { name: e.firma, kategorie: e.kategorie, eigentuemer: e.eigentuemer })
+        else row.hosts.add(l.host)
+      }
     }
     byPub.set(r.publisher, row)
   }
   return [...byPub.entries()]
-    .map(([publisher, v]) => ({ publisher, group: v.group, hard: v.hard, firmen: [...v.firmen].sort(), hosts: [...v.hosts].sort() }))
+    .map(([publisher, v]) => ({
+      publisher, group: v.group, hard: v.hard,
+      empfaenger: [...v.empfaenger.values()].sort((a, b) => a.name.localeCompare(b.name)),
+      hosts: [...v.hosts].sort(),
+    }))
     // Verlage zuerst (Hauptbefund), dann Kontrollgruppe (die Überraschung); je nach Trefferzahl.
     .sort((a, b) => Number(a.group === 'kontrolle') - Number(b.group === 'kontrolle')
       || b.hard.length - a.hard.length || a.publisher.localeCompare(b.publisher))
@@ -138,7 +158,7 @@ export function leakFindings(run: BeifangRun): { publisher: string; group: 'verl
 
 export function doiLeakEntities(run: BeifangRun): string[] {
   const firmen = new Set<string>()
-  for (const f of leakFindings(run)) for (const name of f.firmen) firmen.add(name)
+  for (const f of leakFindings(run)) for (const e of f.empfaenger) firmen.add(e.name)
   return [...firmen].sort()
 }
 
