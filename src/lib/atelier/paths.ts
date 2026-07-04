@@ -3,7 +3,7 @@ export interface ClassifiedWork { slug: string; kind: WorkKind; files: string[];
 export interface RejectedWork { slug: string; kind: null; reason: string }
 export interface FileMap { from: string; to: string }
 
-const ALLOWED_EXT = /\.(astro|ts|js|json|css|svg|html)$/
+const ALLOWED_EXT = /\.(astro|ts|js|mjs|json|css|svg|html)$/
 
 export function classifyWork(slug: string, fileNames: string[]): ClassifiedWork | RejectedWork {
   const files = fileNames.filter((f) => ALLOWED_EXT.test(f))
@@ -15,11 +15,13 @@ export function classifyWork(slug: string, fileNames: string[]): ClassifiedWork 
 
 export function siteTargets(work: ClassifiedWork, ns = 'atelier'): FileMap[] {
   if (work.kind === 'html') {
+    // meta.json speist die Content-Collection; alle übrigen Dateien sind Laufzeit-Assets
+    // und müssen NEBEN der index.html liegen, sonst laufen relative Referenzen ins 404.
     return work.files.map((f) => ({
       from: f,
-      to: f === 'index.html'
-        ? `public/${ns}/werke-html/${work.slug}/index.html`
-        : `src/content/${ns}/works/${work.slug}/${f}`,
+      to: f === 'meta.json'
+        ? `src/content/${ns}/works/${work.slug}/meta.json`
+        : `public/${ns}/werke-html/${work.slug}/${f}`,
     }))
   }
   // astro: whole dir → components/<ns>/werke/<slug>/, work.astro → index.astro

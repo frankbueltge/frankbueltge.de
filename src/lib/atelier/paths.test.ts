@@ -50,6 +50,20 @@ describe('siteTargets', () => {
       { from: 'meta.json',  to: 'src/content/atelier/works/alt/meta.json' },
     ])
   })
+  it('maps html-work runtime assets next to index.html so relative refs resolve (Attractor-Bug)', () => {
+    const w = { slug: 'att', kind: 'html' as const, files: ['index.html', 'meta.json', 'data.js', 'engine.mjs'], ignored: [] }
+    expect(siteTargets(w)).toEqual([
+      { from: 'index.html', to: 'public/atelier/werke-html/att/index.html' },
+      { from: 'meta.json',  to: 'src/content/atelier/works/att/meta.json' },
+      { from: 'data.js',    to: 'public/atelier/werke-html/att/data.js' },
+      { from: 'engine.mjs', to: 'public/atelier/werke-html/att/engine.mjs' },
+    ])
+  })
+  it('allows .mjs modules through the extension gate', () => {
+    const r = classifyWork('m', ['index.html', 'engine.mjs', 'test.mjs'])
+    expect(r.kind).toBe('html')
+    if (r.kind !== null) expect(r.files).toEqual(['index.html', 'engine.mjs', 'test.mjs'])
+  })
   it('maps into a custom namespace', () => {
     const html = { slug: 'x', kind: 'html' as const, files: ['index.html', 'meta.json'], ignored: [] }
     expect(siteTargets(html, 'field')).toEqual([
