@@ -52,8 +52,14 @@ def _pace(min_gap: float = 5.5) -> None:
     _last_call[0] = time.monotonic()
 
 
+# Beats, deren Abruf nach allen Retries scheiterte — fließt als Ausfallvermerk ins JSON
+# (Lab-Regel: „Feststellung entfällt" statt stiller Lücke, die wie ein ruhiger Tag aussieht).
+_beats_failed = [0]
+
+
 def fetch(query: str, retries: int = 4) -> list[dict]:
-    """Ein Beat über die GDELT DOC API; respektiert das 1-Request-/-5-s-Limit."""
+    """Ein Beat über die GDELT DOC API; respektiert das 1-Request-/-5-s-Limit.
+    Backoff exponentiell (6/12/24 s) — GitHub-Runner teilen sich IPs, 429 ist kollektiv."""
     params = urllib.parse.urlencode(
         {
             "query": f'"{query}" sourcelang:english',
@@ -71,17 +77,20 @@ def fetch(query: str, retries: int = 4) -> list[dict]:
             req = urllib.request.Request(url, headers={"User-Agent": UA})
             with urllib.request.urlopen(req, timeout=60) as r:
                 raw = r.read().decode("utf-8", "replace")
-        except Exception as e:  # Netz-/Timeout-Fehler: kurz warten, erneut
+        except Exception as e:  # Netz-/Timeout-Fehler: exponentiell warten, erneut
             print(f"  ! {query}: {e}", file=sys.stderr)
-            time.sleep(6)
+            if attempt < retries - 1:
+                time.sleep(6 * (2**attempt))
             continue
         if raw.lstrip().startswith("Please limit"):
-            time.sleep(6)
+            if attempt < retries - 1:
+                time.sleep(6 * (2**attempt))
             continue
         try:
             return json.loads(raw).get("articles", [])
         except json.JSONDecodeError:
             return []
+    _beats_failed[0] += 1
     return []
 
 
@@ -348,6 +357,7 @@ def main() -> int:
             "domains_scanned": len({a.get("domain", "") for a in articles}),
             "beats": BEATS,
             "per_beat": per_beat,
+            "beats_failed": _beats_failed[0],
             "shingle_n": SHINGLE_N,
             "min_domains": MIN_DOMAINS,
         },

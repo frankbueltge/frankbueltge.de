@@ -1,0 +1,11 @@
+---
+import Page from '@/layouts/Page.astro'
+import UeberflugStudiePage from '@/components/pages/UeberflugStudiePage.astro'
+const locale = 'en' as const
+---
+<Page
+  title="All Along the Watchtower | Frank Bültge"
+  description="SGP4 in the browser — which Earth-observation satellites currently have a location in view."
+>
+  <UeberflugStudiePage {locale} />
+</Page>
