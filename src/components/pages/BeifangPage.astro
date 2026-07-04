@@ -9,6 +9,7 @@ import { getBeifangRuns } from '@/lib/beifang/data'
 import { renderBefund } from '@/lib/beifang/befund'
 import { PUBLISHER_LABELS } from '@/lib/beifang/types'
 import { blockadeStats, entityTable, groupMedians, leakAuditRan, leakFindings, publisherMedians, sparkPath, timeline, usResults } from '@/lib/beifang/stats'
+import { infraFor } from '@/lib/beifang/infra'
 
 interface Props { locale: 'de' | 'en' }
 const { locale } = Astro.props
@@ -42,6 +43,46 @@ const EU_STATUS_TEXT: Record<string, { de: string; en: string }> = {
 const euStatusText = latest
   ? (EU_STATUS_TEXT[latest.vantages.eu.status] ?? EU_STATUS_TEXT.ausstehend)[de ? 'de' : 'en']
   : null
+
+// Empfänger-Kategorien in belegte Nebenzeilen übersetzen (Tatsachen, keine Wertung).
+function kategorieHinweise(f: (typeof leaks)[number], deLang: boolean): string[] {
+  const hinweise: string[] = []
+  const broker = f.empfaenger.filter((e) => e.kategorie === 'metrik-broker')
+  const selfHosted = f.empfaenger.filter((e) => e.kategorie === 'self-hosted-analytics')
+  const verlag = f.empfaenger.filter((e) => e.kategorie === 'verlagseigen')
+  if (broker.length) {
+    const eig = broker.find((b) => b.eigentuemer)?.eigentuemer
+    const namen = broker.map((b) => b.name).join(', ')
+    hinweise.push(deLang
+      ? `${namen}: kommerzieller Metrik-Dienst${eig ? ` (${eig})` : ''}.`
+      : `${namen}: commercial metrics service${eig ? ` (${eig})` : ''}.`)
+  }
+  if (selfHosted.length) {
+    const namen = selfHosted.map((b) => b.name).join(', ')
+    hinweise.push(deLang
+      ? `${namen}: vom Herausgeber selbst betriebene, quelloffene Analyse-Software.`
+      : `${namen}: open-source analytics run by the publisher itself.`)
+  }
+  if (verlag.length) {
+    const namen = verlag.map((b) => b.name).join(', ')
+    hinweise.push(deLang
+      ? `${namen}: verlagseigene Domain (andere Second-Level-Domain, gleicher Verlag).`
+      : `${namen}: publisher-owned domain (different second-level domain, same publisher).`)
+  }
+  return hinweise
+}
+
+// Kanal des Requests lesbar machen — pro Leak korrekt (die DOI reist mal im Query,
+// mal im Pfad/POST), nie pauschal behauptet.
+function kanalLabel(kanal: string, deLang: boolean): string {
+  const map: Record<string, { de: string; en: string }> = {
+    query: { de: 'Query-String', en: 'query string' },
+    pfad: { de: 'URL-Pfad', en: 'URL path' },
+    post: { de: 'POST-Body', en: 'POST body' },
+    referer: { de: 'Referer', en: 'referer' },
+  }
+  return (map[kanal] ?? { de: kanal, en: kanal })[deLang ? 'de' : 'en']
+}
 ---
 
 <article class="beifang mx-auto max-w-3xl px-4 py-14">
@@ -172,15 +213,18 @@ const euStatusText = latest
                   {f.group === 'kontrolle' && (
                     <span class="ml-2 rounded border border-line px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-wide text-fg-faint">{de ? 'Kontrollgruppe' : 'control group'}</span>
                   )}{' '}
-                  {f.firmen.length > 0
+                  {f.empfaenger.length > 0
                     ? (de
-                        ? `— in dieser Messung enthielt ein ausgehender Request die DOI an ${f.firmen.join(', ')} (vor jeder Cookie-Einwilligung).`
-                        : `— in this measurement, an outgoing request carried the DOI to ${f.firmen.join(', ')} (before any cookie consent).`)
+                        ? `— in dieser Messung trug ein ausgehender Request die DOI an ${f.empfaenger.map((e) => e.name).join(', ')} (vor jeder Cookie-Einwilligung).`
+                        : `— in this measurement an outgoing request carried the DOI to ${f.empfaenger.map((e) => e.name).join(', ')} (before any cookie consent).`)
                     : (de
-                        ? `— in dieser Messung enthielt ein ausgehender Request die DOI an Dritte (${f.hosts.join(', ')}), vor jeder Cookie-Einwilligung; kein benannter Datenhändler darunter.`
-                        : `— in this measurement, an outgoing request carried the DOI to third parties (${f.hosts.join(', ')}), before any cookie consent; no named data broker among them.`)}
+                        ? `— in dieser Messung trug ein ausgehender Request die DOI an Dritte (${f.hosts.join(', ')}), vor jeder Cookie-Einwilligung; darunter keine über Tracker-Radar oder kuratierte Liste benannte Firma.`
+                        : `— in this measurement an outgoing request carried the DOI to third parties (${f.hosts.join(', ')}), before any cookie consent; none of them a company named via the tracker radar or the curated list.`)}
                 </p>
-                {f.firmen.length > 0 && f.hosts.length > 0 && (
+                {kategorieHinweise(f, de).map((h) => (
+                  <p class="mt-1 text-sm text-fg-muted">{h}</p>
+                ))}
+                {f.empfaenger.length > 0 && f.hosts.length > 0 && (
                   <p class="mt-1 text-sm text-fg-muted">
                     {de ? `Außerdem an Hosts ohne benannte Firma: ${f.hosts.join(', ')}.`
                         : `Also to hosts without a named company: ${f.hosts.join(', ')}.`}
@@ -190,7 +234,7 @@ const euStatusText = latest
                   {f.hard.map((l) => (
                     <li class="border-l-2 border-accent/60 pl-4">
                       <span class="font-mono text-xs text-fg-muted">
-                        {l.firma ?? l.host} · {l.form} · {l.kanal}
+                        {l.firma ?? infraFor(l.host)?.firma ?? l.host} · {l.form} · {kanalLabel(l.kanal, de)}
                       </span>
                       <details class="mt-1">
                         <summary class="cursor-pointer text-fg-faint">{de ? 'Beweis' : 'Evidence'}</summary>
