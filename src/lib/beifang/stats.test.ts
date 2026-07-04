@@ -112,48 +112,55 @@ function hardDoi(host: string, firma: string | null): BeifangLeak {
 }
 
 describe('leakFindings/doiLeakEntities', () => {
-  it('trennt benannte Firmen von unbenannten Hosts, nur Verlage mit hartem DOI-Leak', () => {
+  it('benennt Empfänger: TDS-firma (tracker), kuratierte Liste (broker), Rest ehrlich unbenannt', () => {
     const r = run([
       result({ publisher: 'springer-nature', doi_leak: true,
-               leaks: [hardDoi('pixel.liveramp.com', 'LiveRamp'), hardDoi('content.readcube.com', null)],
+               leaks: [hardDoi('pixel.liveramp.com', 'LiveRamp'), hardDoi('content.readcube.com', null), hardDoi('tracker.example.org', null)],
                leak_firmen: ['LiveRamp'] }),
       result({ panel_id: 'sn-02', publisher: 'springer-nature', doi_leak: false, leaks: [], leak_firmen: [] }),
       result({ panel_id: 'e-01', publisher: 'elsevier', blocked: { type: 'http', marker: '403' } }),
     ])
     const f = leakFindings(r)
     expect(f.map((x) => x.publisher)).toEqual(['springer-nature'])
-    expect(f[0].firmen).toEqual(['LiveRamp'])            // benannte Broker
-    expect(f[0].hosts).toEqual(['content.readcube.com']) // unbenannte Empfänger
-    expect(f[0].hard.length).toBe(2)
-    expect(doiLeakEntities(r)).toEqual(['LiveRamp'])
+    expect(f[0].empfaenger.map((e) => e.name)).toEqual(['LiveRamp', 'ReadCube']) // sortiert
+    expect(f[0].empfaenger.find((e) => e.name === 'LiveRamp')!.kategorie).toBe('tracker')
+    expect(f[0].empfaenger.find((e) => e.name === 'ReadCube')!.kategorie).toBe('metrik-broker')
+    expect(f[0].hosts).toEqual(['tracker.example.org']) // wirklich unbenannt bleibt ehrlich
+    expect(f[0].hard.length).toBe(3)
+    expect(doiLeakEntities(r)).toEqual(['LiveRamp', 'ReadCube'])
   })
-  it('Realfall: DOI-Leak nur an unbenannte Hosts → firmen leer, hosts gesetzt', () => {
+  it('Realfall: DOI-Leak an kuratierte Empfänger → benannt, hosts leer', () => {
     const r = run([result({ publisher: 'springer-nature', doi_leak: true,
                             leaks: [hardDoi('content.readcube.com', null)], leak_firmen: [] })])
     const f = leakFindings(r)
-    expect(f[0].firmen).toEqual([])
-    expect(f[0].hosts).toEqual(['content.readcube.com'])
-    expect(doiLeakEntities(r)).toEqual([])
+    expect(f[0].empfaenger.map((e) => e.name)).toEqual(['ReadCube'])
+    expect(f[0].empfaenger[0].eigentuemer).toContain('Digital Science')
+    expect(f[0].hosts).toEqual([])
+    expect(doiLeakEntities(r)).toEqual(['ReadCube'])
   })
   it('leerer Befund, wenn nichts leakt', () => {
     const r = run([result({ doi_leak: false, leaks: [], leak_firmen: [] })])
     expect(leakFindings(r)).toEqual([])
     expect(doiLeakEntities(r)).toEqual([])
   })
-  it('führt jetzt auch Kontrollgruppen-Leaks (der Leak folgt dem Skript, nicht dem Geschäftsmodell)', () => {
+  it('führt jetzt auch Kontrollgruppen-Leaks; benennt self-hosted vs broker', () => {
     const r = run([
       result({ publisher: 'springer-nature', group: 'verlag', doi_leak: true,
                leaks: [hardDoi('content.readcube.com', null)], leak_firmen: [] }),
       result({ panel_id: 'joss-01', publisher: 'joss', group: 'kontrolle', doi_leak: true,
                leaks: [hardDoi('api.altmetric.com', null), hardDoi('www.google-analytics.com', 'Google Analytics (Google)')],
                leak_firmen: ['Google Analytics (Google)'] }),
+      result({ panel_id: 'ipr-01', publisher: 'internet-policy-review', group: 'kontrolle', doi_leak: true,
+               leaks: [hardDoi('piwik.hiig.de', null)], leak_firmen: [] }),
     ])
     const f = leakFindings(r)
-    expect(f.map((x) => `${x.publisher}:${x.group}`)).toEqual(['springer-nature:verlag', 'joss:kontrolle'])
+    expect(f.map((x) => `${x.publisher}:${x.group}`)).toEqual(['springer-nature:verlag', 'joss:kontrolle', 'internet-policy-review:kontrolle'])
     const joss = f.find((x) => x.publisher === 'joss')!
-    expect(joss.group).toBe('kontrolle')
-    expect(joss.firmen).toEqual(['Google Analytics (Google)'])
-    expect(joss.hosts).toEqual(['api.altmetric.com'])
+    expect(joss.empfaenger.map((e) => e.name)).toEqual(['Altmetric', 'Google Analytics (Google)'])
+    expect(joss.empfaenger.find((e) => e.name === 'Altmetric')!.kategorie).toBe('metrik-broker')
+    expect(joss.hosts).toEqual([])
+    const ipr = f.find((x) => x.publisher === 'internet-policy-review')!
+    expect(ipr.empfaenger[0].kategorie).toBe('self-hosted-analytics')
   })
 })
 
