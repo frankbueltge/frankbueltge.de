@@ -1,0 +1,51 @@
+---
+// Studie „Überflug" — All Along the Watchtower. Experiment-Layout statt Blog-Artikel
+// (Frank, 2026-07-04); Prosa unverändert aus der früheren Lab-Notiz übernommen.
+import type { Locale } from '@/lib/site'
+import UeberflugIsland from '@/components/ueberflug/UeberflugIsland.astro'
+
+interface Props { locale: Locale }
+const { locale } = Astro.props
+const de = locale === 'de'
+---
+
+<article class="mx-auto max-w-3xl px-4 py-14">
+  <header class="mb-10">
+    <h1 class="text-[clamp(30px,6vw,56px)] font-bold tracking-[-0.03em]">All Along the Watchtower</h1>
+    <p class="mt-2 max-w-xl text-fg-muted">
+      {de
+        ? 'SGP4 im Browser — welche Erdbeobachtungssatelliten einen Standort gerade im Sichtfeld haben.'
+        : 'SGP4 in the browser — which Earth-observation satellites currently have a location in view.'}
+    </p>
+    <p class="mt-3 font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">
+      {de ? 'Studie — läuft seit 12. Juni 2026' : 'Study — running since June 12, 2026'}
+    </p>
+  </header>
+
+  <section class="mb-10 max-w-2xl leading-relaxed text-fg-muted">
+    <p>
+      {de
+        ? 'Welche katalogisierten Erdbeobachtungssatelliten haben einen Standort gerade geometrisch im Sichtfeld? Das Handwerk trägt: Bahnpropagation (SGP4) läuft vollständig im Browser auf täglich aktualisierten, committeten Bahndaten (CelesTrak, OMM/JSON) mit Eigentümer-Klassifikation aus McDowells GCAT (CC-BY 4.0). Der Standort verlässt den Browser nie — nichts wird gespeichert, nichts gesendet. „Sichtkontakt möglich" heißt Elevation über 10°, „Abbildungsgeometrie wahrscheinlich" ab 35°; beides ist Geometrie, keine Aufnahme. Geheime Satelliten fehlen im Katalog.'
+        : 'Which catalogued Earth-observation satellites currently have a location geometrically in view? The craft holds up: orbital propagation (SGP4) runs entirely in the browser on daily-updated, committed orbital data (CelesTrak, OMM/JSON) with owner classification from McDowell’s GCAT (CC-BY 4.0). Your location never leaves the browser — nothing is stored, nothing is sent. "Line of sight possible" means elevation above 10°, "imaging geometry likely" from 35°; both are geometry, not imagery. Classified satellites are absent from the catalogue.'}
+    </p>
+  </section>
+
+  <UeberflugIsland {locale} />
+
+  <section class="mt-12 max-w-2xl border-t border-line pt-6">
+    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+      {de ? 'Offene Richtung' : 'Open direction'}
+    </p>
+    <p class="mt-2 leading-relaxed text-fg-muted">
+      {de
+        ? 'Nicht der Blick nach oben ist interessant, sondern seine Veränderung — die Verdichtung des Blicks. Die tägliche Snapshot-Pipeline könnte statt zu überschreiben eine Zeitreihe führen: Wie schnell füllt sich der Orbit mit Beobachtern, wie verschiebt sich das Verhältnis von kommerziell zu militärisch, Jahr für Jahr. Das wäre eine messbare These.'
+        : 'It is not the view upward that is interesting, but its change — the densification of the gaze. The daily snapshot pipeline could keep a time series instead of overwriting: how quickly the orbit fills with observers, how the ratio of commercial to military shifts, year after year. That would be a measurable thesis.'}
+    </p>
+  </section>
+
+  <footer class="mt-12 border-t border-line pt-6">
+    <p class="font-mono text-xs text-fg-faint">
+      CelesTrak (OMM/JSON), {de ? 'täglich committet' : 'committed daily'} · GCAT (J. McDowell, CC-BY 4.0)
+    </p>
+  </footer>
+</article>

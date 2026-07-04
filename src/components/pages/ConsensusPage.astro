@@ -118,6 +118,12 @@ const syn = h?.syndication
         </section>
       )}
     </>
+  ) : d.stats.articles_scanned === 0 ? (
+    <p class="max-w-xl text-fg-muted">
+      {de
+        ? 'Quelle nicht erreichbar — Feststellung entfällt. GDELT hat die nächtlichen Anfragen nicht beantwortet (Rate-Limit); es wurden 0 Artikel gescannt. Ein Ausfall der Messung, kein ruhiger Nachrichtentag.'
+        : 'Source unreachable — finding omitted. GDELT did not answer the nightly requests (rate limit); 0 articles were scanned. A failure of the measurement, not a quiet news day.'}
+    </p>
   ) : (
     <p class="text-fg-muted">{de ? 'Heute kein Echo-Cluster über der Schwelle.' : 'No echo cluster above threshold today.'}</p>
   )}
