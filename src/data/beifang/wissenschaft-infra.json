@@ -1,0 +1,50 @@
+{
+  "meta": {
+    "beschreibung": "Kuratierte Domain→Firma-Zuordnung für Wissenschafts-Infrastruktur, die der DuckDuckGo-Tracker-Radar (Ad-Tech-fokussiert) nicht als Firma kennt. Ergänzt die TDS-Zuordnung ausschließlich für die Anzeige; die Pipeline und die Archiv-JSONs bleiben unberührt. Auflösungsreihenfolge im Frontend: erst die von der Pipeline gesetzte Firma (TDS/EasyPrivacy), dann diese Liste. Jede Zeile ist quellenbelegt. Software-Namen bei self-hosted-Analytics sind über den gemessenen Hostnamen (piwik.*, umami.*) benannt.",
+    "gepflegt_am": "2026-07-04"
+  },
+  "eintraege": [
+    {
+      "domain": "readcube.com",
+      "firma": "ReadCube",
+      "eigentuemer": "Digital Science / Holtzbrinck Publishing Group",
+      "kategorie": "metrik-broker",
+      "quelle": "https://www.digital-science.com/products/"
+    },
+    {
+      "domain": "altmetric.com",
+      "firma": "Altmetric",
+      "eigentuemer": "Digital Science / Holtzbrinck Publishing Group",
+      "kategorie": "metrik-broker",
+      "quelle": "https://www.digital-science.com/products/"
+    },
+    {
+      "domain": "dimensions.ai",
+      "firma": "Dimensions",
+      "eigentuemer": "Digital Science / Holtzbrinck Publishing Group",
+      "kategorie": "metrik-broker",
+      "quelle": "https://www.digital-science.com/products/"
+    },
+    {
+      "domain": "springernature.com",
+      "firma": "Springer Nature (eigene Media-Domain)",
+      "eigentuemer": "Holtzbrinck Publishing Group (Mehrheit)",
+      "kategorie": "verlagseigen",
+      "quelle": "https://group.springernature.com/gp/group/media/press-releases/archive-2015/holtzbrinck-publishing-group-and-bc-partners-announce-agreement-to-merge-majority-of-macmillan-science-and-education-with-springer-science-business-media/12000350"
+    },
+    {
+      "domain": "hiig.de",
+      "firma": "Matomo (self-hosted, HIIG)",
+      "eigentuemer": null,
+      "kategorie": "self-hosted-analytics",
+      "quelle": "https://policyreview.info/about"
+    },
+    {
+      "domain": "adho.org",
+      "firma": "Umami (self-hosted, ADHO)",
+      "eigentuemer": null,
+      "kategorie": "self-hosted-analytics",
+      "quelle": "https://adho.org/publications/"
+    }
+  ]
+}
