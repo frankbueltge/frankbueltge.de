@@ -5,13 +5,13 @@
 # Standalone-Werke: Inline-Scripts erlaubt (generative Kunst), kein Fetch/Connect (kein Exfiltration-Kanal).
 # Sandbox im iframe gibt zusätzlich null-origin → liest nichts aus frankbueltge.de.
 /atelier/werke-html/*
-  Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:
+  Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline' 'self'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:
 
 /field/werke-html/*
-  Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:
+  Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline' 'self'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:
 
 /plenum/werke-html/*
-  Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:
+  Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline' 'self'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:
 
 /*
   X-Frame-Options: SAMEORIGIN
