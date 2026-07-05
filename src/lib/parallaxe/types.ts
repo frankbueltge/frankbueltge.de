@@ -16,6 +16,9 @@ export interface ParallaxeTopic {
   claims: ParallaxeClaim[]
   omission_by_lang: Record<string, number>
   mean_omission: number
+  /** Datum der letzten Messung dieses Themas (YYYY-MM-DD). Ein Thema pro Tag, rotierend;
+   *  ältere Register (vor der Umstellung) haben den Wert nicht. */
+  measured?: string
 }
 
 /** Ausfall-Zensus eines Laufs: Vermerk statt stiller Lücke. */

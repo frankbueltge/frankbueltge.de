@@ -1,60 +1,99 @@
+"""Parallaxe-Lauf: ein Thema pro Tag (rotierend), ins bestehende Register akkumuliert."""
 import json
+
+import pytest
 
 import protokoll.parallaxe.run as run_mod
 
-
-def _topic(title: str) -> dict:
-    return {
-        "en_title": title, "lang_count": 8, "protection": "edit:autoconfirmed",
-        "langs": ["de", "en", "ja", "ru", "zh"],
-        "lemma": {"en": title},
-        "claims": [{"aussage": "Territorialstreit",
-                    "by_lang": {"en": "verschweigt", "ru": "nennt"}}],
-        "omission_by_lang": {"en": 1.0, "ru": 0.0},
-        "mean_omission": 0.5,
-    }
+RANKED = [
+    {"en_title": "Alpha", "titles": {"en": "Alpha"}, "lang_count": 8},
+    {"en_title": "Bravo", "titles": {"en": "Bravo"}, "lang_count": 7},
+    {"en_title": "Charlie", "titles": {"en": "Charlie"}, "lang_count": 6},
+]
 
 
-def _register(topics: list) -> dict:
-    return {
-        "generated_at": "2026-06-14T05:30:00Z",
-        "rule": {"source": "Wikipedia:List_of_controversial_issues", "min_langs": 5,
-                 "cap": 24, "model": "gemini-2.5-flash"},
-        "census": {"attempted": 24, "measured": len(topics), "failed": {}},
-        "mean_omission_index": 0.41 if topics else None,
-        "topics": topics,
-    }
+def _intros(_client, titles):
+    name = next(iter(titles.values()))
+    return {"en": f"t {name}", "de": "y", "fr": "z", "ru": "w", "ja": "v"}, []
 
 
-def test_dry_run_writes_register(tmp_path, monkeypatch):
-    # Ein gesundes Register (>= MIN_MEASURED_TO_PUBLISH Themen) wird geschrieben.
-    topics = [_topic("Senkaku Islands")] + [_topic(f"Disputed {i}") for i in range(9)]
-    monkeypatch.setattr(run_mod, "build_register", lambda client, today: _register(topics))
-    code = run_mod.main(["--date", "2026-06-14", "--dry-run", "--repo-root", str(tmp_path)])
+def _extract_ok(intros, *, client):
+    return {"lemma": {"en": "L"}, "name_umstritten": False,
+            "claims": [{"aussage": "A", "nach_sprache": {"en": "nennt", "de": "verschweigt"}}]}
+
+
+@pytest.fixture
+def _mock_sources(monkeypatch):
+    monkeypatch.setattr(run_mod.register, "controversial_titles", lambda c: ["x"])
+    monkeypatch.setattr(run_mod.register, "rank_topics", lambda c, t: list(RANKED))
+    monkeypatch.setattr(run_mod.register, "protection_status", lambda c, t: "none")
+    monkeypatch.setattr(run_mod.extracts, "fetch_intros", _intros)
+    monkeypatch.setattr(run_mod.extract_llm, "extract_omissions", _extract_ok)
+    monkeypatch.setattr(run_mod.analyze, "omission_index",
+                        lambda claims, langs: {lang: 0.5 for lang in langs})
+    monkeypatch.setattr(run_mod.analyze, "mean_omission", lambda oi: 0.5)
+
+
+def _run(root, date):
+    return run_mod.main(["--date", date, "--dry-run", "--repo-root", str(root)])
+
+
+def _read(root):
+    return json.loads((root / "src/data/parallaxe/register.json").read_text())
+
+
+def test_measures_one_topic_and_writes(_mock_sources, tmp_path):
+    code = _run(tmp_path, "2026-07-06")
     assert code == 0
-    out = tmp_path / "src/data/parallaxe/register.json"
-    data = json.loads(out.read_text())
-    assert data["mean_omission_index"] == 0.41
-    assert data["topics"][0]["en_title"] == "Senkaku Islands"
+    data = _read(tmp_path)
+    assert len(data["topics"]) == 1           # genau EIN Thema pro Tag
+    t = data["topics"][0]
+    assert t["measured"] == "2026-07-06"
+    assert t["en_title"] in {"Alpha", "Bravo", "Charlie"}
+    assert data["census"] == {"attempted": 1, "measured": 1, "failed": {}}
 
 
-def test_degenerate_guard_aborts_on_empty_topics(tmp_path, monkeypatch):
-    monkeypatch.setattr(run_mod, "build_register", lambda client, today: _register([]))
-    code = run_mod.main(["--date", "2026-06-14", "--dry-run", "--repo-root", str(tmp_path)])
-    assert code == 1
+def test_rotation_picks_three_distinct_topics_over_three_days(_mock_sources, tmp_path):
+    picks = []
+    for d in ["2026-07-06", "2026-07-07", "2026-07-08"]:
+        sub = tmp_path / d.replace("-", "")
+        sub.mkdir()
+        _run(sub, d)
+        picks.append(_read(sub)["topics"][0]["en_title"])
+    assert len(set(picks)) == 3               # drei aufeinanderfolgende Tage → drei Themen
 
 
-def test_degenerate_guard_aborts_on_mostly_failed_run(tmp_path, monkeypatch):
-    # 2026-07-05-Fall: nur 1 von 24 Themen kam durch (Gemini-Ratelimit) → nicht committen,
-    # gestriges Register behalten statt einer Ein-Thema-Verzerrung.
-    monkeypatch.setattr(run_mod, "build_register",
-                        lambda client, today: _register([_topic("Kosovo")]))
-    code = run_mod.main(["--date", "2026-07-05", "--dry-run", "--repo-root", str(tmp_path)])
+def test_accumulates_into_existing_register(_mock_sources, tmp_path):
+    _run(tmp_path, "2026-07-06")              # Tag 1
+    _run(tmp_path, "2026-07-07")              # Tag 2 — ins bestehende Register einsortiert
+    data = _read(tmp_path)
+    assert len(data["topics"]) == 2
+    titles = [t["en_title"] for t in data["topics"]]
+    assert titles == sorted(titles)           # stabil sortiert (minimaler Diff)
+
+
+def test_failed_topic_leaves_register_unchanged(_mock_sources, tmp_path, monkeypatch):
+    _run(tmp_path, "2026-07-06")              # ein gutes Thema liegt vor
+    before = _read(tmp_path)
+
+    def _boom(intros, *, client):
+        raise run_mod.extract_llm.ExtractionError("429 (Test)")
+
+    monkeypatch.setattr(run_mod.extract_llm, "extract_omissions", _boom)
+    code = _run(tmp_path, "2026-07-07")       # heutiges Thema failt
+    assert code == 0                          # weicher Ausfall — wir haben ja Daten
+    assert _read(tmp_path)["topics"] == before["topics"]
+
+
+def test_first_run_failure_is_hard_error(_mock_sources, tmp_path, monkeypatch):
+    monkeypatch.setattr(run_mod.extract_llm, "extract_omissions",
+                        lambda intros, *, client: (_ for _ in ()).throw(
+                            run_mod.extract_llm.ExtractionError("429")))
+    code = _run(tmp_path, "2026-07-06")       # noch gar kein Register
     assert code == 1
     assert not (tmp_path / "src/data/parallaxe/register.json").exists()
 
 
-def test_invalid_date_errors(monkeypatch):
-    import pytest
+def test_invalid_date_errors():
     with pytest.raises(SystemExit):
         run_mod.main(["--date", "not-a-date", "--dry-run", "--repo-root", "/tmp"])
