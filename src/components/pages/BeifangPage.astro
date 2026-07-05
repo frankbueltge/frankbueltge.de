@@ -8,14 +8,17 @@ import { t } from '@/i18n/ui'
 import { getBeifangRuns } from '@/lib/beifang/data'
 import { renderBefund } from '@/lib/beifang/befund'
 import { PUBLISHER_LABELS } from '@/lib/beifang/types'
-import { blockadeStats, entityTable, groupMedians, leakAuditRan, leakFindings, publisherMedians, sparkPath, timeline, usResults } from '@/lib/beifang/stats'
+import { blockadeStats, blockedPublishersFromResults, entityTable, groupMedians, latestByVantage, leakAuditRan, leakFindings, leakFindingsFromResults, leserResults, publisherMedians, sparkPath, timeline, usResults } from '@/lib/beifang/stats'
 import { infraFor } from '@/lib/beifang/infra'
 
 interface Props { locale: 'de' | 'en' }
 const { locale } = Astro.props
 const de = locale === 'de'
 const runs = await getBeifangRuns()
-const latest = runs[0]
+const latest = latestByVantage(runs, 'automat') ?? runs[0]  // jüngster Automat-Standpunkt; Leser-JSONs übernehmen die Automat-Sicht nicht
+const leserRun = latestByVantage(runs, 'leser')
+const leserLeaks = leserRun ? leakFindingsFromResults(leserResults(leserRun)) : []
+const leserBlocked = leserRun ? blockedPublishersFromResults(leserResults(leserRun)) : []
 const leaks = latest ? leakFindings(latest) : []
 const auditRan = latest ? leakAuditRan(latest) : false
 const methodUrl = getRelativeLocaleUrl(locale, '/werke/beifang')
@@ -23,26 +26,17 @@ const gm = latest ? groupMedians(latest) : null
 const pm = latest ? publisherMedians(latest) : {}
 const entities = latest ? entityTable(latest).slice(0, 12) : []
 const blockade = latest ? blockadeStats(latest) : null
-const series = timeline(runs)
+const series = timeline(runs.filter((r) => (r.vantages.automat ?? r.vantages.us)?.status === 'ok'))  // Zeitreihe nur aus Automat-Läufen
 const maxY = Math.max(1, ...series.flatMap((p) => [p.verlag ?? 0, p.kontrolle ?? 0]))
 const okCount = latest ? usResults(latest).filter((r) => r.blocked === null && r.note === null).length : 0
 
-// EU-Messpunkt-Vermerk: 'entfallen' ist ein eigener Zustand (Ausfall in dieser Sitzung),
-// kein Synonym für 'ausstehend' (noch nicht aufgebaut) — beide brauchen eigenen Wortlaut.
-const EU_STATUS_TEXT: Record<string, { de: string; en: string }> = {
-  ok: { de: 'aktiv', en: 'active' },
-  ausstehend: {
-    de: 'ausstehend — gemessen wird bisher nur aus US-Rechenzentrumssicht; die EU-Spalte folgt, sobald der Messpunkt steht.',
-    en: 'pending — measurements so far are from a US datacenter vantage only; the EU column follows once the vantage exists.',
-  },
-  entfallen: {
-    de: 'entfallen — der EU-Messpunkt war in dieser Sitzung nicht erreichbar; Feststellung entfällt.',
-    en: 'omitted — the EU vantage was unreachable this run; no determination.',
-  },
-}
-const euStatusText = latest
-  ? (EU_STATUS_TEXT[latest.vantages.eu.status] ?? EU_STATUS_TEXT.ausstehend)[de ? 'de' : 'en']
-  : null
+// Leser-Standpunkt-Vermerk (ersetzt den EU-Messpunkt — die Probe zeigte: Geografie ist nicht der
+// Hebel, sondern residentielle IP + echtes Chrome; der Leser-Lauf läuft daher lokal, auf Zuruf).
+const leserVermerk = leserRun
+  ? (de ? `zuletzt gemessen am ${leserRun.date} (echtes Chrome, Wohnanschluss)`
+        : `last measured on ${leserRun.date} (real Chrome, residential line)`)
+  : (de ? 'noch nicht gemessen — läuft lokal, auf Zuruf'
+        : 'not yet measured — runs locally, on demand')
 
 // Empfänger-Kategorien in belegte Nebenzeilen übersetzen (Tatsachen, keine Wertung).
 function kategorieHinweise(f: (typeof leaks)[number], deLang: boolean): string[] {
@@ -125,6 +119,13 @@ function formLabel(form: string, deLang: boolean): string {
               ? `Dieselben Plattformen, die jeden Leser vermessen, sperren das Instrument aus, das nachschauen will — zum Vergleich blockieren ${blockade.kontrolle.blocked} von ${blockade.kontrolle.total} Kontrollseiten. Die Blockade ist kein Ausfall, sie ist der Befund.`
               : `The same platforms that measure every reader lock out the instrument that wants to look — for comparison, ${blockade.kontrolle.blocked} of ${blockade.kontrolle.total} control pages block. The refusal is not a failure; it is the finding.`}
           </p>
+          {leserRun && (
+            <p class="mt-2 max-w-xl leading-relaxed text-fg">
+              {de
+                ? `Aber ein echter Leser (echtes Chrome, Wohnanschluss) wird nur bei ${leserBlocked.map((p) => PUBLISHER_LABELS[p] ?? p).join(', ') || '—'} ausgesperrt. Die Sperre trifft den Prüf-Automaten, nicht den zahlenden Leser — was der Leser mitträgt, steht weiter unten.`
+                : `But a real reader (real Chrome, residential line) is locked out only at ${leserBlocked.map((p) => PUBLISHER_LABELS[p] ?? p).join(', ') || '—'}. The block hits the audit automaton, not the paying reader — what the reader carries is shown further down.`}
+            </p>
+          )}
           <ul class="mt-4 space-y-1 text-sm">
             {blockade.verlag.byPublisher.map((p) => (
               <li class="flex items-baseline justify-between gap-3 border-b border-line/60 py-1.5">
@@ -263,6 +264,30 @@ function formLabel(form: string, deLang: boolean): string {
         </p>
       </section>
 
+      {leserRun && leserLeaks.length > 0 && (
+        <section class="mb-12">
+          <h2 class="mb-3 font-semibold">{de ? 'Was der echte Leser mitträgt' : 'What the real reader carries'}</h2>
+          <p class="mb-4 max-w-xl leading-relaxed text-fg-muted">
+            {de
+              ? `Gemessen am ${leserRun.date} mit echtem Chrome von einem Wohnanschluss — die Verlage, die den Prüf-Automaten aussperren, liefern dem Leser aus. Und das reist bei ihnen an Dritte:`
+              : `Measured on ${leserRun.date} with real Chrome from a residential line — the publishers that lock out the audit automaton serve the reader. And this travels to third parties there:`}
+          </p>
+          <ul class="space-y-3">
+            {leserLeaks.map((f) => (
+              <li class="leading-relaxed">
+                <span class="font-semibold">{PUBLISHER_LABELS[f.publisher] ?? f.publisher}</span>
+                {f.group === 'kontrolle' && (
+                  <span class="ml-2 rounded border border-line px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-wide text-fg-faint">{de ? 'Kontrollgruppe' : 'control group'}</span>
+                )}{' '}
+                {f.empfaenger.length > 0
+                  ? (de ? `— DOI an ${f.empfaenger.map((e) => e.name).join(', ')}.` : `— DOI to ${f.empfaenger.map((e) => e.name).join(', ')}.`)
+                  : (de ? `— DOI an Dritte (${f.hosts.join(', ')}).` : `— DOI to third parties (${f.hosts.join(', ')}).`)}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
       {/* Firmen-Tafel */}
       <section class="mb-12">
         <h2 class="mb-3 font-semibold">{de ? 'Wer mitliest' : 'Who reads along'}</h2>
@@ -310,10 +335,10 @@ function formLabel(form: string, deLang: boolean): string {
         )}
       </section>
 
-      {/* EU-Spalte: sichtbar ausstehend (Spec §4/§6) */}
+      {/* Leser-Standpunkt-Vermerk (ersetzt die EU-Spalte — Geografie ist nicht der Hebel) */}
       <section class="mb-12">
         <p class="text-sm text-fg-muted">
-          {de ? `EU-Messpunkt: ${euStatusText}` : `EU vantage: ${euStatusText}`}
+          {de ? `Leser-Standpunkt: ${leserVermerk}` : `Reader vantage: ${leserVermerk}`}
         </p>
       </section>
 
