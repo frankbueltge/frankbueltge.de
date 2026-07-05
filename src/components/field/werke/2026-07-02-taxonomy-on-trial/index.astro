@@ -315,34 +315,34 @@ const dataPayload = JSON.stringify({ cards: allCards, runOrder })
 <script>
   const dataEl = document.getElementById("taxonomy-data");
   const parsed = JSON.parse(dataEl?.textContent || "{}");
-  const cardsData = parsed.cards || [];
-  const runOrder = parsed.runOrder || [];
+  const cardsData: any[] = parsed.cards || [];
+  const runOrder: number[] = parsed.runOrder || [];
 
-  const tray = document.getElementById("tray");
-  const chrome = document.getElementById("chrome-caption");
-  const crossRail = document.getElementById("cross-rail");
-  const runBtn = document.getElementById("run-btn");
-  const skipBtn = document.getElementById("skip-btn");
+  const tray = document.getElementById("tray")!;
+  const chrome = document.getElementById("chrome-caption")!;
+  const crossRail = document.getElementById("cross-rail")!;
+  const runBtn = document.getElementById("run-btn")!;
+  const skipBtn = document.getElementById("skip-btn")!;
 
   // Fixed step duration -- no RNG, no Date.now(); every run takes the same time.
   const STEP_MS = 850;
 
-  function cardEl(id) {
+  function cardEl(id: number) {
     return document.querySelector('.card[data-id="' + id + '"]');
   }
 
-  function laneSlot(modeId) {
+  function laneSlot(modeId: number) {
     return document.getElementById("lane-slot-" + modeId);
   }
 
-  function findCard(id) {
+  function findCard(id: number) {
     for (let i = 0; i < cardsData.length; i++) {
       if (cardsData[i].id === id) return cardsData[i];
     }
     return null;
   }
 
-  function stampCard(id) {
+  function stampCard(id: number) {
     const el = cardEl(id);
     const info = findCard(id);
     if (!el || !info) return;
@@ -373,7 +373,7 @@ const dataPayload = JSON.stringify({ cards: allCards, runOrder })
     const modeEl = el.querySelector(".card-mode");
     if (modeEl) modeEl.textContent = info.modeNames;
 
-    const rationaleEl = el.querySelector(".card-rationale");
+    const rationaleEl = el.querySelector<HTMLElement>(".card-rationale");
     if (rationaleEl) {
       if (info.laneRationale) {
         rationaleEl.textContent = info.laneRationale;
@@ -387,7 +387,7 @@ const dataPayload = JSON.stringify({ cards: allCards, runOrder })
     const claimEl = el.querySelector(".card-claim");
     if (claimEl) claimEl.textContent = info.claim;
 
-    const sourceEl = el.querySelector(".card-source");
+    const sourceEl = el.querySelector<HTMLElement>(".card-source");
     if (sourceEl) {
       if (info.source) {
         sourceEl.textContent = info.source;
@@ -398,7 +398,7 @@ const dataPayload = JSON.stringify({ cards: allCards, runOrder })
       }
     }
 
-    const whoEl = el.querySelector(".card-who");
+    const whoEl = el.querySelector<HTMLElement>(".card-who");
     if (whoEl) {
       if (info.whoPays) {
         whoEl.textContent = "who pays: " + info.whoPays;
@@ -437,19 +437,19 @@ const dataPayload = JSON.stringify({ cards: allCards, runOrder })
       if (tagEl) tagEl.textContent = "";
       const modeEl = el.querySelector(".card-mode");
       if (modeEl) modeEl.textContent = "";
-      const rationaleEl = el.querySelector(".card-rationale");
+      const rationaleEl = el.querySelector<HTMLElement>(".card-rationale");
       if (rationaleEl) {
         rationaleEl.textContent = "";
         rationaleEl.style.display = "";
       }
       const claimEl = el.querySelector(".card-claim");
       if (claimEl) claimEl.textContent = "";
-      const sourceEl = el.querySelector(".card-source");
+      const sourceEl = el.querySelector<HTMLElement>(".card-source");
       if (sourceEl) {
         sourceEl.textContent = "";
         sourceEl.style.display = "";
       }
-      const whoEl = el.querySelector(".card-who");
+      const whoEl = el.querySelector<HTMLElement>(".card-who");
       if (whoEl) {
         whoEl.textContent = "";
         whoEl.style.display = "";
@@ -460,7 +460,7 @@ const dataPayload = JSON.stringify({ cards: allCards, runOrder })
     chrome.classList.remove("visible");
   }
 
-  let timers = [];
+  let timers: ReturnType<typeof setTimeout>[] = [];
   function clearTimers() {
     timers.forEach(function (t) {
       clearTimeout(t);
@@ -468,7 +468,7 @@ const dataPayload = JSON.stringify({ cards: allCards, runOrder })
     timers = [];
   }
 
-  function runSequence(instant) {
+  function runSequence(instant: boolean) {
     clearTimers();
     resetState();
     runOrder.forEach(function (id, idx) {
