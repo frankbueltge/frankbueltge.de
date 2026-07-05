@@ -18,6 +18,7 @@ import httpx
 from protokoll.github_commit import commit_file
 from protokoll.parallaxe import (
     MIN_LANGS,
+    MIN_MEASURED_TO_PUBLISH,
     MODEL,
     SOURCE_CATEGORIES,
     TOPIC_CAP,
@@ -101,10 +102,15 @@ def main(argv: list[str] | None = None) -> int:
 
     with httpx.Client(headers={"User-Agent": USER_AGENT}) as client:
         register_data = build_register(client, today)
-        # Degenerat-Guard: lieber das gestrige Register behalten als ein leeres committen.
-        if not register_data["topics"]:
-            print("Abbruch: keine Themen vermessen — Quelle gestört, Register wird nicht ersetzt.",
-                  file=sys.stderr)
+        # Degenerat-Guard: lieber das gestrige Register behalten als ein weitgehend leeres
+        # committen. Ein, zwei durchgekommene Themen sind keine Messung, sondern eine Verzerrung
+        # im Archiv (2026-07-05: 1/24 nach Gemini-Ratelimit → Seite zeigte nur Kosovo).
+        measured = len(register_data["topics"])
+        if measured < MIN_MEASURED_TO_PUBLISH:
+            attempted = register_data.get("census", {}).get("attempted", measured)
+            print(f"Abbruch: nur {measured}/{attempted} Themen vermessen "
+                  f"(< {MIN_MEASURED_TO_PUBLISH}) — Quelle/Ratelimit gestört, "
+                  "Register wird nicht ersetzt.", file=sys.stderr)
             return 1
         payload = json.dumps(register_data, ensure_ascii=False, indent=1, sort_keys=True,
                              allow_nan=False) + "\n"
