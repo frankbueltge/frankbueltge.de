@@ -5,8 +5,8 @@ export const SITE = {
   url: 'https://frankbueltge.de',
   role: { de: 'Data Engineering & Analytics', en: 'Data Engineering & Analytics' },
   email: 'hello@frankbueltge.de',
-  /** Open-source repository of the lab's measurement instruments (Die Akte der Gegenwart). */
-  sourceCode: 'https://github.com/frankbueltge/akte-pipelines',
+  /** Open-source repository of the lab's measurement instruments. */
+  sourceCode: 'https://github.com/frankbueltge/lab-pipelines',
   /** Frank's personal profiles (used as Person.sameAs). Instagram is owned but empty → schema only. */
   social: {
     linkedin: 'https://www.linkedin.com/in/frankbueltge/',
