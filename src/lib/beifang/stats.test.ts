@@ -104,12 +104,31 @@ describe('timeline/sparkPath', () => {
   })
 })
 
-import { leakFindings, doiLeakEntities, leakAuditRan } from './stats'
+import { leakFindings, doiLeakEntities, leakAuditRan, automatResults, leserResults, blockedPublishersFromResults, leakFindingsFromResults } from './stats'
 import type { BeifangLeak } from './types'
 
 function hardDoi(host: string, firma: string | null): BeifangLeak {
   return { token: 'doi', signal: 'hard', form: 'klartext', kanal: 'query', host, firma, beweis: `https://${host}/?doi=x` }
 }
+
+describe('Zwei Standpunkte: automatResults/leserResults/Differenz', () => {
+  it('automatResults liest us abwärtskompatibel (Altarchiv)', () => {
+    expect(automatResults(run([result({})])).length).toBe(1) // run() baut vantages.us
+  })
+  it('leserResults liest den Leser-Vantage', () => {
+    const r = { ...run([]), vantages: { leser: { status: 'ok' as const, note: null, results: [result({ publisher: 'elsevier' })] } } }
+    expect(leserResults(r).map((x) => x.publisher)).toEqual(['elsevier'])
+  })
+  it('blockedPublishersFromResults nennt nur blockierte Verlage', () => {
+    const rs = [result({ publisher: 'sage', blocked: { type: 'http', marker: '403' } }),
+                result({ publisher: 'elsevier', blocked: null })]
+    expect(blockedPublishersFromResults(rs)).toEqual(['sage'])
+  })
+  it('leakFindingsFromResults trägt die Empfänger-Benennung (readcube → ReadCube)', () => {
+    const rs = [result({ publisher: 'elsevier', doi_leak: true, leaks: [hardDoi('content.readcube.com', null)] })]
+    expect(leakFindingsFromResults(rs)[0].empfaenger.map((e) => e.name)).toEqual(['ReadCube'])
+  })
+})
 
 describe('leakFindings/doiLeakEntities', () => {
   it('benennt Empfänger: TDS-firma (tracker), kuratierte Liste (broker), Rest ehrlich unbenannt', () => {

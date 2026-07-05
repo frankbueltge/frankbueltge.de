@@ -9,8 +9,24 @@ export function median(xs: number[]): number | null {
   return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2
 }
 
-export function usResults(run: BeifangRun): BeifangSiteResult[] {
-  return run.vantages.us?.results ?? []
+export function automatResults(run: BeifangRun): BeifangSiteResult[] {
+  return run.vantages.automat?.results ?? run.vantages.us?.results ?? []  // us = Altarchiv-Fallback
+}
+export function leserResults(run: BeifangRun): BeifangSiteResult[] {
+  return run.vantages.leser?.results ?? []
+}
+/** @deprecated Abwärtskompat-Alias: bestehende Aggregationen arbeiten auf dem Automat-Standpunkt. */
+export const usResults = automatResults
+
+/** Jüngster Run, dessen Standpunkt `kind` tatsächlich gemessen wurde (status ok). */
+export function latestByVantage(runs: BeifangRun[], kind: 'automat' | 'leser'): BeifangRun | undefined {
+  if (kind === 'leser') return runs.find((r) => r.vantages.leser?.status === 'ok')
+  return runs.find((r) => (r.vantages.automat ?? r.vantages.us)?.status === 'ok')
+}
+
+/** Verlage (nicht Kontrollgruppe), die in diesen Ergebnissen blockiert sind. */
+export function blockedPublishersFromResults(results: BeifangSiteResult[]): string[] {
+  return [...new Set(results.filter((r) => r.group === 'verlag' && r.blocked !== null).map((r) => r.publisher))].sort()
 }
 
 function trackerCounts(run: BeifangRun, group: 'verlag' | 'kontrolle'): number[] {
@@ -124,9 +140,9 @@ export interface LeakReceiver {
   eigentuemer: string | null
 }
 
-export function leakFindings(run: BeifangRun): { publisher: string; group: 'verlag' | 'kontrolle'; hard: BeifangLeak[]; empfaenger: LeakReceiver[]; hosts: string[] }[] {
+export function leakFindingsFromResults(results: BeifangSiteResult[]): { publisher: string; group: 'verlag' | 'kontrolle'; hard: BeifangLeak[]; empfaenger: LeakReceiver[]; hosts: string[] }[] {
   const byPub = new Map<string, { group: 'verlag' | 'kontrolle'; hard: BeifangLeak[]; empfaenger: Map<string, LeakReceiver>; hosts: Set<string> }>()
-  for (const r of usResults(run)) {
+  for (const r of results) {
     if (!r.leaks) continue
     const hard = r.leaks.filter((l) => l.signal === 'hard' && l.token === 'doi')
     if (hard.length === 0) continue
@@ -154,6 +170,11 @@ export function leakFindings(run: BeifangRun): { publisher: string; group: 'verl
     // Verlage zuerst (Hauptbefund), dann Kontrollgruppe (die Überraschung); je nach Trefferzahl.
     .sort((a, b) => Number(a.group === 'kontrolle') - Number(b.group === 'kontrolle')
       || b.hard.length - a.hard.length || a.publisher.localeCompare(b.publisher))
+}
+
+/** Abwärtskompat-Wrapper: Leak-Befund des Automat-Standpunkts. */
+export function leakFindings(run: BeifangRun) {
+  return leakFindingsFromResults(automatResults(run))
 }
 
 export function doiLeakEntities(run: BeifangRun): string[] {
