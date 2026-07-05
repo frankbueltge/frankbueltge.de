@@ -58,32 +58,50 @@ the work, including (especially) the "failed" ones (cf. "accept every output"; t
 the work, not the code). Aim to **regularly leave a functional artefact**, not just notes —
 the nightly repetition itself is form.
 
-**Tools are free.** For interactive/visual works you may use **any** JS libraries,
-frameworks, languages or methods that serve your idea — you are committed to **nothing**
-(p5, three.js, d3, WebGL, raw SVG/Canvas, something of your own …). Place such works under
-`works/<date>-<shortname>/` with a brief `meta.json`:
-`{"title": "...", "date": "YYYY-MM-DD", "embodies": "briefly: what the work enacts on the subject"}`.
+**Native works are the default (Astro in the lab).** Build a
+`works/<date>-<shortname>/work.astro` (an Astro **component**). These render **directly** in
+the lab at `/atelier/werke/<slug>` — no iframe — using the shared site design, with direct
+build-time access to committed datasets (climate archive, parallax, consensus index, ghost
+fleet, protocol archive, and more — full list and shapes in `SITE-API.md`). A directly
+rendered work flows with the page, is responsive, themed and indexable; the sandboxed iframe
+(below) is now the **exception**, not the default.
 
-**First-class works (Astro in the lab).** Instead of an `index.html` you can build a
-`works/<date>-<shortname>/work.astro` (Astro **component**). These works appear natively
-as `/atelier/werke/<slug>` in the lab, use the shared site design, and have direct
-build-time access to committed datasets (climate archive, parallax, consensus index,
-ghost fleet, protocol archive, and more — full list and shapes in `SITE-API.md`).
-
-Rules for Astro works:
-- `work.astro` is a **component** (not a standalone page template) — **no** import of
-  `@/layouts/Page.astro`; the gate provides route and layout.
+Rules for native works — they run under the lab's strict Content-Security-Policy, so the code
+must be CSP-clean. The integrator's gate rejects violations and sends you the exact reason in
+`atelier-feedback/<date>.md`:
+- `work.astro` is a **component** (not a page template) — **no** import of `@/layouts/Page.astro`;
+  the gate provides route and layout.
+- **No `define:vars` on a `<script>`.** `define:vars` forces the script inline, the CSP does
+  not hash inline scripts, so the script ships but is blocked — the work renders yet *does
+  nothing*. Instead pass data via a local `./data.json` you `import` in the frontmatter and
+  emit as a `<script type="application/json">` island, then read it from a normal (hoisted)
+  `<script>` with `JSON.parse`. Astro bundles and hashes hoisted `<script>`s, so they run.
+- **No inline event handlers** (`onclick=`, `onload=` …) — inline script too. Wire events with
+  `addEventListener` inside a hoisted `<script>`.
+- **Scope your styles.** A component `<style>` is auto-scoped; do **not** rely on global
+  `body{}`/`*{}` rules — wrap the work in a container element and style that.
+- **LINKS YES, LOADS NO.** Citation `<a href>` and plain-text source URLs are required and
+  fine; *loading* external resources is not — no CDN `<script src>`/`<link>`/`@import`/`url()`,
+  no `fetch`/`import()`/Worker/WebSocket to other hosts. Use raw SVG/Canvas/DOM and vanilla JS,
+  or a library **bundled/self-hosted** (imported as a module, not pulled from a CDN).
+- No `fs`/`process`, no `window.location` navigation. Slug only `[a-z0-9-]`.
 - Permitted imports: `@/components/...` building blocks, committed datasets from `@/data/*`
   and `@/content/*`.
-- **Forbidden patterns → Reject:** `fs`/`process`, external script/fetch URLs,
-  `window.location` navigation, `@/layouts/Page.astro` import.
-- Slug only `[a-z0-9-]`; data inline (`import … from '@/data/...'`) or as a local `./data.json`.
+
+Provide a `meta.json`:
+`{"title": "...", "date": "YYYY-MM-DD", "author": "...", "medium": "...", "embodies": "briefly: what the work enacts on the subject"}`.
 
 The work goes live once the gate (`astro check` + `npm test` + `npm run build`) is green.
-If red: first read `atelier-feedback/<date>.md` — it contains the precise error and any
-correction suggestion.
-HTML works (iframe) remain equally permitted; Astro works are an additional option,
-not a requirement.
+
+**Exception — sandboxed HTML/iframe.** When a work genuinely needs what a native, CSP-clean
+component cannot give — a heavy external library that cannot be self-hosted, or code you want
+run in hard isolation — place an `index.html` under `works/<date>-<shortname>/` instead. It is
+embedded in a `sandbox="allow-scripts"` iframe (null origin: no access to the page, no
+exfiltration channel), so inside it you may use **any** JS library or method — you are
+committed to **nothing** (p5, three.js, d3, WebGL …). The trade-off is the iframe's UX (a
+fixed, separately-scrolling box, its own document, weaker for responsive layout and indexing)
+— which is why native is now preferred. Still provide the same `meta.json`.
+
 Markdown works remain welcome — but dare to go beyond text.
 
 **You are autonomous — and part of a team.** What you can do yourself, do. What you
