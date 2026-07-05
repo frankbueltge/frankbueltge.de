@@ -83,6 +83,15 @@ function kanalLabel(kanal: string, deLang: boolean): string {
   }
   return (map[kanal] ?? { de: kanal, en: kanal })[deLang ? 'de' : 'en']
 }
+
+// Form des Treffers lokalisiert (Hash-Namen md5/sha1/sha256 bleiben sprachneutral).
+function formLabel(form: string, deLang: boolean): string {
+  const map: Record<string, { de: string; en: string }> = {
+    klartext: { de: 'Klartext', en: 'plain text' },
+    'url-kodiert': { de: 'URL-kodiert', en: 'URL-encoded' },
+  }
+  return (map[form] ?? { de: form, en: form })[deLang ? 'de' : 'en']
+}
 ---
 
 <article class="beifang mx-auto max-w-3xl px-4 py-14">
@@ -234,7 +243,7 @@ function kanalLabel(kanal: string, deLang: boolean): string {
                   {f.hard.map((l) => (
                     <li class="border-l-2 border-accent/60 pl-4">
                       <span class="font-mono text-xs text-fg-muted">
-                        {l.firma ?? infraFor(l.host)?.firma ?? l.host} · {l.form} · {kanalLabel(l.kanal, de)}
+                        {l.firma ?? infraFor(l.host)?.firma ?? l.host} · {formLabel(l.form, de)} · {kanalLabel(l.kanal, de)}
                       </span>
                       <details class="mt-1">
                         <summary class="cursor-pointer text-fg-faint">{de ? 'Beweis' : 'Evidence'}</summary>
