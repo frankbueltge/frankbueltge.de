@@ -1,5 +1,19 @@
-from beifang.capture import detect_blocked, RawRequest
+from beifang.capture import detect_blocked, RawRequest, build_launch_kwargs
 from beifang.model import Blocked
+
+
+def test_launch_kwargs_automat_is_bundle_default():
+    assert build_launch_kwargs(real_chrome=False, proxy=None) == {}
+
+
+def test_launch_kwargs_leser_uses_real_chrome_channel():
+    kw = build_launch_kwargs(real_chrome=True, proxy=None)
+    assert kw["channel"] == "chrome"  # echtes Google Chrome, kein Bundle
+
+
+def test_launch_kwargs_passes_proxy():
+    kw = build_launch_kwargs(real_chrome=False, proxy="http://p:1")
+    assert kw["proxy"] == {"server": "http://p:1"}
 
 
 def test_detect_blocked_http_statuses():
