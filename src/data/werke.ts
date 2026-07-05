@@ -77,7 +77,7 @@ export const WERKE: Werk[] = [
     href: '/tell',
     description: {
       de: 'Aus der Linie „Gegenmessung". Bestimmte Wörter — „delve", „showcasing", „intricate" — sind Tells generativer KI. Ihr Anteil in begutachteten PubMed-Abstracts ist seit ChatGPT sprunghaft gestiegen: „delve" rund 14-mal, „showcasing" 19-mal so oft. Ein KI-Werkzeug misst den Fußabdruck der KI in der Wissenschaft.',
-      en: 'From the „Counter-Measurement" line. Certain words — „delve", „showcasing", „intricate" — are tells of generative AI. Their share in peer-reviewed PubMed abstracts jumped after ChatGPT: „delve" about 14×, „showcasing" 19× as often. An AI tool measuring AI’s footprint in science.',
+      en: 'From the “Counter-Measurement” line. Certain words — “delve”, “showcasing”, “intricate” — are tells of generative AI. Their share in peer-reviewed PubMed abstracts jumped after ChatGPT: “delve” about 14×, “showcasing” 19× as often. An AI tool measuring AI’s footprint in science.',
     },
   },
   {
@@ -93,7 +93,7 @@ export const WERKE: Werk[] = [
     href: '/redaction',
     description: {
       de: 'Aus der Linie „Gegenmessung". Das öffentliche Protokoll wird nicht nur geschrieben, sondern auch entschrieben. Jeden Tag difft eine Maschine die Wayback-Snapshots einer kuratierten Liste offizieller Seiten und hebt die substanziellste Schwärzung — beide Fassungen verlinkt, in zwei Klicks überprüfbar. Kein Absichts-Vorwurf, nur das gezählte Weggenommene.',
-      en: 'From the „Counter-Measurement" line. The public record is not only written but un-written. Each day a machine diffs the Wayback snapshots of a curated list of official pages and surfaces the most substantive removal — both versions linked, checkable in two clicks. No claim of intent, only the counted thing taken away.',
+      en: 'From the “Counter-Measurement” line. The public record is not only written but un-written. Each day a machine diffs the Wayback snapshots of a curated list of official pages and surfaces the most substantive removal — both versions linked, checkable in two clicks. No claim of intent, only the counted thing taken away.',
     },
   },
   {
@@ -109,7 +109,7 @@ export const WERKE: Werk[] = [
     href: '/round-number',
     description: {
       de: 'Aus der Linie „Gegenmessung". Ziffern-Forensik (Benford) gilt als Werkzeug gegen gefälschte Zahlen — und ist das Lieblingsinstrument von Wahlbetrugs-Mythen. Das Stück stellt die Methode selbst vor Gericht: Es zeigt täglich, dass derselbe Test, der eine echte amtliche Reihe „verdächtig" nennt, auch nachweislich saubere Daten gleicher Größe genauso verdächtig nennt.',
-      en: 'From the „Counter-Measurement" line. Digit-forensics (Benford) is sold as a tool against faked numbers — and is the favourite instrument of vote-fraud myths. The piece puts the method itself on trial: each day it shows that the same test which calls a real official series „suspicious" calls provably-clean data of the same size just as suspicious.',
+      en: 'From the “Counter-Measurement” line. Digit-forensics (Benford) is sold as a tool against faked numbers — and is the favourite instrument of vote-fraud myths. The piece puts the method itself on trial: each day it shows that the same test which calls a real official series “suspicious” calls provably-clean data of the same size just as suspicious.',
     },
   },
   {
@@ -125,7 +125,7 @@ export const WERKE: Werk[] = [
     href: '/pattern',
     description: {
       de: 'Capstone der Linie „Gegenmessung". Die Maschine durchwühlt täglich das eigene Protokoll-Archiv nach Korrelationen, hebt die stärkste — und beweist mit einem Permutationstest, dass sie Signal nicht von Rauschen unterscheiden kann. Mit genug Reihen findet man immer ein Muster. Die Gegenmessung der Gegenmessung.',
-      en: 'Capstone of the „Counter-Measurement" line. Each day the machine mines its own Protocol archive for correlations, surfaces the strongest — and proves with a permutation test that it cannot tell signal from noise. With enough series, you always find a pattern. The counter-measurement of counter-measurement.',
+      en: 'Capstone of the “Counter-Measurement” line. Each day the machine mines its own Protocol archive for correlations, surfaces the strongest — and proves with a permutation test that it cannot tell signal from noise. With enough series, you always find a pattern. The counter-measurement of counter-measurement.',
     },
   },
   {
@@ -133,7 +133,7 @@ export const WERKE: Werk[] = [
     title: 'The Policy',
     subtitle: {
       de: 'Klimakosten, aus Marktdaten als „Prämie" gerechnet',
-      en: 'Climate cost, computed from market data as a „premium"',
+      en: 'Climate cost, computed from market data as a “premium”',
     },
     status: 'live',
     since: '2026-06-14',
@@ -200,7 +200,7 @@ export const WERKE: Werk[] = [
     title: 'The Consensus',
     subtitle: {
       de: 'Wie viel „unabhängiger" Nachrichten-Konsens eine Quelle ist, x-fach kopiert',
-      en: 'How much „independent" news consensus is one source, copied',
+      en: 'How much “independent” news consensus is one source, copied',
     },
     status: 'live',
     since: '2026-06-22',
@@ -208,7 +208,7 @@ export const WERKE: Werk[] = [
     href: '/consensus',
     description: {
       de: 'Aus der Linie „Gegenmessung". Jeden Tag wählt eine Maschine den Satz, den die meisten „unabhängigen" Medien wortgleich brachten, zeigt Quelle und Kaskade und rechnet, wie viel des Nachrichten-Konsenses Echo statt Recherche ist.',
-      en: 'From the „Counter-Measurement" line. Each day a machine picks the sentence the most „independent" outlets ran word-for-word, shows source and cascade, and computes how much of the news consensus is echo rather than reporting.',
+      en: 'From the “Counter-Measurement” line. Each day a machine picks the sentence the most “independent” outlets ran word-for-word, shows source and cascade, and computes how much of the news consensus is echo rather than reporting.',
     },
     tier: 'studie',
   },
@@ -224,7 +224,7 @@ export const WERKE: Werk[] = [
     href: '/correction',
     description: {
       de: 'Aus der Linie „Gegenmessung". Nicht durch ein eigenes Modell, sondern durch die Revisionen, die das Amt selbst vornimmt: Die US-Beschäftigtenzahl wird still nach unten korrigiert — Juni 2025 um 1,25 Millionen Stellen; jeder der letzten 24 Monate nach unten. Die Echtzeit-Zahl war systematisch zu hoch.',
-      en: 'From the „Counter-Measurement" line. Not via a model of my own but via the revisions the agency itself makes: US employment is quietly cut downward — June 2025 by 1.25 million jobs; every one of the last 24 months downward. The real-time number ran systematically too high.',
+      en: 'From the “Counter-Measurement” line. Not via a model of my own but via the revisions the agency itself makes: US employment is quietly cut downward — June 2025 by 1.25 million jobs; every one of the last 24 months downward. The real-time number ran systematically too high.',
     },
     tier: 'studie',
   },
@@ -241,7 +241,7 @@ export const WERKE: Werk[] = [
     href: '/ghost-fleet',
     description: {
       de: 'Aus der Linie „Gegenmessung". Das AIS-Bild der Meere wirkt lückenlos — ist es aber nicht: Schiffe schalten ihren Transponder bewusst ab, um zu verschwinden. Jeden Tag zählt eine Maschine die absichtliche Funkstille und hebt den markantesten Fall hervor — ein benanntes Schiff, das wochenlang in fremden Hoheitsgewässern dunkel wurde. Kein Illegalitäts-Vorwurf, nur die gezählte Unsichtbarkeit.',
-      en: 'From the „Counter-Measurement" line. The AIS picture of the seas looks complete — but it is not: ships switch off their transponder on purpose to vanish. Each day a machine counts the deliberate radio silence and surfaces the most striking case — a named vessel that went dark for weeks inside foreign national waters. No claim of illegality, only the counted invisibility.',
+      en: 'From the “Counter-Measurement” line. The AIS picture of the seas looks complete — but it is not: ships switch off their transponder on purpose to vanish. Each day a machine counts the deliberate radio silence and surfaces the most striking case — a named vessel that went dark for weeks inside foreign national waters. No claim of illegality, only the counted invisibility.',
     },
     tier: 'studie',
   },

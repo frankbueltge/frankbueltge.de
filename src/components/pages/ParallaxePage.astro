@@ -31,7 +31,11 @@ const txt = {
   more: (n: number) =>
     de ? `… und ${n} weitere Aussagen` : `… and ${n} more claims`,
   claimCol: de ? 'Aussage' : 'Claim',
-  dataAsOf: de ? 'Messstand' : 'Measured as of',
+  dataAsOf: de ? 'Zuletzt aktualisiert' : 'Last updated',
+  measuredOn: de ? 'gemessen' : 'measured',
+  cadence: de
+    ? 'Ein Thema pro Tag, deterministisch nach Datum rotierend — die Matrix baut sich über die Rotation auf; jede Zeile trägt ihr Messdatum.'
+    : 'One topic re-measured per day, rotating deterministically by date — the matrix builds over the rotation; each row carries its measurement date.',
   model: de ? 'Extraktion' : 'Extraction',
   method: de ? 'Methodenblatt' : 'Method sheet',
   censusNote: (attempted: number, measured: number) =>
@@ -57,6 +61,7 @@ const cellLabel = (m: ClaimMark) => (de ? CLAIM_MARK[m].de : CLAIM_MARK[m].en)
       <span class="mt-2 block">{txt.headlineSentence}</span>
     </p>
     <p class="mt-6 font-mono text-xs text-fg-faint">{txt.rule}</p>
+    <p class="mt-1 font-mono text-xs text-fg-faint">{txt.cadence}</p>
   </header>
 
   {topics.length === 0 && (
@@ -78,6 +83,9 @@ const cellLabel = (m: ClaimMark) => (de ? CLAIM_MARK[m].de : CLAIM_MARK[m].en)
             {pct} % {txt.omitted}
           </span>
           <span class="font-mono text-xs text-fg-faint">{topic.protection}</span>
+          {topic.measured && (
+            <span class="font-mono text-xs text-fg-faint">· {txt.measuredOn} {topic.measured}</span>
+          )}
         </div>
 
         {topic.name_umstritten && (
