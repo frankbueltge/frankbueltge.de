@@ -100,7 +100,8 @@ def compute_befund(results: Sequence[SiteResult], previous: dict | None) -> Befu
     if previous is None:
         return Befund(kind="baseline")
     cur = _as_dicts(results)
-    prev = ((previous.get("vantages") or {}).get("us") or {}).get("results") or []
+    v = previous.get("vantages") or {}
+    prev = ((v.get("automat") or v.get("us")) or {}).get("results") or []  # us = Altarchiv-Fallback
     prev_by_id = {r["panel_id"]: r for r in prev}
     # Priorität 1: neue Blockade (Verlag verweigert erstmals die Messung)
     new_blocked = sorted(r["panel_id"] for r in cur
@@ -137,10 +138,16 @@ def compute_befund(results: Sequence[SiteResult], previous: dict | None) -> Befu
 
 def assemble_run(*, date_iso: str, panel_version: str, runner: str, vantage: str,
                  results: Sequence[SiteResult], lists: dict[str, ListMeta],
-                 previous: dict | None) -> RunRecord:
+                 previous: dict | None, vantage_kind: str = "automat") -> RunRecord:
+    # Umgewidmet us/eu → automat/leser: der gemessene Standpunkt ist "ok", der andere "ausstehend"
+    # (läuft separat). Automat = headless CI wöchentlich; Leser = echtes Chrome lokal auf Zuruf.
+    OTHER = {"automat": "Automat-Standpunkt separat (wöchentlich, CI)",
+             "leser": "Leser-Standpunkt separat (lokal, echtes Chrome)"}
+    measured = "leser" if vantage_kind == "leser" else "automat"
+    other = "automat" if measured == "leser" else "leser"
     vantages = {
-        "us": Vantage(status="ok", note=None, results=tuple(results)),
-        "eu": Vantage(status="ausstehend", note="EU-Messpunkt nicht aufgebaut", results=None),
+        measured: Vantage(status="ok", note=None, results=tuple(results)),
+        other: Vantage(status="ausstehend", note=OTHER[other], results=None),
     }
     return RunRecord(date=date_iso, generated_at=utc_now_iso(),
                      schema_version=SCHEMA_VERSION, pipeline_version=PIPELINE_VERSION,
