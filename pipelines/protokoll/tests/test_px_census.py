@@ -1,42 +1,44 @@
-"""Zensus-Block des Parallaxe-Registers: Ausfälle werden gezählt, nie still verschluckt."""
-from protokoll.parallaxe import extract_llm
-from protokoll.parallaxe import run as run_mod
+"""Upsert- und Rotations-Logik des Ein-Thema-pro-Tag-Registers (Einheiten, ohne Netz)."""
+from protokoll.parallaxe.run import pick_topic_for_date, upsert
 
 
-def _fake_rank(_client, _titles):
-    return [
-        {"en_title": "Ok Island", "titles": {"en": "Ok Island"}, "lang_count": 6},
-        {"en_title": "Fail Island", "titles": {"en": "Fail Island"}, "lang_count": 6},
-        {"en_title": "Thin Island", "titles": {"en": "Thin Island"}, "lang_count": 6},
-    ]
+def _topic(title: str, mo: float) -> dict:
+    return {"en_title": title, "lang_count": 6, "protection": "none", "langs": ["en"],
+            "lemma": {"en": title}, "name_umstritten": False, "claims": [],
+            "omission_by_lang": {"en": mo}, "mean_omission": mo}
 
 
-def _fake_intros(_client, titles):
-    name = next(iter(titles.values()))
-    if name == "Thin Island":
-        return {"en": f"t {name}", "de": "y"}, []  # < MIN_LANGS (5)
-    return {"en": f"t {name}", "de": "y", "fr": "z", "ru": "w", "ja": "v"}, []
+def test_upsert_inserts_sets_date_census_and_mean():
+    out = upsert({"topics": []}, _topic("Alpha", 0.4), "2026-07-06", {"Alpha", "Bravo"})
+    assert out["census"] == {"attempted": 1, "measured": 1, "failed": {}}
+    assert out["topics"][0]["measured"] == "2026-07-06"
+    assert out["mean_omission_index"] == 0.4
 
 
-def _fake_extract(intros, *, client):
-    if "Fail Island" in intros["en"]:
-        raise extract_llm.ExtractionError("Gemini erschöpft (Test)")
-    return {"lemma": {"en": "Ok"}, "name_umstritten": False,
-            "claims": [{"aussage": "A", "nach_sprache": {"en": "nennt", "de": "verschweigt"}}]}
+def test_upsert_replaces_same_topic_without_duplicate():
+    reg = {"topics": [{**_topic("Alpha", 0.4), "measured": "2026-07-01"}]}
+    out = upsert(reg, _topic("Alpha", 0.6), "2026-07-06", {"Alpha"})
+    assert len(out["topics"]) == 1
+    assert out["topics"][0]["measured"] == "2026-07-06"
+    assert out["topics"][0]["mean_omission"] == 0.6
 
 
-def test_build_register_counts_failures(monkeypatch):
-    monkeypatch.setattr(run_mod.register, "controversial_titles", lambda c: ["x"])
-    monkeypatch.setattr(run_mod.register, "rank_topics", _fake_rank)
-    monkeypatch.setattr(run_mod.register, "protection_status", lambda c, t: "none")
-    monkeypatch.setattr(run_mod.extracts, "fetch_intros", _fake_intros)
-    monkeypatch.setattr(run_mod.extract_llm, "extract_omissions", _fake_extract)
-    monkeypatch.setattr(run_mod.analyze, "omission_index",
-                        lambda claims, langs: {lang: 0.0 for lang in langs})
-    monkeypatch.setattr(run_mod.analyze, "mean_omission", lambda oi: 0.0)
+def test_upsert_drops_topics_no_longer_ranked():
+    reg = {"topics": [{**_topic("Gone", 0.9), "measured": "2026-06-01"}]}
+    out = upsert(reg, _topic("Alpha", 0.4), "2026-07-06", {"Alpha", "Bravo"})
+    assert {t["en_title"] for t in out["topics"]} == {"Alpha"}   # "Gone" fällt raus
 
-    reg = run_mod.build_register(None, "2026-07-02")
 
-    assert reg["census"] == {"attempted": 3, "measured": 1,
-                             "failed": {"llm": 1, "zu_wenige_sprachen": 1}}
-    assert [t["en_title"] for t in reg["topics"]] == ["Ok Island"]
+def test_upsert_sorts_topics_stably():
+    reg = {"topics": [{**_topic("Charlie", 0.3), "measured": "x"},
+                      {**_topic("Alpha", 0.5), "measured": "x"}]}
+    out = upsert(reg, _topic("Bravo", 0.4), "2026-07-06", {"Alpha", "Bravo", "Charlie"})
+    assert [t["en_title"] for t in out["topics"]] == ["Alpha", "Bravo", "Charlie"]
+
+
+def test_rotation_is_deterministic_and_cycles():
+    ranked = [{"en_title": "A"}, {"en_title": "B"}, {"en_title": "C"}]
+    picks = [pick_topic_for_date(ranked, d)["en_title"]
+             for d in ["2026-07-06", "2026-07-07", "2026-07-08", "2026-07-09"]]
+    assert len(set(picks[:3])) == 3     # drei Tage → drei verschiedene Themen
+    assert picks[3] == picks[0]         # nach len(ranked) Tagen zurück auf Anfang
