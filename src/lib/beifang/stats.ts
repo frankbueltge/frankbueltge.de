@@ -15,7 +15,8 @@ export function automatResults(run: BeifangRun): BeifangSiteResult[] {
 export function leserResults(run: BeifangRun): BeifangSiteResult[] {
   return run.vantages.leser?.results ?? []
 }
-/** @deprecated Abwärtskompat-Alias: bestehende Aggregationen arbeiten auf dem Automat-Standpunkt. */
+/** Alias auf den Automat-Standpunkt — interner Kürzel für die bestehenden Aggregationen
+ *  (die auf dem wöchentlichen Prüfblick arbeiten) und Abwärtskompat für Importe. */
 export const usResults = automatResults
 
 /** Jüngster Run, dessen Standpunkt `kind` tatsächlich gemessen wurde (status ok). */
