@@ -82,14 +82,22 @@ def test_load_previous_picks_latest_before(tmp_path):
     assert load_previous(tmp_path, before="2026-06-29") is None
 
 
-def test_assemble_run_has_eu_pending():
+def test_assemble_automat_fills_automat_vantage():
     rec = assemble_run(date_iso="2026-07-06", panel_version="2026-07-02", runner="test",
-                       vantage="github-actions", results=[sr(note="x")],
+                       vantage="github-actions", vantage_kind="automat", results=[sr(note="x")],
                        lists={"easyprivacy": ListMeta("u", "t", "h")}, previous=None)
-    assert rec.vantages["eu"].status == "ausstehend" and rec.vantages["eu"].results is None
-    assert rec.vantages["us"].status == "ok"
+    assert rec.vantages["automat"].status == "ok"
+    assert rec.vantages["leser"].status == "ausstehend" and rec.vantages["leser"].results is None
     assert rec.runner == "test"
     assert rec.befund.kind == "baseline"
+
+
+def test_assemble_leser_fills_leser_vantage():
+    rec = assemble_run(date_iso="2026-07-06", panel_version="v", runner="lokal",
+                       vantage="leser", vantage_kind="leser", results=[sr(note="x")],
+                       lists={"easyprivacy": ListMeta("u", "t", "h")}, previous=None)
+    assert rec.vantages["leser"].status == "ok"
+    assert rec.vantages["automat"].status == "ausstehend"
 
 
 def test_befund_entity_neu_baseline_nur_verlagsseiten():
