@@ -6,6 +6,7 @@ from __future__ import annotations
 
 import json
 import os
+import threading
 import time
 
 import httpx
@@ -17,6 +18,28 @@ API_BASE = "https://generativelanguage.googleapis.com/v1beta/models"
 RETRY_STATUSES = (429, 500, 503)
 MAX_RETRIES = 5
 RETRY_DELAY_S = 1.5
+
+# Free-Tier-RPM-Bremse. Diagnose 2026-07-05: 23/24 Themen fielen ins 429, obwohl WORKERS
+# schon auf 2 stand — nicht die Parallelität ist das Limit, sondern die Requests-pro-Minute.
+# Darum werden ALLE Aufrufe (über alle Worker-Threads, inkl. Retries) global auf einen
+# Mindestabstand entzerrt, statt sie im Burst abzufeuern. Über PARALLAXE_LLM_MIN_INTERVAL_S
+# tunebar (Sekunden); 0 schaltet die Bremse ab (Tests setzen 0 in conftest).
+_DEFAULT_MIN_INTERVAL_S = 5.0
+_throttle_lock = threading.Lock()
+_next_start = 0.0
+
+
+def _throttle() -> None:
+    """Serialisiert Aufruf-Starts über alle Threads auf >= min-interval Abstand (RPM-Schutz)."""
+    interval = float(os.environ.get("PARALLAXE_LLM_MIN_INTERVAL_S", _DEFAULT_MIN_INTERVAL_S))
+    if interval <= 0:
+        return
+    global _next_start
+    with _throttle_lock:
+        wait = _next_start - time.monotonic()
+        if wait > 0:
+            time.sleep(wait)
+        _next_start = time.monotonic() + interval
 
 
 class ExtractionError(Exception):
@@ -49,6 +72,7 @@ def extract_omissions(lang_to_text: dict[str, str], *, client: httpx.Client) -> 
 
     last_status: int | None = None
     for attempt in range(MAX_RETRIES):
+        _throttle()  # RPM-Bremse gilt für jeden Request, auch Retries
         resp = client.post(_endpoint(), headers=headers, json=body, timeout=120.0)
         if resp.status_code in RETRY_STATUSES:
             last_status = resp.status_code
