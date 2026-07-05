@@ -51,12 +51,27 @@ def detect_blocked(http_status: int | None, page_title: str) -> Blocked | None:
     return None
 
 
+HEADLESS_LESER = False  # Task-1-Befund: echtes Chrome muss headed sein, sonst blocken Wiley/T&F (403)
+
+
+def build_launch_kwargs(real_chrome: bool, proxy: str | None) -> dict:
+    """Playwright-launch()-Argumente. automat = headless-Chromium-Bundle (Default, wie bisher);
+    leser = echtes Google Chrome (channel), headed — wie ein realer Leser, ohne Stealth-Tricks."""
+    kw: dict = {}
+    if real_chrome:
+        kw["channel"] = "chrome"
+        kw["headless"] = HEADLESS_LESER
+    if proxy:
+        kw["proxy"] = {"server": proxy}
+    return kw
+
+
 def capture_page(url: str, *, timeout_s: float = 60.0, settle_s: float = 8.0,
-                 proxy: str | None = None) -> RawCapture:
+                 proxy: str | None = None, real_chrome: bool = False) -> RawCapture:
     from playwright.sync_api import sync_playwright
 
     with sync_playwright() as pw:
-        launch_kwargs = {"proxy": {"server": proxy}} if proxy else {}
+        launch_kwargs = build_launch_kwargs(real_chrome, proxy)
         browser = pw.chromium.launch(**launch_kwargs)
         context = browser.new_context()
         page = context.new_page()
