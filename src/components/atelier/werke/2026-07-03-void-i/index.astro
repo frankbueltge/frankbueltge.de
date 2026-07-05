@@ -1,0 +1,224 @@
+---
+// Void i — works/2026-07-03-void-i/work.astro
+// Native Astro port of the former standalone HTML work. Lipogram (letter "i"
+// prohibited) across four primary texts; client-side DOM animation voids the
+// letters out on load, hover restores them temporarily.
+---
+
+<article class="void-work">
+
+  <header>
+    <h1>Void i</h1>
+    <div class="sub">lipogram · prohibited letter: i · seed 20260703</div>
+  </header>
+
+  <div class="stations">
+
+    <div class="station">
+      <div class="lbl lbl-c1">C1 · Physical — Wiener 1948</div>
+      <div class="src">Cybernetics, Ch. VII "Cybernetics and Psychopathology," p. 148</div>
+      <div class="qt" data-c="#9a5f1e">what started as a relat<span class="vi" data-l="i">i</span>vely tr<span class="vi" data-l="i">i</span>v<span class="vi" data-l="i">i</span>al and acc<span class="vi" data-l="i">i</span>dental reversal of stab<span class="vi" data-l="i">i</span>l<span class="vi" data-l="i">i</span>ty may bu<span class="vi" data-l="i">i</span>ld <span class="vi" data-l="i">i</span>tself up <span class="vi" data-l="i">i</span>nto a process totally destruct<span class="vi" data-l="i">i</span>ve to the ord<span class="vi" data-l="i">i</span>nary mental l<span class="vi" data-l="i">i</span>fe.</div>
+    </div>
+
+    <div class="station">
+      <div class="lbl lbl-c2">C2 · Relational — Bateson et al. 1956</div>
+      <div class="src">Steps to an Ecology of Mind, p. 207 — Condition 6 (autonomous phase)</div>
+      <div class="qt" data-c="#1e7a7a">F<span class="vi" data-l="i">i</span>nally, the complete set of <span class="vi" data-l="i">i</span>ngred<span class="vi" data-l="i">i</span>ents <span class="vi" data-l="i">i</span>s no longer necessary when the v<span class="vi" data-l="i">i</span>ct<span class="vi" data-l="i">i</span>m has learned to perce<span class="vi" data-l="i">i</span>ve h<span class="vi" data-l="i">i</span>s un<span class="vi" data-l="i">i</span>verse <span class="vi" data-l="i">i</span>n double b<span class="vi" data-l="i">i</span>nd patterns.</div>
+    </div>
+
+    <div class="station">
+      <div class="lbl lbl-c3">C3 · Epistemological — Von Foerster 1991</div>
+      <div class="src">Ethics and Second-Order Cybernetics — primary text, pangaro.com</div>
+      <div class="qt" data-c="#2a7a2a">Am <span class="vi" data-l="I">I</span> part of the un<span class="vi" data-l="i">i</span>verse? That <span class="vi" data-l="i">i</span>s, whenever <span class="vi" data-l="I">I</span> act, <span class="vi" data-l="I">I</span> am chang<span class="vi" data-l="i">i</span>ng myself and the un<span class="vi" data-l="i">i</span>verse as well.</div>
+    </div>
+
+    <div class="station">
+      <div class="lbl lbl-c4">C4 · Ontological — Maturana via Mingers 1991†</div>
+      <div class="src">†Secondary — primary text F-021 still inaccessible</div>
+      <div class="qt" data-c="#5a3a8a">A l<span class="vi" data-l="i">i</span>v<span class="vi" data-l="i">i</span>ng system such as a cell has an autopo<span class="vi" data-l="i">i</span>et<span class="vi" data-l="i">i</span>c organ<span class="vi" data-l="i">i</span>zat<span class="vi" data-l="i">i</span>on, that <span class="vi" data-l="i">i</span>s, <span class="vi" data-l="i">i</span>t <span class="vi" data-l="i">i</span>s 'self-produc<span class="vi" data-l="i">i</span>ng.' <span class="vi" data-l="I">I</span>t cons<span class="vi" data-l="i">i</span>sts of processes of product<span class="vi" data-l="i">i</span>on wh<span class="vi" data-l="i">i</span>ch generate <span class="vi" data-l="i">i</span>ts components.</div>
+    </div>
+
+  </div>
+
+  <footer>
+    Lipogram — Prohibited: the letter i (and I)<br>
+    Oulipo method, 1960 — "rats who construct the labyrinth from which they plan to escape" (Queneau, secondary)<br>
+    Hover any · to restore the prohibited exit temporarily<br>
+    Wiener 1948 · Bateson et al. 1956 · Von Foerster 1991 · Mingers 1991 (sec.) for Maturana 1980<br>
+    Ulysses — Error as Method — 2026-07-03
+  </footer>
+
+  <div id="void-ctrl">[ restart ]</div>
+
+</article>
+
+<script>
+  const DOT = '·'; // middle dot ·
+  let pending: ReturnType<typeof setTimeout>[] = [];
+
+  function cancel(): void {
+    pending.forEach(clearTimeout);
+    pending = [];
+  }
+
+  function later(fn: () => void, ms: number): void {
+    pending.push(setTimeout(fn, ms));
+  }
+
+  function run(): void {
+    cancel();
+
+    // Reset: clone all .vi spans to remove old listeners, restore original letter
+    const spans = Array.from(document.querySelectorAll<HTMLSpanElement>('.vi'));
+    spans.forEach((span: HTMLSpanElement) => {
+      const c = document.createElement('span');
+      c.className = 'vi';
+      c.dataset.l = span.dataset.l;
+      c.textContent = span.dataset.l as string;
+      c.style.color = '#999';
+      span.parentNode!.replaceChild(c, span);
+    });
+
+    const fresh = Array.from(document.querySelectorAll<HTMLSpanElement>('.vi'));
+
+    // Group by station color (data-c on parent .qt)
+    const groups = new Map<string, HTMLSpanElement[]>();
+    fresh.forEach((s: HTMLSpanElement) => {
+      const qt = s.closest<HTMLElement>('[data-c]');
+      const color: string = qt?.dataset.c ?? '#888';
+      if (!groups.has(color)) groups.set(color, []);
+      groups.get(color)!.push(s);
+    });
+
+    // Phase 1 — 1100ms: light up the exits in station color
+    later(() => {
+      groups.forEach((spans: HTMLSpanElement[], color: string) => {
+        spans.forEach((s: HTMLSpanElement) => { s.style.color = color; });
+      });
+    }, 1100);
+
+    // Phase 2 — 1900ms: void them out one by one (parallel across stations)
+    groups.forEach((spans: HTMLSpanElement[], color: string) => {
+      spans.forEach((span: HTMLSpanElement, i: number) => {
+        later(() => {
+          span.textContent = DOT;
+          span.style.color = '#222';
+          span.addEventListener('mouseenter', function (this: HTMLSpanElement) {
+            this.textContent = this.dataset.l as string;
+            this.style.color = color;
+          });
+          span.addEventListener('mouseleave', function (this: HTMLSpanElement) {
+            this.textContent = DOT;
+            this.style.color = '#222';
+          });
+        }, 1900 + i * 115);
+      });
+    });
+  }
+
+  document.getElementById('void-ctrl')!.addEventListener('click', run);
+  document.addEventListener('DOMContentLoaded', run);
+</script>
+
+<style>
+  .void-work {
+    background: #050505;
+    font-family: 'Courier New', Courier, monospace;
+    color: #aaa;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2.8rem 1.6rem 3.5rem;
+  }
+
+  .void-work *,
+  .void-work *::before,
+  .void-work *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  .void-work header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .void-work h1 {
+    font-size: 0.88rem;
+    font-weight: normal;
+    letter-spacing: 0.55em;
+    color: #aaa;
+    text-transform: uppercase;
+  }
+
+  .void-work .sub {
+    font-size: 0.5rem;
+    letter-spacing: 0.3em;
+    color: #232323;
+    margin-top: 0.4rem;
+  }
+
+  .void-work .stations {
+    width: 100%;
+    max-width: 660px;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .void-work .station {
+    border-left: 1px solid #161616;
+    padding-left: 1.3rem;
+  }
+
+  .void-work .lbl {
+    font-size: 0.48rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    margin-bottom: 0.38rem;
+    opacity: 0.75;
+  }
+
+  .void-work .lbl-c1 { color: #9a5f1e; }
+  .void-work .lbl-c2 { color: #1e7a7a; }
+  .void-work .lbl-c3 { color: #2a7a2a; }
+  .void-work .lbl-c4 { color: #5a3a8a; }
+
+  .void-work .src {
+    font-size: 0.43rem;
+    color: #1d1d1d;
+    margin-bottom: 0.7rem;
+    letter-spacing: 0.07em;
+  }
+
+  .void-work .qt {
+    font-size: 0.83rem;
+    line-height: 1.8;
+    color: #999;
+    letter-spacing: 0.018em;
+  }
+
+  .void-work .vi {
+    transition: color 0.08s ease;
+    cursor: default;
+  }
+
+  .void-work footer {
+    margin-top: 3rem;
+    max-width: 640px;
+    font-size: 0.43rem;
+    color: #1c1c1c;
+    text-align: center;
+    letter-spacing: 0.14em;
+    line-height: 2.4;
+  }
+
+  .void-work #void-ctrl {
+    margin-top: 2.2rem;
+    font-size: 0.42rem;
+    letter-spacing: 0.3em;
+    color: #191919;
+    cursor: pointer;
+    transition: color 0.25s;
+    user-select: none;
+  }
+
+  .void-work #void-ctrl:hover { color: #555; }
+</style>
