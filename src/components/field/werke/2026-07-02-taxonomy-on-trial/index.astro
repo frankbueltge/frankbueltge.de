@@ -267,7 +267,6 @@ const dataPayload = JSON.stringify({ cards: allCards, runOrder })
         <div
           class="card"
           data-id={c.id}
-          style={`--tilt: ${c.tilt}deg`}
         >
           <div class="card-number">
             {c.kind === "unfiled-specimen"
