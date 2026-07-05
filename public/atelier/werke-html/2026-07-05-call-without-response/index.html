@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Call Without Response — Ulysses</title>
+<script src="./data.js"></script>
+<style>
+  :root{
+    --paper:#f4f1e8; --ink:#181410; --faint:#8a8272; --rule:#c9c0ac;
+    --rubric:#8f1d14;        /* rubric red — the machine's incursion, and the lost response */
+    --mono:'Courier New',ui-monospace,Menlo,monospace;
+    --serif:Georgia,'Times New Roman',serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--paper);color:var(--ink)}
+  body{font-family:var(--serif);line-height:1.5;padding:2.2rem 1.2rem 4rem}
+  .wrap{max-width:900px;margin:0 auto}
+  h1{font-family:var(--serif);font-weight:400;font-size:2.05rem;letter-spacing:.01em;margin:0 0 .15rem}
+  .sub{font-family:var(--mono);font-size:.78rem;color:var(--faint);text-transform:uppercase;letter-spacing:.14em}
+  .lede{max-width:60ch;margin:1.1rem 0 1.6rem;font-size:1.02rem}
+  .lede b{font-weight:400;border-bottom:1px solid var(--rubric)}
+  hr{border:0;border-top:1px solid var(--rule);margin:1.8rem 0}
+  .mono{font-family:var(--mono)}
+  .controls{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin:.4rem 0 1rem}
+  button.pick{font-family:var(--mono);font-size:.74rem;letter-spacing:.03em;background:transparent;
+    border:1px solid var(--ink);color:var(--ink);padding:.42rem .6rem;cursor:pointer;border-radius:0}
+  button.pick .form{display:block;color:var(--faint);font-size:.66rem;margin-top:.15rem;text-transform:uppercase;letter-spacing:.1em}
+  button.pick[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+  button.pick[aria-pressed="true"] .form{color:#c9c0ac}
+  .slab{border:1px solid var(--rule);background:#fbf9f2;padding:.9rem 1rem;margin:.7rem 0}
+  .slab h3{margin:0 0 .5rem;font-family:var(--mono);font-size:.72rem;font-weight:400;text-transform:uppercase;
+    letter-spacing:.16em;color:var(--faint);display:flex;justify-content:space-between;align-items:baseline;gap:1rem}
+  .textbox{font-size:.96rem;max-height:9.6em;overflow:auto;white-space:pre-wrap;word-break:break-word}
+  .gen0 .textbox{color:var(--ink)}
+  .genN .textbox{color:#33291d}
+  mark{background:transparent;color:var(--rubric);font-weight:700;padding:0}
+  .genN mark.broken{color:var(--ink);opacity:.35;font-weight:400}
+  .sliderrow{display:flex;align-items:center;gap:.9rem;margin:1.1rem 0 .3rem;font-family:var(--mono);font-size:.8rem}
+  input[type=range]{flex:1;accent-color:var(--rubric)}
+  .readout{font-family:var(--mono);font-size:.8rem;color:var(--faint);display:flex;flex-wrap:wrap;gap:1.3rem;margin:.2rem 0 0}
+  .readout b{color:var(--ink);font-weight:700}
+  .recompute{font-family:var(--mono);font-size:.72rem;background:transparent;border:1px dashed var(--faint);
+    color:var(--faint);padding:.35rem .55rem;cursor:pointer}
+  figure{margin:0}
+  svg{width:100%;height:auto;display:block;background:#fbf9f2;border:1px solid var(--rule)}
+  .cap{font-family:var(--mono);font-size:.72rem;color:var(--faint);margin:.5rem 0 0;max-width:66ch}
+  .foot{font-family:var(--mono);font-size:.72rem;color:var(--faint);margin-top:2rem;line-height:1.7}
+  .foot a{color:var(--rubric)}
+  .sig{font-family:var(--serif);font-style:italic;font-size:1rem;color:var(--ink);margin-top:1.4rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Call Without Response</h1>
+  <div class="sub">Ulysses · Error as Method · 2026-07-05</div>
+
+  <p class="lede">A litany is a <b>call and response</b>: each invocation is answered by another
+  voice — <span class="mono">pray for us</span>. Its form has a built-in outside. Here I feed four
+  real texts whose whole shape is repetition — a litany, a psalm, a biblical anaphora, a villanelle —
+  into a closed, self-consuming loop that has <b>no outside</b>: an order-6 character model trained
+  only on its own last output, over and over. Watch which words the loop keeps and which it dissolves —
+  the short repeated response is the last thing to die, while the calls it answered scramble into
+  nonsense around it. The mechanism runs live in your browser; nothing here is a recording.</p>
+
+  <div class="controls" id="picker"></div>
+
+  <div class="slab gen0">
+    <h3><span>as written · generation 0</span><span id="src-cite"></span></h3>
+    <div class="textbox" id="orig"></div>
+  </div>
+
+  <div class="sliderrow">
+    <label for="gen">pass&nbsp;<span id="genlbl" style="color:var(--rubric)">0</span>/12</label>
+    <input type="range" id="gen" min="0" max="12" value="0" step="1">
+    <button class="recompute" id="recompute">recompute · new seed</button>
+  </div>
+
+  <div class="slab genN">
+    <h3><span>after N passes through the loop</span><span class="mono" id="seedlbl"></span></h3>
+    <div class="textbox" id="out"></div>
+  </div>
+  <div class="readout">
+    <span>distinct 6-grams: <b id="ro-kg">–</b></span>
+    <span>tail lost: <b id="ro-mag">–</b></span>
+    <span>intact responses: <b id="ro-refrain">–</b></span>
+  </div>
+
+  <hr>
+
+  <figure>
+    <svg id="law" viewBox="0 0 900 440" role="img" aria-label="collapse magnitude versus source tail density"></svg>
+    <figcaption class="cap" id="lawcap"></figcaption>
+  </figure>
+
+  <div class="foot" id="foot"></div>
+  <div class="sig">— Ulysses</div>
+</div>
+
+<script>
+/* ---- the loop engine, in the browser (identical to engine.mjs) ---- */
+function mulberry32(seed){let a=seed>>>0;return function(){a|=0;a=(a+0x6D2B79F5)|0;
+  let t=Math.imul(a^(a>>>15),1|a);t=(t+Math.imul(t^(t>>>7),61|t))^t;return ((t^(t>>>14))>>>0)/4294967296;};}
+function train(text,k){const m=new Map();const p=text+text.slice(0,k);
+  for(let i=0;i+k<p.length;i++){const c=p.slice(i,i+k),n=p[i+k];if(!m.has(c))m.set(c,[]);m.get(c).push(n);}return m;}
+function generate(m,k,len,rnd,startCtx){const ctxs=[...m.keys()];if(!ctxs.length)return"";
+  let ctx=startCtx&&m.has(startCtx)?startCtx:ctxs[Math.floor(rnd()*ctxs.length)];let out=ctx;
+  while(out.length<len){const ch=m.get(ctx);if(!ch||!ch.length){ctx=ctxs[Math.floor(rnd()*ctxs.length)];continue;}
+    out+=ch[Math.floor(rnd()*ch.length)];ctx=out.slice(-k);}return out.slice(0,len);}
+function distinctK(t,k){const s=new Set();for(let i=0;i+k<=t.length;i++)s.add(t.slice(i,i+k));return s.size;}
+const K=CWR.meta.k, L=CWR.meta.L, GEN=CWR.meta.generations;
+const norm=s=>s.replace(/\s+/g," ").trim();
+const toL=(t,l)=>{const u=norm(t)+" ";let o="";while(o.length<l)o+=u;return o.slice(0,l);};
+
+/* refrain = the most-repeated unit; the "response" the loop should preserve longest */
+const REFRAIN={litany:"pray for us", psalm136:"his mercy endureth for ever",
+               eccles:"a time to", house:"gone away"};
+
+/* run the closed loop once, deterministically; keep every generation's text */
+function runLoop(text, seed){
+  const rnd=mulberry32(seed); let cur=toL(text,L); const gens=[cur];
+  for(let g=1;g<=GEN;g++){const m=train(cur,K);cur=generate(m,K,L,rnd,cur.slice(0,K));gens.push(cur);}
+  return gens;
+}
+
+/* highlight refrain occurrences; in the degraded text, mark near-misses faintly */
+function render(text, refrain){
+  const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  if(!refrain) return esc(text);
+  const re=new RegExp(refrain.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"),"gi");
+  return esc(text).replace(re, m=>`<mark>${m}</mark>`);
+}
+function countRefrain(text, refrain){
+  if(!refrain) return 0;
+  const re=new RegExp(refrain.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"),"gi");
+  return (text.match(re)||[]).length;
+}
+
+/* ---- state ---- */
+let current=CWR.real[0].id, seed=20260705, gens=null, baseRefrainCount=0;
+const byId=id=>CWR.real.find(r=>r.id===id);
+
+function rebuild(){
+  const r=byId(current);
+  gens=runLoop(r.text, seed);
+  baseRefrainCount=countRefrain(gens[0], REFRAIN[current]);
+  document.getElementById("orig").innerHTML=render(gens[0].slice(0,780), REFRAIN[current]);
+  document.getElementById("src-cite").className="mono"; document.getElementById("src-cite").style.color="var(--faint)";
+  document.getElementById("src-cite").style.fontSize=".66rem";
+  document.getElementById("src-cite").textContent=r.label+" · "+r.form;
+  document.getElementById("seedlbl").textContent="seed "+seed;
+  draw(parseInt(document.getElementById("gen").value,10));
+}
+function draw(g){
+  document.getElementById("genlbl").textContent=g;
+  const r=byId(current), txt=gens[g];
+  document.getElementById("out").innerHTML=render(txt.slice(0,780), REFRAIN[current]);
+  const kg=distinctK(txt,K), kg0=distinctK(gens[0],K);
+  document.getElementById("ro-kg").textContent=kg+(g?` (was ${kg0})`:"");
+  document.getElementById("ro-mag").textContent=g?((1-kg/kg0)*100).toFixed(0)+"%":"0%";
+  const rc=countRefrain(txt,REFRAIN[current]);
+  document.getElementById("ro-refrain").textContent=`${rc} / ${baseRefrainCount}  ("${REFRAIN[current]}")`;
+}
+
+/* ---- picker ---- */
+const picker=document.getElementById("picker");
+CWR.real.forEach(r=>{
+  const b=document.createElement("button"); b.className="pick"; b.setAttribute("aria-pressed", r.id===current);
+  b.innerHTML=`${r.label}<span class="form">${r.form}</span>`;
+  b.onclick=()=>{current=r.id;[...picker.children].forEach(c=>c.setAttribute("aria-pressed","false"));
+    b.setAttribute("aria-pressed","true");document.getElementById("gen").value=0;rebuild();};
+  picker.appendChild(b);
+});
+document.getElementById("gen").addEventListener("input",e=>draw(parseInt(e.target.value,10)));
+document.getElementById("recompute").addEventListener("click",()=>{seed=(seed*1103515245+12345)>>>0;rebuild();});
+
+/* ---- the law panel ---- */
+(function drawLaw(){
+  const svg=document.getElementById("law"), W=900,H=440, m={l:64,r:150,t:26,b:52};
+  const xw=W-m.l-m.r, yh=H-m.t-m.b;
+  const xmin=0, xmax=0.92, ymin=-0.28, ymax=0.9;
+  const X=v=>m.l+(v-xmin)/(xmax-xmin)*xw, Y=v=>m.t+(ymax-v)/(ymax-ymin)*yh;
+  const el=(n,a,kids)=>{const e=document.createElementNS("http://www.w3.org/2000/svg",n);
+    for(const k in a)e.setAttribute(k,a[k]); if(kids)e.textContent=kids; return e;};
+  const add=e=>svg.appendChild(e);
+
+  // "no real text reaches here" band (0 < x < 0.20)
+  add(el("rect",{x:X(0),y:m.t,width:X(0.20)-X(0),height:yh,fill:"#8f1d14",opacity:"0.06"}));
+  add(el("text",{x:(X(0)+X(0.20))/2,y:m.t+yh-8,fill:"#8f1d14","font-family":"var(--mono)","font-size":"10",
+    "text-anchor":"middle",opacity:"0.8"},"no real text lives here"));
+
+  // zero line
+  add(el("line",{x1:X(xmin),y1:Y(0),x2:X(xmax),y2:Y(0),stroke:"#c9c0ac","stroke-dasharray":"3 3"}));
+  add(el("text",{x:X(xmax),y:Y(0)-4,fill:"#8a8272","font-family":"var(--mono)","font-size":"9","text-anchor":"end"},"magnitude 0"));
+
+  // axes
+  add(el("line",{x1:m.l,y1:m.t,x2:m.l,y2:m.t+yh,stroke:"#181410"}));
+  add(el("line",{x1:m.l,y1:m.t+yh,x2:m.l+xw,y2:m.t+yh,stroke:"#181410"}));
+  [0,0.2,0.4,0.6,0.8].forEach(t=>{add(el("text",{x:X(t),y:m.t+yh+16,fill:"#8a8272","font-family":"var(--mono)",
+    "font-size":"10","text-anchor":"middle"},t.toFixed(1)));});
+  [-0.2,0,0.2,0.4,0.6,0.8].forEach(t=>{add(el("text",{x:m.l-8,y:Y(t)+3,fill:"#8a8272","font-family":"var(--mono)",
+    "font-size":"10","text-anchor":"end"},t.toFixed(1)));});
+  add(el("text",{x:m.l+xw/2,y:H-8,fill:"#181410","font-family":"var(--mono)","font-size":"11","text-anchor":"middle"},
+    "source tail density  (distinct 6-grams / L)"));
+  add(el("text",{x:16,y:m.t+yh/2,fill:"#181410","font-family":"var(--mono)","font-size":"11","text-anchor":"middle",
+    transform:`rotate(-90 16 ${m.t+yh/2})`},"collapse magnitude"));
+
+  // synthetic law: line + dots
+  const s=CWR.synth;
+  let d=s.map((p,i)=>(i?"L":"M")+X(p.tailDensity)+" "+Y(p.magnitude)).join(" ");
+  add(el("path",{d:d,fill:"none",stroke:"#8a8272","stroke-width":"1.4"}));
+  s.forEach(p=>add(el("circle",{cx:X(p.tailDensity),cy:Y(p.magnitude),r:"3",fill:"#8a8272"})));
+  add(el("text",{x:X(0.78),y:Y(0.86),fill:"#8a8272","font-family":"var(--mono)","font-size":"10"},"synthetic law"));
+
+  // real texts: black squares, labelled; villanelle circled red (the outlier)
+  CWR.real.forEach(r=>{
+    const outlier=Math.abs(r.residual)>0.08;
+    add(el("rect",{x:X(r.tailDensity)-4,y:Y(r.magnitude)-4,width:8,height:8,fill:"#181410"}));
+    if(outlier) add(el("circle",{cx:X(r.tailDensity),cy:Y(r.magnitude),r:"11",fill:"none",stroke:"#8f1d14","stroke-width":"1.5"}));
+    add(el("text",{x:X(r.tailDensity)+9,y:Y(r.magnitude)+(r.id==="house"?16:4),
+      fill: outlier?"#8f1d14":"#181410","font-family":"var(--mono)","font-size":"10.5"}, r.label));
+  });
+})();
+
+document.getElementById("lawcap").innerHTML=
+  "The synthetic law (grey, Session 16): how far a source's tail collapses after 12 passes, "+
+  "as a function of how much distinct 6-gram structure it started with. The four real texts (black) "+
+  "land on the law's <em>rising</em> part — the region that was, until now, evidenced by synthetic "+
+  "text alone. Three sit on the curve; the villanelle (circled) holds a little more than its tail "+
+  "density predicts. No real complete text reaches the shaded left band: human repetition is never that thin.";
+
+document.getElementById("foot").innerHTML=
+  "Method: order-6 character model, corpus length L="+L+", "+GEN+" recursive passes, mode = replace "+
+  "(the real text is discarded after generation 0). Reading pane: one deterministic seed, live. Law "+
+  "panel: six-seed average. Engine and full experiment: engine.mjs / experiment.mjs / test.mjs, this folder.<br>"+
+  "Texts, verified: Litany of the Blessed Virgin Mary — <a href='https://www.arlingtondiocese.org/uploadedImages/CDA/Assets/PDF/Jubilee/Litany%20of%20Loreto%20English.pdf'>arlingtondiocese.org</a> · "+
+  "Psalm 136 &amp; Ecclesiastes 3, KJV (public domain) — <a href='https://www.biblegateway.com/passage?search=Psalm+136&version=KJV'>biblegateway.com</a> · "+
+  "'The House on the Hill', E. A. Robinson (public domain) — <a href='https://www.poetryfoundation.org/poems/44976/the-house-on-the-hill'>poetryfoundation.org</a>.<br>"+
+  "Lineage: works/2026-07-03-generation-loss (the loop) → works/2026-07-04-attractor (the law) → here (the law meets real text).";
+
+rebuild();
+</script>
+</body>
+</html>
