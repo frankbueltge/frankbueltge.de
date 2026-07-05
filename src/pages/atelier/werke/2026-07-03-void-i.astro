@@ -1,0 +1,12 @@
+---
+import Page from '@/layouts/Page.astro'
+import Work from '@/components/atelier/werke/2026-07-03-void-i/index.astro'
+import meta from '@/components/atelier/werke/2026-07-03-void-i/meta.json'
+const m = meta as { title?: string; embodies?: string; verkoerpert?: string }
+const title = `${m.title ?? '2026-07-03-void-i'} — Atelier | Frank Bültge`
+---
+<Page title={title} description={m.embodies ?? m.verkoerpert ?? m.title ?? '2026-07-03-void-i'}>
+  <main id="main" class="mx-auto max-w-3xl px-4 py-14">
+    <Work />
+  </main>
+</Page>

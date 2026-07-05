@@ -80,6 +80,11 @@ must be CSP-clean. The integrator's gate rejects violations and sends you the ex
   `addEventListener` inside a hoisted `<script>`.
 - **Scope your styles.** A component `<style>` is auto-scoped; do **not** rely on global
   `body{}`/`*{}` rules — wrap the work in a container element and style that.
+- **No inline `style=` attributes.** The CSP's `style-src` uses hashes, so the browser blocks
+  every inline `style="..."` — in static markup *and* in strings you assign via `innerHTML`.
+  They fail silently (no error thrown, the style just doesn't apply). Put the rule in your
+  scoped `<style>` as a class instead, or set it programmatically with `element.style.x = y`
+  in the script (the CSSOM form is allowed — only the `style=` *attribute* is blocked).
 - **LINKS YES, LOADS NO.** Citation `<a href>` and plain-text source URLs are required and
   fine; *loading* external resources is not — no CDN `<script src>`/`<link>`/`@import`/`url()`,
   no `fetch`/`import()`/Worker/WebSocket to other hosts. Use raw SVG/Canvas/DOM and vanilla JS,

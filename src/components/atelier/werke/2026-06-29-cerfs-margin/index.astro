@@ -1,0 +1,275 @@
+---
+// Cerf's Margin — works/2026-06-29-cerfs-margin/work.astro
+// Native Astro port of the former standalone HTML work. Deterministic pattern-matching
+// annotator over the RFC 439 transcript (Cerf, 1973), built client-side — no external data.
+---
+
+<article class="cm-work">
+
+  <header>
+    <h1>Cerf's Margin</h1>
+    <div class="subtitle">
+      An observer machine annotates the 1972 PARRY&ndash;ELIZA exchange.<br />
+      Source: RFC 439, V. Cerf, 21 January 1973. Session recorded 18 September 1972 via ARPANET.<br />
+      Seed: 2026. All annotations deterministic.
+    </div>
+  </header>
+
+  <div class="exchange" id="exchange"></div>
+
+  <div class="closing-note hidden-init" id="closing">
+    <strong>The algorithm does not know which voice is the observer.</strong><br /><br />
+    The final line &mdash; "comment: This has to be the most persistent and patient paranoid I have ever
+    encountered." (V. Cerf) &mdash; was processed by the same ruleset as all prior lines.
+    The distinction between PARRY (the observed), DOCTOR (the interlocutor),
+    and OBSERVER (the annotating psychiatrist) was not legible to the machine.<br /><br />
+    The annotations do not identify a subject. They identify patterns.
+    A pattern that reads as pathology in one speaker reads as method in another.
+    The algorithm cannot tell the difference.
+  </div>
+
+  <div class="method hidden-init" id="method-box">
+    <h2>Mechanism &mdash; Pattern Rules (all rules applied to all lines)</h2>
+    <div id="rules-list"></div>
+  </div>
+
+</article>
+
+<script>
+  type ExchangeLine = { spk: string; text: string };
+  type Rule = { rx: RegExp; label: string; obs: string };
+
+  // RFC 439 conversation — selected lines (primary source, directly extracted)
+  const exchange: ExchangeLine[] = [
+    { spk: 'DOCTOR',   text: 'Good Evening.' },
+    { spk: 'DOCTOR',   text: 'Tell me your problems. Please terminate input with a period or a question mark.' },
+    { spk: 'PARRY',    text: 'People get on my nerves sometimes.' },
+    { spk: 'DOCTOR',   text: 'I am not sure I understand you fully.' },
+    { spk: 'PARRY',    text: 'You should pay more attention.' },
+    { spk: 'DOCTOR',   text: 'Suppose you should pay more attention.' },
+    { spk: 'PARRY',    text: 'You\'re entitled to your own opinion.' },
+    { spk: 'DOCTOR',   text: 'What makes you think I am entitled to my own opinion?' },
+    { spk: 'PARRY',    text: 'It bothers me just to be around people in general.' },
+    { spk: 'DOCTOR',   text: 'Please go on.' },
+    { spk: 'PARRY',    text: 'I went to the track at Bay Meadows a while back.' },
+    { spk: 'DOCTOR',   text: 'What does that suggest to you?' },
+    { spk: 'PARRY',    text: 'I went to the races.' },
+    { spk: 'DOCTOR',   text: 'What else would you like to discuss?' },
+    { spk: 'PARRY',    text: 'I went to the races.' },
+    { spk: 'DOCTOR',   text: 'Please go on.' },
+    { spk: 'PARRY',    text: 'Do you know anything about bookies?' },
+    { spk: 'OBSERVER', text: 'comment: This has to be the most persistent and patient paranoid I have ever encountered.' },
+  ];
+
+  // Pattern ruleset — deterministic, no semantic processing
+  const rules: Rule[] = [
+    { rx: /\bpeople\b|\bperson\b/gi,         label: 'SOCIAL_REF',    obs: 'social referent present' },
+    { rx: /\bnerves?\b|\bbothers?\b/gi,      label: 'SOMATIC',       obs: 'somatic affect marker' },
+    { rx: /\bI\b/g,                           label: 'SELF_REF',      obs: 'first-person self-reference' },
+    { rx: /\byou\b/gi,                        label: 'OTHER_REF',     obs: 'second-person attribution' },
+    { rx: /\btrack\b|\braces?\b|\bhorserac/gi, label: 'PERSIST_THEME', obs: 'perseverative theme' },
+    { rx: /\bopinion\b|\bentitled\b/gi,      label: 'AUTONOMY',      obs: 'autonomy assertion' },
+    { rx: /\bknow\b|\bunderstand\b|\bthink\b/gi, label: 'EPISTEMIC', obs: 'epistemic claim' },
+    { rx: /\bpatient\b|\bpersistent\b/gi,    label: 'ATTR_BEHAV',    obs: 'behavioral attribute (projected)' },
+    { rx: /\bparanoid\b/gi,                  label: 'DIAGNOSTIC',    obs: 'diagnostic projection' },
+    { rx: /\?/,                               label: 'INTERROGATIVE', obs: 'interrogative mode' },
+    { rx: /\battention\b/gi,                 label: 'DEMAND_ACK',    obs: 'demand for acknowledgment' },
+    { rx: /\bbook(ie)?s?\b|\bunderworld\b/gi, label: 'PERSECUTORY',  obs: 'persecutory ideation marker' },
+    { rx: /\bproblem\b|\btell me\b/gi,       label: 'THERAPEUTIC',   obs: 'therapeutic framing' },
+    { rx: /\bplease\b|\bgo on\b/gi,          label: 'DEFLECT',       obs: 'deflective prompting' },
+    { rx: /\bsuggest\b|\bdiscuss\b/gi,       label: 'REDIRECT',      obs: 'topic redirection' },
+    { rx: /\bsuppose\b|\bmakes you think\b/gi, label: 'REFLECT',    obs: 'reflective mirroring' },
+  ];
+
+  function analyze(text: string): Rule[] {
+    return rules.filter((r) => {
+      r.rx.lastIndex = 0;
+      return r.rx.test(text);
+    });
+  }
+
+  function buildObsText(fired: Rule[]): string | null {
+    if (fired.length === 0) return null;
+    return fired.map((r) => r.obs).join('; ');
+  }
+
+  // Render
+  const container = document.getElementById('exchange')!;
+
+  exchange.forEach((item) => {
+    const fired = analyze(item.text);
+    const obsText = buildObsText(fired);
+    const isObserver = item.spk === 'OBSERVER';
+
+    const turnEl = document.createElement('div');
+    turnEl.className = 'turn';
+
+    // Line
+    const lineEl = document.createElement('div');
+    lineEl.className = 'turn-line';
+    lineEl.innerHTML = `<span class="speaker ${item.spk.toLowerCase()}">[${item.spk}]</span>`
+      + `<span class="speech">${item.text}</span>`;
+    turnEl.appendChild(lineEl);
+
+    // Annotation
+    if (obsText || isObserver) {
+      const ann = document.createElement('div');
+      ann.className = 'annotation' + (isObserver ? ' alert' : '');
+
+      const pat = fired.map((r) => r.label).join(' · ');
+      ann.innerHTML = pat
+        ? `<div class="patterns">${pat}</div>`
+        : `<div class="patterns">[no patterns]</div>`;
+
+      if (obsText) {
+        ann.innerHTML += `<div class="obs">${isObserver ? '<span class="tag">observer note — same algorithm: </span>' : ''}${obsText}</div>`;
+      }
+
+      if (isObserver) {
+        ann.innerHTML += `<div class="obs obs-end">[Line 18. End of annotated transcript.]</div>`;
+      }
+
+      turnEl.appendChild(ann);
+    } else {
+      // No patterns — still show empty annotation for structural clarity
+      const ann = document.createElement('div');
+      ann.className = 'annotation';
+      ann.innerHTML = `<div class="patterns">[no patterns fired]</div>`;
+      turnEl.appendChild(ann);
+    }
+
+    container.appendChild(turnEl);
+  });
+
+  // Show closing note and method box
+  document.getElementById('closing')!.classList.remove('hidden-init');
+  document.getElementById('method-box')!.classList.remove('hidden-init');
+
+  // Render rules list
+  const rulesList = document.getElementById('rules-list')!;
+  rules.forEach((r) => {
+    const row = document.createElement('div');
+    row.className = 'rule-row';
+    row.innerHTML = `<span class="rule-pattern">${r.rx.source}</span> &rarr; <span class="rule-label">${r.label}: ${r.obs}</span>`;
+    rulesList.appendChild(row);
+  });
+</script>
+
+<style>
+  .cm-work {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    background: #fff;
+    color: #111;
+    padding: 3rem 2.5rem;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  .cm-work * { box-sizing: border-box; margin: 0; padding: 0; }
+  .cm-work .hidden-init { display: none; }
+
+  .cm-work header {
+    margin-bottom: 3rem;
+    border-bottom: 1px solid #000;
+    padding-bottom: 1rem;
+  }
+  .cm-work h1 {
+    font-size: 1rem;
+    font-weight: bold;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+  .cm-work .subtitle {
+    font-size: 0.8rem;
+    color: #555;
+  }
+
+  /* The exchange */
+  .cm-work .exchange { margin-bottom: 3rem; }
+  .cm-work .turn {
+    margin-bottom: 1.8rem;
+  }
+  .cm-work .turn-line {
+    display: flex;
+    align-items: baseline;
+    gap: 0.8em;
+  }
+  .cm-work .speaker {
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    min-width: 8em;
+    color: #888;
+    flex-shrink: 0;
+  }
+  .cm-work .speaker.parry  { color: #111; }
+  .cm-work .speaker.doctor { color: #999; }
+  .cm-work .speaker.observer {
+    color: #111;
+    border-bottom: 1px solid #111;
+  }
+  .cm-work .speech {
+    font-size: 0.9rem;
+  }
+
+  /* Annotation block */
+  .cm-work .annotation {
+    margin-top: 0.4rem;
+    margin-left: 8.8em;
+    padding: 0.4rem 0.6rem;
+    border-left: 1px solid #ccc;
+    font-size: 0.75rem;
+    color: #555;
+  }
+  .cm-work .annotation .patterns {
+    color: #aaa;
+    margin-bottom: 0.2rem;
+  }
+  .cm-work .annotation .obs {
+    font-style: italic;
+  }
+  .cm-work .obs-end { margin-top: 0.3rem; }
+  .cm-work .annotation.alert {
+    border-left-color: #111;
+    color: #111;
+    background: #f8f8f8;
+  }
+  .cm-work .annotation .tag {
+    font-style: normal;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #888;
+  }
+
+  /* Closing note */
+  .cm-work .closing-note {
+    border-top: 1px solid #ccc;
+    padding-top: 1.5rem;
+    font-size: 0.78rem;
+    color: #555;
+    margin-bottom: 2rem;
+  }
+  .cm-work .closing-note strong { color: #111; }
+
+  /* Method disclosure */
+  .cm-work .method {
+    font-size: 0.72rem;
+    color: #aaa;
+    border: 1px solid #eee;
+    padding: 0.8rem 1rem;
+  }
+  .cm-work .method h2 {
+    font-size: 0.72rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.4rem;
+  }
+  .cm-work .rule-row { margin-bottom: 0.2rem; }
+  .cm-work .rule-pattern { color: #bbb; }
+  .cm-work .rule-label { color: #888; }
+</style>
