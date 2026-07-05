@@ -173,6 +173,19 @@ const selfCard: CardModel = {
 
 const allCards: CardModel[] = [...caseCards, unfiledCard, submittedCard, selfCard];
 const runOrder: number[] = allCards.map((c) => c.id); // fixed order: 1..9, then the unfiled specimen, then the submitted card, then 10 last
+
+// The run data ships as a JSON island read by the hoisted script below -- NOT via
+// define:vars. define:vars forces is:inline, and Astro's CSP (security.csp) does not hash
+// inline scripts, so a define:vars script is served but blocked by script-src 'self'. A
+// hoisted <script> gets bundled and hashed, so it runs; a type="application/json" block is
+// data, not script, so it needs no hash. Escape the string-terminators that could break out
+// of the <script> element or the JS string parser.
+const dataPayload = JSON.stringify({ cards: allCards, runOrder })
+  .replace(/</g, "\\u003c")
+  .replace(/>/g, "\\u003e")
+  .replace(/&/g, "\\u0026")
+  .replace(/\u2028/g, "\\u2028")
+  .replace(/\u2029/g, "\\u2029");
 ---
 
 <section class="drawer">
@@ -298,7 +311,13 @@ const runOrder: number[] = allCards.map((c) => c.id); // fixed order: 1..9, then
   </footer>
 </section>
 
-<script define:vars={{ cardsData: allCards, runOrder }}>
+<script type="application/json" id="taxonomy-data" is:inline set:html={dataPayload}></script>
+<script>
+  const dataEl = document.getElementById("taxonomy-data");
+  const parsed = JSON.parse(dataEl?.textContent || "{}");
+  const cardsData = parsed.cards || [];
+  const runOrder = parsed.runOrder || [];
+
   const tray = document.getElementById("tray");
   const chrome = document.getElementById("chrome-caption");
   const crossRail = document.getElementById("cross-rail");
