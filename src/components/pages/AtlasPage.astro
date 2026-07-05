@@ -1,5 +1,4 @@
 ---
-import { getRelativeLocaleUrl } from 'astro:i18n'
 import type { Locale } from '@/lib/site'
 import worksData from '@/data/atlas/werke.json'
 
@@ -106,9 +105,6 @@ const physical = works.filter((w) => w.medium_class === 'physical').length
 const clusterCounts: Record<number, number> = {}
 for (const w of works) for (const c of w.clusters) clusterCounts[c] = (clusterCounts[c] ?? 0) + 1
 
-const fieldUrl = getRelativeLocaleUrl(locale, '/field')
-const atelierUrl = getRelativeLocaleUrl(locale, '/atelier')
-
 const clusterKeys = [1, 2, 3, 4, 5, 6, 7]
 const mediumKeys = ['digital', 'hybrid', 'physical']
 const axisKeys = ['investigation', 'mixed', 'spectacle']
@@ -121,9 +117,6 @@ const axisKeys = ['investigation', 'mixed', 'spectacle']
       {de ? 'Atlas der Datenkunst' : 'Atlas of Data Art'}
     </h1>
     <p class="mt-4 text-fg-muted">{copy.intro}</p>
-    <p class="mt-2 text-fg-muted">
-      {copy.fuelPre}<a href={fieldUrl} class="text-fg underline decoration-line underline-offset-4 hover:decoration-fg">{copy.field}</a>{copy.fuelMid}<a href={atelierUrl} class="text-fg underline decoration-line underline-offset-4 hover:decoration-fg">{copy.atelier}</a>.
-    </p>
   </header>
 
   <!-- stats -->
