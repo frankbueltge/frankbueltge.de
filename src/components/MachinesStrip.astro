@@ -16,12 +16,19 @@ const atelierMeta = import.meta.glob('/src/components/atelier/werke/*/meta.json'
 const fieldHtmlMeta = import.meta.glob('/src/content/field/works/*/meta.json', { eager: true, import: 'default' }) as Record<string, EngineWorkMeta>
 const atelierHtmlMeta = import.meta.glob('/src/content/atelier/works/*/meta.json', { eager: true, import: 'default' }) as Record<string, EngineWorkMeta>
 
-const latest = latestWorks([
-  { ns: 'field', kind: 'astro', metas: fieldMeta },
-  { ns: 'field', kind: 'html', metas: fieldHtmlMeta },
-  { ns: 'atelier', kind: 'astro', metas: atelierMeta },
-  { ns: 'atelier', kind: 'html', metas: atelierHtmlMeta },
-], 4)
+const sources = [
+  { ns: 'field' as const, kind: 'astro' as const, metas: fieldMeta },
+  { ns: 'field' as const, kind: 'html' as const, metas: fieldHtmlMeta },
+  { ns: 'atelier' as const, kind: 'astro' as const, metas: atelierMeta },
+  { ns: 'atelier' as const, kind: 'html' as const, metas: atelierHtmlMeta },
+]
+const LIMIT = 4
+const overall = latestWorks(sources, LIMIT)
+// Always surface the newest field work too — otherwise the strip fills up with the
+// (more frequent) atelier works and the collective's latest never shows. Frank, 2026-07-06.
+const newestField = latestWorks(sources.filter((s) => s.ns === 'field'), 1)[0]
+const fieldShown = newestField ? overall.some((w) => w.ns === 'field' && w.slug === newestField.slug) : true
+const latest = fieldShown ? overall : [...overall.slice(0, LIMIT - 1), newestField]
 ---
 
 {latest.length > 0 && (

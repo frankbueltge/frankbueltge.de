@@ -14,6 +14,9 @@ import { projects } from '@/data/projects'
 const locale = (Astro.currentLocale ?? 'en') as Locale
 
 const featured = [...projects].sort((a, b) => a.order - b.order)
+// internal (leading-slash) project urls become locale-aware; external urls pass through
+const projectHref = (p: (typeof featured)[number]) =>
+  p.url ? (p.url.startsWith('/') ? getRelativeLocaleUrl(locale, p.url) : p.url) : getRelativeLocaleUrl(locale, `/work/${p.slug}`)
 ---
 
 <main id="main" class="grid-paper min-w-0 flex-1 px-[clamp(20px,3vw,40px)] pb-16 pt-[clamp(16px,3vw,28px)]">
@@ -51,7 +54,7 @@ const featured = [...projects].sort((a, b) => a.order - b.order)
       <ul class="space-y-2">
         {featured.map((p) => (
           <li class="text-sm">
-            <a href={p.url ?? getRelativeLocaleUrl(locale, `/work/${p.slug}`)} class="font-semibold transition-opacity hover:opacity-70">{p.name}</a>
+            <a href={projectHref(p)} class="font-semibold transition-opacity hover:opacity-70">{p.name}</a>
             <span class="text-fg-muted"> — {p.tagline[locale]}</span>
           </li>
         ))}

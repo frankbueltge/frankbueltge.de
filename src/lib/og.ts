@@ -16,6 +16,10 @@ export const OG_PAGES: Record<string, { title: string; description: string }> = 
     title: 'Projects',
     description: 'Eigene Projekte an der Schnittstelle von Daten, KI und Gestaltung',
   },
+  atlas: {
+    title: 'Atlas der Datenkunst',
+    description: 'Eine quellenbelegte Landkarte zeitgenössischer Datenkunst — Daten, KI und Macht',
+  },
   protokoll: {
     title: 'The Protocol',
     description: 'Tägliche Kennzahlen aus zwölf offenen Quellen',
@@ -69,6 +73,7 @@ export function ogSlug(pathname: string): keyof typeof OG_PAGES {
   if (p.startsWith('/lab')) return 'lab'
   if (p.startsWith('/ueber') || p.startsWith('/about')) return 'about'
   if (p.startsWith('/work') || p.startsWith('/projekte')) return 'projects'
+  if (p.startsWith('/atlas')) return 'atlas'
   if (p.startsWith('/protokoll')) return 'protokoll'
   if (p.startsWith('/parallaxe')) return 'parallax'
   if (p.startsWith('/praemie') || p.startsWith('/police') || p.startsWith('/werke/praemie')) return 'policy'
