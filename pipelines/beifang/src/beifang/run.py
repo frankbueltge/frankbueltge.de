@@ -21,8 +21,9 @@ from beifang.model import ListMeta, run_record_to_json
 from beifang.panel import load_panel
 
 
-def content_path(date_iso: str) -> str:
-    return f"src/content/beifang/{date_iso[:4]}/{date_iso}.json"
+def content_path(date_iso: str, kind: str = "automat") -> str:
+    suffix = "-leser" if kind == "leser" else ""  # Leser-Lauf schreibt eigene Datei (keine Archiv-Kollision)
+    return f"src/content/beifang/{date_iso[:4]}/{date_iso}{suffix}.json"
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -36,6 +37,7 @@ def main(argv: list[str] | None = None) -> int:
     args = p.parse_args(argv)
     date_iso = args.date or datetime.now(timezone.utc).date().isoformat()
     root = Path(args.repo_root)
+    kind = "leser" if args.vantage == "leser" else "automat"  # Leser = echtes Chrome, eigene Datei
 
     panel = load_panel()
     easyprivacy = parse_easyprivacy((LISTS_DIR / "easyprivacy.txt").read_text(encoding="utf-8"))
@@ -48,7 +50,7 @@ def main(argv: list[str] | None = None) -> int:
     for entry in entries:
         retrieved_at = utc_now_iso()
         try:
-            raw = capture_page(entry["url"], proxy=args.proxy)
+            raw = capture_page(entry["url"], proxy=args.proxy, real_chrome=(kind == "leser"))
         except Exception as exc:
             results.append(site_result(entry, retrieved_at=retrieved_at,
                                        note=f"{type(exc).__name__}: {exc}"[:200]))
@@ -81,8 +83,9 @@ def main(argv: list[str] | None = None) -> int:
     runner = "github-actions" if os.environ.get("GITHUB_ACTIONS") == "true" else "lokal"
     vantage = args.vantage or runner
     record = assemble_run(date_iso=date_iso, panel_version=panel["version"], runner=runner,
-                          vantage=vantage, results=results, lists=lists_meta, previous=previous)
-    target = root / content_path(date_iso)
+                          vantage=vantage, results=results, lists=lists_meta, previous=previous,
+                          vantage_kind=kind)
+    target = root / content_path(date_iso, kind)
     if target.exists():
         print(f"{target} existiert bereits — Archiv unantastbar, kein Overwrite "
               f"(Lauf übersprungen).", file=sys.stderr)
