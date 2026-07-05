@@ -36,20 +36,20 @@ const txt = {
   s5: de ? '5. Grenzen der Methode' : '5. Limits of the method',
   s5items: de
     ? [
-        'Misst aus US-Rechenzentrumssicht; der EU-Messpunkt steht noch aus und wird nachgerüstet, sobald er existiert.',
+        'Zwei Standpunkte: der Automat (headless-Chromium, GitHub Actions, wöchentlich) misst den automatisierten Prüfblick; der Leser (echtes Google Chrome, lokal auf Zuruf via `npm run beifang:leser`) misst, was ein realer Leser ausgeliefert bekommt. Die Differenz beider ist der Befund — und reproduzierbar: jeder kann den Leser-Lauf mit denselben Panel-URLs nachstellen.',
+        'Machbarkeit (empirisch belegt): Die Blockade ist eine UND-Bedingung aus IP-Reputation und Browser-Fingerprint — nur ein Wohnanschluss UND echtes Chrome kommen durch. Ein Datacenter-VPS ändert nichts (dieselbe Sperre wie GitHub Actions); Geografie ist nicht der Hebel. Ein residentieller Standpunkt genügt: der eigene Rechner.',
+        'Echter Browser ist kein Umgehen: der Leser-Standpunkt nutzt normales Chrome ohne Stealth-Tricks (navigator.webdriver bleibt sichtbar) — kein Hebeln von Schutz, sondern schlicht, was ein Mensch sieht. SAGE bleibt auch für den echten Leser gesperrt und wird nie umgangen — die Blockade ist selbst ein Befund.',
         'Misst die öffentliche Artikelseite, nicht den institutionellen Zugriff (Uni-Netz, SeamlessAccess) — das Instrument liefert die Untergrenze.',
         'Ein festes Panel misst diese 60 Seiten, nicht „den Verlag" als Ganzes.',
         'Der Listen-Abgleich erkennt nur Bekanntes — kein Fingerprinting-Nachweis in v1.',
-        'Blockaden werden ausgewiesen, nie umgangen — eine Blockade ist selbst ein Befund.',
-        'Vantage als Messgröße: Gemessen wird aus einem Rechenzentrums-Standpunkt (v2: GitHub Actions); der Standpunkt steht im Snapshot („vantage"). Die Blockade ist IP-basiert und kategorisch — ein residentiellerer Standpunkt (geplanter VPS) ist der nächste Hebel, kein Schranken-Umgehen.',
       ]
     : [
-        'Measures from a US datacenter vantage; the EU vantage point is still pending and will be retrofitted once it exists.',
+        'Two vantages: the automaton (headless Chromium, GitHub Actions, weekly) measures the automated audit view; the reader (real Google Chrome, run locally on demand via `npm run beifang:leser`) measures what a real reader is served. The difference between the two is the finding — and reproducible: anyone can repeat the reader run with the same panel URLs.',
+        'Feasibility (empirically established): the block is an AND condition of IP reputation and browser fingerprint — only a residential line AND real Chrome get through. A datacenter VPS changes nothing (the same block as GitHub Actions); geography is not the lever. A residential vantage suffices: your own machine.',
+        'A real browser is not circumvention: the reader vantage uses ordinary Chrome without stealth tricks (navigator.webdriver stays visible) — not a way around protection, simply what a human sees. SAGE stays blocked even for the real reader and is never circumvented — the block is itself a finding.',
         'Measures the public article page, not institutional access (university network, SeamlessAccess) — the instrument gives the lower bound.',
         'A fixed panel measures these 60 pages, not „the publisher" as a whole.',
         'List matching detects only the known — no fingerprinting evidence in v1.',
-        'Blockades are disclosed, never circumvented — a blockade is itself a finding.',
-        'Vantage as a measurement variable: measured from a datacenter vantage point (v2: GitHub Actions); the vantage is recorded in the snapshot ("vantage"). The blockade is IP-based and categorical — a more residential vantage (a planned VPS) is the next lever, not a way around the barrier.',
       ],
   s6: de ? '6. Compute-Fußabdruck' : '6. Compute footprint',
   s6body: de
@@ -62,12 +62,14 @@ const txt = {
         '2026-07-02: Leak-Audit ergänzt (Identitäts-Exfiltration statt reinem Tracker-Zensus).',
         '2026-07-03: Kontrollgruppen-Leaks sichtbar; These präzisiert (der Leak folgt dem Skript, nicht dem Geschäftsmodell).',
         '2026-07-04: Empfänger-Benennung — kuratierte Wissenschafts-Infrastruktur-Liste (quellenbelegt): ReadCube/Altmetric/Dimensions als Digital Science benannt; Kanal (Query-String/URL-Pfad) und Pre-Consent-Cookie-Befund ergänzt.',
+        '2026-07-05: Zweiter Standpunkt „Leser" (echtes Chrome, lokal) neben dem Automat; die Differenz wird der Befund. Machbarkeit belegt (Blockade = residentielle IP + echtes Chrome); EU-/Datacenter-Vantage verworfen.',
       ]
     : [
         'First edition (2026-07-02) — panel: Big 5 × 10 vs. 10 diamond-OA control, EasyPrivacy + DuckDuckGo TDS, US vantage.',
         '2026-07-02: leak audit added (identity exfiltration instead of a pure tracker census).',
         '2026-07-03: control-group leaks made visible; thesis sharpened (the leak follows the script, not the business model).',
         '2026-07-04: recipient naming — curated, source-backed scholarly-infrastructure list: ReadCube/Altmetric/Dimensions named as Digital Science; channel (query string/URL path) and pre-consent cookie finding added.',
+        '2026-07-05: second vantage „reader" (real Chrome, local) alongside the automaton; the difference becomes the finding. Feasibility established (block = residential IP + real Chrome); EU/datacenter vantage discarded.',
       ],
   s7note: de
     ? 'Weitere Panel- bzw. Listenänderungen erscheinen hier — protokolliert im committeten panel.json (log).'
