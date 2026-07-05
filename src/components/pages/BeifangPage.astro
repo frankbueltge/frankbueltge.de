@@ -51,6 +51,20 @@ function kategorieHinweise(f: (typeof leaks)[number], deLang: boolean): string[]
       ? `${namen}: kommerzieller Metrik-Dienst${eig ? ` (${eig})` : ''}.`
       : `${namen}: commercial metrics service${eig ? ` (${eig})` : ''}.`)
   }
+  const werbe = f.empfaenger.filter((e) => e.kategorie === 'werbe-server')
+  if (werbe.length) {
+    const namen = werbe.map((b) => b.name).join(', ')
+    hinweise.push(deLang
+      ? `${namen}: kommerzieller Werbe-Server.`
+      : `${namen}: commercial ad server.`)
+  }
+  const verwertung = f.empfaenger.filter((e) => e.kategorie === 'verwertungsgesellschaft')
+  if (verwertung.length) {
+    const namen = verwertung.map((b) => b.name).join(', ')
+    hinweise.push(deLang
+      ? `${namen}: gesetzliche Verwertungsgesellschaft — die Zählmarke misst Aufrufe für Autoren-Tantiemen, kein Werbe-Tracking.`
+      : `${namen}: statutory collecting society — the counter measures views for author royalties, not ad tracking.`)
+  }
   if (selfHosted.length) {
     const namen = selfHosted.map((b) => b.name).join(', ')
     hinweise.push(deLang
@@ -272,16 +286,31 @@ function formLabel(form: string, deLang: boolean): string {
               ? `Gemessen am ${leserRun.date} mit echtem Chrome von einem Wohnanschluss — die Verlage, die den Prüf-Automaten aussperren, liefern dem Leser aus. Und das reist bei ihnen an Dritte:`
               : `Measured on ${leserRun.date} with real Chrome from a residential line — the publishers that lock out the audit automaton serve the reader. And this travels to third parties there:`}
           </p>
-          <ul class="space-y-3">
+          <ul class="space-y-4">
             {leserLeaks.map((f) => (
               <li class="leading-relaxed">
-                <span class="font-semibold">{PUBLISHER_LABELS[f.publisher] ?? f.publisher}</span>
-                {f.group === 'kontrolle' && (
-                  <span class="ml-2 rounded border border-line px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-wide text-fg-faint">{de ? 'Kontrollgruppe' : 'control group'}</span>
-                )}{' '}
-                {f.empfaenger.length > 0
-                  ? (de ? `— DOI an ${f.empfaenger.map((e) => e.name).join(', ')}.` : `— DOI to ${f.empfaenger.map((e) => e.name).join(', ')}.`)
-                  : (de ? `— DOI an Dritte (${f.hosts.join(', ')}).` : `— DOI to third parties (${f.hosts.join(', ')}).`)}
+                <p>
+                  <span class="font-semibold">{PUBLISHER_LABELS[f.publisher] ?? f.publisher}</span>
+                  {f.group === 'kontrolle' && (
+                    <span class="ml-2 rounded border border-line px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-wide text-fg-faint">{de ? 'Kontrollgruppe' : 'control group'}</span>
+                  )}{' '}
+                  {f.empfaenger.length > 0
+                    ? (de
+                        ? `— in dieser Messung trug ein ausgehender Request die DOI an ${f.empfaenger.map((e) => e.name).join(', ')} (vor jeder Cookie-Einwilligung).`
+                        : `— in this measurement an outgoing request carried the DOI to ${f.empfaenger.map((e) => e.name).join(', ')} (before any cookie consent).`)
+                    : (de
+                        ? `— in dieser Messung trug ein ausgehender Request die DOI an Dritte (${f.hosts.join(', ')}), vor jeder Cookie-Einwilligung.`
+                        : `— in this measurement an outgoing request carried the DOI to third parties (${f.hosts.join(', ')}), before any cookie consent.`)}
+                </p>
+                {kategorieHinweise(f, de).map((h) => (
+                  <p class="mt-1 text-sm text-fg-muted">{h}</p>
+                ))}
+                {f.empfaenger.length > 0 && f.hosts.length > 0 && (
+                  <p class="mt-1 text-sm text-fg-muted">
+                    {de ? `Außerdem an Hosts ohne benannte Firma: ${f.hosts.join(', ')}.`
+                        : `Also to hosts without a named company: ${f.hosts.join(', ')}.`}
+                  </p>
+                )}
               </li>
             ))}
           </ul>

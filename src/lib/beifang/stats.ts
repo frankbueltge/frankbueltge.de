@@ -137,7 +137,7 @@ import { infraFor } from './infra'
  *  die übrigen Kategorien stammen aus der kuratierten Wissenschafts-Infra-Liste (infra.ts). */
 export interface LeakReceiver {
   name: string
-  kategorie: 'metrik-broker' | 'self-hosted-analytics' | 'verlagseigen' | 'tracker'
+  kategorie: 'metrik-broker' | 'werbe-server' | 'verwertungsgesellschaft' | 'self-hosted-analytics' | 'verlagseigen' | 'tracker'
   eigentuemer: string | null
 }
 
