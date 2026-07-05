@@ -1,7 +1,7 @@
 {
   "meta": {
     "beschreibung": "Kuratierte Domain→Firma-Zuordnung für Wissenschafts-Infrastruktur, die der DuckDuckGo-Tracker-Radar (Ad-Tech-fokussiert) nicht als Firma kennt. Ergänzt die TDS-Zuordnung ausschließlich für die Anzeige; die Pipeline und die Archiv-JSONs bleiben unberührt. Auflösungsreihenfolge im Frontend: erst die von der Pipeline gesetzte Firma (TDS/EasyPrivacy), dann diese Liste. Jede Zeile ist quellenbelegt. Software-Namen bei self-hosted-Analytics sind über den gemessenen Hostnamen (piwik.*, umami.*) benannt.",
-    "gepflegt_am": "2026-07-04"
+    "gepflegt_am": "2026-07-05"
   },
   "eintraege": [
     {
@@ -45,6 +45,20 @@
       "eigentuemer": null,
       "kategorie": "self-hosted-analytics",
       "quelle": "https://adho.org/publications/"
+    },
+    {
+      "domain": "servedbyadbutler.com",
+      "firma": "AdButler",
+      "eigentuemer": null,
+      "kategorie": "werbe-server",
+      "quelle": "https://www.adbutler.com/"
+    },
+    {
+      "domain": "vgwort.de",
+      "firma": "VG Wort (Zählmarke METIS)",
+      "eigentuemer": null,
+      "kategorie": "verwertungsgesellschaft",
+      "quelle": "https://vgwort.de/service/faqs/online-e-books-metis"
     }
   ]
 }

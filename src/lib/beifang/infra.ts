@@ -8,7 +8,7 @@ export interface InfraEntry {
   domain: string
   firma: string
   eigentuemer: string | null
-  kategorie: 'metrik-broker' | 'self-hosted-analytics' | 'verlagseigen'
+  kategorie: 'metrik-broker' | 'werbe-server' | 'verwertungsgesellschaft' | 'self-hosted-analytics' | 'verlagseigen'
   quelle: string
 }
 

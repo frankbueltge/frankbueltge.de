@@ -5,7 +5,7 @@ import { infraFor } from './infra'
 describe('wissenschaft-infra.json', () => {
   it('hat Einträge, jeder mit Pflichtfeldern und einer Quelle', () => {
     expect(infra.eintraege.length).toBeGreaterThan(0)
-    const kats = new Set(['metrik-broker', 'self-hosted-analytics', 'verlagseigen'])
+    const kats = new Set(['metrik-broker', 'werbe-server', 'verwertungsgesellschaft', 'self-hosted-analytics', 'verlagseigen'])
     for (const e of infra.eintraege) {
       expect(e.domain).toMatch(/^[a-z0-9.-]+\.[a-z]{2,}$/)
       expect(e.firma.length).toBeGreaterThan(0)
