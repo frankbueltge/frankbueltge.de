@@ -1,0 +1,267 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import type { Locale } from '@/lib/site'
+import worksData from '@/data/atlas/werke.json'
+
+interface Props {
+  locale: Locale
+}
+const { locale } = Astro.props
+
+type Work = {
+  title: string
+  artist: string
+  year: string
+  venue_prize: string
+  clusters: number[]
+  axis_pole: 'investigation' | 'spectacle' | 'mixed'
+  form: string
+  medium_class: 'digital' | 'hybrid' | 'physical'
+  lab_renderable?: boolean
+  decisive_move?: string
+  source_url?: string
+  verify_status?: 'verified' | 'toVerify'
+  curator_note?: string
+}
+const works = worksData as Work[]
+
+const de = locale === 'de'
+
+const CLUSTER: Record<number, string> = de
+  ? {
+      1: 'Material- & planetare KI-Kosten',
+      2: 'KI im Krieg / Kill Cloud',
+      3: 'Counter-Forensics / OSINT',
+      4: 'Provenance / Authentizität',
+      5: 'Dekolonial / more-than-human',
+      6: 'Data Justice / Data-Feminismus',
+      7: 'KI-Selbstverzehr / Quanten',
+    }
+  : {
+      1: 'Material & planetary AI cost',
+      2: 'AI in war / kill cloud',
+      3: 'Counter-forensics / OSINT',
+      4: 'Provenance / authenticity',
+      5: 'Decolonial / more-than-human',
+      6: 'Data justice / data feminism',
+      7: 'AI self-consumption / quantum',
+    }
+const MEDIUM: Record<string, string> = de
+  ? { digital: 'digital', hybrid: 'hybrid', physical: 'physisch' }
+  : { digital: 'digital', hybrid: 'hybrid', physical: 'physical' }
+const AXIS: Record<string, string> = de
+  ? { investigation: 'Untersuchung', spectacle: 'Spektakel', mixed: 'gemischt' }
+  : { investigation: 'investigation', spectacle: 'spectacle', mixed: 'mixed' }
+
+const copy = de
+  ? {
+      kicker: 'Ein lebendiges Verzeichnis',
+      intro:
+        'Eine quellenbelegte Landkarte zeitgenössischer Datenkunst — Werke, in denen Daten, KI und Macht aufeinandertreffen. Global, nach sieben Feldern geordnet, jede Angabe mit abrufbarer Quelle.',
+      fuelPre: 'Futter für das Kollektiv im ',
+      fuelMid: ' und fürs ',
+      lWorks: 'Werke',
+      lVerified: 'verifiziert',
+      lClusters: 'Felder',
+      lPhysical: 'physisch/öffentlich',
+      fField: 'Feld',
+      fMedium: 'Medium',
+      fAxis: 'Standpunkt',
+      all: 'Alle',
+      showing: 'sichtbar',
+      unverified: 'ungeprüft',
+      source: 'Quelle',
+      method:
+        'Zusammengetragen in 16 parallelen Recherche-Durchgängen; jede Angabe gegen eine abrufbare Quelle geprüft — nichts erfunden. Unsichere Einordnungen sind als „ungeprüft" markiert. Ein Werk kann in mehreren Feldern liegen. Standpunkt: Untersuchung (KI als Gegenstand) ↔ Spektakel (KI als Medium).',
+      field: 'Feld',
+      atelier: 'Atelier',
+    }
+  : {
+      kicker: 'A living index',
+      intro:
+        'A source-cited map of contemporary data art — works where data, AI and power meet. Global, ordered by seven clusters, every entry with a retrievable source.',
+      fuelPre: 'Fuel for the collective in the ',
+      fuelMid: ' and for the ',
+      lWorks: 'works',
+      lVerified: 'verified',
+      lClusters: 'clusters',
+      lPhysical: 'physical/public',
+      fField: 'Cluster',
+      fMedium: 'Medium',
+      fAxis: 'Stance',
+      all: 'All',
+      showing: 'showing',
+      unverified: 'unverified',
+      source: 'source',
+      method:
+        'Compiled across 16 parallel research passes; every entry checked against a retrievable source — nothing invented. Uncertain classifications are flagged “unverified”. A work can sit in several clusters. Stance: investigation (AI as subject) ↔ spectacle (AI as medium).',
+      field: 'Field',
+      atelier: 'Atelier',
+    }
+
+// stats
+const total = works.length
+const verified = works.filter((w) => w.verify_status === 'verified').length
+const physical = works.filter((w) => w.medium_class === 'physical').length
+const clusterCounts: Record<number, number> = {}
+for (const w of works) for (const c of w.clusters) clusterCounts[c] = (clusterCounts[c] ?? 0) + 1
+
+const fieldUrl = getRelativeLocaleUrl(locale, '/field')
+const atelierUrl = getRelativeLocaleUrl(locale, '/atelier')
+
+const clusterKeys = [1, 2, 3, 4, 5, 6, 7]
+const mediumKeys = ['digital', 'hybrid', 'physical']
+const axisKeys = ['investigation', 'mixed', 'spectacle']
+---
+
+<main id="main" class="mx-auto w-full max-w-6xl px-4 py-10 sm:py-14">
+  <header class="mb-8 max-w-3xl">
+    <p class="mb-2 font-mono text-xs uppercase tracking-widest text-fg-faint">{copy.kicker}</p>
+    <h1 class="text-3xl font-semibold tracking-tight sm:text-4xl">
+      {de ? 'Atlas der Datenkunst' : 'Atlas of Data Art'}
+    </h1>
+    <p class="mt-4 text-fg-muted">{copy.intro}</p>
+    <p class="mt-2 text-fg-muted">
+      {copy.fuelPre}<a href={fieldUrl} class="text-fg underline decoration-line underline-offset-4 hover:decoration-fg">{copy.field}</a>{copy.fuelMid}<a href={atelierUrl} class="text-fg underline decoration-line underline-offset-4 hover:decoration-fg">{copy.atelier}</a>.
+    </p>
+  </header>
+
+  <!-- stats -->
+  <dl class="mb-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
+    {[
+      { n: total, l: copy.lWorks },
+      { n: verified, l: copy.lVerified },
+      { n: clusterKeys.length, l: copy.lClusters },
+      { n: physical, l: copy.lPhysical },
+    ].map((s) => (
+      <div class="rounded-xl border border-line bg-panel p-4">
+        <dd class="font-mono text-2xl font-semibold text-fg">{s.n}</dd>
+        <dt class="mt-0.5 text-xs text-fg-muted">{s.l}</dt>
+      </div>
+    ))}
+  </dl>
+
+  <section data-atlas>
+    <!-- filters -->
+    <div class="mb-6 space-y-3">
+      <div class="flex flex-wrap items-center gap-1.5">
+        <span class="mr-1 w-16 shrink-0 font-mono text-xs uppercase tracking-wider text-fg-faint">{copy.fField}</span>
+        <button type="button" data-filter="cluster" data-value="all" aria-pressed="true" class="chip">{copy.all}</button>
+        {clusterKeys.map((c) => (
+          <button type="button" data-filter="cluster" data-value={String(c)} aria-pressed="false" class="chip" title={CLUSTER[c]}>
+            <span class="font-mono">{c}</span> · {CLUSTER[c]} <span class="text-fg-faint">{clusterCounts[c] ?? 0}</span>
+          </button>
+        ))}
+      </div>
+      <div class="flex flex-wrap items-center gap-1.5">
+        <span class="mr-1 w-16 shrink-0 font-mono text-xs uppercase tracking-wider text-fg-faint">{copy.fMedium}</span>
+        <button type="button" data-filter="medium" data-value="all" aria-pressed="true" class="chip">{copy.all}</button>
+        {mediumKeys.map((m) => (
+          <button type="button" data-filter="medium" data-value={m} aria-pressed="false" class="chip">{MEDIUM[m]}</button>
+        ))}
+      </div>
+      <div class="flex flex-wrap items-center gap-1.5">
+        <span class="mr-1 w-16 shrink-0 font-mono text-xs uppercase tracking-wider text-fg-faint">{copy.fAxis}</span>
+        <button type="button" data-filter="axis" data-value="all" aria-pressed="true" class="chip">{copy.all}</button>
+        {axisKeys.map((a) => (
+          <button type="button" data-filter="axis" data-value={a} aria-pressed="false" class="chip">{AXIS[a]}</button>
+        ))}
+      </div>
+      <p class="font-mono text-xs text-fg-faint"><span data-count>{total}</span> / {total} {copy.showing}</p>
+    </div>
+
+    <!-- grid -->
+    <ul class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      {works.map((w) => (
+        <li
+          data-card
+          data-clusters={w.clusters.join(' ')}
+          data-medium={w.medium_class}
+          data-axis={w.axis_pole}
+          class="flex flex-col rounded-xl border border-line bg-panel p-4 transition-colors hover:border-fg-faint"
+        >
+          <div class="mb-2 flex flex-wrap items-center gap-1.5">
+            {w.clusters.map((c) => (
+              <span class="rounded bg-panel-2 px-1.5 py-0.5 font-mono text-[10px] text-fg-muted" title={CLUSTER[c]}>{c}</span>
+            ))}
+            <span class="ml-auto font-mono text-[10px] uppercase tracking-wider text-fg-faint">{MEDIUM[w.medium_class]}</span>
+            {w.verify_status !== 'verified' && (
+              <span class="rounded bg-panel-2 px-1.5 py-0.5 font-mono text-[10px] text-amber" title={copy.unverified}>?</span>
+            )}
+          </div>
+          <h2 class="text-[15px] font-semibold leading-snug text-fg">{w.title}</h2>
+          <p class="mt-0.5 text-sm text-fg-muted">{w.artist} · {w.year}</p>
+          <p class="mt-0.5 text-xs text-fg-faint">{w.venue_prize}</p>
+          {w.decisive_move && <p class="mt-2 text-[13px] leading-relaxed text-fg-muted">{w.decisive_move}</p>}
+          {w.curator_note && <p class="mt-2 text-[12px] italic leading-relaxed text-fg-faint">{w.curator_note}</p>}
+          <div class="mt-3 flex items-center justify-between gap-2 border-t border-line pt-2 text-xs">
+            <span class="font-mono text-fg-faint">{AXIS[w.axis_pole]} · {w.form}</span>
+            {w.source_url && (
+              <a href={w.source_url} target="_blank" rel="noopener noreferrer" class="shrink-0 text-fg-muted underline decoration-line underline-offset-2 hover:text-fg">{copy.source} ↗</a>
+            )}
+          </div>
+        </li>
+      ))}
+    </ul>
+
+    <p class="mt-10 max-w-3xl text-xs leading-relaxed text-fg-faint">{copy.method}</p>
+  </section>
+</main>
+
+<style>
+  .chip {
+    border-radius: 0.5rem;
+    border: 1px solid var(--color-line);
+    background: var(--color-panel);
+    padding: 0.25rem 0.6rem;
+    font-size: 12px;
+    color: var(--color-fg-muted);
+    transition: color 0.15s, border-color 0.15s, background 0.15s;
+  }
+  .chip:hover {
+    color: var(--color-fg);
+    border-color: var(--color-fg-faint);
+  }
+  .chip[aria-pressed='true'] {
+    background: var(--color-fg);
+    color: var(--color-bg);
+    border-color: var(--color-fg);
+  }
+</style>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-atlas]')
+  if (root) {
+    const cards = Array.from(root.querySelectorAll<HTMLElement>('[data-card]'))
+    const countEl = root.querySelector<HTMLElement>('[data-count]')
+    const state: Record<string, string> = { cluster: 'all', medium: 'all', axis: 'all' }
+
+    const apply = () => {
+      let n = 0
+      for (const card of cards) {
+        const clusters = (card.dataset.clusters ?? '').split(' ')
+        const okC = state.cluster === 'all' || clusters.includes(state.cluster)
+        const okM = state.medium === 'all' || card.dataset.medium === state.medium
+        const okA = state.axis === 'all' || card.dataset.axis === state.axis
+        const show = okC && okM && okA
+        card.hidden = !show
+        if (show) n++
+      }
+      if (countEl) countEl.textContent = String(n)
+    }
+
+    root.querySelectorAll<HTMLButtonElement>('[data-filter]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const group = btn.dataset.filter ?? ''
+        const value = btn.dataset.value ?? 'all'
+        state[group] = value
+        root
+          .querySelectorAll<HTMLButtonElement>(`[data-filter="${group}"]`)
+          .forEach((b) => b.setAttribute('aria-pressed', String(b === btn)))
+        apply()
+      })
+    })
+
+    apply()
+  }
+</script>

@@ -7,6 +7,7 @@ const locale = (Astro.currentLocale ?? 'en') as Locale
 const home = getRelativeLocaleUrl(locale, '/')
 const nav = [
   { href: getRelativeLocaleUrl(locale, '/lab'), label: t(locale, 'nav.lab') },
+  { href: getRelativeLocaleUrl(locale, '/atlas'), label: t(locale, 'nav.atlas') },
   { href: getRelativeLocaleUrl(locale, '/work'), label: t(locale, 'nav.work') },
   { href: getRelativeLocaleUrl(locale, '/about'), label: t(locale, 'nav.about') },
   { href: getRelativeLocaleUrl(locale, '/contact'), label: t(locale, 'nav.contact') },
