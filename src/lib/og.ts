@@ -2,7 +2,7 @@
 export const OG_PAGES: Record<string, { title: string; description: string }> = {
   home: {
     title: 'Frank Bültge',
-    description: 'Data & AI Engineer — öffentliches Experimentierfeld mit Daten und Code',
+    description: 'Data Engineering & Analytics — öffentliches Experimentierfeld mit Daten und Code',
   },
   lab: {
     title: 'Lab',
@@ -10,7 +10,7 @@ export const OG_PAGES: Record<string, { title: string; description: string }> = 
   },
   about: {
     title: 'Frank Bültge',
-    description: 'Data & AI Engineer — praxisbasierter Weg zu einer künstlerischen Forschung',
+    description: 'Data Engineering & Analytics — öffentliches Experimentierfeld mit Daten, Code und KI',
   },
   projects: {
     title: 'Projects',
