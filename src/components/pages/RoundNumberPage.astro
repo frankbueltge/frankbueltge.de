@@ -4,6 +4,7 @@ import { t } from '@/i18n/ui'
 import type { Locale } from '@/lib/site'
 import type { RoundNumberData, Series } from '@/lib/round-number/types'
 import { percent, verdictLabel, dateLabel } from '@/lib/round-number/format'
+import { seriesName, institutionLabel } from '@/lib/round-number/labels'
 import { bars } from '@/lib/round-number/histogram'
 import data from '@/data/round-number/latest.json'
 
@@ -38,7 +39,7 @@ const flagged = pick ? pick.control.false_positive_rate >= 0.2 : false
           {de ? 'Die Angeklagte des Tages' : 'The defendant of the day'}
         </p>
         <p class="mt-2 text-lg font-semibold">
-          {pick.name}
+          {seriesName(pick, locale)}
           {pick.synthetic && (
             <span class="ml-2 rounded border border-line px-1.5 py-0.5 align-middle font-mono text-[10px] text-fg-faint">
               {de ? 'synthetische Kontrolle' : 'synthetic control'}
@@ -46,7 +47,7 @@ const flagged = pick ? pick.control.false_positive_rate >= 0.2 : false
           )}
         </p>
         <p class="mt-1 font-mono text-xs text-fg-faint">
-          {pick.institution} · n = {pick.n.toLocaleString(de ? 'de-DE' : 'en-GB')} ·
+          {institutionLabel(pick.institution, locale)} · n = {pick.n.toLocaleString(de ? 'de-DE' : 'en-GB')} ·
           <a class="ml-1 underline transition-colors hover:text-fg" href={pick.source.url} target="_blank" rel="noopener">{de ? 'Quelle ↗' : 'source ↗'}</a>
         </p>
 
@@ -78,7 +79,7 @@ const flagged = pick ? pick.control.false_positive_rate >= 0.2 : false
           <p class="max-w-sm text-sm leading-snug text-fg-muted">
             {de
               ? `nennt derselbe Test nachweislich saubere Daten dieser Größe (n = ${pick.n.toLocaleString('de-DE')}) genauso „verdächtig".`
-              : `is how often the same test calls provably-clean data of this size (n = ${pick.n.toLocaleString('en-GB')}) „suspicious".`}
+              : `is how often the same test calls provably-clean data of this size (n = ${pick.n.toLocaleString('en-GB')}) “suspicious”.`}
           </p>
         </div>
         <p class="mt-3 text-sm leading-relaxed">
@@ -100,7 +101,7 @@ const flagged = pick ? pick.control.false_positive_rate >= 0.2 : false
           <ul class="mt-3 space-y-1.5">
             {rest.map((s) => (
               <li class="flex flex-wrap items-baseline gap-x-3 text-sm">
-                <span class="text-fg-muted">{s.name}</span>
+                <span class="text-fg-muted">{seriesName(s, locale)}</span>
                 <span class="font-mono text-xs text-fg-faint">
                   {verdictLabel(s.benford.verdict, locale)} · {de ? 'falsch-positiv' : 'false-positive'} {percent(s.control.false_positive_rate, locale)}
                 </span>
