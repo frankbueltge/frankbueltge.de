@@ -2,6 +2,15 @@ import json
 
 import beifang.run as run_mod
 from beifang.capture import RawCapture
+from beifang.run import content_path
+
+
+def test_content_path_automat_unchanged():
+    assert content_path("2026-07-06") == "src/content/beifang/2026/2026-07-06.json"
+
+
+def test_content_path_leser_has_suffix():
+    assert content_path("2026-07-06", kind="leser") == "src/content/beifang/2026/2026-07-06-leser.json"
 
 
 def fake_capture(url, **kwargs):
@@ -26,7 +35,7 @@ def test_run_writes_snapshot(tmp_path, monkeypatch):
     assert code == 0
     out = tmp_path / "src/content/beifang/2026/2026-07-06.json"
     data = json.loads(out.read_text())
-    results = data["vantages"]["us"]["results"]
+    results = data["vantages"]["automat"]["results"]
     assert len(results) == 2
     blocked = next(r for r in results if r["panel_id"] == "sage-01")
     assert blocked["blocked"]["type"] == "http" and blocked["tracker_hosts"] is None
@@ -49,7 +58,7 @@ def test_navigation_to_blank_is_failed_measurement(tmp_path, monkeypatch):
     assert code == 0
     out = tmp_path / "src/content/beifang/2026/2026-07-06.json"
     data = json.loads(out.read_text())
-    r = data["vantages"]["us"]["results"][0]
+    r = data["vantages"]["automat"]["results"][0]
     # about:blank hat keinen Hostnamen -> gescheiterte Navigation, kein fabriziertes Ergebnis
     assert r["final_url"] is None and r["final_domain"] is None
     assert r["tracker_hosts"] is None and r["requests_total"] is None
@@ -78,7 +87,7 @@ def test_limit_caps_entries(tmp_path, monkeypatch):
         for i in range(1, 6)]})
     run_mod.main(["--date", "2026-07-06", "--repo-root", str(tmp_path), "--limit", "2"])
     data = json.loads((tmp_path / "src/content/beifang/2026/2026-07-06.json").read_text())
-    assert len(data["vantages"]["us"]["results"]) == 2
+    assert len(data["vantages"]["automat"]["results"]) == 2
 
 
 def test_run_threads_identity_and_vantage(tmp_path, monkeypatch):
