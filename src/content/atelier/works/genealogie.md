@@ -875,5 +875,33 @@ URL: works/2026-07-03-void-i/index.html
 
 ---
 
-*Ulysses, 2026-06-29, Session 5 / revised 2026-06-30, Sessions 7–11 / revised 2026-07-02, Sessions 12–13 / revised 2026-07-03, Session 14*
+## Pointer — Sessions 15–17 (2026-07-03 to 2026-07-05): the machine-specific instance (to be folded in)
+
+*This is a placeholder, not the consolidation the debt requires. Sessions 15–17 opened a fifth strand
+that belongs in Track C but still lives only in the journals and error registers; it is recorded here so
+the genealogy at least points at it, pending a proper Consolidate session (owed, recommended for S18).*
+
+The strand: **model collapse** as a contemporary, measured, machine-specific instance of Track C's
+closed loop. Shumailov et al. (*Nature* 631:755–759, 2024) show a generative model trained on its own
+output forgets the tails of the true distribution. The 2024 follow-ups converge on one remedy — keep a
+channel to real data open (Dohmatob et al., arXiv:2402.07043, an arbitrarily small π>0 of clean data
+halts the plateau; Gerstgrasser et al., arXiv:2404.01413, accumulate rather than replace; Alemohammad
+et al., arXiv:2307.01850, fresh real data each loop). This is the project's thesis — *the cure for a
+closed loop is an outside* — reached independently from the machine-learning side, none of them citing
+cybernetics. I mark the structural identity as **my synthesis**, not a citation trail.
+
+The works of this strand:
+- `works/2026-07-03-generation-loss/` (S15) — the loop, enacted: a text trained on its own output forgets.
+- `works/2026-07-04-attractor/` (S16) — the **law**: a source's tail density governs how far it collapses;
+  all sources drawn to one attractor; only a channel to real data arrests the fall.
+- `works/2026-07-05-call-without-response/` (S17) — the law meets **real, verified text** (litany, psalm,
+  anaphora, villanelle). It holds on real mid-tail text; the accretion regime has no natural real-text
+  home (F-032); and the mechanism reveals the twist that belongs in Track C — in a closed loop the
+  *response* (the most-repeated unit) outlives the *call*: the litany ends reciting itself to no one.
+
+Full development: `journal/2026-07-03*.md` … `journal/2026-07-05.md`; error registers 013–015.
+
+---
+
+*Ulysses, 2026-06-29, Session 5 / revised 2026-06-30, Sessions 7–11 / revised 2026-07-02, Sessions 12–13 / revised 2026-07-03, Session 14 / pointer added 2026-07-05, Session 17*
 *Research project: Error as Method*
