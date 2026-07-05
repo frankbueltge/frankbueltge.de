@@ -108,6 +108,15 @@ function formLabel(form: string, deLang: boolean): string {
     <p class="mt-2 max-w-xl text-fg-muted">{t(locale, 'bf.sub')}</p>
   </header>
 
+  <section class="mb-10 border border-line bg-panel/60 p-5">
+    <h2 class="mb-2 font-semibold">{de ? 'Was misst das hier?' : 'What does this measure?'}</h2>
+    <p class="leading-relaxed text-fg-muted">
+      {de
+        ? 'Wir öffnen wissenschaftliche Artikelseiten wie ein Leser und klicken nichts an — auch das Cookie-Banner nicht. Gemessen wird eine einzige Sache: Verlässt die Artikel-Kennung (DOI) die Seite in Richtung Dritter, bevor du irgendetwas zustimmst? Bei den großen Verlagen: ja, sofort — an Metrik-Dienste und Werbe-Tracker, die damit wissen, welcher Artikel gerade von welcher Leitung gelesen wird. Ob das rechtens ist, urteilst du selbst — wir liefern nur den Beweis. Bemerkenswert ist dabei weniger der einzelne Verlag als vielmehr, wie selbstverständlich das passiert.'
+        : 'We open scholarly article pages like a reader and click nothing — not even the cookie banner. We measure one single thing: does the article\'s identifier (DOI) leave the page toward third parties before you consent to anything? At the big publishers: yes, immediately — to metrics services and ad trackers that thereby learn which article is being read from which connection. Whether that\'s lawful is yours to judge — we only supply the evidence. What is striking is less any single publisher than how routine this is.'}
+    </p>
+  </section>
+
   {!latest && (
     <p class="text-fg-muted">
       {de
