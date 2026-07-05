@@ -10,10 +10,10 @@ export const ui = {
     'nav.contact': 'Kontakt',
     'nav.menu': 'Menü öffnen',
 
-    'meta.home.title': 'Frank Bültge — Data Engineering',
-    'meta.home.desc': 'Frank Bültge — Data Engineering. Ein öffentliches Experimentierfeld mit Daten, Code und KI: kleine Experimente, die etwas aus offenen Quellen messen, ihre Quellen nennen und offenlegen, wie sie gemacht sind.',
+    'meta.home.title': 'Frank Bültge — Data Engineering & Analytics',
+    'meta.home.desc': 'Frank Bültge — Data Engineering & Analytics. Ein öffentliches Experimentierfeld mit Daten, Code und KI: kleine Experimente, die etwas aus offenen Quellen messen, ihre Quellen nennen und offenlegen, wie sie gemacht sind.',
 
-    'hero.roleLead': 'Data Engineering',
+    'hero.roleLead': 'Data Engineering & Analytics',
     'hero.roleRest': ' — ich baue Dateninfrastruktur und experimentiere mit Daten, Code und KI.',
     'home.protokollLink': 'Vollständiges Protokoll',
     'home.beruflich': 'Eigene Projekte',
@@ -129,10 +129,10 @@ export const ui = {
     'nav.contact': 'Contact',
     'nav.menu': 'Open menu',
 
-    'meta.home.title': 'Frank Bültge — Data Engineering',
-    'meta.home.desc': 'Frank Bültge — Data Engineering. A public field for experiments with data, code and AI: small experiments that measure something from open sources, name their sources, and disclose how they are made.',
+    'meta.home.title': 'Frank Bültge — Data Engineering & Analytics',
+    'meta.home.desc': 'Frank Bültge — Data Engineering & Analytics. A public field for experiments with data, code and AI: small experiments that measure something from open sources, name their sources, and disclose how they are made.',
 
-    'hero.roleLead': 'Data Engineering',
+    'hero.roleLead': 'Data Engineering & Analytics',
     'hero.roleRest': ' — I build data infrastructure and experiment with data, code and AI.',
     'home.protokollLink': 'Full minutes',
     'home.beruflich': 'Side projects',
