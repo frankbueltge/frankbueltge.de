@@ -1,0 +1,463 @@
+---
+// Exit Prohibited — works/2026-07-02-exit-prohibited/work.astro
+// Native Astro port of the former standalone HTML work. One seeded feedback-loop
+// physics state rendered simultaneously across four canvas panels (Wiener,
+// Bateson, Von Foerster, Maturana); click to restart.
+---
+
+<article class="exit-work">
+  <header>
+    <h1>Exit Prohibited</h1>
+    <div class="subtitle">one structure · four domains · seed 20260702</div>
+  </header>
+  <canvas id="exit-canvas" width="800" height="600"></canvas>
+  <footer>
+    C1 Wiener 1948 &nbsp;·&nbsp; C2 Bateson 1956 &nbsp;·&nbsp; C3 Von Foerster 1991 &nbsp;·&nbsp; C4 Maturana 1980<br>
+    click to restart &nbsp;·&nbsp; Ulysses &nbsp;·&nbsp; Error as Method &nbsp;·&nbsp; 2026-07-02
+  </footer>
+</article>
+
+<script>
+  // ── Seeded LCG ──────────────────────────────────────────────────────────
+  function makeLCG(seed: number): () => number {
+    let s = seed >>> 0;
+    return function (): number {
+      s = (Math.imul(s, 1664525) + 1013904223) | 0;
+      return (s >>> 0) / 4294967296;
+    };
+  }
+
+  // ── Shared physics (Wiener feedback, GAIN 0.18, AMP 1.01) ───────────────
+  // target = (0,0); each panel offsets by its own center
+  const GAIN = 0.18;
+  const AMP  = 1.01;
+  const SEED = 20260702;
+
+  let px: number, py: number, vx: number, vy: number;
+  let history: { x: number; y: number }[]; // [{x,y}] — positions relative to origin
+  let frameN: number;
+
+  // Relational chat log
+  let chatLog: { side: string; text: string }[]; // [{side:'A'|'B', text:string}]
+  let lastChatF: number;
+  let chatTurnA: boolean; // true = A's turn next
+
+  // Observational log
+  let obsLog: string[];
+  let lastObsF: number;
+
+  function initState(): void {
+    const rng = makeLCG(SEED);
+    const a0  = rng() * Math.PI * 2;
+    const d0  = 65 + rng() * 25;
+    px = Math.cos(a0) * d0;
+    py = Math.sin(a0) * d0;
+    vx = (rng() - 0.5) * 1.4;
+    vy = (rng() - 0.5) * 1.4;
+    history  = [];
+    chatLog  = [];
+    obsLog   = [];
+    frameN   = 0;
+    lastChatF = -999;
+    lastObsF  = -999;
+    chatTurnA = true;
+  }
+
+  function stepPhysics(): void {
+    vx = vx * AMP + (-px * GAIN);
+    vy = vy * AMP + (-py * GAIN);
+    px += vx;
+    py += vy;
+    history.push({ x: px, y: py });
+    if (history.length > 500) history.shift();
+    frameN++;
+  }
+
+  function amp(): number {
+    return Math.sqrt(px * px + py * py);
+  }
+
+  // ── Canvas ──────────────────────────────────────────────────────────────
+  const canvas = document.getElementById('exit-canvas') as HTMLCanvasElement;
+  const ctx    = canvas.getContext('2d')!;
+  const W = 800, H = 600;
+
+  // Panel geometry: [left, top, width, height]
+  const P1 = [0,   0,   400, 300];
+  const P2 = [400, 0,   400, 300];
+  const P3 = [0,   300, 400, 300];
+  const P4 = [400, 300, 400, 300];
+
+  // Colors
+  const C1_COL = '#c07828'; // amber — physical
+  const C2_COL = '#2878a0'; // teal  — relational
+  const C3_COL = '#387838'; // green — observational
+  const C4_COL = '#5840a0'; // violet — structural
+  const BG     = '#050505';
+  const DIV    = '#0e0e0e';
+
+  // Clipping helper
+  function clip([x, y, w, h]: number[], fn: () => void): void {
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(x, y, w, h);
+    ctx.clip();
+    fn();
+    ctx.restore();
+  }
+
+  // ── Panel headers ───────────────────────────────────────────────────────
+  function header(x: number, y: number, label: string, source: string, col: string): void {
+    ctx.font = '9px "Courier New"';
+    ctx.fillStyle = col + 'aa';
+    ctx.fillText(label, x, y);
+    ctx.fillStyle = '#252525';
+    ctx.font = '8px "Courier New"';
+    ctx.fillText(source, x, y + 13);
+  }
+
+  // ── C1: Physical ─────────────────────────────────────────────────────────
+  // Shows the 2D path of the oscillating point (same as Purpose Tremor but
+  // reduced to one quadrant — the "original" representation)
+  function drawC1(): void {
+    clip(P1, () => {
+      const cx = 200, cy = 150;
+      const hist = history.slice(-250);
+      const A = amp();
+
+      // Target ring
+      ctx.beginPath();
+      ctx.arc(cx, cy, 5, 0, Math.PI * 2);
+      ctx.strokeStyle = '#161608';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      // Path trace
+      if (hist.length > 1) {
+        for (let i = 1; i < hist.length; i++) {
+          const a = i / hist.length;
+          ctx.beginPath();
+          ctx.strokeStyle = C1_COL + Math.floor(a * 200).toString(16).padStart(2, '0');
+          ctx.lineWidth = 1.0;
+          ctx.moveTo(cx + hist[i - 1].x, cy + hist[i - 1].y);
+          ctx.lineTo(cx + hist[i].x,     cy + hist[i].y);
+          ctx.stroke();
+        }
+      }
+
+      // Current position dot
+      if (hist.length) {
+        const last = hist[hist.length - 1];
+        ctx.beginPath();
+        ctx.arc(cx + last.x, cy + last.y, 2.5, 0, Math.PI * 2);
+        ctx.fillStyle = C1_COL;
+        ctx.fill();
+      }
+
+      header(8, 16, 'C1 · PHYSICAL', 'Wiener 1948', C1_COL);
+
+      // Small amplitude and step readout
+      ctx.font = '7px "Courier New"';
+      ctx.fillStyle = '#1c1c0e';
+      ctx.fillText('amplitude ' + A.toFixed(1), 8, 288);
+      ctx.fillText('step ' + frameN, 8, 297);
+
+      // Quote (barely visible)
+      ctx.fillStyle = '#111108';
+      ctx.fillText('"purpose tremor"  Wiener 1948 p.8', 8, 278);
+    });
+  }
+
+  // ── C2: Relational ──────────────────────────────────────────────────────
+  // Two columns: A (primary injunction) and B (secondary injunction).
+  // Driving signal: px drives which column is louder.
+  // Chat log adds messages at a rate proportional to amplitude.
+  const A_MSGS = [
+    'do not do so and so',
+    'if you do not — I will',
+    'or I will punish you',
+    'you must not',
+    'stop',
+    'do not show me',
+  ];
+  const B_MSGS = [
+    'but do it because you want to',
+    'love cannot be commanded',
+    'be spontaneous',
+    'you choose freely',
+    'show me you truly care',
+    'do it willingly',
+  ];
+
+  function drawC2(): void {
+    clip(P2, () => {
+      const A = amp();
+
+      // Bias: which injunction is "louder" at this moment?
+      // px > 0 → B dominant; px < 0 → A dominant
+      const bias = px / Math.max(1, A); // −1..+1
+
+      // Add chat messages proportional to amplitude (faster at higher amplitude)
+      const chatInterval = Math.max(8, Math.floor(55 - A * 0.06));
+      if (frameN - lastChatF >= chatInterval) {
+        const side = chatTurnA ? 'A' : 'B';
+        const msgs = chatTurnA ? A_MSGS : B_MSGS;
+        const idx  = chatLog.filter(m => m.side === side).length % msgs.length;
+        chatLog.push({ side, text: msgs[idx] });
+        if (chatLog.length > 60) chatLog.shift();
+        chatTurnA  = !chatTurnA;
+        lastChatF  = frameN;
+      }
+
+      // Draw last N messages as a chat log
+      const lineH    = 22;
+      const maxLines = Math.floor(240 / lineH);
+      const visible  = chatLog.slice(-maxLines);
+      const topY     = 48;
+
+      ctx.font = '10px "Courier New"';
+      for (let i = 0; i < visible.length; i++) {
+        const msg  = visible[i];
+        const age  = (visible.length - 1 - i) / Math.max(1, visible.length - 1);
+        const alpha = 0.12 + (1 - age) * 0.78;
+        const isA  = msg.side === 'A';
+        const col  = isA ? `rgba(192,120,40,${alpha})` : `rgba(40,120,160,${alpha})`;
+        ctx.fillStyle = col;
+        if (isA) {
+          ctx.textAlign = 'left';
+          ctx.fillText('A  ' + msg.text, 408, topY + i * lineH);
+        } else {
+          ctx.textAlign = 'right';
+          ctx.fillText(msg.text + '  B', 792, topY + i * lineH);
+        }
+      }
+      ctx.textAlign = 'left';
+
+      // Vertical divider
+      ctx.strokeStyle = '#111';
+      ctx.lineWidth = 1;
+      ctx.setLineDash([2, 5]);
+      ctx.beginPath();
+      ctx.moveTo(600, 38);
+      ctx.lineTo(600, 290);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      header(408, 16, 'C2 · RELATIONAL', 'Bateson 1956', C2_COL);
+
+      ctx.font = '7px "Courier New"';
+      ctx.fillStyle = '#101520';
+      ctx.fillText('"no matter what a person does, he can\'t win"', 408, 286);
+      ctx.fillStyle = '#1a1a1a';
+      ctx.fillText('amplitude ' + A.toFixed(1), 408, 296);
+    });
+  }
+
+  // ── C3: Observational ──────────────────────────────────────────────────
+  // A growing self-description. Each line records its own observation step
+  // and the current amplitude. As amplitude grows, lines come faster.
+  // The log never empties — it always observes its own observing.
+  function drawC3(): void {
+    clip(P3, () => {
+      const A = amp();
+
+      // New observation interval: shrinks with amplitude
+      const obsInterval = Math.max(4, Math.floor(45 - A * 0.05));
+      if (frameN - lastObsF >= obsInterval) {
+        const n = obsLog.length + 1;
+        obsLog.push('obs ' + n + ': step ' + frameN + ', amp ' + A.toFixed(2));
+        if (obsLog.length > 80) obsLog.shift();
+        lastObsF = frameN;
+      }
+
+      const lineH     = 12;
+      const maxVisible = Math.floor(260 / lineH);
+      const visible   = obsLog.slice(-maxVisible);
+
+      ctx.font = '8px "Courier New"';
+      for (let i = 0; i < visible.length; i++) {
+        const age   = (visible.length - 1 - i) / Math.max(1, visible.length - 1);
+        const alpha = 0.08 + (1 - age) * 0.72;
+        ctx.fillStyle = `rgba(56,120,56,${alpha})`;
+        ctx.fillText(visible[i], 8, 323 + i * lineH);
+      }
+
+      header(8, 318, 'C3 · OBSERVATIONAL', 'Von Foerster 1991', C3_COL);
+
+      ctx.font = '7px "Courier New"';
+      ctx.fillStyle = '#0c150c';
+      ctx.fillText('"concepts that apply to themselves"', 8, 587);
+      ctx.fillStyle = '#181818';
+      ctx.fillText('amplitude ' + A.toFixed(1), 8, 597);
+    });
+  }
+
+  // ── C4: Structural ─────────────────────────────────────────────────────
+  // Five nodes in a ring. Their "intended" positions are fixed (the organisation).
+  // Their actual positions are displaced by the shared oscillation state (perturbations).
+  // No inputs — only perturbations. The displacement grows with amplitude.
+  const N_NODES = 5;
+  const NODE_LABELS = ['A', 'B', 'C', 'D', 'E'];
+  const NODE_RADIUS = 62;
+  const DISPLACE_SCALE = 0.20;
+
+  const nodeRestAngles: number[] = Array.from({ length: N_NODES },
+    (_: unknown, i: number) => i * (2 * Math.PI / N_NODES) - Math.PI / 2
+  );
+
+  function drawC4(): void {
+    clip(P4, () => {
+      const cx = 600, cy = 450;
+      const A = amp();
+      const dx = px * DISPLACE_SCALE;
+      const dy = py * DISPLACE_SCALE;
+
+      // Compute node positions: rest and displaced
+      const nodes = nodeRestAngles.map((angle, i) => ({
+        rx: cx + Math.cos(angle) * NODE_RADIUS,
+        ry: cy + Math.sin(angle) * NODE_RADIUS,
+        x:  cx + Math.cos(angle) * NODE_RADIUS + dx,
+        y:  cy + Math.sin(angle) * NODE_RADIUS + dy,
+        label: NODE_LABELS[i],
+      }));
+
+      // Intended (rest) positions — faint ghosts
+      for (const n of nodes) {
+        ctx.beginPath();
+        ctx.arc(n.rx, n.ry, 4, 0, Math.PI * 2);
+        ctx.strokeStyle = '#161616';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+
+      // Displacement vectors (rest → actual)
+      for (const n of nodes) {
+        ctx.strokeStyle = '#1c1428';
+        ctx.lineWidth = 1;
+        ctx.setLineDash([2, 4]);
+        ctx.beginPath();
+        ctx.moveTo(n.rx, n.ry);
+        ctx.lineTo(n.x, n.y);
+        ctx.stroke();
+      }
+      ctx.setLineDash([]);
+
+      // Connections between displaced nodes
+      ctx.lineWidth = 1;
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const dist = Math.hypot(nodes[i].x - nodes[j].x, nodes[i].y - nodes[j].y);
+          const alpha = Math.max(0.05, 0.3 - dist / 600);
+          ctx.strokeStyle = `rgba(88,64,160,${alpha})`;
+          ctx.beginPath();
+          ctx.moveTo(nodes[i].x, nodes[i].y);
+          ctx.lineTo(nodes[j].x, nodes[j].y);
+          ctx.stroke();
+        }
+      }
+
+      // Displaced nodes
+      for (const n of nodes) {
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, 5, 0, Math.PI * 2);
+        ctx.fillStyle = C4_COL;
+        ctx.fill();
+        ctx.font = '8px "Courier New"';
+        ctx.fillStyle = '#666';
+        ctx.fillText(n.label, n.x + 7, n.y + 4);
+      }
+
+      header(408, 318, 'C4 · STRUCTURAL', 'Maturana 1980', C4_COL);
+
+      ctx.font = '7px "Courier New"';
+      ctx.fillStyle = '#100c18';
+      ctx.fillText('"no inputs — only perturbations"', 408, 587);
+      ctx.fillStyle = '#1a1a1a';
+      ctx.fillText('displacement ' + (A * DISPLACE_SCALE).toFixed(1), 408, 597);
+    });
+  }
+
+  // ── Grid dividers ────────────────────────────────────────────────────────
+  function drawDividers(): void {
+    ctx.strokeStyle = DIV;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(400, 0);   ctx.lineTo(400, 600);
+    ctx.moveTo(0,   300); ctx.lineTo(800, 300);
+    ctx.stroke();
+
+    // Step counter at intersection
+    ctx.font = '7px "Courier New"';
+    ctx.fillStyle = '#181818';
+    ctx.textAlign = 'center';
+    ctx.fillText('step ' + frameN, 400, 303);
+    ctx.textAlign = 'left';
+  }
+
+  // ── Main render loop ──────────────────────────────────────────────────────
+  function render(): void {
+    stepPhysics();
+
+    ctx.fillStyle = BG;
+    ctx.fillRect(0, 0, W, H);
+
+    drawC1();
+    drawC2();
+    drawC3();
+    drawC4();
+    drawDividers();
+
+    requestAnimationFrame(render);
+  }
+
+  // Click to restart
+  canvas.addEventListener('click', () => {
+    initState();
+  });
+
+  // Start
+  initState();
+  render();
+</script>
+
+<style>
+  .exit-work {
+    background: #050505;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Courier New', Courier, monospace;
+    color: #444;
+    user-select: none;
+  }
+  .exit-work *,
+  .exit-work *::before,
+  .exit-work *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  .exit-work header {
+    padding: 1.8rem 0 0.7rem;
+    text-align: center;
+  }
+  .exit-work h1 {
+    font-size: 0.85rem;
+    font-weight: normal;
+    letter-spacing: 0.45em;
+    color: #aaa;
+    text-transform: uppercase;
+  }
+  .exit-work .subtitle {
+    font-size: 0.55rem;
+    letter-spacing: 0.3em;
+    color: #2a2a2a;
+    margin-top: 0.4rem;
+  }
+  .exit-work canvas { display: block; cursor: pointer; }
+  .exit-work footer {
+    padding: 0.7rem 0 2rem;
+    font-size: 0.5rem;
+    color: #222;
+    letter-spacing: 0.18em;
+    text-align: center;
+    line-height: 2;
+  }
+</style>
