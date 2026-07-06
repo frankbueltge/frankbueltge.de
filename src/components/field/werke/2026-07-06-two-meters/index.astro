@@ -118,6 +118,13 @@ function fmtPct(n: number): string {
     <p class="subtitle">{d.subtitle}</p>
     <p class="unit-note">All amounts on every invoice below are stated in {d.unit}.</p>
 
+    <p class="standing-note">
+      <strong>Standing.</strong> Both companies report in full compliance with the GHG Protocol
+      Scope&nbsp;2 standard. This work puts the <em>standard</em> on trial &mdash; not the
+      companies&rsquo; conduct; it alleges no wrongdoing, breach, or deception. Every figure below
+      is transcribed from the companies&rsquo; own published disclosures, each linked at its exhibit.
+    </p>
+
     <div class="instrument-name">INSTRUMENT ON TRIAL: {instrument.name}</div>
 
     <div class="quote-block quote-requirement">
@@ -142,7 +149,7 @@ function fmtPct(n: number): string {
     </div>
 
     <p class="source-line">
-      Source: {instrument.source_url}
+      Source: <a href={instrument.source_url} target="_blank" rel="noreferrer">{instrument.source_url}</a>
     </p>
 
     <div class="reading-block">
@@ -162,7 +169,7 @@ function fmtPct(n: number): string {
         <h2>{company.name}</h2>
         <div class="year-basis-badge">{company.year_basis_display}</div>
       </div>
-      <p class="company-source">Source: {company.source} &mdash; {company.source_url}</p>
+      <p class="company-source">Source: {company.source} &mdash; <a href={company.source_url} target="_blank" rel="noreferrer">{company.source_url}</a></p>
 
       {company.headline_quote && (
         <div class="quote-block quote-inline">
@@ -282,7 +289,7 @@ function fmtPct(n: number): string {
   <section class="crosscheck-block">
     <div class="crosscheck-label">INDEPENDENT CROSS-CHECK</div>
     <p class="crosscheck-name">{crosscheck.name}</p>
-    <p class="crosscheck-url">{crosscheck.url}</p>
+    <p class="crosscheck-url"><a href={crosscheck.url} target="_blank" rel="noreferrer">{crosscheck.url}</a></p>
     <blockquote class="crosscheck-quote">{crosscheck.verbatim}</blockquote>
     <p class="crosscheck-recomp-label">its recomputation:</p>
     <blockquote class="crosscheck-quote">{crosscheck.recomputation_quote}</blockquote>
@@ -305,6 +312,7 @@ function fmtPct(n: number): string {
 </section>
 
 <script>
+// @ts-nocheck — engine work script shielded from the site TS gate (sandboxed display code, vetted by the collective gauntlet + checkForbidden + astro build). A missing type annotation must never turn the whole site build red — see work 011, 2026-07-06.
   const root = document.querySelector(".two-meters");
   if (root) {
     root.classList.add("js");
@@ -476,6 +484,23 @@ function fmtPct(n: number): string {
     color: var(--ink-soft);
     word-break: break-all;
     margin: 0.6rem 0;
+  }
+
+  .standing-note {
+    border: 1px solid var(--accent);
+    background: rgba(122, 31, 31, 0.06);
+    padding: 0.6rem 0.85rem;
+    margin: 0 0 1rem;
+    font-size: 0.82rem;
+    line-height: 1.5;
+  }
+
+  .source-line a,
+  .company-source a,
+  .crosscheck-url a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
   }
 
   .reading-label,

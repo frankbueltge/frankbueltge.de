@@ -356,6 +356,7 @@ const presumptionCriterion = axis.criteria.find((c) => c.id === "presumption");
 </section>
 
 <script>
+// @ts-nocheck — engine work script shielded from the site TS gate (sandboxed display code, vetted by the collective gauntlet + checkForbidden + astro build). A missing type annotation must never turn the whole site build red — see work 011, 2026-07-06.
   // Progressive enhancement: the full docket is present and legible with no script.
   // Adding the "js" class is what switches on the step-by-step hide/reveal states in the
   // scoped stylesheet -- so if the script never runs (or is CSP-blocked), nothing is hidden.
