@@ -2,7 +2,7 @@
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import { t } from '@/i18n/ui'
 import { getLabPosts } from '@/lib/lab'
-import { WERKE_EXPERIMENTE, WERKE_STUDIEN } from '@/data/werke'
+import { WERKE_EXPERIMENTE, WERKE_STUDIEN, werkTitle } from '@/data/werke'
 import type { Locale } from '@/lib/site'
 
 const locale = (Astro.currentLocale ?? 'en') as Locale
@@ -26,7 +26,7 @@ const fmt = (iso: string) =>
         <li class="py-7">
           <a href={getRelativeLocaleUrl(locale, werk.href)} class="group block">
             <h2 class="text-lg font-semibold transition-colors group-hover:text-accent-soft">
-              {werk.title}<span class="font-normal text-fg-faint"> — {werk.subtitle[locale]}</span>
+              {werkTitle(werk, locale)}<span class="font-normal text-fg-faint"> — {werk.subtitle[locale]}</span>
               {werk.live && <span class="ml-2 align-middle font-mono text-[10px] uppercase tracking-wider text-fg-faint"><span class="dot-live mr-0.5 inline-block h-[5px] w-[5px] rounded-full align-middle"></span>live data</span>}
             </h2>
             <p class="mt-1.5 text-sm leading-relaxed text-fg-muted">{werk.description[locale]}</p>
@@ -49,7 +49,7 @@ const fmt = (iso: string) =>
       {WERKE_STUDIEN.map((werk) => (
         <li class="py-4">
           <a href={getRelativeLocaleUrl(locale, werk.href)} class="group block">
-            <span class="font-semibold transition-colors group-hover:text-accent-soft">{werk.title}</span>
+            <span class="font-semibold transition-colors group-hover:text-accent-soft">{werkTitle(werk, locale)}</span>
             <span class="text-sm text-fg-muted"> — {werk.subtitle[locale]}</span>
             {werk.live && <span class="ml-2 align-middle font-mono text-[10px] uppercase tracking-wider text-fg-faint"><span class="dot-live mr-0.5 inline-block h-[5px] w-[5px] rounded-full align-middle"></span>live data</span>}
           </a>

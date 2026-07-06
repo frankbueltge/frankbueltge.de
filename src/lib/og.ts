@@ -61,7 +61,7 @@ export const OG_PAGES: Record<string, { title: string; description: string }> = 
     description: 'Schiffe, die ihren Transponder bewusst abschalten, um zu verschwinden',
   },
   beifang: {
-    title: 'Der Beifang — The Bycatch',
+    title: 'Beifang — Bycatch',
     description: 'Science-Tracking, gemessen · Science tracking, measured',
   },
 }

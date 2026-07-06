@@ -79,7 +79,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'atlas',
-    name: 'Atlas der Datenkunst',
+    name: 'Atlas',
     year: '2026',
     url: '/atlas',
     status: { de: 'Aktiv', en: 'Active' },
