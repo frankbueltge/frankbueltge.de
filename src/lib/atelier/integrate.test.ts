@@ -72,6 +72,23 @@ describe('integrate', () => {
     expect(existsSync(join(site, 'src/components/atelier/werke/mixed/README.md'))).toBe(false)
     expect(existsSync(join(site, 'src/components/atelier/werke/mixed/notes.py'))).toBe(false)
   })
+  it('shields engine work scripts + modules from the site tsconfig, but not JSON-LD data', () => {
+    const mk = (p: string, c: string) => { mkdirSync(join(src, p, '..'), { recursive: true }); writeFileSync(join(src, p), c) }
+    mk('works/scripted/work.astro',
+      `---\n---\n<script type="application/ld+json" set:html={JSON.stringify({ a: 1 })} />\n<script>\n  let timers = [];\n  function run(instant) { return instant ? 0 : 1; }\n  run(false); timers.length;\n</script>`)
+    mk('works/scripted/meta.json', JSON.stringify({ title: 'Scripted' }))
+    mk('works/scripted/helper.ts', `export const f = (x) => x`)
+    const r = integrate({ sourceDir: src, siteDir: site })
+    expect(r.accepted.find((x) => x.slug === 'scripted')).toBeDefined()
+    const astro = readFileSync(join(site, 'src/components/atelier/werke/scripted/index.astro'), 'utf8')
+    // the client <script> is shielded, exactly once…
+    expect(astro).toMatch(/<script>\s*\n\s*\/\/ @ts-nocheck/)
+    expect(astro.match(/@ts-nocheck/g)?.length).toBe(1)
+    // …and the JSON-LD data script is left untouched
+    expect(astro).toContain('application/ld+json')
+    // copied .ts helper modules are shielded at the top
+    expect(readFileSync(join(site, 'src/components/atelier/werke/scripted/helper.ts'), 'utf8').startsWith('// @ts-nocheck')).toBe(true)
+  })
   it('integrates into a custom namespace', () => {
     const r = integrate({ sourceDir: src, siteDir: site, ns: 'field' })
     expect(r.accepted).toContainEqual({ slug: 'good', kind: 'astro' })
