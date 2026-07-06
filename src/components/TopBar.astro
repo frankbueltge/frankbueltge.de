@@ -15,6 +15,17 @@ const nav = [
 const other = locale === 'de' ? 'en' : 'de'
 const pathNoLocale = Astro.url.pathname.replace(/^\/(de|en)/, '') || '/'
 const otherUrl = getRelativeLocaleUrl(other, pathNoLocale)
+// The engine works + their protocol/requests pages (and 404) are English-only — no /de mirror
+// is built, so the language toggle would 404. Suppress it there. (Link audit, 2026-07-06.)
+const ENGINE_NS = ['field', 'atelier', 'plenum']
+const hasAlternate =
+  !pathNoLocale.startsWith('/404') &&
+  !ENGINE_NS.some(
+    (ns) =>
+      pathNoLocale.startsWith(`/${ns}/werke/`) ||
+      pathNoLocale.startsWith(`/${ns}/protocol`) ||
+      pathNoLocale.startsWith(`/${ns}/requests`),
+  )
 ---
 
 <header class="keep-dark sticky top-0 z-30 flex h-12 items-center justify-between border-b border-line bg-bg/80 px-4 backdrop-blur-md sm:h-10">
@@ -31,9 +42,11 @@ const otherUrl = getRelativeLocaleUrl(other, pathNoLocale)
       {nav.map((item) => <a href={item.href} class="transition-colors hover:text-fg">{item.label}</a>)}
     </nav>
 
-    <a href={otherUrl} class="font-mono text-xs text-fg-faint transition-colors hover:text-fg">
-      {locale.toUpperCase()}<span class="mx-1 opacity-50">/</span>{other.toUpperCase()}
-    </a>
+    {hasAlternate && (
+      <a href={otherUrl} class="font-mono text-xs text-fg-faint transition-colors hover:text-fg">
+        {locale.toUpperCase()}<span class="mx-1 opacity-50">/</span>{other.toUpperCase()}
+      </a>
+    )}
 
     <!-- mobile menu: native <details> disclosure (works without JS) -->
     <details data-menu class="relative sm:hidden">
