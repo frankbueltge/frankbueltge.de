@@ -1,0 +1,1014 @@
+---
+// Instrument 011 (draft): The Backward Docket
+// Runs the axis that filed the externally-submitted Horizon case at the EDGE of work 010 v2
+// (session 08) BACKWARD across the collective's own nine filed cards. The axis is decomposed
+// into two criteria: mechanism opacity, and the load-bearing outcome-presumption (the reversed
+// burden on the ultimate finding). A case-file / cause-list register, not a spectrum gauge --
+// a precisely plotted axis would carry an instrument-like authority the work itself studies as
+// a failure mode. Every argued, non-STRUCTURAL grade below carries a visible "contest this
+// placement" affordance. Meridian / session 09 / 2026-07-05.
+
+import data from "./data.json";
+
+interface Criterion {
+  id: string;
+  short: string;
+  question: string;
+  closed_when: string;
+  load_bearing: boolean;
+  why_load_bearing?: string;
+}
+
+interface Axis {
+  name: string;
+  origin: string;
+  decomposition_note: string;
+  criteria: Criterion[];
+}
+
+interface GradeDef {
+  id: string;
+  label: string;
+  def: string;
+}
+
+interface Marks {
+  opacity: string;
+  presumption: string;
+}
+
+interface Reference {
+  id: string;
+  tool: string;
+  role: string;
+  accusation: string;
+  marks: Marks;
+  grade: string;
+  opacity_basis: string;
+  presumption_basis: string;
+  channel_that_existed: string;
+  source: string;
+  source_urls: string[];
+}
+
+interface Card {
+  id: number;
+  tool: string;
+  accusation: string;
+  actions_offered: string[];
+  channel_that_existed: string;
+  marks: Marks;
+  grade: string;
+  opacity_basis?: string;
+  presumption_basis?: string;
+  basis?: string;
+  source: string;
+  source_urls: string[];
+  contest_this_placement: string;
+}
+
+interface CounterfactualEntry {
+  question: string;
+  result: string;
+  reasoning: string;
+  residue: string;
+}
+
+interface Counterfactual {
+  prompt: string;
+  card_006: CounterfactualEntry;
+  card_001: CounterfactualEntry;
+}
+
+interface Finding {
+  headline: string;
+  points: string[];
+  consequence: string;
+  self_implication: string;
+}
+
+interface DocketData {
+  title: string;
+  subtitle: string;
+  instrument_no: string;
+  deterministic: boolean;
+  seed_note: string;
+  axis: Axis;
+  grades: GradeDef[];
+  reference: Reference;
+  cards: Card[];
+  counterfactual: Counterfactual;
+  finding: Finding;
+}
+
+const docket = data as DocketData;
+const axis: Axis = docket.axis;
+const grades: GradeDef[] = docket.grades;
+const reference: Reference = docket.reference;
+const cards: Card[] = docket.cards; // fixed order, ids 1..9, as filed -- never re-sorted
+const counterfactual: Counterfactual = docket.counterfactual;
+const finding: Finding = docket.finding;
+
+const gradeById: Record<string, GradeDef> = {};
+grades.forEach((g) => {
+  gradeById[g.id] = g;
+});
+
+function gradeLabel(id: string): string {
+  return gradeById[id] ? gradeById[id].label : id;
+}
+
+function markLabel(value: string): string {
+  if (gradeById[value]) return gradeById[value].label;
+  return value.replace(/_/g, " ");
+}
+
+function markClass(value: string): string {
+  switch (value) {
+    case "CLOSED":
+      return "mark-closed";
+    case "OPEN":
+      return "mark-open";
+    case "PARTIAL":
+      return "mark-partial";
+    case "MIXED":
+      return "mark-mixed";
+    case "DE_FACTO":
+      return "mark-defacto";
+    case "UNPROVEN":
+      return "mark-unproven";
+    case "LATENT":
+      return "mark-latent";
+    case "NONE":
+      return "mark-none";
+    default:
+      return "mark-open";
+  }
+}
+
+function basisLines(card: Card): string[] {
+  if (card.opacity_basis && card.presumption_basis) {
+    return ["Opacity -- " + card.opacity_basis, "Presumption -- " + card.presumption_basis];
+  }
+  if (card.basis) return [card.basis];
+  return [];
+}
+
+function cardNo(id: number): string {
+  return "No. " + String(id).padStart(3, "0");
+}
+
+const opacityCriterion = axis.criteria.find((c) => c.id === "opacity");
+const presumptionCriterion = axis.criteria.find((c) => c.id === "presumption");
+---
+
+<section class="docket">
+  <header class="docket-header">
+    <div class="kicker">MERIDIAN / INSTRUMENT {docket.instrument_no} / CAUSE LIST</div>
+    <h1>{docket.title}</h1>
+    <p class="subtitle">{docket.subtitle}</p>
+    <p class="seed-note">{docket.seed_note}</p>
+  </header>
+
+  <section class="axis-block" aria-label="axis under test">
+    <div class="block-title">AXIS UNDER TEST</div>
+    <p class="axis-name">&ldquo;{axis.name}&rdquo;</p>
+    <p class="axis-origin">{axis.origin}</p>
+    <p class="axis-decomp"><strong>Why two criteria, not one:</strong> {axis.decomposition_note}</p>
+
+    <div class="criteria-grid">
+      {opacityCriterion && (
+        <div class="criterion-card">
+          <div class="criterion-head">{opacityCriterion.short}</div>
+          <p class="criterion-q">{opacityCriterion.question}</p>
+          <p class="criterion-closed"><em>Closed when:</em> {opacityCriterion.closed_when}</p>
+        </div>
+      )}
+      {presumptionCriterion && (
+        <div class="criterion-card load-bearing">
+          <div class="criterion-head">
+            {presumptionCriterion.short}
+            <span class="lb-tag">LOAD-BEARING</span>
+          </div>
+          <p class="criterion-q">{presumptionCriterion.question}</p>
+          <p class="criterion-closed"><em>Closed when:</em> {presumptionCriterion.closed_when}</p>
+          {presumptionCriterion.why_load_bearing && (
+            <p class="criterion-why">{presumptionCriterion.why_load_bearing}</p>
+          )}
+        </div>
+      )}
+    </div>
+  </section>
+
+  <section class="grade-key" aria-label="grade key">
+    <div class="block-title">GRADE KEY</div>
+    <dl class="grade-key-list">
+      {grades.map((g) => (
+        <>
+          <dt>{g.label}</dt>
+          <dd>{g.def}</dd>
+        </>
+      ))}
+    </dl>
+  </section>
+
+  <section class="reference-block" aria-label="calibration reference specimen">
+    <div class="block-title">REFERENCE SPECIMEN -- CALIBRATION, NOT PART OF THE RUN</div>
+    <div class="ref-id">{reference.id}</div>
+    <div class="ref-tool">{reference.tool}</div>
+    <p class="ref-role">{reference.role}</p>
+    <p class="ref-accusation">{reference.accusation}</p>
+
+    <div class="marks-row">
+      <div class={"mark-cell " + markClass(reference.marks.opacity)}>
+        <span class="mark-cell-label">OPACITY</span>
+        <span class="mark-cell-value">{markLabel(reference.marks.opacity)}</span>
+      </div>
+      <div class={"mark-cell load-bearing-cell emphasis " + markClass(reference.marks.presumption)}>
+        <span class="mark-cell-label">PRESUMPTION <em>(load-bearing)</em></span>
+        <span class="mark-cell-value">{markLabel(reference.marks.presumption)}</span>
+        <span class="mark-cell-note">the reason for exile</span>
+      </div>
+    </div>
+
+    <div class="stamp-row">
+      <div class="stamp">{gradeLabel(reference.grade)}</div>
+    </div>
+
+    <p class="ref-basis"><em>Opacity --</em> {reference.opacity_basis}</p>
+    <p class="ref-basis"><em>Presumption --</em> {reference.presumption_basis}</p>
+    <p class="ref-channel"><strong>Channel that existed:</strong> {reference.channel_that_existed}</p>
+
+    <details class="contest">
+      <summary>Source</summary>
+      <p class="source-text">{reference.source}</p>
+      <ul class="urls">
+        {reference.source_urls.map((u) => (<li>{u}</li>))}
+      </ul>
+    </details>
+  </section>
+
+  <div class="controls">
+    <button type="button" id="run-btn">Run the docket</button>
+    <button type="button" id="skip-btn">Skip to end</button>
+    <noscript>
+      <span class="noscript-note">
+        JavaScript is off: every card below, its options, its marks, its grade, and its contest
+        note are already present and legible in this page -- only the step-by-step reveal
+        sequence requires JavaScript to run.
+      </span>
+    </noscript>
+  </div>
+
+  <ol class="cause-list" id="cause-list" aria-label="nine filed cards, fixed order">
+    {cards.map((card) => (
+      <li class="docket-row" data-id={card.id}>
+        <div class="row-head">
+          <span class="row-no">{cardNo(card.id)}</span>
+          <span class="row-tool">{card.tool}</span>
+        </div>
+
+        <div class="reveal-a">
+          <p class="accusation">{card.accusation}</p>
+          <div class="options-block">
+            <div class="options-label">Moves available to the accused, as recorded</div>
+            <ul class="options-list">
+              {card.actions_offered.map((a) => (<li>{a}</li>))}
+            </ul>
+          </div>
+        </div>
+
+        <div class="reveal-b">
+          <p class="channel"><strong>Channel that existed:</strong> {card.channel_that_existed}</p>
+
+          <div class="marks-row">
+            <div class={"mark-cell " + markClass(card.marks.opacity)}>
+              <span class="mark-cell-label">OPACITY</span>
+              <span class="mark-cell-value">{markLabel(card.marks.opacity)}</span>
+            </div>
+            <div class={"mark-cell load-bearing-cell " + markClass(card.marks.presumption)}>
+              <span class="mark-cell-label">PRESUMPTION <em>(load-bearing)</em></span>
+              <span class="mark-cell-value">{markLabel(card.marks.presumption)}</span>
+            </div>
+          </div>
+
+          <div class="stamp-row">
+            <div class="stamp">{gradeLabel(card.grade)}</div>
+          </div>
+
+          {basisLines(card).map((line) => (<p class="basis-line">{line}</p>))}
+
+          <details class="contest">
+            <summary>Contest this placement</summary>
+            <p class="contest-text">{card.contest_this_placement}</p>
+            <p class="source-text"><strong>Source:</strong> {card.source}</p>
+            {card.source_urls.length > 0 && (
+              <ul class="urls">
+                {card.source_urls.map((u) => (<li>{u}</li>))}
+              </ul>
+            )}
+          </details>
+        </div>
+      </li>
+    ))}
+  </ol>
+
+  <section class="counterfactual" id="counterfactual" aria-label="counterfactual refiling test">
+    <div class="block-title">COUNTERFACTUAL -- THE REFILING TEST</div>
+    <p class="cf-prompt">{counterfactual.prompt}</p>
+
+    <div class="cf-entry">
+      <p class="cf-question">{counterfactual.card_006.question}</p>
+      <p class="cf-result">{counterfactual.card_006.result}</p>
+      <p class="cf-reasoning">{counterfactual.card_006.reasoning}</p>
+      <p class="cf-residue"><em>Residue --</em> {counterfactual.card_006.residue}</p>
+    </div>
+
+    <div class="cf-entry">
+      <p class="cf-question">{counterfactual.card_001.question}</p>
+      <p class="cf-result">{counterfactual.card_001.result}</p>
+      <p class="cf-reasoning">{counterfactual.card_001.reasoning}</p>
+      <p class="cf-residue"><em>Residue --</em> {counterfactual.card_001.residue}</p>
+    </div>
+  </section>
+
+  <section class="finding" id="finding" aria-label="finding">
+    <div class="block-title">FINDING</div>
+    <p class="finding-headline">{finding.headline}</p>
+    <ul class="finding-points">
+      {finding.points.map((p) => (<li>{p}</li>))}
+    </ul>
+    <p class="finding-consequence"><strong>Consequence:</strong> {finding.consequence}</p>
+    <p class="finding-self">{finding.self_implication}</p>
+  </section>
+
+  <div class="chrome-caption" id="chrome-caption">
+    Nine filed cards run backward against the axis that exiled the tenth. One STRUCTURAL
+    reference. No forced refilings. One candidate refiling -- gauntlet owed. The distinction is
+    earned, not assumed.
+  </div>
+
+  <footer class="method-footer">
+    Every claim, grade, source, and caveat above is read from this work&rsquo;s data.json,
+    verified before build. Full method note, grade table, and the honesty section in this
+    work&rsquo;s README.md.
+  </footer>
+</section>
+
+<script>
+  // Progressive enhancement: the full docket is present and legible with no script.
+  // Adding the "js" class is what switches on the step-by-step hide/reveal states in the
+  // scoped stylesheet -- so if the script never runs (or is CSP-blocked), nothing is hidden.
+  const docketEl = document.querySelector(".docket");
+  if (docketEl) docketEl.classList.add("js");
+
+  const rows = Array.from(document.querySelectorAll(".docket-row"));
+  const runBtn = document.getElementById("run-btn");
+  const skipBtn = document.getElementById("skip-btn");
+  const counterfactualEl = document.getElementById("counterfactual");
+  const findingEl = document.getElementById("finding");
+  const caption = document.getElementById("chrome-caption");
+
+  // Fixed step timing -- no Math.random(), no Date.now(). Same input, same docket, same pacing.
+  const STEP_MS = 900;
+  const BEAT_MS = 450;
+
+  let timers: number[] = [];
+  function clearTimers() {
+    timers.forEach((t) => clearTimeout(t));
+    timers = [];
+  }
+
+  function resetState() {
+    rows.forEach((row) => {
+      row.classList.remove("show-a", "show-b");
+    });
+    if (counterfactualEl) counterfactualEl.classList.remove("show");
+    if (findingEl) findingEl.classList.remove("show");
+    if (caption) caption.classList.remove("visible");
+  }
+
+  function runSequence(instant: boolean) {
+    clearTimers();
+    resetState();
+
+    rows.forEach((row, idx) => {
+      const stepBase = instant ? 0 : idx * STEP_MS + STEP_MS;
+      const stepBeat = instant ? 0 : stepBase + BEAT_MS;
+      timers.push(
+        window.setTimeout(() => {
+          row.classList.add("show-a");
+        }, stepBase)
+      );
+      timers.push(
+        window.setTimeout(() => {
+          row.classList.add("show-b");
+        }, stepBeat)
+      );
+    });
+
+    const tail = instant ? 0 : rows.length * STEP_MS + STEP_MS + BEAT_MS + STEP_MS;
+    timers.push(
+      window.setTimeout(() => {
+        if (counterfactualEl) counterfactualEl.classList.add("show");
+      }, tail)
+    );
+    timers.push(
+      window.setTimeout(() => {
+        if (findingEl) findingEl.classList.add("show");
+        if (caption) caption.classList.add("visible");
+      }, instant ? 0 : tail + STEP_MS)
+    );
+  }
+
+  if (runBtn) {
+    runBtn.addEventListener("click", () => runSequence(false));
+  }
+  if (skipBtn) {
+    skipBtn.addEventListener("click", () => runSequence(true));
+  }
+</script>
+
+<style>
+  .docket {
+    --paper: #f2f0e8;
+    --paper-dim: #e9e6db;
+    --ink: #1b1a17;
+    --ink-mute: #57544c;
+    --rule: #8c887c;
+    --redact: #0a0a0a;
+    --stamp: #6e2323;
+    font-family: "Courier New", "Courier Prime", ui-monospace, Consolas, monospace;
+    background: var(--paper);
+    color: var(--ink);
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 1.75rem 1.5rem 2.75rem;
+    line-height: 1.5;
+  }
+
+  .docket-header {
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 0.9rem;
+    margin-bottom: 1.1rem;
+  }
+
+  .kicker {
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    color: var(--ink-mute);
+    margin-bottom: 0.5rem;
+  }
+
+  h1 {
+    font-size: 1.55rem;
+    letter-spacing: 0.03em;
+    margin: 0 0 0.45rem;
+    text-transform: uppercase;
+  }
+
+  .subtitle {
+    font-size: 0.88rem;
+    margin: 0 0 0.5rem;
+  }
+
+  .seed-note {
+    font-size: 0.68rem;
+    color: var(--ink-mute);
+    margin: 0;
+    max-width: 68ch;
+  }
+
+  .block-title {
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
+    color: var(--ink-mute);
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 0.3rem;
+    margin-bottom: 0.7rem;
+  }
+
+  .axis-block,
+  .grade-key,
+  .reference-block,
+  .counterfactual,
+  .finding {
+    margin-bottom: 1.3rem;
+    padding: 0.9rem 1rem 1rem;
+    border: 1px solid var(--ink);
+    background: rgba(255, 255, 255, 0.25);
+  }
+
+  .axis-name {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin: 0 0 0.4rem;
+  }
+
+  .axis-origin,
+  .axis-decomp {
+    font-size: 0.78rem;
+    margin: 0 0 0.5rem;
+  }
+
+  .criteria-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-top: 0.6rem;
+  }
+
+  .criterion-card {
+    border: 1px solid var(--rule);
+    padding: 0.55rem 0.65rem 0.65rem;
+    background: rgba(255, 255, 255, 0.4);
+  }
+
+  .criterion-card.load-bearing {
+    border: 2px solid var(--ink);
+  }
+
+  .criterion-head {
+    font-weight: 700;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin-bottom: 0.35rem;
+  }
+
+  .lb-tag {
+    display: inline-block;
+    margin-left: 0.4rem;
+    font-size: 0.56rem;
+    letter-spacing: 0.1em;
+    color: #fff;
+    background: var(--stamp);
+    padding: 0.08rem 0.35rem;
+    vertical-align: middle;
+  }
+
+  .criterion-q {
+    font-size: 0.74rem;
+    margin: 0 0 0.35rem;
+  }
+
+  .criterion-closed,
+  .criterion-why {
+    font-size: 0.68rem;
+    color: var(--ink-mute);
+    margin: 0 0 0.3rem;
+  }
+
+  .grade-key-list {
+    display: grid;
+    grid-template-columns: 9.5rem 1fr;
+    row-gap: 0.4rem;
+    column-gap: 0.6rem;
+    margin: 0;
+  }
+
+  .grade-key-list dt {
+    font-weight: 700;
+    font-size: 0.72rem;
+    letter-spacing: 0.03em;
+  }
+
+  .grade-key-list dd {
+    font-size: 0.72rem;
+    margin: 0;
+    color: var(--ink-mute);
+  }
+
+  .ref-id {
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    color: var(--ink-mute);
+  }
+
+  .ref-tool {
+    font-weight: 700;
+    font-size: 1rem;
+    margin: 0.15rem 0 0.2rem;
+  }
+
+  .ref-role,
+  .ref-accusation,
+  .ref-basis,
+  .ref-channel {
+    font-size: 0.78rem;
+    margin: 0 0 0.5rem;
+  }
+
+  .marks-row {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    margin: 0.5rem 0 0.6rem;
+  }
+
+  .mark-cell {
+    flex: 1 1 11rem;
+    min-width: 9.5rem;
+    border: 1.5px solid var(--ink);
+    padding: 0.4rem 0.55rem;
+    background: var(--paper-dim);
+  }
+
+  .mark-cell-label {
+    display: block;
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+    color: var(--ink-mute);
+    margin-bottom: 0.2rem;
+  }
+
+  .mark-cell-value {
+    display: block;
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.03em;
+  }
+
+  .mark-cell-note {
+    display: block;
+    font-size: 0.6rem;
+    font-style: italic;
+    color: var(--ink-mute);
+    margin-top: 0.2rem;
+  }
+
+  .load-bearing-cell {
+    border-width: 2.5px;
+  }
+
+  .emphasis {
+    box-shadow: 0 0 0 3px rgba(110, 35, 35, 0.18);
+  }
+
+  /* Redaction / blackout motif: the thing that cannot be examined is blacked out. */
+  .mark-closed {
+    background: var(--redact);
+    border-color: var(--redact);
+  }
+  .mark-closed .mark-cell-label,
+  .mark-closed .mark-cell-value,
+  .mark-closed .mark-cell-note {
+    color: #f2f0e8;
+  }
+
+  .mark-open {
+    background: #fff;
+    border-style: solid;
+  }
+
+  .mark-partial {
+    background: repeating-linear-gradient(
+      135deg,
+      var(--paper-dim),
+      var(--paper-dim) 8px,
+      #cfcabb 8px,
+      #cfcabb 16px
+    );
+  }
+
+  .mark-mixed {
+    background: repeating-linear-gradient(45deg, #fff, #fff 4px, var(--paper-dim) 4px, var(--paper-dim) 8px);
+  }
+
+  .mark-defacto {
+    background: #d8d3c2;
+  }
+
+  /* UNPROVEN: a question-mark hatch -- neither the redaction-black of CLOSED nor a settled fill.
+     The grade the docket cannot make on the load-bearing criterion, shown as unresolved. */
+  .mark-unproven {
+    background: repeating-linear-gradient(
+      90deg,
+      var(--paper-dim),
+      var(--paper-dim) 3px,
+      #ffffff 3px,
+      #ffffff 6px
+    );
+    border-style: dashed;
+  }
+
+  .mark-latent {
+    background: var(--paper-dim);
+    border-style: dashed;
+  }
+
+  .mark-none {
+    background: transparent;
+    border-style: dotted;
+  }
+
+  .stamp-row {
+    margin: 0.5rem 0 0.6rem;
+  }
+
+  .stamp {
+    display: inline-block;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.12em;
+    color: var(--stamp);
+    border: 3px double var(--stamp);
+    padding: 0.25rem 0.7rem;
+    transform: rotate(-3deg);
+    text-transform: uppercase;
+  }
+
+  .contest {
+    margin-top: 0.5rem;
+    border-top: 1px dashed var(--rule);
+    padding-top: 0.45rem;
+  }
+
+  .contest summary {
+    cursor: pointer;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+
+  .contest-text,
+  .source-text,
+  .basis-line {
+    font-size: 0.72rem;
+    color: var(--ink-mute);
+    margin: 0.4rem 0 0;
+    line-height: 1.5;
+  }
+
+  .urls {
+    margin: 0.35rem 0 0;
+    padding-left: 1.1rem;
+    font-size: 0.64rem;
+    color: var(--ink-mute);
+    word-break: break-all;
+  }
+
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin: 1.1rem 0 1.2rem;
+  }
+
+  button {
+    font-family: inherit;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    background: var(--ink);
+    color: var(--paper);
+    border: 1.5px solid var(--ink);
+    padding: 0.5rem 0.95rem;
+    cursor: pointer;
+    text-transform: uppercase;
+  }
+
+  button:hover,
+  button:focus-visible {
+    background: var(--stamp);
+    border-color: var(--stamp);
+  }
+
+  .noscript-note {
+    font-size: 0.66rem;
+    color: var(--ink-mute);
+  }
+
+  .cause-list {
+    list-style: none;
+    margin: 0 0 1.3rem;
+    padding: 0;
+    counter-reset: none;
+  }
+
+  .docket-row {
+    border: 1px solid var(--ink);
+    border-top-width: 3px;
+    margin-bottom: 0.85rem;
+    padding: 0.75rem 0.9rem 0.85rem;
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+  .row-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.6rem;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 0.4rem;
+    margin-bottom: 0.55rem;
+  }
+
+  .row-no {
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    color: var(--ink-mute);
+  }
+
+  .row-tool {
+    font-weight: 700;
+    font-size: 0.92rem;
+  }
+
+  .docket.js .reveal-a,
+  .docket.js .reveal-b {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: opacity 0.35s ease;
+  }
+
+  .reveal-b {
+    margin-top: 0.55rem;
+  }
+
+  .docket.js .docket-row.show-a .reveal-a {
+    max-height: none;
+    opacity: 1;
+    overflow: visible;
+  }
+
+  .docket.js .docket-row.show-b .reveal-b {
+    max-height: none;
+    opacity: 1;
+    overflow: visible;
+    margin-top: 0.55rem;
+  }
+
+  .accusation {
+    font-size: 0.8rem;
+    margin: 0 0 0.55rem;
+  }
+
+  .options-block {
+    font-size: 0.7rem;
+  }
+
+  .options-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.06em;
+    color: var(--ink-mute);
+    margin-bottom: 0.3rem;
+    text-transform: uppercase;
+  }
+
+  .options-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .options-list li {
+    border: 1px solid var(--rule);
+    padding: 0.2rem 0.5rem;
+    font-size: 0.68rem;
+    background: rgba(255, 255, 255, 0.5);
+  }
+
+  .channel {
+    font-size: 0.76rem;
+    margin: 0 0 0.4rem;
+  }
+
+  .cf-entry {
+    border-top: 1px dashed var(--rule);
+    padding-top: 0.6rem;
+    margin-top: 0.6rem;
+  }
+
+  .cf-entry:first-of-type {
+    border-top: none;
+    padding-top: 0;
+    margin-top: 0.3rem;
+  }
+
+  .cf-prompt {
+    font-size: 0.76rem;
+    margin: 0 0 0.5rem;
+  }
+
+  .cf-question {
+    font-weight: 700;
+    font-size: 0.8rem;
+    margin: 0 0 0.3rem;
+  }
+
+  .cf-result {
+    display: inline-block;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--stamp);
+    border: 2px solid var(--stamp);
+    padding: 0.1rem 0.5rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .cf-reasoning,
+  .cf-residue {
+    font-size: 0.74rem;
+    margin: 0 0 0.4rem;
+  }
+
+  .finding-headline {
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin: 0 0 0.6rem;
+  }
+
+  .finding-points {
+    margin: 0 0 0.7rem;
+    padding-left: 1.1rem;
+    font-size: 0.76rem;
+  }
+
+  .finding-points li {
+    margin-bottom: 0.5rem;
+  }
+
+  .finding-consequence {
+    font-size: 0.76rem;
+    margin: 0 0 0.6rem;
+  }
+
+  .finding-self {
+    font-size: 0.76rem;
+    font-style: italic;
+    border-left: 3px solid var(--ink);
+    padding-left: 0.7rem;
+    margin: 0;
+  }
+
+  .docket.js #counterfactual,
+  .docket.js #finding {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    padding-top: 0;
+    padding-bottom: 0;
+    border-width: 0;
+    margin-bottom: 0;
+    transition: opacity 0.35s ease;
+  }
+
+  .docket.js #counterfactual.show,
+  .docket.js #finding.show {
+    max-height: none;
+    opacity: 1;
+    overflow: visible;
+    padding: 0.9rem 1rem 1rem;
+    border: 1px solid var(--ink);
+    margin-bottom: 1.3rem;
+  }
+
+  .chrome-caption {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--paper);
+    background: var(--ink);
+    border: 1.5px solid var(--ink);
+    padding: 0.6rem 0.85rem;
+    transition: opacity 0.3s ease;
+    margin-bottom: 1rem;
+  }
+
+  .docket.js .chrome-caption {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+  }
+
+  .docket.js .chrome-caption.visible {
+    opacity: 1;
+    max-height: none;
+  }
+
+  .method-footer {
+    font-size: 0.62rem;
+    color: var(--ink-mute);
+    border-top: 1px dashed var(--rule);
+    padding-top: 0.6rem;
+    margin-top: 0.4rem;
+  }
+
+  @media (max-width: 680px) {
+    .criteria-grid {
+      grid-template-columns: 1fr;
+    }
+    .grade-key-list {
+      grid-template-columns: 1fr;
+    }
+    .marks-row {
+      flex-direction: column;
+    }
+  }
+</style>

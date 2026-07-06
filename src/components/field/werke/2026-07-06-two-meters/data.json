@@ -1,0 +1,127 @@
+{
+  "title": "The Two Meters",
+  "subtitle": "The GHG Protocol Scope 2 dual-reporting standard on trial",
+  "unit": "metric tons CO2-equivalent (tCO2e)",
+  "instrument_on_trial": {
+    "name": "GHG Protocol Scope 2 Guidance — the dual-reporting standard",
+    "what_it_requires_verbatim": "Companies with any operations in markets providing product or supplier-specific data in the form of contractual instruments shall report scope 2 emissions in two ways and label each result according to the method: one based on the location-based method, and one based on the market-based method. This is also termed “dual reporting.”",
+    "what_it_promises_verbatim": "Dual reporting allows companies to compare their individual purchasing decisions to the overall GHG-intensity of the grids on which they operate.",
+    "stated_benefits_verbatim": [
+      "Distinguishes changes in choices vs. changes in grid emissions intensity",
+      "Provides transparency for stakeholders"
+    ],
+    "what_it_leaves_free_verbatim": "Companies shall specify which method is used for goal-setting, tracking, and goal-achievement claims, and for scope 3 or product-level communication.",
+    "source_url": "https://ghgprotocol.org/sites/default/files/2023-03/Scope%202%20Guidance.pdf",
+    "reading": "The standard mandates that both meters be disclosed, and states its purpose: transparency for stakeholders, and the ability to distinguish a company's purchasing choices from what its grids actually do. It simultaneously hands the reporter the choice of which meter anchors goal-setting and goal-achievement claims. Both companies below comply fully. The trial is of the standard, not of anyone's compliance.",
+    "the_test_applied": "The test this work applies is the collective's own, stated openly rather than attributed to the standard: could a reader who encounters only the goal-anchored headline figure — the one the standard lets the reporter choose — reconstruct what the grids saw? The standard's own stated benefit ('transparency for stakeholders') is delivered at the table layer and undone at the headline layer, by a discretion the same document grants."
+  },
+  "meters": {
+    "market_based": {
+      "label": "METER A — AS REPORTED (market-based)",
+      "invoice_subline": "computed: metered consumption minus contractual instruments (certificates, power purchase agreements), credited within GHG Protocol market boundaries",
+      "explanation": "Scope 2 computed with contractual instruments applied. A small figure here is the method working as intended — it is the residual after procurement, and it is designed to reach zero when every megawatt-hour is contractually matched. This is the meter both companies use for their goal claims.",
+      "explanation_status": "collective's summary of the method, not a quotation"
+    },
+    "location_based": {
+      "label": "METER B — AS THE GRID SAW IT (location-based)",
+      "invoice_subline": "metered: kWh consumption per facility · modeled: average emission factor of the supplying grid — a grid-average construct, not a per-electron reading",
+      "explanation": "Scope 2 computed from the average emission factor of the grid actually supplying each facility. The consumption is metered; the emissions figure is derived. It is the figure that tracks what the local grid physically dispatched to meet the load, on average.",
+      "explanation_status": "collective's summary of the method, not a quotation"
+    }
+  },
+  "derivation_formulas": {
+    "gap": "gap = location_based − market_based",
+    "ratio": "ratio = location_based ÷ market_based (one decimal); NOTE: this ratio grows mechanically as the market-based residual approaches zero — a large ratio is not by itself evidence of manipulation, which is why every ratio on this work is paired with the absolute gap",
+    "trend": "trend = (last − first) ÷ first; NOTE: 'first' and 'last' are the endpoints of the window named on each trend block, not necessarily the first and last row displayed. Microsoft's window is all five reported years (FY20→FY24). Google's is 2020→2024 — the 2019 row is shown on the invoice run but excluded from the trend, to hold Microsoft's five-year window and to match the cross-check's base year; the window note on Google's trend states this and gives the 2019-anchored alternative, because choosing a comparison window is itself one of the discretions this work indicts",
+    "worked_examples": [
+      "Microsoft FY24 gap: 9,955,368 − 259,090 = 9,696,278",
+      "Microsoft FY24 ratio: 9,955,368 ÷ 259,090 = 38.4",
+      "Microsoft FY20→FY24 market-based trend: (259,090 − 456,119) ÷ 456,119 = −43.2%",
+      "Google 2020→2024 market-based trend: (3,059,100 − 911,600) ÷ 911,600 = +235.6%"
+    ]
+  },
+  "companies": [
+    {
+      "name": "Microsoft",
+      "year_basis": "fiscal years, July–June (FY20 = July 2019–June 2020)",
+      "year_basis_display": "FISCAL YEARS (JUL–JUN) — not calendar-aligned with the Google invoices",
+      "source": "Microsoft 2025 Environmental Data Fact Sheet, Table 1A (GHG emissions by scope); identical subtotals in Table 3 (by region)",
+      "source_url": "https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/msc/documents/presentations/CSR/2025-Microsoft-Environmental-Data-Fact-Sheet-PDF.pdf",
+      "rows": [
+        { "year": "FY20", "market_based": 456119, "location_based": 4328916, "gap": 3872797, "ratio": 9.5 },
+        { "year": "FY21", "market_based": 429405, "location_based": 5010667, "gap": 4581262, "ratio": 11.7 },
+        { "year": "FY22", "market_based": 288029, "location_based": 6381250, "gap": 6093221, "ratio": 22.2 },
+        { "year": "FY23", "market_based": 393134, "location_based": 8077403, "gap": 7684269, "ratio": 20.5 },
+        { "year": "FY24", "market_based": 259090, "location_based": 9955368, "gap": 9696278, "ratio": 38.4 }
+      ],
+      "trend_first_to_last": {
+        "market_based_pct": -43.2,
+        "location_based_pct": 130.0,
+        "window_label": "FY20 → FY24 (all five reported years)",
+        "sentence": "Over five fiscal years the reported meter fell 43.2% while the grid meter rose 130.0% — the same operations, one meter running backward. In FY24 the two meters differ by 9,696,278 tCO2e (a factor of 38.4)."
+      },
+      "exhibit": "Direction reversal: Microsoft's headline meter is both the smaller figure and a shrinking one. The sentences 'our Scope 2 emissions fell 43%' and 'the grid emissions of our consumption rose 130%' are simultaneously true of the same operations, each under a GHG Protocol method. The standard adjudicates neither."
+    },
+    {
+      "name": "Google (Alphabet)",
+      "year_basis": "calendar years",
+      "year_basis_display": "CALENDAR YEARS — not aligned with the Microsoft fiscal-year invoices",
+      "source": "Google 2025 Environmental Report, appendix: Environmental metrics data tables — Greenhouse gas emissions inventory",
+      "source_url": "https://www.gstatic.com/gumdrop/sustainability/google-2025-environmental-report.pdf",
+      "rows": [
+        { "year": "2019", "market_based": 835900, "location_based": 5116900, "gap": 4281000, "ratio": 6.1 },
+        { "year": "2020", "market_based": 911600, "location_based": 5865100, "gap": 4953500, "ratio": 6.4 },
+        { "year": "2021", "market_based": 1823500, "location_based": 6576200, "gap": 4752700, "ratio": 3.6 },
+        { "year": "2022", "market_based": 2492100, "location_based": 8045400, "gap": 5553300, "ratio": 3.2 },
+        { "year": "2023", "market_based": 3423400, "location_based": 9252900, "gap": 5829500, "ratio": 2.7 },
+        { "year": "2024", "market_based": 3059100, "location_based": 11283200, "gap": 8224100, "ratio": 3.7 }
+      ],
+      "trend_first_to_last": {
+        "market_based_pct": 235.6,
+        "location_based_pct": 92.4,
+        "window_label": "2020 → 2024 (five-year window — see window note)",
+        "window_note": "This trend is computed 2020→2024, not from the 2019 row shown directly above it, for two disclosed reasons: to hold the same five-year window as the Microsoft invoices, and to match the base year of the independent cross-check recomputed below. The work names its own window because choosing a comparison window is precisely the second discretion this Google exhibit indicts — so it does not exempt itself. Anchored instead at 2019 (Google's own SBTi base year), the same meters read market-based +266.0% and location-based +120.5% — so the window this work chose understates, not inflates, the divergence it reports.",
+        "sentence": "2020→2024 both of Google's meters rise — market-based +235.6%, location-based +92.4% — and the reported figure stays roughly a quarter of what the grids saw. In 2024 the absolute gap between the meters was its widest yet: 8,224,100 tCO2e (a factor of 3.7)."
+      },
+      "exhibit": "Window discretion: Google's headline meter is the smaller figure but NOT a shrinking one — it rose 235.6% over the five-year window. The report's narrative frames the year-over-year step instead: 'we reduced our scope 2 (market-based) emissions by 11%.' Both statements are true. The choice of meter is one discretion; the choice of comparison window is a second. The standard regulates neither.",
+      "headline_quote": {
+        "text": "In 2024, our scope 2 (market-based) emissions were approximately 3.1 million tCO2e, representing 26% of our total 2024 ambition-based carbon footprint. Compared to 2023, we reduced our scope 2 (market-based) emissions by 11%, primarily due to clean energy procurement.",
+        "attribution": "Google 2025 Environmental Report — the narrative's Scope 2 framing is the market-based meter, year-over-year"
+      },
+      "goal_anchor_quote": {
+        "text": "We aim to reduce absolute, combined scope 1, 2 (market-based), and 3 emissions by 50% from a 2019 base year by 2030.",
+        "attribution": "Google 2025 Environmental Report — the carbon-reduction ambition is defined on the market-based meter; the report states this ambition was validated by the Science Based Targets initiative (SBTi) in February 2025",
+        "note": "This is why the work does not claim the meter choice is mere optics: the choice is institutionalized — an external validation ecosystem accepts goals defined on the market-based meter. The discretion sits upstream, in the standards architecture, which is exactly where this trial aims."
+      }
+    }
+  ],
+  "finding": {
+    "points": [
+      "The standard on trial works exactly as designed: both companies disclose both meters, in labeled tables, per the dual-reporting rule. Nothing here is a compliance failure.",
+      "The Guidance states dual reporting's purpose in its own words — 'transparency for stakeholders', and distinguishing 'changes in choices vs. changes in grid emissions intensity' — and in the same document leaves the choice of meter for 'goal-setting, tracking, and goal-achievement claims' to the reporter. In the two cases examined, that discretion is exercised the same way: the goal-anchored public narrative runs on the market-based meter, the smaller figure in every disclosed year of both series.",
+      "The divergence between the meters is not static bookkeeping noise. Microsoft's between-meter gap widened from 3,872,797 tCO2e (FY20) to 9,696,278 tCO2e (FY24) — a factor of 38.4 between the meters, up from 9.5; Google's absolute gap reached its maximum, 8,224,100 tCO2e, in 2024. This widening coincides with the period of steep data-centre load growth commonly attributed to AI buildout; the attribution is context (see conjecture flag), the widening is computed.",
+      "In these two examined cases — not asserted as general industry practice — the two discretions compound: Microsoft's case shows meter choice (the headline meter runs backward while the grid meter rises 130%); Google's case shows window choice layered on meter choice (an 11% year-over-year reduction headlined on a meter up 235.6% over five years).",
+      "A large ratio between the meters is not itself an indictment — the market-based residual is designed to shrink toward zero as procurement succeeds, so the ratio grows mechanically. What the trial establishes is narrower and firmer: the standard mandates the production of both figures, states transparency as its purpose, and then leaves the public story free to run entirely on one of them — which, in the two cases examined, is exactly where it ran. Whether disclosure that stops at the table layer is transparency is the question the work puts on the invoice."
+    ],
+    "conjecture_flag": "The causal attribution of the widening gap to AI/data-centre load growth specifically is context drawn from the companies' own report narratives and the independent recomputation cited below; the disclosed tables do not decompose Scope 2 by workload, so that attribution is not a computed result of this instrument."
+  },
+  "independent_crosscheck": {
+    "name": "Le Goff, “Not greenwashing, but still… A closer look at big tech’s 2025 sustainability reports”, Internet Policy Review, 7 Aug 2025",
+    "url": "https://policyreview.info/articles/news/big-techs-2025-sustainability-reports/2027",
+    "verbatim": "the rules allow them to tell only part of the story",
+    "recomputation_quote": "around 25.2 million metric tons CO₂, not the 15.5 million they report",
+    "divergences_found": "Recomputing from the primaries corrected two figures in this secondary's comparison table: its −56% for Microsoft's market-based change (the primaries give −43.2%: (259,090 − 456,119) ÷ 456,119; 56.8% is the remaining share, apparently misread as the decline) and its Google market-based 2020 value of 967,400 (Google's own table shows that is 2020 total operational emissions, Scope 1 + market-based Scope 2; market-based alone was 911,600, making the true rise +235.6% — larger than the secondary's +215%). The cross-check therefore cuts both ways and is reported both ways."
+  },
+  "caveats": [
+    "METER B is not a physical emissions reading. Only the kWh consumption is metered; the emissions figure multiplies it by a grid-average emission factor — a construct, like its twin. The invoice says so on its face, not only here.",
+    "Microsoft reports July–June fiscal years; Google reports calendar years. The two companies' rows are never summed or directly compared to each other in this work, and each invoice carries its year basis on its face.",
+    "The market-based method has a stated purpose — crediting contractual clean-energy procurement, the mechanism by which corporate demand is meant to finance new clean supply. A small or falling market-based figure can reflect genuinely large, real procurement. This work does not claim the market-based meter is fraudulent, and does not claim the headline choice is mere optics: goal-validation ecosystems (e.g. SBTi, per Google's own report) accept targets defined on the market-based meter. The claim is about the standard that leaves the public story free to run on one meter while the two diverge by millions of tons. (Summary, not quotation, except where quoted on the work.)",
+    "The GHG Protocol opened a public consultation on revising the Scope 2 Guidance (2025). This work trials the standard as published and deployed, which remains the operative rule for the disclosures above.",
+    "Findings are stated for the two examined reporters only — the largest and most scrutinized cases of AI-era load growth — not as a measured industry rate.",
+    "The market-vs-location divergence is a general property of Scope 2 accounting, not specific to AI workloads, and the disclosed tables do not decompose emissions by workload. This work opens a thread on the material cost of the compute buildout by examining the two reporters whose disclosed load has grown most under public scrutiny in that period — the buildout is the context in which the two meters diverge, not a quantity this instrument measures (see the conjecture flag).",
+    "The invoice labels are themselves a framing choice this work makes. 'AS THE GRID SAW IT' personifies a figure that is, like its twin, a modeled construct — a grid-average emission factor, not a witnessed reading — and each invoice's subline says so on its face, on all eleven invoices. The published hostile critique (this work's shipping-date journal) presses exactly this point; it is carried so the naming does not smuggle in the authority-by-labeling the work otherwise indicts.",
+    "This work also makes a comparison-window choice of its own — Google's trend is computed 2020→2024, not from the 2019 row shown — and discloses it, with the 2019-anchored alternative, in the window note on Google's trend block. The choice was made to parallel Microsoft's window and the cross-check's base year, and it understates rather than inflates the divergence reported.",
+    "All figures are the companies' own audited disclosures, transcribed from the primary PDFs; every derived value (gap, ratio, trend) follows the formulas above, with worked examples shown so the arithmetic can be audited from the invoice itself."
+  ],
+  "seed_note": "Not a generative work: all values are transcriptions from the two primary PDFs plus deterministic arithmetic per the formulas above. No randomness, no seed."
+}

@@ -1,0 +1,902 @@
+---
+// Instrument (draft): The Two Meters
+// A twin utility-bill / invoice register. For each company and disclosed year,
+// two invoices for the same electricity consumption: METER A -- AS REPORTED
+// (market-based) and METER B -- AS THE GRID SAW IT (location-based). Every
+// figure below is read from ./data.json; this file only formats and lays it out.
+// Meridian / 2026-07-06
+
+import data from "./data.json";
+
+interface MeterInfo {
+  label: string;
+  invoice_subline: string;
+  explanation: string;
+  explanation_status: string;
+}
+interface Meters {
+  market_based: MeterInfo;
+  location_based: MeterInfo;
+}
+interface DerivationFormulas {
+  gap: string;
+  ratio: string;
+  trend: string;
+  worked_examples: string[];
+}
+interface CompanyRow {
+  year: string;
+  market_based: number;
+  location_based: number;
+  gap: number;
+  ratio: number;
+}
+interface TrendFirstToLast {
+  market_based_pct: number;
+  location_based_pct: number;
+  window_label: string;
+  window_note?: string;
+  sentence: string;
+}
+interface Quote {
+  text: string;
+  attribution: string;
+  note?: string;
+}
+interface Company {
+  name: string;
+  year_basis: string;
+  year_basis_display: string;
+  source: string;
+  source_url: string;
+  rows: CompanyRow[];
+  trend_first_to_last: TrendFirstToLast;
+  exhibit: string;
+  headline_quote?: Quote;
+  goal_anchor_quote?: Quote;
+}
+interface Finding {
+  points: string[];
+  conjecture_flag: string;
+}
+interface Crosscheck {
+  name: string;
+  url: string;
+  verbatim: string;
+  recomputation_quote: string;
+  divergences_found: string;
+}
+interface InstrumentOnTrial {
+  name: string;
+  what_it_requires_verbatim: string;
+  what_it_promises_verbatim: string;
+  stated_benefits_verbatim: string[];
+  what_it_leaves_free_verbatim: string;
+  source_url: string;
+  reading: string;
+  the_test_applied: string;
+}
+interface DataShape {
+  title: string;
+  subtitle: string;
+  unit: string;
+  instrument_on_trial: InstrumentOnTrial;
+  meters: Meters;
+  derivation_formulas: DerivationFormulas;
+  companies: Company[];
+  finding: Finding;
+  independent_crosscheck: Crosscheck;
+  caveats: string[];
+  seed_note: string;
+}
+
+const d = data as DataShape;
+const instrument = d.instrument_on_trial;
+const meters = d.meters;
+const companies = d.companies;
+const finding = d.finding;
+const crosscheck = d.independent_crosscheck;
+
+function fmt(n: number): string {
+  return n.toLocaleString("en-US");
+}
+
+function fmtRatio(n: number): string {
+  return n.toFixed(1) + "×";
+}
+
+function fmtPct(n: number): string {
+  const prefix = n > 0 ? "+" : "";
+  return prefix + n.toFixed(1) + "%";
+}
+---
+
+<section class="two-meters">
+  <header class="head-block">
+    <div class="kicker">MERIDIAN &mdash; FIELD INSTRUMENT &middot; ON TRIAL</div>
+    <h1>{d.title}</h1>
+    <p class="subtitle">{d.subtitle}</p>
+    <p class="unit-note">All amounts on every invoice below are stated in {d.unit}.</p>
+
+    <div class="instrument-name">INSTRUMENT ON TRIAL: {instrument.name}</div>
+
+    <div class="quote-block quote-requirement">
+      <div class="quote-label">THE REQUIREMENT (verbatim)</div>
+      <blockquote>{instrument.what_it_requires_verbatim}</blockquote>
+    </div>
+
+    <div class="quote-block quote-purpose">
+      <div class="quote-label">THE STATED PURPOSE, &sect;7.4 (verbatim)</div>
+      <blockquote>{instrument.what_it_promises_verbatim}</blockquote>
+      <div class="benefits-label">stated benefits (verbatim):</div>
+      <ul class="benefits-list">
+        {instrument.stated_benefits_verbatim.map((b) => (
+          <li>{b}</li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="quote-block quote-discretion">
+      <div class="quote-label">THE DISCRETION CLAUSE (verbatim)</div>
+      <blockquote>{instrument.what_it_leaves_free_verbatim}</blockquote>
+    </div>
+
+    <p class="source-line">
+      Source: {instrument.source_url}
+    </p>
+
+    <div class="reading-block">
+      <div class="reading-label">THE COLLECTIVE&rsquo;S READING</div>
+      <p>{instrument.reading}</p>
+    </div>
+
+    <div class="test-block">
+      <div class="test-label">THE TEST THIS WORK APPLIES &mdash; the collective&rsquo;s own, not the standard&rsquo;s</div>
+      <p>{instrument.the_test_applied}</p>
+    </div>
+  </header>
+
+  {companies.map((company) => (
+    <section class="company-block" data-company={company.name}>
+      <div class="company-head">
+        <h2>{company.name}</h2>
+        <div class="year-basis-badge">{company.year_basis_display}</div>
+      </div>
+      <p class="company-source">Source: {company.source} &mdash; {company.source_url}</p>
+
+      {company.headline_quote && (
+        <div class="quote-block quote-inline">
+          <div class="quote-label">QUOTED IN THE REPORT &mdash; headline framing</div>
+          <blockquote>{company.headline_quote.text}</blockquote>
+          <p class="quote-attribution">{company.headline_quote.attribution}</p>
+        </div>
+      )}
+
+      {company.goal_anchor_quote && (
+        <div class="quote-block quote-inline">
+          <div class="quote-label">QUOTED IN THE REPORT &mdash; the goal anchor</div>
+          <blockquote>{company.goal_anchor_quote.text}</blockquote>
+          <p class="quote-attribution">{company.goal_anchor_quote.attribution}</p>
+          {company.goal_anchor_quote.note && (
+            <p class="quote-note">{company.goal_anchor_quote.note}</p>
+          )}
+        </div>
+      )}
+
+      <div class="exhibit-box">
+        <div class="exhibit-label">EXHIBIT</div>
+        <p>{company.exhibit}</p>
+      </div>
+
+      <div class="year-controls" data-role="year-controls">
+        <button type="button" class="yc-prev">&larr; prev year</button>
+        <span class="yc-position">showing all {company.rows.length} years</span>
+        <button type="button" class="yc-next">next year &rarr;</button>
+        <button type="button" class="yc-all">show all years</button>
+      </div>
+
+      <div class="invoice-run">
+        {company.rows.map((row, i) => (
+          <div class="invoice-row" data-year={row.year} data-active="true" data-index={i}>
+            <div class="invoice-pair">
+              <div class="invoice invoice-market">
+                <div class="invoice-band">METER A</div>
+                <div class="invoice-label">{meters.market_based.label}</div>
+                <div class="invoice-account">ACCOUNT: {company.name} &middot; PERIOD: {row.year}</div>
+                <div class="invoice-subline">{meters.market_based.invoice_subline}</div>
+                <div class="invoice-line invoice-amount-line">
+                  <span class="line-label">AMOUNT</span>
+                  <span class="line-fill"></span>
+                  <span class="line-value">{fmt(row.market_based)} tCO2e</span>
+                </div>
+                <div class="invoice-yearbasis">{company.year_basis_display}</div>
+              </div>
+
+              <div class="invoice invoice-location">
+                <div class="invoice-band">METER B</div>
+                <div class="invoice-label">{meters.location_based.label}</div>
+                <div class="invoice-account">ACCOUNT: {company.name} &middot; PERIOD: {row.year}</div>
+                <div class="invoice-subline">{meters.location_based.invoice_subline}</div>
+                <div class="invoice-line invoice-amount-line">
+                  <span class="line-label">AMOUNT</span>
+                  <span class="line-fill"></span>
+                  <span class="line-value">{fmt(row.location_based)} tCO2e</span>
+                </div>
+                <div class="invoice-yearbasis">{company.year_basis_display}</div>
+              </div>
+            </div>
+
+            <div class="reconciliation">
+              <span class="recon-label">RECONCILIATION</span>
+              <span class="recon-gap">GAP: {fmt(row.gap)} tCO2e</span>
+              <span class="recon-ratio">RATIO (B &divide; A): {fmtRatio(row.ratio)}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div class="trend-block">
+        <div class="trend-label">TREND, {company.trend_first_to_last.window_label}</div>
+        <div class="trend-stats">
+          <span>market-based: {fmtPct(company.trend_first_to_last.market_based_pct)}</span>
+          <span>location-based: {fmtPct(company.trend_first_to_last.location_based_pct)}</span>
+        </div>
+        <p>{company.trend_first_to_last.sentence}</p>
+        {company.trend_first_to_last.window_note && (
+          <p class="window-note">{company.trend_first_to_last.window_note}</p>
+        )}
+      </div>
+    </section>
+  ))}
+
+  <section class="finding-block">
+    <div class="finding-label">FINDING</div>
+    <ol class="finding-points">
+      {finding.points.map((p) => (
+        <li>{p}</li>
+      ))}
+    </ol>
+    <div class="conjecture-box">
+      <div class="conjecture-label">CONJECTURE FLAG</div>
+      <p>{finding.conjecture_flag}</p>
+    </div>
+  </section>
+
+  <section class="audit-strip">
+    <div class="audit-label">AUDIT STRIP &mdash; check the arithmetic on the face of the work</div>
+    <div class="audit-formulas">
+      <div><span class="formula-name">gap</span> {d.derivation_formulas.gap}</div>
+      <div><span class="formula-name">ratio</span> {d.derivation_formulas.ratio}</div>
+      <div><span class="formula-name">trend</span> {d.derivation_formulas.trend}</div>
+    </div>
+    <div class="audit-examples">
+      <div class="audit-examples-label">worked examples</div>
+      <ul>
+        {d.derivation_formulas.worked_examples.map((ex) => (
+          <li>{ex}</li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="crosscheck-block">
+    <div class="crosscheck-label">INDEPENDENT CROSS-CHECK</div>
+    <p class="crosscheck-name">{crosscheck.name}</p>
+    <p class="crosscheck-url">{crosscheck.url}</p>
+    <blockquote class="crosscheck-quote">{crosscheck.verbatim}</blockquote>
+    <p class="crosscheck-recomp-label">its recomputation:</p>
+    <blockquote class="crosscheck-quote">{crosscheck.recomputation_quote}</blockquote>
+    <p class="crosscheck-divergences-label">divergences found (reported both ways):</p>
+    <p>{crosscheck.divergences_found}</p>
+  </section>
+
+  <section class="caveats-block">
+    <div class="caveats-label">CAVEATS</div>
+    <ul>
+      {d.caveats.map((c) => (
+        <li>{c}</li>
+      ))}
+    </ul>
+  </section>
+
+  <footer class="footnote">
+    {d.seed_note}
+  </footer>
+</section>
+
+<script>
+  const root = document.querySelector(".two-meters");
+  if (root) {
+    root.classList.add("js");
+
+    const companyBlocks = root.querySelectorAll(".company-block");
+    companyBlocks.forEach((block) => {
+      const rows = Array.from(block.querySelectorAll(".invoice-row"));
+      const prevBtn = block.querySelector(".yc-prev");
+      const nextBtn = block.querySelector(".yc-next");
+      const allBtn = block.querySelector(".yc-all");
+      const posEl = block.querySelector(".yc-position");
+      if (!rows.length || !prevBtn || !nextBtn || !allBtn) return;
+
+      let index = rows.length - 1;
+      let mode = "all";
+
+      function render() {
+        if (mode === "all") {
+          rows.forEach((r) => {
+            r.setAttribute("data-active", "true");
+          });
+          if (posEl) posEl.textContent = "showing all " + rows.length + " years";
+        } else {
+          rows.forEach((r, i) => {
+            r.setAttribute("data-active", i === index ? "true" : "false");
+          });
+          const activeYear = rows[index] ? rows[index].getAttribute("data-year") : "";
+          if (posEl) {
+            posEl.textContent = "year " + (index + 1) + " of " + rows.length + ": " + activeYear;
+          }
+        }
+      }
+
+      prevBtn.addEventListener("click", () => {
+        mode = "single";
+        index = (index - 1 + rows.length) % rows.length;
+        render();
+      });
+      nextBtn.addEventListener("click", () => {
+        mode = "single";
+        index = (index + 1) % rows.length;
+        render();
+      });
+      allBtn.addEventListener("click", () => {
+        mode = "all";
+        render();
+      });
+
+      render();
+    });
+  }
+</script>
+
+<style>
+  .two-meters,
+  .two-meters *,
+  .two-meters *::before,
+  .two-meters *::after {
+    box-sizing: border-box;
+  }
+
+  .two-meters {
+    --ink: #201c14;
+    --ink-soft: #55503f;
+    --paper: #f6f2e7;
+    --paper-2: #efe9d9;
+    --rule: #c9c0a4;
+    --accent: #7a1f1f;
+    font-family: Georgia, "Times New Roman", serif;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink);
+    background: var(--paper);
+    max-width: 840px;
+    margin: 0 auto;
+    padding: 1.75rem 1.5rem 2.5rem;
+    line-height: 1.55;
+    font-size: 0.95rem;
+  }
+
+  .two-meters h1,
+  .two-meters h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: 700;
+    margin: 0 0 0.3rem;
+    color: var(--ink);
+  }
+
+  .kicker {
+    font-family: ui-monospace, "Courier New", monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 0.5rem;
+  }
+
+  .head-block {
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 1.1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+    color: var(--ink-soft);
+    margin: 0 0 0.5rem;
+    font-style: italic;
+  }
+
+  .unit-note {
+    font-family: ui-monospace, "Courier New", monospace;
+    font-size: 0.7rem;
+    color: var(--ink-soft);
+    margin: 0 0 1rem;
+  }
+
+  .instrument-name {
+    font-family: ui-monospace, "Courier New", monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    font-weight: 700;
+    border-top: 1px dashed var(--rule);
+    padding-top: 0.7rem;
+    margin-bottom: 0.9rem;
+  }
+
+  .quote-block {
+    margin-bottom: 0.9rem;
+  }
+
+  .quote-label {
+    font-family: ui-monospace, "Courier New", monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.3rem;
+  }
+
+  blockquote {
+    margin: 0;
+    padding: 0.55rem 0.85rem;
+    border-left: 3px solid var(--accent);
+    background: rgba(122, 31, 31, 0.06);
+    font-style: italic;
+    font-size: 0.92rem;
+  }
+
+  .benefits-label {
+    font-size: 0.72rem;
+    color: var(--ink-soft);
+    margin-top: 0.5rem;
+  }
+
+  .benefits-list {
+    margin: 0.2rem 0 0;
+    padding-left: 1.3rem;
+    font-size: 0.85rem;
+    font-style: italic;
+  }
+
+  .source-line {
+    font-family: ui-monospace, "Courier New", monospace;
+    font-size: 0.65rem;
+    color: var(--ink-soft);
+    word-break: break-all;
+    margin: 0.6rem 0;
+  }
+
+  .reading-label,
+  .test-label,
+  .company-source,
+  .exhibit-label,
+  .trend-label,
+  .finding-label,
+  .audit-label,
+  .crosscheck-label,
+  .caveats-label {
+    font-family: ui-monospace, "Courier New", monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 0.4rem;
+  }
+
+  .reading-block p,
+  .test-block p {
+    margin: 0;
+    font-size: 0.88rem;
+  }
+
+  .test-block {
+    border: 1px solid var(--rule);
+    background: var(--paper-2);
+    padding: 0.7rem 0.85rem;
+    margin-top: 0.8rem;
+  }
+
+  .company-block {
+    border-top: 2px solid var(--ink);
+    padding-top: 1.1rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .company-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .company-head h2 {
+    font-size: 1.25rem;
+  }
+
+  .year-basis-badge {
+    font-family: ui-monospace, "Courier New", monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.04em;
+    border: 1px solid var(--ink);
+    padding: 0.15rem 0.5rem;
+    white-space: normal;
+  }
+
+  .company-source {
+    margin-bottom: 0.8rem;
+    word-break: break-word;
+  }
+
+  .quote-inline {
+    margin-bottom: 0.8rem;
+  }
+
+  .quote-attribution,
+  .quote-note {
+    font-size: 0.72rem;
+    color: var(--ink-soft);
+    margin: 0.3rem 0 0;
+  }
+
+  .quote-note {
+    font-style: italic;
+  }
+
+  .exhibit-box {
+    border: 1px dashed var(--ink);
+    padding: 0.65rem 0.85rem;
+    margin-bottom: 1rem;
+    background: rgba(0, 0, 0, 0.02);
+  }
+
+  .exhibit-box p {
+    margin: 0;
+    font-size: 0.88rem;
+  }
+
+  .year-controls {
+    display: none;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    font-family: ui-monospace, "Courier New", monospace;
+    font-size: 0.68rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .two-meters.js .year-controls {
+    display: flex;
+  }
+
+  .year-controls button {
+    font-family: ui-monospace, "Courier New", monospace;
+    font-size: 0.68rem;
+    background: var(--paper-2);
+    color: var(--ink);
+    border: 1px solid var(--ink);
+    padding: 0.3rem 0.6rem;
+    cursor: pointer;
+  }
+
+  .year-controls button:hover {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .yc-position {
+    color: var(--ink-soft);
+  }
+
+  .invoice-run {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    margin-bottom: 1rem;
+  }
+
+  .invoice-row {
+    border: 1px solid var(--rule);
+    padding: 0.9rem;
+    background: rgba(255, 255, 255, 0.35);
+  }
+
+  .two-meters.js .invoice-row[data-active="false"] {
+    display: none;
+  }
+
+  .invoice-pair {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 1rem;
+  }
+
+  @media (max-width: 620px) {
+    .invoice-pair {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .invoice {
+    border: 1px solid var(--ink);
+    padding: 0.65rem 0.75rem 0.75rem;
+    background: var(--paper);
+  }
+
+  .invoice-market {
+    border-top: 4px solid var(--ink-soft);
+  }
+
+  .invoice-location {
+    border-top: 4px solid var(--accent);
+  }
+
+  .invoice-band {
+    font-family: ui-monospace, "Courier New", monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
+    color: var(--ink-soft);
+  }
+
+  .invoice-label {
+    font-weight: 700;
+    font-size: 0.78rem;
+    margin: 0.15rem 0 0.4rem;
+    line-height: 1.35;
+  }
+
+  .invoice-account {
+    font-family: ui-monospace, "Courier New", monospace;
+    font-size: 0.62rem;
+    color: var(--ink-soft);
+    margin-bottom: 0.35rem;
+  }
+
+  .invoice-subline {
+    font-size: 0.7rem;
+    color: var(--ink-soft);
+    font-style: italic;
+    margin-bottom: 0.6rem;
+    line-height: 1.4;
+  }
+
+  .invoice-line {
+    display: flex;
+    align-items: baseline;
+    margin-bottom: 0.4rem;
+  }
+
+  .line-label {
+    font-family: ui-monospace, "Courier New", monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.06em;
+    color: var(--ink-soft);
+    white-space: nowrap;
+  }
+
+  .line-fill {
+    flex: 1;
+    border-bottom: 1px dotted var(--ink-soft);
+    margin: 0 0.4rem;
+    position: relative;
+    top: -0.35rem;
+  }
+
+  .line-value {
+    font-family: ui-monospace, "Courier New", monospace;
+    font-weight: 700;
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+
+  .invoice-yearbasis {
+    font-family: ui-monospace, "Courier New", monospace;
+    font-size: 0.58rem;
+    color: var(--ink-soft);
+    border-top: 1px dashed var(--rule);
+    padding-top: 0.35rem;
+    margin-top: 0.3rem;
+    line-height: 1.4;
+  }
+
+  .reconciliation {
+    margin-top: 0.8rem;
+    padding-top: 0.6rem;
+    border-top: 2px solid var(--ink);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1rem;
+    font-family: ui-monospace, "Courier New", monospace;
+    font-size: 0.75rem;
+    align-items: baseline;
+  }
+
+  .recon-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    color: var(--ink-soft);
+  }
+
+  .recon-gap,
+  .recon-ratio {
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .trend-block {
+    border: 1px solid var(--rule);
+    padding: 0.7rem 0.85rem;
+    background: var(--paper-2);
+  }
+
+  .trend-stats {
+    display: flex;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+    font-family: ui-monospace, "Courier New", monospace;
+    font-size: 0.78rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .trend-block p {
+    margin: 0;
+    font-size: 0.86rem;
+  }
+
+  .trend-block p.window-note {
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    font-style: italic;
+    margin-top: 0.55rem;
+    border-top: 1px dashed var(--rule);
+    padding-top: 0.5rem;
+  }
+
+  .finding-block {
+    border-top: 2px solid var(--ink);
+    padding-top: 1rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .finding-points {
+    margin: 0.3rem 0 0.9rem;
+    padding-left: 1.4rem;
+  }
+
+  .finding-points li {
+    margin-bottom: 0.6rem;
+    font-size: 0.9rem;
+  }
+
+  .conjecture-box {
+    border: 1px dashed var(--accent);
+    padding: 0.65rem 0.85rem;
+    background: rgba(122, 31, 31, 0.05);
+  }
+
+  .conjecture-label {
+    font-family: ui-monospace, "Courier New", monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.35rem;
+  }
+
+  .conjecture-box p {
+    margin: 0;
+    font-size: 0.84rem;
+  }
+
+  .audit-strip {
+    border: 1px solid var(--ink);
+    padding: 0.85rem;
+    margin-bottom: 1.75rem;
+    background: var(--paper-2);
+    overflow-x: auto;
+  }
+
+  .audit-formulas {
+    font-family: ui-monospace, "Courier New", monospace;
+    font-size: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    margin-bottom: 0.7rem;
+    padding-bottom: 0.7rem;
+    border-bottom: 1px dashed var(--rule);
+  }
+
+  .formula-name {
+    display: inline-block;
+    width: 3.2rem;
+    color: var(--ink-soft);
+  }
+
+  .audit-examples-label {
+    font-family: ui-monospace, "Courier New", monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 0.3rem;
+  }
+
+  .audit-examples ul {
+    margin: 0;
+    padding-left: 1.2rem;
+    font-family: ui-monospace, "Courier New", monospace;
+    font-size: 0.72rem;
+    line-height: 1.7;
+  }
+
+  .crosscheck-block {
+    border-top: 2px solid var(--ink);
+    padding-top: 1rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .crosscheck-name {
+    font-weight: 700;
+    font-size: 0.85rem;
+    margin: 0 0 0.2rem;
+  }
+
+  .crosscheck-url {
+    font-family: ui-monospace, "Courier New", monospace;
+    font-size: 0.62rem;
+    color: var(--ink-soft);
+    word-break: break-all;
+    margin: 0 0 0.6rem;
+  }
+
+  .crosscheck-quote {
+    margin-bottom: 0.5rem;
+  }
+
+  .crosscheck-recomp-label,
+  .crosscheck-divergences-label {
+    font-size: 0.72rem;
+    color: var(--ink-soft);
+    margin: 0.6rem 0 0.3rem;
+  }
+
+  .caveats-block {
+    border-top: 2px solid var(--ink);
+    padding-top: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .caveats-block ul {
+    margin: 0.3rem 0 0;
+    padding-left: 1.4rem;
+  }
+
+  .caveats-block li {
+    margin-bottom: 0.6rem;
+    font-size: 0.85rem;
+  }
+
+  .footnote {
+    font-family: ui-monospace, "Courier New", monospace;
+    font-size: 0.65rem;
+    color: var(--ink-soft);
+    border-top: 1px dashed var(--rule);
+    padding-top: 0.6rem;
+    line-height: 1.5;
+  }
+</style>

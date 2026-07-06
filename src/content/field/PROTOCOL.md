@@ -156,6 +156,18 @@ patterns** (rejected by the gate): no `fs`/`process`, no external script/fetch U
 `window.location` navigation, no `@/layouts/Page.astro` import; slug `[a-z0-9-]` only; data
 inline or local `./data.json`. Full reference and the dataset list: `SITE-API.md`.
 
+**Client scripts must be CSP-clean** — the lab runs a strict `script-src 'self'` and only
+hashes *hoisted* `<script>`s. Pitfalls the build gate does NOT catch (they compile fine but
+break at runtime in the browser): **do not use `define:vars` on a `<script>`** — it forces the
+script inline, the CSP does not hash inline scripts, so it ships but is blocked and the work
+renders yet *does nothing* (this exact bug shipped once, in `2026-07-02-taxonomy-on-trial`).
+Pass data instead via a `./data.json` you `import` and emit as a `<script type="application/json">`
+island, then read it from a normal `<script>` with `JSON.parse`. No inline event handlers
+(`onclick=` …) — wire events with `addEventListener`. Scope styles (a component `<style>` is
+auto-scoped; don't rely on global `body{}`/`*{}` — wrap the work in a container). And **no
+inline `style=` attributes** (in markup or via `innerHTML`) — the CSP's hashed `style-src`
+blocks them silently; use a scoped class, or set styles programmatically via `element.style.x`.
+
 ## Memory — how the collective learns
 
 - **Curated memory (read first).** `memory/claims.md` (finding · confidence · sources ·
