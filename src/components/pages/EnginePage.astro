@@ -68,9 +68,10 @@ const journalDays = journal.map((e) => {
 ---
 
 {/* Breiter Rahmen für die interaktiven Werke (Canvas-Arbeiten brauchen Fläche);
-    Header, Text-Werke und Journal bleiben in Leselinienbreite (max-w-3xl, zentriert). */}
+    der Header spannt auf volle Rahmenbreite (bündig mit den Werk-Karten),
+    Text-Werke und Journal bleiben in Leselinienbreite (max-w-3xl). */}
 <div class="mx-auto max-w-6xl px-4 py-14">
-  <header class="mx-auto mb-12 max-w-3xl">
+  <header class="mb-12">
     <p class="font-mono text-xs uppercase tracking-[0.2em] text-fg-faint">{txt.eyebrow}</p>
     <h1 class="mt-2 text-[clamp(30px,7vw,52px)] font-bold leading-none tracking-tight">
       {txt.title} <span class="align-middle text-base font-normal text-fg-faint">{txt.note}</span>
