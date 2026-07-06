@@ -21,24 +21,26 @@ const latestByNs = new Map([
 
 <div class="rounded-[14px] border border-line bg-panel panel-raised p-6">
   <p class="mb-3 font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">{t(locale, 'werke.kicker')} · {t(locale, 'werke.title')}</p>
-  <div class="flex flex-wrap items-baseline gap-x-6 gap-y-2">
+  <ul class="space-y-1.5">
     {liveWerke.map((werk) => (
-      <a href={getRelativeLocaleUrl(locale, werk.href)} class="group">
-        <span class="font-semibold transition-opacity group-hover:opacity-70">{werkTitle(werk, locale)}</span>
-        {werk.live && <span class="ml-1.5 align-middle font-mono text-[10px] uppercase tracking-wider text-fg-faint"><span class="dot-live mr-0.5 inline-block h-[5px] w-[5px] rounded-full align-middle"></span>live data</span>}
-        <span class="text-sm text-fg-muted"> — {werk.subtitle[locale]}</span>
-        {(werk.id === 'field' || werk.id === 'atelier') && latestByNs.get(werk.id) && (
-          <span class="block font-mono text-[11px] text-fg-faint">
-            ↳ {t(locale, 'machines.latest')}: {latestByNs.get(werk.id)!.title} · {latestByNs.get(werk.id)!.date}
-          </span>
-        )}
-      </a>
+      <li>
+        <a href={getRelativeLocaleUrl(locale, werk.href)} class="group">
+          <span class="font-semibold transition-opacity group-hover:opacity-70">{werkTitle(werk, locale)}</span>
+          {werk.live && <span class="ml-1.5 align-middle font-mono text-[10px] uppercase tracking-wider text-fg-faint"><span class="dot-live mr-0.5 inline-block h-[5px] w-[5px] rounded-full align-middle"></span>live data</span>}
+          <span class="text-sm text-fg-muted"> — {werk.subtitle[locale]}</span>
+          {(werk.id === 'field' || werk.id === 'atelier') && latestByNs.get(werk.id) && (
+            <span class="block font-mono text-[11px] text-fg-faint">
+              ↳ {t(locale, 'machines.latest')}: {latestByNs.get(werk.id)!.title} · {latestByNs.get(werk.id)!.date}
+            </span>
+          )}
+        </a>
+      </li>
     ))}
     {GEPLANT.length > 0 && (
-      <span class="font-mono text-xs text-fg-faint">{GEPLANT.join(' · ')} — {t(locale, 'werke.inPrep')}</span>
+      <li class="font-mono text-xs text-fg-faint">{GEPLANT.join(' · ')} — {t(locale, 'werke.inPrep')}</li>
     )}
-    <a href={getRelativeLocaleUrl(locale, '/lab')} class="ml-auto text-sm text-fg-muted transition-colors hover:text-fg">
-      {t(locale, 'nav.lab')} →
-    </a>
-  </div>
+  </ul>
+  <a href={getRelativeLocaleUrl(locale, '/lab')} class="mt-4 inline-block text-sm text-fg-muted transition-colors hover:text-fg">
+    {t(locale, 'nav.lab')} →
+  </a>
 </div>
