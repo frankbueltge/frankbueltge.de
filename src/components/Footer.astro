@@ -14,12 +14,11 @@ const explore = [
 ]
 ---
 
-<footer class="mt-24 border-t border-line/60">
+<footer class="mt-24 border-t border-line/60 footer-dark">
   <div class="mx-auto grid max-w-5xl gap-10 px-6 py-14 sm:grid-cols-2 lg:grid-cols-4">
     <div class="sm:col-span-2 lg:col-span-1">
-      <img src="/logo.webp" alt="" width="80" height="80" class="h-20 w-20" />
+      <img src="/logo.webp" alt="" width="100" height="100" class="h-[100px] w-[100px]" />
       <p class="mt-4 text-sm font-semibold">Frank Bültge</p>
-      <p class="mt-3 max-w-xs text-sm text-fg-muted">{t(locale, 'footer.tagline')}</p>
     </div>
 
     <nav aria-label={t(locale, 'footer.explore')}>
@@ -55,3 +54,16 @@ const explore = [
     </div>
   </div>
 </footer>
+
+<style>
+  /* The footer is a permanent dark island: pure-black ground with the dark
+     palette's text tokens, so it stays black + legible even under the light theme. */
+  .footer-dark {
+    background-color: #000;
+    --color-fg: #f4f4f5;
+    --color-fg-muted: #a3a3a8;
+    --color-fg-faint: #6c6c72;
+    --color-line: #242427;
+    --color-accent: #c2c2c8;
+  }
+</style>
