@@ -76,6 +76,11 @@
   border-color: rgb(20 20 22 / 0.4);
 }
 
+/* Theme toggle icon: sun while dark (click → light), moon while light (click → dark). */
+.i-moon { display: none; }
+:root[data-theme='light'] .i-sun { display: none; }
+:root[data-theme='light'] .i-moon { display: block; }
+
 /* Scroll-flash experiment: ease colours only while a flash is in progress. */
 html.theme-flash,
 html.theme-flash * {

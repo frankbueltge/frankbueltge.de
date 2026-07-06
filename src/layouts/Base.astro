@@ -62,6 +62,10 @@ const workLd = work ? workJsonLd(work, locale, canonical) : null
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
     <meta name="theme-color" content="#0a0a0a" />
+    <script is:inline>
+      // Anti-FOUC: apply the saved light theme before first paint. Dark is the default.
+      try { if (localStorage.getItem('theme') === 'light') document.documentElement.setAttribute('data-theme', 'light') } catch (e) {}
+    </script>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
@@ -117,6 +121,30 @@ const workLd = work ? workJsonLd(work, locale, canonical) : null
         const lenis = new Lenis({ duration: 1.1, smoothWheel: true })
         const raf = (time: number) => { lenis.raf(time); requestAnimationFrame(raf) }
         requestAnimationFrame(raf)
+      }
+    </script>
+
+    {/* Scroll-flash: while scrolling, the content cards blink briefly to light and ease back;
+        the page background and chrome (.keep-dark) stay black (see global.css .theme-flash rules).
+        Dark mode only — a no-op under persistent light mode — and never under reduced-motion.
+        Single-fire per scroll burst via a cooldown, so it accents scrolling without strobing. */}
+    <script>
+      const root = document.documentElement
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        let busy = false
+        const flash = () => {
+          if (busy || root.getAttribute('data-theme') === 'light') return
+          busy = true
+          root.classList.add('theme-flash')
+          root.setAttribute('data-theme', 'light')
+          setTimeout(() => {
+            root.removeAttribute('data-theme')
+            setTimeout(() => root.classList.remove('theme-flash'), 200)
+          }, 150)
+          setTimeout(() => { busy = false }, 1300) // cooldown: once per scroll burst
+        }
+        addEventListener('scroll', flash, { passive: true })
+        addEventListener('wheel', flash, { passive: true })
       }
     </script>
 

@@ -32,7 +32,14 @@ export default defineConfig({
       ],
       scriptDirective: {
         // 'self' muss explizit genannt werden, wenn resources gesetzt ist (Astro ersetzt den Default).
-        resources: ["'self'"],
+        // Astro hasht seine gebündelten/Modul-Skripte automatisch, aber NICHT `is:inline`-Skripte
+        // (die opten bewusst aus der Verarbeitung aus). Der Hash unten deckt das Anti-FOUC-Theme-
+        // Skript im <head> von Base.astro ab. Bei Änderung dieses Skripts neu berechnen:
+        //   build → sha256-base64 des <script>-Inhalts in dist/index.html.
+        resources: [
+          "'self'",
+          "'sha256-OTbzFulzUa/0o/iJq0xir83lv5aDayqRCmxs9tqjupU='",
+        ],
       },
       styleDirective: {
         // Tailwind v4 / Inline-Styles — 'unsafe-inline' ist vertretbar (kein JS-Risiko).
