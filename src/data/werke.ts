@@ -2,7 +2,8 @@ import type { Locale } from '@/lib/site'
 
 export interface Werk {
   id: string
-  title: string
+  /** meist sprachneutral (ein String); zweisprachig nur, wo der Name je Sprache abweicht (Beifang/Bycatch). */
+  title: string | Record<Locale, string>
   subtitle: Record<Locale, string>
   status: 'live' | 'in-arbeit' | 'geplant'
   href: string
@@ -22,7 +23,7 @@ export interface Werk {
 export const WERKE: Werk[] = [
   {
     id: 'beifang',
-    title: 'Der Beifang',
+    title: { de: 'Beifang', en: 'Bycatch' },
     subtitle: { de: 'Science-Tracking, gemessen', en: 'Science tracking, measured' },
     status: 'live',
     since: '2026-07-02',
@@ -250,6 +251,11 @@ export const WERKE: Werk[] = [
  *  Array-Sortierung die redaktionelle Reihenfolge aus `WERKE` erhält. */
 export function byRecency(a: Werk, b: Werk): number {
   return a.since < b.since ? 1 : a.since > b.since ? -1 : 0
+}
+
+/** Titel je Locale auflösen — sprachneutrale Titel (String) unverändert, zweisprachige nach Locale. */
+export function werkTitle(w: Werk, locale: Locale): string {
+  return typeof w.title === 'string' ? w.title : w.title[locale]
 }
 
 /** Öffentliche Reihenfolge der Experimente: chronologisch, jüngstes zuerst.
