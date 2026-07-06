@@ -120,9 +120,12 @@ const workLd = work ? workJsonLd(work, locale, canonical) : null
       }
     </script>
 
-    {/* Web Analytics: bewusst KEINE — das CF-Beacon wurde 2026-07-02 deaktiviert
-        (widersprach der Beifang-Behauptung „null Drittanbieter-Requests"; die eigenen
-        Tracker-Listen führten es als Tracker). Geplant: selbst gehostetes Umami unter
-        stats.frankbueltge.de (First-Party) — erst dann wieder ein Script hier. */}
+    {/* Web Analytics — Umami, first-party via a Cloudflare Pages Function proxy (functions/stats/).
+        The browser only ever requests /stats/* on this domain; the proxy forwards to Umami Cloud
+        (script → cloud.umami.is, collector → gateway.umami.is). No third-party request leaves the
+        browser, so the Beifang „null Drittanbieter-Requests" claim still holds and no external CSP
+        source is needed. Cookieless, no personal data. (Replaces the CF beacon removed 2026-07-02;
+        realises the planned first-party analytics via a proxy to the cloud account, not self-host.) */}
+    <script defer src="/stats/script.js" data-website-id="2d83db3f-a948-4f7f-a3c6-69a5863e897e" data-host-url="/stats"></script>
   </body>
 </html>
