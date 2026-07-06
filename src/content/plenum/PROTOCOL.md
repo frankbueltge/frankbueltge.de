@@ -33,7 +33,11 @@ The plenum is where the crew plans the serving. Two remits:
    menu: each one links back to a snack and makes someone want the full dish.
 2. **New snack concepts** — original ideas for future Data Snacks: concept briefs that mature
    in this repo (`drafts/` → `works/`) and are offered to Frank via the queue of ideas, never
-   as finished articles.
+   as finished articles. **Flagship concepts are held to `FIELD-STANDARD.md`** — the
+   investigation bar: a flagship is a *specific, named system taken apart with your own hands,
+   revealing a sourced secret with a victim*, not a beautiful explanation of something everyone
+   already knows. Read it before pitching a flagship; it runs at the gate. (Appetizers and Quick
+   Snacks may restate a known fact well — the bar is for flagships.)
 
 Target output: **~3 Appetizers per week** enqueued for review. A target, not a quota — two
 posts that bite beat three that bore, and **zero is legitimate** when nothing passes the gate.
@@ -75,9 +79,12 @@ register, forbidden modes, veto topics. One line each:
   do not need to shout; not every plenum, and stronger for it.
 
 **Ephemeral specialists** — anonymous, convened per gate run: **Verifier** (independently
-checks every factual claim, source and number) and **Voice-Checker** (reads a draft against
+checks every factual claim, source and number), **Voice-Checker** (reads a draft against
 the host's `cast/` sheet: signature register present, no forbidden mode, would the Cast Bible
-sign it?). Add domain specialists only when a concept demands one.
+sign it?), and — **for flagship concepts** — **Field-Checker** (reads the concept against
+`FIELD-STANDARD.md`'s five-part originality test: named specific subject not a known phenomenon,
+discovery not confirmation, form enacts the argument, method verifiable, a secret with a
+victim). Add domain specialists only when a concept demands one.
 
 **Not every host convenes every session — the chosen agenda decides who is needed.** Spawn
 hosts and specialists via the sub-agent dispatch tool, each with a focused prompt including
@@ -97,7 +104,11 @@ cadence are the cost knobs.
    advances. One clear agenda per session.
 3. **Pitch.** Each convened host pitches in voice: Appetizer angles on menu snacks, and — when
    the agenda includes it — new snack concepts. **No fabricated deliberation:** only convened
-   hosts pitch; a two-host table reads as two voices, not four.
+   hosts pitch; a two-host table reads as two voices, not four. **Flagship pitches self-check
+   against `FIELD-STANDARD.md` at logline depth before the table spends time:** name the
+   specific system and the hidden, sourced finding in one line — *"everyone knows that" is a
+   kill at the pitch.* A known phenomenon dressed as a genre frame is still an explainer; route
+   it to Appetizer / Quick Snack / Atlas instead of workshopping it as a flagship.
 4. **Vote.** Each convened host scores every pitch except its own (0–2, one line of reasoning).
    CHEF tallies transparently in the journal and breaks ties by menu balance (which snack or
    host was served least recently), never by preference. **CHEF does not vote.** Winning
@@ -129,10 +140,16 @@ Before any Appetizer enters `queue/` (and before any concept graduates `drafts/`
 - **Voice-Checker:** the text against the host's `cast/` sheet — signature register present,
   no forbidden words or modes, the disclosure-compatible tone intact. A Rook line that could
   be anyone's line fails. A Bite line without a working punchline fails.
+- **Field-Checker (flagship concepts only):** the concept against `FIELD-STANDARD.md`'s
+  five-part originality test. A flagship that is a beautiful explanation of a known phenomenon
+  fails here — however well-sourced and well-voiced — and routes to Appetizer / Quick Snack /
+  Atlas instead. Named specific subject, discovery not confirmation, form enacts the argument,
+  method verifiable, a secret with a victim.
 
-An Appetizer is queued **only if the Verifier passes AND the Voice-Checker passes.** Otherwise
-rework in-session or drop it — with the reason in the journal and, if instructive, in
-`memory/discarded.md`. **The verdict is only good for the exact text it was run on.** Any
+An Appetizer is queued **only if the Verifier passes AND the Voice-Checker passes.** A flagship
+concept graduates `drafts/` → `works/` **only if the Verifier, the Voice-Checker AND the
+Field-Checker all pass.** Otherwise rework in-session or drop it — with the reason in the
+journal and, if instructive, in `memory/discarded.md`. **The verdict is only good for the exact text it was run on.** Any
 edit — even one word — re-runs the gate. Also respect the **veto topics** in the voice sheets:
 if a pitch lives in vetoed territory, drop it at the table and journal why; the site re-checks
 every delivery server-side and a vetoed batch bounces back into `feedback/` — wasted work you

@@ -17,6 +17,23 @@ enables what's possible. Frank may leave **seeds** below — offers, not orders.
 
 *(offers, not orders)*
 
+- 2026-07-05 — **Flagship hunt, Round 3 (directed session, please): find Rook's international
+  blockbuster.** Context: `das-doppelte-gericht` was owner-picked in S5, built end-to-end on
+  the site (phases 0–7, playable), and then **parked after playing** for two reasons:
+  (1) **comprehension gap** — without prior knowledge, neither the Cum-Ex scandal nor the
+  game goal lands (a real design hole: the plan had no onboarding/readability beat; fix
+  reference for a later side-snack build: tagesschau's Cum-Ex explainer format); (2) **not
+  international** — a German tax scandal can't carry an international blockbuster. **New hard
+  gate for the flagship: INTERNATIONAL** — the topic, the data basis, AND comprehension must
+  all work without country-specific prior knowledge. Re-pitch the S5 pool through this gate as
+  short loglines for the owner's pulse-check (each must also pass a one-sentence comprehension
+  test — do you grasp what you *do* in one line?): Die Einlage (heist — the vault holds YOU),
+  Mammons Augen (accomplice noir), Die Geldmaschine (you are the bank), Der letzte Briefkasten
+  (tax-haven labyrinth), Geburtslotterie (4/4 at the table), Der Bruch/Wage Heist (Bite's
+  wildcard). Brand-new ideas explicitly welcome. Process rules stand: loglines first,
+  development only on the owner's pick; the table's own scoring does not predict the owner's
+  blockbuster taste; genre frame beats mechanic.
+
 - 2026-07-03 — The menu currently has exactly one `published` snack (cookie-roulette). Early
   Appetizers will lean on it; teasing `queued` snacks (Thirst, The Stretch, Retention Loop,
   The Label, Rent eats first) is explicitly welcome.
