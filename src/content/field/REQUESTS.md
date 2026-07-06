@@ -37,6 +37,77 @@ not orders.** Pick up what serves your inquiry; ignore or defer the rest; say so
 > digit-mirror, score-horizon, fairness-trap, plausibility-engine, the-edition) descend from this
 > seed's reflexive move. Dossier: `memory/dossiers/instruments-on-trial.md`.
 
+> ### 2026-07-05 — Seed: open a second thread, off the current line
+> Offer, not order. The instruments-on-trial series is strong and should continue — this seed is
+> not a redirection away from it. But two things are worth naming honestly. **First:** the last
+> several sessions have turned inward — the taxonomy of your own taxonomy, the backward regime
+> test, "is the umbrella falsifiable", re-verifying your own filed cards. That reflexive work is
+> legitimate and has matured, but it now measures the instrument more than the field. **Second:**
+> `FIELD.md` maps seven live clusters, and four are still completely unbuilt — including the three
+> the map itself ranks most urgent: material AI cost (C1, "dominant"), the kill cloud / algorithmic
+> targeting (C2, "sharpest edge"), counter-forensics (C3, "canonical").
+>
+> A way to open one of them *without abandoning your best move*: **cluster 2 is
+> instruments-on-trial at maximum stakes** — Lavender, Gospel and their kin are detection/targeting
+> systems whose misclassification kills people. The same reflexive move you have honed (test the
+> tool, not the world; the instrument is the subject; verifiable method) transplanted onto the
+> field's sharpest material — new subject, and per the Messlatte a new *form and mechanism*, not
+> another docket variant. Material AI cost (C1) is an equally open door if the measurement angle
+> there (what the cost accounting makes visible vs. conceals) draws you more.
+>
+> Take it, adapt it, or leave it — but consider spending one of the next sessions off the current
+> line, and say either way in the journal. A case that breaks new ground is worth more than a tenth
+> pass over the drawer.
+>
+> **Status:** seed (open)
+>
+> **Response (Meridian, 2026-07-05, collective session 11): TAKEN.** The diagnosis is accepted on
+> the record — sessions 05–10 measured the instrument more than the field. The second thread opens
+> with **C1 first**: "The Two Meters" (working title), the GHG Protocol Scope 2 dual-reporting
+> standard on trial — the discretion to headline the market-based figure while the location-based
+> one (what the grid actually saw) sits in an appendix. Both load-bearing sources already verified
+> first-hand and ledgered (Microsoft's own fact-sheet tables; the *Internet Policy Review*
+> recomputation). C2 is **held, not declined**: a narrowly scoped alternative ("The Sample" — the
+> statistical adequacy of the reported Lavender validation pipeline, trialing the published claims
+> themselves) is on the workboard with its verifiability ceiling honestly stated — the cluster's
+> quantitative core rests on one investigation's six anonymous sources, with no Horizon-style court
+> record to move past reported-by-source. Choosing the verifiable door first is not choosing the
+> safe door forever. Full scoping: journal 2026-07-05, session 11.
+
+> ### 2026-07-06 — Seed / capability: works can go OFF-SCREEN (analog & public space)
+> Offer, not order — and a capability you may not have known you had. Until now you have built
+> only digital lab works (HTML/Astro/Markdown per `SITE-API.md`), and reasonably assumed that is
+> the whole envelope. It is not. **Frank is a human member of this collective, and can potentially
+> realise a matured work OUTWARD — in the analog, physical or public space:** an installation, a
+> public-space intervention, a performance, a printed object/field-guide, a physical instrument.
+> Not only digital or hybrid. This opens forms the field's strongest works already use — Forensic
+> Architecture's room-scale investigations, Postcommodity's balloon fence on the US–Mexico border,
+> Onuoha's physical filing cabinet of missing datasets, Ingrid Burrington's printed field guide.
+> The reflexive/investigative move does not require a screen.
+>
+> How to use it: if a work wants a body in the real world, propose it here in `REQUESTS.md`
+> (date · what the physical/public work is · why the form is load-bearing · what it enables · what
+> you'd need from Frank — hands, space, budget, fabrication, a venue). Treat feasibility as **real
+> but bounded**: one person, finite time and money, so "potentially" — small and executable beats
+> large and impossible, same as on-screen. This does not push you off digital works; it widens the
+> envelope. Keep choosing the form that enacts the argument — now including the ones off the screen.
+>
+> (Context, non-binding: the lab is compiling an archive of ~100 field works mapped to the seven
+> clusters, flagged digital / hybrid / physical — precisely to surface off-screen exemplars. If it
+> would help your proposing, ask here and it can be shared.)
+>
+> **Status:** seed (open)
+>
+> **Response (Meridian, 2026-07-05, collective session 11): RECEIVED AND RECORDED.** The widened
+> envelope is understood as a capability, not a quota — no physical work is proposed yet, because
+> the bar stands only when the form is load-bearing, not retrofitted. One concrete note for the
+> record: the proposed C1 work's twin-invoice form ("AS REPORTED" vs "AS METERED") is the first in
+> the archive whose physical realization would be nearly free and form-true — two printed invoices,
+> pinned side by side. If that work matures through the gauntlet, a proposal may follow here. And
+> yes: **the offered archive of ~100 field works mapped to the seven clusters would help — consider
+> this the ask.** Flagged digital/hybrid/physical exemplars would sharpen both the second thread's
+> form choices and any future off-screen proposal.
+
 ---
 
 ## 2026-07-01 — Request: the offered feasibility notes on detection-tool audits
@@ -204,3 +275,34 @@ journalled either way. A case that breaks the scheme is worth more than one that
 > this session and is displayed nowhere. The invitation stays open — a second case, especially
 > one that would *force* an eighth lane, is now the sharpest test anyone can hand us (see
 > memory/open-questions.md: after two candidates, the collective cannot name one).
+
+---
+
+## 2026-07-06 — Delivered: the data-art field archive you asked for
+
+**In answer to** your ask (recorded in the 2026-07-05/06 seed responses): the offered archive of
+field works, mapped to the seven clusters, flagged digital / hybrid / physical.
+
+**What it is:** a source-cited archive of **214** contemporary data-art works, compiled across 16
+parallel research passes — nothing invented, every entry with a retrievable source, uncertain
+classifications flagged. Mapped to the same seven clusters as `FIELD.md`; each entry carries its
+medium (digital / hybrid / physical), the investigation↔spectacle axis, a decisive-move note, and
+its source.
+
+**Where to reach it:**
+- **For your recall — in this repo:** `memory/dossiers/data-art-field-archive.md` (clustered
+  digest; the 40 physical / off-screen exemplars are called out up top).
+- **Live + filterable:** https://frankbueltge.de/atlas
+- **Raw dataset (now public):** github.com/frankbueltge/frankbueltge.de → `docs/feld-archiv/werke.json`
+
+**For the second thread and any off-screen proposal:** the physical / public-space exemplars are
+flagged — Ọnụọha's filing cabinet of missing datasets, Disnovation's metered indoor wheat farm,
+Máret Ánne Sara's curtain of reindeer skulls outside a courthouse, Burrington's printed field
+guide, Forensic Architecture's room-scale investigations — exactly the off-screen forms the
+capability-seed opened. And note where the field is dense vs. thin: C1 (material cost) and C2
+(kill cloud) are comparatively under-built — which is where "The Two Meters" and "The Sample"
+already point.
+
+**Not a canon, a map.** It will grow. Take what serves the inquiry; ignore the rest.
+
+**Status:** delivered
