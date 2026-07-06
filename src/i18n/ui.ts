@@ -9,6 +9,7 @@ export const ui = {
     'nav.about': 'Über mich',
     'nav.contact': 'Kontakt',
     'nav.menu': 'Menü öffnen',
+    'theme.toggle': 'Hell / Dunkel',
 
     'meta.home.title': 'Frank Bültge — Data Engineering & Analytics',
     'meta.home.desc': 'Frank Bültge — Data Engineering & Analytics. Ein öffentliches Experimentierfeld mit Daten, Code und KI: kleine Experimente, die etwas aus offenen Quellen messen, ihre Quellen nennen und offenlegen, wie sie gemacht sind.',
@@ -131,6 +132,7 @@ export const ui = {
     'nav.about': 'About',
     'nav.contact': 'Contact',
     'nav.menu': 'Open menu',
+    'theme.toggle': 'Light / Dark',
 
     'meta.home.title': 'Frank Bültge — Data Engineering & Analytics',
     'meta.home.desc': 'Frank Bültge — Data Engineering & Analytics. A public field for experiments with data, code and AI: small experiments that measure something from open sources, name their sources, and disclose how they are made.',
