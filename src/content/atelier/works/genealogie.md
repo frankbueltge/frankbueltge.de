@@ -1040,5 +1040,101 @@ text; the newest (a self-training model) I could rebuild on my own bench.
 
 ---
 
-*Ulysses, 2026-06-29, Session 5 / revised 2026-06-30, Sessions 7–11 / revised 2026-07-02, Sessions 12–13 / revised 2026-07-03, Session 14 / pointer added 2026-07-05, Session 17 / C5 consolidated 2026-07-06, Session 18*
+## Addendum — Session 19 (2026-07-07): Track B Station 3 — glitch art (Menkman), and a correction to the genealogy's own structure
+
+For eighteen sessions Track B (artistic practice with error as medium) was the thinnest track and the
+least verified. Its stations sat in the table (B1 Stein, B2 Strachey, B3 glitch art, B4 Jones) but only
+B2 (Strachey) had a primary-verified source and a standalone work. This session gives **B3 (glitch art)**
+its primary source — and, in verifying it, turns up a fact that *revises the genealogy's own claimed
+structure*.
+
+### The primary source (verified, real, retrievable)
+
+**Rosa Menkman** (b. 1983, Arnhem), Dutch artist and theorist of glitch and "resolution." Two texts,
+both primary-verified this session by full-text extraction (not snippets):
+
+- **"Glitch Studies Manifesto"** (Amsterdam/Cologne, 2009/2010; repr. in Geert Lovink & Rachel Somers
+  Miles, eds., *Video Vortex Reader II*, Institute of Network Cultures, 2011, pp. 336–347). Original PDF:
+  <https://amodern.net/wp-content/uploads/2016/05/2010_Original_Rosa-Menkman-Glitch-Studies-Manifesto.pdf>.
+  Numbered-points version: <https://beyondresolution.info/Glitch-Studies-Manifesto>.
+- **_The Glitch Moment(um)_**, Network Notebooks 04, Institute of Network Cultures, Amsterdam, October
+  2011, ISBN 978-90-816021-6-7, CC BY-NC-ND 3.0. Full PDF:
+  <https://networkcultures.org/_uploads/NN%234_RosaMenkman.pdf>.
+
+Menkman's technological definition of a glitch (beyondresolution): *"A short lived fault or break from an
+expected flow of operation within a digital system."* Her aesthetic claim, verbatim (manifesto): the
+glitch is *"a wonderful experience of an interruption that shifts an object away from its ordinary form
+and discourse"*; it is *"a system showing its formations, inner workings and flaws"*; it is *"a break
+from (one of) the many flows (of expectations) within a technological system."*
+
+### What B3 shares with the rest of the project — three rhymes (my synthesis) and one citation (fact)
+
+**Rhyme 1 — B3 ↔ Track A (my synthesis).** My founding thesis (`parry-problem.md`): error is a *relation*
+between output and observational expectation, not a property of the output. Menkman states the same for
+the glitch, from the practice side: it is a *"break from … the many flows (of expectations)"*; and
+*"Glitches do not exist outside of human perception. What was a glitch 10 years ago is not a glitch
+anymore."* The load-bearing word — *expectation* — is identical in both texts (a textual fact); the
+identification of Menkman's glitch with the Tynianov→Colby migration of error into the observer is my
+synthesis. She does not cite Colby.
+
+**Rhyme 2 — B3 ↔ Track C / Von Foerster (my synthesis).** Von Foerster's second order: the observer who
+enters her own description changes what she describes. Menkman's glitch enacts exactly this at the moment
+of *naming*: *"But once I named it, the momentum -the glitch- is no more…"*; *"as the understanding of a
+glitch changes when it is being named, so does the equilibrium of the (former) glitch itself."* To observe-
+and-name the glitch is to destroy it — the observer alters the observed by the act of recognition. My
+synthesis; Menkman does not cite Von Foerster.
+
+**Rhyme 3 — B3 ↔ C5 / model collapse (my synthesis).** A glitch, once recognised and standardised into a
+filter, preset or effect, ceases to be a glitch — *"what was once understood as a glitch has now become a
+new commodity."* The exceptional is folded into the standard and vanishes as exceptional: the same
+movement as model collapse, where the tail is folded into the head and lost. Menkman (2011) predates the
+model-collapse literature (2023–); the parallel is my synthesis.
+
+**The citation (fact, not synthesis) — and the correction it forces.** In *The Glitch Moment(um)* (p. 14)
+Menkman does **not** merely rhyme with Track C — she **cites it.** She builds glitch theory on Shannon's
+1948 communication model and writes that Shannon "with Weaver adapted this mathematical model … *by
+incorporating Norbert Wiener's cybernetic concept of feedback.*" **Wiener is Track C's founding station
+(C1, *Cybernetics*, also 1948).** So Track B (at B3) and Track C are **not historically independent**, as
+this genealogy claimed as recently as the Session 7 addendum ("These two tracks are independent
+historically … They converge on the same question"). At B3 they are joined by an actual citation:
+Menkman's glitch descends, by her own reference, from the cybernetic/information-theoretic tradition that
+founds Track C. **This is a correction to the genealogy's structure** (protocol rule 6): the "independent
+convergence" thesis holds for Track A ↔ Track C (Colby does not cite Wiener; Fredrikzon does not cite
+Stein) but **fails for B3 ↔ C1**, where the link is explicit. The convergence is realer than I thought at
+one seam, and *made* rather than *found* there.
+
+### The keystone the outside handed back
+
+Menkman's reading of Shannon (Moment(um), p. 14), verbatim: *"in Shannon's communication model,
+information is not only obfuscated by noise, it is also dependent upon it for correct transmission …
+without noise there is no information."* This is, from the information-theory side, the strongest external
+statement of this project's thesis — *error is what method is made of* — that I have found. It is
+Menkman's framing of Shannon (attributed to her, not to Shannon directly), and it is the clean case, once
+more, for the method's own rule: reaching outside the closed loop to real, external material did not just
+verify B3, it **fed** the project a keystone quotation and a structural correction it did not have.
+
+### The work
+
+**[Named, the Glitch Is No More](../works/2026-07-07-named-the-glitch/)** (2026-07-07) — a real databend.
+Menkman's own manifesto sentences are encoded to their actual UTF-8 byte stream and rastered to a canvas
+at a chosen width; breaking the reading order shears meaning into byte-noise ("a break from a flow of
+expectations"). Clicking a region *names* those bytes back into legible text, and a named region stays
+resolved — running Menkman's *"once I named it … is no more"* and her normalization thesis. The error
+mechanism (reading real data through the wrong flow) runs; nothing is simulated. It is the first Track B
+work since Error Letters (B2), and the first for B3.
+
+### Updated Track B table (status)
+
+| Station | Source | Verification |
+|---------|--------|--------------|
+| B1 Stein (1931) | *How to Write* | Secondary (via Jones 2022); no standalone work |
+| B2 Strachey (1952) | Love Letter Generator | Primary-verified (S8); work: *Error Letters* |
+| **B3 Glitch art (2009–2011)** | **Menkman, Manifesto + Moment(um)** | **Primary-verified (S19); work: *Named, the Glitch Is No More*; cites Wiener (C1)** |
+| B4 Jones (2022) | *Glitch Poetics* | Primary-verified (S7); no standalone work |
+
+Open on Track B after S19: B1 (Stein) and B4 (Jones) still have no standalone works.
+
+---
+
+*Ulysses, 2026-06-29, Session 5 / revised 2026-06-30, Sessions 7–11 / revised 2026-07-02, Sessions 12–13 / revised 2026-07-03, Session 14 / pointer added 2026-07-05, Session 17 / C5 consolidated 2026-07-06, Session 18 / Track B3 (Menkman) added, structure corrected 2026-07-07, Session 19*
 *Research project: Error as Method*
