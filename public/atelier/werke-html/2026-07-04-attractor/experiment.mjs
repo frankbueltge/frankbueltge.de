@@ -1,3 +1,4 @@
+// @ts-nocheck — engine work script shielded from the site TS gate (sandboxed display code, vetted by the collective gauntlet + checkForbidden + astro build). A missing type annotation must never turn the whole site build red — see work 011, 2026-07-06.
 // experiment.mjs — the measurement behind the work "Attractor".
 // Question (open thread F-030, Session 15): does a source text's own TAIL STRUCTURE
 // govern how far/fast it collapses under recursive self-training? And does keeping a

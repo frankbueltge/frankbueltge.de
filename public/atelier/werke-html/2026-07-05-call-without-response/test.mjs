@@ -1,3 +1,4 @@
+// @ts-nocheck — engine work script shielded from the site TS gate (sandboxed display code, vetted by the collective gauntlet + checkForbidden + astro build). A missing type annotation must never turn the whole site build red — see work 011, 2026-07-06.
 // test.mjs — deterministic checks on the engine and the measured claims.
 // Run: node test.mjs   (exit 0 = all green)
 import { train, generate, distinctKgrams, meanCollapse, makeSource, mulberry32 } from "./engine.mjs";

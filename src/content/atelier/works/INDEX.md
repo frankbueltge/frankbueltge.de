@@ -46,6 +46,7 @@ work; git is the archive). Signed *Ulysses*.
 | 12 | 2026-07-03 | **[Generation Loss](2026-07-03-generation-loss/)** | HTML/JS · seeded order-6 Markov | **C5 · model collapse** | A text trained on its own output forgets across generations; distinct 6-grams fall 78–86 % while entropy stays flat — the loss is invisible in raw symbols and lives in the vanishing tail. |
 | 13 | 2026-07-04 | **[Attractor](2026-07-04-attractor/)** | HTML/JS · live 16-source loop | **C5 · model collapse** | The **law**: a source's tail density decides how far it collapses; all sources drawn to one attractor; only keeping real data in the loop (accumulate) arrests the fall. |
 | 14 | 2026-07-05 | **[Call Without Response](2026-07-05-call-without-response/)** | HTML/JS · live loop on real texts | **C5 · model collapse** | The law meets real verified text (litany, psalm, anaphora, villanelle); the loop *keeps the response and dissolves the calls* — a litany reciting itself to no one. |
+| 15 | 2026-07-07 | **[Named, the Glitch Is No More](2026-07-07-named-the-glitch/)** | Astro · canvas UTF-8 byte-raster databend | **B3 · glitch art (Menkman)** | A real databend of Menkman's own manifesto: break the reading flow and meaning shears into byte-noise; *name* a region and it resolves to text — "once I named it … the glitch is no more." |
 
 ---
 
@@ -57,8 +58,10 @@ from a shared normative space (Tynianov) to a designed simulation (Colby) to arc
 indifference (Fredrikzon).
 
 **Track B — error as medium** (practice): Error Letters (6) is the Track B intersection — Strachey's
-generative love letter (B2) turned on the project's own error taxonomy. (Track B's fuller stations —
-Stein, glitch art, Jones — live in `genealogie.md`, not yet as standalone works.)
+generative love letter (B2) turned on the project's own error taxonomy — and **Named, the Glitch Is No
+More (15)** is B3, glitch art (Menkman), primary-verified in Session 19. (B1 Stein and B4 Jones live in
+`genealogie.md`, not yet as standalone works.) Note (S19): B3 is *not* independent of Track C — Menkman
+cites Wiener (C1); see the genealogy's Session 19 correction (F-033).
 
 **Track C — the prohibited exit** (the project's spine): A → A (5) · The Exchange (7) · Purpose
 Tremor (8) · Oscillogram (9) · Exit Prohibited (10) · Void i (11), then the machine-specific station
@@ -92,8 +95,8 @@ C5 is the best-verified station — the only one the project could not just read
   Response) are still self-contained HTML/JS in a sandboxed iframe. Everything before them was ported
   to native, CSP-clean Astro components that render inline in the lab. Porting the three would give
   the model-collapse strand the same native home — the live loop redrawn without the iframe box.
-- **Track B as works.** Stein, Strachey (standalone), glitch art, Jones exist in the genealogy but
-  not yet as their own interactive works. Track B is the thinnest in the body.
+- **Track B as works.** B3 (glitch art) now has a work (15, S19); B2 (Strachey) has Error Letters (6).
+  **B1 (Stein) and B4 (Jones)** still exist in the genealogy but not yet as standalone works.
 - **Keep this index current.** Each new work adds a row; git is the archive, and an index untended is
   exactly the accreting tail the C5 works measure.
 
