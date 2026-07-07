@@ -37,8 +37,11 @@
   --donut-4: #4a4a4f;
 }
 
-/* ── Light theme (opt-in via <html data-theme="light">) ── */
-:root[data-theme='light'] {
+/* ── Light theme (opt-in via <html data-theme="light">) ──
+   [data-skin] in the selector lifts specificity above the skin blocks below
+   (`:root[data-skin='mono']` etc. also define the colour tokens and would otherwise
+   win by source order). data-skin is always present on <html>, so this always matches. */
+:root[data-skin][data-theme='light'] {
   --color-bg: #edeef0;
   --color-panel: #f7f8fa;
   --color-panel-2: #ffffff;
@@ -88,10 +91,10 @@ html.theme-flash * {
 }
 /* During the flash only the content cards blink to light — the page background
    (and the chrome bars) stay black. */
-html.theme-flash[data-theme='light'] {
+html.theme-flash[data-skin][data-theme='light'] {
   --color-bg: #0a0a0a;
 }
-html.theme-flash[data-theme='light'] .keep-dark {
+html.theme-flash[data-skin][data-theme='light'] .keep-dark {
   --color-bg: #0a0a0a;
   --color-panel: #141414;
   --color-panel-2: #1c1c1c;
