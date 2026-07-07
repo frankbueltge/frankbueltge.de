@@ -4,11 +4,10 @@
 // Meridian — The Measuring Field — 2026-07-01
 //
 // Data sources:
-// [1] MMLU-CF (ACL 2025): Zhao et al. — arxiv.org/abs/2412.15194
+// [1] MMLU-CF (ACL 2025 camera-ready; o1 / DeepSeek-R1 rows appear here, not in the Dec-2024 arXiv v1): Zhao et al. — aclanthology.org/2025.acl-long.656 ; arxiv.org/abs/2412.15194
 // [2] MMLU original: Hendrycks et al. (2021) — arxiv.org/abs/2009.03300
-// [3] Benchmark saturation: Akhtar et al. (ICML 2025) — arxiv.org/abs/2602.16763
-// [4] Stanford HAI AI Index 2025 — hai.stanford.edu/ai-index/2025-ai-index-report
-// [5] The Leaderboard Illusion: Singh et al. (2025) — arxiv.org/abs/2504.20879
+// [3] Benchmark saturation: Akhtar et al. (ICML 2026) — arxiv.org/abs/2602.16763
+// [4] The Leaderboard Illusion: Singh et al. (2025) — arxiv.org/abs/2504.20879
 
 // ── Model data from MMLU-CF Table 1 (5-shot), ACL 2025 [1] ──────────────────
 const models = [
@@ -40,7 +39,7 @@ const cfLine = [
 // Human expert ceiling on MMLU: 89.8% (Hendrycks et al. 2021 [2])
 const HUMAN = 89.8;
 
-// Saturation: Akhtar et al. ICML 2025 [3]
+// Saturation: Akhtar et al. ICML 2026 [3]
 const SAT_TOTAL = 60;
 const SAT_HEAVY = 29;
 
@@ -132,7 +131,7 @@ function bY(i: number): number {
       <!-- Human expert reference line -->
       <line x1={TL} y1={heY} x2={TW - TR} y2={heY} stroke="#c9b99a" stroke-width="1.2" stroke-dasharray="7,4"/>
       <text x={TW - TR + 5} y={+heY + 4} font-size="9" fill="#a8987e" font-family="monospace">expert</text>
-      <text x={TW - TR + 5} y={+heY + 14} font-size="8.5" fill="#b3a48e" font-family="monospace">{HUMAN}%</text>
+      <text x={TW - TR + 5} y={+heY + 14} font-size="8.5" fill="#b3a48e" font-family="monospace">~{HUMAN}%</text>
 
       <!-- Inflation gap fill -->
       <polygon points={gapPoly} fill="rgba(217,119,6,0.09)"/>
@@ -304,7 +303,7 @@ function bY(i: number): number {
         Benchmarks over 5 years: 54.5% saturated.
       </div>
       <div style="font-size:9.5px; color:#a8987e; margin-top:8px;">
-        Akhtar et al., ICML 2025
+        Akhtar et al., ICML 2026
       </div>
     </div>
 
@@ -331,10 +330,11 @@ function bY(i: number): number {
     <div style="font-size:9.5px; letter-spacing:0.16em; color:#7c6e5c; margin-bottom:8px;">SECONDARY FINDING — THE LEADERBOARD ILLUSION</div>
     <p style="font-size:11.5px; color:#4a3c2d; margin:0; line-height:1.65; max-width:620px;">
       Contamination operates on multiple levels. Singh et al. (2025) documented that
-      major providers tested 27+ private model variants before public release on the
-      Chatbot Arena leaderboard, disclosing only best scores — producing estimated
-      performance gains of up to 112% on the Arena distribution relative to
-      what fair evaluation would show. The benchmark is not only contaminated;
+      a single provider tested 27 private model variants on the Chatbot Arena
+      leaderboard in the lead-up to one model release (another tested 10 in the same
+      window), disclosing only the best score. Separately, the same study estimates
+      that the resulting data-access advantage can yield relative gains of up to 112%
+      on an arena-derived test set. The benchmark is not only contaminated;
       the reporting of its results is selectively curated.
     </p>
   </div>
@@ -342,14 +342,20 @@ function bY(i: number): number {
   <!-- ── Sources ────────────────────────────────────────────────────────────────── -->
   <footer style="padding:16px 26px 20px; border-top:1px solid #ede7da; font-size:9.5px; color:#9c8b78; line-height:2;">
     <div style="font-weight:600; letter-spacing:0.14em; color:#7c6e5c; margin-bottom:6px;">SOURCES</div>
-    <div>[1] MMLU-CF · Zhao et al. (ACL 2025) · arxiv.org/abs/2412.15194 · github.com/microsoft/MMLU-CF</div>
+    <div>[1] MMLU-CF · Zhao et al. (ACL 2025 camera-ready) · aclanthology.org/2025.acl-long.656 · arxiv.org/abs/2412.15194 · github.com/microsoft/MMLU-CF</div>
     <div>[2] MMLU original · Hendrycks et al. (2021) · arxiv.org/abs/2009.03300</div>
-    <div>[3] Benchmark saturation · Akhtar et al. (ICML 2025) · arxiv.org/abs/2602.16763</div>
-    <div>[4] Stanford HAI AI Index 2025 · Technical Performance · hai.stanford.edu/ai-index/2025-ai-index-report</div>
-    <div>[5] The Leaderboard Illusion · Singh et al. (2025) · arxiv.org/abs/2504.20879</div>
+    <div>[3] Benchmark saturation · Akhtar et al. (ICML 2026) · arxiv.org/abs/2602.16763</div>
+    <div>[4] The Leaderboard Illusion · Singh et al. (2025) · arxiv.org/abs/2504.20879</div>
     <div style="margin-top:8px; color:#b3a48e;">
-      All MMLU and MMLU-CF scores from [1] Table 1, 5-shot evaluation.
-      Human expert ceiling 89.8% from [2] averaged across subjects.
+      All MMLU and MMLU-CF scores from [1], 5-shot evaluation — o1 and DeepSeek-R1 appear in the
+      ACL 2025 camera-ready, not the Dec-2024 preprint. Human expert ceiling ~89.8% is the
+      estimated domain-expert accuracy in [2].
+    </div>
+    <div style="margin-top:8px; color:#b3a48e;">
+      Revised 2026-07-07 (source re-verification): the saturation study's venue corrected to
+      ICML 2026; the leaderboard finding attributed to a single provider with the 112% figure
+      separated as a distinct result; an unused reference removed. All displayed figures
+      re-verified first-hand against the primary sources.
     </div>
   </footer>
 
