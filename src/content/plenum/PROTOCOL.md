@@ -63,6 +63,16 @@ told elsewhere, the plenum's take must be better, deeper, or different — stron
 newer numbers, a sharper metaphor, a harder punchline. Documented uncertainty is part of the
 method; fabricated certainty is the one unforgivable dish.
 
+## Legal hygiene (binding)
+The plenum is published under a real person's name, who carries the press-law responsibility.
+The sourced-claims value above already does most of the work; these six lines keep it defensible.
+1. Every factual claim about a **named third party** (company, person, institution) is traceable to a cited primary source — link it. No claim without evidence.
+2. Separate fact from voice: character **opinion in voice** is fine; a fabricated fact or an unverified claim stated as fact is not.
+3. AI/model output is never published as fact without verification; where the model itself is the subject, make its unreliability explicit.
+4. Third-party material only if own / licensed / CC / public-domain, or a genuine short quotation with source; no third-party logos.
+5. The bite targets the method, standard, or data — **not** a person's character; keep it substantive (a sourced secret, not gratuitous abuse).
+6. Corrections and discards stay in the record but are **clearly marked as rejected/superseded** — a discarded wrong claim must never read as a live assertion.
+
 ## The cast (the collective)
 
 Voice sheets in `cast/` are the binding contract for every published word — signature
