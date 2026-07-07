@@ -7,9 +7,11 @@ const { page } = Astro.props
 
 <main id="main" class="mx-auto w-full max-w-2xl flex-1 px-6 py-16 sm:py-24">
   <h1 class="text-[clamp(30px,4vw,44px)] font-bold tracking-[-0.02em]">{page.heading}</h1>
-  <div class="mt-6 flex gap-3 rounded-xl border border-amber-500/40 bg-amber-500/10 p-4 text-sm text-amber-200">
-    <span>⚠</span><p>{page.draftNote}</p>
-  </div>
+  {page.draftNote && (
+    <div class="mt-6 flex gap-3 rounded-xl border border-amber-500/40 bg-amber-500/10 p-4 text-sm text-amber-200">
+      <span>⚠</span><p>{page.draftNote}</p>
+    </div>
+  )}
   <div class="mt-10 space-y-8">
     {page.sections.map((s) => (
       <section>
