@@ -1,0 +1,171 @@
+{
+  "work": "The Floor",
+  "slug": "2026-07-09-the-floor",
+  "instrument_on_trial": "PUE (Power Usage Effectiveness) — the data-center industry's dominant public efficiency metric",
+  "failure_mode": "A bounded ratio, already pinned near its physical floor, foregrounded as a counterweight to an unbounded absolute. PUE = total facility energy / IT-equipment energy has a hard floor of 1.0 (a perfect facility delivers all its energy to the servers and loses none). A fleet already reporting 1.09 has at most ~8% of travel left — a fixed ceiling on the ratio, spent once. When that near-exhausted ratio is presented in the same report as offsetting emissions 'even as computing demands grow', the reader is invited to net an efficiency gain the metric is structurally incapable of delivering against an absolute that grew 27% in a single year.",
+  "not_the_same_as_012": "This is NOT a concealment claim. Google discloses the 27% growth openly, in the same report. Instrument 012 (The Two Meters) tried a discretion that hides a number in an appendix. Here nothing is hidden: the failure is that a bounded, near-floor efficiency ratio is foregrounded (Figure 4; the carbon-reduction bridge graphic's 'PUE improvements' wedge; '84% less overhead energy'; '6x more compute per watt') as if it mitigates an absolute it cannot bound. Structure + framing, not concealment.",
+
+  "pue_definition": {
+    "formula": "PUE = total facility energy / IT-equipment energy",
+    "floor": 1.0,
+    "floor_meaning": "A PUE of 1.0 is a perfectly efficient facility: all energy entering the building reaches the IT equipment and none is lost to cooling, power conversion or overhead. IT energy is a subset of total facility energy, so the ratio can never fall below 1.0.",
+    "origin": "Developed by The Green Grid (2006–2007); published as global standard ISO/IEC 30134-2:2016.",
+    "intended_use": "The Green Grid's own examination: an end-user management tool for one facility over time — 'best used as a tool for management, rather than for making [cross-facility comparisons]'.",
+    "prior_art_misuse": "The industry has a name for using a low PUE as a marketing tool: 'PUE Abuse' — selectively reporting PUE values to create a favorable impression of energy efficiency, potentially misleading stakeholders (Wikipedia; Sunbird eBook). The Green Grid designed partial-PUE (pPUE) specifically to curb misuse 'for marketing reasons'.",
+    "what_pue_ignores": "PUE awards nothing for the carbon of the electricity source (renewable and coal count identically), nothing for IT-equipment efficiency or useful work, and — the point of this instrument — nothing for absolute scale. A facility can double its absolute draw at a constant, or even improving, PUE.",
+    "near_floor": "For state-of-the-art hyperscale facilities PUE is already near ~1.1; the metric literature notes 'further improvement within the boundaries PUE provides is difficult' (REHVA)."
+  },
+
+  "subject": {
+    "name": "Google",
+    "why_this_subject": "Chosen because it discloses the MOST — fleet-wide PUE, year-over-year absolute electricity growth, and a full six-year greenhouse-gas inventory, all in one report. The instrument can only be built on a company transparent enough to be audited this way; a firm that published only its PUE could not be checked at all. The critique is of the metric's structure and the report's framing, not of Google's candor — which is, comparatively, high.",
+    "reports": [
+      {
+        "id": "google_2025_env_report",
+        "title": "Google 2025 Environmental Report",
+        "covers": "fiscal year 2024 (Jan 1 – Dec 31 2024), with some H1 2025 notes",
+        "published": "June 2025",
+        "official_url": "https://sustainability.google/reports/google-2025-environmental-report",
+        "pdf_mirror_extracted": "https://www.smartenergydecisions.com/wp-content/uploads/2025/07/google-2025-environmental-report-1.pdf",
+        "fetched": "2026-07-09"
+      },
+      {
+        "id": "google_2024_env_report",
+        "title": "Google 2024 Environmental Report",
+        "covers": "fiscal year 2023, with earlier years in the data tables",
+        "published": "2024",
+        "pdf_mirror_extracted": "https://www.smartenergydecisions.com/wp-content/uploads/2025/04/google-2024-environmental-report.pdf",
+        "fetched": "2026-07-09"
+      }
+    ]
+  },
+
+  "series": {
+    "years": [2019, 2020, 2021, 2022, 2023, 2024],
+    "fleet_pue": {
+      "values": [1.10, 1.10, 1.10, 1.10, 1.10, 1.09],
+      "unit": "ratio (dimensionless)",
+      "note": "2019–2023 from the 2024 report's data table (fleet-wide average annual PUE, all five years 1.10); 2024 = 1.09 from the 2025 report ('for the first time in six years... dropped below 1.10 to 1.09'). Covers Google-owned-and-operated campuses only.",
+      "source": ["google_2024_env_report", "google_2025_env_report"]
+    },
+    "scope2_location_based_tco2e": {
+      "values": [5116900, 5865100, 6576200, 8045400, 9252900, 11283200],
+      "unit": "tCO2e",
+      "meaning": "Location-based Scope 2 — emissions as the physical grid produced them for Google's electricity ('what the grid saw'). This is the disclosed absolute that rises while PUE stays flat: +120.5% over 2019–2024, same years, same report. Location-based is used as the absolute here for the reasons trialed in instrument 012, 'The Two Meters': it is the meter of physical grid draw, before contractual clean-energy accounting.",
+      "scope_note": "This series does NOT describe the same set of buildings as the fleet-PUE series: Google's own report attributes about 95% of Scope 2 to 'our data centers and offices', while fleet PUE covers owned-and-operated data-center campuses only. See honesty item 6.",
+      "source": "google_2025_env_report"
+    },
+    "scope2_market_based_tco2e": {
+      "values": [835900, 911600, 1823500, 2492100, 3423400, 3059100],
+      "unit": "tCO2e",
+      "meaning": "Market-based Scope 2 — after clean-energy contracts. Fell 2023->2024 (the '-12% data center energy emissions' headline sits near here). Shown for completeness; the location-based series is the honest absolute.",
+      "source": "google_2025_env_report"
+    },
+    "scope1_tco2e": {
+      "values": [81900, 55800, 64100, 91200, 79400, 73100],
+      "unit": "tCO2e",
+      "source": "google_2025_env_report"
+    },
+    "total_operational_s1_plus_market_s2_tco2e": {
+      "values": [917800, 967400, 1887600, 2583300, 3502800, 3132200],
+      "unit": "tCO2e",
+      "source": "google_2025_env_report"
+    },
+    "total_dc_electricity_growth_yoy_pct": {
+      "2023": 17,
+      "2024": 27,
+      "note": "'…our total data center electricity consumption grew by 27% in 2024, compared to 17% growth in the prior year' — verbatim (mid-sentence excerpt), 2025 report. Absolute TWh not used here; the disclosed growth rates plus the disclosed PUE are sufficient for the arithmetic.",
+      "source": "google_2025_env_report"
+    }
+  },
+
+  "disclosed_totals_2024": {
+    "total_ambition_based_emissions_MtCO2e": 11.5,
+    "total_ambition_based_vs_2019_pct": 51,
+    "operations_s1_plus_market_s2_MtCO2e": 3.1,
+    "operations_vs_2019_pct": 241,
+    "scope3_ambition_MtCO2e": 8.4,
+    "scope3_vs_2019_pct": 25,
+    "industry_avg_pue_2024": 1.56,
+    "source": "google_2025_env_report"
+  },
+
+  "the_claim_under_trial": {
+    "figure4_framing_verbatim": "For the first time in six years, the average annual power usage effectiveness (PUE) for our global fleet of data centers dropped below 1.10 to 1.09 (Figure 4). While a PUE improvement of 0.01 might appear small, at the scale of our global data center operations, this efficiency gain avoids significant electricity consumption. This means our global computing network requires less electricity and produces fewer emissions than it otherwise would have, yielding meaningful savings even as our overall computing demands grow.",
+    "growth_verbatim": "…our total data center electricity consumption grew by 27% in 2024, compared to 17% growth in the prior year",
+    "concession": "Google's Figure-4 sentence is literally true, and this work does not dispute it: at PUE 1.09 the network really does use less electricity and produce fewer emissions than the same operations would have at 1.10 — a counterfactual claim about a world with a worse ratio. What this work puts on trial is a stronger reading — the PUE improvement presented as a counterweight a reader may net against absolute growth. That reading is the collective's own interpretation of the framing pattern (the sentence's placement, the bridge graphic's 'PUE improvements' wedge, the surrounding cluster of efficiency headlines), stated here as interpretation, not as anything Google says outright.",
+    "bridge_graphic": "The report's carbon-reduction-progress graphic itemizes 'PUE improvements' as one of four emission-reduction wedges (with clean-energy procurement, machine-hardware efficiencies, avoided emissions).",
+    "supporting_efficiency_headlines": [
+      "84% less overhead energy than the industry average (PUE 1.09 vs 1.56)",
+      "over six times more computing power per unit of electricity than five years ago",
+      "reduced data center energy emissions by 12% compared to 2023",
+      "Ironwood TPU 'nearly 30 times more power efficient than our first Cloud TPU from 2018'"
+    ],
+    "source": "google_2025_env_report"
+  },
+
+  "arithmetic": {
+    "note": "Every number below is derived from the two disclosed inputs — fleet PUE and disclosed growth — plus the definitional floor of 1.0. No modeling, no external estimate. Recomputable by hand.",
+    "remaining_headroom": {
+      "statement": "At PUE 1.09, the maximum future reduction in energy-per-unit-of-IT achievable by ANY PUE improvement is the move from 1.09 to the floor of 1.00.",
+      "computation": "(1.09 - 1.00) / 1.09 = 0.0826",
+      "value_pct": 8.26,
+      "meaning": "~8.3% — a fixed ceiling on the ratio, applied to a still-growing base: the absolute energy it avoids grows with the base, but PUE's relative contribution to energy-per-unit-of-IT can never exceed this share again."
+    },
+    "single_year_growth": {
+      "value_pct": 27,
+      "meaning": "Google's total data-center electricity rose 27% in 2024 alone."
+    },
+    "verdict_ratio": {
+      "statement": "The metric's entire remaining lifetime offset headroom (8.3%) is less than one-third of a single year's absolute growth (27%).",
+      "computation": "8.26 / 27 = 0.306"
+    },
+    "breakeven": {
+      "statement": "To have held total data-center electricity flat against a year's growth, the required PUE falls below the physical floor once growth exceeds 10%.",
+      "formula": "required_PUE = base_PUE / (1 + growth), base_PUE = 1.10 (2023's value — the correct base for a 2023→2024 growth figure)",
+      "base_pue": 1.10,
+      "crosses_floor_at_growth_pct": 10,
+      "crosses_floor_note": "1.10 / (1 + 0.10) = 1.00 exactly; any growth above 10% requires PUE < 1.00, which is impossible. (The exactly-10% crossing is an artifact of the base: with base 1.09 the crossing is at exactly 9%. The conclusion — 27% growth requires an impossible PUE — does not depend on the base choice.)",
+      "robustness_note": "The verdict does not depend on picking the hottest year: even at 2023's slower 17% growth, required PUE = 1.10/1.17 = 0.94 — still below the floor. And Google's subsequent 2026 report (fiscal 2025) discloses 37% growth at an unchanged fleet PUE of 1.09: required PUE = 1.09/1.37 = 0.80, deeper below the floor (see subsequent_disclosure).",
+      "google_2024_growth_pct": 27,
+      "required_pue_at_2024_growth": 0.87,
+      "required_pue_computation": "1.10 / 1.27 = 0.866, rounds to 0.87 — below the floor of 1.00.",
+      "even_lower_note": "This uses the disclosed TOTAL-electricity growth (27%) as the growth input. Actual IT-load growth was slightly higher (total grew 27% while PUE fell 1.10->1.09, implying IT grew 1.27*(1.10/1.09)-1 = 28.2%), which pushes the required PUE to 1.10/1.282 = 0.858 — even further below the floor. The 0.87 figure is the conservative (charitable) one.",
+      "conclusion": "A PUE below 1.0 is thermodynamically impossible (you cannot deliver more energy to the servers than enters the building). The efficiency lever could not have offset the growth even in principle."
+    }
+  },
+
+  "honesty_and_self_implication": [
+    "This is not a concealment claim. Google disclosed the 27% growth, the full six-year emissions inventory, and the near-floor PUE, all openly. The trial is of the metric's structure and the report's framing, not of Google's candor.",
+    "Google's literal Figure-4 claim is true and not in dispute — at PUE 1.09 the network uses less electricity and produces fewer emissions than the same operations at 1.10 would have. The reading on trial (PUE improvement as a counterweight a reader may net against absolute growth) is the collective's own reading of the framing pattern, stated as interpretation, not as a quotation.",
+    "Google is examined precisely because it discloses the most. The instrument cannot be run on a firm that publishes only its PUE — so the deepest version of this problem is worst-hidden by whoever discloses least, and least auditable there.",
+    "Google's fleet PUE covers owned-and-operated campuses only, not leased/colocation facilities it also uses; the reported fleet ratio is not the overhead of its whole footprint.",
+    "The two charted series do not describe the same set of buildings: fleet PUE covers the owned-and-operated campuses, while location-based Scope 2 covers Google's purchased electricity broadly — the report itself attributes about 95% of Scope 2 to 'our data centers and offices'. If anything this understates the problem: for the footprint outside the fleet, no PUE-like ratio is disclosed at all.",
+    "The headline breakeven (required PUE ~0.87 at 27% growth) uses only the disclosed total-electricity growth and the disclosed base PUE of 1.10. A refinement that infers IT-load growth (~28%) from the same disclosure lands even lower (~0.86); that inference is stated as such, not as a Google-disclosed figure. The headroom argument (8.3% vs 27%) is the primary claim — it needs no inference beyond the disclosed PUE, the disclosed growth, and the definitional floor.",
+    "The quantitative verdict (8.3% headroom vs 27% growth) is specific to a fleet already near the floor. At the industry-average PUE of 1.56 the headroom is ~35.9% — the structural argument (a bounded ratio cannot bound an unbounded absolute) generalizes, but the near-exhausted arithmetic is Google's.",
+    "PUE improvements are real efficiency gains — the critique is not that the work is fake but that a bounded, near-exhausted ratio is being asked to carry an argument about an unbounded absolute it was never built to measure."
+  ],
+
+  "subsequent_disclosure": {
+    "note": "Added during the session-17 shipping gauntlet (2026-07-09), after the round-1 Verifier found the newer primary retrievable. The claim under trial remains the 2025 report (fiscal 2024); this postscript only tests whether the verdict survives the subject's next disclosure. It does — more strongly.",
+    "report": {
+      "id": "google_2026_env_report",
+      "title": "Google 2026 Environmental Report",
+      "covers": "fiscal year 2025",
+      "published": "June 2026",
+      "official_url": "https://sustainability.google/google-2026-environmental-report",
+      "pdf": "https://storage.googleapis.com/gweb-mobius-cdn/sustainability/uploads/7f477eb723fe0c23d03f94b90a08882b9f28187d.pdf",
+      "fetched": "2026-07-09"
+    },
+    "growth_verbatim": "…our total electricity consumption grew by 37% in 2025, up from 27% in 2024",
+    "growth_wording_caveat": "The 2026 report states the 37% for TOTAL electricity consumption (and restates 2024's 27% on the same basis); the 2025 report had stated the 27% for total DATA CENTER electricity. Quoted exactly; not conflated — and the mismatch matters: dividing a possibly company-wide growth rate against a data-center-only fleet PUE is the same numerator/denominator scope caution as the emissions-panel caveat. The impossibility conclusion is robust to it: under base 1.09, any growth above 9% already crosses the floor, so even a materially lower data-center-specific growth rate would still land below 1.0.",
+    "pue_verbatim": "This focus resulted in a 2025 average annual PUE of 1.09 for our global data center fleet—meaning that Google data centers used 83% less overhead energy than the industry average.",
+    "fleet_pue_2025": 1.09,
+    "growth_2025_pct": 37,
+    "required_pue_at_2025_growth": 0.80,
+    "required_pue_computation": "1.09 / 1.37 = 0.796 ≈ 0.80 — a further 0.07 below the already-impossible 2024 requirement."
+  },
+
+  "seed": 0,
+  "seed_note": "No randomness in this work: every displayed number is a disclosed figure or a deterministic arithmetic derivation of disclosed figures. Seed recorded as 0 for the archive convention."
+}
