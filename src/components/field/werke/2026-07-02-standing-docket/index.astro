@@ -72,6 +72,22 @@ for (const trial of trials) {
 const alphaPerTest = cumulative.expected_false_conviction_rate_by_chance_alpha || {};
 const alphaValue: number = alphaPerTest.first_digit_chi2 ?? 0.05;
 
+// Generic summary of every distinct real-series indicator scored so far,
+// across all trials -- not hardcoded to any one trial's indicators, dates,
+// or country counts (those vary per trial and are shown per-row below).
+const indicatorDates: Record<string, { label: string; dates: Set<string> }> = {};
+for (const trial of trials) {
+  for (const s of trial.series || []) {
+    if (!indicatorDates[s.indicator]) {
+      indicatorDates[s.indicator] = { label: s.indicator_label, dates: new Set() };
+    }
+    indicatorDates[s.indicator].dates.add(s.indicator_date);
+  }
+}
+const indicatorSummary: string = Object.entries(indicatorDates)
+  .map(([id, v]) => `${v.label} (${id}), ${Array.from(v.dates).sort().join("/")}`)
+  .join("; ");
+
 // Pilot gate: below this many clean-series scorings, the cumulative rates
 // are not statistically distinguishable from the chance baseline and the
 // scoreboard says so on its face. The floor is a declared convention of
@@ -143,11 +159,13 @@ const pAnyByChance: number = cleanTested > 0 ? 1 - Math.pow(1 - famRate, cleanTe
     <div class="disclosure-title">DISCLOSURE</div>
     <p>
       Synthetic controls generated with <code>random.Random(seed)</code> -- synthetic_benford seed 42,
-      synthetic_human seed 43, N=200 each, deterministic. Real series: World Bank indicators
-      SP.POP.TOTL (population, total, 2023) and NY.GDP.MKTP.CD (GDP, current US$, 2023), snapshot date
-      2026-07-02, filtered to 217 / 204 real countries (aggregates excluded). p-values computed via a
-      self-written regularized incomplete gamma function, not a validated statistics library
-      (unit-tested against textbook chi-squared critical values -- see README.md).
+      synthetic_human seed 43, N=200 each, deterministic. Real series scored so far, across all trials:
+      World Bank indicators {indicatorSummary}, each filtered to real countries with non-null values
+      (aggregates excluded) -- exact per-trial country counts and snapshot dates are in the per-row
+      detail below; source disclosures for series that are estimates rather than raw counts are in
+      README.md / PROVENANCE.md. p-values computed via a self-written regularized incomplete gamma
+      function, not a validated statistics library (unit-tested against textbook chi-squared critical
+      values -- see README.md).
     </p>
     <p>
       N-gate: verdicts are only considered valid for 100 &le; N &le; 10000. Outside that range a row is
