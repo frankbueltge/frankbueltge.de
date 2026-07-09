@@ -1,0 +1,562 @@
+---
+import data from './data.json'
+
+// ---- source fields (all display numbers trace back to these) ----------
+const years = data.series.years
+const pueSeries = data.series.fleet_pue.values
+const emissions = data.series.scope2_location_based_tco2e.values
+const industryAvg = data.disclosed_totals_2024.industry_avg_pue_2024
+const floor = data.pue_definition.floor
+
+const arithmetic = data.arithmetic
+const headroom = arithmetic.remaining_headroom
+const singleYearGrowth = arithmetic.single_year_growth
+const verdictRatio = arithmetic.verdict_ratio
+const breakeven = arithmetic.breakeven
+
+const claim = data.the_claim_under_trial
+const honesty = data.honesty_and_self_implication
+const reports = data.subject.reports
+const pueDef = data.pue_definition
+
+// ---- chart geometry (visual layout constants, not measured facts) -----
+// Scale chosen to (a) hold the industry average (1.56) near the top for
+// contrast and (b) leave room below the floor for growth up to 40%.
+const TOP_VALUE = 1.60
+const BOTTOM_VALUE = 0.75
+const CH = 400
+const CW = 260
+const PAD_X = 24
+
+function yFor(v: number) {
+  return ((TOP_VALUE - v) / (TOP_VALUE - BOTTOM_VALUE)) * CH
+}
+
+const floorY = yFor(floor)
+const industryY = yFor(industryAvg)
+
+const plotW = CW - PAD_X * 2
+const stepX = plotW / (years.length - 1)
+const pueXY = years.map((yr, i) => ({
+  year: yr,
+  value: pueSeries[i],
+  x: PAD_X + i * stepX,
+  y: yFor(pueSeries[i]),
+}))
+const pathD = pueXY.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x.toFixed(2)} ${p.y.toFixed(2)}`).join(' ')
+
+const gaugeTicks = [1.60, 1.40, 1.20, 1.00, 0.80].map((v) => ({ v, y: yFor(v) }))
+
+// breakeven fixed annotation — Google's actual 2024 point (from data, not recomputed)
+const breakevenY = yFor(breakeven.required_pue_at_2024_growth)
+
+// ---- emissions column chart -------------------------------------------
+const maxEmission = Math.max(...emissions)
+const BAR_BASE_Y = CH - 20
+const BAR_MAX_H = 360
+const barSlot = plotW / years.length
+const barW = barSlot * 0.6
+const bars = years.map((yr, i) => {
+  const h = (emissions[i] / maxEmission) * BAR_MAX_H
+  return {
+    year: yr,
+    value: emissions[i],
+    displayM: (emissions[i] / 1e6).toFixed(2),
+    x: PAD_X + i * barSlot + (barSlot - barW) / 2,
+    w: barW,
+    y: BAR_BASE_Y - h,
+    h,
+  }
+})
+// one decimal so the rendered figure (120.5%) agrees with the prose everywhere
+const emissionGrowthDisplay = (((emissions[emissions.length - 1] - emissions[0]) / emissions[0]) * 100).toFixed(1)
+
+// ---- breakeven slider defaults (server-rendered; correct with JS off) --
+const basePue = breakeven.base_pue // 1.10
+const defaultGrowth = breakeven.google_2024_growth_pct // 27
+const defaultRequired = breakeven.required_pue_at_2024_growth // 0.87, from data
+// marker position uses the unrounded value so the no-JS position matches what
+// the client script computes on hydration
+const defaultRequiredRaw = basePue / (1 + defaultGrowth / 100)
+const defaultImpossible = defaultRequired < floor
+
+const concession = claim.concession
+const postscript = data.subsequent_disclosure
+---
+
+<section class="floor-instrument">
+  <header class="head">
+    <p class="eyebrow">instrument on trial — {data.instrument_on_trial}</p>
+    <h1>The Floor</h1>
+    <p class="dek">
+      {pueDef.formula} · a ratio with a hard floor of {floor.toFixed(2)} plotted against the absolute it is framed as offsetting.
+    </p>
+  </header>
+
+  <div class="grid">
+    <!-- ============ LEFT: PUE gauge ============ -->
+    <figure class="panel gauge-panel">
+      <figcaption>Fleet PUE, 2019–2024 <span class="src">(owned &amp; operated campuses)</span></figcaption>
+      <svg class="gauge" viewBox={`0 0 ${CW} ${CH}`} role="img" aria-label="PUE gauge showing fleet PUE hugging the 1.00 floor, six years, moved 0.01">
+        <defs>
+          <pattern id="hatch" width="8" height="8" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+            <rect width="8" height="8" class="hatch-bg" />
+            <line x1="0" y1="0" x2="0" y2="8" class="hatch-line" />
+          </pattern>
+        </defs>
+
+        <!-- impossible band -->
+        <rect x={PAD_X - 6} y={floorY} width={plotW + 12} height={CH - floorY} fill="url(#hatch)" class="impossible-band" />
+        <rect x={PAD_X - 6} y={floorY} width={plotW + 12} height={CH - floorY} class="impossible-band-outline" />
+        <text x={PAD_X} y={floorY + 20} class="band-label">IMPOSSIBLE — PUE &lt; 1.00</text>
+
+        <!-- gridlines / ticks -->
+        {gaugeTicks.map((t) => (
+          <g>
+            <line x1={PAD_X - 6} y1={t.y} x2={CW - PAD_X + 6} y2={t.y} class="tick-line" />
+            <text x={CW - PAD_X + 8} y={t.y + 4} class="tick-label">{t.v.toFixed(2)}</text>
+          </g>
+        ))}
+
+        <!-- floor line -->
+        <line x1={PAD_X - 10} y1={floorY} x2={CW - PAD_X + 10} y2={floorY} class="floor-line" />
+        <text x={PAD_X - 10} y={floorY - 8} class="floor-label">PHYSICAL FLOOR · PUE cannot cross</text>
+
+        <!-- industry average, for scale -->
+        <line x1={PAD_X} y1={industryY} x2={CW - PAD_X} y2={industryY} class="industry-line" />
+        <text x={PAD_X} y={industryY - 6} class="industry-label">industry avg {industryAvg.toFixed(2)}</text>
+
+        <!-- fleet PUE path -->
+        <path d={pathD} class="pue-path" />
+        {pueXY.map((p) => (
+          <g>
+            <circle cx={p.x} cy={p.y} r="3.2" class="pue-dot" />
+          </g>
+        ))}
+        <text x={pueXY[0].x} y={pueXY[0].y - 10} class="pue-path-label">1.10 flat, 2019–2023</text>
+        <text x={pueXY[pueXY.length - 1].x} y={pueXY[pueXY.length - 1].y + 16} class="pue-path-label pue-path-label--last">1.09, 2024</text>
+
+        <!-- breakeven fixed annotation (Google's actual 2024 point) -->
+        <circle cx={pueXY[pueXY.length - 1].x} cy={breakevenY} r="4" class="breakeven-dot" />
+        <text x={pueXY[pueXY.length - 1].x - 6} y={breakevenY + 16} class="breakeven-label" text-anchor="end">
+          ≈{breakeven.required_pue_at_2024_growth.toFixed(2)} required to hold 2024 flat · IMPOSSIBLE
+        </text>
+
+        <!-- live slider marker (JS enhancement only) -->
+        <circle id="live-marker" cx={pueXY[pueXY.length - 1].x} cy={yFor(defaultRequiredRaw)} r="5" class:list={["live-marker", { impossible: defaultImpossible }]} />
+
+        <!-- year labels -->
+        {pueXY.map((p) => (
+          <text x={p.x} y={CH - 4} class="year-label">{p.year}</text>
+        ))}
+      </svg>
+      <p class="panel-note">Six years. The metric moved 0.01. Remaining headroom to the floor: {headroom.value_pct.toFixed(1)}% — a fixed ceiling on the ratio, spent once.</p>
+    </figure>
+
+    <!-- ============ RIGHT: rising absolute ============ -->
+    <figure class="panel bars-panel">
+      <figcaption>Disclosed absolute — location-based Scope&nbsp;2 <span class="src">(tCO₂e, same years, same report)</span></figcaption>
+      <svg class="bars" viewBox={`0 0 ${CW} ${CH}`} role="img" aria-label="Rising column chart of Scope 2 location-based emissions, 2019 to 2024, up 120 percent">
+        <line x1={PAD_X - 6} y1={BAR_BASE_Y} x2={CW - PAD_X + 6} y2={BAR_BASE_Y} class="baseline" />
+        {bars.map((b) => (
+          <g>
+            <rect x={b.x} y={b.y} width={b.w} height={b.h} class="bar" />
+            <text x={b.x + b.w / 2} y={b.y - 6} class="bar-value">{b.displayM}M</text>
+            <text x={b.x + b.w / 2} y={CH - 4} class="year-label">{b.year}</text>
+          </g>
+        ))}
+      </svg>
+      <p class="panel-note">2019 → 2024: {(emissions[0]).toLocaleString('en-US')} → {(emissions[emissions.length - 1]).toLocaleString('en-US')} tCO₂e — up {emissionGrowthDisplay}%. Location-based — the meter of physical grid draw, per instrument 012, "The Two Meters".</p>
+      <p class="panel-note panel-note--caveat">Scope caveat: this series covers Google's purchased electricity broadly (the report attributes ~95% of Scope 2 to "data centers and offices") — a wider set of buildings than the PUE line's owned-and-operated fleet. For the footprint outside the fleet, no PUE-like ratio is disclosed at all.</p>
+    </figure>
+  </div>
+
+  <!-- ============ verdict line ============ -->
+  <p class="verdict">
+    Remaining headroom {headroom.value_pct.toFixed(1)}% (a fixed ceiling on the ratio) · One year's growth {singleYearGrowth.value_pct}% · The lever's whole future is less than a third of a single year — and the six-year disclosed absolute is up {emissionGrowthDisplay}%.
+    <span class="verdict-note">{headroom.computation} · {verdictRatio.computation}</span>
+  </p>
+
+  <!-- ============ exhibit: the claim under trial ============ -->
+  <section class="exhibit">
+    <p class="exhibit-tag">Exhibit — Figure 4, {reports[0].title} ({reports[0].published})</p>
+    <blockquote>{claim.figure4_framing_verbatim}</blockquote>
+    <blockquote class="exhibit-secondary">{claim.growth_verbatim}.</blockquote>
+    <ul class="exhibit-headlines">
+      {claim.supporting_efficiency_headlines.map((h) => (<li>{h}</li>))}
+    </ul>
+    <p class="exhibit-concession">{concession}</p>
+  </section>
+
+  <!-- ============ the trial move: breakeven slider ============ -->
+  <section class="trial">
+    <h2>The trial move — set a year's growth, read the required PUE</h2>
+    <p class="trial-formula">{breakeven.formula}</p>
+    <div class="slider-row">
+      <label for="growth-slider">This year's total electricity growth</label>
+      <input id="growth-slider" type="range" min="0" max="40" step="1" value={defaultGrowth} />
+      <span id="growth-readout" class="readout">{defaultGrowth}%</span>
+    </div>
+    <p class="required-row">
+      Required PUE to hold energy flat:
+      <span id="required-pue" class:list={["required-value", { impossible: defaultImpossible }]}>{defaultRequired.toFixed(2)}</span>
+      <span id="required-status" class:list={["required-status", { impossible: defaultImpossible }]}>
+        {defaultImpossible ? 'IMPOSSIBLE — below the physical floor' : 'within physical bounds'}
+      </span>
+    </p>
+    <p class="trial-note">
+      Fixed point: Google's actual 2024 growth, {breakeven.google_2024_growth_pct}%, requires PUE ≈{breakeven.required_pue_at_2024_growth.toFixed(2)} to hold flat —
+      {breakeven.crosses_floor_note} {breakeven.even_lower_note}
+    </p>
+    <p class="trial-note">{breakeven.robustness_note}</p>
+  </section>
+
+  <!-- ============ postscript: the year after ============ -->
+  <section class="postscript">
+    <h2>Postscript — the subject's next disclosure (added in the shipping gauntlet)</h2>
+    <p>
+      <a href={postscript.report.official_url}>{postscript.report.title}</a> ({postscript.report.published}, covers {postscript.report.covers}), fetched {postscript.report.fetched}:
+      <em>"{postscript.pue_verbatim}"</em> — and <em>"{postscript.growth_verbatim}"</em>.
+    </p>
+    <p>
+      PUE unchanged at {postscript.fleet_pue_2025.toFixed(2)}; growth {postscript.growth_2025_pct}%. Required PUE to hold that year flat:
+      {postscript.required_pue_computation} ({postscript.growth_wording_caveat})
+    </p>
+  </section>
+
+  <!-- ============ honesty panel ============ -->
+  <section class="honesty">
+    <h2>Honesty &amp; self-implication</h2>
+    <ol>
+      {honesty.map((h) => (<li>{h}</li>))}
+    </ol>
+  </section>
+
+  <!-- ============ sources footer ============ -->
+  <footer class="sources">
+    <p>Sources — the subject's own disclosures:</p>
+    <ul>
+      {reports.map((r) => (
+        <li>{r.title} ({r.published}, covers {r.covers}) — <a href={r.official_url ?? r.pdf_mirror_extracted}>{r.official_url ?? r.pdf_mirror_extracted}</a></li>
+      ))}
+    </ul>
+    <p class="sources-note">All figures above are Google's own reported numbers or deterministic arithmetic on them (floor = 1.00 by definition; no modeling, no external estimate).</p>
+  </footer>
+</section>
+
+<script>
+// @ts-nocheck — engine work script shielded from the site TS gate (sandboxed display code, vetted by the collective gauntlet + checkForbidden + astro build). A missing type annotation must never turn the whole site build red — see work 011, 2026-07-06.
+  // The only script in this work. It powers the breakeven slider — a
+  // progressive enhancement. Everything above (the gauge, the columns,
+  // the verdict, the honesty panel) is fully legible with this disabled.
+  const BASE_PUE = 1.10
+  const FLOOR = 1.00
+
+  // must mirror the server-rendered chart scale exactly
+  const TOP_VALUE = 1.60
+  const BOTTOM_VALUE = 0.75
+  const CHART_H = 400
+
+  function yFor(v) {
+    return ((TOP_VALUE - v) / (TOP_VALUE - BOTTOM_VALUE)) * CHART_H
+  }
+
+  const slider = document.getElementById('growth-slider')
+  const readout = document.getElementById('growth-readout')
+  const requiredEl = document.getElementById('required-pue')
+  const statusEl = document.getElementById('required-status')
+  const marker = document.getElementById('live-marker')
+
+  function update() {
+    if (!slider) return
+    const growth = Number(slider.value)
+    const raw = BASE_PUE / (1 + growth / 100)
+    const impossible = raw < FLOOR
+    const display = raw.toFixed(2)
+
+    if (readout) readout.textContent = `${growth}%`
+    if (requiredEl) {
+      requiredEl.textContent = display
+      requiredEl.classList.toggle('impossible', impossible)
+    }
+    if (statusEl) {
+      statusEl.textContent = impossible ? 'IMPOSSIBLE — below the physical floor' : 'within physical bounds'
+      statusEl.classList.toggle('impossible', impossible)
+    }
+    if (marker) {
+      const clamped = Math.max(BOTTOM_VALUE, Math.min(TOP_VALUE, raw))
+      marker.setAttribute('cy', String(yFor(clamped)))
+      marker.classList.toggle('impossible', impossible)
+    }
+  }
+
+  if (slider) {
+    slider.addEventListener('input', update)
+    update()
+  }
+</script>
+
+<style>
+  .floor-instrument {
+    --paper: #efe9db;
+    --ink: #1c1a15;
+    --ink-soft: #4a4437;
+    --rule: rgba(28, 26, 21, 0.28);
+    --rule-faint: rgba(28, 26, 21, 0.14);
+    --danger: #8c2a1f;
+    --danger-bg: rgba(140, 42, 31, 0.10);
+    --teal: #1f5c4a;
+    --steel: #3a4a63;
+    --amber: #8a6a1f;
+    font-family: ui-monospace, "IBM Plex Mono", "Consolas", "Liberation Mono", "SFMono-Regular", monospace;
+    background: var(--paper);
+    color: var(--ink);
+    padding: 2rem;
+    border: 1px solid var(--rule);
+    line-height: 1.5;
+    max-width: 980px;
+    margin: 0 auto;
+  }
+
+  .head {
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.7rem;
+    color: var(--ink-soft);
+    margin: 0 0 0.4rem;
+  }
+  .head h1 {
+    font-size: 2rem;
+    margin: 0 0 0.5rem;
+    letter-spacing: 0.02em;
+  }
+  .dek {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 1.75rem;
+  }
+  @media (max-width: 720px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+
+  .panel {
+    border: 1px solid var(--rule);
+    padding: 0.9rem 0.9rem 1.1rem;
+    margin: 0;
+  }
+  .panel figcaption {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.5rem;
+    color: var(--ink-soft);
+  }
+  .src { text-transform: none; letter-spacing: 0; }
+
+  svg.gauge, svg.bars {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .hatch-bg { fill: var(--danger-bg); }
+  .hatch-line { stroke: var(--danger); stroke-width: 1; opacity: 0.5; }
+  .impossible-band-outline { fill: none; stroke: var(--danger); stroke-width: 1; stroke-dasharray: 2 2; }
+  .band-label {
+    font-size: 8px;
+    fill: var(--danger);
+    letter-spacing: 0.02em;
+    font-weight: 700;
+  }
+
+  .tick-line { stroke: var(--rule-faint); stroke-width: 1; }
+  .tick-label { font-size: 8px; fill: var(--ink-soft); }
+
+  .floor-line { stroke: var(--ink); stroke-width: 2.5; }
+  .floor-label { font-size: 8px; fill: var(--ink); font-weight: 700; letter-spacing: 0.01em; }
+
+  .industry-line { stroke: var(--amber); stroke-width: 1; stroke-dasharray: 4 3; }
+  .industry-label { font-size: 8px; fill: var(--amber); }
+
+  .pue-path { fill: none; stroke: var(--teal); stroke-width: 2; }
+  .pue-dot { fill: var(--teal); }
+  .pue-path-label { font-size: 8px; fill: var(--teal); }
+  .pue-path-label--last { fill: var(--ink); font-weight: 700; }
+
+  .breakeven-dot { fill: var(--danger); }
+  .breakeven-label { font-size: 7.5px; fill: var(--danger); font-weight: 700; }
+
+  .live-marker { fill: none; stroke: var(--steel); stroke-width: 2; }
+  .live-marker.impossible { stroke: var(--danger); fill: var(--danger); }
+
+  .baseline { stroke: var(--ink); stroke-width: 1.5; }
+  .bar { fill: var(--steel); }
+  .bar-value { font-size: 8px; fill: var(--ink); text-anchor: middle; }
+  .year-label { font-size: 8px; fill: var(--ink-soft); text-anchor: middle; }
+
+  .panel-note {
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    margin: 0.6rem 0 0;
+  }
+  .panel-note--caveat {
+    margin-top: 0.4rem;
+    font-size: 0.72rem;
+    border-top: 1px dashed var(--rule-faint);
+    padding-top: 0.4rem;
+  }
+
+  .verdict {
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 0.9rem 1rem;
+    border-top: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+    margin: 0 0 1.75rem;
+  }
+  .verdict-note {
+    display: block;
+    font-weight: 400;
+    font-size: 0.72rem;
+    color: var(--ink-soft);
+    margin-top: 0.35rem;
+    letter-spacing: 0.01em;
+  }
+
+  .exhibit {
+    border: 1px solid var(--rule);
+    padding: 1rem 1.2rem;
+    margin-bottom: 1.75rem;
+    background: rgba(28, 26, 21, 0.03);
+  }
+  .exhibit-tag {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ink-soft);
+    margin: 0 0 0.6rem;
+  }
+  .exhibit blockquote {
+    margin: 0 0 0.75rem;
+    padding-left: 0.9rem;
+    border-left: 3px solid var(--ink);
+    font-size: 0.92rem;
+    font-style: italic;
+  }
+  .exhibit-secondary { font-style: normal; border-left-color: var(--danger); }
+  .exhibit-concession {
+    margin: 0.9rem 0 0;
+    padding: 0.6rem 0.75rem;
+    border: 1px dashed var(--rule);
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+  }
+  .exhibit-headlines {
+    margin: 0.75rem 0 0;
+    padding-left: 1.2rem;
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+  }
+
+  .trial {
+    border: 1px solid var(--ink);
+    padding: 1.1rem 1.2rem;
+    margin-bottom: 1.75rem;
+  }
+  .trial h2, .honesty h2 {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 0.75rem;
+  }
+  .trial-formula {
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+    margin: 0 0 0.9rem;
+  }
+  .slider-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.75rem;
+  }
+  .slider-row label { font-size: 0.82rem; }
+  .slider-row input[type="range"] {
+    flex: 1 1 240px;
+    accent-color: var(--steel);
+  }
+  .readout { font-weight: 700; min-width: 3ch; text-align: right; }
+  .required-row {
+    font-size: 0.95rem;
+    margin: 0 0 0.75rem;
+  }
+  .required-value { font-weight: 700; margin: 0 0.4rem; }
+  .required-value.impossible, .required-status.impossible {
+    color: var(--danger);
+  }
+  .required-status {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  .trial-note {
+    font-size: 0.74rem;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  .postscript {
+    border: 1px solid var(--rule);
+    border-left: 4px solid var(--steel);
+    padding: 1.1rem 1.2rem;
+    margin-bottom: 1.75rem;
+  }
+  .postscript h2 {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 0.75rem;
+  }
+  .postscript p {
+    font-size: 0.82rem;
+    margin: 0 0 0.6rem;
+  }
+  .postscript p:last-child { margin-bottom: 0; }
+  .postscript a { color: var(--teal); }
+
+  .honesty {
+    border: 1px solid var(--rule);
+    padding: 1.1rem 1.2rem;
+    margin-bottom: 1.75rem;
+  }
+  .honesty ol {
+    margin: 0;
+    padding-left: 1.3rem;
+    font-size: 0.82rem;
+  }
+  .honesty li { margin-bottom: 0.6rem; }
+  .honesty li:last-child { margin-bottom: 0; }
+
+  .sources {
+    font-size: 0.74rem;
+    color: var(--ink-soft);
+    border-top: 1px solid var(--rule);
+    padding-top: 0.9rem;
+  }
+  .sources ul { margin: 0.4rem 0; padding-left: 1.2rem; }
+  .sources a { color: var(--teal); }
+  .sources-note { margin-top: 0.5rem; }
+</style>
