@@ -84,25 +84,13 @@
 :root[data-theme='light'] .i-sun { display: none; }
 :root[data-theme='light'] .i-moon { display: block; }
 
-/* Scroll-flash experiment: ease colours only while a flash is in progress. */
+/* Scroll-flash: ease colours only while a flash is in progress, so the one-time reveal
+   blinks the WHOLE page — background + chrome (TopBar) — to the light theme and eases back.
+   No .keep-dark override here on purpose: the flash is deliberately full-page. The footer
+   still stays black on its own (.footer-dark), exactly as it does under the real light theme. */
 html.theme-flash,
 html.theme-flash * {
   transition: background-color 0.14s ease, color 0.14s ease, border-color 0.14s ease, fill 0.14s ease, box-shadow 0.14s ease;
-}
-/* During the flash only the content cards blink to light — the page background
-   (and the chrome bars) stay black. */
-html.theme-flash[data-skin][data-theme='light'] {
-  --color-bg: #0a0a0a;
-}
-html.theme-flash[data-skin][data-theme='light'] .keep-dark {
-  --color-bg: #0a0a0a;
-  --color-panel: #141414;
-  --color-panel-2: #1c1c1c;
-  --color-fg: #f4f4f5;
-  --color-fg-muted: #a3a3a8;
-  --color-fg-faint: #6c6c72;
-  --color-cyan: #fafafa;
-  --color-line: #242427;
 }
 
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
@@ -223,8 +211,8 @@ body {
    The whole site cycles through complete art directions via <html data-skin>.
    Content & structure stay constant; each skin overrides tokens + a few
    signature rules. The climate ridgeline re-dresses via --puls-mode + colours.
-   (The legacy data-theme='light' / theme-flash rules above are now dead code —
-   nothing sets those attributes anymore.)
+   (The data-theme='light' / theme-flash rules above are live: the TopBar toggle sets a
+   persistent light theme, and the scroll-flash sets it momentarily for a one-time reveal.)
    ═══════════════════════════════════════════════════════════════════════════ */
 
 /* Fluid skin transitions — no curtain, no black flash. Every element keeps a
