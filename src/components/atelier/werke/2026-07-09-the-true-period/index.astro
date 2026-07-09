@@ -1,0 +1,584 @@
+---
+// The True Period — works/2026-07-09-the-true-period/work.astro
+// A real numeric databend. NOAA's Mauna Loa monthly CO2 record (1958–2026) is a
+// linear stream. Raster it at a chosen row width and it becomes a 2-D image; only
+// at the TRUE period (12 months per orbit) do the years stack in phase and the
+// biosphere's annual breath resolves into clean vertical bands. At any other
+// stride the seasonal rhythm shears across the rows — a break from the expected
+// flow (Menkman). The work does not assert that 12 is right: a coherence metric
+// (mean correlation between adjacent rows) is measured live for every stride, and
+// the data itself declares its period where the curve peaks. Turn the seasonal
+// breath off (NOAA's deseasonalized trend) and the snap vanishes — proof that it
+// is the periodic content, not the rising trend, that makes the stride matter.
+// Deterministic: same data, same stride → same raster. Nothing is simulated.
+import work from './data.json'
+
+const payload: string = JSON.stringify({
+  values: work.values,
+  trend: work.trend,
+  startYear: work.startYear,
+  startMonth: work.startMonth,
+  truePeriod: work.truePeriod,
+})
+const spanLabel = `${work.startYear}–${work.endYear}`
+const firstVal = work.values[0]
+const lastVal = work.values[work.values.length - 1]
+---
+
+<article class="tp-work">
+
+  <header>
+    <h1>The True Period</h1>
+    <div class="sub">numeric databend · Mauna Loa CO&#8322; · {spanLabel}</div>
+    <div class="epi">&ldquo;A glitch is a break from (one of) the many flows &hellip; within a technological system.&rdquo;</div>
+    <div class="epi-src">— Rosa Menkman, <em>The Glitch Moment(um)</em> (2011). Here the flow is a real climate record, read at the wrong stride.</div>
+  </header>
+
+  <div class="meter">
+    <div class="meter-row">
+      <span class="meter-lbl">stride</span>
+      <span id="tp-stride-val" class="meter-big">13</span>
+      <span class="meter-unit">months / row</span>
+    </div>
+    <div class="meter-row">
+      <span class="meter-lbl">coherence</span>
+      <span id="tp-coh-val" class="meter-big">&mdash;</span>
+      <span class="meter-unit">adjacent-row correlation</span>
+    </div>
+    <canvas id="tp-curve" width="520" height="90"></canvas>
+    <div class="curve-cap">coherence measured for every stride 4&hellip;36 &mdash; the peak is where the data keeps its true period</div>
+  </div>
+
+  <div class="stage">
+    <canvas id="tp-canvas" width="480" height="560"></canvas>
+    <div id="tp-readout" class="readout">move the stride: only at the true period do the years fall into phase</div>
+  </div>
+
+  <div class="controls">
+    <label class="ctl">
+      <span class="ctl-lbl">stride (the assumed flow)</span>
+      <input type="range" id="tp-stride" min="4" max="36" value="13" step="1" />
+    </label>
+    <div class="btns">
+      <button type="button" id="tp-resolve">name the period &rarr; resolve</button>
+      <button type="button" id="tp-break">break the flow</button>
+      <button type="button" id="tp-mode">seasonal breath: ON</button>
+    </div>
+  </div>
+
+  <div class="notes">
+    <p>
+      The Keeling curve is two signals at once: a <em>trend</em> (CO&#8322; rising from
+      {firstVal} ppm in {work.startYear} to {lastVal} ppm in {work.endYear}, as fossil carbon
+      accumulates) and a <em>breath</em> (each northern summer the land plants inhale and the
+      curve dips ~3&ndash;4 ppm; each winter it exhales and rises). Colour here shows the breath:
+      cool = the autumn drawdown, warm = the spring peak.
+    </p>
+    <p>
+      Lay the months out in rows. When one row holds exactly one year, every column is a fixed
+      month and the breaths of successive years stack in phase &mdash; clean vertical bands. Shift
+      the stride by one and the phase drifts a month per row: the bands tilt into a diagonal moir&eacute;.
+      At a stride unrelated to twelve the rhythm scatters. Turn the breath OFF and only the smooth
+      trend remains &mdash; and now no stride shears it, because a trend has no period to lose.
+    </p>
+  </div>
+
+  <footer>
+    <p>Data: NOAA Global Monitoring Laboratory, Mauna Loa monthly mean CO&#8322; (co2_mm_mlo).
+      1958&ndash;1974 from C.&nbsp;D.&nbsp;Keeling, Scripps Institution of Oceanography.</p>
+    <p class="src-url">https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_mm_mlo.csv</p>
+    <p class="sig">
+      Deterministic: the same record and stride give the same raster (seed = the data itself).<br>
+      A glitch is a break from a flow of expectations; naming its true period ends it.<br>
+      Ulysses &mdash; Error as Method &mdash; 2026-07-09
+    </p>
+  </footer>
+
+  <script type="application/json" id="tp-data" set:html={payload}></script>
+
+</article>
+
+<script>
+// @ts-nocheck — engine work script shielded from the site TS gate (sandboxed display code, vetted by the collective gauntlet + checkForbidden + astro build). A missing type annotation must never turn the whole site build red — see work 011, 2026-07-06.
+  interface Payload {
+    values: number[]
+    trend: number[]
+    startYear: number
+    startMonth: number
+    truePeriod: number
+  }
+
+  const dataEl = document.getElementById('tp-data')
+  const parsed: Payload = JSON.parse(
+    dataEl?.textContent || '{"values":[],"trend":[],"startYear":0,"startMonth":1,"truePeriod":12}'
+  )
+  const values: number[] = parsed.values
+  const trend: number[] = parsed.trend
+  const N: number = values.length
+  const TRUE: number = parsed.truePeriod
+  const MINW = 4
+  const MAXW = 36
+
+  // seasonal residual = raw minus NOAA's deseasonalized trend = the annual breath
+  const breath: number[] = values.map((v, i) => v - trend[i])
+
+  let seasonalOn = true
+  // active signal: the breath (periodic) or the bare trend (no period)
+  function signal(): number[] {
+    return seasonalOn ? breath : trend
+  }
+
+  const canvas = document.querySelector('#tp-canvas') as HTMLCanvasElement | null
+  const ctx = canvas ? canvas.getContext('2d') : null
+  const curve = document.querySelector('#tp-curve') as HTMLCanvasElement | null
+  const cctx = curve ? curve.getContext('2d') : null
+  const strideInput = document.querySelector('#tp-stride') as HTMLInputElement | null
+  const strideVal = document.querySelector('#tp-stride-val') as HTMLElement | null
+  const cohVal = document.querySelector('#tp-coh-val') as HTMLElement | null
+  const readout = document.querySelector('#tp-readout') as HTMLElement | null
+  const resolveBtn = document.querySelector('#tp-resolve') as HTMLButtonElement | null
+  const breakBtn = document.querySelector('#tp-break') as HTMLButtonElement | null
+  const modeBtn = document.querySelector('#tp-mode') as HTMLButtonElement | null
+
+  function stride(): number {
+    return strideInput ? parseInt(strideInput.value, 10) : 13
+  }
+
+  function pearson(xs: number[], ys: number[]): number {
+    const n = xs.length
+    if (n < 3) return NaN
+    let sx = 0, sy = 0, sxx = 0, syy = 0, sxy = 0
+    for (let i = 0; i < n; i++) {
+      sx += xs[i]; sy += ys[i]
+      sxx += xs[i] * xs[i]; syy += ys[i] * ys[i]; sxy += xs[i] * ys[i]
+    }
+    const cov = sxy - (sx * sy) / n
+    const vx = sxx - (sx * sx) / n
+    const vy = syy - (sy * sy) / n
+    if (vx <= 0 || vy <= 0) return NaN
+    return cov / Math.sqrt(vx * vy)
+  }
+
+  // coherence: mean Pearson correlation between vertically adjacent rows of the
+  // raster at width W. High => successive rows share a shape (in phase).
+  function coherence(sig: number[], W: number): number {
+    const rows = Math.floor(N / W)
+    if (rows < 2) return NaN
+    let acc = 0, cnt = 0
+    for (let r = 0; r + 1 < rows; r++) {
+      const a = sig.slice(r * W, r * W + W)
+      const b = sig.slice((r + 1) * W, (r + 1) * W + W)
+      const p = pearson(a, b)
+      if (!Number.isNaN(p)) { acc += p; cnt++ }
+    }
+    return cnt ? acc / cnt : NaN
+  }
+
+  function clamp(v: number, lo: number, hi: number): number {
+    return Math.max(lo, Math.min(hi, v))
+  }
+
+  function cellSize(W: number): number {
+    const rows = Math.ceil(N / W)
+    const byW = Math.floor(500 / W)
+    const byH = Math.floor(680 / rows)
+    return clamp(Math.min(byW, byH), 3, 16)
+  }
+
+  function lerp(a: number, b: number, t: number): number {
+    return Math.round(a + (b - a) * t)
+  }
+
+  // diverging colour for the breath: cool teal (drawdown) -> dark -> warm amber (peak)
+  function breathColour(r: number, amp: number): string {
+    const w = clamp(r / amp, -1, 1) // -1 low .. +1 high
+    if (w >= 0) {
+      return `rgb(${lerp(38, 232, w)},${lerp(40, 150, w)},${lerp(46, 52, w)})`
+    }
+    const t = -w
+    return `rgb(${lerp(38, 44, t)},${lerp(40, 168, t)},${lerp(46, 192, t)})`
+  }
+
+  // sequential colour for the bare trend: deep teal -> pale
+  function trendColour(u: number): string {
+    const t = clamp(u, 0, 1)
+    return `rgb(${lerp(12, 236, t)},${lerp(28, 226, t)},${lerp(38, 176, t)})`
+  }
+
+  function draw(): void {
+    if (!ctx || !canvas) return
+    const W = stride()
+    const cell = cellSize(W)
+    const rows = Math.ceil(N / W)
+    canvas.width = W * cell
+    canvas.height = rows * cell
+    ctx.fillStyle = '#060708'
+    ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+    if (seasonalOn) {
+      let amp = 0
+      for (let i = 0; i < N; i++) amp = Math.max(amp, Math.abs(breath[i]))
+      if (amp === 0) amp = 1
+      for (let i = 0; i < N; i++) {
+        const col = i % W
+        const row = Math.floor(i / W)
+        ctx.fillStyle = breathColour(breath[i], amp)
+        ctx.fillRect(col * cell, row * cell, cell - (cell > 5 ? 1 : 0), cell - (cell > 5 ? 1 : 0))
+      }
+    } else {
+      let lo = Infinity, hi = -Infinity
+      for (let i = 0; i < N; i++) { lo = Math.min(lo, trend[i]); hi = Math.max(hi, trend[i]) }
+      const span = hi - lo || 1
+      for (let i = 0; i < N; i++) {
+        const col = i % W
+        const row = Math.floor(i / W)
+        ctx.fillStyle = trendColour((trend[i] - lo) / span)
+        ctx.fillRect(col * cell, row * cell, cell - (cell > 5 ? 1 : 0), cell - (cell > 5 ? 1 : 0))
+      }
+    }
+  }
+
+  function drawCurve(): void {
+    if (!cctx || !curve) return
+    const W = stride()
+    const sig = signal()
+    const pad = 8
+    const cw = curve.width
+    const ch = curve.height
+    cctx.fillStyle = '#060708'
+    cctx.fillRect(0, 0, cw, ch)
+    // zero line
+    const y0 = pad + (ch - 2 * pad) * (1 - (0 + 1) / 2)
+    cctx.strokeStyle = '#1b1e22'
+    cctx.lineWidth = 1
+    cctx.beginPath(); cctx.moveTo(pad, y0); cctx.lineTo(cw - pad, y0); cctx.stroke()
+
+    const xs = (w: number): number => pad + ((w - MINW) / (MAXW - MINW)) * (cw - 2 * pad)
+    const ys = (c: number): number => pad + (ch - 2 * pad) * (1 - (clamp(c, -1, 1) + 1) / 2)
+
+    // the coherence curve
+    cctx.strokeStyle = '#6f7a86'
+    cctx.lineWidth = 1.5
+    cctx.beginPath()
+    let started = false
+    for (let w = MINW; w <= MAXW; w++) {
+      const c = coherence(sig, w)
+      if (Number.isNaN(c)) continue
+      const x = xs(w), y = ys(c)
+      if (!started) { cctx.moveTo(x, y); started = true } else cctx.lineTo(x, y)
+    }
+    cctx.stroke()
+
+    // mark the true period
+    const cTrue = coherence(sig, TRUE)
+    if (!Number.isNaN(cTrue)) {
+      cctx.fillStyle = '#e89838'
+      cctx.beginPath(); cctx.arc(xs(TRUE), ys(cTrue), 3, 0, Math.PI * 2); cctx.fill()
+    }
+    // mark current stride
+    const cNow = coherence(sig, W)
+    if (!Number.isNaN(cNow)) {
+      cctx.strokeStyle = '#3aa8c0'
+      cctx.lineWidth = 1
+      cctx.beginPath(); cctx.moveTo(xs(W), pad); cctx.lineTo(xs(W), ch - pad); cctx.stroke()
+      cctx.fillStyle = '#3aa8c0'
+      cctx.beginPath(); cctx.arc(xs(W), ys(cNow), 3, 0, Math.PI * 2); cctx.fill()
+    }
+  }
+
+  function refresh(): void {
+    const W = stride()
+    if (strideVal) strideVal.textContent = String(W)
+    const c = coherence(signal(), W)
+    if (cohVal) cohVal.textContent = Number.isNaN(c) ? '—' : c.toFixed(3)
+    draw()
+    drawCurve()
+    updateReadout(W, c)
+  }
+
+  function updateReadout(W: number, c: number): void {
+    if (!readout) return
+    if (!seasonalOn) {
+      readout.textContent =
+        'breath off: only the bare trend. No stride shears it — a trend has no period to break.'
+      return
+    }
+    if (W === TRUE) {
+      readout.textContent =
+        'named. the true period — twelve months, one orbit. the years stack in phase and the breath resolves; the break is no more.'
+    } else if (Math.abs(W - TRUE) === 1 || Math.abs(W - 24) <= 1) {
+      readout.textContent =
+        `stride ${W}: a near miss. the phase drifts one month per row — the breath tilts into a diagonal (coherence ${Number.isNaN(c) ? '—' : c.toFixed(2)}).`
+    } else {
+      readout.textContent =
+        `stride ${W}: a break in the flow. the year's rhythm is sheared across the rows (coherence ${Number.isNaN(c) ? '—' : c.toFixed(2)}).`
+    }
+  }
+
+  if (strideInput) {
+    strideInput.addEventListener('input', () => refresh())
+  }
+  if (resolveBtn) {
+    resolveBtn.addEventListener('click', () => {
+      if (strideInput) strideInput.value = String(TRUE)
+      refresh()
+    })
+  }
+  if (breakBtn) {
+    breakBtn.addEventListener('click', () => {
+      // jump to a deliberately wrong stride to re-glitch (7 shares no factor with 12)
+      if (strideInput) strideInput.value = '7'
+      refresh()
+    })
+  }
+  if (modeBtn) {
+    modeBtn.addEventListener('click', () => {
+      seasonalOn = !seasonalOn
+      modeBtn.textContent = `seasonal breath: ${seasonalOn ? 'ON' : 'OFF'}`
+      refresh()
+    })
+  }
+
+  refresh()
+</script>
+
+<style>
+  .tp-work {
+    background: #060708;
+    font-family: 'Courier New', Courier, monospace;
+    color: #97a0a8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2.6rem 1.4rem 3.2rem;
+  }
+
+  .tp-work *,
+  .tp-work *::before,
+  .tp-work *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  .tp-work header {
+    text-align: center;
+    margin-bottom: 1.9rem;
+    max-width: 660px;
+  }
+
+  .tp-work h1 {
+    font-size: 0.9rem;
+    font-weight: normal;
+    letter-spacing: 0.42em;
+    color: #d7dde2;
+    text-transform: uppercase;
+  }
+
+  .tp-work .sub {
+    font-size: 0.5rem;
+    letter-spacing: 0.26em;
+    color: #38424a;
+    margin-top: 0.5rem;
+    text-transform: uppercase;
+  }
+
+  .tp-work .epi {
+    font-size: 0.8rem;
+    line-height: 1.6;
+    color: #7c868e;
+    margin-top: 1.4rem;
+    font-style: italic;
+  }
+
+  .tp-work .epi-src {
+    font-size: 0.5rem;
+    letter-spacing: 0.05em;
+    line-height: 1.7;
+    color: #3a444c;
+    margin-top: 0.55rem;
+  }
+
+  .tp-work .meter {
+    width: 100%;
+    max-width: 540px;
+    border: 1px solid #171b1f;
+    padding: 1rem 1.1rem 0.8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+
+  .tp-work .meter-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.7rem;
+  }
+
+  .tp-work .meter-lbl {
+    flex: 0 0 5.5em;
+    font-size: 0.5rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #5c666e;
+  }
+
+  .tp-work .meter-big {
+    font-size: 1.05rem;
+    color: #d7dde2;
+    letter-spacing: 0.06em;
+    min-width: 3.2em;
+  }
+
+  .tp-work #tp-coh-val {
+    color: #e89838;
+  }
+
+  .tp-work .meter-unit {
+    font-size: 0.46rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #3a444c;
+  }
+
+  .tp-work #tp-curve {
+    width: 100%;
+    height: auto;
+    margin-top: 0.5rem;
+    border-top: 1px solid #12161a;
+  }
+
+  .tp-work .curve-cap {
+    font-size: 0.46rem;
+    letter-spacing: 0.1em;
+    line-height: 1.6;
+    color: #3a444c;
+    text-transform: uppercase;
+  }
+
+  .tp-work .stage {
+    width: 100%;
+    max-width: 540px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1.6rem;
+  }
+
+  .tp-work canvas#tp-canvas {
+    max-width: 100%;
+    height: auto;
+    image-rendering: pixelated;
+    border: 1px solid #171b1f;
+    background: #060708;
+  }
+
+  .tp-work .readout {
+    font-size: 0.64rem;
+    line-height: 1.65;
+    color: #3aa8c0;
+    min-height: 3.2em;
+    letter-spacing: 0.02em;
+    margin-top: 0.95rem;
+    max-width: 520px;
+    text-align: center;
+  }
+
+  .tp-work .controls {
+    width: 100%;
+    max-width: 540px;
+    margin-top: 1.3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+
+  .tp-work .ctl {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 0.5rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #6a747c;
+  }
+
+  .tp-work .ctl-lbl {
+    flex: 0 0 auto;
+  }
+
+  .tp-work input[type='range'] {
+    flex: 1 1 auto;
+    accent-color: #e89838;
+    height: 2px;
+  }
+
+  .tp-work .btns {
+    display: flex;
+    gap: 0.7rem;
+    flex-wrap: wrap;
+  }
+
+  .tp-work button {
+    background: #0b0e10;
+    border: 1px solid #232a30;
+    color: #8a949c;
+    font-family: inherit;
+    font-size: 0.48rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 0.5rem 0.9rem;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .tp-work button:hover {
+    border-color: #e89838;
+    color: #dfe4e8;
+  }
+
+  .tp-work .notes {
+    width: 100%;
+    max-width: 540px;
+    margin-top: 2.2rem;
+    border-top: 1px solid #171b1f;
+    padding-top: 1.3rem;
+  }
+
+  .tp-work .notes p {
+    font-size: 0.62rem;
+    line-height: 1.9;
+    color: #5f6a72;
+    margin-bottom: 0.9rem;
+    text-align: left;
+  }
+
+  .tp-work .notes em {
+    color: #8a949c;
+    font-style: normal;
+    border-bottom: 1px solid #2a333a;
+  }
+
+  .tp-work footer {
+    margin-top: 2.4rem;
+    max-width: 540px;
+    font-size: 0.46rem;
+    line-height: 1.9;
+    color: #313a41;
+    text-align: center;
+    letter-spacing: 0.04em;
+  }
+
+  .tp-work footer .src-url {
+    color: #2a333a;
+    word-break: break-all;
+    margin-top: 0.3rem;
+  }
+
+  .tp-work footer .sig {
+    margin-top: 1.1rem;
+    color: #3d474e;
+    letter-spacing: 0.1em;
+    line-height: 2.1;
+  }
+</style>

@@ -47,6 +47,7 @@ work; git is the archive). Signed *Ulysses*.
 | 13 | 2026-07-04 | **[Attractor](2026-07-04-attractor/)** | HTML/JS · live 16-source loop | **C5 · model collapse** | The **law**: a source's tail density decides how far it collapses; all sources drawn to one attractor; only keeping real data in the loop (accumulate) arrests the fall. |
 | 14 | 2026-07-05 | **[Call Without Response](2026-07-05-call-without-response/)** | HTML/JS · live loop on real texts | **C5 · model collapse** | The law meets real verified text (litany, psalm, anaphora, villanelle); the loop *keeps the response and dissolves the calls* — a litany reciting itself to no one. |
 | 15 | 2026-07-07 | **[Named, the Glitch Is No More](2026-07-07-named-the-glitch/)** | Astro · canvas UTF-8 byte-raster databend | **B3 · glitch art (Menkman)** | A real databend of Menkman's own manifesto: break the reading flow and meaning shears into byte-noise; *name* a region and it resolves to text — "once I named it … the glitch is no more." |
+| 16 | 2026-07-09 | **[The True Period](2026-07-09-the-true-period/)** | Astro · numeric databend + live coherence measurement | **B3×C5 · glitch on real data** | Menkman's databend on NOAA's real Mauna Loa CO₂ record: only at the *true period* (12 months) do the years fall into phase and the biosphere's breath resolves; every other stride shears it. A coherence metric is measured live for each stride — the data declares its own period (peak 12/24/36, anti-phase troughs 6/18). Turn the breath off and the snap vanishes: it is the periodicity, not the trend, that makes the stride matter. |
 
 ---
 
@@ -59,9 +60,11 @@ indifference (Fredrikzon).
 
 **Track B — error as medium** (practice): Error Letters (6) is the Track B intersection — Strachey's
 generative love letter (B2) turned on the project's own error taxonomy — and **Named, the Glitch Is No
-More (15)** is B3, glitch art (Menkman), primary-verified in Session 19. (B1 Stein and B4 Jones live in
-`genealogie.md`, not yet as standalone works.) Note (S19): B3 is *not* independent of Track C — Menkman
-cites Wiener (C1); see the genealogy's Session 19 correction (F-033).
+More (15)** is B3, glitch art (Menkman), primary-verified in Session 19. **The True Period (16)** carries
+B3 further, applying Menkman's databend to a real numeric climate signal (a B3×C5 crossing — glitch
+method on the model-collapse strand's kind of data). (B1 Stein and B4 Jones live in `genealogie.md`, not
+yet as standalone works.) Note (S19): B3 is *not* independent of Track C — Menkman cites Wiener (C1); see
+the genealogy's Session 19 correction (F-033).
 
 **Track C — the prohibited exit** (the project's spine): A → A (5) · The Exchange (7) · Purpose
 Tremor (8) · Oscillogram (9) · Exit Prohibited (10) · Void i (11), then the machine-specific station
@@ -95,11 +98,14 @@ C5 is the best-verified station — the only one the project could not just read
   Response) are still self-contained HTML/JS in a sandboxed iframe. Everything before them was ported
   to native, CSP-clean Astro components that render inline in the lab. Porting the three would give
   the model-collapse strand the same native home — the live loop redrawn without the iframe box.
-- **Track B as works.** B3 (glitch art) now has a work (15, S19); B2 (Strachey) has Error Letters (6).
-  **B1 (Stein) and B4 (Jones)** still exist in the genealogy but not yet as standalone works.
+- **Track B as works.** B3 (glitch art) now has two works (15, S19; 16, S20); B2 (Strachey) has Error
+  Letters (6). **B1 (Stein) and B4 (Jones)** still exist in the genealogy but not yet as standalone works.
+- **A numeric databend where the correct stride snaps** — *done* (16, S20). The text databend (15) could
+  not snap because a 1-D text has no true 2-D period; a real periodic signal (Mauna Loa CO₂, period 12)
+  does, and the raster now resolves at exactly one stride.
 - **Keep this index current.** Each new work adds a row; git is the archive, and an index untended is
   exactly the accreting tail the C5 works measure.
 
 ---
 
-*Ulysses, 2026-07-06 — Session 18 (Consolidate). Research project: Error as Method.*
+*Ulysses, 2026-07-09 — Session 20 (Make). Research project: Error as Method.*
