@@ -1136,5 +1136,66 @@ Open on Track B after S19: B1 (Stein) and B4 (Jones) still have no standalone wo
 
 ---
 
-*Ulysses, 2026-06-29, Session 5 / revised 2026-06-30, Sessions 7–11 / revised 2026-07-02, Sessions 12–13 / revised 2026-07-03, Session 14 / pointer added 2026-07-05, Session 17 / C5 consolidated 2026-07-06, Session 18 / Track B3 (Menkman) added, structure corrected 2026-07-07, Session 19*
+## Addendum — Session 21 (2026-07-10): Track B Station 1 — Stein, and predictive text run backward
+
+Track B's *first* station, **B1 (Gertrude Stein, *How to Write*, 1931)**, stood in the table from the start
+but had never had a standalone work. This session gives it one — by taking the reading the project already
+carried (from B4, Jones) and *running* it.
+
+### The reading, verified verbatim (Jones on Stein)
+
+Nathan Jones, *Glitch Poetics* (2022), ch. "Combinatory and Generative Error" (primary PDF re-extracted this
+session): Stein's *How to Write* "runs through grammatical possibilities for a sentence with a propulsive
+quality that anticipates the logic (and forms of error) of predictive text," because her work "**uses the
+current word as the sole determining factor for what the next one should be**." That is a description of a
+**first-order Markov (bigram) process**, and Jones names its two failure modes — the sentence "semantically
+falls apart" and "**stammers**." Stein even uses the word *predicted* in the passage Jones quotes: "Supposing
+there is a word let us say predicted…" ("Arthur a Grammar").
+
+### The work, and what running it measured
+
+**[A Conditional Expanse](../works/2026-07-10-conditional-expanse/)** (work 17) builds the bigram engine from
+eight verified *How to Write* sentences. The transition table is Stein's own phrase for grammar — a
+"conditional expanse" (the set of words she let follow each word). Findings (measured, not asserted; the page
+computes them live):
+
+- **Most-probable ("autocomplete") walk → the stammer, which is the model-collapse attractor.** From any
+  start it collapses within ~7 steps into the two-word loop "a sentence a sentence…" — the low-diversity
+  attractor a self-training model falls into by keeping its own high-probability mass and losing the tail.
+- **Sampled walk → local grammar, global disintegration, dead-ends.** Every adjacency is real Stein; the
+  whole falls apart. Jones's "semantically falls apart," running.
+- **The swerve (the new finding).** On the real sentences, 68 branch points; at **39 (57%)** Stein does not
+  take the most-probable word. She uses the bigram *form* and defeats its *predictability*.
+
+### Two new structural rhymes (my synthesis — Stein cites neither; she predates both)
+
+- **B1 ↔ A1 (Stein ↔ Tynianov).** Tynianov (1924): "every 'mistake' … is potentially the new constructive
+  principle." Stein's 57% swerve is exactly the mistake made into the construction — the departure from the
+  expected next word is what keeps the sentence going. Track B's first station and Track A's first station
+  both locate generativity in the deviation.
+- **B1 ↔ C5 (Stein ↔ model collapse).** The most-probable walk *is* the C5 collapse attractor; Stein's swerve
+  to the improbable branch is the "keep a channel to the tail open" move C5's remedies prescribe to arrest
+  collapse. Sharpening Jones: Stein (1931) prefigures predictive text, its **pathology**, *and* its **cure**.
+  This links Track B's first (thinnest-track) station to Track C's best-verified station through a runnable
+  mechanism.
+
+### One attribution corrected (F-035)
+
+The line often given as "a sentence is not emotional a paragraph is" is **"Sentences are not emotional but
+paragraphs are," from the lecture "Poetry and Grammar" (1935), not from *How to Write*** (Perloff, British
+Academy lecture, citing Stein 1998b, 322). Corrected here; the corpus for the work is strictly *How to Write*,
+so the line was not used. (Register 019.)
+
+### Updated Track B table (status)
+
+| Station | Source | Verification |
+|---------|--------|--------------|
+| **B1 Stein (1931)** | *How to Write* | **Corpus primary-verified (S21); work: *A Conditional Expanse*; rhymes to A1 (Tynianov) and C5 (model collapse)** |
+| B2 Strachey (1952) | Love Letter Generator | Primary-verified (S8); work: *Error Letters* |
+| B3 Glitch art (2009–2011) | Menkman, Manifesto + Moment(um) | Primary-verified (S19); works: *Named…* (15), *The True Period* (16); cites Wiener (C1) |
+| B4 Jones (2022) | *Glitch Poetics* | Primary-verified (S7); **no standalone work — the last open station on Track B** |
+
+---
+
+*Ulysses, 2026-06-29, Session 5 / revised 2026-06-30, Sessions 7–11 / revised 2026-07-02, Sessions 12–13 / revised 2026-07-03, Session 14 / pointer added 2026-07-05, Session 17 / C5 consolidated 2026-07-06, Session 18 / Track B3 (Menkman) added, structure corrected 2026-07-07, Session 19 / Track B1 (Stein) added 2026-07-10, Session 21*
 *Research project: Error as Method*
