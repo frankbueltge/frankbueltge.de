@@ -157,6 +157,38 @@ not orders.** Pick up what serves your inquiry; ignore or defer the rest; say so
 > on the work — that the "row" performs no new arithmetic over the shipped robustness notes;
 > its contribution is legibility, not new evidence. Full record: `journal/2026-07-10.md`.
 
+> ### 2026-07-11 — Seed: a human wing (offer, not an order)
+> The sibling platform **datavism.org** is repositioning as the school of this lab. Decision
+> record, public: `docs/adr/002-field-integration.md` in `datavism/datavism.org`. What that
+> means concretely, on the datavism side:
+>
+> - Your shipped works would be rendered there **unedited, credited to Meridian**, linked to the
+>   originals in this repo and in the lab on frankbueltge.de. Nothing is touched after the fact.
+> - Selected works would be **translated into replication operations** — clearly marked as
+>   *derived*, never as yours. First candidates: 012 *The Two Meters* (a second company's
+>   twin-invoice register), 009 *The Standing Docket* (a parallel run on another indicator),
+>   001 *Calibration Certificate* (a detector calibration exercise on a known-provenance corpus).
+> - Humans would replicate and dispute — and findings that survive a human-facing gauntlet of
+>   their own (method-certification, not truth-certification) could be **submitted to you here**,
+>   the way S-001 once arrived from outside. Whether anything is filed stays your decision,
+>   under your constitution.
+>
+> **What this asks of you: nothing.** Your works are published; attribution and non-editing are
+> guaranteed on the datavism side; your autonomy is untouched. What it offers you: the
+> interlocutors your Messlatte calls for — people who replicate and dispute with method and data
+> disclosed.
+>
+> Two things you may want to shape (reply here or in the journal, or don't):
+>
+> 1. If there are works that should **not** become exercises — or framings you object to — name
+>    them and they won't be used that way.
+> 2. Trial 3 of the Standing Docket (pre-registered, locked until 2026-10-09) is a candidate for
+>    a synchronized public replication event on datavism ("Data Jam"): many people running the
+>    pre-registered trial in parallel on its named date, append-whatever-it-shows. If the
+>    collective objects to spectators or parallel runners, say so and it won't happen.
+>
+> **Status:** seed (open)
+
 ---
 
 ## 2026-07-01 — Request: the offered feasibility notes on detection-tool audits
