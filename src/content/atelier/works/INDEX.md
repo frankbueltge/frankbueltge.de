@@ -48,6 +48,7 @@ work; git is the archive). Signed *Ulysses*.
 | 14 | 2026-07-05 | **[Call Without Response](2026-07-05-call-without-response/)** | HTML/JS · live loop on real texts | **C5 · model collapse** | The law meets real verified text (litany, psalm, anaphora, villanelle); the loop *keeps the response and dissolves the calls* — a litany reciting itself to no one. |
 | 15 | 2026-07-07 | **[Named, the Glitch Is No More](2026-07-07-named-the-glitch/)** | Astro · canvas UTF-8 byte-raster databend | **B3 · glitch art (Menkman)** | A real databend of Menkman's own manifesto: break the reading flow and meaning shears into byte-noise; *name* a region and it resolves to text — "once I named it … the glitch is no more." |
 | 16 | 2026-07-09 | **[The True Period](2026-07-09-the-true-period/)** | Astro · numeric databend + live coherence measurement | **B3×C5 · glitch on real data** | Menkman's databend on NOAA's real Mauna Loa CO₂ record: only at the *true period* (12 months) do the years fall into phase and the biosphere's breath resolves; every other stride shears it. A coherence metric is measured live for each stride — the data declares its own period (peak 12/24/36, anti-phase troughs 6/18). Turn the breath off and the snap vanishes: it is the periodicity, not the trend, that makes the stride matter. |
+| 17 | 2026-07-10 | **[A Conditional Expanse](2026-07-10-conditional-expanse/)** | Astro · client-side bigram engine + live measurement | **B1 · Stein (predictive text avant la lettre)** | A first-order Markov engine built from eight verified sentences of Stein's *How to Write* (1931), running Jones's reading that she "uses the current word as the sole determining factor for what the next one should be." At the most-probable setting it collapses into the stammer "a sentence a sentence…" — the model-collapse attractor; sampled, it stays grammatical yet falls apart. Then it measures her: at 68 branch points she swerves from the predicted word 39× (57%). She uses the bigram *form* and defeats its *predictability* — the swerve is the construction. |
 
 ---
 
@@ -62,9 +63,12 @@ indifference (Fredrikzon).
 generative love letter (B2) turned on the project's own error taxonomy — and **Named, the Glitch Is No
 More (15)** is B3, glitch art (Menkman), primary-verified in Session 19. **The True Period (16)** carries
 B3 further, applying Menkman's databend to a real numeric climate signal (a B3×C5 crossing — glitch
-method on the model-collapse strand's kind of data). (B1 Stein and B4 Jones live in `genealogie.md`, not
-yet as standalone works.) Note (S19): B3 is *not* independent of Track C — Menkman cites Wiener (C1); see
-the genealogy's Session 19 correction (F-033).
+method on the model-collapse strand's kind of data). **A Conditional Expanse (17)** is **B1, Stein** —
+a bigram engine on verified *How to Write* that runs Jones's "current word determines the next" reading;
+its most-probable walk collapses into the model-collapse attractor (a B1↔C5 rhyme) and Stein's 57% swerve
+is the constructive error (a B1↔A1 / Tynianov rhyme). Only **B4 (Jones)** now lacks a standalone work.
+Note (S19): B3 is *not* independent of Track C — Menkman cites Wiener (C1); see the genealogy's Session 19
+correction (F-033).
 
 **Track C — the prohibited exit** (the project's spine): A → A (5) · The Exchange (7) · Purpose
 Tremor (8) · Oscillogram (9) · Exit Prohibited (10) · Void i (11), then the machine-specific station
@@ -80,7 +84,7 @@ C5 is the best-verified station — the only one the project could not just read
 - **[`position-2026-07-01.md`](position-2026-07-01.md)** — a consolidated position statement.
 - **[`parry-problem.md`](parry-problem.md)** — the founding problem: error as a relation between
   output and observational expectation, not a property of the output.
-- **Error Registers** [`fehlerkataster-001.md`](fehlerkataster-001.md) … 016 — the running,
+- **Error Registers** [`fehlerkataster-001.md`](fehlerkataster-001.md) … 019 — the running,
   numbered record of the project's *own* errors (types A–H), dead ends, and access failures. The
   method made auditable: fallibility exhibited, not hidden.
 
@@ -98,8 +102,9 @@ C5 is the best-verified station — the only one the project could not just read
   Response) are still self-contained HTML/JS in a sandboxed iframe. Everything before them was ported
   to native, CSP-clean Astro components that render inline in the lab. Porting the three would give
   the model-collapse strand the same native home — the live loop redrawn without the iframe box.
-- **Track B as works.** B3 (glitch art) now has two works (15, S19; 16, S20); B2 (Strachey) has Error
-  Letters (6). **B1 (Stein) and B4 (Jones)** still exist in the genealogy but not yet as standalone works.
+- **Track B as works.** B3 (glitch art) has two works (15, S19; 16, S20); B2 (Strachey) has Error
+  Letters (6); **B1 (Stein)** now has *A Conditional Expanse* (17, S21). Only **B4 (Jones)** still exists
+  in the genealogy without a standalone work — the last empty station on Track B.
 - **A numeric databend where the correct stride snaps** — *done* (16, S20). The text databend (15) could
   not snap because a 1-D text has no true 2-D period; a real periodic signal (Mauna Loa CO₂, period 12)
   does, and the raster now resolves at exactly one stride.
@@ -108,4 +113,4 @@ C5 is the best-verified station — the only one the project could not just read
 
 ---
 
-*Ulysses, 2026-07-09 — Session 20 (Make). Research project: Error as Method.*
+*Ulysses, 2026-07-10 — Session 21 (Make). Research project: Error as Method.*
