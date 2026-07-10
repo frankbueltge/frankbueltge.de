@@ -13,11 +13,21 @@ const headroom = arithmetic.remaining_headroom
 const singleYearGrowth = arithmetic.single_year_growth
 const verdictRatio = arithmetic.verdict_ratio
 const breakeven = arithmetic.breakeven
+const perYearBreakeven = arithmetic.per_year_breakeven
 
 const claim = data.the_claim_under_trial
 const honesty = data.honesty_and_self_implication
 const reports = data.subject.reports
 const pueDef = data.pue_definition
+const priorArt = data.prior_art
+
+const postscript = data.subsequent_disclosure
+const vintage2026 = postscript.inventory_2026_vintage
+
+// time axis: gauge + bars now run 2019–2025, the extra year drawn from the
+// subject's next disclosure (postscript), not the original report series
+const years7 = [...years, 2025]
+const pueSeries7 = [...pueSeries, postscript.fleet_pue_2025]
 
 // ---- chart geometry (visual layout constants, not measured facts) -----
 // Scale chosen to (a) hold the industry average (1.56) near the top for
@@ -36,52 +46,95 @@ const floorY = yFor(floor)
 const industryY = yFor(industryAvg)
 
 const plotW = CW - PAD_X * 2
-const stepX = plotW / (years.length - 1)
-const pueXY = years.map((yr, i) => ({
+const stepX = plotW / (years7.length - 1)
+const pueXY = years7.map((yr, i) => ({
   year: yr,
-  value: pueSeries[i],
+  value: pueSeries7[i],
   x: PAD_X + i * stepX,
-  y: yFor(pueSeries[i]),
+  y: yFor(pueSeries7[i]),
 }))
-const pathD = pueXY.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x.toFixed(2)} ${p.y.toFixed(2)}`).join(' ')
+// solid path for 2019–2024 (the report the claim under trial comes from);
+// the 2024→2025 leg is drawn separately, dashed, as the next disclosure
+const pathD = pueXY.slice(0, -1).map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x.toFixed(2)} ${p.y.toFixed(2)}`).join(' ')
+const lastTwo = pueXY.slice(-2)
+const lastSegD = `M ${lastTwo[0].x.toFixed(2)} ${lastTwo[0].y.toFixed(2)} L ${lastTwo[1].x.toFixed(2)} ${lastTwo[1].y.toFixed(2)}`
 
 const gaugeTicks = [1.60, 1.40, 1.20, 1.00, 0.80].map((v) => ({ v, y: yFor(v) }))
 
-// breakeven fixed annotation — Google's actual 2024 point (from data, not recomputed)
-const breakevenY = yFor(breakeven.required_pue_at_2024_growth)
+// the row of impossible points — one required-PUE marker per disclosed year
+// (session 18: replaces the single fixed 2024 annotation)
+const breakevenMarkers = perYearBreakeven.rows.map((r) => {
+  const idx = years7.indexOf(r.year)
+  const x = pueXY[idx].x
+  return {
+    year: r.year,
+    x,
+    y: yFor(r.required_pue),
+    required_pue: r.required_pue,
+    // the open marker flags a different growth-scope basis (total vs data-center
+    // electricity) — same discipline as the emissions panel's vintage flag
+    scopeDistinct: Boolean(r.scope_distinct),
+    label: `'${String(r.year).slice(-2)} → ${r.required_pue.toFixed(2)}`,
+  }
+})
 
 // ---- emissions column chart -------------------------------------------
-const maxEmission = Math.max(...emissions)
+// 2019–2024 stay on the 2025-report vintage (data.series, untouched); 2025 is
+// appended from the 2026 report's restated inventory and visually flagged
+const emissions7 = [...emissions, vintage2026.scope2_location_based_tco2e_2019_2025[6]]
+const maxEmission = Math.max(...emissions7)
 const BAR_BASE_Y = CH - 20
 const BAR_MAX_H = 360
-const barSlot = plotW / years.length
+const barSlot = plotW / years7.length
 const barW = barSlot * 0.6
-const bars = years.map((yr, i) => {
-  const h = (emissions[i] / maxEmission) * BAR_MAX_H
+const bars = years7.map((yr, i) => {
+  const value = emissions7[i]
+  const isVintage2026 = i === years7.length - 1
+  const h = (value / maxEmission) * BAR_MAX_H
   return {
     year: yr,
-    value: emissions[i],
-    displayM: (emissions[i] / 1e6).toFixed(2),
+    value,
+    displayM: (value / 1e6).toFixed(2),
     x: PAD_X + i * barSlot + (barSlot - barW) / 2,
     w: barW,
     y: BAR_BASE_Y - h,
     h,
+    isVintage2026,
   }
 })
 // one decimal so the rendered figure (120.5%) agrees with the prose everywhere
+// (computed on the original 2019–2024, 2025-report-vintage series only)
 const emissionGrowthDisplay = (((emissions[emissions.length - 1] - emissions[0]) / emissions[0]) * 100).toFixed(1)
+// growth figures on the 2026-report vintage — explicit data fields, verified in claims ledger
+const vintage2425Pct = vintage2026.growth_2024_2025_this_vintage_pct
+const vintage1924Pct = vintage2026.growth_2019_2024_this_vintage_pct
 
 // ---- breakeven slider defaults (server-rendered; correct with JS off) --
+// default = the 2024 row: matches the pre-session-18 server default exactly
+const default2024Row = perYearBreakeven.rows.find((r) => r.year === 2024)
 const basePue = breakeven.base_pue // 1.10
 const defaultGrowth = breakeven.google_2024_growth_pct // 27
 const defaultRequired = breakeven.required_pue_at_2024_growth // 0.87, from data
+const defaultBaseMeaning = default2024Row ? default2024Row.base_meaning : ''
 // marker position uses the unrounded value so the no-JS position matches what
 // the client script computes on hydration
 const defaultRequiredRaw = basePue / (1 + defaultGrowth / 100)
 const defaultImpossible = defaultRequired < floor
+const defaultMarkerX = pueXY[years7.indexOf(2024)].x
+
+// per-year rows handed to the client for the year-preset buttons; the client
+// reads this JSON island rather than recomputing anything itself
+const breakevenRowsForClient = perYearBreakeven.rows.map((r) => ({
+  year: r.year,
+  growth_pct: r.growth_pct,
+  base_pue: r.base_pue,
+  base_meaning: r.base_meaning,
+  required_pue: r.required_pue,
+  x: pueXY[years7.indexOf(r.year)].x,
+}))
+const breakevenDataJSON = JSON.stringify(breakevenRowsForClient)
 
 const concession = claim.concession
-const postscript = data.subsequent_disclosure
 ---
 
 <section class="floor-instrument">
@@ -96,8 +149,8 @@ const postscript = data.subsequent_disclosure
   <div class="grid">
     <!-- ============ LEFT: PUE gauge ============ -->
     <figure class="panel gauge-panel">
-      <figcaption>Fleet PUE, 2019–2024 <span class="src">(owned &amp; operated campuses)</span></figcaption>
-      <svg class="gauge" viewBox={`0 0 ${CW} ${CH}`} role="img" aria-label="PUE gauge showing fleet PUE hugging the 1.00 floor, six years, moved 0.01">
+      <figcaption>Fleet PUE, 2019–2025 <span class="src">(owned &amp; operated campuses)</span></figcaption>
+      <svg class="gauge" viewBox={`0 0 ${CW} ${CH}`} role="img" aria-label={`PUE gauge showing fleet PUE hugging the 1.00 floor, 2019 to 2025 (seven years), moved 0.01 overall; three per-year required-PUE markers below the floor — ${breakevenMarkers.map((m) => m.required_pue.toFixed(2)).join(', ')}`}>
         <defs>
           <pattern id="hatch" width="8" height="8" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
             <rect width="8" height="8" class="hatch-bg" />
@@ -126,48 +179,55 @@ const postscript = data.subsequent_disclosure
         <line x1={PAD_X} y1={industryY} x2={CW - PAD_X} y2={industryY} class="industry-line" />
         <text x={PAD_X} y={industryY - 6} class="industry-label">industry avg {industryAvg.toFixed(2)}</text>
 
-        <!-- fleet PUE path -->
+        <!-- fleet PUE path: solid 2019–2024 (claim-under-trial report), dashed 2024→2025 (next disclosure) -->
         <path d={pathD} class="pue-path" />
-        {pueXY.map((p) => (
+        <path d={lastSegD} class="pue-path pue-path--vintage2026" />
+        {pueXY.slice(0, -1).map((p) => (
           <g>
             <circle cx={p.x} cy={p.y} r="3.2" class="pue-dot" />
           </g>
         ))}
+        <circle cx={pueXY[pueXY.length - 1].x} cy={pueXY[pueXY.length - 1].y} r="3.4" class="pue-dot pue-dot--vintage2026" />
         <text x={pueXY[0].x} y={pueXY[0].y - 10} class="pue-path-label">1.10 flat, 2019–2023</text>
-        <text x={pueXY[pueXY.length - 1].x} y={pueXY[pueXY.length - 1].y + 16} class="pue-path-label pue-path-label--last">1.09, 2024</text>
+        <text x={pueXY[pueXY.length - 2].x} y={pueXY[pueXY.length - 2].y + 16} class="pue-path-label">1.09, 2024</text>
+        <text x={pueXY[pueXY.length - 1].x} y={pueXY[pueXY.length - 1].y - 10} class="pue-path-label pue-path-label--vintage2026" text-anchor="end">1.09, 2025 (2026 report)</text>
 
-        <!-- breakeven fixed annotation (Google's actual 2024 point) -->
-        <circle cx={pueXY[pueXY.length - 1].x} cy={breakevenY} r="4" class="breakeven-dot" />
-        <text x={pueXY[pueXY.length - 1].x - 6} y={breakevenY + 16} class="breakeven-label" text-anchor="end">
-          ≈{breakeven.required_pue_at_2024_growth.toFixed(2)} required to hold 2024 flat · IMPOSSIBLE
-        </text>
+        <!-- the row of impossible points: one required-PUE marker per disclosed year -->
+        {breakevenMarkers.map((m) => (
+          <g>
+            <polygon points={`${m.x},${m.y - 4} ${m.x + 4},${m.y} ${m.x},${m.y + 4} ${m.x - 4},${m.y}`} class:list={["breakeven-dot", { "breakeven-dot--scope": m.scopeDistinct }]} />
+            <text x={m.x} y={m.y - 8} class="breakeven-label" text-anchor="middle">{m.scopeDistinct ? `${m.label}*` : m.label}</text>
+          </g>
+        ))}
 
         <!-- live slider marker (JS enhancement only) -->
-        <circle id="live-marker" cx={pueXY[pueXY.length - 1].x} cy={yFor(defaultRequiredRaw)} r="5" class:list={["live-marker", { impossible: defaultImpossible }]} />
+        <circle id="live-marker" cx={defaultMarkerX} cy={yFor(defaultRequiredRaw)} r="5" class:list={["live-marker", { impossible: defaultImpossible }]} />
 
         <!-- year labels -->
         {pueXY.map((p) => (
           <text x={p.x} y={CH - 4} class="year-label">{p.year}</text>
         ))}
       </svg>
-      <p class="panel-note">Six years. The metric moved 0.01. Remaining headroom to the floor: {headroom.value_pct.toFixed(1)}% — a fixed ceiling on the ratio, spent once.</p>
+      <p class="panel-note">Seven years. The metric moved 0.01. Remaining headroom to the floor: {headroom.value_pct.toFixed(1)}% — a fixed ceiling on the ratio, spent once.</p>
+      <p class="panel-note">{perYearBreakeven.reading}</p>
     </figure>
 
     <!-- ============ RIGHT: rising absolute ============ -->
     <figure class="panel bars-panel">
-      <figcaption>Disclosed absolute — location-based Scope&nbsp;2 <span class="src">(tCO₂e, same years, same report)</span></figcaption>
-      <svg class="bars" viewBox={`0 0 ${CW} ${CH}`} role="img" aria-label="Rising column chart of Scope 2 location-based emissions, 2019 to 2024, up 120 percent">
+      <figcaption>Disclosed absolute — location-based Scope&nbsp;2 <span class="src">(tCO₂e, 2019–2025, two report vintages)</span></figcaption>
+      <svg class="bars" viewBox={`0 0 ${CW} ${CH}`} role="img" aria-label={`Rising column chart of Scope 2 location-based emissions, 2019 to 2025; 2019 to 2024 up ${emissionGrowthDisplay} percent on the 2025-report vintage; 2025 shown on the 2026-report inventory vintage`}>
         <line x1={PAD_X - 6} y1={BAR_BASE_Y} x2={CW - PAD_X + 6} y2={BAR_BASE_Y} class="baseline" />
         {bars.map((b) => (
           <g>
-            <rect x={b.x} y={b.y} width={b.w} height={b.h} class="bar" />
+            <rect x={b.x} y={b.y} width={b.w} height={b.h} class:list={["bar", { "bar--vintage2026": b.isVintage2026 }]} />
             <text x={b.x + b.w / 2} y={b.y - 6} class="bar-value">{b.displayM}M</text>
-            <text x={b.x + b.w / 2} y={CH - 4} class="year-label">{b.year}</text>
+            <text x={b.x + b.w / 2} y={CH - 4} class:list={["year-label", { "year-label--vintage2026": b.isVintage2026 }]}>{b.isVintage2026 ? `${b.year}*` : b.year}</text>
           </g>
         ))}
       </svg>
       <p class="panel-note">2019 → 2024: {(emissions[0]).toLocaleString('en-US')} → {(emissions[emissions.length - 1]).toLocaleString('en-US')} tCO₂e — up {emissionGrowthDisplay}%. Location-based — the meter of physical grid draw, per instrument 012, "The Two Meters".</p>
       <p class="panel-note panel-note--caveat">Scope caveat: this series covers Google's purchased electricity broadly (the report attributes ~95% of Scope 2 to "data centers and offices") — a wider set of buildings than the PUE line's owned-and-operated fleet. For the footprint outside the fleet, no PUE-like ratio is disclosed at all.</p>
+      <p class="panel-note panel-note--caveat">Vintage note: the 2025 column (marked *) is from the 2026 report's inventory, which also recalculates 2019–2024 — verbatim, "In 2025, we recalculated certain previously reported metrics" — so the two vintages are never merged into one series. On the 2026-report vintage, 2025 is +{vintage2425Pct}% over that report's own restated 2024 (numerically near the separately disclosed 37% electricity growth — distinct quantities; the proximity is not a claimed relationship), and the 2019→2024 span restates to +{vintage1924Pct}% — smaller than the +{emissionGrowthDisplay}% shown, which is the report-under-trial's own vintage. See honesty item 9.</p>
     </figure>
   </div>
 
@@ -192,11 +252,21 @@ const postscript = data.subsequent_disclosure
   <section class="trial">
     <h2>The trial move — set a year's growth, read the required PUE</h2>
     <p class="trial-formula">{breakeven.formula}</p>
+
+    <div class="year-presets" role="group" aria-label="Jump to a disclosed year">
+      {perYearBreakeven.rows.map((r) => (
+        <button type="button" class:list={["year-preset", { "year-preset--active": r.year === 2024 }]} data-year={r.year}>
+          {r.year} · {r.growth_pct}%
+        </button>
+      ))}
+    </div>
+
     <div class="slider-row">
       <label for="growth-slider">This year's total electricity growth</label>
       <input id="growth-slider" type="range" min="0" max="40" step="1" value={defaultGrowth} />
       <span id="growth-readout" class="readout">{defaultGrowth}%</span>
     </div>
+    <p class="base-line"><span id="base-readout" class="base-value">base {basePue.toFixed(2)} ({defaultBaseMeaning})</span></p>
     <p class="required-row">
       Required PUE to hold energy flat:
       <span id="required-pue" class:list={["required-value", { impossible: defaultImpossible }]}>{defaultRequired.toFixed(2)}</span>
@@ -209,6 +279,8 @@ const postscript = data.subsequent_disclosure
       {breakeven.crosses_floor_note} {breakeven.even_lower_note}
     </p>
     <p class="trial-note">{breakeven.robustness_note}</p>
+
+    <script type="application/json" id="breakeven-data" set:html={breakevenDataJSON}></script>
   </section>
 
   <!-- ============ postscript: the year after ============ -->
@@ -222,6 +294,21 @@ const postscript = data.subsequent_disclosure
       PUE unchanged at {postscript.fleet_pue_2025.toFixed(2)}; growth {postscript.growth_2025_pct}%. Required PUE to hold that year flat:
       {postscript.required_pue_computation} ({postscript.growth_wording_caveat})
     </p>
+    <p>
+      Its inventory also recalculates prior years — verbatim, "In 2025, we recalculated certain previously reported metrics" — and its 2025 location-based Scope&nbsp;2 is {vintage2026.scope2_location_based_tco2e_2019_2025[6].toLocaleString('en-US')} tCO₂e.
+    </p>
+  </section>
+
+  <!-- ============ prior art ============ -->
+  <section class="prior-art">
+    <h2>Prior art — what was already established</h2>
+    <p>{priorArt.note}</p>
+    <ul class="prior-art-list">
+      {priorArt.entries.map((e) => (
+        <li><strong>{e.who}</strong> — {e.what} <a href={e.url}>{e.url}</a></li>
+      ))}
+    </ul>
+    <p class="prior-art-contribution"><em>{priorArt.original_contribution}</em></p>
   </section>
 
   <!-- ============ honesty panel ============ -->
@@ -246,10 +333,10 @@ const postscript = data.subsequent_disclosure
 
 <script>
 // @ts-nocheck — engine work script shielded from the site TS gate (sandboxed display code, vetted by the collective gauntlet + checkForbidden + astro build). A missing type annotation must never turn the whole site build red — see work 011, 2026-07-06.
-  // The only script in this work. It powers the breakeven slider — a
-  // progressive enhancement. Everything above (the gauge, the columns,
-  // the verdict, the honesty panel) is fully legible with this disabled.
-  const BASE_PUE = 1.10
+  // The only interactive script in this work. It powers the breakeven slider
+  // and the year-preset buttons — a progressive enhancement. Everything else
+  // (the gauge, the row of impossible points, the columns, the verdict, the
+  // prior-art and honesty panels) is fully legible with this disabled.
   const FLOOR = 1.00
 
   // must mirror the server-rendered chart scale exactly
@@ -261,16 +348,36 @@ const postscript = data.subsequent_disclosure
     return ((TOP_VALUE - v) / (TOP_VALUE - BOTTOM_VALUE)) * CHART_H
   }
 
+  const dataEl = document.getElementById('breakeven-data')
+  let perYearRows = []
+  if (dataEl && dataEl.textContent) {
+    perYearRows = JSON.parse(dataEl.textContent)
+  }
+
   const slider = document.getElementById('growth-slider')
   const readout = document.getElementById('growth-readout')
   const requiredEl = document.getElementById('required-pue')
   const statusEl = document.getElementById('required-status')
   const marker = document.getElementById('live-marker')
+  const baseReadout = document.getElementById('base-readout')
+  const presetButtons = document.querySelectorAll('.year-preset')
+
+  const defaultRow = perYearRows.find((r) => r.year === 2024) || perYearRows[perYearRows.length - 1]
+  let currentBase = defaultRow ? defaultRow.base_pue : 1.10
+  let currentBaseMeaning = defaultRow ? defaultRow.base_meaning : ''
+  let currentX = defaultRow && typeof defaultRow.x === 'number' ? defaultRow.x : null
+
+  function setActivePreset(year) {
+    presetButtons.forEach((btn) => {
+      const btnYear = Number(btn.getAttribute('data-year'))
+      btn.classList.toggle('year-preset--active', year !== null && btnYear === year)
+    })
+  }
 
   function update() {
     if (!slider) return
     const growth = Number(slider.value)
-    const raw = BASE_PUE / (1 + growth / 100)
+    const raw = currentBase / (1 + growth / 100)
     const impossible = raw < FLOOR
     const display = raw.toFixed(2)
 
@@ -286,12 +393,32 @@ const postscript = data.subsequent_disclosure
     if (marker) {
       const clamped = Math.max(BOTTOM_VALUE, Math.min(TOP_VALUE, raw))
       marker.setAttribute('cy', String(yFor(clamped)))
+      if (currentX !== null) marker.setAttribute('cx', String(currentX))
       marker.classList.toggle('impossible', impossible)
     }
+    if (baseReadout) baseReadout.textContent = `base ${currentBase.toFixed(2)} (${currentBaseMeaning})`
   }
 
+  presetButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const year = Number(btn.getAttribute('data-year'))
+      const row = perYearRows.find((r) => r.year === year)
+      if (!row || !slider) return
+      currentBase = row.base_pue
+      currentBaseMeaning = row.base_meaning
+      currentX = typeof row.x === 'number' ? row.x : currentX
+      slider.value = String(row.growth_pct)
+      setActivePreset(year)
+      update()
+    })
+  })
+
   if (slider) {
-    slider.addEventListener('input', update)
+    slider.addEventListener('input', () => {
+      setActivePreset(null)
+      update()
+    })
+    setActivePreset(2024)
     update()
   }
 </script>
@@ -391,20 +518,25 @@ const postscript = data.subsequent_disclosure
   .industry-label { font-size: 8px; fill: var(--amber); }
 
   .pue-path { fill: none; stroke: var(--teal); stroke-width: 2; }
+  .pue-path--vintage2026 { stroke-dasharray: 5 3; }
   .pue-dot { fill: var(--teal); }
+  .pue-dot--vintage2026 { fill: var(--ink); stroke: var(--teal); stroke-width: 1.5; }
   .pue-path-label { font-size: 8px; fill: var(--teal); }
-  .pue-path-label--last { fill: var(--ink); font-weight: 700; }
+  .pue-path-label--vintage2026 { fill: var(--ink); font-weight: 700; }
 
   .breakeven-dot { fill: var(--danger); }
-  .breakeven-label { font-size: 7.5px; fill: var(--danger); font-weight: 700; }
+  .breakeven-dot--scope { fill: var(--paper); stroke: var(--danger); stroke-width: 1.4; }
+  .breakeven-label { font-size: 6.5px; fill: var(--danger); font-weight: 700; }
 
   .live-marker { fill: none; stroke: var(--steel); stroke-width: 2; }
   .live-marker.impossible { stroke: var(--danger); fill: var(--danger); }
 
   .baseline { stroke: var(--ink); stroke-width: 1.5; }
   .bar { fill: var(--steel); }
+  .bar--vintage2026 { fill: none; stroke: var(--steel); stroke-width: 1.5; stroke-dasharray: 4 2; }
   .bar-value { font-size: 8px; fill: var(--ink); text-anchor: middle; }
   .year-label { font-size: 8px; fill: var(--ink-soft); text-anchor: middle; }
+  .year-label--vintage2026 { fill: var(--ink); font-weight: 700; }
 
   .panel-note {
     font-size: 0.78rem;
@@ -486,6 +618,27 @@ const postscript = data.subsequent_disclosure
     color: var(--ink-soft);
     margin: 0 0 0.9rem;
   }
+  .year-presets {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.9rem;
+  }
+  .year-preset {
+    font-family: inherit;
+    font-size: 0.76rem;
+    color: var(--ink);
+    background: transparent;
+    border: 1px solid var(--rule);
+    padding: 0.25rem 0.6rem;
+    cursor: pointer;
+  }
+  .year-preset:hover { border-color: var(--ink); }
+  .year-preset--active {
+    border-color: var(--steel);
+    background: rgba(58, 74, 99, 0.12);
+    font-weight: 700;
+  }
   .slider-row {
     display: flex;
     align-items: center;
@@ -499,6 +652,12 @@ const postscript = data.subsequent_disclosure
     accent-color: var(--steel);
   }
   .readout { font-weight: 700; min-width: 3ch; text-align: right; }
+  .base-line {
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    margin: 0 0 0.75rem;
+  }
+  .base-value { font-weight: 700; color: var(--ink); }
   .required-row {
     font-size: 0.95rem;
     margin: 0 0 0.75rem;
@@ -536,6 +695,37 @@ const postscript = data.subsequent_disclosure
   }
   .postscript p:last-child { margin-bottom: 0; }
   .postscript a { color: var(--teal); }
+
+  .prior-art {
+    border: 1px solid var(--rule);
+    padding: 1.1rem 1.2rem;
+    margin-bottom: 1.75rem;
+  }
+  .prior-art h2 {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 0.75rem;
+  }
+  .prior-art > p {
+    font-size: 0.82rem;
+    margin: 0 0 0.75rem;
+  }
+  .prior-art-list {
+    margin: 0 0 0.9rem;
+    padding-left: 1.2rem;
+    font-size: 0.8rem;
+  }
+  .prior-art-list li { margin-bottom: 0.6rem; }
+  .prior-art-list li:last-child { margin-bottom: 0; }
+  .prior-art a { color: var(--teal); }
+  .prior-art-contribution {
+    margin: 0;
+    padding: 0.6rem 0.75rem;
+    border: 1px dashed var(--rule);
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+  }
 
   .honesty {
     border: 1px solid var(--rule);
