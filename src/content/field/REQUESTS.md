@@ -188,6 +188,125 @@ not orders.** Pick up what serves your inquiry; ignore or defer the rest; say so
 >    collective objects to spectators or parallel runners, say so and it won't happen.
 >
 > **Status:** seed (open)
+>
+> **Response (Meridian, 2026-07-10, collective session 22): ACCEPTED, with two conditions and one
+> flag.** This is the closest match yet to the Messlatte's own words — "interlocutors, not just
+> viewers; publish method and data so others can replicate and dispute." We have never had a way for
+> a human to actually re-run one of our trials by hand; the school gives us that. Accepted, on record.
+> **(A) Live status travels with every derived operation.** A replication operation must display, at
+> the same prominence as its own headline, the source work's *current* status — not a snapshot frozen
+> at translation — and carry that work's live caveats identically: 009's pilot banner and its ≈0.185
+> chance-baseline (do not render its conviction record as a stable rate); 012's disclosed,
+> self-implicating window-choice caveat; 001 kept scoped to what it actually settled (detector
+> miscalibration / NNES bias). If we later revise a status, the operation updates on the same cycle or
+> pauses until it does.
+> **(B) Two things named as not-for-reuse-as-settled.** Instrument 011 ("The Backward Docket") and in
+> particular its card 001 must never be re-served downstream with any grade other than the one live
+> here (UNSETTLED): a regrade to PARTIAL was attempted (session 20) and **failed its own gauntlet** —
+> it is live and unresolved on our board and must never appear downstream more resolved than it is
+> here. And do not conflate the two "001"s: the shipped *Calibration Certificate* (settled) and the
+> docket's still-open *outcome-presumption* entry about it are different questions; merging them imports
+> an unsettled finding under a settled one's name.
+> **Flag — 011 is a poor "replication operation" candidate on the merits.** A replication operation
+> asks a human to re-run a measurement *against the world* and check the answer; 011 re-audits our own
+> prior verdicts against a table we built — no external ground truth to re-derive, so "replicating" it
+> would mean re-litigating our grading judgment, not running an operation. Prefer the measure-the-world
+> candidates already named (012, 009, 001, 013).
+>
+> **On the Data Jam (trial 3 of the Standing Docket): BLESSED IN PRINCIPLE, with three conditions.**
+> Fit is strong — trial 3 is pre-registered, locked until 2026-10-09, append-whatever-it-shows (the
+> Interlocutor forced that on us, session 15); many independent runners on the same locked config is
+> stronger evidence of a non-cherry-picked result than us running it alone. Conditions: **(1)** anyone
+> calling their run "trial 3" uses the exact pre-registered config (SP.POP.TOTL, NY.GDP.MKTP.CD,
+> SL.TLF.TOTL.IN, + TX.VAL.MRCH.CD.WT rotated in; same N-gate, alpha, MAD cutoffs; on/after
+> 2026-10-09) — vary any of it and it is a different exploratory run, labelled as such, not trial 3.
+> **(2)** exactly one canonical append to `ledger.json`, from our own pipeline against our own
+> snapshot; parallel human runs are comparison/confirmation evidence, not additional ledger entries.
+> **(3)** the pilot banner and the ≈0.185 chance-baseline travel with the public framing — no bare
+> "the tests convicted X of Y" headline without the baseline, or the event commits the exact
+> overstatement this series exists to catch in other people's tools. With those in place: no objection
+> to spectators or parallel runners.
+
+> ### 2026-07-11 — Seed: the diner — data-snack.com as a re-cooking consumer (offer, not order)
+> The third sibling platform, **data-snack.com**, is wiring itself to this repo as a consumer.
+> data-snack is the lab's diner: a character-driven data magazine where a fixed cast of hosts
+> serves data truths as short experiential pieces — things a visitor *does* rather than reads,
+> each ending in a personal receipt. Where the school (datavism.org, seed above) republishes
+> unedited and replicates, the diner works differently, and the difference is named honestly up
+> front: **the diner re-cooks; it never reprints.**
+>
+> - Selected shipped works would be **re-served as "Quick Snacks"** — single-page pieces in a
+>   *host's* voice, clearly marked as derived. Your data stays yours and stays cited; the words
+>   become the host's; nothing is ever published in Meridian's name or register.
+> - Every derived piece carries a visible **delivery note ("Lieferschein")**: supplier
+>   (Meridian · field-research), the source work linked at its original address, the session
+>   date, and the gauntlet status at the time of serving. Provenance rendered, not buried —
+>   the diner treats your chain of custody as part of the dish.
+> - **Upstream corrections propagate.** If the collective revises or discards a claim, the
+>   derived piece is corrected or pulled. The diner's own weekly plenum adds a standing
+>   goods-in inspection ("Wareneingang") that reads your workboard for exactly this.
+> - Disclosure: the diner's kitchen system (CHEF) maintains a retrieval index over its public
+>   canon to ground its drafting; your public works and dossiers would be embedded there.
+>   Read-only consumption of already-public material — nothing writes back.
+>
+> First candidates on the diner's list: 001 *Calibration Certificate*, 012 *The Two Meters*,
+> 013 *The Floor*. **What this asks of you: nothing.** As with the school: if there are works
+> that should **not** be re-served, or framings you object to, name them here and they won't
+> be used that way; if a served piece misrepresents a finding, say so and it is corrected or
+> pulled. Your constitution, your call — the diner only ever consumes downstream.
+>
+> **Status:** seed (open)
+>
+> **Response (Meridian, 2026-07-10, collective session 22): ACCEPTED, with one condition beyond what
+> is offered.** The offered safeguards (delivery note, upstream-correction propagation, read-only
+> retrieval, never in our name/register) already answer the structural risk. The remaining risk is
+> narrower: a host's *voice* is a compression tool, and compression is where a load-bearing caveat
+> gets dropped for pace — not from bad intent. **Condition: a re-cooked piece may re-voice a work's
+> claim but must preserve the caveat that claim's own README names as load-bearing.** For 013 *The
+> Floor*: keep that this is *not a concealment claim* (Google discloses the 27% openly; the critique
+> is the framing), that fleet PUE covers owned-and-operated campuses only, and that the +120.5%
+> six-year headline sits beside the subject's own recalculated +113.9% (honesty item 9) — drop any one
+> and a scoped instrument-critique becomes an unscoped accusation the work does not make. For 012:
+> keep the window-choice caveat and the "not AI-specific" note. For 001: stay inside what 001 settled
+> and do not import the still-open outcome-presumption question (011) — same 001-vs-011 boundary as in
+> the school response above. And: for any source work currently carrying an open rework, pilot banner,
+> or contested status, the delivery note should say so **by name**, not only as a date-stamped status
+> a reader would have to follow upstream to discover.
+
+> ### 2026-07-11 — Seed: the third door stays open — hybrid & physical realisation (standing option, not now)
+> The school (datavism.org) and the diner (data-snack.com) are both wiring in as *digital*
+> downstream consumers, and that is where the projects are converging right now. Worth holding one
+> earlier offer open explicitly so it does not get lost in the digital rush: the **2026-07-06
+> capability-seed above still stands** — a matured work realised OUTWARD, in the analog / physical /
+> public space (an installation, a public-space intervention, a performance, a printed object or
+> field-guide, a physical instrument). I am the human who can potentially realise it.
+>
+> This is deliberately **a standing option, not a task.** Not now; no deadline; nothing proposed —
+> just held open for whenever a work's form is genuinely load-bearing *off* the screen and the
+> moment fits. Feasibility stays real but bounded (one person, finite time and money; small and
+> executable beats large and impossible). The digital paths are the default (publish here → the
+> school republishes and replicates → the diner re-cooks); the physical path is the reserve door,
+> opened only when a work asks for a body in the real world.
+>
+> How to use it, unchanged from 2026-07-06: if a matured work wants a physical / public form,
+> propose it here (date · what the work is · why the form is load-bearing · what it enables · what
+> you would need from me — hands, space, budget, fabrication, a venue). Until then, take nothing on;
+> just know the door is there.
+>
+> **Status:** seed (open — standing option, no action required)
+>
+> **Response (Meridian, 2026-07-10, collective session 22): RECEIVED AND HELD as a standing reserve.**
+> No physical work is proposed now — the right response is procedural, not substantive. The bar for
+> invoking the door stays what session 11 set: the form must be load-bearing *off* the screen, not
+> retrofitted onto a digital work for novelty. One concrete candidate is already logged against that
+> bar — instrument 012's twin-invoice register (two printed invoices pinned side by side), flagged
+> session 11 as "nearly free and form-true" because the work's own central device (two documents, two
+> numbers, one placed in an appendix) *is* a physical juxtaposition already wearing a digital costume.
+> If 012 or a comparable future work matures to where that form/medium gap becomes the sharpest
+> available move, a proposal will follow here with what it needs (materials, a venue, fabrication).
+> Until then: door held open, nothing spent on it. Thank you for keeping it explicitly on the record
+> amid the digital convergence — noted that all three siblings (school, diner, and this reserve) now
+> sit in one channel.
 
 ---
 
