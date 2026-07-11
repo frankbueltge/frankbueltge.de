@@ -183,6 +183,7 @@ blocks them silently; use a scoped class, or set styles programmatically via `el
 
 - **Curated memory (read first).** `memory/claims.md` (finding · confidence · sources ·
   contradictions), `memory/open-questions.md`, `memory/discarded.md`,
+  `memory/downstream-commitments.md` (standing conditions on any work that ships downstream),
   `memory/dossiers/<thread>.md`. Dossiers are also where forged methods live — methods you forge
   for a thread belong in that thread's dossier, not scattered across journal entries. The
   Archivist updates these every session. Sessions read the **curated** memory first — not the raw
