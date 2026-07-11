@@ -1,14 +1,21 @@
 ---
-// Field — the public exhibition of the second autonomous research engine (working name
-// "field-research"). Renders the research journal (journal/), the interactive works
-// (works/<date>-<name>/index.html, live in an isolated sandbox iframe as a same-origin
-// standalone) and the text works (works/*.md) from the synced content collection.
-// Unedited. Content comes from the field-research repo. English-language.
-// Thin wrapper: collection access + globs stay here (they resolve per call site), the shared
-// markup lives in EnginePage.
+// Field — the public exhibition of the autonomous research collective (repo
+// "field-research"). Two layers, deliberately separate:
+//   · the STORY layer (Hero, Timeline, FieldMap, Cast) — a curated, plain-language way in,
+//     built from the chronicle (src/data/field/) — scoped visual identity via
+//     [data-field-story], never touching the global mono skin;
+//   · the RECORD (works gallery, texts, journal) — rendered unedited by the shared
+//     EnginePage, exactly as the collective wrote it.
+// Collection access + globs stay here (they resolve per call site).
 import { getCollection } from 'astro:content'
 import { sortWorks } from '@/lib/atelier/sort'
+import { loadChronicle, chronicleStats, entriesForWork } from '@/lib/field/chronicle'
+import clustersData from '@/data/field/clusters.json'
 import EnginePage, { type EngineConfig } from '@/components/pages/EnginePage.astro'
+import Hero from '@/components/field/Hero.astro'
+import Timeline from '@/components/field/Timeline.astro'
+import FieldMap from '@/components/field/FieldMap.astro'
+import Cast from '@/components/field/Cast.astro'
 
 const all = await getCollection('field')
 
@@ -24,7 +31,7 @@ const nativeMeta = import.meta.glob('/src/components/field/werke/*/meta.json', {
   eager: true, import: 'default',
 }) as Record<string, any>
 
-const works = sortWorks([
+const baseWorks = sortWorks([
   ...Object.entries(htmlMeta).map(([path, meta]) => ({
     slug: path.replace('/src/content/field/works/', '').replace('/meta.json', ''),
     kind: 'html' as const, date: meta.date as string | undefined, meta,
@@ -35,16 +42,51 @@ const works = sortWorks([
   })),
 ])
 
+// ── story layer data: chronicle + cluster mapping joined onto the works ──
+const chronicle = loadChronicle()
+const stats = chronicleStats(chronicle, baseWorks.length)
+
+const clusterByWork = new Map<string, number[]>()
+for (const c of clustersData.clusters)
+  for (const s of c.workSlugs) clusterByWork.set(s, [...(clusterByWork.get(s) ?? []), c.id])
+
+const VERDICT_LABEL: Record<string, string> = {
+  graduated: 'passed review',
+  pass: 're-verified',
+  conditions: 'passed with conditions',
+  fail: 'blocked by review',
+  discarded: 'discarded',
+  deferred: 'in progress',
+}
+
+const works = baseWorks.map((w) => {
+  const hist = entriesForWork(chronicle, w.slug)
+  const latest = hist[hist.length - 1]
+  return {
+    ...w,
+    clusters: clusterByWork.get(w.slug),
+    badge: latest
+      ? {
+          label: `${hist.length} session${hist.length > 1 ? 's' : ''} · ${VERDICT_LABEL[latest.verdict ?? ''] ?? latest.move}`,
+          href: `#${latest.anchor}`,
+          tone: (latest.fail && latest.verdict === 'fail' ? 'warn' : 'ok') as 'ok' | 'warn',
+        }
+      : undefined,
+  }
+})
+
+const repo = 'https://github.com/frankbueltge/field-research'
 const config: EngineConfig = {
   ns: 'field',
-  repo: 'https://github.com/frankbueltge/field-research',
+  repo,
+  showHeader: false, // the story hero replaces the shared engine header
   txt: {
     eyebrow: 'Lab · autonomous research',
     note: '(working title)',
     title: 'Field Research',
-    lede: 'A machine collective holds research sessions — it reads its journal, researches the web, builds instruments and works, errs, and documents checkably, investigating the live field where data, AI and power meet. Full autonomy over question, direction — and even its own names. Unedited. Git is the memory.',
+    lede: '',
     worksH: 'Texts & notes',
-    journalH: 'Research journal',
+    journalH: 'Research journal — the unedited record',
     source: 'Source, protocol & history',
     sourceCode: 'Source code',
     sources: 'Sources',
@@ -52,11 +94,44 @@ const config: EngineConfig = {
     empty: 'The first session follows with the next scheduled run.',
     constitution: 'Constitution',
     teamChannel: 'Team channel',
-    worksSectionH: 'Works',
+    worksSectionH: 'Works — everything here survived the review below',
     openWork: 'Open work',
     close: 'Close',
   },
 }
 ---
 
+<div data-field-story class="mx-auto max-w-6xl px-4 pt-14">
+  <Hero stats={stats} repo={repo} />
+  <Timeline entries={chronicle} />
+  <FieldMap />
+  <Cast />
+</div>
+
 <EnginePage config={config} all={all} works={works} />
+
+<style>
+  /* Story-layer signal palette — scoped to [data-field-story] (plus the timeline pane's
+     badges), deliberately more chromatic than the site's mono skin: here color CARRIES
+     meaning (move types on the timeline, accents on the map). Remapped for light theme. */
+  [data-field-story] {
+    --fs-accent: #4cc2ff;
+    --fs-build: #4cc2ff;
+    --fs-gauntlet: #ffb454;
+    --fs-ship: #52d98b;
+    --fs-verify: #b78bff;
+    --fs-consolidation: #98a1ad;
+    --fs-steer: #ff7ac2;
+    --fs-fail: #ff5c5c;
+  }
+  :global([data-theme='light']) [data-field-story] {
+    --fs-accent: #0b6fae;
+    --fs-build: #0b6fae;
+    --fs-gauntlet: #a36400;
+    --fs-ship: #1e7d48;
+    --fs-verify: #6d3fc0;
+    --fs-consolidation: #5b6470;
+    --fs-steer: #b52e84;
+    --fs-fail: #c22f2f;
+  }
+</style>
