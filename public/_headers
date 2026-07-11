@@ -13,6 +13,12 @@
 /plenum/werke-html/*
   Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline' 'self'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:
 
+# Öffentlicher Chronik-Feed des Field-Projekts: bewusst offener CORS (read-only JSON,
+# konsumiert von data-snack.com "Wareneingang" und datavism.org — eine Quelle, drei Flächen).
+/field/chronicle.json
+  Access-Control-Allow-Origin: *
+  Cache-Control: public, max-age=3600
+
 /*
   X-Frame-Options: SAMEORIGIN
   X-Content-Type-Options: nosniff

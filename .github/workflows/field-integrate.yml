@@ -53,6 +53,14 @@ jobs:
           npx tsx scripts/atelier/integrate.ts /tmp/field . field > /tmp/report.json
           cat /tmp/report.json
           for f in PROTOCOL.md README.md REQUESTS.md FIELD.md SITE-API.md; do [ -f "/tmp/field/$f" ] && cp "/tmp/field/$f" "src/content/field/$f" || true; done
+          # Optional chronicle self-report from the engine repo root (see the chronicle seed in
+          # REQUESTS.md) — absence is not an error; malformed content fails the build gate below
+          # via the zod validation in src/lib/field/chronicle.ts.
+          if [ -f "/tmp/field/chronicle.json" ]; then
+            cp "/tmp/field/chronicle.json" src/data/field/chronicle.upstream.json
+          else
+            echo '[]' > src/data/field/chronicle.upstream.json
+          fi
 
       - name: Validate (check + test + build)
         id: validate
@@ -63,10 +71,10 @@ jobs:
       - name: Commit + let deploy-cf rebuild (on success)
         if: success()
         run: |
-          if [ -n "$(git status --porcelain src/content/field src/components/field src/pages/field public/field/werke-html)" ]; then
+          if [ -n "$(git status --porcelain src/content/field src/components/field src/pages/field src/data/field/chronicle.upstream.json public/field/werke-html)" ]; then
             git config user.name "Field-Integrate"
             git config user.email "field-integrate@users.noreply.github.com"
-            git add -A src/content/field src/components/field src/pages/field
+            git add -A src/content/field src/components/field src/pages/field src/data/field/chronicle.upstream.json
             if [ -d public/field/werke-html ]; then git add -A public/field/werke-html; fi
             git commit -m "field: integrate $(date -u +%F)"
             git pull --rebase --autostash origin main
