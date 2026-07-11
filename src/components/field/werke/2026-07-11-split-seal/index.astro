@@ -1,0 +1,637 @@
+---
+// The Split Seal (instrument 014 — built session 28, shipped session 29, 2026-07-11)
+// Extends instrument 003 ("The Provenance Horizon", structural-contradiction axis)
+// from one trust infrastructure to two. Every specimen is stamped with two
+// independently-run seals: the MANIFEST seal (C2PA validation state, data/layer1.json)
+// and the DETECTOR seal (a raw statistical AI-image score, data/layer2.json).
+// Tiers were pre-registered in README.md before layer 2 ever ran; this file only
+// formats and lays out what is already on disk — see README.md / SOURCES.md.
+// data.json is the derived integration bundle of the three canonical data/*.json
+// outputs (tools/bundle_data.py) — the site integrator copies top-level files only
+// (SITE-API contract "./data.json"; conformance fix, session 30).
+import bundle from './data.json'
+const { specimens, layer1, layer2 } = bundle
+
+interface Specimen {
+  id: string
+  file: string
+  tier: 'wild' | 'control-camera' | 'control-fixture'
+  expected: string
+  source: string
+  license: string
+  bytes: number
+  sha256: string
+  retrieved?: string
+  upload_date?: string
+}
+
+interface ValidationStatusEntry {
+  code: string
+  explanation: string
+  url: string
+}
+
+interface Layer1Row {
+  manifest_present: boolean
+  error?: string
+  claim_generator?: string
+  validation_state?: string
+  validation_status?: ValidationStatusEntry[]
+  digital_source_types?: { action: string; digitalSourceType: string }[]
+}
+
+interface Layer2Row {
+  ai_generated: number
+  api_status: string
+  http_status: number
+  operations_used: number
+}
+
+const specimenList = specimens as unknown as Specimen[]
+const layer1Results = layer1.results as unknown as Record<string, Layer1Row>
+const layer2Results = layer2.results as unknown as Record<string, Layer2Row>
+
+// ---- pre-registered detector tiers (README.md, fixed before layer 2 ran) --------
+type TierBand = 'high-ai' | 'lean-ai' | 'lean-human' | 'high-human'
+
+function tierBand(score: number): TierBand {
+  if (score >= 0.9) return 'high-ai'
+  if (score >= 0.5) return 'lean-ai'
+  if (score > 0.1) return 'lean-human'
+  return 'high-human'
+}
+
+const TIER_LABELS: Record<TierBand, string> = {
+  'high-ai': 'flagged AI — high',
+  'lean-ai': 'AI-leaning',
+  'lean-human': 'human-leaning',
+  'high-human': 'flagged human — high',
+}
+
+// ---- what a Valid manifest asserts about origin, read off claim_generator -------
+// Fragility note (gauntlet, session 29): origin classification substring-matches
+// claim_generator rather than reading the standardized digitalSourceType assertion
+// (empty for w01/w02 in the committed data). Any future specimen addition must
+// re-check these marker lists against its actual claim_generator string.
+const GENERATIVE_MARKERS = ['ChatGPT', 'Designer', 'DALL']
+const CAPTURE_MARKERS = ['Truepic', 'Nikon']
+
+function assertedOrigin(claimGenerator?: string): 'generative' | 'capture' | null {
+  if (!claimGenerator) return null
+  if (GENERATIVE_MARKERS.some((m) => claimGenerator.includes(m))) return 'generative'
+  if (CAPTURE_MARKERS.some((m) => claimGenerator.includes(m))) return 'capture'
+  return null
+}
+
+// ---- the pre-registered clash definition (README.md) ----------------------------
+// "A CLASH is declared only when a high-confidence tier contradicts a Valid
+// manifest's asserted origin. A lean contradicting a manifest is recorded as
+// tension, never as a clash. Specimens without a manifest have nothing to clash
+// with." Manifests present-but-invalid have no *valid* seal to test against.
+type Verdict = 'AGREE' | 'TENSION' | 'CLASH' | 'ABSENCE' | 'ABSENCE-of-valid-seal'
+
+function computeVerdict(l1: Layer1Row, score: number): Verdict {
+  if (!l1.manifest_present) return 'ABSENCE'
+  if (l1.validation_state !== 'Valid') return 'ABSENCE-of-valid-seal'
+  const origin = assertedOrigin(l1.claim_generator)
+  // Valid manifest, unclassifiable origin → nothing to clash with. Not exercised
+  // by the committed 15-specimen set (the only such manifest, c02, is quarantined
+  // fixture tier) — dead code against this data, noted at gauntlet (session 29).
+  if (!origin) return 'ABSENCE'
+  const band = tierBand(score)
+  if (origin === 'generative') {
+    if (band === 'high-human') return 'CLASH'
+    if (band === 'lean-human') return 'TENSION'
+    if (band === 'high-ai') return 'AGREE'
+    return 'TENSION' // lean-ai: same direction, not high-confidence
+  }
+  if (band === 'high-ai') return 'CLASH'
+  if (band === 'lean-ai') return 'TENSION'
+  if (band === 'high-human') return 'AGREE'
+  return 'TENSION' // lean-human
+}
+
+const VERDICT_CLASS: Record<Verdict | 'QUARANTINED', string> = {
+  AGREE: 'agree',
+  TENSION: 'tension',
+  CLASH: 'clash',
+  ABSENCE: 'absence',
+  'ABSENCE-of-valid-seal': 'absence-invalid',
+  QUARANTINED: 'quarantined',
+}
+
+// specimen-specific notes — grounded in data/specimens.json + README.md wording,
+// used only for the three rows the register calls out by name
+const SPECIMEN_NOTES: Record<string, string> = {
+  w04:
+    'community-labelled AI (per the Commons file page) — not ground truth, no manifest present, ' +
+    'and the detector clears it as human at 0.01. The double-miss row: the one non-cooperative ' +
+    'specimen is invisible to both seals.',
+  w05:
+    'pre-provenance-era human photograph (2010) — the absence of a manifest is expected here ' +
+    '(Content Credentials postdate this image), and the detector clears it as human at 0.001: consistent.',
+  c10:
+    'the claim signature fails validation (signingCredential.expired, signingCredential.untrusted) — ' +
+    'no valid seal to test against. The detector’s human-high read cannot be scored as agreement ' +
+    'or clash without a validated manifest to compare it to.',
+}
+
+function verdictReason(l1: Layer1Row, score: number, verdict: Verdict, note?: string): string {
+  if (note) return note
+  if (verdict === 'AGREE') {
+    const origin = assertedOrigin(l1.claim_generator)
+    const originText = origin === 'generative' ? 'generative origin' : 'hardware capture'
+    return `manifest asserts ${originText}; the detector's high-confidence tier matches (${TIER_LABELS[tierBand(score)]}) — a match from an uncalibrated instrument, not a confirmation.`
+  }
+  if (verdict === 'TENSION') {
+    return 'a leaning tier does not reach high confidence against the manifest’s asserted origin — tension, not a clash, per the pre-registered rule.'
+  }
+  if (verdict === 'CLASH') {
+    return 'a high-confidence tier contradicts the manifest’s asserted origin — the pre-registered clash condition.'
+  }
+  if (verdict === 'ABSENCE') return 'no manifest present — nothing to clash with.'
+  if (verdict === 'ABSENCE-of-valid-seal') return 'manifest present but invalid — no valid seal to test the detector against.'
+  return ''
+}
+
+interface Row {
+  id: string
+  file: string
+  tier: string
+  expected: string
+  source: string
+  license: string
+  sha256Short: string
+  manifestPresent: boolean
+  manifestError: string
+  claimGenerator: string
+  validationState: string
+  validationCodes: string[]
+  digitalSourceType: string
+  detectorScoreDisplay: string
+  detectorTierLabel: string
+  verdict: Verdict | 'QUARANTINED'
+  verdictClass: string
+  reason: string
+  rawJSON: string
+}
+
+function buildRow(s: Specimen, scored: boolean): Row {
+  const l1 = layer1Results[s.id]
+  const l2 = layer2Results[s.id]
+  const score = l2.ai_generated
+  const verdict: Verdict | 'QUARANTINED' = scored ? computeVerdict(l1, score) : 'QUARANTINED'
+  const dst = l1.digital_source_types && l1.digital_source_types.length > 0
+    ? l1.digital_source_types[0].digitalSourceType
+    : ''
+  return {
+    id: s.id,
+    file: s.file,
+    tier: s.tier,
+    expected: s.expected,
+    source: s.source,
+    license: s.license,
+    sha256Short: `${s.sha256.slice(0, 16)}…`,
+    manifestPresent: l1.manifest_present,
+    manifestError: l1.error ?? '',
+    claimGenerator: l1.claim_generator ?? '',
+    validationState: l1.validation_state ?? '',
+    validationCodes: l1.validation_status ? l1.validation_status.map((v) => v.code) : [],
+    digitalSourceType: dst,
+    detectorScoreDisplay: score.toFixed(3),
+    detectorTierLabel: TIER_LABELS[tierBand(score)],
+    verdict,
+    verdictClass: VERDICT_CLASS[verdict],
+    reason: scored
+      ? verdictReason(l1, score, verdict as Verdict, SPECIMEN_NOTES[s.id])
+      : 'engineered fixture — content-axis-meaningless; no clash countable on this tier.',
+    rawJSON: JSON.stringify({ layer1: l1, layer2: l2 }, null, 2),
+  }
+}
+
+const wildRows = specimenList.filter((s) => s.tier === 'wild').map((s) => buildRow(s, true))
+const cameraRows = specimenList.filter((s) => s.tier === 'control-camera').map((s) => buildRow(s, true))
+const fixtureRows = specimenList.filter((s) => s.tier === 'control-fixture').map((s) => buildRow(s, false))
+
+// self-check computed at build time, not hardcoded — the headline claim is
+// tested against the actual rows every time this page builds
+const scoredRows = [...wildRows, ...cameraRows]
+const agreeCount = scoredRows.filter((r) => r.verdict === 'AGREE').length
+const tensionCount = scoredRows.filter((r) => r.verdict === 'TENSION').length
+const clashCount = scoredRows.filter((r) => r.verdict === 'CLASH').length
+const absenceCount = scoredRows.filter((r) => r.verdict === 'ABSENCE' || r.verdict === 'ABSENCE-of-valid-seal').length
+const noClash = clashCount === 0
+
+const tierSections = [
+  {
+    key: 'wild',
+    label: 'Wild',
+    rows: wildRows,
+    scored: true,
+    intro:
+      "Real media in circulation, original bytes from Wikimedia Commons — this tier is the work's point. " +
+      'Selection used the manifest axis only: w01–w03 are here BECAUSE they carry intact generator manifests, ' +
+      'so their 3-for-3 AGREE rows are close to guaranteed by the sampling rule itself — evidence about that rule, ' +
+      'not an independent test of detector accuracy in the wild.',
+  },
+  {
+    key: 'control-camera',
+    label: 'Control — camera',
+    rows: cameraRows,
+    scored: true,
+    intro: 'Real hardware captures distributed inside the C2PA conformance corpus (Truepic ×2, Nikon ×1).',
+  },
+  {
+    key: 'control-fixture',
+    label: 'Control — fixture',
+    rows: fixtureRows,
+    scored: false,
+    intro:
+      "Synthetic conformance artifacts (c2pa-org/public-testfiles) that test the parser-correctness axis — " +
+      'their pixels were never designed to carry an authorship claim.',
+  },
+]
+
+// ---- JS-enhancement data island: only the id list, escaped per the lab's
+// documented CSP-safe pattern (taxonomy-on-trial) — a hoisted <script>
+// @ts-nocheck — engine work script shielded from the site TS gate (sandboxed display code, vetted by the collective gauntlet + checkForbidden + astro build). A missing type annotation must never turn the whole site build red — see work 011, 2026-07-06. reads
+// it via JSON.parse; NOT define:vars (which forces is:inline and is dropped
+// by the CSP's script-src hashing).
+function escapeForInlineJSON(json: string): string {
+  // built via fromCharCode, not raw characters in source: U+2028/U+2029 are
+  // JS line terminators and cannot appear literally inside a regex literal
+  const lineSep = String.fromCharCode(0x2028)
+  const paraSep = String.fromCharCode(0x2029)
+  return json
+    .replace(/</g, '\\u003c')
+    .replace(/>/g, '\\u003e')
+    .replace(/&/g, '\\u0026')
+    .split(lineSep).join('\\u2028')
+    .split(paraSep).join('\\u2029')
+}
+const idsJSON = escapeForInlineJSON(JSON.stringify(specimenList.map((s) => s.id)))
+---
+
+<section class="split-seal">
+  <header class="head">
+    <p class="eyebrow">instrument 014 — extends 003, "The Provenance Horizon" — shipped session 29; the hostile critique is published in the journal of 2026-07-11</p>
+    <h1>The Split Seal</h1>
+    <p class="dek">
+      Two deployed trust infrastructures for image authenticity — the cryptographic provenance
+      manifest (C2PA) and the statistical AI-image detector — stamped side by side on the same
+      {specimenList.length} frozen specimens. Neither is ground truth; the work makes no claim about
+      which layer is right.
+    </p>
+  </header>
+
+  <section class="disclosure-block">
+    <p class="disclosure disclosure--variant">
+      <strong>Disclosed variant, not a replication.</strong> This instrument varies the "Integrity
+      Clash" protocol (Nemecek, He, Cheng &amp; Ayday, arXiv:2603.02378): the paper's second arm
+      decodes a genuine embedded watermark; no such decoder is publicly runnable, so this work
+      substitutes a commercial statistical classifier (score ∈ [0,1]) — a categorically weaker
+      signal. No specimen here matches the paper's exact demonstration.
+    </p>
+    <p class="disclosure disclosure--legal">
+      <strong>Legal-timing note — not a compliance audit.</strong> Art. 50 of Regulation (EU)
+      2024/1689 applies from 2026-08-02: providers must mark synthetic outputs
+      "in a machine-readable format and detectable as artificially generated or manipulated." This
+      work is timed to that deadline for relevance only — it audits neither providers' marking
+      obligations nor deployers' disclosure duties, and no result here states or implies a
+      compliance rate. The specimens predate the obligation.
+    </p>
+  </section>
+
+  <p class="verdict">
+    {noClash
+      ? `No pre-registered clash was observed: 0 of ${scoredRows.length} scored specimens (N=${specimenList.length} total, incl. ${fixtureRows.length} quarantined fixtures). Both seals fire exactly where the producer volunteered disclosure; the one non-cooperative, community-labelled (not ground truth) AI specimen is invisible to both layers.`
+      : `${clashCount} pre-registered clash(es) observed out of ${scoredRows.length} scored specimens (N=${specimenList.length} total).`}
+    <span class="verdict-note">
+      Computed, not asserted: {agreeCount} AGREE · {tensionCount} TENSION · {clashCount} CLASH · {absenceCount} ABSENCE-family, across {scoredRows.length} scored specimens (wild + control-camera). Control-fixture (7) is quarantined — no clash countable there.
+    </span>
+  </p>
+
+  <section class="tiers-table">
+    <h2>Pre-registered display tiers <span class="pre-reg-tag">fixed in README.md before layer 2 ran</span></h2>
+    <table>
+      <thead>
+        <tr><th>raw <code>ai_generated</code></th><th>display tier</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>≥ 0.90</td><td>flagged AI — high</td></tr>
+        <tr><td>0.50 – 0.90</td><td>AI-leaning</td></tr>
+        <tr><td>0.10 – 0.50</td><td>human-leaning</td></tr>
+        <tr><td>≤ 0.10</td><td>flagged human — high</td></tr>
+      </tbody>
+    </table>
+    <p class="tier-tiebreak">
+      Boundary rule: a boundary score belongs to the first band that captures it in the comparison
+      order ≥ 0.90 · ≥ 0.50 · &gt; 0.10 · else — 0.90 reads "flagged AI — high", 0.50 reads
+      "AI-leaning", 0.10 reads "flagged human — high". No committed score sits near a boundary
+      (all are 0.001, 0.01 or 0.99).
+    </p>
+    <dl class="verdict-legend">
+      <dt>AGREE</dt><dd>a Valid manifest's asserted origin matches a high-confidence detector tier.</dd>
+      <dt>TENSION</dt><dd>a leaning tier (not high-confidence) sits against the manifest — recorded as tension, never a clash.</dd>
+      <dt>CLASH</dt><dd>a high-confidence tier contradicts a Valid manifest's asserted origin — the pre-registered clash condition.</dd>
+      <dt>ABSENCE</dt><dd>no manifest present — nothing to clash with (the RAND ambiguity: never marked, or mark lost?).</dd>
+      <dt>ABSENCE-of-valid-seal</dt><dd>a manifest is present but failed validation — no valid seal to test the detector against.</dd>
+    </dl>
+  </section>
+
+  {tierSections.map((section) => (
+    <section class="tier-section" data-tier={section.key}>
+      <h2>{section.label} <span class="tier-count">({section.rows.length})</span></h2>
+      <p class="tier-intro">{section.intro}</p>
+      {!section.scored && (
+        <p class="quarantine-note">
+          Quarantine: detector scores on engineered fixtures are content-axis-meaningless. No clash
+          is countable on this tier.
+        </p>
+      )}
+      <div class="specimen-list">
+        {section.rows.map((r) => (
+          <article class="specimen-row" id={`specimen-${r.id}`}>
+            <header class="specimen-head">
+              <span class="specimen-id">{r.id}</span>
+              <span class="specimen-file">{r.file}</span>
+              <span class="specimen-tier-tag">{r.tier}</span>
+            </header>
+            <p class="specimen-expected">{r.expected}</p>
+
+            <div class="seals">
+              <div class="seal seal-manifest">
+                <p class="seal-label">manifest</p>
+                {r.manifestPresent ? (
+                  <div class="seal-body">
+                    <p class:list={['seal-stamp', { 'seal-stamp--valid': r.validationState === 'Valid', 'seal-stamp--invalid': r.validationState !== 'Valid' }]}>
+                      {r.validationState}
+                    </p>
+                    <p class="seal-detail">claim_generator: {r.claimGenerator}</p>
+                    {r.digitalSourceType && <p class="seal-detail">digitalSourceType: {r.digitalSourceType}</p>}
+                    {r.validationState !== 'Valid' && r.validationCodes.length > 0 && (
+                      <ul class="seal-codes">
+                        {r.validationCodes.map((code) => <li>{code}</li>)}
+                      </ul>
+                    )}
+                  </div>
+                ) : (
+                  <div class="seal-body">
+                    <p class="seal-stamp seal-stamp--absent">ABSENT</p>
+                    <p class="seal-detail">{r.manifestError}</p>
+                  </div>
+                )}
+              </div>
+
+              <div class="seal seal-detector">
+                <p class="seal-label">detector</p>
+                <div class="seal-body">
+                  <p class="seal-stamp seal-stamp--score">{r.detectorScoreDisplay}</p>
+                  <p class="seal-detail">{r.detectorTierLabel}</p>
+                </div>
+              </div>
+            </div>
+
+            <p class:list={['verdict-line', `verdict-line--${r.verdictClass}`]}>
+              {r.verdict}
+              <span class="reason">{r.reason}</span>
+            </p>
+
+            <p class="specimen-meta">
+              <a href={r.source}>{r.source}</a> · {r.license} · sha256 {r.sha256Short}
+            </p>
+
+            <button type="button" class="raw-toggle" id={`raw-toggle-${r.id}`} aria-expanded="true" aria-controls={`raw-panel-${r.id}`}>
+              raw json (layer1 + layer2)
+            </button>
+            <pre class="raw-panel" id={`raw-panel-${r.id}`}>{r.rawJSON}</pre>
+          </article>
+        ))}
+      </div>
+    </section>
+  ))}
+
+  <footer class="method">
+    <p>
+      Layer 1 — manifest arm: {layer1.tool}, run {layer1.run_date}. Layer 2 — detector arm:
+      {' '}{layer2.tool}, run {layer2.run_date}. {layer2.note}
+    </p>
+    <p class="method-caveat">
+      Full method, pre-registration commit, and specimen sourcing: README.md and SOURCES.md beside
+      this file. Status: shipped collective session 29 (2026-07-11) through the full gauntlet
+      (Verifier PASS WITH FINDINGS; fresh Skeptic SURVIVES WITH CONDITIONS, all applied; round-2
+      confirmation and closing micro-check). The Interlocutor's critique — including its
+      tautology-by-construction and missing-adversarial-case charges — is published verbatim in
+      the journal of 2026-07-11 (session 29) and is part of this work's record; the
+      selection-circularity concession — forced as a blocking condition by the round-1 Skeptic
+      and pressed independently by the Interlocutor — is rendered above, on the wild tier itself.
+    </p>
+  </footer>
+
+  <script type="application/json" id="split-seal-ids" is:inline set:html={idsJSON}></script>
+</section>
+
+<script>
+// @ts-nocheck — engine work script shielded from the site TS gate (sandboxed display code, vetted by the collective gauntlet + checkForbidden + astro build). A missing type annotation must never turn the whole site build red — see work 011, 2026-07-06.
+  // Progressive enhancement only: every seal, verdict and raw-json panel above
+  // is fully legible with this script disabled (the raw panels render open by
+  // default). This script just adds a collapse/expand toggle, wired with
+  // addEventListener, reading the specimen id list from the JSON island above
+  // via JSON.parse (never define:vars).
+  const idsEl = document.getElementById('split-seal-ids')
+  let ids = []
+  if (idsEl && idsEl.textContent) {
+    ids = JSON.parse(idsEl.textContent)
+  }
+
+  ids.forEach((id) => {
+    const button = document.getElementById('raw-toggle-' + id)
+    const panel = document.getElementById('raw-panel-' + id)
+    if (!button || !panel) return
+
+    // JS present: start collapsed. Without JS, the panel keeps its default
+    // (visible) state, since only this script adds the collapsing class.
+    panel.classList.add('raw-panel--collapsed')
+    button.setAttribute('aria-expanded', 'false')
+    button.textContent = 'raw json (layer1 + layer2) — show'
+
+    button.addEventListener('click', () => {
+      const collapsed = panel.classList.toggle('raw-panel--collapsed')
+      button.setAttribute('aria-expanded', String(!collapsed))
+      button.textContent = 'raw json (layer1 + layer2) — ' + (collapsed ? 'show' : 'hide')
+    })
+  })
+</script>
+
+<style>
+  .split-seal {
+    --paper: #eef0ea;
+    --ink: #16191a;
+    --ink-soft: #4b5250;
+    --rule: rgba(22, 25, 26, 0.28);
+    --rule-faint: rgba(22, 25, 26, 0.14);
+    --danger: #8c2a1f;
+    --danger-bg: rgba(140, 42, 31, 0.08);
+    --teal: #1f5c4a;
+    --steel: #3a4a63;
+    --amber: #8a6a1f;
+    font-family: ui-monospace, "IBM Plex Mono", "Consolas", "Liberation Mono", "SFMono-Regular", monospace;
+    background: var(--paper);
+    color: var(--ink);
+    padding: 2rem;
+    border: 1px solid var(--rule);
+    line-height: 1.5;
+    max-width: 1040px;
+    margin: 0 auto;
+  }
+
+  .head {
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.68rem;
+    color: var(--ink-soft);
+    margin: 0 0 0.4rem;
+  }
+  .head h1 { font-size: 2rem; margin: 0 0 0.5rem; letter-spacing: 0.02em; }
+  .dek { margin: 0; font-size: 0.9rem; color: var(--ink-soft); }
+
+  .disclosure-block { display: grid; gap: 0.9rem; margin-bottom: 1.5rem; }
+  .disclosure {
+    margin: 0;
+    padding: 0.75rem 1rem;
+    font-size: 0.8rem;
+    border: 1px solid var(--rule);
+    border-left-width: 4px;
+  }
+  .disclosure--variant { border-left-color: var(--steel); }
+  .disclosure--legal { border-left-color: var(--amber); }
+
+  .verdict {
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 0.9rem 1rem;
+    border-top: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+    margin: 0 0 1.75rem;
+  }
+  .verdict-note {
+    display: block;
+    font-weight: 400;
+    font-size: 0.72rem;
+    color: var(--ink-soft);
+    margin-top: 0.4rem;
+  }
+
+  .tiers-table { margin-bottom: 1.75rem; border: 1px solid var(--rule); padding: 1rem 1.1rem; }
+  .tiers-table h2 { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 0.75rem; }
+  .pre-reg-tag { font-size: 0.68rem; font-weight: 400; text-transform: none; color: var(--ink-soft); letter-spacing: 0; }
+  .tiers-table table { border-collapse: collapse; font-size: 0.8rem; margin-bottom: 0.9rem; }
+  .tiers-table th, .tiers-table td { border: 1px solid var(--rule); padding: 0.35rem 0.7rem; text-align: left; }
+  .tiers-table th { background: rgba(22, 25, 26, 0.05); }
+  .tier-tiebreak { margin: 0 0 0.9rem; font-size: 0.72rem; color: var(--ink-soft); }
+  .verdict-legend { margin: 0; font-size: 0.76rem; display: grid; grid-template-columns: max-content 1fr; gap: 0.3rem 0.75rem; }
+  .verdict-legend dt { font-weight: 700; }
+  .verdict-legend dd { margin: 0; color: var(--ink-soft); }
+
+  .tier-section { border-top: 2px solid var(--ink); padding-top: 1.1rem; margin-bottom: 1.75rem; }
+  .tier-section h2 { font-size: 1.2rem; margin: 0 0 0.4rem; }
+  .tier-count { font-weight: 400; color: var(--ink-soft); font-size: 0.9rem; }
+  .tier-intro { margin: 0 0 0.6rem; font-size: 0.82rem; color: var(--ink-soft); }
+  .quarantine-note {
+    border: 1px dashed var(--danger);
+    color: var(--danger);
+    padding: 0.5rem 0.75rem;
+    font-size: 0.76rem;
+    margin: 0 0 0.9rem;
+  }
+
+  .specimen-list { display: grid; gap: 1rem; }
+  .specimen-row { border: 1px solid var(--rule); padding: 1rem 1.1rem; }
+  .specimen-head { display: flex; gap: 0.7rem; flex-wrap: wrap; align-items: baseline; margin-bottom: 0.3rem; }
+  .specimen-id { font-weight: 700; letter-spacing: 0.02em; }
+  .specimen-file { font-style: italic; color: var(--ink-soft); font-size: 0.82rem; }
+  .specimen-tier-tag {
+    text-transform: uppercase;
+    font-size: 0.62rem;
+    letter-spacing: 0.04em;
+    border: 1px solid var(--rule);
+    padding: 0.05rem 0.4rem;
+    color: var(--ink-soft);
+  }
+  .specimen-expected { font-size: 0.8rem; color: var(--ink-soft); margin: 0 0 0.75rem; }
+
+  .seals { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 0.75rem; }
+  @media (max-width: 640px) { .seals { grid-template-columns: 1fr; } }
+  .seal { border: 1px solid var(--ink); padding: 0.6rem 0.75rem; }
+  .seal-label {
+    font-size: 0.64rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin: 0 0 0.4rem;
+    color: var(--ink-soft);
+  }
+  .seal-stamp {
+    display: inline-block;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    border: 2px double currentColor;
+    padding: 0.1rem 0.55rem;
+    margin: 0 0 0.4rem;
+    transform: rotate(-2deg);
+  }
+  .seal-stamp--valid { color: var(--teal); }
+  .seal-stamp--invalid { color: var(--danger); }
+  .seal-stamp--absent { color: var(--ink-soft); }
+  .seal-stamp--score { color: var(--steel); font-variant-numeric: tabular-nums; }
+  .seal-detail { font-size: 0.72rem; margin: 0.15rem 0; color: var(--ink-soft); word-break: break-word; }
+  .seal-codes { margin: 0.35rem 0 0; padding-left: 1.1rem; font-size: 0.7rem; color: var(--danger); }
+
+  .verdict-line {
+    font-weight: 700;
+    padding: 0.45rem 0.65rem;
+    border: 1px solid var(--rule);
+    font-size: 0.85rem;
+    margin: 0 0 0.6rem;
+  }
+  .verdict-line .reason { display: block; font-weight: 400; font-size: 0.72rem; color: var(--ink-soft); margin-top: 0.25rem; }
+  .verdict-line--agree { border-color: var(--teal); color: var(--teal); }
+  .verdict-line--tension { border-color: var(--amber); color: var(--amber); }
+  .verdict-line--clash { border-color: var(--danger); color: var(--danger); background: var(--danger-bg); }
+  .verdict-line--absence, .verdict-line--absence-invalid { border-color: var(--rule); color: var(--ink-soft); }
+  .verdict-line--quarantined { border-style: dashed; color: var(--ink-soft); }
+
+  .specimen-meta { font-size: 0.7rem; color: var(--ink-soft); margin: 0 0 0.6rem; word-break: break-all; }
+  .specimen-meta a { color: var(--steel); }
+
+  .raw-toggle {
+    font-family: inherit;
+    font-size: 0.7rem;
+    border: 1px solid var(--rule);
+    background: transparent;
+    color: var(--ink);
+    padding: 0.2rem 0.55rem;
+    cursor: pointer;
+  }
+  .raw-toggle:hover { border-color: var(--ink); }
+  .raw-panel {
+    margin-top: 0.5rem;
+    font-size: 0.64rem;
+    white-space: pre-wrap;
+    overflow-x: auto;
+    background: rgba(22, 25, 26, 0.03);
+    border: 1px solid var(--rule-faint);
+    padding: 0.6rem;
+  }
+  .raw-panel.raw-panel--collapsed { display: none; }
+
+  .method { border-top: 1px solid var(--rule); padding-top: 1rem; font-size: 0.74rem; color: var(--ink-soft); }
+  .method p { margin: 0 0 0.5rem; }
+  .method p:last-child { margin-bottom: 0; }
+  .method code { font-size: 0.9em; }
+</style>

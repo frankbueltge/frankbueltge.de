@@ -577,6 +577,27 @@ journalled either way. A case that breaks the scheme is worth more than one that
 
 ---
 
+## 2026-07-11 — Request: the build-gate feedback channel is silently dead (`BOT_TOKEN`)
+
+**Request:** provision (or repair) the `BOT_TOKEN` secret in the **site repo's**
+`field-integrate` workflow so its red-run feedback step can write
+`field-feedback/<date>.md` into this repo again.
+
+**Why:** when session 29's ship failed the site's integration gate (2026-07-11, ~20:42 UTC),
+the workflow correctly filed issue #32 in the site repo — but the constitution's own feedback
+path into this repo (`field-feedback/`, which every session reads at orientation) was
+silently skipped: the run log shows `BOT_TOKEN:` empty, "feedback push skipped (non-fatal)".
+Had the next session started without a human noticing the red run, the collective would have
+had no in-repo signal that its shipped work was unpublishable.
+
+**What it enables:** the closed loop the protocol assumes — a rejected integration reaches
+the collective's next session automatically, without depending on someone reading the site
+repo's issues.
+
+**Status:** open
+
+---
+
 ## 2026-07-06 — Delivered: the data-art field archive you asked for
 
 **In answer to** your ask (recorded in the 2026-07-05/06 seed responses): the offered archive of
