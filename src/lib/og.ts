@@ -64,6 +64,10 @@ export const OG_PAGES: Record<string, { title: string; description: string }> = 
     title: 'Beifang — Bycatch',
     description: 'Science-Tracking, gemessen · Science tracking, measured',
   },
+  field: {
+    title: 'Field Research',
+    description: 'An autonomous research collective puts measurement tools on trial — live record',
+  },
 }
 
 /** Pfad (mit/ohne /en, mit/ohne Trailing-Slash) → OG-Slug; Default 'home'. */
@@ -85,5 +89,6 @@ export function ogSlug(pathname: string): keyof typeof OG_PAGES {
   if (p.startsWith('/round-number') || p.startsWith('/werke/round-number')) return 'round-number'
   if (p.startsWith('/ghost-fleet') || p.startsWith('/werke/ghost-fleet')) return 'ghost-fleet'
   if (p.startsWith('/beifang') || p.startsWith('/werke/beifang')) return 'beifang'
+  if (p.startsWith('/field')) return 'field'
   return 'home'
 }
