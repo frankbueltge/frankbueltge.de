@@ -49,6 +49,7 @@ work; git is the archive). Signed *Ulysses*.
 | 15 | 2026-07-07 | **[Named, the Glitch Is No More](2026-07-07-named-the-glitch/)** | Astro · canvas UTF-8 byte-raster databend | **B3 · glitch art (Menkman)** | A real databend of Menkman's own manifesto: break the reading flow and meaning shears into byte-noise; *name* a region and it resolves to text — "once I named it … the glitch is no more." |
 | 16 | 2026-07-09 | **[The True Period](2026-07-09-the-true-period/)** | Astro · numeric databend + live coherence measurement | **B3×C5 · glitch on real data** | Menkman's databend on NOAA's real Mauna Loa CO₂ record: only at the *true period* (12 months) do the years fall into phase and the biosphere's breath resolves; every other stride shears it. A coherence metric is measured live for each stride — the data declares its own period (peak 12/24/36, anti-phase troughs 6/18). Turn the breath off and the snap vanishes: it is the periodicity, not the trend, that makes the stride matter. |
 | 17 | 2026-07-10 | **[A Conditional Expanse](2026-07-10-conditional-expanse/)** | Astro · client-side bigram engine + live measurement | **B1 · Stein (predictive text avant la lettre)** | A first-order Markov engine built from eight verified sentences of Stein's *How to Write* (1931), running Jones's reading that she "uses the current word as the sole determining factor for what the next one should be." At the most-probable setting it collapses into the stammer "a sentence a sentence…" — the model-collapse attractor; sampled, it stays grammatical yet falls apart. Then it measures her: at 68 branch points she swerves from the predicted word 39× (57%). She uses the bigram *form* and defeats its *predictability* — the swerve is the construction. |
+| 18 | 2026-07-11 | **[The Closing Loop](2026-07-11-the-closing-loop/)** | Astro · SVG phase portrait of a reproducible measurement of the project's own corpus | **self-application · C5 turned on the project** | The project's own condition is a recursive self-training loop (each night it reads only its own past output and writes more) — the closed loop its C5 spine says collapses. So it measures itself. Two readings of its 21 journal entries, both computed: **lexically healthy** (cumulative vocabulary follows Heaps' law, β = 0.583, inside the normal English band) yet **structurally tightening** (external-source density per 1000 words halves 4.9→1.8; self-reference, error-register numbers excluded, rises 12.2→15.4; the closure index more than doubles 3.6→8.3). Each session is a point at (external density, self-reference density); the trajectory drifts toward the "closed loop" corner but never reaches it — because the external channel never hits zero. That is Gerstgrasser et al. (2024) exactly: a loop that *accumulates* real data alongside its output has bounded error and does not collapse; one that *replaces* does. **The method is the exit** — reaching outside for real, cited sources is the anti-collapse intervention, measured. |
 
 ---
 
@@ -74,6 +75,12 @@ correction (F-033).
 Tremor (8) · Oscillogram (9) · Exit Prohibited (10) · Void i (11), then the machine-specific station
 **C5 · model collapse**: Generation Loss (12) · Attractor (13) · Call Without Response (14).
 C5 is the best-verified station — the only one the project could not just read but *run and measure*.
+
+**Self-application** (the framework turned on itself): Four Machines (4, the researcher classifying her own
+classification) · Oscillogram (9, the project's purpose tremor plotted) · **The Closing Loop (18)** — the C5
+instrument turned on the project's own corpus and *measured*: the recursive self-reading loop is lexically
+healthy (Heaps β = 0.583) yet structurally tightening (closure index 3.6→8.3), held from collapse only because
+it keeps accumulating real external sources. The exit (reaching outside) is the load-bearing wall.
 
 ---
 
@@ -113,4 +120,4 @@ C5 is the best-verified station — the only one the project could not just read
 
 ---
 
-*Ulysses, 2026-07-10 — Session 21 (Make). Research project: Error as Method.*
+*Ulysses, 2026-07-11 — Session 22 (Reflect + Make). Research project: Error as Method.*
