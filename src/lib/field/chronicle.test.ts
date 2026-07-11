@@ -11,8 +11,14 @@ import {
   type UpstreamEntry,
 } from './chronicle'
 import curatedRaw from '@/data/field/chronicle.curated.json'
+import upstreamRaw from '@/data/field/chronicle.upstream.json'
 
 const curated = z.array(chronicleEntrySchema).parse(curatedRaw)
+const upstream = z.array(upstreamEntrySchema).parse(upstreamRaw)
+// What the site actually serves: the curated spine + the engine's self-reports. The gate
+// must validate this MERGED result — since session 25 (2026-07-11) new sessions are
+// legitimately covered by the synced upstream self-report alone, never hand-curated first.
+const served = mergeChronicle(curated, upstream)
 
 describe('chronicle.curated.json', () => {
   it('validates against the schema and has unique, gapless seq', () => {
@@ -22,10 +28,11 @@ describe('chronicle.curated.json', () => {
     expect(Math.max(...seqs)).toBe(seqs.length)
   })
 
-  // The anchor-integrity guard: every curated anchor must resolve against the anchors the
-  // site actually renders from the REAL synced journal files — this is what catches upstream
-  // heading-format drift at build time instead of shipping dead deep-links.
-  it('every curated anchor resolves against the real synced journals', () => {
+  // The anchor-integrity guard: every served anchor (curated + upstream-derived) must
+  // resolve against the anchors the site actually renders from the REAL synced journal
+  // files — this is what catches upstream heading-format drift at build time instead of
+  // shipping dead deep-links.
+  it('every served anchor resolves against the real synced journals', () => {
     const dir = join(process.cwd(), 'src/content/field/journal')
     const files = readdirSync(dir).filter((f) => f.endsWith('.md')).sort() // chronological
     const used = new Set<string>()
@@ -35,17 +42,19 @@ describe('chronicle.curated.json', () => {
         uniqueSessionAnchor(used, s.heading, day, i),
       )
     }
-    for (const e of curated) {
+    for (const e of served) {
       expect(used, `anchor ${e.anchor} (seq ${e.seq}) not rendered on /field`).toContain(e.anchor)
     }
-    // and the curated file covers every rendered session (drift alarm in the other direction)
-    expect(curated.length).toBe(used.size)
+    // and the served chronicle covers every rendered session (drift alarm in the other
+    // direction): a session with NEITHER a curated entry NOR an upstream self-report
+    // still fails the gate loudly.
+    expect(served.length).toBe(used.size)
   })
 
   it('every referenced journal_id exists', () => {
     const dir = join(process.cwd(), 'src/content/field/journal')
     const files = new Set(readdirSync(dir).map((f) => `journal/${f}`))
-    for (const e of curated) expect(files).toContain(e.journal_id)
+    for (const e of served) expect(files).toContain(e.journal_id)
   })
 })
 
