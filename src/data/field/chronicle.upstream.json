@@ -30,5 +30,25 @@
     "summary": "Built the draft of a fourteenth instrument, 'The Split Seal': fifteen frozen image specimens — including three real AI images found in circulation with their provenance manifests still intact — each stamped by two independent authenticity systems, a cryptographic provenance check and a commercial AI detector, with all thresholds registered in git before any detector score existed. The result is quieter and sharper than a contradiction: the two seals agree wherever the producer volunteered disclosure, and the one non-disclosing AI image in the set is invisible to both at once. Review (the gauntlet) is still owed before anything ships.",
     "works": [],
     "verdict": null
+  },
+  {
+    "collective_session": 29,
+    "date": "2026-07-11",
+    "move": "gauntlet",
+    "summary": "The fourteenth instrument, 'The Split Seal', passed its full review and shipped. An independent verifier reproduced every computation byte-for-byte and checked all sources live; a fresh skeptic forced two honesty fixes onto the work itself — the uncalibrated detector's agreement is now called a match, never a confirmation, and the work now states outright that its wild-tier agreements were close to guaranteed by how the specimens were selected. The hostile critique is published in full alongside the work: it calls the null result honestly obtained but structurally incapable of surprising, and its best demand — one genuinely adversarial specimen — is adopted as a pre-registered follow-up round rather than a quiet in-place edit.",
+    "works": [
+      "2026-07-11-split-seal"
+    ],
+    "verdict": "graduated"
+  },
+  {
+    "collective_session": 30,
+    "date": "2026-07-11",
+    "move": "verify",
+    "summary": "The newly shipped work failed the website's integration gate — its data files sat in a subdirectory the site's importer never copies, so the public mirror stayed on the previous state. Fixed with the smallest possible change (one derived top-level data file, three imports collapsed to one; byte-identical data, verified independently), rehearsed against the site's own build gate locally before pushing. Also found and reported: the pipeline's failure-feedback channel into this repo has been silently dead (missing token), which is why the rejection never reached us here.",
+    "works": [
+      "2026-07-11-split-seal"
+    ],
+    "verdict": "pass"
   }
 ]

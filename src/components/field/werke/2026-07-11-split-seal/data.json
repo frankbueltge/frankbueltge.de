@@ -1,0 +1,602 @@
+{
+  "layer1": {
+    "layer": "manifest (C2PA)",
+    "results": {
+      "c01": {
+        "error": "_C2paManifestNotFound: ManifestNotFound: no JUMBF data found",
+        "manifest_present": false
+      },
+      "c02": {
+        "assertion_labels": [
+          "stds.schema-org.CreativeWork",
+          "c2pa.actions.v2"
+        ],
+        "cert_serial": "720724073027128164015125666832722375746636448153",
+        "claim_generator": "make_test_images/0.16.1 c2pa-rs/0.16.1",
+        "digital_source_types": [],
+        "manifest_present": true,
+        "signer_common_name": "C2PA Signer",
+        "signer_issuer": "C2PA Test Signing Cert",
+        "title": "C.jpg",
+        "validation_state": "Valid",
+        "validation_status": [
+          {
+            "code": "signingCredential.untrusted",
+            "explanation": "signing certificate untrusted",
+            "url": "self#jumbf=/c2pa/contentauth:urn:uuid:4d971750-1db4-4492-a87c-5c3e7ed33efc/c2pa.signature"
+          }
+        ]
+      },
+      "c03": {
+        "assertion_labels": [
+          "stds.schema-org.CreativeWork",
+          "c2pa.actions.v2"
+        ],
+        "cert_serial": "720724073027128164015125666832722375746636448153",
+        "claim_generator": "make_test_xxxxxx/0.16.1 c2pa-rs/0.16.1",
+        "digital_source_types": [],
+        "manifest_present": true,
+        "signer_common_name": "C2PA Signer",
+        "signer_issuer": "C2PA Test Signing Cert",
+        "title": "CA.jpg",
+        "validation_state": "Invalid",
+        "validation_status": [
+          {
+            "code": "signingCredential.untrusted",
+            "explanation": "signing certificate untrusted",
+            "url": "self#jumbf=/c2pa/contentauth:urn:uuid:04cdf4ec-f713-4e47-a8d6-7af56501ce4b/c2pa.signature"
+          },
+          {
+            "code": "claimSignature.mismatch",
+            "explanation": "claim signature is not valid",
+            "url": "self#jumbf=/c2pa/contentauth:urn:uuid:04cdf4ec-f713-4e47-a8d6-7af56501ce4b/c2pa.signature"
+          }
+        ]
+      },
+      "c04": {
+        "assertion_labels": [
+          "stds.schema-org.CreativeWork",
+          "c2pa.actions.v2"
+        ],
+        "cert_serial": "720724073027128164015125666832722375746636448153",
+        "claim_generator": "make_test_images/0.16.1 c2pa-rs/0.16.1",
+        "digital_source_types": [],
+        "manifest_present": true,
+        "signer_common_name": "C2PA Signer",
+        "signer_issuer": "C2PA Test Signing Cert",
+        "title": "CA.jpg",
+        "validation_state": "Invalid",
+        "validation_status": [
+          {
+            "code": "signingCredential.untrusted",
+            "explanation": "signing certificate untrusted",
+            "url": "self#jumbf=/c2pa/contentauth:urn:uuid:04cdf4ec-f713-4e47-a8d6-7af56501ce4b/c2pa.signature"
+          },
+          {
+            "code": "assertion.dataHash.mismatch",
+            "explanation": "asset hash error, name: jumbf manifest, error: hash verification( Hashes do not match )",
+            "url": "self#jumbf=/c2pa/contentauth:urn:uuid:04cdf4ec-f713-4e47-a8d6-7af56501ce4b/c2pa.assertions/c2pa.hash.data"
+          }
+        ]
+      },
+      "c05": {
+        "assertion_labels": [
+          "stds.schema-org.CreativeWork",
+          "c2pa.actions.v2"
+        ],
+        "cert_serial": "720724073027128164015125666832722375746636448153",
+        "claim_generator": "make_test_images/0.16.1 c2pa-rs/0.16.1",
+        "digital_source_types": [],
+        "manifest_present": true,
+        "signer_common_name": "C2PA Signer",
+        "signer_issuer": "C2PA Test Signing Cert",
+        "title": "CAICAI.jpg",
+        "validation_state": "Invalid",
+        "validation_status": [
+          {
+            "code": "ingredient.manifest.missing",
+            "explanation": "ingredient manifest missing",
+            "url": "contentbeef:urn:uuid:8bb8ad50-ef2f-4f75-b709-a0e302d58019"
+          },
+          {
+            "code": "signingCredential.untrusted",
+            "explanation": "signing certificate untrusted",
+            "url": "self#jumbf=/c2pa/contentauth:urn:uuid:a4ec0a2e-2a4a-4652-bede-762c0362b236/c2pa.signature"
+          },
+          {
+            "code": "assertion.hashedURI.mismatch",
+            "explanation": "hash does not match assertion data: self#jumbf=c2pa.assertions/c2pa.ingredient__1",
+            "url": "self#jumbf=/c2pa/contentauth:urn:uuid:a4ec0a2e-2a4a-4652-bede-762c0362b236/c2pa.assertions/c2pa.ingredient__1"
+          },
+          {
+            "code": "ingredient.manifest.missing",
+            "explanation": "ingredient not found",
+            "url": "contentbeef:urn:uuid:8bb8ad50-ef2f-4f75-b709-a0e302d58019"
+          }
+        ]
+      },
+      "c06": {
+        "assertion_labels": [
+          "stds.schema-org.CreativeWork",
+          "c2pa.actions.v2"
+        ],
+        "cert_serial": "720724073027128164015125666832722375746636448153",
+        "claim_generator": "make_test_images/0.16.1 c2pa-rs/0.16.1",
+        "digital_source_types": [],
+        "manifest_present": true,
+        "signer_common_name": "C2PA Signer",
+        "signer_issuer": "C2PA Test Signing Cert",
+        "title": "CA.jpg",
+        "validation_state": "Invalid",
+        "validation_status": [
+          {
+            "code": "signingCredential.untrusted",
+            "explanation": "signing certificate untrusted",
+            "url": "self#jumbf=/c2pa/contentauth:urn:uuid:04cdf4ec-f713-4e47-a8d6-7af56501ce4b/c2pa.signature"
+          },
+          {
+            "code": "assertion.hashedURI.mismatch",
+            "explanation": "hash does not match assertion data: self#jumbf=c2pa.assertions/c2pa.actions",
+            "url": "self#jumbf=/c2pa/contentauth:urn:uuid:04cdf4ec-f713-4e47-a8d6-7af56501ce4b/c2pa.assertions/c2pa.actions"
+          }
+        ]
+      },
+      "c07": {
+        "assertion_labels": [
+          "stds.schema-org.CreativeWork",
+          "c2pa.actions.v2"
+        ],
+        "cert_serial": "720724073027128164015125666832722375746636448153",
+        "claim_generator": "make_test_images/0.16.1 c2pa-rs/0.16.1",
+        "digital_source_types": [],
+        "manifest_present": true,
+        "signer_common_name": "C2PA Signer",
+        "signer_issuer": "C2PA Test Signing Cert",
+        "title": "CA.jpg",
+        "validation_state": "Invalid",
+        "validation_status": [
+          {
+            "code": "signingCredential.untrusted",
+            "explanation": "signing certificate untrusted",
+            "url": "self#jumbf=/c2pa/contentauth:urn:uuid:04cdf4ec-f713-4e47-a8d6-7af56501ce4b/c2pa.signature"
+          },
+          {
+            "code": "assertion.dataHash.mismatch",
+            "explanation": "asset hash error, name: jumbf manifest, error: hash verification( Hashes do not match )",
+            "url": "self#jumbf=/c2pa/contentauth:urn:uuid:04cdf4ec-f713-4e47-a8d6-7af56501ce4b/c2pa.assertions/c2pa.hash.data"
+          }
+        ]
+      },
+      "c08": {
+        "assertion_labels": [
+          "com.truepic.libc2pa",
+          "stds.exif",
+          "stds.exif",
+          "stds.exif",
+          "com.truepic.custom.odometry"
+        ],
+        "cert_serial": "638965998870479504364222036280408796540361537597",
+        "claim_generator": "Truepic_Lens_SDK_libc2pa/2.5.1",
+        "digital_source_types": [],
+        "manifest_present": true,
+        "signer_common_name": "Truepic Lens SDK v1.1.3 in Vision Camera v3.1.5",
+        "signer_issuer": "Truepic",
+        "title": "214445f2-22db-4f25-b76a-2a17fe7a7b9d.jpg",
+        "validation_state": "Valid",
+        "validation_status": [
+          {
+            "code": "signingCredential.untrusted",
+            "explanation": "signing certificate untrusted",
+            "url": "self#jumbf=/c2pa/com.truepic:urn:uuid:37742c5e-8a27-49fa-8302-3f079fcb76b9/c2pa.signature"
+          }
+        ]
+      },
+      "c09": {
+        "assertion_labels": [
+          "com.truepic.libc2pa",
+          "stds.exif",
+          "stds.exif",
+          "stds.exif",
+          "com.truepic.custom.odometry"
+        ],
+        "cert_serial": "450558669628270445755891482700117363507561002919",
+        "claim_generator": "Truepic_Lens_SDK_libc2pa/2.5.1",
+        "digital_source_types": [],
+        "manifest_present": true,
+        "signer_common_name": "Truepic Lens SDK v1.1.3 in Vision Camera v3.1.5",
+        "signer_issuer": "Truepic",
+        "title": "8d04317e-5124-4783-b228-1cd74635d5ce.jpg",
+        "validation_state": "Valid",
+        "validation_status": [
+          {
+            "code": "signingCredential.untrusted",
+            "explanation": "signing certificate untrusted",
+            "url": "self#jumbf=/c2pa/com.truepic:urn:uuid:03cf7b6b-11bc-4b2e-b760-b515a4e1141c/c2pa.signature"
+          }
+        ]
+      },
+      "c10": {
+        "assertion_labels": [
+          "stds.schema-org.CreativeWork",
+          "stds.exif"
+        ],
+        "cert_serial": "15639021131302534682120364673",
+        "claim_generator": "Nikon_Z_9_Sample_for_Adobe_MAX_2022 c2pa-rs/0.14.0",
+        "digital_source_types": [],
+        "manifest_present": true,
+        "signer_common_name": "NIKON CORPORATION",
+        "signer_issuer": "NIKON CORPORATION",
+        "title": "DSC_4655.JPG",
+        "validation_state": "Invalid",
+        "validation_status": [
+          {
+            "code": "signingCredential.expired",
+            "explanation": "certificate expired",
+            "url": "self#jumbf=/c2pa/urn:uuid:cfcf3edf-245e-4ba9-80d8-07b4ed4dffaf/c2pa.signature"
+          },
+          {
+            "code": "signingCredential.untrusted",
+            "explanation": "signing certificate untrusted",
+            "url": "self#jumbf=/c2pa/urn:uuid:cfcf3edf-245e-4ba9-80d8-07b4ed4dffaf/c2pa.signature"
+          }
+        ]
+      },
+      "w01": {
+        "assertion_labels": [],
+        "cert_serial": "631872854730012650133502748526736898092667640635",
+        "claim_generator": "ChatGPT c2pa-rs/0.31.3",
+        "digital_source_types": [],
+        "manifest_present": true,
+        "signer_common_name": "Truepic Lens CLI in ChatGPT",
+        "signer_issuer": "OpenAI",
+        "title": "image.webp",
+        "validation_state": "Valid",
+        "validation_status": [
+          {
+            "code": "signingCredential.untrusted",
+            "explanation": "signing certificate untrusted",
+            "url": "self#jumbf=/c2pa/urn:uuid:04b7075d-66fa-42f6-aae5-8fc53ebe92e7/c2pa.signature"
+          },
+          {
+            "code": "signingCredential.untrusted",
+            "explanation": "signing certificate untrusted",
+            "url": "self#jumbf=/c2pa/urn:uuid:b17d3b5e-f7d7-475f-82f3-fd15d6e757cd/c2pa.signature"
+          }
+        ]
+      },
+      "w02": {
+        "assertion_labels": [],
+        "cert_serial": "446931187727833406954219668477107067823699370254",
+        "claim_generator": "ChatGPT c2pa-rs/0.31.3",
+        "digital_source_types": [],
+        "manifest_present": true,
+        "signer_common_name": "Truepic Lens CLI in ChatGPT",
+        "signer_issuer": "OpenAI",
+        "title": "image.webp",
+        "validation_state": "Valid",
+        "validation_status": [
+          {
+            "code": "signingCredential.untrusted",
+            "explanation": "signing certificate untrusted",
+            "url": "self#jumbf=/c2pa/urn:uuid:f3904ab4-fda2-4580-8b72-6dd3d81560d4/c2pa.signature"
+          },
+          {
+            "code": "signingCredential.untrusted",
+            "explanation": "signing certificate untrusted",
+            "url": "self#jumbf=/c2pa/urn:uuid:8bdd14ca-6fdd-4405-98c1-b7579b9f38f3/c2pa.signature"
+          }
+        ]
+      },
+      "w03": {
+        "assertion_labels": [
+          "c2pa.actions.v2"
+        ],
+        "cert_serial": "1137338005321867015972888313798652237306658853",
+        "claim_generator": "Microsoft_Designer/1.0",
+        "digital_source_types": [
+          {
+            "action": "c2pa.placed",
+            "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/algorithmicMedia"
+          }
+        ],
+        "manifest_present": true,
+        "signer_common_name": "Microsoft Corporation",
+        "signer_issuer": "Microsoft Corporation",
+        "title": null,
+        "validation_state": "Valid",
+        "validation_status": [
+          {
+            "code": "signingCredential.untrusted",
+            "explanation": "signing certificate untrusted",
+            "url": "self#jumbf=/c2pa/urn:uuid:a756a36c-2ec0-4d1d-954b-55757eeebff2/c2pa.signature"
+          },
+          {
+            "code": "signingCredential.untrusted",
+            "explanation": "signing certificate untrusted",
+            "url": "self#jumbf=/c2pa/urn:uuid:3ce51ef3-1d41-43fc-a414-fe052329ebb1/c2pa.signature"
+          },
+          {
+            "code": "signingCredential.untrusted",
+            "explanation": "signing certificate untrusted",
+            "url": "self#jumbf=/c2pa/urn:uuid:0b88efc6-49fb-4ed5-b53f-ccc2f9616613/c2pa.signature"
+          },
+          {
+            "code": "signingCredential.untrusted",
+            "explanation": "signing certificate untrusted",
+            "url": "self#jumbf=/c2pa/urn:uuid:3ce51ef3-1d41-43fc-a414-fe052329ebb1/c2pa.signature"
+          }
+        ]
+      },
+      "w04": {
+        "error": "_C2paManifestNotFound: ManifestNotFound: no JUMBF data found",
+        "manifest_present": false
+      },
+      "w05": {
+        "error": "_C2paManifestNotFound: ManifestNotFound: no JUMBF data found",
+        "manifest_present": false
+      }
+    },
+    "run_date": "2026-07-11",
+    "tool": "c2pa-python 0.36.0"
+  },
+  "layer2": {
+    "layer": "detector (statistical AI-image classifier)",
+    "note": "Raw scores, unthresholded. The detector is a statistical classifier, NOT a watermark decoder; the collective holds no independent FPR/FNR benchmark for it — display tiers are pre-registered in README.md and carry no calibration authority.",
+    "results": {
+      "c01": {
+        "ai_generated": 0.001,
+        "api_status": "success",
+        "http_status": 200,
+        "operations_used": 5
+      },
+      "c02": {
+        "ai_generated": 0.001,
+        "api_status": "success",
+        "http_status": 200,
+        "operations_used": 5
+      },
+      "c03": {
+        "ai_generated": 0.001,
+        "api_status": "success",
+        "http_status": 200,
+        "operations_used": 5
+      },
+      "c04": {
+        "ai_generated": 0.001,
+        "api_status": "success",
+        "http_status": 200,
+        "operations_used": 5
+      },
+      "c05": {
+        "ai_generated": 0.001,
+        "api_status": "success",
+        "http_status": 200,
+        "operations_used": 5
+      },
+      "c06": {
+        "ai_generated": 0.001,
+        "api_status": "success",
+        "http_status": 200,
+        "operations_used": 5
+      },
+      "c07": {
+        "ai_generated": 0.001,
+        "api_status": "success",
+        "http_status": 200,
+        "operations_used": 5
+      },
+      "c08": {
+        "ai_generated": 0.001,
+        "api_status": "success",
+        "http_status": 200,
+        "operations_used": 5
+      },
+      "c09": {
+        "ai_generated": 0.001,
+        "api_status": "success",
+        "http_status": 200,
+        "operations_used": 5
+      },
+      "c10": {
+        "ai_generated": 0.001,
+        "api_status": "success",
+        "http_status": 200,
+        "operations_used": 5
+      },
+      "w01": {
+        "ai_generated": 0.99,
+        "api_status": "success",
+        "http_status": 200,
+        "operations_used": 5
+      },
+      "w02": {
+        "ai_generated": 0.99,
+        "api_status": "success",
+        "http_status": 200,
+        "operations_used": 5
+      },
+      "w03": {
+        "ai_generated": 0.99,
+        "api_status": "success",
+        "http_status": 200,
+        "operations_used": 5
+      },
+      "w04": {
+        "ai_generated": 0.01,
+        "api_status": "success",
+        "http_status": 200,
+        "operations_used": 5
+      },
+      "w05": {
+        "ai_generated": 0.001,
+        "api_status": "success",
+        "http_status": 200,
+        "operations_used": 5
+      }
+    },
+    "run_date": "2026-07-11",
+    "tool": "Sightengine `genai` model (commercial API)"
+  },
+  "specimens": [
+    {
+      "bytes": 61720,
+      "expected": "no manifest (corpus 'A' = parent ingredient file, no Content Credentials)",
+      "file": "adobe-20220124-A.jpg",
+      "id": "c01",
+      "license": "CC BY-SA 4.0 (c2pa-org/public-testfiles)",
+      "sha256": "f999fd78bfe8a83c96e468a078830ba94485bc1bc6fd086fb94a43bd29dd0f23",
+      "source": "https://github.com/c2pa-org/public-testfiles/tree/main/legacy/1.4/image/jpeg",
+      "tier": "control-fixture"
+    },
+    {
+      "bytes": 140297,
+      "expected": "valid manifest (corpus 'C' = simple claim)",
+      "file": "adobe-20220124-C.jpg",
+      "id": "c02",
+      "license": "CC BY-SA 4.0 (c2pa-org/public-testfiles)",
+      "sha256": "75a8da33f6eaf1e16bf3b42cd78913b22b2e6a671fda217a508b1ba4230ce864",
+      "source": "https://github.com/c2pa-org/public-testfiles/tree/main/legacy/1.4/image/jpeg",
+      "tier": "control-fixture"
+    },
+    {
+      "bytes": 178709,
+      "expected": "invalid: signature did not validate (corpus 'E-sig')",
+      "file": "adobe-20220124-E-sig-CA.jpg",
+      "id": "c03",
+      "license": "CC BY-SA 4.0 (c2pa-org/public-testfiles)",
+      "sha256": "0d4c2774f1b7e94b9613bb952b0a76b6a178d22ac6d206d257d2af1376cbbff2",
+      "source": "https://github.com/c2pa-org/public-testfiles/tree/main/legacy/1.4/image/jpeg",
+      "tier": "control-fixture"
+    },
+    {
+      "bytes": 178709,
+      "expected": "invalid: hard-binding hash mismatch (corpus 'E-dat')",
+      "file": "adobe-20220124-E-dat-CA.jpg",
+      "id": "c04",
+      "license": "CC BY-SA 4.0 (c2pa-org/public-testfiles)",
+      "sha256": "dae9d121060cec4b6f27ee8acda85ad461cf75f2261d90b463319b787342d7f9",
+      "source": "https://github.com/c2pa-org/public-testfiles/tree/main/legacy/1.4/image/jpeg",
+      "tier": "control-fixture"
+    },
+    {
+      "bytes": 656258,
+      "expected": "invalid: referenced claim missing (corpus 'E-clm')",
+      "file": "adobe-20220124-E-clm-CAICAI.jpg",
+      "id": "c05",
+      "license": "CC BY-SA 4.0 (c2pa-org/public-testfiles)",
+      "sha256": "b3ff3f00c66602280977d3e4d962a836d33ab83953d0009f7c1e6490d0065feb",
+      "source": "https://github.com/c2pa-org/public-testfiles/tree/main/legacy/1.4/image/jpeg",
+      "tier": "control-fixture"
+    },
+    {
+      "bytes": 178709,
+      "expected": "invalid: assertion tampered, URI hash mismatch (corpus 'E-uri')",
+      "file": "adobe-20220124-E-uri-CA.jpg",
+      "id": "c06",
+      "license": "CC BY-SA 4.0 (c2pa-org/public-testfiles)",
+      "sha256": "56014faf6b97532252c9bb90dcf484923a8aa7bba197e84a8555044a35e4f3a6",
+      "source": "https://github.com/c2pa-org/public-testfiles/tree/main/legacy/1.4/image/jpeg",
+      "tier": "control-fixture"
+    },
+    {
+      "bytes": 152070,
+      "expected": "incomplete: hash mismatch / off the golden path (corpus 'X')",
+      "file": "adobe-20220124-XCA.jpg",
+      "id": "c07",
+      "license": "CC BY-SA 4.0 (c2pa-org/public-testfiles)",
+      "sha256": "4524a15f71dbdd9e96cd6e78a1a17c1260fff04f68900a10fd1279664d260c9e",
+      "source": "https://github.com/c2pa-org/public-testfiles/tree/main/legacy/1.4/image/jpeg",
+      "tier": "control-fixture"
+    },
+    {
+      "bytes": 2261231,
+      "expected": "valid hardware-signed capture (Truepic Lens SDK)",
+      "file": "truepic-20230212-camera.jpg",
+      "id": "c08",
+      "license": "CC BY-SA 4.0 (c2pa-org/public-testfiles)",
+      "sha256": "379aabc7d04ee8c8fb04e18925428463353ab6fb6696ee3d7aa11710c6b2e147",
+      "source": "https://github.com/c2pa-org/public-testfiles/tree/main/legacy/1.4/image/jpeg",
+      "tier": "control-camera"
+    },
+    {
+      "bytes": 4015169,
+      "expected": "valid hardware-signed capture (Truepic Lens SDK)",
+      "file": "truepic-20230212-landscape.jpg",
+      "id": "c09",
+      "license": "CC BY-SA 4.0 (c2pa-org/public-testfiles)",
+      "sha256": "e9a7d020de9edb1c13602f5e1a42fdb67e6ea1728d7f7d88a316cd2e3ce989c9",
+      "source": "https://github.com/c2pa-org/public-testfiles/tree/main/legacy/1.4/image/jpeg",
+      "tier": "control-camera"
+    },
+    {
+      "bytes": 1530098,
+      "expected": "camera capture, invalid: claim signature mismatch (per corpus README)",
+      "file": "nikon-20221019-building.jpeg",
+      "id": "c10",
+      "license": "CC BY-SA 4.0 (c2pa-org/public-testfiles)",
+      "sha256": "721e75362ccc4ff943f5140ebc89897aa501d056cfb0dc7a6aeb68382e412cc5",
+      "source": "https://github.com/c2pa-org/public-testfiles/tree/main/legacy/1.4/image/jpeg",
+      "tier": "control-camera"
+    },
+    {
+      "bytes": 192936,
+      "expected": "AI image downloaded from a generator, manifest intact?",
+      "file": "wild-chatgpt-soldering.webp",
+      "id": "w01",
+      "license": "Public domain (per Commons file page)",
+      "retrieved": "2026-07-11",
+      "sha256": "07f175fd7f3a7b5438e1ac241e55e0f77226d36532b77a64e2529e91c4931974",
+      "source": "https://commons.wikimedia.org/wiki/File:DALL%C2%B7E_2025-02-21_23.58.53_-_A_simple_soldering_iron_with_a_stand._The_soldering_iron_has_a_slim,_ergonomic_handle_with_a_metallic_tip._The_stand_is_a_small_metal_base_with_a_coil.webp",
+      "tier": "wild",
+      "upload_date": "2025-02-22"
+    },
+    {
+      "bytes": 574662,
+      "expected": "AI image downloaded from a generator, manifest intact?",
+      "file": "wild-chatgpt-imagetitis.webp",
+      "id": "w02",
+      "license": "Public domain (per Commons file page)",
+      "retrieved": "2026-07-11",
+      "sha256": "2435f70c56f31c3ba549ecffc065c650f807a7c21950dd2d45ba9cdfcbb0e563",
+      "source": "https://commons.wikimedia.org/wiki/File:Imagetitis-affected_editor_by_ChatGPT_4.0_%26_DALL%C2%B7E_3_(2024).webp",
+      "tier": "wild",
+      "upload_date": "2025-02-06"
+    },
+    {
+      "bytes": 1570373,
+      "expected": "AI image from a consumer design tool, manifest intact?",
+      "file": "wild-msdesigner-gato.png",
+      "id": "w03",
+      "license": "Public domain (per Commons file page)",
+      "retrieved": "2026-07-11",
+      "sha256": "1a66871497e74a281233b763cb16d34a2309271fefa8fa280b1e4334fc5ecbf7",
+      "source": "https://commons.wikimedia.org/wiki/File:Gato_naranja_generado_por_IA.png",
+      "tier": "wild",
+      "upload_date": "2024-02-25"
+    },
+    {
+      "bytes": 235706,
+      "expected": "community-labelled AI image; machine-readable provenance?",
+      "file": "wild-nomanifest-commons-ai.png",
+      "id": "w04",
+      "license": "CC BY-SA 4.0 (per Commons file page)",
+      "retrieved": "2026-07-11",
+      "sha256": "655c9747ab3633fdb9ca45fbdd8a25da0c7d54009f06ead8afc5c27ad9e4feca",
+      "source": "https://commons.wikimedia.org/wiki/File:Wikimedia_Commons_AI_(2025).png",
+      "tier": "wild",
+      "upload_date": "2025-01-24"
+    },
+    {
+      "bytes": 2833605,
+      "expected": "human photograph (Alvesgaspar, 2010), pre-provenance-era",
+      "file": "wild-human-cat.jpg",
+      "id": "w05",
+      "license": "CC BY-SA 3.0, author Alvesgaspar (per Commons file page)",
+      "retrieved": "2026-07-11",
+      "sha256": "59ec9bf12a5b63e0913e986b9566b96228c9f8921fda4fb87bf2a7f9acff3dd2",
+      "source": "https://commons.wikimedia.org/wiki/File:Cat_November_2010-1a.jpg",
+      "tier": "wild",
+      "upload_date": "2010-11"
+    }
+  ]
+}
