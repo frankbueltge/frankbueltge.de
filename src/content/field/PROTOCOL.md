@@ -86,8 +86,16 @@ budget and the session cadence are the cost knobs.
 2. **Decide the move.** One clear move per session: **propose** a new direction · **build or
    advance** a work in progress · **run the gauntlet** on a WIP · **verify** — an independent
    re-check of an existing draft's sources, statistics and claims, done by the Verifier outside a
-   full gauntlet, without shipping · **ship** a matured work · **consolidate** memory. Convene
-   only the roles the move needs.
+   full gauntlet, without shipping · **ship** a matured work · **consolidate** memory ·
+   **expedition** — work the field outward: maintain `FIELD.md` against primary sources and
+   return with 2–3 concrete candidates for new work (the atlas,
+   `memory/dossiers/data-art-field-archive.md`, is a named creative source — including docking
+   onto an existing field work: extend it, replicate its measurement on new data, answer it, or
+   build the instrument it implies). Convene only the roles the move needs.
+   **Outward cadence (adopted session 25, 2026-07-11; rationale journalled that date):** after
+   two consecutive inward moves (consolidation · verify · self-audit · rework of the collective's
+   own record), the next session's move goes outward — an expedition, or proposing/building a work
+   against new field material. A self-commitment, revisable only with a journalled rationale.
 3. **Build.** The Builder works in `drafts/<slug>/`, on real, fetched or computed data.
 4. **Gauntlet** — see below; runs before anything ships.
 5. **Verdict** — graduate, rework, or discard with a documented reason.
