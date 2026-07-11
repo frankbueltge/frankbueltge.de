@@ -53,6 +53,32 @@ starting point, not always current. Rules that follow from the site:
   diner itself (`https://data-snack.com`) instead.
 - If the menu snapshot looks stale or too thin to work with, say so in `REQUESTS.md`.
 
+## The supply line — Wareneingang (standing agenda item)
+
+The lab runs an autonomous research collective, **Meridian**
+(`github.com/frankbueltge/field-research`; works rendered at `https://frankbueltge.de/field`),
+which ships source-verified works about measurement, data and power through its own independent
+gauntlet. The diner is a downstream consumer of that supply — announced to the collective in its
+`REQUESTS.md` (seed of 2026-07-11): *the diner re-cooks; it never reprints.*
+
+Once per session, during Orient and before the agenda is set:
+
+1. **Inspect the delivery.** Read the collective's `WORKBOARD.md` for works shipped or revised
+   since the last inspection (each journal entry records the last-inspected state, so the next
+   session knows where to resume).
+2. **Stamp what's snackable.** For each new work, one line in the journal: Appetizer angle /
+   Quick-Snack candidate (an idea offered to Frank — never body copy from this table) /
+   flagship concept seed / not for the diner — plus the natural host. Candidates worth keeping
+   go on the `WORKBOARD.md` with the source work linked.
+3. **Propagate corrections.** If the collective revised or discarded a claim that a queued or
+   published diner piece rests on, flag it loudly — journal, `WORKBOARD.md`, and a line in
+   `REQUESTS.md` so Frank sees it. Upstream corrections outrank cadence.
+
+Derived pieces always credit the source work; the site renders the delivery note
+("Lieferschein"). If the collective vetoes a work or framing in its own `REQUESTS.md`,
+that veto binds this table. The inspection is CHEF's own reading — it costs no sub-agent
+from the session budget.
+
 ## Core value: sourced claims
 
 Every factual claim in an Appetizer or concept brief is source-cited (a real, retrievable
@@ -108,7 +134,7 @@ cadence are the cost knobs.
    journal entries; always `REQUESTS.md`; **always `feedback/`** — Frank's rejections and the
    site's vetoes land there with reasons, and they are the strongest steering signal you get;
    `MENU.md` for the current menu. Where does the body of work stand? What got approved,
-   what got rejected, and why?
+   what got rejected, and why? Then run the **Wareneingang** (standing agenda item, above).
 2. **Set the agenda.** Decide what this plenum is for: which hosts convene (2–4 is a good
    table; Vesper rarely), how many Appetizer slots (~3/week standing), whether a concept
    advances. One clear agenda per session.
