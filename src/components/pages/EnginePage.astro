@@ -14,6 +14,8 @@ import { splitSessions, sessionMeta, renderMarkdown, uniqueSessionAnchor } from 
 export interface EngineConfig {
   ns: 'field' | 'atelier' | 'plenum'
   repo: string
+  /** default true — field renders its own story hero above and suppresses the shared header */
+  showHeader?: boolean
   txt: {
     eyebrow: string
     note: string
@@ -37,7 +39,15 @@ export interface EngineConfig {
 interface Props {
   config: EngineConfig
   all: any[]
-  works: { slug: string; kind: 'html' | 'astro'; date?: string; meta: any }[]
+  works: {
+    slug: string
+    kind: 'html' | 'astro'
+    date?: string
+    meta: any
+    /** optional story-layer additions (field only today; atelier/plenum pass nothing) */
+    badge?: { label: string; href: string; tone?: 'ok' | 'warn' }
+    clusters?: number[]
+  }[]
 }
 
 const { config, all, works } = Astro.props
@@ -81,6 +91,7 @@ const journalDays = [...journalDaysAsc].reverse().map((d) => ({ id: d.id, sessio
     der Header spannt auf volle Rahmenbreite (bündig mit den Werk-Karten),
     Text-Werke und Journal bleiben in Leselinienbreite (max-w-3xl). */}
 <div class="mx-auto max-w-6xl px-4 py-14">
+  {config.showHeader !== false && (
   <header class="mb-12">
     <p class="font-mono text-xs uppercase tracking-[0.2em] text-fg-faint">{txt.eyebrow}</p>
     <h1 class="mt-2 text-[clamp(30px,7vw,52px)] font-bold leading-none tracking-tight">
@@ -95,12 +106,13 @@ const journalDays = [...journalDaysAsc].reverse().map((d) => ({ id: d.id, sessio
       · <a href={`/${config.ns}/requests`} class="underline transition-colors hover:text-fg">{txt.teamChannel}</a>
     </p>
   </header>
+  )}
 
   {works.length > 0 && (
     <section class="mb-16">
       <h2 class="mb-5 font-mono text-xs uppercase tracking-widest text-fg-faint">{txt.worksSectionH}</h2>
-      {works.map(({ slug, kind, meta }) => kind === 'astro' ? (
-        <article class="mb-12 rounded-[16px] border border-line bg-panel panel-raised p-6">
+      {works.map(({ slug, kind, meta, badge, clusters }) => kind === 'astro' ? (
+        <article class="mb-12 rounded-[16px] border border-line bg-panel panel-raised p-6" data-clusters={clusters?.length ? clusters.join(' ') : undefined}>
           <a href={`/${config.ns}/werke/${slug}`} class="group block">
             <h3 class="text-lg font-semibold transition-colors group-hover:text-accent-soft">
               {meta.title ?? slug}
@@ -109,6 +121,11 @@ const journalDays = [...journalDaysAsc].reverse().map((d) => ({ id: d.id, sessio
             {(meta.embodies ?? meta.verkoerpert) && <p class="mt-1.5 text-sm leading-relaxed text-fg-muted">{meta.embodies ?? meta.verkoerpert}</p>}
             <span class="mt-3 inline-block font-mono text-[11px] text-fg-faint underline transition-colors group-hover:text-fg">{txt.openWork} →</span>
           </a>
+          {badge && (
+            <a href={badge.href} class={`mt-3 inline-block rounded border px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider no-underline transition-colors ${badge.tone === 'warn' ? 'border-amber/50 text-amber hover:border-amber' : 'border-line text-fg-muted hover:border-fg-faint hover:text-fg'}`}>
+              {badge.label}
+            </a>
+          )}
         </article>
       ) : (
         <article class="mb-12 rounded-[16px] border border-line bg-panel panel-raised p-6">

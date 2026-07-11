@@ -7,6 +7,8 @@ const locale = (Astro.currentLocale ?? 'en') as Locale
 const home = getRelativeLocaleUrl(locale, '/')
 const nav = [
   { href: getRelativeLocaleUrl(locale, '/lab'), label: t(locale, 'nav.lab') },
+  // Field is English-only (the collective's record) — hard href, no locale prefix.
+  { href: '/field', label: 'Field' },
   { href: getRelativeLocaleUrl(locale, '/atlas'), label: t(locale, 'nav.atlas') },
   { href: getRelativeLocaleUrl(locale, '/work'), label: t(locale, 'nav.work') },
   { href: getRelativeLocaleUrl(locale, '/about'), label: t(locale, 'nav.about') },
@@ -16,10 +18,13 @@ const other = locale === 'de' ? 'en' : 'de'
 const pathNoLocale = Astro.url.pathname.replace(/^\/(de|en)/, '') || '/'
 const otherUrl = getRelativeLocaleUrl(other, pathNoLocale)
 // The engine works + their protocol/requests pages (and 404) are English-only — no /de mirror
-// is built, so the language toggle would 404. Suppress it there. (Link audit, 2026-07-06.)
+// is built, so the language toggle would 404. Suppress it there. Field's LANDING page is
+// English-only too (its /de decoy duplicate was removed with the story-layer redesign).
+// (Link audit, 2026-07-06; widened 2026-07-11.)
 const ENGINE_NS = ['field', 'atelier', 'plenum']
 const hasAlternate =
   !pathNoLocale.startsWith('/404') &&
+  pathNoLocale !== '/field' &&
   !ENGINE_NS.some(
     (ns) =>
       pathNoLocale.startsWith(`/${ns}/werke/`) ||
