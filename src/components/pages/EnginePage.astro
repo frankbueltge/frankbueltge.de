@@ -9,7 +9,7 @@
 // `works` array in.
 import { render } from 'astro:content'
 import { sortJournal } from '@/lib/atelier/sort'
-import { splitSessions, sessionMeta, renderMarkdown } from '@/lib/engines/journal'
+import { splitSessions, sessionMeta, renderMarkdown, uniqueSessionAnchor } from '@/lib/engines/journal'
 
 export interface EngineConfig {
   ns: 'field' | 'atelier' | 'plenum'
@@ -59,12 +59,22 @@ const mdRefs = { repo: config.repo, docs: new Set(rootDocs.map((e) => e.id)) }
 
 const dayLabel = (id: string) => id.replace('journal/', '').replace(/\.md$/, '')
 
-const journalDays = journal.map((e) => {
-  const sessions = splitSessions(e.body ?? '')
-    .map((s) => ({ ...s, ...sessionMeta(s.text), html: renderMarkdown(s.text, mdRefs) }))
-    .reverse() // file order is chronological; display newest session first
+// Anchors are assigned in CHRONOLOGICAL order (oldest day first, file order within a day)
+// so that when the engine's own session numbering drifts (two days claiming the same
+// "collective session N" — a real occurrence), the first claimant keeps the clean id.
+// Display order stays newest-first.
+const anchorsUsed = new Set<string>()
+const journalDaysAsc = [...journal].reverse().map((e) => {
+  const day = dayLabel(e.id)
+  const sessions = splitSessions(e.body ?? '').map((s, i) => ({
+    ...s,
+    ...sessionMeta(s.text),
+    html: renderMarkdown(s.text, mdRefs),
+    anchor: uniqueSessionAnchor(anchorsUsed, s.heading, day, i),
+  }))
   return { id: e.id, sessions }
 })
+const journalDays = [...journalDaysAsc].reverse().map((d) => ({ id: d.id, sessions: [...d.sessions].reverse() }))
 ---
 
 {/* Breiter Rahmen für die interaktiven Werke (Canvas-Arbeiten brauchen Fläche);
@@ -167,7 +177,7 @@ const journalDays = journal.map((e) => {
       <div class="mb-10">
         <p class="mb-3 border-t border-line pt-6 font-mono text-[11px] uppercase tracking-wider text-fg-faint">{dayLabel(id)}</p>
         {sessions.map((s, i) => (
-          <details class="engine-session mb-3 rounded-[14px] border border-line bg-panel panel-raised" open={dayIdx === 0 && i === 0}>
+          <details id={s.anchor} class="engine-session mb-3 scroll-mt-16 rounded-[14px] border border-line bg-panel panel-raised" open={dayIdx === 0 && i === 0}>
             <summary class="cursor-pointer select-none px-5 py-3.5">
               <span class="font-semibold">{s.heading || dayLabel(id)}</span>
               {s.move && <span class="ml-2 inline-block rounded border border-line px-1.5 py-0.5 align-middle font-mono text-[10px] uppercase tracking-wider text-fg-muted">{s.move}</span>}
@@ -260,4 +270,17 @@ const journalDays = journal.map((e) => {
     ev.preventDefault()
     if (body) body.scrollTop += ev.deltaY
   }, { passive: false })
+
+  // Deep links into the journal: #cs-N (or any session anchor) opens that entry and
+  // scrolls to it — used by the field timeline, works for hand-typed URLs on all engines.
+  const openFromHash = () => {
+    const id = decodeURIComponent(location.hash.slice(1))
+    const el = id ? document.getElementById(id) : null
+    if (el instanceof HTMLDetailsElement) {
+      el.open = true
+      el.scrollIntoView()
+    }
+  }
+  openFromHash()
+  addEventListener('hashchange', openFromHash)
 </script>
