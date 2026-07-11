@@ -1,20 +1,23 @@
 // @ts-nocheck
-// First-party reverse proxy for Umami Cloud (Cloudflare Pages Function).
+// First-party reverse proxy for self-hosted Umami (Cloudflare Pages Function).
 //
 // Why: the browser must never make a third-party request — the Beifang experiment claims
 // "zero third-party requests", and the CF analytics beacon was removed in July 2026 for
 // exactly that reason. So the Umami tracker is loaded from /stats/script.js and posts to
-// /stats/api/send — both on this domain. This function forwards those to Umami Cloud:
-//   /stats/script.js   -> https://cloud.umami.is/script.js   (the tracker code)
-//   /stats/api/send     -> https://gateway.umami.is/api/send  (the collector the tracker uses)
-// Result: no external host in the browser, no external CSP source needed, cookieless.
+// /stats/api/send — both on this domain. This function forwards those to our own
+// self-hosted Umami instance (EU/Frankfurt, on Vercel + Neon), which serves both:
+//   /stats/script.js  -> https://stats.frankbueltge.de/script.js  (the tracker code)
+//   /stats/api/send    -> https://stats.frankbueltge.de/api/send   (the collector)
+// Result: no external host in the browser, no external CSP source needed, cookieless,
+// and no third-country transfer (was Umami Cloud / US until 2026-07).
 export async function onRequest(context) {
   const { request, params } = context
   const parts = Array.isArray(params.path) ? params.path : [params.path]
   const path = parts.filter(Boolean).join('/')
 
-  // Collector calls (api/*) go to the ingestion gateway; everything else (script.js) to cloud.
-  const upstream = path.startsWith('api/') ? 'https://gateway.umami.is' : 'https://cloud.umami.is'
+  // Self-hosted Umami serves both the tracker (script.js) and the collector (api/send)
+  // on the same host, so everything proxies to the one upstream.
+  const upstream = 'https://stats.frankbueltge.de'
   const target = `${upstream}/${path}`
 
   // Forward only what the upstream needs; pass the real client IP for geo (Umami hashes it).
