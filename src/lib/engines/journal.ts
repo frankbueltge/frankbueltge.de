@@ -1,7 +1,10 @@
 // src/lib/engines/journal.ts
-// Splits an engine's journal-day markdown into sessions (the constitutions mandate
-// `# Session NN` headings) and renders fragments at build time. Tolerant by design:
-// files without session headings render as one card (pre-collective back-catalog).
+// Splits an engine's journal-day markdown into sessions and renders fragments at build
+// time. Tolerant by design: the engines' H1 conventions have drifted across their history
+// (`# Session 01 — date`, `# Session — date (collective session N)`,
+// `# Journal — date (collective session N)`, `# Research day — date (Session N)`,
+// `# Plenum minutes — …`), so the splitter breaks on ANY H1 (fence-aware — a `# ` line
+// inside a code fence is not a heading). Files without H1 headings render as one card.
 import MarkdownIt from 'markdown-it'
 
 const md = new MarkdownIt({ html: false, linkify: true })
@@ -91,15 +94,67 @@ md.renderer.rules.code_inline = (tokens, idx, opts, env, self) => {
 export interface RawSession { heading: string; text: string }
 
 export function splitSessions(body: string): RawSession[] {
-  const chunks = ('\n' + body).split(/\n(?=# Session \d)/).map((c) => c.replace(/^\n/, ''))
+  // Line scan instead of one regex split: heading detection must ignore `# ` lines inside
+  // code fences (machine-written journals quote shell/yaml snippets), which a lookahead
+  // split cannot. Chunks start at every top-level H1; leading text before the first H1
+  // stays a heading-less chunk (pre-collective back-catalog behavior, unchanged).
+  const lines = body.split('\n')
+  const chunks: string[][] = []
+  let current: string[] = []
+  let inFence = false
+  for (const line of lines) {
+    if (/^(```|~~~)/.test(line)) inFence = !inFence
+    else if (!inFence && /^# /.test(line) && current.some((l) => l.trim())) {
+      chunks.push(current)
+      current = []
+    }
+    current.push(line)
+  }
+  if (current.length) chunks.push(current)
+
   const sessions: RawSession[] = []
-  for (const chunk of chunks) {
+  for (const chunkLines of chunks) {
+    const chunk = chunkLines.join('\n')
     if (!chunk.trim()) continue
-    const m = chunk.match(/^# (Session \d+[^\n]*)/)
-    if (m) sessions.push({ heading: m[1].trim(), text: chunk.replace(/^# [^\n]*\n?/, '') })
+    const m = chunk.match(/^\s*# ([^\n]+)/)
+    if (m) sessions.push({ heading: m[1].trim(), text: chunk.replace(/^\s*# [^\n]*\n?/, '') })
     else sessions.push({ heading: '', text: chunk })
   }
   return sessions.length ? sessions : [{ heading: '', text: body }]
+}
+
+/**
+ * Stable, content-derived DOM id for a session — survives re-syncs and re-chunking.
+ * `cs-N` when the heading names a collective session; `pre-<day>-N` for the
+ * pre-constitution `Session NN` entries; positional fallback otherwise.
+ */
+export function sessionAnchor(heading: string, dayId: string, indexInFile: number): string {
+  const cs = heading.match(/collective session (\d+)/i)
+  if (cs) return `cs-${Number(cs[1])}`
+  const pre = heading.match(/^Session (\d+)/i)
+  if (pre) return `pre-${dayId}-${Number(pre[1])}`
+  return `${dayId}-${indexInFile}`
+}
+
+/**
+ * Collision-safe variant: the engine's own numbering drifts (a real instance exists —
+ * two different days both claiming "collective session 24"). Callers walk sessions in
+ * CHRONOLOGICAL order so the first (true) claimant keeps the clean anchor; later
+ * duplicates get a day suffix. Deterministic across builds.
+ */
+export function uniqueSessionAnchor(
+  used: Set<string>,
+  heading: string,
+  dayId: string,
+  indexInFile: number,
+): string {
+  const base = sessionAnchor(heading, dayId, indexInFile)
+  let anchor = base
+  if (used.has(anchor)) anchor = `${base}-${dayId}`
+  let n = 2
+  while (used.has(anchor)) anchor = `${base}-${dayId}-${n++}`
+  used.add(anchor)
+  return anchor
 }
 
 export function sessionMeta(text: string): { move: string | null; voices: string | null } {
