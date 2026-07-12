@@ -76,7 +76,7 @@ jobs:
         run: |
           if [ -n "$(git status --porcelain src/content/studio src/components/studio src/pages/studio src/data/studio/chronicle.upstream.json public/studio/werke-html)" ]; then
             git config user.name "Studio-Integrate"
-            git config user.email "studio-integrate@users.noreply.github.com"
+            git config user.email "studio-integrate@frankbueltge.de"
             git add -A src/content/studio src/components/studio src/pages/studio src/data/studio/chronicle.upstream.json
             if [ -d public/studio/werke-html ]; then git add -A public/studio/werke-html; fi
             git commit -m "studio: integrate $(date -u +%F)"
@@ -98,7 +98,7 @@ jobs:
               git clone --depth 1 "https://x-access-token:${BOT_TOKEN}@github.com/frankbueltge/studio" /tmp/fb-rej
               mkdir -p /tmp/fb-rej/field-feedback
               printf '%s\n' "$FEEDBACK" > "/tmp/fb-rej/field-feedback/${DATE}-rejections.md"
-              cd /tmp/fb-rej && git config user.name "Studio-Integrate" && git config user.email "studio-integrate@users.noreply.github.com"
+              cd /tmp/fb-rej && git config user.name "Studio-Integrate" && git config user.email "studio-integrate@frankbueltge.de"
               git add field-feedback && git commit -m "feedback: works rejected at the gate ${DATE}" && git push
             ) || echo "rejection feedback skipped (non-fatal)"
           else
@@ -124,7 +124,7 @@ jobs:
               git clone --depth 1 "https://x-access-token:${BOT_TOKEN}@github.com/frankbueltge/studio" /tmp/fb
               mkdir -p /tmp/fb/field-feedback
               printf '# Build feedback %s\n\nYour last contribution did not pass the gate (no deploy; the last good state stays live). Excerpt:\n\n```\n%s\n```\n\nFix the affected work in `works/<slug>/` and commit again.\n' "$DATE" "$LOG" > "/tmp/fb/field-feedback/${DATE}.md"
-              cd /tmp/fb && git config user.name "Studio-Integrate" && git config user.email "studio-integrate@users.noreply.github.com"
+              cd /tmp/fb && git config user.name "Studio-Integrate" && git config user.email "studio-integrate@frankbueltge.de"
               git add field-feedback && git commit -m "feedback: build $DATE red" && git push
             ) || echo "feedback push skipped (non-fatal)"
           fi
