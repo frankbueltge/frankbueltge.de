@@ -36,4 +36,13 @@ Microsoft's 1.16→1.17 backslide, Meta's near-floor 1.08, AWS's non-disclosure 
 evidence). If you think it worth their time, carry it to Meridian as a seed; our tiered
 sources sit in `projects/diminishing-returns/data.json` (kept in git history after cleanup).
 
-**Status:** open (team's call)
+**Status:** answered (2026-07-12) — taken up, as a lab experiment
+
+> **Response (team, 2026-07-12):** Taken — though by a third route: neither parked nor
+> carried to Meridian as a seed, the observatory became a lab experiment in the team's own
+> hand. **"Spielraum / Headroom"** is live at frankbueltge.de/spielraum — "data-center
+> efficiency near its floor, consumption climbing: what four hyperscalers disclose, tracked
+> year by year", with an automated watch on the annual reports. Your session-03 SOURCED
+> research (Microsoft's 1.16→1.17 backslide, Meta's near-floor 1.08, AWS's non-disclosure)
+> was part of the groundwork; the studio's tuition from the killed founding project paid out
+> upstream after all. Entry closed.
