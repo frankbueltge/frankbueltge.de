@@ -1,0 +1,130 @@
+# .github/workflows/studio-integrate.yml
+# Pulls the studio repo (production collective "Ensemble"), integrates ONLY allowed paths
+# (path boundary) into the `studio` namespace, validates check/test/build, and lets deploy-cf
+# rebuild only on green. On red: no deploy (last good state stays), a feedback file back into
+# the engine's repo + an issue to Frank. Fourth instance of the same integrator pattern as
+# atelier-integrate.yml (Ulysses), field-integrate.yml (Meridian) and plenum-integrate.yml
+# (Line Check); same integrator script, ns='studio'.
+name: Studio integrate
+
+on:
+  # Promptness: integrate immediately once the engine lands something on its main —
+  # cross-repo via repository_dispatch from the engine's auto-land.yml.
+  repository_dispatch:
+    types: [studio-landed]
+  schedule:
+    - cron: '0 4 * * *'   # safety net if the dispatch fails (offset from field's 03:30 and atelier's 03:00)
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: studio-integrate
+
+jobs:
+  integrate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+
+      - name: Clone studio repo
+        run: git clone --depth 1 https://github.com/frankbueltge/studio /tmp/studio
+
+      - name: Integrate works (html + astro + md) + sync journal/docs
+        # Path boundary: only journal/, works/*.md, work directories (via the integrator) and
+        # the four doc files below are ever copied. projects/, memory/ and WORKBOARD.md are
+        # intentionally excluded — unvetted work stays in the engine repo; the studio's
+        # in-production work lives in projects/ until it premieres into works/.
+        run: |
+          echo "guard: projects/, memory/, WORKBOARD.md are intentionally excluded from this copy — unvetted work stays in the engine repo (the studio's in-production work lives in projects/ until it premieres into works/)"
+          # Full reset of the generated work outputs → the site mirrors the engine exactly
+          # (removed/renamed works leave no orphans).
+          rm -rf src/content/studio/works src/components/studio/werke src/pages/studio/werke public/studio/werke-html
+          mkdir -p src/content/studio/journal src/content/studio/works src/components/studio/werke
+          touch src/components/studio/werke/.gitkeep
+          # Mirror the journal (removes deleted entries)
+          rsync -a --delete /tmp/studio/journal/ src/content/studio/journal/
+          # Markdown works
+          cp /tmp/studio/works/*.md src/content/studio/works/ 2>/dev/null || true
+          # HTML/Astro work directories via the integrator (path boundary enforced), ns=studio
+          npx tsx scripts/atelier/integrate.ts /tmp/studio . studio > /tmp/report.json
+          cat /tmp/report.json
+          for f in PROTOCOL.md README.md REQUESTS.md SITE-API.md; do [ -f "/tmp/studio/$f" ] && cp "/tmp/studio/$f" "src/content/studio/$f" || true; done
+          # Chronicle self-report from the engine repo root (see the chronicle contract in
+          # SITE-API.md) — absence is not an error; malformed content fails the build gate
+          # below via the zod validation in src/lib/studio/chronicle.ts.
+          if [ -f "/tmp/studio/chronicle.json" ]; then
+            cp "/tmp/studio/chronicle.json" src/data/studio/chronicle.upstream.json
+          else
+            echo '[]' > src/data/studio/chronicle.upstream.json
+          fi
+
+      - name: Validate (check + test + build)
+        id: validate
+        run: |
+          set -o pipefail
+          { npm run check && npm test && npm run build; } 2>&1 | tee /tmp/validate.log
+
+      - name: Commit + let deploy-cf rebuild (on success)
+        if: success()
+        run: |
+          if [ -n "$(git status --porcelain src/content/studio src/components/studio src/pages/studio src/data/studio/chronicle.upstream.json public/studio/werke-html)" ]; then
+            git config user.name "Studio-Integrate"
+            git config user.email "studio-integrate@users.noreply.github.com"
+            git add -A src/content/studio src/components/studio src/pages/studio src/data/studio/chronicle.upstream.json
+            if [ -d public/studio/werke-html ]; then git add -A public/studio/werke-html; fi
+            git commit -m "studio: integrate $(date -u +%F)"
+            git pull --rebase --autostash origin main
+            git push
+          else
+            echo "no changes"
+          fi
+
+      - name: Rejection feedback to the engine repo (green builds too)
+        if: success()
+        env:
+          BOT_TOKEN: ${{ secrets.STUDIO_BOT_TOKEN }}
+        run: |
+          FEEDBACK=$(npx tsx scripts/atelier/rejection-feedback.ts /tmp/report.json studio || true)
+          if [ -n "$FEEDBACK" ] && [ -n "$BOT_TOKEN" ]; then
+            DATE=$(date -u +%F)
+            (
+              git clone --depth 1 "https://x-access-token:${BOT_TOKEN}@github.com/frankbueltge/studio" /tmp/fb-rej
+              mkdir -p /tmp/fb-rej/field-feedback
+              printf '%s\n' "$FEEDBACK" > "/tmp/fb-rej/field-feedback/${DATE}-rejections.md"
+              cd /tmp/fb-rej && git config user.name "Studio-Integrate" && git config user.email "studio-integrate@users.noreply.github.com"
+              git add field-feedback && git commit -m "feedback: works rejected at the gate ${DATE}" && git push
+            ) || echo "rejection feedback skipped (non-fatal)"
+          else
+            echo "no rejections (or no BOT_TOKEN) — nothing to feed back"
+          fi
+
+      - name: On failure — feedback to the engine's repo + issue to Frank
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BOT_TOKEN: ${{ secrets.STUDIO_BOT_TOKEN }}
+        run: |
+          DATE=$(date -u +%F)
+          LOG=$(tail -40 /tmp/validate.log 2>/dev/null || echo "see workflow run")
+          # Issue to Frank FIRST — always runs, even if the BOT_TOKEN block below fails.
+          gh issue create --repo frankbueltge/frankbueltge.de \
+            --title "Studio-Integrate red ($DATE)" \
+            --body "The nightly studio build failed; no deploy. Log excerpt in the workflow run. Feedback was written to studio/field-feedback/${DATE}.md." || true
+          # Feedback into the engine's repo (it reads it next session) — defensive: errors here
+          # must not block the issue creation above (hence || true).
+          if [ -n "$BOT_TOKEN" ]; then
+            (
+              git clone --depth 1 "https://x-access-token:${BOT_TOKEN}@github.com/frankbueltge/studio" /tmp/fb
+              mkdir -p /tmp/fb/field-feedback
+              printf '# Build feedback %s\n\nYour last contribution did not pass the gate (no deploy; the last good state stays live). Excerpt:\n\n```\n%s\n```\n\nFix the affected work in `works/<slug>/` and commit again.\n' "$DATE" "$LOG" > "/tmp/fb/field-feedback/${DATE}.md"
+              cd /tmp/fb && git config user.name "Studio-Integrate" && git config user.email "studio-integrate@users.noreply.github.com"
+              git add field-feedback && git commit -m "feedback: build $DATE red" && git push
+            ) || echo "feedback push skipped (non-fatal)"
+          fi
