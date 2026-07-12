@@ -401,28 +401,32 @@ const payload: string = JSON.stringify(work)
   }
   .readout em { color: var(--ink); font-style: normal; }
 
-  /* svg element classes */
-  .cl-axis { stroke: var(--line); stroke-width: 1.2; }
-  .cl-tick { stroke: var(--line); stroke-width: 1; }
-  .cl-ticklab { fill: var(--dim); font-size: 10px; font-family: ui-monospace, monospace; text-anchor: middle; }
-  .cl-tickr { text-anchor: end; }
-  .cl-axlab { fill: var(--dim); font-size: 11px; text-anchor: middle; font-style: italic;
+  /* svg element classes — the chart is built in JS (createElementNS), so these elements never
+     receive Astro's scope attribute. Target them through #cl-svg (a template element that DOES
+     carry the scope attr) + :global(), so the rules reach the JS-created nodes while staying
+     confined to this chart. Without this the SVG falls back to browser defaults (black fill,
+     no stroke) — a black box in light, invisible labels in dark. */
+  #cl-svg :global(.cl-axis) { stroke: var(--line); stroke-width: 1.2; }
+  #cl-svg :global(.cl-tick) { stroke: var(--line); stroke-width: 1; }
+  #cl-svg :global(.cl-ticklab) { fill: var(--dim); font-size: 10px; font-family: ui-monospace, monospace; text-anchor: middle; }
+  #cl-svg :global(.cl-tickr) { text-anchor: end; }
+  #cl-svg :global(.cl-axlab) { fill: var(--dim); font-size: 11px; text-anchor: middle; font-style: italic;
     font-family: ui-serif, Georgia, serif; }
-  .cl-corner { fill: var(--closed); opacity: .09; }
-  .cl-corner-lbl { fill: var(--closed); font-size: 11px; font-style: italic; opacity: .8;
+  #cl-svg :global(.cl-corner) { fill: var(--closed); opacity: .09; }
+  #cl-svg :global(.cl-corner-lbl) { fill: var(--closed); font-size: 11px; font-style: italic; opacity: .8;
     font-family: ui-serif, Georgia, serif; }
-  .cl-open-lbl { fill: var(--open); font-size: 11px; font-style: italic; text-anchor: end; opacity: .85;
+  #cl-svg :global(.cl-open-lbl) { fill: var(--open); font-size: 11px; font-style: italic; text-anchor: end; opacity: .85;
     font-family: ui-serif, Georgia, serif; }
-  .cl-path { fill: none; stroke: var(--dim); stroke-width: 1.4; opacity: .55; stroke-dasharray: 2 3; }
-  .cl-dot { fill: var(--self); stroke: var(--paper); stroke-width: 1.3; opacity: .9; transition: r .1s; }
-  .cl-dot.hot { fill: var(--closed); }
-  .cl-ptlab { fill: var(--ink); font-size: 11px; font-family: ui-monospace, monospace; }
-  .cl-pt { cursor: crosshair; }
-  .cl-drift { stroke: var(--closed); stroke-width: 2.4; }
-  .cl-arrowhead { fill: none; stroke: var(--closed); stroke-width: 2.4; stroke-linejoin: round; stroke-linecap: round; }
-  .cl-centroid { fill: var(--closed); stroke: var(--paper); stroke-width: 1.5; }
-  .cl-clab { fill: var(--closed); font-size: 11px; font-weight: bold; font-family: ui-monospace, monospace; }
-  .cl-clab-r { text-anchor: end; }
+  #cl-svg :global(.cl-path) { fill: none; stroke: var(--dim); stroke-width: 1.4; opacity: .55; stroke-dasharray: 2 3; }
+  #cl-svg :global(.cl-dot) { fill: var(--self); stroke: var(--paper); stroke-width: 1.3; opacity: .9; transition: r .1s; }
+  #cl-svg :global(.cl-dot.hot) { fill: var(--closed); }
+  #cl-svg :global(.cl-ptlab) { fill: var(--ink); font-size: 11px; font-family: ui-monospace, monospace; }
+  #cl-svg :global(.cl-pt) { cursor: crosshair; }
+  #cl-svg :global(.cl-drift) { stroke: var(--closed); stroke-width: 2.4; }
+  #cl-svg :global(.cl-arrowhead) { fill: none; stroke: var(--closed); stroke-width: 2.4; stroke-linejoin: round; stroke-linecap: round; }
+  #cl-svg :global(.cl-centroid) { fill: var(--closed); stroke: var(--paper); stroke-width: 1.5; }
+  #cl-svg :global(.cl-clab) { fill: var(--closed); font-size: 11px; font-weight: bold; font-family: ui-monospace, monospace; }
+  #cl-svg :global(.cl-clab-r) { text-anchor: end; }
 
   .two { margin: 1.6rem 0; }
   .two-head { color: var(--dim); font-style: italic; margin-bottom: .5rem; }
