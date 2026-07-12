@@ -10,8 +10,11 @@ import type { ChronicleEntry } from '@/lib/field/chronicle'
 
 interface Props {
   entries: ChronicleEntry[]
+  /** base path for per-session work links — engines reusing this component pass their own
+   *  (e.g. '/studio/werke'); defaults to the field's, so existing usage is unchanged */
+  werkeBase?: string
 }
-const { entries } = Astro.props
+const { entries, werkeBase = '/field/werke' } = Astro.props
 const sorted = [...entries].sort((a, b) => a.seq - b.seq)
 const latest = sorted[sorted.length - 1]
 
@@ -108,19 +111,20 @@ const paneData = sorted.map((e) => ({
     <p class="fs-pane-links">
       <span id="fs-pane-works">
         {latest.works.map((w) => (
-          <a class="fs-pane-work" href={`/field/werke/${w}`}>{w.replace(/^\d{4}-\d{2}-\d{2}-/, '')}</a>
+          <a class="fs-pane-work" href={`${werkeBase}/${w}`}>{w.replace(/^\d{4}-\d{2}-\d{2}-/, '')}</a>
         ))}
       </span>
       <a id="fs-pane-journal" class="fs-pane-journallink" href={`#${latest.anchor}`}>Read the full journal entry →</a>
     </p>
   </div>
 
-  <script type="application/json" id="fs-tl-data" set:html={JSON.stringify(paneData)} />
+  <script type="application/json" id="fs-tl-data" data-werke-base={werkeBase} set:html={JSON.stringify(paneData)} />
 </section>
 
 <script>
   const dataEl = document.getElementById('fs-tl-data')
   const strip = document.getElementById('fs-tl-strip')
+  const werkeBase = dataEl?.getAttribute('data-werke-base') || '/field/werke'
   const entries: any[] = dataEl ? JSON.parse(dataEl.textContent ?? '[]') : []
   const bySeq = new Map(entries.map((e) => [String(e.seq), e]))
 
@@ -153,7 +157,7 @@ const paneData = sorted.map((e) => ({
         ...e.works.map((w: string) => {
           const a = document.createElement('a')
           a.className = 'fs-pane-work'
-          a.href = `/field/werke/${w}`
+          a.href = `${werkeBase}/${w}`
           a.textContent = w.replace(/^\d{4}-\d{2}-\d{2}-/, '')
           return a
         }),
