@@ -16,8 +16,9 @@ interface Props {
   title: string
   description: string
   noindex?: boolean
+  analytics?: boolean // false on 404 → keep dead-URL / bot hits out of stats
 }
-const { title, description, noindex } = Astro.props
+const { title, description, noindex, analytics = true } = Astro.props
 const locale = (Astro.currentLocale ?? 'en') as Locale
 
 // canonical + hreflang via Astro's config-aware locale URLs (de at /, en at /en; x-default → de)
@@ -217,6 +218,6 @@ const workLd = work ? workJsonLd(work, locale, canonical) : null
         third-party request leaves the browser, so the Beifang „null Drittanbieter-Requests" claim
         still holds and no external CSP source is needed. Cookieless, no personal data, no
         third-country transfer. (Migrated from Umami Cloud to self-hosted 2026-07.) */}
-    <script defer src="/stats/script.js" data-website-id="cea1def9-863b-44e8-9f79-84837cf9cc42" data-host-url="/stats"></script>
+    {analytics && <script defer src="/stats/script.js" data-website-id="cea1def9-863b-44e8-9f79-84837cf9cc42" data-host-url="/stats"></script>}
   </body>
 </html>
