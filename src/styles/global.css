@@ -79,10 +79,15 @@
   border-color: rgb(20 20 22 / 0.4);
 }
 
-/* Theme toggle icon: sun while dark (click → light), moon while light (click → dark). */
-.i-moon { display: none; }
-:root[data-theme='light'] .i-sun { display: none; }
-:root[data-theme='light'] .i-moon { display: block; }
+/* Theme toggle icon reflects the current MODE (not the resolved theme), so the control shows
+   what the user chose: monitor = auto (follows the OS), sun = light, moon = dark. The button
+   cycles auto → light → dark → auto. data-theme-mode is set by the controller in Base.astro;
+   before it runs, no attribute is present → show the auto icon (auto is the default). */
+.i-sun, .i-moon, .i-auto { display: none; }
+:root:not([data-theme-mode]) .i-auto,
+:root[data-theme-mode='auto'] .i-auto { display: block; }
+:root[data-theme-mode='light'] .i-sun { display: block; }
+:root[data-theme-mode='dark'] .i-moon { display: block; }
 
 /* Scroll-flash: ease colours only while a flash is in progress, so the one-time reveal
    blinks the WHOLE page — background + chrome (TopBar) — to the light theme and eases back.
