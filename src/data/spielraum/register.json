@@ -1,0 +1,364 @@
+{
+ "companies": {
+  "aws": {
+   "caveats": [
+    {
+     "de": "Berichtsjahr-Ambiguität: Amazon labelt die PUE nach Berichtsjahr, nicht Datenjahr — aus dem Primärtext nicht auflösbar.",
+     "en": "Report-year ambiguity: Amazon labels PUE by report year, not data year — not resolvable from the primary text."
+    },
+    {
+     "de": "Keine Offenlegung, kein Vergleich: Eine Effizienz-Kennzahl ohne Verbrauchszahl kann keine Runde bilden (benötigte PUE = Basis/(1+Wachstum) hat kein Wachstum). AWS' Runde ist gesperrt — 'keine Offenlegung, kein Spiel' — die Absenz selbst ist der Befund.",
+     "en": "No disclosure, no comparison: an efficiency ratio without a consumption figure cannot form a round (required_PUE = base/(1+growth) has no growth). AWS's round is rendered LOCKED — 'no disclosure, no game' — the finding is the absence."
+    }
+   ],
+   "consumption": {
+    "absence_check_source_id": "amazon_2024_sustainability_report_tables",
+    "discloses": false,
+    "note_de": "AWS/Amazon veröffentlicht keine absolute Strom-/Energieverbrauchszahl — geprüft im 2024 Sustainability Report (accessible tables), Absenz bestätigt.",
+    "note_en": "AWS/Amazon does not publish an absolute electricity/energy consumption figure — checked in the 2024 Sustainability Report (accessible tables), absence confirmed.",
+    "tier": "SOURCED"
+   },
+   "display_name": "Amazon / AWS",
+   "pue": {
+    "quote": "In 2025, our data centers reported an average global PUE of 1.14 which is an improvement compared to 1.15 reported in 2024.",
+    "quote_source_id": "aws_cloud_sustainability_page",
+    "scope_note_de": "Amazon labelt die PUE nach BERICHTSJAHR; ob 'reported 2025' das Datenjahr 2024 meint, lässt sich aus dem Primärtext nicht auflösen — offen benannt, nicht geraten.",
+    "scope_note_en": "Amazon labels PUE by REPORT year; whether 'reported 2025' means data-year 2024 is not resolvable from the primary text — stated, not guessed.",
+    "series": [
+     {
+      "figure": 1.15,
+      "period": "reported 2024",
+      "source_id": "aws_cloud_sustainability_page",
+      "tier": "SOURCED",
+      "vintage_note_de": "Bezeichnung nach Berichtsjahr, nicht Datenjahr — welches Kalenderjahr die Messung tatsächlich abdeckt, ist aus dem Primärtext nicht auflösbar.",
+      "vintage_note_en": "Labeled by report year, not data year — which calendar year the measurement actually covers is not resolvable from the primary text."
+     },
+     {
+      "figure": 1.14,
+      "period": "reported 2025",
+      "source_id": "aws_cloud_sustainability_page",
+      "tier": "SOURCED",
+      "vintage_note_de": "Bezeichnung nach Berichtsjahr, nicht Datenjahr — welches Kalenderjahr die Messung tatsächlich abdeckt, ist aus dem Primärtext nicht auflösbar.",
+      "vintage_note_en": "Labeled by report year, not data year — which calendar year the measurement actually covers is not resolvable from the primary text."
+     }
+    ]
+   }
+  },
+  "google": {
+   "caveats": [
+    {
+     "de": "Kein Verschweige-Vorwurf: Google legt die 27%/37%-Wachstumszahlen offen im selben Bericht wie die PUE-Werte — nichts wird verborgen; der Befund betrifft die Struktur der Kennzahl und die Rahmung des Berichts, nicht Googles Offenheit.",
+     "en": "Not a concealment claim: Google discloses the 27%/37% growth figures openly in the same report as the PUE values — nothing is hidden; the finding concerns the metric's structure and the report's framing, not Google's candor."
+    },
+    {
+     "de": "Fleet-PUE ≠ Gesamt-Footprint: Die berichtete Flotten-PUE deckt nur eigene, selbst betriebene Campusse ab, nicht geleaste/Colocation-Flächen — der Wert ist nicht der Overhead des gesamten Fußabdrucks.",
+     "en": "Fleet PUE is not the whole footprint: the reported fleet PUE covers owned-and-operated campuses only, not leased/colocation facilities also in use — the reported ratio is not the overhead of the whole footprint."
+    },
+    {
+     "de": "Wording-Shift 2026: Der 2026-Report weist die 37 % für 'Gesamtstrom' aus (und rechnet auch die 27 % aus 2024 auf dieser Basis um), während der 2025-Report die 27 % für 'Strom der Rechenzentren gesamt' auswies — wörtlich zitiert, nicht vermischt; die Unmöglichkeits-Schlussfolgerung bleibt robust, da bei einer Basis-PUE von 1,09 bereits jedes Wachstum über 9 % den Boden unterschreitet.",
+     "en": "2026 wording shift: the 2026 report states the 37% for 'total electricity' (and restates 2024's 27% on the same basis), while the 2025 report had stated the 27% for 'total data center electricity' — quoted exactly, not conflated; the impossibility conclusion remains robust since, at a base PUE of 1.09, any growth above 9% already crosses the floor."
+    }
+   ],
+   "consumption": {
+    "discloses": true,
+    "form": "growth_pct",
+    "growth_pct": [
+     {
+      "period": "2023",
+      "quote": "…compared to 17% growth in the prior year",
+      "scope_de": "Strom der Rechenzentren gesamt",
+      "scope_en": "total data center electricity",
+      "source_id": "google_2025_env_report",
+      "tier": "VERIFIED",
+      "value": 17
+     },
+     {
+      "period": "2024",
+      "quote": "our total data center electricity consumption grew by 27% in 2024, compared to 17% growth in the prior year",
+      "scope_de": "Strom der Rechenzentren gesamt",
+      "scope_en": "total data center electricity",
+      "source_id": "google_2025_env_report",
+      "tier": "VERIFIED",
+      "value": 27
+     },
+     {
+      "period": "2025",
+      "quote": "…our total electricity consumption grew by 37% in 2025, up from 27% in 2024",
+      "scope_de": "Gesamtstromverbrauch (weiter gefasst als das 2025er-Wording 'Rechenzentren gesamt')",
+      "scope_en": "total electricity (broader than the 2025 wording of 'total data center electricity')",
+      "source_id": "google_2026_env_report",
+      "tier": "VERIFIED",
+      "value": 37
+     }
+    ]
+   },
+   "display_name": "Google",
+   "pue": {
+    "quote": "For the first time in six years, the average annual power usage effectiveness (PUE) for our global fleet of data centers dropped below 1.10 to 1.09 (Figure 4). While a PUE improvement of 0.01 might appear small, at the scale of our global data center operations, this efficiency gain avoids significant electricity consumption. This means our global computing network requires less electricity and produces fewer emissions than it otherwise would have, yielding meaningful savings even as our overall computing demands grow.",
+    "quote_source_id": "google_2025_env_report",
+    "scope_note_de": "Deckt nur von Google selbst betriebene (owned-and-operated) Rechenzentrums-Campusse ab, nicht geleaste/Colocation-Flächen.",
+    "scope_note_en": "Covers only Google-owned-and-operated data-center campuses, not leased/colocation facilities.",
+    "series": [
+     {
+      "figure": 1.1,
+      "period": "2019",
+      "source_id": "google_2024_env_report",
+      "tier": "VERIFIED"
+     },
+     {
+      "figure": 1.1,
+      "period": "2020",
+      "source_id": "google_2024_env_report",
+      "tier": "VERIFIED"
+     },
+     {
+      "figure": 1.1,
+      "period": "2021",
+      "source_id": "google_2024_env_report",
+      "tier": "VERIFIED"
+     },
+     {
+      "figure": 1.1,
+      "period": "2022",
+      "source_id": "google_2024_env_report",
+      "tier": "VERIFIED"
+     },
+     {
+      "figure": 1.1,
+      "period": "2023",
+      "source_id": "google_2024_env_report",
+      "tier": "VERIFIED"
+     },
+     {
+      "figure": 1.09,
+      "period": "2024",
+      "source_id": "google_2025_env_report",
+      "tier": "VERIFIED"
+     },
+     {
+      "figure": 1.09,
+      "period": "2025",
+      "source_id": "google_2026_env_report",
+      "tier": "VERIFIED",
+      "vintage_note_de": "Stammt aus dem 2026-Report (Nachtrag/Folgeprüfung nach Erscheinen des 2025-Reports, testet ob der Befund bei der nächsten Offenlegung Bestand hält); das zugehörige Wachstum (37 %) ist für 'Gesamtstrom' ausgewiesen, weiter gefasst als das 2025er-Wording 'Rechenzentren gesamt'.",
+      "vintage_note_en": "From the 2026 report (a subsequent-disclosure check added after the 2025 report shipped, testing whether the finding survives the next disclosure); the associated growth figure (37%) is disclosed for 'total electricity', a broader wording than the 2025 report's 'total data center electricity'."
+     }
+    ]
+   }
+  },
+  "meta": {
+   "caveats": [
+    {
+     "de": "'Rechenzentren gesamt' kombiniert eigene UND geleaste Standorte — eine echt rechenzentrums-spezifische Zahl (klarer als Microsofts konzernweite Zahl).",
+     "en": "'Data centers total' combines owned AND leased facilities — a genuinely data-center-scoped figure (cleaner than Microsoft's org-wide number)."
+    },
+    {
+     "de": "UNCONFIRMED, ob die PUE 1,08 denselben owned+leased-Fußabdruck abdeckt (Branchenkonvention schließt Colocation/geleaste Flächen aus der Flotten-PUE oft aus) — eine offene, ungelöste Scope-Frage.",
+     "en": "UNCONFIRMED whether the PUE 1.08 covers the same owned+leased footprint (industry convention often excludes leased/colo from fleet PUE) — an open scope question, stated, not resolved."
+    },
+    {
+     "de": "Meta liegt von allen vier Firmen am nächsten am Boden: bei 1,08 wäre nur noch Wachstum bis 8 % ausgleichbar; der gesamte verbleibende Spielraum beträgt (1,08-1,00)/1,08 = 7,4 % — einmalig.",
+     "en": "Meta runs closest to the floor of all four companies: at 1.08 the winnability threshold is 8% growth; total remaining headroom is (1.08-1.00)/1.08 = 7.4%, once."
+    }
+   ],
+   "consumption": {
+    "discloses": true,
+    "form": "mwh",
+    "mwh": [
+     {
+      "period": "2022",
+      "source_id": "meta_2025_env_data_index",
+      "tier": "SOURCED",
+      "value": 11167416
+     },
+     {
+      "period": "2023",
+      "source_id": "meta_2025_env_data_index",
+      "tier": "SOURCED",
+      "value": 14975435
+     },
+     {
+      "period": "2024",
+      "source_id": "meta_2025_env_data_index",
+      "tier": "SOURCED",
+      "value": 18061781
+     }
+    ],
+    "scope_de": "Rechenzentren gesamt, eigene UND geleaste Standorte (owned + leased).",
+    "scope_en": "Data centers total, owned AND leased facilities."
+   },
+   "display_name": "Meta",
+   "pue": {
+    "quote": "PUE (data center energy efficiency) 1.10 1.09 1.08 1.08 1.08",
+    "quote_source_id": "meta_2025_env_data_index",
+    "scope_note_de": "Ungeklärt, ob die PUE 1,08 denselben Scope (owned + leased) abdeckt wie die Stromverbrauchszahlen — Branchenkonvention schließt Colocation/geleaste Flächen aus der Flotten-PUE oft aus; offene Scope-Frage, nicht aufgelöst.",
+    "scope_note_en": "UNCONFIRMED whether the PUE 1.08 covers the same scope (owned + leased) as the consumption figures — industry convention often excludes leased/colo facilities from fleet PUE; an open scope question, not resolved.",
+    "series": [
+     {
+      "figure": 1.1,
+      "period": "2020",
+      "source_id": "meta_2025_env_data_index",
+      "tier": "SOURCED"
+     },
+     {
+      "figure": 1.09,
+      "period": "2021",
+      "source_id": "meta_2025_env_data_index",
+      "tier": "SOURCED"
+     },
+     {
+      "figure": 1.08,
+      "period": "2022",
+      "source_id": "meta_2025_env_data_index",
+      "tier": "SOURCED"
+     },
+     {
+      "figure": 1.08,
+      "period": "2023",
+      "source_id": "meta_2025_env_data_index",
+      "tier": "SOURCED"
+     },
+     {
+      "figure": 1.08,
+      "period": "2024",
+      "source_id": "meta_2025_env_data_index",
+      "tier": "SOURCED"
+     }
+    ]
+   }
+  },
+  "microsoft": {
+   "caveats": [
+    {
+     "de": "SCOPE MISMATCH, laut ausgewiesen: Die PUE deckt nur eigenbetriebene und kontrollierte Rechenzentren ab; das Stromwachstum ist KONZERNWEIT (GRI 302-1) — Microsoft veröffentlicht keine rechenzentrums-spezifische Verbrauchsreihe neben seiner PUE. Die Runde ist nur mit diesem Sternchen spielbar.",
+     "en": "SCOPE MISMATCH, rendered loudly: the PUE covers owned-and-controlled datacenters only; the electricity growth is ORG-WIDE (whole company, GRI 302-1 style) — Microsoft does not publish a datacenter-only consumption series beside its PUE. The round is playable only with this asterisk on its face."
+    },
+    {
+     "de": "Fiskaljahre (Juli–Juni), keine Kalenderjahre — nie stumm mit Googles/Metas Kalenderjahr-Runden mischen.",
+     "en": "Fiscal years (July–June), not calendar years — never mix with Google/Meta calendar-year rounds without saying so."
+    },
+    {
+     "de": "Die FY23-Flotten-PUE ist nicht offengelegt; die FY24-Runde nutzt daher FY24s eigenen berichteten Wert 1,16 als Basis — eine Näherung mit offengelegten Eingaben, als solche gekennzeichnet.",
+     "en": "FY23 fleet PUE is not disclosed; this round uses FY24's own reported 1.16 — a disclosed-inputs approximation, marked on the referee card."
+    },
+    {
+     "de": "Die Effizienz verschlechterte sich FY24→FY25 (1,16 → 1,17): Der Ausgangspunkt der Kennzahl selbst rutschte zurück — von der Firma offengelegt, hier unverändert wiedergegeben.",
+     "en": "Efficiency WORSENED FY24→FY25 (1.16→1.17): the dial's starting point itself slid backwards — disclosed by the subject, rendered as found."
+    }
+   ],
+   "consumption": {
+    "discloses": true,
+    "form": "mwh",
+    "mwh": [
+     {
+      "period": "FY22",
+      "source_id": "microsoft_env_fact_sheet_2025",
+      "tier": "SOURCED",
+      "value": 18153454
+     },
+     {
+      "period": "FY23",
+      "source_id": "microsoft_env_fact_sheet_2025",
+      "tier": "SOURCED",
+      "value": 23567502
+     },
+     {
+      "period": "FY24",
+      "source_id": "microsoft_env_fact_sheet_2025",
+      "tier": "SOURCED",
+      "value": 29829540
+     }
+    ],
+    "scope_de": "KONZERNWEIT (GRI 302-1), nicht rechenzentrums-spezifisch — Scope-Mismatch zum PUE.",
+    "scope_en": "ORG-WIDE (GRI 302-1 style, whole company), not data-center-specific — a scope mismatch against the PUE."
+   },
+   "display_name": "Microsoft",
+   "pue": {
+    "quote": "Global PUE: FY24 1.16, FY25 1.17 — 'based on datacenters that Microsoft fully owns and controls and that were operational for 12 months at the time of calculation'",
+    "quote_source_id": "microsoft_dc_efficiency_page",
+    "scope_note_de": "Nur vollständig von Microsoft eigenbetriebene und kontrollierte (fully-owned-and-controlled) Rechenzentren, die zum Berechnungszeitpunkt seit 12 Monaten in Betrieb waren.",
+    "scope_note_en": "Only datacenters that Microsoft fully owns and controls and that were operational for 12 months at the time of calculation.",
+    "series": [
+     {
+      "figure": 1.16,
+      "period": "FY24",
+      "source_id": "microsoft_dc_efficiency_page",
+      "tier": "SOURCED"
+     },
+     {
+      "figure": 1.17,
+      "period": "FY25",
+      "source_id": "microsoft_dc_efficiency_page",
+      "tier": "SOURCED"
+     }
+    ]
+   }
+  }
+ },
+ "floor": 1.0,
+ "floor_note_de": "PUE = Gesamtenergie der Anlage / IT-Energie; IT-Energie ist eine Teilmenge der Gesamtenergie, daher kann die Kennzahl nie unter 1,0 fallen — ein PUE von 1,0 wäre eine perfekt effiziente Anlage, bei der keine Energie an Kühlung, Stromumwandlung oder Overhead verloren geht. Entwickelt von The Green Grid (2006–2007); globaler Standard ISO/IEC 30134-2:2016.",
+ "floor_note_en": "PUE = total facility energy / IT-equipment energy; IT energy is a subset of total facility energy, so the ratio can never fall below 1.0 — a PUE of 1.0 would be a perfectly efficient facility where none of the energy is lost to cooling, power conversion, or overhead. Developed by The Green Grid (2006–2007); published as global standard ISO/IEC 30134-2:2016.",
+ "generated_at": "2026-07-12T14:43:15Z",
+ "ingest_log": [
+  {
+   "action": "seed",
+   "by": "field-research/works/2026-07-09-the-floor + studio/projects/diminishing-returns (verifizierte Vorarbeiten)",
+   "note_de": "Erstbefüllung, Werte wortwörtlich übernommen, Tiers und Caveats mitgeführt.",
+   "note_en": "Initial seed, values copied verbatim, tiers and caveats carried over.",
+   "ts": "2026-07-12T14:43:15Z"
+  }
+ ],
+ "schema_version": "1",
+ "sources": {
+  "amazon_2024_sustainability_report_tables": {
+   "fetched_at": "2026-07-12",
+   "name": "Amazon 2024 Sustainability Report — accessible tables (absence of consumption figures confirmed)",
+   "tier_note": "Researcher-FETCHED via text-proxy (absence check)",
+   "url": "https://sustainability.aboutamazon.com/2024-sustainability-report-accessible-tables.pdf"
+  },
+  "aws_cloud_sustainability_page": {
+   "fetched_at": "2026-07-12",
+   "name": "AWS cloud sustainability page (PUE)",
+   "tier_note": "Researcher-FETCHED via text-proxy",
+   "url": "https://sustainability.aboutamazon.com/products-services/aws-cloud"
+  },
+  "google_2024_env_report": {
+   "fetched_at": "2026-07-09",
+   "name": "Google 2024 Environmental Report",
+   "tier_note": "VERIFIED — from the research wing's gauntleted instrument 013 'The Floor'",
+   "url": "https://www.smartenergydecisions.com/wp-content/uploads/2025/04/google-2024-environmental-report.pdf"
+  },
+  "google_2025_env_report": {
+   "fetched_at": "2026-07-09",
+   "name": "Google 2025 Environmental Report",
+   "official": "https://sustainability.google/reports/google-2025-environmental-report",
+   "tier_note": "VERIFIED — from the research wing's gauntleted instrument 013 'The Floor'",
+   "url": "https://www.smartenergydecisions.com/wp-content/uploads/2025/07/google-2025-environmental-report-1.pdf"
+  },
+  "google_2026_env_report": {
+   "fetched_at": "2026-07-09",
+   "name": "Google 2026 Environmental Report",
+   "official": "https://sustainability.google/google-2026-environmental-report",
+   "tier_note": "VERIFIED — subsequent-disclosure check, from the research wing's gauntleted instrument 013 'The Floor'",
+   "url": "https://storage.googleapis.com/gweb-mobius-cdn/sustainability/uploads/7f477eb723fe0c23d03f94b90a08882b9f28187d.pdf"
+  },
+  "meta_2025_env_data_index": {
+   "fetched_at": "2026-07-12",
+   "name": "Meta 2025 Environmental Data Index",
+   "tier_note": "Researcher-FETCHED via text-proxy of the primary PDF; conductor spot-check blocked by the PDF's text encoding — the +34.1% independently corroborated by DataCenterDynamics ('+34%'). Honest tier: SOURCED, one figure-set, proxy-read.",
+   "url": "https://sustainability.atmeta.com/wp-content/uploads/2025/10/Meta_2025-Environmental-Data-Index.pdf"
+  },
+  "microsoft_dc_efficiency_page": {
+   "fetched_at": "2026-07-12",
+   "name": "Microsoft datacenter sustainability/efficiency page (PUE)",
+   "tier_note": "FETCHED first-hand by the conductor",
+   "url": "https://datacenters.microsoft.com/sustainability/efficiency/"
+  },
+  "microsoft_env_fact_sheet_2025": {
+   "fetched_at": "2026-07-12",
+   "name": "Microsoft Environmental Data Fact Sheets 2024/2025 (electricity, Table 6 'Energy consumption within the organization')",
+   "tier_note": "Researcher-FETCHED via text-proxy; growth ~27% matches press corroboration",
+   "url": "https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/msc/documents/presentations/CSR/2025-Microsoft-Environmental-Data-Fact-Sheet-PDF.pdf"
+  }
+ }
+}
