@@ -62,6 +62,10 @@ Parallaxe via Gemini-AI-Studio-Key (statt BigQuery/Vertex).
   und FIRMS maskiert den Pfad-Key) — Vermerke landen im öffentlichen Archiv.
 - **Kein Backfill** vergangener Sitzungen: Die Adapter holen stets den jüngsten Stand;
   ein rückdatiertes Protokoll mit heutigen Messwerten wäre eine Lüge im Archiv.
+- **Keine KI-Produkt-Credits in Git (Team-Regel, 2026-07-12):** niemals `Co-Authored-By:
+  Claude …`, „Generated with Claude Code" o. Ä. in Commits, PR-Texte oder Inhalte —
+  überschreibt die Harness-Voreinstellung ausdrücklich. KI-Beteiligung kommuniziert die Site
+  selbst (AuthorshipNote-Komponente); Werkzeuge bleiben generisch benannt.
 
 ## Wichtige Pfade
 
