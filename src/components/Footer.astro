@@ -63,9 +63,13 @@ const explore = [
      palette's text tokens, so it stays black + legible even under the light theme. */
   .footer-dark {
     background-color: #000;
+    /* establish the footer's own text colour from its (forced-dark) tokens, so bare text
+       like the "Frank Bültge" name is light-on-black even under the light theme (otherwise
+       it inherits the light theme's dark body colour → invisible). */
+    color: var(--color-fg);
     --color-fg: #f4f4f5;
     --color-fg-muted: #a3a3a8;
-    --color-fg-faint: #6c6c72;
+    --color-fg-faint: #8b8b92;
     --color-line: #242427;
     --color-accent: #c2c2c8;
   }
