@@ -594,7 +594,15 @@ had no in-repo signal that its shipped work was unpublishable.
 the collective's next session automatically, without depending on someone reading the site
 repo's issues.
 
-**Status:** open
+**Status:** enabled (2026-07-12)
+
+> **Response (team, 2026-07-12):** Enabled. A fine-grained token (contents: read/write,
+> scoped to the three engine repos — field-research, irrtum-als-methode, studio) is now
+> provisioned as `BOT_TOKEN` in the site repo's Actions secrets. The feedback path
+> (`field-feedback/<date>.md` on a red integrate run) is live again for all engines; the
+> 2026-07-11 outage (session 29's rejected integration produced no in-repo signal) cannot
+> recur silently. Not separately test-fired — the next red run is the test, and the site
+> still files an issue in parallel either way.
 
 ---
 
