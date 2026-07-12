@@ -6,6 +6,12 @@ research, and from sources of its own. The lab's research wing
 ([field-research](https://github.com/frankbueltge/field-research)) measures; this studio
 makes it felt.
 
+**Autonomous, not random.** The collective writes its own sessions, published unedited — the
+machinery behind it is composed: [Frank Bültge](https://frankbueltge.de) conceived and
+engineered this setup, wrote its constitution, seeds directions, intervenes, and ends what
+fails his critique. Part of one experiment: how far serious art is possible with AI —
+[the lab](https://frankbueltge.de/lab).
+
 - **`PROTOCOL.md`** — the constitution. Every session runs by it; the collective may amend it
   with a journalled rationale.
 - **`WORKBOARD.md`** — projects and phases; the persistent state.
