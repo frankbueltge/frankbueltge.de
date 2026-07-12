@@ -14,9 +14,9 @@
    "consumption": {
     "absence_check_source_id": "amazon_2024_sustainability_report_tables",
     "discloses": false,
-    "note_de": "AWS/Amazon veröffentlicht keine absolute Strom-/Energieverbrauchszahl — geprüft im 2024 Sustainability Report (accessible tables), Absenz bestätigt.",
-    "note_en": "AWS/Amazon does not publish an absolute electricity/energy consumption figure — checked in the 2024 Sustainability Report (accessible tables), absence confirmed.",
-    "tier": "SOURCED"
+    "note_de": "AWS/Amazon veröffentlicht keine absolute Strom-/Energieverbrauchszahl — geprüft im 2024 Sustainability Report (accessible tables) und erneut im 2025 Sustainability Report (Climate and Energy S. 7–13 sowie Data Tables S. 46, Erstzugriff auf das Primär-PDF am 2026-07-12): Emissionen, CO₂-Intensität und Renewable-Anteile werden ausgewiesen, eine absolute Verbrauchszahl nicht.",
+    "note_en": "AWS/Amazon does not publish an absolute electricity/energy consumption figure — checked in the 2024 Sustainability Report (accessible tables) and re-checked in the 2025 Sustainability Report (Climate and Energy pp. 7–13 and Data Tables p. 46, primary PDF accessed first-hand 2026-07-12): emissions, carbon intensity and renewable percentages are disclosed, an absolute consumption figure is not.",
+    "tier": "VERIFIED"
    },
    "display_name": "Amazon / AWS",
    "pue": {
@@ -306,6 +306,13 @@
    "note_de": "Erstbefüllung, Werte wortwörtlich übernommen, Tiers und Caveats mitgeführt.",
    "note_en": "Initial seed, values copied verbatim, tiers and caveats carried over.",
    "ts": "2026-07-12T14:43:15Z"
+  },
+  {
+   "action": "recheck-absence",
+   "by": "Session 2026-07-12, Erstzugriff auf das Primär-PDF (Amazon 2025 Sustainability Report)",
+   "note_de": "AWS-Absenz-Befund gegen den neuesten Bericht nachgeprüft (Climate and Energy S. 7–13, Data Tables S. 46): weiterhin keine absolute Verbrauchszahl. Tier des Absenz-Befunds auf VERIFIED angehoben (Erstzugriff). Hinweis für den nächsten Ingest: Der 2025-Report nennt einen PUE von 1,14 für das Datenjahr 2025 — noch nicht ingestiert.",
+   "note_en": "AWS absence finding re-checked against the newest report (Climate and Energy pp. 7–13, Data Tables p. 46): still no absolute consumption figure. Absence-finding tier raised to VERIFIED (first-hand access). Note for the next ingest: the 2025 report states a PUE of 1.14 for data year 2025 — not yet ingested.",
+   "ts": "2026-07-12T16:05:00Z"
   }
  ],
  "schema_version": "1",
@@ -315,6 +322,13 @@
    "name": "Amazon 2024 Sustainability Report — accessible tables (absence of consumption figures confirmed)",
    "tier_note": "Researcher-FETCHED via text-proxy (absence check)",
    "url": "https://sustainability.aboutamazon.com/2024-sustainability-report-accessible-tables.pdf"
+  },
+  "amazon_2025_sustainability_report": {
+   "fetched_at": "2026-07-12",
+   "name": "Amazon 2025 Sustainability Report (Absenz-Nachprüfung: Climate and Energy S. 7–13, Data Tables S. 46)",
+   "official": "https://sustainability.aboutamazon.com/2025-report",
+   "tier_note": "FETCHED first-hand — Primär-PDF direkt gelesen (Absenz-Check, 2026-07-12)",
+   "url": "https://sustainability.aboutamazon.com/2025-amazon-sustainability-report.pdf"
   },
   "aws_cloud_sustainability_page": {
    "fetched_at": "2026-07-12",
