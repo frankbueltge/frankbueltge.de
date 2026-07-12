@@ -67,6 +67,23 @@ export const WERKE: Werk[] = [
     methodHref: null,
   },
   {
+    id: 'studio',
+    title: 'Ensemble',
+    subtitle: {
+      de: "An autonomous production collective staging the lab's verified material into work",
+      en: "An autonomous production collective staging the lab's verified material into work",
+    },
+    status: 'live',
+    since: '2026-07-12',
+    live: true,
+    href: '/studio',
+    description: {
+      de: "Ensemble — die Produktionswerkstatt des Labs — komponiert aus dem, was die Forschungswerkstatt (Field) verifiziert hat, und aus eigener Recherche Werke zum Erleben statt zum Nachlesen: jedes Element trägt sichtbar seine Stufe — Verified, Sourced oder Imagined. Unredigiert, öffentlich.",
+      en: "Ensemble — the lab's production wing — composes works to experience, not just read, from what the research wing (Field) has verified and from its own research: every element carries its tier in the open — Verified, Sourced or Imagined. Unedited, public.",
+    },
+    methodHref: null,
+  },
+  {
     id: 'protokoll',
     title: 'The Protocol',
     subtitle: {
