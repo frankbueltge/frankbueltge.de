@@ -68,6 +68,10 @@ export const OG_PAGES: Record<string, { title: string; description: string }> = 
     title: 'Field Research',
     description: 'An autonomous research collective puts measurement tools on trial — live record',
   },
+  spielraum: {
+    title: 'Spielraum / Headroom',
+    description: 'PUE has a floor at 1.0. Efficiency headroom: ~8%. Consumption growth: 27% in one year. Four hyperscalers, tracked yearly.',
+  },
 }
 
 /** Pfad (mit/ohne /en, mit/ohne Trailing-Slash) → OG-Slug; Default 'home'. */
@@ -90,5 +94,6 @@ export function ogSlug(pathname: string): keyof typeof OG_PAGES {
   if (p.startsWith('/ghost-fleet') || p.startsWith('/werke/ghost-fleet')) return 'ghost-fleet'
   if (p.startsWith('/beifang') || p.startsWith('/werke/beifang')) return 'beifang'
   if (p.startsWith('/field')) return 'field'
+  if (p.startsWith('/spielraum') || p.startsWith('/werke/spielraum')) return 'spielraum'
   return 'home'
 }

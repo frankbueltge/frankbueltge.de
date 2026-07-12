@@ -22,6 +22,22 @@ export interface Werk {
  *  Gleichstand; die öffentliche Sortierung ist chronologisch über `WERKE_CHRONO`. */
 export const WERKE: Werk[] = [
   {
+    id: 'spielraum',
+    title: { de: 'Spielraum', en: 'Headroom' },
+    subtitle: {
+      de: 'Rechenzentrums-Effizienz nahe am Anschlag, Verbrauch im Steigflug',
+      en: 'Data-center efficiency near its floor, consumption climbing',
+    },
+    status: 'live',
+    since: '2026-07-12',
+    href: '/spielraum',
+    description: {
+      de: 'Aus der Linie „Gegenmessung". PUE — die Effizienzkennzahl der Rechenzentren — hat einen physikalischen Boden bei 1,0. Googles Flotte steht bei 1,09: für immer bleiben rund 8 % Spielraum; der Verbrauch wuchs derweil um 27 % in einem Jahr. Jährlich fortgeschrieben, was vier Hyperscaler offenlegen — und was nicht: AWS nennt gar keinen Verbrauch.',
+      en: "From the counter-measurement line. PUE — the data-center efficiency metric — has a physical floor of 1.0. Google's fleet sits at 1.09: about 8% of headroom remains, forever; consumption meanwhile grew 27% in a single year. Tracked year by year: what four hyperscalers disclose — and what they don't. AWS discloses no consumption at all.",
+    },
+    tier: 'experiment',
+  },
+  {
     id: 'beifang',
     title: { de: 'Beifang', en: 'Bycatch' },
     subtitle: { de: 'Science-Tracking, gemessen', en: 'Science tracking, measured' },

@@ -1,0 +1,563 @@
+---
+// Werk „Spielraum" (EN: „Headroom") — Gegenmessung-Linie. PUE hat einen physikalischen
+// Boden bei 1,0; vier Hyperscaler legen unterschiedlich tief offen, wie nah sie ihm sind
+// und ob ihr Verbrauchswachstum die Kennzahl überhaupt hätte halten können.
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import { t } from '@/i18n/ui'
+import type { Locale } from '@/lib/site'
+import registerJson from '@/data/spielraum/register.json'
+import watchJson from '@/data/spielraum/watch.json'
+import type { Company, CompanyKey, PueEntry, SpielraumRegister, Tier } from '@/lib/spielraum/types'
+import { hasDisclosure } from '@/lib/spielraum/types'
+import { buildRounds, fmtPct, fmtRatio, headroomPct, latestPue, type Round } from '@/lib/spielraum/compute'
+import { SR_CHART_W, floorX, hatchLines, impossibleZone, scaleX, ticks, type Domain } from '@/lib/spielraum/chart'
+
+interface Props { locale: Locale }
+const { locale } = Astro.props
+const de = locale === 'de'
+const localeTag = de ? 'de-DE' : 'en-GB'
+
+// JSON-Import wird von TS strukturell zu eng inferiert — Cast über unknown ist hier der
+// korrekte Weg (Muster: praemie/police.json, spielraum/compute.test.ts).
+const reg = registerJson as unknown as SpielraumRegister
+
+interface WatchSourceState {
+  company: string
+  consecutive_unreachable: number
+  fingerprint: string | null
+  last_checked: string | null
+  matches: string[]
+  status: string
+  url: string
+}
+interface WatchState {
+  generated_at: string
+  schema_version: string
+  sources: Record<string, WatchSourceState>
+}
+const watch = watchJson as unknown as WatchState
+
+const COMPANY_ORDER: CompanyKey[] = ['google', 'meta', 'microsoft', 'aws']
+
+function sourceLink(sourceId: string): { name: string; href: string } | null {
+  const s = reg.sources[sourceId]
+  if (!s) return null
+  return { name: s.name, href: s.official ?? s.url }
+}
+
+function tierFullText(tier: Tier): string {
+  if (tier === 'VERIFIED') return de ? 'Direkt an der Primärquelle geprüft' : 'Verified directly against the primary source'
+  return de ? 'Über Sekundärvermittlung/Proxy bezogen' : 'Sourced via secondary/proxy access'
+}
+
+function firstSentence(s: string): string {
+  const idx = s.indexOf('. ')
+  return idx === -1 ? s : s.slice(0, idx + 1)
+}
+
+// Lange Zitate in der Tabelle kürzen — der volle Wortlaut bleibt per title-Attribut
+// und über den Quell-Link zugänglich; das Register führt ihn ungekürzt.
+function shortQuote(s: string, max = 160): string {
+  return s.length <= max ? s : s.slice(0, max - 1).trimEnd() + '…'
+}
+
+// --- Kopf & Lede ------------------------------------------------------------------
+const google = reg.companies.google
+const googleRounds = buildRounds(google, reg.floor)
+const google2024Round = googleRounds.find((r) => r.period === '2024') ?? null
+const showcaseValue = google2024Round ? fmtRatio(google2024Round.requiredPue, locale) : '—'
+const showcaseCaption = de
+  ? 'Der PUE, den Google 2024 gebraucht hätte, um sein Verbrauchswachstum auszugleichen. Die Skala endet bei 1,00 — darunter ist physikalisch unmöglich.'
+  : 'The PUE Google would have needed in 2024 to offset its consumption growth. The scale ends at 1.00 — below that is physically impossible.'
+
+const googlePue2024 = google.pue.series.find((e) => e.period === '2024') ?? null
+const googleHeadroom = googlePue2024 ? headroomPct(googlePue2024.figure) : null
+const googleGrowth2024 =
+  hasDisclosure(google.consumption) && google.consumption.form === 'growth_pct'
+    ? (google.consumption.growth_pct.find((g) => g.period === '2024') ?? null)
+    : null
+
+const pueExplainer = firstSentence(de ? reg.floor_note_de : reg.floor_note_en)
+const ledeFloor = de ? `Der Boden liegt bei ${fmtRatio(reg.floor, locale)}.` : `The floor sits at ${fmtRatio(reg.floor, locale)}.`
+const ledeNumbers =
+  googleHeadroom !== null && googleGrowth2024
+    ? de
+      ? `Googles Flotte behält für immer rund ${fmtPct(googleHeadroom, locale, 0)} % Spielraum — ihr Verbrauch wuchs ${fmtPct(googleGrowth2024.value, locale, 0)} % in einem Jahr.`
+      : `Google's fleet retains about ${fmtPct(googleHeadroom, locale, 0)} % of headroom, forever — its consumption grew ${fmtPct(googleGrowth2024.value, locale, 0)} % in a single year.`
+    : ''
+const ledeText = [pueExplainer, ledeFloor, ledeNumbers].filter(Boolean).join(' ')
+
+// --- Chart-Geometrie (gemeinsames, fixes Domain über alle vier Panels) -------------
+const DOMAIN: Domain = [0.75, 1.2]
+const AXIS_Y = 66
+const ZONE_TOP = 6
+const ZONE_BOTTOM = 70
+const VIEWBOX_H = 100
+const tickList = ticks(DOMAIN, 0.1, SR_CHART_W)
+const floorXVal = floorX(DOMAIN, SR_CHART_W, reg.floor)
+const zone = impossibleZone(DOMAIN, SR_CHART_W, reg.floor)
+const hatch = zone ? hatchLines(zone, ZONE_BOTTOM - ZONE_TOP, 14) : []
+const floorLabel = de ? `${fmtRatio(reg.floor, locale)} — Boden` : `${fmtRatio(reg.floor, locale)} — floor`
+
+interface PanelMarker {
+  x: number
+  y: number
+  period: string
+  valueLabel: string
+  dashed: boolean
+  footnote: boolean
+  title: string
+}
+
+interface Panel {
+  key: CompanyKey
+  company: Company
+  displayName: string
+  latest: PueEntry | null
+  latestX: number
+  showMarkers: boolean
+  markers: PanelMarker[]
+  ariaLabel: string
+  growthItemsQuote: { quote: string; valueLabel: string; period: string; scope: string; sourceName?: string; sourceHref?: string }[]
+  growthItemsDerived: { period: string; valueLabel: string; arithmetic: string }[]
+  awsNote?: string
+  msftDirectionNote?: string
+}
+
+function buildPanel(key: CompanyKey): Panel {
+  const company = reg.companies[key]
+  const displayName = company.display_name
+  const latest = latestPue(company)
+  const latestX = latest ? scaleX(latest.figure, DOMAIN, SR_CHART_W) : -1
+  const showMarkers = key !== 'aws'
+  const rounds = buildRounds(company, reg.floor)
+
+  const markers: PanelMarker[] = showMarkers
+    ? rounds.map((r, i) => {
+        const footnote = r.scopeEn?.startsWith('total electricity') ?? false
+        return {
+          x: scaleX(r.requiredPue, DOMAIN, SR_CHART_W),
+          y: AXIS_Y - 14 - i * 14,
+          period: r.period,
+          valueLabel: fmtRatio(r.requiredPue, locale),
+          dashed: r.baseApprox,
+          footnote,
+          title: de
+            ? `${r.period}: erforderlicher PUE ${fmtRatio(r.requiredPue, locale)} (Basis ${fmtRatio(r.basePue, locale)} @ ${r.basePeriod}${r.baseApprox ? ', Näherung' : ''})`
+            : `${r.period}: required PUE ${fmtRatio(r.requiredPue, locale)} (base ${fmtRatio(r.basePue, locale)} @ ${r.basePeriod}${r.baseApprox ? ', approximation' : ''})`,
+        }
+      })
+    : []
+
+  const ariaParts: string[] = [
+    de
+      ? `Skala von ${fmtRatio(DOMAIN[0], locale)} bis ${fmtRatio(DOMAIN[1], locale)}, Boden bei ${fmtRatio(reg.floor, locale)}.`
+      : `Scale from ${fmtRatio(DOMAIN[0], locale)} to ${fmtRatio(DOMAIN[1], locale)}, floor at ${fmtRatio(reg.floor, locale)}.`,
+  ]
+  if (latest) {
+    ariaParts.push(
+      de
+        ? `${displayName} aktueller PUE ${fmtRatio(latest.figure, locale)} (${latest.period}).`
+        : `${displayName} current PUE ${fmtRatio(latest.figure, locale)} (${latest.period}).`,
+    )
+  }
+  if (markers.length > 0) {
+    ariaParts.push(`${de ? 'Breakeven' : 'Breakeven'}: ${markers.map((m) => `${m.period} ${m.valueLabel}`).join(', ')}.`)
+  } else if (key === 'aws') {
+    ariaParts.push(de ? 'Kein Verbrauch offengelegt — kein Breakeven berechenbar.' : 'No consumption disclosed — no breakeven computable.')
+  }
+
+  const consumption = company.consumption
+  const growthItemsQuote: Panel['growthItemsQuote'] = []
+  const growthItemsDerived: Panel['growthItemsDerived'] = []
+  if (hasDisclosure(consumption) && consumption.form === 'growth_pct') {
+    for (const g of consumption.growth_pct) {
+      const src = sourceLink(g.source_id)
+      growthItemsQuote.push({
+        quote: g.quote,
+        valueLabel: `${fmtPct(g.value, locale)} %`,
+        period: g.period,
+        scope: de ? g.scope_de : g.scope_en,
+        sourceName: src?.name,
+        sourceHref: src?.href,
+      })
+    }
+  } else if (hasDisclosure(consumption) && consumption.form === 'mwh') {
+    for (const r of rounds) {
+      if (r.arithmetic) {
+        growthItemsDerived.push({ period: r.period, valueLabel: `${fmtPct(r.growthPct, locale, 1)} %`, arithmetic: r.arithmetic })
+      }
+    }
+  }
+
+  let awsNote: string | undefined
+  if (!hasDisclosure(consumption)) {
+    awsNote = de ? consumption.note_de : consumption.note_en
+  }
+
+  let msftDirectionNote: string | undefined
+  if (key === 'microsoft') {
+    const found = company.caveats.find((cv) => cv.en.includes('WORSENED'))
+    msftDirectionNote = found ? found[locale] : undefined
+  }
+
+  return {
+    key,
+    company,
+    displayName,
+    latest,
+    latestX,
+    showMarkers,
+    markers,
+    ariaLabel: ariaParts.join(' '),
+    growthItemsQuote,
+    growthItemsDerived,
+    awsNote,
+    msftDirectionNote,
+  }
+}
+const panels = COMPANY_ORDER.map(buildPanel)
+
+// --- Zahlentabelle: jede Registerziffer eine Zeile ---------------------------------
+interface PrimaryRow {
+  company: string
+  kind: string
+  period: string
+  value: string
+  tier: Tier
+  quote?: string
+  note?: string
+  sourceName?: string
+  sourceHref?: string
+}
+const primaryRows: PrimaryRow[] = []
+for (const key of COMPANY_ORDER) {
+  const company = reg.companies[key]
+  const name = company.display_name
+  for (const entry of company.pue.series) {
+    const quote = entry.source_id === company.pue.quote_source_id ? company.pue.quote : undefined
+    const note = de ? entry.vintage_note_de : entry.vintage_note_en
+    const src = sourceLink(entry.source_id)
+    primaryRows.push({
+      company: name,
+      kind: 'PUE',
+      period: entry.period,
+      value: fmtRatio(entry.figure, locale),
+      tier: entry.tier,
+      quote,
+      note,
+      sourceName: src?.name,
+      sourceHref: src?.href,
+    })
+  }
+  const c = company.consumption
+  if (hasDisclosure(c) && c.form === 'growth_pct') {
+    for (const g of c.growth_pct) {
+      const src = sourceLink(g.source_id)
+      primaryRows.push({
+        company: name,
+        kind: de ? 'Wachstum' : 'Growth',
+        period: g.period,
+        value: `${fmtPct(g.value, locale)} %`,
+        tier: g.tier,
+        quote: g.quote,
+        note: de ? g.scope_de : g.scope_en,
+        sourceName: src?.name,
+        sourceHref: src?.href,
+      })
+    }
+  } else if (hasDisclosure(c) && c.form === 'mwh') {
+    for (const m of c.mwh) {
+      const src = sourceLink(m.source_id)
+      primaryRows.push({
+        company: name,
+        kind: 'MWh',
+        period: m.period,
+        value: `${new Intl.NumberFormat(localeTag).format(m.value)} MWh`,
+        tier: m.tier,
+        note: de ? c.scope_de : c.scope_en,
+        sourceName: src?.name,
+        sourceHref: src?.href,
+      })
+    }
+  } else if (!hasDisclosure(c)) {
+    const src = sourceLink(c.absence_check_source_id)
+    primaryRows.push({
+      company: name,
+      kind: de ? 'Verbrauch' : 'Consumption',
+      period: '—',
+      value: de ? 'keine Offenlegung' : 'no disclosure',
+      tier: c.tier,
+      note: de ? c.note_de : c.note_en,
+      sourceName: src?.name,
+      sourceHref: src?.href,
+    })
+  }
+}
+
+interface DerivedRow {
+  company: string
+  kind: string
+  period: string
+  value: string
+  formula: string
+}
+const derivedRows: DerivedRow[] = []
+for (const key of COMPANY_ORDER) {
+  const company = reg.companies[key]
+  const name = company.display_name
+  const rounds: Round[] = buildRounds(company, reg.floor)
+  for (const r of rounds) {
+    if (r.growthSource === 'derived' && r.arithmetic) {
+      derivedRows.push({
+        company: name,
+        kind: de ? 'Wachstum (abgeleitet)' : 'Growth (derived)',
+        period: r.period,
+        value: `${fmtPct(r.growthPct, locale, 1)} %`,
+        formula: r.arithmetic,
+      })
+    }
+    derivedRows.push({
+      company: name,
+      kind: de ? 'Breakeven-PUE' : 'Breakeven PUE',
+      period: r.period,
+      value: fmtRatio(r.requiredPue, locale),
+      formula: `${fmtRatio(r.basePue, locale)} / (1 + ${fmtPct(r.growthPct, locale, 1)} %)`,
+    })
+  }
+  const latest = latestPue(company)
+  if (latest) {
+    derivedRows.push({
+      company: name,
+      kind: de ? 'Spielraum' : 'Headroom',
+      period: latest.period,
+      value: `${fmtPct(headroomPct(latest.figure), locale, 1)} %`,
+      formula: '(PUE − 1) / PUE × 100',
+    })
+  }
+}
+
+// --- Berichtslage (watch.json) ------------------------------------------------------
+const watchSources = Object.values(watch.sources)
+const checkedDates = watchSources.map((s) => s.last_checked).filter((d): d is string => d !== null)
+const allUnchecked = checkedDates.length === 0
+const maxChecked = allUnchecked ? null : checkedDates.reduce((a, b) => (a > b ? a : b))
+const unreachableCount = watchSources.filter((s) => s.status !== 'ok').length
+const dateFmt = new Intl.DateTimeFormat(localeTag, { year: 'numeric', month: '2-digit', day: '2-digit' })
+const berichtslageText = allUnchecked
+  ? de
+    ? 'Berichtslage: automatische Prüfung eingerichtet, erster Lauf steht aus.'
+    : 'Reporting status: automated check is set up, first run is pending.'
+  : de
+    ? `Berichtslage zuletzt geprüft am ${dateFmt.format(new Date(maxChecked as string))}${unreachableCount > 0 ? ` — ${unreachableCount} Quelle(n) zuletzt nicht erreichbar` : ''}`
+    : `Reporting status last checked on ${dateFmt.format(new Date(maxChecked as string))}${unreachableCount > 0 ? ` — ${unreachableCount} source(s) last unreachable` : ''}`
+
+const methodUrl = getRelativeLocaleUrl(locale, '/werke/spielraum')
+const methodLabel = de ? 'Methodenblatt' : 'Method sheet'
+---
+
+<article class="spielraum mx-auto max-w-2xl px-4 py-14">
+  <header class="mb-10 space-y-2">
+    <h1 class="text-2xl font-semibold">{t(locale, 'sr.title')}</h1>
+    <p class="text-fg-muted">{t(locale, 'sr.sub')}</p>
+    <p class="text-[15px] leading-relaxed">{ledeText}</p>
+  </header>
+
+  <section class="mb-12 print:hidden">
+    <p class="font-mono text-xs uppercase tracking-wide text-fg-faint">
+      {de ? 'Erforderlicher Breakeven-PUE — Google 2024' : 'Required breakeven PUE — Google 2024'}
+    </p>
+    <p class="py-1 text-[clamp(48px,9vw,96px)] font-bold leading-none tracking-tight tabular-nums">{showcaseValue}</p>
+    <p class="max-w-prose text-sm text-fg-muted">{showcaseCaption}</p>
+  </section>
+
+  {panels.map((panel) => (
+    <section class="mb-10 border-t border-line pt-6">
+      <div class="flex flex-wrap items-baseline justify-between gap-2">
+        <h2 class="font-semibold">{panel.displayName}</h2>
+        <p class="font-mono text-sm tabular-nums">
+          {panel.latest ? `${fmtRatio(panel.latest.figure, locale)} · ${panel.latest.period}` : '—'}
+          {panel.latest && (
+            <abbr title={tierFullText(panel.latest.tier)} class="ml-1 font-sans text-[10px] text-fg-faint no-underline">
+              {panel.latest.tier}
+            </abbr>
+          )}
+        </p>
+      </div>
+      <p class="mt-1 text-xs text-fg-faint">{de ? panel.company.pue.scope_note_de : panel.company.pue.scope_note_en}</p>
+
+      <svg viewBox={`0 0 ${SR_CHART_W} ${VIEWBOX_H}`} class="mt-3 w-full overflow-visible text-fg-faint" role="img" aria-label={panel.ariaLabel}>
+        <clipPath id={`sr-clip-${panel.key}`}>
+          <rect x="0" y={ZONE_TOP} width={floorXVal < 0 ? 0 : floorXVal} height={ZONE_BOTTOM - ZONE_TOP} />
+        </clipPath>
+        {zone && (
+          <g clip-path={`url(#sr-clip-${panel.key})`}>
+            {hatch.map((h) => (
+              <line x1={h.x1} y1={h.y1 + ZONE_TOP} x2={h.x2} y2={h.y2 + ZONE_TOP} stroke="currentColor" stroke-width="1" stroke-opacity="0.35" />
+            ))}
+          </g>
+        )}
+
+        <line x1="0" y1={AXIS_Y} x2={SR_CHART_W} y2={AXIS_Y} stroke="currentColor" stroke-width="1" stroke-opacity="0.4" />
+
+        {tickList.map((tk) => (
+          <g>
+            <line x1={tk.x} y1={AXIS_Y - 3} x2={tk.x} y2={AXIS_Y + 3} stroke="currentColor" stroke-width="1" />
+            <text x={tk.x} y={AXIS_Y + 14} font-size="9" text-anchor="middle" fill="currentColor">{fmtRatio(tk.value, locale)}</text>
+          </g>
+        ))}
+
+        <line x1={floorXVal} y1="2" x2={floorXVal} y2={AXIS_Y + 4} stroke="rgb(var(--rgb-accent))" stroke-width="2" />
+        <text x={floorXVal + 6} y="10" font-size="9" fill="rgb(var(--rgb-accent))">{floorLabel}</text>
+
+        {panel.latest && panel.showMarkers && (
+          <circle cx={panel.latestX} cy={AXIS_Y} r="5" fill="rgb(var(--rgb-accent))">
+            <title>
+              {de
+                ? `${panel.displayName} aktuell: ${fmtRatio(panel.latest.figure, locale)} (${panel.latest.period})`
+                : `${panel.displayName} current: ${fmtRatio(panel.latest.figure, locale)} (${panel.latest.period})`}
+            </title>
+          </circle>
+        )}
+
+        {panel.markers.map((m) => (
+          <g>
+            <line x1={m.x} y1={m.y + 5} x2={m.x} y2={AXIS_Y} stroke="currentColor" stroke-width="1" stroke-dasharray={m.dashed ? '2,2' : undefined} />
+            <circle cx={m.x} cy={m.y} r="4" fill="none" stroke="rgb(var(--rgb-accent))" stroke-width="1.4" stroke-dasharray={m.dashed ? '2,2' : undefined}>
+              <title>{m.title}</title>
+            </circle>
+            <text x={m.x + 6} y={m.y + 3} font-size="9" fill="currentColor">
+              {m.period}: {m.valueLabel}{m.dashed ? '*' : ''}{m.footnote ? ' ◇' : ''}
+            </text>
+          </g>
+        ))}
+      </svg>
+
+      {panel.key === 'aws' ? (
+        <div class="mt-2 space-y-1 text-sm">
+          <p class="font-medium">
+            {de ? 'legt keinen Verbrauch offen — kein Breakeven berechenbar' : 'discloses no consumption — no breakeven computable'}
+          </p>
+          {panel.awsNote && <p class="text-fg-faint">{panel.awsNote}</p>}
+        </div>
+      ) : panel.growthItemsQuote.length > 0 ? (
+        <ul class="mt-2 space-y-1 text-sm">
+          {panel.growthItemsQuote.map((it) => (
+            <li>
+              <q>{it.quote}</q>
+              <span class="ml-1 text-fg-faint">
+                — {it.valueLabel} ({it.period}), {it.scope}
+                {it.sourceHref && (
+                  <span> · <a href={it.sourceHref} class="hover:text-fg" rel="noopener">{it.sourceName}</a></span>
+                )}
+              </span>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <ul class="mt-2 space-y-1 text-sm">
+          {panel.growthItemsDerived.map((it) => (
+            <li>
+              {it.valueLabel} ({it.period}) — {de ? 'berechnet aus offengelegten MWh' : 'computed from disclosed MWh'}:{' '}
+              <code class="font-mono text-xs text-fg-faint">{it.arithmetic}</code>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {panel.msftDirectionNote && <p class="mt-2 text-sm text-fg-muted">{panel.msftDirectionNote}</p>}
+    </section>
+  ))}
+
+  <p class="mb-10 font-mono text-[11px] leading-relaxed text-fg-faint">
+    {de
+      ? 'Lesart: gefüllter Punkt = berichteter PUE; offene Kreise = Breakeven-PUE je Jahr (in der Schraffur = physikalisch unmöglich). * Basis-PUE als Näherung, Vorjahreswert nicht offengelegt. ◇ Wachstum als „Gesamtstrom" ausgewiesen — weiter gefasst als „Rechenzentren gesamt".'
+      : 'How to read: filled dot = reported PUE; open circles = breakeven PUE per year (inside the hatching = physically impossible). * Base PUE is an approximation, prior-year value not disclosed. ◇ Growth disclosed as "total electricity" — broader than "total data center electricity".'}
+  </p>
+
+  <section class="mb-10">
+    <h2 class="mb-3 font-semibold">{de ? 'Zahlentabelle' : 'Figures'}</h2>
+    <div class="overflow-x-auto">
+      <table class="w-full min-w-[640px] border-collapse font-mono text-xs">
+        <thead>
+          <tr class="border-b border-line text-left text-fg-faint">
+            <th class="py-1 pr-3 font-normal">{de ? 'Firma' : 'Company'}</th>
+            <th class="py-1 pr-3 font-normal">{de ? 'Größe' : 'Metric'}</th>
+            <th class="py-1 pr-3 font-normal">{de ? 'Periode' : 'Period'}</th>
+            <th class="py-1 pr-3 font-normal">{de ? 'Wert' : 'Value'}</th>
+            <th class="py-1 pr-3 font-normal">Tier</th>
+            <th class="py-1 pr-3 font-normal">{de ? 'Zitat' : 'Quote'}</th>
+            <th class="py-1 font-normal">{de ? 'Quelle' : 'Source'}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {primaryRows.map((row) => (
+            <tr class="border-b border-line/50 align-top">
+              <td class="py-1 pr-3">{row.company}</td>
+              <td class="py-1 pr-3">{row.kind}</td>
+              <td class="py-1 pr-3 tabular-nums" title={row.note}>{row.period}{row.note ? ' *' : ''}</td>
+              <td class="py-1 pr-3 tabular-nums">{row.value}</td>
+              <td class="py-1 pr-3">{row.tier}</td>
+              <td class="py-1 pr-3 max-w-xs" title={row.quote}>{row.quote && <q class="text-fg-muted">{shortQuote(row.quote)}</q>}</td>
+              <td class="py-1">{row.sourceHref && <a href={row.sourceHref} class="text-fg-faint transition-colors hover:text-fg" rel="noopener">{row.sourceName}</a>}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="mb-3 mt-6 font-semibold">{de ? 'Ableitungen (berechnet)' : 'Derived (computed)'}</h3>
+    <div class="overflow-x-auto">
+      <table class="w-full min-w-[560px] border-collapse font-mono text-xs">
+        <thead>
+          <tr class="border-b border-line text-left text-fg-faint">
+            <th class="py-1 pr-3 font-normal">{de ? 'Firma' : 'Company'}</th>
+            <th class="py-1 pr-3 font-normal">{de ? 'Größe' : 'Metric'}</th>
+            <th class="py-1 pr-3 font-normal">{de ? 'Periode' : 'Period'}</th>
+            <th class="py-1 pr-3 font-normal">{de ? 'Wert' : 'Value'}</th>
+            <th class="py-1 font-normal">{de ? 'Formel' : 'Formula'}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {derivedRows.map((row) => (
+            <tr class="border-b border-line/50 align-top">
+              <td class="py-1 pr-3">{row.company}</td>
+              <td class="py-1 pr-3">{row.kind}</td>
+              <td class="py-1 pr-3 tabular-nums">{row.period}</td>
+              <td class="py-1 pr-3 tabular-nums">{row.value}</td>
+              <td class="py-1 text-fg-muted">{row.formula}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="mb-10">
+    <h2 class="mb-3 font-semibold">{de ? 'Grenzen, die auf der Fläche stehen' : 'Caveats on the face'}</h2>
+    {COMPANY_ORDER.map((key) => (
+      <div class="mb-4">
+        <h3 class="mb-1 text-sm font-semibold text-fg-muted">{reg.companies[key].display_name}</h3>
+        <ul class="list-disc space-y-1 pl-5 text-sm text-fg-muted">
+          {reg.companies[key].caveats.map((cv) => <li>{cv[locale]}</li>)}
+        </ul>
+      </div>
+    ))}
+  </section>
+
+  <p class="mb-10 font-mono text-xs text-fg-faint">{berichtslageText}</p>
+
+  <footer class="mt-12 space-y-1 border-t border-line pt-6">
+    <nav class="flex gap-4 pt-2 text-sm text-fg-muted print:hidden">
+      <a href={methodUrl} class="transition-colors hover:text-fg">{methodLabel}</a>
+    </nav>
+  </footer>
+</article>
+
+<style>
+  /* Druckfassung: Spielraum schwarz auf weiß, Chrome ausgeblendet (Muster: PraemiePage). */
+  @media print {
+    .spielraum { max-width: none; padding: 0; color: #000; }
+    :global(body > header), :global(body > footer) { display: none !important; }
+  }
+</style>
