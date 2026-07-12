@@ -13,9 +13,13 @@ const liveWerke = WERKE_EXPERIMENTE.filter((w) => w.status === 'live')
 
 const fieldMeta = import.meta.glob('/src/components/field/werke/*/meta.json', { eager: true, import: 'default' }) as Record<string, EngineWorkMeta>
 const atelierMeta = import.meta.glob('/src/components/atelier/werke/*/meta.json', { eager: true, import: 'default' }) as Record<string, EngineWorkMeta>
+const studioMeta = import.meta.glob('/src/components/studio/werke/*/meta.json', { eager: true, import: 'default' }) as Record<string, EngineWorkMeta>
 const latestByNs = new Map([
   ['field', latestWorks([{ ns: 'field', kind: 'astro', metas: fieldMeta }], 1)[0]],
   ['atelier', latestWorks([{ ns: 'atelier', kind: 'astro', metas: atelierMeta }], 1)[0]],
+  // Studio has no premiered works yet — latestWorks() returns undefined, and the guard below
+  // (`latestByNs.get(werk.id)`) is falsy-safe, so this renders nothing until the first premiere.
+  ['studio', latestWorks([{ ns: 'studio', kind: 'astro', metas: studioMeta }], 1)[0]],
 ])
 ---
 
@@ -28,7 +32,7 @@ const latestByNs = new Map([
           <span class="font-semibold transition-opacity group-hover:opacity-70">{werkTitle(werk, locale)}</span>
           {werk.live && <span class="ml-1.5 align-middle font-mono text-[10px] uppercase tracking-wider text-fg-faint"><span class="dot-live mr-0.5 inline-block h-[5px] w-[5px] rounded-full align-middle"></span>live data</span>}
           <span class="text-sm text-fg-muted"> — {werk.subtitle[locale]}</span>
-          {(werk.id === 'field' || werk.id === 'atelier') && latestByNs.get(werk.id) && (
+          {(werk.id === 'field' || werk.id === 'atelier' || werk.id === 'studio') && latestByNs.get(werk.id) && (
             <span class="block font-mono text-[11px] text-fg-faint">
               ↳ {t(locale, 'machines.latest')}: {latestByNs.get(werk.id)!.title} · {latestByNs.get(werk.id)!.date}
             </span>

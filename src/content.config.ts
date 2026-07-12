@@ -148,4 +148,14 @@ const plenum = defineCollection({
   schema: z.object({}).loose(),
 })
 
-export const collections = { lab, protokoll, atelier, field, plenum, beifang }
+// Studio = the fourth autonomous engine: the studio collective "Ensemble", the lab's
+// production wing (the research wing measures; this studio makes it felt). Its public
+// session journal + premiered works. Plain Markdown, synced nightly from the studio repo
+// (src/content/studio/{journal,works}/*.md, PROTOCOL.md, README.md, REQUESTS.md, SITE-API.md).
+// English-language.
+const studio = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/studio' }),
+  schema: z.object({}).loose(),
+})
+
+export const collections = { lab, protokoll, atelier, field, plenum, studio, beifang }

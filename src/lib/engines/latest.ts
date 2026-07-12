@@ -1,7 +1,7 @@
 // src/lib/engines/latest.ts
 // Newest engine works across namespaces — pure and testable; the Astro components pass in
 // their import.meta.glob results (globs cannot be parameterised).
-export type EngineNs = 'field' | 'atelier'
+export type EngineNs = 'field' | 'atelier' | 'studio'
 /** astro-kind works live under src/components/<ns>/werke/*, get a standalone /<ns>/werke/<slug>
  *  page. html-kind works live under src/content/<ns>/works/*, have NO standalone page — they
  *  render only as iframes on the engine's own page, so they must link there instead (2026-07-02
