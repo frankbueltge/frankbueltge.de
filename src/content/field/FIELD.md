@@ -137,14 +137,15 @@ being optional by spec (FETCHED, https://arxiv.org/html/2604.24890v1). Watermark
 is scaling into default infrastructure (SynthID verification in the Gemini app, announced for
 Search/Chrome; OpenAI/Kakao/ElevenLabs adopting; FETCHED,
 https://blog.google/innovation-and-ai/technology/ai/google-io-2026-all-our-announcements/).
-The detector-litigation docket is now **split, not one-directional**: Yang/U. Minnesota
+The detector-litigation docket is now **split, not one-directional**: Yang v. U. Minnesota —
 expulsion affirmed Feb 2026 (grader judgment, explicitly not detector output alone — FETCHED,
-https://minnlawyer.com/2026/02/13/u-of-m-ai-cheating-expulsion-upheld-appeal/); Newby/Adelphi
-resolved for the student; Doe v. U. Michigan adds a disability-discrimination angle; Rignol v.
-Yale pending (SNIPPET tier).
+https://minnlawyer.com/2026/02/13/u-of-m-ai-cheating-expulsion-upheld-appeal/); Newby v.
+Adelphi resolved for the student; Doe v. U. Michigan adds a disability-discrimination angle;
+Rignol v. Yale pending (SNIPPET tier). (Case captions as citations, per the named-individuals
+policy, team steer 2026-07-12.)
 
 *Concrete developments (from field research, sessions 1–3):*
-- **Institutional rollback of AI text detectors**: ACU (Australia) abandoned Turnitin AI detection March 2025 after 25% of ~6,000 allegations were dismissed; UCT (South Africa); U. Waterloo (Canada) all dropped AI detector-based enforcement. Documented harm cases: Rignol v. Yale (D. Conn. 3:25-cv-00159, French-born EMBA student, GPTZero flag on final exam, pending); Yang v. U. Minnesota (PhD student expelled Nov 2024, visa revoked, expulsion upheld Feb 2026). Both cases involve NNES students.
+- **Institutional rollback of AI text detectors**: ACU (Australia) abandoned Turnitin AI detection March 2025 after 25% of ~6,000 allegations were dismissed; UCT (South Africa); U. Waterloo (Canada) all dropped AI detector-based enforcement. Documented harm cases: Rignol v. Yale (D. Conn. 3:25-cv-00159, a French-born EMBA student, GPTZero flag on final exam, pending — https://yaledailynews.com/articles/som-student-sues-yale-alleges-wrongful-suspension-over-ai-use); Yang v. U. Minnesota (a PhD student expelled Nov 2024, visa revoked, expulsion upheld Feb 2026 — caveat: per the appellate record the disciplinary panel did not rely on AI-detection evidence; grader judgment, citation problems, inconsistent testimony — https://minnlawyer.com/2026/02/13/u-of-m-ai-cheating-expulsion-upheld-appeal/). Both cases involve NNES students. (Named-individuals policy, team steer 2026-07-12: individuals appear as role + institution + consequence; the case captions above are official citations.)
 - **AI text detector calibration gap** (session 1 instrument): RAID benchmark (ACL 2024) shows detectors collapse under adversarial conditions; NNES false positive rates 30–61% above baseline (Liang et al., Stanford/Cell Patterns 2023; Stowe et al. 2025; Pratama PeerJ 2025). Vendor FPR claims (0.2–1%) vs. independent measurements (15–37%) show systematic specification gap.
 - **C2PA operational paradox** (RAND June 2025): content most needing verified provenance (virally shared) is most likely to lose C2PA metadata via screenshot, social media recompression, or format conversion. Simple screenshot removes all manifests. The chain of custody breaks at the highest-stakes nodes.
 - **C2PA structural contradictions** (session 3 instrument, 2026-07-01): The standard's three design goals — provenance binding, cross-platform durability, creator privacy — are in structural tension. Forgery demonstrated via c2patool by Hacker Factor (2025): any image can be signed with a valid certificate attributing content to any creator; verification tools show "no evidence of tampering." ArXiv 2604.24890 (2026): "C2PA should not yet be relied upon for high-stakes uses such as financial disclosures, journalism, or legal evidence." Privacy paradox (Fortune, Sep 2025; SMPTE MTS2025): device-bound certificates expose journalists' identities even when bylines are withheld; manifest fetch requests log IP addresses.

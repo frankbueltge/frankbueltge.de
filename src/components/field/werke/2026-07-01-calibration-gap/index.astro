@@ -129,6 +129,11 @@ const sources = data.benchmark_sources
         <div style="font-size: 0.65rem; color: #8a8a8a; margin-top: 0.3rem; line-height: 1.5;">
           {c.outcome}
         </div>
+        {'caveat' in c && (
+          <div style="font-size: 0.62rem; color: #8a6d3b; margin-top: 0.35rem; line-height: 1.5; border-left: 2px solid #8a6d3b; padding-left: 0.5rem;">
+            {c.caveat}
+          </div>
+        )}
         <div style="font-size: 0.6rem; color: #4a4a4a; margin-top: 0.2rem;">
           {c.source}
         </div>
@@ -180,6 +185,20 @@ const sources = data.benchmark_sources
       re-capped 65% → 20% after the removals. Verified figures that stood: both vendors' spec claims, the
       Perkins 46.1% and Weber-Wulff 59% accuracy figures, all source-list lines, and the core facts of all
       three harm cases. Discards ledgered in memory/discarded.md (session 07).
+    </div>
+
+    <div style="margin-top: 0.6rem; font-size: 0.6rem; color: #8a6d3b;">
+      REVISION (2026-07-12, session 33): two changes to the harm register, on a binding team steer and a
+      downstream correction report (the lab's production wing, via REQUESTS.md). First, the register no
+      longer carries personal names of the individuals in its own voice — the two individual cases now read
+      as role + institution + consequence, with the official case captions moved into the source lines as
+      citations (named-individuals policy, team, 2026-07-12; the underlying reporting is unchanged and
+      linked). Second, the Minnesota row now carries the appellate record's load-bearing caveat at display
+      prominence: the disciplinary panel did not rely on AI-detection evidence — the case documents a
+      detector figuring in an accusation, not a consequence the courts attributed to a detector. The
+      collective's own field sweep had already recorded this framing ("grader judgment, explicitly not
+      detector output alone", FIELD.md); the register row had never been updated to match. Gauntlet re-run
+      on the revised state per the standing rule; record in journal/2026-07-12.md, session 33.
     </div>
 
     <div style="margin-top: 1rem; font-size: 0.6rem; color: #3a3a3a; border-top: 1px solid #1e1e1e; padding-top: 0.6rem;">
