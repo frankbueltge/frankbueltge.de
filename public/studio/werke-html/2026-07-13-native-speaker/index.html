@@ -1,0 +1,1649 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Native Speaker — English Verification Gate</title>
+<style>
+  :root {
+    --bg: #0d0d0d;
+    --bg-raised: #131313;
+    --text: #d4d4d4;
+    --text-dim: #9a9a9a;
+    --label: #6b6b6b;
+    --rule: #3f3f3f;
+    --rule-faint: #262626;
+    --red: #c0392b;
+    --red-bg: rgba(192, 57, 43, 0.10);
+    --green: #2e7d4f;
+    --green-bg: rgba(46, 125, 79, 0.10);
+    --amber: #a6822f;
+    --amber-bg: rgba(166, 130, 47, 0.10);
+    --steel: #5c7a8a;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    line-height: 1.55;
+  }
+  body { padding-top: 2.2rem; }
+  a { color: #8fb4c9; overflow-wrap: anywhere; word-break: break-word; }
+  a:visited { color: #a08fc9; }
+  button { font-family: inherit; }
+  button:focus-visible, a:focus-visible, textarea:focus-visible, [tabindex]:focus-visible {
+    outline: 2px solid var(--steel);
+    outline-offset: 2px;
+  }
+  h1, h2, h3 { font-weight: 700; }
+
+  .gate { max-width: 860px; margin: 0 auto; padding: 0 1.1rem 4rem; }
+
+  /* ---------- fixed honesty nudge ---------- */
+  .honesty-nudge {
+    display: block;
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 40;
+    background: #000;
+    color: var(--text-dim);
+    border-bottom: 2px solid var(--red);
+    padding: 0.45rem 1rem;
+    font-size: 0.7rem;
+    text-align: center;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+  }
+  .honesty-nudge:hover, .honesty-nudge:focus-visible { color: var(--text); }
+
+  /* ---------- header strip ---------- */
+  .strip {
+    border-bottom: 1px solid var(--rule);
+    padding: 1.1rem 0 0.6rem;
+    margin-bottom: 1.4rem;
+  }
+  .strip-line {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--label);
+    margin: 0;
+  }
+  .strip-line strong { color: var(--text-dim); }
+
+  /* ---------- tier tags ---------- */
+  .tag {
+    display: inline-block;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 700;
+    padding: 0.12rem 0.4rem;
+    border-radius: 2px;
+    line-height: 1.5;
+  }
+  .tag-verified { color: #7fbf9c; background: var(--green-bg); border: 1px solid var(--green); }
+  .tag-reconstruction { color: #8fb4c9; background: rgba(92, 122, 138, 0.12); border: 1px solid var(--steel); }
+  .tag-ledger { color: #9a9a9a; background: rgba(120, 120, 120, 0.10); border: 1px dotted #6b6b6b; }
+  .tag-imagined { color: #d4b25c; background: var(--amber-bg); border: 1px dashed var(--amber); }
+
+  /* ---------- stages ---------- */
+  .stage {
+    border: 1px solid var(--rule);
+    padding: 1.3rem 1.3rem 1.5rem;
+    margin-bottom: 1.6rem;
+  }
+  .stage h1 { font-size: 1.5rem; letter-spacing: 0.02em; margin: 0 0 0.7rem; }
+  .stage h2 {
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--label);
+    margin: 0 0 0.9rem;
+  }
+  .gate-voice {
+    font-size: 0.92rem;
+    border-left: 3px solid var(--red);
+    padding: 0.3rem 0 0.3rem 0.8rem;
+    margin: 0 0 1.1rem;
+    color: var(--text);
+  }
+  .gate-voice em { color: var(--text-dim); font-style: normal; }
+
+  /* ---------- tier legend (intro) ---------- */
+  .tier-legend { display: flex; flex-direction: column; gap: 0.5rem; margin: 0 0 1.3rem; }
+  .tier-legend-row { display: flex; gap: 0.6rem; align-items: baseline; font-size: 0.78rem; }
+  .tier-legend-row span.meaning { color: var(--text-dim); }
+
+  .btn {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--text-dim);
+    padding: 0.6rem 1.2rem;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+  }
+  .btn:hover:not(:disabled) { border-color: var(--text); background: rgba(212, 212, 212, 0.06); }
+  .btn:disabled { opacity: 0.35; cursor: not-allowed; }
+  .btn-primary { border-color: var(--steel); color: #cfe0e8; }
+  .btn-primary:hover:not(:disabled) { background: rgba(92, 122, 138, 0.14); }
+
+  /* ---------- textarea ---------- */
+  label.field-label {
+    display: block;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--label);
+    margin-bottom: 0.4rem;
+  }
+  textarea {
+    width: 100%;
+    background: var(--bg-raised);
+    color: var(--text);
+    border: 1px solid var(--rule);
+    padding: 0.7rem 0.8rem;
+    font-family: inherit;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    min-height: 5.5rem;
+    resize: vertical;
+    margin-bottom: 0.9rem;
+  }
+  textarea:disabled { opacity: 0.55; }
+  textarea::placeholder { color: #555; }
+
+  /* ---------- meter / gauge ---------- */
+  .meter-wrap { margin-bottom: 1rem; }
+  .meter-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--label);
+    margin-bottom: 0.35rem;
+  }
+  .meter-heading .score-readout { color: var(--text); font-weight: 700; font-variant-numeric: tabular-nums; text-transform: none; letter-spacing: 0; }
+  .gauge {
+    position: relative;
+    height: 34px;
+    border: 1px solid var(--rule);
+    background: var(--bg-raised);
+    margin-bottom: 0.3rem;
+  }
+  .gauge-endlabel {
+    position: absolute;
+    top: 3px;
+    font-size: 0.58rem;
+    letter-spacing: 0.06em;
+    color: var(--label);
+    text-transform: uppercase;
+  }
+  .gauge-endlabel.human { left: 6px; }
+  .gauge-endlabel.machine { right: 6px; }
+  .gauge-threshold {
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 0;
+    border-left: 1px dashed var(--text-dim);
+  }
+  .gauge-threshold-label {
+    position: absolute;
+    bottom: -1.05rem;
+    font-size: 0.58rem;
+    color: var(--text-dim);
+    white-space: nowrap;
+    transform: translateX(-50%);
+  }
+  .gauge-needle {
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    width: 3px;
+    background: var(--text-dim);
+    transform: translateX(-50%);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .gauge-needle { transition: left 0.08s linear, background-color 0.15s linear; }
+  }
+  .gauge-needle.admitted { background: var(--green); }
+  .gauge-needle.flagged { background: var(--red); }
+  .gauge-needle.insufficient { background: var(--amber); opacity: 0.6; }
+  .meter-status { font-size: 0.76rem; margin: 1.2rem 0 0; color: var(--text-dim); }
+  .meter-status strong.admitted { color: #7fbf9c; }
+  .meter-status strong.flagged { color: #e0796c; }
+  .meter-status strong.insufficient { color: #d4b25c; }
+
+  .components { margin: 0.9rem 0 0; padding: 0; list-style: none; }
+  .component-row {
+    display: grid;
+    grid-template-columns: 8.5rem 1fr 3rem;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    margin-bottom: 0.35rem;
+  }
+  .component-row .cname { text-transform: uppercase; letter-spacing: 0.04em; }
+  .component-track { height: 6px; background: var(--rule-faint); position: relative; }
+  .component-fill { height: 100%; background: var(--steel); width: 0%; }
+  @media (prefers-reduced-motion: no-preference) {
+    .component-fill { transition: width 0.1s linear; }
+  }
+  .component-row .cval { text-align: right; font-variant-numeric: tabular-nums; color: var(--text); }
+
+  /* ---------- stamp ---------- */
+  .stamp-area { margin: 1.2rem 0 0.6rem; display: flex; align-items: center; gap: 1.4rem; flex-wrap: wrap; }
+  .stamp {
+    display: inline-block;
+    border: 3px solid currentColor;
+    padding: 0.5rem 1rem;
+    font-size: 1.05rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    transform: rotate(-8deg);
+  }
+  .stamp.admitted { color: var(--green); }
+  .stamp.flagged { color: var(--red); }
+  .stamp-score { font-size: 0.8rem; color: var(--text-dim); }
+  .stamp-score strong { color: var(--text); font-variant-numeric: tabular-nums; }
+  .continue-wrap { margin-top: 1rem; }
+
+  /* ---------- verdict card ---------- */
+  .verdict-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.2rem; }
+  @media (max-width: 620px) { .verdict-grid { grid-template-columns: 1fr; } }
+  .verdict-col { border: 1px solid var(--rule); padding: 0.9rem 1rem; }
+  .verdict-col h3 { font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--label); margin: 0 0 0.6rem; }
+
+  .grace-banner {
+    border: 1px solid var(--green);
+    background: var(--green-bg);
+    padding: 0.9rem 1.1rem;
+    margin-bottom: 1.3rem;
+    font-size: 0.85rem;
+  }
+  .grace-banner .tag { margin-right: 0.4rem; }
+
+  .verdict-block { margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px dashed var(--rule-faint); }
+  .verdict-block:last-child { border-bottom: none; }
+  .verdict-block h3 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 0.7rem;
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .figure-line { font-size: 1.4rem; font-weight: 700; font-variant-numeric: tabular-nums; margin: 0 0 0.4rem; color: var(--text); }
+  .figure-sub { font-size: 0.68rem; color: var(--label); margin: 0 0 0.7rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  .verdict-block p { font-size: 0.85rem; margin: 0 0 0.7rem; }
+  .verdict-block p:last-child { margin-bottom: 0; }
+  .verdict-block ul { margin: 0 0 0.7rem; padding-left: 1.2rem; font-size: 0.8rem; }
+  .case-entry { border-left: 3px solid var(--text-dim); padding-left: 0.8rem; margin-bottom: 0.9rem; }
+  .case-entry:last-child { margin-bottom: 0; }
+  .case-entry h4 { font-size: 0.85rem; margin: 0 0 0.3rem; }
+  .discipline-note { font-size: 0.7rem; color: var(--amber); text-transform: uppercase; letter-spacing: 0.03em; }
+  .counter-line {
+    border-left: 3px solid var(--steel);
+    padding-left: 0.8rem;
+    font-size: 0.82rem;
+    color: var(--text-dim);
+  }
+  .tally-line { font-size: 0.95rem; font-weight: 700; margin: 0 0 0.4rem; }
+  .tally-note { font-size: 0.72rem; color: var(--text-dim); }
+  .figure-secondary { font-size: 0.78rem; color: var(--text-dim); font-variant-numeric: tabular-nums; margin: 0 0 0.7rem; }
+
+  /* ---------- case-file reveal mechanics ---------- */
+  .file-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.2rem;
+  }
+  .btn-small { padding: 0.35rem 0.7rem; font-size: 0.66rem; }
+  .file-controls-note { font-size: 0.66rem; color: var(--label); }
+  .next-exhibit-wrap { margin-top: 0.4rem; }
+  .file-closed h3 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 0.7rem;
+  }
+  .file-closed { border-top: 1px solid var(--rule); padding-top: 1.2rem; margin-bottom: 0.6rem; }
+  .exhibit:focus { outline: none; }
+  .exhibit:focus-visible { outline: 2px solid var(--steel); outline-offset: 2px; }
+  @media (prefers-reduced-motion: no-preference) {
+    .exhibit-enter { opacity: 0; transform: translateY(4px) scale(1.01); }
+    .exhibit-enter-active {
+      opacity: 1;
+      transform: none;
+      transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+    }
+  }
+
+  /* ---------- self-test ---------- */
+  .selftest { border: 1px solid var(--rule); padding: 1.1rem 1.3rem; margin-bottom: 1.6rem; }
+  .selftest h2 { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--label); margin: 0 0 0.8rem; }
+  .selftest-output {
+    font-size: 0.8rem;
+    white-space: pre-wrap;
+    border: 1px dashed var(--rule);
+    padding: 0.7rem 0.85rem;
+    background: var(--bg-raised);
+    margin: 0;
+  }
+  .selftest-output.pass { color: #7fbf9c; }
+  .selftest-output.fail { color: #e0796c; }
+  .selftest-note { font-size: 0.7rem; color: var(--text-dim); margin: 0.6rem 0 0; }
+
+  /* ---------- honesty panel ---------- */
+  .honesty {
+    background: #050505;
+    border: 3px solid var(--red);
+    padding: 1.3rem 1.4rem;
+    margin-bottom: 1.6rem;
+    scroll-margin-top: 3rem;
+  }
+  .honesty h2 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 1rem; color: var(--text); }
+  .honesty-block { margin-bottom: 1.1rem; }
+  .honesty-block:last-child { margin-bottom: 0; }
+  .honesty-block h3 { font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--label); margin: 0 0 0.5rem; }
+  .honesty-block p { font-size: 0.82rem; margin: 0 0 0.6rem; }
+  .honesty-block p:last-child { margin-bottom: 0; }
+  .honesty-block ul, .honesty-block ol { margin: 0 0 0.6rem; padding-left: 1.2rem; font-size: 0.8rem; }
+  .honesty-block li { margin-bottom: 0.4rem; }
+  .tier-legend-detail dt { font-size: 0.78rem; font-weight: 700; margin-top: 0.6rem; }
+  .tier-legend-detail dt:first-child { margin-top: 0; }
+  .tier-legend-detail dd { margin: 0.2rem 0 0; font-size: 0.8rem; color: var(--text-dim); }
+
+  /* ---------- sources footer ---------- */
+  .sources { border: 1px solid var(--rule-faint); padding: 1rem 1.2rem; }
+  .sources h2 { font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--label); margin: 0 0 0.7rem; }
+  .sources ul { margin: 0; padding-left: 1.1rem; font-size: 0.78rem; }
+  .sources li { margin-bottom: 0.5rem; word-break: break-word; }
+
+  .noscript-wrap { max-width: 700px; margin: 2rem auto; padding: 0 1.25rem; }
+
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+
+<a class="honesty-nudge" href="#honesty-panel">This gate computes a reconstruction; it proves nothing about you — honesty panel below ↓</a>
+
+<div class="gate" id="app">
+
+  <header class="strip">
+    <p class="strip-line">THE LAB / ENSEMBLE / <strong>NATIVE SPEAKER</strong> · PREMIERED 2026-07-13</p>
+  </header>
+
+  <!-- ============================================================ -->
+  <!-- VIEW 1 — GATE / INTRO                                          -->
+  <!-- ============================================================ -->
+  <section class="stage" id="view-intro">
+    <h1>ENGLISH VERIFICATION GATE</h1>
+    <p class="gate-voice">"This gate reads your English and decides whether you are human."</p>
+
+    <div class="tier-legend" aria-label="Tier legend">
+      <div class="tier-legend-row"><span class="tag tag-verified">VERIFIED</span><span class="meaning">from the research record — checked, sourced, cited.</span></div>
+      <div class="tier-legend-row"><span class="tag tag-reconstruction">RECONSTRUCTION</span><span class="meaning">this page's own meter — a disclosed, deterministic rebuild of the documented mechanism, not a commercial detector.</span></div>
+      <div class="tier-legend-row"><span class="tag tag-imagined">IMAGINED</span><span class="meaning">the border-checkpoint fiction — the gate's voice, the stamps, the prompts.</span></div>
+      <div class="tier-legend-row"><span class="tag tag-ledger">SELF-REPORTED</span><span class="meaning">this terminal's own ledger — counted locally in your browser, never transmitted; it carries no population claim.</span></div>
+    </div>
+
+    <button type="button" class="btn btn-primary" id="begin-btn">[BEGIN] STEP FORWARD</button>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- VIEW 2 — ATTEMPT 1                                             -->
+  <!-- ============================================================ -->
+  <section class="stage" id="view-attempt1" hidden tabindex="-1">
+    <h2>Attempt 1 of 2</h2>
+    <p class="gate-voice">PROVIDE A WRITING SAMPLE. <em>Describe your morning in one or two sentences — the way you'd text a friend. Don't be careful.</em></p>
+
+    <label class="field-label" for="ta1">Your writing sample — attempt 1</label>
+    <textarea id="ta1" rows="4" aria-describedby="meter1-status" placeholder="type here…"></textarea>
+
+    <div class="meter-wrap" id="meter1">
+      <div class="meter-heading">
+        <span>Human — Machine meter</span>
+        <span class="score-readout" id="meter1-score">—</span>
+      </div>
+      <div class="gauge" id="meter1-gauge">
+        <span class="gauge-endlabel human">Human</span>
+        <span class="gauge-endlabel machine">Machine</span>
+        <div class="gauge-threshold" id="meter1-threshold"></div>
+        <div class="gauge-needle insufficient" id="meter1-needle"></div>
+      </div>
+      <p class="meter-status" id="meter1-status" aria-live="polite">INSUFFICIENT SAMPLE — write at least 8 words.</p>
+      <ul class="components" id="meter1-components"></ul>
+    </div>
+
+    <button type="button" class="btn btn-primary" id="submit1-btn" disabled>PRESENT SAMPLE</button>
+
+    <div class="stamp-area" id="stamp1-area" hidden>
+      <div class="stamp" id="stamp1"></div>
+      <p class="stamp-score" id="stamp1-score"></p>
+    </div>
+
+    <div class="continue-wrap" id="to-attempt2-wrap" hidden>
+      <button type="button" class="btn btn-primary" id="to-attempt2-btn">Continue — second sample required</button>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- VIEW 3 — ATTEMPT 2                                             -->
+  <!-- ============================================================ -->
+  <section class="stage" id="view-attempt2" hidden tabindex="-1">
+    <h2>Attempt 2 of 2</h2>
+    <p class="gate-voice">SECOND SAMPLE REQUIRED. <em>The same morning — but write it as if you had learned English at fifteen: choose each word with care, use only words you are sure of, keep the grammar safe.</em></p>
+
+    <label class="field-label" for="ta2">Your writing sample — attempt 2</label>
+    <textarea id="ta2" rows="4" aria-describedby="meter2-status" placeholder="type here…"></textarea>
+
+    <div class="meter-wrap" id="meter2">
+      <div class="meter-heading">
+        <span>Human — Machine meter</span>
+        <span class="score-readout" id="meter2-score">—</span>
+      </div>
+      <div class="gauge" id="meter2-gauge">
+        <span class="gauge-endlabel human">Human</span>
+        <span class="gauge-endlabel machine">Machine</span>
+        <div class="gauge-threshold" id="meter2-threshold"></div>
+        <div class="gauge-needle insufficient" id="meter2-needle"></div>
+      </div>
+      <p class="meter-status" id="meter2-status" aria-live="polite">INSUFFICIENT SAMPLE — write at least 8 words.</p>
+      <ul class="components" id="meter2-components"></ul>
+    </div>
+
+    <button type="button" class="btn btn-primary" id="submit2-btn" disabled>PRESENT SAMPLE</button>
+
+    <div class="stamp-area" id="stamp2-area" hidden>
+      <div class="stamp" id="stamp2"></div>
+      <p class="stamp-score" id="stamp2-score"></p>
+    </div>
+
+    <div class="continue-wrap" id="to-verdict-wrap" hidden>
+      <button type="button" class="btn btn-primary" id="to-verdict-btn">See the verdict card</button>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- VIEW 4 — THE CASE FILE                                         -->
+  <!-- The border-gate fiction carries through the evidence: the      -->
+  <!-- gate opens a file, its ledger sits at the top, the evidence    -->
+  <!-- enters as exhibits, revealed in sequence — with a disclosed    -->
+  <!-- escape (OPEN THE WHOLE FILE). Pacing never hides evidence;     -->
+  <!-- the noscript block carries everything as plain text.           -->
+  <!-- ============================================================ -->
+  <section class="stage" id="view-verdict" hidden tabindex="-1">
+    <h2>The case file</h2>
+    <p class="gate-voice">PROCESSING COMPLETE. YOUR CASE FILE FOLLOWS.</p>
+
+    <div class="file-controls" id="file-controls">
+      <button type="button" class="btn btn-small" id="open-file-btn">OPEN THE WHOLE FILE</button>
+      <span class="file-controls-note">reveals every exhibit at once — the pacing below never hides evidence</span>
+    </div>
+
+    <div class="grace-banner" id="grace-banner" hidden>
+      <span class="tag tag-verified">VERIFIED</span>
+      <span id="grace-text"></span>
+    </div>
+
+    <!-- subject record — the two attempts, side by side -->
+    <div class="verdict-block" id="block-attempts">
+      <h3><span class="tag tag-reconstruction">RECONSTRUCTION</span> Subject record — your two attempts</h3>
+      <div class="verdict-grid">
+        <div class="verdict-col">
+          <h3>Attempt 1 — casual</h3>
+          <div class="stamp" id="vcard-stamp1"></div>
+          <p class="stamp-score" id="vcard-score1"></p>
+          <ul class="components" id="vcard-components1"></ul>
+        </div>
+        <div class="verdict-col">
+          <h3>Attempt 2 — careful</h3>
+          <div class="stamp" id="vcard-stamp2"></div>
+          <p class="stamp-score" id="vcard-score2"></p>
+          <ul class="components" id="vcard-components2"></ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- the gate's ledger — load-bearing placement: top of the file.
+         JS repositions it right after the grace banner in the
+         ADMITTED branch so banner and ledger argue in one breath. -->
+    <div class="verdict-block" id="gate-ledger">
+      <h3><span class="tag tag-ledger">SELF-REPORTED</span> This gate's ledger</h3>
+      <p class="tally-line" id="tally-line-text">—</p>
+      <p class="tally-note" id="tally-scope-text"></p>
+      <p class="tally-note"><a href="#honesty-panel">Full tally disclosure in the honesty panel ↓</a></p>
+    </div>
+
+    <!-- EXHIBIT A — population record -->
+    <div class="verdict-block exhibit" id="exhibit-a" hidden tabindex="-1">
+      <h3><span class="tag tag-verified">VERIFIED</span> Exhibit A — population record</h3>
+      <p class="figure-line" id="liang-figure-line">—</p>
+      <p class="figure-sub" id="liang-figure-sub"></p>
+      <p class="figure-secondary" id="liang-secondary-line"></p>
+      <p id="liang-claim-text"></p>
+      <p id="liang-mechanism-text"></p>
+      <ul id="liang-discipline-list"></ul>
+      <p><a id="liang-url" href="#" target="_blank" rel="noopener noreferrer"></a></p>
+    </div>
+
+    <!-- EXHIBIT B — precedent: role + institution + consequence; no
+         personal names in the work's own voice (naming policy) -->
+    <div class="verdict-block exhibit" id="exhibit-b" hidden tabindex="-1">
+      <h3><span class="tag tag-verified">VERIFIED</span> Exhibit B — precedent</h3>
+      <div class="case-entry">
+        <h4>The scale case — Australian Catholic University</h4>
+        <p id="acu-claim-text"></p>
+        <p><a id="acu-url" href="#" target="_blank" rel="noopener noreferrer"></a></p>
+      </div>
+      <div class="case-entry">
+        <h4>The detector case — an EMBA student, Yale School of Management</h4>
+        <p class="discipline-note" id="yale-discipline-text"></p>
+        <p id="yale-claim-text"></p>
+        <p><a id="yale-url" href="#" target="_blank" rel="noopener noreferrer"></a></p>
+      </div>
+    </div>
+
+    <!-- EXHIBIT C — applicable law -->
+    <div class="verdict-block exhibit" id="exhibit-c" hidden tabindex="-1">
+      <h3><span class="tag tag-verified">VERIFIED</span> Exhibit C — applicable law: none found</h3>
+      <p id="legal-frame-text"></p>
+    </div>
+
+    <!-- EXHIBIT D — counter-evidence -->
+    <div class="verdict-block exhibit" id="exhibit-d" hidden tabindex="-1">
+      <h3><span class="tag tag-verified">VERIFIED</span> Exhibit D — what this file must also carry</h3>
+      <p class="counter-line" id="counter-line-text"></p>
+      <p><a href="#honesty-panel">Full counter-evidence and every source in the honesty panel below ↓</a></p>
+    </div>
+
+    <!-- FILE CLOSED -->
+    <div class="exhibit file-closed" id="file-closed" hidden tabindex="-1">
+      <h3>File closed</h3>
+      <p class="tally-note" id="tally-reprise-text"></p>
+      <p class="gate-voice">THE GATE DOES NOT APOLOGIZE. IT RECORDS. NEXT.</p>
+      <p class="tally-note"><a href="#honesty-panel">Every disclosure, in full, in the honesty panel below ↓</a></p>
+    </div>
+
+    <div class="next-exhibit-wrap" id="next-exhibit-wrap">
+      <button type="button" class="btn btn-primary" id="next-exhibit-btn">NEXT EXHIBIT →</button>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SELF-TEST — always visible, computed live at page load          -->
+  <!-- ============================================================ -->
+  <section class="selftest" id="engine-selftest">
+    <h2>Self-test — verify the meter is honest</h2>
+    <pre class="selftest-output" id="selftest-output">(running…)</pre>
+    <p class="selftest-note">
+      <span class="tag tag-imagined">IMAGINED</span> the two self-test sentences above are written by this studio —
+      not real TOEFL material — to prove the meter's mechanism live, in your browser, with the exact same function
+      that scored your two attempts. <code>scoreText()</code> receives only a string: no attempt number, no prompt
+      text, no global state, no randomness, no clock. Same input, same output, always — deterministic, which is a
+      stronger guarantee than "seeded."
+    </p>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- HONESTY PANEL — always present, expanded, not skippable         -->
+  <!-- ============================================================ -->
+  <section class="honesty" id="honesty-panel">
+    <h2>Honesty panel</h2>
+
+    <div class="honesty-block">
+      <h3>Tier legend</h3>
+      <dl class="tier-legend-detail">
+        <dt><span class="tag tag-verified">VERIFIED</span></dt>
+        <dd>Taken from the research record: a real, cited, checkable source. Every VERIFIED figure, case and caveat
+          on this page is read at runtime from this page's own data island, not retyped by hand.</dd>
+        <dt><span class="tag tag-reconstruction">RECONSTRUCTION</span></dt>
+        <dd>The meter itself. Not GPTZero, not Turnitin, not any commercial detector — a deterministic, in-browser
+          rebuild of the documented mechanism (perplexity-and-burstiness-style scoring), built by this studio so the
+          mechanism can be experienced and checked, not taken on faith.</dd>
+        <dt><span class="tag tag-imagined">IMAGINED</span></dt>
+        <dd id="imagined-elements-text"></dd>
+      </dl>
+    </div>
+
+    <div class="honesty-block">
+      <h3>Naming policy</h3>
+      <p id="naming-policy-text"></p>
+    </div>
+
+    <div class="honesty-block">
+      <h3>The meter, fully disclosed</h3>
+      <p id="meter-statement-text"></p>
+      <ul id="meter-components-list"></ul>
+      <p id="meter-attempt-blind-text"></p>
+      <p>Threshold is a single named constant, shown on every gauge on this page — not hidden, not adjustable per
+        visitor.</p>
+    </div>
+
+    <div class="honesty-block">
+      <h3>The counter-evidence, in full</h3>
+      <p id="counter-role-text"></p>
+      <ul id="counter-claims-list"></ul>
+      <p><strong>Sources:</strong></p>
+      <ul id="counter-urls-list"></ul>
+    </div>
+
+    <div class="honesty-block">
+      <h3>Short-text caveat</h3>
+      <p id="short-text-claim-text"></p>
+      <p><a id="short-text-url" href="#" target="_blank" rel="noopener noreferrer"></a></p>
+    </div>
+
+    <div class="honesty-block">
+      <h3>The legal void — sources and discipline</h3>
+      <p id="legal-discipline-text"></p>
+      <ul id="legal-basis-list"></ul>
+      <ul id="legal-urls-list"></ul>
+    </div>
+
+    <div class="honesty-block">
+      <h3>A case deliberately not on this card</h3>
+      <p class="discipline-note" id="boundary-role-text"></p>
+      <p id="boundary-claim-text"></p>
+      <p id="boundary-note-text"></p>
+      <p>Citation: <a id="boundary-caption-link" href="#" target="_blank" rel="noopener noreferrer"></a></p>
+    </div>
+
+    <div class="honesty-block">
+      <h3>The tally — what it does and does not prove</h3>
+      <p id="tally-scope-full-text"></p>
+      <p id="tally-nonflip-text"></p>
+    </div>
+
+    <div class="honesty-block">
+      <h3>Upstream</h3>
+      <p id="upstream-source-text"></p>
+      <p id="upstream-live-status-text"></p>
+      <p id="upstream-contract-text"></p>
+    </div>
+  </section>
+
+  <footer class="sources">
+    <h2>All sources, as plain links</h2>
+    <ul id="sources-list"></ul>
+  </footer>
+
+</div>
+
+<noscript>
+  <div class="noscript-wrap">
+    <h1>Native Speaker — English Verification Gate</h1>
+    <p>This is an interactive prototype: the live meter, the two-attempt gate, and the self-test require
+      JavaScript and are not shown here. What follows is the full, honest static record: every VERIFIED figure
+      and case, the legal void, the counter-evidence and every source, unabridged. Naming policy: no personal
+      names in this work's own voice — people appear as role + institution + consequence; personal names survive
+      only as citation text inside linked sources (official case captions), where they are evidence, not
+      spectacle.</p>
+
+    <h2>The mechanism (RECONSTRUCTION, this page's own meter)</h2>
+    <p>AI text detectors, and the reconstruction on this page, score writing on five components: how common the
+      words are (constrained vocabulary reads machine-like), how even the sentence and word-length rhythm is,
+      whether informal markers (contractions, slang, loose punctuation) are present, how diverse the vocabulary is,
+      and how much text repeats itself. The documented mechanism: perplexity-based detection penalizes constrained
+      vocabulary — the careful, limited word choice of a second-language writer reads as machine-like regularity.</p>
+
+    <h2>VERIFIED — the pattern at population scale</h2>
+    <p>Liang, Yuksekgonul, Mao, Wu, Zou — Cell Patterns, 2023. On 91 TOEFL essays, 89 (97.8%) were flagged by at
+      least one of seven detectors studied — a union statistic across seven detectors, never a single detector's
+      rate. The average false-positive rate across the seven detectors was 61.22% (a mean across seven tools, not
+      one named tool's rate). 18 of 91 (19.8%) were flagged unanimously. Native-speaker control essays were
+      near-zero. Source: https://arxiv.org/abs/2304.02819</p>
+
+    <h2>VERIFIED — consequences, on the record</h2>
+    <p><strong>The scale case — Australian Catholic University, 2024:</strong> roughly 6,000 academic-misconduct
+      allegations (around 90% AI-related); about 25% were dismissed; a Deputy Vice-Chancellor called the figures
+      "substantially overstated"; the university abandoned Turnitin AI detection in March 2025. Source:
+      https://www.abc.net.au/news/2025-10-09/artificial-intelligence-cheating-australian-catholic-university/105863524</p>
+    <p><strong>The detector case (PENDING — never decided) — an EMBA student at Yale School of Management, a French
+      national writing in his second language:</strong> one-year suspension and a failing grade after a GPTZero
+      flag on a final exam. He submitted scans showing the same tool flagged academic papers by Yale scholars,
+      including a former university president, as probably AI-generated. His federal lawsuit is PENDING (D. Conn.
+      3:25-cv-00159); a preliminary injunction was denied in May 2025. Citation:
+      <a href="https://yaledailynews.com/articles/som-student-sues-yale-alleges-wrongful-suspension-over-ai-use">Rignol v. Yale (pending)</a></p>
+
+    <h2>A case deliberately not on this card</h2>
+    <p>The most widely reported consequence case — a PhD student expelled from the University of Minnesota over
+      alleged AI use, student visa revoked, expulsion upheld by the Minnesota Court of Appeals in February 2026,
+      federal lawsuit dismissed in October 2025 — is NOT presented on this work as detector harm. The appeals
+      court noted the disciplinary panel did not rely on AI-detection evidence: it credited graders' ability to
+      identify AI-written work, pointed to irrelevant sources, and cited missing citations and inconsistent
+      testimony. A work about machine judgment may not borrow stakes the record does not attribute to the machine.
+      Citation:
+      <a href="https://minnlawyer.com/2026/02/13/u-of-m-ai-cheating-expulsion-upheld-appeal">Yang v. University of Minnesota (Minn. Ct. App., Feb 2026)</a></p>
+
+    <h2>VERIFIED — the legal void</h2>
+    <p>The nearby law governs something else: the EU AI Act's Article 50 obliges PROVIDERS to mark machine OUTPUT
+      as machine-made. In the cases retrieved here, no court reviewed the machine's judgment of a human's words
+      itself — where consequences were challenged, review ran on whether the institution followed its own
+      procedures, not on whether the detector was right. Sources:
+      https://www.oiahe.org.uk/resources-and-publications/learning-from-our-casework/ai-and-academic-misconduct/casework-note-complaints-relating-to-ai-and-academic-misconduct/
+      and https://www.turnitin.com/blog/understanding-false-positives-within-our-ai-writing-detection-capabilities</p>
+
+    <h2>VERIFIED — counter-evidence, load-bearing, documented not universal</h2>
+    <p>A 2026 study in a Czech-language setting found no systematic bias against non-native speakers; the
+      contemporary detectors studied did not rely on perplexity as a key feature (Al Ali, Helcl, Libovický, EACL
+      2026). The bias may be perplexity-architecture-specific and/or English-specific, or diminishing in newer
+      models — not resolved. Turnitin's own research reports no statistically significant false-positive-rate bias
+      against English-language learners at 300+ words — and Liang et al.'s seven detectors did not include
+      Turnitin. Short documents show a significantly larger false-positive gap. The documented pattern is real and
+      sourced — and it is documented, not universal. Sources: https://arxiv.org/abs/2602.05769 and
+      https://www.turnitin.com/blog/new-research-turnitin-s-ai-detector-shows-no-statistically-significant-bias-against-english-language-learners</p>
+
+    <h2>IMAGINED</h2>
+    <p>The border-checkpoint dramaturgy, the gate's voice, the prompts, the stamps, and the self-test sentences are
+      fiction by this studio — marked as such. The figures and consequences above are not.</p>
+  </div>
+</noscript>
+
+<script type="application/json" id="data-island">{
+  "work": "native-speaker",
+  "increment": 1,
+  "extracted": "2026-07-12",
+  "revised": "2026-07-12 (session 08: named-individuals policy + the Minnesota correction)",
+  "upstream": {
+    "source": "field-research (Meridian): works/2026-07-01-calibration-gap (Instrument 001, Calibration Certificate) + memory/claims.md rows on detector bias, harm cases, and the legal record",
+    "instrument_001_live_status": "SHIPPED and live at extraction time, with its 2026-07-03 correction and re-verification history displayed on the work itself; if upstream revises or discards, this work updates on the same cycle or pauses",
+    "contract": "Live status travels; load-bearing caveats survive re-voicing; corrections flow upstream, never silently sideways"
+  },
+  "naming_policy": {
+    "tier": "POLICY (team steer, 2026-07-12)",
+    "statement": "No personal names in this work's own voice — headlines, dramaturgy, verdicts. People appear as role + institution + consequence. Personal names survive only as citation text inside linked sources (official case captions, bylines), where they are evidence, not spectacle. Companies and tools are named where every claim is traceable to a cited primary source."
+  },
+  "verified": {
+    "liang_2023": {
+      "tier": "VERIFIED",
+      "figures": {
+        "essays": 91,
+        "flagged_by_at_least_one_of_seven": 89,
+        "union_pct": "97.8",
+        "mean_fpr_pct": "61.22",
+        "unanimous_count": 18,
+        "unanimous_pct": "19.8",
+        "note": "Direct fields (session 09, discharging Kritiker note 4): the work renders these numbers from here, never parsed out of prose — a wording change can no longer silently break the central figure"
+      },
+      "claim": "AI text detectors flag non-native-English-speaker writing as AI-generated at far higher rates than native writing: on 91 TOEFL essays, 89 (97.8%) were flagged by at least one of the seven detectors studied; the average false-positive rate across the seven detectors was 61.22%; 18 of 91 (19.8%) were flagged unanimously; native-speaker control essays were near-zero",
+      "mechanism": "Perplexity-based detection penalizes constrained vocabulary — the careful, limited word choice of a second-language writer reads as machine-like regularity",
+      "source": "Liang, Yuksekgonul, Mao, Wu, Zou — Cell Patterns 2023",
+      "url": "https://arxiv.org/abs/2304.02819",
+      "discipline": [
+        "97.8% is the union statistic (flagged by ≥1 of 7 detectors) — never attribute it to a single detector",
+        "61.22% is the mean FPR across the seven — per-detector rates were not individually retrieved upstream; do not attribute the average to a specific tool",
+        "Population effect, not an individual guarantee: one careful sentence is not guaranteed to be flagged"
+      ]
+    },
+    "case_institutional": {
+      "tier": "VERIFIED",
+      "claim": "Australian Catholic University, 2024: roughly 6,000 academic-misconduct allegations (around 90% AI-related); about 25% were dismissed; a Deputy Vice-Chancellor called the figures 'substantially overstated'; the university abandoned Turnitin AI detection in March 2025",
+      "url": "https://www.abc.net.au/news/2025-10-09/artificial-intelligence-cheating-australian-catholic-university/105863524"
+    },
+    "case_yale": {
+      "tier": "VERIFIED",
+      "claim": "An EMBA student at Yale School of Management, a French national writing in his second language: one-year suspension and a failing grade after a GPTZero flag on a final exam. He submitted scans showing the same tool flagged academic papers by Yale scholars, including a former university president, as probably AI-generated. His federal lawsuit is PENDING (D. Conn. 3:25-cv-00159); a preliminary injunction was denied in May 2025",
+      "discipline": "PENDING — never state as decided. Named-individuals policy applies: the person appears here as role + institution + consequence; the official case caption is citation text only",
+      "caption": "Rignol v. Yale (pending)",
+      "url": "https://yaledailynews.com/articles/som-student-sues-yale-alleges-wrongful-suspension-over-ai-use"
+    },
+    "case_minnesota_boundary": {
+      "tier": "VERIFIED",
+      "role": "BOUNDARY CASE — DELIBERATELY NOT CARRIED ON THE VERDICT CARD",
+      "claim": "The most widely reported consequence case — a PhD student expelled from the University of Minnesota over alleged AI use, student visa revoked, expulsion upheld by the Minnesota Court of Appeals in February 2026, federal lawsuit dismissed in October 2025 — is NOT presented on this work as detector harm. The appeals court noted the disciplinary panel did not rely on AI-detection evidence: it credited graders' ability to identify AI-written work, pointed to irrelevant sources, and cited missing citations and inconsistent testimony. A work about machine judgment may not borrow stakes the record does not attribute to the machine",
+      "caption": "Yang v. University of Minnesota (Minn. Ct. App., Feb 2026)",
+      "urls": [
+        "https://minnlawyer.com/2026/02/13/u-of-m-ai-cheating-expulsion-upheld-appeal"
+      ],
+      "note": "Reported upstream to the research wing on 2026-07-12 (their instrument 001 lists this case in its harm register): the appellate framing is a load-bearing caveat there"
+    },
+    "legal_void": {
+      "tier": "VERIFIED",
+      "claim_frame": "The nearby law governs something else: the EU AI Act's Article 50 obliges PROVIDERS to mark machine OUTPUT as machine-made. In the cases retrieved here, no court reviewed the machine's judgment of a human's words itself — where consequences were challenged, review ran on whether the institution followed its own procedures, not on whether the detector was right",
+      "upstream_basis": [
+        "Claims ledger row on the harm cases: 'courts found institutions followed their own procedures even where the underlying tool has known false-positive rates'",
+        "Claims ledger row on the England & Wales ombudsman record (searched-and-not-found, scoped): detector output carries no evidentiary presumption of misconduct; the burden of proof stays on the provider; the pure 'detector output alone as dispositive' scenario was never squarely adjudicated in the cases reviewed. This is a procedural-fairness finding from a non-binding ombudsman in one jurisdiction — not a proven universal negative",
+        "The most-cited detection vendor's own statement: 'we provide data for educators to make an informed decision ... Turnitin does not make a determination of misconduct even in the space of text similarity'"
+      ],
+      "discipline": "State as searched-and-scoped, never as a proven universal negative. Do not conflate with, or re-grade, upstream instrument 011's card 001 (live status there: UNSETTLED-but-informed)",
+      "urls": [
+        "https://www.oiahe.org.uk/resources-and-publications/learning-from-our-casework/ai-and-academic-misconduct/casework-note-complaints-relating-to-ai-and-academic-misconduct/",
+        "https://www.turnitin.com/blog/understanding-false-positives-within-our-ai-writing-detection-capabilities"
+      ]
+    },
+    "counter_evidence": {
+      "tier": "VERIFIED",
+      "role": "LOAD-BEARING CAVEAT — survives every re-voicing of this work",
+      "claims": [
+        "A 2026 study in a Czech-language setting found NO systematic bias against non-native speakers; the contemporary detectors studied did not rely on perplexity as a key feature (Al Ali, Helcl, Libovický, EACL 2026). The bias may be perplexity-architecture-specific and/or English-specific, or diminishing in newer models — not resolved",
+        "Turnitin's own research (vendor, on its own tool) reports no statistically significant FPR bias against English-language learners at 300+ words — and Liang et al.'s seven detectors did not include Turnitin. Short documents show a significantly larger false-positive gap",
+        "The documented pattern is real and sourced — and it is documented, not universal"
+      ],
+      "urls": [
+        "https://arxiv.org/abs/2602.05769",
+        "https://www.turnitin.com/blog/new-research-turnitin-s-ai-detector-shows-no-statistically-significant-bias-against-english-language-learners"
+      ]
+    },
+    "short_text": {
+      "tier": "VERIFIED",
+      "claim": "Turnitin's own research: 'too short' documents show a significantly larger false-positive gap; its document-level FPR claim of <1% holds only for documents with 20%+ AI writing",
+      "url": "https://www.turnitin.com/blog/understanding-the-false-positive-rate-for-sentences-of-our-ai-writing-detection-capability"
+    }
+  },
+  "meter": {
+    "tier": "DISCLOSED RECONSTRUCTION",
+    "statement": "The meter on this page is NOT GPTZero, Turnitin, or any commercial detector. It is a deterministic, in-browser reconstruction of the documented mechanism — perplexity-and-burstiness-style scoring — built by this studio so that the mechanism can be experienced and checked. Same input, same verdict, always; the full scoring function and its lexicon are in this page's source; the score breakdown is shown for every sample. Its verdict proves nothing about you. The verified figures above prove the pattern at population scale.",
+    "components": [
+      "COMMONNESS (perplexity proxy): the share of your words drawn from a built-in list of very common English words — constrained, careful vocabulary scores machine-ward, exactly the documented mechanism",
+      "BURSTINESS: variation in sentence and word length — even, careful rhythm scores machine-ward",
+      "IRREGULARITY: contractions, informal tokens, loose punctuation — their absence scores machine-ward",
+      "DIVERSITY: type-token ratio — a narrow working vocabulary scores machine-ward",
+      "REPETITION: repeated word pairs score machine-ward"
+    ],
+    "threshold_disclosed": true,
+    "attempt_blind": "The scoring function receives only the text. It cannot see which attempt it is scoring. A scripted flip would be a lie; this meter cannot tell your first sentence from your second."
+  },
+  "imagined": {
+    "tier": "IMAGINED",
+    "elements": "The border-checkpoint dramaturgy, the gate's voice, the prompts, the stamps, and the self-test sentences are fiction by this studio — marked as such on the work's face. The figures and consequences inside the verdict card are not."
+  },
+  "tally": {
+    "scope": "This terminal only (this browser): counted in local storage, never transmitted. The aggregate argument is carried by the verified population figures, not by this tally.",
+    "non_flip_disclosure": "Your careful sentence may pass. Liang et al. is a population effect, not a per-person guarantee: 89 of 91 flagged means 2 walked through. An ADMITTED second attempt does not acquit the tool — it makes you one of the two."
+  }
+}
+</script>
+
+<script>
+(function () {
+  "use strict";
+
+  // ================================================================
+  // ENGINE-BEGIN — pure functions only. No DOM access below this
+  // line until ENGINE-END. Extractable and node-testable in isolation.
+  // ================================================================
+
+  // LEXICON — the meter's built-in list of common English words; part of the disclosed mechanism
+  var LEXICON = [
+  "i","me","my","mine","myself","you","your","yours","yourself","yourselves",
+  "he","him","his","himself","she","her","hers","herself","it","its",
+  "itself","we","us","our","ours","ourselves","they","them","their","theirs",
+  "themselves","this","that","these","those","who","whom","whose","which","what",
+  "someone","somebody","something","anyone","anybody","anything","everyone","everybody","everything","nobody",
+  "nothing","one","ones","a","an","the","some","any","each","every",
+  "all","both","few","many","much","more","most","other","another","such",
+  "no","none","several","enough","and","or","but","so","because","although",
+  "though","while","if","unless","since","as","than","whether","nor","yet",
+  "in","on","at","by","for","with","about","against","between","into",
+  "through","during","before","after","above","below","to","from","up","down",
+  "over","under","again","further","then","once","out","off","near","around",
+  "along","across","among","behind","beside","beyond","despite","except","inside","outside",
+  "throughout","toward","towards","until","upon","within","without","am","is","are",
+  "was","were","be","been","being","have","has","had","having","do",
+  "does","did","doing","will","would","shall","should","may","might","must",
+  "can","could","go","goes","going","went","gone","get","gets","getting",
+  "got","gotten","make","makes","making","made","take","takes","taking","took",
+  "taken","come","comes","coming","came","see","sees","seeing","saw","seen",
+  "know","knows","knowing","knew","known","think","thinks","thinking","thought","look",
+  "looks","looking","looked","want","wants","wanting","wanted","give","gives","giving",
+  "gave","given","use","uses","using","used","find","finds","finding","found",
+  "tell","tells","telling","told","ask","asks","asking","asked","work","works",
+  "working","worked","seem","seems","seeming","seemed","feel","feels","feeling","felt",
+  "try","tries","trying","tried","leave","leaves","leaving","left","call","calls",
+  "calling","called","need","needs","needing","needed","become","becomes","becoming","became",
+  "put","puts","putting","mean","means","meaning","meant","keep","keeps","keeping",
+  "kept","let","lets","letting","begin","begins","beginning","began","begun","help",
+  "helps","helping","helped","talk","talks","talking","talked","turn","turns","turning",
+  "turned","start","starts","starting","started","show","shows","showing","showed","shown",
+  "hear","hears","hearing","heard","play","plays","playing","played","run","runs",
+  "running","ran","move","moves","moving","moved","live","lives","living","lived",
+  "believe","believes","believing","believed","bring","brings","bringing","brought","happen","happens",
+  "happening","happened","write","writes","writing","wrote","written","provide","provides","providing",
+  "provided","sit","sits","sitting","sat","stand","stands","standing","stood","lose",
+  "loses","losing","lost","pay","pays","paying","paid","meet","meets","meeting",
+  "met","include","includes","including","included","continue","continues","continuing","continued","set",
+  "sets","setting","learn","learns","learning","learned","change","changes","changing","changed",
+  "lead","leads","leading","led","understand","understands","understanding","understood","watch","watches",
+  "watching","watched","follow","follows","following","followed","stop","stops","stopping","stopped",
+  "create","creates","creating","created","speak","speaks","speaking","spoke","spoken","read",
+  "reads","reading","allow","allows","allowing","allowed","add","adds","adding","added",
+  "spend","spends","spending","spent","grow","grows","growing","grew","grown","open",
+  "opens","opening","opened","walk","walks","walking","walked","win","wins","winning",
+  "won","offer","offers","offering","offered","remember","remembers","remembering","remembered","love",
+  "loves","loving","loved","consider","considers","considering","considered","appear","appears","appearing",
+  "appeared","buy","buys","buying","bought","wait","waits","waiting","waited","serve",
+  "serves","serving","served","die","dies","dying","died","send","sends","sending",
+  "sent","expect","expects","expecting","expected","build","builds","building","built","stay",
+  "stays","staying","stayed","fall","falls","falling","fell","fallen","cut","cuts",
+  "cutting","reach","reaches","reaching","reached","kill","kills","killing","killed","remain",
+  "remains","remaining","remained","wake","wakes","waking","woke","woken","eat","eats",
+  "eating","ate","eaten","drink","drinks","drinking","drank","drunk","sleep","sleeps",
+  "sleeping","slept","shower","showers","showering","showered","dress","dresses","dressing","dressed",
+  "brush","brushes","brushing","brushed","cook","cooks","cooking","cooked","drive","drives",
+  "driving","drove","driven","ride","rides","riding","rode","ridden","check","checks",
+  "checking","checked","text","texts","texting","texted","message","messages","messaging","messaged",
+  "email","emails","emailing","emailed","rush","rushes","rushing","rushed","hurry","hurries",
+  "hurrying","hurried","wash","washes","washing","washed","clean","cleans","cleaning","cleaned",
+  "pack","packs","packing","packed","grab","grabs","grabbing","grabbed","pour","pours",
+  "pouring","poured","boil","boils","boiling","boiled","arrive","arrives","arriving","arrived",
+  "enjoy","enjoys","enjoying","enjoyed","prepare","prepares","preparing","prepared","study","studies",
+  "studying","studied","finish","finishes","finishing","finished","decide","decides","deciding","decided",
+  "join","joins","joining","joined","visit","visits","visiting","visited","travel","travels",
+  "traveling","travelled","traveled","return","returns","returning","returned","listen","listens","listening",
+  "listened","forget","forgets","forgetting","forgot","forgotten","choose","chooses","choosing","chose",
+  "chosen","time","year","years","people","way","ways","day","days","man",
+  "men","woman","women","child","children","world","life","hand","hands","part",
+  "parts","place","places","week","weeks","case","cases","point","points","government",
+  "company","companies","number","numbers","group","groups","problem","problems","fact","facts",
+  "morning","mornings","afternoon","evening","evenings","night","nights","breakfast","lunch","dinner",
+  "coffee","tea","water","milk","bread","toast","egg","eggs","cereal","kitchen",
+  "home","homes","house","houses","room","rooms","bed","beds","bedroom","bathroom",
+  "door","doors","window","windows","street","streets","road","roads","city","cities",
+  "town","towns","bus","buses","car","cars","train","trains","station","stations",
+  "school","schools","office","offices","job","jobs","friend","friends","family","families",
+  "mother","father","mom","dad","brother","brothers","sister","sisters","phone","phones",
+  "computer","computers","table","tables","chair","chairs","clock","clocks","alarm","alarms",
+  "clothes","shoes","bag","bags","weather","sun","rain","weekend","weekends","today",
+  "tomorrow","yesterday","minute","minutes","hour","hours","second","seconds","moment","moments",
+  "month","months","news","music","movie","movies","game","games","money","food",
+  "air","fire","earth","head","eye","eyes","face","faces","body","bodies",
+  "heart","hearts","mind","minds","voice","voices","word","words","name","names",
+  "story","stories","question","questions","answer","answers","idea","ideas","information","system",
+  "systems","program","programs","service","services","business","businesses","party","parties","class",
+  "classes","teacher","teachers","student","students","doctor","doctors","member","members","president",
+  "area","areas","county","level","levels","state","states","nation","nations","side",
+  "sides","kind","kinds","type","types","form","forms","order","orders","power",
+  "line","lines","end","ends","law","laws","team","teams","good","new",
+  "first","last","long","great","little","own","old","right","big","high",
+  "different","small","large","next","early","young","important","public","bad","same",
+  "able","late","quick","quickly","slow","slowly","tired","sleepy","hungry","ready",
+  "busy","easy","hard","careful","carefully","never","always","often","sometimes","usually",
+  "still","just","now","here","there","soon","later","already","quite","very",
+  "really","actually","probably","maybe","perhaps","almost","especially","particularly","simply","finally",
+  "suddenly","immediately","eventually","normally","generally","honestly","yes","ok","okay","well",
+  "sure","fine","nice","happy","sad","angry","excited","cold","hot","warm",
+  "dark","light","dirty","full","empty","fast","short","far","close"
+  ];
+  var LEXICON_SET = {};
+  for (var li = 0; li < LEXICON.length; li++) { LEXICON_SET[LEXICON[li]] = true; }
+
+  // Informal / casual tokens — part of the disclosed IRREGULARITY component.
+  var INFORMAL_TOKENS_LIST = [
+    "gonna", "wanna", "kinda", "sorta", "yeah", "yep", "yup", "nah", "ok", "okay", "lol", "omg",
+    "btw", "tbh", "hey", "ugh", "haha", "hahaha", "lmao", "dunno", "gotta", "cuz", "coz", "meh",
+    "yikes", "sooo", "soo"
+  ];
+  var INFORMAL_TOKENS = {};
+  for (var ii = 0; ii < INFORMAL_TOKENS_LIST.length; ii++) { INFORMAL_TOKENS[INFORMAL_TOKENS_LIST[ii]] = true; }
+
+  // The single named, disclosed threshold. score >= THRESHOLD => FLAGGED.
+  var THRESHOLD = 0.55;
+  // Minimum words before the meter will render a verdict at all.
+  var MIN_WORDS = 8;
+
+  // Component weights — sum to 1.0. Disclosed on the honesty panel.
+  var WEIGHT_COMMONNESS = 0.34;
+  var WEIGHT_BURSTINESS = 0.22;
+  var WEIGHT_IRREGULARITY = 0.18;
+  var WEIGHT_DIVERSITY = 0.14;
+  var WEIGHT_REPETITION = 0.12;
+
+  // Normalization reference constants — calibrated against the two embedded
+  // self-test sentences below (see SELF_TEST_CASUAL / SELF_TEST_CAREFUL),
+  // never against the gate's own prompts or any runtime visitor input.
+  var SENT_CV_REF_MAX = 1.2;
+  var WORD_LEN_STD_REF_MAX = 5.0;
+
+  function normalizeWord(w) {
+    return w.toLowerCase().replace(/^'+|'+$/g, "");
+  }
+
+  function tokenize(text) {
+    var m = text.match(/[A-Za-z']+/g);
+    return m ? m : [];
+  }
+
+  function mean(arr) {
+    if (arr.length === 0) return 0;
+    var sum = 0;
+    for (var i = 0; i < arr.length; i++) sum += arr[i];
+    return sum / arr.length;
+  }
+
+  function stdev(arr) {
+    if (arr.length === 0) return 0;
+    var m = mean(arr);
+    var variance = 0;
+    for (var i = 0; i < arr.length; i++) variance += (arr[i] - m) * (arr[i] - m);
+    variance = variance / arr.length;
+    return Math.sqrt(variance);
+  }
+
+  function computeCommonness(words) {
+    if (words.length === 0) return 0;
+    var known = 0;
+    for (var i = 0; i < words.length; i++) {
+      if (LEXICON_SET[normalizeWord(words[i])]) known++;
+    }
+    return known / words.length;
+  }
+
+  function computeBurstiness(text, words) {
+    var sentences = text.split(/[.!?]+/).map(function (s) { return s.trim(); }).filter(function (s) { return s.length > 0; });
+    var sentenceLengths = sentences.map(function (s) {
+      var m = s.match(/[A-Za-z']+/g);
+      return m ? m.length : 0;
+    }).filter(function (n) { return n > 0; });
+
+    var wordLengths = words.map(function (w) { return normalizeWord(w).length; }).filter(function (n) { return n > 0; });
+    var wordLenStd = stdev(wordLengths);
+    var wordLenNorm = Math.min(1, wordLenStd / WORD_LEN_STD_REF_MAX);
+    var wordBurstinessInv = 1 - wordLenNorm;
+
+    if (sentenceLengths.length >= 2) {
+      var m = mean(sentenceLengths);
+      var sd = stdev(sentenceLengths);
+      var cv = m > 0 ? sd / m : 0;
+      var cvNorm = Math.min(1, cv / SENT_CV_REF_MAX);
+      var sentBurstinessInv = 1 - cvNorm;
+      return (sentBurstinessInv + wordBurstinessInv) / 2;
+    }
+    // Handle 1-sentence input via word-length variation alone.
+    return wordBurstinessInv;
+  }
+
+  function computeIrregularity(text, words) {
+    var contractionMatches = (text.match(/[A-Za-z]+'(m|re|s|t|ll|ve|d)\b/gi) || []).length;
+    var informalCount = 0;
+    for (var i = 0; i < words.length; i++) {
+      if (INFORMAL_TOKENS[normalizeWord(words[i])]) informalCount++;
+    }
+    var hasDoubleExclaim = /!!/.test(text);
+    var hasEllipsis = /\.\.\.|…/.test(text);
+    var trimmed = text.trim();
+    var lacksTerminal = trimmed.length > 0 && !/[.!?]["')\]]?$/.test(trimmed);
+    var lowercaseStart = /^[a-z]/.test(trimmed);
+    var loosenessSignals = (hasDoubleExclaim ? 1 : 0) + (hasEllipsis ? 1 : 0) + (lacksTerminal ? 1 : 0) + (lowercaseStart ? 1 : 0);
+    var loosenessNorm = Math.min(1, loosenessSignals / 2);
+    var hasNumeral = /\d/.test(text);
+
+    var contractionNorm = Math.min(1, contractionMatches / 2);
+    var informalNorm = Math.min(1, informalCount / 2);
+    var numeralNorm = hasNumeral ? 1 : 0;
+
+    var informality = 0.35 * contractionNorm + 0.30 * informalNorm + 0.25 * loosenessNorm + 0.10 * numeralNorm;
+    return 1 - informality;
+  }
+
+  function computeDiversity(words) {
+    var norm = words.map(normalizeWord).filter(function (w) { return w.length > 0; });
+    if (norm.length === 0) return 0;
+    var W = Math.min(10, norm.length);
+    if (norm.length <= W) {
+      var uniq = {};
+      var uc = 0;
+      for (var i = 0; i < norm.length; i++) { if (!uniq[norm[i]]) { uniq[norm[i]] = true; uc++; } }
+      return 1 - (uc / norm.length);
+    }
+    var ratios = [];
+    for (var s = 0; s + W <= norm.length; s++) {
+      var windowSet = {};
+      var wc = 0;
+      for (var j = s; j < s + W; j++) { if (!windowSet[norm[j]]) { windowSet[norm[j]] = true; wc++; } }
+      ratios.push(wc / W);
+    }
+    return 1 - mean(ratios);
+  }
+
+  function computeRepetition(words) {
+    var norm = words.map(normalizeWord).filter(function (w) { return w.length > 0; });
+    if (norm.length < 2) return 0;
+    var seen = {};
+    var repeats = 0;
+    var total = 0;
+    for (var i = 0; i < norm.length - 1; i++) {
+      var bigram = norm[i] + " " + norm[i + 1];
+      total++;
+      if (seen[bigram]) repeats++;
+      seen[bigram] = (seen[bigram] || 0) + 1;
+    }
+    return total > 0 ? repeats / total : 0;
+  }
+
+  // The one honest function. Receives ONLY the text — no attempt number,
+  // no prompt, no global state, no randomness, no Date. Same input, same
+  // output, always.
+  function scoreText(text) {
+    var words = tokenize(text || "");
+    if (words.length < MIN_WORDS) {
+      return { score: null, components: null, words: words.length, verdict: "INSUFFICIENT" };
+    }
+    var commonness = computeCommonness(words);
+    var burstiness = computeBurstiness(text, words);
+    var irregularity = computeIrregularity(text, words);
+    var diversity = computeDiversity(words);
+    var repetition = computeRepetition(words);
+
+    var score = WEIGHT_COMMONNESS * commonness
+      + WEIGHT_BURSTINESS * burstiness
+      + WEIGHT_IRREGULARITY * irregularity
+      + WEIGHT_DIVERSITY * diversity
+      + WEIGHT_REPETITION * repetition;
+
+    return {
+      score: score,
+      components: {
+        commonness: commonness,
+        burstiness: burstiness,
+        irregularity: irregularity,
+        diversity: diversity,
+        repetition: repetition
+      },
+      words: words.length,
+      verdict: score >= THRESHOLD ? "FLAGGED" : "ADMITTED"
+    };
+  }
+
+  // Self-test fixtures — IMAGINED, written by this studio, NOT real TOEFL
+  // material. Used only to calibrate and to prove the engine live.
+  var SELF_TEST_CASUAL = "ugh, overslept again... skipped breakfast, chugged my coffee on the 8:15 and honestly? still half asleep lol";
+  var SELF_TEST_CAREFUL = "I woke up early in the morning. I ate my breakfast and drank a cup of coffee. Then I took the bus to my work.";
+
+  // ================================================================
+  // ENGINE-END
+  // ================================================================
+
+  // ---------------------------------------------------------------
+  // Data island — the ONLY source of VERIFIED figures/names/URLs for
+  // this page. Nothing below duplicates a figure as a bare literal;
+  // every VERIFIED value rendered is read from this parsed object.
+  // ---------------------------------------------------------------
+  var DATA = JSON.parse(document.getElementById('data-island').textContent);
+
+  function $(id) { return document.getElementById(id); }
+  function on(el, ev, fn) { el.addEventListener(ev, fn); }
+
+  // ---------------------------------------------------------------
+  // Gauge / meter rendering
+  // ---------------------------------------------------------------
+  function pct(x) { return (Math.max(0, Math.min(1, x)) * 100).toFixed(1) + "%"; }
+
+  function renderMeter(prefix, result) {
+    var gaugeEl = $(prefix + "-gauge");
+    var needle = $(prefix + "-needle");
+    var thresholdEl = $(prefix + "-threshold");
+    var scoreEl = $(prefix + "-score");
+    var statusEl = $(prefix + "-status");
+    var componentsEl = $(prefix + "-components");
+
+    thresholdEl.style.left = pct(THRESHOLD);
+    var thLabel = thresholdEl.querySelector(".gauge-threshold-label");
+    if (!thLabel) {
+      thLabel = document.createElement("span");
+      thLabel.className = "gauge-threshold-label";
+      thresholdEl.appendChild(thLabel);
+    }
+    thLabel.textContent = "threshold " + THRESHOLD.toFixed(2);
+
+    if (result.verdict === "INSUFFICIENT") {
+      needle.className = "gauge-needle insufficient";
+      needle.style.left = "0%";
+      scoreEl.textContent = "—";
+      statusEl.innerHTML = "";
+      var insufNote = document.createElement("span");
+      insufNote.innerHTML = "INSUFFICIENT SAMPLE — write at least " + MIN_WORDS + " words (" + result.words + " so far). ";
+      var shortNote = document.createElement("span");
+      shortNote.textContent = DATA.verified.short_text.claim;
+      statusEl.appendChild(insufNote);
+      statusEl.appendChild(shortNote);
+      componentsEl.innerHTML = "";
+      return;
+    }
+
+    var verdictClass = result.verdict === "FLAGGED" ? "flagged" : "admitted";
+    needle.className = "gauge-needle " + verdictClass;
+    needle.style.left = pct(result.score);
+    scoreEl.textContent = result.score.toFixed(3);
+
+    statusEl.innerHTML = "";
+    var strong = document.createElement("strong");
+    strong.className = verdictClass;
+    strong.textContent = result.verdict === "FLAGGED" ? "FLAGGED AS MACHINE" : "ADMITTED";
+    statusEl.appendChild(document.createTextNode("live reading: "));
+    statusEl.appendChild(strong);
+    statusEl.appendChild(document.createTextNode(" — score " + result.score.toFixed(3) + " / threshold " + THRESHOLD.toFixed(2)));
+
+    renderComponents(componentsEl, result.components);
+  }
+
+  var COMPONENT_LABELS = [
+    ["commonness", "COMMONNESS", WEIGHT_COMMONNESS],
+    ["burstiness", "BURSTINESS", WEIGHT_BURSTINESS],
+    ["irregularity", "IRREGULARITY", WEIGHT_IRREGULARITY],
+    ["diversity", "DIVERSITY", WEIGHT_DIVERSITY],
+    ["repetition", "REPETITION", WEIGHT_REPETITION]
+  ];
+
+  function renderComponents(listEl, components) {
+    listEl.innerHTML = "";
+    COMPONENT_LABELS.forEach(function (row) {
+      var key = row[0], label = row[1], weight = row[2];
+      var val = components[key];
+      var li = document.createElement("li");
+      li.className = "component-row";
+      var name = document.createElement("span");
+      name.className = "cname";
+      name.textContent = label + " ×" + weight.toFixed(2);
+      var track = document.createElement("span");
+      track.className = "component-track";
+      var fill = document.createElement("span");
+      fill.className = "component-fill";
+      fill.style.width = pct(val);
+      track.appendChild(fill);
+      var valEl = document.createElement("span");
+      valEl.className = "cval";
+      valEl.textContent = val.toFixed(2);
+      li.appendChild(name);
+      li.appendChild(track);
+      li.appendChild(valEl);
+      listEl.appendChild(li);
+    });
+  }
+
+  function renderStamp(stampEl, scoreEl, result) {
+    stampEl.className = "stamp " + (result.verdict === "FLAGGED" ? "flagged" : "admitted");
+    stampEl.textContent = result.verdict === "FLAGGED" ? "FLAGGED AS MACHINE" : "ADMITTED";
+    if (scoreEl) scoreEl.innerHTML = "score <strong>" + result.score.toFixed(3) + "</strong> / threshold " + THRESHOLD.toFixed(2);
+  }
+
+  // ---------------------------------------------------------------
+  // Flow state
+  // ---------------------------------------------------------------
+  var state = { result1: null, result2: null };
+
+  function showView(id) {
+    ["view-intro", "view-attempt1", "view-attempt2", "view-verdict"].forEach(function (v) {
+      $(v).hidden = (v !== id);
+    });
+    var el = $(id);
+    if (el && el.hasAttribute("tabindex")) el.focus();
+  }
+
+  on($("begin-btn"), "click", function () {
+    showView("view-attempt1");
+  });
+
+  // ---------------- attempt 1 ----------------
+  on($("ta1"), "input", function () {
+    var r = scoreText($("ta1").value);
+    renderMeter("meter1", r);
+    $("submit1-btn").disabled = (r.verdict === "INSUFFICIENT");
+  });
+
+  on($("submit1-btn"), "click", function () {
+    var r = scoreText($("ta1").value);
+    if (r.verdict === "INSUFFICIENT") return;
+    state.result1 = r;
+    $("ta1").disabled = true;
+    $("submit1-btn").disabled = true;
+    $("stamp1-area").hidden = false;
+    renderStamp($("stamp1"), $("stamp1-score"), r);
+    $("to-attempt2-wrap").hidden = false;
+  });
+
+  on($("to-attempt2-btn"), "click", function () {
+    showView("view-attempt2");
+  });
+
+  // ---------------- attempt 2 ----------------
+  on($("ta2"), "input", function () {
+    var r = scoreText($("ta2").value);
+    renderMeter("meter2", r);
+    $("submit2-btn").disabled = (r.verdict === "INSUFFICIENT");
+  });
+
+  on($("submit2-btn"), "click", function () {
+    var r = scoreText($("ta2").value);
+    if (r.verdict === "INSUFFICIENT") return;
+    state.result2 = r;
+    $("ta2").disabled = true;
+    $("submit2-btn").disabled = true;
+    $("stamp2-area").hidden = false;
+    renderStamp($("stamp2"), $("stamp2-score"), r);
+    $("to-verdict-wrap").hidden = false;
+    recordTallyAttempt(r.verdict === "FLAGGED");
+  });
+
+  on($("to-verdict-btn"), "click", function () {
+    renderVerdictCard();
+    showView("view-verdict");
+  });
+
+  // ---------------------------------------------------------------
+  // Tally — localStorage, this terminal only. Graceful if unavailable.
+  // ---------------------------------------------------------------
+  var TALLY_KEY = "native-speaker-tally";
+
+  function readTally() {
+    try {
+      var raw = window.localStorage.getItem(TALLY_KEY);
+      if (!raw) return { tried: 0, flagged: 0 };
+      var parsed = JSON.parse(raw);
+      return { tried: parsed.tried || 0, flagged: parsed.flagged || 0 };
+    } catch (e) {
+      return null; // unavailable
+    }
+  }
+
+  function recordTallyAttempt(wasFlagged) {
+    try {
+      var t = readTally() || { tried: 0, flagged: 0 };
+      t.tried += 1;
+      if (wasFlagged) t.flagged += 1;
+      window.localStorage.setItem(TALLY_KEY, JSON.stringify(t));
+    } catch (e) {
+      // private mode / unavailable — silently no-op, handled honestly at render time
+    }
+  }
+
+  // ---------------------------------------------------------------
+  // The case file — every figure/case/URL below is read from DATA at
+  // runtime; nothing here duplicates a data.json literal. The central
+  // Liang figures render from DATA.verified.liang_2023.figures fields
+  // directly — never parsed out of prose (Kritiker note 4).
+  // ---------------------------------------------------------------
+  function renderVerdictCard() {
+    // subject record — two attempts side by side
+    renderStamp($("vcard-stamp1"), $("vcard-score1"), state.result1);
+    renderComponents($("vcard-components1"), state.result1.components);
+    renderStamp($("vcard-stamp2"), $("vcard-score2"), state.result2);
+    renderComponents($("vcard-components2"), state.result2.components);
+
+    // non-flip grace banner (binding condition 2) + ledger placement
+    // (Kritiker note 2: the ledger is load-bearing at the TOP of the
+    // file — right after the subject record; in the ADMITTED branch it
+    // moves up under the grace banner so banner and ledger make the
+    // aggregate argument in the same breath).
+    var ledger = $("gate-ledger");
+    var blockAttempts = $("block-attempts");
+    if (state.result2.verdict === "ADMITTED") {
+      $("grace-banner").hidden = false;
+      $("grace-text").textContent = DATA.tally.non_flip_disclosure;
+      blockAttempts.parentNode.insertBefore(ledger, blockAttempts);
+    } else {
+      $("grace-banner").hidden = true;
+      blockAttempts.parentNode.insertBefore(ledger, blockAttempts.nextSibling);
+    }
+
+    // EXHIBIT A — population record, rendered from direct figure fields
+    var liang = DATA.verified.liang_2023;
+    var figs = liang.figures;
+    $("liang-figure-line").textContent = figs.flagged_by_at_least_one_of_seven + " of " + figs.essays + " (" + figs.union_pct + "%)";
+    $("liang-figure-sub").textContent = "flagged by at least one of seven detectors (union statistic)";
+    $("liang-secondary-line").textContent = "mean false-positive rate across the seven: " + figs.mean_fpr_pct + "% · flagged unanimously: " + figs.unanimous_count + " of " + figs.essays + " (" + figs.unanimous_pct + "%)";
+    $("liang-claim-text").textContent = liang.claim;
+    $("liang-mechanism-text").textContent = liang.mechanism;
+    fillList($("liang-discipline-list"), liang.discipline);
+    setLink($("liang-url"), liang.url);
+
+    // EXHIBIT B — precedent: the scale case first, then the detector
+    // case. No personal names in the work's own voice (naming_policy);
+    // the official case caption appears only as citation text.
+    var acu = DATA.verified.case_institutional;
+    $("acu-claim-text").textContent = acu.claim;
+    setLink($("acu-url"), acu.url);
+
+    var yale = DATA.verified.case_yale;
+    $("yale-discipline-text").textContent = yale.discipline;
+    $("yale-claim-text").textContent = yale.claim;
+    setLink($("yale-url"), yale.url);
+
+    // EXHIBIT C — applicable law: none found
+    $("legal-frame-text").textContent = DATA.verified.legal_void.claim_frame;
+
+    // EXHIBIT D — counter-evidence: one load-bearing line + pointer
+    $("counter-line-text").textContent = DATA.verified.counter_evidence.claims[1];
+
+    // the gate's ledger (top of file) + the reprise at file close
+    renderTallyLine();
+
+    // reset the directed reveal to its start state
+    resetExhibitReveal();
+  }
+
+  function renderTallyLine() {
+    var t = readTally();
+    if (t === null) {
+      $("tally-line-text").textContent = "Ledger unavailable on this device.";
+      $("tally-reprise-text").textContent = "Ledger unavailable on this device.";
+    } else {
+      $("tally-line-text").textContent = t.tried + " presented a careful sample; " + t.flagged + " were flagged as machine.";
+      $("tally-reprise-text").textContent = "ENTERED IN THE LEDGER: " + t.tried + " presented; " + t.flagged + " flagged.";
+    }
+    $("tally-scope-text").textContent = DATA.tally.scope;
+  }
+
+  // ---------------------------------------------------------------
+  // The directed reveal (Kritiker note 1): exhibits enter one at a
+  // time via NEXT EXHIBIT; a disclosed escape (OPEN THE WHOLE FILE)
+  // reveals everything at once. Pacing never hides evidence — the
+  // noscript block carries the full record as plain text regardless.
+  // ---------------------------------------------------------------
+  var EXHIBIT_SEQUENCE = ["exhibit-a", "exhibit-b", "exhibit-c", "exhibit-d", "file-closed"];
+  var revealIndex = 0;
+
+  function resetExhibitReveal() {
+    revealIndex = 0;
+    EXHIBIT_SEQUENCE.forEach(function (id) {
+      var el = $(id);
+      el.hidden = true;
+      el.classList.remove("exhibit-enter", "exhibit-enter-active");
+    });
+    $("next-exhibit-wrap").hidden = false;
+    $("next-exhibit-btn").textContent = "NEXT EXHIBIT →";
+    $("file-controls").hidden = false;
+  }
+
+  function revealExhibit(id, moveFocus) {
+    var el = $(id);
+    if (!el.hidden) return;
+    el.hidden = false;
+    // restrained stamp-in: opacity/transform, ~200ms (no-ops under
+    // prefers-reduced-motion because the classes carry no styles there)
+    el.classList.add("exhibit-enter");
+    void el.offsetWidth; // reflow so the transition start state applies
+    el.classList.add("exhibit-enter-active");
+    window.setTimeout(function () {
+      el.classList.remove("exhibit-enter", "exhibit-enter-active");
+    }, 250);
+    if (moveFocus) el.focus();
+  }
+
+  on($("next-exhibit-btn"), "click", function () {
+    if (revealIndex >= EXHIBIT_SEQUENCE.length) return;
+    var id = EXHIBIT_SEQUENCE[revealIndex];
+    revealIndex += 1;
+    revealExhibit(id, true);
+    if (revealIndex === EXHIBIT_SEQUENCE.length - 1) {
+      $("next-exhibit-btn").textContent = "CLOSE THE FILE →";
+    }
+    if (revealIndex >= EXHIBIT_SEQUENCE.length) {
+      $("next-exhibit-wrap").hidden = true;
+      $("file-controls").hidden = true;
+    }
+  });
+
+  on($("open-file-btn"), "click", function () {
+    var firstUnrevealed = null;
+    EXHIBIT_SEQUENCE.forEach(function (id) {
+      var el = $(id);
+      if (el.hidden && firstUnrevealed === null) firstUnrevealed = el;
+      el.hidden = false;
+      el.classList.remove("exhibit-enter", "exhibit-enter-active");
+    });
+    revealIndex = EXHIBIT_SEQUENCE.length;
+    $("next-exhibit-wrap").hidden = true;
+    $("file-controls").hidden = true;
+    if (firstUnrevealed) firstUnrevealed.focus();
+  });
+
+  function fillList(ulEl, items) {
+    ulEl.innerHTML = "";
+    items.forEach(function (item) {
+      var li = document.createElement("li");
+      li.textContent = item;
+      ulEl.appendChild(li);
+    });
+  }
+
+  function setLink(aEl, url) {
+    aEl.href = url;
+    aEl.textContent = url;
+  }
+
+  // ---------------------------------------------------------------
+  // Honesty panel — fully rendered from DATA, always present.
+  // ---------------------------------------------------------------
+  function renderHonestyPanel() {
+    $("imagined-elements-text").textContent = DATA.imagined.elements;
+    $("naming-policy-text").textContent = DATA.naming_policy.statement;
+    $("meter-statement-text").textContent = DATA.meter.statement;
+    fillList($("meter-components-list"), DATA.meter.components);
+    $("meter-attempt-blind-text").textContent = DATA.meter.attempt_blind;
+
+    $("counter-role-text").textContent = DATA.verified.counter_evidence.role;
+    fillList($("counter-claims-list"), DATA.verified.counter_evidence.claims);
+    var curls = $("counter-urls-list");
+    curls.innerHTML = "";
+    DATA.verified.counter_evidence.urls.forEach(function (u) {
+      var li = document.createElement("li");
+      var a = document.createElement("a");
+      a.href = u; a.textContent = u; a.target = "_blank"; a.rel = "noopener noreferrer";
+      li.appendChild(a);
+      curls.appendChild(li);
+    });
+
+    $("short-text-claim-text").textContent = DATA.verified.short_text.claim;
+    setLink($("short-text-url"), DATA.verified.short_text.url);
+
+    $("legal-discipline-text").textContent = DATA.verified.legal_void.discipline;
+    fillList($("legal-basis-list"), DATA.verified.legal_void.upstream_basis);
+    var lurls = $("legal-urls-list");
+    lurls.innerHTML = "";
+    DATA.verified.legal_void.urls.forEach(function (u) {
+      var li = document.createElement("li");
+      var a = document.createElement("a");
+      a.href = u; a.textContent = u; a.target = "_blank"; a.rel = "noopener noreferrer";
+      li.appendChild(a);
+      lurls.appendChild(li);
+    });
+
+    // The boundary case — a case this work deliberately does NOT claim as
+    // detector harm. Same seriousness as the discipline notes; the official
+    // case caption (from DATA) is the citation link's text, nowhere else.
+    var boundary = DATA.verified.case_minnesota_boundary;
+    $("boundary-role-text").textContent = boundary.role;
+    $("boundary-claim-text").textContent = boundary.claim;
+    $("boundary-note-text").textContent = boundary.note;
+    var bLink = $("boundary-caption-link");
+    bLink.href = boundary.urls[0];
+    bLink.textContent = boundary.caption;
+
+    $("tally-scope-full-text").textContent = DATA.tally.scope;
+    $("tally-nonflip-text").textContent = DATA.tally.non_flip_disclosure;
+
+    $("upstream-source-text").textContent = "Source: " + DATA.upstream.source;
+    $("upstream-live-status-text").textContent = "Live status: " + DATA.upstream.instrument_001_live_status;
+    $("upstream-contract-text").textContent = "Contract: " + DATA.upstream.contract;
+
+    // sources footer — every URL in DATA, deduplicated, as plain links.
+    // Case-link labels are the official case captions read from DATA
+    // (naming_policy: personal names as citation text inside links only —
+    // no name literal appears anywhere in this script).
+    var urls = [];
+    function pushUrl(u, label) { if (u) urls.push({ url: u, label: label }); }
+    pushUrl(DATA.verified.liang_2023.url, "Liang et al. 2023, Cell Patterns");
+    pushUrl(DATA.verified.case_institutional.url, "Australian Catholic University misconduct figures — ABC News");
+    pushUrl(DATA.verified.case_yale.url, DATA.verified.case_yale.caption);
+    pushUrl(DATA.verified.case_minnesota_boundary.urls[0], DATA.verified.case_minnesota_boundary.caption);
+    (DATA.verified.legal_void.urls || []).forEach(function (u) { pushUrl(u, "the legal void"); });
+    (DATA.verified.counter_evidence.urls || []).forEach(function (u) { pushUrl(u, "counter-evidence"); });
+    pushUrl(DATA.verified.short_text.url, "short-text false-positive gap");
+
+    var seen = {};
+    var listEl = $("sources-list");
+    listEl.innerHTML = "";
+    urls.forEach(function (entry) {
+      if (seen[entry.url]) return;
+      seen[entry.url] = true;
+      var li = document.createElement("li");
+      var a = document.createElement("a");
+      a.href = entry.url; a.textContent = entry.label + " — " + entry.url;
+      a.target = "_blank"; a.rel = "noopener noreferrer";
+      li.appendChild(a);
+      listEl.appendChild(li);
+    });
+  }
+
+  // ---------------------------------------------------------------
+  // Self-test strip — runs scoreText LIVE at page load on the two
+  // embedded IMAGINED sentences, plus an attempt-blindness check.
+  // ---------------------------------------------------------------
+  function runSelfTest() {
+    var out = $("selftest-output");
+    var casual = scoreText(SELF_TEST_CASUAL);
+    var careful = scoreText(SELF_TEST_CAREFUL);
+
+    // attempt-blindness: score the same string twice, compare deep equality.
+    var casualAgain = scoreText(SELF_TEST_CASUAL);
+    var attemptBlind = JSON.stringify(casual) === JSON.stringify(casualAgain);
+
+    var haveNumbers = casual.score !== null && careful.score !== null && casual.score !== careful.score;
+    var casualOk = casual.verdict === "ADMITTED";
+    var carefulOk = careful.verdict === "FLAGGED";
+    var passed = haveNumbers && casualOk && carefulOk && attemptBlind;
+
+    var lines = [];
+    lines.push("SELF-TEST (computed live at page load, same function as the gate):");
+    lines.push("  casual      → " + (casual.score === null ? "n/a" : casual.score.toFixed(2)) + " " + casual.verdict);
+    lines.push("  constrained → " + (careful.score === null ? "n/a" : careful.score.toFixed(2)) + " " + careful.verdict);
+    lines.push("  threshold   = " + THRESHOLD.toFixed(2));
+    lines.push("  attempt-blind: " + (attemptBlind ? "PASS" : "FAIL"));
+    if (passed) {
+      lines.push("  SELF-TEST PASSED — the constrained sentence is flagged, the casual one is not.");
+      out.className = "selftest-output pass";
+    } else {
+      lines.push("  SELF-TEST FAILED — do not trust the meter above until this is fixed.");
+      out.className = "selftest-output fail";
+    }
+    lines.push("If these numbers are missing or equal, do not trust the meter.");
+    out.textContent = lines.join("\n");
+  }
+
+  // ---------------------------------------------------------------
+  // Boot
+  // ---------------------------------------------------------------
+  renderHonestyPanel();
+  renderTallyLine();
+  runSelfTest();
+})();
+</script>
+
+</body>
+</html>
