@@ -62,7 +62,7 @@ jobs:
         run: |
           if [ -n "$(git status --porcelain src/content/atelier src/components/atelier src/pages/atelier public/atelier/werke-html)" ]; then
             git config user.name "Atelier-Integrate"
-            git config user.email "atelier-integrate@users.noreply.github.com"
+            git config user.email "atelier-integrate@frankbueltge.de"
             git add -A src/content/atelier src/components/atelier src/pages/atelier
             if [ -d public/atelier/werke-html ]; then git add -A public/atelier/werke-html; fi
             git commit -m "atelier: integrate $(date -u +%F)"
@@ -84,7 +84,7 @@ jobs:
               git clone --depth 1 "https://x-access-token:${BOT_TOKEN}@github.com/frankbueltge/irrtum-als-methode" /tmp/fb-rej
               mkdir -p /tmp/fb-rej/atelier-feedback
               printf '%s\n' "$FEEDBACK" > "/tmp/fb-rej/atelier-feedback/${DATE}-rejections.md"
-              cd /tmp/fb-rej && git config user.name "Atelier-Integrate" && git config user.email "atelier-integrate@users.noreply.github.com"
+              cd /tmp/fb-rej && git config user.name "Atelier-Integrate" && git config user.email "atelier-integrate@frankbueltge.de"
               git add atelier-feedback && git commit -m "feedback: works rejected at the gate ${DATE}" && git push
             ) || echo "rejection feedback skipped (non-fatal)"
           else
@@ -110,7 +110,7 @@ jobs:
               git clone --depth 1 "https://x-access-token:${BOT_TOKEN}@github.com/frankbueltge/irrtum-als-methode" /tmp/fb
               mkdir -p /tmp/fb/atelier-feedback
               printf '# Build-Feedback %s\n\nDein letzter Beitrag hat das Gate nicht bestanden (kein Deploy; letzter guter Stand bleibt live). Auszug:\n\n```\n%s\n```\n\nKorrigiere das betroffene Werk in `works/<slug>/` und committe erneut.\n' "$DATE" "$LOG" > "/tmp/fb/atelier-feedback/${DATE}.md"
-              cd /tmp/fb && git config user.name "Atelier-Integrate" && git config user.email "atelier-integrate@users.noreply.github.com"
+              cd /tmp/fb && git config user.name "Atelier-Integrate" && git config user.email "atelier-integrate@frankbueltge.de"
               git add atelier-feedback && git commit -m "feedback: Build $DATE rot" && git push
             ) || echo "feedback push skipped (non-fatal)"
           fi

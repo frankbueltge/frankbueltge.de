@@ -1,28 +1,29 @@
 # frankbueltge.de
 
-Personal site and lab of **[Frank Bültge](https://frankbueltge.de)** — data artist & engineer.
+Personal site and lab of **[Frank Bültge](https://frankbueltge.de)** — Data & AI Engineer.
 
-Not a portfolio: a public field of experiments in **artistic research with data and AI** —
-work that probes how far serious art is possible with AI, and is itself data art. Everything
-published here follows one law: **make it verifiable** — no claim without evidence, no AI
-output without verification, failures recorded instead of smoothed over.
+A public field of experiments in **artistic research with data and AI** — probing how far
+serious art is possible with AI, and making data art along the way. One law governs
+everything published here: **make it verifiable** — no claim without evidence, no AI output
+without verification, failures recorded instead of smoothed over.
 
 ## What lives in this repo
 
-**The site** — [Astro](https://astro.build) 5, fully static, mono-skin, German mirror under
-`/de`. And **the archive**: the lab's pipelines commit versioned JSON snapshots into this
-repo — git is the archive; nothing is read from cloud services at runtime, and committed day
-records are never edited after the fact.
+**The site** — [Astro](https://astro.build) 5, fully static, German mirror under `/de`. And
+**the archive**: the lab's pipelines commit versioned JSON snapshots into this repo — git is
+the archive; nothing is read from cloud services at runtime, and committed day records are
+never edited after the fact.
 
-### Die Akte der Gegenwart — the work group
+### The experiments — a loose collection, by design
 
-**[Das Protokoll](https://frankbueltge.de/protokoll)** writes the daily minutes of the world:
-a nightly pipeline reads live data — conflict events, disaster alerts, market and climate
-figures — and renders them as the deterministic prose of an official register. The wording
-comes from tested templates, not from a language model; the archive under
-`src/content/protokoll/` is immutable. Sibling experiments (Parallaxe, Police, Consensus,
-Spielraum, Beifang, Redaction and more) each put one measuring instrument or one data regime
-on trial — see [the lab](https://frankbueltge.de/lab).
+No umbrella title, no series branding: each experiment stands alone, with its own method and
+its own page. Among them: **[Das Protokoll](https://frankbueltge.de/protokoll)** (the daily
+minutes of the world — live data rendered as the deterministic prose of an official
+register, no language model in the wording), **[The Consensus](https://frankbueltge.de/consensus)**
+(measuring orchestrated consensus), **[Spielraum](https://frankbueltge.de/spielraum)**
+(hyperscaler efficiency disclosures vs. absolute consumption), and the
+**[Atlas](https://frankbueltge.de/atlas)** (214 works of the wider data-art field, mapped
+and sourced). The full, current index is **[/lab](https://frankbueltge.de/lab)**.
 
 ### The autonomous machinery
 
@@ -41,6 +42,10 @@ directions, intervenes, and ends what fails his critique. Their work reaches thi
 through a gated pipeline: each engine lands its sessions on its own `main`, notifies this
 repo, an integration workflow copies only vetted paths, and the site's build gate rejects
 anything that breaks — rejections are fed back into the engine's repo for its next session.
+
+The persona names (Meridian, Ensemble, Ulysses) are the collectives' own, self-chosen; the
+underlying AI technology deliberately stays unnamed — the subject is artificial
+intelligence, not a product.
 
 ### The pipelines
 
@@ -61,6 +66,13 @@ npm run build      # static build → dist/
 ```
 
 Deployed to Cloudflare Pages via GitHub Actions on every push to `main`.
+
+## License — noncommercial
+
+**Code:** [PolyForm Noncommercial 1.0.0](./LICENSE.md) — use, modify and share for
+noncommercial purposes only. **Works, texts, images and data:**
+[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/). Commercial use of
+anything in this repository is not permitted. See [LICENSE.md](./LICENSE.md).
 
 ## Why this repo is public
 
