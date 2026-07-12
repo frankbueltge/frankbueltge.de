@@ -12,7 +12,7 @@ import { sortJournal } from '@/lib/atelier/sort'
 import { splitSessions, sessionMeta, renderMarkdown, uniqueSessionAnchor } from '@/lib/engines/journal'
 
 export interface EngineConfig {
-  ns: 'field' | 'atelier' | 'plenum'
+  ns: 'field' | 'atelier' | 'plenum' | 'studio'
   repo: string
   /** default true — field renders its own story hero above and suppresses the shared header */
   showHeader?: boolean
@@ -33,6 +33,9 @@ export interface EngineConfig {
     worksSectionH: string
     openWork: string
     close: string
+    /** optional — shown instead of the works section when `works` is empty (studio's honest
+     *  "no premiered works yet" state); other engines omit it, so nothing renders (unchanged). */
+    emptyWorks?: string
   }
 }
 
@@ -106,6 +109,13 @@ const journalDays = [...journalDaysAsc].reverse().map((d) => ({ id: d.id, sessio
       · <a href={`/${config.ns}/requests`} class="underline transition-colors hover:text-fg">{txt.teamChannel}</a>
     </p>
   </header>
+  )}
+
+  {works.length === 0 && txt.emptyWorks && (
+    <section class="mb-16">
+      <h2 class="mb-5 font-mono text-xs uppercase tracking-widest text-fg-faint">{txt.worksSectionH}</h2>
+      <p class="text-fg-faint">{txt.emptyWorks}</p>
+    </section>
   )}
 
   {works.length > 0 && (

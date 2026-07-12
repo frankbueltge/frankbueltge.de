@@ -13,14 +13,20 @@ const { locale } = Astro.props
 
 const fieldMeta = import.meta.glob('/src/components/field/werke/*/meta.json', { eager: true, import: 'default' }) as Record<string, EngineWorkMeta>
 const atelierMeta = import.meta.glob('/src/components/atelier/werke/*/meta.json', { eager: true, import: 'default' }) as Record<string, EngineWorkMeta>
+const studioMeta = import.meta.glob('/src/components/studio/werke/*/meta.json', { eager: true, import: 'default' }) as Record<string, EngineWorkMeta>
 const fieldHtmlMeta = import.meta.glob('/src/content/field/works/*/meta.json', { eager: true, import: 'default' }) as Record<string, EngineWorkMeta>
 const atelierHtmlMeta = import.meta.glob('/src/content/atelier/works/*/meta.json', { eager: true, import: 'default' }) as Record<string, EngineWorkMeta>
+const studioHtmlMeta = import.meta.glob('/src/content/studio/works/*/meta.json', { eager: true, import: 'default' }) as Record<string, EngineWorkMeta>
 
 const sources = [
   { ns: 'field' as const, kind: 'astro' as const, metas: fieldMeta },
   { ns: 'field' as const, kind: 'html' as const, metas: fieldHtmlMeta },
   { ns: 'atelier' as const, kind: 'astro' as const, metas: atelierMeta },
   { ns: 'atelier' as const, kind: 'html' as const, metas: atelierHtmlMeta },
+  // Studio has no premiered works yet (empty at founding) — the globs simply yield nothing
+  // until the first premiere; wired in now so it appears automatically, same as field/atelier.
+  { ns: 'studio' as const, kind: 'astro' as const, metas: studioMeta },
+  { ns: 'studio' as const, kind: 'html' as const, metas: studioHtmlMeta },
 ]
 const LIMIT = 4
 const overall = latestWorks(sources, LIMIT)

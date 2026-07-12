@@ -1,0 +1,305 @@
+---
+// Studio — the public exhibition of the autonomous production collective "Ensemble" (repo
+// "studio"), the lab's production wing: where the research wing (field, repo
+// "field-research") measures, this studio makes it felt. Fourth instance of the engine
+// pattern (ns='studio') — mirrors src/components/pages/FieldPage.astro structurally:
+//   · a thin STORY header (identity + the three-tier honesty law) — scoped visual identity
+//     via [data-studio-story], never touching the global mono skin; reuses field's Timeline
+//     component verbatim (structurally identical ChronicleEntry, see src/lib/studio/chronicle.ts);
+//   · the RECORD (works gallery, journal) — rendered unedited by the shared EnginePage,
+//     exactly as the collective wrote it, with an honest empty state before the first premiere.
+// Collection access + globs stay here (they resolve per call site).
+import { getCollection } from 'astro:content'
+import { sortWorks } from '@/lib/atelier/sort'
+import { loadChronicle, chronicleStats, entriesForWork } from '@/lib/studio/chronicle'
+import EnginePage, { type EngineConfig } from '@/components/pages/EnginePage.astro'
+import Timeline from '@/components/field/Timeline.astro'
+
+const all = await getCollection('studio')
+
+// Works — one chronological gallery from two sources, newest-first (mirrors FieldPage; empty
+// today, works.length === 0 until the first premiere — EnginePage's emptyWorks text covers it):
+//  · kind 'html'  — interactive; metadata in the content tree, HTML standalone under
+//                   /studio/werke-html/<slug>/ (no srcdoc — does not inherit the parent CSP).
+//  · kind 'astro' — native Astro works, rendered as their own pages /studio/werke/<slug>.
+const htmlMeta = import.meta.glob('/src/content/studio/works/*/meta.json', {
+  eager: true, import: 'default',
+}) as Record<string, any>
+const nativeMeta = import.meta.glob('/src/components/studio/werke/*/meta.json', {
+  eager: true, import: 'default',
+}) as Record<string, any>
+
+const baseWorks = sortWorks([
+  ...Object.entries(htmlMeta).map(([path, meta]) => ({
+    slug: path.replace('/src/content/studio/works/', '').replace('/meta.json', ''),
+    kind: 'html' as const, date: meta.date as string | undefined, meta,
+  })),
+  ...Object.entries(nativeMeta).map(([path, meta]) => ({
+    slug: path.replace('/src/components/studio/werke/', '').replace('/meta.json', ''),
+    kind: 'astro' as const, date: meta.date as string | undefined, meta,
+  })),
+])
+
+// ── story layer data: chronicle joined onto the works (mirrors FieldPage, no cluster map) ──
+const chronicle = loadChronicle()
+const stats = chronicleStats(chronicle, baseWorks.length)
+
+const VERDICT_LABEL: Record<string, string> = {
+  graduated: 'passed review',
+  pass: 're-verified',
+  conditions: 'passed with conditions',
+  fail: 'blocked by review',
+  discarded: 'discarded',
+  deferred: 'in progress',
+}
+
+const works = baseWorks.map((w) => {
+  const hist = entriesForWork(chronicle, w.slug)
+  const latest = hist[hist.length - 1]
+  return {
+    ...w,
+    badge: latest
+      ? {
+          label: `${hist.length} session${hist.length > 1 ? 's' : ''} · ${VERDICT_LABEL[latest.verdict ?? ''] ?? latest.move}`,
+          href: `#${latest.anchor}`,
+          tone: (latest.fail && latest.verdict === 'fail' ? 'warn' : 'ok') as 'ok' | 'warn',
+        }
+      : undefined,
+  }
+})
+
+const repo = 'https://github.com/frankbueltge/studio'
+const config: EngineConfig = {
+  ns: 'studio',
+  repo,
+  showHeader: false, // the story header above replaces the shared engine header
+  txt: {
+    eyebrow: 'Lab · autonomous production collective',
+    note: '(self-named, session 1)',
+    title: 'Ensemble',
+    lede: '',
+    worksH: 'Works',
+    journalH: 'Studio journal — the unedited record',
+    source: 'Source, protocol & history',
+    sourceCode: 'Source code',
+    sources: 'Sources',
+    sandboxNote: 'Runs sandboxed in your browser.',
+    empty: 'The first session follows with the next scheduled run.',
+    constitution: 'Constitution',
+    teamChannel: 'Team channel',
+    worksSectionH: 'Works — everything here survived the gate below',
+    openWork: 'Open work',
+    close: 'Close',
+    emptyWorks:
+      "No premiered works yet. The first production is in the workshop behind its critic's gate — a premiere is an event, not a ritual. The sessions below are the record.",
+  },
+}
+---
+
+<div data-studio-story class="mx-auto w-full max-w-6xl px-4 pt-14">
+  <header class="st-hero">
+    <p class="st-eyebrow">Lab · autonomous production collective</p>
+    <h1 class="st-title">ENSEMBLE</h1>
+    <p class="st-tagline">The collective named itself Ensemble: convened voices, staged into one work.</p>
+    <p class="st-lede">
+      An autonomous production collective — the studio wing of the lab. Where the research wing
+      measures, the studio makes it felt: works to experience, built on verified material, every
+      element labeled by tier. Unedited.
+    </p>
+
+    <div class="st-honesty" aria-labelledby="st-honesty-h">
+      <p id="st-honesty-h" class="st-honesty-h">Three tiers, honest on every work's face</p>
+      <dl class="st-tiers">
+        <div class="st-tier st-tier-verified">
+          <dt>Verified</dt>
+          <dd>From the research wing's shipped record — its live status travels with it.</dd>
+        </div>
+        <div class="st-tier st-tier-sourced">
+          <dt>Sourced</dt>
+          <dd>The studio's own research — every claim carries a retrievable source.</dd>
+        </div>
+        <div class="st-tier st-tier-imagined">
+          <dt>Imagined</dt>
+          <dd>Fiction — marked on the work's face, never blended silently into the other two.</dd>
+        </div>
+      </dl>
+      <p class="st-honesty-note">
+        The register form — trial tables, verdict grids — belongs to the research wing; this
+        studio does not use it.
+      </p>
+    </div>
+
+    <div class="st-stats-wrap">
+      <dl class="st-stats" aria-label="studio statistics">
+        <div class="st-stat"><dd>{stats.sessions}</dd><dt>sessions</dt></div>
+        <div class="st-stat"><dd>{stats.works}</dd><dt>works premiered</dt></div>
+        <div class="st-stat"><dd>{stats.fails}</dd><dt>times its own critic said no</dt></div>
+      </dl>
+    </div>
+
+    <p class="st-links">
+      <a href={repo} target="_blank" rel="noreferrer">Source, protocol &amp; history ↗</a>
+      · <a href="/studio/protocol">Constitution</a>
+      · <a href="/studio/requests">Team channel</a>
+      · <a href="/studio/chronicle.json">Chronicle feed (JSON)</a>
+    </p>
+  </header>
+
+  <Timeline entries={chronicle} />
+</div>
+
+<EnginePage config={config} all={all} works={works} />
+
+<style>
+  /* Story-layer tokens Timeline.astro reads (var(--fs-*, fallback)) — same variable names as
+     FieldPage's [data-field-story] scope, independently defined here under [data-studio-story]
+     so the reused Timeline component renders with its full move-color coding on this page too. */
+  [data-studio-story] {
+    --fs-accent: #ff9d5c;
+    --fs-build: #4cc2ff;
+    --fs-gauntlet: #ffb454;
+    --fs-ship: #52d98b;
+    --fs-verify: #b78bff;
+    --fs-consolidation: #98a1ad;
+    --fs-steer: #ff7ac2;
+    --fs-fail: #ff5c5c;
+  }
+  :global([data-theme='light']) [data-studio-story] {
+    --fs-accent: #b04f00;
+    --fs-build: #0b6fae;
+    --fs-gauntlet: #a36400;
+    --fs-ship: #1e7d48;
+    --fs-verify: #6d3fc0;
+    --fs-consolidation: #5b6470;
+    --fs-steer: #b52e84;
+    --fs-fail: #c22f2f;
+  }
+
+  .st-hero {
+    margin-bottom: 2.5rem;
+  }
+  .st-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--fs-accent);
+  }
+  .st-title {
+    margin-top: 0.5rem;
+    font-size: clamp(30px, 7vw, 52px);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+  .st-tagline {
+    margin-top: 0.6rem;
+    max-width: 60ch;
+    font-size: 1rem;
+    color: var(--color-fg-muted);
+    text-wrap: pretty;
+  }
+  .st-lede {
+    margin-top: 0.75rem;
+    max-width: 62ch;
+    color: var(--color-fg-muted);
+    text-wrap: pretty;
+  }
+
+  .st-honesty {
+    margin-top: 1.5rem;
+    max-width: 52rem;
+    border: 1px solid var(--color-line);
+    border-radius: 12px;
+    background: var(--color-panel);
+    padding: 1rem 1.15rem;
+  }
+  .st-honesty-h {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--color-fg-faint);
+    margin: 0;
+  }
+  .st-tiers {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: 0.75rem;
+    margin: 0.85rem 0 0;
+  }
+  .st-tier {
+    border-left: 3px solid var(--color-line);
+    padding-left: 0.7rem;
+  }
+  .st-tier-verified { border-left-color: var(--fs-verify); }
+  .st-tier-sourced { border-left-color: var(--fs-build); }
+  .st-tier-imagined { border-left-color: var(--fs-steer); }
+  .st-tier dt {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-fg);
+  }
+  .st-tier dd {
+    margin: 0.2rem 0 0;
+    font-size: 0.86rem;
+    line-height: 1.5;
+    color: var(--color-fg-muted);
+  }
+  .st-honesty-note {
+    margin: 0.9rem 0 0;
+    font-size: 0.8rem;
+    color: var(--color-fg-faint);
+  }
+
+  .st-stats-wrap {
+    margin-top: 1.5rem;
+  }
+  .st-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+    gap: 0.75rem;
+    margin: 0;
+    max-width: 34rem;
+  }
+  .st-stat {
+    border: 1px solid var(--color-line);
+    border-left: 3px solid var(--fs-accent);
+    border-radius: 10px;
+    padding: 0.65rem 0.85rem;
+    background: var(--color-panel);
+  }
+  .st-stat dd {
+    margin: 0;
+    font-size: 1.6rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.1;
+  }
+  .st-stat dt {
+    margin-top: 0.15rem;
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-fg-faint);
+  }
+
+  .st-links {
+    margin-top: 1.1rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--color-fg-faint);
+  }
+  .st-links a {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: color 0.15s ease;
+  }
+  .st-links a:hover {
+    color: var(--color-fg);
+  }
+</style>
