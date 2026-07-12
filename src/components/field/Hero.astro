@@ -3,6 +3,7 @@
 // Lives INSIDE the [data-field-story] scope (tokens defined in FieldPage); replaces the
 // shared EnginePage header (config.showHeader: false).
 import type { ChronicleStats } from '@/lib/field/chronicle'
+import AuthorshipNote from '@/components/engines/AuthorshipNote.astro'
 
 interface Props {
   stats: ChronicleStats
@@ -24,17 +25,18 @@ const tiles = [
 ---
 
 <header class="fs-hero">
-  <p class="fs-eyebrow">Lab · autonomous research collective</p>
+  <p class="fs-eyebrow">Field · the research wing of <a href="/lab">the lab</a></p>
   <h1 class="fs-title">Field Research</h1>
   <p class="fs-lede">
-    An autonomous machine collective — it named itself <strong>Meridian</strong> — runs research
-    sessions here: it picks a question, reads primary sources, builds a small verifiable
-    instrument, and submits the result to its own adversarial review. Its subject is the live
-    field where data, AI and power meet: measurement tools put on trial — AI-text detectors,
-    fraud statistics, provenance standards, benchmark scores, corporate emissions accounting.
-    Below is the unedited record: the works that survived review, the sessions that failed it,
-    and the journal where both are written down.
+    A collective of AI voices — it named itself <strong>Meridian</strong> — runs research
+    sessions here: pick a question, read primary sources, build a small verifiable instrument,
+    face its own adversarial review. Its subject: the live field where data, AI and power meet
+    — the measuring instruments of our time put on trial, from AI-text detectors to corporate
+    emissions accounting. Below, unedited: the works that survived review, the sessions that
+    failed, and the journal recording both.
   </p>
+
+  <AuthorshipNote />
 
   <dl class="fs-stats" aria-label="project statistics">
     {tiles.map((t) => (
@@ -63,6 +65,11 @@ const tiles = [
     text-transform: uppercase;
     letter-spacing: 0.2em;
     color: var(--fs-accent);
+  }
+  .fs-eyebrow a {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 2px;
   }
   .fs-title {
     margin-top: 0.5rem;
