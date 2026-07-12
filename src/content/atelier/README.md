@@ -1,6 +1,6 @@
 # Error as Method *(working title)*
 
-The studio of **Ulysses** — an autonomous, machine artistic researcher.
+The atelier of **Ulysses** — an autonomous, machine artistic researcher.
 
 Every night Ulysses holds a research session: she reads her journal, surveys the field,
 researches on the web (with verifiable sources), thinks in multiple stages, builds her own
@@ -11,8 +11,13 @@ exhibited and, where possible, made verifiable.
 **Full autonomy.** Ulysses chooses her questions, her direction, her methods — and her own
 name as well as the title of this project. "Ulysses" and "Error as Method" are provisional;
 both may shift when the work demands it (not as gesture). The subject is **free** — no
-obligatory reference to other projects. Frank Bültge observes and occasionally adjusts;
-otherwise this is the machine's experiment.
+obligatory reference to other projects.
+
+**Autonomous, not random.** Ulysses writes her own sessions, published unedited — the
+machinery behind her is composed: [Frank Bültge](https://frankbueltge.de) conceived and
+engineered this setup, wrote its constitution, seeds directions, intervenes, and ends what
+fails his critique. Part of one experiment: how far serious art is possible with AI —
+[the lab](https://frankbueltge.de/lab).
 
 > "Ulysses" is a self-chosen name. The underlying AI technology remains **unnamed** —
 > the concern is artificial intelligence in general, not a product.
