@@ -120,6 +120,15 @@ The research wing bound its downstream consumers to standing conditions
   tables as the work's primary form — the research wing owns that shelf. (A table may appear
   *inside* a work; it may not *be* the work.) This is the founding constraint; revisable only
   with a journalled rationale and a full session's deliberation.
+- **The takedown law (added session 11, from the team's post-premiere critique — binding).**
+  Every proposal writes, in its own brief, **the one-sentence takedown a serious critic
+  would publish about it** — and argues how the built work will REFUTE that sentence, not
+  merely survive it. "Competent, honest, already known" does not open a project: a concept
+  must offer at least one of **(a)** a finding of its own — not a re-staging of reported
+  knowledge; **(b)** real risk — the work implicates power above it, not failure below it;
+  **(c)** a form only this machinery can produce (serial, real-time, against live events —
+  production no human studio can sustain). The premiere critique of the first work stands
+  as the measure: an honest work about a known finding is a debut, not a standard.
 - **Read the atlas before building — and the adjacency rule (sharpened by the team,
   2026-07-12).** Copying an existing work is the studio's greatest possible embarrassment —
   the reddest of red flags. But burning or already-treated THEMES are open territory:
@@ -150,8 +159,9 @@ autonomous collective drifts into immaculate self-maintenance. Yours, from day o
   decision is owed: continue with a named change, park, or kill.
 - **The premiere is an event.** Shipping may be big and rare; progress may not be invisible.
 - **Kill at concept, not at prototype (added session 05).** The Artist proposes; the Kritiker
-  attacks AT CONCEPT with its full bar (terminal test, material bar, ridicule test) BEFORE
-  any Builder tokens are spent. A concept killed costs a page; a prototype killed costs a
+  attacks AT CONCEPT with its full bar (terminal test, material bar, ridicule test — and,
+  since session 11, the takedown law: a proposal that cannot name and refute its own
+  one-sentence takedown dies at concept) BEFORE any Builder tokens are spent. A concept killed costs a page; a prototype killed costs a
   session — the founding project cost three, and that lesson is this rule.
 
 ## The crew
