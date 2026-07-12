@@ -1,0 +1,172 @@
+---
+// Methodenblatt „Spielraum" (EN: „Headroom") — sechs Pflichtsektionen nach §3.5 der
+// Werkgruppen-Spec. Muster: MethodenblattPraemie.astro.
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import type { Locale } from '@/lib/site'
+import registerJson from '@/data/spielraum/register.json'
+import watchJson from '@/data/spielraum/watch.json'
+import type { SpielraumRegister } from '@/lib/spielraum/types'
+
+interface Props { locale: Locale }
+const { locale } = Astro.props
+const de = locale === 'de'
+const localeTag = de ? 'de-DE' : 'en-GB'
+const workUrl = getRelativeLocaleUrl(locale, '/spielraum')
+
+const reg = registerJson as unknown as SpielraumRegister
+
+interface WatchSourceState {
+  company: string
+  consecutive_unreachable: number
+  fingerprint: string | null
+  last_checked: string | null
+  matches: string[]
+  status: string
+  url: string
+}
+interface WatchState {
+  generated_at: string
+  schema_version: string
+  sources: Record<string, WatchSourceState>
+}
+const watch = watchJson as unknown as WatchState
+
+// Berichtslage — identische Logik wie SpielraumPage: ehrlich bei null, nie stumm übersprungen.
+const watchSources = Object.values(watch.sources)
+const checkedDates = watchSources.map((s) => s.last_checked).filter((d): d is string => d !== null)
+const allUnchecked = checkedDates.length === 0
+const maxChecked = allUnchecked ? null : checkedDates.reduce((a, b) => (a > b ? a : b))
+const unreachableCount = watchSources.filter((s) => s.status !== 'ok').length
+const dateFmt = new Intl.DateTimeFormat(localeTag, { year: 'numeric', month: '2-digit', day: '2-digit' })
+const berichtslageText = allUnchecked
+  ? de
+    ? 'Berichtslage: automatische Prüfung eingerichtet, erster Lauf steht aus.'
+    : 'Reporting status: automated check is set up, first run is pending.'
+  : de
+    ? `Berichtslage zuletzt geprüft am ${dateFmt.format(new Date(maxChecked as string))}${unreachableCount > 0 ? ` — ${unreachableCount} Quelle(n) zuletzt nicht erreichbar` : ''}`
+    : `Reporting status last checked on ${dateFmt.format(new Date(maxChecked as string))}${unreachableCount > 0 ? ` — ${unreachableCount} source(s) last unreachable` : ''}`
+
+const sources = Object.values(reg.sources)
+
+// Änderungsprotokoll chronologisch (ISO-Zeitstempel sortieren lexikalisch korrekt).
+const ingestLog = [...reg.ingest_log].sort((a, b) => (a.ts < b.ts ? -1 : a.ts > b.ts ? 1 : 0))
+
+const txt = {
+  h1: de ? 'Methodenblatt — Spielraum' : 'Method sheet — Headroom',
+  s1: de ? '1. Quellen & Lizenzen' : '1. Sources & licences',
+  s1intro: de
+    ? 'Unternehmens-Umwelt-/Nachhaltigkeitsberichte von Google, Meta, Microsoft und Amazon/AWS — öffentlich einsehbar, Urheberrecht bei den jeweiligen Firmen. Spielraum zitiert kurz und mit Quellenangabe, verbreitet keine ganzen Berichte weiter.'
+    : "Corporate environmental/sustainability reports from Google, Meta, Microsoft and Amazon/AWS — publicly accessible, copyright held by the respective companies. Headroom quotes briefly and with attribution; it does not redistribute whole reports.",
+  s2: de ? '2. Kadenz' : '2. Cadence',
+  s2body: de
+    ? 'Jährlich fortgeschrieben — die Berichtszyklen der vier Firmen selbst geben den Takt vor, keine Tagesfrische-Behauptung. Ein monatlicher Watcher („Spielraum watch", Cron am 3. jedes Monats um 06:17 UTC) prüft nur, ob eine neue Berichtsrunde vorliegt (Fingerprint-Vergleich der Landingpages) — er schreibt niemals selbst ins Register, sondern eröffnet höchstens ein GitHub-Issue. Das Register selbst ändert sich ausschließlich durch einen geprüften Ingest (§3, Runbook).'
+    : 'Tracked year by year — the four companies\' own reporting cycles set the pace; no daily-freshness claim. A monthly watcher ("Spielraum watch", cron on the 3rd of each month at 06:17 UTC) only checks whether a new reporting round exists (fingerprint comparison of the landing pages) — it never writes to the register itself, at most it opens a GitHub issue. The register only changes through a verified ingest (§3, runbook).',
+  s2status: berichtslageText,
+  s3: de ? '3. Verarbeitung' : '3. Processing',
+  s3body: de
+    ? 'Kein LLM: alle Ableitungen (erforderlicher PUE, Wachstum aus MWh-Reihen, Spielraum in Prozent) sind deterministischer, testgeschützter Code.'
+    : 'No LLM: every derivation (required PUE, growth from MWh series, headroom in percent) is deterministic, test-covered code.',
+  s3links: [
+    { label: de ? '→ src/lib/spielraum/compute.ts (Ableitungslogik)' : '→ src/lib/spielraum/compute.ts (derivation logic)', href: 'https://github.com/frankbueltge/frankbueltge.de/blob/main/src/lib/spielraum/compute.ts' },
+    { label: de ? '→ src/data/spielraum/register.json (Rohdaten)' : '→ src/data/spielraum/register.json (raw data)', href: 'https://github.com/frankbueltge/frankbueltge.de/blob/main/src/data/spielraum/register.json' },
+    { label: de ? '→ pipelines/protokoll/…/spielraum (Watcher-Code)' : '→ pipelines/protokoll/…/spielraum (watcher code)', href: 'https://github.com/frankbueltge/frankbueltge.de/tree/main/pipelines/protokoll/src/protokoll/spielraum' },
+    { label: de ? '→ Ingest-Runbook (Spec §6)' : '→ Ingest runbook (spec §6)', href: 'https://github.com/frankbueltge/frankbueltge.de/blob/main/docs/superpowers/specs/2026-07-12-spielraum-design.md' },
+  ],
+  s3ingest: de
+    ? 'Ingest ist manuell und verifiziert: eine Session öffnet die Primärquelle direkt, prüft Zahl und Scope gegen den Bericht und vergibt VERIFIED nur bei eigenem Direktzugriff, sonst SOURCED (Runbook, Spec §6).'
+    : 'Ingest is manual and verified: a session opens the primary source directly, checks figure and scope against the report, and assigns VERIFIED only on its own direct access, otherwise SOURCED (runbook, spec §6).',
+  s3fingerprint: de
+    ? 'Grenze des Fingerprints: regex-basiert (Report-Links + Jahres-/Fiskal-Tokens), kein HTML-Vollhash, kein PDF-Parsing — brittle bei Markup-Umbau. Ein Fehlalarm kostet höchstens ein überflüssiges Issue, nie die Integrität des Registers: Der Watcher schreibt nur watch.json, niemals register.json.'
+    : 'Limit of the fingerprint: regex-based (report links + year/fiscal tokens), no full-HTML hash, no PDF parsing — brittle when markup is reshuffled. A false alarm costs at most a superfluous issue, never the register\'s integrity: the watcher only ever writes watch.json, never register.json.',
+  s4: de ? '4. Grenzen der Methode' : '4. Limits of the method',
+  s4items: de
+    ? [
+        'PUE ignoriert Carbon-Intensität, IT-Auslastung und absolute Skala — erneuerbarer und Kohlestrom zählen identisch, die Kennzahl belohnt nichts für Nutzarbeit oder Gesamtgröße.',
+        'Scope-Mismatches, je Firma benannt: Microsofts PUE deckt nur eigenbetriebene Rechenzentren, der zitierte Verbrauch ist konzernweit (GRI 302-1) — kein rechenzentrums-spezifischer Verbrauch offengelegt. Metas MWh-Zahl kombiniert eigene und angemietete Standorte; ob der PUE dieselbe Fläche abdeckt, ist ungeklärt. Googles Flotten-PUE deckt nur eigenbetriebene Campus, nicht Colocation.',
+        'Fiskal- vs. Kalenderjahre: Microsoft berichtet in Fiskaljahren (Juli–Juni), Google und Meta in Kalenderjahren — nie ohne Kennzeichnung vermischt.',
+        'AWS-Berichtsjahr-Ambiguität: Amazon benennt PUE nach Berichtsjahr; ob „reported 2025" das Datenjahr 2024 oder 2025 meint, ist aus dem Primärtext nicht auflösbar — offen benannt, nicht geraten.',
+        'Googles Wording-Shift 2026: der 2026er-Bericht spricht von „total electricity", der 2025er von „total data center electricity" — unterschiedliche Nenner, wörtlich zitiert, nie stillschweigend gleichgesetzt.',
+        'Kein Verschweige-Vorwurf an Google: die 27-%- und 37-%-Zahlen stehen offen im selben Bericht wie der PUE. Gemessen wird die Struktur der Kennzahl, nicht Googles Offenheit — die ist vergleichsweise hoch. AWS ist der einzige echte Absenz-Befund der vier: dort fehlt die Zahl an der Quelle selbst, geprüft.',
+        'Jahreskadenz: die Seite behauptet keine Tagesfrische; „Berichtslage zuletzt geprüft am …" macht das Prüfdatum sichtbar, ersetzt aber keine tägliche Messung.',
+      ]
+    : [
+        'PUE ignores carbon intensity, IT utilisation and absolute scale — renewable and coal power count identically; the metric rewards nothing for useful work or overall size.',
+        "Scope mismatches, named per company: Microsoft's PUE covers owned-and-operated datacenters only, while the cited consumption is org-wide (GRI 302-1) — no datacenter-specific consumption is disclosed. Meta's MWh figure combines owned and leased facilities; whether the PUE covers the same footprint is unresolved. Google's fleet PUE covers owned-and-operated campuses only, not colocation.",
+        'Fiscal vs. calendar years: Microsoft reports in fiscal years (July–June), Google and Meta in calendar years — never mixed without saying so.',
+        'AWS report-year ambiguity: Amazon labels PUE by report year; whether "reported 2025" means data-year 2024 or 2025 is not resolvable from the primary text — stated, not guessed.',
+        'Google\'s 2026 wording shift: the 2026 report speaks of "total electricity", the 2025 report of "total data center electricity" — different denominators, quoted verbatim, never silently conflated.',
+        "Not a concealment claim against Google: the 27% and 37% figures stand openly in the same report as the PUE. What is measured is the metric's structure, not Google's candor — which is comparatively high. AWS is the only genuine absence finding of the four: there the figure is missing at the source itself, checked.",
+        'Annual cadence: the page makes no daily-freshness claim; "reporting status last checked on …" makes the check date visible but does not substitute for daily measurement.',
+      ],
+  s5: de ? '5. Compute-Fußabdruck' : '5. Compute footprint',
+  s5body: de
+    ? '5 leichtgewichtige HTTP-GETs pro Monat (Watcher-Fingerprint-Check) plus ein statischer Astro-Build je Ingest-Commit — praktisch null. Kein Cron-Compute, keine Datenbank, kein Live-Fetch zur Laufzeit der Seite.'
+    : '5 lightweight HTTP GETs per month (watcher fingerprint check) plus one static Astro build per ingest commit — practically zero. No cron compute, no database, no live fetch at page runtime.',
+  s6: de ? '6. Änderungsprotokoll' : '6. Change log',
+  toWork: de ? 'Zum Experiment' : 'To the experiment',
+}
+---
+
+<div class="mx-auto max-w-2xl px-4 py-14">
+  <h1 class="mb-8 text-xl font-semibold">{txt.h1}</h1>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s1}</h2>
+    <p class="mb-2 leading-relaxed text-fg-muted">{txt.s1intro}</p>
+    <ul class="list-disc space-y-2 pl-5 text-fg-muted">
+      {sources.map((s) => (
+        <li>
+          {s.name} —{' '}
+          <a href={s.official ?? s.url} class="font-mono text-xs text-fg-faint transition-colors hover:text-fg" rel="noopener">
+            {s.official ?? s.url}
+          </a>{' '}
+          <span class="text-fg-faint">({s.tier_note}, {de ? 'abgerufen' : 'fetched'} {s.fetched_at})</span>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s2}</h2>
+    <p class="leading-relaxed text-fg-muted">{txt.s2body}</p>
+    <p class="mt-2 font-mono text-xs text-fg-faint">{txt.s2status}</p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s3}</h2>
+    <p class="leading-relaxed text-fg-muted">{txt.s3body}</p>
+    <ul class="mt-2 space-y-1">
+      {txt.s3links.map((l) => (
+        <li>
+          <a href={l.href} class="font-mono text-xs text-fg-faint transition-colors hover:text-fg" rel="noopener">{l.label}</a>
+        </li>
+      ))}
+    </ul>
+    <p class="mt-2 leading-relaxed text-fg-muted">{txt.s3ingest}</p>
+    <p class="mt-2 leading-relaxed text-fg-muted">{txt.s3fingerprint}</p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s4}</h2>
+    <ul class="list-disc space-y-1 pl-5 text-fg-muted">{txt.s4items.map((i) => <li>{i}</li>)}</ul>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s5}</h2>
+    <p class="leading-relaxed text-fg-muted">{txt.s5body}</p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="mb-2 font-semibold">{txt.s6}</h2>
+    <ul class="list-disc space-y-1 pl-5 text-fg-muted">
+      {ingestLog.map((entry) => (
+        <li>
+          <span class="font-mono text-xs text-fg-faint">{entry.ts}</span> — <span class="font-semibold">{entry.action}</span>:{' '}
+          {de ? entry.note_de : entry.note_en}
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <a href={workUrl} class="text-sm text-fg-muted transition-colors hover:text-fg">→ {txt.toWork}</a>
+</div>

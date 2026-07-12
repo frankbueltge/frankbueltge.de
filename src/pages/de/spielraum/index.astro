@@ -1,0 +1,9 @@
+---
+import Page from '@/layouts/Page.astro'
+import SpielraumPage from '@/components/pages/SpielraumPage.astro'
+import { t } from '@/i18n/ui'
+const locale = 'de' as const
+---
+<Page title={`${t(locale, 'sr.title')} | Frank Bültge`} description={t(locale, 'sr.sub')}>
+  <SpielraumPage locale={locale} />
+</Page>
