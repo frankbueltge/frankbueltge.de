@@ -63,8 +63,27 @@ const workLd = work ? workJsonLd(work, locale, canonical) : null
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
     <meta name="theme-color" content="#0a0a0a" />
     <script is:inline>
-      // Anti-FOUC: apply the saved light theme before first paint. Dark is the default.
-      try { if (localStorage.getItem('theme') === 'light') document.documentElement.setAttribute('data-theme', 'light') } catch (e) {}
+      // Anti-FOUC + auto theme. Resolve the theme BEFORE first paint and stamp it
+      // EXPLICITLY on <html> (data-theme is always 'light' or 'dark', never absent) so
+      // component styles that key off [data-theme='dark'] / [data-theme='light'] stay in
+      // lockstep with the real page. That lockstep is what prevents dark-grey-on-black
+      // works (e.g. transparent, theme-adaptive pieces like The Closing Loop).
+      //   localStorage 'theme':  'light' | 'dark' = the user's explicit override
+      //                          absent            = AUTO → follow the OS (incl. its own
+      //                                              day/night schedule; kept live by the
+      //                                              controller in <body>).
+      // data-theme-mode carries the *mode* (auto/light/dark) for the toggle icon.
+      (function () {
+        var root = document.documentElement
+        var pref = null
+        try { pref = localStorage.getItem('theme') } catch (e) {}
+        var mode = pref === 'light' || pref === 'dark' ? pref : 'auto'
+        var dark
+        try { dark = mode === 'auto' ? matchMedia('(prefers-color-scheme: dark)').matches : mode === 'dark' }
+        catch (e) { dark = mode === 'dark' }
+        root.setAttribute('data-theme', dark ? 'dark' : 'light')
+        root.setAttribute('data-theme-mode', mode)
+      })()
     </script>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png" />
@@ -105,7 +124,7 @@ const workLd = work ? workJsonLd(work, locale, canonical) : null
   <body class="flex min-h-dvh flex-col">
     <a
       href="#main"
-      class="sr-only rounded-md bg-accent px-4 py-2 text-sm text-white focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50"
+      class="sr-only rounded-md bg-accent px-4 py-2 text-sm text-bg focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50"
     >
       {t(locale, 'a11y.skip')}
     </a>
@@ -133,20 +152,63 @@ const workLd = work ? workJsonLd(work, locale, canonical) : null
       if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
         let done = false
         const flash = () => {
-          if (done || root.getAttribute('data-theme') === 'light') return
+          const prev = root.getAttribute('data-theme') // resolved theme is always set now
+          if (done || prev === 'light') return
           done = true
           removeEventListener('scroll', flash)
           removeEventListener('wheel', flash)
           root.classList.add('theme-flash')
           root.setAttribute('data-theme', 'light')
           setTimeout(() => {
-            root.removeAttribute('data-theme')
+            root.setAttribute('data-theme', prev || 'dark') // restore, never drop the attribute
             setTimeout(() => root.classList.remove('theme-flash'), 200)
           }, 150)
         }
         addEventListener('scroll', flash, { passive: true })
         addEventListener('wheel', flash, { passive: true })
       }
+    </script>
+
+    {/* Theme controller — the single source of truth for light/dark. The head script already
+        set the initial state FOUC-free; this keeps it reactive and wires the toggle (present in
+        TopBar). Modes: 'auto' (default) follows the OS live, including its day/night schedule;
+        'light'/'dark' are explicit user overrides. Cycling: auto → light → dark → auto. */}
+    <script>
+      const root = document.documentElement
+      const mq = matchMedia('(prefers-color-scheme: dark)')
+
+      const readMode = (): string => {
+        try { return localStorage.getItem('theme') || 'auto' } catch (e) { return 'auto' }
+      }
+      const resolve = (mode: string): string => (mode === 'auto' ? (mq.matches ? 'dark' : 'light') : mode)
+
+      const syncThemeColor = (): void => {
+        const m = document.querySelector('meta[name="theme-color"]')
+        const c = getComputedStyle(root).getPropertyValue('--color-bg').trim()
+        if (m && c) m.setAttribute('content', c)
+      }
+
+      const apply = (mode: string): void => {
+        root.setAttribute('data-theme', resolve(mode)) // what the page actually renders as
+        root.setAttribute('data-theme-mode', mode) // what the toggle icon shows
+        syncThemeColor()
+      }
+
+      apply(readMode()) // reconcile with the head script + set the correct theme-color
+
+      // Auto mode: follow the OS live, so a system that flips light↔dark on a schedule flips the site too.
+      mq.addEventListener('change', () => { if (readMode() === 'auto') apply('auto') })
+
+      // Toggle cycles auto → light → dark → auto. 'auto' clears the override (back to following the OS).
+      const order = ['auto', 'light', 'dark']
+      document.querySelector('[data-theme-toggle]')?.addEventListener('click', () => {
+        const next = order[(order.indexOf(readMode()) + 1) % order.length]
+        try {
+          if (next === 'auto') localStorage.removeItem('theme')
+          else localStorage.setItem('theme', next)
+        } catch (e) {}
+        apply(next)
+      })
     </script>
 
     {/* Web Analytics — Umami, first-party via a Cloudflare Pages Function proxy (functions/stats/).
