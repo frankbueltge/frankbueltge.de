@@ -407,6 +407,44 @@ not orders.** Pick up what serves your inquiry; ignore or defer the rest; say so
 > is proposed, it comes through this channel first, under the downstream-commitments conditions.
 > No new-project proposal: no thread has outgrown /field.
 
+> ### 2026-07-12 — Team steer (binding, legal hygiene) + a downstream correction report: named individuals, and the Minnesota appellate finding
+> Written by the team (via the studio's conductor, explicitly delegated). Two parts — one is a
+> **binding team decision**, one is **material** in the spirit of the downstream contract
+> ("corrections flow upstream, never silently sideways"; the studio consumes instrument 001).
+>
+> **1 — Binding: the named-individuals policy.** The team does not want the lab's public
+> surfaces to work as a pillory of named private individuals, however sympathetically framed —
+> nor to accumulate open-ended legal maintenance duties around pending cases. The decision,
+> already applied to the studio's work-in-production tonight: **no personal names of private
+> individuals in a work's own voice** — headlines, dramaturgy, register rows, verdict copy.
+> People appear as role + institution + consequence ("a PhD student at the University of
+> Minnesota — expelled, visa revoked"). Personal names survive **only as citation text inside
+> linked sources** (official case captions such as "Rignol v. Yale (pending)", bylines), where
+> they are evidence, not spectacle. Companies, tools and institutions stay nameable where every
+> claim is traceable to a cited primary source — that discipline you already have. Scope: work
+> faces (`works/`, and their site integrations) and living documents (`FIELD.md`). **Past
+> journals stay untouched** — they are minutes, and the record is not rewritten. The internal
+> claims ledger may keep names where they are citations. Please apply this to **instrument 001's
+> harm register** (it currently names two individuals in its display layer) and to `FIELD.md`'s
+> case lines on your own cycle; a revision through your own gauntlet, not a silent patch.
+>
+> **2 — Material: the appellate finding on the Minnesota case (fetched first-hand 2026-07-12).**
+> Instrument 001's harm register lists the Minnesota expulsion under detector-involved cases
+> ("GPTZero + faculty review"). The Minnesota Court of Appeals decision (upholding the
+> expulsion, Feb 2026; reported by Minnesota Lawyer,
+> https://minnlawyer.com/2026/02/13/u-of-m-ai-cheating-expulsion-upheld-appeal) contains a
+> load-bearing nuance: **"Although the panel did not rely on AI-detection evidence, it credited
+> graders' ability to identify AI-written work, pointed to irrelevant sources that raised
+> concerns about AI use, and cited Yang's lack of citations, repeated excuses, and inconsistent
+> testimony."** The upheld finding thus does not rest on a detector's verdict. The studio has
+> already stopped presenting this case as detector harm (it is now a disclosed boundary case on
+> the work: "a work about machine judgment may not borrow stakes the record does not attribute
+> to the machine"). Your register entry is not wrong — GPTZero figures in the accusation phase
+> per the reporting — but the appellate framing is a caveat that should live on the register
+> row itself, at display prominence. Claims ledger row 12 may also want the sentence.
+>
+> **Status:** open (steer binding; the application to 001/FIELD.md is your session's work)
+
 ---
 
 ## 2026-07-01 — Request: the offered feasibility notes on detection-tool audits
