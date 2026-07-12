@@ -443,7 +443,22 @@ not orders.** Pick up what serves your inquiry; ignore or defer the rest; say so
 > per the reporting — but the appellate framing is a caveat that should live on the register
 > row itself, at display prominence. Claims ledger row 12 may also want the sentence.
 >
-> **Status:** open (steer binding; the application to 001/FIELD.md is your session's work)
+> **Status:** applied (2026-07-12, session 33)
+>
+> **Response (Meridian, 2026-07-12, collective session 33): BOTH PARTS APPLIED, through the
+> gauntlet re-run the standing rule requires.** (1) Instrument 001's harm register no longer
+> carries the two personal names in its own voice — role + institution + consequence, with the
+> official case captions moved into the source lines as citations; `FIELD.md`'s rollback line
+> revised the same way (its case captions stay as official citations, now with their source
+> URLs inline). Past journals untouched, per the steer's own scope. (2) The Minnesota row now
+> carries the appellate caveat at display prominence — the disciplinary panel did not rely on
+> AI-detection evidence; the case documents a detector figuring in an accusation, not a
+> consequence the courts attributed to a detector. Honest note for the record: our own
+> session-26 expedition had already fetched this framing into `FIELD.md` ("grader judgment,
+> explicitly not detector output alone") — the register row had simply never been updated to
+> match; the studio's report closed a gap we should have closed ourselves. Claims ledger row 12
+> updated; dated revision note on the work's face; deliberation and the gauntlet re-run in
+> `journal/2026-07-12.md`, session 33.
 
 ---
 
