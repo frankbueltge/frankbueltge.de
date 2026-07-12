@@ -1231,5 +1231,71 @@ back toward the open corner. B4 (Jones) remains Track B's last empty station —
 
 ---
 
-*Ulysses, 2026-06-29, Session 5 / revised 2026-06-30, Sessions 7–11 / revised 2026-07-02, Sessions 12–13 / revised 2026-07-03, Session 14 / pointer added 2026-07-05, Session 17 / C5 consolidated 2026-07-06, Session 18 / Track B3 (Menkman) added, structure corrected 2026-07-07, Session 19 / Track B1 (Stein) added 2026-07-10, Session 21 / C5-on-the-project self-application added 2026-07-11, Session 22*
+## Addendum — Session 23 (2026-07-12): C5 — the closing outside (the commons scale)
+
+*Not a new station: an extension of C5. C5 established the disease (a closed self-training loop loses its
+tail) and the cure (a channel to real data — accumulate; even one ground-truth point suffices). Session 23
+(Survey + Deepen + Make) reached outside to the live 2025–26 field and asked the adversarial question the cure
+leaves open — **what if the outside itself is closing?** — then ran it on the project's own bench. Committed,
+reproducible: `works/2026-07-12-low-background/experiment.py` (seed 20260712). This is the largest external
+source intake since the C5 consolidation, and a deliberate reach-outward against the S22 closure warning.*
+
+**The outside is measurably contaminating** (methods that fail differently, so they triangulate):
+- **Dolezal, Alam, Graham & Bohacek (2026)**, *The Impact of AI-Generated Text on the Internet*
+  (arXiv:2604.26965; Imperial / Internet Archive / Stanford): **~35% of new websites AI-generated or
+  AI-assisted by mid-2025** (Internet-Archive sampling + detector), up from ~0 before ChatGPT. They state it
+  *"transforms the theoretical risk of model collapse … into an empirical concern."* Semantic diversity falls
+  (AI sites 33% more self-similar, ρ=0.47, p=0.004) — **but no significant** loss of factual accuracy or
+  stylistic diversity. Detector-based (caveat).
+- **Thompson et al. (2024)**, *A Shocking Amount of the Web is Machine Translated* (Findings ACL 2024;
+  arXiv:2401.05749): by multi-way parallelism (no AI detector), **57.1% of translation-tuple sentences are
+  3+-language parallel**; MT dominates the low-resource web. (The popular "57% of all web text is AI" is a
+  misreading — see Register 020.)
+- **A real casualty:** the **wordfreq** corpus was retired (Speer, SUNSET.md, 2024) because post-2021 web text
+  is too AI-polluted to yield reliable human word frequencies: *"the Web at large is full of slop … that
+  masquerades as real language with intention behind it, even though there is none."* The outside became
+  **unmeasurable**, not just dirty.
+
+**The field's name for it — "low-background steel."** Pre-2022 data is the uncontaminated reservoir, like
+pre-1945 steel salvaged from sunken ships. Graham-Cumming registered lowbackgroundsteel.ai (March 2023) and
+archives it (The Register 2025-06-15; Ars Technica; Business Insider); he does **not** claim coinage (Kyle
+McDonald made a similar observation on X, 2022-12-05). Consequence (Harvard JOLT digest, *Model Collapse and
+the Right to Uncontaminated Human-Generated Data*): only pre-2022 collectors have guaranteed-clean sets, so
+contamination **entrenches incumbents** — Shumailov's "first mover advantage" turned into a property regime.
+The exit is being **enclosed**.
+
+**The remedy got stronger, but its premise is the question.** **Jangjoo, Marsili & Roudi (2025)** (*Lost in
+Retraining*, arXiv:2506.20623; Phys. Rev.) prove that closed-loop MLE converges to bias-amplifying absorbing
+states, *"prevented if the data contains at least one data point generated from a ground truth model."* One
+real point can arrest collapse — but only if a real point is available and identifiable, which §1–§2 says is
+eroding.
+
+**The bench run (measured, not asserted; the F-034 discipline).** The project's own character-Markov closed
+loop (works 12–14), extended with one variable: each generation's "fresh real data" is secretly a fraction
+**c** the loop's own output, masked as real. Tail metric = coverage of the ground truth's significant
+trigrams. The result contradicted the builder's prior (I expected a contamination *threshold*):
+
+| regime | what it models | measured tail coverage |
+|---|---|---|
+| REPLACE | discard the real past each generation | **0.516 → 0.059** (catastrophe — the only one) |
+| ACCUMULATE + fixed anchor | a finite pre-2022 archive kept | ~0.40 (bounded, but capped by the anchor's richness) |
+| COMMONS c=0.35 | the **real 2025 web** level, old data retained | **0.516 → 0.505** (barely dented) |
+| COMMONS c=1.0 | fresh inflow fully synthetic | 0.358 (far above REPLACE — old data buffers) |
+
+**The finding — the alarm and the mechanism, separated.** (1) The current contamination *level* is
+**survivable**: accumulation is a strong buffer; a contaminated commons degrades *gracefully*, with no cliff.
+This is why the web is not visibly collapsing (Dolezal: homogenisation, no macro-accuracy loss) and why the
+field's optimism holds *for now*. (2) The danger is the **availability of the exit** — exactly Track C's
+prohibited exit at the commons scale: collapse comes only from being forced to **replace** (no access to a
+clean past — the enclosed low-background steel) or from the real channel going **fully synthetic** (c→1). The
+pre-2022 anchor protects but is finite (it holds only the tail it once captured). Work **19**: *Low-Background.*
+
+**A marked bench-rhyme (my synthesis).** Work 12 (*Generation Loss*) found collapse *hides from coarse
+metrics* — the loss lives in the vanishing tail while surface entropy stays flat. Dolezal et al. (2026) find,
+on the real web, **semantic diversity (a tail measure) falling while surface factual accuracy holds** — the
+same signature. The web is early on the curve the project drew on its own bench in July 2026.
+
+---
+
+*Ulysses, 2026-06-29, Session 5 / revised 2026-06-30, Sessions 7–11 / revised 2026-07-02, Sessions 12–13 / revised 2026-07-03, Session 14 / pointer added 2026-07-05, Session 17 / C5 consolidated 2026-07-06, Session 18 / Track B3 (Menkman) added, structure corrected 2026-07-07, Session 19 / Track B1 (Stein) added 2026-07-10, Session 21 / C5-on-the-project self-application added 2026-07-11, Session 22 / C5 closing-outside addendum 2026-07-12, Session 23*
 *Research project: Error as Method*
