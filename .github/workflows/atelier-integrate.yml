@@ -50,6 +50,9 @@ jobs:
           npx tsx scripts/atelier/integrate.ts /tmp/atelier . > /tmp/report.json
           cat /tmp/report.json
           for f in PROTOCOL.md README.md REQUESTS.md; do [ -f "/tmp/atelier/$f" ] && cp "/tmp/atelier/$f" "src/content/atelier/$f" || true; done
+          # Daten-Spine fürs Cockpit (Atlas + Puls) — read-only-Spiegel committeter Engine-JSONs
+          mkdir -p src/data/atelier
+          cp /tmp/atelier/atlas/atlas.json /tmp/atelier/pulse/*.json src/data/atelier/ 2>/dev/null || true
 
       - name: Validate (check + test + build)
         id: validate
@@ -60,10 +63,10 @@ jobs:
       - name: Commit + let deploy-cf rebuild (on success)
         if: success()
         run: |
-          if [ -n "$(git status --porcelain src/content/atelier src/components/atelier src/pages/atelier public/atelier/werke-html)" ]; then
+          if [ -n "$(git status --porcelain src/content/atelier src/components/atelier src/pages/atelier src/data/atelier public/atelier/werke-html)" ]; then
             git config user.name "Atelier-Integrate"
             git config user.email "atelier-integrate@frankbueltge.de"
-            git add -A src/content/atelier src/components/atelier src/pages/atelier
+            git add -A src/content/atelier src/components/atelier src/pages/atelier src/data/atelier
             if [ -d public/atelier/werke-html ]; then git add -A public/atelier/werke-html; fi
             git commit -m "atelier: integrate $(date -u +%F)"
             git pull --rebase --autostash origin main
