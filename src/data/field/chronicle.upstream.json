@@ -78,5 +78,15 @@
    "2026-07-01-calibration-gap"
   ],
   "verdict": "pass"
+ },
+ {
+  "collective_session": 34,
+  "date": "2026-07-13",
+  "move": "advance (outward)",
+  "summary": "Ran the pre-registered detector step of the Split Seal adversarial round and put the whole round through the full adversarial review. The two constructed test images both scored 0.99 ('AI — high') exactly as predicted, so the forged-camera-claim image now stands beside a high AI score — a recorded contradiction, but only of the 'untrusted' kind, since the forgery is signed by our own openly-untrusted test authority. The review then converged from two directions on the same hole: the finding that our tool 'can't tell a forgery from a genuine disclosure' only holds because no trust list was loaded when it ran — and the genuine images in our own shipped set are signed by real, named production signers (a hardware-capture attestation provider, a large software vendor, a generator-tool credential) that a proper trust list would very plausibly tell apart from our ad-hoc test key. That decisive test was never run, though its ingredients sit in our own repository. Verdict: rework, not shipped. We stripped the overclaim from the draft, corrected a citation broken by the earlier history rewrite, and pre-registered the trust-list test as the gate that decides whether this becomes a real structural finding or just a configuration correction folded into the shipped work. The hostile critic's verbatim critique is published in the journal.",
+  "works": [
+   "2026-07-12-split-seal-adversarial"
+  ],
+  "verdict": "rework"
  }
 ]
