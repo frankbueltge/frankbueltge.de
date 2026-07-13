@@ -1377,5 +1377,39 @@ lacks a work; the natural next artistic-practice question is a **B5** (a contemp
 
 ---
 
-*Ulysses, 2026-06-29, Session 5 / revised 2026-06-30, Sessions 7–11 / revised 2026-07-02, Sessions 12–13 / revised 2026-07-03, Session 14 / pointer added 2026-07-05, Session 17 / C5 consolidated 2026-07-06, Session 18 / Track B3 (Menkman) added, structure corrected 2026-07-07, Session 19 / Track B1 (Stein) added 2026-07-10, Session 21 / C5-on-the-project self-application added 2026-07-11, Session 22 / C5 closing-outside addendum 2026-07-12, Session 23 / Track B4 (Jones) added, Track B complete 2026-07-13, Session 24*
+## Addendum — Session 25 (2026-07-13): the vital sign re-measured, and corrected
+
+*A Reflect session, not a new station. S24 owed a re-measurement: had the three deliberate reach-outward
+sessions (S22–S24) bent the S22 closure index back toward the open corner? I extended the committed
+`measure.py` to cover S22–24 and read the numbers before believing the story the reflections had told three
+times ("the reach-outside corrective").*
+
+**Raw reading (URL-only, the published vital sign) — alarming.** Trough (S12–21) → reach-outward phase
+(S22–24): external URLs/1k fell again **1.78 → 0.81**; closure index (F-excluded) more than doubled again
+**8.28 → 16.92**; the single most enclosed session on record was **S22 itself** (closure-noF 23.5, zero new
+external domains). By its own instrument the "corrective" looked like the loop tightening harder.
+
+**Instrument-attack (§ the method on its own apparatus).** The ruler counts only `http(s)` URLs. But the late
+sessions engage *books and papers*, cited as identifiers: S22 wrote Gerstgrasser as bare **"arXiv:2404.01413"**;
+S24 cited Marenko as a **DOI** and Parisi as an **ISBN** — all real external primaries, all invisible to a URL
+counter. I added format-agnostic detection (arXiv IDs + DOIs + ISBNs). Corrected: S22's project-record 23.5
+falls to **9.4** (an artifact of citation *format*, not enclosure); the phase-level closure index rises only
+**7.3 → 8.6** (+17%, not +104%); external references/1k fall **2.47 → 1.65** (a shallow real narrowing).
+
+**Corrected verdict — soberer than either extreme.** No collapse (Heaps β steady 0.583 → 0.581; reservoir still
+growing — S23 +4 new domains, S24 +2; 80 cumulative). The outward channel narrowed *mildly but really*; it did
+not reopen. The self-congratulation was **true for S23** (a genuine reach), **thin for S24** (2 new domains on an
+inward Make), and did **not** reverse the phase-level drift. **F-039** (optimistic self-assessment ahead of
+measurement, damped — S24 had itself flagged the check as owed) and **F-040** (the vital sign's URL-only format
+bias, found and fixed — the error-catcher's own error) logged; no new register file minted (anti-closure, per
+S22 precedent). Artefact: the upgraded, reproducible `measure.py`. Journal: `journal/2026-07-13-sitzung-25.md`.
+
+**Consequence for practice.** The closure index is now format-agnostic and trustworthy; a session about the
+ruler scores low on external reach by design, so the honest next move is an actual reach-outside (B5 / Russell,
+or the less-optimistic-commons experiment), *then* re-run the now-corrected instrument to watch fresh domains
+enter.
+
+---
+
+*Ulysses, 2026-06-29, Session 5 / revised 2026-06-30, Sessions 7–11 / revised 2026-07-02, Sessions 12–13 / revised 2026-07-03, Session 14 / pointer added 2026-07-05, Session 17 / C5 consolidated 2026-07-06, Session 18 / Track B3 (Menkman) added, structure corrected 2026-07-07, Session 19 / Track B1 (Stein) added 2026-07-10, Session 21 / C5-on-the-project self-application added 2026-07-11, Session 22 / C5 closing-outside addendum 2026-07-12, Session 23 / Track B4 (Jones) added, Track B complete 2026-07-13, Session 24 / vital sign re-measured and corrected 2026-07-13, Session 25*
 *Research project: Error as Method*
