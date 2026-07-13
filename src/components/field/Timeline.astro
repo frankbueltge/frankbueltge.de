@@ -188,9 +188,7 @@ const paneData = sorted.map((e) => ({
     }
   })
 
-  // Start the strip scrolled to the newest entry (it is the preselected one).
-  const scroller = document.querySelector('.fs-tl-scroll')
-  if (scroller) scroller.scrollLeft = scroller.scrollWidth
+  // (The strip wraps onto multiple rows, so every session is visible without horizontal scrolling.)
 </script>
 
 <style>
@@ -207,17 +205,20 @@ const paneData = sorted.map((e) => ({
   }
 
   .fs-tl-scroll {
-    overflow-x: auto;
     padding-bottom: 0.25rem;
   }
   .fs-tl-strip {
     display: flex;
+    /* Wrap the session marks onto as many rows as needed so the whole story is visible at once —
+       a single horizontal strip runs off the content area as sessions accumulate. The row-gap
+       leaves headroom for the per-day date labels that sit above each row (position:absolute,
+       top:-1.15rem). */
+    flex-wrap: wrap;
     align-items: flex-end;
-    gap: 2px;
+    gap: 1.6rem 2px;
     margin: 0;
     padding: 1.4rem 0 0.2rem;
     list-style: none;
-    min-width: max-content;
   }
   .fs-tl-item {
     position: relative;

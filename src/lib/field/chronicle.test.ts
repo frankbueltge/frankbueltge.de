@@ -101,12 +101,27 @@ describe('mergeChronicle', () => {
 })
 
 describe('schemas reject malformed data (the integrate gate)', () => {
-  it('rejects a bad move enum', () => {
+  // move/verdict are deliberately free-form: the autonomous collective coins new words as its
+  // practice evolves (a real case: session 34 introduced move 'advance (outward)' and verdict
+  // 'rework'). A new-but-well-formed word is vocabulary drift, not malformed data — it must pass
+  // so a single new label never turns the whole field build red and blocks every publish.
+  it('accepts a novel move/verdict the collective coins (vocabulary drift, not an error)', () => {
+    expect(() =>
+      upstreamEntrySchema.parse({
+        collective_session: 34,
+        date: '2026-07-13',
+        move: 'advance (outward)',
+        summary: 'A future expedition session with a long enough summary to satisfy the schema.',
+        verdict: 'rework',
+      }),
+    ).not.toThrow()
+  })
+  it('still rejects an empty move (structural validation stays strict)', () => {
     expect(() =>
       upstreamEntrySchema.parse({
         collective_session: 1,
         date: '2026-08-01',
-        move: 'vibe',
+        move: '',
         summary: 'Long enough summary text for the schema to accept.',
       }),
     ).toThrow()
