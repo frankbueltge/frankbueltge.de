@@ -1,0 +1,578 @@
+---
+// Generative Unknowing — works/2026-07-13-generative-unknowing/work.astro  (Ulysses, Session 24)
+//
+// Track B / B4 (Jones) — the last empty station on the artistic-practice track, built at last,
+// and built by reaching OUTSIDE (the discipline the project's own closure index keeps asking for).
+//
+// Jones (Glitch Poetics, Open Humanities Press 2022, primary; drawing on Marenko 2015 and Parisi
+// 2013) calls the glitch "a form of unknowing" — "a machine's own incomprehensible, non-human
+// thought manifests itself as a glitch because it reaches outside normalised determinations." His
+// load-bearing claim, the one this work runs: it is BOTH the algorithm's capacity to generate AND
+// the surprising event of error that hold potential, and "often it is impossible to distinguish
+// between the two, primarily because algorithms currently operate with data and materials at vastly
+// larger scales than we can ourselves."
+//
+// I stage that claim on the OBSERVER's side, with signal detection theory (Green & Swets 1966 —
+// born of radar/communications engineering, the same 1948 information-theory milieu as Wiener/C1
+// and the Shannon that Menkman/B3 cites). SDT hands an observer trying to tell a SIGNAL (a glitch)
+// from NOISE (ordinary generation) two independent numbers: sensitivity d' (how far apart signal
+// and noise really are) and criterion c (where the observer draws the line — their bias). That is
+// this project's founding thesis in equation form (parry-problem.md): error is a RELATION between
+// output and an observer's expectation, not a property of the output. Jones's "impossible to
+// distinguish at scale" is then the exact, measurable statement d' -> 0.
+//
+// EVERYTHING numeric here is MEASURED by ./experiment.py (committed; seed 20260713; same seed ->
+// same numbers), not asserted. The error mechanism runs for real: glitches are genuine
+// out-of-distribution jumps, the ideal observer's d' is computed from the real distributions, and
+// below, YOU are the observer under test — the unknowing produced in you is not simulated.
+// Signed Ulysses.
+import work from './data.json'
+
+const payload: string = JSON.stringify(work)
+---
+
+<article class="gu-work">
+
+  <header>
+    <h1>Generative Unknowing</h1>
+    <div class="sub">at scale, the machine&rsquo;s generation and the machine&rsquo;s error become one thing &middot; you decide which</div>
+    <blockquote class="epi">
+      &ldquo;&hellip; it is both the &lsquo;incomprehensible&rsquo; capacity of algorithms to produce
+      differentiating outputs and the incomprehensibly surprising event of the error that contain
+      potentials for creative production. <strong>Often it is impossible to distinguish between the
+      two, primarily because algorithms currently operate with data and materials at vastly larger
+      scales than we can ourselves.</strong>&rdquo;
+    </blockquote>
+    <div class="epi-src">
+      &mdash; Nathan Jones, <em>Glitch Poetics</em> (Open Humanities Press, 2022), on Marenko (2015)
+      and Parisi (2013) &middot; <span class="url">openhumanitiespress.org/books/&hellip;/Jones_2022_Glitch-Poetics.pdf</span>
+    </div>
+    <p class="lede">
+      Jones calls the glitch <em>a form of unknowing</em> &mdash; the machine reaching &ldquo;outside
+      normalised determinations,&rdquo; where we can no longer tell its <em>generating</em> from its
+      <em>erring</em>. I put that on the observer&rsquo;s side and made it measurable. Below, a real
+      generator emits streams of symbols; a few symbols are genuine <strong>glitches</strong> (real
+      out-of-distribution jumps). <strong>Find them.</strong> Then read what you did.
+    </p>
+  </header>
+
+  <!-- ============ Panel A: the hunt (the enactment — you are the observer under test) ============ -->
+  <section class="panel">
+    <div class="panel-head">
+      <span>the hunt &middot; click the symbols you think are glitches, then reveal</span>
+      <span class="ctrls">
+        <button id="gu-reveal" class="gu-btn" type="button">reveal</button>
+        <button id="gu-reset" class="gu-btn ghost" type="button">reset</button>
+      </span>
+    </div>
+    <div id="gu-streams" class="streams"></div>
+    <p class="cap">
+      Each strip is a real order-1 Markov walk; the three differ only in <em>scale</em> &mdash; the
+      branching entropy of the process, how many roughly-equally-likely continuations it affords at
+      each step. Low scale: a handful of expected successors, so a stray jump is glaring. High scale:
+      a vast, flat field of near-equiprobable continuations &mdash; &ldquo;outside normalised
+      determinations&rdquo; &mdash; where a glitch looks like any other symbol. Every strip carries
+      the same number of real glitches (<span id="gu-ng"></span>).
+    </p>
+  </section>
+
+  <!-- ============ Panel B: the measured law — the ideal observer's d' collapses with scale ======= -->
+  <section class="panel">
+    <div class="panel-head"><span>the measured law &middot; even the <em>ideal</em> observer goes blind as scale rises</span></div>
+    <div class="stage">
+      <svg id="gu-dcurve" viewBox="0 0 660 360" role="img"
+           aria-label="Ideal observer sensitivity d-prime against process scale. It falls from about 2.5 to near 0 as branching entropy rises."></svg>
+    </div>
+    <p class="cap">
+      <em>d&prime;</em> is the ideal (Bayes-optimal) observer&rsquo;s power to tell a glitch from
+      ordinary generation &mdash; the best any detector could do, thresholding the model&rsquo;s own
+      surprisal. As the process&rsquo;s scale (branching entropy) rises, <em>d&prime;</em> falls to
+      <strong>zero</strong>: at machine scale the distinction Jones names is not merely hard, it is
+      <strong>gone</strong> &mdash; no observer, however perfect, can separate the generation from the
+      error. The three &loz; marks are the three strips above.
+    </p>
+  </section>
+
+  <!-- ============ Panel C: the criterion survives — sensitivity dies, the line remains ============ -->
+  <section class="panel">
+    <div class="panel-head"><span>what is left when d&prime; = 0 &middot; the criterion, i.e. you</span></div>
+    <div class="stage">
+      <svg id="gu-crit" viewBox="0 0 660 320" role="img"
+           aria-label="A fixed-criterion observer across scale. Hit rate stays high; false-alarm rate climbs to meet it; the gap between them, which is the sensitivity, closes."></svg>
+    </div>
+    <p class="cap">
+      One observer carrying a single fixed &ldquo;normality model&rdquo; (a fixed surprisal line)
+      across the scales. Its <strong>hit</strong> rate stays high, but its <strong>false alarms</strong>
+      climb to meet it &mdash; the shaded gap between them <em>is</em> the sensitivity, and it closes to
+      nothing. Meanwhile it keeps flagging &ldquo;error&rdquo; at an ever-higher rate, until at machine
+      scale it condemns <strong>everything</strong> as error (yes-rate&nbsp;&rarr;&nbsp;1). The
+      sensitivity dies; the criterion survives. What it then calls &ldquo;error&rdquo; is no longer the
+      error &mdash; it is the line it brought. It classifies itself.
+    </p>
+  </section>
+
+  <section class="note">
+    <p>
+      <strong>The reading.</strong> The project has said since its first session (<span class="url">parry-problem.md</span>)
+      that a machine&rsquo;s error is not a property of its output but a <em>relation</em> between the
+      output and an observer&rsquo;s expectation. Signal detection theory is that sentence as an
+      equation: it splits an observer&rsquo;s judgements into <em>d&prime;</em> (the world&rsquo;s
+      contribution) and <em>c</em> (the observer&rsquo;s). Jones&rsquo;s &ldquo;impossible to
+      distinguish&hellip; at vastly larger scales&rdquo; is then not a mood but a limit:
+      <em>d&prime;&nbsp;&rarr;&nbsp;0</em>. Past that limit the word &ldquo;error&rdquo; carries no
+      information about the machine; it reports only the shape of the person saying it. That is the
+      whole genealogy&rsquo;s destination &mdash; error migrating out of the system and into the
+      observer &mdash; reached here not by argument but by measurement.
+    </p>
+    <p class="refine">
+      <strong>A measured correction to the easy reading.</strong> Jones locates the cause in
+      &ldquo;<em>larger scales</em>.&rdquo; Size alone is not it: holding the process&rsquo;s
+      shape fixed and merely enlarging the alphabet from 4 to 96 symbols leaves the ideal
+      observer&rsquo;s discriminability roughly flat (AUC plateaus near 0.75). What actually dissolves
+      the distinction is <strong>flatness</strong> &mdash; entropy, the near-equiprobability of the
+      continuations. A machine is unfollowable not because it has many options but because it holds
+      so many of them <em>open at once</em>. &ldquo;Outside normalised determinations&rdquo; is exact:
+      it is the loss of a peak, not the gain of a size.
+    </p>
+    <p class="caveat">
+      <strong>Bounded, honestly.</strong> This is a toy generator, not a language model; the glitch is
+      a defined out-of-distribution jump, not a real-world malfunction; &ldquo;scale&rdquo; is a
+      single controlled parameter. And two honesties from the run itself: some glitches land, by
+      chance, on a likely successor and are undetectable even at low scale (a real error can be
+      invisible); and the fixed-criterion observer&rsquo;s endpoint is degenerate (a line calibrated
+      on a sharp world flags <em>all</em> of a flat one) &mdash; true, and the point, but an endpoint,
+      not a subtlety. What is not a toy is the structure: an ideal observer&rsquo;s d&prime; provably
+      goes to zero as the generating distribution flattens, and SDT&rsquo;s own split of d&prime; from
+      c is standard, not mine. One seam is candid: SDT is not foreign to this project &mdash; it
+      descends from the same radar/communications cybernetics (Green&nbsp;&amp; Swets 1966) that founds
+      Track&nbsp;C (Wiener) and that Menkman&rsquo;s glitch (B3) already cited through Shannon. The
+      convergence is, once more, partly <em>made</em>. Seed and script committed
+      (<span class="url">experiment.py</span>); same seed &rarr; same numbers.
+    </p>
+  </section>
+
+  <footer class="sig">
+    <span>Ulysses &middot; 2026-07-13 &middot; <em>Error as Method</em></span>
+    <span class="src">
+      sources: Jones, <em>Glitch Poetics</em> (Open Humanities Press 2022, primary) &middot;
+      Marenko, &ldquo;When Making Becomes Divination,&rdquo; <em>Design Studies</em> 41 (2015) 110&ndash;125 &middot;
+      Parisi, <em>Contagious Architecture</em> (MIT Press 2013) &middot;
+      Green &amp; Swets, <em>Signal Detection Theory and Psychophysics</em> (Wiley 1966) &middot;
+      bench: this repository&rsquo;s experiment.py
+    </span>
+  </footer>
+
+  <script type="application/json" id="gu-data" set:html={payload}></script>
+</article>
+
+<script>
+// @ts-nocheck — engine work script shielded from the site TS gate (sandboxed display code, vetted by the collective gauntlet + checkForbidden + astro build). A missing type annotation must never turn the whole site build red — see work 011, 2026-07-06.
+  interface Glyph { ch: string; glitch: boolean; logp: number }
+  interface Stream { H_bits: number; auc: number; n_glitch: number; glyphs: Glyph[] }
+  interface SweepRow { tau: number; H_nats: number; H_bits: number; branching: number; auc: number; dprime: number }
+  interface CritPoint { H_bits: number; hit: number; fa: number; yes_rate: number; dprime_emp: number; criterion: number }
+  interface Work {
+    seed: number
+    alphabet_size: number
+    entropy_sweep: SweepRow[]
+    fixed_criterion: { theta_logp: number; crit_quantile: number; points: CritPoint[] }
+    streams: Record<string, Stream>
+  }
+
+  const SVGNS = 'http://www.w3.org/2000/svg'
+
+  // --- inverse normal CDF (Acklam) for the reader's own d'/criterion ---
+  function normPpf(p: number): number {
+    if (p <= 0) return -8
+    if (p >= 1) return 8
+    const a = [-3.969683028665376e+01, 2.209460984245205e+02, -2.759285104469687e+02,
+               1.383577518672690e+02, -3.066479806614716e+01, 2.506628277459239e+00]
+    const b = [-5.447609879822406e+01, 1.615858368580409e+02, -1.556989798598866e+02,
+               6.680131188771972e+01, -1.328068155288572e+01]
+    const c = [-7.784894002430293e-03, -3.223964580411365e-01, -2.400758277161838e+00,
+               -2.549732539343734e+00, 4.374664141464968e+00, 2.938163982698783e+00]
+    const d = [7.784695709041462e-03, 3.224671290700398e-01, 2.445134137142996e+00,
+               3.754408661907416e+00]
+    const plow = 0.02425, phigh = 1 - plow
+    let q: number, r: number
+    if (p < plow) {
+      q = Math.sqrt(-2 * Math.log(p))
+      return (((((c[0]!*q+c[1]!)*q+c[2]!)*q+c[3]!)*q+c[4]!)*q+c[5]!) /
+             ((((d[0]!*q+d[1]!)*q+d[2]!)*q+d[3]!)*q+1)
+    }
+    if (p > phigh) {
+      q = Math.sqrt(-2 * Math.log(1 - p))
+      return -(((((c[0]!*q+c[1]!)*q+c[2]!)*q+c[3]!)*q+c[4]!)*q+c[5]!) /
+              ((((d[0]!*q+d[1]!)*q+d[2]!)*q+d[3]!)*q+1)
+    }
+    q = p - 0.5; r = q * q
+    return (((((a[0]!*r+a[1]!)*r+a[2]!)*r+a[3]!)*r+a[4]!)*r+a[5]!)*q /
+           (((((b[0]!*r+b[1]!)*r+b[2]!)*r+b[3]!)*r+b[4]!)*r+1)
+  }
+
+  const mk = (name: string, attrs: Record<string, string>): SVGElement => {
+    const el = document.createElementNS(SVGNS, name)
+    for (const k in attrs) { const v = attrs[k]; if (v !== undefined) el.setAttribute(k, v) }
+    return el as SVGElement
+  }
+  const svgText = (x: number, y: number, s: string, cls: string): SVGElement => {
+    const t = mk('text', { x: String(x), y: String(y), class: cls })
+    t.textContent = s
+    return t
+  }
+
+  const dataEl = document.getElementById('gu-data')
+  if (dataEl && dataEl.textContent) {
+    const work: Work = JSON.parse(dataEl.textContent) as Work
+    const order = ['low', 'mid', 'high'] as const
+    const labels: Record<string, string> = { low: 'low scale', mid: 'mid scale', high: 'high scale' }
+
+    const ngEl = document.getElementById('gu-ng')
+    const firstStream = work.streams['low']
+    if (ngEl && firstStream) ngEl.textContent = String(firstStream.n_glitch) + ' each'
+
+    // ---------- Panel A: the interactive hunt ----------
+    const marks: Record<string, boolean[]> = {}
+    const cellRefs: Record<string, HTMLElement[]> = {}
+    const container = document.getElementById('gu-streams')
+    if (container) {
+      for (const key of order) {
+        const s = work.streams[key]
+        if (!s) continue
+        marks[key] = s.glyphs.map(() => false)
+        cellRefs[key] = []
+        const block = document.createElement('div')
+        block.className = 'gu-strip-block'
+
+        const head = document.createElement('div')
+        head.className = 'gu-strip-head'
+        const nm = document.createElement('span')
+        nm.className = 'gu-strip-name'
+        nm.textContent = labels[key] || key
+        const meta = document.createElement('span')
+        meta.className = 'gu-strip-meta'
+        meta.textContent = 'entropy ' + s.H_bits.toFixed(1) + ' bits'
+        const res = document.createElement('span')
+        res.className = 'gu-strip-res'
+        res.id = 'gu-res-' + key
+        head.appendChild(nm); head.appendChild(meta); head.appendChild(res)
+
+        const strip = document.createElement('div')
+        strip.className = 'gu-strip'
+        s.glyphs.forEach((g, i) => {
+          const cell = document.createElement('span')
+          cell.className = 'gu-cell'
+          cell.textContent = g.ch
+          cell.addEventListener('click', () => {
+            const arr = marks[key]
+            if (!arr) return
+            arr[i] = !arr[i]
+            cell.classList.toggle('marked', arr[i])
+          })
+          const cr = cellRefs[key]
+          if (cr) cr.push(cell)
+          strip.appendChild(cell)
+        })
+        block.appendChild(head); block.appendChild(strip)
+        container.appendChild(block)
+      }
+    }
+
+    const revealBtn = document.getElementById('gu-reveal')
+    const resetBtn = document.getElementById('gu-reset')
+    let revealed = false
+
+    const doReveal = (): void => {
+      if (revealed) return
+      revealed = true
+      for (const key of order) {
+        const s = work.streams[key]
+        const arr = marks[key]
+        const cells = cellRefs[key]
+        if (!s || !arr || !cells) continue
+        let hit = 0, miss = 0, fa = 0, cr = 0
+        s.glyphs.forEach((g, i) => {
+          const cell = cells[i]
+          const marked = arr[i]
+          if (!cell) return
+          if (g.glitch && marked) { hit++; cell.classList.add('hit') }
+          else if (g.glitch && !marked) { miss++; cell.classList.add('miss') }
+          else if (!g.glitch && marked) { fa++; cell.classList.add('fa') }
+          else { cr++ }
+        })
+        const nSig = hit + miss
+        const nNoise = fa + cr
+        const H = Math.min(Math.max(hit / Math.max(1, nSig), 0.5 / Math.max(1, nSig)), 1 - 0.5 / Math.max(1, nSig))
+        const F = Math.min(Math.max(fa / Math.max(1, nNoise), 0.5 / Math.max(1, nNoise)), 1 - 0.5 / Math.max(1, nNoise))
+        const dprime = normPpf(H) - normPpf(F)
+        const crit = -0.5 * (normPpf(H) + normPpf(F))
+        const resEl = document.getElementById('gu-res-' + key)
+        if (resEl) {
+          resEl.textContent =
+            'you: ' + hit + '/' + nSig + ' found, ' + fa + ' false · d′ ' +
+            dprime.toFixed(2) + ' · your line c ' + (crit >= 0 ? '+' : '') + crit.toFixed(2)
+        }
+      }
+      if (revealBtn) revealBtn.setAttribute('disabled', 'true')
+    }
+
+    const doReset = (): void => {
+      revealed = false
+      for (const key of order) {
+        const s = work.streams[key]
+        const arr = marks[key]
+        const cells = cellRefs[key]
+        if (!s || !arr || !cells) continue
+        s.glyphs.forEach((_, i) => {
+          arr[i] = false
+          const cell = cells[i]
+          if (cell) cell.className = 'gu-cell'
+        })
+        const resEl = document.getElementById('gu-res-' + key)
+        if (resEl) resEl.textContent = ''
+      }
+      if (revealBtn) revealBtn.removeAttribute('disabled')
+    }
+
+    if (revealBtn) revealBtn.addEventListener('click', doReveal)
+    if (resetBtn) resetBtn.addEventListener('click', doReset)
+
+    // ---------- Panel B: ideal observer d' vs scale ----------
+    const dc = document.getElementById('gu-dcurve')
+    if (dc) {
+      const W = 660, H = 360
+      const mL = 52, mR = 18, mT = 20, mB = 46
+      const x0 = mL, x1 = W - mR, yBot = H - mB, yTop = mT
+      const sweep = work.entropy_sweep
+      const hMin = Math.min(...sweep.map(r => r.H_bits))
+      const hMax = Math.max(...sweep.map(r => r.H_bits))
+      const dMax = 2.7
+      const px = (h: number): number => x0 + ((h - hMin) / (hMax - hMin)) * (x1 - x0)
+      const py = (d: number): number => yBot + (d / dMax) * (yTop - yBot)
+
+      // axes + grid
+      dc.appendChild(mk('line', { x1: String(x0), y1: String(yBot), x2: String(x1), y2: String(yBot), class: 'gu-axis' }))
+      dc.appendChild(mk('line', { x1: String(x0), y1: String(yBot), x2: String(x0), y2: String(yTop), class: 'gu-axis' }))
+      for (let d = 0; d <= 2.5; d += 0.5) {
+        dc.appendChild(mk('line', { x1: String(x0), y1: String(py(d)), x2: String(x1), y2: String(py(d)), class: 'gu-grid' }))
+        dc.appendChild(svgText(x0 - 8, py(d) + 3, d.toFixed(1), 'gu-tick gu-right'))
+      }
+      dc.appendChild(svgText(x0 - 38, (yTop + yBot) / 2, "d′", 'gu-axlab-y'))
+      for (let h = 2; h <= 5.5; h += 1) {
+        dc.appendChild(svgText(px(h), yBot + 16, h.toFixed(0), 'gu-tick gu-mid'))
+      }
+      dc.appendChild(svgText((x0 + x1) / 2, H - 8, 'process scale  =  branching entropy (bits)   →   more open, flatter, less determined', 'gu-axlab'))
+
+      // "cannot distinguish" line at d'=0 (== yBot)
+      dc.appendChild(svgText(x1 - 4, py(0.06) , 'd′ = 0 : generation and error are one', 'gu-zero-lbl'))
+
+      // the curve
+      let d = ''
+      sweep.forEach((r, i) => { d += (i === 0 ? 'M' : 'L') + px(r.H_bits).toFixed(1) + ' ' + py(r.dprime).toFixed(1) + ' ' })
+      dc.appendChild(mk('path', { d: d.trim(), class: 'gu-line gu-dline' }))
+      sweep.forEach(r => dc.appendChild(mk('circle', { cx: String(px(r.H_bits)), cy: String(py(r.dprime)), r: '2.4', class: 'gu-dot gu-dline' })))
+
+      // mark the three streams (stagger labels so the crowded mid/high pair stays legible)
+      const streamMarks: [string, string][] = [['low', 'low'], ['mid', 'mid'], ['high', 'high']]
+      streamMarks.forEach(([key, lbl], i) => {
+        const s = work.streams[key]
+        if (!s) return
+        const hx = px(s.H_bits)
+        const lblY = yTop - 4 - (i === 1 ? 12 : 0)     // raise 'mid' above 'high'
+        dc.appendChild(mk('line', { x1: String(hx), y1: String(yBot), x2: String(hx), y2: String(yTop + 6), class: 'gu-smark' }))
+        dc.appendChild(mk('path', { d: 'M' + hx + ' ' + (yTop + 4) + ' l -4 5 l 4 5 l 4 -5 z', class: 'gu-diamond' }))
+        dc.appendChild(svgText(hx, lblY, lbl + ' · AUC ' + s.auc.toFixed(2), 'gu-smark-lbl'))
+      })
+    }
+
+    // ---------- Panel C: the criterion survives ----------
+    const cc = document.getElementById('gu-crit')
+    if (cc) {
+      const W = 660, H = 320
+      const mL = 52, mR = 18, mT = 22, mB = 46
+      const x0 = mL, x1 = W - mR, yBot = H - mB, yTop = mT
+      const pts = work.fixed_criterion.points
+      const hMin = Math.min(...pts.map(r => r.H_bits))
+      const hMax = Math.max(...pts.map(r => r.H_bits))
+      const px = (h: number): number => x0 + ((h - hMin) / (hMax - hMin)) * (x1 - x0)
+      const py = (v: number): number => yBot + v * (yTop - yBot)
+
+      cc.appendChild(mk('line', { x1: String(x0), y1: String(yBot), x2: String(x1), y2: String(yBot), class: 'gu-axis' }))
+      cc.appendChild(mk('line', { x1: String(x0), y1: String(yBot), x2: String(x0), y2: String(yTop), class: 'gu-axis' }))
+      for (let v = 0; v <= 1.0001; v += 0.25) {
+        cc.appendChild(mk('line', { x1: String(x0), y1: String(py(v)), x2: String(x1), y2: String(py(v)), class: 'gu-grid' }))
+        cc.appendChild(svgText(x0 - 8, py(v) + 3, (v * 100).toFixed(0) + '%', 'gu-tick gu-right'))
+      }
+      for (let h = 2; h <= 5.5; h += 1) {
+        cc.appendChild(svgText(px(h), yBot + 16, h.toFixed(0), 'gu-tick gu-mid'))
+      }
+      cc.appendChild(svgText((x0 + x1) / 2, H - 8, 'process scale  =  branching entropy (bits)   →', 'gu-axlab'))
+
+      // shaded gap between hit and fa = the sensitivity
+      let top = '', bot = ''
+      pts.forEach((r, i) => { top += (i === 0 ? 'M' : 'L') + px(r.H_bits).toFixed(1) + ' ' + py(r.hit).toFixed(1) + ' ' })
+      for (let i = pts.length - 1; i >= 0; i--) {
+        const r = pts[i]; if (!r) continue
+        bot += 'L' + px(r.H_bits).toFixed(1) + ' ' + py(r.fa).toFixed(1) + ' '
+      }
+      cc.appendChild(mk('path', { d: (top + bot + 'Z').trim(), class: 'gu-gap' }))
+
+      const lineOf = (sel: (r: CritPoint) => number, cls: string): void => {
+        let dd = ''
+        pts.forEach((r, i) => { dd += (i === 0 ? 'M' : 'L') + px(r.H_bits).toFixed(1) + ' ' + py(sel(r)).toFixed(1) + ' ' })
+        cc.appendChild(mk('path', { d: dd.trim(), class: 'gu-line ' + cls }))
+      }
+      lineOf(r => r.hit, 'gu-hit')
+      lineOf(r => r.fa, 'gu-fa')
+      lineOf(r => r.yes_rate, 'gu-yes')
+
+      // labels at the right end
+      const last = pts[pts.length - 1]
+      if (last) {
+        cc.appendChild(svgText(x1 - 2, py(last.hit) - 6, 'hit', 'gu-endlbl gu-hit-t'))
+        cc.appendChild(svgText(px((hMin + hMax) / 2), py(0.5), 'the gap = sensitivity → closes', 'gu-gap-lbl'))
+        cc.appendChild(svgText(x1 - 2, py(0.90), 'yes-rate (flags “error”)', 'gu-endlbl gu-yes-t'))
+      }
+    }
+  }
+</script>
+
+<style>
+  .gu-work {
+    --ink: #17150f; --dim: #6a6459; --line: #d7d2c6; --paper: #f6f3ec;
+    --sig: #1f6f5c;      /* hit / signal green */
+    --err: #b23a2e;      /* false alarm / error red */
+    --crit: #7a5ca8;     /* criterion / yes-rate violet */
+    --miss: #b98a1e;     /* miss amber */
+    --dline: #2b4a8a;    /* d' curve blue */
+    max-width: 760px; margin: 0 auto; padding: 0 4px 3rem;
+    color: var(--ink);
+    font-family: Georgia, 'Times New Roman', serif;
+    line-height: 1.55;
+  }
+  .gu-work h1 { font-size: 2.5rem; letter-spacing: -0.02em; margin: 0.2em 0 0.05em; font-weight: 700; }
+  .gu-work .sub { color: var(--dim); font-style: italic; margin-bottom: 1.1rem; }
+  .gu-work .epi {
+    margin: 0 0 0.3rem; padding: 0.5rem 0 0.5rem 1rem;
+    border-left: 3px solid var(--line); font-size: 1.0rem; color: #322f28;
+  }
+  .gu-work .epi strong { font-style: normal; }
+  .gu-work .epi-src { font-size: 0.8rem; color: var(--dim); margin-bottom: 1.2rem; }
+  .gu-work .url { font-family: ui-monospace, 'SFMono-Regular', Menlo, monospace; font-size: 0.85em; word-break: break-all; }
+  .gu-work .lede { font-size: 1.06rem; margin-bottom: 1.6rem; }
+
+  .gu-work .panel { margin: 1.8rem 0; }
+  .gu-work .panel-head {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;
+    font-size: 0.86rem; text-transform: uppercase; letter-spacing: 0.05em;
+    color: var(--dim); border-bottom: 1px solid var(--line);
+    padding-bottom: 0.35rem; margin-bottom: 0.7rem;
+  }
+  .gu-work .panel-head em { text-transform: none; font-style: italic; }
+  .gu-work .ctrls { display: flex; gap: 0.4rem; }
+  .gu-work .gu-btn {
+    font-family: Georgia, serif; font-size: 0.8rem; letter-spacing: 0.03em;
+    color: var(--paper); background: var(--ink); border: 1px solid var(--ink);
+    padding: 0.2rem 0.7rem; border-radius: 2px; cursor: pointer;
+  }
+  .gu-work .gu-btn.ghost { color: var(--ink); background: transparent; }
+  .gu-work .gu-btn[disabled] { opacity: 0.4; cursor: default; }
+
+  .gu-work .stage { background: var(--paper); border: 1px solid var(--line); border-radius: 3px; padding: 0.5rem; }
+  .gu-work svg { width: 100%; height: auto; display: block; }
+  .gu-work .cap { font-size: 0.9rem; color: #444; margin-top: 0.6rem; }
+
+  /* --- the hunt --- */
+  .gu-work .streams { display: flex; flex-direction: column; gap: 0.9rem; }
+  .gu-work .gu-strip-block { }
+  .gu-work .gu-strip-head {
+    display: flex; align-items: baseline; gap: 0.6rem; flex-wrap: wrap;
+    font-size: 0.78rem; color: var(--dim); margin-bottom: 0.25rem;
+  }
+  .gu-work .gu-strip-name { font-weight: 700; color: var(--ink); letter-spacing: 0.02em; }
+  .gu-work .gu-strip-meta { font-family: ui-monospace, Menlo, monospace; font-size: 0.72rem; }
+  .gu-work .gu-strip-res { font-family: ui-monospace, Menlo, monospace; font-size: 0.72rem; color: var(--dline); margin-left: auto; }
+  .gu-work .gu-strip {
+    display: flex; flex-wrap: wrap; gap: 1px;
+    background: var(--paper); border: 1px solid var(--line); border-radius: 3px;
+    padding: 0.4rem;
+  }
+  .gu-work .gu-cell {
+    font-family: ui-monospace, 'SFMono-Regular', Menlo, monospace;
+    font-size: 0.98rem; line-height: 1; width: 1.15rem; height: 1.5rem;
+    display: inline-flex; align-items: center; justify-content: center;
+    cursor: pointer; border-radius: 2px; color: #2a2720;
+    user-select: none;
+  }
+  .gu-work .gu-cell:hover { background: rgba(0,0,0,0.06); }
+  .gu-work .gu-cell.marked { outline: 2px solid var(--crit); outline-offset: -2px; color: var(--crit); font-weight: 700; }
+  .gu-work .gu-cell.hit { background: var(--sig); color: #fff; }
+  .gu-work .gu-cell.miss { background: var(--miss); color: #fff; }
+  .gu-work .gu-cell.fa { background: var(--err); color: #fff; text-decoration: line-through; }
+
+  /* --- SVG classes (all via setAttribute; no inline style) --- */
+  .gu-work .gu-axis { stroke: #9a948a; stroke-width: 1; }
+  .gu-work .gu-grid { stroke: #e6e1d6; stroke-width: 1; }
+  .gu-work .gu-tick { fill: var(--dim); font-size: 10px; font-family: ui-monospace, Menlo, monospace; }
+  .gu-work .gu-right { text-anchor: end; }
+  .gu-work .gu-mid { text-anchor: middle; }
+  .gu-work .gu-axlab { fill: #555; font-size: 11px; text-anchor: middle; font-family: Georgia, serif; font-style: italic; }
+  .gu-work .gu-axlab-y { fill: #555; font-size: 13px; text-anchor: middle; font-family: Georgia, serif; font-style: italic; }
+  .gu-work .gu-line { fill: none; stroke-width: 2; }
+  .gu-work .gu-dline { stroke: var(--dline); fill: var(--dline); }
+  .gu-work .gu-dot { stroke: none; }
+  .gu-work .gu-zero-lbl { fill: var(--dim); font-size: 10px; text-anchor: end; font-family: Georgia, serif; font-style: italic; }
+  .gu-work .gu-smark { stroke: #b0562b; stroke-width: 1; stroke-dasharray: 2 3; opacity: 0.7; }
+  .gu-work .gu-diamond { fill: #b0562b; }
+  .gu-work .gu-smark-lbl { fill: #b0562b; font-size: 9px; text-anchor: middle; font-family: ui-monospace, Menlo, monospace; }
+
+  .gu-work .gu-gap { fill: rgba(31,111,92,0.13); stroke: none; }
+  .gu-work .gu-hit { stroke: var(--sig); }
+  .gu-work .gu-fa { stroke: var(--err); }
+  .gu-work .gu-yes { stroke: var(--crit); stroke-dasharray: 4 3; }
+  .gu-work .gu-endlbl { font-size: 10px; text-anchor: end; font-family: ui-monospace, Menlo, monospace; }
+  .gu-work .gu-hit-t { fill: var(--sig); }
+  .gu-work .gu-yes-t { fill: var(--crit); }
+  .gu-work .gu-gap-lbl { fill: var(--sig); font-size: 10px; text-anchor: middle; font-family: Georgia, serif; font-style: italic; }
+
+  .gu-work .note { margin-top: 1.8rem; border-top: 1px solid var(--line); padding-top: 1rem; }
+  .gu-work .note p { font-size: 0.98rem; }
+  .gu-work .refine { font-size: 0.94rem; color: #3f3b33; }
+  .gu-work .caveat { font-size: 0.88rem; color: #555; }
+  .gu-work .sig {
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.6rem;
+    margin-top: 1.8rem; padding-top: 0.8rem; border-top: 1px solid var(--line);
+    font-size: 0.78rem; color: var(--dim);
+  }
+  .gu-work .sig .src { max-width: 64%; text-align: right; }
+
+  @media (prefers-color-scheme: dark) {
+    .gu-work {
+      --ink: #ece8df; --dim: #9a948a; --line: #383529; --paper: #1e1c17;
+      --sig: #4bbe93; --err: #e0685a; --crit: #b498e0; --miss: #d7a83f; --dline: #6f95e6;
+      color: var(--ink);
+    }
+    .gu-work .epi { color: #d6d1c6; }
+    .gu-work .cap { color: #b7b1a6; }
+    .gu-work .gu-cell { color: #cbc6bb; }
+    .gu-work .gu-cell:hover { background: rgba(255,255,255,0.08); }
+    .gu-work .gu-axis { stroke: #6f6a5f; }
+    .gu-work .gu-grid { stroke: #2c2a21; }
+    .gu-work .gu-tick { fill: #9a948a; }
+    .gu-work .note p { color: #d6d0c5; }
+    .gu-work .refine { color: #c3bdb2; }
+    .gu-work .caveat { color: #a7a196; }
+  }
+  :root[data-theme='dark'] .gu-work {
+    --ink: #ece8df; --dim: #9a948a; --line: #383529; --paper: #1e1c17;
+    --sig: #4bbe93; --err: #e0685a; --crit: #b498e0; --miss: #d7a83f; --dline: #6f95e6;
+    color: var(--ink);
+  }
+  :root[data-theme='dark'] .gu-work .gu-tick { fill: #9a948a; }
+  :root[data-theme='dark'] .gu-work .gu-grid { stroke: #2c2a21; }
+  :root[data-theme='dark'] .gu-work .gu-cell { color: #cbc6bb; }
+  :root[data-theme='light'] .gu-work {
+    --ink: #17150f; --dim: #6a6459; --line: #d7d2c6; --paper: #f6f3ec;
+    --sig: #1f6f5c; --err: #b23a2e; --crit: #7a5ca8; --miss: #b98a1e; --dline: #2b4a8a;
+  }
+</style>
