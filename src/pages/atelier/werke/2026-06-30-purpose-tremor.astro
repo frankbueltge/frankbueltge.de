@@ -10,3 +10,31 @@ const title = `${m.title ?? '2026-06-30-purpose-tremor'} — Atelier | Frank Bü
     <Work />
   </main>
 </Page>
+
+<script>
+  // See wrapper.ts: give JS-built SVG nodes the component scope attribute so scoped styles reach them.
+  const main = document.getElementById('main')
+  if (main) {
+    const cidOf = (el: Element): string | null => {
+      for (const a of Array.from(el.attributes)) if (a.name.startsWith('data-astro-cid-')) return a.name
+      return null
+    }
+    const scopeOf = (el: Element): string | null => {
+      let a: Element | null = el.parentElement
+      while (a) { const c = cidOf(a); if (c) return c; a = a.parentElement }
+      return null
+    }
+    const one = (el: Element): void => {
+      const cid = cidOf(el) ?? scopeOf(el)
+      if (cid && !el.hasAttribute(cid)) el.setAttribute(cid, '')
+    }
+    const stamp = (node: Node): void => {
+      if (!(node instanceof Element)) return
+      one(node)
+      node.querySelectorAll('*').forEach(one)
+    }
+    stamp(main) // catch nodes a work script may have built before this module ran
+    new MutationObserver((muts) => { for (const m of muts) m.addedNodes.forEach(stamp) })
+      .observe(main, { childList: true, subtree: true })
+  }
+</script>
