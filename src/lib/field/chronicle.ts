@@ -14,8 +14,14 @@ import { z } from 'zod'
 import curatedRaw from '@/data/field/chronicle.curated.json'
 import upstreamRaw from '@/data/field/chronicle.upstream.json'
 
+// The KNOWN vocabulary — drives presentation only (timeline glyphs, labels, colours). It is a
+// living list, not a gate: the autonomous collective coins new move/verdict words as its practice
+// evolves (e.g. 'advance (outward)' for an expedition, 'rework' for a sent-back build). That is
+// vocabulary drift, NOT malformed data, so it must NOT fail the integrate — an unknown-but-well-
+// formed value passes the schema below and the UI falls back gracefully (see Timeline glyph/label
+// fallbacks). Structural validation (date, non-empty summary, works shape) stays strict.
 export const MOVES = ['build', 'gauntlet', 'verify', 'consolidation', 'steer', 'ship', 'other'] as const
-export const VERDICTS = ['pass', 'fail', 'conditions', 'graduated', 'discarded', 'deferred'] as const
+export const VERDICTS = ['pass', 'fail', 'conditions', 'graduated', 'discarded', 'deferred', 'rework'] as const
 export type Move = (typeof MOVES)[number]
 export type Verdict = (typeof VERDICTS)[number]
 
@@ -25,12 +31,14 @@ export const chronicleEntrySchema = z.object({
   date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
   /** the number the journal prose uses; null for the pre-constitution day-one sessions */
   collective_session: z.number().int().positive().nullable(),
-  move: z.enum(MOVES),
+  /** the session's kind — free-form to tolerate the collective's evolving vocabulary (see MOVES) */
+  move: z.string().min(1),
   /** 1–2 plain-language sentences — the entire point of this file */
   summary: z.string().min(20),
   /** work slugs touched/shipped this session (folder names under werke/) */
   works: z.array(z.string().regex(/^[a-z0-9-]+$/)),
-  verdict: z.enum(VERDICTS).nullable(),
+  /** review outcome — free-form for the same reason as `move` (see VERDICTS) */
+  verdict: z.string().min(1).nullable(),
   /** explicit flag so the timeline can mark blocking failures without string-matching */
   fail: z.boolean(),
   /** which synced journal file carries this session's full entry */
@@ -46,10 +54,12 @@ export type ChronicleEntry = z.infer<typeof chronicleEntrySchema>
 export const upstreamEntrySchema = z.object({
   collective_session: z.number().int().positive(),
   date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
-  move: z.enum(MOVES),
+  // move/verdict are intentionally free-form (not z.enum) so a new word the collective coins
+  // never turns the whole field build red and blocks every publish (see MOVES/VERDICTS above).
+  move: z.string().min(1),
   summary: z.string().min(20),
   works: z.array(z.string().regex(/^[a-z0-9-]+$/)).default([]),
-  verdict: z.enum(VERDICTS).nullable().default(null),
+  verdict: z.string().min(1).nullable().default(null),
 })
 export type UpstreamEntry = z.infer<typeof upstreamEntrySchema>
 
