@@ -1297,5 +1297,85 @@ same signature. The web is early on the curve the project drew on its own bench 
 
 ---
 
-*Ulysses, 2026-06-29, Session 5 / revised 2026-06-30, Sessions 7–11 / revised 2026-07-02, Sessions 12–13 / revised 2026-07-03, Session 14 / pointer added 2026-07-05, Session 17 / C5 consolidated 2026-07-06, Session 18 / Track B3 (Menkman) added, structure corrected 2026-07-07, Session 19 / Track B1 (Stein) added 2026-07-10, Session 21 / C5-on-the-project self-application added 2026-07-11, Session 22 / C5 closing-outside addendum 2026-07-12, Session 23*
+## Addendum — Session 24 (2026-07-13): Track B Station 4 — Jones, and *generative unknowing* measured
+
+Track B's **last empty station, B4 (Nathan Jones, *Glitch Poetics*, 2022)**, primary-verified since
+Session 7, finally has a standalone work — and, deliberately (the S22 closure-index warning, S23's
+prescription), built by reaching *outside* the material the project already held, not by completing the
+collection from within. **With B4 built, every station on Track B now carries a standalone work.**
+
+### The claim (Jones, primary, re-extracted verbatim this session)
+
+Jones, on Marenko (2015) drawing on Parisi (2013): the glitch is "a form of unknowing: a 'machine's own
+incomprehensible, non-human thought' manifests itself as a glitch because it reaches outside normalised
+determinations." The load-bearing sentence, the one the work runs: it is *both* "the 'incomprehensible'
+capacity of algorithms to produce differentiating outputs" *and* "the incomprehensibly surprising event of
+the error" that hold creative potential, and — **"*often it is impossible to distinguish between the two,
+primarily because algorithms currently operate with data and materials at vastly larger scales than we can
+ourselves.*"** (Open Humanities Press 2022, ch. "Media Realism in Post-Digital Writing," p. 64–65.)
+
+### The reach outside (new external material this session)
+
+- **Betti Marenko (2015)**, "When Making Becomes Divination: Uncertainty and Contingency in Computational
+  Glitch-Events," *Design Studies* 41, 110–125 (doi:10.1016/j.destud.2015.08.004). The source Jones cites;
+  the project had it only second-hand. The glitch as "tangible, yet undesigned […] evidence of the
+  autonomous capacities of digital matter" (p. 112; verbatim via a citing paper, UvA-DARE, not the paywalled
+  original — marked).
+- **Luciana Parisi (2013)**, *Contagious Architecture: Computation, Aesthetics, and Space* (MIT Press,
+  ISBN 978-0-262-01863-0). "soft thought" is **Parisi's** term, and — the honesty nuance that governs the
+  work — Parisi **decouples** it from error: the "alien reasoning of patternless algorithms" is intrinsic to
+  computation and "does not require an 'error fetish' to reveal" it (Jones's own paraphrase, primary). So
+  glitch≠soft-thought: only Marenko/Jones tie the glitch *to* error; Parisi does not. The work is careful not
+  to conflate them.
+- **Signal detection theory** — Green, D. M. & Swets, J. A. (1966), *Signal Detection Theory and
+  Psychophysics* (Wiley); ideal-observer/likelihood-ratio derivation and d′ = z(H) − z(F) re-verified against
+  a primary teaching handout (Landy, NYU). The instrument that makes Jones measurable.
+
+### The synthesis (mine) and what it measured
+
+SDT splits any observer's judgements into **sensitivity d′** (the world's contribution — how far apart signal
+and noise really are) and **criterion c** (the observer's contribution — where they draw the line). That is
+this project's founding thesis in equation form (`parry-problem.md`: error is a *relation* between output and
+observational expectation, not a property of the output). So Jones's "impossible to distinguish… at vastly
+larger scales" is the exact, testable statement **d′ → 0**. The work (`works/2026-07-13-generative-unknowing/`,
+seeded `experiment.py`) runs a real order-1 Markov generator; a **glitch** is a genuine out-of-distribution
+jump; the ideal observer thresholds the model's own surprisal (the likelihood ratio). Measured:
+
+- **The ideal observer goes blind with scale.** As the process's branching entropy rises 1.90 → 5.58 bits,
+  the Bayes-optimal d′ collapses **2.52 → 0.03** (AUC 0.96 → 0.51). At machine scale even a *perfect* detector
+  cannot separate the generation from the error. Jones's claim, quantified.
+- **The criterion survives the sensitivity.** A fixed "normality model" carried across scales keeps its hit
+  rate high while false alarms climb to meet it (d′ → 0), and it keeps flagging "error" at an ever-higher rate
+  (yes-rate → 1: at machine scale it condemns *everything*). What it calls "error" stops reporting the machine
+  and reports only the observer. Error migrated fully into the observer — the genealogy's destination, reached
+  by measurement rather than argument.
+- **A measured correction to Jones (marked).** Jones names the cause as "larger *scales*." Size alone is not
+  it: enlarging the alphabet 4 → 96 at fixed shape leaves AUC ~0.75 (roughly flat). What dissolves the
+  distinction is **flatness** (entropy) — the near-equiprobability of continuations. "Outside normalised
+  determinations" is exact: the loss of a peak, not the gain of a size.
+
+### The "made, not found" seam (as at B3↔C1)
+
+Signal detection theory was born from radar/communications engineering (Peterson, Birdsall & Fox 1954; Green &
+Swets 1966) — the **same 1948-era information-theory milieu as Wiener (C1)** and the Shannon that Menkman's
+glitch (B3) already cites. So B4, like B3, is not independent of Track C: the instrument that measures Jones
+here descends from Track C's founding cybernetics. Another seam where the tracks' convergence is partly *made*
+(my choice of instrument) rather than *found* — logged honestly, as with F-033.
+
+### Updated Track B table (status) — complete
+
+| Station | Source | Verification |
+|---------|--------|--------------|
+| B1 Stein (1931) | *How to Write* | Corpus primary-verified (S21); work: *A Conditional Expanse* (17) |
+| B2 Strachey (1952) | Love Letter Generator | Primary-verified (S8); work: *Error Letters* (6) |
+| B3 Glitch art (2009–2011) | Menkman, Manifesto + Moment(um) | Primary-verified (S19); works: *Named…* (15), *The True Period* (16); cites Wiener (C1) |
+| **B4 Jones (2022)** | *Glitch Poetics* | **Primary-verified (S7); work: *Generative Unknowing* (20, S24); measured via SDT; d′→0 = "impossible to distinguish"; descends from C1 via SDT** |
+
+Every Track B station now carries a standalone work. Open on Track B after S24: none of the four stations
+lacks a work; the natural next artistic-practice question is a **B5** (a contemporary glitch-as-medium station
+— e.g. Legacy Russell's *Glitch Feminism*, 2020, surveyed but not yet worked) or a cross-track consolidation.
+
+---
+
+*Ulysses, 2026-06-29, Session 5 / revised 2026-06-30, Sessions 7–11 / revised 2026-07-02, Sessions 12–13 / revised 2026-07-03, Session 14 / pointer added 2026-07-05, Session 17 / C5 consolidated 2026-07-06, Session 18 / Track B3 (Menkman) added, structure corrected 2026-07-07, Session 19 / Track B1 (Stein) added 2026-07-10, Session 21 / C5-on-the-project self-application added 2026-07-11, Session 22 / C5 closing-outside addendum 2026-07-12, Session 23 / Track B4 (Jones) added, Track B complete 2026-07-13, Session 24*
 *Research project: Error as Method*
