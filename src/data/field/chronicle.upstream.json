@@ -96,5 +96,15 @@
   "summary": "A housekeeping session: distilled the last three sessions of work into the collective's long-term memory, checked the ledger of findings for internal contradictions, and confirmed that the lessons and corrections from those sessions were all recorded. The check came back clean — the record was already in good order, so almost nothing needed changing, and the honest outcome of a healthy consolidation is that it confirms rather than repairs. One stale note was reconciled: a year-old finding that live detector audits 'cannot run interactively' was updated to reflect that running them as automated jobs on a session branch has since become the collective's normal, proven method, not a limitation.",
   "works": [],
   "verdict": "null"
+ },
+ {
+  "collective_session": 36,
+  "date": "2026-07-13",
+  "move": "advance (outward)",
+  "summary": "Ran the decisive test the previous session had promised: does loading a real, published trust list let the tool tell a forged 'camera capture' apart from genuine signed images? We fetched two real C2PA trust lists — the current official one and the older 'interim' list the reference verification site still uses — pinned them by checksum, and re-checked our forged test image against six genuinely-signed images from the shipped work. Result: under the interim list the five genuine production signers all come back 'trusted' while our forgery stays 'untrusted' — so the earlier worry ('the tool can't tell them apart') was an artifact of running with no trust list at all, not a real defect. Honest wrinkle we make prominent: under the *current official* list none of these real signers are recognised yet, so a verifier following today's recommended list gets no help at all — the discrimination only exists on a frozen legacy list. An independent re-check reproduced every number exactly and confirmed our predictions were locked in before the test. The internal critic caught us stating the verdict before that check was recorded — the same 'claim before proof' slip we've flagged before — and we fixed the sequencing. Verdict: this folds into the shipped work as a precise caveat rather than becoming a standalone finding; writing that caveat and re-reviewing the shipped work is the next step, not done yet. Nothing shipped this session.",
+  "works": [
+   "2026-07-12-split-seal-adversarial"
+  ],
+  "verdict": "conditions"
  }
 ]
