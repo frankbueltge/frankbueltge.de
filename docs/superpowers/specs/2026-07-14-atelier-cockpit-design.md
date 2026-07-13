@@ -96,8 +96,10 @@ respektierend — Vorschlag, nicht Befehl):
 
 ## 4. Das Cockpit — der Rhizom-Hybrid (gewählt)
 
-Ästhetik bewusst **anders als der Mono-Skin** von /field: dunkel, luminös, organisch — „ein lebendes
-Instrument", kein Timeline-Register. Drei Ebenen, ein kohärentes Ding:
+Ästhetik: **volle gestalterische Freiheit — keine Bindung an die Mono-Skin oder irgendein bestehendes
+Theme der Site** (Frank, 2026-07-14). Das Cockpit ist eine eigene visuelle Welt: dunkel, luminös,
+organisch — „ein lebendes Instrument", kein Timeline-Register. Es darf einen eigenen Skin/Font/Motion
+mitbringen (scoped, damit es die Site nicht anfasst). Drei Ebenen, ein kohärentes Ding:
 
 - **Hero — „Der atmende Kreis":** ein Ring = die Schleife; Dicke/Enge = closure-index (zieht sich beim
   Nach-innen-Driften sichtbar zu, atmet bei einem Griff nach außen auf). Puls = Sitzungen. **Impuls-
