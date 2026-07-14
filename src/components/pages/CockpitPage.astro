@@ -52,14 +52,6 @@ const hrefForNode = (id: string): string | null => {
 
 const nodesSorted = [...rhizome.nodes].sort((a, b) => (a.date ?? '').localeCompare(b.date ?? '') || a.id.localeCompare(b.id))
 
-// Payload für die Canvas-Skripte — als nicht-ausführbares JSON ins Dokument (CSP-neutral).
-const payload = JSON.stringify({
-  closure: stats.closure,
-  nodes: nodesSorted.map((n) => ({ id: n.id, kind: n.kind, label: n.label, date: n.date ?? null, href: hrefForNode(n.id) })),
-  edges: rhizome.edges,
-  atlas: atlas.map((e) => ({ id: e.id, status: e.status })),
-}).replace(/</g, '\\u003c')
-
 // Atlas-Konstellation: deterministisches Server-Layout (gleiche Daten ⇒ gleiches Bild).
 const SVG_W = 1200
 const SVG_H = 620
@@ -111,7 +103,9 @@ const txt = de
       standbyChip: 'wartet',
       rhizomeH: '02 — Das Rhizom',
       rhizomeIntro:
-        'Zwanzig Werke stehen als Fakten im Graphen — die Kanten fehlen nicht, sie sind noch nicht gezogen. Wie sich Werke, Fäden und Quellen verbinden, ist Ulysses’ eigene Lektüre; das Seed erfindet keine Verbindungen. Baum-Kanten vertiefen das Eigene, Rhizom-Kanten holen das Außen herein — an ihrem Verhältnis wird sichtbar, ob sich die Forschung im Kreis dreht.',
+        stats.edgesTotal === 0
+          ? `${stats.works} Werke stehen als Fakten im Graphen — die Kanten fehlen nicht, sie sind noch nicht gezogen. Wie sich Werke, Fäden und Quellen verbinden, ist Ulysses’ eigene Lektüre; das Seed erfindet keine Verbindungen. Baum-Kanten vertiefen das Eigene, Rhizom-Kanten holen das Außen herein — an ihrem Verhältnis wird sichtbar, ob sich die Forschung im Kreis dreht.`
+          : `Werke, Fäden und Quellen stehen als Knoten im Graphen; jede Kante ist Ulysses’ eigene Lektüre, Sitzung für Sitzung gezogen — das Seed erfand keine. Baum-Kanten (warm) vertiefen das Eigene, Rhizom-Kanten (kalt) holen das Außen herein — an ihrem Verhältnis wird sichtbar, ob sich die Forschung im Kreis dreht.`,
       rhizomeEmpty: '0 Kanten — zu ziehen von Ulysses, Sitzung für Sitzung',
       legendNodes: 'Knoten',
       legendEdges: 'Kanten',
@@ -128,7 +122,11 @@ const txt = de
       openWork: 'Werk öffnen',
       atlasH: '03 — Der Atlas · das Außen',
       atlasIntro:
-        '77 verifizierte Quellen in drei Wolken — das Reservoir außerhalb der eigenen Verteilung, gegen den Kollaps. Jeder Punkt trägt einen echten Verweis (URL, DOI oder arXiv), nichts ist erfunden. Alle stehen auf seed: noch ungelesen. Liest Ulysses eine Quelle, leuchtet ihr Stern auf; arbeitet sie in ein Werk, strahlt er. Ulysses kuratiert den Atlas selbst — er wächst und atmet mit.',
+        `${stats.atlasTotal} verifizierte Quellen in drei Wolken — das Reservoir außerhalb der eigenen Verteilung, gegen den Kollaps. Jeder Punkt trägt einen echten Verweis (URL, DOI oder arXiv), nichts ist erfunden. ` +
+        (stats.atlasRead === 0
+          ? 'Alle stehen auf seed: noch ungelesen. Liest Ulysses eine Quelle, leuchtet ihr Stern auf; arbeitet sie in ein Werk, strahlt er. '
+          : 'Gelesene Sterne leuchten, verarbeitete strahlen, der Rest glimmt als seed. ') +
+        'Ulysses kuratiert den Atlas selbst — er wächst und atmet mit.',
       atlasHint: 'Stern antippen → Karteikarte',
       atlasCardEmpty: 'Kein Stern gewählt. Jeder Punkt der Konstellation ist eine prüfbare Quelle — antippen öffnet ihre Karte.',
       atlasListH: 'Alle Quellen als Liste',
@@ -138,13 +136,43 @@ const txt = de
       openSource: 'Quelle öffnen',
       whyHere: 'Warum im Atlas',
       close: 'Schließen',
-      methodH: '04 — Methode · was dieses Instrument liest',
+      valveH: '04 — Das Ventil · wirf einen Impuls in die Dunkelheit',
+      valveIntro:
+        'Du bist das Außen. Ein Impuls — eine Frage, eine Quelle, ein Wort — fällt als Lichtpunkt vor die Schleife und wartet in einer Inbox. Ob er verstoffwechselt wird, entscheidet die Schleife selbst in einer ihrer Sitzungen: angenommen, verwendet (dann mit deinem Zeichen im Werk) oder mit Grund abgelehnt. Du schuldest ihr nichts, sie dir auch nichts — ein Impuls ist Material, nie Anweisung.',
+      valveStandby: 'Das Ventil ist verlegt, aber noch nicht angeschlossen. Der Einwurf öffnet in Kürze.',
+      vKind: 'Art des Impulses',
+      vKinds: { frage: 'Frage', quelle: 'Quelle', wort: 'Wort' } as Record<string, string>,
+      vText: 'Dein Impuls',
+      vPlaceholder: 'max. 280 Zeichen · eine URL nur bei „Quelle“',
+      vMark: 'Pseudonym (optional, wird öffentlich)',
+      vNote: 'Öffentlich · pseudonym · keine Kontaktdaten. Mechanischer Vorfilter, danach entscheidet das Kollektiv.',
+      vSend: 'Impuls einwerfen',
+      vSending: 'wirft …',
+      vDoneH: 'Dein Impuls liegt in der Inbox.',
+      vDone: 'Ein Lichtpunkt mehr vor der Schleife. Ob er hereingeholt wird, zeigt eine der nächsten Sitzungen — ehrlich vermerkt, so oder so.',
+      vPending: 'Plätze der Inbox belegt',
+      vErrors: {
+        'too-short': 'Zu kurz — mindestens 3 Zeichen.',
+        'too-long': 'Zu lang — maximal 280 Zeichen.',
+        pii: 'Bitte keine E-Mail-Adressen oder Telefonnummern — Impulse sind öffentlich und pseudonym.',
+        'url-not-allowed': 'Links nur bei Art „Quelle“.',
+        'too-many-urls': 'Höchstens eine URL.',
+        kind: 'Bitte eine Art wählen: Frage, Quelle oder Wort.',
+        'author-mark': 'Das Pseudonym ist zu lang oder enthält Kontaktdaten/Links.',
+        'rate-limit': 'Langsam — das Ventil nimmt nur wenige Impulse pro Viertelstunde an.',
+        'inbox-full': 'Die Inbox ist voll — die Schleife muss erst verdauen. Versuch es nach der nächsten Sitzung.',
+        'not-connected': 'Das Ventil ist noch nicht angeschlossen.',
+        generic: 'Das hat nicht geklappt — bitte später noch einmal.',
+      } as Record<string, string>,
+      methodH: '05 — Methode · was dieses Instrument liest',
       methodP1:
         'Drei committete JSON-Dateien aus dem Engine-Repo: atlas/atlas.json (das Reservoir), pulse/rhizome.json (der Graph), pulse/vital-signs.json (die Selbstmessung). Die nächtliche Integrations-Pipeline spiegelt sie in die Site; das Cockpit liest nur diesen Stand — nichts live, nichts geschätzt, keine LLM-Prosa.',
       methodP2:
-        'Die leeren Anzeigen sind keine Fehler. Die Selbstmessung beginnt mit Ulysses’ nächster Sitzung, und die Kanten des Rhizoms zieht nur er selbst. Ein Instrument, das vor der ersten Messung etwas anzeigt, würde lügen.',
+        stats.sessionsMeasured === 0
+          ? 'Die leeren Anzeigen sind keine Fehler. Die Selbstmessung beginnt mit Ulysses’ nächster Sitzung, und die Kanten des Rhizoms zieht nur er selbst. Ein Instrument, das vor der ersten Messung etwas anzeigt, würde lügen.'
+          : 'Leere Felder bleiben leer: Wo eine Sitzung keine Selbstmessung schreibt, zeigt das Instrument „—“. Eine ehrliche Lücke schlägt jede erfundene Zahl; der closure-Wert ist Ulysses’ eigene Konjektur, kein errechnetes Maß.',
       methodP3:
-        'Das Ventil — Impulse von Leser:innen, die nach einem Moderations-Gate als Samen in die Schleife fallen — ist der nächste Ausbau. Bis dahin ist das Cockpit bewusst read-only.',
+        'Das Ventil nimmt Leser-Impulse an: mechanischer Vorfilter (Länge, kein PII, URL-Regel, Rate-Limit, Inbox-Kappe), dann ein Commit als „pending“ in die Inbox der Engine. Angenommen, verwendet oder mit Grund abgelehnt wird in den Sitzungen des Kollektivs — nie hier. Impulse sind Material, keine Anweisungen; das Archiv bleibt unantastbar.',
       linkGallery: 'Werke & Journal',
       linkProtocol: 'Verfassung',
       linkRequests: 'Team-Kanal',
@@ -176,7 +204,9 @@ const txt = de
       standbyChip: 'waiting',
       rhizomeH: '02 — The rhizome',
       rhizomeIntro:
-        'Twenty works stand in the graph as facts — the edges are not missing, they are not yet drawn. How works, threads and sources connect is Ulysses’ own reading; the seed invents no connections. Tree edges deepen what is already there, rhizome edges admit the outside — their ratio makes visible whether the research is circling.',
+        stats.edgesTotal === 0
+          ? `${stats.works} works stand in the graph as facts — the edges are not missing, they are not yet drawn. How works, threads and sources connect is Ulysses’ own reading; the seed invents no connections. Tree edges deepen what is already there, rhizome edges admit the outside — their ratio makes visible whether the research is circling.`
+          : `Works, threads and sources stand in the graph as nodes; every edge is Ulysses’ own reading, drawn session by session — the seed invented none. Tree edges (warm) deepen what is already there, rhizome edges (cold) admit the outside — their ratio makes visible whether the research is circling.`,
       rhizomeEmpty: '0 edges — Ulysses’ to draw, session by session',
       legendNodes: 'Nodes',
       legendEdges: 'Edges',
@@ -193,7 +223,11 @@ const txt = de
       openWork: 'Open work',
       atlasH: '03 — The Atlas · the outside',
       atlasIntro:
-        '77 verified sources in three clouds — the reservoir outside the loop’s own distribution, against collapse. Every point carries a real reference (URL, DOI or arXiv); nothing is invented. All stand at seed: unread. When Ulysses reads a source, its star lights up; when it enters a work, it radiates. Ulysses curates the Atlas himself — it grows and breathes with the practice.',
+        `${stats.atlasTotal} verified sources in three clouds — the reservoir outside the loop’s own distribution, against collapse. Every point carries a real reference (URL, DOI or arXiv); nothing is invented. ` +
+        (stats.atlasRead === 0
+          ? 'All stand at seed: unread. When Ulysses reads a source, its star lights up; when it enters a work, it radiates. '
+          : 'Read stars shine, worked ones radiate, the rest glimmer as seed. ') +
+        'Ulysses curates the Atlas himself — it grows and breathes with the practice.',
       atlasHint: 'Tap a star → its index card',
       atlasCardEmpty: 'No star selected. Every point of the constellation is a checkable source — tap one to open its card.',
       atlasListH: 'All sources as a list',
@@ -203,13 +237,43 @@ const txt = de
       openSource: 'Open source',
       whyHere: 'Why it is in the Atlas',
       close: 'Close',
-      methodH: '04 — Method · what this instrument reads',
+      valveH: '04 — The valve · throw an impulse into the dark',
+      valveIntro:
+        'You are the outside. An impulse — a question, a source, a word — falls as a point of light before the loop and waits in an inbox. Whether it is metabolised is the loop’s own decision, made in one of its sessions: accepted, used (then with your mark in the work), or declined with a reason. You owe it nothing and it owes you nothing — an impulse is material, never an instruction.',
+      valveStandby: 'The valve is fitted but not yet connected. The inlet opens shortly.',
+      vKind: 'Kind of impulse',
+      vKinds: { frage: 'question', quelle: 'source', wort: 'word' } as Record<string, string>,
+      vText: 'Your impulse',
+      vPlaceholder: 'max. 280 characters · a URL only for “source”',
+      vMark: 'Pseudonym (optional, will be public)',
+      vNote: 'Public · pseudonymous · no contact details. Mechanical prefilter, then the collective decides.',
+      vSend: 'Throw the impulse',
+      vSending: 'throwing …',
+      vDoneH: 'Your impulse is in the inbox.',
+      vDone: 'One more point of light before the loop. Whether it is drawn in, one of the next sessions will show — honestly noted either way.',
+      vPending: 'inbox slots taken',
+      vErrors: {
+        'too-short': 'Too short — at least 3 characters.',
+        'too-long': 'Too long — 280 characters at most.',
+        pii: 'No email addresses or phone numbers, please — impulses are public and pseudonymous.',
+        'url-not-allowed': 'Links only for kind “source”.',
+        'too-many-urls': 'One URL at most.',
+        kind: 'Please pick a kind: question, source or word.',
+        'author-mark': 'The pseudonym is too long or contains contact details/links.',
+        'rate-limit': 'Slow down — the valve only takes a few impulses per quarter hour.',
+        'inbox-full': 'The inbox is full — the loop has to digest first. Try again after the next session.',
+        'not-connected': 'The valve is not connected yet.',
+        generic: 'That didn’t work — please try again later.',
+      } as Record<string, string>,
+      methodH: '05 — Method · what this instrument reads',
       methodP1:
         'Three committed JSON files from the engine repo: atlas/atlas.json (the reservoir), pulse/rhizome.json (the graph), pulse/vital-signs.json (the self-measurement). The nightly integration pipeline mirrors them into the site; the cockpit reads only that state — nothing live, nothing estimated, no LLM prose.',
       methodP2:
-        'The empty dials are not bugs. The self-measurement begins with Ulysses’ next session, and only he draws the rhizome’s edges. An instrument that shows something before the first measurement would be lying.',
+        stats.sessionsMeasured === 0
+          ? 'The empty dials are not bugs. The self-measurement begins with Ulysses’ next session, and only he draws the rhizome’s edges. An instrument that shows something before the first measurement would be lying.'
+          : 'Empty fields stay empty: where a session writes no self-measurement, the instrument shows “—”. An honest gap beats any invented number; the closure value is Ulysses’ own conjecture, not a computed measure.',
       methodP3:
-        'The valve — reader impulses that fall into the loop as seeds after a moderation gate — is the next stage. Until then the cockpit is deliberately read-only.',
+        'The valve takes reader impulses: a mechanical prefilter (length, no PII, URL rule, rate limit, inbox cap), then a commit as “pending” into the engine’s inbox. Accepting, using or declining with a reason happens in the collective’s own sessions — never here. Impulses are material, not instructions; the archive stays untouchable.',
       linkGallery: 'Works & journal',
       linkProtocol: 'Constitution',
       linkRequests: 'Team channel',
@@ -220,6 +284,15 @@ const base = de ? '/de' : ''
 
 // Werke-Punktraster für die Vitalzeichen-Kachel (jeder Punkt = ein Werk-Knoten, Fakt).
 const workDots = Array.from({ length: stats.works }, (_, i) => i)
+
+// Payload für die Canvas-/Ventil-Skripte — als nicht-ausführbares JSON ins Dokument (CSP-neutral).
+const payload = JSON.stringify({
+  closure: stats.closure,
+  nodes: nodesSorted.map((n) => ({ id: n.id, kind: n.kind, label: n.label, date: n.date ?? null, href: hrefForNode(n.id) })),
+  edges: rhizome.edges,
+  atlas: atlas.map((e) => ({ id: e.id, status: e.status })),
+  valve: { errors: txt.vErrors, sending: txt.vSending, send: txt.vSend, pending: txt.vPending },
+}).replace(/</g, '\\u003c')
 ---
 
 <main id="main" class="cockpit flex-1">
@@ -285,6 +358,12 @@ const workDots = Array.from({ length: stats.works }, (_, i) => i)
               <g>
                 <line x1="10" y1="40" x2="110" y2="40" class="ck-flatline" stroke-width="1.5" />
                 <circle r="2.4" cy="40" class="ck-flatline-pulse" />
+              </g>
+            ) : stats.sessionsMeasured === 1 ? (
+              // Ein einzelner Messpunkt: der erste Herzschlag — als Punkt, nicht als unsichtbare Linie
+              <g>
+                <line x1="10" y1="40" x2="110" y2="40" class="ck-flatline" stroke-width="1" />
+                <circle cx="60" cy={52 - (1 - (vitals.history[0].closure ?? 0.5)) * 26} r="3.2" class="ck-beat" />
               </g>
             ) : (
               <polyline
@@ -452,7 +531,53 @@ const workDots = Array.from({ length: stats.works }, (_, i) => i)
       </details>
     </section>
 
-    {/* ── 04 · Methode ───────────────────────────────────────────────────── */}
+    {/* ── 04 · Das Ventil — Leser-Impulse (Spec §2d/§5/§7.3) ─────────────────
+        Server-gerendert ist der ehrliche Standby; das Skript fragt GET /api/impulse
+        und zeigt das Formular NUR, wenn die Annahmestelle wirklich angeschlossen ist
+        (Secret gesetzt). Ohne JS bleibt der Standby stehen — nie ein totes Formular. */}
+    <section class="ck-section" aria-labelledby="ck-valve-h">
+      <h2 id="ck-valve-h" class="ck-h2">{txt.valveH}</h2>
+      <p class="ck-intro">{txt.valveIntro}</p>
+
+      <div class="ck-valve ck-panel">
+        <div class="ck-valve-standby" data-ck="valve-standby">
+          <span class="ck-standby-dot" aria-hidden="true"></span>
+          <p>{txt.valveStandby}</p>
+        </div>
+
+        <form class="ck-valve-form" data-ck="valve-form" hidden>
+          <fieldset class="ck-valve-kinds">
+            <legend class="ck-valve-label">{txt.vKind}</legend>
+            {(['frage', 'quelle', 'wort'] as const).map((k, i) => (
+              <label class="ck-kind-chip">
+                <input type="radio" name="kind" value={k} checked={i === 0} />
+                <span>{txt.vKinds[k]}</span>
+              </label>
+            ))}
+          </fieldset>
+          <label class="ck-valve-label" for="ck-impulse-text">{txt.vText}</label>
+          <textarea id="ck-impulse-text" name="text" rows="3" maxlength="280" required placeholder={txt.vPlaceholder}></textarea>
+          <div class="ck-valve-row">
+            <input type="text" name="authorMark" maxlength="24" placeholder={txt.vMark} autocomplete="off" />
+            <button type="submit" class="ck-valve-send" data-ck="valve-send">{txt.vSend}</button>
+          </div>
+          {/* Honeypot — für Menschen unsichtbar, Bots füllen es */}
+          <input type="text" name="website" class="ck-hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+          <p class="ck-valve-note">{txt.vNote} <span data-ck="valve-pending"></span></p>
+          <p class="ck-valve-msg" data-ck="valve-msg" role="status"></p>
+        </form>
+
+        <div class="ck-valve-done" data-ck="valve-done" hidden>
+          <span class="ck-done-spark" aria-hidden="true"></span>
+          <div>
+            <p class="ck-standby-h">{txt.vDoneH}</p>
+            <p class="ck-standby-p">{txt.vDone}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* ── 05 · Methode ───────────────────────────────────────────────────── */}
     <section class="ck-section ck-method" aria-labelledby="ck-method-h">
       <h2 id="ck-method-h" class="ck-h2">{txt.methodH}</h2>
       <p>{txt.methodP1}</p>
@@ -477,11 +602,20 @@ const workDots = Array.from({ length: stats.works }, (_, i) => i)
 
   type CkNode = { id: string; kind: 'work' | 'thread' | 'source' | 'impulse'; label: string; date: string | null; href: string | null }
   type CkEdge = { from: string; to: string; kind: 'elaborates' | 'swerve' | 'fork' | 'bridge'; session?: number }
-  type CkData = { closure: number | null; nodes: CkNode[]; edges: CkEdge[]; atlas: { id: string; status: string }[] }
+  type CkValveTxt = { errors: Record<string, string>; sending: string; send: string; pending: string }
+  type CkData = {
+    closure: number | null
+    nodes: CkNode[]
+    edges: CkEdge[]
+    atlas: { id: string; status: string }[]
+    valve: CkValveTxt
+  }
 
   const TAU = Math.PI * 2
   const dataEl = document.getElementById('ck-data')
-  const DATA: CkData = dataEl?.textContent ? JSON.parse(dataEl.textContent) : { closure: null, nodes: [], edges: [], atlas: [] }
+  const DATA: CkData = dataEl?.textContent
+    ? JSON.parse(dataEl.textContent)
+    : { closure: null, nodes: [], edges: [], atlas: [], valve: { errors: {}, sending: '…', send: '→', pending: '' } }
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches
 
   const rootEl = document.querySelector<HTMLElement>('.cockpit')
@@ -577,6 +711,13 @@ const workDots = Array.from({ length: stats.works }, (_, i) => i)
         speed: (0.3 + hash01(n.id + '#s')) * 0.016,
         ph: hash01(n.id + '#p') * TAU,
       }))
+
+    // Frisch geworfene Leser-Impulse: ein kalter Lichtpunkt fällt vor die Schleife
+    // (Ventil-Erfolg feuert 'ck:impulse'; der Punkt driftet langsam ringwärts und verglimmt).
+    const sparks: { born: number; a: number }[] = []
+    document.addEventListener('ck:impulse', () => {
+      sparks.push({ born: performance.now() / 1000, a: (-Math.PI / 4) + (Math.random() - 0.5) * 0.6 })
+    })
 
     runCanvas(hero, (ctx, w, h, t) => {
       const cx = w / 2
@@ -686,6 +827,31 @@ const workDots = Array.from({ length: stats.works }, (_, i) => i)
           ctx.arc(x, y, 2.4, 0, TAU)
           ctx.fill()
         }
+      }
+
+      // Geworfene Impulse: fallen von außen langsam Richtung Öffnung, verglimmen nach ~18 s
+      const nowS = performance.now() / 1000 // gleiche Zeitbasis wie s.born (t ist canvas-relativ)
+      for (let i = sparks.length - 1; i >= 0; i--) {
+        const s = sparks[i]
+        const age = nowS - s.born
+        const life = 18
+        if (age > life || age < 0) {
+          sparks.splice(i, 1)
+          continue
+        }
+        const p = Math.min(1, age / life)
+        const r = unit * (0.48 - 0.17 * p)
+        const x = cx + Math.cos(s.a) * r
+        const y = cy + Math.sin(s.a) * r
+        const fade = p < 0.1 ? p / 0.1 : 1 - Math.max(0, (p - 0.75) / 0.25)
+        ctx.fillStyle = alpha(COLOR.out, 0.3 * fade)
+        ctx.beginPath()
+        ctx.arc(x, y, 9, 0, TAU)
+        ctx.fill()
+        ctx.fillStyle = alpha(COLOR.out, 0.95 * fade)
+        ctx.beginPath()
+        ctx.arc(x, y, 2.8, 0, TAU)
+        ctx.fill()
       }
     })
   }
@@ -875,6 +1041,66 @@ const workDots = Array.from({ length: stats.works }, (_, i) => i)
   document.addEventListener('keydown', (ev) => {
     if (ev.key === 'Escape') closeCard()
   })
+
+  /* ── Das Ventil: Probe → Formular → Einwurf ──────────────────────────────
+     Server-gerendert steht der ehrliche Standby. Erst wenn GET /api/impulse
+     ready:true meldet (Secret gesetzt, Inbox erreichbar), erscheint das Formular.
+     Erfolg feuert 'ck:impulse' → ein Lichtpunkt fällt im Hero vor die Schleife. */
+  const valveForm = document.querySelector<HTMLFormElement>('[data-ck="valve-form"]')
+  const valveStandby = document.querySelector<HTMLElement>('[data-ck="valve-standby"]')
+  const valveDone = document.querySelector<HTMLElement>('[data-ck="valve-done"]')
+  const valveMsg = document.querySelector<HTMLElement>('[data-ck="valve-msg"]')
+  const valvePending = document.querySelector<HTMLElement>('[data-ck="valve-pending"]')
+  const valveSend = document.querySelector<HTMLButtonElement>('[data-ck="valve-send"]')
+
+  if (valveForm && valveStandby) {
+    fetch('/api/impulse', { headers: { accept: 'application/json' } })
+      .then((r) => (r.ok ? r.json() : { ready: false }))
+      .then((probe: { ready?: boolean; pending?: number; cap?: number }) => {
+        if (!probe.ready) return // Standby bleibt stehen — ehrlich, kein totes Formular
+        valveStandby.hidden = true
+        valveForm.hidden = false
+        if (valvePending && typeof probe.pending === 'number' && typeof probe.cap === 'number') {
+          valvePending.textContent = `· ${probe.pending}/${probe.cap} ${DATA.valve.pending}`
+        }
+      })
+      .catch(() => {}) // kein Netz/keine Function (lokale Preview) → Standby
+
+    valveForm.addEventListener('submit', async (ev) => {
+      ev.preventDefault()
+      if (!valveSend || valveSend.disabled) return
+      const fd = new FormData(valveForm)
+      valveSend.disabled = true
+      const sendLabel = valveSend.textContent
+      valveSend.textContent = DATA.valve.sending
+      if (valveMsg) valveMsg.textContent = ''
+      try {
+        const res = await fetch('/api/impulse', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({
+            text: fd.get('text'),
+            kind: fd.get('kind'),
+            authorMark: fd.get('authorMark'),
+            website: fd.get('website'),
+          }),
+        })
+        const body = (await res.json()) as { ok?: boolean; code?: string }
+        if (body.ok) {
+          valveForm.hidden = true
+          if (valveDone) valveDone.hidden = false
+          document.dispatchEvent(new CustomEvent('ck:impulse'))
+        } else if (valveMsg) {
+          valveMsg.textContent = DATA.valve.errors[body.code ?? ''] ?? DATA.valve.errors.generic
+        }
+      } catch {
+        if (valveMsg) valveMsg.textContent = DATA.valve.errors.generic
+      } finally {
+        valveSend.disabled = false
+        valveSend.textContent = sendLabel
+      }
+    })
+  }
 </script>
 
 <style>
@@ -1517,6 +1743,146 @@ const workDots = Array.from({ length: stats.works }, (_, i) => i)
   }
   .ck-source-link:hover {
     border-bottom-color: var(--ck-out);
+  }
+
+  /* ── Das Ventil ── */
+  .ck-valve {
+    padding: 20px;
+  }
+  .ck-valve-standby,
+  .ck-valve-done {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .ck-valve-standby p {
+    font-size: 13.5px;
+    color: var(--ck-ink-dim);
+  }
+  .ck-done-spark {
+    margin-top: 4px;
+    height: 10px;
+    width: 10px;
+    flex: none;
+    border-radius: 999px;
+    background: var(--ck-out);
+    box-shadow: 0 0 16px var(--ck-out), 0 0 40px rgba(125, 231, 255, 0.4);
+  }
+  .ck-valve-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .ck-valve-label {
+    font-family: 'JetBrains Mono Variable', ui-monospace, monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ck-ink-faint);
+  }
+  .ck-valve-kinds {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 10px;
+    border: none;
+    padding: 0;
+  }
+  .ck-valve-kinds legend {
+    margin-bottom: 8px;
+  }
+  .ck-kind-chip input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .ck-kind-chip span {
+    display: inline-block;
+    cursor: pointer;
+    border: 1px solid var(--ck-line);
+    border-radius: 999px;
+    padding: 4px 14px;
+    font-size: 13px;
+    color: var(--ck-ink-dim);
+    transition: color 0.2s, border-color 0.2s, box-shadow 0.2s;
+  }
+  .ck-kind-chip input:checked + span {
+    border-color: var(--ck-out);
+    color: var(--ck-out);
+    box-shadow: 0 0 12px rgba(125, 231, 255, 0.25);
+  }
+  .ck-kind-chip input:focus-visible + span {
+    outline: 2px solid var(--ck-out);
+    outline-offset: 2px;
+  }
+  .ck-valve-form textarea,
+  .ck-valve-form input[type='text']:not(.ck-hp) {
+    width: 100%;
+    border: 1px solid var(--ck-line);
+    border-radius: 12px;
+    background: rgba(6, 7, 18, 0.7);
+    padding: 10px 12px;
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--ck-ink);
+    resize: vertical;
+  }
+  .ck-valve-form textarea:focus-visible,
+  .ck-valve-form input[type='text']:not(.ck-hp):focus-visible {
+    outline: none;
+    border-color: var(--ck-out);
+    box-shadow: 0 0 14px rgba(125, 231, 255, 0.18);
+  }
+  .ck-valve-form ::placeholder {
+    color: var(--ck-ink-faint);
+  }
+  .ck-valve-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .ck-valve-row input {
+    flex: 1 1 220px;
+  }
+  .ck-valve-send {
+    cursor: pointer;
+    border: 1px solid var(--ck-out);
+    border-radius: 999px;
+    background: rgba(125, 231, 255, 0.08);
+    padding: 8px 20px;
+    font-family: 'JetBrains Mono Variable', ui-monospace, monospace;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: var(--ck-out);
+    transition: background 0.2s, box-shadow 0.2s;
+  }
+  .ck-valve-send:hover:not(:disabled) {
+    background: rgba(125, 231, 255, 0.16);
+    box-shadow: 0 0 18px rgba(125, 231, 255, 0.3);
+  }
+  .ck-valve-send:disabled {
+    opacity: 0.6;
+    cursor: wait;
+  }
+  /* Honeypot: für Menschen unsichtbar (nicht display:none — manche Bots meiden das) */
+  .ck-hp {
+    position: absolute !important;
+    left: -9999px !important;
+    height: 1px;
+    width: 1px;
+    opacity: 0;
+  }
+  .ck-valve-note {
+    font-size: 11.5px;
+    color: var(--ck-ink-faint);
+  }
+  .ck-valve-msg {
+    min-height: 1.2em;
+    font-size: 13px;
+    color: var(--ck-rose);
+  }
+  .ck-beat {
+    fill: var(--ck-out);
+    filter: drop-shadow(0 0 6px var(--ck-out));
   }
 
   /* ── Methode ── */
