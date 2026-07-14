@@ -56,7 +56,10 @@ describe('atlasHref', () => {
   })
 })
 
-describe('gegen die echten Seed-Daten', () => {
+/* Die echten Dateien wachsen jede Nacht mit Ulysses' Sitzungen — hier stehen deshalb
+   NUR Invarianten, die für jeden Stand gelten müssen (nie Zustands-Annahmen wie
+   „History ist leer": die brechen genau dann, wenn die Engine liefert). */
+describe('gegen die echten Engine-Daten (Invarianten, kein Zustand)', () => {
   it('der Atlas hat verifizierte Einträge und jeder trägt einen Verweis', () => {
     expect(atlas.length).toBeGreaterThanOrEqual(70)
     for (const e of atlas) expect(atlasHref(e), e.id).not.toBeNull()
@@ -69,16 +72,48 @@ describe('gegen die echten Seed-Daten', () => {
     expect(groups.methode.length).toBeGreaterThan(0)
     expect(groups.maschine.length).toBeGreaterThan(0)
   })
-  it('Seed-Zustand: leere History ⇒ closure null (ehrlich, keine erfundene Zahl)', () => {
-    expect(latestClosure(vitals)).toBeNull()
+  it('closure ist null oder eine Zahl in [0,1]', () => {
+    const c = latestClosure(vitals)
+    if (c !== null) {
+      expect(c).toBeGreaterThanOrEqual(0)
+      expect(c).toBeLessThanOrEqual(1)
+    }
   })
-  it('Seed-Zustand: Werk-Knoten vorhanden, Kanten leer', () => {
+  it('jede Kante referenziert existierende Knoten und einen bekannten kind', () => {
+    const ids = new Set(rhizome.nodes.map((n) => n.id))
+    for (const e of rhizome.edges) {
+      expect(ids.has(e.from), `from: ${e.from}`).toBe(true)
+      expect(ids.has(e.to), `to: ${e.to}`).toBe(true)
+      expect(['elaborates', 'swerve', 'fork', 'bridge']).toContain(e.kind)
+    }
+  })
+  it('Stats sind konsistent (Werke vorhanden, read ⊇ worked, Zählungen ≥ 0)', () => {
     const stats = cockpitStats(rhizome, vitals, atlas)
     expect(stats.works).toBeGreaterThanOrEqual(20)
+    expect(stats.edgesTotal).toBe(rhizome.edges.length)
+    expect(stats.atlasRead).toBeGreaterThanOrEqual(stats.atlasWorked)
+    expect(stats.atlasRead).toBeLessThanOrEqual(stats.atlasTotal)
+    expect(stats.swerves).toBeGreaterThanOrEqual(0)
+    expect(stats.sessionsMeasured).toBe(vitals.history.length)
+  })
+})
+
+describe('Leer-Zustand (Fixtures — der Seed-Moment bleibt getestet, ohne am Live-Stand zu kleben)', () => {
+  const emptyVitals: VitalSigns = { updated: '2026-07-14', history: [] }
+  const seedRhizome: Rhizome = {
+    updated: '2026-07-14',
+    nodes: [{ id: 'w-2026-06-29-x', kind: 'work', label: 'X', date: '2026-06-29' }],
+    edges: [],
+  }
+  it('leere History ⇒ closure null (ehrlich, keine erfundene Zahl)', () => {
+    expect(latestClosure(emptyVitals)).toBeNull()
+  })
+  it('Seed: Werk-Knoten da, alles andere ehrlich auf null/0', () => {
+    const stats = cockpitStats(seedRhizome, emptyVitals, [])
     expect(stats.edgesTotal).toBe(0)
     expect(stats.swerves).toBe(0)
     expect(stats.sessionsMeasured).toBe(0)
-    expect(stats.atlasRead).toBe(0)
+    expect(stats.closure).toBeNull()
   })
 })
 
