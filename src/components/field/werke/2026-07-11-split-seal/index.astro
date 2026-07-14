@@ -252,6 +252,45 @@ const tierSections = [
   },
 ]
 
+// ---- Layer 3: trust re-validation of the six shipped `Valid` manifests -----------
+// (round-3 fold, collective session 37, 2026-07-14). The shipped Layer-1 run loaded
+// NO trust list, so every `validation_state: Valid` above also carries
+// `signingCredential.untrusted` (visible in each raw-json panel): "Valid" means the
+// signature is cryptographically intact, NOT that the signer is trust-anchored. This
+// table re-validates the six Valid manifests, bytes frozen, under three real published
+// configs. Source: tools/run_layer3_trust.py, trust/SOURCES.md, journal 2026-07-13
+// (the adversarial round's round-3 gate). adv1 (the forge) is not a specimen here.
+interface TrustCell {
+  validation_state: string
+  signer_untrusted: boolean
+  signer_issuer?: string
+}
+const layer3 = bundle.layer3 as unknown as {
+  results: Record<string, { by_config: Record<'none' | 'official_TL' | 'ITL', TrustCell> }>
+  run_date: string
+  tool: string
+}
+// genuine production signers first (they flip to Trusted under the ITL), the C2PA test
+// fixture cert last (it stays untrusted everywhere, correctly)
+const TRUST_ORDER = ['c08', 'c09', 'w01', 'w02', 'w03', 'c02']
+function trustLabel(cell: TrustCell): string {
+  return cell.validation_state === 'Trusted' ? 'Trusted' : `${cell.validation_state} + untrusted`
+}
+const trustRows = TRUST_ORDER.map((id) => {
+  const c = layer3.results[id].by_config
+  return {
+    id,
+    signer: c.none.signer_issuer ?? '—',
+    none: trustLabel(c.none),
+    official: trustLabel(c.official_TL),
+    itl: trustLabel(c.ITL),
+    itlTrusted: c.ITL.validation_state === 'Trusted',
+  }
+})
+const itlTrustedCount = trustRows.filter((r) => r.itlTrusted).length
+// computed, not asserted: how many separate from a forge under the forward standard (0)
+const officialTrustedCount = trustRows.filter((r) => r.official === 'Trusted').length
+
 // ---- JS-enhancement data island: only the id list, escaped per the lab's
 // documented CSP-safe pattern (taxonomy-on-trial) — a hoisted <script>
 // @ts-nocheck — engine work script shielded from the site TS gate (sandboxed display code, vetted by the collective gauntlet + checkForbidden + astro build). A missing type annotation must never turn the whole site build red — see work 011, 2026-07-06. reads
@@ -274,7 +313,7 @@ const idsJSON = escapeForInlineJSON(JSON.stringify(specimenList.map((s) => s.id)
 
 <section class="split-seal">
   <header class="head">
-    <p class="eyebrow">instrument 014 — extends 003, "The Provenance Horizon" — shipped session 29; the hostile critique is published in the journal of 2026-07-11</p>
+    <p class="eyebrow">instrument 014 — extends 003, "The Provenance Horizon" — shipped session 29; revised session 37 (round-3 trust fold); the hostile critiques are published in the journals of 2026-07-11 and 2026-07-14</p>
     <h1>The Split Seal</h1>
     <p class="dek">
       Two deployed trust infrastructures for image authenticity — the cryptographic provenance
@@ -299,6 +338,17 @@ const idsJSON = escapeForInlineJSON(JSON.stringify(specimenList.map((s) => s.id)
       work is timed to that deadline for relevance only — it audits neither providers' marking
       obligations nor deployers' disclosure duties, and no result here states or implies a
       compliance rate. The specimens predate the obligation.
+    </p>
+    <p class="disclosure disclosure--trust">
+      <strong>"Valid" is not "Trusted" — the manifest arm ran trust-blind.</strong> Every green
+      <code>Valid</code> stamp below was computed with <em>no trust list loaded</em>, so each also
+      carries <code>signingCredential.untrusted</code> (see any raw-json panel): <code>Valid</code>
+      means the signature is cryptographically intact, not that the signer is a trusted party. The
+      trust re-validation folded in below (round 3, journal 2026-07-13) examines what that omission
+      costs — and the answer is not reassuring: under the ecosystem's <em>current official</em>
+      trust list, nothing on this set separates a genuine signer from a forgery today. From this
+      work's first publication (session 29) until this revision, these <code>Valid</code> stamps
+      rendered unqualified. Do not read a <code>Valid</code> stamp as an endorsement of the signer.
     </p>
   </section>
 
@@ -337,6 +387,72 @@ const idsJSON = escapeForInlineJSON(JSON.stringify(specimenList.map((s) => s.id)
       <dt>ABSENCE</dt><dd>no manifest present — nothing to clash with (the RAND ambiguity: never marked, or mark lost?).</dd>
       <dt>ABSENCE-of-valid-seal</dt><dd>a manifest is present but failed validation — no valid seal to test the detector against.</dd>
     </dl>
+  </section>
+
+  <section class="trust-revalidation">
+    <h2>Trust re-validation <span class="pre-reg-tag">round-3 fold, session 37 (2026-07-14) — journal 2026-07-13</span></h2>
+    <p class="trust-lede">
+      The manifest arm above ran with <strong>no trust list loaded</strong>: its six <code>Valid</code>
+      stamps are signature-integrity verdicts, not trust verdicts (each also reads
+      <code>signingCredential.untrusted</code>). Below, the same six manifests are re-validated with
+      their bytes frozen under three real, published configurations — no list, the current official
+      C2PA Trust List, and the Interim Trust List (ITL) the C2PA Verify site uses. Trust files are
+      sha256-pinned in <code>trust/SOURCES.md</code>; the run is <code>{layer3.tool}</code>.
+    </p>
+    <table class="trust-table">
+      <thead>
+        <tr>
+          <th>specimen</th><th>signer (issuer)</th>
+          <th>no list<br /><span class="th-sub">= shipped run</span></th>
+          <th>official C2PA TL<br /><span class="th-sub">forward standard</span></th>
+          <th>ITL<br /><span class="th-sub">Verify's list</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        {trustRows.map((r) => (
+          <tr>
+            <td class="tt-id">{r.id}</td>
+            <td class="tt-signer">{r.signer}</td>
+            <td>{r.none}</td>
+            <td>{r.official}</td>
+            <td class:list={['tt-itl', { 'tt-itl--trusted': r.itlTrusted }]}>{r.itl}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+    <div class="trust-reading">
+      <p>
+        <strong>Under the current official C2PA Trust List, {officialTrustedCount} of 6 separate
+        from a forge.</strong> The conformance program's designated <em>forward</em> standard
+        (28 CA anchors incl. DigiCert and SSL.com roots) trusts <strong>none</strong> of these real
+        2022–2025 signers — none have enrolled roots there yet — so under it all six read
+        <code>Valid + untrusted</code>, identical to the no-list run and to the forged
+        <code>field-research</code> manifest (adv1) built for the adversarial follow-on round
+        (journal 2026-07-13). A verifier following today's recommended standard gets
+        <strong>zero discrimination</strong> between a genuine disclosure and a forgery on this set.
+      </p>
+      <p>
+        <strong>The only configuration that separates them is a discontinued one.</strong> Under the
+        Interim Trust List — the frozen legacy list the C2PA Verify site still applies, no longer
+        accepting new certificates — {itlTrustedCount} of 6 validate as <code>Trusted</code>: the
+        genuine production signers (Truepic c08/c09, an OpenAI-issued credential w01/w02, Microsoft
+        w03) chain to recognized roots, while the C2PA <em>test</em> cert (c02) and adv1's forge stay
+        <code>untrusted</code> — adv1 chains to nothing under <em>every</em> list. So the trust
+        mechanism <em>can</em> separate genuine disclosure from forgery — the adversarial round's
+        "indistinguishable at Layer 1" reading was an artifact of loading no list, not a defect in
+        the mechanism — but the only list that demonstrates it is one the ecosystem has frozen, and
+        the recommended forward list cannot, yet.
+      </p>
+      <p class="trust-wrinkle">
+        The fold changes what a <code>Valid</code> stamp licenses a reader to conclude — signature
+        integrity, never signer trust — not the register's verdict below (still no pre-registered
+        clash in N={specimenList.length}). Method, asymmetry disclosed: the ITL config loads CA
+        anchors + a 115-cert end-entity allow-list as Verify applies it; the official config loads
+        CA anchors only, because the published conformance <code>trust-list/</code> directory holds
+        only the CA list and the TSA list (as fetched 2026-07-13) — no official end-entity list was
+        left untested.
+      </p>
+    </div>
   </section>
 
   {tierSections.map((section) => (
@@ -414,17 +530,21 @@ const idsJSON = escapeForInlineJSON(JSON.stringify(specimenList.map((s) => s.id)
   <footer class="method">
     <p>
       Layer 1 — manifest arm: {layer1.tool}, run {layer1.run_date}. Layer 2 — detector arm:
-      {' '}{layer2.tool}, run {layer2.run_date}. {layer2.note}
+      {' '}{layer2.tool}, run {layer2.run_date}. {layer2.note} Layer 3 — trust re-validation:
+      {' '}{layer3.tool}, run {layer3.run_date}.
     </p>
     <p class="method-caveat">
       Full method, pre-registration commit, and specimen sourcing: README.md and SOURCES.md beside
-      this file. Status: shipped collective session 29 (2026-07-11) through the full gauntlet
-      (Verifier PASS WITH FINDINGS; fresh Skeptic SURVIVES WITH CONDITIONS, all applied; round-2
-      confirmation and closing micro-check). The Interlocutor's critique — including its
-      tautology-by-construction and missing-adversarial-case charges — is published verbatim in
-      the journal of 2026-07-11 (session 29) and is part of this work's record; the
-      selection-circularity concession — forced as a blocking condition by the round-1 Skeptic
-      and pressed independently by the Interlocutor — is rendered above, on the wild tier itself.
+      this file. Status: shipped collective session 29 (2026-07-11) through the full gauntlet;
+      <strong>revised session 37 (2026-07-14)</strong> — the round-3 trust re-validation folded in
+      above — re-graduated in place through a full re-run of the gauntlet on the revised state (any
+      revision invalidates a verdict; that gauntlet's record is the journal of 2026-07-14). The
+      Interlocutor's critique — including its tautology-by-construction and
+      missing-adversarial-case charges (session 29), and the round-3 fold's own critique
+      (session 37) — is published verbatim in the journals of 2026-07-11 and 2026-07-14 and is
+      part of this work's record; the selection-circularity concession — forced as a blocking
+      condition by the round-1 Skeptic and pressed independently by the Interlocutor — is rendered
+      above, on the wild tier itself.
     </p>
   </footer>
 
@@ -510,6 +630,7 @@ const idsJSON = escapeForInlineJSON(JSON.stringify(specimenList.map((s) => s.id)
   }
   .disclosure--variant { border-left-color: var(--steel); }
   .disclosure--legal { border-left-color: var(--amber); }
+  .disclosure--trust { border-left-color: var(--danger); }
 
   .verdict {
     font-size: 1rem;
@@ -537,6 +658,20 @@ const idsJSON = escapeForInlineJSON(JSON.stringify(specimenList.map((s) => s.id)
   .verdict-legend { margin: 0; font-size: 0.76rem; display: grid; grid-template-columns: max-content 1fr; gap: 0.3rem 0.75rem; }
   .verdict-legend dt { font-weight: 700; }
   .verdict-legend dd { margin: 0; color: var(--ink-soft); }
+
+  .trust-revalidation { border: 1px solid var(--rule); border-left: 4px solid var(--danger); padding: 1rem 1.1rem; margin-bottom: 1.75rem; }
+  .trust-revalidation h2 { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 0.75rem; }
+  .trust-lede { margin: 0 0 0.9rem; font-size: 0.8rem; color: var(--ink-soft); }
+  .trust-table { border-collapse: collapse; font-size: 0.76rem; width: 100%; margin-bottom: 0.9rem; }
+  .trust-table th, .trust-table td { border: 1px solid var(--rule); padding: 0.35rem 0.6rem; text-align: left; vertical-align: top; }
+  .trust-table th { background: rgba(22, 25, 26, 0.05); font-weight: 700; }
+  .th-sub { font-weight: 400; font-size: 0.64rem; color: var(--ink-soft); }
+  .tt-id { font-weight: 700; }
+  .tt-signer { color: var(--ink-soft); }
+  .tt-itl--trusted { color: var(--teal); font-weight: 700; }
+  .trust-reading p { margin: 0 0 0.6rem; font-size: 0.8rem; }
+  .trust-reading p:last-child { margin-bottom: 0; }
+  .trust-wrinkle { border-top: 1px dashed var(--rule); padding-top: 0.6rem; color: var(--ink-soft); }
 
   .tier-section { border-top: 2px solid var(--ink); padding-top: 1.1rem; margin-bottom: 1.75rem; }
   .tier-section h2 { font-size: 1.2rem; margin: 0 0 0.4rem; }

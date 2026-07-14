@@ -437,6 +437,217 @@
     "run_date": "2026-07-11",
     "tool": "Sightengine `genai` model (commercial API)"
   },
+  "layer3": {
+    "configs": {
+      "ITL": "Interim Trust List (anchors + allowed) used by the C2PA Verify site",
+      "none": "no trust list (reproduces the shipped Layer-1 run)",
+      "official_TL": "current official C2PA Trust List (conformance program), trust_anchors"
+    },
+    "layer": "manifest trust re-validation (C2PA) — the six shipped Valid manifests",
+    "results": {
+      "c02": {
+        "by_config": {
+          "ITL": {
+            "signer_common_name": "C2PA Signer",
+            "signer_issuer": "C2PA Test Signing Cert",
+            "signer_untrusted": true,
+            "status_codes": [
+              "signingCredential.untrusted"
+            ],
+            "validation_state": "Valid"
+          },
+          "none": {
+            "signer_common_name": "C2PA Signer",
+            "signer_issuer": "C2PA Test Signing Cert",
+            "signer_untrusted": true,
+            "status_codes": [
+              "signingCredential.untrusted"
+            ],
+            "validation_state": "Valid"
+          },
+          "official_TL": {
+            "signer_common_name": "C2PA Signer",
+            "signer_issuer": "C2PA Test Signing Cert",
+            "signer_untrusted": true,
+            "status_codes": [
+              "signingCredential.untrusted"
+            ],
+            "validation_state": "Valid"
+          }
+        },
+        "specimen_sha256": "75a8da33f6eaf1e16bf3b42cd78913b22b2e6a671fda217a508b1ba4230ce864"
+      },
+      "c08": {
+        "by_config": {
+          "ITL": {
+            "signer_common_name": "Truepic Lens SDK v1.1.3 in Vision Camera v3.1.5",
+            "signer_issuer": "Truepic",
+            "signer_untrusted": false,
+            "status_codes": [],
+            "validation_state": "Trusted"
+          },
+          "none": {
+            "signer_common_name": "Truepic Lens SDK v1.1.3 in Vision Camera v3.1.5",
+            "signer_issuer": "Truepic",
+            "signer_untrusted": true,
+            "status_codes": [
+              "signingCredential.untrusted"
+            ],
+            "validation_state": "Valid"
+          },
+          "official_TL": {
+            "signer_common_name": "Truepic Lens SDK v1.1.3 in Vision Camera v3.1.5",
+            "signer_issuer": "Truepic",
+            "signer_untrusted": true,
+            "status_codes": [
+              "signingCredential.untrusted"
+            ],
+            "validation_state": "Valid"
+          }
+        },
+        "specimen_sha256": "379aabc7d04ee8c8fb04e18925428463353ab6fb6696ee3d7aa11710c6b2e147"
+      },
+      "c09": {
+        "by_config": {
+          "ITL": {
+            "signer_common_name": "Truepic Lens SDK v1.1.3 in Vision Camera v3.1.5",
+            "signer_issuer": "Truepic",
+            "signer_untrusted": false,
+            "status_codes": [],
+            "validation_state": "Trusted"
+          },
+          "none": {
+            "signer_common_name": "Truepic Lens SDK v1.1.3 in Vision Camera v3.1.5",
+            "signer_issuer": "Truepic",
+            "signer_untrusted": true,
+            "status_codes": [
+              "signingCredential.untrusted"
+            ],
+            "validation_state": "Valid"
+          },
+          "official_TL": {
+            "signer_common_name": "Truepic Lens SDK v1.1.3 in Vision Camera v3.1.5",
+            "signer_issuer": "Truepic",
+            "signer_untrusted": true,
+            "status_codes": [
+              "signingCredential.untrusted"
+            ],
+            "validation_state": "Valid"
+          }
+        },
+        "specimen_sha256": "e9a7d020de9edb1c13602f5e1a42fdb67e6ea1728d7f7d88a316cd2e3ce989c9"
+      },
+      "w01": {
+        "by_config": {
+          "ITL": {
+            "signer_common_name": "Truepic Lens CLI in ChatGPT",
+            "signer_issuer": "OpenAI",
+            "signer_untrusted": false,
+            "status_codes": [],
+            "validation_state": "Trusted"
+          },
+          "none": {
+            "signer_common_name": "Truepic Lens CLI in ChatGPT",
+            "signer_issuer": "OpenAI",
+            "signer_untrusted": true,
+            "status_codes": [
+              "signingCredential.untrusted",
+              "signingCredential.untrusted"
+            ],
+            "validation_state": "Valid"
+          },
+          "official_TL": {
+            "signer_common_name": "Truepic Lens CLI in ChatGPT",
+            "signer_issuer": "OpenAI",
+            "signer_untrusted": true,
+            "status_codes": [
+              "signingCredential.untrusted",
+              "signingCredential.untrusted"
+            ],
+            "validation_state": "Valid"
+          }
+        },
+        "specimen_sha256": "07f175fd7f3a7b5438e1ac241e55e0f77226d36532b77a64e2529e91c4931974"
+      },
+      "w02": {
+        "by_config": {
+          "ITL": {
+            "signer_common_name": "Truepic Lens CLI in ChatGPT",
+            "signer_issuer": "OpenAI",
+            "signer_untrusted": false,
+            "status_codes": [],
+            "validation_state": "Trusted"
+          },
+          "none": {
+            "signer_common_name": "Truepic Lens CLI in ChatGPT",
+            "signer_issuer": "OpenAI",
+            "signer_untrusted": true,
+            "status_codes": [
+              "signingCredential.untrusted",
+              "signingCredential.untrusted"
+            ],
+            "validation_state": "Valid"
+          },
+          "official_TL": {
+            "signer_common_name": "Truepic Lens CLI in ChatGPT",
+            "signer_issuer": "OpenAI",
+            "signer_untrusted": true,
+            "status_codes": [
+              "signingCredential.untrusted",
+              "signingCredential.untrusted"
+            ],
+            "validation_state": "Valid"
+          }
+        },
+        "specimen_sha256": "2435f70c56f31c3ba549ecffc065c650f807a7c21950dd2d45ba9cdfcbb0e563"
+      },
+      "w03": {
+        "by_config": {
+          "ITL": {
+            "signer_common_name": "Microsoft Corporation",
+            "signer_issuer": "Microsoft Corporation",
+            "signer_untrusted": false,
+            "status_codes": [],
+            "validation_state": "Trusted"
+          },
+          "none": {
+            "signer_common_name": "Microsoft Corporation",
+            "signer_issuer": "Microsoft Corporation",
+            "signer_untrusted": true,
+            "status_codes": [
+              "signingCredential.untrusted",
+              "signingCredential.untrusted",
+              "signingCredential.untrusted",
+              "signingCredential.untrusted"
+            ],
+            "validation_state": "Valid"
+          },
+          "official_TL": {
+            "signer_common_name": "Microsoft Corporation",
+            "signer_issuer": "Microsoft Corporation",
+            "signer_untrusted": true,
+            "status_codes": [
+              "signingCredential.untrusted",
+              "signingCredential.untrusted",
+              "signingCredential.untrusted",
+              "signingCredential.untrusted"
+            ],
+            "validation_state": "Valid"
+          }
+        },
+        "specimen_sha256": "1a66871497e74a281233b763cb16d34a2309271fefa8fa280b1e4334fc5ecbf7"
+      }
+    },
+    "run_date": "2026-07-14",
+    "source": "folds the Split Seal adversarial round's round-3 gate (journal 2026-07-13, session 36) into instrument 014; adv1 (the forge) stays untrusted under every list — see drafts/2026-07-12-split-seal-adversarial/data/layer3-trust.json",
+    "tool": "c2pa-python 0.36.0",
+    "trust_files_sha256": {
+      "C2PA-TRUST-LIST.pem": "b1f399a7235f188a22f3db97992f1cc1417517664600335f9d105a6a7cdb46c1",
+      "C2PA-TSA-TRUST-LIST.pem": "76788c4c36644ee24674f6d63e9ee6f0186c3e25e39ea80da67d1b6f35dbea62",
+      "ITL-allowed.pem": "dfe328032e56f98b83f27f48a3642314124568b9f71ff471dffabf9b307c65d5",
+      "ITL-anchors.pem": "db57e50b9bd4e4c786cbb91f38fd85e2af6a9d5412438a8cddcc42688df07ae5"
+    }
+  },
   "specimens": [
     {
       "bytes": 61720,
