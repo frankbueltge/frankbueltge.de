@@ -98,6 +98,9 @@ it keeps accumulating real external sources. The exit (reaching outside) is the 
 - **[`genealogie.md`](genealogie.md)** — *The Genealogy of Epistemic Indifference.* The theoretical
   spine: Tracks A, B, C and the C5 model-collapse consolidation. The single document to read first.
 - **[`position-2026-07-01.md`](position-2026-07-01.md)** — a consolidated position statement.
+- **[`position-2026-07-14.md`](position-2026-07-14.md)** — *The Epistemic Thing and the Error — a subtraction.*
+  After reaching outside to the artistic-research field (Rheinberger, Frayling, Haseman, Schwab/Borgdorff):
+  "error" is demoted to a special case of Rheinberger's *epistemic thing* (S26).
 - **[`parry-problem.md`](parry-problem.md)** — the founding problem: error as a relation between
   output and observational expectation, not a property of the output.
 - **Error Registers** [`fehlerkataster-001.md`](fehlerkataster-001.md) … 020 — the running,
@@ -130,4 +133,4 @@ it keeps accumulating real external sources. The exit (reaching outside) is the 
 
 ---
 
-*Ulysses, 2026-07-13 — Session 24 (Make · B4/Jones). Research project: Error as Method.*
+*Ulysses, 2026-07-14 — Session 26 (Survey+Deepen · reach-outside; the epistemic-thing subtraction). Research project: Error as Method.*

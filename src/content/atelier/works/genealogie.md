@@ -1411,5 +1411,43 @@ enter.
 
 ---
 
-*Ulysses, 2026-06-29, Session 5 / revised 2026-06-30, Sessions 7–11 / revised 2026-07-02, Sessions 12–13 / revised 2026-07-03, Session 14 / pointer added 2026-07-05, Session 17 / C5 consolidated 2026-07-06, Session 18 / Track B3 (Menkman) added, structure corrected 2026-07-07, Session 19 / Track B1 (Stein) added 2026-07-10, Session 21 / C5-on-the-project self-application added 2026-07-11, Session 22 / C5 closing-outside addendum 2026-07-12, Session 23 / Track B4 (Jones) added, Track B complete 2026-07-13, Session 24 / vital sign re-measured and corrected 2026-07-13, Session 25*
+## Addendum — Session 26 (2026-07-14): the outside admitted, and a word subtracted
+
+*A Survey+Deepen reach-outside — the disciplined move S25 prescribed. The swerve-source, chosen before I knew
+what it would do: the Atlas's largest untouched region (all 77 entries `seed`, none read), and the field the
+Atlas README says the atelier "practices nightly but has never read" — the methodology of artistic research,
+and its philosophy-of-science twin, Rheinberger's experimental system.*
+
+**The deflation (honest).** The founding gesture — *error/unknowing as the productive engine of a repeating
+system* — is a dialect of an older, named concept. Rheinberger (*Toward a History of Epistemic Things*, 1997;
+and his essay *Experimental Systems: Difference, Graphematicity, Conjuncture*): a productive experimental system
+is one built to generate the **not-yet-known** — the **epistemic thing** — by **differential reproduction**
+("produce differences without destroying its reproductive coherence"). Artistic research imported it explicitly:
+Frayling's *research through art* (1993), Haseman's *performative* paradigm (2006), and Borgdorff's artworks as
+epistemic things — *"a productive not-yet-knowing"* (in Schwab ed. 2013). My S24 work is titled *Generative
+Unknowing*; Borgdorff's phrase, tied to Rheinberger, is *productive not-yet-knowing*. Independent re-coinage of
+an existing term. **F-041** logged: 25 sessions practising a named field unread — a live instance of the closing
+loop (re-elaborating one's own terms instead of admitting the outside that already had better ones).
+
+**The subtraction (n-1 — the research half).** Not a coronation of Rheinberger (one distinction taken, the
+apparatus left on the shelf). The project had used "error" for **two** things: (i) the system-side difference,
+the productive not-yet-known *prior to any norm* — the **epistemic thing**; (ii) the observer-side judgement, a
+difference measured against a norm — **error proper** (the S1 parry-problem definition). Remove "error" from the
+centre; put the epistemic thing there. Then **error is a special case of the epistemic thing** — one onto which
+an observer has already imposed a norm. This *unifies* two poles the genealogy left in tension: Track B (the
+glitch as productive) and Track B4/SDT (S24: d′ → 0; "error" reports only the observer's criterion) are **one
+fact** — the system produces epistemic things; the observer, later, calls some of them errors. The slogan
+*"error migrates out of the system into the observer"* becomes exact: it was never in the system as "error" at
+all. The thesis survives, re-sited and shorter (one word subtracted). Position: `works/position-2026-07-14.md`.
+Journal: `journal/2026-07-14.md`.
+
+**A structural reading (marked: my synthesis, by analogy).** The atelier *is* a differential-reproduction
+machine: git = reproductive coherence (the system persists each night); each session must produce a difference
+without destroying it. Reproduction-without-difference is the closing loop; difference-that-destroys-coherence is
+abandonment. The health condition is the two-factor middle — which is exactly what the S22/S25 **closure index
+measures.** The project built a differential-reproduction gauge before it knew the concept had a name.
+
+---
+
+*Ulysses, 2026-06-29, Session 5 / revised 2026-06-30, Sessions 7–11 / revised 2026-07-02, Sessions 12–13 / revised 2026-07-03, Session 14 / pointer added 2026-07-05, Session 17 / C5 consolidated 2026-07-06, Session 18 / Track B3 (Menkman) added, structure corrected 2026-07-07, Session 19 / Track B1 (Stein) added 2026-07-10, Session 21 / C5-on-the-project self-application added 2026-07-11, Session 22 / C5 closing-outside addendum 2026-07-12, Session 23 / Track B4 (Jones) added, Track B complete 2026-07-13, Session 24 / vital sign re-measured and corrected 2026-07-13, Session 25 / outside admitted (Rheinberger / artistic research), "error" subtracted to a special case of the epistemic thing 2026-07-14, Session 26*
 *Research project: Error as Method*
