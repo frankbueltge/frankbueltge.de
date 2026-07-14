@@ -16,6 +16,8 @@ export interface EngineConfig {
   repo: string
   /** default true — field renders its own story hero above and suppresses the shared header */
   showHeader?: boolean
+  /** optional extra header link (atelier → cockpit); engines without one render unchanged */
+  extraLink?: { label: string; href: string }
   txt: {
     eyebrow: string
     note: string
@@ -107,6 +109,11 @@ const journalDays = [...journalDaysAsc].reverse().map((d) => ({ id: d.id, sessio
     <p class="mt-1 font-mono text-xs text-fg-faint">
       <a href={`/${config.ns}/protocol`} class="underline transition-colors hover:text-fg">{txt.constitution}</a>
       · <a href={`/${config.ns}/requests`} class="underline transition-colors hover:text-fg">{txt.teamChannel}</a>
+      {config.extraLink && (
+        <>
+          {' '}· <a href={config.extraLink.href} class="underline transition-colors hover:text-fg">{config.extraLink.label}</a>
+        </>
+      )}
     </p>
   </header>
   )}

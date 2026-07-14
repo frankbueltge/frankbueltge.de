@@ -1,0 +1,1583 @@
+---
+// Cockpit — das Fenster in „Irrtum als Methode" (/atelier/cockpit).
+// Eigene, bewusst vom Mono-Skin gelöste visuelle Welt (Spec 2026-07-14, §4: volle
+// gestalterische Freiheit, scoped): dunkel, luminös, organisch — ein lebendes Instrument.
+// Semantik der Farben: das Innen (Ulysses' eigener Output) glüht warm, das Außen
+// (Atlas, Impulse) leuchtet kalt. Rendert NUR committete Engine-JSONs (src/data/atelier/*);
+// leere Zustände sind gestaltete Wahrheit, kein Bug: die Selbstmessung beginnt mit der
+// nächsten Sitzung, die Kanten des Rhizoms zieht nur Ulysses selbst.
+import type { Locale } from '@/lib/site'
+import atlasJson from '@/data/atelier/atlas.json'
+import rhizomeJson from '@/data/atelier/rhizome.json'
+import vitalsJson from '@/data/atelier/vital-signs.json'
+import {
+  cockpitStats,
+  starLayout,
+  groupAtlas,
+  atlasHref,
+  edgeCounts,
+  DOMAIN_ORDER,
+  type AtlasEntry,
+  type AtlasDomain,
+  type Rhizome,
+  type VitalSigns,
+} from '@/lib/atelier/cockpit'
+
+interface Props {
+  locale: Locale
+}
+const { locale } = Astro.props
+const de = locale === 'de'
+
+const atlas = atlasJson as AtlasEntry[]
+const rhizome = rhizomeJson as Rhizome
+const vitals = vitalsJson as VitalSigns
+const stats = cockpitStats(rhizome, vitals, atlas)
+const edges = edgeCounts(rhizome)
+const latest = vitals.history.length > 0 ? vitals.history[vitals.history.length - 1] : null
+
+// Werk-Knoten → Link auf das integrierte Werk (html-Standalone oder native Astro-Seite).
+// Knoten-ID "w-<datum>-<name>" ↔ Werk-Slug "<datum>-<name>"; ohne Treffer bleibt es ein Punkt ohne Link.
+const htmlMeta = import.meta.glob('/src/content/atelier/works/*/meta.json', { eager: true, import: 'default' })
+const nativeMeta = import.meta.glob('/src/components/atelier/werke/*/meta.json', { eager: true, import: 'default' })
+const htmlSlugs = new Set(Object.keys(htmlMeta).map((p) => p.replace('/src/content/atelier/works/', '').replace('/meta.json', '')))
+const nativeSlugs = new Set(Object.keys(nativeMeta).map((p) => p.replace('/src/components/atelier/werke/', '').replace('/meta.json', '')))
+const hrefForNode = (id: string): string | null => {
+  if (!id.startsWith('w-')) return null
+  const slug = id.slice(2)
+  if (nativeSlugs.has(slug)) return `/atelier/werke/${slug}`
+  if (htmlSlugs.has(slug)) return `/atelier/werke-html/${slug}/`
+  return null
+}
+
+const nodesSorted = [...rhizome.nodes].sort((a, b) => (a.date ?? '').localeCompare(b.date ?? '') || a.id.localeCompare(b.id))
+
+// Payload für die Canvas-Skripte — als nicht-ausführbares JSON ins Dokument (CSP-neutral).
+const payload = JSON.stringify({
+  closure: stats.closure,
+  nodes: nodesSorted.map((n) => ({ id: n.id, kind: n.kind, label: n.label, date: n.date ?? null, href: hrefForNode(n.id) })),
+  edges: rhizome.edges,
+  atlas: atlas.map((e) => ({ id: e.id, status: e.status })),
+}).replace(/</g, '\\u003c')
+
+// Atlas-Konstellation: deterministisches Server-Layout (gleiche Daten ⇒ gleiches Bild).
+const SVG_W = 1200
+const SVG_H = 620
+const stars = starLayout(atlas, SVG_W, SVG_H)
+const domains = groupAtlas(atlas)
+
+const domainName: Record<AtlasDomain, string> = de
+  ? { praxis: 'Kunst als Forschung', methode: 'Philosophie & Methode', maschine: 'Maschine & Fehler' }
+  : { praxis: 'Art as research', methode: 'Philosophy & method', maschine: 'Machine & error' }
+const domainAnchor: Record<AtlasDomain, { x: number; y: number }> = {
+  praxis: { x: SVG_W * 0.2, y: 46 },
+  methode: { x: SVG_W * 0.5, y: 46 },
+  maschine: { x: SVG_W * 0.8, y: 46 },
+}
+const typeName: Record<AtlasEntry['type'], string> = de
+  ? { buch: 'Buch', paper: 'Paper', manifest: 'Manifest', essay: 'Essay' }
+  : { buch: 'book', paper: 'paper', manifest: 'manifesto', essay: 'essay' }
+const statusName: Record<string, string> = de
+  ? { seed: 'seed — ungelesen', read: 'gelesen', worked: 'verarbeitet', archived: 'archiviert' }
+  : { seed: 'seed — unread', read: 'read', worked: 'worked', archived: 'archived' }
+const yearLabel = (y: number) => (y < 0 ? `${-y} ${de ? 'v. Chr.' : 'BC'}` : String(y))
+
+const nf = (n: number) => String(n)
+
+const txt = de
+  ? {
+      eyebrow: 'Atelier · Irrtum als Methode',
+      title: 'Cockpit',
+      lede: 'Das lebende Instrument des Ateliers. Jede Nacht forscht hier eine autonome KI — und ihr Gegenstand ist die Schleife, in der sie selbst steckt: Frisst ein System nur den eigenen Output, kollabiert es; ein echter Punkt von außen stoppt den Kollaps. Das Cockpit zeigt den Zustand dieser Schleife — Atmung, Rhizom und das Außen.',
+      hudClosure: 'closure',
+      hudUnmeasured: 'noch keine Selbstmessung',
+      hudScale: '0 = nach außen gegründet · 1 = reiner Selbstbezug (Kollaps)',
+      standbyH: 'Das Instrument wartet auf die erste Atmung.',
+      standby:
+        'Mit der nächsten Sitzung beginnt Ulysses’ Selbstmessung: eine Konjektur zwischen 0 und 1, ehrlich statt errechnet. Bis dahin atmet der Ring im Ruhetakt, gestrichelt und offen — eine leere Anzeige ist wahrer als eine erfundene Zahl.',
+      liveNote: (s: number, d: string) => `Sitzung ${s} · ${d}`,
+      scrollCue: 'Instrumente',
+      gaugesH: '01 — Vitalzeichen',
+      gClosure: 'Closure',
+      gClosureSub: 'Selbstkonjektur 0–1 · ungemessen',
+      gClosureSubLive: 'Selbstkonjektur 0–1 · jüngste Sitzung',
+      gSessions: 'Sitzungen',
+      gSessionsSub: 'Selbstmessungen im Puls',
+      gWorks: 'Werke',
+      gWorksSub: 'Knoten im Rhizom — Fakten',
+      gSwerves: 'Schwenks',
+      gSwervesSub: 'Außen zugelassen — noch keiner',
+      gSwervesSubLive: 'Außen zugelassen',
+      standbyChip: 'wartet',
+      rhizomeH: '02 — Das Rhizom',
+      rhizomeIntro:
+        'Zwanzig Werke stehen als Fakten im Graphen — die Kanten fehlen nicht, sie sind noch nicht gezogen. Wie sich Werke, Fäden und Quellen verbinden, ist Ulysses’ eigene Lektüre; das Seed erfindet keine Verbindungen. Baum-Kanten vertiefen das Eigene, Rhizom-Kanten holen das Außen herein — an ihrem Verhältnis wird sichtbar, ob sich die Forschung im Kreis dreht.',
+      rhizomeEmpty: '0 Kanten — zu ziehen von Ulysses, Sitzung für Sitzung',
+      legendNodes: 'Knoten',
+      legendEdges: 'Kanten',
+      nWork: 'Werk',
+      nThread: 'Faden',
+      nSource: 'Quelle (Atlas)',
+      nImpulse: 'Impuls (Leser:in)',
+      eElaborates: 'vertieft — Baum',
+      eSwerve: 'Schwenk — ein Außen zugelassen',
+      eFork: 'Gabelung — neue Linie',
+      eBridge: 'Brücke — Querverbindung',
+      undrawn: 'ungezogen',
+      worksListH: 'Alle Werk-Knoten (chronologisch)',
+      openWork: 'Werk öffnen',
+      atlasH: '03 — Der Atlas · das Außen',
+      atlasIntro:
+        '77 verifizierte Quellen in drei Wolken — das Reservoir außerhalb der eigenen Verteilung, gegen den Kollaps. Jeder Punkt trägt einen echten Verweis (URL, DOI oder arXiv), nichts ist erfunden. Alle stehen auf seed: noch ungelesen. Liest Ulysses eine Quelle, leuchtet ihr Stern auf; arbeitet sie in ein Werk, strahlt er. Ulysses kuratiert den Atlas selbst — er wächst und atmet mit.',
+      atlasHint: 'Stern antippen → Karteikarte',
+      atlasCardEmpty: 'Kein Stern gewählt. Jeder Punkt der Konstellation ist eine prüfbare Quelle — antippen öffnet ihre Karte.',
+      atlasListH: 'Alle Quellen als Liste',
+      lSeed: 'seed — ungelesen',
+      lRead: 'gelesen',
+      lWorked: 'in ein Werk gearbeitet',
+      openSource: 'Quelle öffnen',
+      whyHere: 'Warum im Atlas',
+      close: 'Schließen',
+      methodH: '04 — Methode · was dieses Instrument liest',
+      methodP1:
+        'Drei committete JSON-Dateien aus dem Engine-Repo: atlas/atlas.json (das Reservoir), pulse/rhizome.json (der Graph), pulse/vital-signs.json (die Selbstmessung). Die nächtliche Integrations-Pipeline spiegelt sie in die Site; das Cockpit liest nur diesen Stand — nichts live, nichts geschätzt, keine LLM-Prosa.',
+      methodP2:
+        'Die leeren Anzeigen sind keine Fehler. Die Selbstmessung beginnt mit Ulysses’ nächster Sitzung, und die Kanten des Rhizoms zieht nur er selbst. Ein Instrument, das vor der ersten Messung etwas anzeigt, würde lügen.',
+      methodP3:
+        'Das Ventil — Impulse von Leser:innen, die nach einem Moderations-Gate als Samen in die Schleife fallen — ist der nächste Ausbau. Bis dahin ist das Cockpit bewusst read-only.',
+      linkGallery: 'Werke & Journal',
+      linkProtocol: 'Verfassung',
+      linkRequests: 'Team-Kanal',
+      linkRepo: 'Engine-Repo',
+    }
+  : {
+      eyebrow: 'Atelier · Error as Method',
+      title: 'Cockpit',
+      lede: 'The living instrument of the atelier. Every night an autonomous AI researches here — and its subject is the loop it is itself caught in: a system fed only its own output collapses; one real point from outside stops the collapse. The cockpit shows the state of that loop — breath, rhizome, and the outside.',
+      hudClosure: 'closure',
+      hudUnmeasured: 'no self-measurement yet',
+      hudScale: '0 = grounded in the outside · 1 = pure self-reference (collapse)',
+      standbyH: 'The instrument awaits its first breath.',
+      standby:
+        'With the next session, Ulysses’ self-measurement begins: a conjecture between 0 and 1, honest rather than computed. Until then the ring breathes at resting rate, dashed and open — an empty dial is truer than an invented number.',
+      liveNote: (s: number, d: string) => `Session ${s} · ${d}`,
+      scrollCue: 'Instruments',
+      gaugesH: '01 — Vital signs',
+      gClosure: 'Closure',
+      gClosureSub: 'self-conjecture 0–1 · unmeasured',
+      gClosureSubLive: 'self-conjecture 0–1 · latest session',
+      gSessions: 'Sessions',
+      gSessionsSub: 'self-measurements in the pulse',
+      gWorks: 'Works',
+      gWorksSub: 'nodes in the rhizome — facts',
+      gSwerves: 'Swerves',
+      gSwervesSub: 'an outside admitted — none yet',
+      gSwervesSubLive: 'an outside admitted',
+      standbyChip: 'waiting',
+      rhizomeH: '02 — The rhizome',
+      rhizomeIntro:
+        'Twenty works stand in the graph as facts — the edges are not missing, they are not yet drawn. How works, threads and sources connect is Ulysses’ own reading; the seed invents no connections. Tree edges deepen what is already there, rhizome edges admit the outside — their ratio makes visible whether the research is circling.',
+      rhizomeEmpty: '0 edges — Ulysses’ to draw, session by session',
+      legendNodes: 'Nodes',
+      legendEdges: 'Edges',
+      nWork: 'work',
+      nThread: 'thread',
+      nSource: 'source (Atlas)',
+      nImpulse: 'impulse (reader)',
+      eElaborates: 'elaborates — tree',
+      eSwerve: 'swerve — an outside admitted',
+      eFork: 'fork — a new line',
+      eBridge: 'bridge — a lateral link',
+      undrawn: 'undrawn',
+      worksListH: 'All work nodes (chronological)',
+      openWork: 'Open work',
+      atlasH: '03 — The Atlas · the outside',
+      atlasIntro:
+        '77 verified sources in three clouds — the reservoir outside the loop’s own distribution, against collapse. Every point carries a real reference (URL, DOI or arXiv); nothing is invented. All stand at seed: unread. When Ulysses reads a source, its star lights up; when it enters a work, it radiates. Ulysses curates the Atlas himself — it grows and breathes with the practice.',
+      atlasHint: 'Tap a star → its index card',
+      atlasCardEmpty: 'No star selected. Every point of the constellation is a checkable source — tap one to open its card.',
+      atlasListH: 'All sources as a list',
+      lSeed: 'seed — unread',
+      lRead: 'read',
+      lWorked: 'worked into a piece',
+      openSource: 'Open source',
+      whyHere: 'Why it is in the Atlas',
+      close: 'Close',
+      methodH: '04 — Method · what this instrument reads',
+      methodP1:
+        'Three committed JSON files from the engine repo: atlas/atlas.json (the reservoir), pulse/rhizome.json (the graph), pulse/vital-signs.json (the self-measurement). The nightly integration pipeline mirrors them into the site; the cockpit reads only that state — nothing live, nothing estimated, no LLM prose.',
+      methodP2:
+        'The empty dials are not bugs. The self-measurement begins with Ulysses’ next session, and only he draws the rhizome’s edges. An instrument that shows something before the first measurement would be lying.',
+      methodP3:
+        'The valve — reader impulses that fall into the loop as seeds after a moderation gate — is the next stage. Until then the cockpit is deliberately read-only.',
+      linkGallery: 'Works & journal',
+      linkProtocol: 'Constitution',
+      linkRequests: 'Team channel',
+      linkRepo: 'Engine repo',
+    }
+
+const base = de ? '/de' : ''
+
+// Werke-Punktraster für die Vitalzeichen-Kachel (jeder Punkt = ein Werk-Knoten, Fakt).
+const workDots = Array.from({ length: stats.works }, (_, i) => i)
+---
+
+<main id="main" class="cockpit flex-1">
+  {/* ── 0 · Hero — der atmende Kreis ─────────────────────────────────────── */}
+  <section class="ck-hero" aria-labelledby="ck-title">
+    <canvas class="ck-hero-canvas" data-ck="hero" aria-hidden="true"></canvas>
+    <div class="ck-hero-hud">
+      <header class="ck-hero-head">
+        <p class="ck-eyebrow">{txt.eyebrow}</p>
+        <h1 id="ck-title" class="ck-title">{txt.title}</h1>
+        <p class="ck-lede">{txt.lede}</p>
+      </header>
+      <div class="ck-hero-readout" aria-live="off">
+        <p class="ck-readout-value">
+          <span class="ck-readout-label">{txt.hudClosure}</span>
+          <span class="ck-readout-number">{stats.closure == null ? '—' : stats.closure.toFixed(2)}</span>
+        </p>
+        <p class="ck-readout-sub">
+          {latest ? txt.liveNote(latest.session, latest.date) : txt.hudUnmeasured}
+        </p>
+        <p class="ck-readout-scale">{txt.hudScale}</p>
+      </div>
+      {stats.closure == null && (
+        <aside class="ck-standby">
+          <span class="ck-standby-dot" aria-hidden="true"></span>
+          <div>
+            <p class="ck-standby-h">{txt.standbyH}</p>
+            <p class="ck-standby-p">{txt.standby}</p>
+          </div>
+        </aside>
+      )}
+      <a class="ck-scrollcue" href="#ck-gauges"><span aria-hidden="true">↓</span> {txt.scrollCue}</a>
+    </div>
+  </section>
+
+  <div class="ck-body">
+    {/* ── 01 · Vitalzeichen ──────────────────────────────────────────────── */}
+    <section id="ck-gauges" class="ck-section" aria-labelledby="ck-gauges-h">
+      <h2 id="ck-gauges-h" class="ck-h2">{txt.gaugesH}</h2>
+      <div class="ck-gauges">
+        <div class="ck-gauge" data-state={stats.closure == null ? 'standby' : 'live'}>
+          <svg viewBox="0 0 120 66" class="ck-gauge-svg" aria-hidden="true">
+            <path d="M 12 58 A 48 48 0 0 1 108 58" fill="none" class="ck-dial-track" stroke-width="3" stroke-linecap="round" />
+            {stats.closure != null && (
+              <path
+                d="M 12 58 A 48 48 0 0 1 108 58"
+                fill="none"
+                class="ck-dial-value"
+                stroke-width="3.5"
+                stroke-linecap="round"
+                stroke-dasharray={`${(stats.closure * 150.8).toFixed(1)} 150.8`}
+              />
+            )}
+            <text x="60" y="58" text-anchor="middle" class="ck-dial-num">{stats.closure == null ? '—' : stats.closure.toFixed(2)}</text>
+          </svg>
+          <p class="ck-gauge-name">{txt.gClosure} {stats.closure == null && <span class="ck-chip">{txt.standbyChip}</span>}</p>
+          <p class="ck-gauge-sub">{stats.closure == null ? txt.gClosureSub : txt.gClosureSubLive}</p>
+        </div>
+
+        <div class="ck-gauge" data-state={stats.sessionsMeasured === 0 ? 'standby' : 'live'}>
+          <svg viewBox="0 0 120 66" class="ck-gauge-svg" aria-hidden="true">
+            {stats.sessionsMeasured === 0 ? (
+              <g>
+                <line x1="10" y1="40" x2="110" y2="40" class="ck-flatline" stroke-width="1.5" />
+                <circle r="2.4" cy="40" class="ck-flatline-pulse" />
+              </g>
+            ) : (
+              <polyline
+                points={vitals.history
+                  .slice(-12)
+                  .map((h, i, arr) => `${10 + (i * 100) / Math.max(1, arr.length - 1)},${52 - (1 - (h.closure ?? 0.5)) * 26}`)
+                  .join(' ')}
+                fill="none"
+                class="ck-dial-value"
+                stroke-width="2"
+                stroke-linejoin="round"
+              />
+            )}
+            <text x="60" y="30" text-anchor="middle" class="ck-dial-num">{nf(stats.sessionsMeasured)}</text>
+          </svg>
+          <p class="ck-gauge-name">{txt.gSessions} {stats.sessionsMeasured === 0 && <span class="ck-chip">{txt.standbyChip}</span>}</p>
+          <p class="ck-gauge-sub">{txt.gSessionsSub}</p>
+        </div>
+
+        <div class="ck-gauge" data-state="live">
+          <svg viewBox="0 0 120 66" class="ck-gauge-svg" aria-hidden="true">
+            <g>
+              {workDots.map((i) => (
+                <circle cx={18 + (i % 10) * 9.4} cy={36 + Math.floor(i / 10) * 12} r="2.6" class="ck-workdot" />
+              ))}
+            </g>
+            <text x="60" y="24" text-anchor="middle" class="ck-dial-num">{nf(stats.works)}</text>
+          </svg>
+          <p class="ck-gauge-name">{txt.gWorks}</p>
+          <p class="ck-gauge-sub">{txt.gWorksSub}</p>
+        </div>
+
+        <div class="ck-gauge" data-state={stats.swerves === 0 ? 'standby' : 'live'}>
+          <svg viewBox="0 0 120 66" class="ck-gauge-svg" aria-hidden="true">
+            <path d="M 14 48 L 70 48" class="ck-flatline" stroke-width="1.5" fill="none" />
+            <path d="M 70 48 Q 88 48 100 30" class="ck-swerve-ghost" stroke-width="1.5" fill="none" stroke-dasharray="3 5" />
+            <text x="60" y="28" text-anchor="middle" class="ck-dial-num">{nf(stats.swerves)}</text>
+          </svg>
+          <p class="ck-gauge-name">{txt.gSwerves} {stats.swerves === 0 && <span class="ck-chip">{txt.standbyChip}</span>}</p>
+          <p class="ck-gauge-sub">{stats.swerves === 0 ? txt.gSwervesSub : txt.gSwervesSubLive}</p>
+        </div>
+      </div>
+    </section>
+
+    {/* ── 02 · Das Rhizom ────────────────────────────────────────────────── */}
+    <section class="ck-section" aria-labelledby="ck-rhizome-h">
+      <h2 id="ck-rhizome-h" class="ck-h2">{txt.rhizomeH}</h2>
+      <p class="ck-intro">{txt.rhizomeIntro}</p>
+
+      <div class="ck-panel ck-rhizome-panel">
+        <canvas class="ck-rhizome-canvas" data-ck="rhizome" aria-hidden="true"></canvas>
+        {stats.edgesTotal === 0 && <p class="ck-empty-chip">{txt.rhizomeEmpty}</p>}
+      </div>
+
+      <div class="ck-legend">
+        <div class="ck-legend-group">
+          <span class="ck-legend-h">{txt.legendNodes}</span>
+          <span class="ck-legend-item"><i class="ck-dot ck-c-in"></i>{txt.nWork} · {stats.works}</span>
+          <span class="ck-legend-item"><i class="ck-dot ck-c-thread"></i>{txt.nThread} · {stats.threads}</span>
+          <span class="ck-legend-item"><i class="ck-dot ck-c-out"></i>{txt.nSource} · {stats.sourcesLinked}</span>
+          <span class="ck-legend-item"><i class="ck-dot ck-c-rose"></i>{txt.nImpulse} · {stats.impulses}</span>
+        </div>
+        <div class="ck-legend-group">
+          <span class="ck-legend-h">{txt.legendEdges}</span>
+          <span class="ck-legend-item"><i class="ck-stroke ck-c-indim"></i>{txt.eElaborates} · {edges.elaborates || txt.undrawn}</span>
+          <span class="ck-legend-item"><i class="ck-stroke ck-stroke-curve ck-c-out"></i>{txt.eSwerve} · {edges.swerve || txt.undrawn}</span>
+          <span class="ck-legend-item"><i class="ck-stroke ck-c-thread"></i>{txt.eFork} · {edges.fork || txt.undrawn}</span>
+          <span class="ck-legend-item"><i class="ck-stroke ck-stroke-dash ck-c-rose"></i>{txt.eBridge} · {edges.bridge || txt.undrawn}</span>
+        </div>
+      </div>
+
+      <details class="ck-fallback">
+        <summary>{txt.worksListH}</summary>
+        <ol class="ck-worklist">
+          {nodesSorted
+            .filter((n) => n.kind === 'work')
+            .map((n) => {
+              const href = hrefForNode(n.id)
+              return (
+                <li>
+                  <span class="ck-worklist-date">{n.date}</span>
+                  {href ? <a href={href}>{n.label}</a> : <span>{n.label}</span>}
+                </li>
+              )
+            })}
+        </ol>
+      </details>
+    </section>
+
+    {/* ── 03 · Der Atlas ─────────────────────────────────────────────────── */}
+    <section class="ck-section" aria-labelledby="ck-atlas-h">
+      <h2 id="ck-atlas-h" class="ck-h2">{txt.atlasH}</h2>
+      <p class="ck-intro">{txt.atlasIntro}</p>
+
+      <div class="ck-panel ck-atlas-panel">
+        <svg viewBox={`0 0 ${SVG_W} ${SVG_H}`} class="ck-atlas-svg" role="group" aria-label={txt.atlasH}>
+          <defs>
+            <radialGradient id="ck-cloud" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="rgba(125,231,255,0.07)" />
+              <stop offset="100%" stop-color="rgba(125,231,255,0)" />
+            </radialGradient>
+          </defs>
+          <ellipse cx={SVG_W * 0.2} cy={SVG_H * 0.5} rx={SVG_W * 0.19} ry={SVG_H * 0.4} fill="url(#ck-cloud)" />
+          <ellipse cx={SVG_W * 0.5} cy={SVG_H * 0.58} rx={SVG_W * 0.2} ry={SVG_H * 0.4} fill="url(#ck-cloud)" />
+          <ellipse cx={SVG_W * 0.8} cy={SVG_H * 0.48} rx={SVG_W * 0.19} ry={SVG_H * 0.4} fill="url(#ck-cloud)" />
+          {DOMAIN_ORDER.map((d) => (
+            <text x={domainAnchor[d].x} y={domainAnchor[d].y} text-anchor="middle" class="ck-domain-label" data-domain={d}>
+              {domainName[d]} · {domains[d].length}
+            </text>
+          ))}
+          {stars.map((s) => (
+            <a
+              href={`#atlas-${s.entry.id}`}
+              class="ck-star"
+              data-atlas={s.entry.id}
+              data-status={s.entry.status}
+              data-domain={s.domain}
+              aria-label={`${s.entry.author} — ${s.entry.work} (${yearLabel(s.entry.year)})`}
+            >
+              <title>{s.entry.author} — {s.entry.work} ({yearLabel(s.entry.year)})</title>
+              <circle cx={s.x} cy={s.y} r={s.r * 3.2} class="ck-star-halo" />
+              <circle cx={s.x} cy={s.y} r={s.r} class="ck-star-core" />
+            </a>
+          ))}
+        </svg>
+        <p class="ck-atlas-hint">{txt.atlasHint} · <span class="ck-atlas-status"><i class="ck-dot ck-dot-seed"></i>{txt.lSeed} · {atlas.filter((e) => e.status === 'seed').length}</span><span class="ck-atlas-status"><i class="ck-dot ck-dot-read"></i>{txt.lRead} · {stats.atlasRead}</span><span class="ck-atlas-status"><i class="ck-dot ck-dot-worked"></i>{txt.lWorked} · {stats.atlasWorked}</span></p>
+      </div>
+
+      {/* Karteikarte — wird per JS aus der Quellenliste unten gefüllt (eine Quelle der Wahrheit im DOM). */}
+      <aside class="ck-card" data-ck="card" hidden>
+        <div class="ck-card-inner" data-ck="card-content"></div>
+        <button type="button" class="ck-card-close" data-ck="card-close">{txt.close} ✕</button>
+      </aside>
+      <p class="ck-card-hint" data-ck="card-hint">{txt.atlasCardEmpty}</p>
+
+      <details class="ck-fallback">
+        <summary>{txt.atlasListH}</summary>
+        {DOMAIN_ORDER.map((d) => (
+          <section class="ck-source-domain">
+            <h3 class="ck-source-domain-h" data-domain={d}>{domainName[d]} · {domains[d].length}</h3>
+            <ol class="ck-sourcelist">
+              {domains[d].map((e) => {
+                const href = atlasHref(e)
+                return (
+                  <li id={`atlas-${e.id}`} class="ck-source" data-status={e.status}>
+                    <p class="ck-source-head">
+                      <span class="ck-source-author">{e.author}</span>
+                      <cite class="ck-source-work">{e.work}</cite>
+                      <span class="ck-source-meta">{yearLabel(e.year)} · {typeName[e.type]} · {statusName[e.status] ?? e.status}</span>
+                    </p>
+                    <p class="ck-source-summary" lang={de ? 'en' : undefined}>{e.summary}</p>
+                    <p class="ck-source-relevance" lang={de ? 'en' : undefined}><strong>{txt.whyHere}:</strong> {e.relevance}</p>
+                    <p class="ck-source-foot">
+                      <span class="ck-source-tags">{e.tags.join(' · ')}</span>
+                      {href && (
+                        <a href={href} target="_blank" rel="noreferrer" class="ck-source-link">{txt.openSource} ↗</a>
+                      )}
+                    </p>
+                  </li>
+                )
+              })}
+            </ol>
+          </section>
+        ))}
+      </details>
+    </section>
+
+    {/* ── 04 · Methode ───────────────────────────────────────────────────── */}
+    <section class="ck-section ck-method" aria-labelledby="ck-method-h">
+      <h2 id="ck-method-h" class="ck-h2">{txt.methodH}</h2>
+      <p>{txt.methodP1}</p>
+      <p>{txt.methodP2}</p>
+      <p>{txt.methodP3}</p>
+      <p class="ck-method-links">
+        <a href={`${base}/atelier`}>{txt.linkGallery}</a> · <a href="/atelier/protocol">{txt.linkProtocol}</a> ·
+        <a href="/atelier/requests">{txt.linkRequests}</a> ·
+        <a href="https://github.com/frankbueltge/irrtum-als-methode" target="_blank" rel="noreferrer">{txt.linkRepo} ↗</a>
+      </p>
+    </section>
+  </div>
+</main>
+
+<script type="application/json" id="ck-data" set:html={payload} />
+
+<script>
+  // Cockpit-Instrumente: atmender Ring (Hero), Rhizom-Feld, Atlas-Karteikarte.
+  // Läuft nur mit committeten Daten aus #ck-data; ohne JS bleibt alles lesbar
+  // (Quellenliste, Werkliste, native SVG-Links mit Anker in die Liste).
+  import { hash01 } from '@/lib/atelier/cockpit'
+
+  type CkNode = { id: string; kind: 'work' | 'thread' | 'source' | 'impulse'; label: string; date: string | null; href: string | null }
+  type CkEdge = { from: string; to: string; kind: 'elaborates' | 'swerve' | 'fork' | 'bridge'; session?: number }
+  type CkData = { closure: number | null; nodes: CkNode[]; edges: CkEdge[]; atlas: { id: string; status: string }[] }
+
+  const TAU = Math.PI * 2
+  const dataEl = document.getElementById('ck-data')
+  const DATA: CkData = dataEl?.textContent ? JSON.parse(dataEl.textContent) : { closure: null, nodes: [], edges: [], atlas: [] }
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches
+
+  const rootEl = document.querySelector<HTMLElement>('.cockpit')
+  const cssVar = (name: string, fallback: string): string => {
+    const v = rootEl ? getComputedStyle(rootEl).getPropertyValue(name).trim() : ''
+    return v || fallback
+  }
+  const COLOR = {
+    out: cssVar('--ck-out', '#7de7ff'),
+    in: cssVar('--ck-in', '#ffb35c'),
+    thread: cssVar('--ck-thread', '#b7a4ff'),
+    rose: cssVar('--ck-rose', '#ff9ad5'),
+    ink: cssVar('--ck-ink', '#e8e9f5'),
+    ring: cssVar('--ck-ring', '#ccd2ff'),
+  }
+  const alpha = (hex: string, a: number): string => {
+    const m = /^#?([\da-f]{2})([\da-f]{2})([\da-f]{2})/i.exec(hex.trim())
+    if (!m) return hex
+    return `rgba(${parseInt(m[1], 16)}, ${parseInt(m[2], 16)}, ${parseInt(m[3], 16)}, ${a})`
+  }
+  const nodeColor: Record<CkNode['kind'], string> = { work: COLOR.in, thread: COLOR.thread, source: COLOR.out, impulse: COLOR.rose }
+  const edgeColor: Record<CkEdge['kind'], string> = { elaborates: COLOR.in, swerve: COLOR.out, fork: COLOR.thread, bridge: COLOR.rose }
+
+  /** rAF-Schleife mit DPR-Resize, Sichtbarkeits-Pause; reduced-motion ⇒ ein statisches Bild. */
+  function runCanvas(canvas: HTMLCanvasElement, draw: (ctx: CanvasRenderingContext2D, w: number, h: number, t: number) => void): void {
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
+    let w = 0
+    let h = 0
+    let raf = 0
+    let running = false
+    const start = performance.now()
+    const frame = (): void => {
+      ctx.clearRect(0, 0, w, h)
+      draw(ctx, w, h, reduced ? 0 : (performance.now() - start) / 1000)
+    }
+    const tick = (): void => {
+      frame()
+      raf = requestAnimationFrame(tick)
+    }
+    const stop = (): void => {
+      if (running) cancelAnimationFrame(raf)
+      running = false
+    }
+    const go = (): void => {
+      if (running || reduced) return
+      running = true
+      raf = requestAnimationFrame(tick)
+    }
+    const resize = (): void => {
+      const rect = canvas.getBoundingClientRect()
+      const dpr = Math.min(2, window.devicePixelRatio || 1)
+      w = rect.width
+      h = rect.height
+      canvas.width = Math.max(1, Math.round(w * dpr))
+      canvas.height = Math.max(1, Math.round(h * dpr))
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+      if (reduced) frame()
+    }
+    new ResizeObserver(resize).observe(canvas)
+    resize()
+    if (reduced) return
+    new IntersectionObserver((entries) => {
+      if (entries[0]?.isIntersecting) go()
+      else stop()
+    }).observe(canvas)
+  }
+
+  /* ── Hero: der atmende Kreis ─────────────────────────────────────────────
+     closure steuert das Instrument: Dicke + Enge (Atem-Amplitude) + Öffnung des
+     Rings. null (ungemessen) ⇒ Ruheatmung, gestrichelt, weit offen. */
+  const hero = document.querySelector<HTMLCanvasElement>('canvas[data-ck="hero"]')
+  if (hero) {
+    const closure = DATA.closure
+    const bgStars = Array.from({ length: 130 }, (_, i) => ({
+      x: hash01(`bgx${i}`),
+      y: hash01(`bgy${i}`),
+      r: 0.4 + hash01(`bgr${i}`) * 1.1,
+      tw: hash01(`bgt${i}`) * TAU,
+    }))
+    const halo = DATA.atlas.map((a) => ({
+      a0: hash01(a.id) * TAU,
+      rj: 0.88 + hash01(a.id + '#r') * 0.24,
+      speed: (0.5 + hash01(a.id + '#s')) * 0.01,
+      lit: a.status !== 'seed',
+      tw: hash01(a.id + '#t') * TAU,
+    }))
+    const embers = DATA.nodes
+      .filter((n) => n.kind === 'work')
+      .map((n) => ({
+        a0: hash01(n.id) * TAU,
+        rr: 0.18 + hash01(n.id + '#r') * 0.72,
+        speed: (0.3 + hash01(n.id + '#s')) * 0.016,
+        ph: hash01(n.id + '#p') * TAU,
+      }))
+
+    runCanvas(hero, (ctx, w, h, t) => {
+      const cx = w / 2
+      const cy = h / 2
+      const unit = Math.min(w, h)
+
+      // Hintergrund-Sterne (Dekor)
+      for (const s of bgStars) {
+        const a = 0.1 + 0.16 * (0.5 + 0.5 * Math.sin(t * 0.35 + s.tw))
+        ctx.fillStyle = `rgba(190, 200, 255, ${a})`
+        ctx.beginPath()
+        ctx.arc(s.x * w, s.y * h, s.r, 0, TAU)
+        ctx.fill()
+      }
+
+      // Atem
+      const T = 8.5
+      const breathA = closure == null ? 0.045 : 0.06 - 0.048 * closure
+      const breath = Math.sin((TAU * t) / T)
+      const scale = 1 + breathA * breath
+      const R = unit * 0.27 * scale
+
+      // Atlas-Halo: das Außen als langsam kreisender Gürtel aus kalten Lichtern
+      const haloR = unit * 0.44
+      for (const p of halo) {
+        const a = p.a0 + t * p.speed
+        const x = cx + Math.cos(a) * haloR * p.rj * 1.12
+        const y = cy + Math.sin(a) * haloR * p.rj * 0.86
+        const twinkle = 0.5 + 0.5 * Math.sin(t * 0.6 + p.tw)
+        ctx.fillStyle = alpha(COLOR.out, p.lit ? 0.85 : 0.16 + 0.2 * twinkle)
+        ctx.beginPath()
+        ctx.arc(x, y, p.lit ? 2.6 : 1.5, 0, TAU)
+        ctx.fill()
+      }
+
+      // Atem-Glut hinter dem Ring
+      const glow = ctx.createRadialGradient(cx, cy, R * 0.2, cx, cy, R * 1.7)
+      glow.addColorStop(0, alpha(COLOR.ring, 0.05 + 0.03 * (0.5 + 0.5 * breath)))
+      glow.addColorStop(1, 'rgba(0,0,0,0)')
+      ctx.fillStyle = glow
+      ctx.beginPath()
+      ctx.arc(cx, cy, R * 1.7, 0, TAU)
+      ctx.fill()
+
+      // Glut-Punkte: die eigenen Werke, im Inneren der Schleife
+      for (const e of embers) {
+        const a = e.a0 + t * e.speed
+        const r = R * e.rr * (1 + 0.02 * Math.sin(t * 0.4 + e.ph))
+        const x = cx + Math.cos(a) * r * 1.05
+        const y = cy + Math.sin(a) * r * 0.92
+        ctx.fillStyle = alpha(COLOR.in, 0.12)
+        ctx.beginPath()
+        ctx.arc(x, y, 5.5, 0, TAU)
+        ctx.fill()
+        ctx.fillStyle = alpha(COLOR.in, 0.8)
+        ctx.beginPath()
+        ctx.arc(x, y, 1.9, 0, TAU)
+        ctx.fill()
+      }
+
+      // Der Ring: organisch gewobbelt; Öffnung = Griff nach außen (schließt sich mit closure)
+      const gap = closure == null ? 1.0 : 1.15 * (1 - closure)
+      const lw = closure == null ? 1.4 : 1.5 + 7.5 * closure
+      const gapCenter = -Math.PI / 4
+      const a0 = gapCenter + gap / 2
+      const a1 = gapCenter + TAU - gap / 2
+      const ringPath = (): void => {
+        ctx.beginPath()
+        const steps = 180
+        for (let i = 0; i <= steps; i++) {
+          const th = a0 + ((a1 - a0) * i) / steps
+          const wobble = 1 + 0.012 * Math.sin(3 * th + t * 0.35) + 0.008 * Math.sin(5 * th - t * 0.27)
+          const x = cx + Math.cos(th) * R * wobble
+          const y = cy + Math.sin(th) * R * wobble
+          if (i === 0) ctx.moveTo(x, y)
+          else ctx.lineTo(x, y)
+        }
+      }
+      ctx.lineCap = 'round'
+      // Glow-Pass
+      ringPath()
+      ctx.strokeStyle = alpha(COLOR.ring, 0.08)
+      ctx.lineWidth = lw * 7
+      ctx.stroke()
+      ringPath()
+      ctx.strokeStyle = alpha(COLOR.ring, 0.2)
+      ctx.lineWidth = lw * 2.6
+      ctx.stroke()
+      // Kern-Pass — ungemessen: gestrichelt
+      ringPath()
+      if (closure == null) ctx.setLineDash([5, 9])
+      ctx.strokeStyle = alpha(COLOR.ring, 0.92)
+      ctx.lineWidth = lw
+      ctx.stroke()
+      ctx.setLineDash([])
+      // Ventil-Enden der Öffnung
+      if (gap > 0.05) {
+        for (const th of [a0, a1]) {
+          const x = cx + Math.cos(th) * R
+          const y = cy + Math.sin(th) * R
+          ctx.fillStyle = alpha(COLOR.out, 0.25)
+          ctx.beginPath()
+          ctx.arc(x, y, 7, 0, TAU)
+          ctx.fill()
+          ctx.fillStyle = alpha(COLOR.out, 0.95)
+          ctx.beginPath()
+          ctx.arc(x, y, 2.4, 0, TAU)
+          ctx.fill()
+        }
+      }
+    })
+  }
+
+  /* ── Rhizom: Werke als Glut-Feld, Kanten-Renderer liegt bereit ─────────── */
+  const rhizomeCanvas = document.querySelector<HTMLCanvasElement>('canvas[data-ck="rhizome"]')
+  if (rhizomeCanvas) {
+    const nodes = DATA.nodes
+    let hovered = -1
+    const positions: { x: number; y: number }[] = nodes.map(() => ({ x: 0, y: 0 }))
+
+    const layout = (w: number, h: number, t: number): void => {
+      const n = nodes.length
+      if (n === 0) return
+      // Reihenzahl aus dem Seitenverhältnis (√-Heuristik) → das Feld füllt die Fläche,
+      // statt bei wenigen Reihen eine leere Mittelzone zu lassen.
+      const rows = Math.max(2, Math.round(Math.sqrt((n * h) / w / 0.72)))
+      const cols = Math.ceil(n / rows)
+      const padX = 56
+      const padY = 48
+      const cellW = (w - padX * 2) / cols
+      const cellH = (h - padY * 2) / rows
+      nodes.forEach((node, i) => {
+        const row = Math.floor(i / cols)
+        const colRaw = i % cols
+        const col = row % 2 === 0 ? colRaw : cols - 1 - colRaw // Serpentine: Chronologie bleibt Weg
+        const jx = (hash01(node.id + '#x') - 0.5) * cellW * 0.5
+        const jy = (hash01(node.id + '#y') - 0.5) * cellH * 0.55
+        const ph = hash01(node.id + '#d') * TAU
+        positions[i].x = padX + (col + 0.5) * cellW + jx + 5 * Math.sin(t * 0.32 + ph)
+        positions[i].y = padY + (row + 0.5) * cellH + jy + 4 * Math.cos(t * 0.27 + ph * 1.7)
+      })
+    }
+
+    const idx = new Map(nodes.map((n, i) => [n.id, i]))
+
+    runCanvas(rhizomeCanvas, (ctx, w, h, t) => {
+      layout(w, h, t)
+
+      // Kanten (Seed: leer — der Renderer wartet auf Ulysses' erste Linie)
+      for (const e of DATA.edges) {
+        const ai = idx.get(e.from)
+        const bi = idx.get(e.to)
+        if (ai == null || bi == null) continue
+        const a = positions[ai]
+        const b = positions[bi]
+        const c = edgeColor[e.kind]
+        ctx.beginPath()
+        if (e.kind === 'elaborates') {
+          ctx.moveTo(a.x, a.y)
+          ctx.lineTo(b.x, b.y)
+        } else {
+          // Rhizom-Kanten schwingen aus — die Kurve zeigt den Umweg über das Außen
+          const mx = (a.x + b.x) / 2
+          const my = (a.y + b.y) / 2
+          const dx = b.x - a.x
+          const dy = b.y - a.y
+          const len = Math.hypot(dx, dy) || 1
+          ctx.moveTo(a.x, a.y)
+          ctx.quadraticCurveTo(mx - (dy / len) * len * 0.3, my + (dx / len) * len * 0.3, b.x, b.y)
+        }
+        if (e.kind === 'bridge') ctx.setLineDash([4, 6])
+        ctx.strokeStyle = alpha(c, 0.28)
+        ctx.lineWidth = 3.5
+        ctx.stroke()
+        ctx.strokeStyle = alpha(c, 0.85)
+        ctx.lineWidth = 1.2
+        ctx.stroke()
+        ctx.setLineDash([])
+      }
+
+      // Knoten
+      nodes.forEach((node, i) => {
+        const p = positions[i]
+        const c = nodeColor[node.kind]
+        const isHover = i === hovered
+        ctx.fillStyle = alpha(c, isHover ? 0.3 : 0.13)
+        ctx.beginPath()
+        ctx.arc(p.x, p.y, isHover ? 13 : 9, 0, TAU)
+        ctx.fill()
+        ctx.fillStyle = alpha(c, 0.95)
+        ctx.beginPath()
+        ctx.arc(p.x, p.y, isHover ? 5 : 4, 0, TAU)
+        ctx.fill()
+      })
+
+      // Zeitspanne als leise Markierung
+      const first = nodes[0]
+      const last = nodes[nodes.length - 1]
+      if (first?.date && last?.date) {
+        ctx.fillStyle = alpha(COLOR.ink, 0.4)
+        ctx.font = '10px "JetBrains Mono Variable", ui-monospace, monospace'
+        ctx.textAlign = 'left'
+        ctx.fillText(first.date, positions[0].x + 12, positions[0].y + 4)
+        ctx.textAlign = 'right'
+        ctx.fillText(last.date, positions[nodes.length - 1].x - 12, positions[nodes.length - 1].y + 4)
+      }
+
+      // Hover-Etikett
+      if (hovered >= 0) {
+        const node = nodes[hovered]
+        const p = positions[hovered]
+        const label = node.date ? `${node.label} · ${node.date}` : node.label
+        ctx.font = '12px "JetBrains Mono Variable", ui-monospace, monospace'
+        const tw = ctx.measureText(label).width
+        const bx = Math.min(Math.max(p.x - tw / 2 - 10, 8), w - tw - 28)
+        const by = p.y - 42 < 8 ? p.y + 20 : p.y - 42
+        ctx.fillStyle = 'rgba(8, 9, 24, 0.92)'
+        ctx.strokeStyle = alpha(nodeColor[node.kind], 0.5)
+        ctx.lineWidth = 1
+        ctx.beginPath()
+        ctx.roundRect(bx, by, tw + 20, 26, 8)
+        ctx.fill()
+        ctx.stroke()
+        ctx.fillStyle = alpha(COLOR.ink, 0.95)
+        ctx.textAlign = 'left'
+        ctx.fillText(label, bx + 10, by + 17)
+      }
+    })
+
+    const hit = (ev: PointerEvent): number => {
+      const rect = rhizomeCanvas.getBoundingClientRect()
+      const x = ev.clientX - rect.left
+      const y = ev.clientY - rect.top
+      let best = -1
+      let bestD = 26
+      positions.forEach((p, i) => {
+        const d = Math.hypot(p.x - x, p.y - y)
+        if (d < bestD) {
+          bestD = d
+          best = i
+        }
+      })
+      return best
+    }
+    rhizomeCanvas.addEventListener('pointermove', (ev) => {
+      hovered = hit(ev)
+      rhizomeCanvas.style.cursor = hovered >= 0 && nodes[hovered].href ? 'pointer' : 'default'
+    })
+    rhizomeCanvas.addEventListener('pointerleave', () => {
+      hovered = -1
+    })
+    rhizomeCanvas.addEventListener('click', (ev) => {
+      const i = hit(ev as PointerEvent)
+      const href = i >= 0 ? nodes[i].href : null
+      if (href) window.location.href = href
+    })
+  }
+
+  /* ── Atlas: Stern → Karteikarte (Inhalt kommt aus der Quellenliste im DOM) ── */
+  const card = document.querySelector<HTMLElement>('[data-ck="card"]')
+  const cardContent = document.querySelector<HTMLElement>('[data-ck="card-content"]')
+  const cardHint = document.querySelector<HTMLElement>('[data-ck="card-hint"]')
+  const cardClose = document.querySelector<HTMLButtonElement>('[data-ck="card-close"]')
+  let activeStar: Element | null = null
+
+  const closeCard = (): void => {
+    if (card) card.hidden = true
+    if (cardHint) cardHint.hidden = false
+    activeStar?.classList.remove('is-active')
+    activeStar = null
+  }
+  const openCard = (id: string, star: Element): void => {
+    const source = document.getElementById(`atlas-${id}`)
+    if (!source || !card || !cardContent) return
+    const clone = source.cloneNode(true) as HTMLElement
+    clone.removeAttribute('id')
+    cardContent.replaceChildren(clone)
+    card.hidden = false
+    if (cardHint) cardHint.hidden = true
+    activeStar?.classList.remove('is-active')
+    activeStar = star
+    star.classList.add('is-active')
+    card.scrollIntoView({ block: 'nearest', behavior: reduced ? 'auto' : 'smooth' })
+  }
+
+  document.querySelectorAll<SVGAElement>('a.ck-star').forEach((star) => {
+    star.addEventListener('click', (ev) => {
+      ev.preventDefault()
+      const id = star.dataset.atlas
+      if (!id) return
+      if (activeStar === star) closeCard()
+      else openCard(id, star)
+    })
+  })
+  cardClose?.addEventListener('click', closeCard)
+  document.addEventListener('keydown', (ev) => {
+    if (ev.key === 'Escape') closeCard()
+  })
+</script>
+
+<style>
+  /* ── Cockpit-Skin — bewusst eigene Welt, komplett auf .cockpit gescopet. ──
+     Dunkel/luminös in BEIDEN Site-Themes: ein Instrument hat seine eigene
+     Innenbeleuchtung (der TopBar ist ohnehin keep-dark — nahtloser Anschluss). */
+  .cockpit {
+    --ck-bg0: #04040c;
+    --ck-bg1: #0b0c20;
+    --ck-panel: rgba(15, 16, 36, 0.72);
+    --ck-line: rgba(148, 158, 224, 0.16);
+    --ck-ink: #e8e9f5;
+    --ck-ink-dim: #a2a5c4;
+    --ck-ink-faint: #6d7096;
+    --ck-ring: #ccd2ff;
+    --ck-out: #7de7ff; /* das Außen — kaltes Leuchten */
+    --ck-mint: #8ff7e0;
+    --ck-steel: #9db6ff;
+    --ck-in: #ffb35c; /* das Innen — warme Glut */
+    --ck-in-dim: #b97f42;
+    --ck-thread: #b7a4ff;
+    --ck-rose: #ff9ad5;
+
+    background:
+      radial-gradient(120% 90% at 50% 0%, var(--ck-bg1) 0%, var(--ck-bg0) 58%),
+      var(--ck-bg0);
+    color: var(--ck-ink);
+    font-family: 'Space Grotesk Variable', ui-sans-serif, system-ui, sans-serif;
+  }
+  .cockpit ::selection {
+    background: rgba(125, 231, 255, 0.25);
+  }
+
+  /* ── Hero ── */
+  .ck-hero {
+    position: relative;
+    min-height: min(92vh, 980px);
+    overflow: hidden;
+  }
+  .ck-hero-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .ck-hero-hud {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    min-height: min(92vh, 980px);
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 24px;
+    margin: 0 auto;
+    max-width: 72rem;
+    padding: 48px 20px 28px;
+    pointer-events: none;
+  }
+  .ck-hero-hud a,
+  .ck-hero-hud aside {
+    pointer-events: auto;
+  }
+  .ck-eyebrow {
+    font-family: 'JetBrains Mono Variable', ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ck-out);
+  }
+  .ck-title {
+    margin-top: 10px;
+    font-size: clamp(38px, 7vw, 64px);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 0.95;
+    text-shadow: 0 0 34px rgba(125, 231, 255, 0.25);
+  }
+  .ck-lede {
+    margin-top: 16px;
+    max-width: 34rem;
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--ck-ink-dim);
+    text-wrap: pretty;
+  }
+  .ck-hero-readout {
+    align-self: center;
+    text-align: center;
+    font-family: 'JetBrains Mono Variable', ui-monospace, monospace;
+  }
+  .ck-readout-value {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 12px;
+  }
+  .ck-readout-label {
+    font-size: 12px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--ck-ink-faint);
+  }
+  .ck-readout-number {
+    font-size: clamp(34px, 5vw, 52px);
+    color: var(--ck-ring);
+    text-shadow: 0 0 26px rgba(204, 210, 255, 0.45);
+  }
+  .ck-readout-sub {
+    margin-top: 4px;
+    font-size: 12px;
+    color: var(--ck-ink-dim);
+  }
+  .ck-readout-scale {
+    margin-top: 2px;
+    font-size: 10.5px;
+    color: var(--ck-ink-faint);
+  }
+  .ck-standby {
+    display: flex;
+    gap: 12px;
+    max-width: 30rem;
+    border: 1px solid var(--ck-line);
+    border-radius: 14px;
+    background: var(--ck-panel);
+    padding: 14px 16px;
+    backdrop-filter: blur(6px);
+  }
+  .ck-standby-dot {
+    margin-top: 5px;
+    height: 8px;
+    width: 8px;
+    flex: none;
+    border-radius: 999px;
+    background: var(--ck-out);
+    box-shadow: 0 0 12px var(--ck-out);
+    animation: ck-standby 3.2s ease-in-out infinite;
+  }
+  .ck-standby-h {
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .ck-standby-p {
+    margin-top: 4px;
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: var(--ck-ink-dim);
+    text-wrap: pretty;
+  }
+  .ck-scrollcue {
+    align-self: center;
+    font-family: 'JetBrains Mono Variable', ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ck-ink-faint);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .ck-scrollcue:hover {
+    color: var(--ck-out);
+  }
+
+  /* ── Body-Raster ── */
+  .ck-body {
+    margin: 0 auto;
+    max-width: 72rem;
+    padding: 12px 20px 72px;
+  }
+  .ck-section {
+    margin-top: 56px;
+  }
+  .ck-h2 {
+    font-family: 'JetBrains Mono Variable', ui-monospace, monospace;
+    font-size: 12px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--ck-out);
+  }
+  .ck-intro {
+    margin-top: 12px;
+    max-width: 46rem;
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: var(--ck-ink-dim);
+    text-wrap: pretty;
+  }
+  .ck-panel {
+    position: relative;
+    margin-top: 20px;
+    overflow: hidden;
+    border: 1px solid var(--ck-line);
+    border-radius: 18px;
+    background:
+      radial-gradient(90% 100% at 50% 0%, rgba(38, 42, 92, 0.35) 0%, rgba(10, 11, 28, 0.2) 100%),
+      rgba(6, 7, 18, 0.6);
+    box-shadow: inset 0 1px 0 rgba(190, 200, 255, 0.07);
+  }
+
+  /* ── Vitalzeichen ── */
+  .ck-gauges {
+    display: grid;
+    margin-top: 20px;
+    gap: 14px;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  }
+  .ck-gauge {
+    border: 1px solid var(--ck-line);
+    border-radius: 16px;
+    background: var(--ck-panel);
+    padding: 16px 16px 14px;
+  }
+  .ck-gauge-svg {
+    width: 100%;
+    max-width: 180px;
+  }
+  .ck-dial-track {
+    stroke: rgba(148, 158, 224, 0.22);
+    stroke-dasharray: 2 6;
+  }
+  .ck-dial-value {
+    stroke: var(--ck-out);
+    filter: drop-shadow(0 0 6px rgba(125, 231, 255, 0.6));
+  }
+  .ck-dial-num {
+    font-family: 'JetBrains Mono Variable', ui-monospace, monospace;
+    font-size: 20px;
+    fill: var(--ck-ink);
+  }
+  .ck-flatline {
+    stroke: rgba(148, 158, 224, 0.35);
+  }
+  .ck-flatline-pulse {
+    fill: var(--ck-out);
+    filter: drop-shadow(0 0 6px var(--ck-out));
+    animation: ck-sweep 4.5s linear infinite;
+  }
+  .ck-swerve-ghost {
+    stroke: var(--ck-out);
+    opacity: 0.35;
+  }
+  .ck-workdot {
+    fill: var(--ck-in);
+    opacity: 0.85;
+    animation: ck-emberflicker 4s ease-in-out infinite;
+  }
+  /* Gestaffeltes Glimmen ohne Inline-Delays (CSP) */
+  .ck-workdot:nth-child(3n) {
+    animation-delay: -1.3s;
+  }
+  .ck-workdot:nth-child(3n + 1) {
+    animation-delay: -2.6s;
+  }
+  .ck-workdot:nth-child(4n) {
+    animation-delay: -0.7s;
+  }
+  .ck-workdot:nth-child(5n + 2) {
+    animation-delay: -3.4s;
+  }
+  .ck-gauge-name {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .ck-gauge-sub {
+    margin-top: 3px;
+    font-size: 12px;
+    color: var(--ck-ink-faint);
+  }
+  .ck-chip {
+    border: 1px solid var(--ck-line);
+    border-radius: 999px;
+    padding: 1px 8px;
+    font-family: 'JetBrains Mono Variable', ui-monospace, monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ck-out);
+    animation: ck-standby 3.2s ease-in-out infinite;
+  }
+  .ck-gauge[data-state='standby'] .ck-dial-num {
+    fill: var(--ck-ink-dim);
+  }
+
+  /* ── Rhizom ── */
+  .ck-rhizome-panel {
+    height: clamp(340px, 48vh, 460px);
+  }
+  .ck-rhizome-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .ck-empty-chip {
+    position: absolute;
+    bottom: 14px;
+    left: 50%;
+    translate: -50% 0;
+    max-width: calc(100% - 28px);
+    border: 1px dashed rgba(148, 158, 224, 0.35);
+    border-radius: 999px;
+    background: rgba(6, 7, 18, 0.72);
+    padding: 6px 14px;
+    font-family: 'JetBrains Mono Variable', ui-monospace, monospace;
+    font-size: 11px;
+    color: var(--ck-ink-dim);
+    text-align: center;
+    backdrop-filter: blur(4px);
+  }
+  .ck-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 36px;
+    margin-top: 16px;
+  }
+  .ck-legend-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 18px;
+  }
+  .ck-legend-h {
+    font-family: 'JetBrains Mono Variable', ui-monospace, monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ck-ink-faint);
+  }
+  .ck-legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12.5px;
+    color: var(--ck-ink-dim);
+  }
+  .ck-dot {
+    height: 8px;
+    width: 8px;
+    flex: none;
+    border-radius: 999px;
+    background: var(--c, var(--ck-out));
+    box-shadow: 0 0 8px var(--c, var(--ck-out));
+  }
+  .ck-stroke {
+    height: 2px;
+    width: 22px;
+    flex: none;
+    border-radius: 2px;
+    background: var(--c, var(--ck-out));
+    box-shadow: 0 0 8px var(--c, var(--ck-out));
+  }
+  .ck-stroke-curve {
+    border-radius: 999px;
+    transform: rotate(-8deg);
+    clip-path: none;
+  }
+  .ck-stroke-dash {
+    background: repeating-linear-gradient(90deg, var(--c) 0 4px, transparent 4px 8px);
+  }
+  /* Farb-Modifier statt Inline-Styles — die CSP (gehashte style-src) blockiert style-Attribute. */
+  .ck-c-in {
+    --c: var(--ck-in);
+  }
+  .ck-c-indim {
+    --c: var(--ck-in-dim);
+  }
+  .ck-c-out {
+    --c: var(--ck-out);
+  }
+  .ck-c-thread {
+    --c: var(--ck-thread);
+  }
+  .ck-c-rose {
+    --c: var(--ck-rose);
+  }
+
+  /* ── Fallback-Listen ── */
+  .ck-fallback {
+    margin-top: 18px;
+    border: 1px solid var(--ck-line);
+    border-radius: 14px;
+    background: rgba(10, 11, 28, 0.5);
+    padding: 12px 16px;
+  }
+  .ck-fallback summary {
+    cursor: pointer;
+    font-family: 'JetBrains Mono Variable', ui-monospace, monospace;
+    font-size: 12px;
+    color: var(--ck-ink-dim);
+  }
+  .ck-fallback summary:hover {
+    color: var(--ck-ink);
+  }
+  .ck-worklist {
+    margin-top: 12px;
+    columns: 2;
+    column-gap: 32px;
+    font-size: 13px;
+  }
+  .ck-worklist li {
+    margin-bottom: 7px;
+    break-inside: avoid;
+  }
+  .ck-worklist-date {
+    margin-right: 10px;
+    font-family: 'JetBrains Mono Variable', ui-monospace, monospace;
+    font-size: 11px;
+    color: var(--ck-ink-faint);
+  }
+  .ck-worklist a {
+    color: var(--ck-in);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255, 179, 92, 0.3);
+  }
+  .ck-worklist a:hover {
+    border-bottom-color: var(--ck-in);
+  }
+  @media (max-width: 640px) {
+    .ck-worklist {
+      columns: 1;
+    }
+  }
+
+  /* ── Atlas ── */
+  .ck-atlas-panel {
+    padding: 10px 10px 4px;
+  }
+  .ck-atlas-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .ck-domain-label {
+    font-family: 'JetBrains Mono Variable', ui-monospace, monospace;
+    font-size: 13px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    opacity: 0.85;
+  }
+  /* Domänen-Tints: das Außen in drei kalten Lichtern */
+  .ck-domain-label[data-domain='praxis'],
+  .ck-star[data-domain='praxis'] {
+    fill: var(--ck-out);
+    --c: var(--ck-out);
+  }
+  .ck-domain-label[data-domain='methode'],
+  .ck-star[data-domain='methode'] {
+    fill: var(--ck-mint);
+    --c: var(--ck-mint);
+  }
+  .ck-domain-label[data-domain='maschine'],
+  .ck-star[data-domain='maschine'] {
+    fill: var(--ck-steel);
+    --c: var(--ck-steel);
+  }
+  .ck-source-domain-h[data-domain='praxis'] {
+    color: var(--ck-out);
+  }
+  .ck-source-domain-h[data-domain='methode'] {
+    color: var(--ck-mint);
+  }
+  .ck-source-domain-h[data-domain='maschine'] {
+    color: var(--ck-steel);
+  }
+  .ck-star {
+    cursor: pointer;
+    outline: none;
+  }
+  .ck-star-core {
+    fill: var(--c, var(--ck-out));
+    opacity: 0.6;
+    transition: opacity 0.25s;
+  }
+  .ck-star-halo {
+    fill: var(--c, var(--ck-out));
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+  .ck-star:hover .ck-star-core,
+  .ck-star:focus-visible .ck-star-core,
+  .ck-star.is-active .ck-star-core {
+    opacity: 1;
+  }
+  .ck-star:hover .ck-star-halo,
+  .ck-star:focus-visible .ck-star-halo,
+  .ck-star.is-active .ck-star-halo {
+    opacity: 0.22;
+  }
+  .ck-star:focus-visible .ck-star-halo {
+    opacity: 0.35;
+  }
+  /* Status-Dramaturgie: seed glimmt, read leuchtet, worked strahlt */
+  .ck-star[data-status='seed'] .ck-star-core {
+    opacity: 0.5;
+  }
+  .ck-star[data-status='read'] .ck-star-core {
+    opacity: 1;
+  }
+  .ck-star[data-status='read'] .ck-star-halo {
+    opacity: 0.18;
+  }
+  .ck-star[data-status='worked'] .ck-star-core {
+    opacity: 1;
+  }
+  .ck-star[data-status='worked'] .ck-star-halo {
+    opacity: 0.4;
+  }
+  .ck-star[data-status='archived'] .ck-star-core {
+    opacity: 0.18;
+  }
+  .ck-atlas-hint {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 16px;
+    padding: 8px 10px 10px;
+    font-family: 'JetBrains Mono Variable', ui-monospace, monospace;
+    font-size: 11px;
+    color: var(--ck-ink-faint);
+  }
+  .ck-atlas-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .ck-dot-seed {
+    --c: var(--ck-out);
+    opacity: 0.45;
+  }
+  .ck-dot-read {
+    --c: var(--ck-out);
+  }
+  .ck-dot-worked {
+    --c: var(--ck-out);
+    box-shadow: 0 0 12px var(--ck-out);
+  }
+
+  .ck-card-inner :global(li) {
+    list-style: none;
+  }
+  .ck-card {
+    margin-top: 16px;
+    border: 1px solid rgba(125, 231, 255, 0.3);
+    border-radius: 16px;
+    background: var(--ck-panel);
+    box-shadow: 0 0 40px rgba(125, 231, 255, 0.07);
+    padding: 18px 18px 14px;
+  }
+  .ck-card-close {
+    margin-top: 10px;
+    cursor: pointer;
+    border: 1px solid var(--ck-line);
+    border-radius: 999px;
+    background: none;
+    padding: 4px 12px;
+    font-family: 'JetBrains Mono Variable', ui-monospace, monospace;
+    font-size: 11px;
+    color: var(--ck-ink-dim);
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .ck-card-close:hover {
+    border-color: var(--ck-out);
+    color: var(--ck-out);
+  }
+  .ck-card-hint {
+    margin-top: 16px;
+    font-size: 12.5px;
+    color: var(--ck-ink-faint);
+  }
+
+  .ck-source-domain {
+    margin-top: 16px;
+  }
+  .ck-source-domain-h {
+    font-family: 'JetBrains Mono Variable', ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .ck-sourcelist {
+    margin-top: 8px;
+  }
+  .ck-source {
+    border-top: 1px solid rgba(148, 158, 224, 0.1);
+    padding: 12px 2px;
+  }
+  .ck-source-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 10px;
+  }
+  .ck-source-author {
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .ck-source-work {
+    font-size: 13.5px;
+    font-style: italic;
+    color: var(--ck-out);
+  }
+  .ck-source-meta {
+    font-family: 'JetBrains Mono Variable', ui-monospace, monospace;
+    font-size: 10.5px;
+    color: var(--ck-ink-faint);
+  }
+  .ck-source-summary,
+  .ck-source-relevance {
+    margin-top: 6px;
+    max-width: 46rem;
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: var(--ck-ink-dim);
+  }
+  .ck-source-relevance strong {
+    color: var(--ck-ink);
+    font-weight: 600;
+  }
+  .ck-source-foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 6px 16px;
+    margin-top: 7px;
+  }
+  .ck-source-tags {
+    font-family: 'JetBrains Mono Variable', ui-monospace, monospace;
+    font-size: 10.5px;
+    color: var(--ck-ink-faint);
+  }
+  .ck-source-link {
+    font-family: 'JetBrains Mono Variable', ui-monospace, monospace;
+    font-size: 11px;
+    color: var(--ck-out);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(125, 231, 255, 0.35);
+  }
+  .ck-source-link:hover {
+    border-bottom-color: var(--ck-out);
+  }
+
+  /* ── Methode ── */
+  .ck-method p {
+    margin-top: 12px;
+    max-width: 46rem;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--ck-ink-dim);
+    text-wrap: pretty;
+  }
+  .ck-method-links a {
+    color: var(--ck-out);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(125, 231, 255, 0.35);
+  }
+  .ck-method-links a:hover {
+    border-bottom-color: var(--ck-out);
+  }
+
+  /* ── Motion ── */
+  @keyframes ck-standby {
+    0%,
+    100% {
+      opacity: 0.35;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+  @keyframes ck-sweep {
+    0% {
+      cx: 10px;
+      opacity: 0;
+    }
+    12% {
+      opacity: 1;
+    }
+    88% {
+      opacity: 1;
+    }
+    100% {
+      cx: 110px;
+      opacity: 0;
+    }
+  }
+  @keyframes ck-emberflicker {
+    0%,
+    100% {
+      opacity: 0.55;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cockpit *,
+    .cockpit *::before,
+    .cockpit *::after {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+</style>
