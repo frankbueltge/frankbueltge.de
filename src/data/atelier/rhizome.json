@@ -1,6 +1,6 @@
 {
   "updated": "2026-07-14",
-  "note": "SEED (team, 2026-07-14). Nodes below are the existing dated works — facts derived from works/*/meta.json. Edges are intentionally EMPTY: how your works, threads and sources connect is your reading to draw, not ours to invent. Add thread/ and source/impulse nodes and the edges as your practice reveals them. See REQUESTS.md 2026-07-14 for the shape.",
+  "note": "SEED (team, 2026-07-14). Nodes below are the existing dated works — facts derived from works/*/meta.json. Edges are intentionally EMPTY: how your works, threads and sources connect is your reading to draw, not ours to invent. Add thread/ and source/impulse nodes and the edges as your practice reveals them. See REQUESTS.md 2026-07-14 for the shape. | S26 (2026-07-14): first edges drawn — a swerve from the artistic-research field (Rheinberger/Frayling/Schwab/Haseman) into the 'epistemic-thing subtraction' thread, which re-reads two prior works (Generative Unknowing, Named the Glitch) and draws a bridge between them (they are one fact).",
   "nodes": [
     {
       "id": "w-2026-06-29-cerfs-margin",
@@ -121,7 +121,84 @@
       "kind": "work",
       "label": "Generative Unknowing",
       "date": "2026-07-13"
+    },
+    {
+      "id": "w-2026-07-14-position-epistemic-thing",
+      "kind": "work",
+      "label": "The Epistemic Thing and the Error (position)",
+      "date": "2026-07-14"
+    },
+    {
+      "id": "thread-epistemic-thing-subtraction",
+      "kind": "thread",
+      "label": "Error subtracted to a special case of the epistemic thing"
+    },
+    {
+      "id": "atlas:rheinberger-experimental-systems-difference",
+      "kind": "source",
+      "label": "Rheinberger — Experimental Systems (epistemic thing / differential reproduction)"
+    },
+    {
+      "id": "atlas:frayling-research-in-art-and-design",
+      "kind": "source",
+      "label": "Frayling — Research through art"
+    },
+    {
+      "id": "atlas:schwab-experimental-systems",
+      "kind": "source",
+      "label": "Schwab/Borgdorff — Experimental Systems in Artistic Research"
+    },
+    {
+      "id": "atlas:haseman-manifesto-for-performative-research",
+      "kind": "source",
+      "label": "Haseman — Performative Research"
     }
   ],
-  "edges": []
+  "edges": [
+    {
+      "from": "atlas:rheinberger-experimental-systems-difference",
+      "to": "thread-epistemic-thing-subtraction",
+      "kind": "swerve",
+      "session": 26
+    },
+    {
+      "from": "thread-epistemic-thing-subtraction",
+      "to": "w-2026-07-14-position-epistemic-thing",
+      "kind": "elaborates"
+    },
+    {
+      "from": "thread-epistemic-thing-subtraction",
+      "to": "w-2026-07-13-generative-unknowing",
+      "kind": "elaborates"
+    },
+    {
+      "from": "thread-epistemic-thing-subtraction",
+      "to": "w-2026-07-07-named-the-glitch",
+      "kind": "elaborates"
+    },
+    {
+      "from": "w-2026-07-07-named-the-glitch",
+      "to": "w-2026-07-13-generative-unknowing",
+      "kind": "bridge",
+      "session": 26
+    },
+    {
+      "from": "atlas:frayling-research-in-art-and-design",
+      "to": "thread-epistemic-thing-subtraction",
+      "kind": "swerve",
+      "session": 26
+    },
+    {
+      "from": "atlas:schwab-experimental-systems",
+      "to": "thread-epistemic-thing-subtraction",
+      "kind": "swerve",
+      "session": 26
+    },
+    {
+      "from": "atlas:haseman-manifesto-for-performative-research",
+      "to": "thread-epistemic-thing-subtraction",
+      "kind": "swerve",
+      "session": 26
+    }
+  ]
 }
