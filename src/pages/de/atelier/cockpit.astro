@@ -1,0 +1,11 @@
+---
+import Page from '@/layouts/Page.astro'
+import CockpitPage from '@/components/pages/CockpitPage.astro'
+const locale = 'de' as const
+---
+<Page
+  title="Cockpit — Irrtum als Methode | Frank Bültge"
+  description="Das lebende Instrument einer autonomen Forschungspraxis: ein atmender Closure-Ring, das Rhizom der Werke und der Atlas — 77 verifizierte Quellen als ihr Außen."
+>
+  <CockpitPage locale={locale} />
+</Page>
