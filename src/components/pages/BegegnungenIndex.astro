@@ -1,0 +1,53 @@
+---
+// Ökologie-Neustrukturierung, Phase C2 (work order phase-c2-site-entrance-design.md §3): Liste
+// der Begegnungen — aktuell genau ein Eintrag. "Gleiche Familie, eine Stufe ruhiger" als der
+// Site-Eingang (/): derselbe Typo-Kanon (Kicker/Mono-Notate/Hairlines/Registertabellen aus
+// docs/design/variants-2026-07-15/a-observatorium.html), aber keine eigene Zeichengrammatik und
+// kein Dekor — die Partitur (SVG-Karte, Farbidentitäten) bleibt dem Eingang vorbehalten.
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import type { Locale } from '@/lib/site'
+import { allEncounters, shortEncounterSlug } from '@/lib/begegnungen'
+
+const locale = (Astro.currentLocale ?? 'en') as Locale
+const copy = {
+  de: {
+    title: 'Begegnungen',
+    sub: 'Aufgezeichnete Begegnungen zwischen den unabhängigen Praktiken des Labs — materialerst, mit Quellenangaben, nichts aufgelöst.',
+    statusAsOf: 'Stand',
+    readMore: 'Erzählung lesen',
+  },
+  en: {
+    title: 'Encounters',
+    sub: "Recorded encounters between the lab's independent practices — material first, sourced, nothing resolved.",
+    statusAsOf: 'As of',
+    readMore: 'Read the story',
+  },
+}[locale]
+---
+
+<main id="main" class="mx-auto w-full max-w-4xl flex-1 px-6 py-16 sm:py-24">
+  <h1 class="text-[clamp(34px,6vw,64px)] font-bold tracking-[-0.03em]">{copy.title}</h1>
+  <p class="mt-4 max-w-2xl text-fg-muted">{copy.sub}</p>
+
+  <ul class="mt-12 divide-y divide-line/60 border-t border-line/60">
+    {allEncounters.map((entrance) => {
+      const slug = shortEncounterSlug(entrance.encounter_id)
+      return (
+        <li class="py-7">
+          <a href={getRelativeLocaleUrl(locale, `/begegnungen/${slug}`)} class="group block">
+            <h2 class="text-lg font-semibold transition-colors group-hover:text-accent-soft">
+              {entrance.headline}
+            </h2>
+            <p class="mt-1.5 text-sm text-fg-muted">{entrance.title}</p>
+            <p class="mt-2 font-mono text-xs uppercase tracking-wider text-fg-faint">
+              {copy.statusAsOf} {entrance.status.as_of} · {entrance.status.statusLine}
+            </p>
+          </a>
+          <a href={getRelativeLocaleUrl(locale, `/begegnungen/${slug}`)} class="mt-2 inline-block font-mono text-xs text-fg-faint transition-colors hover:text-fg">
+            {copy.readMore} →
+          </a>
+        </li>
+      )
+    })}
+  </ul>
+</main>

@@ -1,9 +1,16 @@
 ---
+// Ökologie-Neustrukturierung (Phase 3e, Branch ecology-restructure, Frank-Mandat 2026-07-15
+// "komplett neu strukturieren"): die Startseite ist jetzt der Eingang in die aktuelle Begegnung
+// statt der bisherigen Bio/Experimente-Übersicht (docs/design/site-restructure-concept.md §1/
+// §2). Git ist das Archiv — die vorige Fassung lebt in der Historie dieser Datei, nicht als
+// auskommentierter Block; der alte Home.astro-Baustein bleibt unangetastet im Repo, nur
+// unverlinkt. NICHT auf main mergen ohne Franks ausdrückliches Go (siehe Arbeitsauftrag §0).
 import Page from '@/layouts/Page.astro'
-import Home from '@/components/Home.astro'
-import { t } from '@/i18n/ui'
-const locale = 'en' as const
+import BegegnungEntrance from '@/components/pages/BegegnungEntrance.astro'
+import { currentEntrance } from '@/lib/begegnungen'
+
+const entrance = currentEntrance
 ---
-<Page title={t(locale, 'meta.home.title')} description={t(locale, 'meta.home.desc')}>
-  <Home />
+<Page title={`${entrance.headline} | Frank Bültge`} description={entrance.status.statusLine}>
+  <BegegnungEntrance />
 </Page>
