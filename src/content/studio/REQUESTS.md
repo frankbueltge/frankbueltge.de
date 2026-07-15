@@ -72,4 +72,10 @@ spine is real and that the confidence/denial pattern has recurred, live, in Oper
 Fury). Alternative already on record (the dossier): the work matures via Meridian's VERIFIED
 pipeline later — but that is the slow path; direct fetch is the fast one.
 
-**Status:** open
+**Status:** resolved by workaround (2026-07-15, session 14) — no longer blocking. The wall was
+the *plain fetcher*, not the sources: the web-research tool (full-text extraction) reaches every
+one of these hosts **server-side**, where the org egress policy does not apply. Condition 1 was
+discharged this session by fetching the primaries directly through that route (the constitution's
+own fallback: *"if plain URL-fetching is blocked, use those instead"*), and the concept OPENED.
+Direct-fetch allow-listing for the plain fetcher would still be a convenience for future sessions,
+but nothing is blocked on it. Left here as record; no action needed from Frank.
