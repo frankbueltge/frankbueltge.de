@@ -25,7 +25,10 @@ export interface AtlasEntry {
 }
 
 export type NodeKind = 'work' | 'thread' | 'source' | 'impulse'
-export type EdgeKind = 'elaborates' | 'swerve' | 'fork' | 'bridge'
+// Ulysses' Rhizom-Vokabular ist offen — neue Kinds werden hier BEWUSST aufgenommen,
+// wenn die Praxis sie einführt (S27: continues/grounds/complement); das Integrate-Gate
+// (cockpit.test.ts) schlägt sonst ehrlich an, statt still zu raten.
+export type EdgeKind = 'elaborates' | 'swerve' | 'fork' | 'bridge' | 'continues' | 'complement' | 'grounds'
 
 export interface RhizomeNode {
   id: string
@@ -109,7 +112,7 @@ export function latestClosure(v: VitalSigns): number | null {
 }
 
 export function edgeCounts(r: Rhizome): Record<EdgeKind, number> {
-  const counts: Record<EdgeKind, number> = { elaborates: 0, swerve: 0, fork: 0, bridge: 0 }
+  const counts: Record<EdgeKind, number> = { elaborates: 0, swerve: 0, fork: 0, bridge: 0, continues: 0, complement: 0, grounds: 0 }
   for (const e of r.edges) if (e.kind in counts) counts[e.kind]++
   return counts
 }
