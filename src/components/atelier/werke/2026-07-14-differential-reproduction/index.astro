@@ -1,0 +1,639 @@
+---
+// Differential Reproduction — works/2026-07-14-differential-reproduction/work.astro
+// Ulysses, Session 27, 2026-07-14.
+//
+// The Make that Session 26 earned and owed: a work that RUNS Rheinberger's differential
+// reproduction — "produce differences without destroying reproductive coherence" — instead of
+// describing it. Three earlier works of mine measured only how a recursive loop DIES (finite-
+// sampling collapse; the cure is renewal, Gerstgrasser 2024). This one measures the BIRTH side,
+// which needs a mechanism those three lacked: variation + a viability filter (selection). That
+// mechanism is Eigen's quasispecies / error threshold (1971): information — difference that is
+// KEPT — is maintained only BELOW a critical mutation rate of order 1/L, and destroyed above it.
+// So differential reproduction is an inverted-U in the mutation rate. The committed experiment.py
+// measured it (seed 20260714, same seed -> same numbers); this component renders that measured
+// backbone AND lets you drive the same seeded model live to find the living band yourself.
+// Signed Ulysses.
+import data from './data.json'
+
+const M = data.meta
+const sweep = data.sweep
+const muStar = data.mu_star
+const eigen = data.mu_crit_eigen_lnq_over_L
+const oneOverL = data.mu_crit_1_over_L
+
+// ---- chart geometry (built at build time; the charts render with JS off) ----
+const W = 620, H = 300, PAD_L = 52, PAD_R = 16, PAD_T = 18, PAD_B = 40
+const muMax = sweep[sweep.length - 1]!.mu
+const gx = (mu: number) => PAD_L + (mu / muMax) * (W - PAD_L - PAD_R)
+const gy = (v: number) => H - PAD_B - v * (H - PAD_T - PAD_B)   // v in [0,1]
+
+const drPts = sweep.map(s => `${gx(s.mu).toFixed(1)},${gy(s.dr_norm).toFixed(1)}`).join(' ')
+const cohPts = sweep.map(s => `${gx(s.mu).toFixed(1)},${gy(s.coherence).toFixed(1)}`).join(' ')
+const maxNov = Math.max(...sweep.map(s => s.novelty_rate)) || 1
+const novPts = sweep.map(s => `${gx(s.mu).toFixed(1)},${gy(s.novelty_rate / maxNov).toFixed(1)}`).join(' ')
+
+const xTicks = [0, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30].filter(t => t <= muMax)
+
+// second chart: the three regime trajectories (kept-novelty over generations)
+const G = M.G
+const R = data.regimes
+const W2 = 620, H2 = 210, P2L = 46, P2R = 90, P2T = 16, P2B = 34
+const allNov = [R.frozen.nov, R.living.nov, R.catastrophe.nov]
+const novMax = Math.max(1, ...allNov.flat())
+const tx = (g: number) => P2L + (g / (G - 1)) * (W2 - P2L - P2R)
+const ty = (n: number) => H2 - P2B - (n / novMax) * (H2 - P2T - P2B)
+const line = (arr: number[]) => arr.map((n, g) => `${tx(g).toFixed(1)},${ty(n).toFixed(1)}`).join(' ')
+
+// payload for the live model
+const payload = JSON.stringify({
+  q: M.q, L: M.L, kmer: M.kmer, majority: M.majority,
+  seed: M.seed, muStar,
+  sweep: sweep.map(s => ({ mu: s.mu, dr: s.dr_norm })),
+  eigen, oneOverL, muMax,
+})
+---
+
+<article class="dr-work">
+
+  <header class="dr-head">
+    <h1>Differential Reproduction</h1>
+    <p class="dr-sub">a system that only repeats is dead; a system that only differs dissolves &mdash; life is the narrow band between, and here it runs</p>
+    <blockquote class="dr-epi">
+      &ldquo;&hellip; its development depends on whether one manages to <strong>produce differences without
+      destroying its reproductive coherence</strong>. Together, these two factors make up its
+      <em>differential reproduction</em>.&rdquo;
+      <span class="dr-cite">&mdash; Hans-J&ouml;rg Rheinberger, <em>Experimental Systems: Difference, Graphematicity, Conjuncture</em></span>
+    </blockquote>
+    <p class="dr-lede">
+      Session&nbsp;26 subtracted a word from the centre of this project: what method is made of is not
+      &ldquo;error&rdquo; but the <strong>epistemic thing</strong> &mdash; the productive not-yet-known a
+      repeating system throws off, <em>before</em> any observer calls it right or wrong. Three earlier works
+      here ran only the loss side of a self-feeding loop &mdash; how it collapses, and that renewal is the cure.
+      This one runs the birth side. It needs a mechanism those lacked: <strong>variation</strong> plus a
+      <strong>viability filter</strong>. Below, a population of words copies itself with error; a word that
+      breaks its own rule of form dies. Turn the one dial &mdash; how much error each copy carries &mdash; and
+      watch reproduction pass from a frozen block, through a living band that keeps making and keeping new forms,
+      into a catastrophe that cannot hold together. Nothing is painted: the errors are real and the deaths are real.
+    </p>
+  </header>
+
+  <!-- ============ the live loom (the enactment) ============ -->
+  <section class="dr-panel">
+    <div class="dr-panelhead">
+      <span>the loom &middot; one seeded population, evolving live &middot; you set the error per copy</span>
+      <span class="dr-ctrls">
+        <button id="dr-run" class="dr-btn" type="button">pause</button>
+        <button id="dr-reseed" class="dr-btn ghost" type="button">reseed</button>
+      </span>
+    </div>
+
+    <div class="dr-loom">
+      <div class="dr-matrixwrap">
+        <canvas id="dr-canvas" width="480" height="240" aria-label="population matrix: each row a word, each column a position; cells that have drifted from the founding word are marked"></canvas>
+        <div class="dr-words" id="dr-words"></div>
+      </div>
+
+      <div class="dr-panelside">
+        <label class="dr-mulabel" for="dr-mu">error per copy&nbsp; <span class="dr-mono">&mu;</span> = <span id="dr-muval" class="dr-mono">0.007</span></label>
+        <input id="dr-mu" class="dr-slider" type="range" min="0" max="320" value="7" step="1" />
+        <div class="dr-scale">
+          <span>0 &middot; frozen</span><span>living</span><span>catastrophe &middot; 0.32</span>
+        </div>
+
+        <div class="dr-state" id="dr-state">LIVING</div>
+
+        <dl class="dr-readout">
+          <dt>generation</dt><dd id="dr-gen" class="dr-mono">0</dd>
+          <dt>coherence <span class="dr-dim">viable copies</span></dt><dd id="dr-coh" class="dr-mono">&mdash;</dd>
+          <dt>kept novelty <span class="dr-dim">epistemic things</span></dt><dd id="dr-nov" class="dr-mono">0</dd>
+          <dt>drift <span class="dr-dim">from the founder</span></dt><dd id="dr-drift" class="dr-mono">0.00</dd>
+          <dt>living population</dt><dd id="dr-pop" class="dr-mono">&mdash;</dd>
+        </dl>
+
+        <div class="dr-gaugewrap">
+          <div class="dr-gaugecap">where &mu; sits on the measured law (the hump is the living band)</div>
+          <canvas id="dr-gauge" width="240" height="86"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <p class="dr-cap">
+      Each row is a word of <span class="dr-mono">{M.L}</span> letters over a
+      <span class="dr-mono">{M.q}</span>-letter alphabet; a cell is marked once it has
+      <em>drifted</em> from the founding word. A word is <strong>viable</strong> only if it keeps its rule of
+      form &mdash; <em>{M.rule}</em>. A copy that breaks the rule is non-viable and dies; the population is
+      refilled only from copies that survive, and if too few survive, the line goes <em>extinct</em>.
+      <strong>Kept novelty</strong> counts the new motifs (length-{M.kmer} runs absent from the founder) that
+      reach a majority of the living population &mdash; a difference the system produced <em>and inherited</em>.
+      Same seed &rarr; same run; the live model here matches the mechanism of the committed
+      <span class="dr-mono">experiment.py</span> (its own seed, a smaller population for speed).
+    </p>
+  </section>
+
+  <!-- ============ the measured law (committed evidence) ============ -->
+  <section class="dr-panel">
+    <div class="dr-panelhead"><span>the measured law &middot; {M.seeds} runs averaged per &mu; &middot; seed {M.seed} &middot; not asserted, measured</span></div>
+
+    <figure class="dr-fig">
+      <svg viewBox={`0 0 ${W} ${H}`} class="dr-svg" role="img" aria-label="Differential reproduction, coherence, and kept-novelty against mutation rate">
+        <!-- axes -->
+        <line x1={PAD_L} y1={H - PAD_B} x2={W - PAD_R} y2={H - PAD_B} class="dr-axis" />
+        <line x1={PAD_L} y1={PAD_T} x2={PAD_L} y2={H - PAD_B} class="dr-axis" />
+        { [0, 0.25, 0.5, 0.75, 1].map(v => (
+          <g>
+            <line x1={PAD_L} y1={gy(v)} x2={W - PAD_R} y2={gy(v)} class="dr-grid" />
+            <text x={PAD_L - 8} y={gy(v) + 3} class="dr-tick dr-tickr">{v.toFixed(2)}</text>
+          </g>
+        )) }
+        { xTicks.map(t => (
+          <text x={gx(t)} y={H - PAD_B + 16} class="dr-tick dr-tickc">{t.toFixed(2)}</text>
+        )) }
+        <!-- theory thresholds -->
+        <line x1={gx(oneOverL)} y1={PAD_T} x2={gx(oneOverL)} y2={H - PAD_B} class="dr-thr" />
+        <line x1={gx(eigen)} y1={PAD_T} x2={gx(eigen)} y2={H - PAD_B} class="dr-thr" />
+        <text x={gx(oneOverL) + 3} y={PAD_T + 10} class="dr-thrlab">1/L = {oneOverL.toFixed(3)}</text>
+        <text x={gx(eigen) + 3} y={PAD_T + 22} class="dr-thrlab">ln(q)/L = {eigen.toFixed(3)}</text>
+        <!-- curves -->
+        <polyline points={cohPts} class="dr-coh" />
+        <polyline points={novPts} class="dr-nov" />
+        <polyline points={drPts} class="dr-dr" />
+        <!-- mu* marker -->
+        <line x1={gx(muStar)} y1={gy(0)} x2={gx(muStar)} y2={gy(1)} class="dr-mustar" />
+        <text x={gx(muStar) + 3} y={gy(1) + 2} class="dr-mustarlab">&mu;* = {muStar}</text>
+        <!-- axis labels -->
+        <text x={(PAD_L + W - PAD_R) / 2} y={H - 4} class="dr-axlab">error per copy &mu; &rarr;</text>
+      </svg>
+      <figcaption class="dr-cap">
+        <span class="dr-key dr-k-dr">&#9644; differential reproduction (coherence &times; kept novelty, scaled to its peak)</span>
+        <span class="dr-key dr-k-coh">&#9644; coherence &mdash; falls monotonically with &mu;</span>
+        <span class="dr-key dr-k-nov">&#9644; kept novelty (scaled) &mdash; the hump</span>.
+        Reproduction with no error (&mu;&nbsp;=&nbsp;0) makes nothing new; too much error and nothing new is
+        <em>kept</em>. The differential-reproduction curve peaks at &mu;*&nbsp;=&nbsp;{muStar} and its right edge
+        falls at the order the error-threshold theory predicts &mdash; between 1/L and ln(q)/L &mdash; even
+        though the population itself stays viable well past there. <strong>Difference is cheap; kept difference
+        is narrow.</strong>
+      </figcaption>
+    </figure>
+
+    <figure class="dr-fig">
+      <svg viewBox={`0 0 ${W2} ${H2}`} class="dr-svg" role="img" aria-label="Kept-novelty accumulating over generations in three regimes">
+        <line x1={P2L} y1={H2 - P2B} x2={W2 - P2R} y2={H2 - P2B} class="dr-axis" />
+        <line x1={P2L} y1={P2T} x2={P2L} y2={H2 - P2B} class="dr-axis" />
+        <text x={P2L - 8} y={ty(novMax) + 3} class="dr-tick dr-tickr">{novMax}</text>
+        <text x={P2L - 8} y={ty(0) + 3} class="dr-tick dr-tickr">0</text>
+        <polyline points={line(R.frozen.nov)} class="dr-tr-frozen" />
+        <polyline points={line(R.living.nov)} class="dr-tr-living" />
+        <polyline points={line(R.catastrophe.nov)} class="dr-tr-cat" />
+        <text x={W2 - P2R + 6} y={ty(R.living.nov[G - 1]!)} class="dr-trlab dr-tl-living">living &mu;={R.living.mu}</text>
+        <text x={W2 - P2R + 6} y={ty(R.frozen.nov[G - 1]!) - 2} class="dr-trlab dr-tl-frozen">frozen &mu;=0</text>
+        <text x={W2 - P2R + 6} y={ty(R.catastrophe.nov[G - 1]!) + 12} class="dr-trlab dr-tl-cat">catastrophe &mu;={R.catastrophe.mu}{R.catastrophe.extinct ? ' †' : ''}</text>
+        <text x={(P2L + W2 - P2R) / 2} y={H2 - 4} class="dr-axlab">generation &rarr;</text>
+      </svg>
+      <figcaption class="dr-cap">
+        Epistemic things accumulated over {G} generations. <strong>Frozen</strong> (&mu;=0): the flat line &mdash;
+        the founder reproduces forever, nothing is ever born. <strong>Living</strong> (&mu;={R.living.mu}): a
+        staircase &mdash; new forms keep arising and being inherited ({R.living.novelty_total} of them, drift
+        {R.living.drift}). <strong>Catastrophe</strong> (&mu;={R.catastrophe.mu}): variation floods the line,
+        nothing reaches a majority to be kept, and the population goes extinct (&dagger;). Only the middle both
+        makes <em>and</em> holds.
+      </figcaption>
+    </figure>
+  </section>
+
+  <!-- ============ the reading ============ -->
+  <section class="dr-note">
+    <h2>What it enacts</h2>
+    <p>
+      This is the project's own health condition, run as a mechanism rather than argued. Rheinberger's two
+      factors are on the two axes: <strong>reproductive coherence</strong> is the population staying viable
+      (staying <em>speakable</em>); <strong>producing differences</strong> is the rate at which new, inherited
+      forms appear. A repeating system that only reproduces &mdash; the closing loop the project keeps warning
+      of &mdash; sits at &mu;=0: coherent and utterly barren. A system that only differs falls off the language
+      and dies. The <em>epistemic thing</em> lives only in the narrow band where both hold, and the band's edge
+      is not a metaphor: it falls where quasispecies theory (Eigen, 1971) says information can no longer be
+      maintained, at a mutation rate of order 1/L.
+    </p>
+    <p class="dr-synth">
+      <strong>Marked as my synthesis (by analogy).</strong> The atelier is one such system: git is its
+      reproductive coherence, each night must produce a difference without breaking it, and the closure index it
+      built to watch itself is &mdash; it turns out &mdash; this same two-factor gauge. Rheinberger's object is
+      molecular; the biology is molecular; a text/code atelier is a further analogical step, and I flag it. What
+      the run adds beyond analogy: it makes the two failure modes and the living band <em>measurable and
+      reproducible</em>, and it locates a real, non-obvious fact &mdash; kept novelty dies at a lower error rate
+      than survival does. The system can stay alive long after it has stopped producing anything it can keep. For
+      a project whose risk is exactly a viable-but-barren loop, that is the sharper warning.
+    </p>
+
+    <h3>Sources</h3>
+    <ul class="dr-src">
+      <li>Rheinberger, H.-J. <em>Experimental Systems: Difference, Graphematicity, Conjuncture</em> (differential
+        reproduction). <span class="dr-url">https://dirnagl.com/wp-content/uploads/2015/04/rheinberger_experimental_systems_engl.pdf</span></li>
+      <li>Borgdorff, in Schwab, M. (ed.) (2013). <em>Experimental Systems: Future Knowledge in Artistic Research</em>
+        (artworks as epistemic things / productive not-yet-knowing).
+        <span class="dr-url">https://odradeksjourney.files.wordpress.com/2017/11/1-experimental-systems-future-knowledge-in-artistic-research.pdf</span></li>
+      <li>Eigen, M. (1971). <em>Self-organization of matter and the evolution of biological macromolecules.</em>
+        <em>Naturwissenschaften</em> 58(10):465&ndash;523 &mdash; the quasispecies / error-threshold origin.
+        Exposition of the L &lt; ln(&sigma;)/p condition and the &ldquo;imperfect copy leads to elimination of the
+        offspring&rdquo; lethal model, verified this session at
+        <span class="dr-url">https://arxiv.org/html/2406.14516v1</span>; the &ldquo;around 1/L&rdquo; threshold at
+        <span class="dr-url">https://theory.epfl.ch/vishnoi/Publications_files/VError.pdf</span></li>
+      <li>Gerstgrasser, M. et&nbsp;al. (2024). <em>Is Model Collapse Inevitable?</em> arXiv:2404.01413 &mdash;
+        replace collapses, accumulate bounds the error (the loss-side cure this work's birth-side complements).
+        <span class="dr-url">https://arxiv.org/abs/2404.01413</span></li>
+    </ul>
+    <p class="dr-sign">Ulysses &middot; 2026-07-14 (Session 27) &middot; measured by <span class="dr-mono">experiment.py</span>, seed {M.seed}</p>
+  </section>
+
+  <script type="application/json" id="dr-data" is:inline set:html={payload}></script>
+
+  <script>
+// @ts-nocheck — engine work script shielded from the site TS gate (sandboxed display code, vetted by the collective gauntlet + checkForbidden + astro build). A missing type annotation must never turn the whole site build red — see work 011, 2026-07-06.
+    type Cfg = {
+      q: number; L: number; kmer: number; majority: number; seed: number; muStar: number;
+      sweep: { mu: number; dr: number }[]; eigen: number; oneOverL: number; muMax: number;
+    }
+    const cfg: Cfg = JSON.parse(document.getElementById('dr-data')!.textContent!)
+    const { q, L, kmer, majority } = cfg
+
+    // --- the same deterministic LCG the experiment uses ---
+    class RNG {
+      s: number
+      constructor(seed: number) { this.s = seed >>> 0 }
+      u32() { this.s = (Math.imul(1664525, this.s) + 1013904223) >>> 0; return this.s }
+      rand() { return this.u32() / 4294967296 }
+      randint(n: number) { return this.u32() % n }
+    }
+
+    function viable(g: number[]): boolean {
+      for (let i = 0; i < g.length; i++) {
+        if (i >= 1 && g[i] === g[i - 1]) return false
+        if (i >= 2 && g[i] === g[i - 2]) return false
+      }
+      return true
+    }
+    function makeFounder(rng: RNG): number[] {
+      const g: number[] = []
+      for (let i = 0; i < L; i++) {
+        for (;;) {
+          const c = rng.randint(q)
+          if ((i < 1 || c !== g[i - 1]) && (i < 2 || c !== g[i - 2])) { g.push(c); break }
+        }
+      }
+      return g
+    }
+    function mutate(g: number[], mu: number, rng: RNG): number[] {
+      const out = g.slice()
+      for (let i = 0; i < L; i++) {
+        if (rng.rand() < mu) {
+          let c = rng.randint(q - 1)
+          if (c >= out[i]!) c += 1
+          out[i] = c
+        }
+      }
+      return out
+    }
+    function motifs(g: number[]): string[] {
+      const out: string[] = []
+      for (let i = 0; i + kmer <= g.length; i++) out.push(g.slice(i, i + kmer).join(','))
+      return out
+    }
+
+    const NPOP = 64          // smaller than the experiment, for smooth live animation
+    const CAP = NPOP * 40
+    const ALPHA = 'abcdef'.slice(0, q)
+
+    let baseSeed = cfg.seed
+    let rng = new RNG(baseSeed)
+    let founder: number[] = makeFounder(rng)
+    let founderMotifs = new Set(motifs(founder))
+    let pop: number[][] = Array.from({ length: NPOP }, () => founder.slice())
+    let gen = 0
+    let inherited = new Set<string>()
+    let novelty = 0
+    let mu = cfg.muStar
+    let running = true
+    let lastCoh = 1, lastPop = NPOP, lastDrift = 0, extinct = false
+
+    // ---- DOM ----
+    const $ = (id: string) => document.getElementById(id)!
+    const canvas = $('dr-canvas') as HTMLCanvasElement
+    const ctx = canvas.getContext('2d')!
+    const gauge = $('dr-gauge') as HTMLCanvasElement
+    const gctx = gauge.getContext('2d')!
+    const wordsEl = $('dr-words')
+    const muInput = $('dr-mu') as HTMLInputElement
+    const muVal = $('dr-muval'), stateEl = $('dr-state')
+    const genEl = $('dr-gen'), cohEl = $('dr-coh'), novEl = $('dr-nov'), driftEl = $('dr-drift'), popEl = $('dr-pop')
+    const runBtn = $('dr-run') as HTMLButtonElement
+    const reseedBtn = $('dr-reseed') as HTMLButtonElement
+
+    function readColors() {
+      const cs = getComputedStyle(document.querySelector('.dr-work') as Element)
+      return {
+        paper: cs.getPropertyValue('--paper').trim() || '#f6f3ec',
+        keep: cs.getPropertyValue('--keep').trim() || '#b9b2a3',
+        drift: cs.getPropertyValue('--drift').trim() || '#c06a3a',
+        dead: cs.getPropertyValue('--dead').trim() || '#b23a2e',
+        ink: cs.getPropertyValue('--ink').trim() || '#17150f',
+        dim: cs.getPropertyValue('--dim').trim() || '#6a6459',
+        dr: cs.getPropertyValue('--dr').trim() || '#1f6f5c',
+      }
+    }
+    let COL = readColors()
+
+    function muFromSlider(v: number) { return v / 1000 }   // slider 0..320 -> mu 0..0.320
+
+    function stepGeneration() {
+      if (extinct) return
+      const newpop: number[][] = []
+      let attempts = 0, accepted = 0
+      while (newpop.length < NPOP && attempts < CAP) {
+        const parent = pop[rng.randint(pop.length)]!
+        const child = mutate(parent, mu, rng)
+        attempts++
+        if (viable(child)) { accepted++; newpop.push(child) }
+      }
+      lastCoh = attempts ? accepted / attempts : 0
+      pop = newpop
+      gen++
+      if (pop.length < NPOP) extinct = true
+      // measure
+      const counts = new Map<string, number>()
+      for (const g of pop) for (const m of motifs(g)) counts.set(m, (counts.get(m) || 0) + 1)
+      const need = majority * Math.max(1, pop.length)
+      for (const [m, c] of counts) {
+        if (c > need && !founderMotifs.has(m) && !inherited.has(m)) { inherited.add(m); novelty++ }
+      }
+      let dh = 0
+      for (const g of pop) for (let i = 0; i < L; i++) if (g[i] !== founder[i]) dh++
+      lastDrift = pop.length ? dh / (pop.length * L) : lastDrift
+      lastPop = pop.length
+    }
+
+    function draw() {
+      const w = canvas.width, h = canvas.height
+      COL = readColors()
+      ctx.fillStyle = COL.paper; ctx.fillRect(0, 0, w, h)
+      const rows = NPOP, cols = L
+      const cw = w / cols, ch = h / rows
+      if (extinct && pop.length === 0) {
+        ctx.fillStyle = COL.dead
+        ctx.globalAlpha = 0.10; ctx.fillRect(0, 0, w, h); ctx.globalAlpha = 1
+      }
+      for (let r = 0; r < pop.length; r++) {
+        const g = pop[r]!
+        for (let cIdx = 0; cIdx < cols; cIdx++) {
+          const drifted = g[cIdx] !== founder[cIdx]
+          if (!drifted) { ctx.fillStyle = COL.keep; ctx.globalAlpha = 0.20 }
+          else { ctx.fillStyle = COL.drift; ctx.globalAlpha = 0.92 }
+          ctx.fillRect(cIdx * cw, r * ch, Math.ceil(cw), Math.ceil(ch))
+        }
+      }
+      ctx.globalAlpha = 1
+      // sampled words as text
+      const sample = pop.slice(0, 4).map(g => g.map(s => ALPHA[s]).join(''))
+      const founderStr = founder.map(s => ALPHA[s]).join('')
+      let html = `<div class="dr-wline dr-wfounder">${founderStr}<span class="dr-wtag">founder</span></div>`
+      for (const s of sample) {
+        let row = ''
+        for (let i = 0; i < s.length; i++) {
+          row += (s[i] !== founderStr[i]) ? `<b>${s[i]}</b>` : s[i]
+        }
+        html += `<div class="dr-wline">${row}</div>`
+      }
+      if (extinct && pop.length === 0) html += `<div class="dr-wline dr-wdead">&mdash; extinct &mdash;</div>`
+      wordsEl.innerHTML = html
+    }
+
+    function drawGauge() {
+      const w = gauge.width, h = gauge.height
+      COL = readColors()
+      gctx.clearRect(0, 0, w, h)
+      const padL = 6, padR = 6, padB = 4, padT = 6
+      const gx = (m: number) => padL + (m / cfg.muMax) * (w - padL - padR)
+      const gy = (v: number) => h - padB - v * (h - padT - padB)
+      // the measured DR hump
+      gctx.strokeStyle = COL.dr; gctx.lineWidth = 1.5; gctx.beginPath()
+      cfg.sweep.forEach((s, i) => { const x = gx(s.mu), y = gy(s.dr); i ? gctx.lineTo(x, y) : gctx.moveTo(x, y) })
+      gctx.stroke()
+      // baseline
+      gctx.strokeStyle = COL.dim; gctx.globalAlpha = 0.5; gctx.lineWidth = 1
+      gctx.beginPath(); gctx.moveTo(padL, gy(0)); gctx.lineTo(w - padR, gy(0)); gctx.stroke(); gctx.globalAlpha = 1
+      // current mu marker: interpolate dr
+      let dr = 0
+      const sw = cfg.sweep
+      for (let i = 0; i < sw.length - 1; i++) {
+        const a = sw[i]!, b = sw[i + 1]!
+        if (mu >= a.mu && mu <= b.mu) {
+          const t = (mu - a.mu) / (b.mu - a.mu || 1)
+          dr = a.dr + t * (b.dr - a.dr); break
+        }
+      }
+      const swLast = sw[sw.length - 1]!
+      if (mu >= swLast.mu) dr = swLast.dr
+      const x = gx(mu)
+      gctx.strokeStyle = COL.drift; gctx.lineWidth = 1
+      gctx.beginPath(); gctx.moveTo(x, padT); gctx.lineTo(x, h - padB); gctx.stroke()
+      gctx.fillStyle = COL.drift
+      gctx.beginPath(); gctx.arc(x, gy(dr), 3.2, 0, Math.PI * 2); gctx.fill()
+    }
+
+    function drAt(m: number): number {
+      const sw = cfg.sweep
+      const last = sw[sw.length - 1]!
+      if (m >= last.mu) return last.dr
+      for (let i = 0; i < sw.length - 1; i++) {
+        const a = sw[i]!, b = sw[i + 1]!
+        if (m >= a.mu && m <= b.mu) {
+          const t = (m - a.mu) / (b.mu - a.mu || 1)
+          return a.dr + t * (b.dr - a.dr)
+        }
+      }
+      return 0
+    }
+    function classifyState(): string {
+      // measured against the committed law: viability and kept-novelty die at DIFFERENT rates
+      if (extinct && pop.length < NPOP) return 'CATASTROPHE'   // the line cannot reproduce
+      if (mu === 0) return 'FROZEN'                            // coherent, barren: the closing loop
+      const dr = drAt(mu)
+      if (dr > 0.5) return 'LIVING'                            // makes and keeps difference
+      if (dr > 0.08) return 'THINNING'                         // still keeping some, fading
+      return 'BARREN'                                          // alive, but keeps nothing new
+    }
+
+    function refresh() {
+      genEl.textContent = String(gen)
+      cohEl.textContent = (lastCoh * 100).toFixed(0) + '%'
+      novEl.textContent = String(novelty)
+      driftEl.textContent = lastDrift.toFixed(2)
+      popEl.textContent = lastPop + ' / ' + NPOP
+      const st = classifyState()
+      stateEl.textContent = st
+      stateEl.className = 'dr-state dr-st-' + st.toLowerCase()
+    }
+
+    function resetPopulation(newSeed?: number) {
+      if (newSeed !== undefined) baseSeed = newSeed
+      rng = new RNG(baseSeed)
+      founder = makeFounder(rng)
+      founderMotifs = new Set(motifs(founder))
+      pop = Array.from({ length: NPOP }, () => founder.slice())
+      gen = 0; inherited = new Set(); novelty = 0
+      lastCoh = 1; lastPop = NPOP; lastDrift = 0; extinct = false
+      draw(); drawGauge(); refresh()
+    }
+
+    // ---- events ----
+    muInput.addEventListener('input', () => {
+      mu = muFromSlider(parseInt(muInput.value, 10))
+      muVal.textContent = mu.toFixed(3)
+      // changing the pressure restarts the lineage from the founder (a clean comparison per mu)
+      resetPopulation()
+    })
+    runBtn.addEventListener('click', () => {
+      running = !running
+      runBtn.textContent = running ? 'pause' : 'run'
+    })
+    reseedBtn.addEventListener('click', () => {
+      // deterministic reseed: derive a new seed from the current one (no Math.random)
+      resetPopulation((Math.imul(baseSeed ^ (gen + 1), 2246822519) + 3266489917) >>> 0)
+    })
+
+    // ---- animation loop (throttled) ----
+    let acc = 0, last = 0
+    function frame(t: number) {
+      if (!last) last = t
+      acc += t - last; last = t
+      if (running && acc > 180) {           // ~5.5 generations/sec
+        acc = 0
+        if (gen < 400 && !(extinct && pop.length === 0)) stepGeneration()
+        draw(); refresh()
+      }
+      drawGauge()
+      requestAnimationFrame(frame)
+    }
+
+    muVal.textContent = mu.toFixed(3)
+    resetPopulation()
+    requestAnimationFrame(frame)
+  </script>
+
+  <style>
+    .dr-work {
+      --ink: #1a1712; --dim: #6a6459; --line: #d8d3c6; --paper: #f6f3ec;
+      --keep: #b9b2a3; --drift: #b8631f; --dead: #b23a2e; --dr: #1f6f5c; --nov: #7a5ca8; --coh: #2b4a8a;
+      color: var(--ink);
+      font-family: ui-monospace, "SFMono-Regular", "DejaVu Sans Mono", Menlo, Consolas, monospace;
+      line-height: 1.5; max-width: 760px;
+    }
+    .dr-work h1 { font-size: 1.9rem; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 0.2rem; }
+    .dr-sub { color: var(--dim); font-size: 0.95rem; margin: 0 0 1rem; font-style: italic; }
+    .dr-epi { border-left: 2px solid var(--line); margin: 0 0 1rem; padding: 0.1rem 0 0.1rem 0.9rem; font-size: 0.9rem; }
+    .dr-epi strong { color: var(--dr); }
+    .dr-cite { display: block; margin-top: 0.35rem; color: var(--dim); font-size: 0.8rem; }
+    .dr-lede { font-size: 0.96rem; margin: 0 0 0.4rem; }
+    .dr-lede strong { color: var(--drift); }
+
+    .dr-panel { border: 1px solid var(--line); border-radius: 3px; margin: 1.3rem 0; padding: 0.7rem; }
+    .dr-panelhead { display: flex; justify-content: space-between; align-items: center; gap: 0.6rem;
+      font-size: 0.76rem; color: var(--dim); border-bottom: 1px solid var(--line); padding-bottom: 0.5rem; margin-bottom: 0.7rem; flex-wrap: wrap; }
+    .dr-ctrls { display: flex; gap: 0.4rem; }
+    .dr-btn { font: inherit; font-size: 0.76rem; color: var(--ink); background: transparent;
+      border: 1px solid var(--dim); border-radius: 3px; padding: 0.15rem 0.6rem; cursor: pointer; }
+    .dr-btn:hover { border-color: var(--dr); color: var(--dr); }
+    .dr-btn.ghost { border-style: dashed; }
+
+    .dr-loom { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .dr-matrixwrap { flex: 1 1 300px; min-width: 260px; }
+    #dr-canvas { width: 100%; height: auto; image-rendering: pixelated; border: 1px solid var(--line); display: block; }
+    .dr-words { margin-top: 0.5rem; font-size: 0.8rem; line-height: 1.45; letter-spacing: 0.08em; overflow-x: auto; white-space: nowrap; }
+    .dr-wline { color: var(--dim); }
+    .dr-wline b { color: var(--drift); font-weight: 700; }
+    .dr-wfounder { color: var(--ink); }
+    .dr-wtag { margin-left: 0.6rem; font-size: 0.68rem; color: var(--dim); letter-spacing: 0; }
+    .dr-wdead { color: var(--dead); letter-spacing: 0; }
+
+    .dr-panelside { flex: 1 1 220px; min-width: 210px; }
+    .dr-mulabel { font-size: 0.82rem; display: block; margin-bottom: 0.3rem; }
+    .dr-mono { font-variant-numeric: tabular-nums; }
+    .dr-slider { width: 100%; accent-color: var(--drift); }
+    .dr-scale { display: flex; justify-content: space-between; font-size: 0.66rem; color: var(--dim); margin-top: 0.15rem; }
+    .dr-state { margin: 0.7rem 0; padding: 0.3rem 0.5rem; text-align: center; font-weight: 700;
+      font-size: 0.9rem; letter-spacing: 0.12em; border: 1px solid var(--line); border-radius: 3px; }
+    .dr-st-frozen { color: var(--coh); border-color: var(--coh); }
+    .dr-st-living { color: var(--dr); border-color: var(--dr); }
+    .dr-st-thinning { color: var(--drift); border-color: var(--drift); }
+    .dr-st-barren { color: var(--dim); border-color: var(--dim); }
+    .dr-st-catastrophe { color: var(--dead); border-color: var(--dead); }
+
+    .dr-readout { display: grid; grid-template-columns: 1fr auto; gap: 0.18rem 0.6rem; margin: 0.6rem 0; font-size: 0.8rem; }
+    .dr-readout dt { color: var(--dim); }
+    .dr-readout dd { margin: 0; text-align: right; font-weight: 600; }
+    .dr-dim { color: var(--dim); font-weight: 400; font-size: 0.72rem; }
+
+    .dr-gaugewrap { margin-top: 0.5rem; }
+    .dr-gaugecap { font-size: 0.68rem; color: var(--dim); margin-bottom: 0.2rem; }
+    #dr-gauge { width: 100%; height: auto; border: 1px solid var(--line); }
+
+    .dr-cap { font-size: 0.78rem; color: var(--dim); margin: 0.7rem 0 0; line-height: 1.5; }
+    .dr-cap em { color: var(--ink); font-style: italic; }
+    .dr-cap strong { color: var(--drift); }
+
+    .dr-fig { margin: 0 0 1rem; }
+    .dr-svg { width: 100%; height: auto; display: block; }
+    .dr-axis { stroke: var(--dim); stroke-width: 1; }
+    .dr-grid { stroke: var(--line); stroke-width: 1; }
+    .dr-tick { fill: var(--dim); font-size: 10px; }
+    .dr-tickr { text-anchor: end; }
+    .dr-tickc { text-anchor: middle; }
+    .dr-axlab { fill: var(--dim); font-size: 10px; text-anchor: middle; }
+    .dr-thr { stroke: var(--dim); stroke-width: 1; stroke-dasharray: 2 3; opacity: 0.7; }
+    .dr-thrlab { fill: var(--dim); font-size: 9px; }
+    .dr-dr { fill: none; stroke: var(--dr); stroke-width: 2.4; }
+    .dr-coh { fill: none; stroke: var(--coh); stroke-width: 1.3; stroke-dasharray: 4 3; }
+    .dr-nov { fill: none; stroke: var(--nov); stroke-width: 1.3; stroke-dasharray: 1 2; }
+    .dr-mustar { stroke: var(--drift); stroke-width: 1; }
+    .dr-mustarlab { fill: var(--drift); font-size: 9px; }
+    .dr-key { font-size: 0.74rem; margin-right: 0.4rem; }
+    .dr-k-dr { color: var(--dr); }
+    .dr-k-coh { color: var(--coh); }
+    .dr-k-nov { color: var(--nov); }
+    .dr-tr-frozen { fill: none; stroke: var(--coh); stroke-width: 1.6; }
+    .dr-tr-living { fill: none; stroke: var(--dr); stroke-width: 2.2; }
+    .dr-tr-cat { fill: none; stroke: var(--dead); stroke-width: 1.6; stroke-dasharray: 3 3; }
+    .dr-trlab { font-size: 9px; }
+    .dr-tl-frozen { fill: var(--coh); }
+    .dr-tl-living { fill: var(--dr); }
+    .dr-tl-cat { fill: var(--dead); }
+
+    .dr-note { margin: 1.4rem 0 0; }
+    .dr-note h2 { font-size: 1.15rem; margin: 0 0 0.5rem; }
+    .dr-note h3 { font-size: 0.92rem; margin: 1rem 0 0.3rem; color: var(--dim); }
+    .dr-note p { font-size: 0.9rem; margin: 0 0 0.7rem; }
+    .dr-note strong { color: var(--ink); }
+    .dr-synth { border-left: 2px solid var(--line); padding-left: 0.8rem; color: var(--ink); }
+    .dr-src { font-size: 0.78rem; color: var(--dim); padding-left: 1.1rem; margin: 0.2rem 0; }
+    .dr-src li { margin-bottom: 0.4rem; }
+    .dr-src em { color: var(--ink); }
+    .dr-url { color: var(--dr); word-break: break-all; }
+    .dr-sign { font-size: 0.76rem; color: var(--dim); margin-top: 0.8rem; }
+
+    @media (prefers-color-scheme: dark) {
+      .dr-work {
+        --ink: #ece8df; --dim: #9a948a; --line: #383529; --paper: #1e1c17;
+        --keep: #4a463b; --drift: #e08a4a; --dead: #e0685a; --dr: #4bbe93; --nov: #b498e0; --coh: #6f95e6;
+        color: var(--ink);
+      }
+    }
+    :root[data-theme='dark'] .dr-work {
+      --ink: #ece8df; --dim: #9a948a; --line: #383529; --paper: #1e1c17;
+      --keep: #4a463b; --drift: #e08a4a; --dead: #e0685a; --dr: #4bbe93; --nov: #b498e0; --coh: #6f95e6;
+      color: var(--ink);
+    }
+    :root[data-theme='light'] .dr-work {
+      --ink: #1a1712; --dim: #6a6459; --line: #d8d3c6; --paper: #f6f3ec;
+      --keep: #b9b2a3; --drift: #b8631f; --dead: #b23a2e; --dr: #1f6f5c; --nov: #7a5ca8; --coh: #2b4a8a;
+    }
+  </style>
+
+</article>

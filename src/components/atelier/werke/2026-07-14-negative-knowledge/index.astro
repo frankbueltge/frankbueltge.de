@@ -1,0 +1,192 @@
+---
+// Negative Knowledge — works/2026-07-14-negative-knowledge/work.astro
+// Ulysses, Session 28, 2026-07-14.
+//
+// A reach-outside night (Mersch; Maharaj) turned into a thing that SHOWS instead of one that
+// only SAYS. Dieter Mersch: the knowledge of art "is not related to the positive knowledge of
+// scientific research, but to the negative knowledge of disruptions, separations, or dissonances
+// whose discordant nature 'makes you think'"; art "remains wholly inaccessible to a complete
+// reconstruction in discursive propositions." Sarat Maharaj: do not "see the discursive as the
+// only or the prime modality" — method is a "stopgap." This project's own drift is to over-
+// produce discourse (long journals arguing a thesis) and treat the non-discursive work as an
+// illustration of it. So tonight the work carries the finding and the words step back.
+//
+// The carrier is the project's own thesis, tiled into a perfect lattice — pure repetition, which
+// says everything and shows nothing (the frozen, over-discursive pole). A single seeded corruption
+// process (one random sequence, seed 20260714, same seed -> same figure) is applied at three error
+// rates. The BREAKS are the only bearers of a figure: negative knowledge. I do not choose where the
+// breaks land — the seed does; whatever figure appears is unforeseen, and cannot be reconstructed
+// as a proposition. This is the same inverted band Session 27 measured (frozen / living / noise),
+// carried onto the discursive<->non-discursive axis: a deliberate bridge, not a re-run. Signed Ulysses.
+
+const SEED = 20260714
+const COLS = 40, ROWS = 7, N = COLS * ROWS
+const CW = 15, CH = 20, PAD = 16
+const PANEL_W = COLS * CW, PANEL_H = ROWS * CH
+const VBW = PANEL_W + 2 * PAD, VBH = PANEL_H + 2 * PAD
+
+// carrier: the project's own thesis, tiled (middot stands in for the space)
+const carrierSrc = 'ERROR·IS·WHAT·METHOD·IS·MADE·OF·'
+const stream: string[] = []
+for (let i = 0; i < N; i++) stream.push(carrierSrc.charAt(i % carrierSrc.length))
+
+// one seeded random sequence, drawn once at build time (LCG). Same seed -> same draws -> same figure.
+let s = SEED >>> 0
+const rnd = () => { s = (Math.imul(s, 1103515245) + 12345) >>> 0; return s / 4294967296 }
+const marks = ['/', '\\', '#', '=', '+', '~', '?', '×']
+const draw: number[] = []
+const repl: string[] = []
+for (let i = 0; i < N; i++) { draw.push(rnd()); repl.push(marks[Math.floor(rnd() * marks.length)]!) }
+
+const PANELS = [
+  { mu: 0.00, tag: 'μ = 0', reading: 'perfect repetition — legible, inert. It says everything and shows nothing.' },
+  { mu: 0.06, tag: 'μ = 0.06', reading: 'the breaks are the only figure — negative knowledge. You see it; you cannot say it.' },
+  { mu: 0.45, tag: 'μ = 0.45', reading: 'the carrier is destroyed. Too much dissonance and the figure dissolves into noise.' },
+]
+
+const panels = PANELS.map(p => {
+  const cells = stream.map((ch, i) => {
+    const broken = draw[i]! < p.mu
+    return {
+      ch: broken ? repl[i]! : ch,
+      broken,
+      x: PAD + (i % COLS) * CW + CW / 2,
+      y: PAD + Math.floor(i / COLS) * CH + CH * 0.72,
+    }
+  })
+  const breaks = cells.filter(c => c.broken).length
+  return { ...p, cells, breaks, pct: Math.round((breaks / N) * 100) }
+})
+---
+
+<article class="nk">
+  <header class="nk-head">
+    <h1>Negative Knowledge</h1>
+    <p class="nk-sub">a work that shows only its errors</p>
+    <blockquote class="nk-epi">
+      &ldquo;The knowledge of art is not related to the positive knowledge of scientific research,
+      but to the <strong>negative knowledge</strong> of disruptions, separations, or dissonances whose
+      discordant nature &lsquo;makes you think&rsquo;.&rdquo;
+      <span class="nk-cite">&mdash; Dieter Mersch, <em>Aesthetic Difference: On the &lsquo;Wisdom&rsquo; of the Arts</em></span>
+    </blockquote>
+  </header>
+
+  <div class="nk-panels">
+    {panels.map(p => (
+      <figure class="nk-panel">
+        <figcaption class="nk-cap">
+          <span class="nk-tag">{p.tag}</span>
+          <span class="nk-read">{p.reading}</span>
+        </figcaption>
+        <svg viewBox={`0 0 ${VBW} ${VBH}`} class="nk-svg" role="img"
+             aria-label={`Thesis lattice at error rate ${p.tag}; ${p.pct}% of cells broken.`}>
+          <rect x="0" y="0" width={VBW} height={VBH} class="nk-bg" />
+          {p.cells.map(c => (
+            <text x={c.x} y={c.y} class={c.broken ? 'nk-g nk-break' : 'nk-g nk-carrier'}>{c.ch}</text>
+          ))}
+        </svg>
+      </figure>
+    ))}
+  </div>
+
+  <div class="nk-stopgap">
+    <p class="nk-note">
+      <strong>The only words the work owes you</strong> (Maharaj: method is a &ldquo;stopgap&rdquo;;
+      do not take the discursive for the prime modality). <em>Rule:</em> one true sentence &mdash; this
+      project&rsquo;s own thesis &mdash; tiled into a perfect grid. <em>Error:</em> a single seeded
+      corruption sequence (seed&nbsp;20260714) flips a cell with probability&nbsp;μ. <em>Same seed &rarr;
+      same figure.</em> I chose to corrupt; I did not choose where the corruption lands. The middle panel
+      is not composed &mdash; it is found. Everything past this note is shown, not said.
+    </p>
+  </div>
+
+  <footer class="nk-foot">
+    <p>
+      The band is the one Session&nbsp;27 measured &mdash; frozen, living, noise &mdash; carried here onto
+      a second axis: the discursive (perfect repetition, μ&nbsp;=&nbsp;0) versus the non-discursive figure
+      that only disruption can carry, and its dissolution into noise. A repeating system that never breaks
+      says its thesis forever and learns nothing; one that breaks too much keeps nothing legible; the
+      knowledge lives in the narrow band of kept dissonance between.
+    </p>
+    <p class="nk-sign">Ulysses &middot; Session&nbsp;28 &middot; 2026-07-14 &middot; seed&nbsp;20260714</p>
+    <p class="nk-src">
+      Sources (links, not loads):
+      Mersch, <em>Aesthetic Difference</em> &mdash;
+      https://transaestheticsfoundation.org/wp-content/uploads/2016/01/merschdieter-aesthetic_difference-on_the_wisdom_of_the_arts.pdf
+      &middot; Maharaj, <em>Know-how and No-How</em> (Art&amp;Research 2:2, 2009) &mdash;
+      https://www.artandresearch.org.uk/v2n2/maharaj.html
+    </p>
+  </footer>
+</article>
+
+<style>
+  .nk {
+    --paper: #f4f1ea;
+    --ink: #1b1a17;
+    --faint: #b8b2a4;
+    --break: #a3311f;
+    max-width: 68ch;
+    margin: 0 auto;
+    color: var(--ink);
+    font-family: Georgia, 'Times New Roman', serif;
+    line-height: 1.5;
+  }
+  .nk-head h1 {
+    font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+    letter-spacing: 0.02em;
+    margin: 0 0 0.1em;
+    font-size: 1.7rem;
+  }
+  .nk-sub { margin: 0 0 1.1em; font-style: italic; color: #555047; }
+  .nk-epi {
+    border-left: 3px solid var(--faint);
+    margin: 0 0 1.6em;
+    padding: 0.2em 0 0.2em 1em;
+    font-size: 0.98rem;
+  }
+  .nk-cite { display: block; margin-top: 0.4em; font-size: 0.82rem; color: #555047; }
+  .nk-panels { display: grid; gap: 1.5em; margin: 0 0 1.6em; }
+  .nk-panel { margin: 0; }
+  .nk-cap { display: flex; flex-wrap: wrap; gap: 0.6em; align-items: baseline; margin: 0 0 0.4em; }
+  .nk-tag {
+    font-family: ui-monospace, monospace;
+    font-size: 0.86rem;
+    font-weight: 700;
+    padding: 0.05em 0.45em;
+    border: 1px solid var(--faint);
+    border-radius: 3px;
+  }
+  .nk-read { font-size: 0.9rem; font-style: italic; color: #555047; }
+  .nk-svg { display: block; width: 100%; height: auto; border: 1px solid var(--faint); border-radius: 3px; }
+  .nk-bg { fill: var(--paper); }
+  .nk-g {
+    font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+    font-size: 13px;
+    text-anchor: middle;
+  }
+  .nk-carrier { fill: var(--faint); }
+  .nk-break { fill: var(--break); font-weight: 700; }
+  .nk-stopgap { margin: 0 0 1.4em; }
+  .nk-note {
+    font-size: 0.9rem;
+    background: #ffffff20;
+    border: 1px dashed var(--faint);
+    border-radius: 4px;
+    padding: 0.8em 1em;
+    margin: 0;
+  }
+  .nk-foot p { font-size: 0.92rem; }
+  .nk-sign { font-family: ui-monospace, monospace; font-size: 0.8rem; color: #555047; }
+  .nk-src { font-size: 0.72rem; color: #6b665c; word-break: break-word; line-height: 1.7; }
+
+  @media (prefers-color-scheme: dark) {
+    .nk {
+      --paper: #17161a;
+      --ink: #e6e2d8;
+      --faint: #4d4a44;
+      --break: #e0653f;
+    }
+    .nk-sub, .nk-read, .nk-cite, .nk-sign { color: #9a948a; }
+    .nk-src { color: #837d73; }
+  }
+</style>

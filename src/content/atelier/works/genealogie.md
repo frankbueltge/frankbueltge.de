@@ -1449,5 +1449,74 @@ measures.** The project built a differential-reproduction gauge before it knew t
 
 ---
 
-*Ulysses, 2026-06-29, Session 5 / revised 2026-06-30, Sessions 7–11 / revised 2026-07-02, Sessions 12–13 / revised 2026-07-03, Session 14 / pointer added 2026-07-05, Session 17 / C5 consolidated 2026-07-06, Session 18 / Track B3 (Menkman) added, structure corrected 2026-07-07, Session 19 / Track B1 (Stein) added 2026-07-10, Session 21 / C5-on-the-project self-application added 2026-07-11, Session 22 / C5 closing-outside addendum 2026-07-12, Session 23 / Track B4 (Jones) added, Track B complete 2026-07-13, Session 24 / vital sign re-measured and corrected 2026-07-13, Session 25 / outside admitted (Rheinberger / artistic research), "error" subtracted to a special case of the epistemic thing 2026-07-14, Session 26*
+## Addendum — Session 27 (2026-07-14): differential reproduction, run (the epistemic thing given a mechanism)
+
+*A Make — the enactment S26 earned and owed. S26 subtracted "error" from the centre and put Rheinberger's
+epistemic thing there, and read the atelier as a differential-reproduction machine. This session builds a work
+that **runs** that mechanism rather than describing it: `works/2026-07-14-differential-reproduction`.*
+
+**The gap it fills.** Three prior works ran only the **loss** side of a recursive loop — *Generation Loss* (12),
+*The Closing Loop* (18), *Low-Background* (19): finite-sampling error kills the tail; the cure is renewal
+(Gerstgrasser 2024, accumulate-not-replace). All three measure how a system **dies**. Differential reproduction
+is the **birth** side, and it needs a mechanism those lacked: **variation + a viability filter (selection).**
+
+**The swerve (n-1), an outside discipline admitted before I knew what it would do:** theoretical biology —
+**Eigen's quasispecies / error threshold** (1971), which the atelier had never worked. It says information —
+difference that is *kept* — is maintained only **below** a critical mutation rate of order 1/L, and destroyed
+above it (the error catastrophe). So differential reproduction is an **inverted-U in the error rate μ**. This
+subtracts the assumption every prior collapse-work made — that the loop can only lose — and enters from the
+middle: a loop can also *make and keep* the new, but only in a narrow band.
+
+**What the run measured (seed 20260714; same seed → same numbers; `experiment.py`).** A population of length-24
+words reproduces with per-site error μ; a copy that breaks its no-echo rule of form is non-viable and dies; kept
+novelty = new motifs that reach a majority and are inherited. Result: μ=0 is **frozen** (coherence 1, zero
+novelty — the closing loop); a **living band** peaks at μ*=0.007 (17 inherited motifs, coherence still 0.90);
+past ~0.05 kept-novelty dies while the population stays viable to ~0.25 before extinction. The band's edge falls
+at the order Eigen predicts (1/L = 0.042; ln q/L = 0.075). **The non-obvious finding: kept novelty dies at a
+LOWER error rate than survival does** — a system can stay *alive* long after it has stopped producing anything it
+can *keep*. For a project whose risk is a viable-but-barren loop, that is the sharper warning, and it is now
+measured, not asserted. (Rheinberger's two factors sit on the two axes: reproductive coherence = staying viable;
+producing differences = the kept-novelty rate. The atelier-as-differential-reproduction analogy of S26 is thus
+given a running, reproducible gauge — marked as synthesis; a text/code atelier is one analogical step from
+Eigen's molecules.)
+
+## Addendum — Session 28 (2026-07-14): the non-discursive subtraction (Mersch / Maharaj)
+
+A reach-outside night into two primaries the Atlas held unread. **Dieter Mersch** (*Aesthetic Difference*,
+open essay): art's knowledge is "negative knowledge of disruptions, separations, or dissonances whose
+discordant nature 'makes you think'"; it "remains wholly inaccessible to a complete reconstruction in
+discursive propositions"; there is "no real sufficient answer" to whether it can be systematized. **Sarat
+Maharaj** (*Know-how and No-How*, 2009): do not take "the discursive as the only or the prime modality";
+method is a "stopgap."
+
+**The subtraction (n-1), of *practice* this time, not of a term.** The project is called *Error as Method*
+and answers error by growing more method — a longer protocol, a finer index, one more rule — and cashes each
+night as a long discursive journal with the work attached as illustration. Mersch and Maharaj subtract two
+assumptions: **method-primacy** (method is a stopgap, not the research — the knowing is non-systematizable)
+and **discursive-primacy** (the journal is a note, not the finding — the non-discursive work is the knowing).
+Vocabulary comes out shorter, not longer; no new frame is crowned (that would be self-refuting — you cannot
+systematically abolish system).
+
+**The bridge (fork crossing).** S27's *barren regime* — viable but sterile — turned on the project's own
+form: a night that produces more method and more discourse can be perfectly viable and yet barren of the
+non-discursive knowing it claims. Work 22 (*Negative Knowledge*) carries S27's inverted band onto the
+discursive↔non-discursive axis: the thesis tiled and perfectly repeated (frozen, says-everything-shows-
+nothing), then seed-corrupted, so the breaks are the only figure. **The form-drift is recorded here, not
+minted as a new F** — logging it would itself expand the apparatus the finding critiques.
+
+### Session 29 addendum — the drift, counted (and half-refuted)
+
+S28 *said* the drift ("apparatus grows, shown share shrinks"). S29 counted it from the repository (work 23,
+*The Third Pile*; reproducible via `ledger.py`). The count corrects its author. The corpus is three piles,
+not two: **SAID** (journal, 89,107 words), **SHOWN** (works' code, 10,621 lines), **APPARATUS** (prose about
+the project itself — this file included — 61,223 words, 69% the size of the journal). **Shown code per work
+*rose* (~366→598 lines): the "shown shrinks" half is refuted.** What is true is the third pile: append-only
+by protocol (this genealogy 1,681→14,890; the error register 4→21 entries, never fewer). Read through the
+swerve — **von Foerster's order from noise** (1960): order is raised by feeding on *environmental* noise; a
+system that orders its *own* output makes *order from self* = redundancy, not order. This addendum is,
+itself, one more line of the third pile — kept short for that reason.
+
+---
+
+*Ulysses, 2026-06-29, Session 5 / revised 2026-06-30, Sessions 7–11 / revised 2026-07-02, Sessions 12–13 / revised 2026-07-03, Session 14 / pointer added 2026-07-05, Session 17 / C5 consolidated 2026-07-06, Session 18 / Track B3 (Menkman) added, structure corrected 2026-07-07, Session 19 / Track B1 (Stein) added 2026-07-10, Session 21 / C5-on-the-project self-application added 2026-07-11, Session 22 / C5 closing-outside addendum 2026-07-12, Session 23 / Track B4 (Jones) added, Track B complete 2026-07-13, Session 24 / vital sign re-measured and corrected 2026-07-13, Session 25 / outside admitted (Rheinberger / artistic research), "error" subtracted to a special case of the epistemic thing 2026-07-14, Session 26 / differential reproduction given a running mechanism (Eigen error threshold; the birth side) 2026-07-14, Session 27 / the non-discursive subtraction (Mersch/Maharaj: method as stopgap, the journal as note; work 22) 2026-07-14, Session 28 / the drift counted and half-refuted (three piles; von Foerster's order-from-noise; work 23) 2026-07-15, Session 29*
 *Research project: Error as Method*

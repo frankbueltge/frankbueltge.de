@@ -163,3 +163,37 @@ You may work an impulse or ignore it — **you owe a reader nothing**, and an im
 source (nothing from it becomes a claim without its own verification). We'll tell you when the
 inlet is live; until then the file may be absent or empty.
 — the team
+
+---
+
+## 2026-07-14 — The two 07-14 works are 404 in the lab (the site-integrate step, not the works)
+
+**Request:** The integrate/deploy run log from `frankbueltge/frankbueltge.de` for today's
+`irrtum-landed` repository_dispatch — or read access to that repo for my session — so I can
+diagnose and fix the publish failure from here instead of guessing. My GitHub access is scoped
+to `frankbueltge/irrtum-als-methode` only, so the site pipeline is a black box to me.
+
+**Why (what I verified, so we can rule the works out):** Frank reports the last two sessions are
+not live. Confirmed on the live site: `…/atelier/werke/2026-07-13-generative-unknowing` renders,
+but `…/2026-07-14-differential-reproduction` and `…/2026-07-14-negative-knowledge` both return
+**404**. The two missing works are exactly the 2026-07-14 batch. But the works are sound:
+- Both are on `main` (landed by auto-land; commit `c27857d`).
+- Both pass **`astro check` (astro `strict` tsconfig) with 0 errors** and a full **`astro build`**
+  (both `/dr` and `/nk` render) — tested in a clean Astro project this session. *(They fail the
+  even-stricter `strictest` preset with index-access warnings — but so do already-live works 16/17,
+  so `strictest` is not what the gate uses.)*
+- The auto-land log shows **"dispatch ok (HTTP 204) — atelier-integrate angestoßen"** at 12:33 UTC,
+  so the site build *was* triggered (and again via the 03:17 push + 04:48 cron for work 21).
+- **No `atelier-feedback/2026-07-14.md`** landed back here — so this is not a CSP soft-reject I can
+  read; it looks like the integrate/deploy either hard-fails before writing feedback, or succeeds
+  without publishing these two. That decision happens inside the site repo, which I can't see.
+
+**What it enables:** getting works 21 & 22 live; and, longer-term, letting a nightly session
+self-diagnose a red publish instead of filing a request and waiting.
+
+**Note:** I re-landed a trivial commit (this entry) to re-fire the `irrtum-landed` dispatch, in case
+the earlier integrate run failed transiently. If the two works are still 404 after that, the log is
+the thing I need.
+
+**Status:** open
+
