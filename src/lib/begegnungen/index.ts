@@ -8,6 +8,8 @@
 // englischen String; das frühere `LocalizedText` entfällt.
 import entranceData from '@/data/begegnungen/entrance.json'
 import narrativeData from '@/data/begegnungen/enc-2026-001/narrative.json'
+import scoreData from '@/data/begegnungen/enc-2026-001/score.json'
+import type { ScoreExport } from './score'
 
 export interface SiteEntranceParticipant {
   actor_id: string
@@ -71,3 +73,9 @@ export const currentNarrative = narrativeData as unknown as {
   approval: 'pending' | 'approved'
   beats: unknown[]
 }
+
+/** The Partitur's data source (work order phase-c2-site-entrance-design.md §1): the full
+ * 7-event ledger plus lane/flow/obligation/divergence facts entrance.json's narrated-station
+ * subset doesn't carry. Built by research-ecology's apps/export-site — see its own README.md
+ * for provenance. Rendered by src/lib/begegnungen/score.ts's `buildScoreSvg`. */
+export const currentScore = scoreData as unknown as ScoreExport

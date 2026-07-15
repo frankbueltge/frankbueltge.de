@@ -4,6 +4,10 @@
 // Material, der Ökologie angeboten" um (docs/design/site-restructure-concept.md §2). Jede
 // bestehende Route bleibt unverändert erreichbar; hier ändert sich nur die Rahmung, keine
 // Experiment-Seite wird verändert oder gelöscht.
+// Ökologie-Neustrukturierung, Phase C2 (work order phase-c2-site-entrance-design.md §3):
+// "gleiche Familie, eine Stufe ruhiger" als der Site-Eingang (/) — derselbe Typo-Kanon
+// (Kicker/Mono-Notate/Hairlines/Registertabellen aus docs/design/variants-2026-07-15/
+// a-observatorium.html), keine eigene Zeichengrammatik, kein Dekor.
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import type { Locale } from '@/lib/site'
 import { WERKE_CHRONO, werkTitle } from '@/data/werke'
@@ -13,8 +17,6 @@ const locale = (Astro.currentLocale ?? 'en') as Locale
 // phase-3e-plumbing.md §2: "ohne die drei Engines").
 const ENGINE_IDS = new Set(['field', 'studio', 'atelier'])
 const bestaende = WERKE_CHRONO.filter((w) => !ENGINE_IDS.has(w.id))
-
-// <!-- DESIGN-SESSION: Chrome-Strings provisorisch, siehe BegegnungEntrance.astro. -->
 const copy = {
   de: {
     title: 'Bestände',

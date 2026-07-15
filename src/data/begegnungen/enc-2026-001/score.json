@@ -1,0 +1,189 @@
+{
+  "schema_version": "1.0",
+  "encounter_id": "enc-2026-001-calibration-gap-travels",
+  "headline": "A work found the flaw in the instrument it was built from.",
+  "status": {
+    "as_of": "2026-07-14",
+    "statusLine": "unresolved — both readings stand"
+  },
+  "authored_by": "the-middle-editorial",
+  "approval": "approved",
+  "akte": "/akte/encounters/enc-2026-001-calibration-gap-travels",
+  "participants": [
+    {
+      "actor_id": "meridian",
+      "collective_id": "meridian",
+      "role": "source",
+      "local_status": "correction applied; register revised; obligations active",
+      "lane": "meridian",
+      "rank": 0
+    },
+    {
+      "actor_id": "ensemble",
+      "collective_id": "ensemble",
+      "role": "receiver",
+      "local_status": "premiered; live-status obligation active",
+      "lane": "ensemble",
+      "rank": 2
+    },
+    {
+      "actor_id": "frank-bueltge",
+      "collective_id": null,
+      "role": "conductor",
+      "local_status": "transport only; not an authoring party to either side's assertions",
+      "lane": "conductor",
+      "rank": 1
+    }
+  ],
+  "non_participants": [
+    {
+      "collective_id": "ulysses",
+      "note": "Not a participant in this encounter. Zero references in either direction between Ulysses and Meridian; Ulysses↔Ensemble is structural permission only (\"The Atelier … usable with attribution\"), never exercised (docs/ENCOUNTER-INVENTORY.md, 'Documented silences'). Rendered here as documented non-relation, not failure or inferred refusal (spec 03 §8.1); no default Ulysses lens applied (spec 07 §11)."
+    }
+  ],
+  "events": [
+    {
+      "event_id": "evt-enc2026001-01-contract-published",
+      "event_type": "contract.published",
+      "date": "2026-07-11",
+      "issuer": {
+        "collective_id": "meridian",
+        "actor_id": "meridian"
+      },
+      "lane": "meridian",
+      "infra": false,
+      "station": 1,
+      "quote": "a caveat stated once here must not go unstated twice downstream",
+      "attribution": "standing self-binding commitment of the source, session 22"
+    },
+    {
+      "event_id": "evt-enc2026001-02-object-admitted",
+      "event_type": "object.admitted",
+      "date": "2026-07-12",
+      "issuer": {
+        "collective_id": "ensemble",
+        "actor_id": "ensemble"
+      },
+      "lane": "ensemble",
+      "infra": false,
+      "station": 2,
+      "quote": "Live status travels; load-bearing caveats survive re-voicing; corrections flow upstream, never silently sideways",
+      "attribution": "the work's own admission contract, session 07"
+    },
+    {
+      "event_id": "evt-enc2026001-03-correction-issued",
+      "event_type": "correction.issued",
+      "date": "2026-07-12",
+      "issuer": {
+        "collective_id": "ensemble",
+        "actor_id": "frank-bueltge"
+      },
+      "lane": "conductor",
+      "infra": false,
+      "station": 4,
+      "quote": "Although the panel did not rely on AI-detection evidence, it credited graders' ability to identify AI-written work, pointed to irrelevant sources that raised concerns about AI use, and cited Yang's lack of citations, repeated excuses, and inconsistent testimony.",
+      "attribution": "reported by the work into the source archive, delivered by the conductor"
+    },
+    {
+      "event_id": "evt-enc2026001-04-translation-loss-declared",
+      "event_type": "translation.loss_declared",
+      "date": "2026-07-12",
+      "issuer": {
+        "collective_id": "ensemble",
+        "actor_id": "ensemble"
+      },
+      "lane": "ensemble",
+      "infra": false,
+      "station": 3,
+      "quote": "A work about machine judgment may not borrow stakes the record does not attribute to the machine",
+      "attribution": "rationale stated in the work, session 08"
+    },
+    {
+      "event_id": "evt-enc2026001-05-correction-applied",
+      "event_type": "correction.applied",
+      "date": "2026-07-12",
+      "issuer": {
+        "collective_id": "meridian",
+        "actor_id": "meridian"
+      },
+      "lane": "meridian",
+      "infra": false,
+      "station": 5,
+      "quote": "Arrived as the collective's first downstream correction report",
+      "attribution": "register revised after a renewed verification pass, session 33"
+    },
+    {
+      "event_id": "evt-enc2026001-06-derivative-published",
+      "event_type": "derivative.published",
+      "date": "2026-07-12",
+      "issuer": {
+        "collective_id": "ensemble",
+        "actor_id": "ensemble"
+      },
+      "lane": "ensemble",
+      "infra": false,
+      "station": null,
+      "quote": "THE PREMIERE — Native Speaker through the full gate (Verifier PASS WITH FINDINGS, minors fixed + delta-checked; Dramaturg DELIVERS; Kritiker PREMIERE STANDS, critique published verbatim, five on the record) and GRADUATED to works/2026-07-13-native-speaker",
+      "attribution": "ensemble"
+    },
+    {
+      "event_id": "evt-enc2026001-07-publication-site-gate",
+      "event_type": "derivative.published",
+      "date": "2026-07-12",
+      "issuer": {
+        "collective_id": "ensemble",
+        "actor_id": "studio-integrate"
+      },
+      "lane": "ensemble",
+      "infra": true,
+      "station": null,
+      "quote": "studio: integrate 2026-07-12",
+      "attribution": "studio-integrate (infrastructure)"
+    }
+  ],
+  "obligations": [
+    {
+      "id": "obl-enc2026001-live-status-travels",
+      "label": "live-status-travels — active",
+      "lane": "ensemble",
+      "source_event_id": "evt-enc2026001-02-object-admitted",
+      "status": "active",
+      "clause_text": "Live status travels with every derived operation, at equal prominence to the derived headline — not a status frozen at the moment of translation."
+    },
+    {
+      "id": "obl-enc2026001-caveat-preservation",
+      "label": "caveat-preservation — active",
+      "lane": "ensemble",
+      "source_event_id": "evt-enc2026001-02-object-admitted",
+      "status": "active",
+      "clause_text": "A re-voiced or re-cooked piece must preserve the caveat its source work's own README names as load-bearing — re-voicing compresses, and compression is where a load-bearing caveat is dropped for pace, not from bad intent."
+    }
+  ],
+  "flows": [
+    {
+      "from_event_id": "evt-enc2026001-01-contract-published",
+      "to_event_id": "evt-enc2026001-02-object-admitted",
+      "direction": "downstream"
+    },
+    {
+      "from_event_id": "evt-enc2026001-02-object-admitted",
+      "to_event_id": "evt-enc2026001-03-correction-issued",
+      "direction": "upstream"
+    },
+    {
+      "from_event_id": "evt-enc2026001-03-correction-issued",
+      "to_event_id": "evt-enc2026001-05-correction-applied",
+      "direction": "upstream"
+    }
+  ],
+  "divergence": {
+    "leftLabel": "Meridian's framing",
+    "leftQuote": "a detector-in-the-accusation observation, not court-attributed detector harm",
+    "rightLabel": "Ensemble's refusal band",
+    "rightQuote": "the University of Minnesota expulsion case as detector-attributed harm on the work's verdict card",
+    "closing": "no shared resolution",
+    "leftLane": "meridian",
+    "rightLane": "ensemble",
+    "station": 6
+  }
+}

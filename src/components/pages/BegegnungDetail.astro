@@ -1,17 +1,16 @@
 ---
-// Ökologie-Neustrukturierung (Phase 3e, Branch ecology-restructure), Ebene 2 "die Erzählung":
-// eine einzelne Begegnung als vertikale Skelett-Sequenz (work order phase-3e-plumbing.md §2:
-// "/begegnungen/enc-2026-001/index.astro — Narrative als vertikale Skelett-Sequenz"). Die
-// Belegschicht (Ebene 3, "die Akte") lebt in einer eigenen App und ist hier nur als
-// Platzhalter-Link verankert.
+// Ökologie-Neustrukturierung, Phase C2 (work order phase-c2-site-entrance-design.md §3): eine
+// einzelne Begegnung als vertikale Erzähl-Sequenz — "gleiche Familie, eine Stufe ruhiger" als der
+// Site-Eingang (/): derselbe Typo-Kanon (Kicker/Mono-Notate/Hairlines/Registertabellen), keine
+// eigene Zeichengrammatik, kein Dekor. Die Belegschicht (Ebene 3, "die Akte") lebt in einer
+// eigenen App und ist hier nur als deaktivierter "folgt"-Vermerk verankert, solange sie nicht
+// deployt ist (Akte-Links sind bewusst keine echten <a>, sondern sichtbar inaktive Elemente).
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import type { Locale } from '@/lib/site'
 import { currentEntrance, isDivergenceStation } from '@/lib/begegnungen'
 
 const locale = (Astro.currentLocale ?? 'en') as Locale
 const entrance = currentEntrance
-
-// <!-- DESIGN-SESSION: Chrome-Strings provisorisch, siehe BegegnungEntrance.astro. -->
 const copy = {
   de: {
     kicker: 'Begegnung',
@@ -83,10 +82,12 @@ const copy = {
               </div>
               <p class="text-sm text-fg-faint sm:col-span-2">{station.divergence.closing}</p>
               <p class="sm:col-span-2">
-                <!-- TODO(phase-3e): /akte-App noch nicht deployt — Platzhalter-Pfad. -->
-                <a href={entrance.links.divergenz} class="text-sm font-semibold underline decoration-2 underline-offset-4">
-                  {copy.openDivergenz} <span class="font-normal text-fg-faint">{copy.comingSoon}</span>
-                </a>
+                {/* The Akte app isn't deployed yet — a disabled-looking notation, not a live
+                    (and currently 404-ing) link (work order phase-c2-site-entrance-design.md
+                    §2, "deaktivierter 'folgt'-Vermerk"). */}
+                <span class="inline-flex cursor-not-allowed items-baseline gap-1.5 text-sm font-semibold text-fg-faint opacity-70" aria-disabled="true" title={copy.comingSoon}>
+                  {copy.openDivergenz} <span class="text-xs font-normal">({copy.comingSoon})</span>
+                </span>
               </p>
             </div>
           ) : (
@@ -94,11 +95,9 @@ const copy = {
               <blockquote class="mt-4 border-l-2 border-line pl-4 text-fg-muted">&ldquo;{station.quote}&rdquo;</blockquote>
               <p class="mt-2 text-xs text-fg-faint">— {station.attribution}</p>
               <p class="mt-3">
-                <!-- TODO(phase-3e): /akte-App noch nicht deployt — Platzhalter-Pfad, verweist
-                     auf das benannte Ereignis in der Akte. -->
-                <a href={`${entrance.links.akte}#event-${station.akte_event_id}`} class="text-sm font-semibold underline decoration-2 underline-offset-4">
-                  {copy.openAkte} <span class="font-normal text-fg-faint">{copy.comingSoon}</span>
-                </a>
+                <span class="inline-flex cursor-not-allowed items-baseline gap-1.5 text-sm font-semibold text-fg-faint opacity-70" aria-disabled="true" title={copy.comingSoon}>
+                  {copy.openAkte} <span class="text-xs font-normal">({copy.comingSoon})</span>
+                </span>
               </p>
             </Fragment>
           )}

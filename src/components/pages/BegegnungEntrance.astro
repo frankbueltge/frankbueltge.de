@@ -1,116 +1,481 @@
 ---
-// Ökologie-Neustrukturierung (Phase 3e, Branch ecology-restructure), Ebene 1 „das Blatt": die
-// Startseite wird zum Eingang in die aktuelle Begegnung (docs/design/site-restructure-concept.
-// md §1/§3). Datenquelle: src/data/begegnungen/entrance.json, exportiert aus research-ecology
-// (siehe dessen docs/runbooks/site-export.md). Bewusst schmuckloses, semantisches Skelett —
-// Maßstab, Display-Typo und der sich selbst zeichnende Glyph kommen aus der eigenen
-// Design-Session (work order phase-3e-plumbing.md §2, Scope "NUR Maschinerie"). KEINE SVG-Karte.
+// Ökologie-Neustrukturierung, Phase C2 (work order phase-c2-site-entrance-design.md): der
+// Site-Eingang wird die Partitur (Richtung A, von Frank gewählt am 2026-07-15 — "noch ziemlich
+// dünn ... sollte genauso professionell und ästhetisch ansprechend sein wie die anderen Sachen").
+// Komposition, Zeichen-Geometrie und Farbwerte sind aus docs/design/variants-2026-07-15/
+// a-observatorium.html + assemble_variants.py portiert (research-ecology); die Partitur selbst
+// wird von src/lib/begegnungen/score.ts (TS-Port von build_svg()) aus dem exportierten
+// score.json gerendert — rein, deterministisch, kein Zufall/keine Uhr. Freigegebene Wortlaute
+// (docs/design/wortlaute-2026-07-15.md) werden hier als feste Zeichengrammatik-Formeln
+// übernommen (Englisch, surface-weit statisch), nicht als Chrome-Copy übersetzt — dieselbe
+// Zwei-Schichten-Regel wie beim Protokoll: Grammatik-Wortlaute sind unter Testschutz
+// (src/lib/begegnungen/score.test.ts), Erzähl-/Chrome-Copy bleibt bilingual wie zuvor.
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import type { Locale } from '@/lib/site'
-import { currentEntrance, isDivergenceStation } from '@/lib/begegnungen'
+import { currentEntrance, currentScore, isDivergenceStation } from '@/lib/begegnungen'
+import { buildScoreSvg } from '@/lib/begegnungen/score'
 
 const locale = (Astro.currentLocale ?? 'en') as Locale
 const entrance = currentEntrance
+const score = currentScore
 
-const displayDate = new Intl.DateTimeFormat(locale === 'de' ? 'de-DE' : 'en-GB', { dateStyle: 'medium' }).format(
-  new Date(`${entrance.status.as_of}T00:00:00Z`),
-)
-
-// <!-- DESIGN-SESSION: Chrome-Strings provisorisch, bewusst inline statt in src/i18n/ui.ts —
-//      Wortlaut/Layout dieses Eingangs kommen aus der eigenen Design-Session, die über App und
-//      Site zugleich zieht (work order phase-3e-plumbing.md, Kopfzeile "Scope"). -->
+// Chrome copy (translatable — everything the design session's own strings below do NOT cover).
 const copy = {
   de: {
-    kicker: 'Die aktuelle Begegnung',
-    statusAsOf: 'Stand',
     openAkte: 'Akte öffnen',
     openDivergenz: 'Zur Divergenz',
-    comingSoon: '(Akte-App folgt)',
+    comingSoon: 'Akte-App folgt',
     authoredBy: 'Erzählt von',
     pendingApproval: 'Freigabe steht aus',
     allEncounters: 'Alle Begegnungen',
+    stationsHeading: 'Die Erzählung, als Register',
+    tableHeading: 'Register-Auszug — dieselben sieben Ereignisse, tabellarisch',
+    theCollective: 'die Ökologie',
   },
   en: {
-    kicker: 'The current encounter',
-    statusAsOf: 'As of',
     openAkte: 'Open the record',
     openDivergenz: 'See the divergence',
-    comingSoon: '(record app not deployed yet)',
+    comingSoon: 'record app not deployed yet',
     authoredBy: 'Narrated by',
     pendingApproval: 'pending approval',
     allEncounters: 'All encounters',
+    stationsHeading: 'The story, as register',
+    tableHeading: 'Register extract — the same seven events, as a table',
+    theCollective: 'the ecology',
   },
 }[locale]
+
+const svgMarkup = buildScoreSvg(score)
+
+const lanes = score.participants.filter((p) => p.lane)
+const activeObligations = score.obligations.filter((o) => o.status === 'active')
+const nonParticipants = score.non_participants ?? []
+const plural = (n: number) => (n === 1 ? '' : 's')
+const statusMeta =
+  `${score.events.length} ledger event${plural(score.events.length)} · ${lanes.length} lane${plural(lanes.length)}` +
+  ` · ${activeObligations.length} obligation${plural(activeObligations.length)} active` +
+  (nonParticipants.length ? ` · ${nonParticipants.length} designed non-relation${plural(nonParticipants.length)}` : '')
+
+const approvalChipLabel = score.approval === 'approved' ? 'wording approved' : copy.pendingApproval
+
+// Practice legend rows: role + local_status, both real exported fields — not the design
+// session's own descriptive labels ("scientific research practice" etc.), which aren't backed
+// by any field this export carries (see work order report, discrepancy list).
+const practiceLanes = lanes.filter((p) => p.role !== 'conductor')
+const conductorLane = lanes.find((p) => p.role === 'conductor')
+
+const tooltipPayload = JSON.stringify(
+  score.events.map((e) => ({
+    id: e.event_id,
+    type: e.event_type,
+    date: e.date,
+    lane: e.lane,
+    infra: e.infra,
+    quote: e.quote,
+    attribution: e.attribution,
+  })),
+)
 ---
 
-<main id="main" class="mx-auto w-full max-w-4xl flex-1 px-6 py-16 sm:py-24">
-  <!-- DESIGN-SESSION: Vollbild-Blatt, Display-Typo (clamp bis ~9vw), der sich einmalig selbst
-       zeichnende Glyph (Transfer-Linie, Korrektur-Pfeil, terrakotta) — siehe
-       docs/design/site-restructure-concept.md §3. Hier ausschließlich das semantische Skelett;
-       keine der dort beschriebenen visuellen Mittel sind schon umgesetzt. -->
-  <section aria-labelledby="entrance-headline">
-    <p class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">
-      {copy.kicker} · {entrance.encounter_id}
-    </p>
-    <p class="mt-1 font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">
-      {copy.statusAsOf} {displayDate} · {entrance.status.statusLine}
-    </p>
+<main id="main" class="flex-1">
+<div class="score-map">
+  <p class="score-kicker">
+    <span>The Middle · contact zone record</span>
+    <span>{score.encounter_id}</span>
+    <span>as of {score.status.as_of}</span>
+    <span class="score-chip">{approvalChipLabel}</span>
+  </p>
 
-    <h1 id="entrance-headline" class="mt-6 text-pretty text-[clamp(34px,6vw,64px)] font-bold tracking-[-0.03em]">
-      {entrance.headline}
-    </h1>
+  <h1 id="entrance-headline" class="score-h1">{score.headline}</h1>
 
-    <!-- Stationsliste: schlichte nummerierte Liste statt Karte (work order §2: "KEINE
-         SVG-Karte, die kommt aus der Design-Session"). -->
-    <ol class="mt-12 space-y-8 border-t border-line/60 pt-8">
+  <p class="score-status"><b>{score.status.statusLine}</b> · {statusMeta}</p>
+
+  <figure class="score-figure">
+    <div class="score-svg" set:html={svgMarkup} />
+  </figure>
+
+  <aside class="score-legend" aria-label="Map key">
+    <div class="score-lg-col">
+      <h3>Practices</h3>
+      {practiceLanes.map((p) => (
+        <div class="score-lg-row">
+          <i class:list={['score-sw', `pr-${p.lane}`]}></i>
+          <span>
+            {p.lane?.toUpperCase()} — {p.role}{p.local_status && <> · {p.local_status}</>}
+          </span>
+        </div>
+      ))}
+      {conductorLane && (
+        <div class="score-lg-row">
+          <i class:list={['score-sw', `pr-${conductorLane.lane}`]}></i>
+          <span>
+            {conductorLane.lane?.toUpperCase()} ({conductorLane.actor_id}) — {conductorLane.role}
+            {conductorLane.local_status && <> · {conductorLane.local_status}</>}
+          </span>
+        </div>
+      )}
+      {nonParticipants.map((np) => (
+        <div class="score-lg-row">
+          <i class="score-sw pr-ulysses"></i>
+          <span>{np.collective_id.toUpperCase()} — documented non-participant in this encounter (designed non-relation; drawn as absence, not as edge)</span>
+        </div>
+      ))}
+    </div>
+
+    <div class="score-lg-col">
+      <h3>Signs</h3>
+      <div class="score-lg-row"><svg viewBox="0 0 46 30" class="score-mini"><path class="mk pr-meridian" d="M14 4 V26"/><path class="mk mk-lt pr-meridian" d="M21 4 V26"/><path class="mk pr-meridian" d="M21 15 H33"/></svg><span>contract.* — threshold: an offer under conditions</span></div>
+      <div class="score-lg-row"><svg viewBox="0 0 46 30" class="score-mini"><rect class="mk-fill pr-ensemble" x="15" y="7" width="16" height="16"/></svg><span>object.* — a work enters, conditions included</span></div>
+      <div class="score-lg-row"><svg viewBox="0 0 46 30" class="score-mini"><rect class="mk-hatch pr-ensemble" x="8" y="8" width="11" height="14"/><rect class="mk-hatch pr-ensemble" x="27" y="8" width="11" height="14"/><path class="mk-void" d="M23 4 V26"/></svg><span>translation.* — declared loss: a designed gap, not an error</span></div>
+      <div class="score-lg-row"><svg viewBox="0 0 46 30" class="score-mini"><path class="mk pr-conductor" d="M23 4 L34 15 L23 26 L12 15 Z" fill="none"/></svg><span>correction.issued — in transit, not yet accepted</span></div>
+      <div class="score-lg-row"><svg viewBox="0 0 46 30" class="score-mini"><path class="mk pr-meridian" d="M12 17 L19 24 L34 6" fill="none"/></svg><span>correction.applied — arrived and worked in</span></div>
+      <div class="score-lg-row"><svg viewBox="0 0 46 30" class="score-mini"><path class="mk-stem pr-ensemble" d="M23 2 V16"/><circle class="mk mk-punch pr-ensemble" cx="23" cy="23" r="6"/></svg><span>derivative.* — offspring on a stem</span></div>
+      <div class="score-lg-row"><svg viewBox="0 0 46 30" class="score-mini"><circle class="mk mk-unknown" cx="23" cy="15" r="9" fill="none"/></svg><span>unknown family — documented fallback, never guessed</span></div>
+    </div>
+
+    <div class="score-lg-col">
+      <h3>Currents</h3>
+      <div class="score-lg-row"><svg viewBox="0 0 46 30" class="score-mini"><path class="flow flow-down pr-ensemble" d="M6 6 C 18 26, 30 26, 40 8"/></svg><span>downstream ↓ — transfer, source to receiver</span></div>
+      <div class="score-lg-row"><svg viewBox="0 0 46 30" class="score-mini"><path class="flow flow-up pr-conductor" d="M6 24 C 18 4, 30 4, 40 22"/></svg><span>upstream ↑ — correction against the stream</span></div>
+      <div class="score-lg-row"><svg viewBox="0 0 46 30" class="score-mini"><path class="obl pr-meridian" d="M4 15 H42"/></svg><span>obligation — sustained until the as-of edge</span></div>
+      <div class="score-lg-row"><svg viewBox="0 0 46 30" class="score-mini"><circle class="ring pr-meridian" cx="14" cy="15" r="7" fill="none"/><circle class="ring pr-ensemble" cx="34" cy="15" r="7" fill="none"/></svg><span>divergence — open rings that never converge</span></div>
+      <p class="score-lg-note">
+        Narrative badges ①–⑥ give the telling's order; the map keeps the ledger's. Same ledger ⇒
+        same map, byte for byte. No force layout, no randomness, no clock.
+      </p>
+    </div>
+  </aside>
+
+  <section class="score-stations" aria-labelledby="stations-heading">
+    <h2 id="stations-heading" class="score-section-heading">{copy.stationsHeading}</h2>
+    <ol>
       {entrance.stations.map((station, i) => (
-        <li class="border-b border-line/60 pb-8">
-          <h2 class="text-lg font-semibold">
-            <span class="mr-2 font-mono text-sm text-fg-faint">{i + 1}</span>
-            {station.heading}
-          </h2>
+        <li>
+          <h3><span class="score-station-n">{i + 1}</span>{station.heading}</h3>
           {isDivergenceStation(station) ? (
-            <div class="mt-3 grid gap-4 sm:grid-cols-2">
+            <div class="score-divergence-grid">
               <div>
-                <p class="font-mono text-xs uppercase tracking-wider text-fg-faint">{station.divergence.leftLabel}</p>
-                <blockquote class="mt-1 text-sm text-fg-muted">&ldquo;{station.divergence.leftQuote}&rdquo;</blockquote>
+                <p class="score-eyebrow">{station.divergence.leftLabel}</p>
+                <blockquote>&ldquo;{station.divergence.leftQuote}&rdquo;</blockquote>
               </div>
               <div>
-                <p class="font-mono text-xs uppercase tracking-wider text-fg-faint">{station.divergence.rightLabel}</p>
-                <blockquote class="mt-1 text-sm text-fg-muted">&ldquo;{station.divergence.rightQuote}&rdquo;</blockquote>
+                <p class="score-eyebrow">{station.divergence.rightLabel}</p>
+                <blockquote>&ldquo;{station.divergence.rightQuote}&rdquo;</blockquote>
               </div>
-              <p class="text-sm text-fg-faint sm:col-span-2">{station.divergence.closing}</p>
+              <p class="score-closing">{station.divergence.closing}</p>
+              <p class="score-akte-link">
+                <span class="score-disabled-link" aria-disabled="true" title={copy.comingSoon}>
+                  {copy.openDivergenz} <span class="score-disabled-note">({copy.comingSoon})</span>
+                </span>
+              </p>
             </div>
           ) : (
             <Fragment>
-              <blockquote class="mt-3 border-l-2 border-line pl-4 text-sm text-fg-muted">&ldquo;{station.quote}&rdquo;</blockquote>
-              <p class="mt-2 text-xs text-fg-faint">— {station.attribution}</p>
+              <blockquote>&ldquo;{station.quote}&rdquo;</blockquote>
+              <p class="score-attribution">— {station.attribution}</p>
+              <p class="score-akte-link">
+                <span class="score-disabled-link" aria-disabled="true" title={copy.comingSoon}>
+                  {copy.openAkte} <span class="score-disabled-note">({copy.comingSoon})</span>
+                </span>
+              </p>
             </Fragment>
           )}
         </li>
       ))}
     </ol>
-
-    <p class="mt-10 flex flex-wrap gap-6">
-      <!-- TODO(phase-3e): /akte-App noch nicht deployt — Platzhalter-Pfad, siehe
-           docs/design/site-restructure-concept.md §4 "Umsetzungsweg". -->
-      <a href={entrance.links.akte} class="font-semibold underline decoration-2 underline-offset-4">
-        {copy.openAkte} <span class="font-normal text-fg-faint">{copy.comingSoon}</span>
-      </a>
-      <a href={entrance.links.divergenz} class="font-semibold underline decoration-2 underline-offset-4">
-        {copy.openDivergenz} <span class="font-normal text-fg-faint">{copy.comingSoon}</span>
-      </a>
-    </p>
-
-    <p class="mt-6 text-xs text-fg-faint">
-      {copy.authoredBy} {entrance.authored_by}
-      {entrance.approval === 'pending' && (
-        <span class="ml-2 rounded-full border border-line/60 px-2 py-0.5">{copy.pendingApproval}</span>
-      )}
-    </p>
-
-    <p class="mt-10">
-      <a href={getRelativeLocaleUrl(locale, '/begegnungen')} class="text-sm text-fg-muted underline">{copy.allEncounters} →</a>
-    </p>
   </section>
+
+  <section class="score-record" aria-label="Event table (register extract)">
+    <h2 class="score-section-heading">{copy.tableHeading}</h2>
+    <div class="score-tbl-wrap">
+      <table>
+        <thead><tr><th>#</th><th>event</th><th>type</th><th>date</th><th>issuer</th><th>verbatim quote</th></tr></thead>
+        <tbody>
+          {score.events.map((e, i) => (
+            <tr>
+              <td>{i + 1}</td>
+              <td class="score-mono">{e.event_id}</td>
+              <td>{e.event_type}</td>
+              <td>{e.date}</td>
+              <td>{e.attribution}</td>
+              <td class="score-q">{e.quote ? <>&ldquo;{e.quote}&rdquo;</> : <span class="score-disabled-note">(no isolated quote in the ledger payload)</span>}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer class="score-foot">
+    <span>deterministic projection of the encounter ledger · {entrance.encounter_id}</span>
+    <span>
+      {copy.authoredBy} {score.authored_by}
+      {score.approval === 'pending' && <span class="score-pending-badge">{copy.pendingApproval}</span>}
+    </span>
+  </footer>
+
+  <p class="score-all-link">
+    <a href={getRelativeLocaleUrl(locale, '/begegnungen')}>{copy.allEncounters} →</a>
+  </p>
+
+  <div id="score-tip" class="score-tip" hidden></div>
+</div>
 </main>
+
+<script type="application/json" id="score-evts" set:html={tooltipPayload} />
+<script>
+  // Progressive enhancement only (zeichengrammatik-2026-07-15.md §4): the register table above
+  // is the complete, JS-free fallback. No loops, no auto-advance — a single reveal on
+  // hover/focus, gone on leave/blur (Bestandsregel: nothing pulses, nothing blinks).
+  function initScoreTooltip() {
+    const dataEl = document.getElementById('score-evts')
+    const tip = document.getElementById('score-tip')
+    if (!dataEl || !tip) return
+    let events: Array<{ id: string; type: string; date: string; lane: string; infra: boolean; quote: string | null; attribution: string | null }> = []
+    try {
+      events = JSON.parse(dataEl.textContent || '[]')
+    } catch {
+      return
+    }
+    function show(g: Element) {
+      const i = Number(g.getAttribute('data-i'))
+      const e = events[i]
+      if (!e || !tip) return
+      tip.innerHTML =
+        `<b>${e.type}</b><br><span class="score-tip-id">${e.id}</span><br>` +
+        `${e.date} · ${e.infra ? e.attribution + ' (infrastructure)' : e.lane}` +
+        (e.quote ? `<hr>&ldquo;${e.quote}&rdquo;<br><i>— ${e.attribution}</i>` : '')
+      tip.hidden = false
+      const r = g.getBoundingClientRect()
+      const tw = (tip as HTMLElement).offsetWidth
+      const x = Math.min(Math.max(8, r.left + r.width / 2 - tw / 2), innerWidth - tw - 8)
+      ;(tip as HTMLElement).style.left = `${x}px`
+      ;(tip as HTMLElement).style.top = `${r.top + scrollY - (tip as HTMLElement).offsetHeight - 10}px`
+    }
+    document.querySelectorAll('.score-svg .evt').forEach((g) => {
+      g.addEventListener('mouseenter', () => show(g))
+      g.addEventListener('focus', () => show(g))
+      g.addEventListener('mouseleave', () => {
+        if (tip) tip.hidden = true
+      })
+      g.addEventListener('blur', () => {
+        if (tip) tip.hidden = true
+      })
+    })
+  }
+  initScoreTooltip()
+</script>
+
+<style is:global>
+  /* Variante A (Observatorium) — validated palette, docs/design/zeichengrammatik-2026-07-15.md
+     §3 + docs/design/variants-2026-07-15/a-observatorium.html. Scoped entirely to .score-map;
+     no global skin change. Prefixed with --score- to stay clear of the site's own --color-*
+     tokens (that system is deliberately grayscale — "Mono-Skin fest" — this page's practice
+     identities are the one deliberate exception, gated to this page only). */
+  :root[data-theme='dark'] .score-map {
+    --score-hairline: #232a33;
+    --score-ink-2: #98a2ad;
+    --score-c-meridian: #3987e5;
+    --score-c-ensemble: #d95926;
+    --score-c-conductor: #77828d;
+    --score-c-ulysses: #9085e9;
+    --score-badge-bg: #181d24;
+    --score-tip-bg: #161b22;
+  }
+  :root[data-theme='light'] .score-map {
+    --score-hairline: #d5dbe2;
+    --score-ink-2: #5b6672;
+    --score-c-meridian: #2a78d6;
+    --score-c-ensemble: #c1481c;
+    --score-c-conductor: #6b7684;
+    --score-c-ulysses: #4a3aa7;
+    --score-badge-bg: #e7ebf0;
+    --score-tip-bg: #ffffff;
+  }
+
+  .score-map {
+    max-width: 96rem;
+    margin: 0 auto;
+    padding: 2.125rem 1rem 3.75rem;
+  }
+  @media (min-width: 640px) {
+    .score-map { padding: 2.125rem 2.5rem 3.75rem; }
+  }
+  .score-kicker {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--score-ink-2);
+    display: flex;
+    gap: 1.4em;
+    flex-wrap: wrap;
+    margin: 0;
+  }
+  .score-chip {
+    border: 1px solid var(--score-hairline);
+    padding: 1px 8px;
+    border-radius: 2px;
+  }
+  .score-h1 {
+    font-size: clamp(34px, 4.6vw, 64px);
+    line-height: 1.04;
+    letter-spacing: -0.022em;
+    margin: 0.5em 0 0.2em;
+    max-width: 24ch;
+    font-weight: 650;
+    color: var(--color-fg);
+  }
+  .score-status {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--score-ink-2);
+    margin: 0;
+  }
+  .score-status b { color: var(--color-fg); font-weight: 600; }
+
+  .score-figure { margin: 26px 0 8px; }
+  .score-svg svg#score { width: 100%; height: auto; display: block; }
+
+  /* ---- grammar strokes ----
+     Shared between the generated score SVG (.score-svg) AND the legend's mini-icons
+     (.score-legend .score-mini), which reuse the exact same sign classes on purpose (the
+     legend IS a miniature of the same marks, zeichengrammatik-2026-07-15.md §2) — scoped to
+     .score-map so both pick them up, not just the real SVG. */
+  .score-map .pr-meridian { --pr: var(--score-c-meridian); }
+  .score-map .pr-ensemble { --pr: var(--score-c-ensemble); }
+  .score-map .pr-conductor { --pr: var(--score-c-conductor); }
+  .score-map .pr-ulysses { --pr: var(--score-c-ulysses); }
+  .score-map .pr-infra { --pr: var(--score-c-conductor); }
+  .score-map .pr-unknown { --pr: var(--score-ink-2); }
+  .score-map .lane { stroke: var(--pr); stroke-width: 2; opacity: 0.92; }
+  .score-map .lane-thin { stroke-width: 1; stroke-dasharray: 1 5; opacity: 0.75; }
+  .score-map .mk { stroke: var(--pr); stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+  /* the derivative sign's circle "punches" a hole through the stem beneath it — filled with the
+     page background rather than left transparent (an inline fill="" would lose to this class in
+     the cascade, so it's a class, not a presentation attribute). */
+  .score-map .mk-punch { fill: var(--color-bg); }
+  .score-map .mk-lt { opacity: 0.45; stroke-width: 1.4; }
+  .score-map .mk-fill { fill: var(--pr); }
+  .score-map .mk-hatch { fill: url(#hatch); stroke: var(--pr); stroke-width: 1.1; }
+  .score-map .hatch-line { stroke: var(--score-ink-2); stroke-width: 1.1; }
+  .score-map .mk-void { stroke: var(--score-ink-2); stroke-width: 1; stroke-dasharray: 2 4; opacity: 0.8; }
+  .score-map .mk-stem { stroke: var(--pr); stroke-width: 1.2; opacity: 0.85; }
+  .score-map .mk-unknown { stroke: var(--score-ink-2); stroke-dasharray: 2 3; }
+  .score-map .flow { fill: none; stroke: var(--pr); stroke-width: 1.8; }
+  .score-map .flow-up { stroke-dasharray: 6 5; }
+  .score-map .obl { stroke: var(--pr); stroke-width: 0.9; opacity: 0.6; stroke-dasharray: 1 4; }
+  .score-map .ring { stroke: var(--pr); stroke-width: 2.2; }
+  .score-svg .gap { stroke: var(--score-ink-2); stroke-width: 1; stroke-dasharray: 3 5; }
+  .score-svg .asof { stroke: var(--score-ink-2); stroke-width: 1.4; }
+  .score-svg .ruler { stroke: var(--score-ink-2); stroke-width: 1; opacity: 0.9; }
+  .score-svg .grat { stroke: var(--score-hairline); stroke-width: 1; }
+  .score-svg .marker-stroke { stroke: var(--score-ink-2); stroke-width: 1.6; }
+  .score-svg .badge { fill: var(--score-badge-bg); stroke: var(--score-hairline); }
+  .score-svg .badge-n { font: 600 10.5px var(--font-mono); fill: var(--color-fg); }
+  .score-svg text { fill: var(--color-fg); }
+  .score-svg .t-lane { font: 600 13px var(--font-mono); letter-spacing: 0.12em; fill: var(--color-fg); }
+  .score-svg .t-note { font: 11.5px var(--font-mono); fill: var(--score-ink-2); }
+  .score-svg .t-dim { opacity: 0.75; }
+  .score-svg .t-quote { font: italic 11.5px var(--font-sans); fill: var(--score-ink-2); }
+  .score-svg .evt { cursor: pointer; outline: none; }
+  .score-svg .evt:hover .mk, .score-svg .evt:focus .mk { stroke-width: 3; }
+  .score-svg .evt:focus .hit { stroke: var(--score-ink-2); stroke-dasharray: 2 3; }
+  @media (prefers-reduced-motion: reduce) {
+    .score-map * { transition: none !important; animation: none !important; }
+  }
+
+  /* ---- legend ---- */
+  .score-legend {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 26px;
+    border-top: 1px solid var(--color-line);
+    border-bottom: 1px solid var(--color-line);
+    padding: 20px 0;
+    margin: 14px 0 26px;
+  }
+  .score-legend h3 {
+    font: 600 11px var(--font-mono);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-fg-faint);
+    margin: 0 0 10px;
+  }
+  .score-lg-row { display: flex; gap: 10px; align-items: center; margin: 5px 0; font: 12.5px var(--font-mono); color: var(--color-fg-muted); }
+  .score-mini { width: 46px; height: 30px; flex: none; }
+  .score-sw { width: 22px; height: 8px; background: var(--pr); flex: none; border-radius: 1px; }
+  .score-lg-note { font: 11.5px var(--font-mono); color: var(--color-fg-faint); margin-top: 12px; max-width: 44ch; opacity: 0.85; }
+
+  /* ---- stations register (Beat sequence, one register level down from the mock's own,
+     restyled with the same typo system: mono kicker numbers, hairline separators) ---- */
+  .score-stations, .score-record { margin-top: 2.5rem; }
+  .score-section-heading {
+    font: 600 13px var(--font-mono);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-fg-faint);
+    margin: 0 0 1.25rem;
+  }
+  .score-stations ol { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--color-line); }
+  .score-stations li { padding: 1.75rem 0; border-bottom: 1px solid var(--color-line); }
+  .score-stations h3 { font-size: 1.125rem; font-weight: 600; margin: 0 0 0.75rem; color: var(--color-fg); }
+  .score-station-n { font: 600 13px var(--font-mono); color: var(--color-fg-faint); margin-right: 0.6em; }
+  .score-stations blockquote { margin: 0.75rem 0 0; padding-left: 1rem; border-left: 2px solid var(--color-line); color: var(--color-fg-muted); font-size: 0.95rem; }
+  .score-attribution { margin: 0.5rem 0 0; font-size: 0.75rem; color: var(--color-fg-faint); }
+  .score-eyebrow { font: 11px var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-fg-faint); margin: 0; }
+  .score-divergence-grid { display: grid; gap: 1.1rem; margin-top: 0.9rem; }
+  @media (min-width: 640px) { .score-divergence-grid { grid-template-columns: 1fr 1fr; } }
+  .score-closing { grid-column: 1 / -1; font-size: 0.85rem; color: var(--color-fg-faint); margin: 0; }
+  .score-akte-link { margin: 0.75rem 0 0; grid-column: 1 / -1; }
+  .score-disabled-link {
+    display: inline-flex;
+    gap: 0.4em;
+    align-items: baseline;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--color-fg-faint);
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+  .score-disabled-note { font-weight: 400; font-size: 0.8em; color: var(--color-fg-faint); }
+  .score-pending-badge { margin-left: 0.5em; border-radius: 999px; border: 1px solid var(--color-line); padding: 0.1em 0.6em; }
+
+  /* ---- event register table ---- */
+  .score-tbl-wrap { overflow-x: auto; }
+  .score-record table { border-collapse: collapse; width: 100%; font: 12.5px var(--font-mono); }
+  .score-record th { text-align: left; font-weight: 600; color: var(--color-fg-faint); letter-spacing: 0.06em; }
+  .score-record th, .score-record td { border-top: 1px solid var(--color-line); padding: 7px 14px 7px 0; vertical-align: top; }
+  .score-mono { white-space: nowrap; color: var(--color-fg-faint); }
+  .score-q { font-style: italic; max-width: 52ch; }
+
+  .score-foot {
+    margin-top: 1.75rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-line);
+    font: 11.5px var(--font-mono);
+    color: var(--color-fg-faint);
+    display: flex;
+    justify-content: space-between;
+    gap: 2em;
+    flex-wrap: wrap;
+  }
+  .score-all-link { margin-top: 1.5rem; }
+  .score-all-link a { font-size: 0.875rem; color: var(--color-fg-muted); text-decoration: underline; }
+
+  .score-tip {
+    position: absolute;
+    max-width: 360px;
+    background: var(--score-tip-bg);
+    color: var(--color-fg);
+    border: 1px solid var(--score-hairline);
+    padding: 10px 12px;
+    font: 12.5px var(--font-mono);
+    line-height: 1.45;
+    pointer-events: none;
+    box-shadow: 0 6px 24px rgb(0 0 0 / 0.25);
+    z-index: 40;
+  }
+  .score-tip hr { border: none; border-top: 1px solid var(--score-hairline); margin: 6px 0; }
+  .score-tip-id { opacity: 0.7; }
+</style>
