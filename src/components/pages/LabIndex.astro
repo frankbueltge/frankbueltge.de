@@ -11,9 +11,32 @@ const studienHrefs = new Set(WERKE_STUDIEN.map((w) => w.href))
 const posts = (await getLabPosts(locale)).filter(({ slug }) => !studienHrefs.has(`/lab/${slug}`))
 const fmt = (iso: string) =>
   new Date(iso).toLocaleDateString(locale === 'de' ? 'de-DE' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+
+// <!-- DESIGN-SESSION: Chrome-Strings provisorisch, siehe BegegnungEntrance.astro. Ökologie-
+//      Neustrukturierung (Phase 3e, Branch ecology-restructure): Hinweisblock statt Redirect —
+//      /lab bleibt bestehen (docs/design/site-restructure-concept.md §2: "Demotion statt
+//      Deletion"), verweist aber auf die neue IA. -->
+const ecologyNotice = {
+  de: {
+    body: 'Diese Übersicht zieht in eine neue Struktur: die laufenden Instrumente stehen jetzt unter „Bestände", die drei autonomen Praxis-Archive unter „Praktiken".',
+    bestaendeLink: 'Zu den Beständen',
+    praktikenLink: 'Zu den Praktiken',
+  },
+  en: {
+    body: 'This overview is moving into a new structure: the ongoing instruments now live under "Holdings", the three autonomous practice archives under "Practices".',
+    bestaendeLink: 'Go to Holdings',
+    praktikenLink: 'Go to Practices',
+  },
+}[locale]
 ---
 
 <main id="main" class="mx-auto w-full max-w-5xl flex-1 px-6 py-16 sm:py-24">
+  <p class="mb-10 border border-line/60 px-4 py-3 text-sm text-fg-muted">
+    {ecologyNotice.body}
+    <a href={getRelativeLocaleUrl(locale, '/bestaende')} class="ml-2 underline">{ecologyNotice.bestaendeLink} →</a>
+    <a href={getRelativeLocaleUrl(locale, '/praktiken')} class="ml-2 underline">{ecologyNotice.praktikenLink} →</a>
+  </p>
+
   <h1 class="text-[clamp(34px,6vw,64px)] font-bold tracking-[-0.03em]">{t(locale, 'lab.title')}</h1>
   <p class="mt-4 max-w-2xl text-fg-muted">{t(locale, 'lab.sub')}</p>
 
