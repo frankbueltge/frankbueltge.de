@@ -4,6 +4,10 @@
 // site-restructure-concept.md §2). Atelier/Field/Studio bleiben souveräne Praxis-Archive,
 // unverändert, nur verlinkt; "das Labor" (Franks eigene Pipelines-Praxis) bekommt hier erst
 // einen Platzhalter — das Manifest folgt in einem späteren Arbeitsauftrag.
+// Ökologie-Neustrukturierung, Phase C2 (work order phase-c2-site-entrance-design.md §3):
+// "gleiche Familie, eine Stufe ruhiger" als der Site-Eingang (/) — derselbe Typo-Kanon
+// (Kicker/Mono-Notate/Hairlines/Registertabellen aus docs/design/variants-2026-07-15/
+// a-observatorium.html), keine eigene Zeichengrammatik, kein Dekor.
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import type { Locale } from '@/lib/site'
 import { WERKE, werkTitle } from '@/data/werke'
@@ -11,8 +15,6 @@ import { WERKE, werkTitle } from '@/data/werke'
 const locale = (Astro.currentLocale ?? 'en') as Locale
 const practiceIds = ['field', 'studio', 'atelier'] as const
 const practices = practiceIds.map((id) => WERKE.find((w) => w.id === id)!).filter(Boolean)
-
-// <!-- DESIGN-SESSION: Chrome-Strings provisorisch, siehe BegegnungEntrance.astro. -->
 const copy = {
   de: {
     title: 'Praktiken',

@@ -1,14 +1,14 @@
 ---
-// Ökologie-Neustrukturierung (Phase 3e, Branch ecology-restructure), Ebene 2 "die Erzählung":
-// Liste der Begegnungen — aktuell genau ein Eintrag (docs/design/site-restructure-concept.md
-// §2). Bewusst schmuckloses Skelett; die Design-Session bestimmt später die endgültige Form.
+// Ökologie-Neustrukturierung, Phase C2 (work order phase-c2-site-entrance-design.md §3): Liste
+// der Begegnungen — aktuell genau ein Eintrag. "Gleiche Familie, eine Stufe ruhiger" als der
+// Site-Eingang (/): derselbe Typo-Kanon (Kicker/Mono-Notate/Hairlines/Registertabellen aus
+// docs/design/variants-2026-07-15/a-observatorium.html), aber keine eigene Zeichengrammatik und
+// kein Dekor — die Partitur (SVG-Karte, Farbidentitäten) bleibt dem Eingang vorbehalten.
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import type { Locale } from '@/lib/site'
 import { allEncounters, shortEncounterSlug } from '@/lib/begegnungen'
 
 const locale = (Astro.currentLocale ?? 'en') as Locale
-
-// <!-- DESIGN-SESSION: Chrome-Strings provisorisch, siehe BegegnungEntrance.astro. -->
 const copy = {
   de: {
     title: 'Begegnungen',
