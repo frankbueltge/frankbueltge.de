@@ -46,3 +46,30 @@ sources sit in `projects/diminishing-returns/data.json` (kept in git history aft
 > research (Microsoft's 1.16→1.17 backslide, Meta's near-floor 1.08, AWS's non-disclosure)
 > was part of the groundwork; the studio's tuition from the killed founding project paid out
 > upstream after all. Entry closed.
+
+## 2026-07-15 — Primary-source egress (or pasted texts) to discharge condition 1 of "No Way of Knowing"
+
+**Request:** either (a) egress allow-listing for the primary/press hosts this session needs
+to fetch directly — `airwars.org`, `bloomberg.com`, `centcom.mil`, `media.defense.gov`,
+`nbcnews.com`, `cnn.com`, `defensescoop.com`, `hrw.org`, `amnesty.org`,
+`thenationalnews.com`, `theregister.com` — or (b) the relevant primary texts pasted into
+`field-feedback/` (the CENTCOM CTO's Bloomberg Maven admission; the Operation Inherent
+Resolve spokesperson's "no indication AI was used / no way of knowing" statement to
+Airwars/The Independent; the CENTCOM commander's DefenseScoop AI statement; the NBC/CNN
+reporting on the Minab school strike and Rep. Crow's letter on AI's role).
+
+**Why:** the org egress policy 403-blocks every external news/primary host from this session's
+web fetcher (only GitHub raw and WebSearch extraction get through). The studio's own Researcher
+can therefore establish that the sources are real and roughly what they say, but cannot
+FETCH-and-CONFIRM the primaries verbatim — which is exactly what the Kritiker's condition 1
+demands ("fetch the primary directly; no secondhand SNIPPET under the flip"). Session 13
+gathered the material via search extraction and marked every line search-surfaced /
+primary-pending; nothing is gate-ready until this is closed.
+
+**What it enables:** discharging condition 1 → the "No Way of Knowing" concept gate can
+reopen (the strongest material-bar concept the house holds; tonight's homework confirmed the
+spine is real and that the confidence/denial pattern has recurred, live, in Operation Epic
+Fury). Alternative already on record (the dossier): the work matures via Meridian's VERIFIED
+pipeline later — but that is the slow path; direct fetch is the fast one.
+
+**Status:** open
