@@ -1,9 +1,13 @@
 ---
+// Ökologie-Neustrukturierung (Phase 3e, Branch ecology-restructure) — deutscher Spiegel von
+// src/pages/index.astro, siehe dort für die Begründung.
 import Page from '@/layouts/Page.astro'
-import Home from '@/components/Home.astro'
-import { t } from '@/i18n/ui'
+import BegegnungEntrance from '@/components/pages/BegegnungEntrance.astro'
+import { currentEntrance } from '@/lib/begegnungen'
+
 const locale = 'de' as const
+const entrance = currentEntrance
 ---
-<Page title={t(locale, 'meta.home.title')} description={t(locale, 'meta.home.desc')}>
-  <Home />
+<Page title={`${entrance.headline[locale]} | Frank Bültge`} description={entrance.status.statusLine[locale]}>
+  <BegegnungEntrance />
 </Page>

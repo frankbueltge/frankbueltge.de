@@ -1,0 +1,116 @@
+---
+// Ökologie-Neustrukturierung (Phase 3e, Branch ecology-restructure), Ebene 1 „das Blatt": die
+// Startseite wird zum Eingang in die aktuelle Begegnung (docs/design/site-restructure-concept.
+// md §1/§3). Datenquelle: src/data/begegnungen/entrance.json, exportiert aus research-ecology
+// (siehe dessen docs/runbooks/site-export.md). Bewusst schmuckloses, semantisches Skelett —
+// Maßstab, Display-Typo und der sich selbst zeichnende Glyph kommen aus der eigenen
+// Design-Session (work order phase-3e-plumbing.md §2, Scope "NUR Maschinerie"). KEINE SVG-Karte.
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import type { Locale } from '@/lib/site'
+import { currentEntrance, isDivergenceStation } from '@/lib/begegnungen'
+
+const locale = (Astro.currentLocale ?? 'en') as Locale
+const entrance = currentEntrance
+
+const displayDate = new Intl.DateTimeFormat(locale === 'de' ? 'de-DE' : 'en-GB', { dateStyle: 'medium' }).format(
+  new Date(`${entrance.status.as_of}T00:00:00Z`),
+)
+
+// <!-- DESIGN-SESSION: Chrome-Strings provisorisch, bewusst inline statt in src/i18n/ui.ts —
+//      Wortlaut/Layout dieses Eingangs kommen aus der eigenen Design-Session, die über App und
+//      Site zugleich zieht (work order phase-3e-plumbing.md, Kopfzeile "Scope"). -->
+const copy = {
+  de: {
+    kicker: 'Die aktuelle Begegnung',
+    statusAsOf: 'Stand',
+    openAkte: 'Akte öffnen',
+    openDivergenz: 'Zur Divergenz',
+    comingSoon: '(Akte-App folgt)',
+    authoredBy: 'Erzählt von',
+    pendingApproval: 'Freigabe steht aus',
+    allEncounters: 'Alle Begegnungen',
+  },
+  en: {
+    kicker: 'The current encounter',
+    statusAsOf: 'As of',
+    openAkte: 'Open the record',
+    openDivergenz: 'See the divergence',
+    comingSoon: '(record app not deployed yet)',
+    authoredBy: 'Narrated by',
+    pendingApproval: 'pending approval',
+    allEncounters: 'All encounters',
+  },
+}[locale]
+---
+
+<main id="main" class="mx-auto w-full max-w-4xl flex-1 px-6 py-16 sm:py-24">
+  <!-- DESIGN-SESSION: Vollbild-Blatt, Display-Typo (clamp bis ~9vw), der sich einmalig selbst
+       zeichnende Glyph (Transfer-Linie, Korrektur-Pfeil, terrakotta) — siehe
+       docs/design/site-restructure-concept.md §3. Hier ausschließlich das semantische Skelett;
+       keine der dort beschriebenen visuellen Mittel sind schon umgesetzt. -->
+  <section aria-labelledby="entrance-headline">
+    <p class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">
+      {copy.kicker} · {entrance.encounter_id}
+    </p>
+    <p class="mt-1 font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">
+      {copy.statusAsOf} {displayDate} · {entrance.status.statusLine[locale]}
+    </p>
+
+    <h1 id="entrance-headline" class="mt-6 text-pretty text-[clamp(34px,6vw,64px)] font-bold tracking-[-0.03em]">
+      {entrance.headline[locale]}
+    </h1>
+
+    <!-- Stationsliste: schlichte nummerierte Liste statt Karte (work order §2: "KEINE
+         SVG-Karte, die kommt aus der Design-Session"). -->
+    <ol class="mt-12 space-y-8 border-t border-line/60 pt-8">
+      {entrance.stations.map((station, i) => (
+        <li class="border-b border-line/60 pb-8">
+          <h2 class="text-lg font-semibold">
+            <span class="mr-2 font-mono text-sm text-fg-faint">{i + 1}</span>
+            {station.heading[locale]}
+          </h2>
+          {isDivergenceStation(station) ? (
+            <div class="mt-3 grid gap-4 sm:grid-cols-2">
+              <div>
+                <p class="font-mono text-xs uppercase tracking-wider text-fg-faint">{station.divergence.leftLabel[locale]}</p>
+                <blockquote class="mt-1 text-sm text-fg-muted">&ldquo;{station.divergence.leftQuote}&rdquo;</blockquote>
+              </div>
+              <div>
+                <p class="font-mono text-xs uppercase tracking-wider text-fg-faint">{station.divergence.rightLabel[locale]}</p>
+                <blockquote class="mt-1 text-sm text-fg-muted">&ldquo;{station.divergence.rightQuote}&rdquo;</blockquote>
+              </div>
+              <p class="text-sm text-fg-faint sm:col-span-2">{station.divergence.closing[locale]}</p>
+            </div>
+          ) : (
+            <Fragment>
+              <blockquote class="mt-3 border-l-2 border-line pl-4 text-sm text-fg-muted">&ldquo;{station.quote}&rdquo;</blockquote>
+              <p class="mt-2 text-xs text-fg-faint">— {station.attribution?.[locale]}</p>
+            </Fragment>
+          )}
+        </li>
+      ))}
+    </ol>
+
+    <p class="mt-10 flex flex-wrap gap-6">
+      <!-- TODO(phase-3e): /akte-App noch nicht deployt — Platzhalter-Pfad, siehe
+           docs/design/site-restructure-concept.md §4 "Umsetzungsweg". -->
+      <a href={entrance.links.akte} class="font-semibold underline decoration-2 underline-offset-4">
+        {copy.openAkte} <span class="font-normal text-fg-faint">{copy.comingSoon}</span>
+      </a>
+      <a href={entrance.links.divergenz} class="font-semibold underline decoration-2 underline-offset-4">
+        {copy.openDivergenz} <span class="font-normal text-fg-faint">{copy.comingSoon}</span>
+      </a>
+    </p>
+
+    <p class="mt-6 text-xs text-fg-faint">
+      {copy.authoredBy} {entrance.authored_by}
+      {entrance.approval === 'pending' && (
+        <span class="ml-2 rounded-full border border-line/60 px-2 py-0.5">{copy.pendingApproval}</span>
+      )}
+    </p>
+
+    <p class="mt-10">
+      <a href={getRelativeLocaleUrl(locale, '/begegnungen')} class="text-sm text-fg-muted underline">{copy.allEncounters} →</a>
+    </p>
+  </section>
+</main>

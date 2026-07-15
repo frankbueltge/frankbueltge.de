@@ -1,0 +1,120 @@
+---
+// Ökologie-Neustrukturierung (Phase 3e, Branch ecology-restructure), Ebene 2 "die Erzählung":
+// eine einzelne Begegnung als vertikale Skelett-Sequenz (work order phase-3e-plumbing.md §2:
+// "/begegnungen/enc-2026-001/index.astro — Narrative als vertikale Skelett-Sequenz"). Die
+// Belegschicht (Ebene 3, "die Akte") lebt in einer eigenen App und ist hier nur als
+// Platzhalter-Link verankert.
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import type { Locale } from '@/lib/site'
+import { currentEntrance, isDivergenceStation } from '@/lib/begegnungen'
+
+const locale = (Astro.currentLocale ?? 'en') as Locale
+const entrance = currentEntrance
+
+// <!-- DESIGN-SESSION: Chrome-Strings provisorisch, siehe BegegnungEntrance.astro. -->
+const copy = {
+  de: {
+    kicker: 'Begegnung',
+    statusAsOf: 'Stand',
+    participantsHeading: 'Positionen der Beteiligten',
+    sequenceHeading: 'Die Erzählung',
+    openAkte: 'Im Ereignis der Akte öffnen',
+    comingSoon: '(Akte-App folgt)',
+    openDivergenz: 'Zur Divergenz',
+    back: 'Alle Begegnungen',
+    authoredBy: 'Erzählt von',
+    pendingApproval: 'Freigabe steht aus',
+  },
+  en: {
+    kicker: 'Encounter',
+    statusAsOf: 'As of',
+    participantsHeading: "Participants' positions",
+    sequenceHeading: 'The story',
+    openAkte: 'Open at the event in the record',
+    comingSoon: '(record app not deployed yet)',
+    openDivergenz: 'See the divergence',
+    back: 'All encounters',
+    authoredBy: 'Narrated by',
+    pendingApproval: 'pending approval',
+  },
+}[locale]
+---
+
+<main id="main" class="mx-auto w-full max-w-3xl flex-1 px-6 py-16 sm:py-24">
+  <p class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">
+    {copy.kicker} · {entrance.encounter_id}
+  </p>
+  <h1 class="mt-4 text-[clamp(28px,5vw,48px)] font-bold tracking-[-0.02em]">{entrance.title}</h1>
+  <p class="mt-3 font-mono text-xs uppercase tracking-wider text-fg-faint">
+    {copy.statusAsOf} {entrance.status.as_of} · {entrance.status.statusLine[locale]}
+  </p>
+
+  <section class="mt-12" aria-labelledby="participants-heading">
+    <h2 id="participants-heading" class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">{copy.participantsHeading}</h2>
+    <ul class="mt-4 space-y-3">
+      {entrance.participants.map((p) => (
+        <li class="border-b border-line/60 pb-3 text-sm">
+          <span class="font-semibold">{p.actor_id}</span>
+          <span class="text-fg-faint"> — {p.role}</span>
+          {p.local_status && <p class="mt-1 text-fg-muted">{p.local_status}</p>}
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="mt-16" aria-labelledby="sequence-heading">
+    <h2 id="sequence-heading" class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">{copy.sequenceHeading}</h2>
+    <ol class="mt-6 space-y-12">
+      {entrance.stations.map((station, i) => (
+        <li id={station.akte_event_id ? `event-${station.akte_event_id}` : undefined}>
+          <h3 class="text-xl font-semibold">
+            <span class="mr-2 font-mono text-sm text-fg-faint">{i + 1}</span>
+            {station.heading[locale]}
+          </h3>
+          {isDivergenceStation(station) ? (
+            <div class="mt-4 grid gap-5 sm:grid-cols-2">
+              <div>
+                <p class="font-mono text-xs uppercase tracking-wider text-fg-faint">{station.divergence.leftLabel[locale]}</p>
+                <blockquote class="mt-2 border-l-2 border-line pl-4 text-sm text-fg-muted">&ldquo;{station.divergence.leftQuote}&rdquo;</blockquote>
+              </div>
+              <div>
+                <p class="font-mono text-xs uppercase tracking-wider text-fg-faint">{station.divergence.rightLabel[locale]}</p>
+                <blockquote class="mt-2 border-l-2 border-line pl-4 text-sm text-fg-muted">&ldquo;{station.divergence.rightQuote}&rdquo;</blockquote>
+              </div>
+              <p class="text-sm text-fg-faint sm:col-span-2">{station.divergence.closing[locale]}</p>
+              <p class="sm:col-span-2">
+                <!-- TODO(phase-3e): /akte-App noch nicht deployt — Platzhalter-Pfad. -->
+                <a href={entrance.links.divergenz} class="text-sm font-semibold underline decoration-2 underline-offset-4">
+                  {copy.openDivergenz} <span class="font-normal text-fg-faint">{copy.comingSoon}</span>
+                </a>
+              </p>
+            </div>
+          ) : (
+            <Fragment>
+              <blockquote class="mt-4 border-l-2 border-line pl-4 text-fg-muted">&ldquo;{station.quote}&rdquo;</blockquote>
+              <p class="mt-2 text-xs text-fg-faint">— {station.attribution?.[locale]}</p>
+              <p class="mt-3">
+                <!-- TODO(phase-3e): /akte-App noch nicht deployt — Platzhalter-Pfad, verweist
+                     auf das benannte Ereignis in der Akte. -->
+                <a href={`${entrance.links.akte}#event-${station.akte_event_id}`} class="text-sm font-semibold underline decoration-2 underline-offset-4">
+                  {copy.openAkte} <span class="font-normal text-fg-faint">{copy.comingSoon}</span>
+                </a>
+              </p>
+            </Fragment>
+          )}
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <p class="mt-16 text-xs text-fg-faint">
+    {copy.authoredBy} {entrance.authored_by}
+    {entrance.approval === 'pending' && (
+      <span class="ml-2 rounded-full border border-line/60 px-2 py-0.5">{copy.pendingApproval}</span>
+    )}
+  </p>
+
+  <p class="mt-6">
+    <a href={getRelativeLocaleUrl(locale, '/begegnungen')} class="text-sm text-fg-muted underline">← {copy.back}</a>
+  </p>
+</main>

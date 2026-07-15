@@ -1,0 +1,64 @@
+---
+// Ökologie-Neustrukturierung (Phase 3e, Branch ecology-restructure): "/praktiken" ist der
+// leise Index der vier Praktiken (KEIN Eingang — der Eingang ist "/", docs/design/
+// site-restructure-concept.md §2). Atelier/Field/Studio bleiben souveräne Praxis-Archive,
+// unverändert, nur verlinkt; "das Labor" (Franks eigene Pipelines-Praxis) bekommt hier erst
+// einen Platzhalter — das Manifest folgt in einem späteren Arbeitsauftrag.
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import type { Locale } from '@/lib/site'
+import { WERKE, werkTitle } from '@/data/werke'
+
+const locale = (Astro.currentLocale ?? 'en') as Locale
+const practiceIds = ['field', 'studio', 'atelier'] as const
+const practices = practiceIds.map((id) => WERKE.find((w) => w.id === id)!).filter(Boolean)
+
+// <!-- DESIGN-SESSION: Chrome-Strings provisorisch, siehe BegegnungEntrance.astro. -->
+const copy = {
+  de: {
+    title: 'Praktiken',
+    sub: 'Die unabhängigen Praktiken des Labs — jede souverän, jede mit eigenem Archiv. Kein Ranking, kein Eingang: nur, wer hier forscht, produziert und irrt.',
+    laborTitle: 'Das Labor',
+    laborBody: 'Franks eigene Pipelines-Praxis — die nächtlichen Messinstrumente unter /bestaende. Ein Manifest wie bei den drei Kollektiven (Bedingungen, unter denen dieses Material der Ökologie angeboten wird) steht noch aus.',
+    laborTodo: 'TODO: Manifest folgt (eigener Arbeitsauftrag).',
+    visitCta: 'Archiv öffnen',
+  },
+  en: {
+    title: 'Practices',
+    sub: "The lab's independent practices — each sovereign, each with its own archive. No ranking, no entrance here: just who researches, produces and errs.",
+    laborTitle: 'The Lab',
+    laborBody: "Frank's own pipelines practice — the nightly measurement instruments listed under /bestaende. A manifest like the three collectives' (the conditions under which this material is offered to the ecology) is still outstanding.",
+    laborTodo: 'TODO: manifest to follow (its own work order).',
+    visitCta: 'Open the archive',
+  },
+}[locale]
+---
+
+<main id="main" class="mx-auto w-full max-w-4xl flex-1 px-6 py-16 sm:py-24">
+  <h1 class="text-[clamp(34px,6vw,64px)] font-bold tracking-[-0.03em]">{copy.title}</h1>
+  <p class="mt-4 max-w-2xl text-fg-muted">{copy.sub}</p>
+
+  <ul class="mt-12 divide-y divide-line/60 border-t border-line/60">
+    {practices.map((werk) => (
+      <li class="py-7">
+        <a href={werk.href} class="group block">
+          <h2 class="text-lg font-semibold transition-colors group-hover:text-accent-soft">{werkTitle(werk, locale)}</h2>
+          <blockquote class="mt-1.5 border-l-2 border-line pl-4 text-sm text-fg-muted">{werk.subtitle[locale]}</blockquote>
+        </a>
+        <a href={werk.href} class="mt-2 inline-block font-mono text-xs text-fg-faint transition-colors hover:text-fg">
+          {copy.visitCta} →
+        </a>
+      </li>
+    ))}
+
+    <!-- Das Labor: vierte Praxis, noch ohne eigenes Manifest (work order phase-3e-plumbing.md
+         §2: "Platzhalter mit TODO: Manifest folgt"). -->
+    <li class="py-7">
+      <h2 class="text-lg font-semibold">{copy.laborTitle}</h2>
+      <p class="mt-1.5 max-w-2xl text-sm text-fg-muted">{copy.laborBody}</p>
+      <p class="mt-2 font-mono text-xs uppercase tracking-wider text-fg-faint">{copy.laborTodo}</p>
+      <a href={getRelativeLocaleUrl(locale, '/bestaende')} class="mt-2 inline-block font-mono text-xs text-fg-faint transition-colors hover:text-fg">
+        {copy.visitCta} →
+      </a>
+    </li>
+  </ul>
+</main>
