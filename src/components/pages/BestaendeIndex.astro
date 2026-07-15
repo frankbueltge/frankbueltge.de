@@ -1,0 +1,55 @@
+---
+// Ökologie-Neustrukturierung (Phase 3e, Branch ecology-restructure): "/bestaende" widmet die
+// bisherigen Experimente (src/data/werke.ts, ohne die drei Engines) zu "Bestände des Labors —
+// Material, der Ökologie angeboten" um (docs/design/site-restructure-concept.md §2). Jede
+// bestehende Route bleibt unverändert erreichbar; hier ändert sich nur die Rahmung, keine
+// Experiment-Seite wird verändert oder gelöscht.
+// Ökologie-Neustrukturierung, Phase C2 (work order phase-c2-site-entrance-design.md §3):
+// "gleiche Familie, eine Stufe ruhiger" als der Site-Eingang (/) — derselbe Typo-Kanon
+// (Kicker/Mono-Notate/Hairlines/Registertabellen aus docs/design/variants-2026-07-15/
+// a-observatorium.html), keine eigene Zeichengrammatik, kein Dekor.
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import type { Locale } from '@/lib/site'
+import { WERKE_CHRONO, werkTitle } from '@/data/werke'
+
+const locale = (Astro.currentLocale ?? 'en') as Locale
+// Die drei Engines (field/studio/atelier) stehen unter /praktiken, nicht hier (work order
+// phase-3e-plumbing.md §2: "ohne die drei Engines").
+const ENGINE_IDS = new Set(['field', 'studio', 'atelier'])
+const bestaende = WERKE_CHRONO.filter((w) => !ENGINE_IDS.has(w.id))
+const copy = {
+  de: {
+    title: 'Bestände',
+    sub: 'Material, der Ökologie angeboten — die laufenden Instrumente des Labors, jedes mit offenen Quellen und offengelegtem Verfahren. (Umgewidmet aus „Experimente"; jede Route bleibt erreichbar, keine Pipeline endet dadurch.)',
+    live: 'live data',
+  },
+  en: {
+    title: 'Holdings',
+    sub: "Material, offered to the ecology — the lab's ongoing instruments, each with open sources and a disclosed method. (Redesignated from \"experiments\"; every route stays reachable, no pipeline ends because of this.)",
+    live: 'live data',
+  },
+}[locale]
+---
+
+<main id="main" class="mx-auto w-full max-w-4xl flex-1 px-6 py-16 sm:py-24">
+  <h1 class="text-[clamp(34px,6vw,64px)] font-bold tracking-[-0.03em]">{copy.title}</h1>
+  <p class="mt-4 max-w-2xl text-fg-muted">{copy.sub}</p>
+
+  <ul class="mt-12 divide-y divide-line/60 border-t border-line/60">
+    {bestaende.map((werk) => (
+      <li class="py-7">
+        <a href={getRelativeLocaleUrl(locale, werk.href)} class="group block">
+          <h2 class="text-lg font-semibold transition-colors group-hover:text-accent-soft">
+            {werkTitle(werk, locale)}<span class="font-normal text-fg-faint"> — {werk.subtitle[locale]}</span>
+            {werk.live && (
+              <span class="ml-2 align-middle font-mono text-[10px] uppercase tracking-wider text-fg-faint">
+                <span class="dot-live mr-0.5 inline-block h-[5px] w-[5px] rounded-full align-middle"></span>{copy.live}
+              </span>
+            )}
+          </h2>
+          <p class="mt-1.5 text-sm leading-relaxed text-fg-muted">{werk.description[locale]}</p>
+        </a>
+      </li>
+    ))}
+  </ul>
+</main>

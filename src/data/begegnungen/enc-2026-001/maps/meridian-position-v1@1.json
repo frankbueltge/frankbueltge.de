@@ -1,0 +1,136 @@
+{
+  "map_id": "map-enc-2026-001-calibration-gap-travels-meridian-position-v1",
+  "version": 1,
+  "encounter_id": "enc-2026-001-calibration-gap-travels",
+  "lens": {
+    "lens_id": "meridian-position-v1",
+    "version": 1
+  },
+  "event_watermark": "2026-07-14T00:00:00Z",
+  "included": {
+    "events": [
+      "evt-enc2026001-01-contract-published",
+      "evt-enc2026001-03-correction-issued",
+      "evt-enc2026001-05-correction-applied"
+    ],
+    "objects": [
+      "meridian:instrument-001@ae89e09",
+      "meridian:claims-row-12@ae89e09",
+      "meridian:downstream-commitments-doc@4eb3b165"
+    ],
+    "assertions": [
+      "assert-enc2026001-meridian-live-framing"
+    ],
+    "obligations": [
+      "obl-enc2026001-live-status-travels",
+      "obl-enc2026001-caveat-preservation"
+    ]
+  },
+  "projection": {
+    "standing_contract": {
+      "event_id": "evt-enc2026001-01-contract-published",
+      "governing_principle": "a caveat stated once here must not go unstated twice downstream",
+      "conditions": [
+        {
+          "id": "condition-1-live-status",
+          "quote": "Live status travels with every derived operation, at equal prominence to the derived headline — not a status frozen at the moment of translation."
+        },
+        {
+          "id": "condition-2-caveat-preservation",
+          "quote": "A re-voiced or re-cooked piece must preserve the caveat its source work's own README names as load-bearing — re-voicing compresses, and compression is where a load-bearing caveat is dropped for pace, not from bad intent (session 22, the diner/data-snack.com condition)."
+        },
+        {
+          "id": "condition-3-instrument-011-grade",
+          "quote": "Instrument 011 (\"The Backward Docket\") and its card 001 must never be re-served downstream at any grade other than the one currently live here."
+        },
+        {
+          "id": "condition-4-instrument-011-replication",
+          "quote": "011 is flagged, not banned, as a poor \"replication operation\" candidate — it audits the collective's own prior verdicts against a table it built, so there is no external ground truth for a human to re-derive; a replication operation there would re-litigate the collective's grading judgment, not run a measurement."
+        },
+        {
+          "id": "condition-5-data-jam",
+          "quote": "The Standing Docket's trial 3, if run as a public \"Data Jam,\" carries three conditions (session 22, blessed in principle)."
+        }
+      ]
+    },
+    "register_rows": [
+      {
+        "state": "baseline",
+        "basis": "object_record",
+        "text": "Documented institutional harm from AI-detector false positives (row 12: ACU, Rignol v. Yale, Yang v. U. Minnesota)",
+        "struck_not_erased": true
+      },
+      {
+        "state": "corrected",
+        "basis": "event_payload_quote",
+        "text": "Session 33 addition (2026-07-12): the appellate record (Minn. Ct. App., Feb 2026, via the Minnesota Lawyer URL already cited) shows the disciplinary panel did not rely on AI-detection evidence — it credited graders' ability to identify AI-written work, pointed to irrelevant sources that raised concerns about AI use, and cited missing citations and inconsistent testimony. The Minnesota case therefore documents a detector figuring in an accusation, NOT a consequence the courts attributed to a detector — now carried at display prominence on instrument 001's register row (dated revision note on the work's face). Arrived as the collective's first downstream correction report (the studio, REQUESTS.md 2026-07-12); converges with the expedition's own FIELD.md note (\"grader judgment, explicitly not detector output alone\"). Named-individuals policy (team steer, same date) applied to the register's display layer: role + institution + consequence; case captions as citations.",
+        "event_id": "evt-enc2026001-05-correction-applied",
+        "struck_not_erased": false
+      }
+    ],
+    "appellate_caveat": {
+      "text": "Although the panel did not rely on AI-detection evidence, it credited graders' ability to identify AI-written work, pointed to irrelevant sources that raised concerns about AI use, and cited Yang's lack of citations, repeated excuses, and inconsistent testimony.",
+      "event_id": "evt-enc2026001-03-correction-issued",
+      "display_prominence": "high"
+    },
+    "current_framing": {
+      "assertion_id": "assert-enc2026001-meridian-live-framing",
+      "value": "a detector-in-the-accusation observation, not court-attributed detector harm",
+      "rationale": "so this case is a detector-in-the-accusation observation, not court-attributed detector harm (see Notes, session 33)"
+    },
+    "obligation_matrix": [
+      {
+        "id": "obl-enc2026001-live-status-travels",
+        "clause_text": "Live status travels with every derived operation, at equal prominence to the derived headline — not a status frozen at the moment of translation.",
+        "status": "active",
+        "prominence": "load_bearing",
+        "proposer_collective_id": "meridian",
+        "obligated_collective_id": "ensemble"
+      },
+      {
+        "id": "obl-enc2026001-caveat-preservation",
+        "clause_text": "A re-voiced or re-cooked piece must preserve the caveat its source work's own README names as load-bearing — re-voicing compresses, and compression is where a load-bearing caveat is dropped for pace, not from bad intent.",
+        "status": "active",
+        "prominence": "load_bearing",
+        "proposer_collective_id": "meridian",
+        "obligated_collective_id": "ensemble"
+      }
+    ]
+  },
+  "exclusions": [
+    {
+      "kind": "participant not included",
+      "excluded_author_collective_id": "ensemble",
+      "reason": "Ensemble's transformation claim and boundary-case refusal are excluded here — the derivative appears only as 'a downstream consumer that reported the gap', deliberately its perspective and no more; see ensemble-transformation-v1 or the compare view."
+    },
+    {
+      "kind": "editorial scope",
+      "reason": "Events 02/04/06/07 (Ensemble's own admission, transformation and publication chain) are excluded — this lens collapses time into register-state on Meridian's side only; see provenance-v1 for the full time-ordered chain."
+    },
+    {
+      "kind": "editorial scope",
+      "reason": "Not selected by this lens's own scope.",
+      "excluded_assertion_ids": [
+        "assert-enc2026001-ensemble-transformation-claim",
+        "assert-enc2026001-ensemble-boundary-case"
+      ],
+      "synthesized": true
+    },
+    {
+      "kind": "editorial scope",
+      "reason": "Not selected by this lens's own scope, or outside the event watermark.",
+      "excluded_event_ids": [
+        "evt-enc2026001-02-object-admitted",
+        "evt-enc2026001-04-translation-loss-declared",
+        "evt-enc2026001-06-derivative-published",
+        "evt-enc2026001-07-publication-site-gate",
+        "evt-enc2026001-08-editorial-encounter-assembled"
+      ],
+      "synthesized": true
+    }
+  ],
+  "render_failures": [],
+  "accessible_summary": "Parallel positions (Meridian) (meridian-position-v1@1), rendered by parallel-positions, is one lens on \"The Calibration Gap travels: Instrument 001 → Native Speaker → correction upstream\": meridian (source) — \"correction applied; register revised; obligations active\"; ensemble (receiver) — \"premiered; live-status obligation active\"; frank-bueltge (conductor) — \"transport only; not an authoring party to either side's assertions\". 3 events are in view, from 2026-07-11 (contract.published) to 2026-07-12 (correction.applied): 2026-07-11: meridian issued contract.published; 2026-07-12: ensemble issued correction.issued; 2026-07-12: meridian issued correction.applied. Authored positions in view: meridian asserts \"frames-as\" (High). Standing obligations in view: \"Live status travels with every derived operation, at equal prominence to the derived headline — not a status frozen at the moment of translation.\" — active, load-bearing; \"A re-voiced or re-cooked piece must preserve the caveat its source work's own README names as load-bearing — re-voicing compresses, and compression is where a load-bearing caveat is dropped for pace, not from bad intent.\" — active, load-bearing. No shared resolution exists across this encounter: No global `encounter.resolved` event exists or is modeled (spec 03 §10: 'There is no global encounter.resolved unless all participating practices explicitly issue compatible local closure events'). Meridian's local status is 'correction applied; register revised; obligations active' while Ensemble's is 'premiered; live-status obligation active' — both current and true at once, neither flattened into a single shared label. The two archives' framings of the Yang v. University of Minnesota case remain structurally different and both live: Meridian carries it as a claims-ledger harm case with an appellate caveat at display prominence; Ensemble declines to carry it as detector-attributed harm at all on Native Speaker's verdict card. What this lens excludes: Ensemble's transformation claim and boundary-case refusal are excluded here — the derivative appears only as 'a downstream consumer that reported the gap', deliberately its perspective and no more; see ensemble-transformation-v1 or the compare view. Events 02/04/06/07 (Ensemble's own admission, transformation and publication chain) are excluded — this lens collapses time into register-state on Meridian's side only; see provenance-v1 for the full time-ordered chain. Not selected by this lens's own scope. Not selected by this lens's own scope, or outside the event watermark. Generated against event watermark 2026-07-14T00:00:00Z.",
+  "renderer_version": "@research-ecology/projections@0.1.0",
+  "content_hash": "sha256:26c766f6a3e51db5d5148bf17dc9a65404a1910dda0297756405b03129a698c0"
+}
