@@ -53,11 +53,11 @@ const copy = {
       {copy.kicker} · {entrance.encounter_id}
     </p>
     <p class="mt-1 font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">
-      {copy.statusAsOf} {displayDate} · {entrance.status.statusLine[locale]}
+      {copy.statusAsOf} {displayDate} · {entrance.status.statusLine}
     </p>
 
     <h1 id="entrance-headline" class="mt-6 text-pretty text-[clamp(34px,6vw,64px)] font-bold tracking-[-0.03em]">
-      {entrance.headline[locale]}
+      {entrance.headline}
     </h1>
 
     <!-- Stationsliste: schlichte nummerierte Liste statt Karte (work order §2: "KEINE
@@ -67,24 +67,24 @@ const copy = {
         <li class="border-b border-line/60 pb-8">
           <h2 class="text-lg font-semibold">
             <span class="mr-2 font-mono text-sm text-fg-faint">{i + 1}</span>
-            {station.heading[locale]}
+            {station.heading}
           </h2>
           {isDivergenceStation(station) ? (
             <div class="mt-3 grid gap-4 sm:grid-cols-2">
               <div>
-                <p class="font-mono text-xs uppercase tracking-wider text-fg-faint">{station.divergence.leftLabel[locale]}</p>
+                <p class="font-mono text-xs uppercase tracking-wider text-fg-faint">{station.divergence.leftLabel}</p>
                 <blockquote class="mt-1 text-sm text-fg-muted">&ldquo;{station.divergence.leftQuote}&rdquo;</blockquote>
               </div>
               <div>
-                <p class="font-mono text-xs uppercase tracking-wider text-fg-faint">{station.divergence.rightLabel[locale]}</p>
+                <p class="font-mono text-xs uppercase tracking-wider text-fg-faint">{station.divergence.rightLabel}</p>
                 <blockquote class="mt-1 text-sm text-fg-muted">&ldquo;{station.divergence.rightQuote}&rdquo;</blockquote>
               </div>
-              <p class="text-sm text-fg-faint sm:col-span-2">{station.divergence.closing[locale]}</p>
+              <p class="text-sm text-fg-faint sm:col-span-2">{station.divergence.closing}</p>
             </div>
           ) : (
             <Fragment>
               <blockquote class="mt-3 border-l-2 border-line pl-4 text-sm text-fg-muted">&ldquo;{station.quote}&rdquo;</blockquote>
-              <p class="mt-2 text-xs text-fg-faint">— {station.attribution?.[locale]}</p>
+              <p class="mt-2 text-xs text-fg-faint">— {station.attribution}</p>
             </Fragment>
           )}
         </li>

@@ -46,7 +46,7 @@ const copy = {
   </p>
   <h1 class="mt-4 text-[clamp(28px,5vw,48px)] font-bold tracking-[-0.02em]">{entrance.title}</h1>
   <p class="mt-3 font-mono text-xs uppercase tracking-wider text-fg-faint">
-    {copy.statusAsOf} {entrance.status.as_of} · {entrance.status.statusLine[locale]}
+    {copy.statusAsOf} {entrance.status.as_of} · {entrance.status.statusLine}
   </p>
 
   <section class="mt-12" aria-labelledby="participants-heading">
@@ -69,19 +69,19 @@ const copy = {
         <li id={station.akte_event_id ? `event-${station.akte_event_id}` : undefined}>
           <h3 class="text-xl font-semibold">
             <span class="mr-2 font-mono text-sm text-fg-faint">{i + 1}</span>
-            {station.heading[locale]}
+            {station.heading}
           </h3>
           {isDivergenceStation(station) ? (
             <div class="mt-4 grid gap-5 sm:grid-cols-2">
               <div>
-                <p class="font-mono text-xs uppercase tracking-wider text-fg-faint">{station.divergence.leftLabel[locale]}</p>
+                <p class="font-mono text-xs uppercase tracking-wider text-fg-faint">{station.divergence.leftLabel}</p>
                 <blockquote class="mt-2 border-l-2 border-line pl-4 text-sm text-fg-muted">&ldquo;{station.divergence.leftQuote}&rdquo;</blockquote>
               </div>
               <div>
-                <p class="font-mono text-xs uppercase tracking-wider text-fg-faint">{station.divergence.rightLabel[locale]}</p>
+                <p class="font-mono text-xs uppercase tracking-wider text-fg-faint">{station.divergence.rightLabel}</p>
                 <blockquote class="mt-2 border-l-2 border-line pl-4 text-sm text-fg-muted">&ldquo;{station.divergence.rightQuote}&rdquo;</blockquote>
               </div>
-              <p class="text-sm text-fg-faint sm:col-span-2">{station.divergence.closing[locale]}</p>
+              <p class="text-sm text-fg-faint sm:col-span-2">{station.divergence.closing}</p>
               <p class="sm:col-span-2">
                 <!-- TODO(phase-3e): /akte-App noch nicht deployt — Platzhalter-Pfad. -->
                 <a href={entrance.links.divergenz} class="text-sm font-semibold underline decoration-2 underline-offset-4">
@@ -92,7 +92,7 @@ const copy = {
           ) : (
             <Fragment>
               <blockquote class="mt-4 border-l-2 border-line pl-4 text-fg-muted">&ldquo;{station.quote}&rdquo;</blockquote>
-              <p class="mt-2 text-xs text-fg-faint">— {station.attribution?.[locale]}</p>
+              <p class="mt-2 text-xs text-fg-faint">— {station.attribution}</p>
               <p class="mt-3">
                 <!-- TODO(phase-3e): /akte-App noch nicht deployt — Platzhalter-Pfad, verweist
                      auf das benannte Ereignis in der Akte. -->

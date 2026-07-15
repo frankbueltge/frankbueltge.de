@@ -36,11 +36,11 @@ const copy = {
         <li class="py-7">
           <a href={getRelativeLocaleUrl(locale, `/begegnungen/${slug}`)} class="group block">
             <h2 class="text-lg font-semibold transition-colors group-hover:text-accent-soft">
-              {entrance.headline[locale]}
+              {entrance.headline}
             </h2>
             <p class="mt-1.5 text-sm text-fg-muted">{entrance.title}</p>
             <p class="mt-2 font-mono text-xs uppercase tracking-wider text-fg-faint">
-              {copy.statusAsOf} {entrance.status.as_of} · {entrance.status.statusLine[locale]}
+              {copy.statusAsOf} {entrance.status.as_of} · {entrance.status.statusLine}
             </p>
           </a>
           <a href={getRelativeLocaleUrl(locale, `/begegnungen/${slug}`)} class="mt-2 inline-block font-mono text-xs text-fg-faint transition-colors hover:text-fg">
