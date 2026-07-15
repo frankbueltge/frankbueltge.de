@@ -2,13 +2,12 @@
 // von research-ecology exportierten Begegnungs-Daten (src/data/begegnungen/, siehe deren
 // README.md für Provenienz). Bewusst schmal — nur, was die Skelett-Seiten aus Phase 3e
 // brauchen; die endgültige Form kommt aus der eigenen Design-Session.
+//
+// Einsprachig Englisch (Frank, 2026-07-15): der Ökologie-Stack schreibt kein Deutsch mehr —
+// research-ecology liefert jedes vormals lokalisierte Feld ({ de, en }) jetzt als einfachen
+// englischen String; das frühere `LocalizedText` entfällt.
 import entranceData from '@/data/begegnungen/entrance.json'
 import narrativeData from '@/data/begegnungen/enc-2026-001/narrative.json'
-
-export interface LocalizedText {
-  de: string
-  en: string
-}
 
 export interface SiteEntranceParticipant {
   actor_id: string
@@ -18,18 +17,18 @@ export interface SiteEntranceParticipant {
 }
 
 export interface SiteEntranceDivergence {
-  leftLabel: LocalizedText
+  leftLabel: string
   leftQuote: string
-  rightLabel: LocalizedText
+  rightLabel: string
   rightQuote: string
-  closing: LocalizedText
+  closing: string
 }
 
 export interface SiteEntranceStation {
   id: string
-  heading: LocalizedText
+  heading: string
   quote?: string
-  attribution?: LocalizedText
+  attribution?: string
   akte_event_id?: string
   akte_event_type?: string
   divergence?: SiteEntranceDivergence
@@ -38,8 +37,8 @@ export interface SiteEntranceStation {
 export interface SiteEntrance {
   encounter_id: string
   title: string
-  headline: LocalizedText
-  status: { as_of: string; statusLine: LocalizedText }
+  headline: string
+  status: { as_of: string; statusLine: string }
   participants: SiteEntranceParticipant[]
   stations: SiteEntranceStation[]
   links: { akte: string; divergenz: string }

@@ -9,9 +9,8 @@ import Page from '@/layouts/Page.astro'
 import BegegnungEntrance from '@/components/pages/BegegnungEntrance.astro'
 import { currentEntrance } from '@/lib/begegnungen'
 
-const locale = 'en' as const
 const entrance = currentEntrance
 ---
-<Page title={`${entrance.headline[locale]} | Frank Bültge`} description={entrance.status.statusLine[locale]}>
+<Page title={`${entrance.headline} | Frank Bültge`} description={entrance.status.statusLine}>
   <BegegnungEntrance />
 </Page>
