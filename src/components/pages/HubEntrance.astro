@@ -19,7 +19,8 @@
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import type { Locale } from '@/lib/site'
 import { currentEntrance, currentScore } from '@/lib/begegnungen'
-import { buildScoreSvg } from '@/lib/begegnungen/score'
+import ScoreFigure from '@/components/begegnungen/ScoreFigure.astro'
+import ScoreKey from '@/components/begegnungen/ScoreKey.astro'
 import { buildPulseSvg, formatWeekRange, type PulseSnapshot } from '@/lib/pulse/render'
 import pulseData from '@/data/pulse/pulse.json'
 import { NAMING, DRAFT_LABEL } from '@/config/naming'
@@ -28,7 +29,6 @@ import '@/styles/score-map.css'
 const locale = (Astro.currentLocale ?? 'en') as Locale
 const entrance = currentEntrance
 const score = currentScore
-const svgMarkup = buildScoreSvg(score)
 
 const pulse = pulseData as PulseSnapshot
 const pulseSvg = buildPulseSvg(pulse)
@@ -75,7 +75,7 @@ const doors = NAMING.doors.items.map((d) => ({
 const isDraft = NAMING.approval !== 'approved'
 ---
 
-<main id="main" class="mx-auto w-full max-w-5xl flex-1 px-6 pb-24 pt-16 sm:pt-24">
+<main id="main" class="mx-auto w-full max-w-7xl flex-1 px-6 pb-24 pt-16 sm:pt-24">
   <section class="text-center">
     <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted">{NAMING.eyebrow}</p>
     <h1 class="mx-auto mt-4 max-w-[18ch] text-[clamp(38px,6.4vw,72px)] font-bold leading-[1.04] tracking-[-0.025em]">
@@ -85,10 +85,14 @@ const isDraft = NAMING.approval !== 'approved'
     <p class="mx-auto mt-5 max-w-[58ch] text-[17px] text-fg-muted">{NAMING.sub}</p>
     <p class="mx-auto mt-3 max-w-[64ch] font-mono text-xs text-fg-faint">{NAMING.conductorLine}</p>
 
-    <figure class="mx-auto mt-9 max-w-4xl px-2">
-      <div class="pulse-svg" set:html={pulseSvg} />
-    </figure>
-    <p class="mx-auto mt-3 max-w-[74ch] font-mono text-[11px] leading-relaxed text-fg-faint">{pulseCaption}</p>
+    {/* Boxen-Konsistenz (Frank, 16.07. nachmittags): Puls und Begegnung bekommen dieselbe
+        Panel-Behandlung wie die Karten weiter unten — keine schwebenden Grafiken mehr. */}
+    <div class="mt-10 rounded-[10px] border border-line bg-panel px-4 py-7 sm:px-8">
+      <figure class="mx-auto">
+        <div class="pulse-svg" set:html={pulseSvg} />
+      </figure>
+      <p class="mx-auto mt-4 max-w-[86ch] font-mono text-[11px] leading-relaxed text-fg-faint">{pulseCaption}</p>
+    </div>
   </section>
 
   <section class="mt-20 border-t border-line/60 pt-16" id="enc">
@@ -98,14 +102,16 @@ const isDraft = NAMING.approval !== 'approved'
     <h2 class="mt-6 max-w-[26ch] text-[clamp(24px,3.2vw,38px)] font-bold tracking-[-0.02em]">{score.headline}</h2>
     <p class="mt-3 text-[15px] text-fg-muted"><b class="text-fg">{score.status.statusLine}</b> · {statusMeta}</p>
 
-    <div class="score-map hub-score-condensed">
-      <div class="score-svg mt-6" set:html={svgMarkup} />
+    <div class="mt-7 rounded-[10px] border border-line bg-panel px-4 py-6 sm:px-8">
+      <div class="score-map hub-score-condensed">
+        <ScoreFigure score={score} />
+        <ScoreKey score={score} />
+      </div>
+      <p class="mt-6 border-t border-line/60 pt-4 font-mono text-xs text-fg-faint">{NAMING.now.selectionRule}</p>
+      <a href={getRelativeLocaleUrl(locale, '/encounters')} class="mt-3 inline-block rounded-lg border border-line px-3.5 py-2 text-sm text-fg-muted transition-colors hover:border-fg-faint hover:text-fg">
+        {NAMING.now.linkLabel}
+      </a>
     </div>
-
-    <p class="mt-5 font-mono text-xs text-fg-faint">{NAMING.now.selectionRule}</p>
-    <a href={getRelativeLocaleUrl(locale, '/encounters')} class="mt-3 inline-block rounded-lg border border-line px-3.5 py-2 text-sm text-fg-muted transition-colors hover:border-fg-faint hover:text-fg">
-      {NAMING.now.linkLabel}
-    </a>
   </section>
 
   <section class="mt-20 border-t border-line/60 pt-16" id="doors">

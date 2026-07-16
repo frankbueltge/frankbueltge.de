@@ -1,0 +1,75 @@
+---
+// Partitur-Figur + Registerauszug-Tooltip — extrahiert aus BegegnungEntrance.astro
+// (Hub-Umbau 2026-07-16, Frank: „man sieht nix … auch mit popups"): Hub und /encounters
+// rendern dieselbe Figur mit denselben Popups aus EINEM Bauteil — die Grammatik darf
+// nicht in zwei Fassungen driften. Tooltip ist progressive enhancement (zeichengrammatik
+// §4): die Register-Tabelle bzw. der Link zur vollen Seite bleibt der JS-freie Weg.
+import type { ScoreExport } from '@/lib/begegnungen/score'
+import { buildScoreSvg } from '@/lib/begegnungen/score'
+
+interface Props {
+  score: ScoreExport
+}
+const { score } = Astro.props
+const svgMarkup = buildScoreSvg(score)
+
+const tooltipPayload = JSON.stringify(
+  score.events.map((e) => ({
+    id: e.event_id,
+    type: e.event_type,
+    date: e.date,
+    lane: e.lane,
+    infra: e.infra,
+    quote: e.quote,
+    attribution: e.attribution,
+  })),
+)
+---
+
+<figure class="score-figure">
+  <div class="score-svg" set:html={svgMarkup} />
+</figure>
+
+<div id="score-tip" class="score-tip" hidden></div>
+<script type="application/json" id="score-evts" set:html={tooltipPayload} />
+<script>
+  // Progressive enhancement only (zeichengrammatik-2026-07-15.md §4): kein Loop, kein
+  // Auto-Advance — ein einzelnes Reveal auf Hover/Fokus, weg bei Leave/Blur.
+  function initScoreTooltip() {
+    const dataEl = document.getElementById('score-evts')
+    const tip = document.getElementById('score-tip')
+    if (!dataEl || !tip) return
+    let events: Array<{ id: string; type: string; date: string; lane: string; infra: boolean; quote: string | null; attribution: string | null }> = []
+    try {
+      events = JSON.parse(dataEl.textContent || '[]')
+    } catch {
+      return
+    }
+    function show(g: Element) {
+      const i = Number(g.getAttribute('data-i'))
+      const e = events[i]
+      if (!e || !tip) return
+      tip.innerHTML =
+        `<b>${e.type}</b><br><span class="score-tip-id">${e.id}</span><br>` +
+        `${e.date} · ${e.infra ? e.attribution + ' (infrastructure)' : e.lane}` +
+        (e.quote ? `<hr>&ldquo;${e.quote}&rdquo;<br><i>— ${e.attribution}</i>` : '')
+      tip.hidden = false
+      const r = g.getBoundingClientRect()
+      const tw = (tip as HTMLElement).offsetWidth
+      const x = Math.min(Math.max(8, r.left + r.width / 2 - tw / 2), innerWidth - tw - 8)
+      ;(tip as HTMLElement).style.left = `${x}px`
+      ;(tip as HTMLElement).style.top = `${r.top + scrollY - (tip as HTMLElement).offsetHeight - 10}px`
+    }
+    document.querySelectorAll('.score-svg .evt').forEach((g) => {
+      g.addEventListener('mouseenter', () => show(g))
+      g.addEventListener('focus', () => show(g))
+      g.addEventListener('mouseleave', () => {
+        if (tip) tip.hidden = true
+      })
+      g.addEventListener('blur', () => {
+        if (tip) tip.hidden = true
+      })
+    })
+  }
+  initScoreTooltip()
+</script>
