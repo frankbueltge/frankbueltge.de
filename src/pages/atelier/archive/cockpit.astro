@@ -1,7 +1,11 @@
 ---
-// /atelier/archive/cockpit — the cockpit as a DATED ARTEFACT (ADR 0008: surfaces are
-// archived, not deleted). The old URL /atelier/cockpit 301s here (public/_redirects).
-// The atlas that used to live inside it has moved to /atelier/material.
+// /atelier/archive/cockpit — the RETIRED cockpit surface (ADR 0008: surfaces are archived,
+// not deleted). The old URL /atelier/cockpit 301s here (public/_redirects). The atlas that
+// used to live inside it has moved to /atelier/material.
+// HONESTY (P0.6, 16.07.): this is a retired INTERFACE rendered against the CURRENT archive —
+// CockpitPage reads the nightly-synced engine JSONs (atlas/rhizome/vital-signs) and the live
+// works collection, so its numbers keep moving. The banner says so; do not label it a frozen
+// snapshot unless the data is actually pinned.
 import Page from '@/layouts/Page.astro'
 import CockpitPage from '@/components/pages/CockpitPage.astro'
 const locale = 'en' as const
@@ -12,7 +16,8 @@ const locale = 'en' as const
 >
   <div class="mx-auto mt-8 w-full max-w-6xl px-4">
     <p class="rounded-lg border border-line bg-panel px-4 py-3 font-mono text-xs text-fg-muted">
-      Archived surface (ADR 0008) — kept as a dated artefact, no longer the entrance.
+      Retired interface (ADR 0008) — no longer the entrance, rendered against the current
+      Atelier archive: the numbers below keep moving with the nightly sync.
       The atlas now lives in <a href="/atelier/material" class="underline hover:text-fg">material</a> ·
       <a href="/atelier" class="underline hover:text-fg">back to the sheet →</a>
     </p>

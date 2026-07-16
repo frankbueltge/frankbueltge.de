@@ -18,11 +18,14 @@
 /werke/halbwertszeit/* /holdings 301
 
 # site-v2 (2026-07-16, decisions doc §1.4): "/lab" war die alte Sammelseite der Experimente —
-# keine zwei Sammelseiten neben /holdings. Nur der Index-Pfad selbst redirectet: /lab/
-# ueberflug-studie bleibt eine echte, eigenständige Seite (kein Sammelseiten-Duplikat, nicht von
-# einer Wildcard-Regel erfasst) und /lab/[slug] bleibt als Route bestehen (aktuell 0 generierte
-# Seiten — die Content-Collection "lab" ist leer). Siehe docs/redirect-matrix-site-v2.md.
+# keine zwei Sammelseiten neben /holdings. Die alte Index-Seite ist entfernt (Live-Befund
+# 16.07. abends: /lab/ mit Slash lieferte weiter die alte Verfassungssprache aus, weil CF
+# exakte Pfade matcht und die generierte Seite gewann) — beide Slash-Varianten redirecten.
+# /lab/ueberflug-studie bleibt eine echte, eigenständige Seite und /lab/[slug] bleibt als
+# Route bestehen (aktuell 0 generierte Seiten — die Content-Collection "lab" ist leer).
+# Siehe docs/redirect-matrix-site-v2.md.
 /lab /holdings 301
+/lab/ /holdings 301
 
 # Routen englisch (2026-07-16, Frank: "warum stehen da deutsche begriffe in den urls?") —
 # der English-only-Entscheid gilt auch für Pfade: /encounters und /holdings sind kanonisch,
@@ -40,6 +43,7 @@
 # (Nachtrag practice-surfaces).
 /atelier/cockpit /atelier/archive/cockpit 301
 /praktiken / 301
+/praktiken/ / 301
 
 # Interim-Akte (2026-07-16): die Record-Links des Encounters zeigen auf die middle-web-Routen
 # (/akte/*), die App ist aber noch nicht deployt. Bis dahin führt /akte/* zum echten,
@@ -48,9 +52,12 @@
 /akte/* https://github.com/frankbueltge/research-ecology/tree/main/fixtures/enc-2026-001-calibration-gap-travels 302
 
 # site-v2 (2026-07-16, decisions doc §1.5): Deutsch fällt komplett weg (Frank, 00:55) — jede
-# /de/*-Route bekommt ihr EN-Pendant. Die zwei Sonderfälle stehen vor der allgemeinen Regel,
+# /de/*-Route bekommt ihr EN-Pendant. Die Sonderfälle stehen vor der allgemeinen Regel,
 # damit sie in einem Hop ans tatsächliche Ziel führen statt über /lab bzw. / einen zweiten
-# Redirect zu brauchen.
+# Redirect zu brauchen (Slash-Varianten explizit — CF matcht exakt, s. o.).
 /de/lab /holdings 301
+/de/lab/ /holdings 301
+/de/praktiken / 301
+/de/praktiken/ / 301
 /de / 301
 /de/* /:splat 301
