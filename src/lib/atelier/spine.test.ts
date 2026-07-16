@@ -46,11 +46,34 @@ describe('buildSpineSvg', () => {
     expect(svg).not.toContain('✳')
   })
 
-  it('refuses to re-layout past the scale rule (quires are a different generator)', () => {
+  // Skalenregel erstmals aktiv mit S31/S32 (2026-07-16): >30 Seiten werfen nicht mehr,
+  // sondern binden — die ältesten acht zu einer Oktav-Lage, deklariert auf der Karte.
+  it('binds the oldest eight pages into a quire past 30 — declared on the map, register uncompressed', () => {
     const many = sessionRegister(
-      Array.from({ length: 31 }, (_, i) => `journal/2026-08-${String(i + 1).padStart(2, '0')}.md`),
+      Array.from({ length: 32 }, (_, i) => `journal/2026-08-${String(i + 1).padStart(2, '0')}.md`),
     )
-    expect(() => buildSpineSvg({ ...input, pages: many })).toThrow(/quires/)
+    const svg = buildSpineSvg({ ...input, pages: many })
+    expect(svg).toContain('S1–S8')
+    expect(svg).toContain('class="quire"')
+    expect(svg).toContain('oldest pages bind first, eight to a quire')
+    // 24 lose Seiten + 1 ungeschriebene nächste Seite; die Lage zeichnet eigene page-Striche
+    expect(svg.match(/<path class="page" d="M\d+ \d+ V\d+"><title>S\d+/g) ?? []).toHaveLength(24)
+    // Register bleibt vollständig: eine Zeile pro Seite, keine Kompression
+    expect(spineRegister({ ...input, pages: many })).toHaveLength(32)
+  })
+
+  it('quire mode is pure: same input ⇒ byte-identical output', () => {
+    const many = sessionRegister(
+      Array.from({ length: 32 }, (_, i) => `journal/2026-08-${String(i + 1).padStart(2, '0')}.md`),
+    )
+    expect(buildSpineSvg({ ...input, pages: many })).toBe(buildSpineSvg({ ...input, pages: structuredClone(many) }))
+  })
+
+  it('still refuses past the NEXT scale rule (volumes are a different generator)', () => {
+    const far = sessionRegister(
+      Array.from({ length: 241 }, (_, i) => `journal/2026-09-01-session-${i + 1}.md`),
+    )
+    expect(() => buildSpineSvg({ ...input, pages: far })).toThrow(/volumes/)
   })
 })
 
