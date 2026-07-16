@@ -34,6 +34,13 @@
 /bestaende /holdings 301
 /bestaende/* /holdings 301
 
+# Praxis-Oberflächen (2026-07-16, practice-surfaces): das Cockpit ist ein datiertes Artefakt
+# (ADR 0008) — die alte URL führt in einem Hop zum Archivpfad. /praktiken war die Sammelseite
+# der Praktiken; die vier Türen wohnen jetzt auf dem Hub. Siehe docs/redirect-matrix-site-v2.md
+# (Nachtrag practice-surfaces).
+/atelier/cockpit /atelier/archive/cockpit 301
+/praktiken / 301
+
 # Interim-Akte (2026-07-16): die Record-Links des Encounters zeigen auf die middle-web-Routen
 # (/akte/*), die App ist aber noch nicht deployt. Bis dahin führt /akte/* zum echten,
 # öffentlichen Register — research-ecology's Fixture auf GitHub. 302 (temporär), weil das Ziel

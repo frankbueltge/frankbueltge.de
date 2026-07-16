@@ -1,0 +1,67 @@
+---
+// /atelier/journal — das Session-Register (atelier-aesthetik §5: „die Endlos-Liste
+// stirbt“). One line per journal page S1…SN, anchors #sNN, the newest night open; the
+// full text folds out per page, rendered verbatim from the committed mirror. The spine
+// (/atelier/history) is the drawn form of the same register.
+import { getCollection } from 'astro:content'
+import Page from '@/layouts/Page.astro'
+import Frame from '@/components/atelier/surface/Frame.astro'
+import { sessionRegister } from '@/lib/atelier/sessions'
+import { renderMarkdown } from '@/lib/engines/journal'
+import { ATELIER_NARRATIVE } from '@/config/atelier-wording'
+
+const all = await getCollection('atelier')
+const journal = all.filter((e) => e.id.startsWith('journal/'))
+const register = sessionRegister(journal.map((e) => e.id))
+const bodyById = new Map(journal.map((e) => [e.id, e.body ?? '']))
+
+const repo = 'https://github.com/frankbueltge/irrtum-als-methode'
+const rootDocs = new Set(all.filter((e) => !e.id.includes('/')).map((e) => e.id))
+
+const entries = [...register].reverse().map((p) => {
+  const body = bodyById.get(p.id) ?? ''
+  const heading = body.match(/^\s*# ([^\n]+)/)?.[1]?.trim() ?? p.date
+  const text = body.replace(/^\s*# [^\n]*\n?/, '')
+  return { ...p, heading, html: renderMarkdown(text, { repo, docs: rootDocs }) }
+})
+
+const kicker = ['Atelier · journal', 'irrtum-als-methode', `S1–S${register.length}`]
+const statusHtml =
+  `<b>${register.length} pages</b> · one line per session, the newest night open · ` +
+  `<a href="/atelier/history" class="underline">the spine — the drawn register →</a>`
+---
+
+<Page
+  title="Atelier — journal, the session register | Frank Bültge"
+  description="The Atelier's research journal as a session register: one line per page, every session anchored, the full text verbatim and unedited."
+>
+  <Frame active="journal" kicker={kicker} h1="The pages, one line each." statusHtml={statusHtml} back>
+    <p class="at-room-intro">{ATELIER_NARRATIVE.rooms.journal}</p>
+    <section>
+      {entries.map((p, i) => (
+        <details id={`s${p.n}`} class="at-page-entry" open={i === 0}>
+          <summary>
+            <span class="at-sess-no">S{p.n}</span>
+            <span class="at-sess-title">{p.heading}</span>
+            <span class="at-sess-date">{p.date}</span>
+          </summary>
+          <div class="at-prose" set:html={p.html} />
+        </details>
+      ))}
+    </section>
+  </Frame>
+</Page>
+
+<script>
+  // Deep links (#sNN) open their register entry — the same convention the engine pages used.
+  const openFromHash = () => {
+    const id = decodeURIComponent(location.hash.slice(1))
+    const el = id ? document.getElementById(id) : null
+    if (el instanceof HTMLDetailsElement) {
+      el.open = true
+      el.scrollIntoView()
+    }
+  }
+  openFromHash()
+  addEventListener('hashchange', openFromHash)
+</script>

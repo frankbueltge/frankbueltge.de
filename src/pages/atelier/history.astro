@@ -1,0 +1,140 @@
+---
+// /atelier/history — der Buchrücken (atelier-aesthetik §6): the practice counts in
+// sessions, not days. Every journal page stands as a spine line, works hang under their
+// night, the error register strikes in red above, threads are born late and stay open,
+// dates ride below as marginalia. The data edge is the unwritten next page (approved
+// formula). Deviations from the mockup are named in the footer: works hang by their
+// COMMITTED dates (the mirror carries no engine git), constitution amendment dates are
+// not mirrored and are honestly noted instead of drawn.
+import Page from '@/layouts/Page.astro'
+import Frame from '@/components/atelier/surface/Frame.astro'
+import rhizomeData from '@/data/atelier/rhizome.json'
+import { buildSpineSvg, spineRegister, type SpineInput, type SpineThread } from '@/lib/atelier/spine'
+import { sessionRegister, spineHeadline } from '@/lib/atelier/sessions'
+import { ATELIER_GRAMMAR, ATELIER_NARRATIVE } from '@/config/atelier-wording'
+import type { Rhizome } from '@/lib/atelier/sheet'
+
+const rhizome = rhizomeData as unknown as Rhizome
+
+// pages from committed journal filenames (the count lives in the names, verbatim)
+const journalFiles = import.meta.glob('/src/content/atelier/journal/*.md')
+const pages = sessionRegister(
+  Object.keys(journalFiles).map((p) => p.replace('/src/content/atelier/', '')),
+)
+
+// works per night — committed dates from both work sources (meta.json), a named deviation
+// from the mockup's git add-dates.
+const htmlMeta = import.meta.glob('/src/content/atelier/works/*/meta.json', {
+  eager: true,
+  import: 'default',
+}) as Record<string, { date?: string }>
+const nativeMeta = import.meta.glob('/src/components/atelier/werke/*/meta.json', {
+  eager: true,
+  import: 'default',
+}) as Record<string, { date?: string }>
+const worksByDate: Record<string, number> = {}
+for (const meta of [...Object.values(htmlMeta), ...Object.values(nativeMeta)]) {
+  if (!meta.date) continue
+  worksByDate[meta.date] = (worksByDate[meta.date] ?? 0) + 1
+}
+
+// catalogued errors per night — the register files date themselves in their head, in two
+// committed dialects: the newer H1 form "# Error Register 021 — Session 24 (2026-07-13)"
+// and the older researcher line "**Researcher:** Ulysses (Sessions 1–2, 2026-06-28)".
+// Deterministic rule: the FIRST ISO date within a file's first six lines is its night.
+const errorFiles = import.meta.glob('/src/content/atelier/works/fehlerkataster-*.md', {
+  eager: true,
+  query: '?raw',
+  import: 'default',
+}) as Record<string, string>
+const errorsByDate: Record<string, number> = {}
+let undatedErrors = 0
+for (const raw of Object.values(errorFiles)) {
+  const head = raw.split('\n').slice(0, 6).join('\n')
+  const m = head.match(/(\d{4}-\d{2}-\d{2})/)
+  if (!m) {
+    undatedErrors += 1 // honest remainder — never guessed onto a night
+    continue
+  }
+  errorsByDate[m[1]] = (errorsByDate[m[1]] ?? 0) + 1
+}
+
+// threads born (rhizome: min swerve session per thread)
+const birth = new Map<string, number>()
+for (const e of rhizome.edges) {
+  if (e.kind !== 'swerve' || typeof e.session !== 'number') continue
+  const prev = birth.get(e.to)
+  if (prev === undefined || e.session < prev) birth.set(e.to, e.session)
+}
+const threads: SpineThread[] = rhizome.nodes
+  .filter((n) => n.kind === 'thread' && birth.has(n.id))
+  .map((n) => {
+    const label = n.label
+    const short = label.includes(':') ? label.slice(0, label.indexOf(':')) : label
+    return { session: birth.get(n.id)!, short, full: label }
+  })
+
+const input: SpineInput = {
+  pages,
+  worksByDate,
+  errorsByDate,
+  threads,
+  constitutionNote: ATELIER_NARRATIVE.provenance.constitutionNoteShort,
+  worksCaption: ATELIER_NARRATIVE.provenance.worksHungBy,
+}
+const svg = buildSpineSvg(input)
+const rows = spineRegister(input)
+
+const worksTotal = Object.values(worksByDate).reduce((a, b) => a + b, 0)
+const errorsTotal = Object.values(errorsByDate).reduce((a, b) => a + b, 0)
+const first = pages[0]
+const last = pages[pages.length - 1]
+const kicker = [
+  'Atelier · the journal as a spine of pages',
+  'irrtum-als-methode',
+  `S1 · ${first.date} → S${last.n} · ${last.date}`,
+]
+const statusHtml =
+  `<b>${pages.length} journal pages · ${worksTotal} works · ${errorsTotal} catalogued errors · ` +
+  `${threads.length} threads</b> · the practice counts in sessions; dates ride below as marginalia` +
+  (undatedErrors > 0 ? ` · ${undatedErrors} register file(s) carry no date in their head and hang nowhere` : '')
+---
+
+<Page
+  title="Atelier — the spine | Frank Bültge"
+  description="The Atelier's history as a book spine: every journal page a session, works hung under their night, errors struck in red — and tonight's page not yet written."
+>
+  <Frame
+    active="journal"
+    kicker={kicker}
+    h1={spineHeadline(pages.length)}
+    statusHtml={statusHtml}
+    footLeft={`compiled read-only from ${ATELIER_NARRATIVE.provenance.spine} · ${ATELIER_NARRATIVE.provenance.constitutionNote}`}
+    footRight={ATELIER_GRAMMAR.scaleRule}
+    back
+  >
+    <figure set:html={svg} />
+
+    <section class="at-record">
+      <h2>Session register — all {pages.length} pages (counts shown at each day’s first page)</h2>
+      <div class="at-tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>page</th><th>date</th><th>works added</th><th>errors catalogued</th><th></th></tr>
+          </thead>
+          <tbody>
+            {rows.map((row) => (
+              <tr>
+                <td><a href={`/atelier/journal#${row.anchor}`} class="underline">{row.page}</a></td>
+                <td class="mono">{row.date}</td>
+                <td>{row.works}</td>
+                <td>{row.errors}</td>
+                <td class="q">{row.threadBorn}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </Frame>
+</Page>
