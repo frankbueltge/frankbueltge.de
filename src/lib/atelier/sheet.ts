@@ -215,10 +215,13 @@ function layoutSheet(r: Rhizome): SheetLayout {
     // allein über solche Bindungen ins Rhizom): JEDE Bindung an ein Faden-Werk, deren
     // anderes Ende ein nicht-elaboriertes Werk ist, stellt dieses Werk aufs Regal — das
     // Register darunter führt die Bindungsart in jedem Fall wörtlich.
-    const SHELF_TIES = new Set(['complement', 'bridge', 'measures', 'corrected-by'])
+    // Offenes Vokabular (16.07.): JEDE Bindungsart außer den eigen-gezeichneten
+    // (elaborates=Tafel, swerve=Rotstift-Knick, fork=Fadenteilung, grounds=Fundament-Stummel)
+    // stellt ein nicht-elaboriertes Werk aufs Regal — auch Arten, die es noch gar nicht gibt.
+    const OWN_DRAWING = new Set(['elaborates', 'swerve', 'fork', 'grounds'])
     const ghostIds: string[] = []
     for (const e of r.edges) {
-      if (!SHELF_TIES.has(e.kind)) continue
+      if (OWN_DRAWING.has(e.kind)) continue
       const far = workEdges.some((we) => we.to === e.from)
         ? e.to
         : workEdges.some((we) => we.to === e.to)
