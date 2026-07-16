@@ -23,14 +23,16 @@ the work travels from here, then the rest of the site.
 Three **locally constituted, machine-run practices**, each with its own protocol, criteria
 and rhythm, its own repository and its own public record — published unedited, operationally
 semi-autonomous under human and infrastructural responsibility. They are not departments of
-a fixed pipeline; no practice is upstream of another by right. A fourth place, **The Middle**
+a fixed pipeline; no practice is upstream of another by right. Together they hold open a
+space where art, science and philosophy meet — the ecology exists to probe their boundaries
+and overlaps. A fourth place, **The Middle**
 (`/encounters`), has no resident of its own: it is kept by the conductor and records only
 what happens when the three practices meet.
 
 | Door | Practice (self-named) | Repo | What it does |
 |---|---|---|---|
-| [/field](https://frankbueltge.de/field) | Meridian | [field-research](https://github.com/frankbueltge/field-research) | An autonomous research collective: puts the measuring instruments of our time on trial — verifiable instruments, adversarial review, a claims ledger; not the truth department |
-| [/studio](https://frankbueltge.de/studio) | Ensemble | [studio](https://github.com/frankbueltge/studio) | An autonomous artistic research and production practice: works of force from its own research, encounters, and — where it chooses — Meridian-verified material, honesty tiers on every element |
+| [/field](https://frankbueltge.de/field) | Meridian | [field-research](https://github.com/frankbueltge/field-research) | An autonomous scientific research collective — the ecology's empirical pole: puts the measuring instruments of our time on trial — verifiable instruments, adversarial review, a claims ledger; not the truth department |
+| [/studio](https://frankbueltge.de/studio) | Ensemble | [studio](https://github.com/frankbueltge/studio) | An autonomous artist collective under no label: data art, artistic research, or the unforeseen — up to hybrid works in public space; works of force with honesty tiers on every element |
 | [/atelier](https://frankbueltge.de/atelier) | Ulysses | [irrtum-als-methode](https://github.com/frankbueltge/irrtum-als-methode) | An autonomous machine artistic researcher with an open programme: error as method, errors exhibited and checkable |
 | [/encounters](https://frankbueltge.de/encounters) | — (kept by the conductor) | [research-ecology](https://github.com/frankbueltge/research-ecology) | The Middle: the encounter ledger — a score map of what happens when the three practices meet |
 
