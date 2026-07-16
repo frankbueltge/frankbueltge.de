@@ -6,28 +6,44 @@
 /en / 301
 /en/* /:splat 301
 /police /praemie 301
-/werke /bestaende 301
+/werke /holdings 301
 
 # Analytics-Engineering-Post entfernt (2026-07-02, Frank) — beruflicher Inhalt, passt nicht ins Lab.
-/lab/bigquery-dbt /bestaende 301
+/lab/bigquery-dbt /holdings 301
 
 # Half-Life zurückgezogen (2026-06) — zu kalt; die Daten wandern ins Protokoll.
-/halbwertszeit /bestaende 301
-/halbwertszeit/* /bestaende 301
-/werke/halbwertszeit /bestaende 301
-/werke/halbwertszeit/* /bestaende 301
+/halbwertszeit /holdings 301
+/halbwertszeit/* /holdings 301
+/werke/halbwertszeit /holdings 301
+/werke/halbwertszeit/* /holdings 301
 
 # site-v2 (2026-07-16, decisions doc §1.4): "/lab" war die alte Sammelseite der Experimente —
-# keine zwei Sammelseiten neben /bestaende. Nur der Index-Pfad selbst redirectet: /lab/
+# keine zwei Sammelseiten neben /holdings. Nur der Index-Pfad selbst redirectet: /lab/
 # ueberflug-studie bleibt eine echte, eigenständige Seite (kein Sammelseiten-Duplikat, nicht von
 # einer Wildcard-Regel erfasst) und /lab/[slug] bleibt als Route bestehen (aktuell 0 generierte
 # Seiten — die Content-Collection "lab" ist leer). Siehe docs/redirect-matrix-site-v2.md.
-/lab /bestaende 301
+/lab /holdings 301
+
+# Routen englisch (2026-07-16, Frank: "warum stehen da deutsche begriffe in den urls?") —
+# der English-only-Entscheid gilt auch für Pfade: /encounters und /holdings sind kanonisch,
+# die deutschen Pfade der Ökologie-Ära 301en dorthin. (Impressum/Datenschutz bleiben deutsch —
+# Rechtstexte; /protokoll, /praemie etc. sind Werk-Archivpfade und bleiben, bis das
+# Praxis-Oberflächen-Paket sie geordnet migriert.)
+/begegnungen /encounters 301
+/begegnungen/* /encounters/:splat 301
+/bestaende /holdings 301
+/bestaende/* /holdings 301
+
+# Interim-Akte (2026-07-16): die Record-Links des Encounters zeigen auf die middle-web-Routen
+# (/akte/*), die App ist aber noch nicht deployt. Bis dahin führt /akte/* zum echten,
+# öffentlichen Register — research-ecology's Fixture auf GitHub. 302 (temporär), weil das Ziel
+# nach dem App-Deploy wieder die eigene Route wird.
+/akte/* https://github.com/frankbueltge/research-ecology/tree/main/fixtures/enc-2026-001-calibration-gap-travels 302
 
 # site-v2 (2026-07-16, decisions doc §1.5): Deutsch fällt komplett weg (Frank, 00:55) — jede
 # /de/*-Route bekommt ihr EN-Pendant. Die zwei Sonderfälle stehen vor der allgemeinen Regel,
 # damit sie in einem Hop ans tatsächliche Ziel führen statt über /lab bzw. / einen zweiten
 # Redirect zu brauchen.
-/de/lab /bestaende 301
+/de/lab /holdings 301
 /de / 301
 /de/* /:splat 301

@@ -89,3 +89,24 @@ above against `public/_redirects` (either an exact rule or coverage by a `/de/*`
 Manual spot-check after deploy: `curl -I https://frankbueltge.de/de/protokoll` and
 `curl -I https://frankbueltge.de/lab` should both return `301` with a `Location` header pointing
 at the targets in this table.
+
+## Nachtrag 2026-07-16 vormittags — Routen englisch + Interim-Akte
+
+Frank ("warum stehen da deutsche begriffe in den urls?"): der English-only-Entscheid gilt auch
+für Pfade. `/encounters` und `/holdings` sind seither die kanonischen Routen (Seiten-
+Verzeichnisse umbenannt, alle internen Links umgestellt); die bisherigen Ziele oben
+(`/bestaende`) wurden in `public/_redirects` auf `/holdings` nachgezogen, damit keine
+Zwei-Hop-Ketten entstehen.
+
+| Route (alt) | Ziel (neu) | Status |
+|---|---|---|
+| `/begegnungen` | `/encounters` | 301 |
+| `/begegnungen/*` | `/encounters/:splat` | 301 |
+| `/bestaende`, `/bestaende/*` | `/holdings` | 301 |
+| `/lab`, `/de/lab` u. a. bisherige `/bestaende`-Ziele | `/holdings` | 301 (retargeted) |
+| `/akte/*` | GitHub: research-ecology `fixtures/enc-2026-001-…` | **302 — Interim**, bis die middle-web-App deployt ist; danach übernimmt die App-Route wieder |
+
+Bewusst NICHT migriert (bleiben, bis das Praxis-Oberflächen-Paket sie geordnet umzieht bzw.
+dauerhaft als Archivpfade): `/atelier/werke/*` (hängt an der Integrate-Maschinerie),
+`/protokoll`, `/praemie`, `/parallaxe` etc. (Werk-Archivpfade), `/impressum`/`/datenschutz`
+(Rechtstexte, deutsch).

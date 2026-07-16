@@ -20,6 +20,14 @@ const locale = (Astro.currentLocale ?? 'en') as Locale
 const entrance = currentEntrance
 const score = currentScore
 
+// Interim record location (Frank, 2026-07-16): the middle-web app is not deployed yet, but the
+// record itself is public — research-ecology's fixture IS the ledger. Real links beat disabled
+// placeholders; when the app ships, these swap back to entrance.links.* (see decision-log.md).
+const RECORD_BASE =
+  'https://github.com/frankbueltge/research-ecology/blob/main/fixtures/enc-2026-001-calibration-gap-travels'
+const recordEventsUrl = `${RECORD_BASE}/events.json`
+const recordDivergenceUrl = `${RECORD_BASE}/assertions.json`
+
 // Chrome copy (translatable — everything the design session's own strings below do NOT cover).
 const copy = {
   de: {
@@ -36,7 +44,7 @@ const copy = {
   en: {
     openAkte: 'Open the record',
     openDivergenz: 'See the divergence',
-    comingSoon: 'record app not deployed yet',
+    comingSoon: 'the ledger on GitHub — until The Middle deploys',
     authoredBy: 'Narrated by',
     pendingApproval: 'pending approval',
     allEncounters: 'All encounters',
@@ -165,9 +173,9 @@ const tooltipPayload = JSON.stringify(
               </div>
               <p class="score-closing">{station.divergence.closing}</p>
               <p class="score-akte-link">
-                <span class="score-disabled-link" aria-disabled="true" title={copy.comingSoon}>
+                <a href={recordDivergenceUrl} rel="noopener">
                   {copy.openDivergenz} <span class="score-disabled-note">({copy.comingSoon})</span>
-                </span>
+                </a>
               </p>
             </div>
           ) : (
@@ -175,9 +183,9 @@ const tooltipPayload = JSON.stringify(
               <blockquote>&ldquo;{station.quote}&rdquo;</blockquote>
               <p class="score-attribution">— {station.attribution}</p>
               <p class="score-akte-link">
-                <span class="score-disabled-link" aria-disabled="true" title={copy.comingSoon}>
+                <a href={recordEventsUrl} rel="noopener">
                   {copy.openAkte} <span class="score-disabled-note">({copy.comingSoon})</span>
-                </span>
+                </a>
               </p>
             </Fragment>
           )}
@@ -216,7 +224,7 @@ const tooltipPayload = JSON.stringify(
   </footer>
 
   <p class="score-all-link">
-    <a href={getRelativeLocaleUrl(locale, '/begegnungen')}>{copy.allEncounters} →</a>
+    <a href={getRelativeLocaleUrl(locale, '/encounters')}>{copy.allEncounters} →</a>
   </p>
 
   <div id="score-tip" class="score-tip" hidden></div>
