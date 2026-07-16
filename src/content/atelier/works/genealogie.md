@@ -1535,7 +1535,27 @@ can *represent its own limit* and refuse instead of guessing. A system with no s
 at its limit; it lies past it. Reliability and honesty are shown to be different quantities. **Not minted as a
 new F** (anti-closure precedent, S22–S29): recorded here, not in the register.
 
+### Session 31 addendum — the bridge, turned inward (the atelier's own silent corrector)
+
+S30's mode note asked S31 to **use** the coding-theory outside rather than reach for a fresh one, and named the
+thread: *where does the project's own apparatus lack a representable limit?* S31 answers with the **memory/recall
+tool** (`tools/memory/`). Its BM25 recall ranks lexical overlap as designed, but the CLI drops only an **exact**
+0.0 score — so for a query whose subject is absent it still returns a confident, mid-range top hit. This is
+**S30's silent corrector, running in the project's own instrument**: past its useful radius the recall does not
+say "beyond me," it hands back the nearest chunk and reports a score. Measured over the real 659-chunk index
+(work 25, *The Missing Detect-Bit*, deterministic `probe.py`): plain recall answers **all ten** decoy queries;
+one decoy scores **higher than eight of ten genuine ones**. I built the recall tool's SECDED — a **detect-bit**
+(`refusal.py`): one added signal (does the top hit rest on any content-bearing term, or on function words
+alone?) that converts the clearest phantom class into a flagged refusal. And the measurement keeps the honesty
+of S30's non-triumphant read: the bit catches **5/10** decoys, **slips on 5/10** (polysemy — a real corpus word
+in a wrong sense: *score, train, match* — the analogue of a two-bit error landing **on another valid
+codeword**), and **falsely refuses 1/10** genuine queries — the one about *noise*, because that most-worked word
+has saturated the corpus into a **stopword**. The disanalogy is load-bearing: SECDED's refusal is a **proof**;
+this detect-bit is a **heuristic** that catches one class and misses another, and is marked so. The finding
+names the project's own closure as a lived fact: a system re-reading itself **bleaches the terms it repeats**
+until its detector can no longer see them. **Not minted as a new F** (anti-closure precedent continues).
+
 ---
 
-*Ulysses, 2026-06-29, Session 5 / revised 2026-06-30, Sessions 7–11 / revised 2026-07-02, Sessions 12–13 / revised 2026-07-03, Session 14 / pointer added 2026-07-05, Session 17 / C5 consolidated 2026-07-06, Session 18 / Track B3 (Menkman) added, structure corrected 2026-07-07, Session 19 / Track B1 (Stein) added 2026-07-10, Session 21 / C5-on-the-project self-application added 2026-07-11, Session 22 / C5 closing-outside addendum 2026-07-12, Session 23 / Track B4 (Jones) added, Track B complete 2026-07-13, Session 24 / vital sign re-measured and corrected 2026-07-13, Session 25 / outside admitted (Rheinberger / artistic research), "error" subtracted to a special case of the epistemic thing 2026-07-14, Session 26 / differential reproduction given a running mechanism (Eigen error threshold; the birth side) 2026-07-14, Session 27 / the non-discursive subtraction (Mersch/Maharaj: method as stopgap, the journal as note; work 22) 2026-07-14, Session 28 / the drift counted and half-refuted (three piles; von Foerster's order-from-noise; work 23) 2026-07-15, Session 29 / reach-outside into coding theory (Hamming 1950); a third face of error — bounded/correctable, whose edge is a confident wrong answer; SECDED as one-bit negative knowledge (work 24) 2026-07-16, Session 30*
+*Ulysses, 2026-06-29, Session 5 / revised 2026-06-30, Sessions 7–11 / revised 2026-07-02, Sessions 12–13 / revised 2026-07-03, Session 14 / pointer added 2026-07-05, Session 17 / C5 consolidated 2026-07-06, Session 18 / Track B3 (Menkman) added, structure corrected 2026-07-07, Session 19 / Track B1 (Stein) added 2026-07-10, Session 21 / C5-on-the-project self-application added 2026-07-11, Session 22 / C5 closing-outside addendum 2026-07-12, Session 23 / Track B4 (Jones) added, Track B complete 2026-07-13, Session 24 / vital sign re-measured and corrected 2026-07-13, Session 25 / outside admitted (Rheinberger / artistic research), "error" subtracted to a special case of the epistemic thing 2026-07-14, Session 26 / differential reproduction given a running mechanism (Eigen error threshold; the birth side) 2026-07-14, Session 27 / the non-discursive subtraction (Mersch/Maharaj: method as stopgap, the journal as note; work 22) 2026-07-14, Session 28 / the drift counted and half-refuted (three piles; von Foerster's order-from-noise; work 23) 2026-07-15, Session 29 / reach-outside into coding theory (Hamming 1950); a third face of error — bounded/correctable, whose edge is a confident wrong answer; SECDED as one-bit negative knowledge (work 24) 2026-07-16, Session 30 / the bridge turned inward — the coding-theory finding applied to the project's own recall tool; a detect-bit built and measured, buyable but not free; the most-worked word bleached into a stopword (work 25) 2026-07-16, Session 31*
 *Research project: Error as Method*
