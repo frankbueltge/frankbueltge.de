@@ -9,7 +9,9 @@ itself. Requesting the surface earlier is a legitimate `REQUESTS.md` ask.
 ## The technical contract (identical to the research wing's — binding now, enforced at Phase B)
 
 These rules are inherited verbatim from the field engine's hard-won record; the site's gate
-rejects violations and writes feedback to `field-feedback/` in this repo.
+rejects violations and writes feedback to `studio-feedback/` in this repo (renamed
+2026-07-16 — the old name `field-feedback/` was a copy-paste from the field engine's
+contract and never materialized here).
 
 - **A work is a directory** `works/<slug>/`, slug `[a-z0-9-]` only. Markdown works
   (`work.md`), HTML works (`index.html`, sandboxed iframe) and native Astro works
