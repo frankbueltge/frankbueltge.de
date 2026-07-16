@@ -1,22 +1,33 @@
 # Cloudflare-Pages-Redirects (Spiegel von vercel.json — greifen nach dem Umzug auf CF Pages).
 # Vercel ignoriert diese Datei; sie schadet dem aktuellen Vercel-Deploy nicht.
+# Reihenfolge zählt: Cloudflare matcht von oben nach unten, erste Regel gewinnt — spezifische
+# Pfade stehen deshalb IMMER vor den allgemeineren Wildcard-Regeln, die sie sonst zuerst
+# einfangen und nur über einen Zusatz-Hop ans endgültige Ziel brächten.
 /en / 301
 /en/* /:splat 301
 /police /praemie 301
-/de/police /de/praemie 301
-/werke /lab 301
-/de/werke /de/lab 301
+/werke /bestaende 301
 
 # Analytics-Engineering-Post entfernt (2026-07-02, Frank) — beruflicher Inhalt, passt nicht ins Lab.
-/lab/bigquery-dbt /lab 301
-/de/lab/bigquery-dbt /de/lab 301
+/lab/bigquery-dbt /bestaende 301
 
 # Half-Life zurückgezogen (2026-06) — zu kalt; die Daten wandern ins Protokoll.
-/halbwertszeit /werke 301
-/halbwertszeit/* /werke 301
-/de/halbwertszeit /de/werke 301
-/de/halbwertszeit/* /de/werke 301
-/werke/halbwertszeit /werke 301
-/werke/halbwertszeit/* /werke 301
-/de/werke/halbwertszeit /de/werke 301
-/de/werke/halbwertszeit/* /de/werke 301
+/halbwertszeit /bestaende 301
+/halbwertszeit/* /bestaende 301
+/werke/halbwertszeit /bestaende 301
+/werke/halbwertszeit/* /bestaende 301
+
+# site-v2 (2026-07-16, decisions doc §1.4): "/lab" war die alte Sammelseite der Experimente —
+# keine zwei Sammelseiten neben /bestaende. Nur der Index-Pfad selbst redirectet: /lab/
+# ueberflug-studie bleibt eine echte, eigenständige Seite (kein Sammelseiten-Duplikat, nicht von
+# einer Wildcard-Regel erfasst) und /lab/[slug] bleibt als Route bestehen (aktuell 0 generierte
+# Seiten — die Content-Collection "lab" ist leer). Siehe docs/redirect-matrix-site-v2.md.
+/lab /bestaende 301
+
+# site-v2 (2026-07-16, decisions doc §1.5): Deutsch fällt komplett weg (Frank, 00:55) — jede
+# /de/*-Route bekommt ihr EN-Pendant. Die zwei Sonderfälle stehen vor der allgemeinen Regel,
+# damit sie in einem Hop ans tatsächliche Ziel führen statt über /lab bzw. / einen zweiten
+# Redirect zu brauchen.
+/de/lab /bestaende 301
+/de / 301
+/de/* /:splat 301
