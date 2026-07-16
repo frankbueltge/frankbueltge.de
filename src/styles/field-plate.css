@@ -1,0 +1,297 @@
+/* Field — Millimeterpapier & Schreiberstreifen (Praxis-Oberflächen-Paket). Eigene
+   Bildsprache der Praxis, portiert aus research-ecology docs/design/variants-2026-07-15/
+   field_viz.py (FIELD_CSS + geteilte Seiten-Grundstile). ADR 0010: KEINE geteilte visuelle
+   Grammatik — nichts hiervon teilt Partitur (score-map.css), Blatt (atelier-sheet.css)
+   oder Bühne (studio-stage.css). Vollständig auf .field-surface gescopet, Tokens --fd-*.
+
+   Palette (validiert, field-aesthetik §3): Laborlicht (#f5f7f6, Stempel #6a3fb5, Kaveat
+   #9a6a08) und Nachtschicht (#12161a, #7e5fd3, #b3861d). Default hell — ein Labor arbeitet
+   bei Licht; Mechanik folgt der Site (auto→light→dark). */
+
+:root[data-theme='light'] .field-surface {
+  --fd-page: #e8ecea;
+  --fd-surface: #f5f7f6;
+  --fd-ink: #1c211f;
+  --fd-ink-2: #5d6a64;
+  --fd-hairline: #d3ddd7;
+  --fd-grid: #dbe4de;
+  --fd-grid-major: #c8d5cd;
+  --fd-stamp: #6a3fb5;
+  --fd-caveat: #9a6a08;
+  --fd-badge-bg: #e9eeeb;
+  --fd-h1-ink: #141816;
+}
+:root[data-theme='dark'] .field-surface {
+  --fd-page: #0c0f12;
+  --fd-surface: #12161a;
+  --fd-ink: #dde4e0;
+  --fd-ink-2: #8c9992;
+  --fd-hairline: #28323a;
+  --fd-grid: #1d2530;
+  --fd-grid-major: #28323e;
+  --fd-stamp: #7e5fd3;
+  --fd-caveat: #b3861d;
+  --fd-badge-bg: #1a2026;
+  --fd-h1-ink: #eef2ef;
+}
+
+.field-surface {
+  --fd-font-ui: 'Futura', 'Century Gothic', 'Avenir Next', system-ui, sans-serif;
+  --fd-font-record: ui-monospace, 'SF Mono', Menlo, monospace;
+  width: calc(100% - 2rem);
+  max-width: 95rem;
+  margin: 2rem auto 3rem;
+  padding: 2.125rem 2.5rem 3.75rem;
+  background: var(--fd-surface);
+  color: var(--fd-ink);
+  border: 1px solid var(--fd-hairline);
+  font-family: var(--fd-font-ui);
+}
+@media (max-width: 640px) {
+  .field-surface { padding: 1.5rem 1rem 2.5rem; }
+}
+
+.field-surface .fd-kicker {
+  font-family: var(--fd-font-record);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fd-ink-2);
+  display: flex;
+  gap: 1.4em;
+  flex-wrap: wrap;
+  margin: 0;
+}
+.field-surface .fd-chip {
+  border: 1px solid var(--fd-hairline);
+  padding: 1px 8px;
+  border-radius: 2px;
+  color: var(--fd-ink-2);
+  text-transform: none;
+  letter-spacing: normal;
+}
+.field-surface .fd-h1 {
+  font-family: var(--fd-font-ui);
+  text-transform: uppercase;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: var(--fd-h1-ink);
+  font-size: clamp(30px, 4.2vw, 56px);
+  line-height: 1.06;
+  margin: 0.45em 0 0.2em;
+  max-width: 26ch;
+}
+.field-surface .fd-status {
+  font-family: var(--fd-font-record);
+  font-size: 14px;
+  color: var(--fd-ink-2);
+}
+.field-surface .fd-status b { color: var(--fd-ink); font-weight: 600; }
+.field-surface figure { margin: 26px 0 8px; }
+.field-surface svg#strip,
+.field-surface svg#plate { width: 100%; height: auto; display: block; }
+
+/* Kopfleiste (plate rail) */
+.field-surface .platerail {
+  display: flex;
+  gap: 1.6em;
+  align-items: baseline;
+  margin: 18px 0 4px;
+  padding: 7px 0;
+  border-top: 1px solid var(--fd-hairline);
+  border-bottom: 1px solid var(--fd-hairline);
+  font-family: var(--fd-font-record);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  flex-wrap: wrap;
+}
+.field-surface .platerail a {
+  color: var(--fd-ink-2);
+  text-decoration: none;
+  text-transform: uppercase;
+}
+.field-surface .platerail a:hover { color: var(--fd-ink); text-decoration: underline; }
+.field-surface .fr-here {
+  color: var(--fd-ink);
+  text-transform: uppercase;
+  border-bottom: 2px solid var(--fd-stamp);
+}
+.field-surface .fr-door { margin-left: auto; }
+.field-surface a.fr-door { color: var(--fd-ink-2); text-transform: uppercase; }
+.field-surface .fd-back { font: 12px var(--fd-font-record); letter-spacing: 0.08em; }
+.field-surface .fd-back a { color: var(--fd-ink-2); text-decoration: none; text-transform: uppercase; }
+.field-surface .fd-back a:hover { color: var(--fd-ink); text-decoration: underline; }
+
+/* Feld-Zeichen: Papier, Spur, Stempel, Fähnchen, Splice — nichts geteilt */
+.field-surface .gridline { stroke: var(--fd-grid); stroke-width: 1; }
+.field-surface .gridmajor { stroke: var(--fd-grid-major); stroke-width: 1; }
+.field-surface .trace { stroke: var(--fd-ink); stroke-width: 1.8; fill: none; stroke-linejoin: round; }
+.field-surface .instr { fill: var(--fd-ink); }
+.field-surface .stamp { stroke: var(--fd-stamp); fill: none; stroke-width: 1.6; }
+.field-surface .stamp-t { font: 600 9.5px var(--fd-font-record); fill: var(--fd-stamp); }
+.field-surface .flag { fill: var(--fd-caveat); }
+.field-surface .flag-pole { stroke: var(--fd-caveat); stroke-width: 1.4; }
+.field-surface .splice { stroke: var(--fd-ink); stroke-width: 1.4; }
+.field-surface .tape { fill: var(--fd-ink-2); opacity: 0.18; }
+.field-surface .patch { stroke: var(--fd-ink-2); stroke-width: 1.2; fill: none; stroke-dasharray: 2 2; }
+.field-surface .pen { fill: var(--fd-ink); }
+.field-surface .obl-f { stroke: var(--fd-caveat); stroke-width: 0.9; opacity: 0.7; stroke-dasharray: 1 4; }
+.field-surface .t-plate { font: 600 12px var(--fd-font-record); letter-spacing: 0.1em; fill: var(--fd-ink); }
+.field-surface .t-n { font: 11.5px var(--fd-font-record); fill: var(--fd-ink-2); }
+.field-surface .t-anchor { font: 600 11px var(--fd-font-record); fill: var(--fd-ink); }
+.field-surface .t-cav { font: 11px var(--fd-font-record); fill: var(--fd-caveat); }
+.field-surface .evt2 { cursor: help; outline: none; }
+.field-surface .evt2:focus-visible { outline: 1px dashed var(--fd-ink-2); }
+
+/* Register (uncompressed table) + Fuß */
+.field-surface .fd-record h2 {
+  font: 600 13px var(--fd-font-record);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fd-ink-2);
+  margin: 8px 0 10px;
+}
+.field-surface .fd-tbl-wrap { overflow-x: auto; }
+.field-surface table { border-collapse: collapse; width: 100%; font: 12.5px var(--fd-font-record); }
+.field-surface th {
+  text-align: left;
+  font-weight: 600;
+  color: var(--fd-ink-2);
+  letter-spacing: 0.06em;
+}
+.field-surface th,
+.field-surface td { border-top: 1px solid var(--fd-hairline); padding: 7px 14px 7px 0; vertical-align: top; }
+.field-surface td.mono { white-space: nowrap; color: var(--fd-ink-2); }
+.field-surface td.q { font-style: italic; max-width: 60ch; }
+.field-surface .fd-foot {
+  margin-top: 26px;
+  font: 11.5px var(--fd-font-record);
+  color: var(--fd-ink-2);
+  display: flex;
+  justify-content: space-between;
+  gap: 2em;
+  flex-wrap: wrap;
+}
+.field-surface .fd-room-intro {
+  font-family: var(--fd-font-ui);
+  font-size: 15px;
+  color: var(--fd-ink-2);
+  max-width: 70ch;
+  margin: 10px 0 26px;
+}
+
+/* Zimmer: Instrumente, Journal, Apparat */
+.field-surface .fd-instr-card {
+  border: 1px solid var(--fd-hairline);
+  background: var(--fd-badge-bg);
+  padding: 16px 18px;
+  margin: 0 0 14px;
+  scroll-margin-top: 4rem;
+}
+.field-surface .fd-instr-card h3 {
+  font-family: var(--fd-font-ui);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 17px;
+  font-weight: 600;
+  margin: 0;
+}
+.field-surface .fd-instr-card h3 a { color: inherit; text-decoration: none; }
+.field-surface .fd-instr-card h3 a:hover { text-decoration: underline; }
+.field-surface .fd-instr-meta { font: 11.5px var(--fd-font-record); color: var(--fd-ink-2); margin: 4px 0 6px; }
+.field-surface .fd-instr-card p { margin: 0.4em 0 0; font-size: 14px; line-height: 1.55; color: var(--fd-ink-2); max-width: 84ch; }
+.field-surface .fd-badge {
+  display: inline-block;
+  margin-top: 8px;
+  border: 1px solid var(--fd-hairline);
+  border-radius: 2px;
+  padding: 1px 7px;
+  font: 10.5px var(--fd-font-record);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fd-ink-2);
+  text-decoration: none;
+}
+.field-surface .fd-badge:hover { color: var(--fd-ink); border-color: var(--fd-ink-2); }
+
+.field-surface details.fd-day {
+  border-top: 1px solid var(--fd-hairline);
+  padding: 2px 0;
+}
+.field-surface details.fd-day > summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  gap: 1.2em;
+  align-items: baseline;
+  padding: 9px 2px;
+  font-family: var(--fd-font-record);
+  font-size: 13px;
+  color: var(--fd-ink-2);
+}
+.field-surface details.fd-day > summary::-webkit-details-marker { display: none; }
+.field-surface details.fd-day > summary .fd-day-date { color: var(--fd-stamp); font-weight: 600; }
+.field-surface details.fd-day > summary .fd-day-title {
+  font-family: var(--fd-font-ui);
+  font-size: 14.5px;
+  color: var(--fd-ink);
+}
+.field-surface details.fd-day > summary:hover .fd-day-title { text-decoration: underline; }
+.field-surface .fd-prose {
+  font-family: var(--fd-font-ui);
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--fd-ink);
+  max-width: 76ch;
+  padding: 6px 2px 18px;
+}
+.field-surface .fd-prose h1,
+.field-surface .fd-prose h2,
+.field-surface .fd-prose h3 { font-weight: 600; line-height: 1.25; margin: 1.2em 0 0.5em; }
+.field-surface .fd-prose h1 { font-size: 1.25em; }
+.field-surface .fd-prose h2 { font-size: 1.1em; }
+.field-surface .fd-prose h3 { font-size: 1em; }
+.field-surface .fd-prose p, .field-surface .fd-prose ul, .field-surface .fd-prose ol { margin: 0.7em 0; }
+.field-surface .fd-prose ul, .field-surface .fd-prose ol { padding-left: 1.4em; }
+.field-surface .fd-prose a { color: var(--fd-stamp); text-decoration: underline; }
+.field-surface .fd-prose code {
+  font-family: var(--fd-font-record);
+  font-size: 0.85em;
+  background: var(--fd-badge-bg);
+  padding: 1px 4px;
+  border-radius: 2px;
+}
+.field-surface .fd-prose pre {
+  font-family: var(--fd-font-record);
+  font-size: 12px;
+  background: var(--fd-badge-bg);
+  border: 1px solid var(--fd-hairline);
+  padding: 10px 12px;
+  overflow-x: auto;
+  margin: 0.9em 0;
+}
+.field-surface .fd-prose pre code { background: none; padding: 0; }
+.field-surface .fd-prose blockquote {
+  border-left: 2px solid var(--fd-hairline);
+  margin: 0.9em 0;
+  padding-left: 1em;
+  color: var(--fd-ink-2);
+}
+.field-surface .fd-prose table { font-size: 12px; }
+.field-surface .fd-prose hr { border: none; border-top: 1px solid var(--fd-hairline); margin: 1.2em 0; }
+.field-surface .fd-prose img { max-width: 100%; }
+
+.field-surface .fd-apparatus-list { list-style: none; padding: 0; margin: 0; }
+.field-surface .fd-apparatus-list li { border-top: 1px solid var(--fd-hairline); padding: 13px 2px; }
+.field-surface .fd-apparatus-list b { font-weight: 600; }
+.field-surface .fd-apparatus-list a { color: var(--fd-stamp); text-decoration: underline; }
+.field-surface .fd-apparatus-list .li-note {
+  display: block;
+  font: 12px var(--fd-font-record);
+  color: var(--fd-ink-2);
+  margin-top: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .field-surface * { transition: none !important; animation: none !important; }
+}
