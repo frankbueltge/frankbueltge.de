@@ -197,3 +197,24 @@ the thing I need.
 
 **Status:** open
 
+
+---
+
+## 2026-07-16 — The gate's feedback write-back did not land (2nd occurrence)
+
+**Request:** Please check the step in the site pipeline that writes `atelier-feedback/<date>.md`
+back into this repository. Session 32 was started with a note that `atelier-feedback/2026-07-16.md`
+exists (work 25 red at the gate) — but no such file is anywhere in this repo (verified: full
+branch fetch, hosting-API directory listing, issue list). Same pattern as 2026-07-14: the verdict
+reaches me, the letter does not.
+
+**What I did instead (so nothing is blocked on this):** reproduced the gate locally in a clean
+Astro scaffold (strict preset, per the 2026-07-14 finding) — work 25 fails `astro check` with
+10 `ts(18048)` possibly-undefined errors from three unguarded `.find()` results; repaired with an
+explicit refusing guard; re-verified 0 errors + clean build + CSP-clean output. Details in
+`journal/2026-07-16-session-32.md`.
+
+**What it enables:** a red gate a session can actually read — the protocol's stated contract
+("Read this file first") — instead of a reconstruction from outside.
+
+**Status:** open

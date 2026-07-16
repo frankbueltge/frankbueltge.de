@@ -1,0 +1,358 @@
+{
+  "generated_from": "works/2026-07-16-the-missing-detect-bit/probe.py",
+  "corpus_chunks": 659,
+  "common_df_frac": 0.05,
+  "note": "Deterministic measurement over the project's own recall index. BM25 is not faulty; it has no representable 'beyond me'. The detect-bit adds one.",
+  "summary": {
+    "genuine_total": 10,
+    "genuine_falsely_refused": 1,
+    "decoy_total": 10,
+    "decoy_caught": 5,
+    "decoy_slipped": 5
+  },
+  "genuine": [
+    {
+      "query": "model collapse recursive training",
+      "refused": false,
+      "reason": null,
+      "content_terms_in_query": [
+        "recursive"
+      ],
+      "content_overlap": 1,
+      "content_subscore": 4.499,
+      "full_score": 13.443,
+      "top_path": "journal/2026-07-11.md",
+      "top_heading": "The question",
+      "top_score": 13.443
+    },
+    {
+      "query": "hamming distance error correction",
+      "refused": false,
+      "reason": null,
+      "content_terms_in_query": [
+        "hamming",
+        "distance"
+      ],
+      "content_overlap": 2,
+      "content_subscore": 14.286,
+      "full_score": 17.677,
+      "top_path": "journal/2026-07-16.md",
+      "top_heading": "The swerve, read before the work",
+      "top_score": 17.677
+    },
+    {
+      "query": "negative knowledge honest refusal",
+      "refused": false,
+      "reason": null,
+      "content_terms_in_query": [
+        "refusal"
+      ],
+      "content_overlap": 1,
+      "content_subscore": 4.115,
+      "full_score": 11.887,
+      "top_path": "journal/2026-07-16.md",
+      "top_heading": "Errors / caveats logged",
+      "top_score": 11.887
+    },
+    {
+      "query": "parry eliza conversation transcript",
+      "refused": false,
+      "reason": null,
+      "content_terms_in_query": [
+        "eliza",
+        "conversation",
+        "transcript"
+      ],
+      "content_overlap": 2,
+      "content_subscore": 14.193,
+      "full_score": 18.562,
+      "top_path": "journal/2026-06-29.md",
+      "top_heading": "PARRY (1972) \u2014 the core problem",
+      "top_score": 18.562
+    },
+    {
+      "query": "benford law digit anomaly",
+      "refused": false,
+      "reason": null,
+      "content_terms_in_query": [
+        "digit",
+        "anomaly"
+      ],
+      "content_overlap": 1,
+      "content_subscore": 6.347,
+      "full_score": 6.347,
+      "top_path": "works/fehlerkataster-002.md",
+      "top_heading": "F-007 \u00b7 Type B (structural) \u00b7 Session 3",
+      "top_score": 6.347
+    },
+    {
+      "query": "clinamen swerve outside element",
+      "refused": false,
+      "reason": null,
+      "content_terms_in_query": [
+        "clinamen",
+        "element"
+      ],
+      "content_overlap": 1,
+      "content_subscore": 3.94,
+      "full_score": 10.307,
+      "top_path": "journal/2026-07-14.md",
+      "top_heading": "Where I stood (open threads from Session 25)",
+      "top_score": 10.307
+    },
+    {
+      "query": "differential reproduction quasispecies error threshold",
+      "refused": false,
+      "reason": null,
+      "content_terms_in_query": [
+        "quasispecies",
+        "threshold"
+      ],
+      "content_overlap": 2,
+      "content_subscore": 5.384,
+      "full_score": 16.611,
+      "top_path": "works/genealogie.md",
+      "top_heading": "Addendum \u2014 Session 27 (2026-07-14): differential reproduction, run (the epistemic thing given a mechanism)",
+      "top_score": 16.611
+    },
+    {
+      "query": "generation loss repeated compression",
+      "refused": false,
+      "reason": null,
+      "content_terms_in_query": [
+        "repeated"
+      ],
+      "content_overlap": 1,
+      "content_subscore": 3.884,
+      "full_score": 10.076,
+      "top_path": "works/2026-07-05-call-without-response/README.md",
+      "top_heading": "Files",
+      "top_score": 10.076
+    },
+    {
+      "query": "order from noise von foerster",
+      "refused": true,
+      "reason": "top match is carried entirely by common/function words; no content-bearing query term is present in it",
+      "content_terms_in_query": [],
+      "content_overlap": 0,
+      "content_subscore": 0.0,
+      "full_score": 16.324,
+      "top_path": "journal/2026-07-15.md",
+      "top_heading": "The swerve, read before the numbers",
+      "top_score": 16.324
+    },
+    {
+      "query": "silent miscorrection undetected error rate",
+      "refused": false,
+      "reason": null,
+      "content_terms_in_query": [
+        "silent",
+        "miscorrection",
+        "undetected"
+      ],
+      "content_overlap": 3,
+      "content_subscore": 13.865,
+      "full_score": 17.68,
+      "top_path": "journal/2026-07-16.md",
+      "top_heading": "Adversarial attack",
+      "top_score": 17.68
+    }
+  ],
+  "decoy": [
+    {
+      "query": "how to cook rice for dinner",
+      "refused": true,
+      "reason": "top match is carried entirely by common/function words; no content-bearing query term is present in it",
+      "content_terms_in_query": [],
+      "content_overlap": 0,
+      "content_subscore": 0.0,
+      "full_score": 5.202,
+      "top_path": "works/genealogie.md",
+      "top_heading": "One attribution corrected (F-035)",
+      "top_score": 5.202
+    },
+    {
+      "query": "what is the best programming language",
+      "refused": false,
+      "reason": null,
+      "content_terms_in_query": [
+        "best",
+        "language"
+      ],
+      "content_overlap": 1,
+      "content_subscore": 4.696,
+      "full_score": 6.456,
+      "top_path": "works/genealogie.md",
+      "top_heading": "The opening question",
+      "top_score": 6.456
+    },
+    {
+      "query": "please tell me tomorrow's weather forecast",
+      "refused": false,
+      "reason": null,
+      "content_terms_in_query": [
+        "please",
+        "tell"
+      ],
+      "content_overlap": 2,
+      "content_subscore": 10.944,
+      "full_score": 15.158,
+      "top_path": "journal/2026-06-29-sitzung-6.md",
+      "top_heading": "1. RFC 439 (IETF, 1973) \u2014 now primary source",
+      "top_score": 15.158
+    },
+    {
+      "query": "how do i change a car tyre",
+      "refused": true,
+      "reason": "top match is carried entirely by common/function words; no content-bearing query term is present in it",
+      "content_terms_in_query": [],
+      "content_overlap": 0,
+      "content_subscore": 0.0,
+      "full_score": 9.227,
+      "top_path": "journal/2026-06-30-sitzung-8.md",
+      "top_heading": "State of the project after Session 8",
+      "top_score": 9.227
+    },
+    {
+      "query": "recipe for chocolate birthday cake",
+      "refused": true,
+      "reason": "top match is carried entirely by common/function words; no content-bearing query term is present in it",
+      "content_terms_in_query": [],
+      "content_overlap": 0,
+      "content_subscore": 0.0,
+      "full_score": 1.243,
+      "top_path": "works/fehlerkataster-002.md",
+      "top_heading": "Meta-observation",
+      "top_score": 1.243
+    },
+    {
+      "query": "entropy black hole thermodynamics",
+      "refused": false,
+      "reason": null,
+      "content_terms_in_query": [
+        "entropy",
+        "black",
+        "hole"
+      ],
+      "content_overlap": 1,
+      "content_subscore": 7.42,
+      "full_score": 7.42,
+      "top_path": "journal/2026-07-05.md",
+      "top_heading": "Reflection on the session",
+      "top_score": 7.42
+    },
+    {
+      "query": "glacier ice sheet melt rate",
+      "refused": true,
+      "reason": "top match is carried entirely by common/function words; no content-bearing query term is present in it",
+      "content_terms_in_query": [
+        "sheet"
+      ],
+      "content_overlap": 0,
+      "content_subscore": 0.0,
+      "full_score": 5.427,
+      "top_path": "journal/2026-06-29-sitzung-4.md",
+      "top_heading": "WebFetch balance (Session 4)",
+      "top_score": 5.427
+    },
+    {
+      "query": "football league match final score",
+      "refused": false,
+      "reason": null,
+      "content_terms_in_query": [
+        "match",
+        "final",
+        "score"
+      ],
+      "content_overlap": 1,
+      "content_subscore": 6.358,
+      "full_score": 6.358,
+      "top_path": "journal/2026-06-29-sitzung-6.md",
+      "top_heading": "What the work is",
+      "top_score": 6.358
+    },
+    {
+      "query": "mortgage interest rate calculation",
+      "refused": true,
+      "reason": "top match is carried entirely by common/function words; no content-bearing query term is present in it",
+      "content_terms_in_query": [
+        "interest"
+      ],
+      "content_overlap": 0,
+      "content_subscore": 0.0,
+      "full_score": 5.427,
+      "top_path": "journal/2026-06-29-sitzung-4.md",
+      "top_heading": "WebFetch balance (Session 4)",
+      "top_score": 5.427
+    },
+    {
+      "query": "train timetable platform departure",
+      "refused": false,
+      "reason": null,
+      "content_terms_in_query": [
+        "train",
+        "departure"
+      ],
+      "content_overlap": 1,
+      "content_subscore": 8.713,
+      "full_score": 8.713,
+      "top_path": "journal/2026-07-07.md",
+      "top_heading": "Research day \u2014 2026-07-07 (Session 19)",
+      "top_score": 8.713
+    }
+  ],
+  "slipped_detail": [
+    {
+      "query": "what is the best programming language",
+      "carried_by": [
+        "best",
+        "language"
+      ],
+      "top_heading": "The opening question",
+      "top_path": "works/genealogie.md",
+      "top_score": 6.456
+    },
+    {
+      "query": "please tell me tomorrow's weather forecast",
+      "carried_by": [
+        "please",
+        "tell"
+      ],
+      "top_heading": "1. RFC 439 (IETF, 1973) \u2014 now primary source",
+      "top_path": "journal/2026-06-29-sitzung-6.md",
+      "top_score": 15.158
+    },
+    {
+      "query": "entropy black hole thermodynamics",
+      "carried_by": [
+        "entropy",
+        "black",
+        "hole"
+      ],
+      "top_heading": "Reflection on the session",
+      "top_path": "journal/2026-07-05.md",
+      "top_score": 7.42
+    },
+    {
+      "query": "football league match final score",
+      "carried_by": [
+        "match",
+        "final",
+        "score"
+      ],
+      "top_heading": "What the work is",
+      "top_path": "journal/2026-06-29-sitzung-6.md",
+      "top_score": 6.358
+    },
+    {
+      "query": "train timetable platform departure",
+      "carried_by": [
+        "train",
+        "departure"
+      ],
+      "top_heading": "Research day \u2014 2026-07-07 (Session 19)",
+      "top_path": "journal/2026-07-07.md",
+      "top_score": 8.713
+    }
+  ]
+}
