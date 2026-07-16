@@ -299,8 +299,10 @@ function bY(i: number): number {
         {SAT_HEAVY}<span style="font-size:22px; color:#9c8b78; font-weight:500;">/{SAT_TOTAL}</span>
       </div>
       <div style="font-size:11px; color:#7c6e5c; margin-top:5px; line-height:1.5;">
-        major LLM benchmarks saturated.<br/>
-        Benchmarks over 5 years: 54.5% saturated.
+        major LLM benchmarks show high or very high saturation (48% of 60).<br/>
+        By age bin: 42.9% under 24 months, 54.5% over 60 months — a contrast the
+        source itself calls "modest and not statistically significant at
+        conventional thresholds".
       </div>
       <div style="font-size:9.5px; color:#a8987e; margin-top:8px;">
         Akhtar et al., ICML 2026
@@ -356,6 +358,15 @@ function bY(i: number): number {
       ICML 2026; the leaderboard finding attributed to a single provider with the 112% figure
       separated as a distinct result; an unused reference removed. All displayed figures
       re-verified first-hand against the primary sources.
+    </div>
+    <div style="margin-top:8px; color:#b3a48e;">
+      Revised 2026-07-16 (chrome rework): the saturation panel's two adjacent rates previously sat
+      unreconciled — they have different bases in [3]: 29/60 (≈48%) is the full benchmark set at
+      saturation index ≥ 0.7, while 54.5% is the age bin of benchmarks older than 60 months, whose
+      counterpart bin (under 24 months) sits at 42.9%. The panel now states both bins and carries
+      the source's own caveat that this age contrast is "modest and not statistically significant
+      at conventional thresholds" — the paper's comparison is between its age bins, not against the
+      48% whole-set rate. Figures unchanged.
     </div>
   </footer>
 

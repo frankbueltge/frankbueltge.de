@@ -35,6 +35,10 @@
 // text was a paraphrase presented as a quote); the PLAY-study n corrected from ≈3,000
 // (screening pool) to 1,060 (analytic baseline interviews); the DSM-5 note marked
 // abridged; the ADD/ADHD naming made precise; referendum tally enriched and sourced.
+//
+// Corrected 2026-07-16 (session 40 chrome rework): the ADHD prevalence caption mislabelled
+// the percentage-point delta as a "relative increase" — it is the absolute increase; the
+// relative figure is the computed percentage beside it. Wording fixed; no number changed.
 
 // ── DSM-IV → DSM-5 diff: Major Depressive Disorder ──────────────────────────
 
@@ -347,7 +351,7 @@ const instruments = [
               <div style="background:#dc2626;height:24px;width:{adhdChange.prevalence_dsm5 * 5}px;border-radius:2px"></div>
               <span style="font-size:12px;font-weight:700;color:#dc2626">{adhdChange.prevalence_dsm5}%</span>
             </div>
-            <div style="font-size:9px;color:#888;margin-top:0.2rem">DSM-5 prevalence (+{adhdChange.prevalence_dsm5 - adhdChange.prevalence_dsm4}pp relative increase: {Math.round((adhdChange.prevalence_dsm5 - adhdChange.prevalence_dsm4) / adhdChange.prevalence_dsm4 * 100)}%)</div>
+            <div style="font-size:9px;color:#888;margin-top:0.2rem">DSM-5 prevalence (+{adhdChange.prevalence_dsm5 - adhdChange.prevalence_dsm4}pp absolute; a {Math.round((adhdChange.prevalence_dsm5 - adhdChange.prevalence_dsm4) / adhdChange.prevalence_dsm4 * 100)}% relative increase)</div>
           </div>
         </div>
         <div style="font-size:10px;color:#555;line-height:1.6">{adhdChange.note}</div>
@@ -448,7 +452,7 @@ const instruments = [
       DSM in litigation and legislation: jaapl.org/content/39/1/6 ·
       Hacking I. (2006). "Making Up People." London Review of Books 28(16): lrb.co.uk/the-paper/v28/n16/ian-hacking/making-up-people ·
       Frances A. (2013). Saving Normal. HarperCollins · Mother Jones interview: motherjones.com/politics/2013/05/psychiatry-allen-frances-saving-normal-dsm-5-controversy ·
-      Corrections of 2026-07-02 (session 04 verify pass) documented in the source header and journal/2026-07-02.md
+      Corrections of 2026-07-02 (session 04 verify pass) and of 2026-07-16 (session 40 chrome rework: the ADHD caption's pp-vs-relative mislabel) documented in the source header and the journal
     </div>
 
   </div>
