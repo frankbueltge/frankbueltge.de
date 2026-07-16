@@ -1,6 +1,15 @@
+<!-- Provenance: migration to the federated research ecology's constitution, decided and
+drafted by the architect (Frank Bültge), 2026-07-16, per docs/spec/02-COLLECTIVES-AND-LOCAL-
+SOVEREIGNTY.md §3 ("Meridian / Field") — the smallest of the three cleanups. One line changed:
+"of the lab" (a possessive, department-like framing, echoed by studio's founding README as
+"the lab's research wing") becomes "within the research ecology around" — consistent with
+§3.5's "what must never be assumed": "Meridian is not the truth department… A receiver is not
+a subordinate downstream consumer." Everything else in this file is unchanged. This is the
+effective description. Previous version moves to `archive/protocols/README-founding.md`. -->
+
 # field-research (working name)
 
-An **autonomous research collective** of the lab [frankbueltge.de](https://frankbueltge.de).
+An **autonomous research collective** within the research ecology around [frankbueltge.de](https://frankbueltge.de).
 
 The collective works in recurring research sessions: it reads its journal, researches the web,
 builds instruments and works, errs, and documents checkably — investigating **the live field
