@@ -1,0 +1,115 @@
+---
+// /atelier/works — the works room. The slabs on the sheet are doors into this room; the
+// existing detail routes /atelier/werke/* stay untouched (Integrate machinery writes
+// there — renaming them is a LATER package). Interactive HTML works run live in the same
+// isolated sandbox the old page used; the texts & catalogue (error register, genealogy,
+// positions) render verbatim below.
+import { getCollection, render } from 'astro:content'
+import Page from '@/layouts/Page.astro'
+import Frame from '@/components/atelier/surface/Frame.astro'
+import { sortWorks } from '@/lib/atelier/sort'
+import { ATELIER_NARRATIVE } from '@/config/atelier-wording'
+
+const all = await getCollection('atelier')
+const repo = 'https://github.com/frankbueltge/irrtum-als-methode'
+
+// Works — one chronological gallery from two sources, newest-first (unchanged data access):
+//  · kind 'html'  — interactive; HTML standalone under /atelier/werke-html/<slug>/
+//  · kind 'astro' — native Astro works at /atelier/werke/<slug> (routes stay)
+const htmlMeta = import.meta.glob('/src/content/atelier/works/*/meta.json', {
+  eager: true, import: 'default',
+}) as Record<string, any>
+const nativeMeta = import.meta.glob('/src/components/atelier/werke/*/meta.json', {
+  eager: true, import: 'default',
+}) as Record<string, any>
+
+const works = sortWorks([
+  ...Object.entries(htmlMeta).map(([path, meta]) => ({
+    slug: path.replace('/src/content/atelier/works/', '').replace('/meta.json', ''),
+    kind: 'html' as const, date: meta.date as string | undefined, meta,
+  })),
+  ...Object.entries(nativeMeta).map(([path, meta]) => ({
+    slug: path.replace('/src/components/atelier/werke/', '').replace('/meta.json', ''),
+    kind: 'astro' as const, date: meta.date as string | undefined, meta,
+  })),
+])
+
+// Texts & catalogue (works/*.md) — newest first, rendered verbatim.
+const mdWorks = all.filter((e) => e.id.startsWith('works/')).sort((a, b) => b.id.localeCompare(a.id))
+const mdWorksR = await Promise.all(
+  mdWorks.map(async (e) => ({ id: e.id, Content: (await render(e)).Content })),
+)
+
+const kicker = ['Atelier · works', 'irrtum-als-methode', `${works.length} works · ${mdWorksR.length} texts`]
+const statusHtml = `<b>${works.length} works</b> · newest first · detail routes stay under /atelier/werke/*`
+---
+
+<Page
+  title="Atelier — works | Frank Bültge"
+  description="The Atelier's works, newest first — interactive pieces running sandboxed, native works on their own pages, and the texts & catalogue verbatim."
+>
+  <Frame active="works" kicker={kicker} h1="The slabs, standing." statusHtml={statusHtml} back>
+    <p class="at-room-intro">{ATELIER_NARRATIVE.rooms.works}</p>
+
+    <section>
+      {works.map(({ slug, kind, meta }) =>
+        kind === 'astro' ? (
+          <article class="at-work-card" id={slug}>
+            <h3>
+              <a href={`/atelier/werke/${slug}`}>{meta.title ?? slug}</a>
+              {meta.date && <span class="at-work-date">{meta.date}</span>}
+            </h3>
+            {(meta.embodies ?? meta.verkoerpert) && <p>{meta.embodies ?? meta.verkoerpert}</p>}
+            <div class="at-work-links">
+              <a href={`/atelier/werke/${slug}`}>Open work →</a>
+            </div>
+          </article>
+        ) : (
+          <article class="at-work-card" id={slug}>
+            <h3>
+              {meta.title ?? slug}
+              {meta.date && <span class="at-work-date">{meta.date}</span>}
+            </h3>
+            {(meta.embodies ?? meta.verkoerpert) && <p>{meta.embodies ?? meta.verkoerpert}</p>}
+            {meta.medium && <p class="at-shelf-meta">{meta.medium}{meta.seed != null && ` · Seed ${meta.seed}`}</p>}
+            {/*
+              SECURITY: standalone same-origin file under /atelier/werke-html/<slug>/ —
+              a separate document does NOT inherit the parent <meta> CSP. sandbox="allow-scripts"
+              WITHOUT allow-same-origin → null origin, no access to cookies/storage/DOM of
+              frankbueltge.de. Path-specific CSP in _headers allows the work's inline scripts,
+              blocks fetch/connect (no exfiltration channel).
+              NEVER add allow-same-origin — that would lift the isolation.
+            */}
+            <iframe
+              src={`/atelier/werke-html/${slug}/`}
+              sandbox="allow-scripts"
+              loading="lazy"
+              title={meta.title ?? slug}
+            ></iframe>
+            <div class="at-work-links">
+              <span>Runs sandboxed in your browser.</span>
+              <a href={`${repo}/tree/main/works/${slug}`} target="_blank" rel="noreferrer">Source code ↗</a>
+            </div>
+            {Array.isArray(meta.quellen) && meta.quellen.length > 0 && (
+              <details class="mt-2">
+                <summary class="cursor-pointer select-none at-shelf-meta">Sources</summary>
+                <ul class="at-shelf-meta mt-1 list-disc pl-5">
+                  {meta.quellen.map((q: string) => <li>{q}</li>)}
+                </ul>
+              </details>
+            )}
+          </article>
+        ),
+      )}
+    </section>
+
+    <section class="at-record mt-10">
+      <h2>Texts &amp; catalogue — verbatim, unedited</h2>
+      {mdWorksR.map(({ id, Content }) => (
+        <article class="at-work-card at-prose" id={id.replace('works/', '').replace(/\.md$/, '')}>
+          <Content />
+        </article>
+      ))}
+    </section>
+  </Frame>
+</Page>

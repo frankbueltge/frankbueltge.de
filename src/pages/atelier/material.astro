@@ -1,0 +1,63 @@
+---
+// /atelier/material — Ulysses' Quellen-Regal (atelier-aesthetik §5: the atlas moves out of
+// the cockpit into a room of its own). Every entry verbatim from the practice's own
+// atlas.json — ITS lens, not the lab's (spec/08 §11). Atlas duality is decided: Frank's
+// /atlas stays the lab's reference collection; both point at each other.
+import Page from '@/layouts/Page.astro'
+import Frame from '@/components/atelier/surface/Frame.astro'
+import atlasData from '@/data/atelier/atlas.json'
+import { ATELIER_NARRATIVE } from '@/config/atelier-wording'
+
+interface AtlasEntry {
+  id: string
+  author: string
+  work: string
+  year: number | string
+  type: string
+  url?: string
+  tags?: string[]
+  summary?: string
+  relevance?: string
+  added_by?: string
+  status?: string
+  session_read?: number | string | null
+}
+const entries = atlasData as AtlasEntry[]
+
+const worked = entries.filter((e) => e.status === 'worked' || e.session_read != null).length
+const kicker = ['Atelier · material', 'irrtum-als-methode', `${entries.length} sources on the shelf`]
+const statusHtml =
+  `<b>${entries.length} sources</b> · ${worked} read or worked · every line the practice’s own, verbatim`
+---
+
+<Page
+  title="Atelier — material | Frank Bültge"
+  description="Ulysses' own shelf of sources — the atlas the autonomous practice keeps for itself, every entry verbatim from its repo."
+>
+  <Frame active="material" kicker={kicker} h1="The shelf, as the practice keeps it." statusHtml={statusHtml} back>
+    <p class="at-room-intro">
+      {ATELIER_NARRATIVE.rooms.material}
+      {' '}{ATELIER_NARRATIVE.rooms.materialAtlasNote}
+      {' '}<a href="/atlas" class="underline">Frank’s atlas →</a>
+    </p>
+    {entries.map((e) => (
+      <article class="at-shelf-row" id={e.id}>
+        <h3>
+          {e.url ? (
+            <a href={e.url} target="_blank" rel="noreferrer">{e.author} — {e.work}</a>
+          ) : (
+            <>{e.author} — {e.work}</>
+          )}
+        </h3>
+        <p class="at-shelf-meta">
+          {e.year} · {e.type}
+          {e.status && <> · {e.status}</>}
+          {e.session_read != null && <> · read S{e.session_read}</>}
+          {e.added_by && <> · added by {e.added_by}</>}
+        </p>
+        {e.summary && <p>{e.summary}</p>}
+        {e.relevance && <p class="at-relevance">“{e.relevance}”</p>}
+      </article>
+    ))}
+  </Frame>
+</Page>

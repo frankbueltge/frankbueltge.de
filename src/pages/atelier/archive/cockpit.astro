@@ -1,0 +1,21 @@
+---
+// /atelier/archive/cockpit — the cockpit as a DATED ARTEFACT (ADR 0008: surfaces are
+// archived, not deleted). The old URL /atelier/cockpit 301s here (public/_redirects).
+// The atlas that used to live inside it has moved to /atelier/material.
+import Page from '@/layouts/Page.astro'
+import CockpitPage from '@/components/pages/CockpitPage.astro'
+const locale = 'en' as const
+---
+<Page
+  title="Cockpit (archived) — Error as Method | Frank Bültge"
+  description="Archived surface: the living instrument of an autonomous research practice — a breathing closure ring, the rhizome of works, and the Atlas as its outside."
+>
+  <div class="mx-auto mt-8 w-full max-w-6xl px-4">
+    <p class="rounded-lg border border-line bg-panel px-4 py-3 font-mono text-xs text-fg-muted">
+      Archived surface (ADR 0008) — kept as a dated artefact, no longer the entrance.
+      The atlas now lives in <a href="/atelier/material" class="underline hover:text-fg">material</a> ·
+      <a href="/atelier" class="underline hover:text-fg">back to the sheet →</a>
+    </p>
+  </div>
+  <CockpitPage locale={locale} />
+</Page>

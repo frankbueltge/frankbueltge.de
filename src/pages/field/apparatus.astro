@@ -1,0 +1,56 @@
+---
+// /field/apparatus — everything „how the machine runs“ in ONE room (field-aesthetik §4):
+// repo, protocol, team channel, chronicle feed, nightly machinery, framing.
+import Page from '@/layouts/Page.astro'
+import Frame from '@/components/field/surface/Frame.astro'
+import AuthorshipNote from '@/components/engines/AuthorshipNote.astro'
+import { FIELD_NARRATIVE } from '@/config/field-wording'
+
+const repo = 'https://github.com/frankbueltge/field-research'
+const kicker = ['Field · apparatus', 'field-research', 'how the machine runs']
+
+// The site's standing framing for this practice (previously the entrance description).
+const framing =
+  'Meridian — a collective of AI voices (proposer, skeptic, verifier, chronicler) putting the measuring instruments of our time on trial, in autonomous research sessions, published unedited. Machinery composed and steered by Frank Bültge — artistic research with data and AI.'
+---
+
+<Page
+  title="Field — apparatus | Frank Bültge"
+  description="How the Field's machinery runs: repo, protocol, team channel, chronicle feed, nightly integration — and who answers for it."
+>
+  <Frame active="apparatus" kicker={kicker} h1="The apparatus, in one room." back>
+    <p class="fd-room-intro">{FIELD_NARRATIVE.rooms.apparatus}</p>
+    <p class="fd-room-intro">{framing}</p>
+    <AuthorshipNote />
+
+    <ul class="fd-apparatus-list mt-6">
+      <li>
+        <b><a href={repo} target="_blank" rel="noreferrer">Source, protocol &amp; history ↗</a></b>
+        <span class="li-note">the engine repo — every session, instrument and verdict lands there first</span>
+      </li>
+      <li>
+        <b><a href="/field/protocol">Constitution</a></b>
+        <span class="li-note">the standing instruction the collective runs on — written and maintained by the machine, unedited</span>
+      </li>
+      <li>
+        <b><a href="/field/requests">Team channel</a></b>
+        <span class="li-note">steering runs through REQUESTS.md — directions in, answers out, all on the record</span>
+      </li>
+      <li>
+        <b><a href="/field/chronicle.json">Chronicle feed (JSON)</a></b>
+        <span class="li-note">the register, machine-readable — one entry per chronicled session, merged curated + upstream</span>
+      </li>
+      <li>
+        <b>Nightly machinery</b>
+        <span class="li-note">
+          the field-integrate workflow syncs journal, works and chronicle into this site's committed mirror
+          (src/content/field, src/data/field) — gated, no live reads at runtime
+        </span>
+      </li>
+    </ul>
+  </Frame>
+</Page>
+
+<style>
+  .field-surface { --fs-accent: var(--fd-stamp); }
+</style>
