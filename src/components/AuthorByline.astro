@@ -1,15 +1,64 @@
 ---
-import { getRelativeLocaleUrl } from 'astro:i18n'
-import { SITE, type Locale } from '@/lib/site'
+// Die Quellen-Byline unter jeder Seite. Bis 16.07. zeigte sie pauschal auf lab-pipelines —
+// richtig nur für die Instrumente der Holdings-Ära (Frank: „entweder verlinken wir die
+// entsprechenden repos korrekt oder hauen das komplett raus"). Jetzt pfadbasiert: jede
+// Fläche verlinkt IHR öffentliches Repo; wo keines passt (About, Atlas, Projects, Recht),
+// entfällt die Zeile — kein falscher Beleg ist besser als ein bequemer.
+import { SITE } from '@/lib/site'
 
-const locale = (Astro.currentLocale ?? 'en') as Locale
-const de = locale === 'de'
-const aboutUrl = getRelativeLocaleUrl(locale, '/about')
+const REPOS = {
+  atelier: 'https://github.com/frankbueltge/irrtum-als-methode',
+  field: 'https://github.com/frankbueltge/field-research',
+  studio: 'https://github.com/frankbueltge/studio',
+  ecology: 'https://github.com/frankbueltge/research-ecology',
+  instruments: SITE.sourceCode, // lab-pipelines — die Messinstrumente der Holdings-Ära
+} as const
+
+/** Pfad-Präfix → Quell-Repo (Präfixe überschneiden sich nicht). */
+const BY_PREFIX: ReadonlyArray<readonly [string, string]> = [
+  ['/atelier', REPOS.atelier],
+  ['/field', REPOS.field],
+  ['/studio', REPOS.studio],
+  ['/encounters', REPOS.ecology],
+  ['/apparatus', REPOS.ecology],
+  // Holdings-Ära: die Instrumente, deren öffentlicher Quellcode in lab-pipelines liegt
+  ['/protokoll', REPOS.instruments],
+  ['/parallaxe', REPOS.instruments],
+  ['/praemie', REPOS.instruments],
+  ['/consensus', REPOS.instruments],
+  ['/ghost-fleet', REPOS.instruments],
+  ['/redaction', REPOS.instruments],
+  ['/round-number', REPOS.instruments],
+  ['/spielraum', REPOS.instruments],
+  ['/beifang', REPOS.instruments],
+  ['/tell', REPOS.instruments],
+  ['/pattern', REPOS.instruments],
+  ['/correction', REPOS.instruments],
+  ['/plenum', REPOS.instruments],
+  ['/werke', REPOS.instruments],
+  ['/holdings', REPOS.instruments],
+  ['/lab', REPOS.instruments],
+]
+
+const path = Astro.url.pathname
+const sourceUrl =
+  path === '/' ? REPOS.ecology : (BY_PREFIX.find(([p]) => path === p || path.startsWith(p + '/'))?.[1] ?? null)
 ---
-<aside class="mx-auto max-w-3xl px-4 pb-6 text-xs text-fg-faint">
-  <p>
-    {de ? 'Ein Messinstrument von ' : 'An instrument by '}
-    <a href={aboutUrl} rel="author" class="underline transition-colors hover:text-fg">{SITE.name}</a> — {de ? 'Methode und Quellen offengelegt, ' : 'method and sources disclosed, '}
-    <a href={SITE.sourceCode} target="_blank" rel="noreferrer" class="underline transition-colors hover:text-fg">{de ? 'Quellcode offen' : 'source code open'}</a>.
-  </p>
-</aside>
+
+{
+  sourceUrl && (
+    <aside class="mx-auto max-w-3xl px-4 pb-6 text-xs text-fg-faint">
+      <p>
+        An instrument by{' '}
+        <a href="/about" rel="author" class="underline transition-colors hover:text-fg">
+          {SITE.name}
+        </a>{' '}
+        — method and sources disclosed,{' '}
+        <a href={sourceUrl} target="_blank" rel="noreferrer" class="underline transition-colors hover:text-fg">
+          source code open
+        </a>
+        .
+      </p>
+    </aside>
+  )
+}
