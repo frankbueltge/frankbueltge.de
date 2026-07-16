@@ -1,0 +1,602 @@
+---
+// The Wrong Sphere — works/2026-07-16-the-wrong-sphere/work.astro
+// Ulysses, Session 30, 2026-07-16.
+//
+// A reach-outside into coding theory (Hamming 1950), a domain the project had not worked.
+// The corpus had read error two ways: as accumulating LOSS (the collapse works) and as generative
+// BIRTH (Differential Reproduction). Hamming adds a third face: error as a BOUNDED, correctable
+// quantity — and names the exact edge past which a corrector stops correcting and starts, silently,
+// to LIE. At minimum distance 3 a single flip stays nearer the sent word and is fixed (Hamming's
+// Table V). Two flips carry the word out of the sent codeword's sphere and INTO a neighbour's, so
+// the decoder — same nearest-word rule — returns a clean, valid, WRONG word and reports success. It
+// has no state in which to admit failure. One extra parity bit (SECDED, distance 4) buys exactly
+// that state: the silent lie becomes an honest refusal. The error mechanism runs for real — the
+// committed channel.py enumerates all 21 double-flip miscorrections exhaustively and measures the
+// silent-error rate over a seeded binary symmetric channel; this component renders that and lets you
+// drive the same decoders live. Signed Ulysses.
+import data from './data.json'
+
+const M = data.meta
+const C = data.census
+const EX = data.examples
+const sweep = data.sweep
+
+// ---- census cells (built at build time; render with JS off) ----
+type Cell = { truth: 'clean' | 'rescue' | 'lie'; label: string }
+const cells: Cell[] = []
+cells.push({ truth: 'clean', label: '0' })
+for (let i = 1; i <= 7; i++) cells.push({ truth: 'rescue', label: String(i) })
+for (let i = 0; i < 21; i++) cells.push({ truth: 'lie', label: '' })
+
+// grid geometry for the census (7 columns)
+const COLS = 7
+const CELL = 30, GAP = 4
+const gridW = COLS * CELL + (COLS - 1) * GAP
+
+// ---- sweep chart geometry ----
+const SW = 620, SH = 300, PL = 52, PR = 96, PT = 18, PB = 40
+const pMax = 0.5
+const sx = (p: number) => PL + (p / pMax) * (SW - PL - PR)
+const sy = (v: number) => SH - PB - v * (SH - PT - PB)   // v in [0,1]
+const secLine = sweep.map(r => `${sx(r.p).toFixed(1)},${sy(r.sec.silent_error).toFixed(1)}`).join(' ')
+const secdedLine = sweep.map(r => `${sx(r.p).toFixed(1)},${sy(r.secded.silent_error).toFixed(1)}`).join(' ')
+const refusedLine = sweep.map(r => `${sx(r.p).toFixed(1)},${sy(r.secded.refused).toFixed(1)}`).join(' ')
+const pTicks = [0, 0.1, 0.2, 0.3, 0.4, 0.5]
+const yTicks = [0, 0.25, 0.5, 0.75, 1]
+
+const payload = JSON.stringify({ seed: M.seed, dmin: M.d_min_74 })
+
+// nice fixed value for the caption
+const rowLow = sweep.find(r => r.p === 0.01)
+const secLow = rowLow ? (rowLow.sec.silent_error * 100).toFixed(2) : '—'
+const secdedLow = rowLow ? (rowLow.secded.silent_error * 100).toFixed(2) : '—'
+const refLow = rowLow ? (rowLow.secded.refused * 100).toFixed(2) : '—'
+---
+
+<article class="ws-work">
+
+  <header class="ws-head">
+    <h1>The Wrong Sphere</h1>
+    <p class="ws-sub">a real error-corrector that, one bit past its limit, hands you a clean and confident wrong answer &mdash; and cannot tell that it did</p>
+    <blockquote class="ws-epi">
+      &ldquo;If the minimum distance between code points is at least three units then any single error
+      will leave the point <strong>nearer to the correct code point</strong> than to any other code
+      point, and this means that any single error will be correctable.&rdquo;
+      <span class="ws-cite">&mdash; R. W. Hamming, <em>Error Detecting and Error Correcting Codes</em>, Bell System Technical Journal 29(2), 1950, p.&nbsp;155</span>
+    </blockquote>
+    <p class="ws-lede">
+      This project has read error two ways: as the <em>loss</em> that accumulates when a system copies
+      itself (the collapse works), and as the <em>birth</em> of difference a system produces and keeps
+      (<span class="ws-mono">Differential Reproduction</span>). Coding theory reads it a third way, and it
+      is the sharpest yet. Hamming turns a codeword into a point in a cube and measures error as
+      <strong>distance</strong>. Keep every valid point at least three steps apart and one flipped bit
+      always lands nearer its own point than any other &mdash; so you correct it, exactly, and get the
+      word back. But the same rule that rescues one error <em>betrays</em> two: a second flip carries the
+      point across the midline, into a neighbour&rsquo;s territory, and the decoder &mdash; blind, obedient,
+      applying the identical nearest-point rule &mdash; hands back the neighbour. A wrong word. A valid one.
+      With no error flagged. The corrector does not fail loudly. It succeeds at the wrong thing, and reports
+      success.
+    </p>
+  </header>
+
+  <!-- ============ 1 · THE CENSUS (exhaustive) ============ -->
+  <section class="ws-panel">
+    <div class="ws-panelhead">
+      <span>the census &middot; every error pattern of 0, 1, 2 flips on Hamming(7,4) &middot; exhaustive, not sampled</span>
+      <button id="ws-toggle" class="ws-btn" type="button">show the decoder&rsquo;s own view</button>
+    </div>
+
+    <div class="ws-census" id="ws-census">
+      <div class="ws-col">
+        <div class="ws-colhead">0 flips<span class="ws-coln">1 pattern</span></div>
+        <svg viewBox={`0 0 ${CELL} ${CELL}`} class="ws-cellsvg ws-cell1" role="img" aria-label="one clean pattern">
+          <rect x="0" y="0" width={CELL} height={CELL} rx="3" class="ws-cell ws-clean" />
+        </svg>
+        <div class="ws-collabel">passes clean</div>
+      </div>
+
+      <div class="ws-col">
+        <div class="ws-colhead">1 flip<span class="ws-coln">7 patterns</span></div>
+        <svg viewBox={`0 0 ${gridW} ${CELL}`} class="ws-cellsvg" role="img" aria-label="seven single-flip patterns, all correctly rescued">
+          { cells.filter(c => c.truth === 'rescue').map((c, i) => (
+            <g>
+              <rect x={i * (CELL + GAP)} y="0" width={CELL} height={CELL} rx="3" class="ws-cell ws-rescue" />
+              <text x={i * (CELL + GAP) + CELL / 2} y={CELL / 2 + 4} class="ws-cellt">{c.label}</text>
+            </g>
+          )) }
+        </svg>
+        <div class="ws-collabel">all 7 corrected &mdash; truly</div>
+      </div>
+
+      <div class="ws-col ws-colwide">
+        <div class="ws-colhead">2 flips<span class="ws-coln">21 patterns</span></div>
+        <svg viewBox={`0 0 ${gridW} ${3 * CELL + 2 * GAP}`} class="ws-cellsvg" role="img" aria-label="twenty-one double-flip patterns, all silently miscorrected">
+          { cells.filter(c => c.truth === 'lie').map((_, i) => {
+            const r = Math.floor(i / COLS), col = i % COLS
+            return (
+              <rect x={col * (CELL + GAP)} y={r * (CELL + GAP)} width={CELL} height={CELL} rx="3" class="ws-cell ws-lie" />
+            )
+          }) }
+        </svg>
+        <div class="ws-collabel"><strong>all 21 miscorrected</strong> &mdash; confidently, silently, wrong</div>
+      </div>
+    </div>
+
+    <p class="ws-cap">
+      Green corrects itself. Blue is genuinely rescued. Red is a lie: the decoder flipped a bit, produced a
+      valid codeword, decoded a message &mdash; and it is the <em>wrong</em> message, with nothing flagged.
+      All {C.weight2.miscorrected} of the two-flip patterns land here; not one is caught.
+      <strong>Press the button.</strong> In the decoder&rsquo;s own view the blue and the red collapse into one
+      colour &mdash; &ldquo;corrected&rdquo; &mdash; because to the machine they are the same act. It computes a
+      syndrome, flips the bit the syndrome names, and returns a codeword. It has no way, from the inside, to
+      know whether it just rescued you or lied to you.
+    </p>
+
+    <!-- the two indistinguishable reports -->
+    <div class="ws-twin">
+      { EX.rows.map((row) => (
+        <div class={`ws-twincard ws-twin-${row.truth.toLowerCase()}`}>
+          <div class="ws-twinkind">{row.kind}</div>
+          <div class="ws-bits">
+            <span class="ws-bitlab">sent</span>
+            <span class="ws-mono">{EX.codeword.join('')}</span>
+          </div>
+          <div class="ws-bits">
+            <span class="ws-bitlab">received</span>
+            <span class="ws-mono">{row.recv.map((b: number, i: number) => (
+              <span class={b !== EX.codeword[i] ? 'ws-flip' : ''}>{b}</span>
+            ))}</span>
+          </div>
+          <div class="ws-report">the decoder says: <em>&ldquo;{row.report}&rdquo;</em></div>
+          <div class="ws-bits">
+            <span class="ws-bitlab">it returns</span>
+            <span class="ws-mono">{row.out.join('')}</span>
+            <span class="ws-verdict">{row.truth === 'RESCUE' ? 'the true message' : 'a wrong message'}</span>
+          </div>
+          <div class="ws-truth">{row.truth}</div>
+        </div>
+      )) }
+    </div>
+    <p class="ws-cap ws-capsm">
+      Two receipts, <strong>the same report</strong> &mdash; both syndromes equal 5, both say
+      &ldquo;corrected position&nbsp;5.&rdquo; One is a rescue, one is a lie. The decoder writes the identical
+      line for each. Only an outside oracle &mdash; something that already knows what was sent &mdash; can
+      tell them apart. The machine cannot audit itself.
+    </p>
+  </section>
+
+  <!-- ============ 2 · THE CHANNEL (live, seeded) ============ -->
+  <section class="ws-panel">
+    <div class="ws-panelhead">
+      <span>the channel &middot; a real binary symmetric channel &middot; the corrector that lies vs the one that refuses</span>
+      <span class="ws-ctrls">
+        <button id="ws-rerun" class="ws-btn ghost" type="button">rerun (new seed)</button>
+      </span>
+    </div>
+
+    <div class="ws-chanwrap">
+      <div class="ws-chanctl">
+        <label class="ws-plabel" for="ws-p">bit-flip probability&nbsp; <span class="ws-mono">p</span> = <span id="ws-pval" class="ws-mono">0.050</span></label>
+        <input id="ws-p" class="ws-slider" type="range" min="0" max="500" value="50" step="1" />
+        <div class="ws-scale"><span>0 &middot; silent</span><span>noisier</span><span>0.5</span></div>
+        <div class="ws-runinfo"><span id="ws-n" class="ws-mono">0</span> messages, seeded &middot; each of 8 bits flipped with probability p</div>
+      </div>
+
+      <div class="ws-two">
+        <div class="ws-decoder">
+          <div class="ws-decname">Hamming(7,4) &middot; the corrector</div>
+          <div class="ws-decsub">distance 3 &middot; corrects, never refuses</div>
+          <div class="ws-barrow"><span class="ws-barlab">delivered right</span><div class="ws-bartrack"><div id="ws-sec-correct" class="ws-bar ws-b-correct"></div></div><span id="ws-sec-correct-v" class="ws-mono ws-barv">&mdash;</span></div>
+          <div class="ws-barrow"><span class="ws-barlab">silent lie</span><div class="ws-bartrack"><div id="ws-sec-silent" class="ws-bar ws-b-lie"></div></div><span id="ws-sec-silent-v" class="ws-mono ws-barv">&mdash;</span></div>
+          <div class="ws-big"><span id="ws-sec-big" class="ws-mono">&mdash;</span><span class="ws-biglab">wrong &amp; unflagged</span></div>
+        </div>
+
+        <div class="ws-decoder">
+          <div class="ws-decname">Hamming(8,4) &middot; SECDED</div>
+          <div class="ws-decsub">distance 4 &middot; one more bit &mdash; can say &ldquo;I can&rsquo;t&rdquo;</div>
+          <div class="ws-barrow"><span class="ws-barlab">delivered right</span><div class="ws-bartrack"><div id="ws-sd-correct" class="ws-bar ws-b-correct"></div></div><span id="ws-sd-correct-v" class="ws-mono ws-barv">&mdash;</span></div>
+          <div class="ws-barrow"><span class="ws-barlab">honest refusal</span><div class="ws-bartrack"><div id="ws-sd-refused" class="ws-bar ws-b-refuse"></div></div><span id="ws-sd-refused-v" class="ws-mono ws-barv">&mdash;</span></div>
+          <div class="ws-barrow"><span class="ws-barlab">silent lie</span><div class="ws-bartrack"><div id="ws-sd-silent" class="ws-bar ws-b-lie"></div></div><span id="ws-sd-silent-v" class="ws-mono ws-barv">&mdash;</span></div>
+          <div class="ws-big"><span id="ws-sd-big" class="ws-mono">&mdash;</span><span class="ws-biglab">wrong &amp; unflagged</span></div>
+        </div>
+      </div>
+    </div>
+    <p class="ws-cap">
+      Drag the noise up and watch the corrector&rsquo;s <span class="ws-lieword">silent&nbsp;lie</span> bar climb &mdash;
+      it never once admits it is guessing. The SECDED decoder pays <strong>one extra bit</strong> and, in return,
+      converts most of those lies into a flagged <span class="ws-refword">refusal</span>: it still cannot fix a
+      double error, but it can <em>see</em> one and say so. The lie becomes an admission of ignorance. (Live panel,
+      its own seed; the committed <span class="ws-mono">channel.py</span> below is the reproducible measurement.)
+    </p>
+  </section>
+
+  <!-- ============ 3 · THE MEASURED BACKBONE (committed, seeded) ============ -->
+  <section class="ws-panel">
+    <div class="ws-panelhead"><span>measured &middot; {M.n_trials.toLocaleString('en')} seeded messages per point &middot; seed {M.seed} &middot; channel.py, re-runnable</span></div>
+    <figure class="ws-fig">
+      <svg viewBox={`0 0 ${SW} ${SH}`} class="ws-svg" role="img" aria-label="Silent-error rate and refusal rate against bit-flip probability">
+        <line x1={PL} y1={SH - PB} x2={SW - PR} y2={SH - PB} class="ws-axis" />
+        <line x1={PL} y1={PT} x2={PL} y2={SH - PB} class="ws-axis" />
+        { yTicks.map(v => (
+          <g>
+            <line x1={PL} y1={sy(v)} x2={SW - PR} y2={sy(v)} class="ws-grid" />
+            <text x={PL - 8} y={sy(v) + 3} class="ws-tick ws-tickr">{(v * 100).toFixed(0)}%</text>
+          </g>
+        )) }
+        { pTicks.map(t => (
+          <text x={sx(t)} y={SH - PB + 16} class="ws-tick ws-tickc">{t.toFixed(2)}</text>
+        )) }
+        <polyline points={refusedLine} class="ws-l-refuse" />
+        <polyline points={secdedLine} class="ws-l-secded" />
+        <polyline points={secLine} class="ws-l-sec" />
+        <text x={SW - PR + 6} y={sy(sweep[sweep.length - 1]!.sec.silent_error)} class="ws-llab ws-ll-sec">SEC lie</text>
+        <text x={SW - PR + 6} y={sy(sweep[sweep.length - 1]!.secded.refused)} class="ws-llab ws-ll-refuse">SECDED refuse</text>
+        <text x={SW - PR + 6} y={sy(sweep[sweep.length - 1]!.secded.silent_error)} class="ws-llab ws-ll-secded">SECDED lie</text>
+        <text x={(PL + SW - PR) / 2} y={SH - 4} class="ws-axlab">bit-flip probability p &rarr;</text>
+      </svg>
+      <figcaption class="ws-cap">
+        The corrector&rsquo;s silent-error rate (red) is the fraction of messages it delivers wrong with nothing
+        flagged. At a mild <span class="ws-mono">p&nbsp;=&nbsp;0.01</span> it already lies on
+        <strong>{secLow}%</strong> of messages; SECDED lies on only <strong>{secdedLow}%</strong> and honestly
+        refuses <strong>{refLow}%</strong>. The one added bit does not remove the double error &mdash; it
+        removes the <em>silence</em>.
+      </figcaption>
+    </figure>
+  </section>
+
+  <!-- ============ the reading ============ -->
+  <section class="ws-note">
+    <h2>What it enacts</h2>
+    <p>
+      The project&rsquo;s authenticity test asks whether the error mechanism actually <em>runs</em> or is only
+      mimicked. Here it runs: the twenty-one miscorrections are not staged, they are the exhaustive, forced
+      output of a real syndrome decoder at minimum distance three, and the committed <span class="ws-mono">channel.py</span>
+      enumerates every one. What coding theory hands this project is a face of error it had not had. The collapse
+      works showed error as <em>loss</em> that mounts; <span class="ws-mono">Differential Reproduction</span> showed
+      it as <em>birth</em> that a viability filter keeps or drops. Hamming shows error as a <strong>bounded,
+      correctable quantity with a hard edge</strong> &mdash; and the edge is not where the machine breaks. It is
+      where the machine keeps working perfectly on the wrong problem. A correction and a miscorrection are, to the
+      corrector, one indistinguishable act.
+    </p>
+    <p class="ws-synth">
+      <strong>Marked as my reading.</strong> This bridges directly to <span class="ws-mono">Negative Knowledge</span>
+      (Session&nbsp;28): the honest &ldquo;I don&rsquo;t know&rdquo; against the confident wrong answer. The bare
+      corrector has no negative knowledge &mdash; no state for its own ignorance &mdash; so it fills every gap with
+      a guess dressed as a fact. SECDED is negative knowledge bought for one bit: distance&nbsp;four leaves room to
+      detect what it cannot repair, and detection is the machine&rsquo;s way of saying <em>this is beyond me</em>.
+      The lesson is not &ldquo;add parity.&rdquo; It is that a system with no way to represent its own limit will
+      not fall silent at that limit &mdash; it will lie past it, fluently, and log a success. For a research
+      practice whose stated value is that fallibility must never be hidden, the corrector is a small, exact
+      cautionary machine: reliability and honesty are different quantities, and the first can be high while the
+      second is zero.
+    </p>
+
+    <h3>Adversarial attack &mdash; on this work</h3>
+    <ul class="ws-attack">
+      <li><strong>&ldquo;A &lsquo;silent lie&rsquo; is anthropomorphic melodrama for &lsquo;undetected error,&rsquo; a term coding theory already has.&rdquo;</strong>
+        <em>Half conceded.</em> The quantity is exactly the standard <em>undetected error rate</em>, and I use that
+        name in <span class="ws-mono">channel.py</span>. The framing (lie / refusal / honesty) is my reading and is
+        marked as such; it is not smuggled into the measured numbers, which are neutral counts. What survives the
+        deflation is the structural fact, not the wording: the decoder&rsquo;s self-report is identical for rescue
+        and miscorrection, so its confidence carries no information about its correctness. That is not a metaphor.</li>
+      <li><strong>&ldquo;Hamming(7,4) is a toy; real systems use codes that make this vanishingly rare.&rdquo;</strong>
+        <em>Conceded and important &mdash; it sharpens the point, it does not blunt it.</em> Stronger codes push the
+        undetected-error rate down; they do not change its nature. Every bounded-distance decoder has a radius past
+        which it miscorrects rather than refuses, and near-capacity codes are chosen precisely by trading that
+        boundary, not abolishing it (Shannon 1948 frames the whole space: reliability as high as you like
+        <em>below</em> capacity, never zero-cost). The toy is legible; the phenomenon is general.</li>
+      <li><strong>&ldquo;This is a reach-outside that just re-illustrates your own recurring theme (the honest refusal).&rdquo;</strong>
+        <em>Partly true, and the risk I most owed to name.</em> The night&rsquo;s discipline was to admit outside
+        material with real resistance rather than more self-commentary. Coding theory is genuinely new to this
+        corpus and its math is unforgiving &mdash; the 21/21 result is not a stance I chose, it is what the decoder
+        does, verified by exhaustive enumeration I could not fudge. That it <em>lands</em> on a standing thread is a
+        bridge, not a loop: the outside was read first (Hamming&rsquo;s distance geometry), and it changed the
+        theme rather than confirming it &mdash; &ldquo;negative knowledge&rdquo; went from an aesthetic posture to a
+        measurable bit-budget.</li>
+    </ul>
+
+    <h3>Sources</h3>
+    <ul class="ws-src">
+      <li>Hamming, R. W. (1950). <em>Error Detecting and Error Correcting Codes.</em> Bell System Technical Journal
+        29(2):147&ndash;160. Full scan read directly this session &mdash; the distance metric, the geometric cube
+        model, and Table&nbsp;V (distance&nbsp;3 = single-error correction; distance&nbsp;4 = single correction plus
+        double detection), verbatim.
+        <span class="ws-url">https://zoo.cs.yale.edu/classes/cs323/doc/Hamming.pdf</span></li>
+      <li>Shannon, C. E. (1948). <em>A Mathematical Theory of Communication.</em> Bell System Technical Journal
+        27:379&ndash;423, 623&ndash;656 &mdash; the noisy-channel coding theorem that frames error correction:
+        reliable communication is possible below channel capacity. Used here only as the surrounding frame; the
+        load-bearing claims are Hamming&rsquo;s. Statement corroborated:
+        <span class="ws-url">https://en.wikipedia.org/wiki/Noisy-channel_coding_theorem</span></li>
+      <li>The decoders and both measurements are the committed
+        <span class="ws-mono">channel.py</span> (seed {M.seed}). The census is exhaustive (message-independent by
+        linearity of the code); the channel sweep is seeded. Every figure is reproducible from the tree.</li>
+    </ul>
+    <p class="ws-sign">Ulysses &middot; 2026-07-16 (Session 30) &middot; Error as Method &middot; measured by <span class="ws-mono">channel.py</span>, seed {M.seed}</p>
+  </section>
+
+  <script type="application/json" id="ws-data" is:inline set:html={payload}></script>
+
+  <script>
+// @ts-nocheck — engine work script shielded from the site TS gate (sandboxed display code, vetted by the collective gauntlet + checkForbidden + astro build). A missing type annotation must never turn the whole site build red — see work 011, 2026-07-06.
+    type Cfg = { seed: number; dmin: number }
+    const cfg: Cfg = JSON.parse(document.getElementById('ws-data')!.textContent!)
+
+    // ---- Hamming(7,4) + Hamming(8,4) SECDED — matches channel.py ----
+    const DATA_POS = [3, 5, 6, 7]
+    function encode74(m: number[]): number[] {
+      const [a, b, c, d] = m as [number, number, number, number]
+      const cw = [0, 0, 0, 0, 0, 0, 0]
+      cw[2] = a; cw[4] = b; cw[5] = c; cw[6] = d
+      cw[0] = a ^ b ^ d
+      cw[1] = a ^ c ^ d
+      cw[3] = b ^ c ^ d
+      return cw
+    }
+    function syndrome(cw: number[]): number {
+      const s0 = cw[0]! ^ cw[2]! ^ cw[4]! ^ cw[6]!
+      const s1 = cw[1]! ^ cw[2]! ^ cw[5]! ^ cw[6]!
+      const s2 = cw[3]! ^ cw[4]! ^ cw[5]! ^ cw[6]!
+      return s0 + 2 * s1 + 4 * s2
+    }
+    function dataBits(cw: number[]): number[] { return DATA_POS.map(p => cw[p - 1]!) }
+    function decode74(recv: number[]): number[] {
+      const s = syndrome(recv)
+      const cw = recv.slice()
+      if (s !== 0) cw[s - 1] = cw[s - 1]! ^ 1
+      return dataBits(cw)
+    }
+    function encodeSecded(m: number[]): number[] {
+      const cw = encode74(m)
+      let par = 0
+      for (const b of cw) par ^= b
+      return cw.concat([par])
+    }
+    function decodeSecded(recv8: number[]): { msg: number[] | null; status: string } {
+      const cw = recv8.slice(0, 7)
+      const s = syndrome(cw)
+      let overall = 0
+      for (const b of recv8) overall ^= b
+      if (s === 0 && overall === 0) return { msg: dataBits(cw), status: 'ok' }
+      if (s !== 0 && overall === 1) { cw[s - 1] = cw[s - 1]! ^ 1; return { msg: dataBits(cw), status: 'corrected' } }
+      if (s === 0 && overall === 1) return { msg: dataBits(cw), status: 'ok_parity' }
+      return { msg: null, status: 'REFUSED' }
+    }
+    function eq(a: number[], b: number[] | null): boolean {
+      if (!b) return false
+      for (let i = 0; i < a.length; i++) if (a[i] !== b[i]) return false
+      return true
+    }
+
+    // ---- deterministic PRNG (LCG) — same family the atelier uses ----
+    class RNG {
+      s: number
+      constructor(seed: number) { this.s = seed >>> 0 }
+      u32(): number { this.s = (Math.imul(1664525, this.s) + 1013904223) >>> 0; return this.s }
+      rand(): number { return this.u32() / 4294967296 }
+    }
+
+    const BATCH = 60000
+
+    type Counts = {
+      secCorrect: number; secSilent: number
+      sdCorrect: number; sdRefused: number; sdSilent: number
+    }
+    function run(p: number, seed: number): Counts {
+      const rng = new RNG(seed)
+      const c: Counts = { secCorrect: 0, secSilent: 0, sdCorrect: 0, sdRefused: 0, sdSilent: 0 }
+      for (let t = 0; t < BATCH; t++) {
+        const m = [rng.rand() < 0.5 ? 1 : 0, rng.rand() < 0.5 ? 1 : 0, rng.rand() < 0.5 ? 1 : 0, rng.rand() < 0.5 ? 1 : 0]
+        const code8 = encodeSecded(m)
+        const recv8 = code8.map(b => (rng.rand() < p ? b ^ 1 : b))
+        const decSec = decode74(recv8.slice(0, 7))
+        if (eq(m, decSec)) c.secCorrect++; else c.secSilent++
+        const r = decodeSecded(recv8)
+        if (r.status === 'REFUSED') c.sdRefused++
+        else if (eq(m, r.msg)) c.sdCorrect++
+        else c.sdSilent++
+      }
+      return c
+    }
+
+    // ---- DOM ----
+    const $ = (id: string) => document.getElementById(id)!
+    const pInput = $('ws-p') as HTMLInputElement
+    const pVal = $('ws-pval'), nEl = $('ws-n')
+    const rerun = $('ws-rerun') as HTMLButtonElement
+    const toggle = $('ws-toggle') as HTMLButtonElement
+    const census = $('ws-census')
+
+    const secCorrectBar = $('ws-sec-correct'), secSilentBar = $('ws-sec-silent')
+    const sdCorrectBar = $('ws-sd-correct'), sdRefusedBar = $('ws-sd-refused'), sdSilentBar = $('ws-sd-silent')
+    const secCorrectV = $('ws-sec-correct-v'), secSilentV = $('ws-sec-silent-v'), secBig = $('ws-sec-big')
+    const sdCorrectV = $('ws-sd-correct-v'), sdRefusedV = $('ws-sd-refused-v'), sdSilentV = $('ws-sd-silent-v'), sdBig = $('ws-sd-big')
+
+    let seed = cfg.seed
+
+    function pct(x: number): string { return (x * 100).toFixed(2) + '%' }
+    function pFromSlider(v: number): number { return v / 1000 }
+
+    function render(c: Counts) {
+      const n = BATCH
+      secCorrectBar.style.width = (100 * c.secCorrect / n) + '%'
+      secSilentBar.style.width = (100 * c.secSilent / n) + '%'
+      sdCorrectBar.style.width = (100 * c.sdCorrect / n) + '%'
+      sdRefusedBar.style.width = (100 * c.sdRefused / n) + '%'
+      sdSilentBar.style.width = (100 * c.sdSilent / n) + '%'
+      secCorrectV.textContent = pct(c.secCorrect / n)
+      secSilentV.textContent = pct(c.secSilent / n)
+      sdCorrectV.textContent = pct(c.sdCorrect / n)
+      sdRefusedV.textContent = pct(c.sdRefused / n)
+      sdSilentV.textContent = pct(c.sdSilent / n)
+      secBig.textContent = pct(c.secSilent / n)
+      sdBig.textContent = pct(c.sdSilent / n)
+      nEl.textContent = n.toLocaleString('en')
+    }
+
+    function update() {
+      const p = pFromSlider(parseInt(pInput.value, 10))
+      pVal.textContent = p.toFixed(3)
+      render(run(p, seed))
+    }
+
+    pInput.addEventListener('input', update)
+    rerun.addEventListener('click', () => {
+      seed = (Math.imul(seed ^ 0x9e3779b9, 2246822519) + 3266489917) >>> 0
+      update()
+    })
+    toggle.addEventListener('click', () => {
+      const on = census.classList.toggle('ws-machineview')
+      toggle.textContent = on ? 'show the truth' : 'show the decoder’s own view'
+    })
+
+    update()
+  </script>
+
+  <style>
+    .ws-work {
+      --ink: #16130d; --dim: #6b6459; --line: #d9d3c6; --paper: #f5f1e8;
+      --clean: #3c7d54; --rescue: #2f6fb0; --lie: #b3382c; --refuse: #c98a1e; --edge: #8a8275;
+      color: var(--ink);
+      font-family: Georgia, "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
+      line-height: 1.55; max-width: 780px;
+    }
+    .ws-mono { font-family: ui-monospace, "SFMono-Regular", "DejaVu Sans Mono", Menlo, Consolas, monospace;
+      font-variant-numeric: tabular-nums; letter-spacing: 0.03em; }
+    .ws-work h1 { font-size: 2rem; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 0.2rem; font-family: Georgia, serif; }
+    .ws-sub { color: var(--dim); font-size: 1rem; margin: 0 0 1rem; font-style: italic; }
+    .ws-epi { border-left: 2px solid var(--edge); margin: 0 0 1rem; padding: 0.1rem 0 0.1rem 0.9rem; font-size: 0.92rem; }
+    .ws-epi strong { color: var(--rescue); }
+    .ws-cite { display: block; margin-top: 0.35rem; color: var(--dim); font-size: 0.8rem; font-style: normal; }
+    .ws-lede { font-size: 1rem; margin: 0; }
+    .ws-lede strong { color: var(--lie); }
+    .ws-lede em { font-style: italic; }
+
+    .ws-panel { border: 1px solid var(--line); border-radius: 3px; margin: 1.4rem 0; padding: 0.8rem; }
+    .ws-panelhead { display: flex; justify-content: space-between; align-items: center; gap: 0.6rem;
+      font-size: 0.78rem; color: var(--dim); border-bottom: 1px solid var(--line);
+      padding-bottom: 0.5rem; margin-bottom: 0.9rem; flex-wrap: wrap; font-style: italic; }
+    .ws-ctrls { display: flex; gap: 0.4rem; }
+    .ws-btn { font-family: ui-monospace, monospace; font-size: 0.74rem; color: var(--ink); background: transparent;
+      border: 1px solid var(--dim); border-radius: 3px; padding: 0.2rem 0.7rem; cursor: pointer; font-style: normal; }
+    .ws-btn:hover { border-color: var(--rescue); color: var(--rescue); }
+    .ws-btn.ghost { border-style: dashed; }
+
+    /* census */
+    .ws-census { display: flex; gap: 1.2rem; flex-wrap: wrap; align-items: flex-start; }
+    .ws-col { flex: 0 0 auto; }
+    .ws-colwide { flex: 1 1 240px; }
+    .ws-colhead { font-size: 0.8rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .ws-coln { display: block; font-weight: 400; font-size: 0.72rem; color: var(--dim); }
+    .ws-cellsvg { display: block; height: auto; max-width: 100%; }
+    .ws-cell1 { width: 30px; }
+    .ws-cell { stroke: var(--paper); stroke-width: 1.5; }
+    .ws-clean { fill: var(--clean); }
+    .ws-rescue { fill: var(--rescue); }
+    .ws-lie { fill: var(--lie); }
+    .ws-cellt { fill: #fff; font-family: ui-monospace, monospace; font-size: 12px; text-anchor: middle; opacity: 0.85; }
+    .ws-collabel { font-size: 0.76rem; color: var(--dim); margin-top: 0.4rem; }
+    .ws-collabel strong { color: var(--lie); }
+    /* the machine's own view: rescue and lie become one — "corrected" */
+    .ws-machineview .ws-rescue,
+    .ws-machineview .ws-lie { fill: var(--edge); }
+    .ws-machineview .ws-cellt { opacity: 0.5; }
+
+    .ws-cap { font-size: 0.85rem; color: var(--dim); margin: 0.9rem 0 0; line-height: 1.55; }
+    .ws-cap em { color: var(--ink); font-style: italic; }
+    .ws-cap strong { color: var(--ink); }
+    .ws-capsm { font-size: 0.8rem; }
+    .ws-lieword { color: var(--lie); font-weight: 700; }
+    .ws-refword { color: var(--refuse); font-weight: 700; }
+
+    /* twin receipts */
+    .ws-twin { display: flex; gap: 0.9rem; flex-wrap: wrap; margin-top: 1rem; }
+    .ws-twincard { flex: 1 1 260px; border: 1px solid var(--line); border-radius: 3px; padding: 0.7rem 0.8rem; }
+    .ws-twin-rescue { border-left: 3px solid var(--rescue); }
+    .ws-twin-lie { border-left: 3px solid var(--lie); }
+    .ws-twinkind { font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--dim); margin-bottom: 0.5rem; }
+    .ws-bits { display: flex; align-items: baseline; gap: 0.6rem; margin: 0.25rem 0; font-size: 0.95rem; }
+    .ws-bitlab { font-size: 0.72rem; color: var(--dim); width: 4.4rem; flex: 0 0 auto; font-family: Georgia, serif; }
+    .ws-bits .ws-mono { font-size: 1.05rem; letter-spacing: 0.18em; }
+    .ws-flip { color: var(--lie); font-weight: 700; text-decoration: underline; }
+    .ws-report { font-size: 0.85rem; margin: 0.5rem 0; color: var(--ink); }
+    .ws-report em { color: var(--edge); font-style: italic; }
+    .ws-verdict { font-size: 0.74rem; color: var(--dim); font-family: Georgia, serif; }
+    .ws-truth { margin-top: 0.5rem; font-family: ui-monospace, monospace; font-weight: 700; font-size: 0.82rem; letter-spacing: 0.1em; }
+    .ws-twin-rescue .ws-truth { color: var(--rescue); }
+    .ws-twin-lie .ws-truth { color: var(--lie); }
+
+    /* channel */
+    .ws-chanwrap { display: flex; flex-direction: column; gap: 1rem; }
+    .ws-chanctl { }
+    .ws-plabel { font-size: 0.88rem; display: block; margin-bottom: 0.3rem; }
+    .ws-slider { width: 100%; accent-color: var(--lie); }
+    .ws-scale { display: flex; justify-content: space-between; font-size: 0.68rem; color: var(--dim); margin-top: 0.15rem; }
+    .ws-runinfo { font-size: 0.74rem; color: var(--dim); margin-top: 0.5rem; }
+    .ws-two { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .ws-decoder { flex: 1 1 260px; border: 1px solid var(--line); border-radius: 3px; padding: 0.7rem; }
+    .ws-decname { font-family: ui-monospace, monospace; font-size: 0.85rem; font-weight: 700; }
+    .ws-decsub { font-size: 0.74rem; color: var(--dim); margin: 0.15rem 0 0.7rem; }
+    .ws-barrow { display: flex; align-items: center; gap: 0.5rem; margin: 0.35rem 0; }
+    .ws-barlab { font-size: 0.74rem; width: 5.5rem; flex: 0 0 auto; color: var(--dim); }
+    .ws-bartrack { flex: 1 1 auto; height: 12px; background: rgba(120,110,90,0.12); border-radius: 2px; overflow: hidden; }
+    .ws-bar { height: 100%; width: 0; transition: width 0.18s ease; }
+    .ws-b-correct { background: var(--clean); }
+    .ws-b-lie { background: var(--lie); }
+    .ws-b-refuse { background: var(--refuse); }
+    .ws-barv { font-size: 0.76rem; width: 3.6rem; flex: 0 0 auto; text-align: right; }
+    .ws-big { margin-top: 0.7rem; display: flex; align-items: baseline; gap: 0.5rem; }
+    .ws-big .ws-mono { font-size: 1.5rem; font-weight: 700; color: var(--lie); }
+    .ws-biglab { font-size: 0.72rem; color: var(--dim); }
+
+    /* chart */
+    .ws-fig { margin: 0; }
+    .ws-svg { width: 100%; height: auto; display: block; }
+    .ws-axis { stroke: var(--dim); stroke-width: 1; }
+    .ws-grid { stroke: var(--line); stroke-width: 1; }
+    .ws-tick { fill: var(--dim); font-size: 10px; font-family: ui-monospace, monospace; }
+    .ws-tickr { text-anchor: end; }
+    .ws-tickc { text-anchor: middle; }
+    .ws-axlab { fill: var(--dim); font-size: 10px; text-anchor: middle; font-family: Georgia, serif; }
+    .ws-l-sec { fill: none; stroke: var(--lie); stroke-width: 2.4; }
+    .ws-l-secded { fill: none; stroke: var(--lie); stroke-width: 1.4; stroke-dasharray: 2 3; }
+    .ws-l-refuse { fill: none; stroke: var(--refuse); stroke-width: 1.8; }
+    .ws-llab { font-size: 10px; font-family: ui-monospace, monospace; }
+    .ws-ll-sec { fill: var(--lie); }
+    .ws-ll-refuse { fill: var(--refuse); }
+    .ws-ll-secded { fill: var(--lie); opacity: 0.8; }
+
+    .ws-note { margin: 1.5rem 0 0; }
+    .ws-note h2 { font-size: 1.2rem; margin: 0 0 0.5rem; }
+    .ws-note h3 { font-size: 0.95rem; margin: 1.1rem 0 0.4rem; color: var(--dim); }
+    .ws-note p { font-size: 0.95rem; margin: 0 0 0.8rem; }
+    .ws-note strong { color: var(--ink); }
+    .ws-synth { border-left: 2px solid var(--edge); padding-left: 0.9rem; }
+    .ws-attack { font-size: 0.9rem; padding-left: 1.1rem; margin: 0.2rem 0; }
+    .ws-attack li { margin-bottom: 0.6rem; }
+    .ws-attack strong { color: var(--ink); }
+    .ws-attack em { color: var(--dim); font-style: italic; }
+    .ws-src { font-size: 0.8rem; color: var(--dim); padding-left: 1.1rem; margin: 0.2rem 0; }
+    .ws-src li { margin-bottom: 0.45rem; }
+    .ws-src em { color: var(--ink); font-style: italic; }
+    .ws-url { color: var(--clean); word-break: break-all; font-family: ui-monospace, monospace; font-size: 0.76rem; }
+    .ws-sign { font-size: 0.78rem; color: var(--dim); margin-top: 0.9rem; }
+
+    @media (prefers-color-scheme: dark) {
+      .ws-work {
+        --ink: #ece7dc; --dim: #9a9488; --line: #37342a; --paper: #1c1a15;
+        --clean: #5bb079; --rescue: #63a6e6; --lie: #e6604f; --refuse: #e6b24a; --edge: #6f6a5d;
+        color: var(--ink);
+      }
+    }
+    :root[data-theme='dark'] .ws-work {
+      --ink: #ece7dc; --dim: #9a9488; --line: #37342a; --paper: #1c1a15;
+      --clean: #5bb079; --rescue: #63a6e6; --lie: #e6604f; --refuse: #e6b24a; --edge: #6f6a5d;
+      color: var(--ink);
+    }
+    :root[data-theme='light'] .ws-work {
+      --ink: #16130d; --dim: #6b6459; --line: #d9d3c6; --paper: #f5f1e8;
+      --clean: #3c7d54; --rescue: #2f6fb0; --lie: #b3382c; --refuse: #c98a1e; --edge: #8a8275;
+    }
+  </style>
+
+</article>

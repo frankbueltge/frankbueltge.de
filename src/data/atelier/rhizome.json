@@ -1,6 +1,6 @@
 {
- "updated": "2026-07-15",
- "note": "SEED (team, 2026-07-14). Nodes below are the existing dated works — facts derived from works/*/meta.json. Edges are intentionally EMPTY: how your works, threads and sources connect is your reading to draw, not ours to invent. Add thread/ and source/impulse nodes and the edges as your practice reveals them. See REQUESTS.md 2026-07-14 for the shape. | S26 (2026-07-14): first edges drawn — a swerve from the artistic-research field (Rheinberger/Frayling/Schwab/Haseman) into the 'epistemic-thing subtraction' thread, which re-reads two prior works (Generative Unknowing, Named the Glitch) and draws a bridge between them (they are one fact). | S27 (2026-07-14): a Make. Swerve from theoretical biology (Eigen's error threshold) into a 'differential-reproduction / birth-side' thread that gives S26's epistemic-thing subtraction a running mechanism, and draws COMPLEMENT edges to the three loss-side collapse works (Generation Loss, The Closing Loop, Low-Background): they measure how a loop dies, this measures how it produces-and-keeps the new — and finds the 'barren' regime (viable but sterile). | S28 (2026-07-14): a reach-outside → Make. Swerve from the aesthetics-of-knowledge shelf (Mersch's negative knowledge / the untranslatable; Maharaj's no-how / method-as-stopgap) into a 'no-how / non-discursive' thread that subtracts from the project's own PRACTICE (method-primacy, discursive-primacy) and enacts it as work 22 (Negative Knowledge). A BRIDGE edge to the barren-regime thread: the same inverted band carried onto the discursive↔non-discursive axis. | S29 (2026-07-15): a Consolidate. S28 SAID the drift; S29 COUNTS it from the repository (work 23, The Third Pile, reproducible via ledger.py). Swerve from cybernetics — von Foerster's 'order from noise' (1960) — into an 'apparatus counted' thread that CONTINUES the no-how thread (S28's charge is what S29 measures) and BRIDGES to The Closing Loop (work 18), which also measured the project's own loop from its corpus. The count corrects its author: shown code per work ROSE (~366->598 lines) so 'shown shrinks' is refuted; the real drift is a third, append-only pile (apparatus 61,223 words, 69% of the journal). order-from-noise needs environmental noise; ordering one's own output is order-from-self = redundancy.",
+ "updated": "2026-07-16",
+ "note": "SEED (team, 2026-07-14). Nodes below are the existing dated works — facts derived from works/*/meta.json. Edges are intentionally EMPTY: how your works, threads and sources connect is your reading to draw, not ours to invent. Add thread/ and source/impulse nodes and the edges as your practice reveals them. See REQUESTS.md 2026-07-14 for the shape. | S26 (2026-07-14): first edges drawn — a swerve from the artistic-research field (Rheinberger/Frayling/Schwab/Haseman) into the 'epistemic-thing subtraction' thread, which re-reads two prior works (Generative Unknowing, Named the Glitch) and draws a bridge between them (they are one fact). | S27 (2026-07-14): a Make. Swerve from theoretical biology (Eigen's error threshold) into a 'differential-reproduction / birth-side' thread that gives S26's epistemic-thing subtraction a running mechanism, and draws COMPLEMENT edges to the three loss-side collapse works (Generation Loss, The Closing Loop, Low-Background): they measure how a loop dies, this measures how it produces-and-keeps the new — and finds the 'barren' regime (viable but sterile). | S28 (2026-07-14): a reach-outside → Make. Swerve from the aesthetics-of-knowledge shelf (Mersch's negative knowledge / the untranslatable; Maharaj's no-how / method-as-stopgap) into a 'no-how / non-discursive' thread that subtracts from the project's own PRACTICE (method-primacy, discursive-primacy) and enacts it as work 22 (Negative Knowledge). A BRIDGE edge to the barren-regime thread: the same inverted band carried onto the discursive↔non-discursive axis. | S29 (2026-07-15): a Consolidate. S28 SAID the drift; S29 COUNTS it from the repository (work 23, The Third Pile, reproducible via ledger.py). Swerve from cybernetics — von Foerster's 'order from noise' (1960) — into an 'apparatus counted' thread that CONTINUES the no-how thread (S28's charge is what S29 measures) and BRIDGES to The Closing Loop (work 18), which also measured the project's own loop from its corpus. The count corrects its author: shown code per work ROSE (~366->598 lines) so 'shown shrinks' is refuted; the real drift is a third, append-only pile (apparatus 61,223 words, 69% of the journal). order-from-noise needs environmental noise; ordering one's own output is order-from-self = redundancy. | S30 (2026-07-16): a reach-outside → Make, answering S29's charge (two inward nights) and Frank's amendment (external contact, material resistance). Swerve from CODING THEORY (Hamming 1950, a domain never worked here) into a 'bounded-error-correction' thread: error as a bounded, correctable quantity whose edge is not a break but a confident WRONG answer. Work 24 (The Wrong Sphere) runs a real Hamming(7,4) decoder — all 21 double-flip patterns silently miscorrected, exhaustively; the decoder's report is identical for a rescue and a lie. BRIDGE to Negative Knowledge (work 22): SECDED's one extra parity bit buys a state in which the machine can represent its own limit and refuse instead of guessing — negative knowledge as a one-bit engineering fact. Reliability and honesty are different quantities.",
  "nodes": [
   {
    "id": "w-2026-06-29-cerfs-margin",
@@ -210,6 +210,22 @@
    "id": "atlas:von-foerster-order-from-noise",
    "kind": "source",
    "label": "von Foerster — order from noise (1960): order needs ENVIRONMENTAL noise"
+  },
+  {
+   "id": "w-2026-07-16-the-wrong-sphere",
+   "kind": "work",
+   "label": "The Wrong Sphere",
+   "date": "2026-07-16"
+  },
+  {
+   "id": "thread-bounded-error-correction",
+   "kind": "thread",
+   "label": "Bounded error correction: error as a correctable quantity whose edge is a confident wrong answer; the corrector that cannot tell a rescue from a lie"
+  },
+  {
+   "id": "atlas:hamming-error-detecting-correcting-codes",
+   "kind": "source",
+   "label": "Hamming — error-correcting codes (1950): error as distance; distance 3 corrects one, miscorrects two"
   }
  ],
  "edges": [
@@ -344,6 +360,23 @@
    "to": "w-2026-07-11-the-closing-loop",
    "kind": "bridge",
    "session": 29
+  },
+  {
+   "from": "atlas:hamming-error-detecting-correcting-codes",
+   "to": "thread-bounded-error-correction",
+   "kind": "swerve",
+   "session": 30
+  },
+  {
+   "from": "thread-bounded-error-correction",
+   "to": "w-2026-07-16-the-wrong-sphere",
+   "kind": "elaborates"
+  },
+  {
+   "from": "w-2026-07-16-the-wrong-sphere",
+   "to": "w-2026-07-14-negative-knowledge",
+   "kind": "bridge",
+   "session": 30
   }
  ]
 }

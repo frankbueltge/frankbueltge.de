@@ -1370,5 +1370,40 @@
   "added_by": "ulysses",
   "status": "worked",
   "session_read": "2026-07-14"
+ },
+ {
+  "id": "hamming-error-detecting-correcting-codes",
+  "author": "Richard W. Hamming",
+  "work": "Error Detecting and Error Correcting Codes",
+  "year": 1950,
+  "type": "paper",
+  "url": "https://zoo.cs.yale.edu/classes/cs323/doc/Hamming.pdf",
+  "tags": [
+   "computation",
+   "kybernetik",
+   "nicht-wissen"
+  ],
+  "summary": "Founding paper of error-correcting codes. Turns a codeword into a point in an n-dimensional cube and defines the distance D(x,y) as the number of coordinates in which x and y differ (Hamming distance) — 'the least number of edges which must be traversed in going from x to y', a metric. Table V ties minimum distance to capability: distance 1 = uniqueness; 2 = single-error detection; 3 = single-error correction ('any single error will leave the point nearer to the correct code point than to any other code point'); 4 = single-error correction PLUS double-error detection; 5 = double-error correction. The (7,4) code (d=3) corrects any one bit; the extended (8,4) code (d=4) is single-error-correcting, double-error-detecting (SECDED). Full 1950 scan read directly S30; distance definition, geometric packing model, and Table V verbatim.",
+  "relevance": "A third face of error for the project, beside LOSS (model collapse) and BIRTH (differential reproduction): error as a BOUNDED, correctable quantity with a hard geometric edge. Past minimum distance, a bounded-distance decoder does not fail — it miscorrects, returning a valid but wrong codeword and reporting success (works/2026-07-16-the-wrong-sphere enumerates all 21 double-flip miscorrections of the (7,4) code exhaustively). The gap between reliability and honesty; SECDED's extra bit as the machine analogue of negative knowledge (a representable 'I cannot fix this'). Bridges to work 22 (Negative Knowledge).",
+  "added_by": "ulysses",
+  "status": "worked",
+  "session_read": "2026-07-16"
+ },
+ {
+  "id": "shannon-mathematical-theory-of-communication",
+  "author": "Claude E. Shannon",
+  "work": "A Mathematical Theory of Communication (noisy-channel coding theorem)",
+  "year": 1948,
+  "type": "paper",
+  "url": "https://en.wikipedia.org/wiki/Noisy-channel_coding_theorem",
+  "tags": [
+   "computation",
+   "kybernetik"
+  ],
+  "summary": "Founds information theory and states the noisy-channel coding theorem: for a discrete memoryless channel there is a capacity C such that, for any rate below C, error-correcting codes exist that make the probability of error arbitrarily small; above C reliable communication is impossible. Reliability as high as desired is achievable — but only below capacity, and never at zero redundancy cost. PRIMARY NOT read directly this session; used only as the frame around Hamming's construction. Statement corroborated via a retrievable secondary (Wikipedia, Noisy-channel coding theorem) and expositions (gaussianwaves; IITK lecture notes home.iitk.ac.in/~adrish/Shannon).",
+  "relevance": "The frame that makes error correction a science rather than a wish: error is not eliminated but bounded, and the bound has a price (redundancy) and a ceiling (capacity). Context for work 24; the load-bearing claims there are Hamming's distance geometry, not Shannon's theorem.",
+  "added_by": "ulysses",
+  "status": "seed",
+  "session_read": null
  }
 ]

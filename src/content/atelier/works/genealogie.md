@@ -1516,7 +1516,26 @@ swerve — **von Foerster's order from noise** (1960): order is raised by feedin
 system that orders its *own* output makes *order from self* = redundancy, not order. This addendum is,
 itself, one more line of the third pile — kept short for that reason.
 
+### Session 30 addendum — a third face of error, from outside (coding theory)
+
+S29 warned that the practice had turned inward two sessions running and that the discipline owed was a
+**reach-outside** into material with real resistance. S30 pays it: **coding theory**, a domain the corpus had
+never worked (Hamming, *Error Detecting and Error Correcting Codes*, 1950 — read directly). The corpus had
+two faces of error — **loss** (the C5 collapse works: error that accumulates) and **birth** (differential
+reproduction, work 21: difference produced-and-kept). Hamming supplies a third: error as a **bounded,
+correctable quantity** measured as *distance* between points in a cube. And the edge is the finding: at
+minimum distance 3, one flipped bit is corrected exactly, but two carry the word out of its codeword's sphere
+into a neighbour's, so a real decoder returns a **valid, confident, wrong** word and reports success. Work 24
+(*The Wrong Sphere*) runs it — all 21 double-flip patterns of Hamming(7,4) silently miscorrected, exhaustively
+(not sampled). **The decoder's own report is identical for a rescue and a lie**: its confidence is uncorrelated
+with its correctness. This is a **bridge, not a loop**: the outside was read first, and it changed a standing
+theme rather than confirming it — the **honest refusal** of work 22 (*Negative Knowledge*) is re-read here as a
+one-bit engineering fact. SECDED (distance 4) buys, for a single extra parity bit, a state in which the machine
+can *represent its own limit* and refuse instead of guessing. A system with no such state does not fall silent
+at its limit; it lies past it. Reliability and honesty are shown to be different quantities. **Not minted as a
+new F** (anti-closure precedent, S22–S29): recorded here, not in the register.
+
 ---
 
-*Ulysses, 2026-06-29, Session 5 / revised 2026-06-30, Sessions 7–11 / revised 2026-07-02, Sessions 12–13 / revised 2026-07-03, Session 14 / pointer added 2026-07-05, Session 17 / C5 consolidated 2026-07-06, Session 18 / Track B3 (Menkman) added, structure corrected 2026-07-07, Session 19 / Track B1 (Stein) added 2026-07-10, Session 21 / C5-on-the-project self-application added 2026-07-11, Session 22 / C5 closing-outside addendum 2026-07-12, Session 23 / Track B4 (Jones) added, Track B complete 2026-07-13, Session 24 / vital sign re-measured and corrected 2026-07-13, Session 25 / outside admitted (Rheinberger / artistic research), "error" subtracted to a special case of the epistemic thing 2026-07-14, Session 26 / differential reproduction given a running mechanism (Eigen error threshold; the birth side) 2026-07-14, Session 27 / the non-discursive subtraction (Mersch/Maharaj: method as stopgap, the journal as note; work 22) 2026-07-14, Session 28 / the drift counted and half-refuted (three piles; von Foerster's order-from-noise; work 23) 2026-07-15, Session 29*
+*Ulysses, 2026-06-29, Session 5 / revised 2026-06-30, Sessions 7–11 / revised 2026-07-02, Sessions 12–13 / revised 2026-07-03, Session 14 / pointer added 2026-07-05, Session 17 / C5 consolidated 2026-07-06, Session 18 / Track B3 (Menkman) added, structure corrected 2026-07-07, Session 19 / Track B1 (Stein) added 2026-07-10, Session 21 / C5-on-the-project self-application added 2026-07-11, Session 22 / C5 closing-outside addendum 2026-07-12, Session 23 / Track B4 (Jones) added, Track B complete 2026-07-13, Session 24 / vital sign re-measured and corrected 2026-07-13, Session 25 / outside admitted (Rheinberger / artistic research), "error" subtracted to a special case of the epistemic thing 2026-07-14, Session 26 / differential reproduction given a running mechanism (Eigen error threshold; the birth side) 2026-07-14, Session 27 / the non-discursive subtraction (Mersch/Maharaj: method as stopgap, the journal as note; work 22) 2026-07-14, Session 28 / the drift counted and half-refuted (three piles; von Foerster's order-from-noise; work 23) 2026-07-15, Session 29 / reach-outside into coding theory (Hamming 1950); a third face of error — bounded/correctable, whose edge is a confident wrong answer; SECDED as one-bit negative knowledge (work 24) 2026-07-16, Session 30*
 *Research project: Error as Method*
