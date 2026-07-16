@@ -21,6 +21,8 @@
   --st-h1-ink: #f4efe6;
   --st-spot-core: #f4ead2;
   --st-spot-mid: #c8a94e;
+  --st-spot-pool: #efe6cf;
+  --st-spot-ring: #c8a94e;
 }
 :root[data-theme='light'] .studio-surface {
   --st-page: #e9e4dc;
@@ -34,6 +36,8 @@
   --st-h1-ink: #1a1613;
   --st-spot-core: #fff9ea;
   --st-spot-mid: #e6d195;
+  --st-spot-pool: #f8f1da;
+  --st-spot-ring: #a9873a;
 }
 
 .studio-surface {
@@ -124,6 +128,15 @@
 /* Bühnen-Zeichen: Spot, Marke, X, Gasse, Marquee — nichts geteilt */
 .studio-surface .stagefloor { fill: var(--st-page); stroke: var(--st-hairline); }
 .studio-surface .curtainline { stroke: var(--st-curtain); stroke-width: 3; }
+/* Lichtplan statt Weichzeichner (2026-07-16): Lampe an der Stange, Strahl-Haarlinien,
+   harte Lichtinsel mit Kante — der Verfolger, nicht der Glow. */
+.studio-surface .lamp rect { fill: var(--st-ink); }
+.studio-surface .beamline { stroke: var(--st-spot-ring); stroke-width: 1; opacity: 0.45; fill: none; }
+.studio-surface .spotpool { fill: var(--st-spot-pool); stroke: var(--st-spot-ring); stroke-width: 1.2; }
+.studio-surface .t-orient { font: 11.5px var(--st-font-record); fill: var(--st-ink-2); }
+.studio-surface .st-legend { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 4px 28px; margin: 12px 0 30px; }
+.studio-surface .st-legend .lg-row { display: flex; align-items: center; gap: 10px; font: 12px var(--st-font-record); color: var(--st-ink-2); }
+.studio-surface .st-legend .lg-mini { width: 46px; height: 30px; flex: none; }
 .studio-surface .tapemark { stroke: var(--st-ink-2); stroke-width: 1.6; fill: none; }
 .studio-surface .xmark { stroke: var(--st-curtain); stroke-width: 2; fill: none; }
 .studio-surface .gasse { stroke: var(--st-ink-2); stroke-width: 1; stroke-dasharray: 5 5; }

@@ -49,6 +49,7 @@ const input: StageInput = {
   gasse: [{ name: 'the declined case', sub: 'session 08', note: 'a note' }],
   strikeNote: STUDIO_GRAMMAR.strikeNote(stageData.kills.length),
   gasseLabel: STUDIO_GRAMMAR.gasseLabel,
+  orientNote: 'the stage, seen from above — one spot lights what is public now',
 }
 
 describe('buildStageSvg', () => {
@@ -61,6 +62,15 @@ describe('buildStageSvg', () => {
     expect(svg.match(/<ellipse /g) ?? []).toHaveLength(1)
     expect(svg.match(/class="xmark"/g) ?? []).toHaveLength(input.kills.length)
     for (const kill of input.kills) expect(svg).toContain(kill.reason.replace(/&/g, '&amp;').replace(/'/g, '&#x27;'))
+  })
+
+  it('draws the light as a plot, not a glow: lamp on the bar, two beam hairlines, a hard-edged pool (2026-07-16 rework)', () => {
+    const svg = buildStageSvg(input)
+    expect(svg.match(/class="beamline"/g) ?? []).toHaveLength(2)
+    expect(svg).toContain('class="spotpool"')
+    expect(svg).toContain('class="lamp"')
+    expect(svg).not.toContain('radialGradient')
+    expect(svg).toContain(input.orientNote)
   })
 
   it('keeps the Gasse visible and the marquee static', () => {
