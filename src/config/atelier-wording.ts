@@ -1,0 +1,98 @@
+// Atelier-Wortlaute (Praxis-Oberflächen-Paket; research-ecology docs/work-orders/
+// practice-surfaces.md + docs/design/wortlaute-2026-07-15.md §1, Zwei-Schichten-Regel):
+//
+//   GRAMMAR   — statische Formeln des Zeichensystems (Datenkante, Blattrand, Legende).
+//               Freigegeben mit der Design-Session vom 2026-07-15 („wording approved“),
+//               wörtlich aus den gebauten Mockups (atelier_viz.py / atelier_history_viz.py).
+//               Unter Testschutz (src/lib/atelier/sheet.test.ts, spine.test.ts) —
+//               Protokoll-Prinzip: Test-Strings nie aufweichen.
+//   NARRATIVE — neue Erzähl-Wortlaute dieser Verdrahtung (Seitenbeschreibungen, Zimmer-
+//               Intros, Auswahlregeln). approval: 'draft' bis Franks Freigabe; Seiten,
+//               die sie rendern, zeigen den Draft-Chip (Muster: src/config/naming.ts).
+//
+// ADR 0010: das Atelier teilt keine visuelle Grammatik mit Partitur (Middle), Messprotokoll
+// (Field) oder Bühne (Studio) — auch dieses Wörterbuch ist bewusst ein eigenes.
+
+export interface RailItem {
+  label: string
+  href: string
+  hint: string
+}
+
+export const ATELIER_GRAMMAR = {
+  approval: 'approved' as const, // Design-Session 2026-07-15, Chip „wording approved“
+  /** Die freigegebene Datenkanten-Formel des Ateliers (wortlaute-2026-07-15.md §2/§5). */
+  dataEdge: 'tonight’s page is not yet written',
+  /** Zwei Zeilen, wie der Buchrücken sie am rechten Rand setzt (atelier_history_viz.py). */
+  dataEdgeLines: ['tonight’s page —', 'not yet written'] as const,
+  /** Der Blattrand — die EINZIGE stehende Navigation (atelier-aesthetik §5). */
+  rail: [
+    { label: 'this sheet', href: '/atelier', hint: 'the current working sheet' },
+    { label: 'sheets', href: '/atelier/sheets', hint: 'all sheets, one per thread' },
+    { label: 'works', href: '/atelier/works', hint: 'works & catalogue — existing URLs stay' },
+    { label: 'journal', href: '/atelier/journal', hint: 'the journal as session register, S1…' },
+    { label: 'material', href: '/atelier/material', hint: 'sources & the atlas — Ulysses’ own shelf' },
+    { label: 'apparatus', href: '/atelier/apparatus', hint: 'repo, constitution, team channel, nightly runs' },
+  ] as RailItem[],
+  door: { label: '→ the middle', href: '/encounters', hint: 'encounters; the doorway at the sheet’s edge' },
+  /** Rückweg-Konvention jeder Unterseite (atelier-aesthetik §5). */
+  backToSheet: '← back to the sheet',
+  doorwayNote: 'doorway reserved — for an external encounter, once it exists',
+  legend: {
+    materials: [
+      'thread — ink; a reading drawn across works',
+      'swerve — red pencil; a source kinks into a thread (the clinamen)',
+      'work — an ink slab standing on the sheet',
+      'prior work on the shelf — present, not re-made',
+    ],
+    ties: [
+      'elaborates — a thread holds a work',
+      'bridge — two works tied in the practice’s own words',
+      'complement — the loss-side shelf answers the birth-side run',
+      'grounds — a source laid under a work as foundation',
+      'doorway — reserved for external encounters; empty until one exists',
+    ],
+    notThisSheet:
+      'No time axis, no lanes, no practice colors, no as-of edge — those belong to The Middle’s score (ADR 0010: no shared visual grammar). The sheet keeps one lab-wide ethic unchanged: everything drawn is verbatim and sourced, and the table below compresses nothing.',
+  },
+  /** Skalenregel-Fußnote des Buchrückens (Zeichengrammatik §7, Atelier-Geschmack). */
+  scaleRule: 'scale rule (grammar §7, atelier flavour): pages gather into quires when the spine outgrows the sheet',
+} as const
+
+export const ATELIER_NARRATIVE = {
+  approval: 'draft' as 'draft' | 'approved',
+  /** Auswahlregel des Blatt-Titels — neu benannt, weil das Rhizom inzwischen mehr Fäden
+   * trägt als die Design-Session (S26–S28) sah. */
+  titleRule: 'the sheet title is the youngest thread’s own label, verbatim',
+  sheetLede:
+    'every edge below is drawn in the rhizome by Ulysses — the practice’s own reading of its works and sources',
+  /** Franks Rahmung, 2 Sätze am Blatt-Fuß (atelier-aesthetik §5; volle Rahmung in apparatus). */
+  framingFoot:
+    'Every night an AI holds a research session — it errs, and catalogues its errors checkably. Frank Bültge conceived and engineered this machinery, seeds directions and intervenes; the machines write, the record shows who wrote what.',
+  /** Ehrliche Abweichungen der Site gegenüber den Mockup-Generatoren (nichts still überbrückt). */
+  provenance: {
+    sheet: 'drawn from src/data/atelier/rhizome.json — the practice’s own reading, mirrored nightly, read-only',
+    spine:
+      'journal filenames · committed work dates (meta.json) · error-register headings · pulse/rhizome.json — the site reads its committed mirror, not the engine repo’s git',
+    worksHungBy: 'hung by committed date',
+    constitutionNote:
+      'constitution amendments are not drawn — the amendment dates live in the engine repo’s git, which this mirror does not carry',
+    /** short margin form of the same honesty (the SVG margin has ~34ch) */
+    constitutionNoteShort: 'constitution — amendment dates not mirrored here',
+  },
+  rooms: {
+    sheets: 'All sheets, one per thread — each a reading the practice has drawn across its works.',
+    journal: 'The journal as a session register — one line per page, the newest night open.',
+    material: 'Ulysses’ own shelf: the sources the practice has pulled, as it catalogued them.',
+    materialAtlasNote:
+      'Frank’s atlas (/atlas) is the lab’s reference collection; this shelf is the practice’s own lens on it. Each points at the other.',
+    apparatus: 'How the machine runs — repo, constitution, team channel, nightly machinery, in one room.',
+    works: 'The works, newest first — each slab on the sheet is a door to one of these.',
+    cockpitArchiveNote: 'the atlas now lives in material',
+    cockpitArchived:
+      'Archived surface (ADR 0008): the cockpit is kept as a dated artefact, no longer the entrance.',
+  },
+} as const
+
+/** Kleiner Mono-Draft-Marker, solange NARRATIVE nicht freigegeben ist (Muster: naming.ts). */
+export const ATELIER_DRAFT_LABEL = 'wording draft — approval pending'
