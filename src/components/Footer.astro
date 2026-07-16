@@ -1,62 +1,32 @@
 ---
-import { getRelativeLocaleUrl } from 'astro:i18n'
-import { t } from '@/i18n/ui'
-import { SITE, type Locale } from '@/lib/site'
+// site-v2 work order §5 (decisions doc 2026-07-16 §1.7): a trimmed footer — Contact, Impressum,
+// Datenschutz, the license line, GitHub. The previous four-column footer (Explore/Projects/
+// Connect) duplicated what the hub-era TopBar nav + hub's own "where works travel"/"also on
+// this site" sections already cover; this keeps only what belongs on every single page.
+import { SITE } from '@/lib/site'
+import { NAMING } from '@/config/naming'
 
-const locale = (Astro.currentLocale ?? 'en') as Locale
-const L = (p: string) => getRelativeLocaleUrl(locale, p)
 const year = 2026
-const explore = [
-  { href: L('/work'), label: t(locale, 'nav.work') },
-  { href: L('/lab'), label: t(locale, 'nav.lab') },
-  // English-only record of the autonomous collective — hard href, no locale prefix
-  { href: '/field', label: 'Field' },
-  // English-only record of the studio collective "Ensemble" — hard href, no locale prefix
-  { href: '/studio', label: 'Studio' },
-  { href: L('/atlas'), label: t(locale, 'nav.atlas') },
-  { href: L('/about'), label: t(locale, 'nav.about') },
-  { href: L('/contact'), label: t(locale, 'nav.contact') },
-]
 ---
 
 <footer class="mt-24 border-t border-line/60 footer-dark">
-  <div class="mx-auto grid max-w-5xl gap-10 px-6 py-14 sm:grid-cols-2 lg:grid-cols-4">
-    <div class="sm:col-span-2 lg:col-span-1">
-      <img src="/logo.webp" alt="" width="169" height="169" class="h-[169px] w-[169px]" />
-      <p class="mt-4 w-[169px] text-center text-sm font-semibold">Frank Bültge</p>
+  <div class="mx-auto flex max-w-5xl flex-col gap-8 px-6 py-14 sm:flex-row sm:items-start sm:justify-between">
+    <div class="flex items-center gap-3">
+      <img src="/logo.webp" alt="" width="48" height="48" class="h-12 w-12 rounded-full" />
+      <span class="text-sm font-semibold">Frank Bültge</span>
     </div>
 
-    <nav aria-label={t(locale, 'footer.explore')}>
-      <h2 class="font-mono text-xs uppercase tracking-widest text-fg-faint">{t(locale, 'footer.explore')}</h2>
-      <ul class="mt-4 space-y-2 text-sm text-fg-muted">
-        {explore.map((i) => <li><a href={i.href} class="transition-colors hover:text-fg">{i.label}</a></li>)}
-      </ul>
-    </nav>
-
-    <nav aria-label={t(locale, 'footer.projects')}>
-      <h2 class="font-mono text-xs uppercase tracking-widest text-fg-faint">{t(locale, 'footer.projects')}</h2>
-      <ul class="mt-4 space-y-2 text-sm text-fg-muted">
-        <li><a href={SITE.projects.dataSnack} target="_blank" rel="noreferrer" class="transition-colors hover:text-fg">data-snack.com</a></li>
-        <li><a href={L('/work/datavism')} class="transition-colors hover:text-fg">datavism.org</a></li>
-      </ul>
-    </nav>
-
-    <nav aria-label={t(locale, 'footer.connect')}>
-      <h2 class="font-mono text-xs uppercase tracking-widest text-fg-faint">{t(locale, 'footer.connect')}</h2>
-      <ul class="mt-4 space-y-2 text-sm text-fg-muted">
-        <li><a href={SITE.social.linkedin} target="_blank" rel="noreferrer" class="transition-colors hover:text-fg">LinkedIn</a></li>
-        <li><a href={SITE.social.github} target="_blank" rel="noreferrer" class="transition-colors hover:text-fg">GitHub</a></li>
-        <li><a href={`mailto:${SITE.email}`} class="transition-colors hover:text-fg">{SITE.email}</a></li>
-      </ul>
+    <nav aria-label="Footer" class="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-fg-muted">
+      <a href="/contact" class="transition-colors hover:text-fg">Contact</a>
+      <a href="/impressum" class="transition-colors hover:text-fg">Impressum</a>
+      <a href="/datenschutz" class="transition-colors hover:text-fg">Datenschutz</a>
+      <a href={SITE.social.github} target="_blank" rel="noreferrer" class="transition-colors hover:text-fg">GitHub</a>
     </nav>
   </div>
 
-  <div class="mx-auto flex max-w-5xl flex-col gap-3 px-6 pb-10 text-xs text-fg-faint sm:flex-row sm:items-center sm:justify-between">
-    <p>© {year} {SITE.name}. {t(locale, 'footer.rights')}</p>
-    <div class="flex items-center gap-4">
-      <a href={L('/impressum')} class="transition-colors hover:text-fg">{t(locale, 'footer.impressum')}</a>
-      <a href={L('/datenschutz')} class="transition-colors hover:text-fg">{t(locale, 'footer.privacy')}</a>
-    </div>
+  <div class="mx-auto flex max-w-5xl flex-col gap-2 px-6 pb-10 font-mono text-xs text-fg-faint sm:flex-row sm:items-center sm:justify-between">
+    <span>© {year} {SITE.name}</span>
+    <span>{NAMING.footer.licenseLine}</span>
   </div>
 </footer>
 

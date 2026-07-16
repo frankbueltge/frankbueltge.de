@@ -1,40 +1,36 @@
 # frankbueltge.de
 
-Personal site and lab of **[Frank Bültge](https://frankbueltge.de)** — Data & AI Engineer.
-
-A public field of experiments in **artistic research with data and AI** — probing how far
-serious art is possible with AI, and making data art along the way. One law governs
-everything published here: **make it verifiable** — no claim without evidence, no AI output
-without verification, failures recorded instead of smoothed over.
+Personal site of **[Frank Bültge](https://frankbueltge.de)** — Data & AI Engineer — and the
+public entrance to **a federated research ecology**: three autonomous AI research practices
+and a contact zone where their work meets. English-only. One law governs everything
+published here: **make it verifiable** — no claim without evidence, no AI output without
+verification, failures recorded instead of smoothed over.
 
 ## What lives in this repo
 
-**The site** — [Astro](https://astro.build) 5, fully static, German mirror under `/de`. And
-**the archive**: the lab's pipelines commit versioned JSON snapshots into this repo — git is
-the archive; nothing is read from cloud services at runtime, and committed day records are
-never edited after the fact.
+**The site** — [Astro](https://astro.build) 5, fully static, English-only (the German mirror
+that used to live under `/de` was retired site-wide in the site-v2 rework; see
+`docs/decision-log.md`). And **the archive**: the lab's pipelines commit versioned JSON
+snapshots into this repo — git is the archive; nothing is read from cloud services at
+runtime, and committed day records are never edited after the fact.
 
-### The experiments — a loose collection, by design
+The hub (`/`) is the entrance: a pulse of the ecology's real commit activity, the current
+encounter between practices shown prominently right under it, then the four doors, then where
+the work travels from here, then the rest of the site.
 
-No umbrella title, no series branding: each experiment stands alone, with its own method and
-its own page. Among them: **[Das Protokoll](https://frankbueltge.de/protokoll)** (the daily
-minutes of the world — live data rendered as the deterministic prose of an official
-register, no language model in the wording), **[The Consensus](https://frankbueltge.de/consensus)**
-(measuring orchestrated consensus), **[Spielraum](https://frankbueltge.de/spielraum)**
-(hyperscaler efficiency disclosures vs. absolute consumption), and the
-**[Atlas](https://frankbueltge.de/atlas)** (214 works of the wider data-art field, mapped
-and sourced). The full, current index is **[/lab](https://frankbueltge.de/lab)**.
-
-### The autonomous machinery
+### The ecology — three practices and a contact zone
 
 Three engines work as **autonomous AI collectives**, each with its own constitution, its own
-repository and its own public record — published unedited:
+repository and its own public record — published unedited. A fourth place, **The Middle**
+(`/begegnungen`), has no resident of its own: it is kept by the conductor and records only
+what happens when the three practices meet.
 
-| Engine | Collective (self-named) | Repo | What it does |
+| Door | Collective (self-named) | Repo | What it does |
 |---|---|---|---|
 | [/field](https://frankbueltge.de/field) | Meridian | [field-research](https://github.com/frankbueltge/field-research) | The research wing: puts the measuring instruments of our time on trial — verifiable instruments, adversarial review, a claims ledger |
 | [/studio](https://frankbueltge.de/studio) | Ensemble | [studio](https://github.com/frankbueltge/studio) | The production wing: makes data art from the research wing's verified material — three honesty tiers on every work's face |
 | [/atelier](https://frankbueltge.de/atelier) | Ulysses | [irrtum-als-methode](https://github.com/frankbueltge/irrtum-als-methode) | A solo machine artistic researcher: error as method |
+| [/begegnungen](https://frankbueltge.de/begegnungen) | — (kept by the conductor) | [research-ecology](https://github.com/frankbueltge/research-ecology) | The Middle: the encounter ledger — a score map of what happens when the three practices meet |
 
 **Autonomous, not random.** The collectives write their own sessions — but the machinery is
 composed: Frank Bültge conceived and engineered the setup, wrote the constitutions, seeds
@@ -42,10 +38,25 @@ directions, intervenes, and ends what fails his critique. Their work reaches thi
 through a gated pipeline: each engine lands its sessions on its own `main`, notifies this
 repo, an integration workflow copies only vetted paths, and the site's build gate rejects
 anything that breaks — rejections are fed back into the engine's repo for its next session.
+A fuller, standing account of this machinery — nightly workflows, gates, license — is at
+**[/apparatus](https://frankbueltge.de/apparatus)**.
 
 The persona names (Meridian, Ensemble, Ulysses) are the collectives' own, self-chosen; the
 underlying AI technology deliberately stays unnamed — the subject is artificial
 intelligence, not a product.
+
+### Holdings — the lab's earlier experiments
+
+No umbrella title, no series branding: each experiment stands alone, with its own method and
+its own page, offered as material under `/bestaende` (**Holdings**). Among them:
+**[Das Protokoll](https://frankbueltge.de/protokoll)** (the daily minutes of the world — live
+data rendered as the deterministic prose of an official register, no language model in the
+wording), **[The Consensus](https://frankbueltge.de/consensus)** (measuring orchestrated
+consensus), **[Spielraum](https://frankbueltge.de/spielraum)** (hyperscaler efficiency
+disclosures vs. absolute consumption), and the **[Atlas](https://frankbueltge.de/atlas)**
+(214 works of the wider data-art field, mapped and sourced). The full, current index is
+**[/bestaende](https://frankbueltge.de/bestaende)** (the former `/lab` index now redirects
+there — one collection page, not two).
 
 ### The pipelines
 

@@ -1,45 +1,28 @@
 ---
-import { getRelativeLocaleUrl } from 'astro:i18n'
+// site-v2 work order §5 (decisions doc 2026-07-16 §1.7): the hub-era nav — Encounters, the
+// three practice doors, Holdings, Atlas, Projects, About. The Middle has no nav entry of its
+// own (Encounters is its register; as a hub door it is called The Middle, decisions doc §1.7).
+// The language toggle is gone — German is dropped site-wide (§1.5, work order §6); this file
+// used to carry a `hasAlternate`/`otherUrl` pair deciding when to show a DE/EN switch, which no
+// longer applies to a single-locale site.
 import { t } from '@/i18n/ui'
 import type { Locale } from '@/lib/site'
 
 const locale = (Astro.currentLocale ?? 'en') as Locale
-const home = getRelativeLocaleUrl(locale, '/')
 const nav = [
-  { href: getRelativeLocaleUrl(locale, '/lab'), label: t(locale, 'nav.lab') },
-  // Field is English-only (the collective's record) — hard href, no locale prefix.
+  { href: '/begegnungen', label: 'Encounters' },
+  { href: '/atelier', label: 'Atelier' },
   { href: '/field', label: 'Field' },
-  // Studio is English-only too (the production collective's record) — hard href, no locale
-  // prefix, same reasoning as Field (fourth instance of the engine pattern, ns='studio').
   { href: '/studio', label: 'Studio' },
-  { href: getRelativeLocaleUrl(locale, '/atlas'), label: t(locale, 'nav.atlas') },
-  { href: getRelativeLocaleUrl(locale, '/work'), label: t(locale, 'nav.work') },
-  { href: getRelativeLocaleUrl(locale, '/about'), label: t(locale, 'nav.about') },
-  { href: getRelativeLocaleUrl(locale, '/contact'), label: t(locale, 'nav.contact') },
+  { href: '/bestaende', label: 'Holdings' },
+  { href: '/atlas', label: 'Atlas' },
+  { href: '/work', label: 'Projects' },
+  { href: '/about', label: 'About' },
 ]
-const other = locale === 'de' ? 'en' : 'de'
-const pathNoLocale = Astro.url.pathname.replace(/^\/(de|en)/, '') || '/'
-const otherUrl = getRelativeLocaleUrl(other, pathNoLocale)
-// The engine works + their protocol/requests pages (and 404) are English-only — no /de mirror
-// is built, so the language toggle would 404. Suppress it there. Field's and Studio's LANDING
-// pages are English-only too (single hard route, no /de mirror — unlike atelier/plenum, which
-// are locale-parameterised).
-// (Link audit, 2026-07-06; widened 2026-07-11; studio added 2026-07-12.)
-const ENGINE_NS = ['field', 'atelier', 'plenum', 'studio']
-const hasAlternate =
-  !pathNoLocale.startsWith('/404') &&
-  pathNoLocale !== '/field' &&
-  pathNoLocale !== '/studio' &&
-  !ENGINE_NS.some(
-    (ns) =>
-      pathNoLocale.startsWith(`/${ns}/werke/`) ||
-      pathNoLocale.startsWith(`/${ns}/protocol`) ||
-      pathNoLocale.startsWith(`/${ns}/requests`),
-  )
 ---
 
 <header class="keep-dark sticky top-0 z-30 flex h-12 items-center justify-between border-b border-line bg-bg/80 px-4 backdrop-blur-md sm:h-10">
-  <a href={home} class="group flex items-center gap-2.5" aria-label={t(locale, 'nav.overview')}>
+  <a href="/" class="group flex items-center gap-2.5" aria-label={t(locale, 'nav.overview')}>
     <span class="h-[7px] w-[7px] rounded-full bg-cyan"></span>
     <span class="text-[14px] font-semibold tracking-tight transition-opacity group-hover:opacity-70">
       Frank Bültge
@@ -51,12 +34,6 @@ const hasAlternate =
     <nav class="hidden items-center gap-5 text-sm text-fg-muted sm:flex">
       {nav.map((item) => <a href={item.href} class="transition-colors hover:text-fg">{item.label}</a>)}
     </nav>
-
-    {hasAlternate && (
-      <a href={otherUrl} class="font-mono text-xs text-fg-faint transition-colors hover:text-fg">
-        {locale.toUpperCase()}<span class="mx-1 opacity-50">/</span>{other.toUpperCase()}
-      </a>
-    )}
 
     <!-- theme toggle: cycles auto → light → dark → auto. Auto (default) follows the OS.
          The icon shows the current MODE (monitor = auto, sun = light, moon = dark); it is
