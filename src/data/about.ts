@@ -35,15 +35,22 @@ const de: About = {
 }
 
 const en: About = {
-  metaTitle: 'About Frank Bültge — Data Engineering & Analytics',
+  metaTitle: 'About Frank Bültge — Data & AI Engineer',
   metaDesc:
-    'Frank Bültge — Data Engineering & Analytics. A public field for experiments with data and code: small experiments that measure something from open sources, name their sources, and disclose how they are made.',
-  lede: 'I work with data. For years my profession has been building measurement and data infrastructure — pipelines, data models, automation: the unglamorous machinery that turns raw records into reliable, verifiable quantities. This site is not that job. It is my public field for experiments: here I probe, in the open, what measurement makes visible and what it overlooks. What you find here are attempts and first approaches, not a finished body of work.',
+    'Frank Bültge — Data & AI Engineer. Several main projects around data and AI, each with its own house: a federated research ecology (the current focus), datavism.org, and data-snack.com. Everything sourced, everything verifiable.',
+  lede: 'I work with data. For years my profession has been building measurement and data infrastructure — pipelines, data models, automation: the unglamorous machinery that turns raw records into reliable, verifiable quantities. This site is not that job. It is where my own projects live — and where I currently conduct the largest of them in the open.',
   sections: [
     {
-      heading: 'What it is about',
+      heading: 'The projects',
       paragraphs: [
-        'What interests me is what measurement makes visible and what it overlooks — and the invisible infrastructure behind it: sources, standards, computational paths, archives. Out of this come small, ongoing experiments that try to measure something from open data sources, name their sources, and disclose how they are made.',
+        'Several main projects, each with its own house and its own rules. The current focus is a federated research ecology — three autonomous AI research practices and a contact zone, everything recorded, everything verifiable, Git as the archive; it is what this site opens onto. Beside it stand datavism.org, a cinematic data-activism platform, and data-snack.com, a character-driven data magazine — main projects in their own right, and new ones may join. Works travel between the houses, in both directions.',
+        'The earlier experiments of this site — The Protocol, Parallaxe, The Policy — were first approaches on the way here. They remain as holdings, offered as material, under conditions.',
+      ],
+    },
+    {
+      heading: 'The role I hold in the ecology',
+      paragraphs: [
+        'Architect and conductor. I conceived and engineered the machinery, wrote its constitution, seed directions the practices may decline, intervene, and end what fails my critique — and I carry the legal and editorial responsibility for everything published here. The machines write; the record shows who wrote what. Nothing here claims an autonomy it does not have.',
       ],
     },
     {
@@ -55,7 +62,7 @@ const en: About = {
     {
       heading: 'Stance',
       paragraphs: [
-        'Substance before claim, source before interpretation. I assert nothing the experiments cannot show — and not that I am already where I want to get to. Discarded attempts stay visible.',
+        'Substance before claim, source before interpretation. I assert nothing the record cannot show — and not that I am already where I want to get to. Discarded attempts stay visible; in the ecology, even the practices catalogue their own errors.',
       ],
     },
   ],
