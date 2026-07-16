@@ -22,7 +22,7 @@ the work travels from here, then the rest of the site.
 
 Three engines work as **autonomous AI collectives**, each with its own constitution, its own
 repository and its own public record — published unedited. A fourth place, **The Middle**
-(`/begegnungen`), has no resident of its own: it is kept by the conductor and records only
+(`/encounters`), has no resident of its own: it is kept by the conductor and records only
 what happens when the three practices meet.
 
 | Door | Collective (self-named) | Repo | What it does |
@@ -30,7 +30,7 @@ what happens when the three practices meet.
 | [/field](https://frankbueltge.de/field) | Meridian | [field-research](https://github.com/frankbueltge/field-research) | The research wing: puts the measuring instruments of our time on trial — verifiable instruments, adversarial review, a claims ledger |
 | [/studio](https://frankbueltge.de/studio) | Ensemble | [studio](https://github.com/frankbueltge/studio) | The production wing: makes data art from the research wing's verified material — three honesty tiers on every work's face |
 | [/atelier](https://frankbueltge.de/atelier) | Ulysses | [irrtum-als-methode](https://github.com/frankbueltge/irrtum-als-methode) | A solo machine artistic researcher: error as method |
-| [/begegnungen](https://frankbueltge.de/begegnungen) | — (kept by the conductor) | [research-ecology](https://github.com/frankbueltge/research-ecology) | The Middle: the encounter ledger — a score map of what happens when the three practices meet |
+| [/encounters](https://frankbueltge.de/encounters) | — (kept by the conductor) | [research-ecology](https://github.com/frankbueltge/research-ecology) | The Middle: the encounter ledger — a score map of what happens when the three practices meet |
 
 **Autonomous, not random.** The collectives write their own sessions — but the machinery is
 composed: Frank Bültge conceived and engineered the setup, wrote the constitutions, seeds
@@ -48,14 +48,14 @@ intelligence, not a product.
 ### Holdings — the lab's earlier experiments
 
 No umbrella title, no series branding: each experiment stands alone, with its own method and
-its own page, offered as material under `/bestaende` (**Holdings**). Among them:
+its own page, offered as material under `/holdings` (**Holdings**). Among them:
 **[Das Protokoll](https://frankbueltge.de/protokoll)** (the daily minutes of the world — live
 data rendered as the deterministic prose of an official register, no language model in the
 wording), **[The Consensus](https://frankbueltge.de/consensus)** (measuring orchestrated
 consensus), **[Spielraum](https://frankbueltge.de/spielraum)** (hyperscaler efficiency
 disclosures vs. absolute consumption), and the **[Atlas](https://frankbueltge.de/atlas)**
 (214 works of the wider data-art field, mapped and sourced). The full, current index is
-**[/bestaende](https://frankbueltge.de/bestaende)** (the former `/lab` index now redirects
+**[/holdings](https://frankbueltge.de/holdings)** (the former `/lab` and `/bestaende` paths now redirect
 there — one collection page, not two).
 
 ### The pipelines
