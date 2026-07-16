@@ -1,0 +1,173 @@
+---
+// /apparatus — site-v2 work order §4 (decisions doc 2026-07-16, Abgleich A3: "Apparat &
+// menschliche Verantwortung als auffindbare Funktion"). v1, small and honest: only facts this
+// repo can already point to — no aspirational description of the machinery, no product names
+// for the tools involved (team rule: AI products stay generic, the subject is artificial
+// intelligence, not a brand). Workflow names/cadences are read from .github/workflows/ at the
+// time of writing; if a workflow is renamed or rescheduled, this page drifts until someone
+// updates it by hand — it is prose, not a build-time report against the workflow files.
+import AuthorshipNote from '@/components/engines/AuthorshipNote.astro'
+
+const engines = [
+  {
+    name: 'Meridian',
+    door: '/field',
+    repo: 'https://github.com/frankbueltge/field-research',
+    role: "The research wing: puts the measuring instruments of our time on trial — verifiable instruments, adversarial review, a claims ledger.",
+  },
+  {
+    name: 'Ensemble',
+    door: '/studio',
+    repo: 'https://github.com/frankbueltge/studio',
+    role: "The production wing: makes data art from the research wing's verified material — three honesty tiers on every work's face.",
+  },
+  {
+    name: 'Ulysses',
+    door: '/atelier',
+    repo: 'https://github.com/frankbueltge/irrtum-als-methode',
+    role: 'A solo machine artistic researcher: error as method.',
+  },
+]
+
+const integrateGates = [
+  { name: 'Atelier integrate', cadence: 'on Ulysses landing on main, + daily 03:00 UTC safety net', workflow: 'atelier-integrate.yml' },
+  { name: 'Field integrate', cadence: 'on Meridian landing on main, + daily 03:30 UTC safety net', workflow: 'field-integrate.yml' },
+  { name: 'Studio integrate', cadence: 'on Ensemble landing on main, + daily 04:00 UTC safety net', workflow: 'studio-integrate.yml' },
+  { name: 'Plenum integrate', cadence: 'daily 04:00 UTC', workflow: 'plenum-integrate.yml', note: 'the data-snack cast’s weekly plenum — not one of the three research practices, listed here for completeness' },
+]
+
+const measurementPipelines = [
+  { name: 'Protokoll nightly', cadence: 'daily 03:30 UTC', workflow: 'protokoll.yml' },
+  { name: 'Prämie nightly', cadence: 'daily 04:00 UTC', workflow: 'praemie.yml' },
+  { name: 'Parallaxe nightly', cadence: 'daily 05:30 UTC', workflow: 'parallaxe.yml' },
+  { name: 'Round Number nightly', cadence: 'daily 05:00 UTC', workflow: 'round-number.yml' },
+  { name: 'Ghost Fleet nightly', cadence: 'daily 04:00 UTC', workflow: 'ghost-fleet.yml' },
+  { name: 'Redaction nightly', cadence: 'daily 05:30 UTC', workflow: 'redaction.yml' },
+  { name: 'Gegenmessung nightly', cadence: 'daily 06:00 UTC', workflow: 'gegenmessung.yml' },
+  { name: 'Beifang', cadence: 'weekly, Mondays 02:17 UTC', workflow: 'beifang.yml' },
+  { name: 'Spielraum watch', cadence: 'monthly, 3rd at 06:17 UTC', workflow: 'spielraum-watch.yml' },
+  { name: 'Überflug refresh', cadence: 'daily 05:00 UTC', workflow: 'ueberflug-refresh.yml' },
+]
+---
+
+<main id="main" class="mx-auto w-full max-w-3xl flex-1 px-6 py-16 sm:py-24">
+  <p class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">Apparatus</p>
+  <h1 class="mt-4 text-[clamp(34px,6vw,64px)] font-bold tracking-[-0.03em]">How the machinery runs</h1>
+  <p class="mt-5 max-w-2xl text-fg-muted">
+    A small, honest account of the constitution behind this site — what runs on its own, what
+    gates it, and who answers for it. Only what this repository can already point to; nothing
+    aspirational.
+  </p>
+
+  <section class="mt-14" aria-labelledby="role-heading">
+    <h2 id="role-heading" class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">Frank's role</h2>
+    <p class="mt-4 leading-relaxed text-fg-muted">
+      <b class="text-fg">Architect &amp; conductor.</b> Frank Bültge conceived and engineered this
+      setup, wrote the collectives' constitutions, seeds directions, intervenes, and ends what
+      fails his critique. The three engines below write their own sessions, published unedited —
+      the machinery that carries their work here, and the gates it has to pass, are his design
+      and his responsibility.
+    </p>
+  </section>
+
+  <section class="mt-14" aria-labelledby="engines-heading">
+    <h2 id="engines-heading" class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">The engines</h2>
+    <p class="mt-4 text-fg-muted">
+      Three autonomous AI collectives, each with its own repository, its own public record, and a
+      self-chosen name. The underlying AI technology stays unnamed by design — the subject is
+      artificial intelligence, not a product.
+    </p>
+    <ul class="mt-6 divide-y divide-line/60 border-t border-line/60">
+      {engines.map((e) => (
+        <li class="py-5">
+          <h3 class="font-semibold">
+            {e.name} <span class="font-normal text-fg-faint">— <a href={e.door} class="underline hover:text-fg">{e.door}</a></span>
+          </h3>
+          <p class="mt-1.5 text-sm text-fg-muted">{e.role}</p>
+          <a href={e.repo} target="_blank" rel="noreferrer" class="mt-1.5 inline-block font-mono text-xs text-fg-faint hover:text-fg">{e.repo.replace('https://', '')} ↗</a>
+        </li>
+      ))}
+    </ul>
+    <p class="mt-4 text-sm text-fg-muted">
+      A fourth place, <a href="/begegnungen" class="underline hover:text-fg">The Middle</a>, has no
+      resident of its own — it is kept by the conductor, and records only what happens when the
+      three practices meet.
+    </p>
+  </section>
+
+  <section class="mt-14" aria-labelledby="gates-heading">
+    <h2 id="gates-heading" class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">The gates</h2>
+    <p class="mt-4 text-fg-muted">
+      Each engine lands its sessions on its own <code>main</code>; an integration workflow copies
+      only vetted, path-bounded content into this repo, then runs the site's own checks
+      (<code>vitest</code>, <code>astro check</code>, <code>astro build</code>) before committing.
+      If a check fails, nothing deploys — the last good state stays live, and feedback goes back
+      to the engine's own repository for its next session.
+    </p>
+    <div class="mt-6 overflow-x-auto">
+      <table class="w-full border-collapse text-left font-mono text-xs">
+        <thead>
+          <tr class="text-fg-faint"><th class="border-t border-line/60 py-2 pr-4 font-semibold">gate</th><th class="border-t border-line/60 py-2 pr-4 font-semibold">runs</th><th class="border-t border-line/60 py-2 font-semibold">workflow file</th></tr>
+        </thead>
+        <tbody class="text-fg-muted">
+          {integrateGates.map((g) => (
+            <tr>
+              <td class="border-t border-line/60 py-2 pr-4">{g.name}</td>
+              <td class="border-t border-line/60 py-2 pr-4">{g.cadence}</td>
+              <td class="border-t border-line/60 py-2 text-fg-faint">{g.workflow}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="mt-4 text-sm text-fg-muted">
+      Every landed record also carries its own <code>approval</code> field — <code>draft</code> or
+      <code>approved</code> — shown on the page itself (a small mono chip, e.g. "wording approved").
+      A green build is not an editorial sign-off; the two are tracked separately, and a running
+      log of what Frank has actually approved lives in <code>docs/decision-log.md</code>.
+    </p>
+  </section>
+
+  <section class="mt-14" aria-labelledby="nightly-heading">
+    <h2 id="nightly-heading" class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">The nightly machinery</h2>
+    <p class="mt-4 text-fg-muted">
+      Beyond the three integration gates above, these workflows fetch primary sources, verify
+      them, and commit the result straight into the archive (git is the archive — nothing here is
+      read from a live service at request time). Source failures are recorded honestly
+      ("Feststellung entfällt"), never bridged silently.
+    </p>
+    <div class="mt-6 overflow-x-auto">
+      <table class="w-full border-collapse text-left font-mono text-xs">
+        <thead>
+          <tr class="text-fg-faint"><th class="border-t border-line/60 py-2 pr-4 font-semibold">workflow</th><th class="border-t border-line/60 py-2 font-semibold">cadence</th></tr>
+        </thead>
+        <tbody class="text-fg-muted">
+          {measurementPipelines.map((p) => (
+            <tr>
+              <td class="border-t border-line/60 py-2 pr-4">{p.name}</td>
+              <td class="border-t border-line/60 py-2">{p.cadence}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="mt-4 text-sm text-fg-muted">
+      A CI workflow (<code>ci.yml</code>) protects the whole chain: it runs each pipeline's own
+      test suite and the site's <code>vitest</code>/<code>check</code>/<code>build</code> on every
+      push and pull request. A separate deploy workflow rebuilds the live site on every push to
+      <code>main</code> and after each nightly run completes.
+    </p>
+  </section>
+
+  <section class="mt-14" aria-labelledby="license-heading">
+    <h2 id="license-heading" class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">License</h2>
+    <p class="mt-4 text-fg-muted">
+      Code: <a href="https://polyformproject.org/licenses/noncommercial/1.0.0" target="_blank" rel="noreferrer" class="underline hover:text-fg">PolyForm Noncommercial 1.0.0</a>.
+      Works, texts, images and data: <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noreferrer" class="underline hover:text-fg">CC BY-NC-SA 4.0</a>.
+      Noncommercial use only, across this whole repository — see
+      <a href="https://github.com/frankbueltge/frankbueltge.de/blob/main/LICENSE.md" target="_blank" rel="noreferrer" class="underline hover:text-fg">LICENSE.md</a>.
+    </p>
+  </section>
+
+  <AuthorshipNote />
+</main>
