@@ -105,9 +105,9 @@ describe('removed DE routes are covered by public/_redirects', () => {
 describe('the retired /lab collection index', () => {
   const rules = parseRedirects(raw)
 
-  it('redirects to /bestaende', () => {
+  it('redirects to /holdings', () => {
     const labRule = rules.find((r) => r.from === '/lab')
-    expect(labRule?.to).toBe('/bestaende')
+    expect(labRule?.to).toBe('/holdings')
   })
 
   it('is an exact rule (no wildcard), so it never swallows /lab/ueberflug-studie or /lab/[slug]', () => {
@@ -118,6 +118,42 @@ describe('the retired /lab collection index', () => {
 
   it('does not redirect /lab/ueberflug-studie (the page stays live)', () => {
     expect(isCovered('/lab/ueberflug-studie', rules)).toBe(false)
+  })
+})
+
+// Routen englisch (2026-07-16, Frank): /encounters und /holdings sind kanonisch; die deutschen
+// Ökologie-Pfade müssen abgedeckt sein, samt Unterseiten.
+const REMOVED_GERMAN_ECOLOGY_ROUTES = [
+  '/begegnungen',
+  '/begegnungen/enc-2026-001',
+  '/bestaende',
+]
+
+describe('German ecology routes are covered and point at the English canonicals', () => {
+  const rules = parseRedirects(raw)
+
+  it.each(REMOVED_GERMAN_ECOLOGY_ROUTES)('%s', (route) => {
+    expect(isCovered(route, rules)).toBe(true)
+  })
+
+  it('/begegnungen goes to /encounters, /bestaende to /holdings', () => {
+    expect(rules.find((r) => r.from === '/begegnungen')?.to).toBe('/encounters')
+    expect(rules.find((r) => r.from === '/bestaende')?.to).toBe('/holdings')
+  })
+})
+
+describe('the interim /akte record redirect (middle-web app not deployed yet)', () => {
+  const rules = parseRedirects(raw)
+
+  it('covers the record links the encounter export carries', () => {
+    expect(isCovered('/akte/encounters/enc-2026-001-calibration-gap-travels', rules)).toBe(true)
+    expect(isCovered('/akte/encounters/enc-2026-001-calibration-gap-travels/compare', rules)).toBe(true)
+  })
+
+  it('is temporary (302) and points at the public record on GitHub', () => {
+    const akte = rules.find((r) => r.from === '/akte/*')
+    expect(akte?.code).toBe('302')
+    expect(akte?.to).toContain('github.com/frankbueltge/research-ecology')
   })
 })
 
@@ -133,7 +169,13 @@ describe('every parsed rule', () => {
     }
   })
 
-  it('uses a permanent (301) redirect — nothing here is meant to be temporary', () => {
-    for (const r of rules) expect(r.code).toBe('301')
+  it('uses permanent (301) redirects — except the declared-interim /akte rule (302)', () => {
+    for (const r of rules) {
+      if (r.from === '/akte/*') {
+        expect(r.code).toBe('302')
+      } else {
+        expect(r.code).toBe('301')
+      }
+    }
   })
 })
