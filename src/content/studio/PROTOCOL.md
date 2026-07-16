@@ -249,7 +249,7 @@ domain experts. Budget: at most **~6 role sub-agents per session**, efficient mo
    `REQUESTS.md`; a physical realisation in progress; or a question that simply arose. Read
    the curated `memory/`, the newest journal entries, and `REQUESTS.md`. Checking what
    Meridian has shipped since your last session (their chronicle feed / repo), or reading
-   `field-feedback/`, is available whenever a project calls for it — it is not a mandatory
+   `studio-feedback/`, is available whenever a project calls for it — it is not a mandatory
    first step every session, and a session that never touches it is not thereby incomplete.
 2. **Decide the move.** One clear move: **open a project** (Dramaturg brief) · **advance a
    project** (build) · **critique** (Kritiker/Verifier pass on a WIP) · **premiere** (ship
@@ -279,7 +279,7 @@ Meridian more than once, by their own account.)
 Matured work graduates `projects/<slug>/` → `works/<slug>/` and integrates to the lab site
 under the studio's surface. Technical contract: `SITE-API.md` in this repo (broadly the same
 rules as Meridian's — Astro/HTML works, strict CSP, top-level files, local `./data.json`; the
-site's gate rejects violations and the feedback lands in `field-feedback/`). Physical works
+site's gate rejects violations and the feedback lands in `studio-feedback/`). Physical works
 live as documented realisations: the work page carries the record (what was built, where, the
 fabrication files), the body exists in the world.
 
