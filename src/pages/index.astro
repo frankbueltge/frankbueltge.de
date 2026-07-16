@@ -1,16 +1,15 @@
 ---
-// Ökologie-Neustrukturierung (Phase 3e, Branch ecology-restructure, Frank-Mandat 2026-07-15
-// "komplett neu strukturieren"): die Startseite ist jetzt der Eingang in die aktuelle Begegnung
-// statt der bisherigen Bio/Experimente-Übersicht (docs/design/site-restructure-concept.md §1/
-// §2). Git ist das Archiv — die vorige Fassung lebt in der Historie dieser Datei, nicht als
-// auskommentierter Block; der alte Home.astro-Baustein bleibt unangetastet im Repo, nur
-// unverlinkt. NICHT auf main mergen ohne Franks ausdrückliches Go (siehe Arbeitsauftrag §0).
+// site-v2 work order §3 (research-ecology docs/design/site-v2-decisions-2026-07-16.md §1.3):
+// the hub is now the entrance — hero (the pulse) → the current encounter, condensed → the four
+// doors → where works travel → also on this site. The previous entrance (the full score/
+// Partitur experience) moved to its own stable URL, /begegnungen. Approval trail for both this
+// change and the score-entrance it replaces: docs/decision-log.md. Git is the archive — the
+// prior versions of this file live in its history, not as commented-out blocks; the old
+// Home.astro/HeroField.astro components stay in the repo, unlinked (git log for provenance).
 import Page from '@/layouts/Page.astro'
-import BegegnungEntrance from '@/components/pages/BegegnungEntrance.astro'
-import { currentEntrance } from '@/lib/begegnungen'
-
-const entrance = currentEntrance
+import HubEntrance from '@/components/pages/HubEntrance.astro'
+import { NAMING } from '@/config/naming'
 ---
-<Page title={`${entrance.headline} | Frank Bültge`} description={entrance.status.statusLine}>
-  <BegegnungEntrance />
+<Page title={`${NAMING.title} | Frank Bültge`} description={NAMING.sub}>
+  <HubEntrance />
 </Page>
