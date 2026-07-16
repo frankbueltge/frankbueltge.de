@@ -64,6 +64,18 @@ export const STUDIO_NARRATIVE = {
   approval: 'draft' as 'draft' | 'approved',
   stageRule:
     'the entry to /studio is the stage, not a gallery grid: one spot, and the floor keeps every strike',
+  /** Orientierungszeile auf dem Boden (Umbau 2026-07-16 — Franks Kritik: die Karte war
+   * ohne Schlüssel nicht lesbar; diese eine Zeile setzt die Vogelperspektive). */
+  orientNote: 'the stage, seen from above — one spot lights what is public now',
+  stageKey: {
+    heading: 'Stage key',
+    spot: 'the spot — the lit pool: what is public now',
+    lamp: 'the lamp on the curtain bar — its beam draws the spot',
+    tape: 'blocking tape — the running work’s position on the floor',
+    xmark: 'X-mark — a struck position; the floor keeps it, the reason on hover',
+    gasse: 'die Gasse — the offstage strip: declined or held, visible but unlit',
+    curtain: 'the curtain line — the ramp to the public',
+  },
   provenance: {
     stage:
       'chronicle mirror (curated + upstream) · works meta.json · enc-2026-001 score export · kill reasons hand-curated in src/data/studio/stage.curated.json from the engine repo’s session commits (quoted verbatim; the mirror does not carry commit messages)',

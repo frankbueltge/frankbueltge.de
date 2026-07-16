@@ -59,6 +59,7 @@ const svg = buildStageSvg({
   gasse,
   strikeNote: STUDIO_GRAMMAR.strikeNote(kills.length),
   gasseLabel: STUDIO_GRAMMAR.gasseLabel,
+  orientNote: STUDIO_NARRATIVE.orientNote,
 })
 
 const sessions = chronicle.map((e) => e.collective_session).filter((s): s is number => s !== null)
@@ -110,6 +111,15 @@ const rows: Row[] = [
     footRight="the correction this work sent upstream lives in The Middle → enc-2026-001"
   >
     <figure set:html={svg} />
+
+    <aside class="st-legend" aria-label={STUDIO_NARRATIVE.stageKey.heading}>
+      <div class="lg-row"><svg class="lg-mini" viewBox="0 0 46 30"><ellipse class="spotpool" cx="23" cy="15" rx="16" ry="9"/></svg><span>{STUDIO_NARRATIVE.stageKey.spot}</span></div>
+      <div class="lg-row"><svg class="lg-mini" viewBox="0 0 46 30"><g class="lamp"><rect x="19" y="3" width="8" height="4"/></g><path class="beamline" d="M21 7 L10 26"/><path class="beamline" d="M25 7 L36 26"/></svg><span>{STUDIO_NARRATIVE.stageKey.lamp}</span></div>
+      <div class="lg-row"><svg class="lg-mini" viewBox="0 0 46 30"><path class="tapemark" d="M10 12 V6 H16"/><path class="tapemark" d="M36 18 V24 H30"/></svg><span>{STUDIO_NARRATIVE.stageKey.tape}</span></div>
+      <div class="lg-row"><svg class="lg-mini" viewBox="0 0 46 30"><path class="xmark" d="M16 8 L30 22 M30 8 L16 22"/></svg><span>{STUDIO_NARRATIVE.stageKey.xmark}</span></div>
+      <div class="lg-row"><svg class="lg-mini" viewBox="0 0 46 30"><path class="gasse" d="M23 3 V27"/></svg><span>{STUDIO_NARRATIVE.stageKey.gasse}</span></div>
+      <div class="lg-row"><svg class="lg-mini" viewBox="0 0 46 30"><path class="curtainline" d="M4 15 H42"/></svg><span>{STUDIO_NARRATIVE.stageKey.curtain}</span></div>
+    </aside>
 
     <section class="st-record">
       <h2>Stage record — every mark, uncompressed</h2>
