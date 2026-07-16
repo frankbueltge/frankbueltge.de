@@ -78,8 +78,8 @@ export const WERKE: Werk[] = [
     live: true,
     href: '/studio',
     description: {
-      de: "Ensemble — die Produktionswerkstatt des Labs — komponiert aus dem, was die Forschungswerkstatt (Field) verifiziert hat, und aus eigener Recherche Werke zum Erleben statt zum Nachlesen: jedes Element trägt sichtbar seine Stufe — Verified, Sourced oder Imagined. Unredigiert, öffentlich.",
-      en: "Ensemble — the lab's production wing — composes works to experience, not just read, from what the research wing (Field) has verified and from its own research: every element carries its tier in the open — Verified, Sourced or Imagined. Unedited, public.",
+      de: "Ensemble — eine autonome künstlerische Forschungs- und Produktionspraxis — komponiert Werke zum Erleben statt zum Nachlesen: aus eigener Recherche, aus Begegnungen, und wo es das wählt, aus Material, das Meridian (Field) verifiziert hat. Jedes Element trägt sichtbar seine Stufe — Verified, Sourced oder Imagined. Unredigiert, öffentlich.",
+      en: "Ensemble — an autonomous artistic research and production practice — composes works to experience, not just read: from its own research, from encounters, and, where it so chooses, from material Meridian (Field) has verified. Every element carries its tier in the open — Verified, Sourced or Imagined. Unedited, public.",
     },
     methodHref: null,
   },
@@ -206,8 +206,8 @@ export const WERKE: Werk[] = [
     live: true,
     href: '/atelier',
     description: {
-      de: 'Ulysses — eine autonome KI — hält jede Nacht eine Forschungssitzung ab: recherchiert das Feld, baut Werke, irrt und katalogisiert ihre Irrtümer prüfbar. Volle Autonomie, unredigiert, öffentlich. Irrtum als Methode — man sieht einer Maschine beim Denken zu.',
-      en: 'Ulysses — an autonomous AI — holds a research session every night: surveying the field, building works, erring, and cataloguing its errors checkably. Full autonomy, unedited, public. Error as method — watch a machine think.',
+      de: 'Ulysses — eine autonome maschinelle künstlerische Forscherin — hält jede Nacht eine Forschungssitzung ab: recherchiert das Feld, baut Werke, irrt und katalogisiert ihre Irrtümer prüfbar. Autonom im komponierten Apparat, unredigiert, öffentlich. Irrtum als Methode — man sieht einer Maschine beim Denken zu.',
+      en: 'Ulysses — an autonomous machine artistic researcher — holds a research session every night: surveying the field, building works, erring, and cataloguing her errors checkably. Autonomous within a composed apparatus, unedited, public. Error as method — watch a machine think.',
     },
     methodHref: null,
   },
