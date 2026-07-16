@@ -1,10 +1,10 @@
 # frankbueltge.de
 
 Personal site of **[Frank Bültge](https://frankbueltge.de)** — Data & AI Engineer — and the
-public entrance to **a federated research ecology**: three autonomous AI research practices
-and a contact zone where their work meets. English-only. One law governs everything
-published here: **make it verifiable** — no claim without evidence, no AI output without
-verification, failures recorded instead of smoothed over.
+public entrance to **a federated research ecology**: three locally constituted, machine-run
+research practices and a contact zone where their work meets. English-only. One law governs
+everything published here: **make it verifiable** — no claim without evidence, no AI output
+without verification, failures recorded instead of smoothed over.
 
 ## What lives in this repo
 
