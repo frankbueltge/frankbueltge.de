@@ -1,0 +1,303 @@
+/* Studio — die Bühne & der Abendzettel (Praxis-Oberflächen-Paket). Eigene Bildsprache der
+   Praxis, portiert aus research-ecology docs/design/variants-2026-07-15/studio_viz.py
+   (STUDIO_CSS + geteilte Seiten-Grundstile). ADR 0010: KEINE geteilte visuelle Grammatik —
+   nichts hiervon teilt Partitur, Blatt oder Messprotokoll. Vollständig auf .studio-surface
+   gescopet, Tokens --st-*.
+
+   Licht (studio-aesthetik §1): Default DUNKEL — die einzige Praxis, deren Naturlicht die
+   Dunkelheit ist (Bühnenschwarz, warm); hell = Probenlicht. Die Mechanik folgt der Site
+   (auto→light→dark) — wie im Mockup, dessen SSR-Default ebenfalls dunkel war. Palette
+   validiert: Lampengold #bd8b21/#8a6a10, Vorhang-Karmesin #c2455a/#a83248. */
+
+:root[data-theme='dark'] .studio-surface {
+  --st-page: #0e0c0b;
+  --st-surface: #141110;
+  --st-ink: #eae4da;
+  --st-ink-2: #9a9188;
+  --st-hairline: #2e2825;
+  --st-lamp: #bd8b21;
+  --st-curtain: #c2455a;
+  --st-badge-bg: #1c1816;
+  --st-h1-ink: #f4efe6;
+  --st-spot-core: #f4ead2;
+  --st-spot-mid: #c8a94e;
+}
+:root[data-theme='light'] .studio-surface {
+  --st-page: #e9e4dc;
+  --st-surface: #f3efe9;
+  --st-ink: #221e1b;
+  --st-ink-2: #6d645c;
+  --st-hairline: #dcd4c8;
+  --st-lamp: #8a6a10;
+  --st-curtain: #a83248;
+  --st-badge-bg: #ece6dd;
+  --st-h1-ink: #1a1613;
+  --st-spot-core: #fff9ea;
+  --st-spot-mid: #e6d195;
+}
+
+.studio-surface {
+  --st-font-display: 'Bodoni 72', 'Didot', 'Playfair Display', Georgia, serif;
+  --st-font-record: ui-monospace, 'SF Mono', Menlo, monospace;
+  width: calc(100% - 2rem);
+  max-width: 95rem;
+  margin: 2rem auto 3rem;
+  padding: 2.125rem 2.5rem 3.75rem;
+  background: var(--st-surface);
+  color: var(--st-ink);
+  border: 1px solid var(--st-hairline);
+  font-family: var(--st-font-display);
+}
+@media (max-width: 640px) {
+  .studio-surface { padding: 1.5rem 1rem 2.5rem; }
+}
+
+.studio-surface .st-kicker {
+  font-family: var(--st-font-record);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--st-ink-2);
+  display: flex;
+  gap: 1.4em;
+  flex-wrap: wrap;
+  margin: 0;
+}
+.studio-surface .st-chip {
+  border: 1px solid var(--st-hairline);
+  padding: 1px 8px;
+  border-radius: 2px;
+  color: var(--st-ink-2);
+  text-transform: none;
+  letter-spacing: normal;
+}
+.studio-surface .st-h1 {
+  font-family: var(--st-font-display);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--st-h1-ink);
+  font-size: clamp(32px, 4.4vw, 60px);
+  line-height: 1.05;
+  margin: 0.45em 0 0.2em;
+  max-width: 26ch;
+}
+.studio-surface .st-status {
+  font-family: var(--st-font-record);
+  font-size: 14px;
+  color: var(--st-ink-2);
+}
+.studio-surface .st-status b { color: var(--st-ink); font-weight: 600; }
+.studio-surface figure { margin: 26px 0 8px; }
+.studio-surface svg#stage { width: 100%; height: auto; display: block; }
+
+/* Kopfleiste (stage rail) */
+.studio-surface .stagerail {
+  display: flex;
+  gap: 1.6em;
+  align-items: baseline;
+  margin: 18px 0 4px;
+  padding: 7px 0;
+  border-top: 1px solid var(--st-hairline);
+  border-bottom: 1px solid var(--st-hairline);
+  font-family: var(--st-font-record);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  flex-wrap: wrap;
+}
+.studio-surface .stagerail a {
+  color: var(--st-ink-2);
+  text-decoration: none;
+  text-transform: uppercase;
+}
+.studio-surface .stagerail a:hover { color: var(--st-ink); text-decoration: underline; }
+.studio-surface .sr-here {
+  color: var(--st-ink);
+  text-transform: uppercase;
+  border-bottom: 2px solid var(--st-curtain);
+}
+.studio-surface .sr-door { margin-left: auto; }
+.studio-surface a.sr-door { color: var(--st-ink-2); text-transform: uppercase; }
+.studio-surface .st-back { font: 12px var(--st-font-record); letter-spacing: 0.08em; }
+.studio-surface .st-back a { color: var(--st-ink-2); text-decoration: none; text-transform: uppercase; }
+.studio-surface .st-back a:hover { color: var(--st-ink); text-decoration: underline; }
+
+/* Bühnen-Zeichen: Spot, Marke, X, Gasse, Marquee — nichts geteilt */
+.studio-surface .stagefloor { fill: var(--st-page); stroke: var(--st-hairline); }
+.studio-surface .curtainline { stroke: var(--st-curtain); stroke-width: 3; }
+.studio-surface .tapemark { stroke: var(--st-ink-2); stroke-width: 1.6; fill: none; }
+.studio-surface .xmark { stroke: var(--st-curtain); stroke-width: 2; fill: none; }
+.studio-surface .gasse { stroke: var(--st-ink-2); stroke-width: 1; stroke-dasharray: 5 5; }
+/* Texte IM Kegel stehen in dunkler Tinte — beleuchtete Objekte liest man dunkel, in beiden Themes */
+.studio-surface .t-worktitle { font: 500 40px var(--st-font-display); fill: #2e250f; letter-spacing: 0.06em; }
+.studio-surface .t-workmeta { font: 12px var(--st-font-record); fill: var(--st-ink-2); }
+.studio-surface .t-inspot { fill: #4a3d1c; }
+.studio-surface .t-marquee { font: 600 13px var(--st-font-record); fill: #6b4f0e; letter-spacing: 0.34em; }
+.studio-surface .t-quote-s { font: italic 13.5px var(--st-font-display); fill: #3a2f14; }
+.studio-surface .t-kill { font: 11.5px var(--st-font-record); fill: var(--st-ink-2); }
+.studio-surface .t-kill-n { font: 600 12px var(--st-font-record); fill: var(--st-ink); }
+.studio-surface .t-gasse { font: 600 11px var(--st-font-record); letter-spacing: 0.2em; fill: var(--st-ink-2); }
+.studio-surface .evt2 { cursor: help; outline: none; }
+.studio-surface .evt2:focus-visible { outline: 1px dashed var(--st-ink-2); }
+
+/* Abendzettel (playbill) */
+.studio-surface .zettel { max-width: 660px; margin: 30px auto 10px; text-align: center; }
+.studio-surface .zettel .abend {
+  font: 600 13px var(--st-font-record);
+  letter-spacing: 0.3em;
+  color: var(--st-ink-2);
+  margin: 34px 0 6px;
+  text-transform: uppercase;
+}
+.studio-surface .zettel .rule { border: none; border-top: 1px solid var(--st-hairline); margin: 12px auto; width: 60%; }
+.studio-surface .zettel .rule-heavy { border-top: 2px solid var(--st-ink); width: 40%; }
+.studio-surface .zettel .nr { font: 600 12px var(--st-font-record); color: var(--st-lamp); letter-spacing: 0.18em; }
+.studio-surface .zettel .line { font: 19px var(--st-font-display); color: var(--st-ink); margin: 2px 0 18px; line-height: 1.4; }
+.studio-surface .zettel .move {
+  font: 600 10.5px var(--st-font-record);
+  letter-spacing: 0.22em;
+  color: var(--st-ink-2);
+  text-transform: uppercase;
+}
+.studio-surface .zettel .kill { color: var(--st-curtain); }
+.studio-surface .zettel .prem { font: 500 30px var(--st-font-display); letter-spacing: 0.04em; color: var(--st-h1-ink); margin: 6px 0 4px; }
+.studio-surface .zettel .edge { font: italic 15px var(--st-font-display); color: var(--st-ink-2); margin-top: 26px; }
+
+/* Register (uncompressed table) + Fuß */
+.studio-surface .st-record h2 {
+  font: 600 13px var(--st-font-record);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--st-ink-2);
+  margin: 8px 0 10px;
+}
+.studio-surface .st-tbl-wrap { overflow-x: auto; }
+.studio-surface table { border-collapse: collapse; width: 100%; font: 12.5px var(--st-font-record); }
+.studio-surface th { text-align: left; font-weight: 600; color: var(--st-ink-2); letter-spacing: 0.06em; }
+.studio-surface th,
+.studio-surface td { border-top: 1px solid var(--st-hairline); padding: 7px 14px 7px 0; vertical-align: top; }
+.studio-surface td.mono { white-space: nowrap; color: var(--st-ink-2); }
+.studio-surface td.q { font-family: var(--st-font-display); font-style: italic; font-size: 14px; max-width: 60ch; }
+.studio-surface .st-foot {
+  margin-top: 26px;
+  font: 11.5px var(--st-font-record);
+  color: var(--st-ink-2);
+  display: flex;
+  justify-content: space-between;
+  gap: 2em;
+  flex-wrap: wrap;
+}
+.studio-surface .st-room-intro {
+  font-family: var(--st-font-display);
+  font-size: 15.5px;
+  color: var(--st-ink-2);
+  max-width: 70ch;
+  margin: 10px 0 26px;
+}
+
+/* Zimmer: Werke, Journal, Apparat */
+.studio-surface .st-work-card {
+  border: 1px solid var(--st-hairline);
+  background: var(--st-badge-bg);
+  padding: 18px 20px;
+  margin: 0 0 18px;
+  scroll-margin-top: 4rem;
+}
+.studio-surface .st-work-card h3 { font: 500 22px var(--st-font-display); letter-spacing: 0.04em; margin: 0; }
+.studio-surface .st-work-card .st-work-date { font: 11px var(--st-font-record); color: var(--st-ink-2); margin-left: 0.8em; }
+.studio-surface .st-work-card p { margin: 0.5em 0 0; font-size: 14.5px; line-height: 1.55; color: var(--st-ink-2); max-width: 80ch; }
+.studio-surface .st-work-card iframe {
+  display: block;
+  width: 100%;
+  height: 600px;
+  resize: vertical;
+  overflow: auto;
+  border: 1px solid var(--st-hairline);
+  background: #fff;
+  margin-top: 14px;
+}
+.studio-surface .st-work-card .st-work-links {
+  display: flex;
+  justify-content: space-between;
+  gap: 1em;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  font: 11px var(--st-font-record);
+  color: var(--st-ink-2);
+}
+.studio-surface .st-work-card .st-work-links a { color: var(--st-ink-2); text-decoration: underline; }
+.studio-surface .st-work-card .st-work-links a:hover { color: var(--st-ink); }
+
+.studio-surface details.st-day { border-top: 1px solid var(--st-hairline); padding: 2px 0; }
+.studio-surface details.st-day > summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  gap: 1.2em;
+  align-items: baseline;
+  padding: 9px 2px;
+  font-family: var(--st-font-record);
+  font-size: 13px;
+  color: var(--st-ink-2);
+}
+.studio-surface details.st-day > summary::-webkit-details-marker { display: none; }
+.studio-surface details.st-day > summary .st-day-anchor { color: var(--st-lamp); font-weight: 600; }
+.studio-surface details.st-day > summary .st-day-title { font-family: var(--st-font-display); font-size: 16px; color: var(--st-ink); }
+.studio-surface details.st-day > summary:hover .st-day-title { text-decoration: underline; }
+.studio-surface .st-prose {
+  font-family: var(--st-font-display);
+  font-size: 15.5px;
+  line-height: 1.6;
+  color: var(--st-ink);
+  max-width: 74ch;
+  padding: 6px 2px 18px;
+}
+.studio-surface .st-prose h1,
+.studio-surface .st-prose h2,
+.studio-surface .st-prose h3 { font-weight: 500; line-height: 1.25; margin: 1.2em 0 0.5em; }
+.studio-surface .st-prose h1 { font-size: 1.3em; }
+.studio-surface .st-prose h2 { font-size: 1.15em; }
+.studio-surface .st-prose h3 { font-size: 1em; }
+.studio-surface .st-prose p, .studio-surface .st-prose ul, .studio-surface .st-prose ol { margin: 0.7em 0; }
+.studio-surface .st-prose ul, .studio-surface .st-prose ol { padding-left: 1.4em; }
+.studio-surface .st-prose a { color: var(--st-lamp); text-decoration: underline; }
+.studio-surface .st-prose code {
+  font-family: var(--st-font-record);
+  font-size: 0.8em;
+  background: var(--st-badge-bg);
+  padding: 1px 4px;
+  border-radius: 2px;
+}
+.studio-surface .st-prose pre {
+  font-family: var(--st-font-record);
+  font-size: 12px;
+  background: var(--st-badge-bg);
+  border: 1px solid var(--st-hairline);
+  padding: 10px 12px;
+  overflow-x: auto;
+  margin: 0.9em 0;
+}
+.studio-surface .st-prose pre code { background: none; padding: 0; }
+.studio-surface .st-prose blockquote {
+  border-left: 2px solid var(--st-hairline);
+  margin: 0.9em 0;
+  padding-left: 1em;
+  color: var(--st-ink-2);
+}
+.studio-surface .st-prose table { font-size: 12px; }
+.studio-surface .st-prose hr { border: none; border-top: 1px solid var(--st-hairline); margin: 1.2em 0; }
+.studio-surface .st-prose img { max-width: 100%; }
+
+.studio-surface .st-apparatus-list { list-style: none; padding: 0; margin: 0; }
+.studio-surface .st-apparatus-list li { border-top: 1px solid var(--st-hairline); padding: 13px 2px; }
+.studio-surface .st-apparatus-list b { font-weight: 600; }
+.studio-surface .st-apparatus-list a { color: var(--st-lamp); text-decoration: underline; }
+.studio-surface .st-apparatus-list .li-note {
+  display: block;
+  font: 12px var(--st-font-record);
+  color: var(--st-ink-2);
+  margin-top: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .studio-surface * { transition: none !important; animation: none !important; }
+}
