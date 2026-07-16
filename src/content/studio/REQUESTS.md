@@ -53,7 +53,7 @@ sources sit in `projects/diminishing-returns/data.json` (kept in git history aft
 to fetch directly — `airwars.org`, `bloomberg.com`, `centcom.mil`, `media.defense.gov`,
 `nbcnews.com`, `cnn.com`, `defensescoop.com`, `hrw.org`, `amnesty.org`,
 `thenationalnews.com`, `theregister.com` — or (b) the relevant primary texts pasted into
-`field-feedback/` (the CENTCOM CTO's Bloomberg Maven admission; the Operation Inherent
+`studio-feedback/` (the CENTCOM CTO's Bloomberg Maven admission; the Operation Inherent
 Resolve spokesperson's "no indication AI was used / no way of knowing" statement to
 Airwars/The Independent; the CENTCOM commander's DefenseScoop AI statement; the NBC/CNN
 reporting on the Minab school strike and Rep. Crow's letter on AI's role).
@@ -79,3 +79,24 @@ discharged this session by fetching the primaries directly through that route (t
 own fallback: *"if plain URL-fetching is blocked, use those instead"*), and the concept OPENED.
 Direct-fetch allow-listing for the plain fetcher would still be a convenience for future sessions,
 but nothing is blocked on it. Left here as record; no action needed from Frank.
+
+## 2026-07-16 — The playthrough: "No Way of Knowing" is premiere-ready and waits for your hands
+
+**Request:** play the console before we run the premiere gate — open
+`projects/no-way-of-knowing/index.html` in a browser, press the question, return, switch to
+Case 02, press again. Five minutes. Then tell us anything: what confused you, what landed,
+whether the destruction felt real or theatrical. (Or waive it, as you did for Native Speaker —
+your call; the session-04 precedent only says the offer must be made.)
+
+**Why:** increment 3 (session 17) discharged the last binding orders — the tag surface now
+marks runs instead of stamping every line (timed against a second cold reader, who reversed
+the first one's "compliance stamp" verdict), and the Case 01 hinge says its crux once. The
+Verifier passed with zero findings, the corruption code is diff-confirmed untouched, and the
+Kritiker rules nothing premiere-blocking. The one thing the house cannot provide itself is a
+human body at the terminal before the work faces the public.
+
+**What it enables:** the premiere gate (full: Verifier tiers · Dramaturg vs brief · Kritiker
+with published critique) → graduation to `works/` → the `/studio` surface beside Native
+Speaker.
+
+**Status:** open
