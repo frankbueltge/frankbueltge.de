@@ -23,6 +23,11 @@ export const NAMING = {
   approval: 'approved' as 'draft' | 'approved',
 
   eyebrow: 'FRANK BÜLTGE · DATA & AI ENGINEER',
+  /** Fokus-Zeile über dem Titel (Frank, 16.07. nachmittags): die Ökologie ist das aktuell
+   * prominente Projekt unter mehreren Hauptprojekten — nicht die Identität der Site.
+   * „currently conducting" ist Haus-Vokabular (architect & conductor) und bleibt wahr,
+   * wenn der Fokus wandert. */
+  focusKicker: 'currently conducting',
   title: 'a federated research ecology',
   sub: 'Three autonomous AI research practices and a contact zone. Everything recorded, everything verifiable — Git is the archive.',
   conductorLine: 'architect & conductor: Frank Bültge · the machines write, the record shows who wrote what',
@@ -67,20 +72,24 @@ export const NAMING = {
     ] as DoorItem[],
   },
 
+  /** Umgerahmt (Frank, 16.07. nachmittags): datavism und data-snack sind KEINE Ableger der
+   * Ökologie, sondern gleichrangige Hauptprojekte mit eigenen Häusern — der Austausch
+   * läuft in beide Richtungen, und neue Projekte können dazukommen. */
   travel: {
-    kicker: 'WHERE WORKS TRAVEL',
-    kickerSub: 'STANDING VENUES ELSEWHERE',
-    note: 'other houses, other rules — what travels there is presented, not governed, by this site',
+    kicker: 'THE OTHER HOUSES',
+    kickerSub: 'MAIN PROJECTS IN THEIR OWN RIGHT',
+    note: 'independent houses, their own rules — works travel between them and the ecology, in both directions',
+    allLink: { label: 'all projects →', href: '/work' },
     items: [
       {
         name: 'datavism.org',
         href: 'https://datavism.org',
-        description: 'Cinematic data activism. Works and methods from the ecology surface there in an activist register.',
+        description: 'Cinematic data activism — an AI-driven platform for data power literacy. A main project in its own right.',
       },
       {
         name: 'data-snack.com',
         href: 'https://data-snack.com',
-        description: 'A character-driven data magazine. Takes up works made here and serves them in a different voice.',
+        description: 'A character-driven data magazine (a cyber-diner with a cast of its own). A main project in its own right.',
       },
     ],
   },
