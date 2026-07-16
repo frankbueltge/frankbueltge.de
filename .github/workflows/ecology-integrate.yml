@@ -1,0 +1,112 @@
+# .github/workflows/ecology-integrate.yml
+# Das bislang fehlende Ökologie-Glied der Kette (Runbook research-ecology docs/runbooks/
+# site-export.md; Arbeitsstrang site-v2-briefing §5.2; Freigabematrix site-v2-decisions §2 A4):
+# importer → Gate → export-site → Commit in die Site. Läuft NACH jedem Engine-Lauf (dieselben
+# repository_dispatch-Signale wie die Werk-Integrates — auch Franks manuelle Tages-Läufe) plus
+# Sicherheitsnetz-Cron. Idempotent: gleicher Engine-Stand ⇒ byte-gleicher Export ⇒ kein Commit.
+#
+# Freigabematrix (A4) eingebaut: Regeneration der BEREITS freigegebenen Projektion committet
+# automatisch auf main; eine NEUE Begegnung (neuer Slug / neue encounter_id) ist eine
+# Bedeutungsänderung → kein Auto-Commit, sondern Branch + PR + Issue an Frank.
+# Gate-Ehrlichkeit: geprüft wird der Export-Vertrag (Determinismus/Schema), NICHT die
+# commit-gepinnten Adapter-Zählstände — die sind Review-Werkzeug für Menschen (siehe
+# REPOSITORY-SEMANTIC-ALIGNMENT-Diskussion); ein roter Lauf erzeugt IMMER ein Issue.
+name: Ecology integrate
+
+on:
+  repository_dispatch:
+    types: [irrtum-landed, field-landed, studio-landed]
+  schedule:
+    - cron: '30 4 * * *'   # 06:30 Berlin — nach Engine-Nightlies (03:19–04:16 UTC) + Integrates
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+concurrency:
+  group: ecology-integrate
+
+jobs:
+  integrate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Clone research-ecology + engine repos
+        run: |
+          git clone https://github.com/frankbueltge/research-ecology /tmp/ecology
+          git clone https://github.com/frankbueltge/field-research /tmp/engines/field-research
+          git clone https://github.com/frankbueltge/irrtum-als-methode /tmp/engines/irrtum-als-methode
+          git clone https://github.com/frankbueltge/studio /tmp/engines/studio
+
+      - name: Install research-ecology
+        working-directory: /tmp/ecology
+        run: npm ci
+
+      - name: Import bundles (read-only, deterministic ids)
+        working-directory: /tmp/ecology
+        run: |
+          npx tsx apps/importer/src/cli.ts --repo /tmp/engines/field-research --collective meridian
+          npx tsx apps/importer/src/cli.ts --repo /tmp/engines/irrtum-als-methode --collective ulysses
+          npx tsx apps/importer/src/cli.ts --repo /tmp/engines/studio --collective ensemble
+
+      - name: Gate — export contract (determinism + schema)
+        working-directory: /tmp/ecology
+        run: npx vitest run tests/contract/export-site.test.ts 2>&1 | tee /tmp/gate.log
+
+      - name: Export site artefacts
+        working-directory: /tmp/ecology
+        run: npx tsx apps/export-site/src/cli.ts --site "$GITHUB_WORKSPACE"
+
+      - name: Commit (regeneration) or PR (new meaning)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          git config user.name "Ecology-Integrate"
+          git config user.email "ecology-integrate@frankbueltge.de"
+          if git status --porcelain src/data/begegnungen | grep -q .; then :; else
+            echo "export byte-identical — nothing to do"; exit 0
+          fi
+          DATE=$(date -u +%F)
+          SHA=$(git -C /tmp/ecology rev-parse --short HEAD)
+          # Bedeutungsänderung? Neuer Begegnungs-Ordner ODER gewechselte encounter_id.
+          NEW_DIRS=$(git status --porcelain src/data/begegnungen | grep -c '^??' || true)
+          ID_CHANGE=$(git diff -- src/data/begegnungen/entrance.json | grep -c '^[+-].*"encounter_id"' || true)
+          git add src/data/begegnungen
+          if [ "$NEW_DIRS" -gt 0 ] || [ "$ID_CHANGE" -gt 0 ]; then
+            BRANCH="ecology-export-$DATE"
+            git checkout -b "$BRANCH"
+            git commit -m "ecology: NEUE Begegnung im Export vom $DATE (research-ecology $SHA) — wartet auf Freigabe (Freigabematrix A4)"
+            git push -u origin "$BRANCH"
+            gh pr create --title "Neue Begegnung: Export vom $DATE" \
+              --body "Der Ökologie-Export enthält eine neue Begegnung (neuer Slug oder gewechselte encounter_id) — Bedeutungsänderung, kein Auto-Commit (Freigabematrix A4, site-v2-decisions §2). Bitte prüfen und mergen; research-ecology-Stand: $SHA." || true
+            gh issue create --title "Neue Begegnung wartet auf Freigabe ($DATE)" \
+              --body "Ecology-Integrate hat eine neue Begegnung exportiert und als PR angelegt statt automatisch zu committen. Branch: $BRANCH." || true
+          else
+            git commit -m "ecology: Begegnungs-Export vom $DATE (research-ecology $SHA) — Regeneration der freigegebenen Projektion"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+
+      - name: On failure — issue to Frank (ein rotes Gate darf nie still sein)
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          DATE=$(date -u +%F)
+          LOG=$(tail -40 /tmp/gate.log 2>/dev/null || echo "see workflow run")
+          gh issue create --repo frankbueltge/frankbueltge.de \
+            --title "Ecology-Integrate rot ($DATE)" \
+            --body "Importer/Gate/Export fehlgeschlagen — kein Ökologie-Commit; der letzte gute Export bleibt live. Log-Auszug:
+
+\`\`\`
+$LOG
+\`\`\`
+
+Typische Ursache laut Arbeitsstrang §5.3: Engines haben neues Vokabular erfunden (das SOLLEN sie) — dann Pins/Schema bewusst erweitern, siehe research-ecology tests/contract/." || true
