@@ -1,0 +1,71 @@
+# .github/workflows/requests-watchdog.yml
+# Franks Posteingang für die REQUESTS-Kanäle (16.07. nachts, Frank: "ich muss die requests
+# irgendwie bekommen"). Die Kollektive schreiben Anfragen an Frank in ihre REQUESTS.md —
+# bisher las die niemand zuverlässig (Session 17 legte z. B. die Playthrough-Einladung dort
+# ab). Dieser Wächter liest zweimal täglich die REQUESTS.md aller drei Engines und macht aus
+# jedem NEUEN Abschnitt (##-Überschrift) ein Issue in diesem Repo — GitHub-Notifications
+# sind der Sockel; Telegram/Steuerzentrale können später oben drauf. Dedupe über den
+# Issue-Titel (offen ODER geschlossen — ein geschlossenes Issue alarmiert nie wieder).
+# Abschnitte mit führendem Datum älter als 10 Tage gelten als Bestand und bleiben stumm.
+name: Requests watchdog
+
+on:
+  schedule:
+    - cron: '15 6 * * *'    # 08:15 Berlin — nach den Nightly-Netzen
+    - cron: '15 21 * * *'   # 23:15 Berlin — nach den Abend-Sessions
+  workflow_dispatch: {}
+
+permissions:
+  issues: write
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Scan engine REQUESTS.md files for new sections
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          python3 - <<'PYEOF'
+          import json, re, subprocess, sys, urllib.request
+          from datetime import date, timedelta
+
+          CUTOFF = date.today() - timedelta(days=10)
+          REPOS = ["irrtum-als-methode", "field-research", "studio"]
+
+          def sh(args, inp=None):
+              return subprocess.run(args, input=inp, capture_output=True, text=True)
+
+          for repo in REPOS:
+              url = f"https://raw.githubusercontent.com/frankbueltge/{repo}/main/REQUESTS.md"
+              try:
+                  text = urllib.request.urlopen(url, timeout=30).read().decode()
+              except Exception as e:
+                  print(f"{repo}: REQUESTS.md nicht lesbar ({e}) — übersprungen")
+                  continue
+              # Abschnitte: '## <heading>' bis zur nächsten ##-Überschrift
+              parts = re.split(r"^## ", text, flags=re.M)[1:]
+              for part in parts:
+                  heading, _, body = part.partition("\n")
+                  heading = heading.strip()
+                  # Bestandsschutz: führendes Datum älter als CUTOFF → stumm
+                  m = re.match(r"(\d{4})-(\d{2})-(\d{2})", heading)
+                  if m and date(*map(int, m.groups())) < CUTOFF:
+                      continue
+                  title = f"Request aus {repo}: {heading}"[:200]
+                  q = f'"{title}" in:title'
+                  found = sh(["gh", "issue", "list", "--repo", "frankbueltge/frankbueltge.de",
+                              "--state", "all", "--search", q, "--json", "number"])
+                  if found.returncode == 0 and json.loads(found.stdout or "[]"):
+                      continue
+                  excerpt = "\n".join(body.strip().splitlines()[:40])
+                  issue_body = (
+                      f"Neuer Eintrag in `{repo}/REQUESTS.md`:\n\n## {heading}\n\n{excerpt}\n\n---\n"
+                      f"Quelle: https://github.com/frankbueltge/{repo}/blob/main/REQUESTS.md\n"
+                      f"(Requests-Watchdog — Issue schließen = gelesen/erledigt; es alarmiert nie erneut.)"
+                  )
+                  made = sh(["gh", "issue", "create", "--repo", "frankbueltge/frankbueltge.de",
+                             "--title", title, "--body", issue_body])
+                  print(f"{repo}: {'ISSUE ' + made.stdout.strip() if made.returncode == 0 else 'FEHLER ' + made.stderr.strip()} — {heading[:60]}")
+          PYEOF
