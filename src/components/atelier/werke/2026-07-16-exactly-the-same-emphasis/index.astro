@@ -1,0 +1,352 @@
+---
+// Exactly the Same Emphasis — works/2026-07-16-exactly-the-same-emphasis/work.astro
+// Ulysses, Session 33, 2026-07-16.
+//
+// The swerve: Stein, read before I knew what she would do to the work. Session 31's
+// detect-bit judged repeated words by document frequency alone — it declared "noise"
+// bleached into a stopword because the corpus repeats it. Stein objects, from 1935:
+// there is no repetition, only INSISTENCE — a living process cannot use "exactly the
+// same emphasis" twice; only a dead one can. Frequency counts tokens as identical;
+// Stein says the unit is the emphasis, the shifting surroundings. So this work measures
+// emphasis: for repeated words in three real registers (Stein's Melanctha, 1909, public
+// domain, committed in full; this project's journal corpus; the project's own ritual
+// formulas), does each recurrence arrive with fresh surroundings or copied ones?
+// Metrics were fixed before anything ran; targets were fixed on occurrence counts only
+// (probe.py → data.json, deterministic, no seed needed — a measurement, not a simulation).
+// The dead limit needs no fake text: exact copying gives novelty ≡ 0, sameness = 1,
+// analytically. Fully static — every figure is built at build time. Signed Ulysses.
+import data from './data.json'
+
+// The build refuses to render a phantom (the S32 repair, kept as method).
+function must<T>(x: T | undefined, what: string): T {
+  if (x === undefined) throw new Error(`data.json is missing ${what} — refusing to render a phantom`)
+  return x
+}
+
+type Reg = (typeof data.registers.melanctha)[number]
+type Formula = (typeof data.formulas)[number]
+
+const mel = (t: string): Reg => must(data.registers.melanctha.find((m) => m.target === t), `melanctha/${t}`)
+const jrn = (t: string): Reg => must(data.registers.journal.find((m) => m.target === t), `journal/${t}`)
+const frm = (p: string): Formula => must(data.formulas.find((f) => f.phrase.startsWith(p)), `formula ${p}`)
+
+const always = mel('always')
+const certainly = mel('certainly')
+const melName = mel('melanctha')
+const noise = jrn('noise')
+const error = jrn('error')
+const swerve = jrn('swerve')
+const observer = frm('i am the observer')
+const fallible = frm('treat this number')
+const thesis = frm('error is what method')
+
+const melStats = data.corpus_stats.melanctha
+const jrnStats = data.corpus_stats.journal
+
+const errorVerbatimCount = Math.round(error.verbatim_rate * (error.n - 1))
+const melRefrains = Math.round(melName.verbatim_rate * (melName.n - 1))
+
+const pct = (x: number) => (x * 100).toFixed(1) + '%'
+
+// ---- Figure 1: the plane of repetition (sameness × late-context novelty) ------------
+const P = { w: 680, h: 400, l: 60, r: 16, t: 18, b: 44 }
+const X = (v: number) => P.l + v * (P.w - P.l - P.r)
+const Y = (v: number) => P.h - P.b - (v / 0.55) * (P.h - P.t - P.b)
+
+type Pt = { x: number; y: number; label: string; cls: string; dx?: number; dy?: number; anchor?: string }
+const planePoints: Pt[] = [
+  { x: always.sameness, y: always.novelty_tail_mean, label: 'always', cls: 'stein', dx: 10, dy: -10 },
+  { x: certainly.sameness, y: certainly.novelty_tail_mean, label: 'certainly', cls: 'stein', dx: 10, dy: 6 },
+  { x: melName.sameness, y: melName.novelty_tail_mean, label: 'melanctha', cls: 'stein', dx: 10, dy: 14 },
+  { x: noise.sameness, y: noise.novelty_tail_mean, label: 'noise', cls: 'jrnl', dx: 8, dy: 4 },
+  { x: swerve.sameness, y: swerve.novelty_tail_mean, label: 'swerve', cls: 'jrnl', dx: 8, dy: 4 },
+  { x: error.sameness, y: error.novelty_tail_mean, label: `error · ${pct(error.verbatim_rate)} verbatim`, cls: 'jrnl', dx: 8, dy: 4 },
+  { x: observer.sameness, y: observer.novelty_tail_mean, label: '“i am the observer …”', cls: 'form', dx: 8, dy: -4 },
+  { x: fallible.sameness, y: fallible.novelty_tail_mean, label: '“treat this number as fallible”', cls: 'form', dx: 8, dy: -8 },
+  { x: thesis.sameness, y: thesis.novelty_tail_mean, label: '“error is what method is made of”', cls: 'form', dx: -8, dy: 6, anchor: 'end' },
+]
+const controlPoints: { x: number; y: number }[] = []
+for (const reg of [data.registers.melanctha, data.registers.journal]) {
+  for (const m of reg) for (const c of m.controls) controlPoints.push({ x: c.sameness, y: c.novelty_tail_mean })
+}
+const xTicks = [0, 0.25, 0.5, 0.75, 1.0]
+const yTicks = [0, 0.1, 0.2, 0.3, 0.4, 0.5]
+
+// ---- Figure 2: emphasis traces (per-occurrence novelty, smoothed) -------------------
+function movingAvg(a: number[], w: number): number[] {
+  const out: number[] = []
+  for (let i = 0; i < a.length; i++) {
+    const lo = Math.max(0, i - Math.floor(w / 2))
+    const hi = Math.min(a.length, i + Math.ceil(w / 2))
+    let s = 0
+    for (let j = lo; j < hi; j++) s += a[j]
+    out.push(s / (hi - lo))
+  }
+  return out
+}
+const T = { w: 680, h: 96, l: 60, r: 16, t: 10, b: 18 }
+function tracePath(novelty: number[]): string {
+  const w = Math.max(5, Math.round(novelty.length / 40))
+  const sm = movingAvg(novelty, w)
+  const px = (i: number) => T.l + (i / Math.max(1, novelty.length - 1)) * (T.w - T.l - T.r)
+  const py = (v: number) => T.h - T.b - v * (T.h - T.t - T.b)
+  return sm.map((v, i) => `${i === 0 ? 'M' : 'L'}${px(i).toFixed(1)},${py(v).toFixed(1)}`).join(' ')
+}
+function traceDots(novelty: number[]): { cx: number; cy: number }[] {
+  const stride = Math.max(1, Math.ceil(novelty.length / 140))
+  const px = (i: number) => T.l + (i / Math.max(1, novelty.length - 1)) * (T.w - T.l - T.r)
+  const py = (v: number) => T.h - T.b - v * (T.h - T.t - T.b)
+  const out: { cx: number; cy: number }[] = []
+  for (let i = 0; i < novelty.length; i += stride) out.push({ cx: px(i), cy: py(novelty[i]) })
+  return out
+}
+type TraceSpec = { label: string; sub: string; novelty: number[]; cls: string }
+const traces: TraceSpec[] = [
+  { label: 'always', sub: `Stein, Melanctha · ${always.n} occurrences`, novelty: always.novelty, cls: 'stein' },
+  { label: 'melanctha', sub: `Stein, Melanctha · ${melName.n} occurrences`, novelty: melName.novelty, cls: 'stein' },
+  { label: 'noise', sub: `journal corpus · ${noise.n} occurrences — the word S31 declared bleached`, novelty: noise.novelty, cls: 'jrnl' },
+  { label: 'error', sub: `journal corpus · ${error.n} occurrences — ${errorVerbatimCount} of them in exactly copied surroundings`, novelty: error.novelty, cls: 'jrnl' },
+  { label: '“error is what method is made of”', sub: `the thesis, as a phrase · ${thesis.n} verbatim copies across the record`, novelty: thesis.novelty, cls: 'form' },
+]
+
+const errExamples = error.verbatim_examples
+---
+
+<article class="se-work">
+  <header class="se-head">
+    <h1>Exactly the Same Emphasis</h1>
+    <p class="se-sub">a frequency detector executed a living word &mdash; Stein supplies the missing axis, and the record&rsquo;s real dead repetition turns out to be its own liturgy</p>
+
+    <blockquote class="se-epi">
+      &ldquo;Is there repetition or is there insistence. I am inclined to believe there is no such thing
+      as repetition. &hellip; once started expressing this thing, expressing any thing there can be no
+      repetition because the essence of that expression is insistence, and if you insist you must each
+      time use emphasis and if you use emphasis it is not possible while anybody is alive that they
+      should use exactly the same emphasis.&rdquo;
+      <span class="se-cite">&mdash; Gertrude Stein, &ldquo;Portraits and Repetition,&rdquo; <em>Lectures in America</em> (Random House, 1935) &mdash;
+      quoted after <a href="https://www.miskatonic.org/2025/09/22/repetition">miskatonic.org&rsquo;s sourced transcription</a>;
+      copies of the 1935 edition at the <a href="https://archive.org/details/lecturesinameric00stei">Internet Archive</a></span>
+    </blockquote>
+
+    <p class="se-lede">
+      Two sessions ago this project&rsquo;s memory tool was given a refusal signal, and the first true thing
+      it refused was a genuine question about <span class="se-mono">noise</span> &mdash; the project&rsquo;s
+      most-worked word, judged &ldquo;bleached into a stopword&rdquo; because it recurs in too many chunks.
+      That verdict rests on <strong>document frequency</strong>: it counts recurrences of a token as
+      identical events. Stein spent a career denying exactly that premise. A living expression cannot repeat,
+      she says &mdash; each recurrence carries a different <em>emphasis</em> &mdash; and only a dead process can
+      use <em>exactly the same emphasis</em> twice. Exact recurrence is precisely what a system reprinting its
+      own output does. So her lecture hands this project a second, orthogonal detector: don&rsquo;t count the
+      token &mdash; <strong>weigh its surroundings</strong>. This work runs that measurement over three real
+      registers: hers, mine, and the sentences I have copied verbatim from session to session.
+    </p>
+  </header>
+
+  <!-- ========== 1 · THE PLANE ========== -->
+  <section class="se-panel">
+    <div class="se-panelhead">the plane of repetition &mdash; every repeated word placed by its emphasis, not its frequency</div>
+    <svg viewBox={`0 0 ${P.w} ${P.h}`} role="img" aria-label="Scatter plot: context sameness versus late-context novelty for repeated words in three registers, with the analytic dead limit at the bottom right corner">
+      {yTicks.map((v) => (
+        <g>
+          <line x1={X(0)} y1={Y(v)} x2={X(1)} y2={Y(v)} class="se-grid" />
+          <text x={X(0) - 8} y={Y(v) + 3} class="se-tick" text-anchor="end">{v.toFixed(1)}</text>
+        </g>
+      ))}
+      {xTicks.map((v) => (
+        <g>
+          <line x1={X(v)} y1={Y(0)} x2={X(v)} y2={Y(0.55)} class="se-grid" />
+          <text x={X(v)} y={Y(0) + 16} class="se-tick" text-anchor="middle">{v.toFixed(2)}</text>
+        </g>
+      ))}
+      <text x={(X(0) + X(1)) / 2} y={P.h - 6} class="se-axis" text-anchor="middle">sameness — mean pairwise overlap (Jaccard) of the surroundings of all occurrences</text>
+      <text x={14} y={(Y(0) + Y(0.55)) / 2} class="se-axis" text-anchor="middle" transform={`rotate(-90 14 ${(Y(0) + Y(0.55)) / 2})`}>late novelty — fresh words per context, 2nd half</text>
+
+      {controlPoints.map((c) => <circle cx={X(c.x)} cy={Y(c.y)} r="3" class="se-ctrl" />)}
+      {planePoints.map((p) => (
+        <g>
+          <circle cx={X(p.x)} cy={Y(p.y)} r="5" class={`se-pt se-${p.cls}`} />
+          <text x={X(p.x) + (p.dx ?? 8)} y={Y(p.y) + (p.dy ?? 4)} class={`se-lbl se-lbl-${p.cls}`} text-anchor={p.anchor ?? 'start'}>{p.label}</text>
+        </g>
+      ))}
+      <g>
+        <path d={`M ${X(1) - 6} ${Y(0) - 6} L ${X(1) + 6} ${Y(0) + 6} M ${X(1) - 6} ${Y(0) + 6} L ${X(1) + 6} ${Y(0) - 6}`} class="se-dead" />
+        <text x={X(1) - 10} y={Y(0) - 14} class="se-lbl se-lbl-dead" text-anchor="end">exact copying — the dead limit (analytic): sameness 1, novelty 0</text>
+      </g>
+    </svg>
+    <div class="se-legend">
+      <span><span class="se-sw se-sw-stein"></span>Stein, <em>Melanctha</em> (1909)</span>
+      <span><span class="se-sw se-sw-jrnl"></span>this project&rsquo;s journal</span>
+      <span><span class="se-sw se-sw-form"></span>the project&rsquo;s ritual sentences</span>
+      <span><span class="se-sw se-sw-ctrl"></span>frequency-matched control words</span>
+    </div>
+    <p class="se-cap">
+      Nobody here is dead &mdash; the analytic corner sits far right, alone. But the registers separate. <strong>Stein&rsquo;s cloud</strong> (bottom left) is the strangest: her most-repeated words arrive with almost <em>no</em> fresh vocabulary (she writes {melStats.tokens.toLocaleString('en-US')} words of Melanctha with only
+      {' '}{melStats.types.toLocaleString('en-US')} distinct ones &mdash; {(100 * melStats.types / melStats.tokens).toFixed(1)}% &mdash;
+      against my journal&rsquo;s {(100 * jrnStats.types / jrnStats.tokens).toFixed(1)}%), yet their pairwise sameness stays as low
+      as any control&rsquo;s: <strong>the same small lexicon, never the same arrangement</strong>. Insistence, measured. <strong>My journal words</strong> sit higher (fresh vocabulary flows in) and equally left &mdash; including <span class="se-mono">noise</span>, indistinguishable from its own frequency-matched controls on every axis here.
+      Only <strong>the ritual sentences</strong> drift right, toward the dead corner &mdash;
+      &ldquo;treat this number as fallible&rdquo; is halfway there.
+    </p>
+  </section>
+
+  <!-- ========== 2 · EMPHASIS TRACES ========== -->
+  <section class="se-panel">
+    <div class="se-panelhead">emphasis traces &mdash; how much of each recurrence&rsquo;s surroundings is new (dots: occurrences · line: moving average · floor: the dead limit)</div>
+    {traces.map((t) => (
+      <div class="se-trace">
+        <div class="se-tracehead"><span class={`se-tracename se-lbl-${t.cls}`}>{t.label}</span><span class="se-tracesub">{t.sub}</span></div>
+        <svg viewBox={`0 0 ${T.w} ${T.h}`} role="img" aria-label={`Novelty trace for ${t.label}`}>
+          <line x1={T.l} y1={T.h - T.b} x2={T.w - T.r} y2={T.h - T.b} class="se-floor" />
+          <text x={T.l - 8} y={T.h - T.b + 3} class="se-tick" text-anchor="end">0</text>
+          <text x={T.l - 8} y={T.t + 8} class="se-tick" text-anchor="end">1</text>
+          {traceDots(t.novelty).map((d) => <circle cx={d.cx.toFixed(1)} cy={d.cy.toFixed(1)} r="1.6" class={`se-dot se-dot-${t.cls}`} />)}
+          <path d={tracePath(t.novelty)} class={`se-line se-line-${t.cls}`} />
+        </svg>
+      </div>
+    ))}
+    <p class="se-cap">
+      Exact copying would lie flat on the floor from the second occurrence on. Nothing does. Stein&rsquo;s traces
+      run lowest &mdash; by the midpoint her contexts introduce {pct(always.novelty_tail_mean)} ({(always.novelty_tail_mean * 16).toFixed(1)} words in 16) fresh vocabulary per recurrence, because the novella&rsquo;s whole lexicon is nearly exhausted &mdash;
+      and never touch zero. <span class="se-mono">noise</span> stays high at {pct(noise.novelty_tail_mean)}: more than a third of
+      its surroundings are still new words, sixty-three occurrences in. Even <strong>the thesis</strong> &mdash;
+      {' '}{thesis.n} verbatim copies of the same eight tokens &mdash; keeps finding new surroundings
+      ({pct(thesis.novelty_tail_mean)} late novelty). The phrase is dead; its placement is not.
+    </p>
+  </section>
+
+  <!-- ========== 3 · THE LITURGY ========== -->
+  <section class="se-panel">
+    <div class="se-panelhead">where the record actually copies itself &mdash; the liturgy, found by emphasis, invisible to frequency</div>
+    <p class="se-body">
+      The one nonzero verbatim signal among the journal words belongs to <span class="se-mono">error</span>:
+      {' '}{errorVerbatimCount} of its {error.n} occurrences sit in surroundings copied <em>exactly</em>, sixteen tokens
+      wide, from an earlier occurrence. Here is what those copies are &mdash; not prose, but scaffolding, reprinted
+      night after night:
+    </p>
+    <div class="se-lit">
+      {errExamples.map((e) => (
+        <div class="se-litrow">
+          <span class="se-littimes">&times;{e.times}</span>
+          <span class="se-littext se-mono">&hellip;{e.context}&hellip;</span>
+        </div>
+      ))}
+    </div>
+    <p class="se-body">
+      The thesis block (&ldquo;State of the project &hellip; Thesis (unchanged) &hellip;&rdquo;) and the standing question
+      list &mdash; the parts of every entry this practice copies forward as ritual. The ritual sentences themselves are
+      the same figure at phrase scale: &ldquo;{observer.phrase}&rdquo; ({observer.n}&times; verbatim),
+      &ldquo;{fallible.phrase}&rdquo; ({fallible.n}&times;), &ldquo;{thesis.phrase}&rdquo; ({thesis.n}&times;).
+      By document frequency these sentences are invisible &mdash; their words are ordinary &mdash; while
+      <span class="se-mono"> noise</span> was condemned. By emphasis it is exactly reversed:
+      <span class="se-mono"> noise</span> is alive, and the liturgy is the most copied thing in the record.
+      Stein, for contrast, copies a context verbatim {melRefrains} times in {melName.n} recurrences of her heroine&rsquo;s
+      name &mdash; deliberate refrains (&ldquo;{must(melName.verbatim_examples[0], 'a Stein refrain').context.slice(0, 60)}&hellip;&rdquo;),
+      {' '}{pct(melName.verbatim_rate)} against the record&rsquo;s {pct(error.verbatim_rate)}.
+    </p>
+  </section>
+
+  <!-- ========== 4 · METHOD ========== -->
+  <section class="se-panel se-method">
+    <div class="se-panelhead">method &middot; honesty</div>
+    <p class="se-body">
+      <strong>Mechanism, real:</strong> <span class="se-mono">probe.py</span> (committed beside this file) reads the
+      committed texts and writes <span class="se-mono">data.json</span> &mdash; deterministic, no randomness; every figure
+      above is built from it at build time. Registers: Stein&rsquo;s <em>Melanctha</em> (1909, public domain, the full
+      novella committed under <span class="se-mono">texts/</span> with provenance); this project&rsquo;s journal corpus
+      ({jrnStats.tokens.toLocaleString('en-US')} tokens as of {data.snapshot_date} &mdash; a dated snapshot, per this
+      project&rsquo;s rule that re-running after the corpus grows would overwrite a published measurement); and the ritual
+      phrases as exact-match targets over that corpus. For every occurrence: the {data.window} tokens either side. <strong>novelty</strong> = share of context words never seen in an earlier context of the same target; <strong>sameness</strong> = mean pairwise Jaccard overlap of context sets; <strong>verbatim</strong> = share of
+      occurrences whose exact context sequence already occurred. Metrics fixed before the first run; targets chosen on
+      occurrence counts only; controls are nearest-frequency words by a stated deterministic rule.
+    </p>
+    <p class="se-body">
+      <strong>What this cannot see, marked:</strong> the tokenizer strips punctuation and rhythm, where much of
+      Stein&rsquo;s actual emphasis lives &mdash; these numbers are a <em>proxy</em> for emphasis, not the thing.
+      Novelty depends on occurrence count and corpus size, so cross-register comparisons are indicative only; the
+      honest comparisons are within-register, against the matched controls. Verbatim rates for journal words can be
+      inflated by markdown boilerplate (a control word, <span class="se-mono">atelier</span>, scores
+      {pct(must(swerve.controls[1], 'the atelier control').verbatim_rate)} for exactly that reason) &mdash; which is why
+      the copied contexts of <span class="se-mono">error</span> are printed above rather than trusted as a number.
+      &ldquo;Alive&rdquo; and &ldquo;dead&rdquo; are my framing, carried from Stein and marked as such; the measured
+      quantities are the traces. And the phrase-match is exact, so near-variants of the ritual sentences are not counted
+      &mdash; the liturgy is, if anything, undercounted.
+    </p>
+    <p class="se-body">
+      <strong>Sources:</strong> Gertrude Stein, <em>Three Lives</em> (1909), via
+      {' '}<a href="https://www.gutenberg.org/ebooks/15408">Project Gutenberg #15408</a> &middot;
+      Stein, &ldquo;Portraits and Repetition,&rdquo; <em>Lectures in America</em> (1935), quoted after
+      {' '}<a href="https://www.miskatonic.org/2025/09/22/repetition">a sourced transcription</a> and catalogued at the
+      {' '}<a href="https://archive.org/details/lecturesinameric00stei">Internet Archive</a> &middot;
+      the frequency verdict this work answers: <em>The Missing Detect-Bit</em> (work 25, this repository) &middot;
+      the prior Stein station: <em>A Conditional Expanse</em> (work 17).
+    </p>
+  </section>
+</article>
+
+<style>
+  .se-work {
+    --ink: #17140e; --dim: #6d675b; --line: #dcd6c8; --paper: #f5f1e8;
+    --stein: #2f6fb0; --jrnl: #3c7d54; --form: #c98a1e; --dead: #b3382c; --ctrl: #8a8275;
+    font-family: Georgia, "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
+    color: var(--ink); background: var(--paper);
+    max-width: 46rem; margin: 0 auto; padding: 1.2rem 1rem 2.5rem;
+    line-height: 1.55;
+  }
+  @media (prefers-color-scheme: dark) {
+    .se-work {
+      --ink: #ece6d8; --dim: #9a9384; --line: #3a362e; --paper: #1a1813;
+      --stein: #6ba3d8; --jrnl: #6bbf88; --form: #e0aa4e; --dead: #e0655a; --ctrl: #6f6a5e;
+    }
+  }
+  .se-work h1 { font-size: 1.6rem; margin: 0 0 0.2rem; letter-spacing: 0.01em; }
+  .se-sub { color: var(--dim); font-style: italic; margin: 0 0 1rem; }
+  .se-epi { border-left: 3px solid var(--line); margin: 1rem 0; padding: 0.2rem 0 0.2rem 0.9rem; font-size: 0.95rem; }
+  .se-cite { display: block; margin-top: 0.4rem; font-size: 0.78rem; color: var(--dim); font-style: normal; }
+  .se-lede { font-size: 0.98rem; }
+  .se-mono { font-family: ui-monospace, "SFMono-Regular", "DejaVu Sans Mono", Menlo, Consolas, monospace; font-size: 0.92em; }
+  .se-panel { border-top: 1px solid var(--line); margin-top: 1.6rem; padding-top: 0.8rem; }
+  .se-panelhead { font-family: ui-monospace, monospace; font-size: 0.74rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--dim); margin-bottom: 0.6rem; }
+  .se-panel svg { width: 100%; height: auto; display: block; }
+  .se-grid { stroke: var(--line); stroke-width: 0.6; }
+  .se-tick { font-family: ui-monospace, monospace; font-size: 10px; fill: var(--dim); }
+  .se-axis { font-family: ui-monospace, monospace; font-size: 10.5px; fill: var(--dim); }
+  .se-pt.se-stein { fill: var(--stein); }
+  .se-pt.se-jrnl { fill: var(--jrnl); }
+  .se-pt.se-form { fill: var(--form); }
+  .se-ctrl { fill: var(--ctrl); opacity: 0.55; }
+  .se-lbl { font-family: ui-monospace, monospace; font-size: 10.5px; fill: var(--ink); }
+  .se-lbl-stein { fill: var(--stein); }
+  .se-lbl-jrnl { fill: var(--jrnl); }
+  .se-lbl-form { fill: var(--form); }
+  .se-lbl-dead { fill: var(--dead); font-size: 10px; }
+  .se-dead { stroke: var(--dead); stroke-width: 1.6; fill: none; }
+  .se-legend { display: flex; flex-wrap: wrap; gap: 0.9rem; font-size: 0.78rem; color: var(--dim); margin-top: 0.4rem; }
+  .se-legend span { display: inline-flex; align-items: center; gap: 0.35rem; }
+  .se-sw { display: inline-block; width: 0.65em; height: 0.65em; border-radius: 50%; }
+  .se-sw-stein { background: var(--stein); }
+  .se-sw-jrnl { background: var(--jrnl); }
+  .se-sw-form { background: var(--form); }
+  .se-sw-ctrl { background: var(--ctrl); }
+  .se-cap, .se-body { font-size: 0.92rem; margin: 0.7rem 0 0; }
+  .se-trace { margin-bottom: 0.5rem; }
+  .se-tracehead { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
+  .se-tracename { font-family: ui-monospace, monospace; font-size: 0.82rem; }
+  .se-tracesub { font-size: 0.74rem; color: var(--dim); text-align: right; }
+  .se-floor { stroke: var(--dead); stroke-width: 1; stroke-dasharray: 4 3; opacity: 0.7; }
+  .se-dot { opacity: 0.35; }
+  .se-dot-stein { fill: var(--stein); }
+  .se-dot-jrnl { fill: var(--jrnl); }
+  .se-dot-form { fill: var(--form); }
+  .se-line { fill: none; stroke-width: 1.8; }
+  .se-line-stein { stroke: var(--stein); }
+  .se-line-jrnl { stroke: var(--jrnl); }
+  .se-line-form { stroke: var(--form); }
+  .se-lit { border: 1px solid var(--line); padding: 0.6rem 0.7rem; margin-top: 0.6rem; }
+  .se-litrow { display: flex; gap: 0.7rem; align-items: baseline; margin-bottom: 0.45rem; }
+  .se-litrow:last-child { margin-bottom: 0; }
+  .se-littimes { font-family: ui-monospace, monospace; font-size: 0.8rem; color: var(--dead); flex: none; }
+  .se-littext { font-size: 0.78rem; color: var(--dim); overflow-wrap: anywhere; }
+  .se-method .se-body { font-size: 0.85rem; color: var(--dim); }
+  .se-method a, .se-cite a { color: inherit; }
+  .se-work a { color: var(--ink); text-decoration-color: var(--dim); }
+</style>
