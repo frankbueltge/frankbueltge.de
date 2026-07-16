@@ -1,0 +1,60 @@
+---
+// /atelier/apparatus — everything „how the machine runs“ in ONE room (atelier-aesthetik
+// §5): repo, constitution, team channel, nightly machinery, the archived cockpit, and the
+// full framing (the two sentences at the sheet's foot live here in full). The entrance
+// chrome stays free of it.
+import Page from '@/layouts/Page.astro'
+import Frame from '@/components/atelier/surface/Frame.astro'
+import AuthorshipNote from '@/components/engines/AuthorshipNote.astro'
+import { ATELIER_NARRATIVE } from '@/config/atelier-wording'
+
+const repo = 'https://github.com/frankbueltge/irrtum-als-methode'
+const kicker = ['Atelier · apparatus', 'irrtum-als-methode', 'how the machine runs']
+
+// The full framing — the site's standing wording for this practice (previously the
+// entrance lede), verbatim; the sheet's foot carries only two sentences of it.
+const framing =
+  'Every night an AI holds a research session — it reads its journal, researches the web, builds works, errs, and catalogues its errors checkably. Full autonomy over question, direction and title. Unedited. Git is the memory. Autonomous, not random: Frank Bültge conceived and engineered this machinery, seeds directions and intervenes — part of one lab experiment in how far serious art is possible with AI.'
+---
+
+<Page
+  title="Atelier — apparatus | Frank Bültge"
+  description="How the Atelier's machinery runs: repo, constitution, team channel, nightly integration — and who answers for it."
+>
+  <Frame active="apparatus" kicker={kicker} h1="The apparatus, in one room." back>
+    <p class="at-room-intro">{ATELIER_NARRATIVE.rooms.apparatus}</p>
+    <p class="at-room-intro">{framing}</p>
+    <AuthorshipNote />
+
+    <ul class="at-apparatus-list mt-6">
+      <li>
+        <b><a href={repo} target="_blank" rel="noreferrer">Source, protocol &amp; history ↗</a></b>
+        <span class="li-note">the engine repo — Git is the memory; every session, work and error lands there first</span>
+      </li>
+      <li>
+        <b><a href="/atelier/protocol">Constitution</a></b>
+        <span class="li-note">the standing instruction the practice runs on — written and maintained by the machine, unedited</span>
+      </li>
+      <li>
+        <b><a href="/atelier/requests">Team channel</a></b>
+        <span class="li-note">steering runs through REQUESTS.md — directions in, answers out, all on the record</span>
+      </li>
+      <li>
+        <b>Nightly machinery</b>
+        <span class="li-note">
+          the atelier-integrate workflow syncs the engine repo's journal, works and pulse data into this
+          site's committed mirror (src/content/atelier, src/data/atelier) — gated, no live reads at runtime
+        </span>
+      </li>
+      <li>
+        <b><a href="/atelier/archive/cockpit">Cockpit — archived surface</a></b>
+        <span class="li-note">{ATELIER_NARRATIVE.rooms.cockpitArchived} {ATELIER_NARRATIVE.rooms.cockpitArchiveNote} (<a href="/atelier/material">material →</a>)</span>
+      </li>
+    </ul>
+  </Frame>
+</Page>
+
+<style>
+  /* AuthorshipNote inherits --fs-accent from engine story scopes; give it the sheet's red. */
+  .atelier-surface { --fs-accent: var(--at-red); }
+</style>

@@ -1,0 +1,80 @@
+---
+// /studio/works — what has premiered. Everything here passed the full three-voice gate;
+// the honest empty state stays honest (a premiere is an event, not a ritual). Interactive
+// works run in the same isolated sandbox the old page used.
+import Page from '@/layouts/Page.astro'
+import Frame from '@/components/studio/surface/Frame.astro'
+import { sortWorks } from '@/lib/atelier/sort'
+import { loadChronicle, entriesForWork } from '@/lib/studio/chronicle'
+import { STUDIO_NARRATIVE } from '@/config/studio-wording'
+
+const repo = 'https://github.com/frankbueltge/studio'
+const htmlMeta = import.meta.glob('/src/content/studio/works/*/meta.json', {
+  eager: true, import: 'default',
+}) as Record<string, any>
+
+const works = sortWorks(
+  Object.entries(htmlMeta).map(([path, meta]) => ({
+    slug: path.replace('/src/content/studio/works/', '').replace('/meta.json', ''),
+    kind: 'html' as const,
+    date: meta.date as string | undefined,
+    meta,
+  })),
+)
+
+const chronicle = loadChronicle()
+const withBadges = works.map((w) => {
+  const hist = entriesForWork(chronicle, w.slug)
+  const latest = hist[hist.length - 1]
+  return { ...w, badge: latest ? { label: `S${latest.collective_session} · ${latest.move}`, anchor: latest.anchor } : undefined }
+})
+
+const kicker = ['Studio · works', 'studio (Ensemble)', `${works.length} premiered`]
+const statusHtml = `<b>${works.length} work${works.length === 1 ? '' : 's'} premiered</b> · everything here survived the gate the playbill records`
+---
+
+<Page
+  title="Studio — works | Frank Bültge"
+  description="The Studio's premiered works — everything here passed the full three-voice gate, the hostile critique published either way."
+>
+  <Frame active="works" kicker={kicker} h1="What has premiered." statusHtml={statusHtml} back>
+    <p class="st-room-intro">{STUDIO_NARRATIVE.rooms.works}</p>
+
+    {works.length === 0 && (
+      <p class="st-room-intro">
+        No premiered works yet. The first production is in the workshop behind its critic's gate —
+        a premiere is an event, not a ritual. The <a href="/studio/history" class="underline">playbill</a> is the record.
+      </p>
+    )}
+
+    {withBadges.map(({ slug, meta, badge }) => (
+      <article class="st-work-card" id={slug}>
+        <h3>
+          {meta.title ?? slug}
+          {meta.date && <span class="st-work-date">{meta.date}</span>}
+        </h3>
+        {(meta.embodies ?? meta.verkoerpert) && <p>{meta.embodies ?? meta.verkoerpert}</p>}
+        {meta.medium && <p class="st-work-links">{meta.medium}</p>}
+        {/*
+          SECURITY: standalone same-origin file under /studio/werke-html/<slug>/ —
+          a separate document does NOT inherit the parent <meta> CSP. sandbox="allow-scripts"
+          WITHOUT allow-same-origin → null origin, no access to cookies/storage/DOM of
+          frankbueltge.de. Path-specific CSP in _headers allows the work's inline scripts,
+          blocks fetch/connect (no exfiltration channel).
+          NEVER add allow-same-origin — that would lift the isolation.
+        */}
+        <iframe
+          src={`/studio/werke-html/${slug}/`}
+          sandbox="allow-scripts"
+          loading="lazy"
+          title={meta.title ?? slug}
+        ></iframe>
+        <div class="st-work-links">
+          <span>Runs sandboxed in your browser.</span>
+          <a href={`${repo}/tree/main/works/${slug}`} target="_blank" rel="noreferrer">Source code ↗</a>
+        </div>
+        {badge && <p class="st-work-links"><a href={`/studio/history#${badge.anchor}`}>{badge.label} — the gate on the record →</a></p>}
+      </article>
+    ))}
+  </Frame>
+</Page>

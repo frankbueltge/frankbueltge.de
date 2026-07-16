@@ -1,0 +1,46 @@
+---
+// Studio surface frame (Praxis-Oberflächen-Paket): kicker, stage rail, headline, status,
+// content slot, footer. Visual grammar in studio-stage.css, scoped to .studio-surface
+// (ADR 0010) — Didone capitals, Bühnenschwarz by default, Probenlicht in light theme.
+import { STUDIO_GRAMMAR, STUDIO_NARRATIVE, STUDIO_DRAFT_LABEL } from '@/config/studio-wording'
+import '@/styles/studio-stage.css'
+
+interface Props {
+  active: string
+  kicker: string[]
+  h1: string
+  statusHtml?: string
+  footLeft?: string
+  footRight?: string
+  back?: boolean
+}
+const { active, kicker, h1, statusHtml, footLeft, footRight, back = false } = Astro.props
+const isDraft = STUDIO_NARRATIVE.approval !== 'approved'
+---
+
+<main id="main" class="studio-surface">
+  <p class="st-kicker">
+    {kicker.map((k) => <span>{k}</span>)}
+    {isDraft && <span class="st-chip" title={STUDIO_DRAFT_LABEL}>wording draft</span>}
+  </p>
+  <nav class="stagerail" aria-label="Stage rail — the only standing navigation">
+    {STUDIO_GRAMMAR.rail.map((item) =>
+      item.label === active ? (
+        <span class="sr-here">{item.label}</span>
+      ) : (
+        <a href={item.href} title={item.hint}>{item.label}</a>
+      ),
+    )}
+    <a class="sr-door" href={STUDIO_GRAMMAR.door.href} title={STUDIO_GRAMMAR.door.hint}>{STUDIO_GRAMMAR.door.label}</a>
+  </nav>
+  {back && <p class="st-back mt-3"><a href="/studio">{STUDIO_GRAMMAR.backToStage}</a></p>}
+  <h1 class="st-h1">{h1}</h1>
+  {statusHtml && <p class="st-status" set:html={statusHtml} />}
+  <slot />
+  {(footLeft || footRight) && (
+    <footer class="st-foot">
+      {footLeft && <span>{footLeft}</span>}
+      {footRight && <span>{footRight}</span>}
+    </footer>
+  )}
+</main>

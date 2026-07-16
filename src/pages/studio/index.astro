@@ -1,10 +1,137 @@
 ---
+// /studio — die Bühne (studio-aesthetik-2026-07-15.md): ONE spot on what is public now,
+// no gallery grid; the floor keeps every strike (X-marks with verbatim kill reasons); the
+// Gasse holds the refused material, visible but unlit. Data: the chronicle mirror (the
+// ship entry names the premiered work), the enc-2026-001 score export (admission
+// contract, declined case, obligation → marquee), and the hand-curated kill list
+// (src/data/studio/stage.curated.json — session-commit quotes the mirror itself does not
+// carry; provenance in the file). Replaces the old EnginePage entrance.
 import Page from '@/layouts/Page.astro'
-import StudioPage from '@/components/pages/StudioPage.astro'
+import Frame from '@/components/studio/surface/Frame.astro'
+import { loadChronicle } from '@/lib/studio/chronicle'
+import { currentScore } from '@/lib/begegnungen'
+import { buildStageSvg, type GasseEntry } from '@/lib/studio/stage'
+import { STUDIO_GRAMMAR, STUDIO_NARRATIVE } from '@/config/studio-wording'
+import stageData from '@/data/studio/stage.curated.json'
+import { numberWord } from '@/lib/atelier/sessions'
+
+const chronicle = loadChronicle()
+const ship = chronicle.find((e) => e.move === 'ship')
+if (!ship || !ship.works[0]) throw new Error('/studio: no premiered work in the chronicle mirror')
+const slug = ship.works[0]
+
+const metas = import.meta.glob('/src/content/studio/works/*/meta.json', {
+  eager: true, import: 'default',
+}) as Record<string, { title?: string; date?: string }>
+const meta = metas[`/src/content/studio/works/${slug}/meta.json`]
+if (!meta?.title || !meta.date) throw new Error(`/studio: premiered work ${slug} has no committed meta`)
+
+const firstSentence = ship.summary.split('. ')[0].replace(/\.+$/, '') + '.'
+
+const score = currentScore
+const admitted = score.events.find((e) => e.event_type === 'object.admitted')
+const declined = score.events.find((e) => e.event_type === 'translation.loss_declared')
+const issued = score.events.find((e) => e.event_type === 'correction.issued')
+const obligation = score.obligations.find((o) => o.id.includes('live-status'))
+
+const kills = stageData.kills as { name: string; session: string; reason: string; source: string }[]
+const gasse: GasseEntry[] = [
+  ...(declined
+    ? [{
+        name: 'the declined case',
+        sub: declined.attribution?.match(/session \d+/)?.[0] ?? declined.date,
+        note: `${'translation.loss_declared'} — “${declined.quote}” (${declined.attribution} · enc-2026-001, verbatim). The most spectacular case stays offstage, on purpose.`,
+      }]
+    : []),
+  ...(stageData.held as GasseEntry[] & { name: string; sub: string; note: string }[]),
+]
+
+const svg = buildStageSvg({
+  premiere: {
+    title: (meta.title ?? slug).toUpperCase(),
+    metaLine: `premiered ${meta.date} · session ${ship.collective_session} · “${firstSentence}”`,
+    hover: `works/${slug} — ${ship.summary}`,
+    quote: admitted?.quote ?? '',
+    attribution: admitted ? `${admitted.attribution} (enc-2026-001, verbatim)` : '',
+  },
+  marquee: obligation ? STUDIO_GRAMMAR.marquee : '',
+  kills: kills.map(({ name, session, reason }) => ({ name, session, reason })),
+  gasse,
+  strikeNote: STUDIO_GRAMMAR.strikeNote(kills.length),
+  gasseLabel: STUDIO_GRAMMAR.gasseLabel,
+})
+
+const sessions = chronicle.map((e) => e.collective_session).filter((s): s is number => s !== null)
+const sMax = Math.max(...sessions)
+const evenings = new Set(chronicle.map((e) => e.date)).size
+const premieres = chronicle.filter((e) => e.move === 'ship').length
+
+const kicker = ['Studio · the stage · what is public now', 'studio (Ensemble)', `founded ${chronicle[0]?.date ?? ''}`]
+const statusHtml =
+  `<b>${premieres} premiere${premieres === 1 ? '' : 's'} · ${kills.length} kills · ${stageData.held.length} held · ` +
+  `${sMax} sessions in ${numberWord(evenings)} evenings</b> · ${STUDIO_NARRATIVE.stageRule}`
+
+// Stage record — every mark, uncompressed: the chronicle entries that name the premiered
+// work (verbatim search on its title), the encounter events, the standing obligation.
+interface Row { date: string; event: string; source: string }
+const rows: Row[] = [
+  ...chronicle
+    .filter((e) => e.summary.includes(meta.title!) || e.works.includes(slug))
+    .map((e) => ({
+      date: e.date,
+      event: `S${e.collective_session} — ${e.move}: ${e.summary}`,
+      source: 'chronicle, verbatim',
+    })),
+  ...(admitted
+    ? [{ date: admitted.date, event: `admission contract stated — “${admitted.quote}”`, source: `enc-2026-001 ledger, verbatim (${admitted.attribution})` }]
+    : []),
+  ...(declined
+    ? [{ date: declined.date, event: `the most spectacular case declined — “${declined.quote}”`, source: `enc-2026-001 ledger, verbatim (${declined.attribution})` }]
+    : []),
+  ...(issued
+    ? [{ date: issued.date, event: 'the correction reported upstream, delivered by the conductor', source: 'enc-2026-001 ledger' }]
+    : []),
+  ...(obligation
+    ? [{ date: `since ${admitted?.date ?? ''}`, event: `obligation ${obligation.label}`, source: 'enc-2026-001 obligations' }]
+    : []),
+].sort((a, b) => a.date.localeCompare(b.date))
 ---
+
 <Page
-  title="Studio — Lab | Frank Bültge"
-  description="Ensemble — a collective of AI voices (artist, dramaturg, builder, verifier, blocking art critic) making data art in autonomous sessions from the lab's verified research material, published unedited. Machinery composed and steered by Frank Bültge — probing how far serious art is possible with AI."
+  title="Studio — the stage | Frank Bültge"
+  description="The Studio's entry is the stage: one spotlight on what is public now, seven struck positions kept on the floor, and the refused material in the Gasse — visible, unlit."
 >
-  <StudioPage />
+  <Frame
+    active="this stage"
+    kicker={kicker}
+    h1={STUDIO_GRAMMAR.stageHeadline(premieres, kills.length)}
+    statusHtml={statusHtml}
+    footLeft={STUDIO_NARRATIVE.provenance.stage}
+    footRight="the correction this work sent upstream lives in The Middle → enc-2026-001"
+  >
+    <figure set:html={svg} />
+
+    <section class="st-record">
+      <h2>Stage record — every mark, uncompressed</h2>
+      <div class="st-tbl-wrap">
+        <table>
+          <thead><tr><th>date</th><th>event</th><th>source</th></tr></thead>
+          <tbody>
+            {rows.map((r) => (
+              <tr>
+                <td class="mono">{r.date}</td>
+                <td class="q">{r.event}</td>
+                <td class="mono">{r.source}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="st-room-intro">
+        Every strike keeps its reason — hover the X-marks, or read the sources in
+        <a href="/studio/history" class="underline">the playbill</a>. The premiered work itself:
+        <a href="/studio/works" class="underline">works →</a>
+      </p>
+    </section>
+  </Frame>
 </Page>

@@ -1,0 +1,74 @@
+---
+// /field/journal — the unedited record: day files, grouped, exactly as the collective
+// wrote them (field-aesthetik §4: „Journal bleibt tagesbasiert, gruppiert“). Sessions
+// split per day file; anchors keep the engine convention (cs-N …) so the register's
+// chronicle anchors keep working. Newest day first, its newest session open.
+import { getCollection } from 'astro:content'
+import Page from '@/layouts/Page.astro'
+import Frame from '@/components/field/surface/Frame.astro'
+import { sortJournal } from '@/lib/atelier/sort'
+import { splitSessions, sessionMeta, renderMarkdown, uniqueSessionAnchor } from '@/lib/engines/journal'
+import { FIELD_NARRATIVE } from '@/config/field-wording'
+
+const all = await getCollection('field')
+const journal = sortJournal(all.filter((e) => e.id.startsWith('journal/')))
+const repo = 'https://github.com/frankbueltge/field-research'
+const rootDocs = new Set(all.filter((e) => !e.id.includes('/')).map((e) => e.id))
+const mdRefs = { repo, docs: rootDocs }
+
+const dayLabel = (id: string) => id.replace('journal/', '').replace(/\.md$/, '')
+
+// anchors assigned in CHRONOLOGICAL order (drifting engine numbering keeps first claim)
+const anchorsUsed = new Set<string>()
+const daysAsc = [...journal].reverse().map((e) => {
+  const day = dayLabel(e.id)
+  const sessions = splitSessions(e.body ?? '').map((s, i) => ({
+    ...s,
+    ...sessionMeta(s.text),
+    html: renderMarkdown(s.text, mdRefs),
+    anchor: uniqueSessionAnchor(anchorsUsed, s.heading, day, i),
+  }))
+  return { id: e.id, day, sessions }
+})
+const days = [...daysAsc].reverse().map((d) => ({ ...d, sessions: [...d.sessions].reverse() }))
+
+const kicker = ['Field · journal', 'field-research', `${days.length} day files`]
+const statusHtml = `<b>${days.length} days</b> · the unedited record, grouped by day · newest first`
+---
+
+<Page
+  title="Field — journal | Frank Bültge"
+  description="The Field collective's research journal — day files, grouped, published unedited."
+>
+  <Frame active="journal" kicker={kicker} h1="The record, day by day." statusHtml={statusHtml} back>
+    <p class="fd-room-intro">{FIELD_NARRATIVE.rooms.journal}</p>
+    {days.map(({ day, sessions }, dayIdx) => (
+      <section class="mb-6">
+        <p class="fd-instr-meta mt-6">{day}</p>
+        {sessions.map((s, i) => (
+          <details id={s.anchor} class="fd-day scroll-mt-16" open={dayIdx === 0 && i === 0}>
+            <summary>
+              <span class="fd-day-date">{s.anchor}</span>
+              <span class="fd-day-title">{s.heading || day}</span>
+              {s.move && <span>{s.move}</span>}
+            </summary>
+            <div class="fd-prose" set:html={s.html} />
+          </details>
+        ))}
+      </section>
+    ))}
+  </Frame>
+</Page>
+
+<script>
+  const openFromHash = () => {
+    const id = decodeURIComponent(location.hash.slice(1))
+    const el = id ? document.getElementById(id) : null
+    if (el instanceof HTMLDetailsElement) {
+      el.open = true
+      el.scrollIntoView()
+    }
+  }
+  openFromHash()
+  addEventListener('hashchange', openFromHash)
+</script>

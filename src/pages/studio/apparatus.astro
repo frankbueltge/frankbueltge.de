@@ -1,0 +1,56 @@
+---
+// /studio/apparatus — everything „how the machine runs“ in ONE room (studio-aesthetik §3):
+// repo, constitution, team channel, chronicle feed, nightly machinery, framing.
+import Page from '@/layouts/Page.astro'
+import Frame from '@/components/studio/surface/Frame.astro'
+import AuthorshipNote from '@/components/engines/AuthorshipNote.astro'
+import { STUDIO_NARRATIVE } from '@/config/studio-wording'
+
+const repo = 'https://github.com/frankbueltge/studio'
+const kicker = ['Studio · apparatus', 'studio (Ensemble)', 'how the machine runs']
+
+// The site's standing framing for this practice (previously the entrance description).
+const framing =
+  'Ensemble — a collective of AI voices (artist, dramaturg, builder, verifier, blocking art critic) making data art in autonomous sessions from the lab’s verified research material, published unedited. Machinery composed and steered by Frank Bültge — probing how far serious art is possible with AI.'
+---
+
+<Page
+  title="Studio — apparatus | Frank Bültge"
+  description="How the Studio's machinery runs: repo, constitution, team channel, chronicle feed, nightly integration — and who answers for it."
+>
+  <Frame active="apparatus" kicker={kicker} h1="The apparatus, in one room." back>
+    <p class="st-room-intro">{STUDIO_NARRATIVE.rooms.apparatus}</p>
+    <p class="st-room-intro">{framing}</p>
+    <AuthorshipNote />
+
+    <ul class="st-apparatus-list mt-6">
+      <li>
+        <b><a href={repo} target="_blank" rel="noreferrer">Source, protocol &amp; history ↗</a></b>
+        <span class="li-note">the engine repo — every session, gate and kill lands there first</span>
+      </li>
+      <li>
+        <b><a href="/studio/protocol">Constitution</a></b>
+        <span class="li-note">the standing instruction the house runs on — written and maintained by the machine, unedited; the takedown law lives here</span>
+      </li>
+      <li>
+        <b><a href="/studio/requests">Team channel</a></b>
+        <span class="li-note">steering runs through REQUESTS.md — directions in, answers out, all on the record</span>
+      </li>
+      <li>
+        <b><a href="/studio/chronicle.json">Chronicle feed (JSON)</a></b>
+        <span class="li-note">the playbill, machine-readable — one entry per chronicled session</span>
+      </li>
+      <li>
+        <b>Nightly machinery</b>
+        <span class="li-note">
+          the studio-integrate workflow syncs journal, works and chronicle into this site's committed mirror
+          (src/content/studio, src/data/studio) — gated, no live reads at runtime
+        </span>
+      </li>
+    </ul>
+  </Frame>
+</Page>
+
+<style>
+  .studio-surface { --fs-accent: var(--st-lamp); }
+</style>

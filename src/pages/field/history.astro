@@ -1,0 +1,144 @@
+---
+// /field/history — der Schreiberstreifen (field-aesthetik §1/§2): the register room. The
+// recorder tape runs on wall-clock days; quiet days stay as a flat line. Pen trace =
+// chronicled sessions/day (named deviation: the mockup drew engine-git commits/day, which
+// this mirror does not carry). Stamps = every chronicle entry, verbatim. The splice
+// (2026-07-12 history rewrite) and the patch (S08 entry restored verbatim) are documented
+// in the mirrored journals — journal/2026-07-13.md names the rewrite and its live
+// equivalents, journal/2026-07-01.md carries the archival recovery note.
+import Page from '@/layouts/Page.astro'
+import Frame from '@/components/field/surface/Frame.astro'
+import { loadChronicle } from '@/lib/field/chronicle'
+import { currentScore } from '@/lib/begegnungen'
+import { buildStripSvg, dayRange } from '@/lib/field/strip'
+import { FIELD_GRAMMAR, FIELD_NARRATIVE } from '@/config/field-wording'
+
+const chronicle = loadChronicle()
+const dates = chronicle.map((e) => e.date).sort()
+const days = dayRange(dates[0], dates[dates.length - 1]).map((date) => ({
+  date,
+  sessions: chronicle.filter((e) => e.date === date).length,
+}))
+
+const stamps = chronicle.map((e) => ({
+  session: e.collective_session,
+  date: e.date,
+  move: e.move,
+  note: e.summary,
+}))
+
+const metas = import.meta.glob('/src/components/field/werke/*/meta.json', {
+  eager: true, import: 'default',
+}) as Record<string, { date?: string }>
+const instrumentsByDate: Record<string, number> = {}
+for (const m of Object.values(metas)) {
+  if (!m.date) continue
+  instrumentsByDate[m.date] = (instrumentsByDate[m.date] ?? 0) + 1
+}
+const instruments = Object.entries(instrumentsByDate)
+  .sort(([a], [b]) => a.localeCompare(b))
+  .map(([date, count]) => ({ date, count }))
+
+const score = currentScore
+const contract = score.events.find((e) => e.event_type === 'contract.published')
+const obligation = score.obligations.find((o) => o.id.includes('caveat-preservation'))
+
+// Documented tape wounds (sources in the mirrored journals — see header comment):
+const splice = {
+  date: '2026-07-12',
+  note: 'git history rewritten (team decision): the tape is cut and respliced — commit pointers dangle, content hashes hold (named in journal/2026-07-13.md; ADR 0009, rewrite map in the engine repo)',
+}
+const patch = {
+  date: '2026-07-01',
+  note: 'a Session-08 journal entry was lost to a parallel git recovery and restored VERBATIM in place (archival note in journal/2026-07-01.md)',
+}
+
+const sessions = chronicle.map((e) => e.collective_session).filter((s): s is number => s !== null)
+const sMin = Math.min(...sessions)
+const sMax = Math.max(...sessions)
+
+const svg = buildStripSvg({
+  days,
+  stamps,
+  instruments,
+  flag: contract
+    ? { date: contract.date, note: `contract.published: the standing caveat commitment travels — “${contract.quote}” (${contract.attribution}) · enc-2026-001` }
+    : undefined,
+  obligationLabel: obligation?.label,
+  splice,
+  patch,
+  calibrationNote: 'calibration marks · not mirrored',
+  traceLabel: FIELD_GRAMMAR.marginLabels.trace,
+  dataEdgeLines: FIELD_GRAMMAR.dataEdgeLines,
+  stampsLabel: ['move stamps ·', `chronicle S${sMin}–S${sMax}`],
+})
+
+const instrumentsTotal = instruments.reduce((a, m) => a + m.count, 0)
+const kicker = ['Field · the history as a recorder tape', 'field-research', `${days[0].date} → ${days[days.length - 1].date}`]
+const statusHtml =
+  `<b>${sMax} collective sessions · ${instrumentsTotal} instruments · ${stamps.length} chronicled moves · ` +
+  `1 splice · 1 patch</b> · the recorder runs on wall-clock days; quiet days stay on the tape as a flat line`
+
+// Tape register — every mark on this strip, uncompressed.
+interface Row { session: string; date: string; mark: string; source: string }
+const rows: Row[] = [
+  ...chronicle.map((e) => ({
+    session: e.collective_session ? `S${e.collective_session}` : 'pre',
+    date: e.date,
+    mark: `move · ${e.move}${e.verdict ? ` · ${e.verdict}` : ''} — ${e.summary}`,
+    source: 'chronicle, verbatim',
+  })),
+  ...instruments.map((m) => ({
+    session: '—',
+    date: m.date,
+    mark: `${m.count} instrument(s) added`,
+    source: 'works/ committed dates',
+  })),
+  ...(contract
+    ? [{ session: '—', date: contract.date, mark: `contract.published — standing caveat commitment travels`, source: 'enc-2026-001 ledger' }]
+    : []),
+  { session: '—', date: splice.date, mark: 'splice: git history rewritten, pointers dangle, hashes hold', source: 'journal/2026-07-13.md · ADR 0009' },
+  { session: 'S08', date: patch.date, mark: 'patch: journal entry lost, restored verbatim in place', source: 'journal/2026-07-01.md' },
+].sort((a, b) => a.date.localeCompare(b.date))
+---
+
+<Page
+  title="Field — the strip | Frank Bültge"
+  description="The Field's history as a strip-chart recorder tape: a continuous pen trace over graph paper, move stamps, instrument marks, one splice, one patch — and the pen has not lifted."
+>
+  <Frame
+    active="register"
+    kicker={kicker}
+    h1={FIELD_GRAMMAR.stripH1}
+    statusHtml={statusHtml}
+    footLeft={`${FIELD_NARRATIVE.provenance.strip} · ${FIELD_NARRATIVE.provenance.trace} · ${FIELD_NARRATIVE.provenance.calibration}`}
+    footRight={FIELD_GRAMMAR.scaleRule}
+    back
+  >
+    <figure set:html={svg} />
+
+    <section class="fd-record">
+      <h2>Tape register — every mark on this strip, uncompressed</h2>
+      <p class="fd-room-intro">
+        The machine-readable form of this register is public at
+        <a href="/field/chronicle.json" class="underline">/field/chronicle.json</a>; the unedited prose lives in the
+        <a href="/field/journal" class="underline">journal</a>.
+      </p>
+      <div class="fd-tbl-wrap">
+        <table>
+          <thead><tr><th>session</th><th>date</th><th>mark</th><th>source</th></tr></thead>
+          <tbody>
+            {rows.map((r) => (
+              <tr>
+                <td>{r.session}</td>
+                <td class="mono">{r.date}</td>
+                <td class="q">{r.mark}</td>
+                <td class="mono">{r.source}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </Frame>
+</Page>
