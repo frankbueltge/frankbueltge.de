@@ -28,7 +28,14 @@ export type NodeKind = 'work' | 'thread' | 'source' | 'impulse'
 // Ulysses' Rhizom-Vokabular ist offen — neue Kinds werden hier BEWUSST aufgenommen,
 // wenn die Praxis sie einführt (S27: continues/grounds/complement); das Integrate-Gate
 // (cockpit.test.ts) schlägt sonst ehrlich an, statt still zu raten.
-export type EdgeKind = 'elaborates' | 'swerve' | 'fork' | 'bridge' | 'continues' | 'complement' | 'grounds' | 'measures' | 'corrected-by'
+/** Die Arten mit eigenem Zeichen auf Blatt/Cockpit. Das Vokabular der Praxis ist OFFEN
+ * (Zeichengrammatik §2, angewandt 2026-07-16 nach der dritten Neuprägung binnen 24h:
+ * continues/complement/grounds → measures/corrected-by → corrects): unbekannte Arten sind
+ * kein Gate-Fehler — sie laufen wörtlich ins Register, zählen in den 'other'-Eimer und
+ * stellen Werke aufs Regal. Das Gate prüft Struktur, nicht die Wortliste. */
+export type KnownEdgeKind = 'elaborates' | 'swerve' | 'fork' | 'bridge' | 'continues' | 'complement' | 'grounds' | 'measures' | 'corrected-by'
+export const KNOWN_EDGE_KINDS: readonly KnownEdgeKind[] = ['elaborates', 'swerve', 'fork', 'bridge', 'continues', 'complement', 'grounds', 'measures', 'corrected-by']
+export type EdgeKind = KnownEdgeKind | (string & {})
 
 export interface RhizomeNode {
   id: string
@@ -111,9 +118,12 @@ export function latestClosure(v: VitalSigns): number | null {
   return null
 }
 
-export function edgeCounts(r: Rhizome): Record<EdgeKind, number> {
-  const counts: Record<EdgeKind, number> = { elaborates: 0, swerve: 0, fork: 0, bridge: 0, continues: 0, complement: 0, grounds: 0, measures: 0, 'corrected-by': 0 }
-  for (const e of r.edges) if (e.kind in counts) counts[e.kind]++
+export function edgeCounts(r: Rhizome): Record<KnownEdgeKind | 'other', number> {
+  const counts: Record<KnownEdgeKind | 'other', number> = { elaborates: 0, swerve: 0, fork: 0, bridge: 0, continues: 0, complement: 0, grounds: 0, measures: 0, 'corrected-by': 0, other: 0 }
+  for (const e of r.edges) {
+    if (e.kind in counts) counts[e.kind as KnownEdgeKind]++
+    else counts.other++ // unbekannte Art: gezählt, nie verschluckt (offenes Vokabular)
+  }
   return counts
 }
 
