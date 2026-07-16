@@ -1,0 +1,235 @@
+{
+ "meta": {
+  "code": "Hamming(7,4)",
+  "extended": "Hamming(8,4) SECDED",
+  "d_min_74": 3,
+  "d_min_84": 4,
+  "seed": 20260716,
+  "n_trials": 200000,
+  "data_pos": [
+   3,
+   5,
+   6,
+   7
+  ],
+  "check_pos": [
+   1,
+   2,
+   4
+  ],
+  "note": "Census is exhaustive (message-independent by linearity). Channel sweep is seeded."
+ },
+ "census": {
+  "weight0": {
+   "correct": 1,
+   "miscorrected": 0,
+   "patterns": 1
+  },
+  "weight1": {
+   "correct": 7,
+   "miscorrected": 0,
+   "patterns": 7
+  },
+  "weight2": {
+   "correct": 0,
+   "miscorrected": 21,
+   "patterns": 21
+  }
+ },
+ "examples": {
+  "message": [
+   1,
+   0,
+   1,
+   1
+  ],
+  "codeword": [
+   0,
+   1,
+   1,
+   0,
+   0,
+   1,
+   1
+  ],
+  "rows": [
+   {
+    "kind": "one flip",
+    "sent": [
+     0,
+     1,
+     1,
+     0,
+     0,
+     1,
+     1
+    ],
+    "recv": [
+     0,
+     1,
+     1,
+     0,
+     1,
+     1,
+     1
+    ],
+    "syndrome": 5,
+    "report": "corrected position 5",
+    "out": [
+     1,
+     0,
+     1,
+     1
+    ],
+    "truth": "RESCUE",
+    "flips": [
+     5
+    ]
+   },
+   {
+    "kind": "two flips",
+    "sent": [
+     0,
+     1,
+     1,
+     0,
+     0,
+     1,
+     1
+    ],
+    "recv": [
+     1,
+     1,
+     1,
+     1,
+     0,
+     1,
+     1
+    ],
+    "syndrome": 5,
+    "report": "corrected position 5",
+    "out": [
+     1,
+     1,
+     1,
+     1
+    ],
+    "truth": "LIE",
+    "flips": [
+     1,
+     4
+    ]
+   }
+  ]
+ },
+ "sweep": [
+  {
+   "p": 0.0,
+   "sec": {
+    "correct": 1.0,
+    "silent_error": 0.0
+   },
+   "secded": {
+    "correct": 1.0,
+    "silent_error": 0.0,
+    "refused": 0.0
+   }
+  },
+  {
+   "p": 0.01,
+   "sec": {
+    "correct": 0.99808,
+    "silent_error": 0.00192
+   },
+   "secded": {
+    "correct": 0.997405,
+    "silent_error": 5.5e-05,
+    "refused": 0.00254
+   }
+  },
+  {
+   "p": 0.02,
+   "sec": {
+    "correct": 0.991905,
+    "silent_error": 0.008095
+   },
+   "secded": {
+    "correct": 0.98935,
+    "silent_error": 0.00039,
+    "refused": 0.01026
+   }
+  },
+  {
+   "p": 0.05,
+   "sec": {
+    "correct": 0.955625,
+    "silent_error": 0.044375
+   },
+   "secded": {
+    "correct": 0.94283,
+    "silent_error": 0.0052,
+    "refused": 0.05197
+   }
+  },
+  {
+   "p": 0.1,
+   "sec": {
+    "correct": 0.85127,
+    "silent_error": 0.14873
+   },
+   "secded": {
+    "correct": 0.813855,
+    "silent_error": 0.033495,
+    "refused": 0.15265
+   }
+  },
+  {
+   "p": 0.15,
+   "sec": {
+    "correct": 0.71623,
+    "silent_error": 0.28377
+   },
+   "secded": {
+    "correct": 0.65734,
+    "silent_error": 0.09094,
+    "refused": 0.25172
+   }
+  },
+  {
+   "p": 0.2,
+   "sec": {
+    "correct": 0.577635,
+    "silent_error": 0.422365
+   },
+   "secded": {
+    "correct": 0.503415,
+    "silent_error": 0.163905,
+    "refused": 0.33268
+   }
+  },
+  {
+   "p": 0.3,
+   "sec": {
+    "correct": 0.327895,
+    "silent_error": 0.672105
+   },
+   "secded": {
+    "correct": 0.254385,
+    "silent_error": 0.32923,
+    "refused": 0.416385
+   }
+  },
+  {
+   "p": 0.5,
+   "sec": {
+    "correct": 0.06219,
+    "silent_error": 0.93781
+   },
+   "secded": {
+    "correct": 0.03517,
+    "silent_error": 0.526215,
+    "refused": 0.438615
+   }
+  }
+ ]
+}
