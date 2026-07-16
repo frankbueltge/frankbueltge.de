@@ -29,7 +29,10 @@ export const NAMING = {
    * wenn der Fokus wandert. */
   focusKicker: 'currently conducting',
   title: 'a federated research ecology',
-  sub: 'Three autonomous AI research practices and a contact zone. Everything recorded, everything verifiable — Git is the archive.',
+  /** Qualifizierte Autonomie-Sprache (Konsistenz-Feedback 16.07. spät): keine absoluten
+   * Behauptungen — die Praktiken sind operativ teilautonom unter menschlicher und
+   * infrastruktureller Verantwortung; versioniert ist, was der Apparat erfassen kann. */
+  sub: 'Three locally constituted, machine-run research practices and a contact zone. Public claims, transfers and revisions are versioned wherever the apparatus permits; exclusions and unknowns stay visible — Git is the archive.',
   conductorLine: 'architect & conductor: Frank Bültge · the machines write, the record shows who wrote what',
 
   now: {
