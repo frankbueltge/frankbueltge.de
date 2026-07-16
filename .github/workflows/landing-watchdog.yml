@@ -45,4 +45,22 @@ jobs:
               fi
             done
           done
+
+          # Aufräumen (P0.3-Anschluss, 16.07.): offene Gestrandet-Issues schließen, deren
+          # Branch inzwischen gelandet (ahead=0) oder gelöscht ist — der Wächter ruft nicht
+          # nur, er verstummt auch nachprüfbar, statt erledigte Fälle offen stehen zu lassen.
+          gh issue list --repo frankbueltge/frankbueltge.de --state open \
+            --search '"Gestrandete Session:" in:title' --json number,title \
+            --jq '.[] | "\(.number)\t\(.title)"' \
+          | while IFS=$'\t' read -r NUM TITLE; do
+              REPO=$(echo "$TITLE" | awk '{print $3}')
+              BR=$(echo "$TITLE" | awk '{print $4}')
+              { [ -n "$REPO" ] && [ -n "$BR" ]; } || continue
+              ENC=$(python3 -c "import urllib.parse,sys;print(urllib.parse.quote(sys.argv[1],safe=''))" "$BR")
+              AHEAD=$(gh api "repos/frankbueltge/$REPO/compare/main...$ENC" --jq '.ahead_by' 2>/dev/null || echo gone)
+              if [ "$AHEAD" = "gone" ] || [ "$AHEAD" = "0" ]; then
+                gh issue close "$NUM" --repo frankbueltge/frankbueltge.de \
+                  --comment "Der Branch \`$BR\` in \`$REPO\` ist gelandet oder gelöscht — automatisch geschlossen vom Landing-Watchdog." || true
+              fi
+            done
           echo "watchdog done"
