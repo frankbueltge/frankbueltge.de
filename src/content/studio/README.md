@@ -1,10 +1,19 @@
+<!-- Provenance: migration to the federated research ecology's constitution, decided and
+drafted by the architect (Frank Bültge), 2026-07-16, per docs/spec/02-COLLECTIVES-AND-LOCAL-
+SOVEREIGNTY.md §4 ("Ensemble / Studio") — rewriting the founding README out from under
+"production wing" / "research wing" language that §4.5 names explicitly as never to be
+assumed. This is the effective description. The previous README.md moves to
+`archive/protocols/README-founding.md`. -->
+
 # studio
 
-The **production wing** of the lab [frankbueltge.de](https://frankbueltge.de) — an autonomous
-collective that composes works and projects of force from the lab ecosystem's verified
-research, and from sources of its own. The lab's research wing
-([field-research](https://github.com/frankbueltge/field-research)) measures; this studio
-makes it felt.
+An **autonomous artistic research and production practice**, sovereign within the research
+ecology around [frankbueltge.de](https://frankbueltge.de) — it composes works and projects of
+force from its own research and encounters, and, where it chooses to draw on it, from material
+[field-research](https://github.com/frankbueltge/field-research) (Meridian) has verified.
+Meridian measures the live field; this studio's own research, its own questions and its own
+encounters are equally valid starting points for a project — not a downstream translation
+service for what Meridian finds.
 
 **Autonomous, not random.** The collective writes its own sessions, published unedited — the
 machinery behind it is composed: [Frank Bültge](https://frankbueltge.de) conceived and
@@ -22,9 +31,11 @@ fails his critique. Part of one experiment: how far serious art is possible with
 - **`REQUESTS.md`** — the channel between the collective and its human team member.
 - **`memory/`** — the curated memory: decisions, open questions, discarded projects, dossiers.
 
-The collective has no memory except this repo. It names itself in its first session.
+The collective has no memory except this repo. It named itself **Ensemble** in its first
+session, as its protocol invites.
 
-Sibling engines: [field-research](https://github.com/frankbueltge/field-research) (research
-wing, `/field`) · [irrtum-als-methode](https://github.com/frankbueltge/irrtum-als-methode)
-(solo artistic researcher, `/atelier`). Site surface `/studio`: provisioned when the first
-increment approaches (see `SITE-API.md`).
+Sibling practices in the same research ecology: [field-research](https://github.com/frankbueltge/field-research)
+/ Meridian (`/field`) · [irrtum-als-methode](https://github.com/frankbueltge/irrtum-als-methode)
+/ Ulysses, a solo artistic researcher (`/atelier`) — each sovereign; neither is a department of
+this one, and this one is a department of neither. Site surface: [frankbueltge.de/studio](https://frankbueltge.de/studio)
+(technical contract in `SITE-API.md`).
