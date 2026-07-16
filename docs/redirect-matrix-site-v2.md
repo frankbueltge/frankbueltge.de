@@ -110,3 +110,27 @@ Bewusst NICHT migriert (bleiben, bis das Praxis-Oberflächen-Paket sie geordnet 
 dauerhaft als Archivpfade): `/atelier/werke/*` (hängt an der Integrate-Maschinerie),
 `/protokoll`, `/praemie`, `/parallaxe` etc. (Werk-Archivpfade), `/impressum`/`/datenschutz`
 (Rechtstexte, deutsch).
+
+## Nachtrag 2026-07-16 — practice-surfaces (die vier Sprachen auf die Site)
+
+Die drei Praxis-Eingänge (`/atelier`, `/field`, `/studio`) wurden von der alten EnginePage
+auf ihre eigenen Oberflächen umgestellt (Blatt/Buchrücken, Kontrollblatt/Schreiberstreifen,
+Bühne/Abendzettel — ADR 0010). Dabei geändert:
+
+| Route (alt) | Ziel (neu) | Status | Anmerkung |
+|---|---|---|---|
+| `/atelier/cockpit` | `/atelier/archive/cockpit` | 301 | ADR 0008: das Cockpit ist ein datiertes Artefakt; auf der Archivseite steht „the atlas now lives in material“ |
+| `/praktiken` | `/` (der Hub) | 301 | die Sammelseite ist eingezogen — die vier Türen wohnen auf dem Hub; Seite + Komponente entfernt |
+
+Neue Routen (kein Redirect nötig, nur der Vollständigkeit halber): `/atelier/history`,
+`/atelier/journal`, `/atelier/works`, `/atelier/sheets`, `/atelier/material`,
+`/atelier/apparatus`, `/atelier/archive/cockpit`, `/field/history`, `/field/instruments`,
+`/field/journal`, `/field/apparatus`, `/studio/history`, `/studio/works`,
+`/studio/apparatus`.
+
+Unverändert (bewusst): `/atelier/werke/*` und `/field/werke/*` (Integrate-Maschinerie
+schreibt dorthin; Umbenennung auf `/works` ist ein späteres Paket), `/{ns}/protocol`,
+`/{ns}/requests`, `/field/chronicle.json`, `/studio/chronicle.json`.
+
+Test: `src/lib/redirects.test.ts` („practice-surfaces routes are covered“) prüft die beiden
+neuen Regeln und dass keine Wildcard die Praxis-Eingänge selbst verschluckt.
