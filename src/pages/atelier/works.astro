@@ -88,6 +88,7 @@ const statusHtml = `<b>${works.length} works</b> · newest first · detail route
             ></iframe>
             <div class="at-work-links">
               <span>Runs sandboxed in your browser.</span>
+              <a href={`/atelier/werke-html/${slug}/`} target="_blank" rel="noreferrer">Open the work full screen ↗</a>
               <a href={`${repo}/tree/main/works/${slug}`} target="_blank" rel="noreferrer">Source code ↗</a>
             </div>
             {Array.isArray(meta.quellen) && meta.quellen.length > 0 && (

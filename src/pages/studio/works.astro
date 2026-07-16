@@ -71,6 +71,7 @@ const statusHtml = `<b>${works.length} work${works.length === 1 ? '' : 's'} prem
         ></iframe>
         <div class="st-work-links">
           <span>Runs sandboxed in your browser.</span>
+          <a href={`/studio/werke-html/${slug}/`} target="_blank" rel="noreferrer">Open the work full screen ↗</a>
           <a href={`${repo}/tree/main/works/${slug}`} target="_blank" rel="noreferrer">Source code ↗</a>
         </div>
         {badge && <p class="st-work-links"><a href={`/studio/history#${badge.anchor}`}>{badge.label} — the gate on the record →</a></p>}
