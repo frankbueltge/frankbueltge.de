@@ -1,0 +1,48 @@
+# .github/workflows/landing-watchdog.yml
+# Apparatus-Befund 2026-07-16 (Fable-Testläufe): Cloud-Sessions können enden, ohne zu landen —
+# einmal lag die Arbeit nur auf dem Cloud-Outcome-Branch (claude/*), einmal wurde der
+# research/session-*-Push vom Auto-land nicht bemerkt. Eine Session, die endet, ohne zu landen,
+# ist ein stilles Loch — dieser Wächter macht daraus ein Issue (Arbeitsstrang site-v2-briefing
+# §5.1: Sichtbarkeit statt Stille). Er repariert nichts und landet nichts: Er RUFT nur.
+name: Landing watchdog
+
+on:
+  schedule:
+    - cron: '45 5 * * *'   # 07:45 Berlin — nach Nightlies (03:05/04:00) + Auto-lands + Integrates
+  workflow_dispatch: {}
+
+permissions:
+  issues: write
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check every engine for stranded, un-landed session work
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          DATE=$(date -u +%F)
+          for REPO in irrtum-als-methode field-research studio; do
+            BRANCHES=$(git ls-remote "https://github.com/frankbueltge/$REPO" \
+              | grep -E 'refs/heads/(research/session-|ulysses/|claude/)' \
+              | sed 's|.*refs/heads/||') || true
+            for BR in $BRANCHES; do
+              AHEAD=$(gh api "repos/frankbueltge/$REPO/compare/main...$(python3 -c "import urllib.parse,sys;print(urllib.parse.quote(sys.argv[1],safe=''))" "$BR")" --jq '.ahead_by' 2>/dev/null || echo 0)
+              [ "$AHEAD" -gt 0 ] || continue
+              # nur frische Stranden melden (jüngster Commit < 36h) — alte, bewusst stehende
+              # Branches (z. B. dokumentierte Duplikate) sollen nicht täglich alarmieren
+              LAST=$(gh api "repos/frankbueltge/$REPO/commits/$(python3 -c "import urllib.parse,sys;print(urllib.parse.quote(sys.argv[1],safe=''))" "$BR")" --jq '.commit.committer.date' 2>/dev/null || echo '')
+              [ -n "$LAST" ] || continue
+              AGE_H=$(( ( $(date -u +%s) - $(date -u -d "$LAST" +%s) ) / 3600 ))
+              [ "$AGE_H" -lt 36 ] || continue
+              TITLE="Gestrandete Session: $REPO $BR"
+              if [ "$(gh issue list --repo frankbueltge/frankbueltge.de --state open --search "\"$TITLE\" in:title" --json number --jq 'length')" = "0" ]; then
+                gh issue create --repo frankbueltge/frankbueltge.de \
+                  --title "$TITLE" \
+                  --body "Der Branch \`$BR\` in \`$REPO\` liegt $AHEAD Commit(s) vor main (jüngster Commit: $LAST) — eine Session hat gearbeitet, aber nichts ist gelandet. Prüfen: Auto-land nicht getriggert? Nur Cloud-Outcome-Branch gepusht? Veralteter Klon (Duplikat)? Apparatus-Befunde vom $DATE: research-ecology docs/design/site-v2-decisions-2026-07-16.md §4." || true
+              fi
+            done
+          done
+          echo "watchdog done"
