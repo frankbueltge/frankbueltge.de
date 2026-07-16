@@ -95,7 +95,11 @@ const rows: Row[] = [
   ...(obligation
     ? [{ date: `since ${admitted?.date ?? ''}`, event: `obligation ${obligation.label}`, source: 'enc-2026-001 obligations' }]
     : []),
-].sort((a, b) => a.date.localeCompare(b.date))
+].sort((a, b) => {
+  // Neueste zuerst (Frank, 16.07. abends); 'since <datum>'-Zeilen sortieren an ihrem Datum.
+  const key = (d: string) => d.replace(/^since /, '')
+  return key(b.date).localeCompare(key(a.date))
+})
 ---
 
 <Page
