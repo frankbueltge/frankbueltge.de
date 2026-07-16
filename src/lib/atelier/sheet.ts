@@ -209,14 +209,25 @@ function layoutSheet(r: Rhizome): SheetLayout {
       return { id: e.to, label: node?.label ?? e.to, date: node?.date, x, y }
     })
 
-    // shelf ghosts: complement targets of THIS thread's works that are not themselves
-    // elaborated on the sheet — present, not re-made.
+    // shelf ghosts: works tied to THIS thread's works without being elaborated on the
+    // sheet — present, not re-made. Ursprünglich nur complement-Ziele; verallgemeinert
+    // 2026-07-16 (S31/S32 erfanden `measures` und `corrected-by` und hängten ein Werk
+    // allein über solche Bindungen ins Rhizom): JEDE Bindung an ein Faden-Werk, deren
+    // anderes Ende ein nicht-elaboriertes Werk ist, stellt dieses Werk aufs Regal — das
+    // Register darunter führt die Bindungsart in jedem Fall wörtlich.
+    const SHELF_TIES = new Set(['complement', 'bridge', 'measures', 'corrected-by'])
     const ghostIds: string[] = []
     for (const e of r.edges) {
-      if (e.kind !== 'complement') continue
-      if (!workEdges.some((we) => we.to === e.from)) continue
-      if (elaboratedBy.has(e.to) || workPos.has(e.to)) continue
-      ghostIds.push(e.to)
+      if (!SHELF_TIES.has(e.kind)) continue
+      const far = workEdges.some((we) => we.to === e.from)
+        ? e.to
+        : workEdges.some((we) => we.to === e.to)
+          ? e.from
+          : null
+      if (!far) continue
+      if (byId.get(far)?.kind !== 'work') continue
+      if (elaboratedBy.has(far) || workPos.has(far) || ghostIds.includes(far)) continue
+      ghostIds.push(far)
     }
     const ghosts = ghostIds.map((id, g) => {
       const node = byId.get(id)

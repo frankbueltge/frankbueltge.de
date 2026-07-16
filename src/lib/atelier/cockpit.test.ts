@@ -84,7 +84,7 @@ describe('gegen die echten Engine-Daten (Invarianten, kein Zustand)', () => {
     for (const e of rhizome.edges) {
       expect(ids.has(e.from), `from: ${e.from}`).toBe(true)
       expect(ids.has(e.to), `to: ${e.to}`).toBe(true)
-      expect(['elaborates', 'swerve', 'fork', 'bridge', 'continues', 'complement', 'grounds']).toContain(e.kind)
+      expect(['elaborates', 'swerve', 'fork', 'bridge', 'continues', 'complement', 'grounds', 'measures', 'corrected-by']).toContain(e.kind)
     }
   })
   it('Stats sind konsistent (Werke vorhanden, read ⊇ worked, Zählungen ≥ 0)', () => {
@@ -154,7 +154,7 @@ describe('edgeCounts + Swerve-Zählung', () => {
     ],
   }
   it('zählt nach kind', () => {
-    expect(edgeCounts(r)).toEqual({ elaborates: 1, swerve: 1, fork: 0, bridge: 0, continues: 0, complement: 0, grounds: 0 })
+    expect(edgeCounts(r)).toEqual({ elaborates: 1, swerve: 1, fork: 0, bridge: 0, continues: 0, complement: 0, grounds: 0, measures: 0, 'corrected-by': 0 })
   })
   it('Swerves = Maximum aus Kanten-Sicht und Vitalzeichen-Sicht, nie Summe', () => {
     const v: VitalSigns = {
