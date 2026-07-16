@@ -70,6 +70,9 @@ if (applied) {
 if (contract && obligation) {
   rows.push({ date: `since ${contract.date}`, event: `obligation ${obligation.label}`, source: 'enc-2026-001 obligations' })
 }
+// Neueste zuerst (Frank, 16.07. abends) — nur die Lese-Tabelle; Streifen-Geometrie und
+// Instrument-Nummerierung bleiben chronologisch (deterministische Identität).
+rows.sort((a, b) => a.date.replace(/^since /, '') === b.date.replace(/^since /, '') ? 0 : b.date.replace(/^since /, '').localeCompare(a.date.replace(/^since /, '')))
 
 marks.sort((a, b) => (a.date === b.date ? 0 : a.date.localeCompare(b.date)))
 const endDate = [score.status.as_of, ...marks.map((m) => m.date)].sort().at(-1)!
