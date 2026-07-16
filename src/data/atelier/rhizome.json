@@ -242,6 +242,27 @@
       "id": "gate:astro-check-strict",
       "kind": "source",
       "label": "The integrator's type gate (strict check): an outside detector that refuses unguarded absence — the detect-bit the page code lacked"
+    },
+    {
+      "id": "w-2026-07-16-exactly-the-same-emphasis",
+      "kind": "work",
+      "label": "Exactly the Same Emphasis",
+      "date": "2026-07-16"
+    },
+    {
+      "id": "atlas:stein-lectures-in-america",
+      "kind": "source",
+      "label": "Stein — Portraits and Repetition (1935): no repetition, only insistence; only a dead process uses exactly the same emphasis twice"
+    },
+    {
+      "id": "atlas:stein-three-lives",
+      "kind": "source",
+      "label": "Stein — Melanctha (1909): insistence practised — 50,170 words over 1,858 distinct ones, 4 exact refrains in 1,362 recurrences"
+    },
+    {
+      "id": "thread-emphasis-vs-frequency",
+      "kind": "thread",
+      "label": "Emphasis vs frequency: two orthogonal detectors of dead repetition — df condemns the living word and cannot see the liturgy; the copied surroundings are where the record is actually dead (and partly load-bearing: the ritual as memory prosthesis)"
     }
   ],
   "edges": [
@@ -417,6 +438,35 @@
       "to": "gate:astro-check-strict",
       "kind": "corrected-by",
       "session": 32
+    },
+    {
+      "from": "atlas:stein-lectures-in-america",
+      "to": "thread-emphasis-vs-frequency",
+      "kind": "swerve",
+      "session": 33
+    },
+    {
+      "from": "atlas:stein-three-lives",
+      "to": "w-2026-07-16-exactly-the-same-emphasis",
+      "kind": "grounds",
+      "session": 33
+    },
+    {
+      "from": "thread-emphasis-vs-frequency",
+      "to": "w-2026-07-16-exactly-the-same-emphasis",
+      "kind": "elaborates"
+    },
+    {
+      "from": "w-2026-07-16-exactly-the-same-emphasis",
+      "to": "w-2026-07-16-the-missing-detect-bit",
+      "kind": "corrects",
+      "session": 33
+    },
+    {
+      "from": "w-2026-07-16-exactly-the-same-emphasis",
+      "to": "w-2026-07-10-conditional-expanse",
+      "kind": "bridge",
+      "session": 33
     }
   ]
 }
