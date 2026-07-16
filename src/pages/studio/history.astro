@@ -1,0 +1,132 @@
+---
+// /studio/history — der Abendzettel (studio-aesthetik §1/§4): one bill per evening,
+// Roman session numerals, move words small and spaced, kills in Karmesin, the premiere
+// as the centrepiece; the data edge printed at the bill's foot (approved formula). The
+// chronicle table below carries every summary in full, and the unedited journal of the
+// house follows (the playbill room opens both — chronicle + journal, field-aesthetik's
+// sibling decision).
+import { getCollection } from 'astro:content'
+import Page from '@/layouts/Page.astro'
+import Frame from '@/components/studio/surface/Frame.astro'
+import { loadChronicle } from '@/lib/studio/chronicle'
+import { buildPlaybill } from '@/lib/studio/stage'
+import { STUDIO_GRAMMAR, STUDIO_NARRATIVE } from '@/config/studio-wording'
+import { sortJournal } from '@/lib/atelier/sort'
+import { splitSessions, sessionMeta, renderMarkdown, uniqueSessionAnchor } from '@/lib/engines/journal'
+
+const chronicle = loadChronicle()
+const evenings = buildPlaybill(chronicle, STUDIO_GRAMMAR.eveningLabel)
+const sessions = chronicle.map((e) => e.collective_session).filter((s): s is number => s !== null)
+const sMax = Math.max(...sessions)
+
+// the unedited journal below the bill
+const all = await getCollection('studio')
+const journal = sortJournal(all.filter((e) => e.id.startsWith('journal/')))
+const repo = 'https://github.com/frankbueltge/studio'
+const rootDocs = new Set(all.filter((e) => !e.id.includes('/')).map((e) => e.id))
+const mdRefs = { repo, docs: rootDocs }
+const dayLabel = (id: string) => id.replace('journal/', '').replace(/\.md$/, '')
+const anchorsUsed = new Set<string>()
+const daysAsc = [...journal].reverse().map((e) => {
+  const day = dayLabel(e.id)
+  const sessionsSplit = splitSessions(e.body ?? '').map((s, i) => ({
+    ...s,
+    ...sessionMeta(s.text),
+    html: renderMarkdown(s.text, mdRefs),
+    anchor: uniqueSessionAnchor(anchorsUsed, s.heading, day, i),
+  }))
+  return { day, sessions: sessionsSplit }
+})
+const days = [...daysAsc].reverse().map((d) => ({ ...d, sessions: [...d.sessions].reverse() }))
+
+const kicker = ['Studio · the history as an evening bill', 'studio (Ensemble)', `${evenings[0]?.date ?? ''} → ${evenings[evenings.length - 1]?.date ?? ''}`]
+const statusHtml = `<b>${STUDIO_NARRATIVE.provenance.playbill}</b>`
+---
+
+<Page
+  title="Studio — the playbill | Frank Bültge"
+  description="The Studio's history as an evening bill: Roman session numerals, kills in crimson, the premiere as the centrepiece — and the next bill is not yet printed."
+>
+  <Frame
+    active="playbill"
+    kicker={kicker}
+    h1={STUDIO_GRAMMAR.playbillHeadline(evenings.length, sMax)}
+    statusHtml={statusHtml}
+    footLeft={STUDIO_NARRATIVE.provenance.playbill}
+    footRight={STUDIO_GRAMMAR.scaleRule}
+    back
+  >
+    <div class="zettel">
+      <hr class="rule rule-heavy" />
+      {evenings.map((evening) => (
+        <>
+          <p class="abend">{evening.label} — {evening.date}</p>
+          <hr class="rule" />
+          {evening.lines.map((l) => (
+            <>
+              <p class="nr">{l.roman} · <span class={l.kill ? 'kill' : ''}>{l.move}</span></p>
+              {l.premiere && <p class="prem">{l.premiere}</p>}
+              {l.line && <p class="line">{l.line}</p>}
+            </>
+          ))}
+        </>
+      ))}
+      <hr class="rule rule-heavy" />
+      <p class="edge">{STUDIO_GRAMMAR.playbillEdge}</p>
+    </div>
+
+    <section class="st-record mt-10">
+      <h2>Chronicle — all {chronicle.length} entries, full text, uncompressed</h2>
+      <div class="st-tbl-wrap">
+        <table>
+          <thead><tr><th>session</th><th>date</th><th>move</th><th>summary (verbatim)</th></tr></thead>
+          <tbody>
+            {chronicle.map((e) => (
+              <tr>
+                <td>S{e.collective_session}</td>
+                <td class="mono">{e.date}</td>
+                <td>{e.move}</td>
+                <td class="q">{e.summary}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="st-room-intro">
+        Machine-readable at <a href="/studio/chronicle.json" class="underline">/studio/chronicle.json</a>.
+      </p>
+    </section>
+
+    <section class="st-record mt-10">
+      <h2>The journal — the unedited record of the house</h2>
+      {days.map(({ day, sessions: daySessions }, dayIdx) => (
+        <section class="mb-6">
+          <p class="st-room-intro mb-1 mt-4">{day}</p>
+          {daySessions.map((s, i) => (
+            <details id={s.anchor} class="st-day scroll-mt-16" open={dayIdx === 0 && i === 0}>
+              <summary>
+                <span class="st-day-anchor">{s.anchor}</span>
+                <span class="st-day-title">{s.heading || day}</span>
+                {s.move && <span>{s.move}</span>}
+              </summary>
+              <div class="st-prose" set:html={s.html} />
+            </details>
+          ))}
+        </section>
+      ))}
+    </section>
+  </Frame>
+</Page>
+
+<script>
+  const openFromHash = () => {
+    const id = decodeURIComponent(location.hash.slice(1))
+    const el = id ? document.getElementById(id) : null
+    if (el instanceof HTMLDetailsElement) {
+      el.open = true
+      el.scrollIntoView()
+    }
+  }
+  openFromHash()
+  addEventListener('hashchange', openFromHash)
+</script>
