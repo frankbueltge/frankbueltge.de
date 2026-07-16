@@ -137,7 +137,7 @@ export const ui = {
     'theme.toggle': 'Theme: Auto / Light / Dark',
 
     'meta.home.title': 'Frank Bültge — Data Engineering & Analytics',
-    'meta.home.desc': 'Frank Bültge — Data Engineering & Analytics. A public field for experiments with data, code and AI: small experiments that measure something from open sources, name their sources, and disclose how they are made.',
+    'meta.home.desc': 'Frank Bültge — Data & AI Engineer. Currently conducting a federated research ecology: three autonomous AI research practices and a contact zone — everything recorded, everything verifiable, Git as the archive.',
 
     'hero.roleLead': 'Data Engineering & Analytics',
     'hero.roleRest': ' — I build data infrastructure and experiment with data, code and AI.',
