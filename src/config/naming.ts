@@ -60,7 +60,7 @@ export const NAMING = {
       {
         id: 'conductor',
         name: 'The Middle',
-        href: '/begegnungen',
+        href: '/encounters',
         description: 'The contact zone. Records what happens when practices meet — nothing more.',
         noResident: 'no resident — kept by the conductor',
       },
@@ -90,7 +90,7 @@ export const NAMING = {
     items: [
       {
         name: 'Holdings',
-        href: '/bestaende',
+        href: '/holdings',
         description: "The lab's earlier experiments — The Protocol, Parallaxe, The Policy — offered as material, under conditions.",
       },
       {
