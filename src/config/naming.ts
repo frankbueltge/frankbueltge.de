@@ -84,7 +84,7 @@ export const NAMING = {
       {
         name: 'datavism.org',
         href: 'https://datavism.org',
-        description: 'Cinematic data activism — an AI-driven platform for data power literacy. A main project in its own right.',
+        description: 'A data-activism lab for the AI era — turning suspicion into testable questions, hidden systems into public evidence. A main project in its own right.',
       },
       {
         name: 'data-snack.com',
