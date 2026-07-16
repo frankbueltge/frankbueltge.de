@@ -127,12 +127,15 @@
 .studio-surface .tapemark { stroke: var(--st-ink-2); stroke-width: 1.6; fill: none; }
 .studio-surface .xmark { stroke: var(--st-curtain); stroke-width: 2; fill: none; }
 .studio-surface .gasse { stroke: var(--st-ink-2); stroke-width: 1; stroke-dasharray: 5 5; }
-/* Texte IM Kegel stehen in dunkler Tinte — beleuchtete Objekte liest man dunkel, in beiden Themes */
-.studio-surface .t-worktitle { font: 500 40px var(--st-font-display); fill: #2e250f; letter-spacing: 0.06em; }
+/* Texte IM Kegel stehen in dunkler Tinte — beleuchtete Objekte liest man dunkel, in beiden Themes.
+   Der Lichthof (paint-order-Halo in Kegel-Kernfarbe) trägt die Lesbarkeit dort, wo der radiale
+   Verlauf abfällt: die Zeile trägt ihr eigenes Licht, statt von der Position im Kegel abzuhängen
+   (Befund 2026-07-16: Meta-/Attributionszeile soff am Kegelrand ab). */
+.studio-surface .t-worktitle { font: 500 40px var(--st-font-display); fill: #2e250f; letter-spacing: 0.06em; stroke: var(--st-spot-core); stroke-width: 4; paint-order: stroke; stroke-linejoin: round; }
 .studio-surface .t-workmeta { font: 12px var(--st-font-record); fill: var(--st-ink-2); }
-.studio-surface .t-inspot { fill: #4a3d1c; }
-.studio-surface .t-marquee { font: 600 13px var(--st-font-record); fill: #6b4f0e; letter-spacing: 0.34em; }
-.studio-surface .t-quote-s { font: italic 13.5px var(--st-font-display); fill: #3a2f14; }
+.studio-surface .t-inspot { fill: #4a3d1c; stroke: var(--st-spot-core); stroke-width: 3; paint-order: stroke; stroke-linejoin: round; }
+.studio-surface .t-marquee { font: 600 13px var(--st-font-record); fill: #6b4f0e; letter-spacing: 0.34em; stroke: var(--st-spot-core); stroke-width: 3; paint-order: stroke; stroke-linejoin: round; }
+.studio-surface .t-quote-s { font: italic 13.5px var(--st-font-display); fill: #3a2f14; stroke: var(--st-spot-core); stroke-width: 3; paint-order: stroke; stroke-linejoin: round; }
 .studio-surface .t-kill { font: 11.5px var(--st-font-record); fill: var(--st-ink-2); }
 .studio-surface .t-kill-n { font: 600 12px var(--st-font-record); fill: var(--st-ink); }
 .studio-surface .t-gasse { font: 600 11px var(--st-font-record); letter-spacing: 0.2em; fill: var(--st-ink-2); }
