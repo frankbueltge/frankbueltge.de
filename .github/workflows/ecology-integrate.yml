@@ -101,12 +101,7 @@ jobs:
         run: |
           DATE=$(date -u +%F)
           LOG=$(tail -40 /tmp/gate.log 2>/dev/null || echo "see workflow run")
+          BODY=$(printf 'Importer/Gate/Export fehlgeschlagen - kein Oekologie-Commit; der letzte gute Export bleibt live. Log-Auszug:\n\n```\n%s\n```\n\nTypische Ursache laut Arbeitsstrang 5.3: Engines haben neues Vokabular erfunden (das SOLLEN sie) - dann Pins/Schema bewusst erweitern, siehe research-ecology tests/contract/.' "$LOG")
           gh issue create --repo frankbueltge/frankbueltge.de \
             --title "Ecology-Integrate rot ($DATE)" \
-            --body "Importer/Gate/Export fehlgeschlagen — kein Ökologie-Commit; der letzte gute Export bleibt live. Log-Auszug:
-
-\`\`\`
-$LOG
-\`\`\`
-
-Typische Ursache laut Arbeitsstrang §5.3: Engines haben neues Vokabular erfunden (das SOLLEN sie) — dann Pins/Schema bewusst erweitern, siehe research-ecology tests/contract/." || true
+            --body "$BODY" || true
