@@ -1,0 +1,219 @@
+/* Partitur / score-map styles — Variante A (Observatorium), validated palette,
+   docs/design/zeichengrammatik-2026-07-15.md §3 + docs/design/variants-2026-07-15/
+   a-observatorium.html. Scoped entirely to .score-map; no global skin change. Prefixed with
+   --score- to stay clear of the site's own --color-* tokens (that system is deliberately
+   grayscale — "Mono-Skin fest" — this page's practice identities are the one deliberate
+   exception, gated to this page only).
+
+   Extracted from src/components/pages/BegegnungEntrance.astro (site-v2 work order §2/§3:
+   "score-map-Styles sind global in BegegnungEntrance — sauber teilen, nicht duplizieren") so
+   both the full encounter page (/begegnungen) and the hub's condensed NOW section (/) can
+   import the one file instead of each carrying its own copy. Plain CSS import, not an
+   is:global Astro <style> block — Vite bundles it once regardless of how many pages use it. */
+
+:root[data-theme='dark'] .score-map {
+  --score-hairline: #232a33;
+  --score-ink-2: #98a2ad;
+  --score-c-meridian: #3987e5;
+  --score-c-ensemble: #d95926;
+  --score-c-conductor: #77828d;
+  --score-c-ulysses: #9085e9;
+  --score-badge-bg: #181d24;
+  --score-tip-bg: #161b22;
+}
+:root[data-theme='light'] .score-map {
+  --score-hairline: #d5dbe2;
+  --score-ink-2: #5b6672;
+  --score-c-meridian: #2a78d6;
+  --score-c-ensemble: #c1481c;
+  --score-c-conductor: #6b7684;
+  --score-c-ulysses: #4a3aa7;
+  --score-badge-bg: #e7ebf0;
+  --score-tip-bg: #ffffff;
+}
+
+.score-map {
+  max-width: 96rem;
+  margin: 0 auto;
+  padding: 2.125rem 1rem 3.75rem;
+}
+@media (min-width: 640px) {
+  .score-map { padding: 2.125rem 2.5rem 3.75rem; }
+}
+.score-kicker {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--score-ink-2);
+  display: flex;
+  gap: 1.4em;
+  flex-wrap: wrap;
+  margin: 0;
+}
+.score-chip {
+  border: 1px solid var(--score-hairline);
+  padding: 1px 8px;
+  border-radius: 2px;
+}
+.score-h1 {
+  font-size: clamp(34px, 4.6vw, 64px);
+  line-height: 1.04;
+  letter-spacing: -0.022em;
+  margin: 0.5em 0 0.2em;
+  max-width: 24ch;
+  font-weight: 650;
+  color: var(--color-fg);
+}
+.score-status {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--score-ink-2);
+  margin: 0;
+}
+.score-status b { color: var(--color-fg); font-weight: 600; }
+
+.score-figure { margin: 26px 0 8px; }
+.score-svg svg#score { width: 100%; height: auto; display: block; }
+
+/* ---- grammar strokes ----
+   Shared between the generated score SVG (.score-svg) AND the legend's mini-icons
+   (.score-legend .score-mini), which reuse the exact same sign classes on purpose (the
+   legend IS a miniature of the same marks, zeichengrammatik-2026-07-15.md §2) — scoped to
+   .score-map so both pick them up, not just the real SVG. */
+.score-map .pr-meridian { --pr: var(--score-c-meridian); }
+.score-map .pr-ensemble { --pr: var(--score-c-ensemble); }
+.score-map .pr-conductor { --pr: var(--score-c-conductor); }
+.score-map .pr-ulysses { --pr: var(--score-c-ulysses); }
+.score-map .pr-infra { --pr: var(--score-c-conductor); }
+.score-map .pr-unknown { --pr: var(--score-ink-2); }
+.score-map .lane { stroke: var(--pr); stroke-width: 2; opacity: 0.92; }
+.score-map .lane-thin { stroke-width: 1; stroke-dasharray: 1 5; opacity: 0.75; }
+.score-map .mk { stroke: var(--pr); stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+/* the derivative sign's circle "punches" a hole through the stem beneath it — filled with the
+   page background rather than left transparent (an inline fill="" would lose to this class in
+   the cascade, so it's a class, not a presentation attribute). */
+.score-map .mk-punch { fill: var(--color-bg); }
+.score-map .mk-lt { opacity: 0.45; stroke-width: 1.4; }
+.score-map .mk-fill { fill: var(--pr); }
+.score-map .mk-hatch { fill: url(#hatch); stroke: var(--pr); stroke-width: 1.1; }
+.score-map .hatch-line { stroke: var(--score-ink-2); stroke-width: 1.1; }
+.score-map .mk-void { stroke: var(--score-ink-2); stroke-width: 1; stroke-dasharray: 2 4; opacity: 0.8; }
+.score-map .mk-stem { stroke: var(--pr); stroke-width: 1.2; opacity: 0.85; }
+.score-map .mk-unknown { stroke: var(--score-ink-2); stroke-dasharray: 2 3; }
+.score-map .flow { fill: none; stroke: var(--pr); stroke-width: 1.8; }
+.score-map .flow-up { stroke-dasharray: 6 5; }
+.score-map .obl { stroke: var(--pr); stroke-width: 0.9; opacity: 0.6; stroke-dasharray: 1 4; }
+.score-map .ring { stroke: var(--pr); stroke-width: 2.2; }
+.score-svg .gap { stroke: var(--score-ink-2); stroke-width: 1; stroke-dasharray: 3 5; }
+.score-svg .asof { stroke: var(--score-ink-2); stroke-width: 1.4; }
+.score-svg .ruler { stroke: var(--score-ink-2); stroke-width: 1; opacity: 0.9; }
+.score-svg .grat { stroke: var(--score-hairline); stroke-width: 1; }
+.score-svg .marker-stroke { stroke: var(--score-ink-2); stroke-width: 1.6; }
+.score-svg .badge { fill: var(--score-badge-bg); stroke: var(--score-hairline); }
+.score-svg .badge-n { font: 600 10.5px var(--font-mono); fill: var(--color-fg); }
+.score-svg text { fill: var(--color-fg); }
+.score-svg .t-lane { font: 600 13px var(--font-mono); letter-spacing: 0.12em; fill: var(--color-fg); }
+.score-svg .t-note { font: 11.5px var(--font-mono); fill: var(--score-ink-2); }
+.score-svg .t-dim { opacity: 0.75; }
+.score-svg .t-quote { font: italic 11.5px var(--font-sans); fill: var(--score-ink-2); }
+.score-svg .evt { cursor: pointer; outline: none; }
+.score-svg .evt:hover .mk, .score-svg .evt:focus .mk { stroke-width: 3; }
+.score-svg .evt:focus .hit { stroke: var(--score-ink-2); stroke-dasharray: 2 3; }
+@media (prefers-reduced-motion: reduce) {
+  .score-map * { transition: none !important; animation: none !important; }
+}
+
+/* ---- legend ---- */
+.score-legend {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 26px;
+  border-top: 1px solid var(--color-line);
+  border-bottom: 1px solid var(--color-line);
+  padding: 20px 0;
+  margin: 14px 0 26px;
+}
+.score-legend h3 {
+  font: 600 11px var(--font-mono);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-fg-faint);
+  margin: 0 0 10px;
+}
+.score-lg-row { display: flex; gap: 10px; align-items: center; margin: 5px 0; font: 12.5px var(--font-mono); color: var(--color-fg-muted); }
+.score-mini { width: 46px; height: 30px; flex: none; }
+.score-sw { width: 22px; height: 8px; background: var(--pr); flex: none; border-radius: 1px; }
+.score-lg-note { font: 11.5px var(--font-mono); color: var(--color-fg-faint); margin-top: 12px; max-width: 44ch; opacity: 0.85; }
+
+/* ---- stations register (Beat sequence, one register level down from the mock's own,
+   restyled with the same typo system: mono kicker numbers, hairline separators) ---- */
+.score-stations, .score-record { margin-top: 2.5rem; }
+.score-section-heading {
+  font: 600 13px var(--font-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-fg-faint);
+  margin: 0 0 1.25rem;
+}
+.score-stations ol { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--color-line); }
+.score-stations li { padding: 1.75rem 0; border-bottom: 1px solid var(--color-line); }
+.score-stations h3 { font-size: 1.125rem; font-weight: 600; margin: 0 0 0.75rem; color: var(--color-fg); }
+.score-station-n { font: 600 13px var(--font-mono); color: var(--color-fg-faint); margin-right: 0.6em; }
+.score-stations blockquote { margin: 0.75rem 0 0; padding-left: 1rem; border-left: 2px solid var(--color-line); color: var(--color-fg-muted); font-size: 0.95rem; }
+.score-attribution { margin: 0.5rem 0 0; font-size: 0.75rem; color: var(--color-fg-faint); }
+.score-eyebrow { font: 11px var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-fg-faint); margin: 0; }
+.score-divergence-grid { display: grid; gap: 1.1rem; margin-top: 0.9rem; }
+@media (min-width: 640px) { .score-divergence-grid { grid-template-columns: 1fr 1fr; } }
+.score-closing { grid-column: 1 / -1; font-size: 0.85rem; color: var(--color-fg-faint); margin: 0; }
+.score-akte-link { margin: 0.75rem 0 0; grid-column: 1 / -1; }
+.score-disabled-link {
+  display: inline-flex;
+  gap: 0.4em;
+  align-items: baseline;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--color-fg-faint);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+.score-disabled-note { font-weight: 400; font-size: 0.8em; color: var(--color-fg-faint); }
+.score-pending-badge { margin-left: 0.5em; border-radius: 999px; border: 1px solid var(--color-line); padding: 0.1em 0.6em; }
+
+/* ---- event register table ---- */
+.score-tbl-wrap { overflow-x: auto; }
+.score-record table { border-collapse: collapse; width: 100%; font: 12.5px var(--font-mono); }
+.score-record th { text-align: left; font-weight: 600; color: var(--color-fg-faint); letter-spacing: 0.06em; }
+.score-record th, .score-record td { border-top: 1px solid var(--color-line); padding: 7px 14px 7px 0; vertical-align: top; }
+.score-mono { white-space: nowrap; color: var(--color-fg-faint); }
+.score-q { font-style: italic; max-width: 52ch; }
+
+.score-foot {
+  margin-top: 1.75rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-line);
+  font: 11.5px var(--font-mono);
+  color: var(--color-fg-faint);
+  display: flex;
+  justify-content: space-between;
+  gap: 2em;
+  flex-wrap: wrap;
+}
+.score-all-link { margin-top: 1.5rem; }
+.score-all-link a { font-size: 0.875rem; color: var(--color-fg-muted); text-decoration: underline; }
+
+.score-tip {
+  position: absolute;
+  max-width: 360px;
+  background: var(--score-tip-bg);
+  color: var(--color-fg);
+  border: 1px solid var(--score-hairline);
+  padding: 10px 12px;
+  font: 12.5px var(--font-mono);
+  line-height: 1.45;
+  pointer-events: none;
+  box-shadow: 0 6px 24px rgb(0 0 0 / 0.25);
+  z-index: 40;
+}
+.score-tip hr { border: none; border-top: 1px solid var(--score-hairline); margin: 6px 0; }
+.score-tip-id { opacity: 0.7; }

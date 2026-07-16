@@ -28,7 +28,14 @@ const links = [
     ))}
   </div>
 
-  <h2 class="mt-12 font-mono text-xs uppercase tracking-widest text-fg-faint">{t(locale, 'about.elsewhere')}</h2>
+  <h2 class="mt-12 font-mono text-xs uppercase tracking-widest text-fg-faint">Contact</h2>
+  <p class="mt-3 max-w-lg text-fg-muted">
+    Reachable directly by <a href={`mailto:${SITE.email}`} class="underline hover:text-fg">{SITE.email}</a>
+    or on LinkedIn. For projects, conversations, or just a good question about data — see
+    also <a href="/contact" class="underline hover:text-fg">/contact</a>.
+  </p>
+
+  <h2 class="mt-10 font-mono text-xs uppercase tracking-widest text-fg-faint">{t(locale, 'about.elsewhere')}</h2>
   <ul class="mt-4 flex flex-wrap gap-2">
     {links.map((l) => (
       <li><a href={l.href} target="_blank" rel="noreferrer" class="rounded-full border border-line px-3 py-1.5 text-sm text-fg-muted transition-colors hover:border-fg-muted hover:text-fg">{l.label} ↗</a></li>

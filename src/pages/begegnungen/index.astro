@@ -1,7 +1,17 @@
 ---
+// site-v2 work order §3: the hub (/) becomes the entrance and now only shows a condensed NOW
+// section; the full encounter experience — score map, legend, station register, event table —
+// moves here, to its stable URL. Previously this route rendered BegegnungenIndex (a plain list,
+// "one level calmer" than the entrance) — with exactly one encounter recorded, that list added
+// a click without adding information; BegegnungenIndex.astro stays in the repo, unlinked, for
+// when a second encounter makes a real index useful again (git is the archive; see
+// docs/decision-log.md for the approval trail).
 import Page from '@/layouts/Page.astro'
-import BegegnungenIndex from '@/components/pages/BegegnungenIndex.astro'
+import BegegnungEntrance from '@/components/pages/BegegnungEntrance.astro'
+import { currentEntrance } from '@/lib/begegnungen'
+
+const entrance = currentEntrance
 ---
-<Page title={`Encounters | Frank Bültge`} description="Recorded encounters between the lab's independent practices.">
-  <BegegnungenIndex />
+<Page title={`${entrance.headline} | Frank Bültge`} description={entrance.status.statusLine}>
+  <BegegnungEntrance />
 </Page>
