@@ -1,10 +1,130 @@
 ---
+// /field — das Kontrollblatt (field-aesthetik-2026-07-15.md §4): the entry is the
+// instrument currently under verification, NOT a dashboard. Marks derive from committed
+// data only: the work's meta date (built), the chronicle entries that touch it (stamps),
+// and the enc-2026-001 score export (contract flag, the correction splicing in from
+// outside, the applied stamp, the standing obligation). The mockup hand-picked its event
+// list; the site derives it — a named deviation. Replaces the old EnginePage entrance.
 import Page from '@/layouts/Page.astro'
-import FieldPage from '@/components/pages/FieldPage.astro'
+import Frame from '@/components/field/surface/Frame.astro'
+import { loadChronicle, entriesForWork } from '@/lib/field/chronicle'
+import { currentScore } from '@/lib/begegnungen'
+import { buildControlSvg, dayRange, type ControlMark } from '@/lib/field/strip'
+import { FIELD_NARRATIVE } from '@/config/field-wording'
+
+const slug = FIELD_NARRATIVE.currentInstrumentSlug
+const metas = import.meta.glob('/src/components/field/werke/*/meta.json', {
+  eager: true, import: 'default',
+}) as Record<string, { title?: string; date?: string; medium?: string; embodies?: string }>
+const metaBySlug = new Map(
+  Object.entries(metas).map(([p, m]) => [p.replace('/src/components/field/werke/', '').replace('/meta.json', ''), m]),
+)
+const meta = metaBySlug.get(slug)
+if (!meta?.date) throw new Error(`/field: instrument ${slug} has no committed meta date`)
+
+// deterministic instrument number: position in the (date, slug)-ordered works list
+const ordered = [...metaBySlug.entries()].sort(([sa, a], [sb, b]) =>
+  (a.date ?? '') === (b.date ?? '') ? sa.localeCompare(sb) : (a.date ?? '').localeCompare(b.date ?? ''),
+)
+const instrumentNo = String(ordered.findIndex(([s]) => s === slug) + 1).padStart(3, '0')
+
+const chronicle = loadChronicle()
+const touching = entriesForWork(chronicle, slug)
+
+const score = currentScore
+const contract = score.events.find((e) => e.event_type === 'contract.published')
+const issued = score.events.find((e) => e.event_type === 'correction.issued')
+const applied = score.events.find((e) => e.event_type === 'correction.applied')
+const obligation = score.obligations.find((o) => o.id.includes('caveat-preservation'))
+
+interface Row { date: string; event: string; source: string }
+const marks: ControlMark[] = []
+const rows: Row[] = []
+
+marks.push({ date: meta.date, label: `built — instrument ${instrumentNo} enters service`, kind: 'instr' })
+rows.push({ date: meta.date, event: `built — instrument ${instrumentNo} enters service`, source: `works/${slug} (committed date)` })
+
+for (const e of touching) {
+  const sessLabel = e.collective_session ? `S${e.collective_session}` : 'pre-constitution'
+  const label = `${sessLabel} — ${e.move}${e.verdict ? ` · ${e.verdict}` : ''}: ${e.summary}`
+  if (e.date === meta.date && e.move === 'build') {
+    rows.push({ date: e.date, event: label, source: 'chronicle, verbatim' })
+    continue // the build entry IS the built mark — no second glyph on the same spot
+  }
+  marks.push({ date: e.date, label, kind: 'stamp', letter: e.move.charAt(0).toUpperCase() })
+  rows.push({ date: e.date, event: label, source: 'chronicle, verbatim' })
+}
+
+if (contract) {
+  marks.push({ date: contract.date, label: `contract.published — “${contract.quote}” (${contract.attribution})`, kind: 'flag' })
+  rows.push({ date: contract.date, event: `contract.published — “${contract.quote}”`, source: `enc-2026-001 ledger, verbatim (${contract.attribution})` })
+}
+if (issued) {
+  marks.push({ date: issued.date, label: 'correction arrives from the work, delivered by the conductor (enc-2026-001)', kind: 'splicein' })
+  rows.push({ date: issued.date, event: `correction arrives from the work — “${issued.quote}”`, source: `enc-2026-001 ledger, verbatim (${issued.attribution})` })
+}
+if (applied) {
+  marks.push({ date: applied.date, label: `correction.applied — ${applied.quote} (${applied.attribution})`, kind: 'stamp', letter: 'S' })
+  rows.push({ date: applied.date, event: `correction.applied — ${applied.quote}`, source: `enc-2026-001 ledger · chronicle (${applied.attribution})` })
+}
+if (contract && obligation) {
+  rows.push({ date: `since ${contract.date}`, event: `obligation ${obligation.label}`, source: 'enc-2026-001 obligations' })
+}
+
+marks.sort((a, b) => (a.date === b.date ? 0 : a.date.localeCompare(b.date)))
+const endDate = [score.status.as_of, ...marks.map((m) => m.date)].sort().at(-1)!
+const days = dayRange(meta.date, endDate)
+
+const svg = buildControlSvg({
+  days,
+  marks,
+  obligation:
+    contract && obligation ? { fromDate: contract.date, label: obligation.label } : undefined,
+  penLabel: 'in service',
+})
+
+const kicker = ['Field · instrument record', `works/${slug}`, `${meta.date} → ${endDate}`]
+const statusHtml =
+  `<b>in service since ${meta.date}${applied ? ' · correction applied · register revised' : ''}` +
+  `${obligation ? ' · caveat obligation active' : ''}</b> · ${FIELD_NARRATIVE.selectionRule}`
 ---
+
 <Page
-  title="Field Research — Lab | Frank Bültge"
-  description="Meridian — a collective of AI voices (proposer, skeptic, verifier, chronicler) putting the measuring instruments of our time on trial, in autonomous research sessions, published unedited. Machinery composed and steered by Frank Bültge — artistic research with data and AI."
+  title={`Field — instrument record · ${meta.title ?? slug} | Frank Bültge`}
+  description="The Field's entry is the instrument currently under verification: its record strip — built, contracted, corrected from outside, obligation standing — every mark sourced."
 >
-  <FieldPage />
+  <Frame
+    active="this instrument"
+    kicker={kicker}
+    h1={`Instrument ${instrumentNo} — ${meta.title ?? slug}`}
+    statusHtml={statusHtml}
+    footLeft={FIELD_NARRATIVE.provenance.strip}
+    footRight="the correction’s two readings live in The Middle → enc-2026-001; this plate keeps the local record"
+  >
+    <figure set:html={svg} />
+
+    {meta.embodies && (
+      <p class="fd-room-intro">
+        {meta.embodies} <a href={`/field/werke/${slug}`} class="underline">Open the instrument →</a>
+      </p>
+    )}
+
+    <section class="fd-record">
+      <h2>Instrument record — every mark, uncompressed</h2>
+      <div class="fd-tbl-wrap">
+        <table>
+          <thead><tr><th>date</th><th>event</th><th>source</th></tr></thead>
+          <tbody>
+            {rows.map((r) => (
+              <tr>
+                <td class="mono">{r.date}</td>
+                <td class="q">{r.event}</td>
+                <td class="mono">{r.source}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </Frame>
 </Page>

@@ -1,0 +1,46 @@
+---
+// Field surface frame (Praxis-Oberflächen-Paket): kicker, Kopfleiste (plate rail — the
+// only standing navigation, field-aesthetik §4), headline, status, content slot, footer.
+// Visual grammar in field-plate.css, scoped to .field-surface (ADR 0010).
+import { FIELD_GRAMMAR, FIELD_NARRATIVE, FIELD_DRAFT_LABEL } from '@/config/field-wording'
+import '@/styles/field-plate.css'
+
+interface Props {
+  active: string
+  kicker: string[]
+  h1: string
+  statusHtml?: string
+  footLeft?: string
+  footRight?: string
+  back?: boolean
+}
+const { active, kicker, h1, statusHtml, footLeft, footRight, back = false } = Astro.props
+const isDraft = FIELD_NARRATIVE.approval !== 'approved'
+---
+
+<main id="main" class="field-surface">
+  <p class="fd-kicker">
+    {kicker.map((k) => <span>{k}</span>)}
+    {isDraft && <span class="fd-chip" title={FIELD_DRAFT_LABEL}>wording draft</span>}
+  </p>
+  <nav class="platerail" aria-label="Plate rail — the only standing navigation">
+    {FIELD_GRAMMAR.rail.map((item) =>
+      item.label === active ? (
+        <span class="fr-here">{item.label}</span>
+      ) : (
+        <a href={item.href} title={item.hint}>{item.label}</a>
+      ),
+    )}
+    <a class="fr-door" href={FIELD_GRAMMAR.door.href} title={FIELD_GRAMMAR.door.hint}>{FIELD_GRAMMAR.door.label}</a>
+  </nav>
+  {back && <p class="fd-back mt-3"><a href="/field">{FIELD_GRAMMAR.backToPlate}</a></p>}
+  <h1 class="fd-h1">{h1}</h1>
+  {statusHtml && <p class="fd-status" set:html={statusHtml} />}
+  <slot />
+  {(footLeft || footRight) && (
+    <footer class="fd-foot">
+      {footLeft && <span>{footLeft}</span>}
+      {footRight && <span>{footRight}</span>}
+    </footer>
+  )}
+</main>

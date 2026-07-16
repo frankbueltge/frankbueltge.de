@@ -1,0 +1,64 @@
+---
+// /field/instruments — the instruments room: every instrument, newest first, with its
+// review badge from the chronicle. Detail routes stay under /field/werke/* (work order:
+// existing URLs stay; renaming is a later package with Integrate changes).
+import Page from '@/layouts/Page.astro'
+import Frame from '@/components/field/surface/Frame.astro'
+import { sortWorks } from '@/lib/atelier/sort'
+import { loadChronicle, entriesForWork } from '@/lib/field/chronicle'
+import { FIELD_NARRATIVE } from '@/config/field-wording'
+
+const metas = import.meta.glob('/src/components/field/werke/*/meta.json', {
+  eager: true, import: 'default',
+}) as Record<string, any>
+
+const works = sortWorks(
+  Object.entries(metas).map(([path, meta]) => ({
+    slug: path.replace('/src/components/field/werke/', '').replace('/meta.json', ''),
+    kind: 'astro' as const,
+    date: meta.date as string | undefined,
+    meta,
+  })),
+)
+
+const chronicle = loadChronicle()
+const VERDICT_LABEL: Record<string, string> = {
+  graduated: 'passed review',
+  pass: 're-verified',
+  conditions: 'passed with conditions',
+  fail: 'blocked by review',
+  discarded: 'discarded',
+  deferred: 'in progress',
+  rework: 'in rework',
+}
+const withBadges = works.map((w) => {
+  const hist = entriesForWork(chronicle, w.slug)
+  const latest = hist[hist.length - 1]
+  return {
+    ...w,
+    badge: latest
+      ? { label: `${hist.length} session${hist.length > 1 ? 's' : ''} · ${VERDICT_LABEL[latest.verdict ?? ''] ?? latest.move}`, anchor: latest.anchor }
+      : undefined,
+  }
+})
+
+const kicker = ['Field · instruments', 'field-research', `${works.length} instruments`]
+const statusHtml = `<b>${works.length} instruments</b> · newest first · detail routes stay under /field/werke/*`
+---
+
+<Page
+  title="Field — instruments | Frank Bültge"
+  description="All instruments of the Field collective, newest first — everything here survived the review the register records."
+>
+  <Frame active="instruments" kicker={kicker} h1="The instruments." statusHtml={statusHtml} back>
+    <p class="fd-room-intro">{FIELD_NARRATIVE.rooms.instruments}</p>
+    {withBadges.map(({ slug, meta, badge }) => (
+      <article class="fd-instr-card" id={slug}>
+        <h3><a href={`/field/werke/${slug}`}>{meta.title ?? slug}</a></h3>
+        <p class="fd-instr-meta">{meta.date}{meta.medium && ` · ${meta.medium}`}</p>
+        {meta.embodies && <p>{meta.embodies}</p>}
+        {badge && <a class="fd-badge" href={`/field/journal#${badge.anchor}`}>{badge.label}</a>}
+      </article>
+    ))}
+  </Frame>
+</Page>
