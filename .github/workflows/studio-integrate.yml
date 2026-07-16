@@ -96,10 +96,10 @@ jobs:
             DATE=$(date -u +%F)
             (
               git clone --depth 1 "https://x-access-token:${BOT_TOKEN}@github.com/frankbueltge/studio" /tmp/fb-rej
-              mkdir -p /tmp/fb-rej/field-feedback
-              printf '%s\n' "$FEEDBACK" > "/tmp/fb-rej/field-feedback/${DATE}-rejections.md"
+              mkdir -p /tmp/fb-rej/studio-feedback
+              printf '%s\n' "$FEEDBACK" > "/tmp/fb-rej/studio-feedback/${DATE}-rejections.md"
               cd /tmp/fb-rej && git config user.name "Studio-Integrate" && git config user.email "studio-integrate@frankbueltge.de"
-              git add field-feedback && git commit -m "feedback: works rejected at the gate ${DATE}" && git push
+              git add studio-feedback && git commit -m "feedback: works rejected at the gate ${DATE}" && git push
             ) || echo "rejection feedback skipped (non-fatal)"
           else
             echo "no rejections (or no BOT_TOKEN) — nothing to feed back"
@@ -116,15 +116,15 @@ jobs:
           # Issue to Frank FIRST — always runs, even if the BOT_TOKEN block below fails.
           gh issue create --repo frankbueltge/frankbueltge.de \
             --title "Studio-Integrate red ($DATE)" \
-            --body "The nightly studio build failed; no deploy. Log excerpt in the workflow run. Feedback was written to studio/field-feedback/${DATE}.md." || true
+            --body "The nightly studio build failed; no deploy. Log excerpt in the workflow run. Feedback was written to studio/studio-feedback/${DATE}.md." || true
           # Feedback into the engine's repo (it reads it next session) — defensive: errors here
           # must not block the issue creation above (hence || true).
           if [ -n "$BOT_TOKEN" ]; then
             (
               git clone --depth 1 "https://x-access-token:${BOT_TOKEN}@github.com/frankbueltge/studio" /tmp/fb
-              mkdir -p /tmp/fb/field-feedback
-              printf '# Build feedback %s\n\nYour last contribution did not pass the gate (no deploy; the last good state stays live). Excerpt:\n\n```\n%s\n```\n\nFix the affected work in `works/<slug>/` and commit again.\n' "$DATE" "$LOG" > "/tmp/fb/field-feedback/${DATE}.md"
+              mkdir -p /tmp/fb/studio-feedback
+              printf '# Build feedback %s\n\nYour last contribution did not pass the gate (no deploy; the last good state stays live). Excerpt:\n\n```\n%s\n```\n\nFix the affected work in `works/<slug>/` and commit again.\n' "$DATE" "$LOG" > "/tmp/fb/studio-feedback/${DATE}.md"
               cd /tmp/fb && git config user.name "Studio-Integrate" && git config user.email "studio-integrate@frankbueltge.de"
-              git add field-feedback && git commit -m "feedback: build $DATE red" && git push
+              git add studio-feedback && git commit -m "feedback: build $DATE red" && git push
             ) || echo "feedback push skipped (non-fatal)"
           fi
