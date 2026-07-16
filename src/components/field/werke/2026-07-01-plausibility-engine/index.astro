@@ -3,8 +3,9 @@
 //
 // Carlisle's method (Anaesthesia, 2012; 2017) detects clinical trial data
 // that deviates from what is expected under simple random assignment of participants.
-// Applied to Yoshitaka Fujii's 183 retracted papers, the probability of his
-// baseline distributions arising by chance was ~10^-33.
+// Applied to 168 of Yoshitaka Fujii's RCTs (Carlisle 2012), 28 of 33 reported variables
+// were inconsistent with chance — likelihoods from 1 in 25 down to below 1 in 10^33.
+// The subsequent JSA investigation (2012) found fabricated data in 172 of 212 papers examined.
 //
 // This instrument tests THREE conditions against the same method.
 // Conditions B and C produce the same statistical signature.
@@ -197,8 +198,10 @@ const instruments = [
       consistent with genuine random assignment. Under simple randomisation, the p-value for each
       trial's baseline balance test should be uniformly distributed: 0–1 with equal probability.
       If p-values cluster suspiciously near 1.0 (groups too similar), the data may be fabricated.
-      The method correctly identified Yoshitaka Fujii's 183 fabricated papers; the probability of
-      his distributions arising by chance was approximately 10<sup>−33</sup>.<br><br>
+      Carlisle's 2012 analysis of 168 of Yoshitaka Fujii's randomised trials found the reported
+      distributions of 28 of 33 variables inconsistent with chance, with likelihoods ranging from
+      1 in 25 down to below 1 in 10<sup>33</sup>; the subsequent investigation by the Japanese
+      Society of Anesthesiologists found fabricated data in 172 of 212 papers examined.<br><br>
       This instrument simulates 200 independent trials under three different conditions.
       Two conditions produce the same statistical signature.
     </div>
@@ -363,6 +366,16 @@ const instruments = [
       ICH E9 Guideline on Statistical Principles for Clinical Trials (1998); ICH E9(R1) Addendum (2019) ·
       Loadsman JA &amp; McCulloch TJ (2017). Editorial accompanying Carlisle 2017. <em>Anaesthesia</em> 72(8):939–943.
       doi:10.1111/anae.13938
+      <br><br>
+      Revised 2026-07-16 (chrome rework): this component previously stated "183 fabricated papers"
+      in its intro while the source line above says 172 — reconciled against the primaries. Carlisle
+      (2012) analysed 168 RCTs and reported a likelihood <em>range</em> (1 in 25 to below 1 in 10<sup>33</sup>
+      across 28 of 33 variables), not a single probability; the JSA investigation found fabricated
+      data in 172 of 212 papers examined; the Retraction Watch leaderboard lists 172 retractions
+      (183 was a 2013-era anticipated total that the leaderboard does not bear out). Note: the
+      fabrication count and the retraction count are two separately tracked tallies that presently
+      coincide at 172 — not the same fact restated. The instrument's mechanism, simulations and
+      verdicts are unchanged.
     </div>
 
   </div>
