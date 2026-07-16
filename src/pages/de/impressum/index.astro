@@ -1,9 +1,0 @@
----
-import Page from '@/layouts/Page.astro'
-import LegalPageView from '@/components/pages/LegalPage.astro'
-import { impressum } from '@/data/legal'
-const page = impressum.de
----
-<Page title={`${page.metaTitle} | Frank Bültge`} description={page.metaTitle}>
-  <LegalPageView page={page} />
-</Page>

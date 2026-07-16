@@ -1,9 +1,0 @@
----
-import Page from '@/layouts/Page.astro'
-import AtlasPage from '@/components/pages/AtlasPage.astro'
-import { t } from '@/i18n/ui'
-const locale = 'de' as const
----
-<Page title={`${t(locale, 'atlas.title')} | Frank Bültge`} description={t(locale, 'atlas.sub')}>
-  <AtlasPage {locale} />
-</Page>
