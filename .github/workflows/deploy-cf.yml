@@ -51,6 +51,11 @@ jobs:
         with:
           node-version: 22
       - run: npm install
+      # Gate vor dem Deploy (P0.4, 16.07.): check + test laufen HIER, nicht nur im parallelen
+      # CI — Bot-Pushes der Nightlies (GITHUB_TOKEN) lösen `on: push` nicht aus, dieser Job
+      # ist auf dem workflow_run-Pfad also das einzige Netz. Rot statt blind live.
+      - run: npm run check
+      - run: npm run test
       - run: npm run build
       - name: Deploy → Cloudflare Pages
         env:
