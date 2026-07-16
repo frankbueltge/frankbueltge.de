@@ -13,7 +13,8 @@
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import type { Locale } from '@/lib/site'
 import { currentEntrance, currentScore, isDivergenceStation } from '@/lib/begegnungen'
-import { buildScoreSvg } from '@/lib/begegnungen/score'
+import ScoreFigure from '@/components/begegnungen/ScoreFigure.astro'
+import ScoreKey from '@/components/begegnungen/ScoreKey.astro'
 import '@/styles/score-map.css'
 
 const locale = (Astro.currentLocale ?? 'en') as Locale
@@ -54,8 +55,6 @@ const copy = {
   },
 }[locale]
 
-const svgMarkup = buildScoreSvg(score)
-
 const lanes = score.participants.filter((p) => p.lane)
 const activeObligations = score.obligations.filter((o) => o.status === 'active')
 const nonParticipants = score.non_participants ?? []
@@ -67,23 +66,6 @@ const statusMeta =
 
 const approvalChipLabel = score.approval === 'approved' ? 'wording approved' : copy.pendingApproval
 
-// Practice legend rows: role + local_status, both real exported fields — not the design
-// session's own descriptive labels ("scientific research practice" etc.), which aren't backed
-// by any field this export carries (see work order report, discrepancy list).
-const practiceLanes = lanes.filter((p) => p.role !== 'conductor')
-const conductorLane = lanes.find((p) => p.role === 'conductor')
-
-const tooltipPayload = JSON.stringify(
-  score.events.map((e) => ({
-    id: e.event_id,
-    type: e.event_type,
-    date: e.date,
-    lane: e.lane,
-    infra: e.infra,
-    quote: e.quote,
-    attribution: e.attribution,
-  })),
-)
 ---
 
 <main id="main" class="flex-1">
@@ -99,61 +81,10 @@ const tooltipPayload = JSON.stringify(
 
   <p class="score-status"><b>{score.status.statusLine}</b> · {statusMeta}</p>
 
-  <figure class="score-figure">
-    <div class="score-svg" set:html={svgMarkup} />
-  </figure>
-
-  <aside class="score-legend" aria-label="Map key">
-    <div class="score-lg-col">
-      <h3>Practices</h3>
-      {practiceLanes.map((p) => (
-        <div class="score-lg-row">
-          <i class:list={['score-sw', `pr-${p.lane}`]}></i>
-          <span>
-            {p.lane?.toUpperCase()} — {p.role}{p.local_status && <> · {p.local_status}</>}
-          </span>
-        </div>
-      ))}
-      {conductorLane && (
-        <div class="score-lg-row">
-          <i class:list={['score-sw', `pr-${conductorLane.lane}`]}></i>
-          <span>
-            {conductorLane.lane?.toUpperCase()} ({conductorLane.actor_id}) — {conductorLane.role}
-            {conductorLane.local_status && <> · {conductorLane.local_status}</>}
-          </span>
-        </div>
-      )}
-      {nonParticipants.map((np) => (
-        <div class="score-lg-row">
-          <i class="score-sw pr-ulysses"></i>
-          <span>{np.collective_id.toUpperCase()} — documented non-participant in this encounter (designed non-relation; drawn as absence, not as edge)</span>
-        </div>
-      ))}
-    </div>
-
-    <div class="score-lg-col">
-      <h3>Signs</h3>
-      <div class="score-lg-row"><svg viewBox="0 0 46 30" class="score-mini"><path class="mk pr-meridian" d="M14 4 V26"/><path class="mk mk-lt pr-meridian" d="M21 4 V26"/><path class="mk pr-meridian" d="M21 15 H33"/></svg><span>contract.* — threshold: an offer under conditions</span></div>
-      <div class="score-lg-row"><svg viewBox="0 0 46 30" class="score-mini"><rect class="mk-fill pr-ensemble" x="15" y="7" width="16" height="16"/></svg><span>object.* — a work enters, conditions included</span></div>
-      <div class="score-lg-row"><svg viewBox="0 0 46 30" class="score-mini"><rect class="mk-hatch pr-ensemble" x="8" y="8" width="11" height="14"/><rect class="mk-hatch pr-ensemble" x="27" y="8" width="11" height="14"/><path class="mk-void" d="M23 4 V26"/></svg><span>translation.* — declared loss: a designed gap, not an error</span></div>
-      <div class="score-lg-row"><svg viewBox="0 0 46 30" class="score-mini"><path class="mk pr-conductor" d="M23 4 L34 15 L23 26 L12 15 Z" fill="none"/></svg><span>correction.issued — in transit, not yet accepted</span></div>
-      <div class="score-lg-row"><svg viewBox="0 0 46 30" class="score-mini"><path class="mk pr-meridian" d="M12 17 L19 24 L34 6" fill="none"/></svg><span>correction.applied — arrived and worked in</span></div>
-      <div class="score-lg-row"><svg viewBox="0 0 46 30" class="score-mini"><path class="mk-stem pr-ensemble" d="M23 2 V16"/><circle class="mk mk-punch pr-ensemble" cx="23" cy="23" r="6"/></svg><span>derivative.* — offspring on a stem</span></div>
-      <div class="score-lg-row"><svg viewBox="0 0 46 30" class="score-mini"><circle class="mk mk-unknown" cx="23" cy="15" r="9" fill="none"/></svg><span>unknown family — documented fallback, never guessed</span></div>
-    </div>
-
-    <div class="score-lg-col">
-      <h3>Currents</h3>
-      <div class="score-lg-row"><svg viewBox="0 0 46 30" class="score-mini"><path class="flow flow-down pr-ensemble" d="M6 6 C 18 26, 30 26, 40 8"/></svg><span>downstream ↓ — transfer, source to receiver</span></div>
-      <div class="score-lg-row"><svg viewBox="0 0 46 30" class="score-mini"><path class="flow flow-up pr-conductor" d="M6 24 C 18 4, 30 4, 40 22"/></svg><span>upstream ↑ — correction against the stream</span></div>
-      <div class="score-lg-row"><svg viewBox="0 0 46 30" class="score-mini"><path class="obl pr-meridian" d="M4 15 H42"/></svg><span>obligation — sustained until the as-of edge</span></div>
-      <div class="score-lg-row"><svg viewBox="0 0 46 30" class="score-mini"><circle class="ring pr-meridian" cx="14" cy="15" r="7" fill="none"/><circle class="ring pr-ensemble" cx="34" cy="15" r="7" fill="none"/></svg><span>divergence — open rings that never converge</span></div>
-      <p class="score-lg-note">
-        Narrative badges ①–⑥ give the telling's order; the map keeps the ledger's. Same ledger ⇒
-        same map, byte for byte. No force layout, no randomness, no clock.
-      </p>
-    </div>
-  </aside>
+  {/* Figur (mit Registerauszug-Tooltip) und Kartenschlüssel sind seit dem Hub-Umbau
+      2026-07-16 geteilte Bauteile — der Hub rendert dieselbe Grammatik. */}
+  <ScoreFigure score={score} />
+  <ScoreKey score={score} />
 
   <section class="score-stations" aria-labelledby="stations-heading">
     <h2 id="stations-heading" class="score-section-heading">{copy.stationsHeading}</h2>
@@ -227,50 +158,6 @@ const tooltipPayload = JSON.stringify(
     <a href={getRelativeLocaleUrl(locale, '/encounters')}>{copy.allEncounters} →</a>
   </p>
 
-  <div id="score-tip" class="score-tip" hidden></div>
 </div>
 </main>
 
-<script type="application/json" id="score-evts" set:html={tooltipPayload} />
-<script>
-  // Progressive enhancement only (zeichengrammatik-2026-07-15.md §4): the register table above
-  // is the complete, JS-free fallback. No loops, no auto-advance — a single reveal on
-  // hover/focus, gone on leave/blur (Bestandsregel: nothing pulses, nothing blinks).
-  function initScoreTooltip() {
-    const dataEl = document.getElementById('score-evts')
-    const tip = document.getElementById('score-tip')
-    if (!dataEl || !tip) return
-    let events: Array<{ id: string; type: string; date: string; lane: string; infra: boolean; quote: string | null; attribution: string | null }> = []
-    try {
-      events = JSON.parse(dataEl.textContent || '[]')
-    } catch {
-      return
-    }
-    function show(g: Element) {
-      const i = Number(g.getAttribute('data-i'))
-      const e = events[i]
-      if (!e || !tip) return
-      tip.innerHTML =
-        `<b>${e.type}</b><br><span class="score-tip-id">${e.id}</span><br>` +
-        `${e.date} · ${e.infra ? e.attribution + ' (infrastructure)' : e.lane}` +
-        (e.quote ? `<hr>&ldquo;${e.quote}&rdquo;<br><i>— ${e.attribution}</i>` : '')
-      tip.hidden = false
-      const r = g.getBoundingClientRect()
-      const tw = (tip as HTMLElement).offsetWidth
-      const x = Math.min(Math.max(8, r.left + r.width / 2 - tw / 2), innerWidth - tw - 8)
-      ;(tip as HTMLElement).style.left = `${x}px`
-      ;(tip as HTMLElement).style.top = `${r.top + scrollY - (tip as HTMLElement).offsetHeight - 10}px`
-    }
-    document.querySelectorAll('.score-svg .evt').forEach((g) => {
-      g.addEventListener('mouseenter', () => show(g))
-      g.addEventListener('focus', () => show(g))
-      g.addEventListener('mouseleave', () => {
-        if (tip) tip.hidden = true
-      })
-      g.addEventListener('blur', () => {
-        if (tip) tip.hidden = true
-      })
-    })
-  }
-  initScoreTooltip()
-</script>
