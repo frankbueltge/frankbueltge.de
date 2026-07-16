@@ -78,7 +78,8 @@ const isDraft = NAMING.approval !== 'approved'
 <main id="main" class="mx-auto w-full max-w-7xl flex-1 px-6 pb-24 pt-16 sm:pt-24">
   <section class="text-center">
     <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted">{NAMING.eyebrow}</p>
-    <h1 class="mx-auto mt-4 max-w-[18ch] text-[clamp(38px,6.4vw,72px)] font-bold leading-[1.04] tracking-[-0.025em]">
+    <p class="mt-7 font-mono text-[11px] uppercase tracking-[0.3em] text-fg-faint">{NAMING.focusKicker}</p>
+    <h1 class="mx-auto mt-3 max-w-[18ch] text-[clamp(38px,6.4vw,72px)] font-bold leading-[1.04] tracking-[-0.025em]">
       {NAMING.title}
       {isDraft && <span class="chip ml-3 align-middle text-[11px] normal-case tracking-normal text-fg-faint" title={DRAFT_LABEL}>draft</span>}
     </h1>
@@ -141,7 +142,9 @@ const isDraft = NAMING.approval !== 'approved'
         </a>
       ))}
     </div>
-    <p class="mt-4.5 font-mono text-xs text-fg-faint">{NAMING.travel.note}</p>
+    <p class="mt-4.5 font-mono text-xs text-fg-faint">
+      {NAMING.travel.note} · <a href={getRelativeLocaleUrl(locale, NAMING.travel.allLink.href)} class="underline decoration-line underline-offset-4 transition-colors hover:text-fg">{NAMING.travel.allLink.label}</a>
+    </p>
   </section>
 
   <section class="mt-20 border-t border-line/60 pt-16" id="rest">
