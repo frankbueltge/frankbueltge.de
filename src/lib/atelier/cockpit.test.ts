@@ -79,13 +79,20 @@ describe('gegen die echten Engine-Daten (Invarianten, kein Zustand)', () => {
       expect(c).toBeLessThanOrEqual(1)
     }
   })
-  it('jede Kante referenziert existierende Knoten und einen bekannten kind', () => {
+  it('jede Kante referenziert existierende Knoten und trägt eine Art — das Vokabular ist offen, die Struktur nicht', () => {
+    // Zeichengrammatik §2 (angewandt 16.07. nach der dritten Vokabel-Neuprägung binnen 24h):
+    // neue Arten sind der Normalfall der Praxis, kein Gate-Fehler. Das Gate prüft Struktur;
+    // unbekannte Arten zählen in den other-Eimer und stehen wörtlich im Register.
     const ids = new Set(rhizome.nodes.map((n) => n.id))
     for (const e of rhizome.edges) {
       expect(ids.has(e.from), `from: ${e.from}`).toBe(true)
       expect(ids.has(e.to), `to: ${e.to}`).toBe(true)
-      expect(['elaborates', 'swerve', 'fork', 'bridge', 'continues', 'complement', 'grounds', 'measures', 'corrected-by']).toContain(e.kind)
+      expect(typeof e.kind, `kind fehlt: ${e.from} → ${e.to}`).toBe('string')
+      expect(e.kind.length).toBeGreaterThan(0)
     }
+    const counts = edgeCounts(rhizome)
+    const summed = Object.values(counts).reduce((a, b) => a + b, 0)
+    expect(summed, 'edgeCounts verschluckt nichts: bekannte Arten + other = alle Kanten').toBe(rhizome.edges.length)
   })
   it('Stats sind konsistent (Werke vorhanden, read ⊇ worked, Zählungen ≥ 0)', () => {
     const stats = cockpitStats(rhizome, vitals, atlas)
@@ -154,7 +161,7 @@ describe('edgeCounts + Swerve-Zählung', () => {
     ],
   }
   it('zählt nach kind', () => {
-    expect(edgeCounts(r)).toEqual({ elaborates: 1, swerve: 1, fork: 0, bridge: 0, continues: 0, complement: 0, grounds: 0, measures: 0, 'corrected-by': 0 })
+    expect(edgeCounts(r)).toEqual({ elaborates: 1, swerve: 1, fork: 0, bridge: 0, continues: 0, complement: 0, grounds: 0, measures: 0, 'corrected-by': 0, other: 0 })
   })
   it('Swerves = Maximum aus Kanten-Sicht und Vitalzeichen-Sicht, nie Summe', () => {
     const v: VitalSigns = {
