@@ -110,6 +110,20 @@ https://ars.electronica.art/prix/en/winners/); STARTS 2026 Grand Prizes to Steye
 *Mechanical Kurds* and Meyer-Brandis's *Office for Tree Migration* (FETCHED,
 https://starts-prize.aec.at/en/winners/winners2026/).
 
+*`[gate 2026-07-16]` — "Half-Life of the Cartography" feasibility gate (session 39, FETCHED):*
+the session-27 blocker (the platform is a JS app; a plain fetch returned only the title) is
+resolved by JS-rendering research tooling. The live platform `gaza.forensic-architecture.org/database`
+is still **not crawler-enumerable** (empty link graph at depth 2), but the citations ARE
+enumerable and linked via the **827-page report + Methodology/Summary PDFs** (Oct 2024): incident
+IDs footnoted, per-chapter source appendices, OSCOLA-form external URLs with access dates; corpus
+OSINT-heavy (X/`t.co`, Telegram, news); FA follows the Berkeley Protocol and open-sources its
+stack (`timemap`, `datasheet-server`, `gaza-public-data`). **The naive "decay/half-life" framing
+was retired by convergent pre-critique** (a single access-blocked timepoint, without diff-able
+archived ground truth and a matched control, cannot carry kinetic language). What survives is a
+narrower ground-truth-gated liveness+identity census; ground-truth (Wayback) coverage is
+**stratum-dependent** — present for Telegram, unreliable for X/`t.co`, the very stratum worst for
+live-checking too. Full record: `journal/2026-07-16.md`; claims rows added same session.
+
 **4 · Provenance/Authenticity.** Debate is moving from *input* (who owns training data?
 Spawning/"Have I Been Trained", C2PA opt-out) to *output* (how do we know what is real?
 C2PA in Samsung/Sony cameras, EU AI Act from August 2026). **Most under-served cluster
