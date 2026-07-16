@@ -1,0 +1,50 @@
+---
+// Atelier surface frame (Praxis-Oberflächen-Paket): kicker, Blattrand (the only standing
+// navigation, atelier-aesthetik §5), headline, status line, content slot, footer. Every
+// Atelier room renders inside this frame; the visual grammar lives in atelier-sheet.css,
+// scoped to .atelier-surface (ADR 0010 — no shared grammar with the other practices).
+import { ATELIER_GRAMMAR, ATELIER_NARRATIVE, ATELIER_DRAFT_LABEL } from '@/config/atelier-wording'
+import '@/styles/atelier-sheet.css'
+
+interface Props {
+  /** rail label that is "here" ('' = none) */
+  active: string
+  kicker: string[]
+  h1: string
+  /** rendered as-is (may carry <b>…</b>) */
+  statusHtml?: string
+  footLeft?: string
+  footRight?: string
+  /** show the "← back to the sheet" line above the headline (all rooms except the sheet) */
+  back?: boolean
+}
+const { active, kicker, h1, statusHtml, footLeft, footRight, back = false } = Astro.props
+const isDraft = ATELIER_NARRATIVE.approval !== 'approved'
+---
+
+<main id="main" class="atelier-surface">
+  <p class="at-kicker">
+    {kicker.map((k) => <span>{k}</span>)}
+    {isDraft && <span class="at-chip" title={ATELIER_DRAFT_LABEL}>wording draft</span>}
+  </p>
+  <nav class="blattrand" aria-label="Margin rail — the only standing navigation">
+    {ATELIER_GRAMMAR.rail.map((item) =>
+      item.label === active ? (
+        <span class="br-here">{item.label}</span>
+      ) : (
+        <a href={item.href} title={item.hint}>{item.label}</a>
+      ),
+    )}
+    <a class="br-door" href={ATELIER_GRAMMAR.door.href} title={ATELIER_GRAMMAR.door.hint}>{ATELIER_GRAMMAR.door.label}</a>
+  </nav>
+  {back && <p class="at-back mt-3"><a href="/atelier">{ATELIER_GRAMMAR.backToSheet}</a></p>}
+  <h1 class="at-h1">{h1}</h1>
+  {statusHtml && <p class="at-status" set:html={statusHtml} />}
+  <slot />
+  {(footLeft || footRight) && (
+    <footer class="at-foot">
+      {footLeft && <span>{footLeft}</span>}
+      {footRight && <span>{footRight}</span>}
+    </footer>
+  )}
+</main>

@@ -142,6 +142,30 @@ describe('German ecology routes are covered and point at the English canonicals'
   })
 })
 
+// Praxis-Oberflächen-Paket (practice-surfaces): das Cockpit wird datiertes Artefakt
+// (ADR 0008), /praktiken geht auf den Hub (die vier Türen wohnen dort).
+describe('practice-surfaces routes are covered', () => {
+  const rules = parseRedirects(raw)
+
+  it('/atelier/cockpit 301s to the archive path in one hop', () => {
+    const rule = rules.find((r) => r.from === '/atelier/cockpit')
+    expect(rule?.to).toBe('/atelier/archive/cockpit')
+    expect(rule?.code).toBe('301')
+  })
+
+  it('/praktiken 301s to the hub', () => {
+    const rule = rules.find((r) => r.from === '/praktiken')
+    expect(rule?.to).toBe('/')
+    expect(rule?.code).toBe('301')
+  })
+
+  it('does not swallow the practice entrances themselves', () => {
+    for (const route of ['/atelier', '/field', '/studio', '/atelier/history', '/field/history', '/studio/history']) {
+      expect(isCovered(route, rules)).toBe(false)
+    }
+  })
+})
+
 describe('the interim /akte record redirect (middle-web app not deployed yet)', () => {
   const rules = parseRedirects(raw)
 

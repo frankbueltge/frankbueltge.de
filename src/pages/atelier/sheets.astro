@@ -1,0 +1,97 @@
+---
+// /atelier/sheets — all sheets, one per thread (atelier-aesthetik §5 rail: „sheets“).
+// Each thread is a reading the practice has drawn: its birth session, the sources that
+// swerved into it, the works it holds. Anchors #<thread-id> are the targets of the
+// thread-title doors on the working sheet.
+import Page from '@/layouts/Page.astro'
+import Frame from '@/components/atelier/surface/Frame.astro'
+import rhizomeData from '@/data/atelier/rhizome.json'
+import atlasData from '@/data/atelier/atlas.json'
+import { ATELIER_NARRATIVE } from '@/config/atelier-wording'
+import type { Rhizome } from '@/lib/atelier/sheet'
+
+const rhizome = rhizomeData as unknown as Rhizome
+const byId = new Map(rhizome.nodes.map((n) => [n.id, n]))
+const atlasIds = new Set((atlasData as { id: string }[]).map((a) => a.id))
+const nativePages = import.meta.glob('/src/pages/atelier/werke/*.astro')
+const nativeSlugs = new Set(
+  Object.keys(nativePages).map((p) => p.replace('/src/pages/atelier/werke/', '').replace('.astro', '')),
+)
+
+const threads = rhizome.nodes
+  .filter((n) => n.kind === 'thread')
+  .map((t) => {
+    const swerves = rhizome.edges.filter((e) => e.kind === 'swerve' && e.to === t.id)
+    const sessions = swerves.map((e) => e.session).filter((s): s is number => typeof s === 'number')
+    const works = rhizome.edges
+      .filter((e) => e.kind === 'elaborates' && e.from === t.id)
+      .map((e) => {
+        const node = byId.get(e.to)
+        const slug = e.to.replace(/^w-/, '')
+        return {
+          label: node?.label ?? e.to,
+          date: node?.date,
+          href: nativeSlugs.has(slug) ? `/atelier/werke/${slug}` : `/atelier/works#${slug}`,
+        }
+      })
+    return {
+      id: t.id,
+      label: t.label,
+      session: sessions.length ? Math.min(...sessions) : null,
+      sources: swerves.map((e) => {
+        const node = byId.get(e.from)
+        const atlasId = e.from.replace(/^atlas:/, '')
+        return {
+          label: node?.label ?? e.from,
+          href: atlasIds.has(atlasId) ? `/atelier/material#${atlasId}` : null,
+        }
+      }),
+      works,
+    }
+  })
+  .reverse() // youngest reading first — the current sheet leads
+
+const kicker = ['Atelier · sheets', 'irrtum-als-methode', `${threads.length} readings`]
+const statusHtml = `<b>${threads.length} sheets</b> · one per thread, youngest first`
+---
+
+<Page
+  title="Atelier — sheets | Frank Bültge"
+  description="All working sheets of the Atelier, one per thread — each a reading the practice has drawn across its works and sources."
+>
+  <Frame active="sheets" kicker={kicker} h1="The readings, one sheet each." statusHtml={statusHtml} back>
+    <p class="at-room-intro">{ATELIER_NARRATIVE.rooms.sheets}</p>
+    {threads.map((t) => (
+      <article class="at-shelf-row" id={t.id}>
+        <h3>{t.label}</h3>
+        <p class="at-shelf-meta">
+          {t.session !== null && <>born <a href={`/atelier/journal#s${t.session}`} class="underline">S{t.session}</a> · </>}
+          {t.sources.length} source{t.sources.length === 1 ? '' : 's'} · {t.works.length} work{t.works.length === 1 ? '' : 's'}
+        </p>
+        {t.sources.length > 0 && (
+          <p>
+            <span class="at-relevance">swerved from:</span>{' '}
+            {t.sources.map((s, i) => (
+              <>
+                {i > 0 && ' · '}
+                {s.href ? <a href={s.href} class="underline">{s.label}</a> : s.label}
+              </>
+            ))}
+          </p>
+        )}
+        {t.works.length > 0 && (
+          <p>
+            <span class="at-relevance">holds:</span>{' '}
+            {t.works.map((w, i) => (
+              <>
+                {i > 0 && ' · '}
+                <a href={w.href} class="underline">{w.label}</a>
+                {w.date && <span class="at-shelf-meta"> ({w.date})</span>}
+              </>
+            ))}
+          </p>
+        )}
+      </article>
+    ))}
+  </Frame>
+</Page>
