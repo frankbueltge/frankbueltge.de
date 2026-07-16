@@ -21,10 +21,9 @@ interface Props {
 const { title, description, noindex, analytics = true } = Astro.props
 const locale = (Astro.currentLocale ?? 'en') as Locale
 
-// canonical + hreflang via Astro's config-aware locale URLs (de at /, en at /en; x-default → de)
-const pathNoLocale = Astro.url.pathname.replace(/^\/de/, '') || '/'
-const href = (l: Locale) => getAbsoluteLocaleUrl(l, pathNoLocale)
-const canonical = href(locale)
+// canonical URL via Astro's config-aware locale URL (single locale, en, unprefixed — site-v2
+// work order §6: German dropped site-wide, decisions doc 2026-07-16 §1.5).
+const canonical = getAbsoluteLocaleUrl(locale, Astro.url.pathname)
 // Pro Seite generiertes OG-Bild (1200×630, build-time via src/pages/og/).
 const ogImage = `${SITE.url}/og/${ogSlug(Astro.url.pathname)}.png`
 
@@ -37,9 +36,7 @@ const person = {
   url: SITE.url,
   jobTitle: SITE.role[locale],
   disambiguatingDescription:
-    locale === 'de'
-      ? 'Data Engineering & Analytics. Ein öffentliches Experimentierfeld mit Daten, Code und KI — kleine Experimente, die etwas aus offenen Quellen messen und offenlegen, wie sie gemacht sind. Macher von data-snack.com und datavism.org.'
-      : 'Data Engineering & Analytics. A public field for experiments with data, code and AI — small experiments that measure something from open sources and disclose how they are made. Creator of data-snack.com and datavism.org.',
+    'Data Engineering & Analytics. A public field for experiments with data, code and AI — small experiments that measure something from open sources and disclose how they are made. Creator of data-snack.com and datavism.org.',
   knowsAbout: ['Data Engineering', 'Analytics', 'AI/ML', 'Data Infrastructure', 'Data Visualization'],
   sameAs: [SITE.social.linkedin, SITE.social.github, SITE.social.instagram, SITE.projects.dataSnack, SITE.projects.datavism],
 }
@@ -49,7 +46,7 @@ const website = {
   '@id': `${SITE.url}/#website`,
   name: SITE.name,
   url: SITE.url,
-  inLanguage: locale === 'de' ? 'de-DE' : 'en',
+  inLanguage: 'en',
   publisher: { '@id': `${SITE.url}/#person` },
 }
 // Per-instrument CreativeWork, attributed to Frank — only on work pages.
@@ -95,22 +92,14 @@ const workLd = work ? workJsonLd(work, locale, canonical) : null
     {noindex && <meta name="robots" content="noindex, follow" />}
 
     <link rel="canonical" href={canonical} />
-    <link rel="alternate" hreflang="de-DE" href={href('de')} />
-    <link rel="alternate" hreflang="en" href={href('en')} />
-    <link rel="alternate" hreflang="x-default" href={href('en')} />
-    <link
-      rel="alternate"
-      type="application/rss+xml"
-      title="The Protocol"
-      href={locale === 'de' ? '/de/protokoll/feed.xml' : '/protokoll/feed.xml'}
-    />
+    <link rel="alternate" type="application/rss+xml" title="The Protocol" href="/protokoll/feed.xml" />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={SITE.name} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:locale" content={locale === 'de' ? 'de_DE' : 'en_US'} />
+    <meta property="og:locale" content="en_US" />
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />

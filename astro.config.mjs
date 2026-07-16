@@ -5,15 +5,18 @@ import mdx from '@astrojs/mdx'
 import tailwindcss from '@tailwindcss/vite'
 import rehypeRepoLinks from './src/lib/engines/rehype-repo-links.mjs'
 
-// Bilingual EN/DE: EN is default at root (unprefixed), DE under /de. No browser detection —
-// every visitor lands on EN; /de is manual only (language toggle in TopBar).
+// English-only (site-v2 work order §6, decisions doc 2026-07-16 §1.5: "Deutsch fliegt komplett
+// raus" — Frank, 2026-07-16). The /de mirror is gone; public/_redirects sends old /de/* URLs to
+// their EN pendants. Astro's i18n integration is kept (single locale) rather than removed
+// outright — Astro.currentLocale, getRelativeLocaleUrl() etc. stay valid no-ops across the many
+// call sites that already use them (src/i18n/ui.ts's t() dictionary keeps its unused `de` half
+// too, for the same reason: smaller diff, zero behavioural difference with one locale).
 // Astro ships the content layer as static HTML (top CWV, crawlable); WebGL lives in islands.
 export default defineConfig({
   site: 'https://frankbueltge.de',
   i18n: {
     defaultLocale: 'en',
-    locales: ['en', 'de'],
-    // English at /, German at /de — hreflang handles parity; /en/* → / via public/_redirects (Cloudflare).
+    locales: ['en'],
     routing: { prefixDefaultLocale: false },
   },
   // Content-Security-Policy: Astro 6 hasht eigene inline/gebündelte Skripte automatisch (kein
