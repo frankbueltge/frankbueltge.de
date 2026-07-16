@@ -65,6 +65,8 @@ export interface StageInput {
   gasse: GasseEntry[]
   strikeNote: string
   gasseLabel: string
+  /** orientation line, top right of the floor ("the stage, seen from above …") */
+  orientNote: string
 }
 
 // ---------------------------------------------------------------- ported geometry
@@ -93,17 +95,19 @@ export function buildStageSvg(input: StageInput): string {
       `${escapeXml(input.premiere.title)}; ${input.kills.length} taped X-marks for killed projects; ` +
       `the Gasse holds the refused material; the stage record follows as a table.">`,
   )
-  s.push(
-    '<defs><radialGradient id="spot" cx="50%" cy="46%" r="55%">' +
-      '<stop offset="0%" stop-color="var(--st-spot-core)" stop-opacity=".95"/>' +
-      '<stop offset="55%" stop-color="var(--st-spot-mid)" stop-opacity=".28"/>' +
-      '<stop offset="100%" stop-color="var(--st-spot-mid)" stop-opacity="0"/></radialGradient></defs>',
-  )
   s.push('<rect class="stagefloor" x="150" y="226" width="1080" height="416"/>')
   s.push('<path class="curtainline" d="M150 226 H1230"/>')
 
-  // the spot with the premiered work (texts IN the cone read dark on light, both themes)
-  s.push(`<ellipse cx="${CX}" cy="${CY}" rx="300" ry="170" fill="url(#spot)"/>`)
+  // Der gezeichnete Lichtkegel (Umbau 2026-07-16, Franks Kritik am weichen Verlauf:
+  // "hässlicher gold glow"). Lichtplan-Geste statt Weichzeichner: eine Lampe hängt an
+  // der Vorhangstange, zwei Strahl-Haarlinien zeichnen den Kegel, die Lichtinsel ist
+  // eine harte, helle Fläche wie ein echter Verfolger — Texte darin lesen sich dunkel
+  // auf hell, in beiden Themes; die Kante macht das "beleuchtet" lesbar statt diffus.
+  s.push(`<g class="lamp"><rect x="${CX - 8}" y="218" width="16" height="9"/></g>`)
+  s.push(`<path class="beamline" d="M${CX - 6} 227 L${CX - 300} ${CY}"/>`)
+  s.push(`<path class="beamline" d="M${CX + 6} 227 L${CX + 300} ${CY}"/>`)
+  s.push(`<ellipse class="spotpool" cx="${CX}" cy="${CY}" rx="300" ry="170"/>`)
+  s.push(`<text class="t-orient" x="1210" y="252" text-anchor="end">${escapeXml(input.orientNote)}</text>`)
   s.push(
     `<g class="evt2" tabindex="0">` +
       `<text class="t-worktitle" x="${CX}" y="${CY - 42}" text-anchor="middle">${escapeXml(input.premiere.title)}</text>` +
