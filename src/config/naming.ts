@@ -20,7 +20,7 @@ export interface DoorItem {
 }
 
 export const NAMING = {
-  approval: 'draft' as 'draft' | 'approved',
+  approval: 'approved' as 'draft' | 'approved',
 
   eyebrow: 'FRANK BÜLTGE · DATA & AI ENGINEER',
   title: 'a federated research ecology',
@@ -91,7 +91,7 @@ export const NAMING = {
       {
         name: 'Holdings',
         href: '/bestaende',
-        description: "The lab's earlier experiments — The Protocol, Parallaxe, Police — offered as material, under conditions.",
+        description: "The lab's earlier experiments — The Protocol, Parallaxe, The Policy — offered as material, under conditions.",
       },
       {
         name: 'Atlas',
