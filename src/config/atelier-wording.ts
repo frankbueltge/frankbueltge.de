@@ -57,6 +57,13 @@ export const ATELIER_GRAMMAR = {
   },
   /** Skalenregel-Fußnote des Buchrückens (Zeichengrammatik §7, Atelier-Geschmack). */
   scaleRule: 'scale rule (grammar §7, atelier flavour): pages gather into quires when the spine outgrows the sheet',
+  /** Deklarations-Formeln der gebundenen Lage (Skalenregel erstmals aktiv mit S31/S32,
+   * 2026-07-16): die aktive Regel steht auf der Karte selbst, nie still (§7-Prinzip);
+   * das Register darunter komprimiert weiterhin nichts. */
+  quireNote: 'oldest pages bind first, eight to a quire — the register below keeps every page',
+  quireLabel(from: number, to: number): string {
+    return `S${from}–S${to}`
+  },
 } as const
 
 export const ATELIER_NARRATIVE = {

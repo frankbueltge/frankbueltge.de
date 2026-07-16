@@ -43,8 +43,34 @@ const VIEW_TOP = 172
 const X0 = 300
 const STEP = 34
 const MAX_PAGES = 30
+const QUIRE = 8
 
-const sx = (n: number) => X0 + (n - 1) * STEP
+export interface BoundQuire {
+  from: number
+  to: number
+}
+
+/** Buchbinder-Regel (Zeichengrammatik §7, Atelier-Geschmack; erstmals aktiv mit S31/S32,
+ * 2026-07-16): wächst der Rücken über die 30 Slots des Blatts, binden sich die ÄLTESTEN
+ * Seiten zu Oktav-Lagen (8 Blatt), bis der Rücken wieder passt — die Gegenwart bleibt lose
+ * und feinkörnig, die aktive Regel steht als Formel auf der Karte (deklariert, nie still),
+ * und das Register darunter führt weiterhin jede einzelne Seite. */
+export function bindQuires(pages: SessionPage[]): { quires: BoundQuire[]; loose: SessionPage[] } {
+  const quires: BoundQuire[] = []
+  let loose = pages.slice()
+  while (quires.length + loose.length > MAX_PAGES && loose.length >= QUIRE) {
+    quires.push({ from: loose[0].n, to: loose[QUIRE - 1].n })
+    loose = loose.slice(QUIRE)
+  }
+  if (quires.length + loose.length > MAX_PAGES) {
+    throw new Error(
+      `buildSpineSvg: ${pages.length} pages exceed the sheet even fully bound ` +
+        `(max ${MAX_PAGES} slots, ${QUIRE} pages a quire). The next gathering — quires into ` +
+        `volumes — is a different, not-yet-built generator, not a silent re-layout of this one.`,
+    )
+  }
+  return { quires, loose }
+}
 
 export interface SpineRegisterRow {
   page: string
@@ -90,15 +116,22 @@ function escapeXml(value: string): string {
 export function buildSpineSvg(input: SpineInput): string {
   const { pages, threads } = input
   if (pages.length === 0) throw new Error('buildSpineSvg: no journal pages')
-  if (pages.length > MAX_PAGES) {
-    throw new Error(
-      `buildSpineSvg: ${pages.length} pages exceed the sheet (max ${MAX_PAGES}). The scale rule ` +
-        `(Zeichengrammatik §7, atelier flavour) gathers pages into quires — a different, ` +
-        `not-yet-built generator, not a silent re-layout of this one.`,
-    )
+  const { quires, loose } = bindQuires(pages)
+
+  // Slot-Geometrie: eine gebundene Lage belegt EINEN Slot, lose Seiten je einen —
+  // ohne Bindung ist xOf(n) exakt das alte sx(n) (byte-identischer Bestandspfad).
+  const slotOf = new Map<number, number>()
+  quires.forEach((q, i) => {
+    for (let n = q.from; n <= q.to; n++) slotOf.set(n, i)
+  })
+  loose.forEach((p, i) => slotOf.set(p.n, quires.length + i))
+  const xOf = (n: number) => X0 + (slotOf.get(n) ?? 0) * STEP
+  const quireIndexOf = (n: number) => {
+    for (let i = 0; i < quires.length; i++) if (n >= quires[i].from && n <= quires[i].to) return i
+    return -1
   }
 
-  const nextX = sx(pages.length + 1)
+  const nextX = X0 + (quires.length + loose.length) * STEP
   const firstOfDay = new Map<string, number>()
   for (const p of pages) if (!firstOfDay.has(p.date)) firstOfDay.set(p.date, p.n)
 
@@ -123,7 +156,7 @@ export function buildSpineSvg(input: SpineInput): string {
 
   // thread ribbons, born late, staying open
   threads.forEach((t, i) => {
-    const x = sx(t.session)
+    const x = xOf(t.session)
     const y = thY0 + i * 26
     s.push(`<path class="rp" d="M${x} ${spineTop} C ${x - 2} ${y + 40}, ${x + 4} ${y + 14}, ${x + 16} ${y}" fill="none"/>`)
     s.push(`<path class="th" d="M${x + 16} ${y} C ${x + 70} ${y - 4}, ${nextX - 60} ${y - 2}, ${nextX + 6} ${y - 3}"/>`)
@@ -140,51 +173,98 @@ export function buildSpineSvg(input: SpineInput): string {
   // the error-register band (red strikes above the spine)
   const errTotal = Object.values(input.errorsByDate).reduce((a, b) => a + b, 0)
   s.push(`<text class="t-sess" x="${X0 - 58}" y="${spineTop - 18}" text-anchor="end">ERROR REGISTER · ${errTotal}</text>`)
+  const quireErr = quires.map(() => 0)
   for (const [d, cnt] of Object.entries(input.errorsByDate)) {
     const first = firstOfDay.get(d)
     if (first === undefined) continue
-    const x = sx(first)
+    const qi = quireIndexOf(first)
+    if (qi >= 0) {
+      quireErr[qi] += cnt
+      continue
+    }
+    const x = xOf(first)
     for (let k = 0; k < cnt; k++) {
       const y = spineTop - 12 - k * 9
       s.push(`<path class="rp" d="M${x - 5} ${y} L${x + 5} ${y - 5}"/>`)
     }
   }
 
-  // the spine: pages + the unwritten next page (the Atelier's data edge, approved wording)
-  for (const p of pages) {
+  // the spine: loose pages + bound quires + the unwritten next page (approved wording)
+  for (const p of loose) {
     s.push(
-      `<path class="page" d="M${sx(p.n)} ${spineTop} V${spineBot}"><title>S${p.n} — ${escapeXml(p.date)} (journal/, verbatim)</title></path>`,
+      `<path class="page" d="M${xOf(p.n)} ${spineTop} V${spineBot}"><title>S${p.n} — ${escapeXml(p.date)} (journal/, verbatim)</title></path>`,
     )
     if (p.n === 1 || p.n % 5 === 0 || p.n === pages.length) {
-      s.push(`<text class="t-sess-n" x="${sx(p.n)}" y="${spineBot + 16}" text-anchor="middle">S${p.n}</text>`)
+      s.push(`<text class="t-sess-n" x="${xOf(p.n)}" y="${spineBot + 16}" text-anchor="middle">S${p.n}</text>`)
     }
   }
+  quires.forEach((q, i) => {
+    const x = X0 + i * STEP
+    s.push(
+      `<g class="quire"><path class="page" d="M${x - 3} ${spineTop} V${spineBot}"/>` +
+        `<path class="page" d="M${x + 3} ${spineTop} V${spineBot}"/>` +
+        `<path class="page" d="M${x - 7} ${spineTop + 7} H${x + 7}"/>` +
+        `<path class="page" d="M${x - 7} ${spineBot - 7} H${x + 7}"/>` +
+        `<title>${escapeXml(ATELIER_GRAMMAR.quireLabel(q.from, q.to))} — bound quire (${QUIRE} pages, oldest bind first); every page stays in the register below</title></g>`,
+    )
+    s.push(
+      `<text class="t-sess-n" x="${x}" y="${spineBot + 16}" text-anchor="middle">${escapeXml(ATELIER_GRAMMAR.quireLabel(q.from, q.to))}</text>`,
+    )
+    if (quireErr[i] > 0) {
+      s.push(`<text class="t-sess" x="${x}" y="${spineTop - 14}" text-anchor="middle">×${quireErr[i]}</text>`)
+    }
+  })
   s.push(`<path class="page page-next" d="M${nextX} ${spineTop} V${spineBot}"/>`)
   const midY = Math.floor((spineTop + spineBot) / 2)
   s.push(`<text class="t-note-a" x="${nextX + 12}" y="${midY - 2}">${escapeXml(ATELIER_GRAMMAR.dataEdgeLines[0])}</text>`)
   s.push(`<text class="t-note-a" x="${nextX + 12}" y="${midY + 12}">${escapeXml(ATELIER_GRAMMAR.dataEdgeLines[1])}</text>`)
   s.push(`<text class="t-lane-a" x="${X0 - 58}" y="${midY - 6}" text-anchor="end">JOURNAL</text>`)
   s.push(`<text class="t-note-a" x="${X0 - 58}" y="${midY + 10}" text-anchor="end">${pages.length} pages · S1–S${pages.length}</text>`)
+  if (quires.length) {
+    s.push(`<text class="t-note-a" x="${X0 - 58}" y="${midY + 26}" text-anchor="end">${quires.length} quire${quires.length === 1 ? '' : 's'} bound</text>`)
+    s.push(`<text class="t-note-a" x="${nextX + 12}" y="${midY + 28}">${escapeXml(ATELIER_GRAMMAR.quireNote)}</text>`)
+  }
 
   // honest margin note where the mockup drew constitution asterisks (git dates not mirrored)
   s.push(`<text class="t-note-a" x="${X0 - 58}" y="${spineTop - 34}" text-anchor="end">${escapeXml(input.constitutionNote)}</text>`)
 
-  // date marginalia (rotated, at day change)
+  // date marginalia (rotated, at day change; bound days collapse to a range per quire)
+  const quireDates = quires.map(() => [] as string[])
   for (const [d, n] of firstOfDay) {
-    const x = sx(n)
+    const qi = quireIndexOf(n)
+    if (qi >= 0) {
+      quireDates[qi].push(d)
+      continue
+    }
+    const x = xOf(n)
     s.push(
       `<text class="t-date-r" transform="rotate(-90 ${x + 3} ${spineBot + 66})" x="${x + 3}" y="${spineBot + 66}" text-anchor="middle">${escapeXml(d.slice(5))}</text>`,
     )
   }
+  quireDates.forEach((ds, i) => {
+    if (!ds.length) return
+    const sorted = ds.slice().sort()
+    const lbl = sorted.length > 1 ? `${sorted[0].slice(5)}–${sorted[sorted.length - 1].slice(5)}` : sorted[0].slice(5)
+    const x = X0 + i * STEP
+    s.push(
+      `<text class="t-date-r" transform="rotate(-90 ${x + 3} ${spineBot + 66})" x="${x + 3}" y="${spineBot + 66}" text-anchor="middle">${escapeXml(lbl)}</text>`,
+    )
+  })
 
   // works hanging under their night (slabs, stacked)
   const worksTotal = Object.values(input.worksByDate).reduce((a, b) => a + b, 0)
   s.push(`<text class="t-lane-a" x="${X0 - 58}" y="${worksY0 + 22}" text-anchor="end">WORKS · ${worksTotal}</text>`)
   s.push(`<text class="t-note-a" x="${X0 - 58}" y="${worksY0 + 38}" text-anchor="end">${escapeXml(input.worksCaption)}</text>`)
+  const quireWorks = quires.map(() => 0)
   for (const [d, cnt] of Object.entries(input.worksByDate)) {
     const first = firstOfDay.get(d)
     if (first === undefined) continue
-    const x = sx(first)
+    const qi = quireIndexOf(first)
+    if (qi >= 0) {
+      quireWorks[qi] += cnt
+      continue
+    }
+    const x = xOf(first)
     for (let k = 0; k < cnt; k++) {
       const y = worksY0 + k * 22
       s.push(
@@ -192,6 +272,14 @@ export function buildSpineSvg(input: SpineInput): string {
       )
     }
   }
+  quireWorks.forEach((cnt, i) => {
+    if (cnt === 0) return
+    const x = X0 + i * STEP
+    s.push(
+      `<rect class="slab" x="${x - 4}" y="${worksY0}" width="8" height="16"><title>${escapeXml(ATELIER_GRAMMAR.quireLabel(quires[i].from, quires[i].to))} — ${cnt} work(s), committed dates</title></rect>`,
+    )
+    s.push(`<text class="t-note-a" x="${x + 8}" y="${worksY0 + 13}">×${cnt}</text>`)
+  })
 
   s.push('</svg>')
   return s.join('\n')
