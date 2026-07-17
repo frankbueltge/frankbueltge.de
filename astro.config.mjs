@@ -52,7 +52,14 @@ export default defineConfig({
   },
   // Tages-Snapshots (/protokoll/<datum>) sind noindex + aus der Sitemap — dünn & wächst
   // täglich; Frische trägt die aktuelle /protokoll-Seite + das Archiv-Register.
-  integrations: [sitemap({ filter: (page) => !/\/protokoll\/\d{4}-\d{2}-\d{2}\//.test(page) }), mdx()],
+  // /steuerzentrale ist ein privates Operator-Werkzeug (noindex, token-gated) — nie in der
+  // Sitemap, unabhängig davon, ob Google robots.txt beachtet.
+  integrations: [
+    sitemap({
+      filter: (page) => !/\/protokoll\/\d{4}-\d{2}-\d{2}\//.test(page) && !/\/steuerzentrale(\/|$)/.test(page),
+    }),
+    mdx(),
+  ],
   // Engine README/INDEX docs (synced from the engines' own repos) carry repo-relative links;
   // rewrite them to the public repos' blob/tree URLs so they don't 404 on the site.
   markdown: { rehypePlugins: [rehypeRepoLinks] },
