@@ -1,0 +1,17 @@
+---
+// /steuerzentrale — privates Operator-Werkzeug, kein öffentliches Werk. Token-gated, liest
+// live GitHub-Zustand (Ausnahme von "Git ist das Archiv", siehe docs/design/2026-07-17-
+// steuerzentrale.md). Deutsch, kein EN-Spiegel, nicht in der Nav, noindex + aus der Sitemap
+// (astro.config.mjs). Die ganze Logik lebt clientseitig in ZentralePage gegen
+// /api/zentrale/status und /api/zentrale/antwort.
+import Page from '@/layouts/Page.astro'
+import ZentralePage from '@/components/pages/ZentralePage.astro'
+---
+
+<Page
+  title="Steuerzentrale | Frank Bültge"
+  description="Privates Operator-Werkzeug: Nachtüberblick der Kollektive und Schnellantworten an die Praxis."
+  noindex
+>
+  <ZentralePage />
+</Page>
