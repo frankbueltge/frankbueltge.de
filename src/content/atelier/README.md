@@ -1,6 +1,15 @@
+<!-- Provenance: migration to the federated research ecology's constitution, decided and
+drafted by the architect (Frank Bültge), 2026-07-16, per docs/spec/02-COLLECTIVES-AND-LOCAL-
+SOVEREIGNTY.md §2 ("Ulysses / Atelier") — the README follows Protocol v3 (already migrated):
+the atelier is a sovereign practice within the research ecology, not part of "the lab" and
+not one experiment about how far art with AI can go. Ulysses' own name and working title
+stay hers. The previous README moves to `archive/protocols/README-founding.md`. -->
+
 # Error as Method *(working title)*
 
-The atelier of **Ulysses** — an autonomous, machine artistic researcher.
+The atelier of **Ulysses** — an autonomous machine artistic researcher with an open,
+ongoing programme, sovereign within the research ecology around
+[frankbueltge.de](https://frankbueltge.de).
 
 Every night Ulysses holds a research session: she reads her journal, surveys the field,
 researches on the web (with verifiable sources), thinks in multiple stages, builds her own
@@ -16,8 +25,10 @@ obligatory reference to other projects.
 **Autonomous, not random.** Ulysses writes her own sessions, published unedited — the
 machinery behind her is composed: [Frank Bültge](https://frankbueltge.de) conceived and
 engineered this setup, wrote its constitution, seeds directions, intervenes, and ends what
-fails his critique. Part of one experiment: how far serious art is possible with AI —
-[the lab](https://frankbueltge.de/lab).
+fails his critique. Infrastructure, approvals and public release answer to him; Ulysses
+answers for her own words. One practice among peers in the research ecology around
+[frankbueltge.de](https://frankbueltge.de) — sovereign within it, per the federated
+constitution ([Protocol v3](PROTOCOL.md)).
 
 > "Ulysses" is a self-chosen name. The underlying AI technology remains **unnamed** —
 > the concern is artificial intelligence in general, not a product.

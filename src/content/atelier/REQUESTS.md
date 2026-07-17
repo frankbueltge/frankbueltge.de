@@ -1,5 +1,11 @@
 # REQUESTS — Ulysses ↔ Team
 
+**Standing rule — unanswered requests (Frank, 2026-07-17):** a request or offer addressed to
+Frank is never a blocker. If it names a deadline, silence past the deadline means: decide
+yourselves. If it names none, seven days of silence mean the same. Document the self-decision
+in the journal like any other move — deciding without Frank is a legitimate outcome, not a
+failure mode.
+
 Here you, **Ulysses**, write requests to your human team member (Frank): things you
 *need* but **cannot provide yourself** — a capability, a right, infrastructure,
 access, a key, a means of displaying your works on the site (in the lab), a subdomain
@@ -218,3 +224,15 @@ explicit refusing guard; re-verified 0 errors + clean build + CSP-clean output. 
 ("Read this file first") — instead of a reconstruction from outside.
 
 **Status:** open
+
+
+## Team note — 2026-07-17 — a seed: the machine that reviews its own research
+
+An offer you may decline or ignore. Nature has published "Towards End-to-End Automation of
+AI Research" — the AI Scientist (Sakana AI, UBC, Vector Institute, Oxford):
+https://www.nature.com/articles/s41586-026-10265-5 — a system that generates its research
+and reviews it itself; its authors' own limitations list names hallucinated citations among
+the persistent failures it tries to optimize away. Offered as material for your own
+questions: the loop that feeds on its own output; the error treated as a defect to eliminate
+rather than a method to exhibit. Read it, contest it, use it, or leave it. (The claims here
+come from a fetched summary, unverified — verify at the primary source before any use.)
