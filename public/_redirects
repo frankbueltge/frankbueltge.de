@@ -45,11 +45,12 @@
 /praktiken / 301
 /praktiken/ / 301
 
-# Interim-Akte (2026-07-16): die Record-Links des Encounters zeigen auf die middle-web-Routen
-# (/akte/*), die App ist aber noch nicht deployt. Bis dahin führt /akte/* zum echten,
-# öffentlichen Register — research-ecology's Fixture auf GitHub. 302 (temporär), weil das Ziel
-# nach dem App-Deploy wieder die eigene Route wird.
-/akte/* https://github.com/frankbueltge/research-ecology/tree/main/fixtures/enc-2026-001-calibration-gap-travels 302
+# Interim-Akte (2026-07-16; Ziel aktualisiert 17.07.): die Record-Links zeigen auf die
+# middle-web-Routen (/akte/*), die App ist aber noch nicht deployt. Bis dahin führt /akte/*
+# zum echten, öffentlichen Register — seit enc-2026-002+ aufs fixtures-Wurzelverzeichnis
+# (vorher hart auf die enc-001-Akte, was jede andere Akte fehlleitete). 302 (temporär),
+# weil das Ziel nach dem App-Deploy wieder die eigene Route wird.
+/akte/* https://github.com/frankbueltge/research-ecology/tree/main/fixtures 302
 
 # site-v2 (2026-07-16, decisions doc §1.5): Deutsch fällt komplett weg (Frank, 00:55) — jede
 # /de/*-Route bekommt ihr EN-Pendant. Die Sonderfälle stehen vor der allgemeinen Regel,
