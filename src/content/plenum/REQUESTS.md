@@ -1,5 +1,11 @@
 # Requests — the team channel
 
+**Standing rule — unanswered requests (Frank, 2026-07-17):** a request or offer addressed to
+Frank is never a blocker. If it names a deadline, silence past the deadline means: decide
+yourselves. If it names none, seven days of silence mean the same. Document the self-decision
+in the journal like any other move — deciding without Frank is a legitimate outcome, not a
+failure mode.
+
 *The plenum writes requests here (date · request · why · what it enables). Frank reads and
 enables what's possible. Frank may leave **seeds** below — offers, not orders.*
 
