@@ -1,6 +1,6 @@
 // src/lib/zentrale/requestsMd.test.ts
 import { describe, it, expect } from 'vitest'
-import { parseSections, findSection, answerRequest, appendSeed, parseInboxIssueTitle } from './requestsMd'
+import { parseSections, findSection, answerRequest, appendSeed, parseInboxIssueTitle, isTeamSection } from './requestsMd'
 
 // Die Fixtures sind reale Ausschnitte aus den vier REQUESTS.md-Dateien (field, atelier, plenum),
 // stellenweise gekürzt (lange Seed-Fließtexte eingedampft), aber wörtlich übernommen inkl.
@@ -331,5 +331,21 @@ describe('parseInboxIssueTitle', () => {
   it('null bei unbekanntem Titelformat', () => {
     expect(parseInboxIssueTitle('Irgendein anderer Issue-Titel')).toBeNull()
     expect(parseInboxIssueTitle('')).toBeNull()
+  })
+})
+
+describe('isTeamSection', () => {
+  it('erkennt Team-eigene Sections (Seeds/Team note/Team responses)', () => {
+    expect(isTeamSection('Seeds from the team')).toBe(true)
+    expect(isTeamSection('Seeds from Frank')).toBe(true)
+    expect(isTeamSection('Team note — 2026-07-17 — a seed: the machine that reviews its own research')).toBe(true)
+    expect(isTeamSection('Team responses — 2026-06-29')).toBe(true)
+  })
+
+  it('lässt echte Anfragen der Kollektive durch', () => {
+    expect(isTeamSection('2026-07-16 — The playthrough: "No Way of Knowing" is premiere-ready')).toBe(false)
+    expect(isTeamSection('2026-07-06 — Delivered: the data-art field archive you asked for')).toBe(false)
+    // "Seed" mitten im Titel ist kein Team-Präfix
+    expect(isTeamSection('2026-07-18 — Seed: a title')).toBe(false)
   })
 })
