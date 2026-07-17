@@ -1,17 +1,70 @@
 ---
 // site-v2 work order §3: the hub (/) becomes the entrance and now only shows a condensed NOW
 // section; the full encounter experience — score map, legend, station register, event table —
-// moves here, to its stable URL. Previously this route rendered BegegnungenIndex (a plain list,
-// "one level calmer" than the entrance) — with exactly one encounter recorded, that list added
-// a click without adding information; BegegnungenIndex.astro stays in the repo, unlinked, for
-// when a second encounter makes a real index useful again (git is the archive; see
-// docs/decision-log.md for the approval trail).
+// moves here, to its stable URL.
+// 2026-07-17: the "second encounter" moment arrived (the ledger holds four) — the register
+// below lists every recorded encounter from src/data/begegnungen/register.json, which the
+// ecology export chain regenerates after every engine session and every nightly scribe run.
+// The entrance keeps the one encounter with an AUTHORED score (the selection rule, now named
+// in src/config/naming.ts); a newer encounter takes the entrance when its score is authored.
 import Page from '@/layouts/Page.astro'
 import BegegnungEntrance from '@/components/pages/BegegnungEntrance.astro'
 import { currentEntrance } from '@/lib/begegnungen'
+import register from '@/data/begegnungen/register.json'
 
 const entrance = currentEntrance
+interface RegisterEntry {
+  encounter_id: string
+  title: string | null
+  status: { as_of?: string; statusLine?: string } | null
+  approval: string | null
+  authored_by: string | null
+  participants: string[]
+  record_url: string
+}
+const entries = register as RegisterEntry[]
 ---
 <Page title={`${entrance.headline} | Frank Bültge`} description={entrance.status.statusLine}>
   <BegegnungEntrance />
+
+  <section class="mx-auto w-full max-w-4xl px-6 pb-16" aria-labelledby="register-heading">
+    <h2 id="register-heading" class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">
+      The register — every recorded encounter
+    </h2>
+    <p class="mt-3 text-sm text-fg-muted">
+      The entrance above shows the encounter with an authored score; the ledger records
+      {entries.length} encounters, kept current by the nightly scribe. Each record links to the
+      public register (every quote pinned to a source commit, machine-verified).
+    </p>
+    <div class="mt-5 overflow-x-auto">
+      <table class="w-full border-collapse text-left font-mono text-xs">
+        <thead>
+          <tr class="text-fg-faint">
+            <th class="border-t border-line/60 py-2 pr-4 font-semibold">encounter</th>
+            <th class="border-t border-line/60 py-2 pr-4 font-semibold">status</th>
+            <th class="border-t border-line/60 py-2 pr-4 font-semibold">participants</th>
+            <th class="border-t border-line/60 py-2 font-semibold">record</th>
+          </tr>
+        </thead>
+        <tbody class="text-fg-muted">
+          {entries.map((e) => (
+            <tr>
+              <td class="border-t border-line/60 py-2 pr-4">
+                <span class="text-fg">{e.title ?? e.encounter_id}</span>
+                <span class="block text-fg-faint">{e.encounter_id}{e.approval === 'draft' ? ' · draft' : ''}</span>
+              </td>
+              <td class="border-t border-line/60 py-2 pr-4">
+                {e.status?.statusLine ?? '—'}
+                {e.status?.as_of && <span class="block text-fg-faint">as of {e.status.as_of}</span>}
+              </td>
+              <td class="border-t border-line/60 py-2 pr-4">{e.participants.join(' · ')}</td>
+              <td class="border-t border-line/60 py-2">
+                <a href={e.record_url} target="_blank" rel="noreferrer" class="underline hover:text-fg">record ↗</a>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
 </Page>
