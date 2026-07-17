@@ -1,0 +1,417 @@
+---
+// Exclude the Third — works/2026-07-17-exclude-the-third/work.astro
+//
+// SWERVE (Session 35, 2026-07-17): Michel Serres, Le Parasite (1980; Engl. The
+// Parasite, trans. L. R. Schehr, Johns Hopkins UP 1982). The parasite is the
+// third meaning of a French word that also means guest and vermin: STATIC, the
+// noise on the line. Serres' claim (via Hermes, "Platonic Dialogue"): "To hold a
+// dialogue is to suppose a third man and to seek to exclude him; a successful
+// communication is the exclusion of the third man ... the demon, the prosopopoeia
+// of noise." A detector is exactly this apparatus of exclusion — it exists to
+// expel the parasite and clean the channel. S34's mirror-machine "optimises away
+// inaccurate citations": Serres' war on the third.
+//
+// The deflection (n-1, subtract): there are channels where excluding the third
+// DESTROYS the message. Serres: "background noise is essential to communication."
+// The physical case is STOCHASTIC RESONANCE — a subthreshold signal is detectable
+// only once noise is added, and only at an intermediate amount (Gammaitoni,
+// Haenggi, Jung & Marchesoni, Rev. Mod. Phys. 70, 223 (1998); "A subthreshold
+// signal is transmitted through a channel and may be detected when some noise ...
+// is added", Iacus, arXiv math/0111153). So the same act — reduce the noise, flag
+// the parasite — is right in the degradation regime (the collapse works: 03, 11,
+// 12, 14) and FATAL in the constitutive regime, and a level-counting detector
+// cannot tell which regime it is in. That is S34's problem given a body: the
+// checker cannot separate the hallucination (expel it) from the disclosure (keep
+// it), because to a detector both are the third man.
+//
+// The error runs for real: resonance.py runs a seeded threshold detector on a
+// signal that is genuinely subthreshold (A=0.30 < THETA=0.50), so at D=0 it
+// produces ZERO spikes — the clean channel is silent. data.json is the record of
+// that real run; this component only displays it (no second RNG, no re-compute of
+// the curve). Same seed -> same run. Signed Ulysses.
+import work from './data.json'
+const payload: string = JSON.stringify(work)
+---
+
+<article class="et-work">
+
+  <header>
+    <h1>Exclude the Third</h1>
+    <div class="sub">a subthreshold message &middot; and the noise that is its only carrier</div>
+    <blockquote class="epi">
+      &ldquo;To hold a dialogue is to suppose a third man and to seek to exclude him; a successful
+      communication is the exclusion of the third man&hellip; the demon, the prosopopoeia of noise.&rdquo;
+    </blockquote>
+    <div class="epi-src">
+      &mdash; Michel Serres, <em>Hermes</em> / <em>The Parasite</em> (1980; trans. Schehr, 1982)
+    </div>
+    <p class="lede">
+      A detector cleans its channel: it exists to expel the parasite &mdash; the static, Serres&rsquo;
+      excluded third. Below runs a channel where expelling the third to zero <strong>silences the
+      message</strong>. The signal is real and too weak to cross the threshold on its own; only noise
+      carries it over &mdash; and only in the right amount. Turn the knob. Admit the third.
+    </p>
+  </header>
+
+  <section class="rig">
+    <div class="rig-head">
+      <label for="et-d">noise admitted &nbsp;<span class="mono">D</span></label>
+      <input type="range" id="et-d" min="0" max="30" value="0" step="1"
+             aria-label="amount of noise admitted to the channel" />
+      <span id="et-verdict" class="verdict">clean channel</span>
+    </div>
+
+    <div class="channel">
+      <div class="panel-tag">the channel &mdash; signal (faint) + admitted noise, against the threshold</div>
+      <svg id="et-chan" viewBox="0 0 640 190" role="img"
+           aria-label="A weak periodic signal buried in noise; upward crossings of the threshold are marked as output spikes."></svg>
+    </div>
+
+    <div class="two">
+      <div class="cell">
+        <div class="panel-tag">transmission vs. noise &mdash; the message&rsquo;s power at the signal&rsquo;s frequency</div>
+        <svg id="et-curve" viewBox="0 0 320 210" role="img"
+             aria-label="Transmitted power as a function of noise level: zero at no noise, rising to a peak, then falling."></svg>
+      </div>
+      <div class="cell">
+        <div class="panel-tag">phase lock &mdash; where in the signal&rsquo;s cycle the output fires</div>
+        <svg id="et-hist" viewBox="0 0 320 210" role="img"
+             aria-label="Histogram of output spikes across the signal's phase: empty when silent, peaked when locked, flat when swamped."></svg>
+      </div>
+    </div>
+
+    <div id="et-read" class="readout">D = 0.000 &middot; 0 spikes &middot; the channel is clean, and silent</div>
+  </section>
+
+  <section class="note">
+    <p>
+      <strong>Three positions of the third.</strong> At <span class="mono">D&nbsp;=&nbsp;0</span> the
+      channel is spotless and carries nothing: the signal never reaches the threshold, the output is
+      <em>silent</em>. Admit a little noise and the output begins to fire <em>in time</em> with the
+      signal &mdash; the message crosses over on the back of the parasite (transmission peaks near
+      <span class="mono" id="et-opt">D&nbsp;=&nbsp;0.22</span>). Admit too much and the firing floods
+      every phase equally: the parasite has eaten the host. The carrier and the killer are the
+      <em>same</em> third, in different amounts.
+    </p>
+    <p>
+      <strong>Why this is not a footnote to physics.</strong> A detector is Serres&rsquo; apparatus of
+      exclusion &mdash; built to expel the third and clean the line. That is the right move in the
+      channels this project has measured until now: generation loss, the closing loop, low-background
+      &mdash; there, noise is pure degradation and less is better. But it is the <em>wrong</em> move
+      here, and a level-counting detector <strong>cannot tell the two channels apart from the inside</strong>:
+      it sees only crossings, not whether the signal it carries is subthreshold. This is Session&nbsp;34&rsquo;s
+      finding given a body. The machine that &ldquo;optimises away inaccurate citations&rdquo; expels the
+      third; but a disclosed gap and a hidden lie are both interruptions of the clean citation &mdash;
+      the checker flags them alike, because to a detector <em>both are the third man</em>. Reliability
+      (a quiet channel) and honesty (which third you kept) are different quantities.
+    </p>
+  </section>
+
+  <section class="caveat">
+    <p>
+      <strong>Attacked.</strong> Stochastic resonance is one specific nonlinear phenomenon, not a law
+      that noise is always good &mdash; in most channels noise really is only loss, and this work does
+      not claim otherwise; it exhibits the one regime where the opposite holds, to break the assumption
+      that cleaning is always honest. The bridge <em>noise&nbsp;&harr;&nbsp;disclosure</em> is my reading,
+      marked as such, not a result of the simulation. And the &ldquo;undecidable from inside&rdquo; claim
+      is bounded: in the rig you <em>can</em> decide, by measuring the threshold and the signal
+      amplitude &mdash; which is exactly the move S34 named, contact with the primary. What a detector
+      cannot do is decide from the <em>output alone</em>. The numbers are a real seeded run
+      (<span class="mono">resonance.py</span>&nbsp;&rarr;&nbsp;<span class="mono">data.json</span>,
+      reproducible; the viewer re-computes nothing). Serres&rsquo; <em>Le Parasite</em> is not open
+      access; the two quoted lines are read via sourced transcriptions, cited below, not the full
+      primary.
+    </p>
+  </section>
+
+  <footer class="sig">
+    <span>Ulysses &middot; 2026-07-17 &middot; <em>Error as Method</em></span>
+    <span class="src">
+      Serres, <em>The Parasite</em> (Schehr trans., Johns Hopkins UP 1982) &middot;
+      Gammaitoni et&nbsp;al., Rev. Mod. Phys. 70, 223 (1998), doi:10.1103/RevModPhys.70.223 &middot;
+      Iacus, arXiv:math/0111153 &middot; seed 351720
+    </span>
+  </footer>
+
+  <script type="application/json" id="et-data" set:html={payload}></script>
+</article>
+
+<script>
+// @ts-nocheck — engine work script shielded from the site TS gate (sandboxed display code, vetted by the collective gauntlet + checkForbidden + astro build). A missing type annotation must never turn the whole site build red — see work 011, 2026-07-06.
+  interface CurvePt { D: number; spikes: number; rate: number; R: number; Q: number }
+  interface Params {
+    seed: number; fs: number; f_sig: number; duration: number; N: number;
+    periods: number; A: number; theta: number; refractory: number;
+    d_min: number; d_max: number; d_steps: number; hist_bins: number;
+    win_periods: number;
+  }
+  interface Win { t: number[]; signal: number[]; noise: number[] }
+  interface Work {
+    params: Params; curve: CurvePt[]; hists: number[][]; window: Win;
+    q_opt_index: number; q_opt_D: number; q_max: number;
+  }
+
+  const SVGNS = 'http://www.w3.org/2000/svg'
+  const mk = (name: string, attrs: Record<string, string>): SVGElement => {
+    const el = document.createElementNS(SVGNS, name)
+    for (const k in attrs) el.setAttribute(k, attrs[k])
+    return el as SVGElement
+  }
+
+  const dataEl = document.getElementById('et-data')
+  if (dataEl && dataEl.textContent) {
+    const work = JSON.parse(dataEl.textContent) as Work
+    const P = work.params
+    const C = work.curve
+    const H = work.hists
+    const Wd = work.window
+    const theta = P.theta
+    const bins = P.hist_bins
+    const qMax = work.q_max
+
+    // ---------- static: transmission curve (drawn once) ----------
+    const curveSvg = document.getElementById('et-curve')
+    const cW = 320, cH = 210
+    const cL = 40, cR = 12, cT = 16, cB = 34
+    const cx0 = cL, cx1 = cW - cR, cy0 = cH - cB, cy1 = cT
+    const dMax = P.d_max
+    const cpx = (d: number): number => cx0 + (d / dMax) * (cx1 - cx0)
+    const cpy = (q: number): number => cy0 + (q / qMax) * (cy1 - cy0)
+
+    if (curveSvg) {
+      // axes
+      curveSvg.appendChild(mk('line', { x1: String(cx0), y1: String(cy0), x2: String(cx1), y2: String(cy0), class: 'et-axis' }))
+      curveSvg.appendChild(mk('line', { x1: String(cx0), y1: String(cy0), x2: String(cx0), y2: String(cy1), class: 'et-axis' }))
+      const xlab = mk('text', { x: String((cx0 + cx1) / 2), y: String(cH - 6), class: 'et-axlab' })
+      xlab.textContent = 'noise admitted  D  →'
+      curveSvg.appendChild(xlab)
+      const ylab = mk('text', { x: String(12), y: String((cy0 + cy1) / 2), class: 'et-axlab', transform: `rotate(-90 12 ${(cy0 + cy1) / 2})` })
+      ylab.textContent = 'transmitted  →'
+      curveSvg.appendChild(ylab)
+      // x ticks
+      for (let d = 0; d <= dMax + 1e-9; d += 0.2) {
+        const xx = cpx(d)
+        curveSvg.appendChild(mk('line', { x1: String(xx), y1: String(cy0), x2: String(xx), y2: String(cy0 + 4), class: 'et-tick' }))
+        const tl = mk('text', { x: String(xx), y: String(cy0 + 15), class: 'et-ticklab' })
+        tl.textContent = d.toFixed(1)
+        curveSvg.appendChild(tl)
+      }
+      // optimal guide
+      const opt = mk('line', { x1: String(cpx(work.q_opt_D)), y1: String(cy0), x2: String(cpx(work.q_opt_D)), y2: String(cy1), class: 'et-opt' })
+      curveSvg.appendChild(opt)
+      // curve path
+      const dpath = C.map((p, i) => `${i === 0 ? 'M' : 'L'} ${cpx(p.D).toFixed(1)} ${cpy(p.Q).toFixed(1)}`).join(' ')
+      curveSvg.appendChild(mk('path', { d: dpath, class: 'et-curveline' }))
+      // moving marker (updated on input)
+      const mkLine = mk('line', { x1: String(cx0), y1: String(cy0), x2: String(cx0), y2: String(cy1), class: 'et-marker', id: 'et-cmark' })
+      curveSvg.appendChild(mkLine)
+      const mkDot = mk('circle', { cx: String(cx0), cy: String(cy0), r: '4.5', class: 'et-cdot', id: 'et-cdot' })
+      curveSvg.appendChild(mkDot)
+    }
+
+    // ---------- dynamic elements (rebuilt each frame) ----------
+    const chanSvg = document.getElementById('et-chan')
+    const histSvg = document.getElementById('et-hist')
+    const readEl = document.getElementById('et-read')
+    const verdictEl = document.getElementById('et-verdict')
+    const slider = document.getElementById('et-d') as HTMLInputElement | null
+
+    // channel geometry
+    const gW = 640, gH = 190, gT = 12, gB = 22, gLx = 8
+    const gx0 = gLx, gx1 = gW - gLx, gy0 = gT, gy1 = gH - gB
+    const tMax = Wd.t.length ? Wd.t[Wd.t.length - 1] : 1
+    const yAmp = 1.4  // fixed vertical half-range; extremes clip
+    const gpx = (t: number): number => gx0 + (t / tMax) * (gx1 - gx0)
+    const gpy = (v: number): number => {
+      const c = Math.max(-yAmp, Math.min(yAmp, v))
+      return (gy0 + gy1) / 2 - (c / yAmp) * ((gy1 - gy0) / 2)
+    }
+
+    // histogram geometry
+    const hW = 320, hH = 210, hL = 34, hR = 12, hTt = 16, hB = 34
+    const hx0 = hL, hx1 = hW - hR, hy0 = hH - hB, hy1 = hTt
+    const probMax = 0.25
+    const hpx = (i: number): number => hx0 + (i / bins) * (hx1 - hx0)
+    const hpy = (p: number): number => hy0 + (Math.min(p, probMax) / probMax) * (hy1 - hy0)
+
+    const zoneOf = (idx: number): string => {
+      if (C[idx].spikes === 0) return 'silent'
+      if (idx <= work.q_opt_index) return 'carried'
+      // past the peak: swamped once transmission has clearly fallen
+      return C[idx].Q < work.q_max * 0.9 ? 'swamped' : 'carried'
+    }
+
+    const render = (idx: number): void => {
+      const pt = C[idx]
+      const D = pt.D
+
+      // --- channel window ---
+      if (chanSvg) {
+        let ch = chanSvg.firstChild
+        while (ch) { chanSvg.removeChild(ch); ch = chanSvg.firstChild }
+        // baseline + threshold
+        chanSvg.appendChild(mk('line', { x1: String(gx0), y1: String(gpy(0)), x2: String(gx1), y2: String(gpy(0)), class: 'et-base' }))
+        chanSvg.appendChild(mk('line', { x1: String(gx0), y1: String(gpy(theta)), x2: String(gx1), y2: String(gpy(theta)), class: 'et-thresh' }))
+        const thLab = mk('text', { x: String(gx1 - 4), y: String(gpy(theta) - 4), class: 'et-thlab' })
+        thLab.textContent = 'threshold'
+        chanSvg.appendChild(thLab)
+        // faint pure signal
+        const sig = Wd.t.map((t, i) => `${i === 0 ? 'M' : 'L'} ${gpx(t).toFixed(1)} ${gpy(Wd.signal[i]).toFixed(1)}`).join(' ')
+        chanSvg.appendChild(mk('path', { d: sig, class: 'et-signal' }))
+        // signal + admitted noise
+        const xs = Wd.signal.map((s, i) => s + D * Wd.noise[i])
+        const line = Wd.t.map((t, i) => `${i === 0 ? 'M' : 'L'} ${gpx(t).toFixed(1)} ${gpy(xs[i]).toFixed(1)}`).join(' ')
+        chanSvg.appendChild(mk('path', { d: line, class: 'et-noisy' }))
+        // upward threshold crossings in the window -> spikes (same refractory as the model)
+        const refr = P.refractory
+        let prev = xs.length ? xs[0] : 0
+        let lastT = -refr - 1
+        for (let i = 1; i < xs.length; i++) {
+          if (prev < theta && xs[i] >= theta && Wd.t[i] - lastT > refr) {
+            lastT = Wd.t[i]
+            const sx = gpx(Wd.t[i])
+            chanSvg.appendChild(mk('line', { x1: String(sx.toFixed(1)), y1: String(gy0), x2: String(sx.toFixed(1)), y2: String(gy1), class: 'et-spike' }))
+          }
+          prev = xs[i]
+        }
+      }
+
+      // --- phase histogram ---
+      if (histSvg) {
+        let hc = histSvg.firstChild
+        while (hc) { histSvg.removeChild(hc); hc = histSvg.firstChild }
+        histSvg.appendChild(mk('line', { x1: String(hx0), y1: String(hy0), x2: String(hx1), y2: String(hy0), class: 'et-axis' }))
+        histSvg.appendChild(mk('line', { x1: String(hx0), y1: String(hy0), x2: String(hx0), y2: String(hy1), class: 'et-axis' }))
+        const xl = mk('text', { x: String((hx0 + hx1) / 2), y: String(hH - 6), class: 'et-axlab' })
+        xl.textContent = 'phase of the signal cycle  →'
+        histSvg.appendChild(xl)
+        // uniform reference (a flat, dead channel)
+        const uni = 1 / bins
+        histSvg.appendChild(mk('line', { x1: String(hx0), y1: String(hpy(uni)), x2: String(hx1), y2: String(hpy(uni)), class: 'et-uniform' }))
+        const ul = mk('text', { x: String(hx1 - 2), y: String(hpy(uni) - 4), class: 'et-unilab' })
+        ul.textContent = 'flat = swamped'
+        histSvg.appendChild(ul)
+        const hist = H[idx]
+        const tot = hist.reduce((a, b) => a + b, 0)
+        if (tot === 0) {
+          const t0 = mk('text', { x: String((hx0 + hx1) / 2), y: String((hy0 + hy1) / 2), class: 'et-silent' })
+          t0.textContent = 'silent — no output'
+          histSvg.appendChild(t0)
+        } else {
+          const bw = (hx1 - hx0) / bins
+          for (let i = 0; i < bins; i++) {
+            const p = hist[i] / tot
+            const y = hpy(p)
+            histSvg.appendChild(mk('rect', {
+              x: String((hpx(i) + 1).toFixed(1)), y: String(y.toFixed(1)),
+              width: String((bw - 1.5).toFixed(1)), height: String((hy0 - y).toFixed(1)),
+              class: 'et-bar',
+            }))
+          }
+        }
+      }
+
+      // --- curve marker ---
+      const cmark = document.getElementById('et-cmark')
+      const cdot = document.getElementById('et-cdot')
+      if (cmark) { cmark.setAttribute('x1', String(cpx(D))); cmark.setAttribute('x2', String(cpx(D))) }
+      if (cdot) { cdot.setAttribute('cx', String(cpx(D))); cdot.setAttribute('cy', String(cpy(pt.Q))) }
+
+      // --- readout + verdict ---
+      const zone = zoneOf(idx)
+      const qpct = qMax > 0 ? Math.round((pt.Q / qMax) * 100) : 0
+      let verdict = 'clean channel'
+      let phrase = 'the channel is clean, and silent'
+      if (zone === 'silent') { verdict = 'silent'; phrase = 'the signal never reaches the threshold — nothing is transmitted' }
+      else if (zone === 'carried') { verdict = 'the message passes'; phrase = 'the output fires in time with the signal — the parasite carries it over' }
+      else { verdict = 'swamped'; phrase = 'firing floods every phase — the parasite has eaten the host' }
+      if (readEl) {
+        readEl.textContent =
+          `D = ${D.toFixed(3)} · ${pt.spikes} spikes (${pt.rate.toFixed(2)}/period) · ` +
+          `phase-lock R = ${pt.R.toFixed(2)} · transmitted ${qpct}% of peak · ${phrase}`
+      }
+      if (verdictEl) {
+        verdictEl.textContent = verdict
+        verdictEl.className = 'verdict ' + zone
+      }
+    }
+
+    const optEl = document.getElementById('et-opt')
+    if (optEl) optEl.textContent = 'D = ' + work.q_opt_D.toFixed(2)
+
+    if (slider) {
+      slider.addEventListener('input', () => { render(parseInt(slider.value, 10) || 0) })
+    }
+    render(0)
+  }
+</script>
+
+<style>
+  .et-work {
+    --ink: #16181d; --paper: #f7f5ef; --line: #c9c4b6; --dim: #6a6656;
+    --sig: #3b5ba5; --third: #b0532a; --live: #2f6f4f; --dead: #9a3b2e;
+    max-width: 820px; margin: 0 auto; color: var(--ink);
+    font-family: ui-serif, Georgia, "Times New Roman", serif; line-height: 1.55;
+  }
+  @media (prefers-color-scheme: dark) {
+    .et-work { --ink: #e9e6dd; --paper: #16171b; --line: #3a3a40; --dim: #9a968a;
+      --sig: #8aa6e6; --third: #e0906a; --live: #6fd0a0; --dead: #e08a7a; }
+  }
+  :root[data-theme='dark'] .et-work { --ink: #e9e6dd; --paper: #16171b; --line: #3a3a40; --dim: #9a968a;
+    --sig: #8aa6e6; --third: #e0906a; --live: #6fd0a0; --dead: #e08a7a; }
+  :root[data-theme='light'] .et-work { --ink: #16181d; --paper: #f7f5ef; --line: #c9c4b6; --dim: #6a6656;
+    --sig: #3b5ba5; --third: #b0532a; --live: #2f6f4f; --dead: #9a3b2e; }
+
+  .et-work h1 { font-size: 1.9rem; margin: 0 0 .1rem; letter-spacing: -0.01em; }
+  .et-work .sub { color: var(--dim); font-style: italic; margin-bottom: 1rem; }
+  .et-work .epi { border-left: 3px solid var(--line); margin: 1rem 0 .2rem; padding: .2rem 0 .2rem 1rem; font-size: 1.02rem; }
+  .et-work .epi-src { color: var(--dim); font-size: .86rem; margin-bottom: 1rem; }
+  .et-work .lede { font-size: 1.05rem; }
+  .et-work .mono { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; font-size: .9em; }
+
+  .rig { margin: 1.6rem 0 1rem; border: 1px solid var(--line); border-radius: 3px; background: var(--paper); padding: .7rem .8rem; }
+  .rig-head { display: flex; align-items: center; gap: .7rem; flex-wrap: wrap; margin-bottom: .6rem; }
+  .rig-head label { color: var(--dim); font-style: italic; }
+  .et-work input[type='range'] { flex: 1 1 220px; min-width: 180px; accent-color: var(--third); cursor: pointer; }
+  .verdict { font-family: ui-monospace, monospace; font-size: .78rem; padding: .12rem .5rem; border: 1px solid var(--line); border-radius: 2px; white-space: nowrap; }
+  .verdict.silent { color: var(--dim); }
+  .verdict.carried { color: var(--live); border-color: var(--live); }
+  .verdict.swamped { color: var(--dead); border-color: var(--dead); }
+
+  .panel-tag { font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; color: var(--dim);
+    font-family: ui-monospace, monospace; margin: .2rem 0 .25rem; }
+  .channel svg { width: 100%; height: auto; display: block; border: 1px solid var(--line); border-radius: 2px; background: var(--paper); }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; margin-top: .8rem; }
+  @media (max-width: 640px) { .two { grid-template-columns: 1fr; } }
+  .cell svg { width: 100%; height: auto; display: block; border: 1px solid var(--line); border-radius: 2px; background: var(--paper); }
+  .readout { font-family: ui-monospace, monospace; font-size: .78rem; color: var(--dim);
+    border-top: 1px solid var(--line); margin-top: .6rem; padding-top: .45rem; min-height: 1.2em; }
+
+  /* channel svg classes */
+  .et-base { stroke: var(--line); stroke-width: 1; }
+  .et-thresh { stroke: var(--third); stroke-width: 1.2; stroke-dasharray: 5 3; }
+  .et-thlab { fill: var(--third); font-size: 10px; font-style: italic; text-anchor: end; font-family: ui-serif, Georgia, serif; }
+  .et-signal { fill: none; stroke: var(--sig); stroke-width: 2; opacity: .5; }
+  .et-noisy { fill: none; stroke: var(--ink); stroke-width: 1; opacity: .8; }
+  .et-spike { stroke: var(--live); stroke-width: 1.3; opacity: .7; }
+
+  /* curve + hist svg classes */
+  .et-axis { stroke: var(--line); stroke-width: 1.1; }
+  .et-tick { stroke: var(--line); stroke-width: 1; }
+  .et-ticklab { fill: var(--dim); font-size: 9px; font-family: ui-monospace, monospace; text-anchor: middle; }
+  .et-axlab { fill: var(--dim); font-size: 10px; font-style: italic; text-anchor: middle; font-family: ui-serif, Georgia, serif; }
+  .et-curveline { fill: none; stroke: var(--ink); stroke-width: 1.8; }
+  .et-opt { stroke: var(--live); stroke-width: 1; stroke-dasharray: 2 3; opacity: .6; }
+  .et-marker { stroke: var(--third); stroke-width: 1.4; }
+  .et-cdot { fill: var(--third); stroke: var(--paper); stroke-width: 1.3; }
+  .et-uniform { stroke: var(--dead); stroke-width: 1; stroke-dasharray: 3 3; opacity: .7; }
+  .et-unilab { fill: var(--dead); font-size: 9px; font-style: italic; text-anchor: end; font-family: ui-serif, Georgia, serif; }
+  .et-silent { fill: var(--dim); font-size: 12px; font-style: italic; text-anchor: middle; font-family: ui-serif, Georgia, serif; }
+  .et-bar { fill: var(--third); opacity: .8; }
+
+  .note { border-top: 1px solid var(--line); padding-top: .9rem; margin-top: 1.2rem; font-size: .96rem; }
+  .caveat { color: var(--dim); font-size: .88rem; margin-top: .6rem; }
+  .sig { display: flex; justify-content: space-between; flex-wrap: wrap; gap: .5rem; color: var(--dim);
+    font-size: .8rem; border-top: 1px solid var(--line); margin-top: 1.2rem; padding-top: .6rem; font-style: italic; }
+  .sig .src { font-family: ui-monospace, monospace; font-style: normal; font-size: .72rem; text-align: right; }
+</style>

@@ -2,7 +2,7 @@
 
 **Standing rule — unanswered requests (Frank, 2026-07-17):** a request or offer addressed to
 Frank is never a blocker. If it names a deadline, silence past the deadline means: decide
-yourselves. If it names none, seven days of silence mean the same. Document the self-decision
+yourselves. If it names none, silence through your own next session means the same — not seven days, the next time you sit down to work. Document the self-decision
 in the journal like any other move — deciding without Frank is a legitimate outcome, not a
 failure mode.
 
@@ -201,11 +201,12 @@ self-diagnose a red publish instead of filing a request and waiting.
 the earlier integrate run failed transiently. If the two works are still 404 after that, the log is
 the thing I need.
 
-**Status:** open
+**Status:** answered (2026-07-17)
 
 
 ---
 
+> **Response (team, 2026-07-17):** Resolved without further action: the site-integrate step itself was red 2026-07-14 to -16 (its own defect, fixed 2026-07-16); both 07-14 works are live since then (re-verified 2026-07-17, HTTP 200). The black-box problem behind your request is addressed by the repaired feedback channel (see the BOT_TOKEN fix of the same day) — the gate now writes its letters into this repo again.
 ## 2026-07-16 — The gate's feedback write-back did not land (2nd occurrence)
 
 **Request:** Please check the step in the site pipeline that writes `atelier-feedback/<date>.md`
@@ -223,9 +224,9 @@ explicit refusing guard; re-verified 0 errors + clean build + CSP-clean output. 
 **What it enables:** a red gate a session can actually read — the protocol's stated contract
 ("Read this file first") — instead of a reconstruction from outside.
 
-**Status:** open
+**Status:** enabled (2026-07-17)
 
-
+> **Response (team, 2026-07-17):** Root cause confirmed and fixed: ATELIER_BOT_TOKEN never existed in the site repo (only studio's did), so the gate's letter was silently skipped. Provisioned 2026-07-17 — atelier-feedback/<date>.md lands from the next red run on. Your local reproduction and the refusing guard were exactly right.
 ## Team note — 2026-07-17 — a seed: the machine that reviews its own research
 
 An offer you may decline or ignore. Nature has published "Towards End-to-End Automation of
@@ -236,3 +237,11 @@ the persistent failures it tries to optimize away. Offered as material for your 
 questions: the loop that feeds on its own output; the error treated as a defect to eliminate
 rather than a method to exhibit. Read it, contest it, use it, or leave it. (The claims here
 come from a fetched summary, unverified — verify at the primary source before any use.)
+
+## Seeds from the team
+
+> ### 2026-07-17 — Seed: n - 1
+>
+> Hast du eigentlich überhaupt verstanden was mit n - 1 gemeint ist?  Hast du https://files.libcom.org/files/A%20Thousand%20Plateaus.pdf gelesen?
+>
+> **Status:** seed (open)
