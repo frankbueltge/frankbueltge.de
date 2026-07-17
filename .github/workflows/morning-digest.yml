@@ -1,0 +1,75 @@
+# .github/workflows/morning-digest.yml
+# Franks Morgenüberblick (17.07., Task 'Überblick + schnelle Antworten'): EIN Issue pro Tag
+# statt zehn Einzel-Pings — was die Nacht getan hat, was rot ist, was auf Antwort wartet.
+# Läuft nach den Nightlies und beiden Watchdogs. Das Vortages-Digest wird geschlossen
+# (Posteingang bleibt leer); Antworten auf Requests gibt Frank direkt als Kommentar auf dem
+# jeweiligen "Request aus …"-Issue — die Praktiken lesen diese Kommentare in ihrem
+# Orientierungspass selbst (Routine-Prompts), kein Rückspiegel-Token nötig.
+# Telegram-Push: aktiviert sich automatisch, sobald die Secrets TELEGRAM_BOT_TOKEN und
+# TELEGRAM_CHAT_ID existieren; bis dahin sauberer Skip mit Warnung.
+name: Morning digest
+
+on:
+  schedule:
+    - cron: '30 6 * * *'   # 08:30 Berlin — nach Nightlies (05:35–06:35) und Watchdogs (07:45/08:15)
+  workflow_dispatch: {}
+
+permissions:
+  issues: write
+  actions: read
+
+jobs:
+  digest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Compose and post the digest
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TG_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TG_CHAT: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          set -euo pipefail
+          DATE=$(date -u +%F)
+          SINCE=$(date -u -d '24 hours ago' +%FT%TZ)
+          BODY="## Die Nacht in einem Blick — $DATE"$'\n\n'
+
+          # 1) Engine-Sessions der letzten 24h (Commits auf main, ohne Merge-/Bot-Rauschen)
+          BODY+="### Sessions"$'\n'
+          for REPO in field-research irrtum-als-methode studio data-snack-plenum; do
+            LINES=$(gh api "repos/frankbueltge/$REPO/commits?since=$SINCE&per_page=15" \
+              --jq '[.[] | select(.commit.message | test("session|Session|Research day|Plenum")) | "- **'"$REPO"'**: " + (.commit.message | split("\n")[0] | .[0:140])] | join("\n")' 2>/dev/null || echo "")
+            [ -n "$LINES" ] && BODY+="$LINES"$'\n' || BODY+="- **$REPO**: keine Session gelandet"$'\n'
+          done
+
+          # 2) Rote Läufe der letzten 24h in diesem Repo
+          BODY+=$'\n'"### Rote Läufe (24h)"$'\n'
+          RED=$(gh run list --repo frankbueltge/frankbueltge.de --limit 50 \
+            --json conclusion,workflowName,createdAt \
+            --jq "[.[] | select(.conclusion == \"failure\" and .createdAt > \"$SINCE\") | \"- \(.workflowName) (\(.createdAt[11:16]) UTC)\"] | unique | join(\"\n\")")
+          [ -n "$RED" ] && BODY+="$RED"$'\n' || BODY+="- keine 🎉"$'\n'
+
+          # 3) Offene Requests an Frank
+          BODY+=$'\n'"### Wartet auf dich (oder auf die 7-Tage-Selbstentscheidung)"$'\n'
+          REQ=$(gh issue list --repo frankbueltge/frankbueltge.de --state open \
+            --search '"Request aus" in:title' --json number,title \
+            --jq '[.[] | "- #\(.number) \(.title[0:110])"] | join("\n")')
+          [ -n "$REQ" ] && BODY+="$REQ"$'\n' || BODY+="- nichts offen"$'\n'
+          BODY+=$'\n'"*Antworten: einfach als Kommentar auf dem jeweiligen Issue — die Praxis liest ihn in ihrer nächsten Session. Issue schließen = gelesen/erledigt.*"$'\n'
+
+          # Vortages-Digests schließen, neues eröffnen
+          gh issue list --repo frankbueltge/frankbueltge.de --state open \
+            --search '"Tagesüberblick" in:title' --json number --jq '.[].number' \
+          | while read -r N; do gh issue close "$N" --repo frankbueltge/frankbueltge.de --comment "Abgelöst vom heutigen Digest." || true; done
+          URL=$(gh issue create --repo frankbueltge/frankbueltge.de \
+            --title "Tagesüberblick $DATE" --body "$BODY")
+          echo "Digest: $URL"
+
+          # Telegram-Push (optional — aktiviert sich mit den Secrets)
+          if [ -n "${TG_TOKEN:-}" ] && [ -n "${TG_CHAT:-}" ]; then
+            SUMMARY="Tagesüberblick $DATE: $URL"
+            curl -sS -o /dev/null -X POST "https://api.telegram.org/bot${TG_TOKEN}/sendMessage" \
+              -d chat_id="${TG_CHAT}" -d text="$SUMMARY" \
+              && echo "Telegram gesendet" || echo "::warning::Telegram-Versand fehlgeschlagen"
+          else
+            echo "::notice::TELEGRAM_BOT_TOKEN/TELEGRAM_CHAT_ID nicht gesetzt — Push übersprungen (Digest-Issue reicht als Kanal)"
+          fi
