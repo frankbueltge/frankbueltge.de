@@ -185,7 +185,9 @@ export async function onRequestGet(context) {
   if (!checkToken(request.headers.get('x-zentrale-auth'), env.ZENTRALE_SECRET)) {
     return json(401, { ok: false, code: 'unauthorized' })
   }
-  const token = env.ZENTRALE_GITHUB_TOKEN
+  // trim: ein beim Einfügen ins Secret mitgerutschter Zeilenumbruch macht sonst aus einem
+  // gültigen PAT ein ungültiges "Bearer xxx\n" — GitHub antwortet dann pauschal 401.
+  const token = (env.ZENTRALE_GITHUB_TOKEN || '').trim()
   if (!token) return json(503, { ok: false, code: 'not-connected' })
 
   const refresh = new URL(request.url).searchParams.get('refresh') === '1'
