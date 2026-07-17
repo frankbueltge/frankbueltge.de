@@ -19,10 +19,64 @@ interface RegisterEntry {
   status: { as_of?: string; statusLine?: string } | null
   approval: string | null
   authored_by: string | null
-  participants: string[]
+  participants: { id: string; role: string | null }[]
   record_url: string
 }
 const entries = register as RegisterEntry[]
+
+// --- Die Ökologie-Karte (17.07., Frank: "datavism oder data snack tauchen da gar nicht auf")
+// Alle sechs Praktiken als Knoten, jede Begegnung als gerichtete Kante source→receiver —
+// gebaut aus register.json, also automatisch aktuell mit jedem Export. Ulysses' und Franks
+// kantenlose Knoten sind kein Fehler, sondern die Verfassung: dokumentiertes Schweigen bzw.
+// noch keine Begegnung als Partei — sichtbar, nie als Defizit gerendert (§7.2, spec 03 §8.1).
+const normId = (id: string) =>
+  id === 'frank-bueltge' ? 'frank' : id === 'data-snack-plenum' ? 'data-snack' : id
+const NODES: Record<string, { x: number; y: number; label: string }> = {
+  meridian: { x: 130, y: 84, label: 'Meridian · field' },
+  ensemble: { x: 360, y: 56, label: 'Ensemble · studio' },
+  ulysses: { x: 590, y: 84, label: 'Ulysses · atelier' },
+  datavism: { x: 130, y: 246, label: 'datavism.org' },
+  frank: { x: 360, y: 282, label: 'Frank · conductor' },
+  'data-snack': { x: 590, y: 246, label: 'data-snack.com' },
+}
+interface Edge { from: string; to: string; nr: string; idx: number }
+const pairIdx = new Map<string, number>()
+const edges: Edge[] = []
+for (const e of entries) {
+  const nr = e.encounter_id.match(/^enc-\d{4}-(\d{3})/)?.[1] ?? e.encounter_id
+  const src = e.participants.filter((p) => p.role === 'source').map((p) => normId(p.id))
+  const rcv = e.participants.filter((p) => p.role === 'receiver').map((p) => normId(p.id))
+  for (const f of src) for (const t of rcv) {
+    if (!NODES[f] || !NODES[t]) continue
+    const key = [f, t].sort().join('|')
+    const idx = pairIdx.get(key) ?? 0
+    pairIdx.set(key, idx + 1)
+    edges.push({ from: f, to: t, nr, idx })
+  }
+}
+const edgeSvg = edges.map(({ from, to, nr, idx }) => {
+  const a = NODES[from], b = NODES[to]
+  const mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2
+  const dx = b.x - a.x, dy = b.y - a.y, len = Math.hypot(dx, dy) || 1
+  const off = 16 + idx * 20
+  const cx = mx - (dy / len) * off, cy = my + (dx / len) * off
+  const lx = mx - (dy / len) * (off * 0.72), ly = my + (dx / len) * (off * 0.72)
+  return (
+    `<path d="M ${a.x} ${a.y} Q ${cx} ${cy} ${b.x} ${b.y}" fill="none" stroke="currentColor" stroke-width="1" opacity="0.45" marker-end="url(#eco-arrow)"/>` +
+    `<text x="${lx}" y="${ly}" text-anchor="middle" font-size="10" opacity="0.75">${nr}</text>`
+  )
+}).join('')
+const nodeSvg = Object.entries(NODES).map(([id, n]) => {
+  const connected = edges.some((e) => e.from === id || e.to === id)
+  return (
+    `<circle cx="${n.x}" cy="${n.y}" r="5" fill="${connected ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="1.2" opacity="${connected ? '0.9' : '0.5'}"/>` +
+    `<text x="${n.x}" y="${n.y + (n.y > 160 ? 22 : -14)}" text-anchor="middle" font-size="11" opacity="0.85">${n.label}</text>`
+  )
+}).join('')
+const ecologyMapSvg =
+  `<svg viewBox="0 0 720 320" role="img" aria-label="Map of the ecology: six practices, ${entries.length} recorded encounters as directed edges" style="width:100%;height:auto;font-family:inherit">` +
+  `<defs><marker id="eco-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M 0 0 L 8 4 L 0 8 z" fill="currentColor" opacity="0.55"/></marker></defs>` +
+  edgeSvg + nodeSvg + `</svg>`
 ---
 <Page title={`${entrance.headline} | Frank Bültge`} description={entrance.status.statusLine}>
   <BegegnungEntrance />
@@ -35,6 +89,12 @@ const entries = register as RegisterEntry[]
       The entrance above shows the encounter with an authored score; the ledger records
       {entries.length} encounters, kept current by the nightly scribe. Each record links to the
       public register (every quote pinned to a source commit, machine-verified).
+    </p>
+    <figure class="mt-6 font-mono text-fg-muted" set:html={ecologyMapSvg} />
+    <p class="mt-2 font-mono text-xs text-fg-faint">
+      the ecology map — every recorded encounter as a directed edge (source → receiver), numbered
+      by record · an unfilled node is not a failure: Ulysses' silence is documented non-relation,
+      and the conductor has no recorded encounter as a party yet
     </p>
     <div class="mt-5 overflow-x-auto">
       <table class="w-full border-collapse text-left font-mono text-xs">
@@ -57,7 +117,7 @@ const entries = register as RegisterEntry[]
                 {e.status?.statusLine ?? '—'}
                 {e.status?.as_of && <span class="block text-fg-faint">as of {e.status.as_of}</span>}
               </td>
-              <td class="border-t border-line/60 py-2 pr-4">{e.participants.join(' · ')}</td>
+              <td class="border-t border-line/60 py-2 pr-4">{e.participants.map((p) => p.id).join(' · ')}</td>
               <td class="border-t border-line/60 py-2">
                 <a href={e.record_url} target="_blank" rel="noreferrer" class="underline hover:text-fg">record ↗</a>
               </td>
