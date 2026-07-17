@@ -1,0 +1,705 @@
+---
+// Steuerzentrale — Franks private Übersicht nach dem nächtlichen Run: was ist gelaufen (Die
+// Nacht), was wartet auf Antwort (Inbox), und ein Kanal, um selbst etwas anzustoßen (Saat).
+// Sober mit Absicht (Design-Notiz §Architektur): keine KPI-Deko, keine Animation — dieselben
+// Tailwind-Tokens wie der Rest der Site (text-fg-muted, border-line, bg-panel), nur Grün/Rot/
+// Amber als echte Signalfarben für Status (Tailwind-Kernpalette, Präzedenz: LegalPage.astro).
+//
+// Alles unten ist ein statisches, leeres Gerüst — Inhalt kommt ausschließlich aus dem Skript
+// gegen GET/POST /api/zentrale/* (Contract: X-Zentrale-Auth-Header, Token aus localStorage).
+// Server-seitig gibt es hier nichts zu rendern (kein committetes JSON, anders als sonst im
+// Lab) — daher kein no-JS-Fallback wie bei anderen Seiten, nur ein <noscript>-Hinweis.
+//
+// Skript-Muster folgt CockpitPage.astro 1:1: kein is:inline (Astro bündelt/hasht es selbst,
+// erlaubt durch script-src 'self' in astro.config.mjs — kein neuer CSP-Hash nötig), ein
+// generischer el()-Baustein, der Kind-Strings ausschließlich über DOM-Textknoten einfügt
+// (nie innerHTML mit rohen API-Daten), und eine deutsche Fehlercode→Text-Map wie Cockpits
+// Ventil (vErrors).
+---
+
+<main id="main" class="mx-auto w-full max-w-3xl flex-1 px-4 py-14 sm:px-6">
+  {/* ── Zugang ─────────────────────────────────────────────────────────── */}
+  <section data-zx="gate" class="mx-auto max-w-sm">
+    <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-faint">Steuerzentrale</p>
+    <h1 class="mt-2 text-2xl font-bold tracking-tight text-fg">Zugang</h1>
+    <p class="mt-3 text-sm text-fg-muted">Privates Operator-Werkzeug — nur mit Zugangstoken.</p>
+    <form data-zx="gate-form" class="mt-6 flex flex-col gap-3">
+      <label for="zx-token" class="font-mono text-xs uppercase tracking-[0.12em] text-fg-faint">Zugangstoken</label>
+      <input
+        id="zx-token"
+        name="token"
+        type="password"
+        autocomplete="off"
+        required
+        class="rounded-lg border border-line bg-panel px-3 py-2 text-sm text-fg outline-none focus-visible:border-fg"
+      />
+      <button
+        type="submit"
+        class="self-start rounded-full bg-fg px-5 py-2 text-sm font-semibold text-bg transition hover:opacity-90"
+      >
+        Öffnen
+      </button>
+      <p data-zx="gate-error" class="min-h-[1.2em] text-sm text-amber-500" role="status"></p>
+    </form>
+  </section>
+
+  {/* ── Laden ──────────────────────────────────────────────────────────── */}
+  <p data-zx="loading" class="mx-auto max-w-sm text-sm text-fg-muted" hidden>Lädt …</p>
+
+  {/* ── Nicht verbunden ────────────────────────────────────────────────── */}
+  <p data-zx="notconnected" class="mx-auto max-w-sm text-sm text-fg-muted" hidden></p>
+
+  {/* ── Dashboard ──────────────────────────────────────────────────────── */}
+  <div data-zx="dashboard" hidden>
+    <header class="mb-10 flex flex-wrap items-baseline justify-between gap-3 border-b border-line pb-4">
+      <div>
+        <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-faint">Steuerzentrale</p>
+        <h1 class="mt-1 text-2xl font-bold tracking-tight text-fg">Übersicht</h1>
+      </div>
+      <div class="flex items-center gap-3">
+        <span data-zx="stamp" class="font-mono text-xs text-fg-muted">—</span>
+        <button
+          type="button"
+          data-zx="refresh"
+          class="rounded-full border border-line px-3 py-1.5 text-xs font-semibold text-fg transition hover:border-fg"
+        >
+          Aktualisieren
+        </button>
+      </div>
+    </header>
+
+    <p data-zx="errors" class="mb-8 border-l-2 border-amber-500 pl-3 text-sm text-amber-500" hidden></p>
+
+    <section aria-labelledby="zx-night-h" class="mb-12">
+      <h2 id="zx-night-h" class="mb-4 font-mono text-xs uppercase tracking-[0.22em] text-fg-faint">Die Nacht</h2>
+      <div data-zx="night" class="flex flex-col gap-4"></div>
+    </section>
+
+    <section aria-labelledby="zx-inbox-h" class="mb-12">
+      <h2 id="zx-inbox-h" class="mb-4 font-mono text-xs uppercase tracking-[0.22em] text-fg-faint">Inbox</h2>
+      <div data-zx="inbox" class="flex flex-col gap-4"></div>
+    </section>
+
+    <section aria-labelledby="zx-seed-h" class="mb-12">
+      <h2 id="zx-seed-h" class="mb-4 font-mono text-xs uppercase tracking-[0.22em] text-fg-faint">Saat</h2>
+      <form data-zx="seed-form" class="flex flex-col gap-3 rounded-xl border border-line bg-panel p-4">
+        <label for="zx-seed-repo" class="font-mono text-xs uppercase tracking-[0.12em] text-fg-faint">Kollektiv</label>
+        <select
+          id="zx-seed-repo"
+          name="repo"
+          class="rounded-lg border border-line bg-bg px-3 py-2 text-sm text-fg"
+        >
+          <option value="field-research">Field · Meridian</option>
+          <option value="studio">Studio · Ensemble</option>
+          <option value="irrtum-als-methode">Atelier · Ulysses</option>
+          <option value="data-snack-plenum">Plenum</option>
+        </select>
+
+        <label for="zx-seed-title" class="font-mono text-xs uppercase tracking-[0.12em] text-fg-faint">Titel</label>
+        <input
+          id="zx-seed-title"
+          name="title"
+          type="text"
+          required
+          maxlength="140"
+          class="rounded-lg border border-line bg-bg px-3 py-2 text-sm text-fg outline-none focus-visible:border-fg"
+        />
+
+        <label for="zx-seed-body" class="font-mono text-xs uppercase tracking-[0.12em] text-fg-faint">Text</label>
+        <textarea
+          id="zx-seed-body"
+          name="body"
+          rows="4"
+          required
+          class="rounded-lg border border-line bg-bg px-3 py-2 text-sm text-fg outline-none focus-visible:border-fg"
+        ></textarea>
+
+        <button
+          type="submit"
+          data-zx="seed-submit"
+          class="self-start rounded-full bg-fg px-5 py-2 text-sm font-semibold text-bg transition hover:opacity-90 disabled:opacity-50"
+        >
+          In REQUESTS.md legen
+        </button>
+        <p data-zx="seed-msg" class="min-h-[1.2em] text-sm text-fg" role="status"></p>
+        <p class="text-xs text-fg-faint">Ein Seed ist ein Angebot, kein Auftrag — die Praxis antwortet im Journal.</p>
+      </form>
+    </section>
+
+    <section aria-labelledby="zx-runs-h">
+      <details data-zx="runs-details">
+        <summary id="zx-runs-h" class="cursor-pointer font-mono text-xs uppercase tracking-[0.22em] text-fg-faint">
+          Alle Läufe
+        </summary>
+        <div data-zx="runs" class="mt-4 flex flex-col"></div>
+      </details>
+    </section>
+  </div>
+
+  <noscript>
+    <p class="mx-auto max-w-sm text-sm text-fg-muted">Die Steuerzentrale braucht JavaScript.</p>
+  </noscript>
+</main>
+
+<script>
+  // Steuerzentrale — Zustandsmaschine: gate → loading → dashboard | notconnected. Alles unten
+  // ist reines DOM, kein Framework (CockpitPage-Muster). Jede API-gelieferte Zeichenkette geht
+  // ausschließlich über el()/Text-Kinder ins DOM (nie innerHTML) — auch Commit-Messages und
+  // Issue-Excerpts sind Kollektiv-Text, keine vertrauenswürdige Auszeichnung.
+  const TOKEN_KEY = 'zentraleToken'
+
+  interface ZxCollective {
+    repo: string
+    label: string
+    commitsLast24h: number
+    lastCommit: { sha: string; message: string; date: string } | null
+    integrate: {
+      workflow: string
+      conclusion: 'success' | 'failure' | null
+      at: string | null
+      runUrl: string | null
+      redIssue: { number: number; title: string; url: string } | null
+    } | null
+    chronicle: { date: string; summary: string; verdict: string | null; session: number | null } | null
+    vitalSigns: { date: string | null; closure: number | null; session: number | null } | null
+    strandedIssues: { number: number; title: string; url: string }[]
+  }
+
+  interface ZxRun {
+    workflow: string
+    conclusion: 'success' | 'failure' | null
+    status: string
+    at: string
+    url: string
+  }
+
+  interface ZxInboxEntry {
+    repo: string
+    heading: string
+    issueNumber: number
+    issueUrl: string
+    openedAt: string
+    ageDays: number
+    excerpt: string
+  }
+
+  interface ZxStatus {
+    ok: true
+    generatedAt: string
+    cached: boolean
+    errors: string[]
+    collectives: ZxCollective[]
+    runs: ZxRun[]
+    inbox: ZxInboxEntry[]
+  }
+
+  interface ZxAntwortResult {
+    ok: boolean
+    code?: string
+    commit?: Record<string, unknown>
+    issue?: Record<string, unknown>
+    warning?: string
+  }
+
+  const REPO_LABELS: Record<string, string> = {
+    'field-research': 'Field · Meridian',
+    studio: 'Studio · Ensemble',
+    'irrtum-als-methode': 'Atelier · Ulysses',
+    'data-snack-plenum': 'Plenum',
+  }
+
+  const ANTWORT_ERR: Record<string, string> = {
+    'bad-json': 'Fehlerhafte Anfrage — bitte neu laden.',
+    validation: 'Eingabe unvollständig oder ungültig.',
+    upstream: 'GitHub antwortet gerade nicht — bitte später erneut versuchen.',
+  }
+
+  /** Minimaler DOM-Baustein: Kinder gehen nur über Element.append() ins Dokument — der
+   * native String→Text-Node-Weg, nie innerHTML. Fremdtext bleibt so immer bloßer Text. */
+  function el<K extends keyof HTMLElementTagNameMap>(
+    tag: K,
+    attrs: Record<string, string> = {},
+    ...children: Array<string | Node>
+  ): HTMLElementTagNameMap[K] {
+    const node = document.createElement(tag)
+    for (const [k, v] of Object.entries(attrs)) {
+      if (k === 'class') node.className = v
+      else node.setAttribute(k, v)
+    }
+    if (children.length) node.append(...children)
+    return node
+  }
+
+  function fmtStamp(iso: string): string {
+    const d = new Date(iso)
+    if (Number.isNaN(d.getTime())) return '—'
+    return new Intl.DateTimeFormat('de-DE', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Berlin' }).format(d)
+  }
+
+  /** Relative Zeit aus einem ISO-Zeitstempel — für Commits, Integrate-Läufe, Workflow-Runs. */
+  function fmtRel(iso: string | null): string {
+    if (!iso) return '—'
+    const then = new Date(iso).getTime()
+    if (Number.isNaN(then)) return '—'
+    const min = Math.floor((Date.now() - then) / 60_000)
+    if (min < 1) return 'gerade eben'
+    if (min < 60) return `vor ${min} Min.`
+    const h = Math.floor(min / 60)
+    if (h < 24) return `vor ${h} h`
+    const d = Math.floor(h / 24)
+    return `vor ${d} ${d === 1 ? 'Tag' : 'Tagen'}`
+  }
+
+  /** Die Inbox liefert ageDays fertig (ganze Tage, server-seitig gerundet) statt eines
+   * Zeitstempels — hier nur noch in Text übersetzt, kein zweites Runden. */
+  function fmtAgeDays(n: number): string {
+    if (n <= 0) return 'heute'
+    if (n === 1) return 'vor 1 Tag'
+    return `vor ${n} Tagen`
+  }
+
+  function fmtClosure(n: number): string {
+    return n.toFixed(2).replace('.', ',')
+  }
+
+  // ── DOM-Referenzen ──────────────────────────────────────────────────────
+  const gateSection = document.querySelector<HTMLElement>('[data-zx="gate"]')
+  const gateForm = document.querySelector<HTMLFormElement>('[data-zx="gate-form"]')
+  const gateError = document.querySelector<HTMLElement>('[data-zx="gate-error"]')
+  const loadingEl = document.querySelector<HTMLElement>('[data-zx="loading"]')
+  const notConnected = document.querySelector<HTMLElement>('[data-zx="notconnected"]')
+  const dashboard = document.querySelector<HTMLElement>('[data-zx="dashboard"]')
+  const stampEl = document.querySelector<HTMLElement>('[data-zx="stamp"]')
+  const refreshBtn = document.querySelector<HTMLButtonElement>('[data-zx="refresh"]')
+  const errorsEl = document.querySelector<HTMLElement>('[data-zx="errors"]')
+  const nightEl = document.querySelector<HTMLElement>('[data-zx="night"]')
+  const inboxEl = document.querySelector<HTMLElement>('[data-zx="inbox"]')
+  const seedForm = document.querySelector<HTMLFormElement>('[data-zx="seed-form"]')
+  const seedSubmit = document.querySelector<HTMLButtonElement>('[data-zx="seed-submit"]')
+  const seedMsg = document.querySelector<HTMLElement>('[data-zx="seed-msg"]')
+  const runsEl = document.querySelector<HTMLElement>('[data-zx="runs"]')
+
+  let token: string | null = null
+  try {
+    token = localStorage.getItem(TOKEN_KEY)
+  } catch {
+    token = null
+  }
+
+  function clearToken(): void {
+    token = null
+    try {
+      localStorage.removeItem(TOKEN_KEY)
+    } catch {
+      /* private mode etc. — token bleibt im Speicher schon null */
+    }
+  }
+
+  function showGate(message?: string): void {
+    if (loadingEl) loadingEl.hidden = true
+    if (notConnected) notConnected.hidden = true
+    if (dashboard) dashboard.hidden = true
+    if (gateSection) gateSection.hidden = false
+    if (gateError) gateError.textContent = message ?? ''
+  }
+
+  function showLoading(): void {
+    if (gateSection) gateSection.hidden = true
+    if (notConnected) notConnected.hidden = true
+    if (dashboard) dashboard.hidden = true
+    if (loadingEl) loadingEl.hidden = false
+  }
+
+  function showNotConnected(message?: string): void {
+    if (gateSection) gateSection.hidden = true
+    if (loadingEl) loadingEl.hidden = true
+    if (dashboard) dashboard.hidden = true
+    if (notConnected) {
+      notConnected.hidden = false
+      notConnected.textContent = message ?? 'Nicht verbunden — Secrets fehlen auf dem Server.'
+    }
+  }
+
+  /** POST-Wrapper für Antworten/Saat — 401 räumt global den Token weg und zeigt das Gate,
+   * damit keine Karte einzeln improvisiert, was ein abgelaufenes Token bedeutet. */
+  async function postAntwort(payload: Record<string, unknown>): Promise<ZxAntwortResult> {
+    const res = await fetch('/api/zentrale/antwort', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', 'X-Zentrale-Auth': token ?? '' },
+      body: JSON.stringify(payload),
+    })
+    if (res.status === 401) {
+      clearToken()
+      showGate('Token ungültig.')
+      throw new Error('unauthorized')
+    }
+    return (await res.json()) as ZxAntwortResult
+  }
+
+  function commitUrlOf(commit: Record<string, unknown> | undefined): string | null {
+    if (!commit) return null
+    const url = commit.html_url ?? commit.url
+    return typeof url === 'string' ? url : null
+  }
+
+  // ── Rendering: Die Nacht ────────────────────────────────────────────────
+  function renderCollective(c: ZxCollective): HTMLElement {
+    const card = el('article', { class: 'rounded-xl border border-line bg-panel p-4' })
+    card.append(el('p', { class: 'font-semibold text-fg' }, c.label))
+
+    const sessionLine = c.commitsLast24h > 0 ? `Session: ${c.commitsLast24h} Commits (24 h)` : 'keine Session'
+    card.append(el('p', { class: 'mt-1 text-sm text-fg-muted' }, sessionLine))
+
+    if (c.lastCommit) {
+      card.append(
+        el('p', { class: 'mt-1 text-sm text-fg-muted' }, `Letzter Commit: „${c.lastCommit.message}“ · ${fmtRel(c.lastCommit.date)}`),
+      )
+    }
+
+    if (c.integrate) {
+      const conclusion = c.integrate.conclusion
+      const word = conclusion === 'success' ? 'grün' : conclusion === 'failure' ? 'rot' : 'offen'
+      const cls = conclusion === 'success' ? 'text-green-500' : conclusion === 'failure' ? 'text-red-500' : 'text-fg-faint'
+      const line = el('p', { class: 'mt-2 text-sm text-fg-muted' })
+      line.append(el('span', { class: `font-semibold ${cls}` }, `integrate ${word}`))
+      if (c.integrate.runUrl) {
+        line.append(' · ')
+        line.append(el('a', { href: c.integrate.runUrl, target: '_blank', rel: 'noreferrer', class: 'underline hover:text-fg' }, 'Lauf ansehen ↗'))
+      }
+      if (c.integrate.redIssue) {
+        line.append(' · ')
+        line.append(
+          el(
+            'a',
+            { href: c.integrate.redIssue.url, target: '_blank', rel: 'noreferrer', class: 'text-red-500 underline hover:opacity-80' },
+            `Issue #${c.integrate.redIssue.number}`,
+          ),
+        )
+      }
+      card.append(line)
+    }
+
+    if (c.chronicle) {
+      const quote = c.chronicle.verdict ? `„${c.chronicle.summary}“ — ${c.chronicle.verdict}` : `„${c.chronicle.summary}“`
+      card.append(el('p', { class: 'mt-2 text-sm italic text-fg-muted' }, quote))
+    }
+
+    if (c.vitalSigns && typeof c.vitalSigns.closure === 'number') {
+      card.append(el('p', { class: 'mt-2 font-mono text-xs text-fg-faint' }, `closure ${fmtClosure(c.vitalSigns.closure)}`))
+    }
+
+    if (c.strandedIssues.length > 0) {
+      const warn = el('p', { class: 'mt-2 text-sm text-amber-500' }, 'Offen geblieben: ')
+      c.strandedIssues.forEach((issue, i) => {
+        if (i > 0) warn.append(', ')
+        warn.append(el('a', { href: issue.url, target: '_blank', rel: 'noreferrer', class: 'underline' }, `#${issue.number} ${issue.title}`))
+      })
+      card.append(warn)
+    }
+
+    return card
+  }
+
+  // ── Rendering: Inbox ────────────────────────────────────────────────────
+  function renderInboxCard(entry: ZxInboxEntry): HTMLElement {
+    const card = el('article', { class: 'rounded-xl border border-line bg-panel p-4' })
+    const repoLabel = REPO_LABELS[entry.repo] ?? entry.repo
+    card.append(el('p', { class: 'font-mono text-xs uppercase tracking-[0.12em] text-fg-faint' }, `${repoLabel} · ${fmtAgeDays(entry.ageDays)}`))
+    card.append(el('p', { class: 'mt-1 font-semibold text-fg' }, entry.heading))
+
+    const excerptWrap = el('div', { class: 'zx-excerpt mt-2 text-sm text-fg-muted' }, el('span', {}, entry.excerpt))
+    card.append(excerptWrap)
+    const expandBtn = el('button', { type: 'button', class: 'mt-1 font-mono text-xs text-fg-faint underline' }, 'mehr')
+    expandBtn.addEventListener('click', () => {
+      const expanded = excerptWrap.classList.toggle('is-expanded')
+      expandBtn.textContent = expanded ? 'weniger' : 'mehr'
+    })
+    card.append(expandBtn)
+
+    card.append(el('p', { class: 'mt-2 text-xs text-fg-faint' }, 'Ohne Antwort entscheidet die Praxis in ihrer nächsten Sitzung selbst.'))
+
+    const msgField = el('textarea', {
+      rows: '2',
+      class: 'mt-2 w-full rounded-lg border border-line bg-bg px-3 py-2 text-sm text-fg outline-none focus-visible:border-fg',
+      placeholder: 'Nachricht …',
+    }) as HTMLTextAreaElement
+    msgField.hidden = true
+    card.append(msgField)
+
+    const hint = el('p', { class: 'mt-1 min-h-[1.2em] text-xs text-fg-faint', role: 'status' })
+    card.append(hint)
+
+    let revealed = false
+    const reveal = (): void => {
+      revealed = true
+      msgField.hidden = false
+      msgField.focus()
+    }
+
+    const actions = el('div', { class: 'mt-3 flex flex-wrap gap-2' })
+    const btn = (label: string): HTMLButtonElement =>
+      el('button', {
+        type: 'button',
+        class: 'rounded-full border border-line px-3 py-1.5 text-xs font-semibold text-fg transition hover:border-fg disabled:opacity-50',
+      }, label) as HTMLButtonElement
+
+    const btnEnabled = btn('enabled')
+    const btnDeclined = btn('declined')
+    const btnNote = btn('Antwort')
+    const btnAck = btn('gelesen — entscheidet selbst')
+    actions.append(btnEnabled, btnDeclined, btnNote, btnAck)
+    card.append(actions)
+
+    const setBusy = (busy: boolean): void => {
+      for (const b of [btnEnabled, btnDeclined, btnNote, btnAck]) b.disabled = busy
+    }
+
+    async function submit(payload: Record<string, unknown>, decision?: string): Promise<void> {
+      setBusy(true)
+      hint.textContent = ''
+      try {
+        const result = await postAntwort(payload)
+        if (result.ok) {
+          if (decision === 'enabled') {
+            const p = el('p', { class: 'text-sm text-fg' }, '✓ enabled — committet')
+            const url = commitUrlOf(result.commit)
+            if (url) {
+              p.append(' · ')
+              p.append(el('a', { href: url, target: '_blank', rel: 'noreferrer', class: 'underline hover:text-fg' }, 'Commit ansehen ↗'))
+            }
+            if (result.warning) p.append(el('span', { class: 'block text-xs text-amber-500' }, result.warning))
+            card.replaceChildren(p)
+          } else {
+            const p = el('p', { class: 'text-sm text-fg' }, '✓ geschlossen')
+            if (result.warning) p.append(el('span', { class: 'block text-xs text-amber-500' }, result.warning))
+            card.replaceChildren(p)
+          }
+          return
+        }
+        if (result.code === 'not-found') {
+          card.replaceChildren(el('p', { class: 'text-sm text-fg-muted' }, 'Die Praxis hat inzwischen selbst entschieden — Issue wird geschlossen'))
+          return
+        }
+        if (result.code === 'conflict') {
+          hint.textContent = 'Konflikt — neu laden und erneut versuchen'
+        } else {
+          hint.textContent = ANTWORT_ERR[result.code ?? ''] ?? 'Das hat nicht geklappt — bitte später erneut versuchen.'
+        }
+      } catch (err) {
+        if (String(err) !== 'Error: unauthorized') {
+          hint.textContent = 'Netzwerkfehler — bitte erneut versuchen.'
+        }
+      } finally {
+        setBusy(false)
+      }
+    }
+
+    // enabled/declined/Antwort teilen sich das Nachrichtenfeld: der erste Klick auf eine der
+    // drei öffnet es nur (Chance, etwas zu schreiben, bevor irgendetwas verschickt wird);
+    // jeder weitere Klick validiert und sendet. Für declined/Antwort ist eine leere Nachricht
+    // eine gültige "öffnen"-Aktion und wird als Hinweis beantwortet statt stillschweigend
+    // gesendet zu werden.
+    const attemptAnswer = (decision: 'enabled' | 'declined' | 'note'): void => {
+      if (!revealed) {
+        reveal()
+        return
+      }
+      const message = msgField.value.trim()
+      if ((decision === 'declined' || decision === 'note') && message === '') {
+        hint.textContent = 'Bitte eine Nachricht ergänzen.'
+        msgField.focus()
+        return
+      }
+      void submit({ action: 'answer', repo: entry.repo, heading: entry.heading, issueNumber: entry.issueNumber, decision, message }, decision)
+    }
+
+    btnEnabled.addEventListener('click', () => attemptAnswer('enabled'))
+    btnDeclined.addEventListener('click', () => attemptAnswer('declined'))
+    btnNote.addEventListener('click', () => attemptAnswer('note'))
+    btnAck.addEventListener('click', () => {
+      void submit({ action: 'acknowledge', repo: entry.repo, heading: entry.heading, issueNumber: entry.issueNumber })
+    })
+
+    return card
+  }
+
+  // ── Rendering: Alle Läufe ───────────────────────────────────────────────
+  function renderRuns(runs: ZxRun[]): void {
+    if (!runsEl) return
+    runsEl.replaceChildren()
+    const sorted = [...runs].sort((a, b) => {
+      const rank = (c: ZxRun['conclusion']) => (c === 'failure' ? 0 : 1)
+      const byRank = rank(a.conclusion) - rank(b.conclusion)
+      return byRank !== 0 ? byRank : a.workflow.localeCompare(b.workflow)
+    })
+    for (const r of sorted) {
+      const dotCls = r.conclusion === 'success' ? 'bg-green-500' : r.conclusion === 'failure' ? 'bg-red-500' : 'bg-fg-faint'
+      const row = el('div', { class: 'flex items-center gap-2 border-b border-line py-1.5 text-sm' })
+      row.append(el('span', { class: `inline-block h-2 w-2 shrink-0 rounded-full ${dotCls}`, 'aria-hidden': 'true' }))
+      row.append(el('span', { class: 'flex-1 text-fg' }, r.workflow))
+      row.append(el('span', { class: 'font-mono text-xs text-fg-faint' }, fmtRel(r.at)))
+      row.append(el('a', { href: r.url, target: '_blank', rel: 'noreferrer', class: 'font-mono text-xs text-fg-faint underline hover:text-fg' }, '↗'))
+      runsEl.append(row)
+    }
+  }
+
+  // ── Rendering: Dashboard-Kopf ───────────────────────────────────────────
+  function renderDashboard(body: ZxStatus): void {
+    if (gateSection) gateSection.hidden = true
+    if (loadingEl) loadingEl.hidden = true
+    if (notConnected) notConnected.hidden = true
+    if (dashboard) dashboard.hidden = false
+
+    if (stampEl) stampEl.textContent = `Stand ${fmtStamp(body.generatedAt)}${body.cached ? ' (Cache)' : ''}`
+
+    if (errorsEl) {
+      if (body.errors.length > 0) {
+        errorsEl.textContent = `Teilausfall: ${body.errors.join(', ')}`
+        errorsEl.hidden = false
+      } else {
+        errorsEl.textContent = ''
+        errorsEl.hidden = true
+      }
+    }
+
+    if (nightEl) {
+      nightEl.replaceChildren()
+      for (const c of body.collectives) nightEl.append(renderCollective(c))
+    }
+
+    if (inboxEl) {
+      inboxEl.replaceChildren()
+      if (body.inbox.length === 0) {
+        inboxEl.append(el('p', { class: 'text-sm text-fg-muted' }, 'Nichts wartet auf dich.'))
+      } else {
+        for (const entry of body.inbox) inboxEl.append(renderInboxCard(entry))
+      }
+    }
+
+    renderRuns(body.runs)
+  }
+
+  // ── Laden ───────────────────────────────────────────────────────────────
+  async function fetchStatus(refresh: boolean): Promise<void> {
+    if (!token) {
+      showGate()
+      return
+    }
+    const dashboardVisible = dashboard ? !dashboard.hidden : false
+    if (!dashboardVisible) showLoading()
+    if (refresh && refreshBtn) {
+      refreshBtn.disabled = true
+      refreshBtn.textContent = 'Aktualisiert …'
+    }
+    try {
+      const res = await fetch(`/api/zentrale/status${refresh ? '?refresh=1' : ''}`, {
+        headers: { 'X-Zentrale-Auth': token },
+      })
+      if (res.status === 401) {
+        clearToken()
+        showGate('Token ungültig.')
+        return
+      }
+      if (res.status === 503) {
+        showNotConnected()
+        return
+      }
+      if (!res.ok) {
+        showNotConnected('Unerwarteter Fehler beim Laden — bitte später erneut versuchen.')
+        return
+      }
+      const body = (await res.json()) as ZxStatus | { ok: false; code?: string }
+      if (!body.ok) {
+        showNotConnected()
+        return
+      }
+      renderDashboard(body)
+    } catch {
+      showNotConnected('Netzwerkfehler — bitte später erneut versuchen.')
+    } finally {
+      if (refresh && refreshBtn) {
+        refreshBtn.disabled = false
+        refreshBtn.textContent = 'Aktualisieren'
+      }
+    }
+  }
+
+  gateForm?.addEventListener('submit', (ev) => {
+    ev.preventDefault()
+    const fd = new FormData(gateForm)
+    const value = String(fd.get('token') ?? '').trim()
+    if (!value) return
+    try {
+      localStorage.setItem(TOKEN_KEY, value)
+    } catch {
+      /* private mode etc. — Token gilt nur für diese Seitenladung */
+    }
+    token = value
+    void fetchStatus(false)
+  })
+
+  refreshBtn?.addEventListener('click', () => {
+    void fetchStatus(true)
+  })
+
+  seedForm?.addEventListener('submit', (ev) => {
+    ev.preventDefault()
+    if (!seedSubmit || seedSubmit.disabled) return
+    const fd = new FormData(seedForm)
+    const repo = String(fd.get('repo') ?? '')
+    const title = String(fd.get('title') ?? '').trim()
+    const bodyText = String(fd.get('body') ?? '').trim()
+    if (!seedMsg) return
+    if (!title || !bodyText) {
+      seedMsg.textContent = 'Titel und Text sind Pflicht.'
+      seedMsg.className = 'min-h-[1.2em] text-sm text-amber-500'
+      return
+    }
+    seedSubmit.disabled = true
+    seedMsg.textContent = ''
+    seedMsg.className = 'min-h-[1.2em] text-sm text-fg'
+    void (async () => {
+      try {
+        const result = await postAntwort({ action: 'seed', repo, title, body: bodyText })
+        if (result.ok) {
+          seedMsg.textContent = '✓ gelegt'
+          const url = commitUrlOf(result.commit)
+          if (url) {
+            seedMsg.append(' ')
+            seedMsg.append(el('a', { href: url, target: '_blank', rel: 'noreferrer', class: 'underline hover:text-fg' }, 'Commit ansehen ↗'))
+          }
+          if (result.warning) seedMsg.append(el('span', { class: 'block text-xs text-amber-500' }, result.warning))
+          seedForm.reset()
+        } else {
+          seedMsg.textContent = ANTWORT_ERR[result.code ?? ''] ?? 'Das hat nicht geklappt — bitte später erneut versuchen.'
+          seedMsg.className = 'min-h-[1.2em] text-sm text-amber-500'
+        }
+      } catch (err) {
+        if (String(err) !== 'Error: unauthorized') {
+          seedMsg.textContent = 'Netzwerkfehler — bitte erneut versuchen.'
+          seedMsg.className = 'min-h-[1.2em] text-sm text-amber-500'
+        }
+      } finally {
+        seedSubmit.disabled = false
+      }
+    })()
+  })
+
+  if (token) void fetchStatus(false)
+  else showGate()
+</script>
+
+<style>
+  /* Excerpt-Klappe: 4 Zeilen, bis antippen es öffnet — keine Bibliothek, reines CSS. */
+  .zx-excerpt {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    overflow: hidden;
+  }
+  .zx-excerpt.is-expanded {
+    display: block;
+    -webkit-line-clamp: unset;
+    overflow: visible;
+  }
+</style>
