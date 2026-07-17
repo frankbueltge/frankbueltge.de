@@ -66,7 +66,22 @@ jobs:
 
       - name: Export site artefacts
         working-directory: /tmp/ecology
-        run: npx tsx apps/export-site/src/cli.ts --site "$GITHUB_WORKSPACE"
+        # --engines: the freshly cloned engine repos (above) are ground truth for the register's
+        # OBSERVED receiver-work premiere status — export-site reads each engine's works/ so the
+        # ecology map self-corrects the moment a work premieres (17.07., "Beobachten & anstoßen"),
+        # instead of re-exporting a stale fixture forever. driftWarnings (receiver premiered, but
+        # the record still reads "premiere pending") are surfaced here; the loud, self-clearing
+        # prompt to the scribe lives in research-ecology's encounter-freshness.yml.
+        run: |
+          npx tsx apps/export-site/src/cli.ts --site "$GITHUB_WORKSPACE" --engines /tmp/engines | tee /tmp/export.json
+          node -e '
+            const w = (require("/tmp/export.json").driftWarnings) || [];
+            if (w.length) {
+              const md = "## Encounter drift (observed premiere, record not updated)\n\n" + w.map((x) => "- " + x).join("\n") + "\n";
+              require("fs").appendFileSync(process.env.GITHUB_STEP_SUMMARY, md);
+              console.log("::warning::" + w.length + " encounter(s) drifting — see research-ecology encounter-freshness");
+            }
+          '
 
       - name: Commit (regeneration) or PR (new meaning)
         env:
