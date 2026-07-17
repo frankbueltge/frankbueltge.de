@@ -1,0 +1,406 @@
+---
+// works/2026-07-17-comparable-with-humans/work.astro
+// "Comparable With Humans" — an instrument on the comparator a 2026 paper chose
+// when it declared its Automated Reviewer human-level.
+// Data: ./data.json (compact histogram derived from the real, sha256-pinned public
+// ICLR/OpenReview dataset; see README.md, derive_hist.py, run_spike.py). No fetch, no deps.
+import data from './data.json'
+
+const { n, n_accept, n_reject, bins, bin_width, reference } = data
+const acceptRate = n_accept / n
+const AXIS_LO = 0.5, AXIS_HI = 0.9
+
+// Balanced accuracy of "predict accept iff bin-centre >= t" — the exact same
+// computation the slider runs client-side. Verified against the continuous data
+// (run_spike.py): binned peak 0.879 vs continuous 0.8795 at mean>=5.69.
+function baFromBins(t: number): number {
+  let tp = 0, fn = 0, tn = 0, fp = 0
+  for (const b of bins) {
+    const c = (b.lo + b.hi) / 2
+    if (c >= t) { tp += b.accept; fp += b.reject }
+    else { fn += b.accept; tn += b.reject }
+  }
+  const tpr = tp + fn ? tp / (tp + fn) : 0
+  const tnr = tn + fp ? tn / (tn + fp) : 0
+  return 0.5 * (tpr + tnr)
+}
+const centres = bins.map((b) => (b.lo + b.hi) / 2)
+let peakBA = 0, peakT = centres[0]
+for (const t of centres) { const v = baFromBins(t); if (v > peakBA) { peakBA = v; peakT = t } }
+const DEFAULT_T = 4.5           // deliberately NOT the peak — the reader drags to find it
+const defaultBA = baFromBins(DEFAULT_T)
+
+// Per-year robustness (RESULTS.txt of run_spike.py — exact continuous computation).
+const perYear = [
+  { year: 2017, ba: 0.909 }, { year: 2018, ba: 0.896 }, { year: 2019, ba: 0.903 },
+  { year: 2020, ba: 0.891 }, { year: 2021, ba: 0.882 }, { year: 2022, ba: 0.885 },
+  { year: 2023, ba: 0.898 }, { year: 2024, ba: 0.869 },
+]
+---
+
+<section class="cw">
+  <header class="cw-head">
+    <h1>&ldquo;Comparable With Humans&rdquo;</h1>
+    <p class="cw-sub">
+      A 2026 paper automates AI research end-to-end (arXiv:2606.15497 · Nature
+      651, 914&ndash;919, 2026). One component &mdash; an &ldquo;Automated
+      Reviewer,&rdquo; five machine reviews plus a machine Area-Chair
+      meta-review, reading only the paper text &mdash; is reported at
+      <strong>balanced accuracy 0.69&nbsp;&plusmn;&nbsp;0.04</strong> against real
+      ICLR accept/reject decisions, and declared &ldquo;comparable with humans
+      (69% versus 66%).&rdquo; This instrument asks what that comparison rests
+      on: the <em>bar</em> it chose to clear, and the <em>axis</em> it left out.
+    </p>
+  </header>
+
+  <blockquote class="cw-quote">
+    &ldquo;The Automated Reviewer achieves a comparable balanced accuracy with
+    humans (69% versus 66%) and a higher F1-score compared to inter-human group
+    agreement (0.62 versus 0.49) in the NeurIPS 2021 consistency experiment
+    &hellip; These results suggest that LLM-based agents can provide valuable
+    feedback that aligns with the average human expert opinion.&rdquo;
+    <cite>&mdash; arXiv:2606.15497, verbatim (Table 1 + text).</cite>
+  </blockquote>
+
+  <p class="cw-lead">
+    The two numbers answer <strong>different questions</strong>. The
+    <strong>0.69</strong> is accuracy against a <em>fixed ICLR decision</em>. The
+    <strong>0.66</strong> is the paper&rsquo;s <em>human bar</em> &mdash; but it
+    comes from a different venue (NeurIPS, not ICLR) and measures a different
+    thing: how often <em>two independent committees agree</em> when they
+    re-decide the same papers, not accuracy against a fixed label. Below, the top
+    panel is the axis the paper reports on &mdash; recovering the ICLR decision.
+    Drag the one threshold on the mean review score and watch it climb. The
+    bottom panel is the human bar the paper chose, held deliberately apart
+    because it is not a point on the same axis.
+  </p>
+
+  <!-- ============ ZONE A: recovering the ICLR decision (one axis) ========= -->
+  <div class="cw-zone cw-zoneA" id="cw-instrument"
+       data-default-t={DEFAULT_T.toFixed(2)} data-peak-t={peakT.toFixed(2)}>
+    <h2 class="cw-zone-h">One axis: recovering the ICLR accept/reject decision <span class="cw-zone-sub">(balanced accuracy, 2017&ndash;2024)</span></h2>
+
+    <div class="cw-readout">
+      <div class="cw-metric">
+        <span class="cw-metric-label">threshold: mean review score &ge;</span>
+        <span class="cw-metric-val" id="cw-t">{DEFAULT_T.toFixed(2)}</span>
+      </div>
+      <div class="cw-metric">
+        <span class="cw-metric-label">balanced accuracy vs the ICLR decision</span>
+        <span class="cw-metric-val cw-big" id="cw-ba">{defaultBA.toFixed(3)}</span>
+      </div>
+    </div>
+
+    <input class="cw-slider" id="cw-slider" type="range"
+      min={bins[0].lo} max={bins[bins.length - 1].hi} step="0.05"
+      value={DEFAULT_T.toFixed(2)} aria-label="mean review score threshold" />
+
+    <!-- balanced-accuracy axis, 0.50 .. 0.90; three reference marks, all on the SAME question -->
+    <div class="cw-meter" aria-hidden="true">
+      <div class="cw-meter-fill" id="cw-meter-fill"></div>
+      <div class="cw-ci-band" id="cw-ci-tool"></div>
+      <div class="cw-mark cw-mark-base" id="cw-mark-base"><span>0.50 the paper&rsquo;s own trivial baselines (Random, Always-Reject)</span></div>
+      <div class="cw-mark cw-mark-tool" id="cw-mark-tool"><span>0.69 &plusmn; 0.04 &mdash; the Automated Reviewer, from text (n=1,000)</span></div>
+      <div class="cw-mark cw-mark-peak" id="cw-mark-peak"><span>0.88 &mdash; best single score threshold (n=19,685)</span></div>
+      <div class="cw-mark cw-mark-live" id="cw-mark-live"><span>you</span></div>
+    </div>
+    <div class="cw-meter-axis" aria-hidden="true"><span>0.50</span><span>0.70</span><span>0.90</span></div>
+
+    <p class="cw-asym" id="cw-asym">
+      <strong>Dragging past 0.69 is not beating the tool.</strong> The threshold
+      reads the mean review <em>scores</em>; the 0.69 tool reads only the paper
+      <em>text</em> &mdash; different inputs, the same target. So this is
+      <em>not</em> &ldquo;a trivial reviewer beats the sophisticated one.&rdquo;
+      It shows how much of the ICLR <em>decision</em> is already a threshold on
+      the scores (&asymp;0.88 of it), and that the paper&rsquo;s own table stops
+      its baselines at 0.50 (Random / Always-Reject) and never places this 0.88
+      score line on the axis. The shaded band on 0.69 is its reported
+      &plusmn;0.04; the 0.88 is a point estimate on a different sample size, so
+      read the <em>direction</em>, not the exact width of the gap (see below).
+    </p>
+
+    <!-- score distribution, coloured by decision, with the movable cut -->
+    <div class="cw-hist" id="cw-hist" aria-hidden="true">
+      {bins.map((b) => (
+        <div class="cw-col" data-lo={b.lo} data-hi={b.hi} data-accept={b.accept} data-reject={b.reject} data-total={b.accept + b.reject}>
+          <div class="cw-bar cw-bar-accept"></div>
+          <div class="cw-bar cw-bar-reject"></div>
+        </div>
+      ))}
+      <div class="cw-cut" id="cw-cut"></div>
+    </div>
+    <div class="cw-hist-axis" aria-hidden="true">
+      <span>mean score {bins[0].lo}</span>
+      <span class="cw-legend"><i class="cw-swatch-a"></i>accepted &nbsp; <i class="cw-swatch-r"></i>rejected</span>
+      <span>{bins[bins.length - 1].hi}</span>
+    </div>
+    <p class="cw-hint" id="cw-hint">Drag the threshold. The peak (&asymp;0.88) is one straight cut through the score axis; the from-text tool reaches 0.69.</p>
+  </div>
+
+  <!-- ============ ZONE B: the human bar, held apart ====================== -->
+  <div class="cw-zone cw-zoneB">
+    <h2 class="cw-zone-h">A different question: the human bar the paper chose</h2>
+    <div class="cw-bar-panel">
+      <div class="cw-bar-val">0.66</div>
+      <div class="cw-bar-txt">
+        <strong>Human committee vs human committee (NeurIPS 2021).</strong>
+        Balanced accuracy of <em>agreement</em> between two independent review
+        committees re-deciding the same ~10% of submissions
+        (Beygelzimer et al., arXiv:2306.03262) &mdash; in that experiment,
+        roughly half the papers one committee accepted were rejected by the
+        other. This is <strong>not</strong> accuracy against a fixed ICLR
+        decision; it is a different venue and a different quantity. It is the bar
+        the paper adopts when it calls its tool &ldquo;comparable with humans.&rdquo;
+      </div>
+    </div>
+    <p class="cw-zoneB-note">
+      Kept off the top axis on purpose. Placing 0.66 as a third tick beside 0.69
+      and 0.88 would repeat the very move this instrument examines &mdash;
+      reading a committee-agreement number and a decision-accuracy number as if
+      they raced on one track.
+    </p>
+  </div>
+
+  <!-- ============ the reading ============================================ -->
+  <div class="cw-reading">
+    <h2>What this shows &mdash; and what it does not</h2>
+    <ol>
+      <li>
+        <strong>The comparator, not the tool.</strong> The observation is about
+        <em>which bar was chosen</em>. On the axis the paper actually reports
+        (recovering the ICLR decision), the from-text tool reaches 0.69, above
+        the paper&rsquo;s trivial 0.50 baselines and below the 0.88 a single
+        review-score threshold recovers. &ldquo;Human-level&rdquo; is then
+        asserted by importing a cross-venue committee-agreement number (0.66) as
+        the human bar. A &ldquo;comparable with humans&rdquo; claim is only ever
+        as strong as the human bar it picks.
+      </li>
+      <li>
+        <strong>Input asymmetry &mdash; load-bearing.</strong> The 0.88 uses the
+        mean human review score; the tool never sees it. So 0.88 is not a target
+        the from-text tool could reach &mdash; it is the ceiling of how far the
+        <em>decision</em> is a threshold on the scores. The honest reading is
+        &ldquo;the ICLR decision is largely score-driven, and the tool is
+        benchmarked against a committee-agreement floor rather than that
+        score ceiling,&rdquo; not &ldquo;trivial beats sophisticated.&rdquo;
+      </li>
+      <li>
+        <strong>Not a matched-subset replication.</strong> The paper&rsquo;s 0.69
+        is computed on <strong>1,000</strong> ICLR papers (2017&ndash;2024); the
+        open text gives that sample size but not which 1,000 papers or how they
+        were sampled. This instrument computes 0.88 on
+        <strong>all {n.toLocaleString()}</strong> clearly-decided scored papers of
+        the same years. The <em>size</em> of the 0.88&ndash;0.69 gap is therefore
+        not established against a matched subset &mdash; only that the
+        comparison <em>as stated</em> does not surface the score axis or the
+        venue/quantity gap in the human bar. Not a claim that the paper conceals
+        anything &mdash; it names the NeurIPS experiment in the same sentence; the
+        point is that it treats two different quantities as comparable.
+        The 0.88 is also the <em>best single threshold chosen in-sample</em> (no
+        held-out split), whereas the tool&rsquo;s 0.69 is not tuned on the
+        evaluation set; the per-year stability (0.869&ndash;0.909) indicates this
+        is not overfitting &mdash; one scalar has little room to overfit ~20,000
+        points &mdash; but it is stated, not hidden in the method.
+      </li>
+      <li>
+        <strong>Prior art, stated up front.</strong> That two human committees
+        disagree on roughly half of accepted papers is Beygelzimer et al.
+        (arXiv:2306.03262). That automated reviewers should not be trusted
+        without rigorous evaluation &mdash; they show a &ldquo;hivemind
+        effect&rdquo; and are gameable by stylistic rewriting &mdash; is Baumann
+        et al., <em>Stop Automating Peer Review Without Rigorous Evaluation</em>
+        (arXiv:2605.03202, ICML 2026 Oral). This instrument adds only the
+        computed reframing: the score axis (0.88) the paper&rsquo;s table omits,
+        and the incommensurability of the 0.66 human bar &mdash; both operable by
+        hand above.
+      </li>
+    </ol>
+  </div>
+
+  <footer class="cw-foot">
+    <h2>Method &amp; sources</h2>
+    <ul>
+      <li><strong>Object:</strong> the &ldquo;Automated Reviewer&rdquo; of
+        arXiv:2606.15497 · Nature 651, 914&ndash;919 (2026). Figures 0.69&plusmn;0.04
+        (tool, 2017&ndash;2024, n=1,000), 0.66 (Human&nbsp;NeurIPS), and the
+        Random / Always-Reject 0.50 baselines are its Table 1, verified verbatim.
+        The 0.66/0.49 human figures trace to the NeurIPS-2021 consistency
+        experiment (arXiv:2306.03262).</li>
+      <li><strong>Dataset:</strong> berenslab/iclr-dataset, <code>data/iclr24v2.parquet</code>,
+        sha256 <code>f486c7a0&hellip;d47fb0</code> (24,445 ICLR submissions 2017&ndash;2024;
+        described in arXiv:2404.08403). Fetched and hash-verified.</li>
+      <li><strong>Label rule:</strong> accept iff <code>decision</code> starts with
+        &ldquo;accept&rdquo; (case-insensitive); reject iff &isin; {'{'}Reject, Desk rejected{'}'};
+        Withdrawn / Invite-to-Workshop excluded. Predictor = mean of the integer
+        review scores. Balanced accuracy = &frac12;(recall<sub>accept</sub> +
+        recall<sub>reject</sub>); constant predictor 0.500 by construction &mdash;
+        matching the paper&rsquo;s own Random / Always-Reject rows.</li>
+      <li><strong>Computation:</strong> deterministic threshold sweep, n={n.toLocaleString()}
+        ({n_accept.toLocaleString()} accepted, {n_reject.toLocaleString()} rejected;
+        accept rate {(acceptRate * 100).toFixed(1)}%); peak balanced accuracy
+        <strong>0.8795 at mean&nbsp;&ge;&nbsp;5.69</strong> (exact, <code>run_spike.py</code>),
+        stable per year (
+        {perYear.map((y, i) => (<span>{i ? ' · ' : ''}{y.year} {y.ba.toFixed(2)}</span>))}
+        ). The slider reconstructs it from a {bin_width}-wide histogram (peak 0.879);
+        both scripts ship with this work.</li>
+      <li><strong>Seed &amp; provenance:</strong> offered by Frank B&uuml;ltge, 2026-07-17;
+        feasibility gate + build + gauntlet, 2026-07-17. The hostile critique this
+        work carries is published in the collective&rsquo;s journal for its
+        shipping date.</li>
+    </ul>
+  </footer>
+
+  <script type="application/json" id="cw-data" set:html={JSON.stringify({ bins, reference, axis: { lo: AXIS_LO, hi: AXIS_HI }, peakT })} />
+
+  <script>
+// @ts-nocheck — engine work script shielded from the site TS gate (sandboxed display code, vetted by the collective gauntlet + checkForbidden + astro build). A missing type annotation must never turn the whole site build red — see work 011, 2026-07-06.
+    const el = document.getElementById('cw-instrument')
+    const raw = document.getElementById('cw-data')
+    if (el && raw) {
+      const { bins, reference, axis } = JSON.parse(raw.textContent || '{}')
+      const slider = document.getElementById('cw-slider')
+      const tOut = document.getElementById('cw-t')
+      const baOut = document.getElementById('cw-ba')
+      const meterFill = document.getElementById('cw-meter-fill')
+      const markLive = document.getElementById('cw-mark-live')
+      const markTool = document.getElementById('cw-mark-tool')
+      const markBase = document.getElementById('cw-mark-base')
+      const markPeak = document.getElementById('cw-mark-peak')
+      const cut = document.getElementById('cw-cut')
+      const ciTool = document.getElementById('cw-ci-tool')
+      const cols = Array.from(document.querySelectorAll('.cw-col'))
+
+      const loScore = bins[0].lo
+      const hiScore = bins[bins.length - 1].hi
+      const span = hiScore - loScore
+      const maxCount = Math.max(...bins.map((b) => b.accept + b.reject))
+      const clamp = (x) => Math.max(0, Math.min(100, x))
+      const baToPct = (ba) => clamp(((ba - axis.lo) / (axis.hi - axis.lo)) * 100)
+      const scoreToPct = (s) => clamp(((s - loScore) / span) * 100)
+
+      function ba(t) {
+        let tp = 0, fn = 0, tn = 0, fp = 0
+        for (const b of bins) {
+          const c = (b.lo + b.hi) / 2
+          if (c >= t) { tp += b.accept; fp += b.reject }
+          else { fn += b.accept; tn += b.reject }
+        }
+        const tpr = tp + fn ? tp / (tp + fn) : 0
+        const tnr = tn + fp ? tn / (tn + fp) : 0
+        return 0.5 * (tpr + tnr)
+      }
+      // recompute the exact binned peak for the fixed mark (independent of frontmatter)
+      let peak = 0
+      for (const b of bins) { const v = ba((b.lo + b.hi) / 2); if (v > peak) peak = v }
+
+      cols.forEach((col) => {
+        const total = Number(col.dataset.total)
+        const accept = Number(col.dataset.accept)
+        const reject = Number(col.dataset.reject)
+        col.style.height = (maxCount ? (total / maxCount) * 100 : 0) + '%'
+        const a = col.querySelector('.cw-bar-accept')
+        const r = col.querySelector('.cw-bar-reject')
+        if (a) a.style.height = (total ? (accept / total) * 100 : 0) + '%'
+        if (r) r.style.height = (total ? (reject / total) * 100 : 0) + '%'
+      })
+      if (markBase) markBase.style.left = baToPct(reference.constant_ba) + '%'
+      if (markTool) markTool.style.left = baToPct(reference.tool_ba) + '%'
+      if (markPeak) markPeak.style.left = baToPct(peak) + '%'
+      if (ciTool) {
+        const ci = reference.tool_ba_ci || 0
+        const lo = baToPct(reference.tool_ba - ci)
+        ciTool.style.left = lo + '%'
+        ciTool.style.width = (baToPct(reference.tool_ba + ci) - lo) + '%'
+      }
+
+      function render(t) {
+        const v = ba(t)
+        if (tOut) tOut.textContent = t.toFixed(2)
+        if (baOut) baOut.textContent = v.toFixed(3)
+        if (meterFill) meterFill.style.width = baToPct(v) + '%'
+        if (markLive) markLive.style.left = baToPct(v) + '%'
+        if (cut) cut.style.left = scoreToPct(t) + '%'
+      }
+      slider.addEventListener('input', () => render(Number(slider.value)))
+      render(Number(slider.value))
+    }
+  </script>
+</section>
+
+<style>
+  .cw {
+    max-width: 52rem;
+    margin: 0 auto;
+    font-family: ui-monospace, "SFMono-Regular", "Menlo", "Consolas", monospace;
+    color: #1a1a1a;
+    line-height: 1.5;
+  }
+  .cw-head h1 { font-size: 2rem; margin: 0 0 0.3rem; letter-spacing: -0.01em; }
+  .cw-sub { font-size: 0.9rem; color: #444; margin: 0 0 1.3rem; }
+  .cw-quote {
+    border-left: 3px solid #b08900;
+    margin: 0 0 1.3rem;
+    padding: 0.4rem 0 0.4rem 1rem;
+    font-size: 0.88rem;
+    color: #333;
+  }
+  .cw-quote cite { display: block; margin-top: 0.5rem; font-size: 0.76rem; color: #666; font-style: normal; }
+  .cw-lead { font-size: 0.93rem; margin: 0 0 1.6rem; }
+
+  .cw-zone { border: 1px solid #ccc; padding: 1.1rem; margin: 0 0 1.2rem; }
+  .cw-zoneA { background: #faf7f4; border-color: #d8c9bd; }
+  .cw-zoneB { background: #eef2f4; border-color: #b9c9d0; }
+  .cw-zone-h { font-size: 1rem; margin: 0 0 0.9rem; }
+  .cw-zone-sub { color: #777; font-weight: 400; font-size: 0.82rem; }
+
+  .cw-readout { display: flex; gap: 2rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
+  .cw-metric { display: flex; flex-direction: column; }
+  .cw-metric-label { font-size: 0.7rem; color: #666; text-transform: uppercase; letter-spacing: 0.04em; }
+  .cw-metric-val { font-size: 1.25rem; font-variant-numeric: tabular-nums; }
+  .cw-big { font-size: 2rem; color: #333; }
+  .cw-slider { width: 100%; margin: 0.2rem 0 2.4rem; accent-color: #7a1f1f; }
+
+  .cw-meter { position: relative; height: 1.4rem; background: #e7e1da; border: 1px solid #c9bcb0; }
+  .cw-meter-fill { position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: #c9a98a; }
+  .cw-ci-band { position: absolute; top: 0; bottom: 0; left: 0; width: 0; background: rgba(31, 95, 122, 0.22); }
+  .cw-mark { position: absolute; top: -0.15rem; bottom: -0.15rem; width: 0; border-left: 2px solid; }
+  .cw-mark span { position: absolute; left: 3px; font-size: 0.6rem; white-space: nowrap; }
+  .cw-mark-base { border-color: #888; }
+  .cw-mark-base span { top: -0.95rem; color: #777; }
+  .cw-mark-tool { border-color: #1f5f7a; }
+  .cw-mark-tool span { top: 1.5rem; color: #1f5f7a; }
+  .cw-mark-peak { border-color: #7a1f1f; }
+  .cw-mark-peak span { top: -0.95rem; color: #7a1f1f; }
+  .cw-mark-live { border-color: #111; }
+  .cw-mark-live span { top: 1.5rem; left: -0.6rem; color: #111; font-weight: 700; }
+  .cw-meter-axis { display: flex; justify-content: space-between; font-size: 0.6rem; color: #999; margin-top: 0.3rem; }
+
+  .cw-asym { font-size: 0.82rem; color: #444; background: #f2e9e0; border: 1px dashed #cbb49f; padding: 0.55rem 0.7rem; margin: 1rem 0 0; }
+
+  .cw-hist { position: relative; display: flex; align-items: flex-end; gap: 2px; height: 5.5rem; margin: 1.4rem 0 0; border-bottom: 1px solid #bbb; }
+  .cw-col { position: relative; flex: 1; display: flex; flex-direction: column-reverse; min-width: 0; }
+  .cw-bar { width: 100%; }
+  .cw-bar-reject { background: #b8b2a4; }
+  .cw-bar-accept { background: #7a1f1f; }
+  .cw-cut { position: absolute; top: -0.4rem; bottom: 0; width: 0; border-left: 2px dashed #111; }
+  .cw-hist-axis { display: flex; justify-content: space-between; font-size: 0.6rem; color: #999; margin-top: 0.3rem; }
+  .cw-legend i { display: inline-block; width: 0.6rem; height: 0.6rem; vertical-align: baseline; }
+  .cw-swatch-a { background: #7a1f1f; }
+  .cw-swatch-r { background: #b8b2a4; }
+  .cw-hint { font-size: 0.7rem; color: #777; margin: 0.5rem 0 0; }
+
+  .cw-bar-panel { display: flex; gap: 1rem; align-items: flex-start; }
+  .cw-bar-val { font-size: 2.6rem; color: #1f5f7a; font-variant-numeric: tabular-nums; line-height: 1; }
+  .cw-bar-txt { font-size: 0.84rem; color: #34424a; }
+  .cw-zoneB-note { font-size: 0.78rem; color: #56656d; margin: 0.9rem 0 0; }
+
+  .cw-reading { margin: 0.4rem 0 1.4rem; }
+  .cw-reading h2, .cw-foot h2 { font-size: 1.02rem; margin: 0 0 0.7rem; }
+  .cw-reading ol { padding-left: 1.2rem; font-size: 0.86rem; }
+  .cw-reading li { margin-bottom: 0.8rem; }
+
+  .cw-foot { border-top: 1px solid #ddd; padding-top: 1rem; }
+  .cw-foot ul { padding-left: 1.1rem; font-size: 0.79rem; color: #444; }
+  .cw-foot li { margin-bottom: 0.5rem; }
+  .cw-foot code { background: #f0efeb; padding: 0 0.2rem; font-size: 0.77rem; }
+</style>

@@ -1,0 +1,235 @@
+{
+"source": {
+"dataset": "berenslab/iclr-dataset data/iclr24v2.parquet",
+"sha256": "f486c7a0f58c71005ab8f86e6128038ca523a9efe7feb4ab353b37f789d47fb0",
+"paper_url": "https://github.com/berenslab/iclr-dataset",
+"described_in": "https://arxiv.org/abs/2404.08403"
+},
+"label_rule": "y=1 if decision startswith 'accept' (case-insensitive); y=0 if decision in {Reject, Desk rejected}; Withdrawn/Invite-to-Workshop excluded",
+"years": "2017-2024",
+"n": 19685,
+"n_accept": 7510,
+"n_reject": 12175,
+"bin_width": 0.25,
+"bins": [
+{
+"lo": 1.0,
+"hi": 1.25,
+"accept": 0,
+"reject": 79
+},
+{
+"lo": 1.5,
+"hi": 1.75,
+"accept": 0,
+"reject": 133
+},
+{
+"lo": 1.75,
+"hi": 2.0,
+"accept": 0,
+"reject": 4
+},
+{
+"lo": 2.0,
+"hi": 2.25,
+"accept": 0,
+"reject": 55
+},
+{
+"lo": 2.25,
+"hi": 2.5,
+"accept": 1,
+"reject": 233
+},
+{
+"lo": 2.5,
+"hi": 2.75,
+"accept": 0,
+"reject": 154
+},
+{
+"lo": 2.75,
+"hi": 3.0,
+"accept": 0,
+"reject": 10
+},
+{
+"lo": 3.0,
+"hi": 3.25,
+"accept": 0,
+"reject": 611
+},
+{
+"lo": 3.25,
+"hi": 3.5,
+"accept": 1,
+"reject": 283
+},
+{
+"lo": 3.5,
+"hi": 3.75,
+"accept": 2,
+"reject": 666
+},
+{
+"lo": 3.75,
+"hi": 4.0,
+"accept": 0,
+"reject": 262
+},
+{
+"lo": 4.0,
+"hi": 4.25,
+"accept": 11,
+"reject": 1081
+},
+{
+"lo": 4.25,
+"hi": 4.5,
+"accept": 13,
+"reject": 1024
+},
+{
+"lo": 4.5,
+"hi": 4.75,
+"accept": 18,
+"reject": 1171
+},
+{
+"lo": 4.75,
+"hi": 5.0,
+"accept": 12,
+"reject": 717
+},
+{
+"lo": 5.0,
+"hi": 5.25,
+"accept": 150,
+"reject": 1482
+},
+{
+"lo": 5.25,
+"hi": 5.5,
+"accept": 140,
+"reject": 1334
+},
+{
+"lo": 5.5,
+"hi": 5.75,
+"accept": 445,
+"reject": 1225
+},
+{
+"lo": 5.75,
+"hi": 6.0,
+"accept": 405,
+"reject": 542
+},
+{
+"lo": 6.0,
+"hi": 6.25,
+"accept": 1128,
+"reject": 699
+},
+{
+"lo": 6.25,
+"hi": 6.5,
+"accept": 1052,
+"reject": 252
+},
+{
+"lo": 6.5,
+"hi": 6.75,
+"accept": 1423,
+"reject": 96
+},
+{
+"lo": 6.75,
+"hi": 7.0,
+"accept": 449,
+"reject": 30
+},
+{
+"lo": 7.0,
+"hi": 7.25,
+"accept": 876,
+"reject": 22
+},
+{
+"lo": 7.25,
+"hi": 7.5,
+"accept": 555,
+"reject": 3
+},
+{
+"lo": 7.5,
+"hi": 7.75,
+"accept": 395,
+"reject": 4
+},
+{
+"lo": 7.75,
+"hi": 8.0,
+"accept": 18,
+"reject": 0
+},
+{
+"lo": 8.0,
+"hi": 8.25,
+"accept": 345,
+"reject": 3
+},
+{
+"lo": 8.25,
+"hi": 8.5,
+"accept": 15,
+"reject": 0
+},
+{
+"lo": 8.5,
+"hi": 8.75,
+"accept": 45,
+"reject": 0
+},
+{
+"lo": 8.75,
+"hi": 9.0,
+"accept": 3,
+"reject": 0
+},
+{
+"lo": 9.0,
+"hi": 9.25,
+"accept": 6,
+"reject": 0
+},
+{
+"lo": 9.25,
+"hi": 9.5,
+"accept": 1,
+"reject": 0
+},
+{
+"lo": 9.5,
+"hi": 9.75,
+"accept": 1,
+"reject": 0
+}
+],
+"reference": {
+"tool_ba": 0.69,
+"tool_ba_ci": 0.04,
+"tool_n": 1000,
+"tool_years": "2017-2024",
+"committee_ba": 0.66,
+"committee_source": "Human (NeurIPS 2021) inter-committee consistency, arXiv:2306.03262; Table 1 of arXiv:2606.15497",
+"constant_ba": 0.5,
+"paper_baselines": {
+"random": 0.5,
+"always_reject": 0.5
+},
+"our_n": 19685,
+"note": "tool_ba is arXiv:2606.15497 Table 1 Automated Reviewer row, 2017-2024 set (n=1000). committee_ba is that table's Human(NeurIPS) row. constant_ba matches the paper's own Random/Always-Reject baselines."
+}
+}
