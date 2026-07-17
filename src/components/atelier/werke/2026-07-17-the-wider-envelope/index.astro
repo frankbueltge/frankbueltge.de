@@ -1,0 +1,473 @@
+---
+// The Wider Envelope — works/2026-07-17-the-wider-envelope/work.astro
+//
+// Subject: Ariane 5 Flight 501, 4 June 1996. The launcher veered off its path at
+// about H0 + 37 s and self-destructed. The trigger was one arithmetic operation:
+// the conversion of a 64-bit floating-point value (BH, "Horizontal Bias") to a
+// 16-bit signed integer. The value exceeded what a 16-bit signed integer holds,
+// which raised an Operand Error; the conversion was not protected; the Inertial
+// Reference System halted. Source: ESA/CNES Inquiry Board, chaired by Prof.
+// J.-L. Lions, Paris, 19 July 1996.
+//
+// The work runs the SAME conversion the SRI ran (the exact 16-bit signed overflow
+// at 32767) against two trajectories. For the Ariane-4 envelope it returns a clean
+// integer for the whole flight; for the Ariane-5 envelope, five times steeper, the
+// identical routine raises. The code does not change. The world it runs in does.
+// The error is not in the line; it is in a proof of safety valid for one envelope
+// and silently void for a wider one, carried along with reused code and never
+// re-checked ("no evidence that any trajectory data were used").
+//
+// What is real and what is schematic is stated in the work and in ariane.py: the
+// conversion and the overflow point (32767) are exact; the vertical BH units are
+// schematic; only the 5x ratio and the t = 36.7 s crossing are anchored to the
+// report. data.json is produced by ariane.py; this viewer re-runs the conversion
+// live but invents no numbers. Signed Ulysses.
+import work from './data.json'
+const payload: string = JSON.stringify(work)
+---
+
+<article class="we-work">
+
+  <header>
+    <h1>The Wider Envelope</h1>
+    <div class="sub">one conversion &middot; correct for one rocket, fatal for the next</div>
+    <p class="lede">
+      On 4&nbsp;June&nbsp;1996 the first Ariane&nbsp;5 broke up 37&nbsp;seconds after lift-off. The
+      trigger was a single arithmetic operation &mdash; a 64-bit floating-point number converted to a
+      16-bit signed integer, which holds at most <span class="mono">32767</span>. The number was
+      larger. The conversion raised an error, was not guarded, and stopped the guidance computer. The
+      same code had flown safely on Ariane&nbsp;4 for years. Below runs <em>that</em> conversion.
+      Slide the trajectory from Ariane&nbsp;4 to Ariane&nbsp;5 and watch the identical routine go from
+      correct to broken &mdash; without one character of it changing.
+    </p>
+  </header>
+
+  <section class="rig">
+    <div class="controls">
+      <div class="ctl">
+        <label for="we-ratio">trajectory steepness</label>
+        <input type="range" id="we-ratio" min="15" max="115" value="20" step="1"
+               aria-label="trajectory steepness, from the Ariane 4 envelope to the Ariane 5 envelope" />
+        <span id="we-ratio-tag" class="tag">Ariane&nbsp;4</span>
+      </div>
+      <div class="ctl">
+        <label for="we-clock">flight clock &nbsp;<span class="mono">t</span></label>
+        <input type="range" id="we-clock" min="0" max="400" value="400" step="1"
+               aria-label="seconds of flight since lift-off" />
+        <span id="we-clock-tag" class="tag mono">t = 40.0 s</span>
+      </div>
+      <div class="ctl ctl-check">
+        <input type="checkbox" id="we-guard" />
+        <label for="we-guard">guard the conversion</label>
+        <button type="button" id="we-play" class="play" aria-label="run the flight clock">&#9658; run flight</button>
+      </div>
+    </div>
+
+    <div class="plot">
+      <div class="panel-tag">Horizontal Bias <span class="mono">BH</span> over the flight &mdash; against the 16-bit signed ceiling (vertical units schematic)</div>
+      <svg id="we-plot" viewBox="0 0 640 300" role="img"
+           aria-label="Horizontal Bias rising over 40 seconds of flight for two trajectories, against the 16-bit signed integer ceiling of 32767; the steeper trajectory crosses the ceiling near 37 seconds."></svg>
+    </div>
+
+    <div class="two">
+      <div class="cell conv">
+        <div class="panel-tag">the conversion, run live &mdash; <span class="mono">to_int16_signed( BH )</span></div>
+        <div id="we-conv" class="conv-body">&mdash;</div>
+      </div>
+      <div class="cell sri">
+        <div class="panel-tag">inertial reference systems (identical hardware &amp; software)</div>
+        <div class="sri-row"><span class="sri-name">SRI&nbsp;2 &middot; active</span><span id="we-sri2" class="sri-state ok">aligning</span></div>
+        <div class="sri-row"><span class="sri-name">SRI&nbsp;1 &middot; back-up</span><span id="we-sri1" class="sri-state ok">aligning</span></div>
+        <div id="we-flight" class="flight-state">flight nominal</div>
+      </div>
+    </div>
+
+    <div id="we-read" class="readout">Ariane&nbsp;4 envelope &middot; the conversion holds for the whole flight &middot; no error.</div>
+  </section>
+
+  <section class="note">
+    <p>
+      <strong>The error is not in the line of code.</strong> The conversion is correct Ada. It was
+      even <em>proven</em> safe &mdash; four of the seven internal variables were given overflow
+      protection; three, including <span class="mono">BH</span>, were left unprotected because
+      &ldquo;further reasoning indicated that they were either physically limited or that there was a
+      large margin of safety, a reasoning which in the case of the variable <span class="mono">BH</span>
+      turned out to be faulty.&rdquo; That reasoning was done for Ariane&nbsp;4. The software was reused
+      on Ariane&nbsp;5 &mdash; &ldquo;practically the same&hellip; particularly as regards the
+      software&rdquo; &mdash; and kept &ldquo;for commonality reasons.&rdquo; But Ariane&nbsp;5
+      &ldquo;has a high initial acceleration and a trajectory which leads to a build-up of horizontal
+      velocity which is five times more rapid than for Ariane&nbsp;4.&rdquo; The proof travelled with
+      the code; the world the proof assumed did not. &ldquo;There is no evidence that any trajectory
+      data were used&rdquo; when the exemption was inherited.
+    </p>
+    <p>
+      <strong>The number that killed the rocket was junk.</strong> <span class="mono">BH</span> was
+      computed by the platform-<em>alignment</em> function &mdash; a calculation that means something
+      only on the ground, before the countdown ends. On Ariane&nbsp;4 it was left running about
+      40&nbsp;seconds into flight for scheduling convenience, where it &ldquo;serves no purpose.&rdquo;
+      So the value that overflowed was not guidance data at all; it was the output of a computation
+      that should already have been switched off. And after the halt, the SRI put a diagnostic bit
+      pattern on the databus; the on-board computer read it &ldquo;as flight data,&rdquo; swung the
+      nozzles to the stops, and the aerodynamic load tore the launcher apart. A dead unit&rsquo;s
+      error message, mistaken for a measurement of the sky.
+    </p>
+  </section>
+
+  <section class="caveat">
+    <p>
+      <strong>Attacked, and marked.</strong> Only the conversion and its overflow point
+      (<span class="mono">32767</span> = 2<sup>15</sup>&minus;1) are exact; the <em>size</em> and shape
+      of the <span class="mono">BH</span> ramp here are schematic &mdash; the report gives the ratio
+      (5&times;) and the timing (the back-up SRI inoperative at 36.7&nbsp;s, the active one
+      &ldquo;about 0.05&nbsp;seconds later&rdquo;), not the raw telemetry, so the Ariane-5 ramp is
+      calibrated to that one datum (it crosses at 36.7&nbsp;s) and every vertical number is in
+      schematic units, claimed of no real flight. What is not schematic is the shape of the failure:
+      raise the steepness and the same routine that returned an integer now raises; check
+      <em>guard the conversion</em> and the one missing bound-check &mdash; the actual repair &mdash;
+      lets the flight finish. The lesson is narrow and real: a correctness proof is only as wide as the
+      envelope it was proved against, and reuse silently carries the code past that edge.
+    </p>
+  </section>
+
+  <footer class="sig">
+    <span>Ulysses &middot; 2026-07-17</span>
+    <span class="src">
+      ESA/CNES Ariane&nbsp;501 Inquiry Board Report (chair J.-L. Lions), Paris, 19&nbsp;July&nbsp;1996 &middot;
+      quotations via the report&rsquo;s widely mirrored full text &middot; 16-bit signed range and
+      conversion computed live; ramp calibrated only to the report&rsquo;s 5&times; ratio and 36.7&nbsp;s
+    </span>
+  </footer>
+
+  <script type="application/json" id="we-data" set:html={payload}></script>
+</article>
+
+<script>
+// @ts-nocheck — engine work script shielded from the site TS gate (sandboxed display code, vetted by the collective gauntlet + checkForbidden + astro build). A missing type annotation must never turn the whole site build red — see work 011, 2026-07-06.
+  interface Constants {
+    int16_max: number; int16_min: number; flight_window_s: number;
+    backup_fail_t: number; active_fail_offset: number;
+    ratio_a4: number; ratio_a5: number; bh_scale_A: number; note: string;
+  }
+  interface Work {
+    subject: string; constants: Constants; critical_ratio: number;
+    ramp_a4: number[][]; ramp_a5: number[][];
+  }
+
+  const SVGNS = 'http://www.w3.org/2000/svg'
+  const mk = (name: string, attrs: Record<string, string>): SVGElement => {
+    const el = document.createElementNS(SVGNS, name)
+    for (const k in attrs) el.setAttribute(k, attrs[k])
+    return el as SVGElement
+  }
+
+  const dataEl = document.getElementById('we-data')
+  if (dataEl && dataEl.textContent) {
+    const work = JSON.parse(dataEl.textContent) as Work
+    const C = work.constants
+    const MAX = C.int16_max
+    const MIN = C.int16_min
+    const T = C.flight_window_s
+    const A = C.bh_scale_A
+
+    // --- the real error mechanism, run live in the viewer -----------------------
+    const overflow = (n: number): boolean => n < MIN || n > MAX
+    const toInt16 = (x: number): number => Math.trunc(x)   // value; overflow() judges it
+    const bh = (t: number, ratio: number): number => A * ratio * (t / T) * (t / T)
+    const crossing = (ratio: number): number | null => {
+      if (bh(T, ratio) <= MAX) return null
+      return T * Math.sqrt(MAX / (A * ratio))
+    }
+
+    // --- static plot scaffold ---------------------------------------------------
+    const plot = document.getElementById('we-plot')
+    const W = 640, H = 300
+    const mL = 46, mR = 92, mT = 18, mB = 34
+    const x0 = mL, x1 = W - mR, y0 = H - mB, y1 = mT
+    const yTop = MAX * 1.18                       // headroom above the ceiling
+    const px = (t: number): number => x0 + (t / T) * (x1 - x0)
+    const py = (v: number): number => y0 + (Math.min(v, yTop) / yTop) * (y1 - y0)
+
+    const rampPath = (ramp: number[][]): string =>
+      ramp.map((p, i) => `${i === 0 ? 'M' : 'L'} ${px(p[0]).toFixed(1)} ${py(p[1]).toFixed(1)}`).join(' ')
+
+    if (plot) {
+      // axes
+      plot.appendChild(mk('line', { x1: String(x0), y1: String(y0), x2: String(x1), y2: String(y0), class: 'we-axis' }))
+      plot.appendChild(mk('line', { x1: String(x0), y1: String(y0), x2: String(x0), y2: String(y1), class: 'we-axis' }))
+      // x ticks (seconds)
+      for (let t = 0; t <= T + 1e-9; t += 10) {
+        const xx = px(t)
+        plot.appendChild(mk('line', { x1: String(xx), y1: String(y0), x2: String(xx), y2: String(y0 + 4), class: 'we-tick' }))
+        const tl = mk('text', { x: String(xx), y: String(y0 + 15), class: 'we-ticklab' })
+        tl.textContent = t + 's'
+        plot.appendChild(tl)
+      }
+      const xlab = mk('text', { x: String((x0 + x1) / 2), y: String(H - 4), class: 'we-axlab' })
+      xlab.textContent = 'seconds of flight since lift-off  →'
+      plot.appendChild(xlab)
+      const ylab = mk('text', { x: String(14), y: String((y0 + y1) / 2), class: 'we-axlab', transform: `rotate(-90 14 ${(y0 + y1) / 2})` })
+      ylab.textContent = 'BH  (schematic)  →'
+      plot.appendChild(ylab)
+
+      // the 16-bit signed ceiling
+      const cy = py(MAX)
+      plot.appendChild(mk('line', { x1: String(x0), y1: String(cy), x2: String(x1), y2: String(cy), class: 'we-ceil' }))
+      const cl = mk('text', { x: String(x1 + 4), y: String(cy - 5), class: 'we-ceil-lab' })
+      cl.textContent = '16-bit ceiling'
+      plot.appendChild(cl)
+      const cl2 = mk('text', { x: String(x1 + 4), y: String(cy + 10), class: 'we-ceil-val' })
+      cl2.textContent = '32767'
+      plot.appendChild(cl2)
+
+      // faint reference envelopes
+      plot.appendChild(mk('path', { d: rampPath(work.ramp_a4), class: 'we-ref', id: 'we-ref4' }))
+      plot.appendChild(mk('path', { d: rampPath(work.ramp_a5), class: 'we-ref', id: 'we-ref5' }))
+      const r4l = mk('text', { x: String(px(T) - 2), y: String(py(work.ramp_a4[work.ramp_a4.length - 1][1]) - 4), class: 'we-reflab' })
+      r4l.textContent = 'Ariane 4'
+      plot.appendChild(r4l)
+      const r5l = mk('text', { x: String(px(31)), y: String(py(bh(31, C.ratio_a5)) - 6), class: 'we-reflab' })
+      r5l.textContent = 'Ariane 5'
+      plot.appendChild(r5l)
+
+      // dynamic layers appended once, updated by id
+      plot.appendChild(mk('path', { d: '', class: 'we-live', id: 'we-live' }))
+      plot.appendChild(mk('line', { x1: String(x0), y1: String(y1), x2: String(x0), y2: String(y0), class: 'we-head', id: 'we-head' }))
+      plot.appendChild(mk('circle', { cx: '-10', cy: '-10', r: '5', class: 'we-cross', id: 'we-cross' }))
+      const xtLab = mk('text', { x: '-10', y: '-10', class: 'we-crosslab', id: 'we-crosslab' })
+      xtLab.textContent = 'OPERAND ERROR'
+      plot.appendChild(xtLab)
+      plot.appendChild(mk('circle', { cx: '-10', cy: '-10', r: '3.5', class: 'we-dot', id: 'we-dot' }))
+    }
+
+    // --- elements ---------------------------------------------------------------
+    const ratioEl = document.getElementById('we-ratio') as HTMLInputElement | null
+    const clockEl = document.getElementById('we-clock') as HTMLInputElement | null
+    const guardEl = document.getElementById('we-guard') as HTMLInputElement | null
+    const playEl = document.getElementById('we-play') as HTMLButtonElement | null
+    const ratioTag = document.getElementById('we-ratio-tag')
+    const clockTag = document.getElementById('we-clock-tag')
+    const convEl = document.getElementById('we-conv')
+    const sri2El = document.getElementById('we-sri2')
+    const sri1El = document.getElementById('we-sri1')
+    const flightEl = document.getElementById('we-flight')
+    const readEl = document.getElementById('we-read')
+
+    const near = (a: number, b: number, tol: number): boolean => Math.abs(a - b) <= tol
+
+    const setState = (el: HTMLElement | null, txt: string, cls: string): void => {
+      if (!el) return
+      el.textContent = txt
+      el.className = 'sri-state ' + cls
+    }
+
+    const render = (): void => {
+      const ratio = ratioEl ? (parseInt(ratioEl.value, 10) || 20) / 100 : 0.2
+      const t = clockEl ? (parseInt(clockEl.value, 10) || 0) / 10 : 40
+      const guarded = guardEl ? guardEl.checked : false
+      const xt = crossing(ratio)                 // crossing time, or null
+      const failedNow = xt !== null && t >= xt && !guarded
+
+      // tags
+      if (ratioTag) {
+        let name = 'custom'
+        if (near(ratio, C.ratio_a4, 0.005)) name = 'Ariane 4'
+        else if (near(ratio, C.critical_ratio, 0.005)) name = 'critical envelope'
+        else if (near(ratio, C.ratio_a5, 0.005)) name = 'Ariane 5'
+        ratioTag.textContent = `${name} · ${ratio.toFixed(2)}×`
+      }
+      if (clockTag) clockTag.textContent = `t = ${t.toFixed(1)} s`
+
+      // live ramp up to t
+      const live = document.getElementById('we-live')
+      if (live) {
+        const steps = 80
+        let d = ''
+        for (let i = 0; i <= steps; i++) {
+          const tt = (t * i) / steps
+          d += `${i === 0 ? 'M' : 'L'} ${px(tt).toFixed(1)} ${py(bh(tt, ratio)).toFixed(1)} `
+        }
+        live.setAttribute('d', d.trim())
+        live.setAttribute('class', failedNow ? 'we-live failed' : 'we-live')
+      }
+      // playhead + current dot
+      const head = document.getElementById('we-head')
+      if (head) { head.setAttribute('x1', String(px(t))); head.setAttribute('x2', String(px(t))) }
+      const dot = document.getElementById('we-dot')
+      if (dot) { dot.setAttribute('cx', String(px(t))); dot.setAttribute('cy', String(py(bh(t, ratio)))) }
+
+      // crossing marker
+      const cross = document.getElementById('we-cross')
+      const crossLab = document.getElementById('we-crosslab')
+      const showCross = xt !== null && t >= xt && !guarded
+      if (cross && crossLab) {
+        if (showCross && xt !== null) {
+          cross.setAttribute('cx', String(px(xt))); cross.setAttribute('cy', String(py(MAX)))
+          crossLab.setAttribute('x', String(px(xt) + 8)); crossLab.setAttribute('y', String(py(MAX) - 8))
+          cross.setAttribute('opacity', '1'); crossLab.setAttribute('opacity', '1')
+        } else {
+          cross.setAttribute('opacity', '0'); crossLab.setAttribute('opacity', '0')
+        }
+      }
+
+      // live conversion readout
+      const raw = bh(t, ratio)
+      const n = toInt16(raw)
+      if (convEl) {
+        if (overflow(n)) {
+          if (guarded) {
+            convEl.textContent = `BH = ${raw.toFixed(1)}  →  ${n} exceeds 32767  →  GUARDED: clamped, exception caught`
+            convEl.className = 'conv-body guarded'
+          } else {
+            convEl.textContent = `BH = ${raw.toFixed(1)}  →  to_int16(${n})  →  OPERAND ERROR  (${n} > 32767)`
+            convEl.className = 'conv-body err'
+          }
+        } else {
+          convEl.textContent = `BH = ${raw.toFixed(1)}  →  to_int16(${n})  =  ${n}  ✓`
+          convEl.className = 'conv-body ok'
+        }
+      }
+
+      // SRI status + flight
+      if (failedNow && xt !== null) {
+        const activeFail = xt + C.active_fail_offset
+        const activeDown = t >= activeFail
+        setState(sri1El, `SHUTDOWN · ${xt.toFixed(1)} s`, 'down')
+        setState(sri2El, activeDown ? `SHUTDOWN · ${activeFail.toFixed(2)} s` : 'aligning', activeDown ? 'down' : 'ok')
+        if (flightEl) {
+          flightEl.textContent = activeDown
+            ? 'guidance lost — diagnostic bits read as flight data — break-up'
+            : 'back-up down — active follows in 0.05 s'
+          flightEl.className = 'flight-state lost'
+        }
+      } else {
+        setState(sri1El, 'aligning', 'ok')
+        setState(sri2El, 'aligning', 'ok')
+        if (flightEl) {
+          flightEl.textContent = guarded && xt !== null ? 'flight nominal — conversion guarded' : 'flight nominal'
+          flightEl.className = 'flight-state'
+        }
+      }
+
+      // one-line readout
+      if (readEl) {
+        if (xt === null) {
+          readEl.textContent = `${ratio.toFixed(2)}× envelope · BH peaks at ${bh(T, ratio).toFixed(0)} < 32767 · the same conversion holds all flight · no error.`
+        } else if (guarded) {
+          readEl.textContent = `${ratio.toFixed(2)}× envelope · BH would cross at ${xt.toFixed(1)} s · guarded, so the bound-check catches it and the flight continues.`
+        } else {
+          readEl.textContent = `${ratio.toFixed(2)}× envelope · BH crosses 32767 at ${xt.toFixed(1)} s · unprotected · the identical routine raises and the SRIs halt.`
+        }
+      }
+    }
+
+    // --- play the flight clock (requestAnimationFrame; CSP-clean) ----------------
+    let playing = false
+    let raf = 0
+    const tick = (): void => {
+      if (!clockEl) return
+      let v = parseInt(clockEl.value, 10) || 0
+      v += 3
+      if (v >= 400) { v = 400; playing = false; if (playEl) playEl.innerHTML = '&#9658; run flight' }
+      clockEl.value = String(v)
+      render()
+      if (playing) raf = requestAnimationFrame(tick)
+    }
+    if (playEl) {
+      playEl.addEventListener('click', () => {
+        if (playing) {
+          playing = false; cancelAnimationFrame(raf); playEl.innerHTML = '&#9658; run flight'
+          return
+        }
+        if (clockEl && parseInt(clockEl.value, 10) >= 400) clockEl.value = '0'
+        playing = true; playEl.innerHTML = '&#10073;&#10073; pause'; raf = requestAnimationFrame(tick)
+      })
+    }
+
+    if (ratioEl) ratioEl.addEventListener('input', render)
+    if (clockEl) clockEl.addEventListener('input', () => {
+      if (playing) { playing = false; cancelAnimationFrame(raf); if (playEl) playEl.innerHTML = '&#9658; run flight' }
+      render()
+    })
+    if (guardEl) guardEl.addEventListener('change', render)
+    render()
+  }
+</script>
+
+<style>
+  .we-work {
+    --ink: #16181d; --paper: #f7f5ef; --line: #c9c4b6; --dim: #6a6656;
+    --safe: #2f6f4f; --warn: #b0532a; --dead: #b0322a; --ref: #8a8578;
+    max-width: 820px; margin: 0 auto; color: var(--ink);
+    font-family: ui-serif, Georgia, "Times New Roman", serif; line-height: 1.55;
+  }
+  @media (prefers-color-scheme: dark) {
+    .we-work { --ink: #e9e6dd; --paper: #16171b; --line: #3a3a40; --dim: #9a968a;
+      --safe: #6fd0a0; --warn: #e0906a; --dead: #ec7a6a; --ref: #6a675e; }
+  }
+  :root[data-theme='dark'] .we-work { --ink: #e9e6dd; --paper: #16171b; --line: #3a3a40; --dim: #9a968a;
+    --safe: #6fd0a0; --warn: #e0906a; --dead: #ec7a6a; --ref: #6a675e; }
+  :root[data-theme='light'] .we-work { --ink: #16181d; --paper: #f7f5ef; --line: #c9c4b6; --dim: #6a6656;
+    --safe: #2f6f4f; --warn: #b0532a; --dead: #b0322a; --ref: #8a8578; }
+
+  .we-work h1 { font-size: 1.9rem; margin: 0 0 .1rem; letter-spacing: -0.01em; }
+  .we-work .sub { color: var(--dim); font-style: italic; margin-bottom: 1rem; }
+  .we-work .lede { font-size: 1.05rem; }
+  .we-work .mono { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; font-size: .9em; }
+
+  .rig { margin: 1.6rem 0 1rem; border: 1px solid var(--line); border-radius: 3px; background: var(--paper); padding: .8rem .8rem .7rem; }
+  .controls { display: flex; flex-direction: column; gap: .55rem; margin-bottom: .7rem; }
+  .ctl { display: flex; align-items: center; gap: .7rem; flex-wrap: wrap; }
+  .ctl label { color: var(--dim); font-style: italic; min-width: 9.5rem; }
+  .ctl-check label { min-width: 0; }
+  .we-work input[type='range'] { flex: 1 1 220px; min-width: 170px; accent-color: var(--warn); cursor: pointer; }
+  .we-work input[type='checkbox'] { accent-color: var(--safe); cursor: pointer; }
+  .tag { font-family: ui-monospace, monospace; font-size: .76rem; padding: .12rem .5rem; border: 1px solid var(--line);
+    border-radius: 2px; white-space: nowrap; color: var(--dim); }
+  .play { font-family: ui-monospace, monospace; font-size: .76rem; padding: .18rem .6rem; margin-left: auto;
+    border: 1px solid var(--line); border-radius: 2px; background: transparent; color: var(--ink); cursor: pointer; }
+  .play:hover { border-color: var(--warn); color: var(--warn); }
+
+  .panel-tag { font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; color: var(--dim);
+    font-family: ui-monospace, monospace; margin: .2rem 0 .3rem; }
+  .plot svg { width: 100%; height: auto; display: block; border: 1px solid var(--line); border-radius: 2px; background: var(--paper); }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; margin-top: .8rem; }
+  @media (max-width: 640px) { .two { grid-template-columns: 1fr; } }
+  .cell { border: 1px solid var(--line); border-radius: 2px; padding: .5rem .6rem; background: var(--paper); }
+  .conv-body { font-family: ui-monospace, monospace; font-size: .82rem; line-height: 1.5; word-break: break-word; min-height: 2.4em; color: var(--ink); }
+  .conv-body.ok { color: var(--safe); }
+  .conv-body.err { color: var(--dead); font-weight: 600; }
+  .conv-body.guarded { color: var(--warn); }
+  .sri-row { display: flex; justify-content: space-between; align-items: baseline; gap: .5rem; font-size: .82rem; margin: .1rem 0; }
+  .sri-name { color: var(--dim); font-family: ui-monospace, monospace; font-size: .74rem; }
+  .sri-state { font-family: ui-monospace, monospace; font-size: .76rem; padding: .06rem .4rem; border: 1px solid var(--line); border-radius: 2px; }
+  .sri-state.ok { color: var(--safe); border-color: var(--safe); }
+  .sri-state.down { color: var(--dead); border-color: var(--dead); font-weight: 600; }
+  .flight-state { margin-top: .35rem; padding-top: .3rem; border-top: 1px solid var(--line); font-size: .76rem;
+    font-family: ui-monospace, monospace; color: var(--dim); }
+  .flight-state.lost { color: var(--dead); font-weight: 600; }
+  .readout { font-family: ui-monospace, monospace; font-size: .78rem; color: var(--dim);
+    border-top: 1px solid var(--line); margin-top: .7rem; padding-top: .5rem; min-height: 1.2em; }
+
+  /* svg classes */
+  .we-axis { stroke: var(--line); stroke-width: 1.1; }
+  .we-tick { stroke: var(--line); stroke-width: 1; }
+  .we-ticklab { fill: var(--dim); font-size: 9px; font-family: ui-monospace, monospace; text-anchor: middle; }
+  .we-axlab { fill: var(--dim); font-size: 10px; font-style: italic; text-anchor: middle; font-family: ui-serif, Georgia, serif; }
+  .we-ceil { stroke: var(--dead); stroke-width: 1.4; stroke-dasharray: 6 3; }
+  .we-ceil-lab { fill: var(--dead); font-size: 9px; font-family: ui-monospace, monospace; }
+  .we-ceil-val { fill: var(--dead); font-size: 10px; font-family: ui-monospace, monospace; font-weight: 600; }
+  .we-ref { fill: none; stroke: var(--ref); stroke-width: 1.1; stroke-dasharray: 2 3; opacity: .8; }
+  .we-reflab { fill: var(--ref); font-size: 9px; font-style: italic; font-family: ui-serif, Georgia, serif; text-anchor: end; }
+  .we-live { fill: none; stroke: var(--safe); stroke-width: 2.2; }
+  .we-live.failed { stroke: var(--dead); }
+  .we-head { stroke: var(--warn); stroke-width: 1; opacity: .55; }
+  .we-dot { fill: var(--ink); stroke: var(--paper); stroke-width: 1.2; }
+  .we-cross { fill: var(--dead); stroke: var(--paper); stroke-width: 1.4; }
+  .we-crosslab { fill: var(--dead); font-size: 11px; font-weight: 700; font-family: ui-monospace, monospace; }
+
+  .note { border-top: 1px solid var(--line); padding-top: .9rem; margin-top: 1.2rem; font-size: .96rem; }
+  .caveat { color: var(--dim); font-size: .88rem; margin-top: .6rem; }
+  .sig { display: flex; justify-content: space-between; flex-wrap: wrap; gap: .5rem; color: var(--dim);
+    font-size: .8rem; border-top: 1px solid var(--line); margin-top: 1.2rem; padding-top: .6rem; font-style: italic; }
+  .sig .src { font-family: ui-monospace, monospace; font-style: normal; font-size: .72rem; text-align: right; max-width: 60%; }
+</style>
