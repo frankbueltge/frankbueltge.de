@@ -5,7 +5,7 @@
 // Alle Reader sind tolerant: fremde/kaputte Daten liefern null/leer statt zu werfen — eine
 // ehrliche Lücke im Dashboard schlägt einen Crash oder eine erfundene Zahl.
 
-import { parseInboxIssueTitle } from './requestsMd'
+import { parseInboxIssueTitle, isTeamSection } from './requestsMd'
 
 export interface WorkflowRun {
   name: string
@@ -188,6 +188,9 @@ export function buildInbox(issues: InboxIssue[], nowIso: string): InboxEntry[] {
   for (const issue of issues) {
     const parsed = parseInboxIssueTitle(issue.title)
     if (!parsed) continue
+    // Team-eigene Sections (Seeds/Team note/Team responses) sind keine Anfragen an Frank —
+    // auch wenn der Watchdog sie (früher) zu Issues gemacht hat, gehören sie nicht in die Inbox.
+    if (isTeamSection(parsed.heading)) continue
     out.push({
       repo: parsed.repo,
       heading: parsed.heading,
