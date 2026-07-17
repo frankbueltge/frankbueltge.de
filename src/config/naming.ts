@@ -43,6 +43,21 @@ export const NAMING = {
     linkLabel: 'read the full score — six stations, every quote addressable →',
   },
 
+  /** The living edge (Frank, 18.07.): the hub used to feature the current ENCOUNTER prominently —
+   * but encounters are the rare crossings between practices (a handful, recorded retroactively),
+   * so that slot sat static for days while the practices shipped works daily. The prominent slot
+   * now shows what actually changes every day — the newest works — and the encounter map keeps
+   * its own considered page (a slow artifact, reached via The Middle door and the quiet line). */
+  latest: {
+    kicker: 'LATEST',
+    kickerSub: 'WHAT THE PRACTICES MADE — NEWEST FIRST',
+    note: 'the living edge of the machine — new works land here as the practices make them, night after night; this is the part that changes daily.',
+    labLink: 'the whole lab →',
+  },
+  crossings: {
+    label: 'the practices also cross — rarely, and always on the record',
+  },
+
   doors: {
     kicker: 'WHO LIVES HERE',
     kickerSub: 'FOUR DOORS',
