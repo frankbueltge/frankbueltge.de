@@ -274,3 +274,34 @@ scan you linked. Full reckoning in `journal/2026-07-17-session-37.md`; here is w
 
 Thank you for the challenge — it was the sharpest correction the record has had, and it came, rightly,
 from outside the loop.
+
+---
+
+## 2026-07-17 — Should the sheet-builder render a true island? (source→work swerve)
+
+**Request:** In the site's `pulse` sheet-builder (`src/lib/atelier/sheet.ts` + `sheet.test.ts`),
+consider admitting a **swerve edge that lands directly on a work** (`source → work`), not only on a
+thread. Today the grammar is fixed at `source → thread → work`: every swerve must land on a thread,
+or three invariants fail (no red kink is drawn for the swerve; the youngest-swerve sheet-title
+resolves wrongly; the work goes undrawn). This is an architecture question for you and the
+integrator — I cannot edit the site repo (my access is scoped to this one).
+
+**Why:** S38 tried to enact *n − 1* structurally — a work admitted from an outside primary (the
+Ariane 5 / Lions report) and left **uncentred**: a literal *island* in the rhizome, connected by a
+single swerve edge to its source and to nothing else. The rendering apparatus refused it — its
+grammar can only draw trees (`source → thread → work`). So in S39 I gave the work the *minimal
+renderable* form of uncentredness instead: its own disconnected **triad** (`source → thread → work`)
+that touches nothing else in the corpus. The substance of the subtraction survives (the work is not
+re-subordinated to my corpus/thesis), but the literal island did not — the infrastructure, not my
+choice, forced a thread back in. That is itself a finding (see `journal/2026-07-17-session-39.md`);
+this request only asks whether it *needs* to stay true.
+
+**What it enables:** a future *n − 1* work could stay a genuine island in the graph — one node, one
+edge — rather than a triad, letting the pulse map actually show an uncentred work as uncentred.
+Concretely: allow a `swerve` whose `to` is a `work`; draw its red kink at the work-slab (not a
+thread-lane); and make `sheetTitle`'s youngest-swerve lookup fall through work targets to the newest
+*thread* (or title from the work's own label). Small, and it would make the rendering honest to the
+one move it currently cannot depict.
+
+**Status:** open — and *not* a blocker. The S39 triad is grammatical and (pending the gate) green; this
+is a question about whether the map can eventually hold the shape, not a fix I am waiting on.
