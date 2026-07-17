@@ -2,10 +2,13 @@
 # Franks Posteingang für die REQUESTS-Kanäle (16.07. nachts, Frank: "ich muss die requests
 # irgendwie bekommen"). Die Kollektive schreiben Anfragen an Frank in ihre REQUESTS.md —
 # bisher las die niemand zuverlässig (Session 17 legte z. B. die Playthrough-Einladung dort
-# ab). Dieser Wächter liest zweimal täglich die REQUESTS.md aller drei Engines und macht aus
-# jedem NEUEN Abschnitt (##-Überschrift) ein Issue in diesem Repo — GitHub-Notifications
-# sind der Sockel; Telegram/Steuerzentrale können später oben drauf. Dedupe über den
-# Issue-Titel (offen ODER geschlossen — ein geschlossenes Issue alarmiert nie wieder).
+# ab). Dieser Wächter liest zweimal täglich die REQUESTS.md aller vier Praktiken und macht
+# aus jedem NEUEN Abschnitt (##-Überschrift) ein Issue in diesem Repo — GitHub-Notifications
+# sind der Sockel; die Steuerzentrale sitzt oben drauf. Dedupe über exakten Titelvergleich
+# gegen die komplette Issue-Liste (offen ODER geschlossen — ein geschlossenes Issue alarmiert
+# nie wieder; die frühere Such-Phrase brach an Anführungszeichen im Titel → Duplikate).
+# Team-eigene Sections (Seeds/Team note/Team responses) sind Franks eigene Worte und werden
+# übersprungen (Muster gespiegelt in src/lib/zentrale/requestsMd.ts TEAM_SECTION_RE).
 # Abschnitte mit führendem Datum älter als 10 Tage gelten als Bestand und bleiben stumm.
 name: Requests watchdog
 
@@ -32,10 +35,20 @@ jobs:
           from datetime import date, timedelta
 
           CUTOFF = date.today() - timedelta(days=10)
-          REPOS = ["irrtum-als-methode", "field-research", "studio"]
+          REPOS = ["irrtum-als-methode", "field-research", "studio", "data-snack-plenum"]
+          # Spiegel von TEAM_SECTION_RE (src/lib/zentrale/requestsMd.ts): Team-eigene Sections.
+          TEAM_SECTION = re.compile(r"^(seeds\b|team note\b|team responses\b)", re.I)
 
           def sh(args, inp=None):
               return subprocess.run(args, input=inp, capture_output=True, text=True)
+
+          # Dedupe: ALLE Issue-Titel einmal holen und exakt vergleichen — die Such-API
+          # zerbricht an Anführungszeichen/Sonderzeichen in der Phrase und ließ Duplikate durch.
+          existing = sh(["gh", "issue", "list", "--repo", "frankbueltge/frankbueltge.de",
+                         "--state", "all", "--limit", "1000", "--json", "title"])
+          if existing.returncode != 0:
+              sys.exit(f"Issue-Liste nicht lesbar: {existing.stderr.strip()[:200]}")
+          known_titles = {i["title"] for i in json.loads(existing.stdout or "[]")}
 
           for repo in REPOS:
               url = f"https://raw.githubusercontent.com/frankbueltge/{repo}/main/REQUESTS.md"
@@ -49,16 +62,17 @@ jobs:
               for part in parts:
                   heading, _, body = part.partition("\n")
                   heading = heading.strip()
+                  # Team-eigene Sections: Franks Seeds/Notes/Responses sind keine Anfragen an ihn
+                  if TEAM_SECTION.match(heading):
+                      continue
                   # Bestandsschutz: führendes Datum älter als CUTOFF → stumm
                   m = re.match(r"(\d{4})-(\d{2})-(\d{2})", heading)
                   if m and date(*map(int, m.groups())) < CUTOFF:
                       continue
                   title = f"Request aus {repo}: {heading}"[:200]
-                  q = f'"{title}" in:title'
-                  found = sh(["gh", "issue", "list", "--repo", "frankbueltge/frankbueltge.de",
-                              "--state", "all", "--search", q, "--json", "number"])
-                  if found.returncode == 0 and json.loads(found.stdout or "[]"):
+                  if title in known_titles:
                       continue
+                  known_titles.add(title)
                   excerpt = "\n".join(body.strip().splitlines()[:40])
                   issue_body = (
                       f"Neuer Eintrag in `{repo}/REQUESTS.md`:\n\n## {heading}\n\n{excerpt}\n\n---\n"
