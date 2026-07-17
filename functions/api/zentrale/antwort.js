@@ -294,7 +294,8 @@ export async function onRequestPost(context) {
   if (!checkToken(request.headers.get('x-zentrale-auth'), env.ZENTRALE_SECRET)) {
     return json(401, { ok: false, code: 'unauthorized' })
   }
-  const token = env.ZENTRALE_GITHUB_TOKEN
+  // trim wie in status.js: Whitespace aus dem Secret-Einfügen darf den PAT nicht entwerten.
+  const token = (env.ZENTRALE_GITHUB_TOKEN || '').trim()
   if (!token) return json(503, { ok: false, code: 'not-connected' })
 
   let body
