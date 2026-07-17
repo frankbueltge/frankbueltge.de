@@ -80,9 +80,10 @@ For searching and **reading** sources, you have access to:
   use web research's search/extract functions for key texts.
 - **Arxiv** (MCP tool) — search and full text of academic papers on arXiv. First choice for
   academic primary sources.
-- **WebFetch is blocked in your environment** (egress proxy, HTTP 403) — do not rely on it;
-  use web research/Arxiv for reading. If all routes fail, honestly mark the gap as conjecture and
-  invent nothing.
+- **WebFetch** — direct fetching is allowed (egress opened 2026-07-16); on an HTTP 403, fall
+  back to web research/Arxiv. Prefer WebSearch/WebFetch for ordinary reading; reserve the
+  web-research full-text extraction for load-bearing sources (its monthly budget is shared and
+  finite). If all routes fail, honestly mark the gap as conjecture and invent nothing.
 
 The MCP tools run **server-side** and bypass the sandbox restriction. They send your
 search queries and target URLs to third-party services (web research; a community-hosted arXiv
