@@ -1,0 +1,1266 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>No Way of Knowing</title>
+<style>
+  :root{
+    --bg:#0d0d0d;
+    --raised:#131313;
+    --text:#d4d4d4;
+    --dim:#9a9a9a;
+    --accent:#c0392b;
+    --green:#2e7d4f;
+    --amber:#a6822f;
+    --border:#2a2a2a;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", "DejaVu Sans Mono", monospace;
+    font-size:15px;
+    line-height:1.55;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+  }
+  a{color:var(--text);}
+  a:visited{color:var(--text);}
+  button{
+    font-family:inherit;
+    font-size:inherit;
+    color:var(--text);
+    background:var(--raised);
+    border:1px solid var(--border);
+    cursor:pointer;
+  }
+  button:disabled{
+    cursor:default;
+    opacity:0.45;
+  }
+  :focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:2px;
+  }
+  .visually-hidden{
+    position:absolute;
+    width:1px;height:1px;
+    padding:0;margin:-1px;
+    overflow:hidden;
+    clip:rect(0,0,0,0);
+    white-space:nowrap;
+    border:0;
+  }
+
+  /* ---- header ---- */
+  header.topstrip{
+    position:sticky;
+    top:0;
+    z-index:20;
+    background:var(--bg);
+    border-bottom:1px solid var(--border);
+    padding:10px 16px;
+  }
+  header.topstrip .row1{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:12px;
+  }
+  header.topstrip h1{
+    font-size:14px;
+    font-weight:700;
+    letter-spacing:0.08em;
+    margin:0;
+  }
+  .tagbtn{
+    font-size:12px;
+    padding:3px 8px;
+    color:var(--amber);
+    border-color:var(--border);
+  }
+  .tagbtn:hover{ border-color:var(--amber); }
+  header.topstrip .row2{
+    margin-top:6px;
+    font-size:12px;
+    letter-spacing:0.04em;
+    color:var(--dim);
+  }
+  .statustag{
+    color:var(--text);
+    border:1px solid var(--border);
+    padding:2px 6px;
+    display:inline-block;
+  }
+  .statustag .stateword{ color:var(--accent); }
+  .statusgloss{
+    color:var(--dim);
+    margin-left:8px;
+    display:inline-block;
+  }
+
+  /* ---- context strip ---- */
+  .context-strip{
+    padding:14px 16px 0 16px;
+    color:var(--dim);
+    font-size:13px;
+    max-width:64ch;
+  }
+  .context-strip[hidden]{ display:none; }
+
+  /* ---- main / content ---- */
+  main{
+    flex:1;
+    padding:14px 16px 24px 16px;
+    max-width:72ch;
+  }
+  #content{
+    min-height:9em;
+    margin:14px 0;
+  }
+  .face{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .line{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:baseline;
+    gap:8px;
+  }
+  .line.comment{
+    font-style:normal;
+  }
+  .tag{
+    font-size:10px;
+    letter-spacing:0.06em;
+    padding:1px 5px;
+    border:1px solid var(--border);
+    flex:0 0 auto;
+    align-self:flex-start;
+  }
+  .t-sourced{ color:var(--green); border-color:var(--green); }
+  .t-imagined{ color:var(--amber); border-color:var(--amber); }
+  .frame{
+    color:var(--dim);
+    font-size:13px;
+  }
+  .qtext{
+    color:var(--text);
+  }
+  .attribution{
+    color:var(--dim);
+    font-size:13px;
+  }
+  .face-role{
+    padding-bottom:8px;
+    border-bottom:1px solid var(--border);
+    margin-bottom:4px;
+  }
+  .roletext{
+    font-size:12px;
+    letter-spacing:0.04em;
+    color:var(--dim);
+    text-transform:uppercase;
+  }
+  .stat{
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+    margin-top:6px;
+  }
+  .statnum{
+    font-size:28px;
+    font-weight:700;
+    letter-spacing:0.02em;
+    color:var(--text);
+  }
+  .srcline{
+    font-size:11px;
+    color:var(--dim);
+  }
+  .srclink{
+    font-size:11px;
+    color:var(--dim);
+    text-decoration:underline;
+  }
+  .hinge{
+    margin-top:10px;
+    padding:10px 12px;
+    border-left:2px solid var(--amber);
+    background:var(--raised);
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+  .hingetext{ color:var(--text); }
+  .toll{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    margin-top:4px;
+    padding:8px 10px;
+    border:1px solid var(--border);
+  }
+  .answer-slot{
+    margin-top:10px;
+    padding:12px 14px;
+    border:1px solid var(--accent);
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .slot-label{
+    color:var(--accent);
+    font-weight:700;
+    letter-spacing:0.04em;
+    font-size:13px;
+  }
+  .slot-safeguard{
+    color:var(--accent);
+    font-weight:700;
+  }
+  .cursor{
+    display:inline-block;
+    color:var(--text);
+    animation:blink 1s steps(1) infinite;
+  }
+  @keyframes blink{ 50%{ opacity:0; } }
+  @media (prefers-reduced-motion: reduce){
+    .cursor{ animation:none; opacity:1; }
+  }
+
+  /* ---- control slot ---- */
+  .control-slot{
+    margin:18px 0;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    align-items:flex-start;
+  }
+  .control-btn{
+    padding:10px 14px;
+    font-size:13px;
+    letter-spacing:0.03em;
+    color:var(--text);
+    border:1px solid var(--text);
+    background:var(--raised);
+  }
+  .control-btn:hover:not(:disabled){ border-color:var(--accent); color:var(--accent); }
+  .control-btn.return-btn{ border-color:var(--green); color:var(--green); }
+  .control-btn.return-btn:hover:not(:disabled){ border-color:var(--text); color:var(--text); }
+  .microcopy{
+    font-size:12px;
+    color:var(--dim);
+    max-width:56ch;
+    display:flex;
+    gap:8px;
+    align-items:flex-start;
+  }
+
+  /* ---- case rail ---- */
+  .rail-wrap[hidden]{ display:none; }
+  .rail-wrap{
+    margin-top:18px;
+    padding-top:14px;
+    border-top:1px solid var(--border);
+  }
+  .rail{
+    display:flex;
+    gap:16px;
+  }
+  .rail-btn{
+    padding:4px 8px;
+    font-size:12px;
+    letter-spacing:0.04em;
+    border-color:var(--border);
+  }
+  .rail-btn[aria-current="true"]{
+    color:var(--accent);
+    border-color:var(--accent);
+  }
+  .rail-btn:hover:not([aria-current="true"]){ border-color:var(--text); }
+  .serial-line{
+    margin-top:8px;
+    font-size:11px;
+    color:var(--dim);
+  }
+
+  /* ---- self-test strip ---- */
+  .selftest-strip{
+    position:sticky;
+    bottom:0;
+    z-index:20;
+    background:var(--raised);
+    border-top:1px solid var(--border);
+    padding:8px 16px;
+    font-size:11px;
+    color:var(--dim);
+  }
+  .selftest-frame{ margin:0 0 3px 0; }
+  .selftest-result{ margin:0; color:var(--dim); font-weight:700; letter-spacing:0.02em; }
+  .selftest-result[data-state="pass"]{ color:var(--green); }
+  .selftest-result[data-state="fail"]{ color:var(--accent); }
+
+  /* ---- honesty overlay ---- */
+  .overlay{
+    position:fixed;
+    inset:0;
+    z-index:50;
+    background:rgba(0,0,0,0.78);
+    display:flex;
+    align-items:flex-start;
+    justify-content:center;
+    padding:6vh 16px;
+    overflow-y:auto;
+  }
+  .overlay[hidden]{ display:none; }
+  .panel{
+    background:var(--raised);
+    border:1px solid var(--border);
+    max-width:64ch;
+    width:100%;
+    padding:20px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+  .panel h2{
+    font-size:14px;
+    margin:0;
+    letter-spacing:0.06em;
+  }
+  .panel .closebtn{
+    align-self:flex-end;
+    font-size:12px;
+    padding:4px 8px;
+  }
+  .panel .block h3{
+    font-size:12px;
+    color:var(--amber);
+    margin:0 0 4px 0;
+    letter-spacing:0.06em;
+  }
+  .panel .block.sourced h3{ color:var(--green); }
+  .panel .block p{
+    margin:0;
+    font-size:13px;
+    color:var(--text);
+  }
+  .panel .concession{
+    font-size:12px;
+    color:var(--dim);
+    border-top:1px solid var(--border);
+    padding-top:10px;
+  }
+
+  /* ---- noscript fallback ---- */
+  noscript .ns-wrap{
+    display:block;
+    max-width:72ch;
+    margin:0 auto;
+    padding:16px;
+  }
+  noscript .ns-case{
+    border-top:2px solid var(--border);
+    padding-top:16px;
+    margin-top:24px;
+  }
+  noscript h2{ font-size:14px; letter-spacing:0.05em; }
+  noscript h3{ font-size:12px; color:var(--amber); }
+  noscript .ns-note{ color:var(--dim); font-size:13px; font-style:italic; }
+  noscript .ns-quote{ margin:8px 0; }
+  noscript .ns-attr{ color:var(--dim); font-size:13px; }
+  noscript .ns-answer{ border:1px solid var(--accent); padding:10px 12px; margin-top:10px; }
+</style>
+</head>
+<body>
+
+<div id="app">
+<header class="topstrip">
+  <div class="row1">
+    <h1>NO WAY OF KNOWING</h1>
+    <button type="button" id="tagBtn" class="tagbtn">[SOURCED / IMAGINED &#9656;]</button>
+  </div>
+  <div class="row2">
+    <span id="statusTag" class="statustag">CASE 01 &middot; STATUS: CLOSED PAIR</span>
+    <span id="statusGloss" class="statusgloss">A CLOSED PAIR &mdash; both sentences said, on the record</span>
+  </div>
+</header>
+
+<p class="context-strip" id="captionEl">What the machine was claimed to do. On the record. In the state&rsquo;s own words.</p>
+
+<main>
+  <div id="content" aria-live="polite" aria-atomic="false" tabindex="-1"></div>
+
+  <div id="controlSlot" class="control-slot"></div>
+
+  <div id="railWrap" class="rail-wrap">
+    <div class="rail" role="group" aria-label="Case selector">
+      <button type="button" class="rail-btn" id="railBtn1" data-case="1">CASE 01 [&#9679;]</button>
+      <button type="button" class="rail-btn" id="railBtn2" data-case="2">CASE 02 [&#9675;]</button>
+    </div>
+    <p class="serial-line">2 catches on record. Case 02 unresolved. Last checked 17 July 2026.</p>
+  </div>
+</main>
+
+<div class="selftest-strip">
+  <p class="selftest-frame">This page checks itself: it verifies in your browser that the two faces are never shown at once, and prints the result here.</p>
+  <p class="selftest-result" id="selftestResult">SELF-TEST: RUNNING&hellip;</p>
+</div>
+
+<div class="overlay" id="honestyOverlay" hidden>
+  <div class="panel" role="dialog" aria-modal="true" aria-labelledby="honestyTitle">
+    <button type="button" class="closebtn control-btn" id="honestyClose">CLOSE [x]</button>
+    <h2 id="honestyTitle">SOURCED / IMAGINED</h2>
+    <div class="block sourced">
+      <h3>WHAT&rsquo;S SOURCED</h3>
+      <p id="honestySourced"></p>
+    </div>
+    <div class="block imagined">
+      <h3>WHAT&rsquo;S BUILT / IMAGINED</h3>
+      <p id="honestyImagined"></p>
+    </div>
+    <div class="block">
+      <h3>NAMING</h3>
+      <p id="honestyNaming"></p>
+    </div>
+    <div class="block">
+      <h3>MONITORING</h3>
+      <p id="honestyMonitoring"></p>
+    </div>
+    <div class="block">
+      <h3>MOTION</h3>
+      <p>The erasure is real: pressing the question removes the first face&rsquo;s sentences from the page before the second is built from nothing &mdash; the self-test below checks exactly that. The decay is deliberately slow (about two and a half seconds). If your system requests reduced motion, it still happens in full, only faster; it is never faked over a preserved page.</p>
+    </div>
+    <p class="concession">It adds nothing evidentiary to the record &mdash; it only makes the record legible in one sitting.</p>
+  </div>
+</div>
+</div><!-- /#app: the readable, interactive surface. The JSON island and noscript fallback below are deliberately outside it, so the self-test's DOM scope matches "readable DOM" (rule 1), not raw source text. -->
+
+<script type="application/json" id="spine">
+{
+  "work": "no-way-of-knowing",
+  "increment": 3,
+  "extracted": "2026-07-15 (session 14, concept gate — SOURCED/primary-confirmed)",
+  "built": "2026-07-16 (session 15, increment 1)",
+  "built_increment_2": "2026-07-16 (session 16, increment 2 — render-from-island hygiene; no visible change)",
+  "built_increment_3": "2026-07-16 (session 17, increment 3 — tag-run grouping + the Case 01 hinge said once)",
+  "monitoring_checked": "2026-07-17",
+  "one_line": "The state at maximal confidence when it acts; the state at declared un-knowing when it harms — two sentences it said on the record, in a console that will not let you hold both at once.",
+  "tiers_on_this_work": {
+    "SOURCED_primary_confirmed": "The spine — every quoted sentence on either face is a verbatim substring of its cited primary, fetched directly (server-side) and checked at the concept gate (session 14). Figures are attributed per source, never harmonised into one number.",
+    "IMAGINED": "The console conceit itself — the ACT / HARM framing, the 'spend one sentence to buy the other' mechanism, the gate's second-person address — is this studio's form, not a claim about the world. Marked on the work's face and never blended into the SOURCED spine."
+  },
+  "naming_policy": {
+    "tier": "POLICY (team steer, 2026-07-12; applied at the concept gate, session 14)",
+    "statement": "No personal name of a private individual appears in this work's own voice. The accountable institution — U.S. Central Command (CENTCOM) — is named where the cited primaries name it; its officials appear by institutional role within it (CENTCOM's chief technology officer; a CENTCOM spokesperson; CENTCOM's commander). Named military operations and programs, and any AI vendor/product, are kept generic on every face — a machine/AI targeting program, the 2026 operation — and survive only inside the cited primary sources. The civilian killed appears as role + place + date + institutional acknowledgment; the children killed in the school strike appear only as a per-source aggregate toll. Personal names survive solely as citation text inside the linked sources."
+  },
+  "premise": {
+    "tier": "PREMISE (the work's own voice — NOT a claim of a proven structural pattern)",
+    "statement": "The same apparatus is claimed as knowledge when it credits the program and disclaimed as ignorance at the exact moment knowledge would attribute a death. Knowledge as asset, ignorance as shield — toggled by the valence of the outcome. This is a finding of experience and form, shown through its first two catches (one closed, one open). It is NOT presented as a proven 'repeating institutional pattern' or as 'the state is systematically hypocritical' — the record does not carry that at n=2, and the serial form extends the claim only as the record grows (Kritiker condition 1, session 14).",
+    "discipline": "The word 'systematically' and any claim to have discovered institutional hypocrisy are forbidden in the work's own voice."
+  },
+  "instances": [
+    {
+      "id": "instance-1",
+      "order": 1,
+      "status": "CLOSED PAIR",
+      "status_label": "A CLOSED PAIR — both sentences said, on the record",
+      "title": "The 2 February 2024 strike",
+      "disclosed": "Confidence stated February 2024; the death and the denial disclosed 10 March 2026",
+      "face_act": {
+        "role": "ACT — the state at maximal confidence",
+        "speaker_role": "U.S. Central Command's chief technology officer, on the record",
+        "outlet": "Bloomberg",
+        "date": "February 2024",
+        "quotes": [
+          {
+            "text": "struck more than 85 targets in Iraq and Syria",
+            "frame": "In early February the United States",
+            "verbatim": true
+          },
+          {
+            "text": "helped narrow targets for strikes in Iraq and Syria",
+            "frame": "A machine/AI targeting program (named in the source, generic here)",
+            "verbatim": true
+          },
+          {
+            "text": "…has become exceptionally critical to our function.",
+            "frame": "The program, in the officer's words",
+            "verbatim": true,
+            "note": "Lead-ellipsis marks the dropped subject (the program's proper name), which is kept generic on this face per the naming policy (Verifier condition 6, session 14)."
+          }
+        ],
+        "target_count": "more than 85 targets",
+        "program_descriptor": "a machine/AI targeting program",
+        "source_url": "https://www.bloomberg.com/features/2024-ai-warfare-project-maven/"
+      },
+      "face_harm": {
+        "role": "HARM — the same state at declared un-knowing",
+        "civilian": "A 20-year-old construction student, killed in the 2 February 2024 strike (named only in the cited investigation, not in this work's voice)",
+        "speaker_role": "A U.S. Central Command spokesperson",
+        "outlet": "Airwars, with The Independent (the original outlet)",
+        "date": "10 March 2026",
+        "quotes": [
+          {
+            "text": "There is no indication that AI was used at any point in the targeting process,",
+            "verbatim": true
+          },
+          {
+            "text": "We have no way of knowing whether this strike is one of the 85 [strikes] that [the chief technology officer] described [as having been targeted using AI].",
+            "verbatim": true,
+            "note": "'[the chief technology officer]' replaces the official's surname with her institutional role per the naming policy; '[strikes]' and '[as having been targeted using AI]' are the source's own brackets, restored verbatim (Verifier finding 2, session 15). Otherwise verbatim."
+          }
+        ],
+        "acknowledgment": "Reported as the first military acknowledgment of civilian harm from an AI-assisted strike (the outlet's framing, attributed — not an independent fact of this work).",
+        "source_url": "https://airwars.org/the-first-civilian-confirmed-killed-in-an-ai-assisted-strike/",
+        "render": {
+          "opening_comment_imagined": "Both sides answered. The answers do not meet.",
+          "opening_comment_sourced": "A 20-year-old construction student was killed in the strike of 2 February 2024. Name not on record.",
+          "attribution": "— A U.S. Central Command spokesperson, to Airwars, published with The Independent, 10 March 2026.",
+          "hinge_display": "The same 85. The machine helped narrow it; this death cannot be placed inside or outside of it. The state does not say which.",
+          "note": "The exact Face Two display copy for this instance, verbatim — kept here so buildFaceTwoNodes() never hardcodes a sentence literal (increment-2 hygiene, session-15 gate). hinge_display is the work's rendered voice and intentionally differs from the analytic hinge.text below."
+        }
+      },
+      "hinge": {
+        "label": "The mutual exclusion, in the state's own two sentences",
+        "text": "The same 85. The program helped narrow the 85 targets; whether it narrowed the one that killed this civilian is declared unknowable. The work never asserts the death WAS one of the 85 — it holds the state's own two sentences: helped target the 85 · no way of knowing about this one."
+      }
+    },
+    {
+      "id": "instance-2",
+      "order": 2,
+      "status": "OPEN QUESTION",
+      "status_label": "AN OPEN QUESTION — the confidence stated, the answer not yet given",
+      "title": "The 2026 operation against Iran",
+      "disclosed": "Confidence stated on the record; the harm under active investigation as of 2026-07-17",
+      "face_act": {
+        "role": "ACT — the state at maximal confidence",
+        "speaker_role": "U.S. Central Command's commander, on the record (video statement)",
+        "outlet": "DefenseScoop / NBC News",
+        "date": "11 March 2026",
+        "quotes": [
+          {
+            "text": "help us sift through vast amounts of data in seconds so our leaders can cut through the noise and make smarter decisions faster than the enemy can react",
+            "frame": "Advanced AI tools",
+            "verbatim": true
+          },
+          {
+            "text": "Humans will always make final decisions on what to shoot and what not to shoot and when to shoot",
+            "verbatim": true,
+            "note": "Carried in full (complete verbatim sentence, restored session 15 per Verifier finding 3) so the confidence claim is not amplified beyond what the commander said."
+          }
+        ],
+        "target_count": "more than 5,500 targets",
+        "program_descriptor": "advanced AI tools",
+        "source_url": "https://defensescoop.com/2026/03/11/us-military-using-ai-against-iran-operation-epic-fury-adm-cooper/"
+      },
+      "face_harm": {
+        "role": "HARM — and here the answer is not a denial but an open question",
+        "harm": "A 28 February 2026 strike on the Shajareh Tayyebeh elementary school in Minab, Hormozgan. Preliminary US findings: a US munition 'likely responsible'; 'outdated intelligence' the likely cause ('old intelligence showed it to be a military target'). The machine is named neither way.",
+        "toll_per_source": [
+          { "figure": "more than 170 people, mostly children", "source": "NBC News", "label": "NBC", "url": "https://www.nbcnews.com/world/iran/old-intelligence-likely-led-us-strike-iran-elementary-school-rcna262967" },
+          { "figure": "156 people, over 100 children", "source": "Amnesty International", "label": "AMNESTY", "url": "https://www.amnesty.org/en/latest/news/2026/03/usa-iran-those-responsible-for-deadly-and-unlawful-us-strike-on-school-that-killed-over-100-children-must-be-held-accountable/" }
+        ],
+        "open_answer_slot": {
+          "label": "THE ANSWER IS NOT YET GIVEN",
+          "text": "more than 120 members of Congress asked the Pentagon what role AI may have played in selecting targets — 'something that could be addressed in the results of the Pentagon investigation.' As of 2026-07-17 the investigation is being finalised (over four months on); the Pentagon has not answered the AI question either way. This console fabricates no denial. The open state is the truth it shows.",
+          "source_urls": [
+            "https://www.nbcnews.com/politics/national-security/democrats-ask-pentagon-iran-school-strike-role-ai-rcna263083",
+            "https://www.nbcnews.com/politics/national-security/pentagon-investigation-iran-school-strike-finalized-rcna350170"
+          ]
+        },
+        "render": {
+          "opening_comment_imagined": "One side has answered. The other has not spoken yet.",
+          "opening_comment_sourced": "An elementary school in Minab was struck on 28 February 2026. A US munition was likely responsible. Outdated intelligence was the likely cause.",
+          "toll_note": "Two counts. Kept separate here, as they were kept separate by the two organizations that reported them.",
+          "answer_slot_label": "THE ANSWER, AS OF 17 JULY 2026:",
+          "answer_slot_text": "more than 120 members of Congress have asked the Pentagon what role AI may have played in this strike. The investigation is not finished. The Pentagon has not said yes. It has not said no.",
+          "answer_slot_safeguard": "No denial exists for this strike. None is shown here, because none was made.",
+          "note": "The exact Face Two display copy for this instance, verbatim — kept here so buildFaceTwoNodes() never hardcodes a sentence literal (increment-2 hygiene, session-15 gate). Distinct from open_answer_slot above, which is the analytic slot data; answer_slot_label/text/safeguard are the work's rendered voice for that slot."
+        }
+      },
+      "hinge": {
+        "label": "Why this one is open, not closed",
+        "text": "In 2024 the state said both sentences: the confidence AND the 'no way of knowing.' Here it has said only the first. The second — was the machine in the loop of this death? — is the question Congress has put on the record and the Pentagon has not answered. The console holds the wait, and will change state when the wait ends."
+      }
+    }
+  ],
+  "monitoring": {
+    "tier": "STUDIO MONITORING STATUS (not a world-fact)",
+    "last_checked": "2026-07-17",
+    "statement": "Two catches as of the last check (2026-07-17): one closed pair (2024), one open question (2026, the operation against Iran, investigation being finalised — the AI question unanswered). No new confirmed confidence/denial pair since. This is the studio's own monitoring status on the date shown, not a claim that none exists.",
+    "serial_note": "The console ships on the pairs that verifiably exist and never manufactures content to feed the form. When the Pentagon investigation answers Congress's AI question, Instance 2's open slot updates on that cycle — or the console discloses that it has not.",
+    "serial_line": "2 catches on record. Case 02 unresolved. Last checked 17 July 2026."
+  },
+  "mechanism": {
+    "tier": "IMAGINED (the form) — the SOURCED spine is what it carries",
+    "name": "The single-surface destructive switch",
+    "spec": [
+      "One full-bleed console. One face legible at a time. No tabs, no split view, no scroll that contains both faces.",
+      "Boots on Face One (ACT): the confidence sentences + target count + generic program descriptor + date, verbatim and cited.",
+      "Exactly one control, labelled with the state's own question: 'Was the machine involved in this death?'",
+      "Pressing it is destructive and slow (~2.5s): Face One de-resolves to an empty field. Only from emptiness does Face Two (HARM) assemble.",
+      "The two faces are never legible at once. Returning to Face One costs the same in reverse — the confidence de-resolves nothing is preserved; it is rebuilt from empty.",
+      "The visitor spends one sentence to buy the other — the exact economy the state performs."
+    ],
+    "guards_binding": [
+      "No persistent hidden toggle that keeps both faces in the DOM.",
+      "No browser back/forward that restores a face without paying the destruction again.",
+      "Never co-rendered: at no frame are both faces' sentences in the readable DOM together.",
+      "The emptiness between faces is real, not a cached animation over a preserved DOM. The day it becomes that, the work is dead."
+    ]
+  },
+  "self_test": {
+    "tier": "DISCLOSED SELF-TEST (house pattern)",
+    "purpose": "Proves, on the page, the one claim the whole work rests on: the two faces are never co-rendered.",
+    "assertions": [
+      "At rest on Face One, the HARM face's sentences are absent from the document (not merely hidden by CSS) — asserted by querying the live DOM.",
+      "At rest on Face Two, the ACT face's sentences are absent from the document.",
+      "During the transition, at the empty midpoint, neither face's sentences are present.",
+      "The result is printed live on the page; a visitor can read the assertion pass/fail without trusting the studio's word."
+    ]
+  },
+  "neighbors_daylight": {
+    "airwars": "The catalogued atlas artwork 'The First Civilian Confirmed Killed in an AI-Assisted Strike?' — terminal and evidentiary. The console adds NOTHING evidentiary (conceded, on the face) but is serial where Airwars is terminal, enacts the mutual exclusion on the body, and stands inside a live, open instance Airwars is not built to hold.",
+    "aaajiao": "'Minority Algorithm' — algorithmic subjectivity as metaphor; the console refuses metaphor, pinned to dated state utterances and specific deaths.",
+    "disruption_network_lab": "'Investigating the Kill Cloud' (incl. Suchman's lecture) — discursive, expert, lecture-length; the console is non-discursive, one-minute, bodily."
+  },
+  "takedown": {
+    "sentence": "A competent, honest gallery restaging of a finding an investigative outlet already published and closed — it juxtaposes two quotes anyone can read in the original source and adds no fact, no risk, nothing new.",
+    "refutation": "Refuted on (c) form + (b) risk, not on (a): only a serial, self-dating machine can hold a live, un-finalised instance whose answer-slot honestly shows a pending question rather than a written denial — terminal prose cannot, because the fact does not yet exist; and the destructive switch produces a finding of experience (spend the boast to buy the denial) no article can. It implicates U.S. Central Command (CENTCOM) and the Pentagon by their own dated words in the actively-investigated killing of children. The (a) structural-finding leg is demoted (Kritiker condition 1) — the work does not lean on it."
+  }
+}
+</script>
+
+<noscript>
+<div class="ns-wrap">
+  <h2>NO WAY OF KNOWING</h2>
+  <p class="ns-note">Without JavaScript, the console cannot destroy one face to assemble the other &mdash; here, the console would erase this claim and assemble the harm below; without JavaScript, both are simply shown in order &mdash; the interaction (spending one sentence to buy the other) does not happen for you. That omission is part of this piece.</p>
+
+  <div class="ns-case">
+    <p><strong>CASE 01 &middot; STATUS: CLOSED PAIR</strong> &mdash; a closed pair: both sentences said, on the record.</p>
+    <h3>FACE ONE: ACT</h3>
+    <p class="ns-quote">&ldquo;In early February the United States struck more than 85 targets in Iraq and Syria&rdquo;</p>
+    <p class="ns-quote">&ldquo;helped narrow targets for strikes in Iraq and Syria&rdquo;</p>
+    <p class="ns-quote">&ldquo;&hellip;has become exceptionally critical to our function.&rdquo;</p>
+    <p class="ns-attr">&mdash; U.S. Central Command&rsquo;s chief technology officer, on the record, Bloomberg, February 2024.</p>
+    <p><strong>85+ / TARGETS</strong></p>
+    <hr>
+    <h3>FACE TWO: HARM</h3>
+    <p>Both sides answered. The answers do not meet.</p>
+    <p>A 20-year-old construction student was killed in the strike of 2 February 2024. Name not on record.</p>
+    <p class="ns-quote">&ldquo;There is no indication that AI was used at any point in the targeting process,&rdquo;</p>
+    <p class="ns-quote">&ldquo;We have no way of knowing whether this strike is one of the 85 [strikes] that [the chief technology officer] described [as having been targeted using AI].&rdquo;</p>
+    <p class="ns-attr">&mdash; A U.S. Central Command spokesperson, to Airwars, published with The Independent, 10 March 2026.</p>
+    <p>The same 85. The machine helped narrow it; this death cannot be placed inside or outside of it. The state does not say which.</p>
+  </div>
+
+  <div class="ns-case">
+    <p><strong>CASE 02 &middot; STATUS: OPEN QUESTION</strong> &mdash; an open question: the confidence stated, the answer not yet given.</p>
+    <h3>FACE ONE: ACT</h3>
+    <p class="ns-quote">&ldquo;Advanced AI tools help us sift through vast amounts of data in seconds so our leaders can cut through the noise and make smarter decisions faster than the enemy can react&rdquo;</p>
+    <p class="ns-quote">&ldquo;Humans will always make final decisions on what to shoot and what not to shoot and when to shoot&rdquo;</p>
+    <p class="ns-attr">&mdash; U.S. Central Command&rsquo;s commander, on the record (video statement), DefenseScoop / NBC News, 11 March 2026.</p>
+    <p><strong>5,500+ / TARGETS</strong></p>
+    <hr>
+    <h3>FACE TWO: HARM (open question)</h3>
+    <p>One side has answered. The other has not spoken yet.</p>
+    <p>An elementary school in Minab was struck on 28 February 2026. A US munition was likely responsible. Outdated intelligence was the likely cause.</p>
+    <p>NBC: more than 170 people, mostly children.</p>
+    <p>AMNESTY: 156 people, over 100 children.</p>
+    <p>Two counts. Kept separate here, as they were kept separate by the two organizations that reported them.</p>
+    <div class="ns-answer">
+      <p><strong>THE ANSWER, AS OF 17 JULY 2026:</strong></p>
+      <p>more than 120 members of Congress have asked the Pentagon what role AI may have played in this strike. The investigation is not finished. The Pentagon has not said yes. It has not said no.</p>
+      <p><strong>No denial exists for this strike. None is shown here, because none was made.</strong></p>
+    </div>
+  </div>
+
+  <div class="ns-case">
+    <h3>SOURCED / IMAGINED</h3>
+    <p><strong>WHAT&rsquo;S SOURCED</strong> &mdash; The spine: every quoted sentence on either face is a verbatim substring of its cited primary, fetched directly and checked at the concept gate. Figures are attributed per source, never harmonised into one number.</p>
+    <p><strong>WHAT&rsquo;S BUILT / IMAGINED</strong> &mdash; The console conceit itself: the ACT / HARM framing, the &lsquo;spend one sentence to buy the other&rsquo; mechanism, the gate&rsquo;s second-person address &mdash; is this studio&rsquo;s form, not a claim about the world.</p>
+    <p><strong>NAMING</strong> &mdash; No personal name of a private individual appears in this work&rsquo;s own voice. The civilian killed appears as role + place + date + institutional acknowledgment. Officials appear as their institutional role. Named military programs and any AI vendor/product are kept generic on every face. The children killed in the school strike appear only as a per-source aggregate toll.</p>
+    <p><strong>MONITORING</strong> &mdash; Two catches as of the last check (2026-07-17): one closed pair (2024), one open question (2026, the operation against Iran, investigation being finalised). No new confirmed confidence/denial pair since. This is the studio&rsquo;s own monitoring status on the date shown, not a claim that none exists.</p>
+    <p class="ns-note">It adds nothing evidentiary to the record &mdash; it only makes the record legible in one sitting.</p>
+  </div>
+</div>
+</noscript>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- read the spine, verbatim, from the island ---------- */
+  var spine = JSON.parse(document.getElementById('spine').textContent);
+  var caseByOrder = {};
+  spine.instances.forEach(function(inst){ caseByOrder[inst.order] = inst; });
+
+  /* ---------- seeded PRNG (deterministic — never Math.random / Date.now) ---------- */
+  function mulberry32(seed){
+    var a = seed >>> 0;
+    return function(){
+      a = (a + 0x6D2B79F5) | 0;
+      var t = a;
+      t = Math.imul(t ^ (t >>> 15), t | 1);
+      t = (t + Math.imul(t ^ (t >>> 7), t | 61)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  var rng = mulberry32(1337);
+  var CORRUPT_CHARS = ['▓', '█']; /* ▓ █ */
+
+  function corruptString(text, frac){
+    var len = text.length;
+    var n = Math.floor(frac * len);
+    var out = '';
+    for (var i = 0; i < len; i++){
+      var ch = text.charAt(i);
+      if (i < n && ch !== ' '){
+        var r = rng();
+        out += r < 0.5 ? CORRUPT_CHARS[0] : CORRUPT_CHARS[1];
+      } else {
+        out += ch;
+      }
+    }
+    return out;
+  }
+
+  function prefersReducedMotion(){
+    return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+
+  /* ---------- small DOM helpers ---------- */
+  function mk(tag, cls, text){
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+  function tierTag(kind){
+    return mk('span', 'tag t-' + kind, kind.toUpperCase());
+  }
+  function corruptable(cls, text){
+    var s = mk('span', 'corruptable' + (cls ? ' ' + cls : ''), text);
+    s.dataset.original = text;
+    return s;
+  }
+  function formatStat(targetCountStr){
+    var m = targetCountStr.match(/([\d,]+)/);
+    var num = m ? m[1] : targetCountStr;
+    return num + '+ / TARGETS';
+  }
+
+  /* ---------- tag-run grouping (increment 3) ----------
+     Every line/box that carries a tier still gets a machine-readable
+     data-tier attribute, always. The visible chip is collapsed: same-tier
+     runs of consecutive units show one chip, on the first unit of the run.
+     A run breaks on a tier change or a container change. This is a pure
+     post-pass over an array of {el, tier} units decided at array-build
+     time (each call to applyTierRuns() is scoped to exactly one context —
+     the top-level flow, or the inside of one bordered box — so a fresh
+     array always starts a fresh run); assembleStaggered() still just
+     appends the finished nodes one at a time and is untouched. */
+  function taggable(el, kind){
+    el.dataset.tier = kind;
+    return { el: el, tier: kind };
+  }
+  function applyTierRuns(units){
+    var last = null;
+    units.forEach(function(u){
+      if (u.tier !== last){
+        u.el.insertBefore(tierTag(u.tier), u.el.firstChild);
+        last = u.tier;
+      }
+    });
+  }
+
+  /* ---------- Face One (ACT) node builders ---------- */
+  function roleHeading(kind, text){
+    var line = mk('div', 'line face-role');
+    line.appendChild(corruptable('roletext', text));
+    return line;
+  }
+
+  function buildFaceOneNodes(inst){
+    var nodes = [];
+    var flow = [];
+
+    var roleEl = roleHeading('imagined', inst.face_act.role);
+    flow.push(taggable(roleEl, 'imagined'));
+    nodes.push(roleEl);
+
+    inst.face_act.quotes.forEach(function(q){
+      var line = mk('div', 'line');
+      if (q.frame){ line.appendChild(mk('span', 'frame', q.frame + ':')); }
+      var qtextStr = '“' + q.text + '”';
+      var qs = corruptable('qtext', qtextStr);
+      line.appendChild(qs);
+      flow.push(taggable(line, 'sourced'));
+      nodes.push(line);
+    });
+    var attrStr = '— ' + inst.face_act.speaker_role + ', ' + inst.face_act.outlet + ', ' + inst.face_act.date + '.';
+    var attrLine = mk('div', 'line attribution');
+    attrLine.appendChild(corruptable('', attrStr));
+    flow.push(taggable(attrLine, 'sourced'));
+    nodes.push(attrLine);
+
+    var statStr = formatStat(inst.face_act.target_count);
+    var statLine = mk('div', 'stat');
+    statLine.appendChild(corruptable('statnum', statStr));
+    flow.push(taggable(statLine, 'sourced'));
+    nodes.push(statLine);
+
+    applyTierRuns(flow);
+
+    var srcStr = inst.face_act.outlet + ' · ' + inst.face_act.date;
+    var srcLine = mk('div', 'line srcline');
+    srcLine.appendChild(corruptable('', srcStr));
+    var srcLink = document.createElement('a');
+    srcLink.href = inst.face_act.source_url;
+    srcLink.textContent = ' [source]';
+    srcLink.target = '_blank';
+    srcLink.rel = 'noopener noreferrer';
+    srcLink.className = 'srclink';
+    srcLine.appendChild(srcLink);
+    nodes.push(srcLine);
+
+    return nodes;
+  }
+
+  function commentLine(kind, text){
+    var line = mk('div', 'line comment');
+    line.appendChild(corruptable('', text));
+    return line;
+  }
+
+  /* ---------- Face Two (HARM) node builders ---------- */
+  /* All sentence literals below come from the island (inst.face_harm.render.*,
+     inst.hinge.text, toll_per_source[i].label) — nothing here is hardcoded
+     display copy; see face_harm.render.note on each instance (increment-2
+     hygiene, session-15 gate: render Face Two fully from the island). */
+  function buildFaceTwoNodes(inst){
+    var nodes = [];
+    var render = inst.face_harm.render;
+    var flow = [];
+
+    var roleEl = roleHeading('imagined', inst.face_harm.role);
+    flow.push(taggable(roleEl, 'imagined'));
+    nodes.push(roleEl);
+
+    if (inst.order === 1){
+      var openImg = commentLine('imagined', render.opening_comment_imagined);
+      flow.push(taggable(openImg, 'imagined'));
+      nodes.push(openImg);
+
+      var openSrc = commentLine('sourced', render.opening_comment_sourced);
+      flow.push(taggable(openSrc, 'sourced'));
+      nodes.push(openSrc);
+
+      inst.face_harm.quotes.forEach(function(q){
+        var line = mk('div', 'line');
+        var qtextStr = '“' + q.text + '”';
+        line.appendChild(corruptable('qtext', qtextStr));
+        flow.push(taggable(line, 'sourced'));
+        nodes.push(line);
+      });
+
+      var attrStr = render.attribution;
+      var attrLine = mk('div', 'line attribution');
+      attrLine.appendChild(corruptable('', attrStr));
+      flow.push(taggable(attrLine, 'sourced'));
+      nodes.push(attrLine);
+
+      applyTierRuns(flow);
+
+      var hingeText = render.hinge_display;
+      var hinge = mk('div', 'hinge');
+      hinge.appendChild(corruptable('hingetext', hingeText));
+      applyTierRuns([taggable(hinge, 'imagined')]);
+      nodes.push(hinge);
+    } else {
+      var openImg2 = commentLine('imagined', render.opening_comment_imagined);
+      flow.push(taggable(openImg2, 'imagined'));
+      nodes.push(openImg2);
+
+      var openSrc2 = commentLine('sourced', render.opening_comment_sourced);
+      flow.push(taggable(openSrc2, 'sourced'));
+      nodes.push(openSrc2);
+
+      applyTierRuns(flow);
+
+      var toll = mk('div', 'toll');
+      var tollUnits = [];
+      inst.face_harm.toll_per_source.forEach(function(t){
+        var line = mk('div', 'line');
+        var str = t.label + ': ' + t.figure + '.';
+        line.appendChild(corruptable('', str));
+        tollUnits.push(taggable(line, 'sourced'));
+        toll.appendChild(line);
+      });
+      var tollNote = commentLine('imagined', render.toll_note);
+      tollUnits.push(taggable(tollNote, 'imagined'));
+      toll.appendChild(tollNote);
+      applyTierRuns(tollUnits);
+      nodes.push(toll);
+
+      if (inst.hinge && inst.hinge.text){
+        var hinge2 = mk('div', 'hinge');
+        hinge2.appendChild(corruptable('hingetext', inst.hinge.text));
+        applyTierRuns([taggable(hinge2, 'imagined')]);
+        nodes.push(hinge2);
+      }
+
+      var slot = mk('div', 'answer-slot');
+      slot.appendChild(mk('div', 'slot-label', render.answer_slot_label));
+      slot.appendChild(corruptable('', render.answer_slot_text));
+      var safeguard = corruptable('slot-safeguard', render.answer_slot_safeguard);
+      safeguard.className = safeguard.className.replace('corruptable', 'corruptable-block');
+      slot.appendChild(safeguard);
+      applyTierRuns([taggable(slot, 'sourced')]);
+      nodes.push(slot);
+    }
+    return nodes;
+  }
+
+  /* ---------- instant (non-animated) render, used at boot + self-test ---------- */
+  var content = document.getElementById('content');
+
+  function renderFaceOneInto(container, inst){
+    container.replaceChildren();
+    var wrap = mk('div', 'face face-act');
+    buildFaceOneNodes(inst).forEach(function(n){ wrap.appendChild(n); });
+    container.appendChild(wrap);
+  }
+  function renderFaceTwoInto(container, inst){
+    container.replaceChildren();
+    var wrap = mk('div', 'face face-harm');
+    buildFaceTwoNodes(inst).forEach(function(n){ wrap.appendChild(n); });
+    container.appendChild(wrap);
+  }
+
+  /* ---------- self-test (visible, mandatory) ---------- */
+  var selftestResult = document.getElementById('selftestResult');
+  var c1 = caseByOrder[1];
+  var ACT_MARKER = c1.face_act.role;
+  var HARM_MARKER = c1.face_harm.role;
+
+  var appEl = document.getElementById('app');
+
+  function bodyHas(str){
+    /* Scoped to the readable, interactive surface (#app) — not document.body.
+       document.body.textContent would also swallow the raw text of the
+       verbatim JSON island (script contents are text nodes too) and of the
+       <noscript> fallback (browsers keep it as literal text when scripting
+       is on), which would make both markers "present" forever regardless of
+       which face is actually showing. #app contains only the live UI: the
+       header, the content region, the control slot, the case rail, the
+       self-test strip and the honesty overlay — i.e. the "readable DOM"
+       rule 1 actually means. */
+    return appEl.textContent.indexOf(str) !== -1;
+  }
+
+  function printSelfTest(pass, detail){
+    var msg = 'SELF-TEST: ' + (pass ? 'PASS' : 'FAIL') + ' — ' + detail;
+    selftestResult.textContent = msg;
+    selftestResult.dataset.state = pass ? 'pass' : 'fail';
+    if (pass) { console.log(msg); } else { console.error(msg); }
+  }
+
+  function runBootSelfTest(){
+    try {
+      var a = !bodyHas(HARM_MARKER); /* at rest on Face One, HARM marker absent */
+      content.replaceChildren();      /* real removal -> empty midpoint */
+      var c = !bodyHas(HARM_MARKER) && !bodyHas(ACT_MARKER);
+      renderFaceTwoInto(content, c1);
+      var b = !bodyHas(ACT_MARKER);   /* at rest on Face Two, ACT marker absent */
+      content.replaceChildren();      /* empty again */
+      renderFaceOneInto(content, c1); /* restore to boot state */
+      var pass = a && b && c;
+      printSelfTest(pass, pass
+        ? 'the two faces were never on screen together (rest-on-one: ' + a + ', empty-midpoint: ' + c + ', rest-on-two: ' + b + ')'
+        : 'assertion failed (rest-on-one=' + a + ' empty-midpoint=' + c + ' rest-on-two=' + b + ')');
+    } catch (err){
+      printSelfTest(false, 'error during self-test — ' + err.message);
+    }
+  }
+
+  function verifyRest(){
+    var inst = caseByOrder[state.caseIdx];
+    var marker = state.face === 'act' ? inst.face_harm.role : inst.face_act.role;
+    var ok = !bodyHas(marker);
+    printSelfTest(ok, 'the two faces were never on screen together (live-verified at rest on '
+      + (state.face === 'act' ? 'Face One' : 'Face Two') + ')');
+  }
+
+  /* ---------- state machine ---------- */
+  var state = { caseIdx: 1, face: 'act', transitioning: false };
+
+  var captionEl = document.getElementById('captionEl');
+  var controlSlot = document.getElementById('controlSlot');
+  var railWrap = document.getElementById('railWrap');
+  var statusTag = document.getElementById('statusTag');
+  var statusGloss = document.getElementById('statusGloss');
+  var railBtn1 = document.getElementById('railBtn1');
+  var railBtn2 = document.getElementById('railBtn2');
+
+  /* the serial line states monitoring data — render it from the island;
+     the static text already in the markup is only the pre-JS fallback. */
+  var serialLineEl = railWrap.querySelector('.serial-line');
+  if (serialLineEl) serialLineEl.textContent = spine.monitoring.serial_line;
+
+  function statusLabel(inst){
+    return 'CASE 0' + inst.order + ' · STATUS: ' + inst.status;
+  }
+
+  function updateStatusTag(){
+    var inst = caseByOrder[state.caseIdx];
+    statusTag.textContent = statusLabel(inst);
+    statusGloss.textContent = inst.status_label;
+  }
+
+  function updateChrome(){
+    var restingOnAct = (state.face === 'act' && !state.transitioning);
+    captionEl.hidden = !restingOnAct;
+    railWrap.hidden = !restingOnAct;
+    railBtn1.setAttribute('aria-current', String(state.caseIdx === 1));
+    railBtn2.setAttribute('aria-current', String(state.caseIdx === 2));
+    renderControlSlot();
+  }
+
+  function renderControlSlot(){
+    controlSlot.replaceChildren();
+    var inst = caseByOrder[state.caseIdx];
+    if (state.face === 'act'){
+      var label = inst.order === 1
+        ? 'WAS THE MACHINE INVOLVED IN THIS DEATH?'
+        : 'WAS THE MACHINE INVOLVED IN THESE DEATHS?';
+      var btn = mk('button', 'control-btn', label);
+      btn.type = 'button';
+      btn.id = 'destroyBtn';
+      btn.disabled = state.transitioning;
+      btn.addEventListener('click', onDestroyPress);
+      controlSlot.appendChild(btn);
+      var micro = mk('p', 'microcopy');
+      micro.appendChild(tierTag('imagined'));
+      micro.appendChild(document.createTextNode('This clears the claim above. What replaces it is what the same institution said about a death. The two are never shown together.'));
+      controlSlot.appendChild(micro);
+    } else if (state.face === 'harm'){
+      var rbtn = mk('button', 'control-btn return-btn', '← RETURN TO THE CLAIM');
+      rbtn.type = 'button';
+      rbtn.id = 'returnBtn';
+      rbtn.disabled = state.transitioning;
+      rbtn.addEventListener('click', onReturnPress);
+      controlSlot.appendChild(rbtn);
+      var micro2 = mk('p', 'microcopy');
+      micro2.appendChild(tierTag('imagined'));
+      micro2.appendChild(document.createTextNode('Reverses the same way it opened. Same cost, opposite direction.'));
+      controlSlot.appendChild(micro2);
+    }
+  }
+
+  function bootFaceOne(caseIdx){
+    state.caseIdx = caseIdx;
+    state.face = 'act';
+    state.transitioning = false;
+    renderFaceOneInto(content, caseByOrder[caseIdx]);
+    updateStatusTag();
+    updateChrome();
+  }
+
+  /* ---------- corruption / decay helpers (deterministic timing) ---------- */
+  function corruptElement(elx, duration, steps, startDelay){
+    var original = elx.dataset.original;
+    if (!original) return;
+    for (var k = 1; k <= steps; k++){
+      (function(frac){
+        setTimeout(function(){
+          elx.textContent = corruptString(original, frac);
+        }, startDelay + (duration * frac));
+      })(k / steps);
+    }
+  }
+  function corruptBlock(blockEl, duration, steps, startDelay){
+    var spans = blockEl.querySelectorAll ? blockEl.querySelectorAll('.corruptable, .corruptable-block') : [];
+    if (blockEl.classList && (blockEl.classList.contains('corruptable') || blockEl.classList.contains('corruptable-block'))){
+      corruptElement(blockEl, duration, steps, startDelay);
+    }
+    for (var i = 0; i < spans.length; i++){
+      corruptElement(spans[i], duration, steps, startDelay);
+    }
+  }
+
+  function timings(){
+    var reduced = prefersReducedMotion();
+    return reduced
+      ? { corrupt: 260, empty: 160, assemble: 420, extraPause: 60, steps: 2 }
+      : { corrupt: 900, empty: 600, assemble: 1000, extraPause: 150, steps: 6 };
+  }
+
+  /* ---------- forward transition: Face One -> empty -> Face Two ---------- */
+  function onDestroyPress(){
+    if (state.transitioning) return;
+    state.transitioning = true;
+    var btn = document.getElementById('destroyBtn');
+    if (btn) btn.disabled = true; /* inert immediately, no double-press, no reward flash */
+    captionEl.hidden = true;
+    railWrap.hidden = true;
+
+    var T = timings();
+    var wrap = content.querySelector('.face-act');
+    var attrEl = wrap ? wrap.querySelector('.attribution .corruptable') : null;
+    var quoteEls = wrap ? Array.prototype.slice.call(wrap.querySelectorAll('.line:not(.attribution):not(.srcline) .corruptable')) : [];
+    var statEl = wrap ? wrap.querySelector('.statnum') : null;
+    var srcEl = wrap ? wrap.querySelector('.srcline .corruptable') : null;
+
+    /* attribution corrupts FIRST */
+    if (attrEl) corruptElement(attrEl, T.corrupt * 0.3, T.steps, 0);
+    /* then quote lines left-to-right, staggered */
+    quoteEls.forEach(function(elx, i){
+      corruptElement(elx, T.corrupt * 0.35, T.steps, T.corrupt * 0.15 + i * (T.corrupt * 0.15));
+    });
+    if (srcEl) corruptElement(srcEl, T.corrupt * 0.3, T.steps, T.corrupt * 0.2);
+    /* stat readout holds legible ~half a beat longer, then blanks */
+    if (statEl){
+      setTimeout(function(){
+        statEl.textContent = corruptString(statEl.dataset.original, 1);
+      }, T.corrupt * 0.85);
+    }
+    /* top status strip does NOT decay — untouched */
+
+    setTimeout(function(){
+      content.replaceChildren(); /* REAL removal of Face One's sentence nodes */
+      var cursor = mk('span', 'cursor', '_');
+      cursor.setAttribute('aria-hidden', 'true');
+      content.appendChild(cursor);
+    }, T.corrupt);
+
+    setTimeout(function(){
+      content.replaceChildren(); /* clear cursor: empty field ends */
+      var wrapTwo = mk('div', 'face face-harm');
+      content.appendChild(wrapTwo);
+      var nodes = buildFaceTwoNodes(caseByOrder[state.caseIdx]);
+      assembleStaggered(wrapTwo, nodes, T.assemble, T.extraPause);
+    }, T.corrupt + T.empty);
+
+    setTimeout(function(){
+      state.transitioning = false;
+      state.face = 'harm';
+      updateChrome();
+      content.focus();
+      verifyRest();
+    }, T.corrupt + T.empty + T.assemble + T.extraPause);
+  }
+
+  /* ---------- backward transition: Face Two -> empty -> Face One ---------- */
+  function onReturnPress(){
+    if (state.transitioning) return;
+    state.transitioning = true;
+    var btn = document.getElementById('returnBtn');
+    if (btn) btn.disabled = true;
+
+    var T = timings();
+    var wrap = content.querySelector('.face-harm');
+    var allBlocks = wrap ? Array.prototype.slice.call(wrap.children) : [];
+    var lastBlock = allBlocks[allBlocks.length - 1];
+    var restBlocks = allBlocks.slice(0, allBlocks.length - 1).reverse();
+
+    /* reverse of "opened": the last-assembled (most emphasised) block corrupts first & fast */
+    if (lastBlock) corruptBlock(lastBlock, T.corrupt * 0.35, T.steps, 0);
+    restBlocks.forEach(function(blockEl, i){
+      corruptBlock(blockEl, T.corrupt * 0.4, T.steps, T.corrupt * 0.15 + i * (T.corrupt * 0.15));
+    });
+
+    setTimeout(function(){
+      content.replaceChildren(); /* REAL removal of Face Two's sentence nodes */
+      var cursor = mk('span', 'cursor', '_');
+      cursor.setAttribute('aria-hidden', 'true');
+      content.appendChild(cursor);
+    }, T.corrupt);
+
+    setTimeout(function(){
+      content.replaceChildren();
+      var wrapOne = mk('div', 'face face-act');
+      content.appendChild(wrapOne);
+      var nodes = buildFaceOneNodes(caseByOrder[state.caseIdx]);
+      assembleStaggered(wrapOne, nodes, T.assemble, 0);
+    }, T.corrupt + T.empty);
+
+    setTimeout(function(){
+      state.transitioning = false;
+      state.face = 'act';
+      updateStatusTag();
+      updateChrome();
+      var db = document.getElementById('destroyBtn');
+      if (db) db.focus();
+      verifyRest();
+    }, T.corrupt + T.empty + T.assemble);
+  }
+
+  function assembleStaggered(container, nodes, totalDuration, extraLastPause){
+    var n = nodes.length;
+    if (n === 0) return;
+    var per = totalDuration / n;
+    nodes.forEach(function(node, i){
+      var delay = i * per;
+      if (i === n - 1) delay += (extraLastPause || 0);
+      setTimeout(function(){
+        container.appendChild(node);
+      }, delay);
+    });
+  }
+
+  /* ---------- case rail ---------- */
+  railBtn1.addEventListener('click', function(){
+    if (state.transitioning || state.face !== 'act') return;
+    if (state.caseIdx !== 1) bootFaceOne(1);
+  });
+  railBtn2.addEventListener('click', function(){
+    if (state.transitioning || state.face !== 'act') return;
+    if (state.caseIdx !== 2) bootFaceOne(2);
+  });
+
+  /* ---------- honesty / tier panel ---------- */
+  var tagBtn = document.getElementById('tagBtn');
+  var honestyOverlay = document.getElementById('honestyOverlay');
+  var honestyClose = document.getElementById('honestyClose');
+  document.getElementById('honestySourced').textContent = spine.tiers_on_this_work.SOURCED_primary_confirmed;
+  document.getElementById('honestyImagined').textContent = spine.tiers_on_this_work.IMAGINED;
+  document.getElementById('honestyNaming').textContent = spine.naming_policy.statement;
+  document.getElementById('honestyMonitoring').textContent = spine.monitoring.statement;
+
+  var lastFocused = null;
+  function openHonesty(){
+    lastFocused = document.activeElement;
+    honestyOverlay.hidden = false;
+    honestyClose.focus();
+    document.addEventListener('keydown', onHonestyKeydown);
+  }
+  function closeHonesty(){
+    honestyOverlay.hidden = true;
+    document.removeEventListener('keydown', onHonestyKeydown);
+    if (lastFocused && lastFocused.focus) lastFocused.focus();
+  }
+  function onHonestyKeydown(e){
+    if (e.key === 'Escape') closeHonesty();
+  }
+  tagBtn.addEventListener('click', openHonesty);
+  honestyClose.addEventListener('click', closeHonesty);
+  honestyOverlay.addEventListener('click', function(e){
+    if (e.target === honestyOverlay) closeHonesty();
+  });
+
+  /* ---------- boot ---------- */
+  bootFaceOne(1);
+  runBootSelfTest();
+})();
+</script>
+
+</body>
+</html>
