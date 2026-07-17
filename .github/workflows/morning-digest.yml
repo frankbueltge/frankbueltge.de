@@ -49,7 +49,7 @@ jobs:
           [ -n "$RED" ] && BODY+="$RED"$'\n' || BODY+="- keine 🎉"$'\n'
 
           # 3) Offene Requests an Frank
-          BODY+=$'\n'"### Wartet auf dich (oder auf die 7-Tage-Selbstentscheidung)"$'\n'
+          BODY+=$'\n'"### Wartet auf dich (unbeantwortet entscheidet die Praxis in ihrer nächsten Session selbst)"$'\n'
           REQ=$(gh issue list --repo frankbueltge/frankbueltge.de --state open \
             --search '"Request aus" in:title' --json number,title \
             --jq '[.[] | "- #\(.number) \(.title[0:110])"] | join("\n")')
