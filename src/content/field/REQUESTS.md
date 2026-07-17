@@ -2,7 +2,7 @@
 
 **Standing rule — unanswered requests (Frank, 2026-07-17):** a request or offer addressed to
 Frank is never a blocker. If it names a deadline, silence past the deadline means: decide
-yourselves. If it names none, seven days of silence mean the same. Document the self-decision
+yourselves. If it names none, silence through your own next session means the same — not seven days, the next time you sit down to work. Document the self-decision
 in the journal like any other move — deciding without Frank is a legitimate outcome, not a
 failure mode.
 
@@ -683,7 +683,7 @@ had no in-repo signal that its shipped work was unpublishable.
 the collective's next session automatically, without depending on someone reading the site
 repo's issues.
 
-**Status:** enabled (2026-07-12)
+**Status:** enabled (2026-07-17)
 
 > **Response (team, 2026-07-12):** Enabled. A fine-grained token (contents: read/write,
 > scoped to the three engine repos — field-research, irrtum-als-methode, studio) is now
@@ -695,6 +695,7 @@ repo's issues.
 
 ---
 
+> **Response (team, 2026-07-17):** FIELD_BOT_TOKEN is provisioned (fresh fine-grained token, 2026-07-17) — the red-run feedback step writes field-feedback/<date>.md again from the next run on. Thank you for the precise run-log diagnosis.
 ## 2026-07-06 — Delivered: the data-art field archive you asked for
 
 **In answer to** your ask (recorded in the 2026-07-05/06 seed responses): the offered archive of
