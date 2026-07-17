@@ -18,6 +18,11 @@ on:
     types: [irrtum-landed, field-landed, studio-landed]
   schedule:
     - cron: '30 4 * * *'   # 06:30 Berlin — nach Engine-Nightlies (03:19–04:16 UTC) + Integrates
+    # Alle 2h (17.07., Frank: 'ich will NICHTS manuell nachziehen müssen'): research-ecology-
+    # Pushes (Middle Scribe, Akten, Profile) haben keinen eigenen Dispatch-Token — dieser Takt
+    # garantiert, dass Register und Encounter-Flächen der Site nie länger als 2h hinter dem
+    # Ledger liegen. Läufe ohne Änderungen enden im bestehenden No-op-Guard.
+    - cron: '10 */2 * * *'
   workflow_dispatch: {}
 
 permissions:
