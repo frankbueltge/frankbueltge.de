@@ -1,9 +1,9 @@
 # Provenienz
 
-Erzeugt aus `research-ecology` Commit `976a8978992f3053d9924cea3b30a6bc97b76ed7` durch `apps/export-site`
+Erzeugt aus `research-ecology` Commit `4dd776d9d6ef164fe22f4444e3b3721c5eb9d3b5` durch `apps/export-site`
 (`@research-ecology/export-site@0.1.0`, Projektions-Engine `@research-ecology/projections@0.1.0`).
 
-Datenstand: 2026-07-14T00:00:00Z (jüngstes aufgezeichnetes Ereignis der Begegnung
+Datenstand: 2026-07-17T00:00:00Z (jüngstes aufgezeichnetes Ereignis der Begegnung
 `enc-2026-001-calibration-gap-travels`) — kein Erzeugungs-Zeitstempel, nur datengetragene Daten.
 
 Diese Dateien sind ein Export, keine Originalquelle — die Quelle bleibt `research-ecology`
