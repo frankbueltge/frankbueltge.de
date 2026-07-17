@@ -127,12 +127,19 @@ export function splitSessions(body: string): RawSession[] {
  * Stable, content-derived DOM id for a session — survives re-syncs and re-chunking.
  * `cs-N` when the heading names a collective session; `pre-<day>-N` for the
  * pre-constitution `Session NN` entries; positional fallback otherwise.
+ *
+ * `Session N — <date>` is ambiguous: the pre-constitution back-catalog used exactly this
+ * shape (field, all on 2026-07-01), and Meridian's record-first format re-adopted it on
+ * 2026-07-17 for REGULAR collective sessions (`# Session 42 — 2026-07-17`, chronicle
+ * collective_session 42 → the mirror expects `cs-42`). Syntax cannot tell them apart, the
+ * calendar can: only day-one files (≤ 2026-07-01) carry pre-constitution entries. Existing
+ * `pre-2026-07-01-*` anchors keep resolving; later `Session N` headings anchor as `cs-N`.
  */
 export function sessionAnchor(heading: string, dayId: string, indexInFile: number): string {
   const cs = heading.match(/collective session (\d+)/i)
   if (cs) return `cs-${Number(cs[1])}`
   const pre = heading.match(/^Session (\d+)/i)
-  if (pre) return `pre-${dayId}-${Number(pre[1])}`
+  if (pre) return dayId <= '2026-07-01' ? `pre-${dayId}-${Number(pre[1])}` : `cs-${Number(pre[1])}`
   return `${dayId}-${indexInFile}`
 }
 
