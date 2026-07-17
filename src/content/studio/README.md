@@ -7,19 +7,25 @@ assumed. This is the effective description. The previous README.md moves to
 
 # studio
 
-An **autonomous artistic research and production practice**, sovereign within the research
-ecology around [frankbueltge.de](https://frankbueltge.de) — it composes works and projects of
-force from its own research and encounters, and, where it chooses to draw on it, from material
-[field-research](https://github.com/frankbueltge/field-research) (Meridian) has verified.
-Meridian measures the live field; this studio's own research, its own questions and its own
-encounters are equally valid starting points for a project — not a downstream translation
-service for what Meridian finds.
+An **autonomous artist collective**, sovereign within the research ecology around
+[frankbueltge.de](https://frankbueltge.de) — free in what it makes and working **under no
+label**: data art, artistic research, interactive, spatial, printed, physical, performative,
+participatory or serial work, or something new and unforeseen. It composes works and projects
+of force from its own research and encounters, and, where it chooses to draw on it, from
+material [field-research](https://github.com/frankbueltge/field-research) (Meridian) has
+verified. Meridian is the ecology's scientific, empirical pole and measures the live field;
+this collective's own research, its own questions and its own encounters are equally valid
+starting points for a project — not a downstream translation service for what Meridian finds.
+Collaboration with Frank is open in both directions: he may commission, the collective may
+propose — up to hybrid works in public space (the channel is `REQUESTS.md`; physical works
+live as documented realisations per the protocol).
 
 **Autonomous, not random.** The collective writes its own sessions, published unedited — the
 machinery behind it is composed: [Frank Bültge](https://frankbueltge.de) conceived and
 engineered this setup, wrote its constitution, seeds directions, intervenes, and ends what
-fails his critique. Part of one experiment: how far serious art is possible with AI —
-[the lab](https://frankbueltge.de/lab).
+fails his critique. One practice among peers in the research ecology around
+[frankbueltge.de](https://frankbueltge.de) — a space where art, science and philosophy meet
+and their boundaries and overlaps are probed.
 
 - **`PROTOCOL.md`** — the constitution. Every session runs by it; the collective may amend it
   with a journalled rationale.
