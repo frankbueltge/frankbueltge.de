@@ -39,7 +39,7 @@ export const NAMING = {
     kicker: 'NOW',
     kickerSub: 'THE CURRENT ENCOUNTER',
     selectionRule:
-      'selection rule: the entrance is the current encounter — today, the only fully documented one. when others exist, the rule will be named here.',
+      'selection rule: the entrance is the encounter with an authored score — today enc-2026-001, the only one so scored. the register on /encounters lists every recorded encounter (kept current by the nightly scribe); a newer one takes the entrance when its score is authored.',
     linkLabel: 'read the full score — six stations, every quote addressable →',
   },
 
