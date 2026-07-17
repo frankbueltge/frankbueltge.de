@@ -21,6 +21,20 @@ interface RegisterEntry {
   authored_by: string | null
   participants: { id: string; role: string | null }[]
   record_url: string
+  // Machine-OBSERVED receiver-work premiere status (17.07., "Beobachten & anstoßen"): derived
+  // by the ecology export from the receiver engine's works/, strictly separate from the scribe's
+  // editorial title/status. Present only for encounters whose receiver is one of the cloned
+  // engine collectives; absent for datavism/data-snack (honestly not observable), and in the
+  // determinism test (no engines) — so this stays optional.
+  observed?: {
+    receiver_collective: string
+    engine_repo: string
+    work_slug: string
+    premiered: boolean
+    work_dir: string | null
+    premiered_on: string | null
+    in_production_uri: string
+  }
 }
 const entries = register as RegisterEntry[]
 
@@ -116,6 +130,11 @@ const ecologyMapSvg =
               <td class="border-t border-line/60 py-2 pr-4">
                 {e.status?.statusLine ?? '—'}
                 {e.status?.as_of && <span class="block text-fg-faint">as of {e.status.as_of}</span>}
+                {e.observed?.premiered && (
+                  <span class="block text-fg">
+                    ▲ receiver work premiered{e.observed.premiered_on ? ` ${e.observed.premiered_on}` : ''} (observed){/premiere pending/i.test(e.title ?? '') ? ' — record catching up' : ''}
+                  </span>
+                )}
               </td>
               <td class="border-t border-line/60 py-2 pr-4">{e.participants.map((p) => p.id).join(' · ')}</td>
               <td class="border-t border-line/60 py-2">
