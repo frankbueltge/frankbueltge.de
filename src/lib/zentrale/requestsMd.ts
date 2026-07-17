@@ -103,6 +103,16 @@ export function appendSeed(md: string, opts: { title: string; body: string; date
   return md.slice(0, section.bodyStart) + newRaw + md.slice(section.end)
 }
 
+/** Team-eigene Sections in den REQUESTS.md: Seeds, Team notes, Team responses — das sind
+ * Franks/des Teams eigene Worte an die Kollektive, keine Anfragen AN Frank. Die Inbox
+ * (und der Watchdog, der dasselbe Muster in Python spiegelt — requests-watchdog.yml)
+ * überspringt sie: wer sich selbst in der eigenen Inbox liest, liest nur Rauschen. */
+export const TEAM_SECTION_RE = /^(seeds\b|team note\b|team responses\b)/i
+
+export function isTeamSection(heading: string): boolean {
+  return TEAM_SECTION_RE.test(heading.trim())
+}
+
 /** Der Titel, unter dem eine offene Request als GitHub-Issue in der Inbox landet
  * ("Request aus {repo}: {heading}") — repo ist das Engine-Repo (keine Leerzeichen),
  * heading der volle Section-Titel, auch wenn er selbst Doppelpunkte/Gedankenstriche trägt. */
