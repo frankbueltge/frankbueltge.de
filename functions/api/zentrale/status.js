@@ -9,7 +9,7 @@
 // übernehmen die reinen, getesteten Funktionen aus src/lib/zentrale/status.ts; diese Datei
 // ist nur Beschaffung (fetch) + Verdrahtung + Cache.
 //
-// Ausfall-Politik: EIN kaputter Teilfetch darf nie das ganze Lagebild leeren. Alle neun
+// Ausfall-Politik: EIN kaputter Teilfetch darf nie das ganze Lagebild leeren. Alle zehn
 // Anfragen laufen parallel über Promise.allSettled; ein gescheiterter Teil wird null plus
 // ein Eintrag in `errors` (nur der Name des Teils, nie Token/Query-Inhalt). Die drei rohen,
 // unauthentifizierten chronicle/vital-signs-Reads sind grundsätzlich tolerant (404, kaputtes
@@ -21,6 +21,7 @@
 // checkToken) und ZENTRALE_GITHUB_TOKEN (Lesezugriff auf die vier Kollektiv-Repos + dieses
 // Repo). Kein Token wird je geloggt oder in eine Fehlermeldung eingebettet.
 import { latestRunPerWorkflow, summarizeCommits, chronicleLast, vitalSignsLast, buildInbox } from '../../../src/lib/zentrale/status'
+import { enginePrs } from '../../../src/lib/zentrale/sitePrs'
 import { checkToken } from '../../../src/lib/zentrale/auth'
 
 const API_BASE = 'https://api.github.com'
@@ -98,6 +99,8 @@ async function buildPayload(token) {
       run: () => ghGet(token, `/repos/frankbueltge/${c.repo}/commits?per_page=30`),
     })),
     { name: 'issues', run: () => ghGet(token, '/repos/frankbueltge/frankbueltge.de/issues?state=open&per_page=100') },
+    // Offene Vorschläge der PR-Schleuse (engine-site-pr.yml) — gefiltert auf `<ns>/pr-*`-Branches.
+    { name: 'sitePrs', run: () => ghGet(token, '/repos/frankbueltge/frankbueltge.de/pulls?state=open&per_page=50') },
     { name: 'chronicle:field-research', run: () => rawJson('frankbueltge/field-research', 'chronicle.json') },
     { name: 'chronicle:studio', run: () => rawJson('frankbueltge/studio', 'chronicle.json') },
     { name: 'vitalSigns:irrtum-als-methode', run: () => rawJson('frankbueltge/irrtum-als-methode', 'pulse/vital-signs.json') },
@@ -170,6 +173,8 @@ async function buildPayload(token) {
     collectives,
     runs: runsSummary,
     inbox,
+    // null = Teilfetch ausgefallen (steht dann in errors); [] = ehrlich leer.
+    sitePrs: results.sitePrs ? enginePrs(results.sitePrs) : null,
   }
 }
 
