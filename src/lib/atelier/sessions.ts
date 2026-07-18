@@ -63,8 +63,9 @@ export function numberWord(n: number): string {
   return o === 0 ? tens[t] : `${tens[t]}-${ones[o]}`
 }
 
-/** The spine's headline: „<N> nights; the next page is not written.“ (capitalized). */
+/** The spine's headline (v4 revision 2026-07-18: the nightly phase is a closed archive):
+ * „<N> nights — the nightly register closed 18 July 2026.“ (capitalized). */
 export function spineHeadline(pageCount: number): string {
   const word = numberWord(pageCount)
-  return `${word.charAt(0).toUpperCase()}${word.slice(1)} nights; the next page is not written.`
+  return `${word.charAt(0).toUpperCase()}${word.slice(1)} nights — the nightly register closed 18 July 2026.`
 }
