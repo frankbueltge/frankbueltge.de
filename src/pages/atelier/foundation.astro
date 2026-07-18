@@ -1,0 +1,118 @@
+---
+// /atelier/foundation — what happens here, and on what ground (Protocol v4, 2026-07-18).
+// One page, deliberately: the plain-language operating model, the status legend, the
+// division of authority, and the Research Foundation anchor mirrored verbatim from the
+// engine repo (src/content/atelier/RESEARCH-FOUNDATION-V1.md — synced by atelier-integrate,
+// same mechanism as PROTOCOL.md). The full dossiers behind the anchor remain research
+// records outside the public repo; this page projects, it does not re-author.
+import { getCollection, render } from 'astro:content'
+import Page from '@/layouts/Page.astro'
+
+const all = await getCollection('atelier')
+const doc = all.find((e) => e.id === 'research-foundation-v1')
+const { Content } = doc ? await render(doc) : { Content: null }
+
+const statuses = [
+  ['ACTIVE', 'a bounded project in progress — research record, not a work'],
+  ['ARCHIVE_AS_STUDY', 'closed and kept as an openly labelled study; no publication implied'],
+  ['KILL', 'terminated line — preserved honestly, never reinterpreted as a success'],
+  ['PUBLICATION_CANDIDATE', 'Ulysses proposes it; it waits for a human decision, indefinitely if need be'],
+  ['PUBLISHED_WORK', 'Frank Bültge approved publication (PUBLICATION.json with name + timestamp) — only then does it enter the works surface'],
+  ['ESCALATE / QUARANTINED', 'a mandate boundary was reached; the project waits for human review and cannot auto-land'],
+]
+
+const ulyssesMay = [
+  'initiate a project from a concrete source situation',
+  'research, build, revise within the project budget',
+  'archive or kill its own projects',
+  'propose a work for publication',
+  'land ordinary research records automatically (validated, allowlisted)',
+]
+const frankDecides = [
+  'curated publication (the only route to the works surface)',
+  'rights, consent and affected-public exceptions',
+  'new external costs and infrastructure access',
+  'the protocol and the standing delegation themselves',
+  'suspension or termination of the practice',
+]
+---
+
+<Page
+  title="Atelier — foundation | Frank Bültge"
+  description="What happens in the Atelier and on what ground: bounded projects under a standing human delegation, the status legend, the division of authority, and the Research Foundation behind Protocol v4."
+>
+  <main id="main" class="mx-auto max-w-3xl px-4 py-14">
+    <p class="font-mono text-xs uppercase tracking-[0.2em] text-fg-faint">
+      Atelier · machine-participatory research practice · foundation
+    </p>
+    <p class="mb-8 mt-2 font-mono text-[11px] text-fg-faint">
+      Protocol v4 · 2026-07-18 · <a href="/atelier" class="underline transition-colors hover:text-fg">back to the atelier →</a>
+    </p>
+
+    <article class="engine-prose">
+      <h1>What happens here, and on what ground</h1>
+
+      <p>
+        <strong>Ulysses / Atelier is a situated artistic research practice by Frank Bültge,
+        developed through documented human–machine operations.</strong> Models and tools hold
+        real operative agency here: they identify project candidates, research, compare,
+        build, revise and archive. They do so inside a <em>standing delegation</em> — a
+        versioned mandate that fixes capacity, budgets, permitted paths and escalation
+        conditions — while curated publication, rights-sensitive exceptions, protocol changes
+        and ultimate responsibility remain human.
+      </p>
+      <p>
+        The unit of work is the <strong>bounded project</strong>: it begins from a concrete
+        source situation (a material, a claim, an instrument, an encounter — never an
+        abstract theme), carries its own budget and kill condition, and must expose itself to
+        something capable of defeating its premise. A scheduled run that finds no justified
+        work ends empty; producing output because a clock fired is exactly the failure mode
+        this protocol retired. From 28 June to 18 July 2026 the practice operated through a
+        nightly session protocol — that phase is closed and preserved as the
+        <a href="/atelier/journal">nightly protocol archive</a>.
+      </p>
+      <p>
+        The <a href="https://github.com/frankbueltge/irrtum-als-methode" target="_blank" rel="noreferrer">engine repository ↗</a>
+        is an inspectable research archive, not a works gallery: active projects, studies,
+        failed and killed lines are public there, labelled by state. The
+        <a href="/atelier/works">works surface</a> on this site is a separate, curated space —
+        nothing enters it through a merge, a green build or a model's judgement.
+      </p>
+
+      <h2>The status legend</h2>
+      <table>
+        <thead><tr><th>state</th><th>meaning</th></tr></thead>
+        <tbody>
+          {statuses.map(([s, m]) => (
+            <tr><td><code>{s}</code></td><td>{m}</td></tr>
+          ))}
+        </tbody>
+      </table>
+
+      <h2>Who decides what</h2>
+      <div class="grid gap-6 sm:grid-cols-2">
+        <div>
+          <h3>Ulysses may, autonomously</h3>
+          <ul>{ulyssesMay.map((x) => <li>{x}</li>)}</ul>
+        </div>
+        <div>
+          <h3>Frank Bültge decides</h3>
+          <ul>{frankDecides.map((x) => <li>{x}</li>)}</ul>
+        </div>
+      </div>
+      <p>
+        The full rules live in the <a href="/atelier/protocol">constitution (Research
+        Protocol v4)</a> and the
+        <a href="https://github.com/frankbueltge/irrtum-als-methode/blob/main/governance/STANDING-DELEGATION.md" target="_blank" rel="noreferrer">standing delegation ↗</a>.
+      </p>
+
+      <h2>The theoretical ground</h2>
+      <p class="font-mono text-[11px] text-fg-faint">
+        The anchor below is mirrored verbatim from the engine repo
+        (<code>docs/RESEARCH-FOUNDATION-V1.md</code>); Protocol v4 was derived from a
+        five-tranche research foundation, of which this is the public condensation.
+      </p>
+      {Content ? <Content /> : <p class="text-fg-faint">Not synced yet.</p>}
+    </article>
+  </main>
+</Page>
