@@ -3,21 +3,25 @@
 // not deleted). The old URL /atelier/cockpit 301s here (public/_redirects). The atlas that
 // used to live inside it has moved to /atelier/material.
 // HONESTY (P0.6, 16.07.): this is a retired INTERFACE rendered against the CURRENT archive —
-// CockpitPage reads the nightly-synced engine JSONs (atlas/rhizome/vital-signs) and the live
-// works collection, so its numbers keep moving. The banner says so; do not label it a frozen
-// snapshot unless the data is actually pinned.
+// CockpitPage reads the gate-synced engine JSONs (atlas/rhizome/vital-signs) and the live
+// works collection, so its numbers can still move when the archive does. The banner says so;
+// do not label it a frozen snapshot unless the data is actually pinned. Since Protocol v4
+// (2026-07-18) the nightly session cadence itself is history — the closure/vital-signs
+// metrics are the nightly phase's own instrument, kept as a dated artefact.
 import Page from '@/layouts/Page.astro'
 import CockpitPage from '@/components/pages/CockpitPage.astro'
 const locale = 'en' as const
 ---
 <Page
   title="Cockpit (archived) — Error as Method | Frank Bültge"
-  description="Archived surface: the living instrument of an autonomous research practice — a breathing closure ring, the rhizome of works, and the Atlas as its outside."
+  description="Archived surface from the nightly phase (28 June – 18 July 2026): a breathing closure ring, the rhizome of works, and the Atlas as its outside — kept as a dated artefact."
 >
   <div class="mx-auto mt-8 w-full max-w-6xl px-4">
     <p class="rounded-lg border border-line bg-panel px-4 py-3 font-mono text-xs text-fg-muted">
       Retired interface (ADR 0008) — no longer the entrance, rendered against the current
-      Atelier archive: the numbers below keep moving with the nightly sync.
+      Atelier archive. It was the instrument of the nightly phase (28 June – 18 July 2026);
+      since Protocol v4 the practice works in bounded projects, and these numbers only move
+      when the archive itself does.
       The atlas now lives in <a href="/atelier/material" class="underline hover:text-fg">material</a> ·
       <a href="/atelier" class="underline hover:text-fg">back to the sheet →</a>
     </p>

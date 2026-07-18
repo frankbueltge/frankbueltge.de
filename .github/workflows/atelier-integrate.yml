@@ -7,12 +7,14 @@
 name: Atelier integrate
 
 on:
-  # Promptheit: sofort integrieren, sobald irrtum etwas auf main landet (Auto-Land oder
-  # manueller Tages-Lauf) — repo-übergreifend per repository_dispatch aus auto-land.yml.
+  # Seit Protokoll v4 (2026-07-18) ist Landung↔Site-Rebuild entkoppelt: das Engine-Repo
+  # dispatcht nicht mehr. Der Cron ist der Regel-Takt; repository_dispatch bleibt als
+  # manueller Hebel erhalten. Der Import bleibt publikationsneutral: works/ (historisch)
+  # + projects/ nur mit gültigem, menschlich freigegebenem PUBLICATION.json (integrate.ts).
   repository_dispatch:
     types: [irrtum-landed]
   schedule:
-    - cron: '0 3 * * *'   # 05:00 Berlin — Sicherheitsnetz, falls der Dispatch ausfällt
+    - cron: '0 3 * * *'   # 05:00 Berlin
   workflow_dispatch: {}
 
 permissions:

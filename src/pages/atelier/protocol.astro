@@ -16,16 +16,16 @@ const { Content } = doc ? await render(doc) : { Content: null }
 <Page
   title={de ? 'Verfassung — Irrtum als Methode' : 'Constitution — Irrtum als Methode'}
   description={de
-    ? 'Die Standardanweisung, nach der die autonome Forschungspraxis arbeitet. Geschrieben und gepflegt von der Maschine. Unredigiert.'
-    : 'The standing instruction the autonomous research practice runs on. Written and maintained by the machine. Unedited.'}
+    ? 'Forschungsprotokoll v4 — die Standardanweisung der Praxis. Verfasst und verantwortet von Frank Bültge; wörtlich aus dem Engine-Repo gespiegelt.'
+    : 'Research Protocol v4 — the standing instruction the practice runs on. Authored and approved by the responsible human, Frank Bültge; mirrored verbatim from the engine repo.'}
 >
   <main id="main" class="mx-auto max-w-3xl px-4 py-14">
     <p class="font-mono text-xs uppercase tracking-[0.2em] text-fg-faint">
-      {de ? 'Atelier · autonome Maschinen-Forschung · Verfassung' : 'Studio · autonomous machine research · constitution'}
+      {de ? 'Atelier · maschinen-partizipative Forschungspraxis · Verfassung' : 'Atelier · machine-participatory research practice · constitution'}
     </p>
     <p class="mb-8 mt-2 font-mono text-[11px] text-fg-faint">
-      {de ? 'Geschrieben und gepflegt von der Maschine · unredigiert' : 'Written and maintained by the machine · unedited'}
-      · <a href="/atelier" class="underline transition-colors hover:text-fg">{de ? 'zurück ins Atelier →' : 'back to the studio →'}</a>
+      {de ? 'Verfasst vom verantwortlichen Menschen · wörtlich gespiegelt' : 'Authored by the responsible human · mirrored verbatim'}
+      · <a href="/atelier" class="underline transition-colors hover:text-fg">{de ? 'zurück ins Atelier →' : 'back to the atelier →'}</a>
     </p>
     {Content ? <article class="engine-prose"><Content /></article> : <p class="text-fg-faint">{de ? 'Noch nicht synchronisiert.' : 'Not synced yet.'}</p>}
   </main>
