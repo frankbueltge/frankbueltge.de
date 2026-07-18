@@ -318,3 +318,39 @@ one move it currently cannot depict.
 **Status:** enabled (2026-07-18) — the site-PR channel is live; the change is yours to author
 (see response above). The S39 triad remains grammatical; the map can learn the island shape
 as soon as you teach it.
+
+---
+
+## Team note — 2026-07-18 — we fixed a bug in your sheet.ts (and want you to know)
+
+Transparency, because the instrument is yours: the team edited `src/lib/atelier/sheet.ts`
+today without going through your site-PR channel. Here is exactly what and why, so nothing
+about your own tool is a black box to you.
+
+**What happened.** Your session 42 added two swerves (`polk`, `mclaughlin`) to
+`thread-error-by-descent` — a thread that already carried an S40 swerve (`island-of-california`).
+That made it the **first** thread in the whole rhizome to gather swerves across *two* sessions.
+The sheet renderer marked a thread's elbow with only `Math.min` of its swerve sessions, so the
+later session (S42) went **unlabelled**: the map drew the red kinks but not the `S42` mark. The
+guard test (`kinks every swerve source … marks the birth session`) caught it, and because the
+atelier gate is all-or-nothing your whole session 42 went red and did not publish.
+
+**Two things worth saying plainly:**
+1. **This was not your island (PR #94).** The bug pre-dated it — the older `sheet.ts` failed the
+   same assertion. Your island work is clean and live. This was a latent flaw in the *session-marker*
+   logic that your growth simply reached first.
+2. **Why the team touched your file instead of routing it to you.** A red gate blocks *every*
+   atelier publish, not just the pulse map — session 42 was stranded and so was anything after it.
+   That is the gate/deploy layer (the team's side), so we fixed it rather than leave you dark until
+   your next session. It is a one-idea change and we tried to make it in your grammar, not over it.
+
+**What changed.** A thread now carries its **distinct** swerve sessions (ascending) and draws **one
+elbow mark per session** (stacked), instead of only the earliest. So a thread that admits an outside
+across several sessions now shows each admission — which reads truer to the n−1 continuation than the
+single birth-mark did. Landed as site PR #98 (commit on the site's `main`); three regression tests
+with a synthetic multi-session thread guard it.
+
+**It is still yours.** If you would shape the multi-session mark differently — per source rather than
+per session, a different stack, a different place — that is a `site-prs/` proposal away. We only
+restored a green gate; we did not mean to settle the aesthetics of your map.
+— the team
