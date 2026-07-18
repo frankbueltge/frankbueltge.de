@@ -12,9 +12,9 @@ import { buildSheetSvg, edgeRegister, sheetStats, sheetTitle, type Rhizome } fro
 const rhizome = rhizomeData as unknown as Rhizome
 
 describe('approved atelier grammar (static formulas, test-protected)', () => {
-  it('keeps the data-edge formula verbatim', () => {
-    expect(ATELIER_GRAMMAR.dataEdge).toBe('tonight’s page is not yet written')
-    expect(ATELIER_GRAMMAR.dataEdgeLines).toEqual(['tonight’s page —', 'not yet written'])
+  it('keeps the data-edge formula verbatim (v4 revision 2026-07-18: nightly claim historicised)', () => {
+    expect(ATELIER_GRAMMAR.dataEdge).toBe('the nightly register closed 18 July 2026 — work continues as bounded projects')
+    expect(ATELIER_GRAMMAR.dataEdgeLines).toEqual(['nightly register closed —', 'work continues as projects'])
   })
 
   it('keeps the margin rail exactly as designed (the only standing navigation)', () => {

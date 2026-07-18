@@ -44,9 +44,9 @@ describe('sessionRegister', () => {
   })
 })
 
-describe('spineHeadline (approved formula, counts in words)', () => {
-  it('matches the design session’s own line for its own count', () => {
-    expect(spineHeadline(28)).toBe('Twenty-eight nights; the next page is not written.')
+describe('spineHeadline (approved formula, counts in words; v4 revision 2026-07-18)', () => {
+  it('speaks the closed nightly register for its own count', () => {
+    expect(spineHeadline(28)).toBe('Twenty-eight nights — the nightly register closed 18 July 2026.')
   })
 
   it('speaks numbers as words', () => {
