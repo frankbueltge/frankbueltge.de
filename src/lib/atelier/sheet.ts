@@ -83,7 +83,12 @@ function labelledText(cls: string, x: number, y: number, label: string, max: num
 interface ThreadLayout {
   id: string
   label: string
+  /** the thread's birth session (earliest swerve) — kept for sorting/back-compat */
   session: number | null
+  /** every distinct session in which a swerve joined this thread, ascending. A thread
+   *  can gather outsides across several sessions (the n−1 continuation), so each session
+   *  gets its own elbow mark — not only the birth (a single Math.min hid the later ones). */
+  sessions: number[]
   y: number
   sources: { id: string; label: string; y: number; kind: 'swerve' }[]
   works: { id: string; label: string; date?: string; x: number; y: number }[]
@@ -213,7 +218,8 @@ function layoutSheet(r: Rhizome): SheetLayout {
   for (const t of threadNodes) {
     const swerves = r.edges.filter((e) => e.kind === 'swerve' && e.to === t.id)
     const sessions = swerves.map((e) => e.session).filter((s): s is number => typeof s === 'number')
-    const session = sessions.length ? Math.min(...sessions) : null
+    const sessionList = [...new Set(sessions)].sort((a, b) => a - b)
+    const session = sessionList.length ? sessionList[0] : null
     const workEdges = r.edges.filter((e) => e.kind === 'elaborates' && e.from === t.id)
 
     const nSrc = swerves.length
@@ -288,7 +294,7 @@ function layoutSheet(r: Rhizome): SheetLayout {
     const groundBottom = groundSources.some((g) => g.y === ty + 116) ? ty + 124 : ty
     const bandBottom = Math.max(srcBottom + 16, workBottom, ghostBottom, groundBottom)
 
-    threads.push({ id: t.id, label: t.label, session, y: ty, sources, works, ghosts })
+    threads.push({ id: t.id, label: t.label, session, sessions: sessionList, y: ty, sources, works, ghosts })
     bandTop = bandBottom + BAND_GAP
   }
 
@@ -376,14 +382,16 @@ export function buildSheetSvg(r: Rhizome, opts?: { doorwayNote?: string; links?:
       s.push(`<path class="rp" d="M${ELBOW_X - 22} ${src.y} Q ${ELBOW_X - 4} ${src.y}, ${ELBOW_X} ${t.y}" fill="none"/>`)
     }
     s.push(`<circle class="rp-dot" cx="${ELBOW_X}" cy="${t.y}" r="3.5"/>`)
-    if (t.session !== null) {
+    // One elbow mark per distinct session in which a swerve joined — stacked below the dot.
+    // A thread that gathers outsides across several sessions shows each, not only its birth.
+    t.sessions.forEach((sess, i) => {
       s.push(
         door(
-          links.session?.(t.session),
-          `<text class="t-sess" x="${ELBOW_X - 6}" y="${t.y + 22}" text-anchor="end">S${t.session}</text>`,
+          links.session?.(sess),
+          `<text class="t-sess" x="${ELBOW_X - 6}" y="${t.y + 22 + i * 15}" text-anchor="end">S${sess}</text>`,
         ),
       )
-    }
+    })
   }
 
   // continues: a thread flows on into a later one (left-side long curve, red session mark)
