@@ -1,5 +1,5 @@
 // Determinism + honesty guard for the Buchrücken generator. Guards the approved data-edge
-// wording (tonight's page), the uncompressed session register, and the explicit refusal to
+// wording (v4: nightly register closed), the uncompressed session register, and the explicit refusal to
 // re-layout silently past the scale rule (§7: quires).
 import { describe, expect, it } from 'vitest'
 import { ATELIER_GRAMMAR } from '@/config/atelier-wording'
@@ -34,7 +34,7 @@ describe('buildSpineSvg', () => {
     expect(svg.match(/class="page page-next"/g) ?? []).toHaveLength(1)
   })
 
-  it('carries the approved data-edge formula verbatim (tonight’s page …)', () => {
+  it('carries the approved data-edge formula verbatim (v4: nightly register closed …)', () => {
     const svg = buildSpineSvg(input)
     expect(svg).toContain(ATELIER_GRAMMAR.dataEdgeLines[0])
     expect(svg).toContain(ATELIER_GRAMMAR.dataEdgeLines[1])

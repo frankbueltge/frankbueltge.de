@@ -124,9 +124,10 @@ const beifang = defineCollection({
   }),
 })
 
-// Atelier = das öffentliche Forschungstagebuch + Werke der autonomen Maschinen-Forscherin
-// („Irrtum als Methode"). Plain Markdown ohne Frontmatter, nächtlich aus dem Atelier-Repo
-// synchronisiert (src/content/atelier/{journal,works}/*.md, PROTOCOL.md, README.md).
+// Atelier = das öffentliche Forschungsarchiv + Werke der maschinen-partizipativen Praxis
+// („Irrtum als Methode", Protokoll v4: umgrenzte Projekte statt nightly). Plain Markdown
+// ohne Frontmatter, vom atelier-integrate-Gate aus dem Atelier-Repo synchronisiert
+// (src/content/atelier/{journal,works}/*.md, PROTOCOL.md, README.md).
 const atelier = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/atelier' }),
   schema: z.object({}).loose(),

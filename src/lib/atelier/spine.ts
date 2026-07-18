@@ -4,7 +4,8 @@
 // sessions: every journal page stands as a spine line, works hang as slabs under their
 // night, the error register strikes in red pencil above, threads are born as red kinks
 // and stay open, dates ride below as rotated marginalia. The right edge is the Atelier's
-// own data edge: tonight's page, not yet written (approved formula, wortlaute §2).
+// own data edge: the nightly register closed 18 July 2026 (v4 revision of the approved
+// formula, wortlaute §2 + public-surface patch 2026-07-18).
 //
 // Pure and deterministic: same inputs ⇒ byte-identical SVG. No randomness, no clock.
 //
