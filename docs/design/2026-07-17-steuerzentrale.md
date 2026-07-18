@@ -33,16 +33,27 @@ Server-Daten — der gesamte Inhalt kommt zur Laufzeit aus dem Browser):
   Chronik-Zeile, bei Atelier zusätzlich der closure-Wert, liegen gebliebene Issues.
 - **Inbox** — offene Anfragen der Kollektive (aus den REQUESTS.md-Sections, als GitHub-Issue
   gespiegelt) mit Schnellantwort-Buttons.
+- **Site-PRs** — offene Vorschläge der PR-Schleuse (`engine-site-pr.yml`): Änderungen, die
+  ein Kollektiv an der Site selbst vorschlägt, als PRs mit Branch `<ns>/pr-<slug>`. Pro
+  Karte: Persona, PR-Nummer/Alter, Titel, Slug, Begründungs-Auszug, Link zum PR und zwei
+  Entscheidungen — **mergen** (Live-Aktion, zweiter bestätigender Klick nötig; danach baut
+  `deploy-cf` die Site neu) oder **ablehnen** (schließen, endgültig — die Schleuse belebt
+  geschlossene PRs nie wieder; ein optionales Begründungsfeld geht als PR-Kommentar an die
+  Engine). Nach beidem wird der PR-Branch best-effort gelöscht.
 - **Saat** — ein Formular, um selbst eine Anregung in die REQUESTS.md eines Kollektivs zu
   legen.
 
-Dahinter zwei Cloudflare Pages Functions (`functions/api/zentrale/status.js`,
-`functions/api/zentrale/antwort.js`) und die pure, getestete Logik in `src/lib/zentrale/`
-(Auth-Vergleich, Response-Umformung, REQUESTS.md-Textoperationen — kein `fetch` darin, das
-bleibt Sache der Functions). Antworten und Saaten committen als **„Steuerzentrale
+Dahinter drei Cloudflare Pages Functions (`functions/api/zentrale/status.js`,
+`functions/api/zentrale/antwort.js`, `functions/api/zentrale/site-pr.js`) und die pure,
+getestete Logik in `src/lib/zentrale/` (Auth-Vergleich, Response-Umformung, REQUESTS.md-
+Textoperationen, Site-PR-Filter/Validierung — kein `fetch` darin, das bleibt Sache der
+Functions). Antworten und Saaten committen als **„Steuerzentrale
 <steuerzentrale@frankbueltge.de>"** in die REQUESTS.md der Engine-Repos (field-research,
 studio, irrtum-als-methode, data-snack-plenum) und schließen — bei `answer`/`acknowledge` —
-das zugehörige Inbox-Issue im eigenen Repo.
+das zugehörige Inbox-Issue im eigenen Repo. Die Site-PR-Aktionen (`site-pr.js`) mergen bzw.
+schließen PRs im Site-Repo selbst; vor jeder Aktion wird der PR geladen und gegen das
+Engine-Branch-Muster (`<ns>/pr-<slug>`, `isEngineHead`) geprüft — der Endpoint kann nie
+einen menschlichen Feature-PR anfassen, egal welche Nummer hereinkommt.
 
 Die Seite selbst (`src/pages/steuerzentrale/index.astro`, `src/components/pages/
 ZentralePage.astro`) ist ein leeres, token-gated Gerüst: kein Framework, plain DOM-Code im
@@ -59,7 +70,11 @@ und Issue-Auszüge Kollektiv-Text sind, keine vertrauenswürdige Auszeichnung.
   - Contents read/write auf `field-research`, `studio`, `irrtum-als-methode`,
     `data-snack-plenum` (schreibt in deren REQUESTS.md),
   - Actions read + Issues read/write auf `frankbueltge.de` (liest Workflow-Runs, verwaltet
-    die Inbox-Issues).
+    die Inbox-Issues),
+  - **Pull requests read/write + Contents read/write auf `frankbueltge.de`** — für den
+    Site-PRs-Block: die offenen Vorschläge lesen, mergen (Contents-Write nötig, sonst 403)
+    und schließen. Fehlt dieses Recht, zeigt der Merge-Button ehrlich „Dem Token fehlt das
+    Merge-Recht …" statt still zu scheitern.
   - Läuft maximal 1 Jahr — Ablauf-Erinnerung setzen.
 
 Ohne diese Secrets antwortet `status` mit 503, die Seite zeigt „Nicht verbunden — Secrets
