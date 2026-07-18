@@ -170,3 +170,44 @@ describe('source→work island (n−1)', () => {
     )
   })
 })
+
+// Regression (2026-07-18): a thread can gather swerves across SEVERAL sessions (the n−1
+// continuation). The elbow used to mark only Math.min of them, so a later session's swerve
+// went unlabelled — first exposed live when S42 added a second swerve to a thread already
+// swerved at S40, turning the whole atelier build red. The mark is now per distinct session.
+describe('buildSheetSvg — multi-session swerves on one thread', () => {
+  const multiSession: Rhizome = {
+    nodes: [
+      { id: 'th', kind: 'thread', label: 'a thread that gathers outsides over time' },
+      { id: 'src-a', kind: 'source', label: 'first outside' },
+      { id: 'src-b', kind: 'source', label: 'a later outside' },
+      { id: 'w', kind: 'work', label: 'the work', date: '2026-07-18' },
+    ],
+    edges: [
+      { from: 'src-a', to: 'th', kind: 'swerve', session: 7 },
+      { from: 'src-b', to: 'th', kind: 'swerve', session: 9 },
+      { from: 'th', to: 'w', kind: 'elaborates' },
+    ],
+  } as unknown as Rhizome
+
+  it('marks EVERY distinct swerve session, not only the earliest', () => {
+    const svg = buildSheetSvg(multiSession)
+    expect(svg).toContain('>S7</text>') // the birth
+    expect(svg).toContain('>S9</text>') // the later admission — used to be dropped by Math.min
+  })
+
+  it('draws one red kink per swerve source (both admissions are real)', () => {
+    const svg = buildSheetSvg(multiSession)
+    expect((svg.match(/class="rp"/g) ?? []).length).toBe(2)
+  })
+
+  it('a single-session thread still shows exactly one mark (no regression)', () => {
+    const svg = buildSheetSvg(multiSession)
+    // src-b removed → only S7 remains
+    const single = { ...multiSession, edges: multiSession.edges.filter((e) => e.session !== 9) } as Rhizome
+    const svgSingle = buildSheetSvg(single)
+    expect((svgSingle.match(/>S7</g) ?? []).length).toBe(1)
+    expect(svgSingle).not.toContain('>S9</text>')
+    expect(svg).toContain('>S9</text>') // sanity: the two-session case still has both
+  })
+})
