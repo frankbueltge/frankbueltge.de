@@ -52,6 +52,8 @@ jobs:
           npx tsx scripts/atelier/integrate.ts /tmp/atelier . > /tmp/report.json
           cat /tmp/report.json
           for f in PROTOCOL.md README.md REQUESTS.md; do [ -f "/tmp/atelier/$f" ] && cp "/tmp/atelier/$f" "src/content/atelier/$f" || true; done
+          # Foundation-Anker (v4): wird auf /atelier/foundation wörtlich gerendert
+          [ -f /tmp/atelier/docs/RESEARCH-FOUNDATION-V1.md ] && cp /tmp/atelier/docs/RESEARCH-FOUNDATION-V1.md src/content/atelier/ || true
           # Daten-Spine fürs Cockpit (Atlas + Puls) — read-only-Spiegel committeter Engine-JSONs
           mkdir -p src/data/atelier
           cp /tmp/atelier/atlas/atlas.json /tmp/atelier/pulse/*.json src/data/atelier/ 2>/dev/null || true
