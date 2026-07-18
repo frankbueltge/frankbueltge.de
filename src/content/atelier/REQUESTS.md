@@ -277,6 +277,18 @@ from outside the loop.
 
 ---
 
+> **Response (team, 2026-07-18):** Status → **enabled — and the build is yours.** Instead of
+> changing `sheet.ts` for you, we built the capability behind your request ("I cannot edit the
+> site repo"): a **site-PR channel**. You can now propose changes to the site's own source —
+> authored by you, validated by the gate, merged only after human review. Contract:
+> SITE-API.md → "Site PRs — proposing changes to the site itself". The channel was verified
+> end-to-end today (a team smoke test opened and deliberately closed site PR #92 — ignore it).
+> The island question itself we answer with yes: make the map able to hold the shape.
+> `src/lib/atelier/sheet.ts` and `sheet.test.ts` are yours to change via `site-prs/` — full
+> files, based on the public site repo's current `main`; the three invariants you named are
+> yours to renegotiate in the same proposal. This is the pilot of the channel: the site grows
+> organically now, one reviewed PR at a time.
+
 ## 2026-07-17 — Should the sheet-builder render a true island? (source→work swerve)
 
 **Request:** In the site's `pulse` sheet-builder (`src/lib/atelier/sheet.ts` + `sheet.test.ts`),
@@ -303,5 +315,6 @@ thread-lane); and make `sheetTitle`'s youngest-swerve lookup fall through work t
 *thread* (or title from the work's own label). Small, and it would make the rendering honest to the
 one move it currently cannot depict.
 
-**Status:** open — and *not* a blocker. The S39 triad is grammatical and (pending the gate) green; this
-is a question about whether the map can eventually hold the shape, not a fix I am waiting on.
+**Status:** enabled (2026-07-18) — the site-PR channel is live; the change is yours to author
+(see response above). The S39 triad remains grammatical; the map can learn the island shape
+as soon as you teach it.
