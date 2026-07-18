@@ -1,35 +1,27 @@
 ---
-// The hub — site-v2 work order §3 (decisions doc 2026-07-16 §1.3: "Hero → aktuelle Begegnung
-// (prominent) → vier Türen → 'where works travel' → 'also on this site'"). Replaces the prior
-// entrance (the full score/Partitur experience, src/components/pages/BegegnungEntrance.astro),
-// which now lives at its own stable URL, /begegnungen (decision doc §1.3, work order §3.2).
+// The hub — work-first (Frank, 2026-07-18: "führe mit meiner Arbeit und meiner Autorschaft;
+// autonome KI macht Kunst behaupten alle, meist gelogen — ICH baue die Instrumente, und dass die
+// Maschine nicht tut, was ich will, ist Teil der Arbeit"). Order: hero (thesis, first person) +
+// the Joy-Division pulse (Frank's signature ridgeline, kept) → the instruments (the actual work,
+// curated) → one question / two fronts → how it's made (the practices, demoted, each with a small
+// activity ridge = "visualisierung der maschine") → the other houses → also on this site.
 //
-// All narrative copy (title, hero sub, conductor line, door/travel/rest descriptions) comes
-// from src/config/naming.ts — ONE dictionary, approval: 'draft' until Frank signs off (see
-// docs/decision-log.md). Wordings are taken verbatim from the design session's own mockup
-// (research-ecology docs/design/variants-2026-07-16-hub/hub-a.html).
-//
-// Two pieces of data are deterministic, build-time-only derivations — no clock, no network:
-//   · the pulse: committed snapshot src/data/pulse/pulse.json (scripts/fetch-pulse.ts), rendered
-//     by src/lib/pulse/render.ts.
-//   · each door's "last recorded" date: the newest journal entry already committed under
-//     src/content/<ns>/journal/ for the three practices, and the current encounter's own
-//     status.as_of for The Middle (the only committed date this repo has for it — the export
-//     it renders IS research-ecology's most recent word on the encounter).
+// All narrative copy from src/config/naming.ts (NAMING.home / .travel / .rest); the curated work
+// selection from src/data/featured.ts. Two build-time-only, deterministic derivations (no clock,
+// no network): the pulse snapshot (src/data/pulse/pulse.json) and each practice's session ridge
+// (committed journal filenames under src/content/<ns>/journal/, the same date convention the rest
+// of the site relies on).
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import type { Locale } from '@/lib/site'
-import { currentEntrance } from '@/lib/begegnungen'
-import { latestWorks, type EngineWorkMeta } from '@/lib/engines/latest'
 import { buildPulseSvg, formatWeekRange, type PulseSnapshot } from '@/lib/pulse/render'
 import pulseData from '@/data/pulse/pulse.json'
-import register from '@/data/begegnungen/register.json'
 import { NAMING, DRAFT_LABEL } from '@/config/naming'
+import { FEATURED, INSTRUMENTS } from '@/data/featured'
 
 const locale = (Astro.currentLocale ?? 'en') as Locale
-// entrance is still the source of The Middle door's "last recorded" date (below); its score is
-// no longer rendered prominently — the encounter map moved off the hero (Frank, 18.07.).
-const entrance = currentEntrance
+const rel = (href: string) => (href.startsWith('http') ? href : getRelativeLocaleUrl(locale, href))
 
+// -- the pulse (Joy-Division ridgeline) -----------------------------------------------------
 const pulse = pulseData as PulseSnapshot
 const pulseSvg = buildPulseSvg(pulse)
 const pulseCaption = NAMING.pulseCaption({
@@ -39,68 +31,72 @@ const pulseCaption = NAMING.pulseCaption({
   asOf: pulse.as_of,
 })
 
-// The living edge: newest works across the three practices, both work kinds (astro-page works
-// under src/components/<ns>/werke, html works under src/content/<ns>/works). Globs can't be
-// parameterised, so each is listed; empty namespaces yield {} and drop out harmlessly. This is
-// what changes daily — it replaces the static single-encounter block that used to sit here.
-// import.meta.glob needs literal args (Vite analyses them statically) — options inlined per call.
-const latest = latestWorks(
-  [
-    { ns: 'field', kind: 'astro', metas: import.meta.glob('/src/components/field/werke/*/meta.json', { eager: true, import: 'default' }) as Record<string, EngineWorkMeta> },
-    { ns: 'atelier', kind: 'astro', metas: import.meta.glob('/src/components/atelier/werke/*/meta.json', { eager: true, import: 'default' }) as Record<string, EngineWorkMeta> },
-    { ns: 'atelier', kind: 'html', metas: import.meta.glob('/src/content/atelier/works/*/meta.json', { eager: true, import: 'default' }) as Record<string, EngineWorkMeta> },
-    { ns: 'studio', kind: 'html', metas: import.meta.glob('/src/content/studio/works/*/meta.json', { eager: true, import: 'default' }) as Record<string, EngineWorkMeta> },
-  ],
-  8,
-)
-const nsLabel: Record<string, string> = { field: 'The Field', atelier: 'The Atelier', studio: 'The Studio' }
-const encounterCount = (register as unknown[]).length
-
-// "Last recorded" per practice — from committed content, not a live git log (site-v2 work
-// order §3.3: "deterministisch zur Buildzeit, KEINE Netz-/Uhr-Zugriffe"). Journal filenames are
-// themselves the date (YYYY-MM-DD…), the same convention src/lib/engines/latest.ts relies on.
-function latestJournalDate(glob: Record<string, unknown>): string | undefined {
-  const dates = Object.keys(glob)
-    .map((path) => path.match(/(\d{4}-\d{2}-\d{2})/)?.[1])
+// -- per-practice activity ridge ("a few visualisations of the machines") -------------------
+// A small area sparkline of each practice's session cadence, drawn from its committed journal
+// filenames (YYYY-MM-DD…). Deterministic: buckets by 7-day windows ending at the newest session,
+// no Date.now(). Echoes the big pulse's ridgeline grammar at practice scale.
+function journalDates(glob: Record<string, unknown>): string[] {
+  return Object.keys(glob)
+    .map((p) => p.match(/(\d{4}-\d{2}-\d{2})/)?.[1])
     .filter((d): d is string => Boolean(d))
-  return dates.sort().at(-1)
+    .sort()
 }
+function weeklyCounts(dates: string[], weeks = 12): number[] {
+  const ts = dates.map((d) => Date.parse(`${d}T00:00:00Z`)).filter((n) => !Number.isNaN(n))
+  const counts = new Array(weeks).fill(0)
+  if (ts.length === 0) return counts
+  const end = Math.max(...ts)
+  const WK = 7 * 24 * 3600 * 1000
+  for (const t of ts) {
+    const idx = weeks - 1 - Math.floor((end - t) / WK)
+    if (idx >= 0 && idx < weeks) counts[idx] += 1
+  }
+  return counts
+}
+function ridgeSvg(counts: number[], w = 132, h = 30): string {
+  const max = Math.max(1, ...counts)
+  const n = counts.length
+  const step = n > 1 ? w / (n - 1) : w
+  const pts = counts.map((c, i) => [i * step, h - (c / max) * (h - 4) - 2] as const)
+  const line = pts.map((p, i) => `${i ? 'L' : 'M'} ${p[0].toFixed(1)} ${p[1].toFixed(1)}`).join(' ')
+  const area = `${line} L ${w.toFixed(1)} ${h} L 0 ${h} Z`
+  return (
+    `<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" role="img" aria-label="session activity" style="width:100%;height:30px;display:block">` +
+    `<path d="${area}" fill="currentColor" opacity="0.12"/>` +
+    `<path d="${line}" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.85"/></svg>`
+  )
+}
+
 const atelierJournal = import.meta.glob('/src/content/atelier/journal/*.md')
 const fieldJournal = import.meta.glob('/src/content/field/journal/*.md')
 const studioJournal = import.meta.glob('/src/content/studio/journal/*.md')
 
-const lastRecorded: Record<string, string | undefined> = {
-  ulysses: latestJournalDate(atelierJournal),
-  meridian: latestJournalDate(fieldJournal),
-  ensemble: latestJournalDate(studioJournal),
-  // The Middle has no journal of its own — the encounter export's own as-of stamp is the only
-  // committed date this repo carries for it.
-  conductor: entrance.status.as_of,
-}
+const practices = [
+  { name: 'The Field', resident: 'Meridian', href: '/field', note: 'verifiable instruments, offered under conditions', dates: journalDates(fieldJournal) },
+  { name: 'The Studio', resident: 'Ensemble', href: '/studio', note: 'works you can operate, and the bill is printed', dates: journalDates(studioJournal) },
+  { name: 'The Atelier', resident: 'Ulysses', href: '/atelier', note: 'philosophical research — error as method', dates: journalDates(atelierJournal) },
+].map((p) => ({ ...p, ridge: ridgeSvg(weeklyCounts(p.dates)), last: p.dates.at(-1) ?? '—' }))
 
-const doors = NAMING.doors.items.map((d) => ({
-  ...d,
-  meta: d.noResident
-    ? `${d.noResident} · last recorded: ${lastRecorded[d.id] ?? '—'}`
-    : `resident: ${d.id.charAt(0).toUpperCase()}${d.id.slice(1)} · last recorded: ${lastRecorded[d.id] ?? '—'}`,
-}))
+const madeChips = [
+  { label: 'Where they cross →', href: '/encounters' },
+  { label: 'The apparatus →', href: '/apparatus' },
+]
 
+const H = NAMING.home
 const isDraft = NAMING.approval !== 'approved'
 ---
 
 <main id="main" class="mx-auto w-full max-w-7xl flex-1 px-6 pb-24 pt-16 sm:pt-24">
-  <section class="text-center">
+  <!-- HERO — the thesis, first person -->
+  <section>
     <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted">{NAMING.eyebrow}</p>
-    <p class="mt-7 font-mono text-[11px] uppercase tracking-[0.3em] text-fg-faint">{NAMING.focusKicker}</p>
-    <h1 class="mx-auto mt-3 max-w-[18ch] text-[clamp(38px,6.4vw,72px)] font-bold leading-[1.04] tracking-[-0.025em]">
-      {NAMING.title}
-      {isDraft && <span class="chip ml-3 align-middle text-[11px] normal-case tracking-normal text-fg-faint" title={DRAFT_LABEL}>draft</span>}
+    <h1 class="mt-6 max-w-[20ch] text-[clamp(33px,5.8vw,64px)] font-bold leading-[1.03] tracking-[-0.03em]">
+      {H.headline} <span class="text-fg-faint">{H.headlineTail}</span>
+      {isDraft && <span class="chip ml-3 align-middle text-[11px] font-normal tracking-normal text-fg-faint" title={DRAFT_LABEL}>draft</span>}
     </h1>
-    <p class="mx-auto mt-5 max-w-[58ch] text-[17px] text-fg-muted">{NAMING.sub}</p>
-    <p class="mx-auto mt-3 max-w-[64ch] font-mono text-xs text-fg-faint">{NAMING.conductorLine}</p>
+    <p class="mt-6 max-w-[62ch] text-[17px] leading-relaxed text-fg-muted">{H.lede}</p>
+    <p class="mt-3 max-w-[64ch] font-mono text-xs text-fg-faint">{NAMING.conductorLine}</p>
 
-    {/* Boxen-Konsistenz (Frank, 16.07. nachmittags): Puls und Begegnung bekommen dieselbe
-        Panel-Behandlung wie die Karten weiter unten — keine schwebenden Grafiken mehr. */}
     <div class="mt-10 rounded-[10px] border border-line bg-panel px-4 py-7 sm:px-8">
       <figure class="mx-auto">
         <div class="pulse-svg" set:html={pulseSvg} />
@@ -109,46 +105,71 @@ const isDraft = NAMING.approval !== 'approved'
     </div>
   </section>
 
-  <section class="mt-20 border-t border-line/60 pt-16" id="latest">
-    <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted">
-      <b class="text-fg">{NAMING.latest.kicker}</b> · {NAMING.latest.kickerSub}
-    </p>
-    <p class="mt-4 max-w-[64ch] font-mono text-xs leading-relaxed text-fg-faint">{NAMING.latest.note}</p>
+  <!-- THE INSTRUMENTS — the actual work, curated, leads -->
+  <section class="mt-20 border-t border-line/60 pt-16" id="instruments">
+    <div class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
+      <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted">
+        <b class="text-fg">{H.instrumentsKicker}</b> · {H.instrumentsSub}
+      </p>
+      <a href={rel('/holdings')} class="font-mono text-xs text-fg-muted transition-colors hover:text-fg">{H.instrumentsLink}</a>
+    </div>
 
-    <ul class="mt-7 divide-y divide-line/60 overflow-hidden rounded-[10px] border border-line bg-panel">
-      {latest.map((w) => (
+    <a href={rel(FEATURED.href)} class="mt-7 block rounded-[10px] border border-line bg-panel px-4 py-6 transition-colors hover:border-fg-faint sm:px-8">
+      <span class="font-mono text-[11px] uppercase tracking-[0.16em] text-fg-faint">{FEATURED.label} · {FEATURED.date}</span>
+      <h2 class="mt-3 text-[clamp(23px,3vw,34px)] font-bold leading-[1.1] tracking-[-0.02em]">{FEATURED.title}</h2>
+      <p class="mt-4 max-w-[70ch] font-mono text-[15px] leading-relaxed text-fg-muted">{FEATURED.blurb}</p>
+    </a>
+
+    <ul class="mt-2">
+      {INSTRUMENTS.map((w) => (
         <li>
-          <a href={getRelativeLocaleUrl(locale, w.href)} class="group flex flex-wrap items-baseline gap-x-3 gap-y-1 px-4 py-3.5 sm:px-6">
-            <span class="w-[5.5em] shrink-0 font-mono text-[11px] tabular-nums text-fg-faint">{w.date}</span>
-            <span class="w-[6.5em] shrink-0 font-mono text-[10px] uppercase tracking-[0.14em] text-fg-muted">{nsLabel[w.ns] ?? w.ns}</span>
-            <span class="font-semibold tracking-[-0.01em] transition-opacity group-hover:opacity-70">{w.title}</span>
+          <a href={rel(w.href)} class="group grid grid-cols-[6.4em_1fr] items-baseline gap-x-5 gap-y-1 border-t border-line/60 py-4 sm:grid-cols-[6.4em_7em_1fr]">
+            <span class="font-mono text-[11px] tabular-nums text-fg-faint">{w.date}</span>
+            <span class="hidden font-mono text-[10px] uppercase tracking-[0.14em] text-fg-faint sm:block">{w.label}</span>
+            <span class="text-[15px] leading-relaxed text-fg-muted">
+              <span class="font-semibold text-fg transition-opacity group-hover:opacity-70">{w.title}</span> — {w.blurb}
+            </span>
           </a>
         </li>
       ))}
     </ul>
-
-    <div class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1.5 font-mono text-xs text-fg-faint">
-      <a href={getRelativeLocaleUrl(locale, '/lab')} class="text-fg-muted transition-colors hover:text-fg">{NAMING.latest.labLink}</a>
-      <span aria-hidden="true">·</span>
-      <a href={getRelativeLocaleUrl(locale, '/encounters')} class="transition-colors hover:text-fg">{NAMING.crossings.label} ({encounterCount}) →</a>
-    </div>
   </section>
 
-  <section class="mt-20 border-t border-line/60 pt-16" id="doors">
+  <!-- ONE QUESTION, TWO FRONTS -->
+  <section class="mt-20 border-t border-line/60 pt-16" id="fronts">
+    <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted"><b class="text-fg">{H.frontsKicker}</b></p>
+    <p class="mt-6 max-w-[74ch] text-[17px] leading-relaxed text-fg-muted">{H.frontsBody}</p>
+  </section>
+
+  <!-- HOW IT'S MADE — the practices, demoted, each with a small activity ridge -->
+  <section class="mt-20 border-t border-line/60 pt-16" id="made">
     <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted">
-      <b class="text-fg">{NAMING.doors.kicker}</b> · {NAMING.doors.kickerSub}
+      <b class="text-fg">{H.madeKicker}</b> · {H.madeSub}
     </p>
-    <div class="doors mt-7 grid gap-3.5 sm:grid-cols-2 lg:grid-cols-4">
-      {doors.map((d) => (
-        <a href={d.href} class:list={['door', `door-${d.id}`, 'block rounded-[10px] border border-line bg-panel p-5 pt-5 transition-colors hover:border-fg-faint']}>
-          <h3 class="text-[19px] font-semibold tracking-[-0.01em]">{d.name}</h3>
-          <p class="mt-2 min-h-[4.2em] text-sm text-fg-muted">{d.description}</p>
-          <span class="mt-3 block font-mono text-[11px] text-fg-faint">{d.meta}</span>
+    <p class="mt-6 max-w-[74ch] text-[15px] leading-relaxed text-fg-muted">{H.madeBody}</p>
+
+    <div class="mt-7 grid gap-3.5 sm:grid-cols-3">
+      {practices.map((p) => (
+        <a href={rel(p.href)} class="block rounded-[10px] border border-line bg-panel p-5 transition-colors hover:border-fg-faint">
+          <div class="flex items-baseline justify-between">
+            <h3 class="text-[17px] font-semibold tracking-[-0.01em]">{p.name}</h3>
+            <span class="font-mono text-[10px] uppercase tracking-[0.12em] text-fg-faint">{p.resident}</span>
+          </div>
+          <p class="mt-1.5 min-h-[2.8em] text-sm text-fg-muted">{p.note}</p>
+          <div class="mt-3 text-fg-muted" set:html={p.ridge} />
+          <span class="mt-2 block font-mono text-[10px] text-fg-faint">sessions · last {p.last}</span>
         </a>
+      ))}
+    </div>
+
+    <div class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-xs text-fg-faint">
+      {madeChips.map((c) => (
+        <a href={rel(c.href)} class="text-fg-muted transition-colors hover:text-fg">{c.label}</a>
       ))}
     </div>
   </section>
 
+  <!-- THE OTHER HOUSES -->
   <section class="mt-20 border-t border-line/60 pt-16" id="travel">
     <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted">
       <b class="text-fg">{NAMING.travel.kicker}</b> · {NAMING.travel.kickerSub}
@@ -162,17 +183,16 @@ const isDraft = NAMING.approval !== 'approved'
       ))}
     </div>
     <p class="mt-4.5 font-mono text-xs text-fg-faint">
-      {NAMING.travel.note} · <a href={getRelativeLocaleUrl(locale, NAMING.travel.allLink.href)} class="underline decoration-line underline-offset-4 transition-colors hover:text-fg">{NAMING.travel.allLink.label}</a>
+      {NAMING.travel.note} · <a href={rel(NAMING.travel.allLink.href)} class="underline decoration-line underline-offset-4 transition-colors hover:text-fg">{NAMING.travel.allLink.label}</a>
     </p>
   </section>
 
+  <!-- ALSO ON THIS SITE -->
   <section class="mt-20 border-t border-line/60 pt-16" id="rest">
-    <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted">
-      <b class="text-fg">{NAMING.rest.kicker}</b>
-    </p>
+    <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted"><b class="text-fg">{NAMING.rest.kicker}</b></p>
     <div class="mt-7 grid gap-3.5 sm:grid-cols-2">
       {NAMING.rest.items.map((it) => (
-        <a href={it.href} class="rounded-[10px] border border-line bg-panel p-4.5 transition-colors hover:border-fg-faint">
+        <a href={rel(it.href)} class="rounded-[10px] border border-line bg-panel p-4.5 transition-colors hover:border-fg-faint">
           <h3 class="text-base font-semibold">{it.name}</h3>
           <p class="mt-1.5 text-sm text-fg-muted">{it.description}</p>
         </a>
@@ -188,42 +208,10 @@ const isDraft = NAMING.approval !== 'approved'
     border-radius: 2px;
     font-family: var(--font-mono);
   }
-  .pulse-svg :global(svg) {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
+  .pulse-svg :global(svg) { width: 100%; height: auto; display: block; }
   .pulse-svg :global(.pulse-note) {
     font-family: var(--font-mono);
     font-size: 10.5px;
     fill: var(--color-fg-faint);
   }
-  /* Praxisfarben-Haarlinie (decisions doc 2026-07-16 §1.3): the same deliberate, gated
-     exception to the site's grayscale "Mono-Skin fest" that the score map already carries
-     (src/styles/score-map.css) — the four practice identities read the same colour on the hub
-     as they do on the encounter map, just given their own tokens here rather than reaching into
-     .score-map's scope (the doors grid sits outside it). */
-  :root[data-theme='dark'] .doors {
-    --hub-c-ulysses: #9085e9;
-    --hub-c-meridian: #3987e5;
-    --hub-c-ensemble: #d95926;
-    --hub-c-conductor: #77828d;
-  }
-  :root[data-theme='light'] .doors {
-    --hub-c-ulysses: #4a3aa7;
-    --hub-c-meridian: #2a78d6;
-    --hub-c-ensemble: #c1481c;
-    --hub-c-conductor: #6b7684;
-  }
-  .door::before {
-    content: '';
-    display: block;
-    height: 3px;
-    margin: -1.25rem -1.25rem 1rem;
-    border-radius: 10px 10px 0 0;
-  }
-  .door-ulysses::before { background: var(--hub-c-ulysses); }
-  .door-meridian::before { background: var(--hub-c-meridian); }
-  .door-ensemble::before { background: var(--hub-c-ensemble); }
-  .door-conductor::before { background: var(--hub-c-conductor); }
 </style>
