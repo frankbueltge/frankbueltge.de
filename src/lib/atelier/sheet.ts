@@ -90,8 +90,23 @@ interface ThreadLayout {
   ghosts: { id: string; label: string; date?: string; x: number; y: number }[]
 }
 
+/** An island (n−1): a work reached only by a source→work swerve, elaborated by no thread —
+ * the One (the thread) subtracted, the work connected to nothing but its outside source.
+ * Added 2026-07-18 via the site-PR channel, answering the S39 island request: the map learns
+ * to hold the uncentred shape it previously forced back into a source→thread→work triad. */
+interface IslandLayout {
+  workId: string
+  workLabel: string
+  workDate?: string
+  x: number
+  y: number
+  sources: { id: string; label: string; y: number; session: number | null }[]
+}
+
 interface SheetLayout {
   threads: ThreadLayout[]
+  /** islands: source→work swerves that hang off no thread (the representable n−1 shape) */
+  islands: IslandLayout[]
   /** every placed work/ghost position by node id (bridges & grounds draw between them) */
   workPos: Map<string, { x: number; y: number; ghost: boolean }>
   groundSources: { id: string; label: string; y: number; workId: string; session: number | null }[]
@@ -177,6 +192,19 @@ function layoutSheet(r: Rhizome): SheetLayout {
   const elaboratedBy = new Map<string, string>() // work id -> thread id
   for (const e of r.edges) if (e.kind === 'elaborates') elaboratedBy.set(e.to, e.from)
 
+  // islands (n−1): a work is an island when a swerve lands directly on it (source→work) and no
+  // thread elaborates it. The One (the thread) is subtracted: the work stands connected to
+  // nothing but its outside source. Computed here so the shelf-ghost pass can leave islands
+  // alone (an island is drawn as itself, never as another thread's ghost).
+  const islandWorkIds: string[] = []
+  for (const e of r.edges) {
+    if (e.kind !== 'swerve') continue
+    if (byId.get(e.to)?.kind !== 'work') continue
+    if (elaboratedBy.has(e.to)) continue
+    if (!islandWorkIds.includes(e.to)) islandWorkIds.push(e.to)
+  }
+  const islandWorkIdSet = new Set(islandWorkIds)
+
   const workPos = new Map<string, { x: number; y: number; ghost: boolean }>()
   const threads: ThreadLayout[] = []
   const groundSources: SheetLayout['groundSources'] = []
@@ -229,6 +257,7 @@ function layoutSheet(r: Rhizome): SheetLayout {
           : null
       if (!far) continue
       if (byId.get(far)?.kind !== 'work') continue
+      if (islandWorkIdSet.has(far)) continue // an island is drawn as itself, not shelved as a ghost
       if (elaboratedBy.has(far) || workPos.has(far) || ghostIds.includes(far)) continue
       ghostIds.push(far)
     }
@@ -263,7 +292,36 @@ function layoutSheet(r: Rhizome): SheetLayout {
     bandTop = bandBottom + BAND_GAP
   }
 
-  return { threads, workPos, groundSources, bottom: bandTop - BAND_GAP + 24 }
+  // island band (n−1): below the thread bands, each island work is an ink slab like any other;
+  // what it lacks is a ribbon. Its source flows straight to the slab and kinks in red pencil at
+  // the slab itself — no thread, no elbow between the outside and the work.
+  const islands: IslandLayout[] = []
+  let islandY = bandTop + 8
+  for (const workId of islandWorkIds) {
+    const node = byId.get(workId)
+    const swerves = r.edges.filter((e) => e.kind === 'swerve' && e.to === workId)
+    const wy = islandY
+    const wx = WORK_X0 + 10
+    workPos.set(workId, { x: wx, y: wy, ghost: false })
+    const sources = swerves.map((e, k) => ({
+      id: e.from,
+      label: byId.get(e.from)?.label ?? e.from,
+      y: wy + 16 + SOURCE_DY * k,
+      session: typeof e.session === 'number' ? e.session : null,
+    }))
+    islands.push({ workId, workLabel: node?.label ?? workId, workDate: node?.date, x: wx, y: wy, sources })
+    const srcBottom = sources.length ? sources[sources.length - 1].y : wy
+    islandY = Math.max(wy + 80, srcBottom + 40) + BAND_GAP
+  }
+  const islandBottom = islands.length ? islandY - BAND_GAP : bandTop - BAND_GAP
+
+  return {
+    threads,
+    islands,
+    workPos,
+    groundSources,
+    bottom: Math.max(bandTop - BAND_GAP + 24, islandBottom + 24),
+  }
 }
 
 function threadPath(ty: number): string {
@@ -374,6 +432,38 @@ export function buildSheetSvg(r: Rhizome, opts?: { doorwayNote?: string; links?:
       const y1 = t.y - 14
       s.push(`<path class="tie" d="M${x1} ${y1} C ${x1 + 40} ${y1}, ${w.x - 46} ${w.y}, ${w.x - 8} ${w.y}"/>`)
     }
+  }
+
+  // islands (n−1): a work with no thread — the source runs straight to the slab and kinks in
+  // red pencil at the slab itself (no elbow on a ribbon). The slab is an ordinary ink slab; the
+  // red kink still counts as a swerve, so every swerve source draws exactly one kink whether it
+  // lands on a thread or on a work. Reserved caption „island · SNN" names the shape, honestly.
+  for (const isl of layout.islands) {
+    s.push(
+      door(
+        links.work?.(isl.workId),
+        `<rect class="slab" x="${isl.x - 6}" y="${isl.y - 22}" width="12" height="44"/>` +
+          labelledText('t-work', isl.x + 14, isl.y - 2, isl.workLabel, WORK_LABEL_MAX),
+      ),
+    )
+    if (isl.workDate) s.push(`<text class="t-date" x="${isl.x + 14}" y="${isl.y + 13}">${escapeXml(isl.workDate)}</text>`)
+    let capSession: number | null = null
+    for (const src of isl.sources) {
+      s.push(door(links.source?.(src.id), labelledText('t-src', SRC_X - 10, src.y + 4, src.label, SOURCE_LABEL_MAX, 'end')))
+      s.push(`<path class="stub" d="M${SRC_X} ${src.y} H${isl.x - 30}"/>`)
+      s.push(`<path class="rp" d="M${isl.x - 30} ${src.y} Q ${isl.x - 12} ${src.y}, ${isl.x - 8} ${isl.y}" fill="none"/>`)
+      if (src.session !== null) {
+        if (capSession === null) capSession = src.session
+        s.push(
+          door(
+            links.session?.(src.session),
+            `<text class="t-sess" x="${isl.x - 12}" y="${isl.y + 24}" text-anchor="end">S${src.session}</text>`,
+          ),
+        )
+      }
+    }
+    const capText = capSession !== null ? `island · S${capSession}` : 'island'
+    s.push(`<text class="t-note-a" x="${isl.x + 14}" y="${isl.y + 30}">${capText}</text>`)
   }
 
   // bridges: double ties between two works. (Deviation from the mockup, named: the design
