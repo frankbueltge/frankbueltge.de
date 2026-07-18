@@ -8,7 +8,7 @@
 // carry; provenance in the file). Replaces the old EnginePage entrance.
 import Page from '@/layouts/Page.astro'
 import Frame from '@/components/studio/surface/Frame.astro'
-import { loadChronicle } from '@/lib/studio/chronicle'
+import { loadChronicle, latestPremiere } from '@/lib/studio/chronicle'
 import { currentScore } from '@/lib/begegnungen'
 import { buildStageSvg, type GasseEntry } from '@/lib/studio/stage'
 import { STUDIO_GRAMMAR, STUDIO_NARRATIVE } from '@/config/studio-wording'
@@ -16,7 +16,9 @@ import stageData from '@/data/studio/stage.curated.json'
 import { numberWord } from '@/lib/atelier/sessions'
 
 const chronicle = loadChronicle()
-const ship = chronicle.find((e) => e.move === 'ship')
+// The stage spotlights the NEWEST premiere ("what is public now") — latestPremiere picks the
+// highest-seq ship entry, so every future premiere takes the spot on its own.
+const ship = latestPremiere(chronicle)
 if (!ship || !ship.works[0]) throw new Error('/studio: no premiered work in the chronicle mirror')
 const slug = ship.works[0]
 

@@ -7,6 +7,7 @@ import {
   chronicleEntrySchema,
   upstreamEntrySchema,
   mergeChronicle,
+  latestPremiere,
   type ChronicleEntry,
   type UpstreamEntry,
 } from './chronicle'
@@ -174,5 +175,65 @@ describe('schemas reject malformed data (the integrate gate)', () => {
       source: 'curated' as const,
     }
     expect(() => chronicleEntrySchema.parse(bad)).toThrow()
+  })
+})
+
+describe('latestPremiere', () => {
+  const entry = (over: Partial<ChronicleEntry>): ChronicleEntry => ({
+    seq: 1,
+    date: '2026-07-13',
+    collective_session: 10,
+    move: 'build',
+    summary: 'Long enough summary text for the schema to accept it fine.',
+    works: [],
+    verdict: null,
+    fail: false,
+    journal_id: 'journal/2026-07-13.md',
+    anchor: 'cs-10',
+    source: 'upstream',
+    ...over,
+  })
+
+  // The regression this fix locks down: two premieres, and the stage must spotlight the
+  // NEWEST. The old `chronicle.find(move==='ship')` returned the first (oldest) match, so from
+  // the second premiere on the stage showed the wrong work. Newest = highest seq.
+  it('returns the highest-seq ship entry when several premieres exist', () => {
+    const chron = [
+      entry({ seq: 5, move: 'ship', date: '2026-07-13', collective_session: 10, works: ['native-speaker'] }),
+      entry({ seq: 12, move: 'ship', date: '2026-07-17', collective_session: 19, works: ['no-way-of-knowing'] }),
+      entry({ seq: 14, move: 'steer', works: [] }),
+    ]
+    expect(latestPremiere(chron)?.works[0]).toBe('no-way-of-knowing')
+  })
+
+  it('ignores non-ship moves entirely', () => {
+    const chron = [
+      entry({ seq: 20, move: 'build', works: ['wip'] }),
+      entry({ seq: 3, move: 'ship', works: ['shipped'] }),
+    ]
+    expect(latestPremiere(chron)?.works[0]).toBe('shipped')
+  })
+
+  it('skips a ship entry with no work slug (nothing to spotlight)', () => {
+    const chron = [
+      entry({ seq: 4, move: 'ship', works: ['real'] }),
+      entry({ seq: 9, move: 'ship', works: [] }),
+    ]
+    expect(latestPremiere(chron)?.works[0]).toBe('real')
+  })
+
+  it('returns null when nothing has premiered', () => {
+    expect(latestPremiere([entry({ seq: 1, move: 'build' })])).toBeNull()
+    expect(latestPremiere([])).toBeNull()
+  })
+
+  // Guards the live data too: the served chronicle's newest premiere is the newest ship,
+  // so this fails loudly if a future data change ever reintroduces oldest-first selection.
+  it('agrees with the served chronicle: newest premiere = highest-seq ship', () => {
+    const ships = served.filter((e) => e.move === 'ship' && e.works.length > 0)
+    if (ships.length > 0) {
+      const maxSeq = Math.max(...ships.map((e) => e.seq))
+      expect(latestPremiere(served)?.seq).toBe(maxSeq)
+    }
   })
 })
