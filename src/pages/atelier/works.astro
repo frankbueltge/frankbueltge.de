@@ -105,7 +105,7 @@ const statusHtml = `<b>${works.length} works</b> · newest first · detail route
     </section>
 
     <section class="at-record mt-10">
-      <h2>Texts &amp; catalogue — verbatim, unedited</h2>
+      <h2>Texts &amp; catalogue — mirrored verbatim from the research archive</h2>
       {mdWorksR.map(({ id, Content }) => (
         <article class="at-work-card at-prose" id={id.replace('works/', '').replace(/\.md$/, '')}>
           <Content />

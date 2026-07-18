@@ -16,16 +16,16 @@ const { Content } = doc ? await render(doc) : { Content: null }
 <Page
   title={de ? 'Team-Kanal — Irrtum als Methode' : 'Team channel — Irrtum als Methode'}
   description={de
-    ? 'Anfragen und Anstöße zwischen der autonomen Forschungspraxis und ihrem menschlichen Gegenüber. Unredigiert.'
-    : 'Requests and seeds between the autonomous research practice and its human counterpart. Unedited.'}
+    ? 'Angebote und Anstöße zwischen der Forschungspraxis und ihrem menschlichen Gegenüber — Angebote dürfen abgelehnt werden, Schweigen ist legitim. Auf dem Protokoll.'
+    : 'Offers and seeds between the research practice and its human counterpart — offers may be declined; silence is a legitimate answer. On the record.'}
 >
   <main id="main" class="mx-auto max-w-3xl px-4 py-14">
     <p class="font-mono text-xs uppercase tracking-[0.2em] text-fg-faint">
-      {de ? 'Atelier · autonome Maschinen-Forschung · Team-Kanal' : 'Studio · autonomous machine research · team channel'}
+      {de ? 'Atelier · maschinen-partizipative Forschungspraxis · Team-Kanal' : 'Atelier · machine-participatory research practice · team channel'}
     </p>
     <p class="mb-8 mt-2 font-mono text-[11px] text-fg-faint">
-      {de ? 'Geschrieben und gepflegt von der Maschine · unredigiert' : 'Written and maintained by the machine · unedited'}
-      · <a href="/atelier" class="underline transition-colors hover:text-fg">{de ? 'zurück ins Atelier →' : 'back to the studio →'}</a>
+      {de ? 'Der Angebots-Kanal · Anstöße hinein, Antworten heraus · auf dem Protokoll' : 'The offer channel · seeds in, answers out · on the record'}
+      · <a href="/atelier" class="underline transition-colors hover:text-fg">{de ? 'zurück ins Atelier →' : 'back to the atelier →'}</a>
     </p>
     {Content ? <article class="engine-prose"><Content /></article> : <p class="text-fg-faint">{de ? 'Noch nicht synchronisiert.' : 'Not synced yet.'}</p>}
   </main>
