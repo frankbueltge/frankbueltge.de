@@ -21,10 +21,12 @@ export interface RailItem {
 
 export const ATELIER_GRAMMAR = {
   approval: 'approved' as const, // Design-Session 2026-07-15, Chip „wording approved“
-  /** Die freigegebene Datenkanten-Formel des Ateliers (wortlaute-2026-07-15.md §2/§5). */
-  dataEdge: 'tonight’s page is not yet written',
+  /** Die Datenkanten-Formel des Ateliers. v4-Revision 2026-07-18 (Protokoll v4,
+   * public-surface patch §7): die nightly-Formel „tonight's page is not yet written“
+   * behauptete laufende nächtliche Produktion — historisiert; Freigabe = Franks Merge. */
+  dataEdge: 'the nightly register closed 18 July 2026 — work continues as bounded projects',
   /** Zwei Zeilen, wie der Buchrücken sie am rechten Rand setzt (atelier_history_viz.py). */
-  dataEdgeLines: ['tonight’s page —', 'not yet written'] as const,
+  dataEdgeLines: ['nightly register closed —', 'work continues as projects'] as const,
   /** Der Blattrand — die EINZIGE stehende Navigation (atelier-aesthetik §5). */
   rail: [
     { label: 'this sheet', href: '/atelier', hint: 'the current working sheet' },
@@ -32,7 +34,7 @@ export const ATELIER_GRAMMAR = {
     { label: 'works', href: '/atelier/works', hint: 'works & catalogue — existing URLs stay' },
     { label: 'journal', href: '/atelier/journal', hint: 'the journal as session register, S1…' },
     { label: 'material', href: '/atelier/material', hint: 'sources & the atlas — Ulysses’ own shelf' },
-    { label: 'apparatus', href: '/atelier/apparatus', hint: 'repo, constitution, team channel, nightly runs' },
+    { label: 'apparatus', href: '/atelier/apparatus', hint: 'repo, constitution, team channel, integration machinery' },
   ] as RailItem[],
   door: { label: '→ the middle', href: '/encounters', hint: 'encounters; the doorway at the sheet’s edge' },
   /** Rückweg-Konvention jeder Unterseite (atelier-aesthetik §5). */
@@ -73,12 +75,13 @@ export const ATELIER_NARRATIVE = {
   titleRule: 'the sheet title is the youngest thread’s own label, verbatim',
   sheetLede:
     'every edge below is drawn in the rhizome by Ulysses — the practice’s own reading of its works and sources',
-  /** Franks Rahmung, 2 Sätze am Blatt-Fuß (atelier-aesthetik §5; volle Rahmung in apparatus). */
+  /** Franks Rahmung, 2 Sätze am Blatt-Fuß (atelier-aesthetik §5; volle Rahmung in
+   * apparatus). v4-Revision 2026-07-18: projektbasiert statt nightly. */
   framingFoot:
-    'Every night an AI holds a research session — it errs, and catalogues its errors checkably. Frank Bültge conceived and engineered this machinery, seeds directions and intervenes; the machines write, the record shows who wrote what.',
+    'Ulysses is a machine-participatory artistic research practice by Frank Bültge — bounded projects under a standing delegation, errors catalogued checkably. The machines write, the record shows who wrote what; curated publication remains a human decision.',
   /** Ehrliche Abweichungen der Site gegenüber den Mockup-Generatoren (nichts still überbrückt). */
   provenance: {
-    sheet: 'drawn from src/data/atelier/rhizome.json — the practice’s own reading, mirrored nightly, read-only',
+    sheet: 'drawn from src/data/atelier/rhizome.json — the practice’s own reading, mirrored by the integration gate, read-only',
     spine:
       'journal filenames · committed work dates (meta.json) · error-register headings · pulse/rhizome.json — the site reads its committed mirror, not the engine repo’s git',
     worksHungBy: 'hung by committed date',
@@ -89,11 +92,11 @@ export const ATELIER_NARRATIVE = {
   },
   rooms: {
     sheets: 'All sheets, one per thread — each a reading the practice has drawn across its works.',
-    journal: 'The journal as a session register — one line per page, the newest night open.',
+    journal: 'The nightly protocol archive (28 June – 18 July 2026) as a session register — one line per page.',
     material: 'Ulysses’ own shelf: the sources the practice has pulled, as it catalogued them.',
     materialAtlasNote:
       'Frank’s atlas (/atlas) is the lab’s reference collection; this shelf is the practice’s own lens on it. Each points at the other.',
-    apparatus: 'How the machine runs — repo, constitution, team channel, nightly machinery, in one room.',
+    apparatus: 'How the machine runs — repo, constitution, team channel, integration machinery, in one room.',
     works: 'The works, newest first — each slab on the sheet is a door to one of these.',
     cockpitArchiveNote: 'the atlas now lives in material',
     cockpitArchived:

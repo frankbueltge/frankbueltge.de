@@ -96,3 +96,73 @@ describe('integrate', () => {
     expect(existsSync(join(site, 'src/pages/field/werke/good.astro'))).toBe(true)
   })
 })
+
+// Protocol-v4 publication gate (M-08): projects/ reaches the works surface only through
+// a valid, human-approved PUBLICATION.json. Everything else is a research record.
+describe('integrate — v4 publication gate', () => {
+  const mkProject = (id: string, pub: object | string | null, withWork = true) => {
+    const mk = (p: string, c: string) => { mkdirSync(join(src, p, '..'), { recursive: true }); writeFileSync(join(src, p), c) }
+    if (withWork) {
+      mk(`projects/${id}/work/work.astro`, `---\n---\n<p>v4 work</p>`)
+      mk(`projects/${id}/work/meta.json`, JSON.stringify({ title: id, verkoerpert: 'v' }))
+    }
+    mk(`projects/${id}/EXPOSITION.md`, '# exposition')
+    mk(`projects/${id}/APPARATUS.md`, '# apparatus')
+    if (pub !== null) mk(`projects/${id}/PUBLICATION.json`, typeof pub === 'string' ? pub : JSON.stringify(pub))
+  }
+  const validPub = (id: string) => ({
+    project_id: id,
+    status: 'PUBLISHED_WORK',
+    protocol_version: 4,
+    approved_by: 'Frank Bültge',
+    approved_at: '2026-07-18T12:00:00Z',
+    work_path: 'work',
+    exposition_path: 'EXPOSITION.md',
+    apparatus_path: 'APPARATUS.md',
+  })
+
+  it('never imports a project without PUBLICATION.json — active/study/killed states are invisible', () => {
+    mkProject('2026-07-18-active-line', null)
+    const r = integrate({ sourceDir: src, siteDir: site })
+    expect(r.accepted.find((x) => x.slug === '2026-07-18-active-line')).toBeUndefined()
+    expect(r.rejected.find((x) => x.slug === '2026-07-18-active-line')).toBeUndefined()
+    expect(existsSync(join(site, 'src/components/atelier/werke/2026-07-18-active-line/index.astro'))).toBe(false)
+  })
+  it('imports a project with a valid human-approved manifest', () => {
+    mkProject('2026-07-18-published', validPub('2026-07-18-published'))
+    const r = integrate({ sourceDir: src, siteDir: site })
+    expect(r.accepted).toContainEqual({ slug: '2026-07-18-published', kind: 'astro' })
+    expect(existsSync(join(site, 'src/pages/atelier/werke/2026-07-18-published.astro'))).toBe(true)
+  })
+  it('refuses a manifest without a human approver', () => {
+    mkProject('2026-07-18-no-approver', { ...validPub('2026-07-18-no-approver'), approved_by: '' })
+    const r = integrate({ sourceDir: src, siteDir: site })
+    expect(r.rejected.find((x) => x.slug === '2026-07-18-no-approver')?.reason).toMatch(/approved_by/)
+    expect(existsSync(join(site, 'src/components/atelier/werke/2026-07-18-no-approver/index.astro'))).toBe(false)
+  })
+  it('refuses a manifest whose status is not PUBLISHED_WORK', () => {
+    mkProject('2026-07-18-candidate', { ...validPub('2026-07-18-candidate'), status: 'PUBLICATION_CANDIDATE' })
+    const r = integrate({ sourceDir: src, siteDir: site })
+    expect(r.rejected.find((x) => x.slug === '2026-07-18-candidate')?.reason).toMatch(/PUBLISHED_WORK/)
+  })
+  it('refuses a work_path that escapes the project directory', () => {
+    mkProject('2026-07-18-escape', { ...validPub('2026-07-18-escape'), work_path: '../../works/good' })
+    const r = integrate({ sourceDir: src, siteDir: site })
+    expect(r.rejected.find((x) => x.slug === '2026-07-18-escape')?.reason).toMatch(/inside the project/)
+  })
+  it('refuses a mismatched project_id and reports broken JSON without crashing', () => {
+    mkProject('2026-07-18-mismatch', { ...validPub('2026-07-18-other'), project_id: '2026-07-18-other' })
+    mkProject('2026-07-18-broken', 'NOT JSON {{{')
+    const r = integrate({ sourceDir: src, siteDir: site })
+    expect(r.rejected.find((x) => x.slug === '2026-07-18-mismatch')?.reason).toMatch(/project_id/)
+    expect(r.rejected.find((x) => x.slug === '2026-07-18-broken')?.reason).toMatch(/fehler bei verarbeitung/)
+    // the ordinary works pass is unaffected
+    expect(r.accepted).toContainEqual({ slug: 'good', kind: 'astro' })
+  })
+  it('skips the _template directory', () => {
+    mkProject('_template', validPub('_template'))
+    const r = integrate({ sourceDir: src, siteDir: site })
+    expect(r.accepted.find((x) => x.slug === '_template')).toBeUndefined()
+    expect(r.rejected.find((x) => x.slug === '_template')).toBeUndefined()
+  })
+})

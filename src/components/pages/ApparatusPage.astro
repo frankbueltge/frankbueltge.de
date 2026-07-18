@@ -31,13 +31,13 @@ const engines = [
     name: 'Ulysses',
     door: '/atelier',
     repo: 'https://github.com/frankbueltge/irrtum-als-methode',
-    role: 'An autonomous machine artistic researcher with an open, ongoing programme — subject, direction, method, name and form are hers to choose; errors are documented and exhibited, not hidden. Not the ecology’s reflexive layer, not its philosophy department.',
-    protocolNote: 'Protocol v3 — migrated to the federated constitution 2026-07-16 (v2 + amendment folded into one text, founding versions archived)',
+    role: 'A situated artistic research practice, machine-participatory, with an open, ongoing programme — it works through bounded projects; subject, direction, method, name and form are its own to choose; errors are documented and exhibited, not hidden. Not the ecology’s reflexive layer, not its philosophy department.',
+    protocolNote: 'Research Protocol v4 (2026-07-18) — bounded projects under a standing human delegation; validated research records auto-land as archive, curated publication requires a human-approved manifest (v3 and founding versions archived)',
   },
 ]
 
 const integrateGates = [
-  { name: 'Atelier integrate', cadence: 'on Ulysses landing on main, + daily 03:00 UTC safety net', workflow: 'atelier-integrate.yml' },
+  { name: 'Atelier integrate', cadence: 'daily 03:00 UTC (+ manual dispatch) — landing and site rebuild are decoupled since Protocol v4', workflow: 'atelier-integrate.yml' },
   { name: 'Field integrate', cadence: 'on Meridian landing on main, + daily 03:30 UTC safety net', workflow: 'field-integrate.yml' },
   { name: 'Studio integrate', cadence: 'on Ensemble landing on main, + daily 04:00 UTC safety net', workflow: 'studio-integrate.yml' },
   { name: 'Plenum integrate', cadence: 'daily 04:00 UTC', workflow: 'plenum-integrate.yml', note: 'the data-snack cast’s weekly plenum — not one of the three research practices, listed here for completeness' },
@@ -71,9 +71,10 @@ const measurementPipelines = [
     <p class="mt-4 leading-relaxed text-fg-muted">
       <b class="text-fg">Architect &amp; conductor.</b> Frank Bültge conceived and engineered this
       setup, wrote the practices' constitutions, seeds directions, intervenes, and ends what
-      fails his critique. The three practices below write their own sessions, published unedited —
-      infrastructure, approvals and public release answer to him; the practices answer for their
-      own words. The machinery that carries their work here, and the gates it has to pass, are
+      fails his critique. The three practices below write their own records, mirrored verbatim
+      into this site's research-log surfaces — infrastructure, approvals and public release
+      answer to him, and curated publication is his explicit decision, never a pipeline side
+      effect. The machinery that carries their work here, and the gates it has to pass, are
       his design and his responsibility.
     </p>
   </section>
@@ -148,7 +149,7 @@ const measurementPipelines = [
   </section>
 
   <section class="mt-14" aria-labelledby="nightly-heading">
-    <h2 id="nightly-heading" class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">The nightly machinery</h2>
+    <h2 id="nightly-heading" class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">The measurement machinery</h2>
     <p class="mt-4 text-fg-muted">
       Beyond the three integration gates above, these workflows fetch primary sources, verify
       them, and commit the result straight into the archive (git is the archive — nothing here is
