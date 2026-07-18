@@ -92,12 +92,81 @@ describe('sheetTitle', () => {
     const title = sheetTitle(rhizome)
     const labels = rhizome.nodes.filter((n) => n.kind === 'thread').map((n) => n.label)
     expect(labels).toContain(title)
-    // the youngest thread is the one born in the highest swerve session
-    const maxSession = Math.max(
-      ...rhizome.edges.filter((e) => e.kind === 'swerve').map((e) => e.session ?? -1),
+    // the youngest thread is the one born in the highest THREAD-targeted swerve session. A
+    // source→work swerve (an island, n−1) never titles the sheet — an uncentred work organizes
+    // nothing; that is what uncentred means — so the title falls through work targets to the
+    // newest thread.
+    const threadIds = new Set(rhizome.nodes.filter((n) => n.kind === 'thread').map((n) => n.id))
+    const threadSwerves = rhizome.edges.filter(
+      (e) => e.kind === 'swerve' && threadIds.has(e.to) && typeof e.session === 'number',
     )
-    const youngest = rhizome.edges.find((e) => e.kind === 'swerve' && e.session === maxSession)
+    const maxSession = Math.max(...threadSwerves.map((e) => e.session as number))
+    const youngest = threadSwerves.find((e) => e.session === maxSession)
     const node = rhizome.nodes.find((n) => n.id === youngest?.to)
     expect(title).toBe(node?.label)
+  })
+})
+
+// The n−1 island (site-PR pilot, 2026-07-18): a swerve that lands directly on a work
+// (source→work), elaborated by no thread. Before this the sheet-builder could draw only trees
+// (source→thread→work); a pure island went undrawn, drew no red kink, and mis-titled the sheet
+// (the three invariants the S39 red-gate letter reported). These tests fix the shape in place.
+const ISLAND_FIXTURE: Rhizome = {
+  updated: '2026-07-18',
+  nodes: [
+    { id: 'thread-t', kind: 'thread', label: 'a centred thread' },
+    { id: 'src:s1', kind: 'source', label: 'a thread source' },
+    { id: 'w-a', kind: 'work', label: 'a threaded work', date: '2026-07-18' },
+    { id: 'src:s2', kind: 'source', label: 'an outside primary' },
+    { id: 'w-b', kind: 'work', label: 'an uncentred work', date: '2026-07-18' },
+  ],
+  edges: [
+    { from: 'src:s1', to: 'thread-t', kind: 'swerve', session: 1 },
+    { from: 'thread-t', to: 'w-a', kind: 'elaborates' },
+    { from: 'src:s2', to: 'w-b', kind: 'swerve', session: 2 }, // the island: source→work
+  ],
+}
+
+describe('source→work island (n−1)', () => {
+  it('is pure: an island renders byte-identically on repeated calls', () => {
+    expect(buildSheetSvg(ISLAND_FIXTURE)).toBe(buildSheetSvg(structuredClone(ISLAND_FIXTURE)))
+  })
+
+  it('draws the island work as an ink slab (no work goes undrawn — S39 invariant 1)', () => {
+    const svg = buildSheetSvg(ISLAND_FIXTURE)
+    const stats = sheetStats(ISLAND_FIXTURE)
+    const slabs = (svg.match(/class="slab"/g) ?? []).length
+    const ghosts = (svg.match(/class="slab-ghost"/g) ?? []).length
+    expect(slabs + ghosts).toBe(stats.works) // both the threaded work and the island work
+    expect(svg).toContain('an uncentred work')
+    // the island work is drawn as itself, never shelved as another thread's ghost
+    expect(ghosts).toBe(0)
+  })
+
+  it('kinks the island swerve in red pencil at the slab (S39 invariant 2)', () => {
+    const svg = buildSheetSvg(ISLAND_FIXTURE)
+    const swerves = ISLAND_FIXTURE.edges.filter((e) => e.kind === 'swerve')
+    // one red kink per swerve, whether it lands on a thread or on a work
+    expect((svg.match(/class="rp"/g) ?? []).length).toBe(swerves.length)
+    expect(svg).toContain('>S2</text>') // the island's birth session is marked
+    expect(svg).toContain('island · S2') // and the shape is named, honestly
+  })
+
+  it('lets no island title the sheet — an uncentred work organizes nothing (S39 invariant 3)', () => {
+    // the youngest swerve overall (S2) lands on the island work; the title still falls through
+    // to the youngest thread, not the work.
+    expect(sheetTitle(ISLAND_FIXTURE)).toBe('a centred thread')
+  })
+
+  it('still draws a tree correctly when there is no island (byte-identical to before)', () => {
+    // the real committed rhizome carries no island today; island support must not perturb it.
+    const stats = sheetStats(rhizome)
+    const svg = buildSheetSvg(rhizome)
+    const slabs = (svg.match(/class="slab"/g) ?? []).length
+    const ghosts = (svg.match(/class="slab-ghost"/g) ?? []).length
+    expect(slabs + ghosts).toBe(stats.works)
+    expect((svg.match(/class="rp"/g) ?? []).length).toBe(
+      rhizome.edges.filter((e) => e.kind === 'swerve').length,
+    )
   })
 })
