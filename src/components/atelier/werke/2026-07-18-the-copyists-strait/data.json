@@ -1,0 +1,22 @@
+{
+  "subject": "The Island of California — the cartographic error, current c.1622–1770s, by which California was drawn as an island severed from North America. It spread not by many independent mistakes but by copying: cartographers of the period routinely copied prior maps, so one misreading propagated down a lineage of copies and outlived repeated first-hand proof to the contrary (Eusebio Kino, overland, 1698–1706, peninsula map 1701; Fernando Consag, by sea to the head of the Gulf, 1746). Sources cited in the work.",
+  "seed": 20260718,
+  "generations": 11,
+  "ascension_gen": 3,
+  "surveyor_gens": [6, 9],
+  "surveyor_labels": ["Kino 1701", "Consag 1746"],
+  "jitter": 0.85,
+  "strait_jitter": 1.25,
+  "strait_seed_value": 5.0,
+  "strait_max": 16.0,
+  "strait_floor": 4.0,
+  "island_threshold": 3.0,
+  "cell_w": 74,
+  "cell_h": 96,
+  "base": {
+    "mainland": [[38,10],[52,7],[65,13],[69,28],[64,44],[53,53],[45,47],[41,33],[38,22]],
+    "peninsula": [[42,30],[48,33],[46,52],[41,72],[33,82],[27,72],[29,52],[35,36],[38,30]],
+    "bridge": [[38,30],[42,30],[45,40],[41,44]]
+  },
+  "note": "The base landmass is a SCHEMATIC of the copying mechanism, not a reproduction of any real historical map and not a claim about real geography. Every drifted shape here is generated live by a seeded random walk (mulberry32); no historical map is copied or invented. 'Same seed → same work'; the recopy control advances the seed to expose the system's range, including outputs where the strait, by chance, barely opens."
+}
