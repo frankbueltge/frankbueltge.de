@@ -134,3 +134,20 @@ export function chronicleStats(entries: ChronicleEntry[], workCount: number): Ch
 export function entriesForWork(entries: ChronicleEntry[], slug: string): ChronicleEntry[] {
   return entries.filter((e) => e.works.includes(slug)).sort((a, b) => a.seq - b.seq)
 }
+
+/**
+ * The NEWEST premiere the studio has shipped — the one the stage spotlights ("what is public
+ * now"). Picks the `ship` entry with the highest `seq` (the chronicle's monotonic ordinal, the
+ * canonical ordering — not `date`, which two premieres could tie on). A ship entry with no
+ * work slug cannot be spotlighted, so it is skipped. Returns null when nothing has premiered.
+ *
+ * This is the automation: every future premiere lands with a higher seq and takes the spot on
+ * its own. (Before 2026-07-18 the stage used `chronicle.find(move==='ship')`, which returns the
+ * FIRST — i.e. oldest — match; with one premiere that happened to be newest, so the bug hid
+ * until the second premiere shipped and the stage kept showing the first.)
+ */
+export function latestPremiere(entries: ChronicleEntry[]): ChronicleEntry | null {
+  return entries
+    .filter((e) => e.move === 'ship' && e.works.length > 0)
+    .reduce<ChronicleEntry | null>((best, e) => (best === null || e.seq > best.seq ? e : best), null)
+}
