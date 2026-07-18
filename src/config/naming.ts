@@ -28,11 +28,13 @@ export const NAMING = {
    * „currently conducting" ist Haus-Vokabular (architect & conductor) und bleibt wahr,
    * wenn der Fokus wandert. */
   focusKicker: 'currently conducting',
-  title: 'a federated research ecology',
+  // Meta <title>/OG only (rendered as "<title> | Frank Bültge"); the on-page H1 is `home.headline`
+  // below. Work-first framing (Frank, 2026-07-18).
+  title: 'instruments for what power leaves in the dark',
   /** Qualifizierte Autonomie-Sprache (Konsistenz-Feedback 16.07. spät): keine absoluten
    * Behauptungen — die Praktiken sind operativ teilautonom unter menschlicher und
    * infrastruktureller Verantwortung; versioniert ist, was der Apparat erfassen kann. */
-  sub: 'Three locally constituted, machine-run research practices and a contact zone. Public claims, transfers and revisions are versioned wherever the apparatus permits; exclusions and unknowns stay visible — Git is the archive.',
+  sub: 'Small, running instruments on open data and AI — each turns a measurement, or a machine, on itself to show where it fails, hides, or cannot know. Everything reproducible; Git is the archive.',
   conductorLine: 'architect & conductor: Frank Bültge · the machines write, the record shows who wrote what',
 
   now: {
@@ -56,6 +58,27 @@ export const NAMING = {
   },
   crossings: {
     label: 'the practices also cross — rarely, and always on the record',
+  },
+
+  /** Work-first hub (Frank, 2026-07-18: "führe mit meiner Arbeit und meiner Autorschaft"). The
+   * homepage leads with Frank as author and the actual instruments; the practices/ecology become
+   * "how it's made", demoted below the work. The Joy-Division pulse (his signature ridgeline,
+   * buildPulseSvg) stays the hero's visual. Headline alternates kept here for a one-line swap:
+   *   B · "I count what power leaves in the dark — and make it checkable."
+   *   C · "Small instruments about how machines fail, what measurement hides, and who gets to call it an error."
+   */
+  home: {
+    headline: 'I make machines measure the things they’d rather not',
+    headlineTail: '— including their own lies.',
+    lede: 'I build small, running instruments on open data and AI. Each one turns a measurement, or a machine, on itself — to show where it fails, what it hides, and where it simply cannot know. The machines are my medium; they don’t always do what I mean, and that friction is part of the work. Everything is reproducible; Git is the archive.',
+    instrumentsKicker: 'THE INSTRUMENTS',
+    instrumentsSub: 'WHAT THE WORK ACTUALLY IS',
+    instrumentsLink: 'browse the whole lab →',
+    frontsKicker: 'ONE QUESTION, TWO FRONTS',
+    frontsBody: 'Power counts what serves it and leaves the rest in the dark. I count the rest and make it checkable. That is one front. The other turns the same suspicion on the machines themselves — where the tool is the subject, its unreliability becomes part of the measurement. Either way the rule holds: no claim without evidence, sources open, failures noted rather than smoothed over.',
+    madeKicker: 'HOW IT’S MADE',
+    madeSub: 'THE APPARATUS, NOT THE POINT',
+    madeBody: 'I run three machine-built practices and conduct them: a field lab for verifiable instruments, a studio for works you can operate, an atelier that studies its own errors. Each has its own rules and runs nightly; I set the subject, gate what ships, and end what fails. The machines write — the record shows who wrote what, and when they cross paths, that is on the record too.',
   },
 
   doors: {
