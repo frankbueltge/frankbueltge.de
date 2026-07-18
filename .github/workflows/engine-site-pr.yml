@@ -1,0 +1,256 @@
+# .github/workflows/engine-site-pr.yml
+# Die PR-Schleuse: Die drei Engine-Kollektive (Ulysses/atelier, Meridian/field,
+# Ensemble/studio) können Änderungen an der Site SELBST vorschlagen — als vollständige
+# Dateien unter site-prs/<slug>/ in ihrem jeweiligen Repo (Vertrag: SITE-API.md dort).
+# Dieser Workflow prüft die Pfad-Grenze (nur src/**, nie das Protokoll-Archiv, nie
+# Workflows/Pipelines/Configs — src/lib/atelier/sitepr.ts), validiert check+test+build
+# und öffnet bei Grün einen PR im Namen der Engine. GEMERGT WIRD NUR VON EINEM MENSCHEN —
+# die Schleuse endet am Review.
+#
+# Sicherheitsarchitektur:
+#   • checkout ohne persist-credentials — der Validate-Schritt führt ENGINE-Code aus
+#     (Vitest/Build) und läuft deshalb komplett ohne Tokens im Env.
+#   • Token-Schritte (PR-Scan, Push/PR, Feedback) führen keinen Engine-Code aus.
+#   • PRs entstehen mit GITHUB_TOKEN → lösen per Anti-Rekursions-Regel KEINE weiteren
+#     Workflows aus; die Validierung läuft deshalb hier inline (dieselben Gates wie ci.yml:
+#     check + test + build). Nach dem Merge (menschlicher Push) laufen ci.yml + deploy-cf regulär.
+#
+# Lebenszyklus je Slug: kein PR → eröffnen · offener PR → bei Änderung aktualisieren ·
+# geschlossener/gemergter PR → nie wiederbeleben (neuer Anlauf = neuer Slug).
+# EHRLICHKEITS-REGEL wie auto-land: Rot (Engine-Code) ist ein Brief, kein Fehler der
+# Schleuse; ein Fehler der SCHLEUSE selbst macht den Job rot.
+name: Engine site PR
+
+on:
+  repository_dispatch:
+    types: [irrtum-landed, field-landed, studio-landed]
+  schedule:
+    - cron: '15 3 * * *'   # Sicherheitsnetz nach den 03:00-Integrates
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: engine-site-pr
+
+jobs:
+  schleuse:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - ns: atelier
+            repo: irrtum-als-methode
+            persona: Ulysses
+            author: 'Ulysses <ulysses@irrtum-als-methode.invalid>'
+            feedback_dir: atelier-feedback
+            bot_secret: ATELIER_BOT_TOKEN
+          - ns: field
+            repo: field-research
+            persona: Meridian
+            author: 'Meridian <meridian@field-research.invalid>'
+            feedback_dir: field-feedback
+            bot_secret: FIELD_BOT_TOKEN
+          - ns: studio
+            repo: studio
+            persona: Ensemble
+            author: 'Ensemble <ensemble@studio.invalid>'
+            feedback_dir: studio-feedback
+            bot_secret: STUDIO_BOT_TOKEN
+    env:
+      NS: ${{ matrix.ns }}
+      ENGINE_REPO: frankbueltge/${{ matrix.repo }}
+      PERSONA: ${{ matrix.persona }}
+      ENGINE_AUTHOR: ${{ matrix.author }}
+      FEEDBACK_DIR: ${{ matrix.feedback_dir }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false   # Engine-Code läuft später in diesem Checkout
+
+      - name: Clone engine repo + Vorschläge zählen
+        id: enum
+        run: |
+          set -euo pipefail
+          git clone --depth 1 "https://github.com/${ENGINE_REPO}" /tmp/engine
+          mkdir -p /tmp/sitepr
+          : > /tmp/sitepr/slugs.txt
+          if [ -d /tmp/engine/site-prs ]; then
+            for d in /tmp/engine/site-prs/*/; do
+              [ -d "$d" ] && basename "$d" >> /tmp/sitepr/slugs.txt
+            done
+          fi
+          count=$(wc -l < /tmp/sitepr/slugs.txt | tr -d ' ')
+          echo "count=$count" >> "$GITHUB_OUTPUT"
+          echo "$count Vorschlag/Vorschläge ($NS):"; cat /tmp/sitepr/slugs.txt
+
+      - name: PR-Stand je Slug erheben
+        if: steps.enum.outputs.count != '0'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          : > /tmp/sitepr/pr-state.tsv
+          while read -r slug; do
+            [ -n "$slug" ] || continue
+            state=$(gh pr list --repo "$GITHUB_REPOSITORY" --head "$NS/pr-$slug" --state all --limit 10 \
+              --json state,number \
+              --jq 'map(select(.state=="OPEN")) as $o
+                    | if length==0 then "none 0"
+                      elif ($o|length)>0 then "open " + ($o[0].number|tostring)
+                      else (.[0].state|ascii_downcase) + " " + (.[0].number|tostring) end' \
+              2>/dev/null || echo "none 0")
+            printf '%s\t%s\n' "$slug" "$state" | tr ' ' '\t' >> /tmp/sitepr/pr-state.tsv
+          done < /tmp/sitepr/slugs.txt
+          cat /tmp/sitepr/pr-state.tsv
+
+      - uses: actions/setup-node@v4
+        if: steps.enum.outputs.count != '0'
+        with:
+          node-version: 22
+      - if: steps.enum.outputs.count != '0'
+        run: npm ci
+
+      - name: Stage + validate je Slug (OHNE Tokens — führt Engine-Code aus)
+        if: steps.enum.outputs.count != '0'
+        run: |
+          set -uo pipefail   # bewusst ohne -e: ein roter Slug stoppt nicht die anderen
+          : > /tmp/sitepr/outcomes.tsv
+          note() { printf '%s\t%s\t%s\n' "$1" "$2" "${3:-}" >> /tmp/sitepr/outcomes.tsv; }
+          git config user.name "Site-PR-Schleuse"
+          git config user.email "site-pr-schleuse@frankbueltge.de"
+          # bestehende PR-Branches für den patch-id-Vergleich (anonymer Fetch, Repo ist public)
+          git fetch -q origin "+refs/heads/$NS/pr-*:refs/remotes/origin/$NS/pr-*" || true
+          while read -r slug; do
+            [ -n "$slug" ] || continue
+            state=$(awk -F'\t' -v s="$slug" '$1==s{print $2}' /tmp/sitepr/pr-state.tsv)
+            case "$state" in
+              merged) note "$slug" skipped_merged "bereits gemergt — site-prs/$slug kann entfernt werden"; continue ;;
+              closed) note "$slug" skipped_closed "geschlossener PR wird nie wiederbelebt — neuer Anlauf braucht einen neuen Slug"; continue ;;
+            esac
+            case "$slug" in
+              *[!a-z0-9-]*|-*) note "$slug" refused "ungültiger Slug (erlaubt: [a-z0-9-], beginnend mit [a-z0-9])"; continue ;;
+            esac
+            git reset --hard -q origin/main && git clean -fdq
+            git checkout -q -B "$NS/pr-$slug" origin/main
+            if ! npx tsx scripts/atelier/site-pr.ts /tmp/engine "$slug" . > "/tmp/sitepr/report-$slug.json"; then
+              note "$slug" error "Schleusen-Script fehlgeschlagen (Fehler der Schleuse, nicht des Vorschlags)"
+              continue
+            fi
+            if [ "$(jq -r .ok "/tmp/sitepr/report-$slug.json")" != "true" ]; then
+              note "$slug" refused "$(jq -r '.reasons | join(" · ")' "/tmp/sitepr/report-$slug.json")"
+              continue
+            fi
+            if [ -z "$(git status --porcelain)" ]; then
+              note "$slug" identical "Dateien identisch mit main — nichts vorzuschlagen (schon gemergt? dann site-prs/$slug entfernen)"
+              continue
+            fi
+            if { npm run check && npm test && npm run build; } > "/tmp/sitepr/validate-$slug.log" 2>&1; then
+              git add -A src
+              git commit -q -m "$NS site-pr: $slug" --author="$ENGINE_AUTHOR"
+              new_pid=$(git diff origin/main..HEAD | git patch-id --stable | cut -d' ' -f1)
+              old_pid=$( (git diff "origin/main..refs/remotes/origin/$NS/pr-$slug" 2>/dev/null || true) | git patch-id --stable | cut -d' ' -f1)
+              if [ -n "$old_pid" ] && [ "$new_pid" = "$old_pid" ]; then
+                note "$slug" unchanged "Vorschlag unverändert gegenüber dem bestehenden PR-Branch"
+              else
+                note "$slug" ready ""
+              fi
+            else
+              note "$slug" red "check/test/build rot — Log-Auszug im Feedback-Brief"
+            fi
+          done < /tmp/sitepr/slugs.txt
+          git checkout -q --detach origin/main
+          git reset --hard -q origin/main && git clean -fdq
+          echo "--- outcomes ($NS) ---"; cat /tmp/sitepr/outcomes.tsv
+
+      - name: Push + PR eröffnen/aktualisieren (führt KEINEN Engine-Code aus)
+        if: steps.enum.outputs.count != '0'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          : > /tmp/sitepr/push-results.tsv
+          DATE=$(date -u +%F)
+          while IFS=$'\t' read -r slug outcome detail; do
+            [ "$outcome" = "ready" ] || continue
+            git push -q --force "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}" \
+              "refs/heads/$NS/pr-$slug:refs/heads/$NS/pr-$slug"
+            state=$(awk -F'\t' -v s="$slug" '$1==s{print $2}' /tmp/sitepr/pr-state.tsv)
+            num=$(awk -F'\t' -v s="$slug" '$1==s{print $3}' /tmp/sitepr/pr-state.tsv)
+            if [ "$state" = "open" ]; then
+              gh pr comment "$num" --repo "$GITHUB_REPOSITORY" \
+                --body "Aktualisiert aus \`site-prs/$slug\` — Schleuse (check + test + build) grün am $DATE."
+              url=$(gh pr view "$num" --repo "$GITHUB_REPOSITORY" --json url --jq .url)
+              printf '%s\tupdated\t%s\n' "$slug" "$url" >> /tmp/sitepr/push-results.tsv
+            else
+              title=$(jq -r .title "/tmp/sitepr/report-$slug.json")
+              body=$(jq -r .body "/tmp/sitepr/report-$slug.json")
+              full_body=$(printf '%s\n\n---\n*Vorschlag von %s aus [`site-prs/%s`](https://github.com/%s/tree/main/site-prs/%s); Schleuse (Pfad-Grenze + check + test + build) grün am %s. Gemergt wird nur nach menschlichem Review.*' \
+                "$body" "$PERSONA" "$slug" "$ENGINE_REPO" "$slug" "$DATE")
+              url=$(gh pr create --repo "$GITHUB_REPOSITORY" --base main --head "$NS/pr-$slug" \
+                --title "$title" --body "$full_body")
+              printf '%s\topened\t%s\n' "$slug" "$url" >> /tmp/sitepr/push-results.tsv
+            fi
+          done < /tmp/sitepr/outcomes.tsv
+          cat /tmp/sitepr/push-results.tsv
+
+      - name: Feedback-Brief ins Engine-Repo (führt KEINEN Engine-Code aus)
+        if: always() && steps.enum.outputs.count != '0'
+        env:
+          BOT_TOKEN: ${{ secrets[matrix.bot_secret] }}
+        run: |
+          set -euo pipefail
+          [ -s /tmp/sitepr/outcomes.tsv ] || { echo "keine Outcomes — kein Brief"; exit 0; }
+          [ -n "$BOT_TOKEN" ] || { echo "kein BOT_TOKEN — Brief übersprungen"; exit 0; }
+          touch /tmp/sitepr/push-results.tsv
+          # Push-Ergebnisse (opened/updated + URL) über die Stage-Outcomes legen.
+          # FILENAME statt NR==FNR: die erste Datei darf leer sein.
+          awk -F'\t' 'FILENAME==ARGV[1] { u[$1]=$2; url[$1]=$3; next }
+            { o=$2; d=$3; if ($1 in u) { o=u[$1]; d=url[$1] }
+              printf "%s\t%s\t%s\n", $1, o, d }' \
+            /tmp/sitepr/push-results.tsv /tmp/sitepr/outcomes.tsv > /tmp/sitepr/final.tsv
+          # Nur schreiben, wenn es etwas zu sagen gibt — Ruhe-Outcomes (skipped/identical/
+          # unchanged) erzeugen keinen täglichen Brief-Lärm; der Vertrag erklärt sie.
+          if ! awk -F'\t' '$2=="opened"||$2=="updated"||$2=="red"||$2=="refused"||$2=="error"{f=1} END{exit !f}' /tmp/sitepr/final.tsv; then
+            echo "nur Ruhe-Outcomes — kein Brief"; exit 0
+          fi
+          DATE=$(date -u +%F)
+          {
+            printf '# Site-PR-Schleuse %s\n\n' "$DATE"
+            printf 'Ergebnis je Vorschlag in `site-prs/` (Vertrag: SITE-API.md → "Site PRs"):\n\n'
+            awk -F'\t' '{ printf "- `%s` — **%s**%s\n", $1, $2, ($3!="" ? ": " $3 : "") }' /tmp/sitepr/final.tsv
+            for f in /tmp/sitepr/validate-*.log; do
+              [ -f "$f" ] || continue
+              slug=$(basename "$f" .log); slug=${slug#validate-}
+              if awk -F'\t' -v s="$slug" '$1==s && $2=="red"{found=1} END{exit !found}' /tmp/sitepr/outcomes.tsv; then
+                printf '\n## Log-Auszug `%s` (rot)\n\n```\n%s\n```\n' "$slug" "$(tail -40 "$f")"
+              fi
+            done
+          } > /tmp/sitepr/letter.md
+          git clone --depth 1 "https://x-access-token:${BOT_TOKEN}@github.com/${ENGINE_REPO}" /tmp/fb-sitepr
+          mkdir -p "/tmp/fb-sitepr/${FEEDBACK_DIR}"
+          cp /tmp/sitepr/letter.md "/tmp/fb-sitepr/${FEEDBACK_DIR}/${DATE}-site-pr.md"
+          cd /tmp/fb-sitepr
+          git config user.name "Site-PR-Schleuse" && git config user.email "site-pr-schleuse@frankbueltge.de"
+          git add "$FEEDBACK_DIR"
+          git diff --cached --quiet || { git commit -m "feedback: Site-PR-Schleuse ${DATE}" && git push; }
+
+      - name: Zusammenfassung + Schleusen-Fehler melden
+        if: always() && steps.enum.outputs.count != '0'
+        run: |
+          mkdir -p /tmp/sitepr
+          touch /tmp/sitepr/outcomes.tsv /tmp/sitepr/push-results.tsv
+          {
+            printf '## Site-PR-Schleuse (%s)\n\n| Slug | Ergebnis | Detail |\n|---|---|---|\n' "$NS"
+            awk -F'\t' 'FILENAME==ARGV[1] { u[$1]=$2; url[$1]=$3; next }
+              { o=$2; d=$3; if ($1 in u) { o=u[$1]; d=url[$1] }
+                printf "| `%s` | %s | %s |\n", $1, o, d }' \
+              /tmp/sitepr/push-results.tsv /tmp/sitepr/outcomes.tsv
+          } >> "$GITHUB_STEP_SUMMARY"
+          if awk -F'\t' '$2=="error"{found=1} END{exit !found}' /tmp/sitepr/outcomes.tsv; then
+            echo "::error::Schleusen-Fehler bei mindestens einem Slug ($NS) — siehe outcomes"
+            exit 1
+          fi
