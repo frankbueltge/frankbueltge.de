@@ -10,6 +10,13 @@
 # Team-eigene Sections (Seeds/Team note/Team responses) sind Franks eigene Worte und werden
 # übersprungen (Muster gespiegelt in src/lib/zentrale/requestsMd.ts TEAM_SECTION_RE).
 # Abschnitte mit führendem Datum älter als 10 Tage gelten als Bestand und bleiben stumm.
+#
+# Zweiter Job (saat-sync, seit 2026-07-20): derselbe 2×-täglich-Rhythmus trägt auch den
+# Status-Rückfluss der "Öffentlichen Saat" (Design-Spec 2026-07-20 §5) — scripts/saat/sync.ts
+# liest dieselben drei Engine-REQUESTS.md roh von raw.githubusercontent.com (kein Token, wie
+# oben) und synct Praxis-Antworten aus "Seeds from the public" ins Register
+# (src/data/saat/register.json), das dieser Job dann committet. Eigener Job statt eines Steps
+# im bestehenden `watch`-Job, damit dessen reine Python/gh-Logik unangetastet bleibt.
 name: Requests watchdog
 
 on:
@@ -18,12 +25,11 @@ on:
     - cron: '15 21 * * *'   # 23:15 Berlin — nach den Abend-Sessions
   workflow_dispatch: {}
 
-permissions:
-  issues: write
-
 jobs:
   watch:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
     steps:
       - name: Scan engine REQUESTS.md files for new sections
         env:
@@ -83,3 +89,41 @@ jobs:
                              "--title", title, "--body", issue_body])
                   print(f"{repo}: {'ISSUE ' + made.stdout.strip() if made.returncode == 0 else 'FEHLER ' + made.stderr.strip()} — {heading[:60]}")
           PYEOF
+
+  saat-sync:
+    # Status-Rückfluss "Öffentliche Saat" (Spec 2026-07-20 §5): synct Praxis-Antworten aus
+    # "Seeds from the public" ins Register. Braucht Checkout + Node, weil es (anders als
+    # `watch` oben) Dateien im Site-Repo selbst liest und schreibt.
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    concurrency:
+      group: saat-sync
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # volle History → git pull --rebase im Commit-Schritt funktioniert
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Register-Sync aus den Engine-REQUESTS.md (roh, kein Token — öffentliche Repos)
+        run: npx tsx scripts/saat/sync.ts
+      - name: Committen, wenn geändert
+        run: |
+          git config user.name "Öffentliche Saat"
+          git config user.email "saat@frankbueltge.de"
+          git add src/data/saat/register.json
+          if git diff --cached --quiet; then
+            echo "Keine Änderung."; exit 0
+          fi
+          git commit -m "saat: register-sync $(date -u +%F)"
+          for i in 1 2 3 4 5; do
+            if git pull --rebase --autostash origin main && git push origin HEAD:main; then
+              echo "Gepusht."; exit 0
+            fi
+            echo "Push-Versuch $i fehlgeschlagen, neu …"; sleep 5
+          done
+          echo "::error::Push nach 5 Versuchen fehlgeschlagen"; exit 1
