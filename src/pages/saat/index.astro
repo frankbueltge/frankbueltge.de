@@ -1,15 +1,13 @@
 ---
 // /saat — Öffentliche Saat / Public seed (Design-Spec 2026-07-20-oeffentliche-saat-design.md §5,
 // Addendum D6: EINE Route, englischer Inhalt, deutscher Slug nach Site-Muster /werke, /bestaende).
-// Die deutsche Textfassung liegt vollständig in SaatPage.astro — locale="de" würde sie aktivieren.
 import Page from '@/layouts/Page.astro'
 import SaatPage from '@/components/pages/SaatPage.astro'
-const locale = 'en' as const
 ---
 
 <Page
   title="Public seed | Frank Bültge"
   description="Offer this research a seed — a question, a source, a word, a direction. The practices decide for themselves; acceptance and refusal are both public."
 >
-  <SaatPage locale={locale} />
+  <SaatPage />
 </Page>

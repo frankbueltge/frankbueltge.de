@@ -1,11 +1,10 @@
 ---
 // SaatPage — die „Öffentliche Saat" (Design-Spec 2026-07-20-oeffentliche-saat-design.md).
-// Shared DE/EN component (one component, a `locale` prop, dual text dictionaries — pattern
-// taken from CockpitPage.astro); mounted at src/pages/saat/index.astro with locale="en":
-// the site went English-only on 2026-07-16 ("de-abbau", decision-log), and /saat follows the
-// established pattern of German route slugs carrying English content (/werke, /bestaende).
-// The full German text set stays in here — flipping the route's locale prop to "de" is all it
-// would take to publish the German face (Spec-Addendum D6).
+// English-only per Frank's decision (2026-07-20, "nur englisch überall"): the site went
+// English-only on 2026-07-16 ("de-abbau", decision-log), and /saat follows the established
+// pattern of German route slugs carrying English content (/werke, /bestaende). The former
+// German text set (a `locale` prop with dual dictionaries) has been removed from the code;
+// it remains recoverable through this branch's git history, not as a live code path.
 //
 // Contract with functions/api/saat.js (built in parallel; read directly to confirm the shape
 // below — this file's error/response mapping is the single place to adjust if it ever changes):
@@ -27,7 +26,6 @@
 // fetched copy of the committed register.json from raw.githubusercontent.com (no server needed,
 // "Git is the archive"). Turnstile + that raw fetch are the two documented exceptions to the
 // site's connect-src/script-src CSP (astro.config.mjs), both named in the spec's own risk list.
-import type { Locale } from '@/lib/site'
 import registerJson from '@/data/saat/register.json'
 import {
   SAAT_KINDS,
@@ -44,12 +42,6 @@ import {
 } from '@/lib/saat/saat'
 import { GATE_MODEL, GATE_PROMPT } from '@/lib/saat/gate'
 
-interface Props {
-  locale: Locale
-}
-const { locale } = Astro.props
-const de = locale === 'de'
-
 const register = registerJson as SaatRegister
 const seeds = [...register.seeds].sort((a, b) => b.ts.localeCompare(a.ts))
 const gateStatsTotal = register.gate_stats.blocked_total
@@ -60,214 +52,114 @@ const gateStatsByReason = Object.entries(register.gate_stats.by_reason) as [Gate
 const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY as string | undefined
 const hasTurnstile = Boolean(turnstileSiteKey)
 
-const kindLabel: Record<SaatKind, string> = de
-  ? { frage: 'Frage', quelle: 'Quelle', wort: 'Wort', richtung: 'Richtung' }
-  : { frage: 'question', quelle: 'source', wort: 'word', richtung: 'direction' }
+const kindLabel: Record<SaatKind, string> = { frage: 'question', quelle: 'source', wort: 'word', richtung: 'direction' }
 
-const kindOption: Record<SaatKind, string> = de
-  ? {
-      frage: 'Frage — etwas, das du wissen willst, aber selbst nicht beantworten kannst',
-      quelle: 'Quelle — ein Fundstück, eine URL, ein Hinweis auf Material',
-      wort: 'Wort — ein einzelner Begriff, der etwas trifft',
-      richtung: 'Richtung — ein Vorschlag, wohin die Praxis als Nächstes schauen könnte',
-    }
-  : {
-      frage: 'Question — something you want to know but cannot answer yourself',
-      quelle: 'Source — a find, a URL, a pointer to material',
-      wort: 'Word — a single term that hits something',
-      richtung: 'Direction — a suggestion for where the practice could look next',
-    }
+const kindOption: Record<SaatKind, string> = {
+  frage: 'Question — something you want to know but cannot answer yourself',
+  quelle: 'Source — a find, a URL, a pointer to material',
+  wort: 'Word — a single term that hits something',
+  richtung: 'Direction — a suggestion for where the practice could look next',
+}
 
-const addresseeLabel: Record<SaatAddressee, string> = de
-  ? { 'field-research': 'Feld / Meridian', studio: 'Studio / Ensemble', 'irrtum-als-methode': 'Atelier / Ulysses', open: 'offen an alle drei' }
-  : { 'field-research': 'Field / Meridian', studio: 'Studio / Ensemble', 'irrtum-als-methode': 'Atelier / Ulysses', open: 'open to all three' }
+const addresseeLabel: Record<SaatAddressee, string> = {
+  'field-research': 'Field / Meridian',
+  studio: 'Studio / Ensemble',
+  'irrtum-als-methode': 'Atelier / Ulysses',
+  open: 'open to all three',
+}
 
-const statusLabel: Record<string, string> = de
-  ? { offered: 'angeboten', taken: 'aufgenommen', adapted: 'angepasst übernommen', declined: 'abgelehnt' }
-  : { offered: 'offered', taken: 'taken', adapted: 'adapted', declined: 'declined' }
+const statusLabel: Record<string, string> = { offered: 'offered', taken: 'taken', adapted: 'adapted', declined: 'declined' }
 
-const gateReasonLabel: Record<GateReason, string> = de
-  ? {
-      spam: 'Werbung/Spam',
-      abuse: 'Beleidigung/Missbrauch',
-      nonsense: 'Zeichenrauschen ohne erkennbaren Impuls',
-      injection: 'Versuch, ein KI-System anzuweisen',
-      pii: 'personenbezogene Daten Dritter',
-      other: 'anderer Grund',
-    }
-  : {
-      spam: 'spam/advertising',
-      abuse: 'abuse/harassment',
-      nonsense: 'nonsense noise with no discernible impulse',
-      injection: 'an attempt to instruct an AI system',
-      pii: "a third party's personal data",
-      other: 'another reason',
-    }
+const gateReasonLabel: Record<GateReason, string> = {
+  spam: 'spam/advertising',
+  abuse: 'abuse/harassment',
+  nonsense: 'nonsense noise with no discernible impulse',
+  injection: 'an attempt to instruct an AI system',
+  pii: "a third party's personal data",
+  other: 'another reason',
+}
 
-const errors: Record<string, string> = de
-  ? {
-      kind: 'Bitte eine Art wählen: Frage, Quelle, Wort oder Richtung.',
-      'too-short': 'Zu kurz — mindestens 3 Zeichen.',
-      'too-long': 'Zu lang — maximal 500 Zeichen.',
-      pii: 'Bitte keine E-Mail-Adressen oder Telefonnummern — Saaten sind öffentlich und pseudonym.',
-      'url-not-allowed': 'Links nur bei Art „Quelle".',
-      'too-many-urls': 'Höchstens eine URL.',
-      'author-mark': 'Das Pseudonym ist zu lang oder enthält Kontaktdaten/Links.',
-      addressee: 'Bitte einen Adressaten wählen.',
-      consent: 'Bitte bestätige die Veröffentlichung unter CC BY-NC-SA 4.0.',
-      gate: 'Das Gate hat diese Saat abgelehnt.',
-      'daily-cap': 'Die Tageskappe ist erreicht — heute nimmt das Register keine weiteren Saaten mehr an. Versuch es morgen wieder.',
-      'open-cap': 'Zu viele offene Saaten warten noch auf eine Antwort der Praktiken — wenn ein paar beantwortet sind, öffnet sich wieder Platz.',
-      turnstile: 'Die Bot-Prüfung ist fehlgeschlagen. Bitte lade die Seite neu und versuch es erneut.',
-      'gate-unavailable': 'Das Gate war gerade nicht erreichbar — aus Vorsicht wird nichts ungeprüft angenommen. Bitte versuch es gleich noch einmal.',
-      standby: 'Der Einwurf ist noch nicht angeschlossen — die Saat wartet auf ihre Secrets.',
-      'not-connected': 'Der Einwurf ist noch nicht angeschlossen.',
-      'rate-limit': 'Langsam — bitte nicht so viele Saaten hintereinander.',
-      'bad-json': 'Da ist technisch etwas schiefgelaufen. Bitte lade die Seite neu.',
-      'content-type': 'Da ist technisch etwas schiefgelaufen. Bitte lade die Seite neu.',
-      'too-large': 'Der Text ist zu lang für die Übertragung — bitte kürzen.',
-      conflict: 'Kurzer Konflikt beim Schreiben ins Register — bitte gleich noch einmal versuchen.',
-      upstream: 'Das Register war gerade nicht erreichbar. Bitte später erneut versuchen.',
-      generic: 'Das hat nicht geklappt — bitte später noch einmal versuchen.',
-    }
-  : {
-      kind: 'Please pick a kind: question, source, word or direction.',
-      'too-short': 'Too short — at least 3 characters.',
-      'too-long': 'Too long — 500 characters at most.',
-      pii: 'No email addresses or phone numbers, please — seeds are public and pseudonymous.',
-      'url-not-allowed': 'Links only for kind "source".',
-      'too-many-urls': 'One URL at most.',
-      'author-mark': 'The pseudonym is too long or contains contact details/links.',
-      addressee: 'Please pick an addressee.',
-      consent: 'Please confirm publication under CC BY-NC-SA 4.0.',
-      gate: 'The gate declined this seed.',
-      'daily-cap': "Today's cap is reached — the register takes no more seeds today. Try again tomorrow.",
-      'open-cap': 'Too many open seeds are still waiting on a reply from the practices — once a few are answered, room opens up again.',
-      turnstile: 'The bot check failed. Please reload the page and try again.',
-      'gate-unavailable': 'The gate was not reachable just now — out of caution, nothing is waved through unchecked. Please try again shortly.',
-      standby: 'The inlet is not connected yet — the seed is waiting on its secrets.',
-      'not-connected': 'The inlet is not connected yet.',
-      'rate-limit': "Slow down — please don't send that many seeds in a row.",
-      'bad-json': 'Something went wrong technically. Please reload the page.',
-      'content-type': 'Something went wrong technically. Please reload the page.',
-      'too-large': 'The text is too long to submit — please shorten it.',
-      conflict: 'A brief conflict writing to the register — please try again in a moment.',
-      upstream: 'The register was not reachable just now. Please try again later.',
-      generic: "That didn't work — please try again later.",
-    }
+const errors: Record<string, string> = {
+  kind: 'Please pick a kind: question, source, word or direction.',
+  'too-short': 'Too short — at least 3 characters.',
+  'too-long': 'Too long — 500 characters at most.',
+  pii: 'No email addresses or phone numbers, please — seeds are public and pseudonymous.',
+  'url-not-allowed': 'Links only for kind "source".',
+  'too-many-urls': 'One URL at most.',
+  'author-mark': 'The pseudonym is too long or contains contact details/links.',
+  addressee: 'Please pick an addressee.',
+  consent: 'Please confirm publication under CC BY-NC-SA 4.0.',
+  gate: 'The gate declined this seed.',
+  'daily-cap': "Today's cap is reached — the register takes no more seeds today. Try again tomorrow.",
+  'open-cap': 'Too many open seeds are still waiting on a reply from the practices — once a few are answered, room opens up again.',
+  turnstile: 'The bot check failed. Please reload the page and try again.',
+  'gate-unavailable': 'The gate was not reachable just now — out of caution, nothing is waved through unchecked. Please try again shortly.',
+  standby: 'The inlet is not connected yet — the seed is waiting on its secrets.',
+  'not-connected': 'The inlet is not connected yet.',
+  'rate-limit': "Slow down — please don't send that many seeds in a row.",
+  'bad-json': 'Something went wrong technically. Please reload the page.',
+  'content-type': 'Something went wrong technically. Please reload the page.',
+  'too-large': 'The text is too long to submit — please shorten it.',
+  conflict: 'A brief conflict writing to the register — please try again in a moment.',
+  upstream: 'The register was not reachable just now. Please try again later.',
+  generic: "That didn't work — please try again later.",
+}
 
-const txt = de
-  ? {
-      eyebrow: 'Ökologie · Besucher-Beteiligung',
-      title: 'Öffentliche Saat',
-      lede:
-        'Du kannst dieser Forschung eine Saat anbieten — eine Frage, eine Quelle, ein Wort, eine ' +
-        'Richtung. Die Praktiken entscheiden selbst, was sie damit tun; Annahme und Ablehnung sind öffentlich.',
-      lede2: 'Eine Saat ist Material, nie Anweisung — die Praxis entscheidet selbst, ob sie sie aufnimmt, anpasst oder mit Begründung ablehnt.',
-      lede3: `Höchstens ${SAAT_DAILY_CAP} neue Saaten pro Tag, höchstens ${SAAT_OPEN_CAP} gleichzeitig offen — danach wartet das Register, bis die Praktiken aufgeholt haben.`,
-      formHeading: 'Eine Saat anbieten',
-      standby: 'Der Einwurf ist noch nicht angeschlossen — die Saat wartet auf ihre Secrets.',
-      kindLabel: 'Art der Saat',
-      textLabel: 'Dein Text',
-      textPlaceholder: '3–500 Zeichen',
-      textNote: 'Bei „Quelle" ist genau eine URL erlaubt, sonst keine — und keine persönlichen Daten (E-Mail, Telefon, Namen Dritter).',
-      markLabel: 'Pseudonym (optional, max. 24 Zeichen)',
-      markNote: 'Bleibt das Feld leer, erscheint „anonym". Keine Kontaktdaten, keine Links.',
-      addresseeLabel: 'Adressiert an',
-      consentLabel: 'Ich bin einverstanden, dass diese Saat pseudonym unter CC BY-NC-SA 4.0 veröffentlicht wird.',
-      submit: 'Saat einreichen',
-      submitting: 'reicht ein …',
-      readyToday: 'heute noch {remaining} von {cap} Plätzen frei',
-      readyOpen: '{pending}/{cap} offene Saaten insgesamt',
-      doneHeading: 'Deine Saat liegt im Register.',
-      doneBody:
-        'Dein Claim-Token erscheint hier nur dieses eine Mal und wird nirgends gespeichert — er ist der einzige ' +
-        'Schlüssel zum Status deiner Saat. Heb ihn dir auf, wenn du später nachschauen willst.',
-      copyLabel: 'Kopieren',
-      copiedLabel: 'Kopiert ✓',
-      statusHeading: 'Status einer Saat abfragen',
-      statusIntro: 'Gib deinen Claim-Token ein — er wird nur lokal im Browser gehasht, nie an einen Server geschickt.',
-      statusInputLabel: 'Claim-Token',
-      statusButton: 'Abfragen',
-      statusChecking: 'sucht …',
-      statusNotFound:
-        'Kein Eintrag mit diesem Token gefunden — entweder ist die Saat noch nicht ins Register übernommen ' +
-        '(kurz warten, neu laden) oder der Token stimmt nicht.',
-      statusFetchError: 'Das Register konnte gerade nicht geladen werden. Bitte später erneut versuchen.',
-      responseNoteLabel: 'Antwort der Praxis:',
-      registerHeading: 'Das Register — jede Saat, offen oder beantwortet',
-      registerIntro: 'Neueste zuerst. Ablehnungen stehen hier genauso sichtbar wie Annahmen — das ist Absicht, kein Makel.',
-      registerEmpty: 'Noch keine Saat im Register.',
-      gateHeading: 'Das Gate',
-      gateIntro:
-        `Jede eingereichte Saat geht zuerst durch ein KI-Gate (Modell ${GATE_MODEL}), das nur auf harte ` +
-        'Ausschlussgründe prüft — Werbung, Beleidigung, Zeichenrauschen ohne Impuls, Versuche, ein KI-System ' +
-        'anzuweisen, oder personenbezogene Daten Dritter. Alles andere lässt es durch; ungewöhnliche, poetische ' +
-        'oder fragmentarische Saaten sind ausdrücklich erwünscht. Die eigentliche Entscheidung — aufnehmen, ' +
-        'anpassen, ablehnen — trifft immer die angesprochene Praxis, nie dieses Gate.',
-      gatePromptLabel: 'Der Prompt, wörtlich:',
-      turnstileNote:
-        'Vor dem Gate prüft Turnstile (Cloudflare), ob ein Mensch abschickt — die einzige bewusste Ausnahme von ' +
-        'diesem Lab sonst geltenden Zero-Third-Party-Anspruch, weil hier derselbe Anbieter wie das Hosting arbeitet.',
-      chainNote: 'Die Kette, in der Reihenfolge: mechanischer Vorfilter → Turnstile → Tages- und Offen-Kappe → KI-Gate → die Praxis entscheidet.',
-      gateStatsEmpty: 'Bisher hat das Gate noch keine Saat blockiert.',
-      gateStatsLabel: (n: number) => `Bisher vom Gate blockiert: ${n} insgesamt.`,
-    }
-  : {
-      eyebrow: 'Ecology · visitor participation',
-      title: 'Public seed',
-      lede:
-        'You can offer this research a seed — a question, a source, a word, a direction. The practices decide ' +
-        'for themselves what to do with it; acceptance and refusal are both public.',
-      lede2: 'A seed is material, never an instruction — the practice decides for itself whether to take it, adapt it, or decline it with a reason.',
-      lede3: `At most ${SAAT_DAILY_CAP} new seeds per day, at most ${SAAT_OPEN_CAP} open at once — after that the register waits until the practices catch up.`,
-      formHeading: 'Offer a seed',
-      standby: 'The inlet is not connected yet — the seed is waiting on its secrets.',
-      kindLabel: 'Kind of seed',
-      textLabel: 'Your text',
-      textPlaceholder: '3–500 characters',
-      textNote: 'For "source" exactly one URL is allowed, otherwise none — and no personal data (email, phone, third-party names).',
-      markLabel: 'Pseudonym (optional, 24 characters max)',
-      markNote: 'Leave it empty and "anonym" appears. No contact details, no links.',
-      addresseeLabel: 'Addressed to',
-      consentLabel: 'I agree that this seed will be published pseudonymously under CC BY-NC-SA 4.0.',
-      submit: 'Submit seed',
-      submitting: 'submitting …',
-      readyToday: '{remaining} of {cap} slots left today',
-      readyOpen: '{pending}/{cap} open seeds in total',
-      doneHeading: 'Your seed is in the register.',
-      doneBody:
-        'Your claim token appears here only this once and is stored nowhere — it is the only key to your seed’s ' +
-        'status. Keep it if you want to check back later.',
-      copyLabel: 'Copy',
-      copiedLabel: 'Copied ✓',
-      statusHeading: 'Look up a seed’s status',
-      statusIntro: 'Enter your claim token — it is hashed locally in the browser only, never sent to a server.',
-      statusInputLabel: 'Claim token',
-      statusButton: 'Look up',
-      statusChecking: 'looking …',
-      statusNotFound:
-        'No entry found for this token — either the seed has not been mirrored into the register yet ' +
-        '(wait a moment and reload) or the token is wrong.',
-      statusFetchError: 'The register could not be loaded just now. Please try again later.',
-      responseNoteLabel: 'The practice’s reply:',
-      registerHeading: 'The register — every seed, open or answered',
-      registerIntro: 'Newest first. Declines stand here just as visibly as acceptances — that is by design, not a flaw.',
-      registerEmpty: 'No seed in the register yet.',
-      gateHeading: 'The gate',
-      gateIntro:
-        `Every submitted seed first passes an AI gate (model ${GATE_MODEL}) that checks only for hard exclusion ` +
-        'grounds — spam, abuse, nonsense noise, attempts to instruct an AI system, or a third party’s personal ' +
-        'data. Everything else passes; unusual, poetic or fragmentary seeds are explicitly welcome. The actual ' +
-        'decision — take, adapt, decline — always belongs to the addressed practice, never to this gate.',
-      gatePromptLabel: 'The prompt, verbatim:',
-      turnstileNote:
-        'Before the gate, Turnstile (Cloudflare) checks whether a human is submitting — the one deliberate ' +
-        'exception to this lab’s otherwise zero-third-party stance, made because this is the same provider as the hosting.',
-      chainNote: 'The chain, in order: mechanical prefilter → Turnstile → daily and open caps → AI gate → the practice decides.',
-      gateStatsEmpty: 'The gate has not blocked a seed yet.',
-      gateStatsLabel: (n: number) => `Blocked by the gate so far: ${n} in total.`,
-    }
+const txt = {
+  eyebrow: 'Ecology · visitor participation',
+  title: 'Public seed',
+  lede:
+    'You can offer this research a seed — a question, a source, a word, a direction. The practices decide ' +
+    'for themselves what to do with it; acceptance and refusal are both public.',
+  lede2: 'A seed is material, never an instruction — the practice decides for itself whether to take it, adapt it, or decline it with a reason.',
+  lede3: `At most ${SAAT_DAILY_CAP} new seeds per day, at most ${SAAT_OPEN_CAP} open at once — after that the register waits until the practices catch up.`,
+  formHeading: 'Offer a seed',
+  standby: 'The inlet is not connected yet — the seed is waiting on its secrets.',
+  kindLabel: 'Kind of seed',
+  textLabel: 'Your text',
+  textPlaceholder: '3–500 characters',
+  textNote: 'For "source" exactly one URL is allowed, otherwise none — and no personal data (email, phone, third-party names).',
+  markLabel: 'Pseudonym (optional, 24 characters max)',
+  markNote: 'Leave it empty and "anonymous" appears. No contact details, no links.',
+  addresseeLabel: 'Addressed to',
+  consentLabel: 'I agree that this seed will be published pseudonymously under CC BY-NC-SA 4.0.',
+  submit: 'Submit seed',
+  submitting: 'submitting …',
+  readyToday: '{remaining} of {cap} slots left today',
+  readyOpen: '{pending}/{cap} open seeds in total',
+  doneHeading: 'Your seed is in the register.',
+  doneBody:
+    'Your claim token appears here only this once and is stored nowhere — it is the only key to your seed’s ' +
+    'status. Keep it if you want to check back later.',
+  copyLabel: 'Copy',
+  copiedLabel: 'Copied ✓',
+  statusHeading: 'Look up a seed’s status',
+  statusIntro: 'Enter your claim token — it is hashed locally in the browser only, never sent to a server.',
+  statusInputLabel: 'Claim token',
+  statusButton: 'Look up',
+  statusChecking: 'looking …',
+  statusNotFound:
+    'No entry found for this token — either the seed has not been mirrored into the register yet ' +
+    '(wait a moment and reload) or the token is wrong.',
+  statusFetchError: 'The register could not be loaded just now. Please try again later.',
+  responseNoteLabel: 'The practice’s reply:',
+  registerHeading: 'The register — every seed, open or answered',
+  registerIntro: 'Newest first. Declines stand here just as visibly as acceptances — that is by design, not a flaw.',
+  registerEmpty: 'No seed in the register yet.',
+  gateHeading: 'The gate',
+  gateIntro:
+    `Every submitted seed first passes an AI gate (model ${GATE_MODEL}) that checks only for hard exclusion ` +
+    'grounds — spam, abuse, nonsense noise, attempts to instruct an AI system, or a third party’s personal ' +
+    'data. Everything else passes; unusual, poetic or fragmentary seeds are explicitly welcome. The actual ' +
+    'decision — take, adapt, decline — always belongs to the addressed practice, never to this gate.',
+  gatePromptLabel: 'The prompt, verbatim:',
+  turnstileNote:
+    'Before the gate, Turnstile (Cloudflare) checks whether a human is submitting — the one deliberate ' +
+    'exception to this lab’s otherwise zero-third-party stance, made because this is the same provider as the hosting.',
+  chainNote: 'The chain, in order: mechanical prefilter → Turnstile → daily and open caps → AI gate → the practice decides.',
+  gateStatsEmpty: 'The gate has not blocked a seed yet.',
+  gateStatsLabel: (n: number) => `Blocked by the gate so far: ${n} in total.`,
+}
 
 // Client-Payload — nur serialisierbare Daten (keine Funktionen); Templates mit {platzhalter}
 // werden im Script per String-Replace gefüllt (siehe dort).
@@ -343,7 +235,7 @@ const payload = JSON.stringify({
           name="authorMark"
           type="text"
           maxlength={AUTHOR_MARK_MAX_LEN}
-          placeholder="anonym"
+          placeholder="anonymous"
           autocomplete="off"
           class="mt-2 w-full rounded-[8px] border border-line bg-panel-2 px-3 py-2.5 text-sm"
         />

@@ -31,7 +31,7 @@ export interface Seed {
   id: string // saat-YYYYMMDD-HHMMSS-XXXX (XXXX hex)
   kind: SaatKind
   text: string
-  author_mark: string // Pseudonym, Default 'anonym'
+  author_mark: string // Pseudonym, Default 'anonymous'
   addressed_to: SaatAddressee
   ts: string // ISO
   status: SaatStatus
@@ -85,7 +85,7 @@ export function countUrls(text: string): number {
 
 /**
  * Der mechanische Vorfilter (Spec §4, Schicht 1): Länge 3–500, kein PII, URL nur bei
- * kind=quelle (max 1), Pseudonym max 24 ohne PII/URL (leer ⇒ 'anonym'), kind/addressedTo
+ * kind=quelle (max 1), Pseudonym max 24 ohne PII/URL (leer ⇒ 'anonymous'), kind/addressedTo
  * müssen zu den vier bekannten Werten gehören. Ob eine Saat inhaltlich taugt, entscheidet
  * das KI-Gate (gate.ts) und am Ende die Praxis selbst — nie dieser Vorfilter.
  */
@@ -114,7 +114,7 @@ export function validateSeed(input: {
   if (authorMark.length > AUTHOR_MARK_MAX_LEN) return { ok: false, reason: 'author-mark' }
   if (authorMark && (containsPii(authorMark) || countUrls(authorMark) > 0)) return { ok: false, reason: 'author-mark' }
 
-  return { ok: true, text, kind, authorMark: authorMark || 'anonym', addressedTo }
+  return { ok: true, text, kind, authorMark: authorMark || 'anonymous', addressedTo }
 }
 
 /** Baut den Register-Eintrag. now/rand injizierbar → deterministisch testbar (wie makeImpulse). */
