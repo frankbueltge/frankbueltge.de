@@ -1,0 +1,36 @@
+name: Validate Ulysses project records
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'projects/**'
+      - 'works/**'
+      - 'governance/**'
+      - 'PROTOCOL.md'
+      - 'README.md'
+      - 'tools/validate_v4_projects.py'
+      - '.github/workflows/**'
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ulysses-project-checks-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate Protocol v4 project records
+        run: python tools/validate_v4_projects.py
+      - name: State governance boundary
+        run: |
+          echo 'Structural validation passed.'
+          echo 'This workflow validates only; publication and mandate amendments remain human decisions.'
