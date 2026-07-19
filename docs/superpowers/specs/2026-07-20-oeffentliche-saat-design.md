@@ -194,3 +194,19 @@ sichtbar, nicht vergessen.
 - **Missbrauch trotz Gate** — Kappen begrenzen den Schaden strukturell (max 6/Tag); Eskalation
   wäre: Kappe senken, Gate-Prompt schärfen (Frank kann den Prompt jederzeit editieren —
   er ist eine gewöhnliche Code-Konstante unter Testschutz für Format, nicht Inhalt).
+
+## 11. Addendum aus dem Review (2026-07-20, nach dem Bau)
+
+- **D6 — Sprache:** Die Spec-Annahme „/saat (DE) + /en/seed (EN)" beruhte auf einem veralteten
+  Stand — die Site ist seit 2026-07-16 englisch-only („German dropped site-wide", decision-log).
+  Umgesetzt ist EINE Route `/saat` mit englischem Inhalt; der deutsche Slug folgt dem etablierten
+  Muster deutscher Routen mit englischem Inhalt (`/werke`, `/bestaende` „Holdings"). Die
+  vollständige deutsche Textfassung bleibt in `SaatPage.astro` (locale-Prop) — eine deutsche
+  Fassung wäre eine Ein-Zeilen-Änderung.
+- **D7 — Consent serverseitig:** `POST /api/saat` verlangt `consent: true` (422 `consent`),
+  zusätzlich zum Pflicht-Häkchen im Formular. Einreichung ohne explizites Einverständnis wird
+  nie angenommen, auch nicht von Nicht-Browser-Clients.
+- **D8 — Deploy-Trigger:** `deploy-cf.yml` hört zusätzlich auf den Requests-watchdog-Workflow —
+  der saat-sync-Job committet mit dem eingebauten `GITHUB_TOKEN`, dessen Pushes kein `on: push`
+  auslösen; ohne den Trigger erschienen Praxis-Antworten erst mit dem nächsten Nightly im
+  gebauten Register.

@@ -77,6 +77,7 @@ Parallaxe via Gemini-AI-Studio-Key (statt BigQuery/Vertex).
 | `src/pages/protokoll/`, `src/pages/werke/` | Routen (DE; EN-Spiegel unter `src/pages/en/`) |
 | `docs/superpowers/specs/`, `docs/superpowers/plans/` | Design-Specs und Implementierungspläne |
 | `src/lib/zentrale/`, `functions/api/zentrale/`, `src/pages/steuerzentrale/` | private Steuerzentrale (Status + Antworten), Design-Notiz `docs/design/2026-07-17-steuerzentrale.md` |
+| `src/lib/saat/`, `functions/api/saat.js`, `src/pages/saat/` | Öffentliche Saat (Besucher-Seeds mit Gate, Spec 2026-07-20) |
 
 ## Deployment
 
