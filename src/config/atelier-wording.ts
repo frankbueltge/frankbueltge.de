@@ -30,6 +30,7 @@ export const ATELIER_GRAMMAR = {
   /** Der Blattrand — die EINZIGE stehende Navigation (atelier-aesthetik §5). */
   rail: [
     { label: 'this sheet', href: '/atelier', hint: 'the current working sheet' },
+    { label: 'projects', href: '/atelier/projects', hint: 'the research log — bounded projects under Protocol v4 (v4 revision 2026-07-19)' },
     { label: 'sheets', href: '/atelier/sheets', hint: 'all sheets, one per thread' },
     { label: 'works', href: '/atelier/works', hint: 'works & catalogue — existing URLs stay' },
     { label: 'journal', href: '/atelier/journal', hint: 'the journal as session register, S1…' },

@@ -17,9 +17,10 @@ describe('approved atelier grammar (static formulas, test-protected)', () => {
     expect(ATELIER_GRAMMAR.dataEdgeLines).toEqual(['nightly register closed —', 'work continues as projects'])
   })
 
-  it('keeps the margin rail exactly as designed (the only standing navigation)', () => {
+  it('keeps the margin rail exactly as designed (v4 revision 2026-07-19: projects room added)', () => {
     expect(ATELIER_GRAMMAR.rail.map((r) => r.label)).toEqual([
       'this sheet',
+      'projects',
       'sheets',
       'works',
       'journal',
