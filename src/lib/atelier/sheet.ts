@@ -384,17 +384,8 @@ export function buildSheetSvg(r: Rhizome, opts?: { doorwayNote?: string; links?:
       s.push(door(links.source?.(src.id), labelledText('t-src', SRC_X - 10, src.y + 4, src.label, SOURCE_LABEL_MAX, 'end')))
       s.push(`<path class="stub" d="M${SRC_X} ${src.y} H${ELBOW_X - 22}"/>`)
       s.push(`<path class="rp" d="M${ELBOW_X - 22} ${src.y} Q ${ELBOW_X - 4} ${src.y}, ${ELBOW_X} ${t.y}" fill="none"/>`)
-      // Later swerves into an existing thread carry their own session at the kink —
-      // the elbow mark below shows only the thread's birth (S40+S42 on one thread, S46+S48
-      // on another, since 2026-07-19). Same-session sources stay unmarked (no duplicates).
-      if (src.session !== null && src.session !== t.session) {
-        s.push(
-          door(
-            links.session?.(src.session),
-            `<text class="t-sess" x="${ELBOW_X - 28}" y="${src.y - 4}" text-anchor="end">S${src.session}</text>`,
-          ),
-        )
-      }
+      // (Merge reconciliation 2026-07-19: per-source kink marks were superseded by the
+      // per-session elbow marks below — every distinct session is already lettered there.)
     }
     s.push(`<circle class="rp-dot" cx="${ELBOW_X}" cy="${t.y}" r="3.5"/>`)
     // One elbow mark per distinct session in which a swerve joined — stacked below the dot.
