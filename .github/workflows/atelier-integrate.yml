@@ -46,6 +46,10 @@ jobs:
           touch src/components/atelier/werke/.gitkeep
           # Journal spiegeln (entfernt gelöschte Einträge)
           rsync -a --delete /tmp/atelier/journal/ src/content/atelier/journal/
+          # v4-Projekt-Records spiegeln (Forschungslog, publikationsneutral): nur die
+          # Markdown-Akten (SCORE/TRACE/DECISION/…), nie PUBLICATION.json, nie _template
+          mkdir -p src/content/atelier/projects
+          rsync -a --delete --exclude='_template' --include='*/' --include='*.md' --exclude='*' /tmp/atelier/projects/ src/content/atelier/projects/ 2>/dev/null || true
           # Markdown-Werke (fehlerkataster, genealogie, parry-problem …)
           cp /tmp/atelier/works/*.md src/content/atelier/works/ 2>/dev/null || true
           # HTML-/Astro-Werk-Verzeichnisse via Integrator (Pfad-Grenze erzwungen)

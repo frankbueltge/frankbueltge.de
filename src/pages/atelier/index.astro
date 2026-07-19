@@ -32,6 +32,14 @@ const htmlSlugs = new Set(
 )
 const atlasIds = new Set((atlasData as { id: string }[]).map((a) => a.id))
 
+// Live pointer to the research log: count ACTIVE projects from the mirrored SCORE files.
+const projectScores = import.meta.glob('/src/content/atelier/projects/*/SCORE.md', {
+  eager: true, query: '?raw', import: 'default',
+}) as Record<string, string>
+const activeProjects = Object.values(projectScores).filter((raw) =>
+  /^status:\s*ACTIVE\s*$/m.test(raw.split('\n---')[0]),
+).length
+
 const svg = buildSheetSvg(rhizome, {
   doorwayNote: ATELIER_GRAMMAR.doorwayNote,
   links: {
@@ -146,6 +154,9 @@ const statusHtml =
     </section>
 
     <p class="at-framing">
+      {activeProjects > 0
+        ? <a href="/atelier/projects"><b>{activeProjects} project{activeProjects === 1 ? '' : 's'} in progress right now</b> — the research log →</a>
+        : <a href="/atelier/projects">No project in progress — the research log →</a>}
       {ATELIER_NARRATIVE.framingFoot}
       <a href="/atelier/foundation">What happens here, and on what ground →</a>
       <a href="/atelier/apparatus">The full framing lives in the apparatus →</a>
