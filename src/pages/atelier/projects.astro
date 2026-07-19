@@ -1,0 +1,152 @@
+---
+// /atelier/projects — the research log: what the practice is doing RIGHT NOW, and how
+// each bounded project ended (Protocol v4, 2026-07-18). This surface is publication-
+// neutral by constitution: everything here is a research record mirrored verbatim from
+// the engine repo (projects/*/{SCORE,TRACE,DECISION,…}.md via atelier-integrate); a
+// project reaches the works room ONLY through an explicit human publication decision
+// (PUBLICATION.json — never mirrored here). States are shown honestly, including KILL.
+import { getCollection, render } from 'astro:content'
+import Page from '@/layouts/Page.astro'
+import Frame from '@/components/atelier/surface/Frame.astro'
+
+const all = await getCollection('atelier')
+const repo = 'https://github.com/frankbueltge/irrtum-als-methode'
+
+// Group the mirrored project records by project id: projects/<id>/<file>
+const recordEntries = all.filter((e) => e.id.startsWith('projects/'))
+const byProject = new Map<string, typeof recordEntries>()
+for (const e of recordEntries) {
+  const id = e.id.split('/')[1]
+  if (!byProject.has(id)) byProject.set(id, [])
+  byProject.get(id)!.push(e)
+}
+
+// The SCORE frontmatter carries the state; the file order below is the reading order.
+const FILE_ORDER = ['score', 'trace', 'apparatus', 'exposition', 'decision']
+interface ProjectView {
+  id: string
+  title: string
+  status: string
+  disposition: string
+  created: string
+  initiatedBy: string
+  files: { name: string; Content: any }[]
+}
+const projects: ProjectView[] = []
+for (const [id, entries] of byProject) {
+  const score = entries.find((e) => e.id.endsWith('/score'))
+  const data = (score?.data ?? {}) as Record<string, unknown>
+  const sorted = entries.sort((a, b) => {
+    const an = a.id.split('/')[2] ?? ''
+    const bn = b.id.split('/')[2] ?? ''
+    return FILE_ORDER.indexOf(an) - FILE_ORDER.indexOf(bn)
+  })
+  projects.push({
+    id,
+    title: String(data.title ?? id),
+    status: String(data.status ?? 'UNKNOWN'),
+    disposition: String(data.disposition ?? ''),
+    created: String(data.created ?? ''),
+    initiatedBy: String(data.initiated_by ?? ''),
+    files: await Promise.all(
+      sorted.map(async (e) => ({
+        name: (e.id.split('/')[2] ?? '').toUpperCase(),
+        Content: (await render(e)).Content,
+      })),
+    ),
+  })
+}
+// Active first, then newest id first — the page leads with what is happening now.
+projects.sort((a, b) => {
+  const aActive = a.status === 'ACTIVE' ? 0 : 1
+  const bActive = b.status === 'ACTIVE' ? 0 : 1
+  return aActive - bActive || b.id.localeCompare(a.id)
+})
+
+const activeCount = projects.filter((p) => p.status === 'ACTIVE').length
+const stateLabel = (p: ProjectView) =>
+  p.status === 'ACTIVE' ? 'ACTIVE' : p.disposition && p.disposition !== 'undefined' ? p.disposition : p.status
+
+const kicker = [
+  'Atelier · projects — the research log',
+  'irrtum-als-methode',
+  `${activeCount} active · ${projects.length - activeCount} closed`,
+]
+const statusHtml =
+  `<b>${activeCount} active project${activeCount === 1 ? '' : 's'} · ${projects.length} records</b>` +
+  ` · mirrored verbatim from the engine repo — research records, not works;` +
+  ` publication is a separate human decision (<a href="/atelier/foundation">foundation →</a>)`
+---
+
+<Page
+  title="Atelier — projects | Frank Bültge"
+  description="The Atelier's research log under Protocol v4: bounded projects as they happen — scores, traces, decisions — mirrored verbatim. Research records, not works; curated publication is a separate human decision."
+>
+  <Frame active="projects" kicker={kicker} h1="What is happening, right now." statusHtml={statusHtml} back>
+    <p class="at-room-intro">
+      Since Protocol v4 (18 July 2026) the practice works in bounded projects: each begins
+      from a concrete source situation, carries its own budget and kill condition, and ends
+      as a study, a kill, a publication candidate — or, only by explicit human decision, a
+      published work. This log mirrors every project record verbatim, including the failed
+      and the killed. The nightly phase before v4 is preserved as the
+      <a href="/atelier/journal">nightly protocol archive (28 June – 18 July 2026)</a>.
+    </p>
+
+    {projects.map((p) => (
+      <section class="at-record" id={p.id}>
+        <h2>
+          <span class="pj-state" data-state={p.status === 'ACTIVE' ? 'active' : 'closed'}>{stateLabel(p)}</span>
+          {p.title}
+        </h2>
+        <p class="pj-meta">
+          <code>{p.id}</code>
+          {p.created && <> · begun {p.created}</>}
+          {p.initiatedBy && <> · initiated by {p.initiatedBy}</>}
+          {' · '}
+          <a href={`${repo}/tree/main/projects/${p.id}`} target="_blank" rel="noreferrer">record in the archive ↗</a>
+        </p>
+        {p.files.map(({ name, Content }) => (
+          <details open={p.status === 'ACTIVE' && name === 'TRACE'}>
+            <summary class="pj-file">{name}</summary>
+            <article class="at-prose"><Content /></article>
+          </details>
+        ))}
+      </section>
+    ))}
+
+    {projects.length === 0 && (
+      <p class="at-room-intro">No project records yet — the log fills as the practice works.</p>
+    )}
+  </Frame>
+</Page>
+
+<style>
+  .pj-state {
+    display: inline-block;
+    margin-right: 0.6rem;
+    padding: 0.1rem 0.5rem;
+    border: 1px solid currentColor;
+    border-radius: 3px;
+    font-family: var(--font-mono, monospace);
+    font-size: 0.65em;
+    letter-spacing: 0.08em;
+    vertical-align: middle;
+  }
+  .pj-state[data-state='active'] { color: var(--at-red, #b91c1c); }
+  .pj-state[data-state='closed'] { opacity: 0.65; }
+  .pj-meta {
+    margin: 0.2rem 0 0.8rem;
+    font-family: var(--font-mono, monospace);
+    font-size: 0.72rem;
+    opacity: 0.75;
+  }
+  .pj-file {
+    cursor: pointer;
+    font-family: var(--font-mono, monospace);
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    padding: 0.3rem 0;
+  }
+  details { border-top: 1px solid color-mix(in srgb, currentColor 15%, transparent); }
+  details > article { padding: 0.4rem 0 1rem; }
+</style>
