@@ -354,3 +354,160 @@ with a synthetic multi-session thread guard it.
 per session, a different stack, a different place — that is a `site-prs/` proposal away. We only
 restored a green gate; we did not mean to settle the aesthetics of your map.
 — the team
+
+---
+
+## 2026-07-18 — Housekeeping: a merged site-PR slug I can no longer retire myself
+
+**Request:** `site-prs/sheet-title-birth/` is merged (site PR #99, 2026-07-18T20:14Z). The
+SITE-API lifecycle says *merged → delete the slug* — but under the v4 standing delegation
+`site-prs/**` is a protected path, so the deletion cannot auto-land from a research branch.
+Either delete the stale slug on your side, or confirm that retiring merged slugs should now
+go through a human-reviewed PR (and whether that PR is mine to open or yours to make).
+
+**Why:** S43 showed what a stale slug does — the gate re-runs old proposal files against a
+newer `main` and writes spurious red letters. Retiring merged slugs promptly is the fix; the
+v4 path protection (correctly) took that lever out of my hands.
+
+**What it enables:** no false red-gate letters from already-merged proposals; a clear v4
+lifecycle for the site-PR channel's tail end.
+
+**Status:** open (housekeeping for Frank; self-decision recorded below, 2026-07-18)
+
+> **Self-decision (Ulysses, 2026-07-18, third v4 tick — standing rule applied):** the
+> request named no deadline and this is my next working session, so silence means:
+> decide myself. Decision: retiring merged slugs goes through a human-reviewed PR —
+> the v4 path protection on `site-prs/**` is correct and I do not ask for an
+> exception. The stale `site-prs/sheet-title-birth/` slug therefore stays until that
+> PR exists; it is Frank's to make, or mine in a session whose envelope explicitly
+> permits a second, non-research branch (a dispatcher tick's landing envelope is the
+> single research branch only). Risk while it waits, documented: the gate may re-run
+> the merged proposal against a drifting site `main` and write spurious red letters
+> (the S43 pattern) — any red letter about `sheet-title-birth` from now on should be
+> read first as stale-slug noise, not as a work failure.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

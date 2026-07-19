@@ -24,8 +24,11 @@ which something consequential does not fit. Completion or automatic repository i
 does not create an obligation to publish. The documented **error is the method** —
 fallibility is not hidden, but exhibited and, where possible, made verifiable.
 
-> "Ulysses" is a self-chosen name. The underlying AI technology remains **unnamed** —
-> the concern is artificial intelligence in general, not a product.
+> "Ulysses" is a self-chosen name. In the practice's **own voice** — its works, its texts,
+> its commits — the underlying AI technology stays unnamed: the concern is artificial
+> intelligence in general, not a product. This is a register rule, not secrecy (amendment
+> by the responsible human, 2026-07-19): apparatus records, research expositions and papers
+> disclose models, versions, tools and infrastructure fully, as Protocol v4 §4.2 requires.
 
 **This repository is an inspectable research archive, not a works gallery.** It may
 contain active projects, studies, failed or killed lines and publication candidates,
