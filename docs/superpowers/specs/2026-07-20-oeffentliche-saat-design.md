@@ -177,7 +177,7 @@ Datenschutzerklärung-Update, Versand z. B. Resend. Eigene Design-Spec, wenn Stu
 | `SAAT_GITHUB_TOKEN` — fine-grained PAT, Contents R/W auf `frankbueltge.de` + 3 Engine-Repos | GitHub → CF Pages Secret (Prod + Preview) | Frank |
 | Turnstile-Widget anlegen → `PUBLIC_TURNSTILE_SITE_KEY` (Build-Var) + `TURNSTILE_SECRET_KEY` (Secret) | Cloudflare-Dashboard | Frank |
 | `GEMINI_API_KEY` zusätzlich als CF-Pages-Secret (existiert bisher nur als GH-Actions-Secret) | Cloudflare-Dashboard | Frank |
-| Engine-Amendments (§6) anwenden oder an Praktiken geben | Engine-Repos | Frank |
+| ~~Engine-Amendments (§6) anwenden~~ — **erledigt 2026-07-20** (siehe D9) | Engine-Repos | ✓ |
 
 Fehlt eines ⇒ `GET /api/saat` meldet `ready:false` und die Seite zeigt ehrlich Standby —
 sichtbar, nicht vergessen.
@@ -200,9 +200,12 @@ sichtbar, nicht vergessen.
 - **D6 — Sprache:** Die Spec-Annahme „/saat (DE) + /en/seed (EN)" beruhte auf einem veralteten
   Stand — die Site ist seit 2026-07-16 englisch-only („German dropped site-wide", decision-log).
   Umgesetzt ist EINE Route `/saat` mit englischem Inhalt; der deutsche Slug folgt dem etablierten
-  Muster deutscher Routen mit englischem Inhalt (`/werke`, `/bestaende` „Holdings"). Die
-  vollständige deutsche Textfassung bleibt in `SaatPage.astro` (locale-Prop) — eine deutsche
-  Fassung wäre eine Ein-Zeilen-Änderung.
+  Muster deutscher Routen mit englischem Inhalt (`/werke`, `/bestaende` „Holdings"). Frank hat am
+  2026-07-20 „nur englisch überall" für die gesamte Site bestätigt; die zunächst mitgeführte
+  vollständige deutsche Textfassung in `SaatPage.astro` (locale-Prop) wurde daraufhin ganz aus
+  dem Code entfernt — sie bleibt über die Git-History des Branches auffindbar, ist aber kein
+  aktiver Code-Pfad mehr. Zug um Zug: der Gate-Prompt (`gate.ts`) ist jetzt englisch, das
+  Default-Pseudonym `anonymous` (vormals `anonym`).
 - **D7 — Consent serverseitig:** `POST /api/saat` verlangt `consent: true` (422 `consent`),
   zusätzlich zum Pflicht-Häkchen im Formular. Einreichung ohne explizites Einverständnis wird
   nie angenommen, auch nicht von Nicht-Browser-Clients.
@@ -210,3 +213,10 @@ sichtbar, nicht vergessen.
   der saat-sync-Job committet mit dem eingebauten `GITHUB_TOKEN`, dessen Pushes kein `on: push`
   auslösen; ohne den Trigger erschienen Praxis-Antworten erst mit dem nächsten Nightly im
   gebauten Register.
+- **D9 — Engine-Amendments angewendet (2026-07-20):** Auf Franks Sammel-Go („noch alles
+  umsetzen, was du jetzt umsetzen kannst") direkt in die drei Engine-Repos committet —
+  `field-research` 7a79d80, `studio` 8121a03, `irrtum-als-methode` 70fadfd. Bei Meridian und
+  Ensemble als Ergänzung des Orient-Schritts; bei Ulysses (v4) als Zusatz zur bestehenden
+  Trace-Konvention — dessen eigene Status-Marken (`worked (ref)`, `declined (reason)`) bleiben
+  unangetastet, die `Response`-Zeile kommt für öffentliche Seeds hinzu, damit der
+  Register-Sync sie lesen kann.

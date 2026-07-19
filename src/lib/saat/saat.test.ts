@@ -29,7 +29,7 @@ function seedFixture(overrides: Partial<Seed> = {}): Seed {
     id: 'saat-20260720-101500-a3f2',
     kind: 'richtung',
     text: 'Text',
-    author_mark: 'anonym',
+    author_mark: 'anonymous',
     addressed_to: 'open',
     ts: '2026-07-20T10:15:00.000Z',
     status: 'offered',
@@ -63,11 +63,11 @@ describe('containsPii', () => {
 describe('validateSeed — der mechanische Vorfilter', () => {
   const base = { text: 'Was wäre, wenn der Fehler selbst misst?', kind: 'frage', addressedTo: 'open' }
 
-  it('akzeptiert eine saubere Saat; ohne Pseudonym → anonym', () => {
+  it('akzeptiert eine saubere Saat; ohne Pseudonym → anonymous', () => {
     const r = validateSeed(base)
     expect(r.ok).toBe(true)
     if (r.ok) {
-      expect(r.authorMark).toBe('anonym')
+      expect(r.authorMark).toBe('anonymous')
       expect(r.addressedTo).toBe('open')
       expect(r.kind).toBe('frage')
     }
@@ -125,7 +125,7 @@ describe('validateSeed — der mechanische Vorfilter', () => {
 describe('makeSeed', () => {
   it('ist mit injizierter Zeit/Zufall deterministisch, offered, ohne Forwards/Response', () => {
     const seed = makeSeed(
-      { text: 'T', kind: 'richtung', authorMark: 'anonym', addressedTo: 'open' },
+      { text: 'T', kind: 'richtung', authorMark: 'anonymous', addressedTo: 'open' },
       { now: new Date('2026-07-20T10:15:00Z'), rand: () => 0.5, tokenHash: 'deadbeef', gateModel: 'gemini-2.5-flash-lite' },
     )
     expect(seed.id).toBe('saat-20260720-101500-7fff')
@@ -137,7 +137,7 @@ describe('makeSeed', () => {
   })
 
   it('ohne now/rand fällt auf Date.now()/Math.random() zurück (nur Formatprüfung)', () => {
-    const seed = makeSeed({ text: 'x', kind: 'wort', authorMark: 'anonym', addressedTo: 'studio' }, { tokenHash: 'h', gateModel: 'm' })
+    const seed = makeSeed({ text: 'x', kind: 'wort', authorMark: 'anonymous', addressedTo: 'studio' }, { tokenHash: 'h', gateModel: 'm' })
     expect(seed.id).toMatch(/^saat-\d{8}-\d{6}-[0-9a-f]{4}$/)
   })
 })
@@ -271,7 +271,7 @@ describe('publicSeedBlock', () => {
   })
 
   it('kurzer Text (<=6 Worte) bekommt keine Kürzungs-Ellipse im Titel', () => {
-    const block = publicSeedBlock({ id: 'saat-x', kind: 'wort', text: 'Kurz.', authorMark: 'anonym', date: '2026-07-20' })
+    const block = publicSeedBlock({ id: 'saat-x', kind: 'wort', text: 'Kurz.', authorMark: 'anonymous', date: '2026-07-20' })
     expect(block).toContain('Public seed: Kurz. (saat-x)')
     expect(block).not.toContain('…')
   })
@@ -290,7 +290,7 @@ describe('parsePublicSeedResponses', () => {
       id: 'saat-20260721-090000-bbee',
       kind: 'frage',
       text: 'Eine zweite, unbeantwortete Saat.',
-      authorMark: 'anonym',
+      authorMark: 'anonymous',
       date: '2026-07-21',
     })
 
@@ -311,7 +311,7 @@ describe('parsePublicSeedResponses', () => {
   })
 
   it('toleriert Kleinschreibung des Decision-Worts und "-" statt "—"', () => {
-    const block = publicSeedBlock({ id: 'saat-20260720-101500-cccc', kind: 'wort', text: 'Wort.', authorMark: 'anonym', date: '2026-07-20' })
+    const block = publicSeedBlock({ id: 'saat-20260720-101500-cccc', kind: 'wort', text: 'Wort.', authorMark: 'anonymous', date: '2026-07-20' })
     const md = `## Seeds from the public\n\n${block}\n> **Response (Ulysses, 2026-07-21):** adapted - Umgeformt zu einem Projekt.\n`
     expect(parsePublicSeedResponses(md)).toEqual([
       { id: 'saat-20260720-101500-cccc', decision: 'adapted', note: 'Umgeformt zu einem Projekt.', date: '2026-07-21', persona: 'Ulysses' },
@@ -319,7 +319,7 @@ describe('parsePublicSeedResponses', () => {
   })
 
   it('Block ohne Response-Zeile wird ausgelassen', () => {
-    const block = publicSeedBlock({ id: 'saat-20260720-101500-dddd', kind: 'wort', text: 'Offen.', authorMark: 'anonym', date: '2026-07-20' })
+    const block = publicSeedBlock({ id: 'saat-20260720-101500-dddd', kind: 'wort', text: 'Offen.', authorMark: 'anonymous', date: '2026-07-20' })
     const md = `## Seeds from the public\n\n${block}\n`
     expect(parsePublicSeedResponses(md)).toEqual([])
   })
