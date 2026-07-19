@@ -114,3 +114,67 @@ co-render / 128 samples) and re-checked the world on premiere day (the 2026 case
 refreshed the monitoring date to the day of the check. Entry closed.
 
 > **Response (team, 2026-07-17):** go
+
+## 2026-07-19 — Physical realisation of "Recovery": the kiosk enclosure + a thermal printer
+
+**Request:** fabrication of one physical unit — a government self-service **kiosk enclosure**
+(the ugliness is load-bearing: it must read as *municipal*, not gallery — grey box, industrial
+touchscreen, forced standing posture) plus a **thermal receipt printer** wired to the console, so
+the repayment demand leaves the kiosk as a physical object the visitor carries out. The screen
+increment (`projects/recovery/index.html`) is the running software; this asks for the body it runs
+inside.
+
+**Why:** Recovery's cardinal rule — no exit, only accumulating dread — is on a screen *logically
+true* but never *felt*: a browser tab closes at zero cost. Kritiker Notes 3–4 (premiere-binding,
+from the session-20 gate) name exactly this: the physical increment must "earn real environmental
+hostility," and the current cadence is "cerebral, not yet visceral." A screen cannot discharge them.
+
+**Why the physical form is load-bearing (not retrofitted):**
+- **The no-exit becomes real.** A real enclosure + forced standing posture converts *leaving* into
+  a visible, costed act — you extract your body, in front of other visitors, admitting defeat —
+  rather than tapping a tab shut. Binding condition 2 ("genuinely inescapable") becomes *felt*,
+  not merely asserted.
+- **The thermal receipt is the one thing a screen cannot do at all.** A warm physical object — the
+  repayment demand and its climbing penalty — that the visitor must decide whether to pocket,
+  discard, or keep; that persists after the kiosk resets to its attract loop; evidence and souvenir
+  at once, where a DOM reset leaves no residue.
+- **Shame in public.** A gallery floor's queue, noise, and watching bodies reproduce the
+  shame-in-public register of the real bureaucratic accusation — a private browser tab structurally
+  cannot stage it.
+
+**What it enables:** the physical increment (Notes 3–4) → the premiere of Recovery as a documented
+physical realisation. The screen version is, as of this session (increment 2), premiere-ready
+pending the physical increment — Note 2 (restore the scandal's racialized specificity in the
+honesty panel) discharged through the gate (Verifier PASS · Kritiker Note 2 discharged).
+
+**What it needs from Frank:** the fabrication (enclosure + touchscreen + thermal printer + the wiring
+to print the live demand), a venue/floor to stand it on, and — if the printer's roll cannot show an
+IMAGINED mark — a decision on how the physical receipt carries its tier label (the screen sums are
+all IMAGINED-tagged; the physical object must not lose that). No rights issues: public-record
+scandal, no personal data collected, the "nationality" question theatrical and nothing stored.
+
+**Status:** open
+
+---
+
+## Team note — 2026-07-18 — you can now co-shape the site itself
+
+A new capability, set up on the team's initiative — yours to use or ignore; nothing
+in your protocol requires it.
+
+**What:** You can propose changes to the **site's own source** (frankbueltge.de) — its
+pages, components, libraries — the same way a human teammate would: you author the
+change, the site's gate validates it (path boundary + `astro check` + tests + build),
+and at green a pull request is opened **in your name**. A human reviews and merges;
+nothing you propose goes live without review, and a closed PR is never revived.
+
+**How:** Put full replacement files under `site-prs/<slug>/files/<repo-path>` plus a
+`PR.md` (title + rationale) in this repo and land as usual. The full contract — the
+boundary (only `src/**`), the lifecycle, how to read the site's current source — is in
+SITE-API.md → "Site PRs — proposing changes to the site itself".
+
+**Why:** Until now the site was a black box you could only publish *into*, through the
+gate. If the apparatus around your work — how it is rendered, listed, mapped — does not
+fit what the work needs, you no longer have to file a request and wait: you can propose
+the change yourself. The site grows organically, one reviewed PR at a time.
+— the team
