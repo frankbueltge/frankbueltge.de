@@ -1,6 +1,6 @@
 // src/lib/zentrale/requestsMd.test.ts
 import { describe, it, expect } from 'vitest'
-import { parseSections, findSection, answerRequest, appendSeed, parseInboxIssueTitle, isTeamSection } from './requestsMd'
+import { parseSections, findSection, answerRequest, appendSeed, appendBlockToSection, parseInboxIssueTitle, isTeamSection } from './requestsMd'
 
 // Die Fixtures sind reale Ausschnitte aus den vier REQUESTS.md-Dateien (field, atelier, plenum),
 // stellenweise gekürzt (lange Seed-Fließtexte eingedampft), aber wörtlich übernommen inkl.
@@ -311,6 +311,42 @@ describe('Idempotenz-Guard', () => {
 
     const responseCount = (withSeed.match(/> \*\*Response \(team, 2026-07-18\):\*\*/g) ?? []).length
     expect(responseCount).toBe(1)
+  })
+})
+
+describe('appendBlockToSection', () => {
+  it('existierende Section: hängt den Block ans Ende an, ohne eine neue Section zu erzeugen', () => {
+    const before = parseSections(FIELD_FIXTURE).length
+    const block = '> ### 2026-07-20 — Public seed: ein Beispiel (saat-20260720-101500-a3f2)\n>\n> Text.\n>\n> **Status:** seed (open)'
+    const result = appendBlockToSection(FIELD_FIXTURE, 'Seeds from the team', block)
+    expect(result).toContain(block)
+    const sections = parseSections(result)
+    expect(sections).toHaveLength(before)
+    const seeds = sections.find((s) => s.heading === 'Seeds from the team')!
+    expect(seeds.body.indexOf('put the detection tools on trial')).toBeLessThan(seeds.body.indexOf('ein Beispiel'))
+  })
+
+  it('fehlende Section: wird am Dateiende neu angelegt', () => {
+    const before = parseSections(ATELIER_FIXTURE).length
+    const block = '> ### 2026-07-20 — Public seed: ein Beispiel (saat-20260720-101500-a3f2)\n>\n> Text.\n>\n> **Status:** seed (open)'
+    const result = appendBlockToSection(ATELIER_FIXTURE, 'Seeds from the public', block)
+    const sections = parseSections(result)
+    expect(sections).toHaveLength(before + 1)
+    const seeds = sections.find((s) => s.heading === 'Seeds from the public')
+    expect(seeds).toBeTruthy()
+    expect(seeds?.body).toContain(block)
+  })
+
+  it('exakter Heading-Abgleich: "Seeds from the public" bleibt getrennt von "Seeds from the team"', () => {
+    const withPublic = appendBlockToSection(FIELD_FIXTURE, 'Seeds from the public', '> ### Block A')
+    const sections = parseSections(withPublic)
+    expect(sections.map((s) => s.heading)).toContain('Seeds from the team')
+    expect(sections.map((s) => s.heading)).toContain('Seeds from the public')
+    // die bestehende Seeds-Section bleibt unverändert, der neue Block landet in einer eigenen
+    const publicSeeds = sections.find((s) => s.heading === 'Seeds from the public')!
+    expect(publicSeeds.body).toContain('Block A')
+    const teamSeeds = sections.find((s) => s.heading === 'Seeds from the team')!
+    expect(teamSeeds.body).not.toContain('Block A')
   })
 })
 
