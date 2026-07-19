@@ -26,7 +26,8 @@ cd pipelines/protokoll && source .venv/bin/activate && pytest -q
 
 ## Architektur in einem Absatz
 
-Astro 5, statisch, zweisprachig (de unter `/`, en unter `/en`), Tailwind v4,
+Astro 5, statisch, englisch-only seit 2026-07-16 (site-v2) — deutsche Routen-Slugs bleiben als
+Eigennamen (`/werke`, `/saat` …), aber der Inhalt ist durchgehend englisch. Tailwind v4,
 Mono-Skin fest. **Git ist das Archiv:** Pipelines committen versionierte
 JSON-Snapshots ins Repo (kein dynamisches Lesen aus Cloud-Diensten zur Laufzeit).
 Die Protokoll-Pipelines (`pipelines/protokoll/`, Python 3.12) laufen als nächtliche
@@ -77,6 +78,7 @@ Parallaxe via Gemini-AI-Studio-Key (statt BigQuery/Vertex).
 | `src/pages/protokoll/`, `src/pages/werke/` | Routen (DE; EN-Spiegel unter `src/pages/en/`) |
 | `docs/superpowers/specs/`, `docs/superpowers/plans/` | Design-Specs und Implementierungspläne |
 | `src/lib/zentrale/`, `functions/api/zentrale/`, `src/pages/steuerzentrale/` | private Steuerzentrale (Status + Antworten), Design-Notiz `docs/design/2026-07-17-steuerzentrale.md` |
+| `src/lib/saat/`, `functions/api/saat.js`, `src/pages/saat/` | Öffentliche Saat (Besucher-Seeds mit Gate, Spec 2026-07-20) |
 
 ## Deployment
 

@@ -1,0 +1,573 @@
+---
+// SaatPage — die „Öffentliche Saat" (Design-Spec 2026-07-20-oeffentliche-saat-design.md).
+// English-only per Frank's decision (2026-07-20, "nur englisch überall"): the site went
+// English-only on 2026-07-16 ("de-abbau", decision-log), and /saat follows the established
+// pattern of German route slugs carrying English content (/werke, /bestaende). The former
+// German text set (a `locale` prop with dual dictionaries) has been removed from the code;
+// it remains recoverable through this branch's git history, not as a live code path.
+//
+// Contract with functions/api/saat.js (built in parallel; read directly to confirm the shape
+// below — this file's error/response mapping is the single place to adjust if it ever changes):
+//   GET  /api/saat  → { ready, missing, daily_used, daily_cap, pending, cap }
+//   POST /api/saat  body { kind, text, authorMark, addressedTo, consent, website, turnstileToken }
+//                    → success { ok: true, id, claim_token }
+//                    → failure { ok: false, reason, code? }
+//   `reason` is the primary discriminator: one of the RejectReason values from saat.ts
+//   ('kind' | 'too-short' | 'too-long' | 'pii' | 'url-not-allowed' | 'too-many-urls' |
+//   'author-mark' | 'addressee'), or 'gate' | 'daily-cap' | 'open-cap' | 'turnstile' |
+//   'gate-unavailable' | 'standby' | 'rate-limit' | 'bad-json' | 'content-type' | 'too-large' |
+//   'conflict' | 'upstream'. Only for reason === 'gate' does a second field, `code`, carry the
+//   GateReason (spam/abuse/nonsense/injection/pii/other) — mirrors validateSeed()'s own
+//   RejectReason naming, not functions/api/impulse.js's flatter `{ code: v.reason }` shape.
+//
+// Status lookup runs entirely client-side: hashToken() (WebCrypto SHA-256, imported straight
+// from src/lib/saat/saat.ts — Web-API-only, safe in a browser <script>) hashes the entered
+// token locally; the token itself never leaves the browser. It is matched against a freshly
+// fetched copy of the committed register.json from raw.githubusercontent.com (no server needed,
+// "Git is the archive"). Turnstile + that raw fetch are the two documented exceptions to the
+// site's connect-src/script-src CSP (astro.config.mjs), both named in the spec's own risk list.
+import registerJson from '@/data/saat/register.json'
+import {
+  SAAT_KINDS,
+  SAAT_ADDRESSEES,
+  SAAT_MIN_LEN,
+  SAAT_MAX_LEN,
+  AUTHOR_MARK_MAX_LEN,
+  SAAT_DAILY_CAP,
+  SAAT_OPEN_CAP,
+  type SaatRegister,
+  type SaatKind,
+  type SaatAddressee,
+  type GateReason,
+} from '@/lib/saat/saat'
+import { GATE_MODEL, GATE_PROMPT } from '@/lib/saat/gate'
+
+const register = registerJson as SaatRegister
+const seeds = [...register.seeds].sort((a, b) => b.ts.localeCompare(a.ts))
+const gateStatsTotal = register.gate_stats.blocked_total
+const gateStatsByReason = Object.entries(register.gate_stats.by_reason) as [GateReason, number][]
+
+// Nur zur Buildzeit gesetzt ⇒ nur dann rendern wir Widget + Script (Task-Vorgabe: ohne Key
+// bleibt das Formular im Standby, kein totes Formular, kein ungenutztes externes Script).
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY as string | undefined
+const hasTurnstile = Boolean(turnstileSiteKey)
+
+const kindLabel: Record<SaatKind, string> = { frage: 'question', quelle: 'source', wort: 'word', richtung: 'direction' }
+
+const kindOption: Record<SaatKind, string> = {
+  frage: 'Question — something you want to know but cannot answer yourself',
+  quelle: 'Source — a find, a URL, a pointer to material',
+  wort: 'Word — a single term that hits something',
+  richtung: 'Direction — a suggestion for where the practice could look next',
+}
+
+const addresseeLabel: Record<SaatAddressee, string> = {
+  'field-research': 'Field / Meridian',
+  studio: 'Studio / Ensemble',
+  'irrtum-als-methode': 'Atelier / Ulysses',
+  open: 'open to all three',
+}
+
+const statusLabel: Record<string, string> = { offered: 'offered', taken: 'taken', adapted: 'adapted', declined: 'declined' }
+
+const gateReasonLabel: Record<GateReason, string> = {
+  spam: 'spam/advertising',
+  abuse: 'abuse/harassment',
+  nonsense: 'nonsense noise with no discernible impulse',
+  injection: 'an attempt to instruct an AI system',
+  pii: "a third party's personal data",
+  other: 'another reason',
+}
+
+const errors: Record<string, string> = {
+  kind: 'Please pick a kind: question, source, word or direction.',
+  'too-short': 'Too short — at least 3 characters.',
+  'too-long': 'Too long — 500 characters at most.',
+  pii: 'No email addresses or phone numbers, please — seeds are public and pseudonymous.',
+  'url-not-allowed': 'Links only for kind "source".',
+  'too-many-urls': 'One URL at most.',
+  'author-mark': 'The pseudonym is too long or contains contact details/links.',
+  addressee: 'Please pick an addressee.',
+  consent: 'Please confirm publication under CC BY-NC-SA 4.0.',
+  gate: 'The gate declined this seed.',
+  'daily-cap': "Today's cap is reached — the register takes no more seeds today. Try again tomorrow.",
+  'open-cap': 'Too many open seeds are still waiting on a reply from the practices — once a few are answered, room opens up again.',
+  turnstile: 'The bot check failed. Please reload the page and try again.',
+  'gate-unavailable': 'The gate was not reachable just now — out of caution, nothing is waved through unchecked. Please try again shortly.',
+  standby: 'The inlet is not connected yet — the seed is waiting on its secrets.',
+  'not-connected': 'The inlet is not connected yet.',
+  'rate-limit': "Slow down — please don't send that many seeds in a row.",
+  'bad-json': 'Something went wrong technically. Please reload the page.',
+  'content-type': 'Something went wrong technically. Please reload the page.',
+  'too-large': 'The text is too long to submit — please shorten it.',
+  conflict: 'A brief conflict writing to the register — please try again in a moment.',
+  upstream: 'The register was not reachable just now. Please try again later.',
+  generic: "That didn't work — please try again later.",
+}
+
+const txt = {
+  eyebrow: 'Ecology · visitor participation',
+  title: 'Public seed',
+  lede:
+    'You can offer this research a seed — a question, a source, a word, a direction. The practices decide ' +
+    'for themselves what to do with it; acceptance and refusal are both public.',
+  lede2: 'A seed is material, never an instruction — the practice decides for itself whether to take it, adapt it, or decline it with a reason.',
+  lede3: `At most ${SAAT_DAILY_CAP} new seeds per day, at most ${SAAT_OPEN_CAP} open at once — after that the register waits until the practices catch up.`,
+  formHeading: 'Offer a seed',
+  standby: 'The inlet is not connected yet — the seed is waiting on its secrets.',
+  kindLabel: 'Kind of seed',
+  textLabel: 'Your text',
+  textPlaceholder: '3–500 characters',
+  textNote: 'For "source" exactly one URL is allowed, otherwise none — and no personal data (email, phone, third-party names).',
+  markLabel: 'Pseudonym (optional, 24 characters max)',
+  markNote: 'Leave it empty and "anonymous" appears. No contact details, no links.',
+  addresseeLabel: 'Addressed to',
+  consentLabel: 'I agree that this seed will be published pseudonymously under CC BY-NC-SA 4.0.',
+  submit: 'Submit seed',
+  submitting: 'submitting …',
+  readyToday: '{remaining} of {cap} slots left today',
+  readyOpen: '{pending}/{cap} open seeds in total',
+  doneHeading: 'Your seed is in the register.',
+  doneBody:
+    'Your claim token appears here only this once and is stored nowhere — it is the only key to your seed’s ' +
+    'status. Keep it if you want to check back later.',
+  copyLabel: 'Copy',
+  copiedLabel: 'Copied ✓',
+  statusHeading: 'Look up a seed’s status',
+  statusIntro: 'Enter your claim token — it is hashed locally in the browser only, never sent to a server.',
+  statusInputLabel: 'Claim token',
+  statusButton: 'Look up',
+  statusChecking: 'looking …',
+  statusNotFound:
+    'No entry found for this token — either the seed has not been mirrored into the register yet ' +
+    '(wait a moment and reload) or the token is wrong.',
+  statusFetchError: 'The register could not be loaded just now. Please try again later.',
+  responseNoteLabel: 'The practice’s reply:',
+  registerHeading: 'The register — every seed, open or answered',
+  registerIntro: 'Newest first. Declines stand here just as visibly as acceptances — that is by design, not a flaw.',
+  registerEmpty: 'No seed in the register yet.',
+  gateHeading: 'The gate',
+  gateIntro:
+    `Every submitted seed first passes an AI gate (model ${GATE_MODEL}) that checks only for hard exclusion ` +
+    'grounds — spam, abuse, nonsense noise, attempts to instruct an AI system, or a third party’s personal ' +
+    'data. Everything else passes; unusual, poetic or fragmentary seeds are explicitly welcome. The actual ' +
+    'decision — take, adapt, decline — always belongs to the addressed practice, never to this gate.',
+  gatePromptLabel: 'The prompt, verbatim:',
+  turnstileNote:
+    'Before the gate, Turnstile (Cloudflare) checks whether a human is submitting — the one deliberate ' +
+    'exception to this lab’s otherwise zero-third-party stance, made because this is the same provider as the hosting.',
+  chainNote: 'The chain, in order: mechanical prefilter → Turnstile → daily and open caps → AI gate → the practice decides.',
+  gateStatsEmpty: 'The gate has not blocked a seed yet.',
+  gateStatsLabel: (n: number) => `Blocked by the gate so far: ${n} in total.`,
+}
+
+// Client-Payload — nur serialisierbare Daten (keine Funktionen); Templates mit {platzhalter}
+// werden im Script per String-Replace gefüllt (siehe dort).
+const payload = JSON.stringify({
+  hasTurnstile,
+  addressees: SAAT_ADDRESSEES,
+  errors,
+  gateReasons: gateReasonLabel,
+  kindLabels: kindLabel,
+  addresseeLabels: addresseeLabel,
+  statusLabels: statusLabel,
+  sending: txt.submitting,
+  readyToday: txt.readyToday,
+  readyOpen: txt.readyOpen,
+  statusChecking: txt.statusChecking,
+  statusNotFound: txt.statusNotFound,
+  statusFetchError: txt.statusFetchError,
+  responseNoteLabel: txt.responseNoteLabel,
+  copyLabel: txt.copyLabel,
+  copiedLabel: txt.copiedLabel,
+}).replace(/</g, '\\u003c')
+---
+
+<main id="main" class="mx-auto w-full max-w-3xl flex-1 px-6 pb-24 pt-16 sm:pt-24">
+  <section>
+    <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted">{txt.eyebrow}</p>
+    <h1 class="mt-4 text-[clamp(34px,6vw,58px)] font-bold leading-[1.05] tracking-[-0.02em]">{txt.title}</h1>
+    <p class="mt-5 max-w-[62ch] text-[17px] text-fg-muted">{txt.lede}</p>
+    <p class="mt-3 max-w-[62ch] text-sm text-fg-muted">{txt.lede2}</p>
+    <p class="mt-3 max-w-[62ch] font-mono text-xs text-fg-faint">{txt.lede3}</p>
+  </section>
+
+  {/* ── Formular — Standby bis /api/saat ready:true meldet UND Turnstile zur Buildzeit da ist ── */}
+  <section class="mt-12 rounded-[10px] border border-line bg-panel p-6 sm:p-8" aria-labelledby="saat-form-h">
+    <h2 id="saat-form-h" class="font-mono text-xs uppercase tracking-[0.2em] text-fg-muted">{txt.formHeading}</h2>
+
+    <div class="mt-5 flex items-start gap-3 rounded-[8px] border border-line bg-bg/40 p-4" data-saat="standby">
+      <span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-fg-faint" aria-hidden="true"></span>
+      <p class="text-sm text-fg-muted">{txt.standby}</p>
+    </div>
+
+    <form class="mt-5 space-y-5" data-saat="form" hidden>
+      <div>
+        <label for="saat-kind" class="block font-mono text-xs uppercase tracking-[0.14em] text-fg-faint">{txt.kindLabel}</label>
+        <select id="saat-kind" name="kind" required class="mt-2 w-full rounded-[8px] border border-line bg-panel-2 px-3 py-2.5 text-sm">
+          {SAAT_KINDS.map((k) => <option value={k}>{kindOption[k]}</option>)}
+        </select>
+      </div>
+
+      <div>
+        <label for="saat-text" class="block font-mono text-xs uppercase tracking-[0.14em] text-fg-faint">{txt.textLabel}</label>
+        <textarea
+          id="saat-text"
+          name="text"
+          required
+          minlength={SAAT_MIN_LEN}
+          maxlength={SAAT_MAX_LEN}
+          rows="4"
+          placeholder={txt.textPlaceholder}
+          data-saat="text"
+          class="mt-2 w-full rounded-[8px] border border-line bg-panel-2 px-3 py-2.5 text-[15px] leading-relaxed"
+        ></textarea>
+        <div class="mt-1 flex items-center justify-between">
+          <p class="max-w-[48ch] text-xs text-fg-muted">{txt.textNote}</p>
+          <span class="shrink-0 pl-3 font-mono text-xs text-fg-faint" data-saat="counter">0/{SAAT_MAX_LEN}</span>
+        </div>
+      </div>
+
+      <div>
+        <label for="saat-mark" class="block font-mono text-xs uppercase tracking-[0.14em] text-fg-faint">{txt.markLabel}</label>
+        <input
+          id="saat-mark"
+          name="authorMark"
+          type="text"
+          maxlength={AUTHOR_MARK_MAX_LEN}
+          placeholder="anonymous"
+          autocomplete="off"
+          class="mt-2 w-full rounded-[8px] border border-line bg-panel-2 px-3 py-2.5 text-sm"
+        />
+        <p class="mt-1 text-xs text-fg-muted">{txt.markNote}</p>
+      </div>
+
+      <div>
+        <label for="saat-addressee" class="block font-mono text-xs uppercase tracking-[0.14em] text-fg-faint">{txt.addresseeLabel}</label>
+        <select id="saat-addressee" name="addressedTo" required data-saat="addressee" class="mt-2 w-full rounded-[8px] border border-line bg-panel-2 px-3 py-2.5 text-sm">
+          {SAAT_ADDRESSEES.map((a) => <option value={a}>{addresseeLabel[a]}</option>)}
+        </select>
+      </div>
+
+      <label class="flex items-start gap-2.5 text-sm text-fg-muted">
+        <input type="checkbox" name="consent" required class="mt-1 shrink-0" />
+        <span>{txt.consentLabel}</span>
+      </label>
+
+      {/* Honeypot — für Menschen unsichtbar, Bots füllen es aus (Cockpit-Ventil-Konvention) */}
+      <input type="text" name="website" class="saat-hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+      {hasTurnstile && <div class="cf-turnstile" data-sitekey={turnstileSiteKey}></div>}
+
+      <div class="flex flex-wrap items-center gap-3">
+        <button type="submit" data-saat="submit" class="rounded-full bg-fg px-6 py-2.5 text-sm font-semibold text-bg transition hover:opacity-90">
+          {txt.submit}
+        </button>
+        <span class="font-mono text-xs text-fg-faint" data-saat="ready-info"></span>
+      </div>
+      <p class="text-sm text-fg-muted" role="status" data-saat="msg"></p>
+    </form>
+
+    <div class="mt-5 rounded-[8px] border border-line bg-bg/40 p-4" data-saat="done" hidden>
+      <p class="font-semibold text-fg">{txt.doneHeading}</p>
+      <p class="mt-2 text-sm text-fg-muted">{txt.doneBody}</p>
+      <div class="mt-3 flex flex-wrap items-center gap-2">
+        <code class="break-all rounded border border-line bg-panel-2 px-3 py-2 font-mono text-sm" data-saat="token"></code>
+        <button type="button" class="rounded-full border border-line px-4 py-1.5 text-xs font-semibold transition hover:border-fg" data-saat="copy">
+          {txt.copyLabel}
+        </button>
+      </div>
+    </div>
+  </section>
+
+  {/* ── Status-Abfrage ─────────────────────────────────────────────────── */}
+  <section class="mt-14" aria-labelledby="saat-status-h">
+    <h2 id="saat-status-h" class="font-mono text-xs uppercase tracking-[0.2em] text-fg-muted">{txt.statusHeading}</h2>
+    <p class="mt-3 max-w-[60ch] text-sm text-fg-muted">{txt.statusIntro}</p>
+    <form class="mt-4 flex flex-wrap gap-2" data-saat="status-form">
+      <label class="sr-only" for="saat-token-input">{txt.statusInputLabel}</label>
+      <input
+        id="saat-token-input"
+        name="token"
+        type="text"
+        autocomplete="off"
+        placeholder={txt.statusInputLabel}
+        class="min-w-[16rem] flex-1 rounded-[8px] border border-line bg-panel px-3 py-2 font-mono text-sm"
+      />
+      <button type="submit" class="rounded-full border border-line px-5 py-2 text-sm font-semibold transition hover:border-fg">{txt.statusButton}</button>
+    </form>
+    <p class="mt-3 min-h-[1.5em] text-sm text-fg-muted" role="status" data-saat="status-result"></p>
+  </section>
+
+  {/* ── Register ───────────────────────────────────────────────────────── */}
+  <section class="mt-14" aria-labelledby="saat-register-h">
+    <h2 id="saat-register-h" class="font-mono text-xs uppercase tracking-[0.2em] text-fg-muted">{txt.registerHeading}</h2>
+    <p class="mt-3 max-w-[64ch] text-sm text-fg-muted">{txt.registerIntro}</p>
+
+    {seeds.length === 0 ? (
+      <p class="mt-6 text-sm text-fg-faint">{txt.registerEmpty}</p>
+    ) : (
+      <ul class="mt-6 divide-y divide-line/60 overflow-hidden rounded-[10px] border border-line bg-panel">
+        {seeds.map((seed) => (
+          <li class="p-4 sm:p-5">
+            <div class="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[11px] uppercase tracking-[0.12em] text-fg-faint">
+              <span>{seed.ts.slice(0, 10)}</span>
+              <span aria-hidden="true">·</span>
+              <span>{kindLabel[seed.kind]}</span>
+              <span aria-hidden="true">·</span>
+              <span>{addresseeLabel[seed.addressed_to]}</span>
+              <span aria-hidden="true">·</span>
+              <span class="rounded-full border border-line px-2 py-0.5 normal-case tracking-normal text-fg-muted">{statusLabel[seed.status]}</span>
+            </div>
+            <p class="mt-2 whitespace-pre-line text-[15px] leading-relaxed text-fg">{seed.text}</p>
+            <p class="mt-2 font-mono text-xs text-fg-faint">— {seed.author_mark}</p>
+            {seed.response && (
+              <p class="mt-3 border-t border-line/60 pt-3 text-sm text-fg-muted">
+                <span class="font-mono text-xs uppercase tracking-[0.12em] text-fg-faint">{txt.responseNoteLabel}</span>{' '}
+                {statusLabel[seed.response.decision]} — {seed.response.note}
+                <span class="ml-1 text-fg-faint">({seed.response.practice}, {seed.response.date})</span>
+              </p>
+            )}
+          </li>
+        ))}
+      </ul>
+    )}
+  </section>
+
+  {/* ── Gate-Transparenz (Spec §4, §7) ─────────────────────────────────── */}
+  <section class="mb-4 mt-14" aria-labelledby="saat-gate-h">
+    <h2 id="saat-gate-h" class="font-mono text-xs uppercase tracking-[0.2em] text-fg-muted">{txt.gateHeading}</h2>
+    <p class="mt-3 max-w-[68ch] text-sm text-fg-muted">{txt.gateIntro}</p>
+    <p class="mt-4 font-mono text-xs uppercase tracking-[0.14em] text-fg-faint">{txt.gatePromptLabel}</p>
+    <pre class="mt-2 overflow-x-auto whitespace-pre-wrap rounded-[8px] border border-line bg-panel p-4 text-[13px] leading-relaxed text-fg-muted">{GATE_PROMPT}</pre>
+    <p class="mt-4 text-sm text-fg-muted">{txt.turnstileNote}</p>
+    <p class="mt-2 text-sm text-fg-muted">{txt.chainNote}</p>
+    <p class="mt-4 font-mono text-xs text-fg-faint">
+      {gateStatsTotal === 0 ? txt.gateStatsEmpty : txt.gateStatsLabel(gateStatsTotal)}
+      {gateStatsTotal > 0 && gateStatsByReason.length > 0 && (
+        <span> {gateStatsByReason.map(([reason, n]) => `${gateReasonLabel[reason] ?? reason}: ${n}`).join(' · ')}</span>
+      )}
+    </p>
+  </section>
+</main>
+
+<script type="application/json" id="saat-data" set:html={payload} />
+
+{hasTurnstile && <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
+
+<script>
+  // Öffentliche Saat — Formular-Logik: Standby → Probe → Formular → Einreichen, plus die
+  // clientseitige Status-Abfrage per Claim-Token. Läuft nur mit dem, was der Server (functions/
+  // api/saat.js) tatsächlich zurückgibt; ohne JS bleibt der Standby stehen (progressive
+  // enhancement, wie das Cockpit-Ventil).
+  import { hashToken } from '@/lib/saat/saat'
+
+  interface SaatPayload {
+    hasTurnstile: boolean
+    addressees: string[]
+    errors: Record<string, string>
+    gateReasons: Record<string, string>
+    kindLabels: Record<string, string>
+    addresseeLabels: Record<string, string>
+    statusLabels: Record<string, string>
+    sending: string
+    readyToday: string
+    readyOpen: string
+    statusChecking: string
+    statusNotFound: string
+    statusFetchError: string
+    responseNoteLabel: string
+    copyLabel: string
+    copiedLabel: string
+  }
+
+  const dataEl = document.getElementById('saat-data')
+  const DATA: SaatPayload = dataEl?.textContent
+    ? JSON.parse(dataEl.textContent)
+    : {
+        hasTurnstile: false,
+        addressees: [],
+        errors: {},
+        gateReasons: {},
+        kindLabels: {},
+        addresseeLabels: {},
+        statusLabels: {},
+        sending: '…',
+        readyToday: '',
+        readyOpen: '',
+        statusChecking: '…',
+        statusNotFound: '',
+        statusFetchError: '',
+        responseNoteLabel: '',
+        copyLabel: 'copy',
+        copiedLabel: 'copied',
+      }
+
+  // ── Adressat aus ?an=<addressee> vorwählen (CTAs von /field, /studio, /atelier, dem Hub) ──
+  const addresseeSelect = document.querySelector<HTMLSelectElement>('[data-saat="addressee"]')
+  const an = new URLSearchParams(location.search).get('an')
+  if (addresseeSelect && an && DATA.addressees.includes(an)) addresseeSelect.value = an
+
+  // ── Live-Zeichenzähler ────────────────────────────────────────────────
+  const textArea = document.querySelector<HTMLTextAreaElement>('[data-saat="text"]')
+  const counter = document.querySelector<HTMLElement>('[data-saat="counter"]')
+  const maxLen = textArea?.maxLength && textArea.maxLength > 0 ? textArea.maxLength : 500
+  const updateCounter = (): void => {
+    if (textArea && counter) counter.textContent = `${textArea.value.length}/${maxLen}`
+  }
+  textArea?.addEventListener('input', updateCounter)
+  updateCounter()
+
+  // ── Standby → Probe → Formular ────────────────────────────────────────
+  const standby = document.querySelector<HTMLElement>('[data-saat="standby"]')
+  const form = document.querySelector<HTMLFormElement>('[data-saat="form"]')
+  const doneEl = document.querySelector<HTMLElement>('[data-saat="done"]')
+  const msgEl = document.querySelector<HTMLElement>('[data-saat="msg"]')
+  const readyInfo = document.querySelector<HTMLElement>('[data-saat="ready-info"]')
+  const submitBtn = document.querySelector<HTMLButtonElement>('[data-saat="submit"]')
+
+  if (form && standby && DATA.hasTurnstile) {
+    fetch('/api/saat', { headers: { accept: 'application/json' } })
+      .then((r) => (r.ok ? r.json() : { ready: false }))
+      .then((probe: { ready?: boolean; daily_used?: number; daily_cap?: number; pending?: number; cap?: number }) => {
+        if (!probe.ready) return // Standby bleibt stehen — ehrlich, kein totes Formular
+        standby.hidden = true
+        form.hidden = false
+        if (readyInfo) {
+          const parts: string[] = []
+          if (typeof probe.daily_used === 'number' && typeof probe.daily_cap === 'number') {
+            parts.push(
+              DATA.readyToday
+                .replace('{remaining}', String(Math.max(0, probe.daily_cap - probe.daily_used)))
+                .replace('{cap}', String(probe.daily_cap)),
+            )
+          }
+          if (typeof probe.pending === 'number' && typeof probe.cap === 'number') {
+            parts.push(DATA.readyOpen.replace('{pending}', String(probe.pending)).replace('{cap}', String(probe.cap)))
+          }
+          readyInfo.textContent = parts.join(' · ')
+        }
+      })
+      .catch(() => {}) // kein Netz/keine Function (lokale Preview, oder noch nicht deployed) → Standby
+
+    form.addEventListener('submit', async (ev) => {
+      ev.preventDefault()
+      if (!submitBtn || submitBtn.disabled) return
+      const fd = new FormData(form)
+      submitBtn.disabled = true
+      const label = submitBtn.textContent
+      submitBtn.textContent = DATA.sending
+      if (msgEl) msgEl.textContent = ''
+      try {
+        const res = await fetch('/api/saat', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({
+            kind: fd.get('kind'),
+            text: fd.get('text'),
+            authorMark: fd.get('authorMark'),
+            addressedTo: fd.get('addressedTo'),
+            consent: fd.get('consent') === 'on',
+            website: fd.get('website'),
+            // Turnstile injiziert dieses Feld selbst ins Formular, sobald der Widget-Token da ist.
+            turnstileToken: fd.get('cf-turnstile-response'),
+          }),
+        })
+        const body = (await res.json()) as { ok?: boolean; reason?: string; code?: string; id?: string; claim_token?: string }
+        if (body.ok) {
+          // Honeypot-Treffer antworten { ok:true } ohne claim_token (functions/api/saat.js) —
+          // dann bleibt die Token-Zeile leer; das betrifft nie einen echten Absender.
+          const token = body.claim_token ?? ''
+          form.hidden = true
+          if (doneEl) {
+            doneEl.hidden = false
+            const tokenEl = doneEl.querySelector<HTMLElement>('[data-saat="token"]')
+            if (tokenEl) tokenEl.textContent = token
+          }
+        } else if (msgEl) {
+          // `reason` ist der primäre Diskriminator; nur bei reason === 'gate' trägt `code` den
+          // GateReason (spam/abuse/… — s. Kopf-Kommentar, Vertrag mit functions/api/saat.js).
+          const reason = body.reason ?? 'generic'
+          if (reason === 'gate') {
+            const reasonLabel = DATA.gateReasons[body.code ?? 'other']
+            msgEl.textContent = reasonLabel ? `${DATA.errors.gate} (${reasonLabel})` : DATA.errors.gate
+          } else {
+            msgEl.textContent = DATA.errors[reason] ?? DATA.errors.generic
+          }
+        }
+      } catch {
+        if (msgEl) msgEl.textContent = DATA.errors.generic
+      } finally {
+        submitBtn.disabled = false
+        submitBtn.textContent = label
+      }
+    })
+  }
+
+  // ── Copy-Button für den Claim-Token ────────────────────────────────────
+  const copyBtn = document.querySelector<HTMLButtonElement>('[data-saat="copy"]')
+  copyBtn?.addEventListener('click', async () => {
+    const tokenEl = document.querySelector<HTMLElement>('[data-saat="token"]')
+    const value = tokenEl?.textContent ?? ''
+    if (!value) return
+    try {
+      await navigator.clipboard.writeText(value)
+      const original = copyBtn.textContent
+      copyBtn.textContent = DATA.copiedLabel
+      setTimeout(() => {
+        copyBtn.textContent = original
+      }, 2000)
+    } catch {
+      // Clipboard-API kann in unsicheren Kontexten fehlen — der Token bleibt sichtbar zum Abschreiben.
+    }
+  })
+
+  // ── Status-Abfrage: Token lokal hashen, gegen frisches Register matchen ──
+  interface RegisterSeed {
+    claim_token_hash: string
+    status: string
+    kind: string
+    addressed_to: string
+    response: { practice: string; decision: string; note: string; date: string } | null
+  }
+  const REGISTER_URL = 'https://raw.githubusercontent.com/frankbueltge/frankbueltge.de/main/src/data/saat/register.json'
+  const statusForm = document.querySelector<HTMLFormElement>('[data-saat="status-form"]')
+  const statusResult = document.querySelector<HTMLElement>('[data-saat="status-result"]')
+
+  statusForm?.addEventListener('submit', async (ev) => {
+    ev.preventDefault()
+    const input = statusForm.querySelector<HTMLInputElement>('input[name="token"]')
+    const token = input?.value.trim()
+    if (!token || !statusResult) return
+    statusResult.textContent = DATA.statusChecking
+    try {
+      const hash = await hashToken(token)
+      const res = await fetch(REGISTER_URL, { cache: 'no-store' })
+      if (!res.ok) throw new Error('fetch failed')
+      const reg = (await res.json()) as { seeds: RegisterSeed[] }
+      const seed = reg.seeds.find((s) => s.claim_token_hash === hash)
+      if (!seed) {
+        statusResult.textContent = DATA.statusNotFound
+        return
+      }
+      const label = DATA.statusLabels[seed.status] ?? seed.status
+      let text = `${DATA.kindLabels[seed.kind] ?? seed.kind} → ${DATA.addresseeLabels[seed.addressed_to] ?? seed.addressed_to} · ${label}`
+      if (seed.response) {
+        text += ` — ${DATA.responseNoteLabel} ${seed.response.note} (${seed.response.practice}, ${seed.response.date})`
+      }
+      statusResult.textContent = text
+    } catch {
+      statusResult.textContent = DATA.statusFetchError
+    }
+  })
+</script>
+
+<style>
+  .saat-hp {
+    position: absolute !important;
+    left: -9999px !important;
+    height: 1px;
+    width: 1px;
+    opacity: 0;
+  }
+</style>
