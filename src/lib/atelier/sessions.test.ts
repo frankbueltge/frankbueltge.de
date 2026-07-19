@@ -2,10 +2,14 @@
 // derived purely from committed journal filenames, and where a filename names its number
 // explicitly the derived sequence must agree — numbering drift surfaces here instead of
 // being renumbered silently. Runs against the REAL committed journal ids via glob.
+//
+// Since Protocol v4 the journal also carries UNNUMBERED notes (dispatcher ticks) that are
+// not sessions. The invariant is that the split is total: every committed journal file is
+// either a counted session or a note, and nothing is silently lost between the two.
 import { describe, expect, it } from 'vitest'
 import { readdirSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
-import { numberWord, sessionRegister, spineHeadline } from './sessions'
+import { isSessionId, journalNotes, numberWord, sessionRegister, spineHeadline } from './sessions'
 
 const JOURNAL_DIR = fileURLToPath(new URL('../../content/atelier/journal', import.meta.url))
 const realIds = readdirSync(JOURNAL_DIR)
@@ -13,15 +17,33 @@ const realIds = readdirSync(JOURNAL_DIR)
   .map((f) => `journal/${f}`)
 
 describe('sessionRegister', () => {
-  it('derives a sequential register from the committed filenames', () => {
+  it('derives a sequential register from every session filename (notes excluded, nothing lost)', () => {
     const reg = sessionRegister(realIds)
-    expect(reg.length).toBe(realIds.length)
+    // the register counts exactly the sessions; the rest are unnumbered notes …
+    expect(reg.length).toBe(realIds.filter(isSessionId).length)
+    // … and together sessions + notes account for every committed file (no silent drop)
+    expect(reg.length + journalNotes(realIds).length).toBe(realIds.length)
     expect(reg[0].n).toBe(1)
-    expect(reg[reg.length - 1].n).toBe(realIds.length)
+    expect(reg[reg.length - 1].n).toBe(reg.length)
     // dates never go backwards
     for (let i = 1; i < reg.length; i++) {
       expect(reg[i].date >= reg[i - 1].date).toBe(true)
     }
+  })
+
+  it('classifies unnumbered dated notes (v4 dispatcher ticks) as notes, not sessions', () => {
+    const ids = [
+      'journal/2026-07-18.md',
+      'journal/2026-07-18-session-41.md',
+      'journal/2026-07-18-first-v4-tick.md',
+    ]
+    expect(ids.filter(isSessionId)).toEqual(['journal/2026-07-18.md', 'journal/2026-07-18-session-41.md'])
+    const notes = journalNotes(ids)
+    expect(notes.map((n) => n.id)).toEqual(['journal/2026-07-18-first-v4-tick.md'])
+    expect(notes[0]).toMatchObject({ date: '2026-07-18', slug: 'first-v4-tick' })
+    // and a note never appears in the numbered register
+    const reg = sessionRegister(ids)
+    expect(reg.some((p) => p.id === notes[0].id)).toBe(false)
   })
 
   it('agrees with every explicitly numbered filename (honesty check on real data)', () => {
