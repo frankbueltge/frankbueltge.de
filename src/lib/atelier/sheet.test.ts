@@ -67,10 +67,11 @@ describe('buildSheetSvg', () => {
     expect(svg.match(/class="door"/g) ?? []).toHaveLength(2)
   })
 
-  it('letters bridges with their session, never with invented quotes', () => {
+  it('letters bridges with their session — or the honest gap S—, never invented', () => {
     const svg = buildSheetSvg(rhizome)
     const bridges = rhizome.edges.filter((e) => e.kind === 'bridge')
-    for (const b of bridges) expect(svg).toContain(`bridge · S${b.session}`)
+    for (const b of bridges)
+      expect(svg).toContain(`bridge · S${typeof b.session === 'number' ? b.session : '—'}`)
   })
 })
 
