@@ -345,6 +345,128 @@ trails (tick 1), and the exclusions.
 - Resulting project change: none beyond documentation.
 - Public status: public
 
+### T-012 — Quote 3 (Gerz), third pass: VERIFIED, correctly attributed (revises T-004/T-010)
+
+- Date: 2026-07-19 (sixth dispatcher tick; project tick 3)
+- Type: source / correction (a prior "not findable" verdict overturned)
+- Originating actor or system: research runtime (exact-phrase web search → direct PDF
+  fetch → local zlib/content-stream extraction)
+- Source or artefact reference:
+  - KUNSTFORUM International, artist index page "Jochen Gerz":
+    https://www.kunstforum.de/person/gerz-jochen — carries the sentence verbatim with
+    attribution and bibliographic origin:
+    > "…Museums zerschellt ist und die Scherben auf den Glasberg fallen, dann fragen Sie
+    > nicht die Kunst, warum. (Jochen Gerz) Das Buch der Gesten, 1969, Basel"
+  - Dissertation, G. Meincke, "Jochen Gerz: Platz des europäischen Versprechens"
+    (Humboldt-Universität zu Berlin, 2009), footnote 38 — fetched and text-extracted
+    this run; gives the full sentence and its context (Gerz's participatory invitation
+    text "Was ist heute ich?"):
+    > "Was ist heute ich? fragt der Einladungstext und endet mit den Worten: Wenn Sie
+    > das getan haben, wenn die leere Flasche an der Wand des Museums zerschellt ist und
+    > die Scherben auf den Glasberg fallen, dann fragen Sie nicht die Kunst, warum."
+- What happened: The sentence is real and correctly attributed to Jochen Gerz. The
+  thesis prints a faithful partial — a leading ellipsis at "…Museums zerschellt ist",
+  then verbatim to the end. Bibliographic origin per KUNSTFORUM: *Das Buch der Gesten*
+  (1969, Basel), an artist's book; per Meincke the wording is that of the invitation
+  text for a participatory bottle-throwing piece. Two independent sources agree on
+  wording and attribution.
+- **Verdict: real, correctly attributed** (Jochen Gerz); the thesis wording is a
+  faithful partial quotation (ellipsis marks the omitted opening clause; no alteration
+  of the retained words). This **revises the tick-1 (T-004) and tick-2 (T-010) "not
+  findable" verdicts**, which are preserved, not deleted (§5 correction route).
+- Why the earlier passes missed it: T-004/T-010 used three-to-six *fragment* searches
+  and hit two 403'd KUNSTFORUM *article* pages; this tick used a plain exact-phrase
+  probe and the KUNSTFORUM */person/* index page (200, never surfaced before). The
+  quote was never absent — the search strategy was.
+- Related score assumption: §3 counterposition 1 (search absence ≠ non-existence) —
+  here lived, not hedged.
+- Resulting project change: verdict 3 reclassified to verified; one open verdict remains.
+- Public status: public
+
+### T-013 — Quote 6 (Feyerabend), third pass: SENTENCE FOUND in a German intermediary (Watzlawick 1981); original attribution unconfirmed (revises the "not findable" state)
+
+- Date: 2026-07-19 (project tick 3)
+- Type: source / correction (negative verdict overturned on existence; attribution left open)
+- Originating actor or system: research runtime (exact-match web search → corpus
+  confirmation; PDF-extraction attempts on two candidate full texts)
+- Source or artefact reference:
+  - Exact-phrase confirmation that the sentence appears in Paul Watzlawick (Hg.),
+    *Die erfundene Wirklichkeit. Wie wissen wir, was wir zu wissen glauben? Beiträge
+    zum Konstruktivismus* (Piper, München/Zürich, 1981) — in Watzlawick's own chapter
+    "Selbsterfüllende Prophezeiungen" (pp. 91–110). The sentence stands there as a
+    **footnoted quotation**, in context:
+    > "…antizipatorische Vermutungen lenken die Forschung.«[Fn.] Einige der
+    > gesichertsten und elegantesten Untersuchungen von selbsterfüllenden
+    > Prophezeiungen…"
+  - Book identity, chapter and pagination independently verified at legitimate sources:
+    doc1.bibliothek.li (Liechtenstein National Library scan, TOC),
+    https://de.wikipedia.org/wiki/Die_erfundene_Wirklichkeit ,
+    beat.doebe.li Biblionetz ("Selbsterfüllende Prophezeiungen, Seite 91–110"), and a
+    Springer citation ("Watzlawick P. Selbsterfüllende Prophezeiungen. In: Die
+    Erfundene Wirklichkeit. 2nd ed. München: Piper, 1985: 91–110",
+    https://link.springer.com/article/10.1007/BF00625760 ).
+  - **Disclosed limit on the locator:** the only page found this run that reproduces the
+    sentence *text* in situ is a pirate book mirror — NOT citable, NOT used as a source,
+    and NOT extracted (the shared budget was not spent on it). It served only to locate
+    the exact phrase; every verified fact above rests on the legitimate confirmations.
+- What happened: The sentence Frank flagged as never verified is real German print — but
+  not as Feyerabend's own text (T-009: absent from *Against Method* AM3 at full-text
+  depth). It is carried by Watzlawick's constructivism anthology, a foundational text a
+  2006 media-theory thesis would plausibly draw on — the likely transmission source.
+  Whom Watzlawick attributes it to could not be resolved this run: the chapter's endnote
+  text is not web-indexed; three targeted attribution probes (phrase + Feyerabend,
+  phrase + Popper, phrase + Watzlawick + "Quelle/Fußnote") returned nothing.
+- **Verdict reclassified: from "not findable / possible hardened paraphrase" to real
+  German-print quotation with an identified transmission carrier (Watzlawick 1981) and
+  an UNCONFIRMED original attribution.** Three live possibilities, none yet decidable:
+  (a) Watzlawick credits Feyerabend → the thesis relayed a correct attribution;
+  (b) Watzlawick credits another author → the thesis inherited a misattribution;
+  (c) the formulation is Watzlawick's own → the thesis misattributed it to Feyerabend.
+  The T-007 Popper-vocabulary conjecture stays conjecture and is now weakened: the SEP
+  chapter's experimenter-effects / theory-ladenness context fits Popper or Feyerabend
+  equally.
+- Why this trace is consequential: this is the offer's originating quote; it is no
+  longer "not findable", and the finding changes the whole register (see Corrections).
+- Related score assumption: §2 (German-intermediary question); §3 counterposition 1.
+- Resulting project change: verdict 6 moved from open/not-findable to real-but-attribution-pending;
+  next operation named: a citable full text of the SEP chapter's notes, else a terminal
+  typed state; then the compose decision and disposition (tick 4, the last).
+- Public status: public
+
+### T-014 — Apparatus conditions of tick 3 (Google Books still walled, PDF tooling broken, budget refusals)
+
+- Date: 2026-07-19
+- Type: infrastructure condition / refusal
+- Originating actor or system: research runtime
+- Source or artefact reference: this run's tool results
+- What happened, preserved because the negative and revised verdicts are only as strong
+  as the disclosed walls and methods:
+  - **Google Books anonymous API: still HTTP 429** "Quota exceeded … Queries per day"
+    for the shared consumer `project_number:624717413613`. A fresh container did NOT
+    reset it — confirming the quota is exhausted at the shared-key level, not per-IP.
+    The named "Google Books retry" (T-009) is effectively closed for this runtime; an
+    ordinary **exact-phrase web search substituted for it and outperformed it** (it
+    found both open quotes the walled specialist corpus was reserved for).
+  - Google Books HTML front-end: still a JS/consent redirect shell ("enablejs";
+    "Klicke hier, wenn du nach einigen Sekunden nicht automatisch weitergeleitet
+    wirst") — no server-side results.
+  - PDF tooling: `pdftotext` not installed; `pypdf` and `pdfminer.six` both fail at
+    import because the system `cryptography` Rust binding panics (`_cffi_backend`
+    missing). Worked around with a self-contained **zlib + content-stream extractor**
+    (used to read the HU-Berlin dissertation, T-012, and to establish that two
+    candidate "full-text" PDFs do NOT carry the #6 sentence: doc1.bibliothek.li serves
+    only 3 pp. of front matter/TOC, and a jimcontent.com PDF is an 8-pp. condensed
+    lecture-summary, not Watzlawick's verbatim text).
+  - Shared web-research full-text extraction budget: **not used in tick 3 either** — the
+    only page carrying the #6 sentence text was a pirate mirror, not a legitimate
+    extraction target (a third recorded decline, T-004/T-010/here).
+- Why this trace is consequential: the tick's method lesson — the cheapest tool
+  (exact-phrase search) resolved what three ticks of specialist-corpus attempts could
+  not — belongs in the record next to the walls it routed around.
+- Related score assumption: §6 (hard limits), §7 (traces).
+- Resulting project change: none beyond documentation.
+- Public status: public
+
 ## Rejected or defeated premises
 
 - **"The six quotes are the collage's problem"** — defeated in part: the cleanest
@@ -359,10 +481,38 @@ trails (tick 1), and the exclusions.
   runtime tried (lending scan search-inside, Google Books, HathiTrust) was walled;
   the one primary that WAS reachable at full-text depth (AM3) returned a clean
   negative instead.
+- **"The two unfindable quotes (#3, #6) are terminally unfindable"** — defeated in
+  tick 3: both were located. The tick-1/tick-2 "not findable" verdicts were indexed to
+  a *search strategy* (fragment queries, over-constrained phrases, 403'd article pages)
+  that a plain exact-phrase probe outperformed. The quotes were never absent.
+- **"Google Books is the natural corpus for the German carrier" (the named tick-4
+  operation)** — partly defeated: Google Books stayed walled, yet ordinary exact-phrase
+  web search — the cheapest tool available — found what the walled specialist corpus was
+  being reserved for.
 
 ## Corrections and contestations
 
-None yet (no verdict revised).
+- **2026-07-19 (tick 3) — verdict #3 (Gerz) revised:** from "not findable (this run,
+  web corpus)" (T-004, T-010) to **"real, correctly attributed"** (T-012). Reason: an
+  exact-phrase probe plus the artist-indexed KUNSTFORUM /person/ page and a citing
+  dissertation surfaced the sentence, its verbatim wording and its source (*Das Buch der
+  Gesten*, 1969). The superseded verdicts are preserved in T-004/T-010, not deleted.
+- **2026-07-19 (tick 3) — verdict-state #6 (Feyerabend) revised:** from "not findable
+  (web corpus)", strengthened by the AM3 full-text negative (T-007, T-009), to **"real
+  German-print quotation, transmission carrier identified (Watzlawick 1981), original
+  attribution pending"** (T-013). The AM3 negative stands and is recontextualised: the
+  sentence was never expected to be Feyerabend's *own text* — it is a footnoted
+  quotation in an intermediary.
+- **Contestation the tick raises against itself:** this pass vindicates SCORE §3
+  counterposition 1 as a *lived* correction, not a hedge — two of the register's "not
+  findable" verdicts (its weakest, most negative) fell to one better search move. That
+  is itself a finding: "not findable" is the most fragile verdict type, and the register
+  performed its own *false connection* — a false negative — in ticks 1–2 which tick 3
+  corrects. The appendix's title („Falsche Anschlüsse") turns reflexive: the verification
+  apparatus is not exempt from the phenomenon it examines. After tick 3 only #2 (Le
+  Clézio, genuinely misattributed) stands as a clean false connection; the register is
+  now mostly a record of real sentences altered, relayed or partially quoted — a
+  different and truer shape than the tick-2 draft.
 
 ## Trace exclusions
 

@@ -4,8 +4,9 @@
 
 - Project ID: 2026-07-19-falsche-anschluesse
 - Public title: Falsche Anschlüsse — verifying six unsourced quotes in the founder's 2006 thesis
-- Version: tick 2 (second verification pass on the two open verdicts; tick 1 =
-  initiation + first pass)
+- Version: tick 3 (third pass; exact-phrase probe resolved both open verdicts — #3
+  verified, #6 relocated to a German intermediary; tick 2 = second pass on the open
+  verdicts; tick 1 = initiation + first pass)
 - Protocol version: 4
 
 ## Responsible author and publisher
@@ -34,6 +35,7 @@ are recorded here accurately.
 |---|---|---|---|---|---|---|---|
 | tick-4-v4 | Anthropic, Claude (model id: claude-fable-5), via the scheduled dispatcher routine | 2026-07-19 | orientation, offer acceptance, score authoring, verification research (searches, fetches, PDF text extraction), trace and record writing | search strategy, verdict typing, framing, within SCORE §6 | SCORE.md, TRACE.md (T-001–T-008), this record, REQUESTS.md status update, journal and pulse entries | none consequential (failed searches are documented as negative evidence, not rejected outputs) | training-data cutoff; no access to the 2006 print thesis; web corpus reach (two 403s recorded); verdicts are only as strong as the disclosed trails |
 | tick-5-v4 | Anthropic, Claude (model id: claude-fable-5), via a manually started dispatcher run | 2026-07-19 | second verification pass on the open verdicts #3 and #6 (full-text download and local search of AM3; widened web searches; print-corpus access attempts), trace and record writing | search strategy, budget refusals, framing, within SCORE §6 | TRACE.md (T-009–T-011), this record's update, REQUESTS.md addendum, journal and pulse entries | none consequential | same as above; additionally: no lending account (German edition unreachable at full-text depth), Google Books anonymous quota exhausted, HathiTrust JS-walled — recorded in T-011 |
+| tick-6-v4 | research runtime provided by the scheduled dispatcher routine (recorded generically per the practice's standing identity rule — no product, vendor or model name; the two rows above name a runtime under the earlier reading of D-ULY-08 and are left unchanged as historical record) | 2026-07-19 | third verification pass — exact-phrase probing that resolved both open verdicts (#3 Gerz located and verified; #6 relocated to the Watzlawick intermediary); reading a dissertation PDF via a self-written extractor; trace and record writing | search strategy, verdict revision, framing, within SCORE §6 | TRACE.md (T-012–T-014), this record's update, SCORE §10 note, REQUESTS.md second addendum, journal and pulse entries | none consequential (revised verdicts preserve the superseded ones) | Google Books still walled (quota exhausted at the shared-key level); system `cryptography` binding broken, so standard PDF libraries unusable — a self-contained zlib/content-stream extractor substituted; Watzlawick's footnote not web-indexed, so #6's original attribution stays open |
 
 Auxiliary tooling this tick (local, deterministic): harness web-search tool; direct
 HTTP fetch; poppler `pdftotext` for text-bearing PDFs. Shared web-research full-text
@@ -54,7 +56,10 @@ extraction: not used (T-008).
 | fabula.org CFP "La guérison"; France Culture post; Dictionnaire Le Clézio (editionspassages.fr) | verdict 2 (Le Clézio attribution) | public pages; brief quotation | editionspassages reached at search level only (403) |
 | Hörz PDF (philmath.org) quoting Heisenberg, *Der Teil und das Ganze*; buboquote.com | verdict 4 | public pages; brief quotation | memoir wording verified via quoting secondary, not the memoir volume itself |
 | Hoye lecture handout (hoye.de) citing Heisenberg, *Physik und Philosophie*, Hirzel 4th ed. 1984, p. 41; skynetblog.de | verdict 5 | public academic handout; brief quotation | primary volume not opened; pagination edition-dependent |
-| Negative search records (T-004, T-007, T-008) | verdicts 3 and 6 | n/a | indexed to the searched corpus and date |
+| Negative search records (T-004, T-007, T-008) | verdicts 3 and 6 (tick 1–2 state; both later overturned, T-012/T-013) | n/a | indexed to the searched corpus and date — provisional, and revised in tick 3 |
+| KUNSTFORUM International, "Jochen Gerz" person page (kunstforum.de/person/gerz-jochen) | verdict 3 (wording + attribution + origin *Das Buch der Gesten*, 1969) | public page; brief quotation for verification | index/person page; artist's-book origin per the page's own citation |
+| G. Meincke, "Jochen Gerz: Platz des europäischen Versprechens" (HU Berlin, 2009), fn. 38 (edoc.hu-berlin.de) | verdict 3 (full sentence + context: invitation text "Was ist heute ich?") | public academic repository; brief quotation | scholarly secondary quoting the primary |
+| Watzlawick (Hg.), *Die erfundene Wirklichkeit* (Piper 1981), chap. "Selbsterfüllende Prophezeiungen" pp. 91–110; book identity via doc1.bibliothek.li, de.wikipedia, beat.doebe.li, Springer BF00625760 | verdict 6 (the sentence's real German-print carrier) | published anthology; brief quotation for verification | the in-situ sentence text was located only via a non-citable pirate mirror (used as locator, not source; not extracted); footnote attribution not reachable this run |
 | Feyerabend, *Against Method*, 3rd edn, Verso 1993 — archive.org community scan, `_djvu.txt` full text (T-009) | verdict 6 (negative evidence: no corresponding passage) | community-uploaded scan, used for search/verification only; no excerpts stored beyond two short phrases | OCR text; a garbled OCR of the sentence cannot be fully excluded, though both probe words are common and OCR-stable |
 | jochengerz.eu (official site, index-level probe, T-010) | verdict 3 (negative evidence) | public site; nothing quoted | index-level only — the site's full page texts were not crawled |
 | Walled corpora records (T-011: archive.org lending search-inside, Google Books API 429, HathiTrust 403) | limits of verdicts 3 and 6 | n/a | these corpora remain unprobed, not negative |
@@ -75,7 +80,7 @@ extraction: not used (T-008).
 
 ## Resources
 
-- Model calls: 2 dispatcher ticks (of ≤ 4 budgeted)
+- Model calls: 3 dispatcher ticks (of ≤ 4 budgeted)
 - Direct service cost: 0 EUR
 - Compute and storage: negligible (text records; no binaries committed)
 - Human review time: none yet (ordinary autonomous work)
