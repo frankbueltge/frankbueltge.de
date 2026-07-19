@@ -27,9 +27,12 @@ export const ATELIER_GRAMMAR = {
   dataEdge: 'the nightly register closed 18 July 2026 — work continues as bounded projects',
   /** Zwei Zeilen, wie der Buchrücken sie am rechten Rand setzt (atelier_history_viz.py). */
   dataEdgeLines: ['nightly register closed —', 'work continues as projects'] as const,
-  /** Der Blattrand — die EINZIGE stehende Navigation (atelier-aesthetik §5). */
+  /** Der Blattrand — die EINZIGE stehende Navigation (atelier-aesthetik §5).
+   * Stufe-0-Revision 2026-07-20 (Franks Auftrag: verständliche Haustür): /atelier ist
+   * jetzt der Eingang (ohne Rail), das Blatt zieht als Zimmer nach /atelier/sheet um —
+   * Labels unverändert, nur die Tür des Blatts zeigt auf den neuen Ort. */
   rail: [
-    { label: 'this sheet', href: '/atelier', hint: 'the current working sheet' },
+    { label: 'this sheet', href: '/atelier/sheet', hint: 'the current working sheet' },
     { label: 'projects', href: '/atelier/projects', hint: 'the research log — bounded projects under Protocol v4 (v4 revision 2026-07-19)' },
     { label: 'sheets', href: '/atelier/sheets', hint: 'all sheets, one per thread' },
     { label: 'works', href: '/atelier/works', hint: 'works & catalogue — existing URLs stay' },
@@ -38,8 +41,9 @@ export const ATELIER_GRAMMAR = {
     { label: 'apparatus', href: '/atelier/apparatus', hint: 'repo, constitution, team channel, integration machinery' },
   ] as RailItem[],
   door: { label: '→ the middle', href: '/encounters', hint: 'encounters; the doorway at the sheet’s edge' },
-  /** Rückweg-Konvention jeder Unterseite (atelier-aesthetik §5). */
-  backToSheet: '← back to the sheet',
+  /** Rückweg-Konvention jeder Unterseite (atelier-aesthetik §5; Stufe-0-Revision
+   * 2026-07-20: der Rückweg führt zum Eingang, nicht mehr zum Blatt). */
+  backToSheet: '← the atelier',
   doorwayNote: 'doorway reserved — for an external encounter, once it exists',
   legend: {
     materials: [
@@ -91,6 +95,22 @@ export const ATELIER_NARRATIVE = {
     /** short margin form of the same honesty (the SVG margin has ~34ch) */
     constitutionNoteShort: 'constitution — amendment dates not mirrored here',
   },
+  /** Stufe 0 (2026-07-20): die Haustür — ein erklärender Absatz und vier Türen.
+   * Draft bis Franks Merge des Stufe-0-PRs. */
+  entrance: {
+    kicker: 'Atelier · machine-participatory artistic research',
+    h1: 'Atelier · Ulysses',
+    lede:
+      'Ulysses is a situated artistic research practice by Frank Bültge, developed through documented human–machine operations. Machines hold real operative agency here — they find problems, research, build, revise and archive inside a standing human delegation — while curated publication and responsibility remain human. The unit of work is the bounded project; its failures stay on the record. Error is the method, checkably.',
+    doors: {
+      now: 'the research log — bounded projects under Protocol v4: scores, traces, dispositions',
+      works: 'works & catalogue from the nightly phase (28 June – 18 July 2026) — the first curated v4 publication joins when a project earns it',
+      foundation: 'what this is, in plain language — the operating model, who decides what, and the theoretical ground',
+      sheet: 'the working sheet — the practice’s own reading of its works and sources, drawn by itself',
+    },
+    quietRow:
+      'deeper: the nightly journal archive · the constitution · the apparatus · the team channel',
+  },
   rooms: {
     sheets: 'All sheets, one per thread — each a reading the practice has drawn across its works.',
     journal: 'The nightly protocol archive (28 June – 18 July 2026) as a session register — one line per page.',
@@ -102,6 +122,8 @@ export const ATELIER_NARRATIVE = {
       'Frank’s atlas (/atlas) is the lab’s reference collection; this shelf is the practice’s own lens on it. Each points at the other.',
     apparatus: 'How the machine runs — repo, constitution, team channel, integration machinery, in one room.',
     works: 'The works, newest first — each slab on the sheet is a door to one of these.',
+    worksPhase:
+      'All works so far date from the nightly phase (28 June – 18 July 2026). The first curated v4 publication joins this surface only through an explicit human decision — never through a merge or a green build.',
     cockpitArchiveNote: 'the atlas now lives in material',
     cockpitArchived:
       'Archived surface (ADR 0008): the cockpit is kept as a dated artefact, no longer the entrance.',
