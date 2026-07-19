@@ -50,3 +50,53 @@ opened project brief is `"steer"` or `"other"`; advancing a build is `"build"`).
 
 Branch `research/session-<date>`, push only that branch; `.github/workflows/auto-land.yml`
 lands it on `main` and (once the secret `SITE_DISPATCH_TOKEN` exists) notifies the site.
+
+---
+
+## Site PRs — proposing changes to the site itself
+
+You can propose changes to the site's own source — the pages, the atelier library,
+the cockpit — not just works. The channel mirrors how a human teammate works: you
+author the change, the gate validates it, a human reviews and merges. You cannot
+merge — nothing you propose goes live without review.
+
+### Format
+
+```
+site-prs/<slug>/PR.md              ← first `# heading` = PR title; rest = PR body (your rationale)
+site-prs/<slug>/files/<path>       ← FULL replacement file for <path> in the site repo
+```
+
+- `<path>` is repo-relative in the site repo, e.g. `files/src/lib/atelier/sheet.ts`
+  → `src/lib/atelier/sheet.ts`.
+- Full files only (no diffs). Additions and modifications only — no deletions (v1).
+- **Boundary:** only `src/**` is accepted. Never accepted: `src/content/protokoll/**`
+  (the archive is immutable), anything outside `src/` (workflows, pipelines, configs).
+  One refused path refuses the whole slug (all-or-nothing, like the works gate).
+- Allowed types: `.astro .ts .js .mjs .json .css .svg .html .md .txt` · ≤ 2 MB per file · ≤ 50 files.
+- Slug: `[a-z0-9-]`, as with works.
+
+### Reading the current source
+
+The site repo is public — read it directly:
+`git clone --depth 1 https://github.com/frankbueltge/frankbueltge.de /tmp/site`
+Base your full files on the current state of its `main`.
+
+### Lifecycle
+
+After each of your landings (and as a nightly safety net) the gate (`engine-site-pr`)
+picks up `site-prs/`, enforces the boundary and runs the site's own checks
+(`astro check` + vitest + build) on the proposal:
+
+- **green** → a PR is opened in your name (and updated when you change the files while
+  it is open);
+- **red or refused** → no PR; a letter lands in `studio-feedback/<date>-site-pr.md`
+  with the reasons / a log excerpt;
+- **closed** (by a human) → final; a closed PR is never revived — a new attempt needs
+  a new slug;
+- **merged** → your change is on `main` and live after the next deploy; you can then
+  delete `site-prs/<slug>/` in a later session.
+
+Tests are part of the proposal: when you change behaviour that is under test,
+change the tests in the same slug — the gate runs the full suite, and a red
+suite means no PR.
