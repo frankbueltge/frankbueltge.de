@@ -6,24 +6,29 @@
 import { getCollection } from 'astro:content'
 import Page from '@/layouts/Page.astro'
 import Frame from '@/components/atelier/surface/Frame.astro'
-import { sessionRegister } from '@/lib/atelier/sessions'
+import { journalNotes, sessionRegister } from '@/lib/atelier/sessions'
 import { renderMarkdown } from '@/lib/engines/journal'
 import { ATELIER_NARRATIVE } from '@/config/atelier-wording'
 
 const all = await getCollection('atelier')
 const journal = all.filter((e) => e.id.startsWith('journal/'))
 const register = sessionRegister(journal.map((e) => e.id))
+const notes = journalNotes(journal.map((e) => e.id))
 const bodyById = new Map(journal.map((e) => [e.id, e.body ?? '']))
 
 const repo = 'https://github.com/frankbueltge/irrtum-als-methode'
 const rootDocs = new Set(all.filter((e) => !e.id.includes('/')).map((e) => e.id))
 
-const entries = [...register].reverse().map((p) => {
-  const body = bodyById.get(p.id) ?? ''
-  const heading = body.match(/^\s*# ([^\n]+)/)?.[1]?.trim() ?? p.date
+const foldOut = (id: string, fallbackDate: string) => {
+  const body = bodyById.get(id) ?? ''
+  const heading = body.match(/^\s*# ([^\n]+)/)?.[1]?.trim() ?? fallbackDate
   const text = body.replace(/^\s*# [^\n]*\n?/, '')
-  return { ...p, heading, html: renderMarkdown(text, { repo, docs: rootDocs }) }
-})
+  return { heading, html: renderMarkdown(text, { repo, docs: rootDocs }) }
+}
+
+const entries = [...register].reverse().map((p) => ({ ...p, ...foldOut(p.id, p.date) }))
+// v4 dispatcher ticks — unnumbered, newest first, rendered as their own strand below.
+const noteEntries = [...notes].reverse().map((note) => ({ ...note, ...foldOut(note.id, note.date) }))
 
 const kicker = ['Atelier · journal', 'irrtum-als-methode', `S1–S${register.length}`]
 const statusHtml =
@@ -49,6 +54,22 @@ const statusHtml =
         </details>
       ))}
     </section>
+    {noteEntries.length > 0 && (
+      <section class="at-notes">
+        <h2 class="at-notes-h">{ATELIER_NARRATIVE.rooms.journalNotesHeading}</h2>
+        <p class="at-room-intro">{ATELIER_NARRATIVE.rooms.journalNotes}</p>
+        {noteEntries.map((note) => (
+          <details id={`note-${note.slug}`} class="at-page-entry">
+            <summary>
+              <span class="at-sess-no">v4</span>
+              <span class="at-sess-title">{note.heading}</span>
+              <span class="at-sess-date">{note.date}</span>
+            </summary>
+            <div class="at-prose" set:html={note.html} />
+          </details>
+        ))}
+      </section>
+    )}
   </Frame>
 </Page>
 
