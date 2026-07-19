@@ -1,0 +1,74 @@
+name: Auto-land reversible Ulysses research records
+
+on:
+  push:
+    branches:
+      - 'ulysses/**'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ulysses-research-auto-land-main
+  cancel-in-progress: false
+
+jobs:
+  validate-and-land:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out research branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Validate project records
+        run: python tools/validate_v4_projects.py
+
+      - name: Enforce reversible-path allowlist
+        shell: bash
+        run: |
+          git fetch origin main
+          changed="$(git diff --name-only origin/main...HEAD)"
+          printf '%s\n' "$changed"
+
+          if printf '%s\n' "$changed" | grep -Eq '^(PROTOCOL\.md|README\.md|governance/|\.github/workflows/|tools/|works/|.*PUBLICATION\.json$)'; then
+            echo 'Protected path changed; human-reviewed PR required.' >&2
+            exit 1
+          fi
+
+          if printf '%s\n' "$changed" | grep -Ev '^(projects/|atlas/|docs/research-notes/)' | grep -q .; then
+            echo 'A changed path is outside the auto-land allowlist.' >&2
+            exit 1
+          fi
+
+          project_dirs="$(printf '%s\n' "$changed" | awk -F/ '$1 == "projects" && $2 !~ /^_/ {print $1 "/" $2}' | sort -u)"
+          while IFS= read -r project_dir; do
+            [ -z "$project_dir" ] && continue
+            score="$project_dir/SCORE.md"
+            if [ ! -f "$score" ]; then
+              echo "$project_dir has no SCORE.md." >&2
+              exit 1
+            fi
+            if grep -Eq '^mandate_check:[[:space:]]*ESCALATE|^status:[[:space:]]*QUARANTINED|^disposition:[[:space:]]*ESCALATE' "$score"; then
+              echo "$project_dir is escalated or quarantined and cannot auto-land." >&2
+              exit 1
+            fi
+          done <<< "$project_dirs"
+
+      - name: Merge into main without publishing
+        shell: bash
+        env:
+          SOURCE_BRANCH: ${{ github.ref_name }}
+        run: |
+          git config user.name 'ulysses-research-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git fetch origin main
+          git checkout -B main origin/main
+          git merge --no-ff "origin/${SOURCE_BRANCH}" -m "Auto-land research records from ${SOURCE_BRANCH}"
+          git push origin main
+          echo 'Research records landed. No site dispatch or publication approval was created.'
