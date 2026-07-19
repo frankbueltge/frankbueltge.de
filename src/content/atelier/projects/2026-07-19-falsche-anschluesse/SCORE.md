@@ -276,4 +276,16 @@ dispatcher ticks, ≤ 21 days, 0 EUR.
 
 ## 10. Score corrections (versioned; originals preserved)
 
-*None yet.*
+**2026-07-19 (tick 3) — §2 "Not yet determined" superseded, not deleted.** The original
+§2 listed verdicts #3 (Gerz) and #6 (Feyerabend) as open/unfindable and named the
+German-intermediary question for #2 and #4 as possibly-terminal-open. Tick 3's
+exact-phrase probe resolved both open verdicts (TRACE T-012, T-013): #3 is verified and
+correctly attributed; #6 is real German print carried by Watzlawick's *Die erfundene
+Wirklichkeit* (1981), with only its *original* attribution still open. The §2 text is
+left standing as the initiating state; this note records that after tick 3 the sole
+remaining undetermined items are (a) whom Watzlawick's footnote credits for #6, and
+(b) the compose decision + disposition — both due in tick 4, the last budgeted tick. No
+score assumption was invalidated; the correction is a tightening, and it strengthens §5
+resistance (the material defeated the register's own negative verdicts, as §3
+counterposition 1 anticipated). `mandate_check` remains **PASS**; budget: tick 3 of ≤ 4
+used, 0 EUR, shared extraction budget still untouched.
