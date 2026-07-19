@@ -232,6 +232,10 @@ function layoutSheet(r: Rhizome): SheetLayout {
       label: byId.get(e.from)?.label ?? e.from,
       y: ty - 16 * (nSrc - 1) + SOURCE_DY * k,
       kind: 'swerve' as const,
+      // A later swerve into an existing thread keeps its OWN session (S43 onward the
+      // practice swerves new sources into old threads); the elbow mark below still
+      // carries only the birth session, so these later kinks are marked per source.
+      session: typeof e.session === 'number' ? e.session : null,
     }))
 
     const works = workEdges.map((e, k) => {
@@ -380,6 +384,17 @@ export function buildSheetSvg(r: Rhizome, opts?: { doorwayNote?: string; links?:
       s.push(door(links.source?.(src.id), labelledText('t-src', SRC_X - 10, src.y + 4, src.label, SOURCE_LABEL_MAX, 'end')))
       s.push(`<path class="stub" d="M${SRC_X} ${src.y} H${ELBOW_X - 22}"/>`)
       s.push(`<path class="rp" d="M${ELBOW_X - 22} ${src.y} Q ${ELBOW_X - 4} ${src.y}, ${ELBOW_X} ${t.y}" fill="none"/>`)
+      // Later swerves into an existing thread carry their own session at the kink —
+      // the elbow mark below shows only the thread's birth (S40+S42 on one thread, S46+S48
+      // on another, since 2026-07-19). Same-session sources stay unmarked (no duplicates).
+      if (src.session !== null && src.session !== t.session) {
+        s.push(
+          door(
+            links.session?.(src.session),
+            `<text class="t-sess" x="${ELBOW_X - 28}" y="${src.y - 4}" text-anchor="end">S${src.session}</text>`,
+          ),
+        )
+      }
     }
     s.push(`<circle class="rp-dot" cx="${ELBOW_X}" cy="${t.y}" r="3.5"/>`)
     // One elbow mark per distinct session in which a swerve joined — stacked below the dot.
@@ -478,12 +493,23 @@ export function buildSheetSvg(r: Rhizome, opts?: { doorwayNote?: string; links?:
   // session hand-lettered the S26 bridge with the practice's own words — „they are one
   // fact“ — quoted from the rhizome NOTE; rhizome.json carries no per-edge quote field, so
   // every bridge is lettered `bridge · SNN` and the words stay in the note/register.)
+  // Since 2026-07-19 the practice also bridges THREADS (S46: disclosure-vs-hidden-error
+  // ↔ ) — a bridge endpoint may be a work slab or a thread ribbon.
+  // Thread anchor: the ribbon's right end, where its ties leave for the work column.
+  const bridgeAnchor = (id: string) => {
+    const w = layout.workPos.get(id)
+    if (w) return w
+    const t = layout.threads.find((th) => th.id === id)
+    return t ? { x: THREAD_X1, y: t.y } : undefined
+  }
   for (const e of r.edges) {
     if (e.kind !== 'bridge') continue
-    const a = layout.workPos.get(e.from)
-    const b = layout.workPos.get(e.to)
+    const a = bridgeAnchor(e.from)
+    const b = bridgeAnchor(e.to)
     if (!a || !b) continue
-    const sess = typeof e.session === 'number' ? ` · S${e.session}` : ''
+    // A bridge without a session is an honest gap, marked like the register marks it (S—),
+    // never invented and never silently dropped.
+    const sess = typeof e.session === 'number' ? ` · S${e.session}` : ' · S—'
     if (Math.abs(b.y - a.y) > Math.abs(b.x - a.x)) {
       // vertical bridge (ported from the w-nk → w-dr pair). Long spans cross other bands:
       // bulge them left into the tie corridor so they never run through an unrelated slab,
