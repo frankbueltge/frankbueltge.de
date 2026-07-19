@@ -484,8 +484,8 @@ export function buildSheetSvg(r: Rhizome, opts?: { doorwayNote?: string; links?:
   // session hand-lettered the S26 bridge with the practice's own words — „they are one
   // fact“ — quoted from the rhizome NOTE; rhizome.json carries no per-edge quote field, so
   // every bridge is lettered `bridge · SNN` and the words stay in the note/register.)
-  // Since 2026-07-19 the practice also bridges THREADS (S46: disclosure-vs-hidden-error
-  // ↔ ) — a bridge endpoint may be a work slab or a thread ribbon.
+  // Since 2026-07-19 the practice also bridges THREADS — a bridge endpoint may be a work
+  // slab or a thread ribbon, not only a work.
   // Thread anchor: the ribbon's right end, where its ties leave for the work column.
   const bridgeAnchor = (id: string) => {
     const w = layout.workPos.get(id)
