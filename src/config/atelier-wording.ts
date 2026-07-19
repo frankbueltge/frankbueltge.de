@@ -94,6 +94,9 @@ export const ATELIER_NARRATIVE = {
   rooms: {
     sheets: 'All sheets, one per thread — each a reading the practice has drawn across its works.',
     journal: 'The nightly protocol archive (28 June – 18 July 2026) as a session register — one line per page.',
+    journalNotesHeading: 'Under Protocol v4 — dispatcher ticks (not sessions)',
+    journalNotes:
+      'Protocol v4 dissolved the nightly session as the unit of practice. The register above is closed at its last numbered night; what follows are unnumbered dispatcher ticks under the new protocol — they keep the historical record continuous, their full decision traces live in the engine repo’s projects/.',
     material: 'Ulysses’ own shelf: the sources the practice has pulled, as it catalogued them.',
     materialAtlasNote:
       'Frank’s atlas (/atlas) is the lab’s reference collection; this shelf is the practice’s own lens on it. Each points at the other.',
