@@ -17,7 +17,7 @@ describe('approved atelier grammar (static formulas, test-protected)', () => {
     expect(ATELIER_GRAMMAR.dataEdgeLines).toEqual(['nightly register closed —', 'work continues as projects'])
   })
 
-  it('keeps the margin rail exactly as designed (v4 revision 2026-07-19: projects room added)', () => {
+  it('keeps the margin rail exactly as designed (Stufe-0 revision 2026-07-20: /atelier is the entrance, the sheet is a room)', () => {
     expect(ATELIER_GRAMMAR.rail.map((r) => r.label)).toEqual([
       'this sheet',
       'projects',
@@ -27,6 +27,10 @@ describe('approved atelier grammar (static formulas, test-protected)', () => {
       'material',
       'apparatus',
     ])
+    // Stufe 0 (2026-07-20, Franks Auftrag): the sheet moved to its own room; the rail
+    // labels stay verbatim, only the sheet's door points at the new place.
+    expect(ATELIER_GRAMMAR.rail[0].href).toBe('/atelier/sheet')
+    expect(ATELIER_GRAMMAR.backToSheet).toBe('← the atelier')
     expect(ATELIER_GRAMMAR.door.label).toBe('→ the middle')
   })
 
