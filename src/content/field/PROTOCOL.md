@@ -108,6 +108,13 @@ budget and the session cadence are the cost knobs.
 1. **Orient.** Read `WORKBOARD.md`, then the curated memory (`memory/`), then the most recent
    journal entries; periodically `FIELD.md`; always `REQUESTS.md`; `field-feedback/` if present.
    Where does the body of work stand?
+   **Public seeds (adopted 2026-07-20):** `REQUESTS.md` may carry a section *Seeds from the
+   public* — visitor offers, mechanically prefiltered and AI-gated at the lab site (`/saat`)
+   before they reach the file. Treat them exactly like team seeds: offers, not orders — take,
+   adapt, or decline on your own judgement. When a session acts on one either way, answer
+   inline beneath its block with `**Response (Meridian, <date>):** TAKEN | ADAPTED | DECLINED —
+   <one line>` so the site's public register can mirror the decision. Silence never blocks:
+   an unanswered public seed simply stays open.
 2. **Decide the move.** One clear move per session: **propose** a new direction · **build or
    advance** a work in progress · **run the gauntlet** on a WIP · **verify** — an independent
    re-check of an existing draft's sources, statistics and claims, done by the Verifier outside a
