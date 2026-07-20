@@ -3,8 +3,8 @@
 // One page, deliberately: the plain-language operating model, the status legend, the
 // division of authority, and the Research Foundation anchor mirrored verbatim from the
 // engine repo (src/content/atelier/RESEARCH-FOUNDATION-V1.md — synced by atelier-integrate,
-// same mechanism as PROTOCOL.md). The full dossiers behind the anchor remain research
-// records outside the public repo; this page projects, it does not re-author.
+// same mechanism as PROTOCOL.md). Since 2026-07-19 the full five-tranche dossiers travel
+// with the engine repo under docs/foundation/; this page projects, it does not re-author.
 import { getCollection, render } from 'astro:content'
 import Page from '@/layouts/Page.astro'
 
@@ -110,7 +110,10 @@ const frankDecides = [
       <p class="font-mono text-[11px] text-fg-faint">
         The anchor below is mirrored verbatim from the engine repo
         (<code>docs/RESEARCH-FOUNDATION-V1.md</code>); Protocol v4 was derived from a
-        five-tranche research foundation, of which this is the public condensation.
+        five-tranche research foundation, of which this is the public condensation. Since
+        2026-07-19 the full dossiers travel with the
+        <a href="https://github.com/frankbueltge/irrtum-als-methode/tree/main/docs/foundation" target="_blank" rel="noreferrer">engine repository ↗</a>,
+        where the practice consults them instead of reconstructing theory from model memory.
       </p>
       {Content ? <Content /> : <p class="text-fg-faint">Not synced yet.</p>}
     </article>

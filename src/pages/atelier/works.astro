@@ -50,6 +50,7 @@ const statusHtml = `<b>${works.length} works</b> · newest first · detail route
 >
   <Frame active="works" kicker={kicker} h1="The slabs, standing." statusHtml={statusHtml} back>
     <p class="at-room-intro">{ATELIER_NARRATIVE.rooms.works}</p>
+    <p class="at-room-intro">{ATELIER_NARRATIVE.rooms.worksPhase}</p>
 
     <section>
       {works.map(({ slug, kind, meta }) =>

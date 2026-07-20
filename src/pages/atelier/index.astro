@@ -1,165 +1,125 @@
 ---
-// /atelier — das Blatt (Praxis-Oberflächen-Paket; atelier-aesthetik-2026-07-15.md §1–§5).
-// The entrance is the CURRENT WORKING SHEET, not an overview: the practice's own reading
-// (rhizome.json, mirrored by the integration gate) drawn in the Atelier's own grammar — threads in ink,
-// swerves in red pencil, works as slabs, the doorway reserved and empty. Every sign is a
-// door (§5): slabs open works, source stubs open the material shelf, red S-marks open the
-// journal page, thread titles open the sheet index. The rail is only the fallback.
-// Replaces the old EnginePage rendering; journal/works/material/apparatus live in rooms.
+// /atelier — der Eingang (Stufe 0, 2026-07-20, Franks Auftrag: verständliche Haustür).
+// Ein erklärender Absatz und vier Türen; keine Rail — die Rail gehört den Zimmern, jede
+// Tür unten führt in eines. Das Blatt (die bisherige Eingangsseite) lebt unverändert als
+// Zimmer unter /atelier/sheet weiter. Wortlaute: ATELIER_NARRATIVE.entrance (draft bis
+// Franks Merge dieses PRs).
 import Page from '@/layouts/Page.astro'
-import Frame from '@/components/atelier/surface/Frame.astro'
-import rhizomeData from '@/data/atelier/rhizome.json'
-import atlasData from '@/data/atelier/atlas.json'
-import { buildSheetSvg, edgeRegister, sheetStats, sheetTitle, type Rhizome } from '@/lib/atelier/sheet'
-import { ATELIER_GRAMMAR, ATELIER_NARRATIVE } from '@/config/atelier-wording'
+import { ATELIER_NARRATIVE, ATELIER_DRAFT_LABEL } from '@/config/atelier-wording'
+import '@/styles/atelier-sheet.css'
 
-const rhizome = rhizomeData as unknown as Rhizome
-const stats = sheetStats(rhizome)
-const title = sheetTitle(rhizome)
+const E = ATELIER_NARRATIVE.entrance
+const isDraft = ATELIER_NARRATIVE.approval !== 'approved'
 
-// „Jedes Zeichen ist eine Tür“ — but only to pages that exist. Work slabs link to their
-// real routes: native Astro works under /atelier/werke/<slug> (routes stay, work order §1),
-// everything else to its anchor in the works room; sources to the material shelf (only if
-// the atlas mirror carries the id); S-marks to the journal register; threads to the sheet
-// index. Unmappable ids stay unlinked — no invented doors.
-const nativePages = import.meta.glob('/src/pages/atelier/werke/*.astro')
-const nativeSlugs = new Set(
-  Object.keys(nativePages).map((p) => p.replace('/src/pages/atelier/werke/', '').replace('.astro', '')),
-)
-const htmlMeta = import.meta.glob('/src/content/atelier/works/*/meta.json', { eager: true, import: 'default' })
-const htmlSlugs = new Set(
-  Object.keys(htmlMeta).map((p) => p.replace('/src/content/atelier/works/', '').replace('/meta.json', '')),
-)
-const atlasIds = new Set((atlasData as { id: string }[]).map((a) => a.id))
-
-// Live pointer to the research log: count ACTIVE projects from the mirrored SCORE files.
+// Live counts — same read-only mirrors the sheet uses.
 const projectScores = import.meta.glob('/src/content/atelier/projects/*/SCORE.md', {
   eager: true, query: '?raw', import: 'default',
 }) as Record<string, string>
 const activeProjects = Object.values(projectScores).filter((raw) =>
   /^status:\s*ACTIVE\s*$/m.test(raw.split('\n---')[0]),
 ).length
+const htmlMeta = import.meta.glob('/src/content/atelier/works/*/meta.json', { eager: true, import: 'default' })
+const nativeMeta = import.meta.glob('/src/components/atelier/werke/*/meta.json', { eager: true, import: 'default' })
+const worksCount = Object.keys(htmlMeta).length + Object.keys(nativeMeta).length
 
-const svg = buildSheetSvg(rhizome, {
-  doorwayNote: ATELIER_GRAMMAR.doorwayNote,
-  links: {
-    work: (id) => {
-      const slug = id.replace(/^w-/, '')
-      if (nativeSlugs.has(slug)) return `/atelier/werke/${slug}`
-      if (htmlSlugs.has(slug)) return `/atelier/works#${slug}`
-      return null
-    },
-    source: (id) => {
-      const atlasId = id.replace(/^atlas:/, '')
-      return atlasIds.has(atlasId) ? `/atelier/material#${atlasId}` : null
-    },
-    session: (n) => `/atelier/journal#s${n}`,
-    thread: (id) => `/atelier/sheets#${id}`,
+const doors = [
+  {
+    href: '/atelier/projects',
+    label:
+      activeProjects > 0
+        ? `now — ${activeProjects} project${activeProjects === 1 ? '' : 's'} in progress`
+        : 'now — no project in progress',
+    text: E.doors.now,
   },
-})
-
-const register = edgeRegister(rhizome)
-const sessionSpan =
-  stats.sessionMin !== null && stats.sessionMax !== null ? `S${stats.sessionMin}–S${stats.sessionMax}` : ''
-const kicker = [
-  `Atelier · working sheet ${sessionSpan}`,
-  'irrtum-als-methode',
-  `drawn ${rhizome.updated} by the practice itself`,
+  { href: '/atelier/works', label: `works — ${worksCount} so far`, text: E.doors.works },
+  { href: '/atelier/foundation', label: 'what this is', text: E.doors.foundation },
+  { href: '/atelier/sheet', label: 'the working sheet', text: E.doors.sheet },
 ]
-const statusHtml =
-  `<b>${stats.threads} threads · ${stats.sources} sources · ${stats.works} works · ${stats.bridges} bridges</b>` +
-  ` · ${ATELIER_NARRATIVE.titleRule}; ${ATELIER_NARRATIVE.sheetLede}`
 ---
 
 <Page
-  title="Atelier — the working sheet | Frank Bültge"
-  description="The Atelier's working sheet: the machine-participatory practice's own reading of its works and sources — threads in ink, swerves in red pencil, the doorway reserved. A practice by Frank Bültge, working in bounded projects since Protocol v4."
+  title="Atelier · Ulysses — machine-participatory artistic research | Frank Bültge"
+  description={E.lede}
 >
-  <Frame
-    active="this sheet"
-    kicker={kicker}
-    h1={title}
-    statusHtml={statusHtml}
-    footLeft={ATELIER_NARRATIVE.provenance.sheet}
-    footRight="the Atelier’s grammar is its own — ADR 0010 · atelier-aesthetik-2026-07-15.md"
-  >
-    <figure set:html={svg} />
-
-    <aside class="at-legend" aria-label="Sheet key">
-      <div>
-        <h3>Materials</h3>
-        <div class="lg-row">
-          <svg class="lg-mini" viewBox="0 0 46 30"><path class="th" d="M4 20 C 16 12, 30 22, 42 14"/></svg>
-          <span>{ATELIER_GRAMMAR.legend.materials[0]}</span>
-        </div>
-        <div class="lg-row">
-          <svg class="lg-mini" viewBox="0 0 46 30"><path class="stub" d="M4 15 H24"/><path class="rp" d="M24 15 Q 32 15, 36 8" fill="none"/></svg>
-          <span>{ATELIER_GRAMMAR.legend.materials[1]}</span>
-        </div>
-        <div class="lg-row">
-          <svg class="lg-mini" viewBox="0 0 46 30"><rect class="slab" x="20" y="4" width="8" height="22"/></svg>
-          <span>{ATELIER_GRAMMAR.legend.materials[2]}</span>
-        </div>
-        <div class="lg-row">
-          <svg class="lg-mini" viewBox="0 0 46 30"><rect class="slab-ghost" x="20" y="4" width="8" height="22"/></svg>
-          <span>{ATELIER_GRAMMAR.legend.materials[3]}</span>
-        </div>
-      </div>
-      <div>
-        <h3>Ties</h3>
-        <div class="lg-row">
-          <svg class="lg-mini" viewBox="0 0 46 30"><path class="tie" d="M4 15 C 16 8, 30 22, 42 15"/></svg>
-          <span>{ATELIER_GRAMMAR.legend.ties[0]}</span>
-        </div>
-        <div class="lg-row">
-          <svg class="lg-mini" viewBox="0 0 46 30"><path class="bridge" d="M4 13 C 18 6, 28 6, 42 13"/><path class="bridge" d="M4 18 C 18 25, 28 25, 42 18"/></svg>
-          <span>{ATELIER_GRAMMAR.legend.ties[1]}</span>
-        </div>
-        <div class="lg-row">
-          <svg class="lg-mini" viewBox="0 0 46 30"><path class="comp" d="M4 15 C 16 8, 30 22, 42 15"/></svg>
-          <span>{ATELIER_GRAMMAR.legend.ties[2]}</span>
-        </div>
-        <div class="lg-row">
-          <svg class="lg-mini" viewBox="0 0 46 30"><path class="ground" d="M10 22 H36"/></svg>
-          <span>{ATELIER_GRAMMAR.legend.ties[3]}</span>
-        </div>
-        <div class="lg-row">
-          <svg class="lg-mini" viewBox="0 0 46 30"><path class="door" d="M36 4 V26"/></svg>
-          <span>{ATELIER_GRAMMAR.legend.ties[4]}</span>
-        </div>
-      </div>
-      <div>
-        <h3>Not this sheet</h3>
-        <p class="lg-note">{ATELIER_GRAMMAR.legend.notThisSheet}</p>
-      </div>
-    </aside>
-
-    <section class="at-record">
-      <h2>Edge register — all {register.length} edges of the sheet, uncompressed</h2>
-      <div class="at-tbl-wrap">
-        <table>
-          <thead><tr><th>from</th><th>kind</th><th>to</th><th>session</th></tr></thead>
-          <tbody>
-            {register.map((row) => (
-              <tr>
-                <td class="q">{row.from}</td>
-                <td>{row.kind}</td>
-                <td class="q">{row.to}</td>
-                <td>{row.session}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <p class="at-framing">
-      {activeProjects > 0
-        ? <a href="/atelier/projects"><b>{activeProjects} project{activeProjects === 1 ? '' : 's'} in progress right now</b> — the research log →</a>
-        : <a href="/atelier/projects">No project in progress — the research log →</a>}
-      {ATELIER_NARRATIVE.framingFoot}
-      <a href="/atelier/foundation">What happens here, and on what ground →</a>
-      <a href="/atelier/apparatus">The full framing lives in the apparatus →</a>
+  <main id="main" class="atelier-surface">
+    <p class="at-kicker">
+      <span>{E.kicker}</span>
+      <span>irrtum-als-methode</span>
+      {isDraft && <span class="at-chip" title={ATELIER_DRAFT_LABEL}>wording draft</span>}
     </p>
-  </Frame>
+    <h1 class="at-h1">{E.h1}</h1>
+    <p class="at-entrance-lede">{E.lede}</p>
+
+    <nav class="at-doors" aria-label="Doors into the atelier">
+      {doors.map((d) => (
+        <a class="at-door-card" href={d.href}>
+          <span class="d-label">{d.label} →</span>
+          <span class="d-text">{d.text}</span>
+        </a>
+      ))}
+    </nav>
+
+    <p class="at-quiet">
+      deeper:
+      <a href="/atelier/journal">journal archive (nightly phase)</a> ·
+      <a href="/atelier/protocol">constitution</a> ·
+      <a href="/atelier/apparatus">apparatus</a> ·
+      <a href="/atelier/requests">team channel</a>
+    </p>
+
+    <footer class="at-foot">
+      <span>{ATELIER_NARRATIVE.framingFoot}</span>
+    </footer>
+  </main>
 </Page>
+
+<style>
+  .at-entrance-lede {
+    max-width: 62ch;
+    margin: 1.25rem 0 2rem;
+    font-size: 0.95rem;
+    line-height: 1.65;
+  }
+  .at-doors {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    margin: 0 0 1.5rem;
+  }
+  @media (min-width: 640px) {
+    .at-doors {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .at-door-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding: 0.9rem 1rem;
+    border: 1px solid currentColor;
+    text-decoration: none;
+    color: inherit;
+  }
+  .at-door-card:hover .d-label {
+    text-decoration: underline;
+  }
+  .d-label {
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.02em;
+  }
+  .d-text {
+    font-size: 0.8rem;
+    line-height: 1.5;
+    opacity: 0.75;
+  }
+  .at-quiet {
+    font-size: 0.75rem;
+    opacity: 0.7;
+    margin-bottom: 2.5rem;
+  }
+  .at-quiet a {
+    text-decoration: underline;
+    color: inherit;
+  }
+</style>
