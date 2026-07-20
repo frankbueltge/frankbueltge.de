@@ -58,7 +58,7 @@ const dateShort = (iso: string) =>
   new Intl.DateTimeFormat(de ? 'de-DE' : 'en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' })
     .format(new Date(`${iso}T00:00:00Z`))
 
-const methodUrl = getRelativeLocaleUrl(locale, '/werke/protokoll')
+const methodUrl = getRelativeLocaleUrl(locale, '/werke/protocol')
 // CSP-sichere Marker-Farbe + Position: Werte sind build-time statisch (SSG);
 // als roher <style>-Block emittiert → hashbar, kein inline-style="".
 const markerLeft = `calc(${((pos ?? 0) * 100).toFixed(1)}% - 3px)`

@@ -86,7 +86,7 @@ export function ogSlug(pathname: string): keyof typeof OG_PAGES {
   if (p.startsWith('/ueber') || p.startsWith('/about')) return 'about'
   if (p.startsWith('/work') || p.startsWith('/projekte')) return 'projects'
   if (p.startsWith('/atlas')) return 'atlas'
-  if (p.startsWith('/protokoll')) return 'protokoll'
+  if (p.startsWith('/protocol')) return 'protokoll'
   if (p.startsWith('/parallax')) return 'parallax'
   if (p.startsWith('/policy') || p.startsWith('/police') || p.startsWith('/werke/policy')) return 'policy'
   if (p.startsWith('/consensus') || p.startsWith('/werke/consensus')) return 'consensus'

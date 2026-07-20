@@ -13,7 +13,7 @@ export async function GET(context: APIContext) {
       const r = renderDay(day, 'en')
       return {
         title: r.kopf[0],
-        link: `/protokoll/${day.date}/`,
+        link: `/protocol/${day.date}/`,
         pubDate: new Date(day.generated_at),
         description: [...r.kopf, ...r.tops.flatMap((t) => [t.heading, ...t.lines, t.closing])].join(' '),
       }

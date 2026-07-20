@@ -8,9 +8,9 @@ import type { ProtokollDay } from '@/lib/protokoll/types'
 interface Props { day: ProtokollDay; locale: Locale }
 const { day, locale } = Astro.props
 const r = renderDay(day, locale)
-const archivUrl = getRelativeLocaleUrl(locale, '/protokoll/archiv')
-const methodUrl = getRelativeLocaleUrl(locale, '/werke/protokoll')
-const feedUrl = locale === 'de' ? '/de/protokoll/feed.xml' : '/protokoll/feed.xml'
+const archivUrl = getRelativeLocaleUrl(locale, '/protocol/archiv')
+const methodUrl = getRelativeLocaleUrl(locale, '/werke/protocol')
+const feedUrl = locale === 'de' ? '/de/protokoll/feed.xml' : '/protocol/feed.xml'
 ---
 
 <article class="protokoll mx-auto max-w-2xl px-4 py-14">
