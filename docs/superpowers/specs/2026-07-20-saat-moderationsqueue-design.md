@@ -75,9 +75,12 @@ Schritte 1–8 **wörtlich wie gebaut**. Ab Schritt 9 neu:
     auf `/seed` wird zu „empfangen, in Prüfung; erscheint im öffentlichen Register, wenn
     freigegeben".
 
-**Gate-Block-Zähler (`gate_stats`):** bleiben in-memory akkumuliert (`pendingBlocks`), werden aber
-erst beim nächsten **Freigabe**-Commit ins Register eingefaltet (kein eigener Commit für einen
-Block — unverändert die Anti-Amplification-Regel).
+**Gate-Block-Zähler (`gate_stats`):** unter Option A **nicht mehr fortgeschrieben.** Ein Block
+passiert im Einreich-Isolate (`seed.js`), ein Commit nur noch im Freigabe-Isolate
+(`seed-review.js`) — ein In-memory-Zähler kann diese Isolate-Grenze nicht überqueren, und ein
+KV-Zähler je Block brächte Write-Amplification bei Spam. `gate_stats` bleibt daher statisch (der
+`/seed`-Transparenzblock zeigt entsprechend 0). Ein durabler, entkoppelter Zähler ist ein
+möglicher späterer Zusatz — kein Sicherheits-, nur ein Telemetrie-Verlust.
 
 **GET-Probe:** meldet zusätzlich `pending_review` (KV-Count) neben `pending` (offen im Register).
 `ready`/`missing` deckt jetzt auch `SEED_PENDING_KV` ab (fehlt das Binding ⇒ Standby).

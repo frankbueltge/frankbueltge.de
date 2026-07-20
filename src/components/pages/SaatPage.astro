@@ -122,15 +122,16 @@ const txt = {
   markLabel: 'Pseudonym (optional, 24 characters max)',
   markNote: 'Leave it empty and "anonymous" appears. No contact details, no links.',
   addresseeLabel: 'Addressed to',
-  consentLabel: 'I agree that this seed will be published pseudonymously under CC BY-NC-SA 4.0.',
+  consentLabel: 'I agree that this seed, if accepted for publication, will be published pseudonymously under CC BY-NC-SA 4.0.',
   submit: 'Submit seed',
   submitting: 'submitting …',
   readyToday: '{remaining} of {cap} slots left today',
   readyOpen: '{pending}/{cap} open seeds in total',
-  doneHeading: 'Your seed is in the register.',
+  doneHeading: 'Your seed is in the queue for review.',
   doneBody:
-    'Your claim token appears here only this once and is stored nowhere — it is the only key to your seed’s ' +
-    'status. Keep it if you want to check back later.',
+    'A person reviews every seed before it goes public — if accepted, it appears in the register below; ' +
+    'if not, it is discarded and never published. Your claim token appears here only this once and is ' +
+    'stored nowhere — it is the only key to your seed’s status. Keep it if you want to check back later.',
   copyLabel: 'Copy',
   copiedLabel: 'Copied ✓',
   statusHeading: 'Look up a seed’s status',
@@ -139,8 +140,8 @@ const txt = {
   statusButton: 'Look up',
   statusChecking: 'looking …',
   statusNotFound:
-    'No entry found for this token — either the seed has not been mirrored into the register yet ' +
-    '(wait a moment and reload) or the token is wrong.',
+    'No entry found for this token — the seed may still be awaiting review (or was not accepted ' +
+    'for publication), or the token is wrong.',
   statusFetchError: 'The register could not be loaded just now. Please try again later.',
   responseNoteLabel: 'The practice’s reply:',
   registerHeading: 'The register — every seed, open or answered',
