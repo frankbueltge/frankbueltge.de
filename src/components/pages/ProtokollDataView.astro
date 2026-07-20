@@ -38,9 +38,9 @@ const attentionHistory = [...days]
 const SW = 320
 const SH = 64
 
-const archivUrl = getRelativeLocaleUrl(locale, '/protokoll/archiv')
-const methodUrl = getRelativeLocaleUrl(locale, '/werke/protokoll')
-const feedUrl = de ? '/de/protokoll/feed.xml' : '/protokoll/feed.xml'
+const archivUrl = getRelativeLocaleUrl(locale, '/protocol/archiv')
+const methodUrl = getRelativeLocaleUrl(locale, '/werke/protocol')
+const feedUrl = de ? '/de/protokoll/feed.xml' : '/protocol/feed.xml'
 
 const nf = new Intl.NumberFormat(de ? 'de-DE' : 'en-GB', { maximumFractionDigits: 2 })
 // Große Zahlen (Bevölkerung, Aufrufe …) kompakt, damit sie die Kachel nicht sprengen.

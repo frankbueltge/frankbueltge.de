@@ -18,7 +18,7 @@ const years = [...new Set(days.map((d) => d.date.slice(0, 4)))]
         <ul class="space-y-1">
           {days.filter((d) => d.date.startsWith(year)).map((d) => (
             <li>
-              <a href={getRelativeLocaleUrl(locale, `/protokoll/${d.date}`)} class="text-fg-muted transition-colors hover:text-fg">
+              <a href={getRelativeLocaleUrl(locale, `/protocol/${d.date}`)} class="text-fg-muted transition-colors hover:text-fg">
                 {fmtDateLong(d.date, locale)}
               </a>
             </li>

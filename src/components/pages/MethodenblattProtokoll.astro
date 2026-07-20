@@ -8,7 +8,7 @@ interface Props { locale: Locale }
 const { locale } = Astro.props
 const day = await getLatestProtokoll()
 const de = locale === 'de'
-const protokollUrl = getRelativeLocaleUrl(locale, '/protokoll')
+const protokollUrl = getRelativeLocaleUrl(locale, '/protocol')
 
 const txt = {
   h1: de ? 'Methodenblatt — The Protocol' : 'Method sheet — The Protocol',

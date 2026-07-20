@@ -93,7 +93,7 @@ export const WERKE: Werk[] = [
     status: 'live',
     since: '2026-06-12',
     live: true,
-    href: '/protokoll',
+    href: '/protocol',
     description: {
       de: 'Jede Nacht verfasst eine Pipeline das Sitzungsprotokoll des Planeten — aus zwölf offenen, zitierfähigen Quellen, deterministisch, ohne LLM. Jeder Tagesordnungspunkt endet gleich: Beschluss: vertagt.',
       en: "Every night a pipeline writes the minutes of the planet's session — from twelve open, citable sources, deterministic, no LLM. Every agenda item ends the same way: Resolution: adjourned.",

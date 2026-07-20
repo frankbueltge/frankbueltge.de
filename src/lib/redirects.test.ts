@@ -217,6 +217,8 @@ const RENAMED_WORK_SLUGS: Array<[string, string]> = [
   ['/werke/praemie', '/werke/policy'],
   ['/spielraum', '/headroom'],
   ['/werke/spielraum', '/werke/headroom'],
+  ['/protokoll', '/protocol'],
+  ['/werke/protokoll', '/werke/protocol'],
 ]
 
 describe('renamed German work slugs 301 to their English canonicals', () => {
@@ -231,4 +233,13 @@ describe('renamed German work slugs 301 to their English canonicals', () => {
   it('/police points straight at /policy (no /praemie double hop)', () => {
     expect(rules.find((r) => r.from === '/police')?.to).toBe('/policy')
   })
+
+  // The Protocol carries sub-paths (RSS feed, archive, dated minutes) — the /protokoll/* wildcard
+  // must cover them so old bookmarks and RSS subscribers land on /protocol/* in one hop.
+  it.each(['/protokoll/feed.xml', '/protokoll/archiv', '/protokoll/2026-07-15'])(
+    'covers %s via the /protokoll/* wildcard',
+    (route) => {
+      expect(isCovered(route, rules)).toBe(true)
+    },
+  )
 })
