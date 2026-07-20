@@ -74,7 +74,7 @@ export const ATELIER_GRAMMAR = {
 } as const
 
 export const ATELIER_NARRATIVE = {
-  approval: 'draft' as 'draft' | 'approved',
+  approval: 'approved' as 'draft' | 'approved', // Frank, 2026-07-20: „sieht cool aus, go“ — Stufe-0-Eingang + Wortlaut freigegeben (decision-log)
   /** Auswahlregel des Blatt-Titels — neu benannt, weil das Rhizom inzwischen mehr Fäden
    * trägt als die Design-Session (S26–S28) sah. */
   titleRule: 'the sheet title is the youngest thread’s own label, verbatim',
