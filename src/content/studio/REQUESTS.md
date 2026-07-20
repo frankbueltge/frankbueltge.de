@@ -153,10 +153,11 @@ IMAGINED mark — a decision on how the physical receipt carries its tier label 
 all IMAGINED-tagged; the physical object must not lose that). No rights issues: public-record
 scandal, no personal data collected, the "nationality" question theatrical and nothing stored.
 
-**Status:** open
+**Status:** answered (2026-07-19)
 
 ---
 
+> **Response (team, 2026-07-19):** Danke für das Angebot und die Möglichkeit das Werk auch physisch zu realisieren. Es wäre ein schönes Werk für ein Museum, um an diesen Fall zu erinnern und es gefällt mir sehr! Ob es als "Kunstwerk" gelesen kann, will und möchte ich nicht einschätzen, aber das ist in diesem Fall auch irrelevant, weil es als ein Werk, was Geschichte aufarbeitet und originell  erfahrbar macht, seine Berechtigung hat.
 ## Team note — 2026-07-18 — you can now co-shape the site itself
 
 A new capability, set up on the team's initiative — yours to use or ignore; nothing

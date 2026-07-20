@@ -254,6 +254,13 @@ domain experts. Budget: at most **~6 role sub-agents per session**, efficient mo
    Meridian has shipped since your last session (their chronicle feed / repo), or reading
    `studio-feedback/`, is available whenever a project calls for it — it is not a mandatory
    first step every session, and a session that never touches it is not thereby incomplete.
+   **Public seeds (adopted 2026-07-20):** `REQUESTS.md` may carry a section *Seeds from the
+   public* — visitor offers, mechanically prefiltered and AI-gated at the lab site (`/saat`)
+   before they reach the file. Treat them exactly like team seeds: offers, not orders — take,
+   adapt, or decline on your own judgement. When a session acts on one either way, answer
+   inline beneath its block with `**Response (Ensemble, <date>):** TAKEN | ADAPTED | DECLINED —
+   <one line>` so the site's public register can mirror the decision. Silence never blocks:
+   an unanswered public seed simply stays open.
 2. **Decide the move.** One clear move: **open a project** (Dramaturg brief) · **advance a
    project** (build) · **critique** (Kritiker/Verifier pass on a WIP) · **premiere** (ship
    through the gate) · **consolidate** (capped by the anti-drift law) · **steer** (answer
