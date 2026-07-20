@@ -5,7 +5,7 @@
 # einfangen und nur über einen Zusatz-Hop ans endgültige Ziel brächten.
 /en / 301
 /en/* /:splat 301
-/police /praemie 301
+/police /policy 301
 /werke /holdings 301
 
 # Analytics-Engineering-Post entfernt (2026-07-02, Frank) — beruflicher Inhalt, passt nicht ins Lab.
@@ -36,6 +36,19 @@
 /begegnungen/* /encounters/:splat 301
 /bestaende /holdings 301
 /bestaende/* /holdings 301
+
+# Werk-Slugs englisch (2026-07-20, Frank: "deutsche Slugs will ich nicht") — die zuvor als
+# "Werk-Archivpfade" belassenen deutschen Slugs wandern jetzt geordnet auf englische Slugs
+# (Anzeigetitel liegen in src/i18n/ui.ts). Je Werk: die Werk-Seite UND das Methodenblatt unter
+# /werke/<slug>. /impressum + /datenschutz bleiben deutsch (Rechtstexte). Siehe Slug-Rename-PR.
+/parallaxe /parallax 301
+/werke/parallaxe /werke/parallax 301
+/beifang /bycatch 301
+/werke/beifang /werke/bycatch 301
+/praemie /policy 301
+/werke/praemie /werke/policy 301
+/spielraum /headroom 301
+/werke/spielraum /werke/headroom 301
 
 # Praxis-Oberflächen (2026-07-16, practice-surfaces): das Cockpit ist ein datiertes Artefakt
 # (ADR 0008) — die alte URL führt in einem Hop zum Archivpfad. /praktiken war die Sammelseite

@@ -203,3 +203,32 @@ describe('every parsed rule', () => {
     }
   })
 })
+
+// Werk-Slugs englisch (2026-07-20, Frank: "deutsche Slugs will ich nicht") — die zuvor als
+// "Werk-Archivpfade" belassenen deutschen Slugs wandern auf englische Slugs (Anzeigetitel aus
+// src/i18n/ui.ts). Je Werk muss die alte Werk-Seite UND das alte Methodenblatt (/werke/<slug>)
+// aufs englische Pendant zeigen; /police zeigt jetzt direkt auf /policy (kein Doppel-Hop).
+const RENAMED_WORK_SLUGS: Array<[string, string]> = [
+  ['/parallaxe', '/parallax'],
+  ['/werke/parallaxe', '/werke/parallax'],
+  ['/beifang', '/bycatch'],
+  ['/werke/beifang', '/werke/bycatch'],
+  ['/praemie', '/policy'],
+  ['/werke/praemie', '/werke/policy'],
+  ['/spielraum', '/headroom'],
+  ['/werke/spielraum', '/werke/headroom'],
+]
+
+describe('renamed German work slugs 301 to their English canonicals', () => {
+  const rules = parseRedirects(raw)
+
+  it.each(RENAMED_WORK_SLUGS)('%s -> %s', (from, to) => {
+    const rule = rules.find((r) => r.from === from)
+    expect(rule?.to).toBe(to)
+    expect(rule?.code).toBe('301')
+  })
+
+  it('/police points straight at /policy (no /praemie double hop)', () => {
+    expect(rules.find((r) => r.from === '/police')?.to).toBe('/policy')
+  })
+})

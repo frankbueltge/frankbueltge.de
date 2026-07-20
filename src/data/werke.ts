@@ -30,7 +30,7 @@ export const WERKE: Werk[] = [
     },
     status: 'live',
     since: '2026-07-12',
-    href: '/spielraum',
+    href: '/headroom',
     description: {
       de: 'Aus der Linie „Gegenmessung". PUE — die Effizienzkennzahl der Rechenzentren — hat einen physikalischen Boden bei 1,0. Googles Flotte steht bei 1,09: für immer bleiben rund 8 % Spielraum; der Verbrauch wuchs derweil um 27 % in einem Jahr. Jährlich fortgeschrieben, was vier Hyperscaler offenlegen — und was nicht: AWS nennt gar keinen Verbrauch.',
       en: "From the counter-measurement line. PUE — the data-center efficiency metric — has a physical floor of 1.0. Google's fleet sits at 1.09: about 8% of headroom remains, forever; consumption meanwhile grew 27% in a single year. Tracked year by year: what four hyperscalers disclose — and what they don't. AWS discloses no consumption at all.",
@@ -43,7 +43,7 @@ export const WERKE: Werk[] = [
     subtitle: { de: 'Science-Tracking, gemessen', en: 'Science tracking, measured' },
     status: 'live',
     since: '2026-07-02',
-    href: '/beifang',
+    href: '/bycatch',
     description: {
       de: 'Wöchentlicher Tracker-Zensus über Artikelseiten der fünf größten Wissenschaftsverlage — gegen zehn Diamond-OA-Journals als Kontrollgruppe, vor jeder Einwilligung, aus zwei Blickwinkeln.',
       en: 'A weekly tracker census of article pages from the five largest scholarly publishers — against ten diamond-OA journals as a control group, before any consent, from two vantage points.',
@@ -172,7 +172,7 @@ export const WERKE: Werk[] = [
     status: 'live',
     since: '2026-06-14',
     live: true,
-    href: '/praemie',
+    href: '/policy',
     description: {
       de: 'Ein Versicherungsschein auf die Gegenwart, dessen Prämie jede Nacht aus echten Marktdaten neu berechnet wird. Der Markt hat die Klimakatastrophe längst eingepreist — und die Prämie steigt: +179 % seit 1998.',
       en: 'An insurance policy on the present, its premium recomputed each night from real market data. The market has long since priced in the climate catastrophe — and the premium is rising: +179% since 1998.',
@@ -188,7 +188,7 @@ export const WERKE: Werk[] = [
     status: 'live',
     since: '2026-06-14',
     live: true,
-    href: '/parallaxe',
+    href: '/parallax',
     description: {
       de: 'Dieselbe umstrittene Sache in mehreren Sprachversionen der Wikipedia — und die Messung, welche Aussage jede Version benennt und welche sie verschweigt. Die japanische Beschreibung der Senkaku-Inseln etwa erwähnt den Territorialstreit mit keinem Wort.',
       en: 'The same contested thing across several Wikipedia language versions — and the measure of which claim each version states and which it conceals. The Japanese description of the Senkaku Islands, for instance, never mentions the territorial dispute.',
