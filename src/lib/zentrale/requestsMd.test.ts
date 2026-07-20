@@ -317,7 +317,7 @@ describe('Idempotenz-Guard', () => {
 describe('appendBlockToSection', () => {
   it('existierende Section: hängt den Block ans Ende an, ohne eine neue Section zu erzeugen', () => {
     const before = parseSections(FIELD_FIXTURE).length
-    const block = '> ### 2026-07-20 — Public seed: ein Beispiel (saat-20260720-101500-a3f2)\n>\n> Text.\n>\n> **Status:** seed (open)'
+    const block = '> ### 2026-07-20 — Public seed: ein Beispiel (seed-20260720-101500-a3f2)\n>\n> Text.\n>\n> **Status:** seed (open)'
     const result = appendBlockToSection(FIELD_FIXTURE, 'Seeds from the team', block)
     expect(result).toContain(block)
     const sections = parseSections(result)
@@ -328,7 +328,7 @@ describe('appendBlockToSection', () => {
 
   it('fehlende Section: wird am Dateiende neu angelegt', () => {
     const before = parseSections(ATELIER_FIXTURE).length
-    const block = '> ### 2026-07-20 — Public seed: ein Beispiel (saat-20260720-101500-a3f2)\n>\n> Text.\n>\n> **Status:** seed (open)'
+    const block = '> ### 2026-07-20 — Public seed: ein Beispiel (seed-20260720-101500-a3f2)\n>\n> Text.\n>\n> **Status:** seed (open)'
     const result = appendBlockToSection(ATELIER_FIXTURE, 'Seeds from the public', block)
     const sections = parseSections(result)
     expect(sections).toHaveLength(before + 1)

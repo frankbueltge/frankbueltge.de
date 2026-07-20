@@ -26,8 +26,13 @@ cd pipelines/protokoll && source .venv/bin/activate && pytest -q
 
 ## Architektur in einem Absatz
 
-Astro 5, statisch, englisch-only seit 2026-07-16 (site-v2) — deutsche Routen-Slugs bleiben als
-Eigennamen (`/werke`, `/saat` …), aber der Inhalt ist durchgehend englisch. Tailwind v4,
+Astro 5, statisch, englisch-only seit 2026-07-16 (site-v2) — **Routen-Slugs sind englisch**
+(Frank, 2026-07-16 „Routen englisch" + 2026-07-20 „deutsche Slugs will ich nicht"): neue Slugs
+englisch (`/seed`, `/holdings`, `/encounters`), alte deutsche Ökologie-Pfade 301en in
+`public/_redirects`. Noch live-deutsch und Kandidaten für einen geordneten Rename-PR:
+`/parallaxe`, `/praemie`, `/beifang`, `/spielraum`, `/protokoll` (englische Werktitel liegen
+schon in `src/i18n/ui.ts`). Ausnahme: `/impressum` + `/datenschutz` bleiben deutsch (Rechtstexte).
+Tailwind v4,
 Mono-Skin fest. **Git ist das Archiv:** Pipelines committen versionierte
 JSON-Snapshots ins Repo (kein dynamisches Lesen aus Cloud-Diensten zur Laufzeit).
 Die Protokoll-Pipelines (`pipelines/protokoll/`, Python 3.12) laufen als nächtliche
@@ -78,7 +83,7 @@ Parallaxe via Gemini-AI-Studio-Key (statt BigQuery/Vertex).
 | `src/pages/protokoll/`, `src/pages/werke/` | Routen (DE; EN-Spiegel unter `src/pages/en/`) |
 | `docs/superpowers/specs/`, `docs/superpowers/plans/` | Design-Specs und Implementierungspläne |
 | `src/lib/zentrale/`, `functions/api/zentrale/`, `src/pages/steuerzentrale/` | private Steuerzentrale (Status + Antworten), Design-Notiz `docs/design/2026-07-17-steuerzentrale.md` |
-| `src/lib/saat/`, `functions/api/saat.js`, `src/pages/saat/` | Öffentliche Saat (Besucher-Seeds mit Gate, Spec 2026-07-20) |
+| `src/lib/saat/`, `functions/api/seed.js`, `src/pages/seed/` | Public seed — Route `/seed` (Besucher-Seeds mit Gate, Spec 2026-07-20; interne Code-Bezeichner heißen noch `saat`, s. D10) |
 
 ## Deployment
 

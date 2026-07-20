@@ -1,15 +1,15 @@
 ---
 // SaatPage — die „Öffentliche Saat" (Design-Spec 2026-07-20-oeffentliche-saat-design.md).
 // English-only per Frank's decision (2026-07-20, "nur englisch überall"): the site went
-// English-only on 2026-07-16 ("de-abbau", decision-log), and /saat follows the established
-// pattern of German route slugs carrying English content (/werke, /bestaende). The former
-// German text set (a `locale` prop with dual dictionaries) has been removed from the code;
-// it remains recoverable through this branch's git history, not as a live code path.
+// English-only on 2026-07-16 ("de-abbau", decision-log). The route is /seed — English slug,
+// no German URLs (Frank 2026-07-20; the earlier German slug /saat was dropped, Addendum D10).
+// The former German text set (a `locale` prop with dual dictionaries) has been removed from the
+// code; it remains recoverable through this branch's git history, not as a live code path.
 //
-// Contract with functions/api/saat.js (built in parallel; read directly to confirm the shape
+// Contract with functions/api/seed.js (built in parallel; read directly to confirm the shape
 // below — this file's error/response mapping is the single place to adjust if it ever changes):
-//   GET  /api/saat  → { ready, missing, daily_used, daily_cap, pending, cap }
-//   POST /api/saat  body { kind, text, authorMark, addressedTo, consent, website, turnstileToken }
+//   GET  /api/seed  → { ready, missing, daily_used, daily_cap, pending, cap }
+//   POST /api/seed  body { kind, text, authorMark, addressedTo, consent, website, turnstileToken }
 //                    → success { ok: true, id, claim_token }
 //                    → failure { ok: false, reason, code? }
 //   `reason` is the primary discriminator: one of the RejectReason values from saat.ts
@@ -192,7 +192,7 @@ const payload = JSON.stringify({
     <p class="mt-3 max-w-[62ch] font-mono text-xs text-fg-faint">{txt.lede3}</p>
   </section>
 
-  {/* ── Formular — Standby bis /api/saat ready:true meldet UND Turnstile zur Buildzeit da ist ── */}
+  {/* ── Formular — Standby bis /api/seed ready:true meldet UND Turnstile zur Buildzeit da ist ── */}
   <section class="mt-12 rounded-[10px] border border-line bg-panel p-6 sm:p-8" aria-labelledby="saat-form-h">
     <h2 id="saat-form-h" class="font-mono text-xs uppercase tracking-[0.2em] text-fg-muted">{txt.formHeading}</h2>
 
@@ -427,7 +427,7 @@ const payload = JSON.stringify({
   const submitBtn = document.querySelector<HTMLButtonElement>('[data-saat="submit"]')
 
   if (form && standby && DATA.hasTurnstile) {
-    fetch('/api/saat', { headers: { accept: 'application/json' } })
+    fetch('/api/seed', { headers: { accept: 'application/json' } })
       .then((r) => (r.ok ? r.json() : { ready: false }))
       .then((probe: { ready?: boolean; daily_used?: number; daily_cap?: number; pending?: number; cap?: number }) => {
         if (!probe.ready) return // Standby bleibt stehen — ehrlich, kein totes Formular
@@ -459,7 +459,7 @@ const payload = JSON.stringify({
       submitBtn.textContent = DATA.sending
       if (msgEl) msgEl.textContent = ''
       try {
-        const res = await fetch('/api/saat', {
+        const res = await fetch('/api/seed', {
           method: 'POST',
           headers: { 'content-type': 'application/json' },
           body: JSON.stringify({
@@ -475,7 +475,7 @@ const payload = JSON.stringify({
         })
         const body = (await res.json()) as { ok?: boolean; reason?: string; code?: string; id?: string; claim_token?: string }
         if (body.ok) {
-          // Honeypot-Treffer antworten { ok:true } ohne claim_token (functions/api/saat.js) —
+          // Honeypot-Treffer antworten { ok:true } ohne claim_token (functions/api/seed.js) —
           // dann bleibt die Token-Zeile leer; das betrifft nie einen echten Absender.
           const token = body.claim_token ?? ''
           form.hidden = true
@@ -486,7 +486,7 @@ const payload = JSON.stringify({
           }
         } else if (msgEl) {
           // `reason` ist der primäre Diskriminator; nur bei reason === 'gate' trägt `code` den
-          // GateReason (spam/abuse/… — s. Kopf-Kommentar, Vertrag mit functions/api/saat.js).
+          // GateReason (spam/abuse/… — s. Kopf-Kommentar, Vertrag mit functions/api/seed.js).
           const reason = body.reason ?? 'generic'
           if (reason === 'gate') {
             const reasonLabel = DATA.gateReasons[body.code ?? 'other']

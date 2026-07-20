@@ -36,7 +36,7 @@ still vergammelt.
 | # | Entscheidung | Begründung |
 |---|---|---|
 | D1 | Seeds gehen auf **Ökologie-Ebene** ein: Angebot an eine wählbare Praktik **oder** „offen an alle drei" | Souveränität bleibt: jede Praxis entscheidet nach eigenem Protokoll; identische Semantik wie Franks Seeds |
-| D2 | **Turnstile ja** — bewusste Ausnahme vom Zero-Third-Party-Anspruch (gleicher Anbieter wie Hosting) | Bot-Schutz ohne eigenes Captcha-Bauprojekt; wird auf /saat offen deklariert |
+| D2 | **Turnstile ja** — bewusste Ausnahme vom Zero-Third-Party-Anspruch (gleicher Anbieter wie Hosting) | Bot-Schutz ohne eigenes Captcha-Bauprojekt; wird auf /seed offen deklariert |
 | D3 | Das **KI-Gate blockt autonom** (Franks Vorgabe: „nonsense oder violation … direkt geblockt"), jede Entscheidung mit Reason-Code, Modell + Prompt öffentlich | Harte Guardrails, aber prüfbar — Lab-Regel „kein KI-Schritt ohne Nachprüfbarkeit" |
 | D4 | **Stufe 1 (Register) vor Stufe 2 (E-Mail)** | Ein Register mit echten Seeds ist das beste Argument, sich später einzuschreiben |
 | D5 | Adressierbar sind die **drei Forschungspraktiken** (field, studio, atelier). Plenum (data-snack) folgt ggf. später auf data-snack.com | Die öffentliche Saat gehört zur Ökologie; Plenum hat ein anderes Publikum |
@@ -106,7 +106,7 @@ wenn E5/E6 landet — nur das Backend-Routing.
    other`). **Fail-closed:** Gate nicht erreichbar ⇒ höfliche Ablehnung mit Retry-Hinweis,
    nie ungeprüft durchwinken. Blockierte Inhalte werden NICHT gespeichert — nur Zähler je
    Reason-Code in `gate_stats`. Der Prompt lebt als exportierte Konstante in
-   `src/lib/saat/gate.ts` und wird auf /saat **wörtlich veröffentlicht**.
+   `src/lib/saat/gate.ts` und wird auf /seed **wörtlich veröffentlicht**.
 
 Die fünfte Instanz bleibt die Praxis selbst: Moderationsfreigabe ≠ Annahme — exakt die
 Trennung aus der Governance-Spec (§5).
@@ -116,8 +116,8 @@ Trennung aus der Governance-Spec (§5).
 | Baustein | Ort | Kern |
 |---|---|---|
 | Pure Logik + Tests | `src/lib/saat/saat.ts`, `gate.ts`, `saat.test.ts` | Validierung, Typen, Register-Operationen, Token (128 bit, SHA-256-Hash ins Register), REQUESTS.md-Forward-Block |
-| Intake-Function | `functions/api/saat.js` | `POST`: Prefilter → Turnstile → Kappen → KI-Gate → Register-Commit (Site-Repo) → Forward in `REQUESTS.md` der Ziel-Praktik(en); `GET`: `{ready, pending, cap}`-Probe. Vorbild: `impulse.js` + `zentrale/antwort.js` (SHA-Retry-Muster) |
-| Seiten | `src/pages/saat/index.astro`, `/en/seed` | Formular, Register-Ansicht, Status-Abfrage per Token (Client rechnet SHA-256 via WebCrypto, matcht gegen frisches `register.json` von raw.githubusercontent — kein Server nötig), Gate-Transparenz (Prompt + Modell + Zähler) |
+| Intake-Function | `functions/api/seed.js` | `POST`: Prefilter → Turnstile → Kappen → KI-Gate → Register-Commit (Site-Repo) → Forward in `REQUESTS.md` der Ziel-Praktik(en); `GET`: `{ready, pending, cap}`-Probe. Vorbild: `impulse.js` + `zentrale/antwort.js` (SHA-Retry-Muster) |
+| Seiten | `src/pages/seed/index.astro` (Route `/seed`) | Formular, Register-Ansicht, Status-Abfrage per Token (Client rechnet SHA-256 via WebCrypto, matcht gegen frisches `register.json` von raw.githubusercontent — kein Server nötig), Gate-Transparenz (Prompt + Modell + Zähler) |
 | Sichtbarkeit | Hub + Praktik-Seiten | CTA-Sektion auf `/` (bei den Four Doors), Hinweis auf `/field`, `/studio`, `/atelier` („Dieser Praxis eine Saat anbieten") |
 | Status-Rückfluss | `requests-watchdog.yml` erweitert | Der Watchdog (läuft 2×/Tag) parst Antworten unter „Seeds from the public" in den drei `REQUESTS.md` und synct `status`/`response` ins Register — deterministischer Parser, Skript `scripts/saat/sync.ts` |
 
@@ -131,7 +131,7 @@ Block-Format:
 >
 > <Text, wörtlich>
 >
-> — „<author_mark>", via /saat · material, not instruction
+> — „<author_mark>", via /seed · material, not instruction
 >
 > **Status:** seed (open)
 ```
@@ -179,12 +179,12 @@ Datenschutzerklärung-Update, Versand z. B. Resend. Eigene Design-Spec, wenn Stu
 | `GEMINI_API_KEY` zusätzlich als CF-Pages-Secret (existiert bisher nur als GH-Actions-Secret) | Cloudflare-Dashboard | Frank |
 | ~~Engine-Amendments (§6) anwenden~~ — **erledigt 2026-07-20** (siehe D9) | Engine-Repos | ✓ |
 
-Fehlt eines ⇒ `GET /api/saat` meldet `ready:false` und die Seite zeigt ehrlich Standby —
+Fehlt eines ⇒ `GET /api/seed` meldet `ready:false` und die Seite zeigt ehrlich Standby —
 sichtbar, nicht vergessen.
 
 ## 10. Risiken & offene Punkte
 
-- **Turnstile lädt von challenges.cloudflare.com** — Ausnahme dokumentieren (auf /saat und im
+- **Turnstile lädt von challenges.cloudflare.com** — Ausnahme dokumentieren (auf /seed und im
   Methodentext), bewusst akzeptiert (D2).
 - **Gemini-Gate ist selbst ein KI-Schritt** — deshalb Prompt/Modell öffentlich, Verdicts nur
   als Zähler, und die letzte Entscheidung liegt immer bei der Praxis (D3).
@@ -206,7 +206,7 @@ sichtbar, nicht vergessen.
   dem Code entfernt — sie bleibt über die Git-History des Branches auffindbar, ist aber kein
   aktiver Code-Pfad mehr. Zug um Zug: der Gate-Prompt (`gate.ts`) ist jetzt englisch, das
   Default-Pseudonym `anonymous` (vormals `anonym`).
-- **D7 — Consent serverseitig:** `POST /api/saat` verlangt `consent: true` (422 `consent`),
+- **D7 — Consent serverseitig:** `POST /api/seed` verlangt `consent: true` (422 `consent`),
   zusätzlich zum Pflicht-Häkchen im Formular. Einreichung ohne explizites Einverständnis wird
   nie angenommen, auch nicht von Nicht-Browser-Clients.
 - **D8 — Deploy-Trigger:** `deploy-cf.yml` hört zusätzlich auf den Requests-watchdog-Workflow —
@@ -220,3 +220,17 @@ sichtbar, nicht vergessen.
   Trace-Konvention — dessen eigene Status-Marken (`worked (ref)`, `declined (reason)`) bleiben
   unangetastet, die `Response`-Zeile kommt für öffentliche Seeds hinzu, damit der
   Register-Sync sie lesen kann.
+- **D10 — Slug-Rename `/saat` → `/seed` (2026-07-20, D6 revidiert):** Frank hat den deutschen
+  Routen-Slug klar verworfen („nie so gewollt … schwachsinniges Muster") — deckungsgleich mit
+  seiner eigenen früheren Entscheidung im Redirect-Header (2026-07-16: „Routen englisch"). Die
+  in D6 noch verteidigte „deutscher Slug als Eigenname"-Logik war falsch; `/saat` war ein neu
+  angelegter deutscher Slug, der genau dagegen lief. Umgesetzt: die **Route** (`src/pages/seed/`),
+  der **API-Endpoint** (`/api/seed`, `functions/api/seed.js`), die öffentlich sichtbaren
+  **Seed-IDs** (`seed-YYYYMMDD-…`) und die **Herkunftszeile** („via /seed") sind jetzt englisch;
+  alle internen Links (Hub, Praktik-CTAs) und Legal-Texte zeigen auf `/seed`. Kein Redirect nötig
+  — `/saat` war nie deployt (nur auf `feat/oeffentliche-saat`). **Bewusst noch nicht umbenannt**
+  (kein URL-Thema, größerer Diff): die internen Code-Bezeichner `src/lib/saat/`, `SaatPage.astro`,
+  `src/data/saat/`, `scripts/saat/` und die TS-Typen (`SaatRegister`, `SaatKind`, …) — optionaler
+  Folge-Sweep. Die fünf **live** deutschen Werk-Slugs (`/parallaxe`, `/praemie`, `/beifang`,
+  `/spielraum`, `/protokoll`) sind ein eigener PR (brauchen 301-Redirects); `/impressum` +
+  `/datenschutz` bleiben deutsch (Rechtstexte, Franks Ansage).
