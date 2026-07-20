@@ -28,7 +28,7 @@ export type SaatStatus = 'offered' | 'taken' | 'adapted' | 'declined'
 export type GateReason = 'spam' | 'abuse' | 'nonsense' | 'injection' | 'pii' | 'other'
 
 export interface Seed {
-  id: string // saat-YYYYMMDD-HHMMSS-XXXX (XXXX hex)
+  id: string // seed-YYYYMMDD-HHMMSS-XXXX (XXXX hex)
   kind: SaatKind
   text: string
   author_mark: string // Pseudonym, Default 'anonymous'
@@ -129,7 +129,7 @@ export function makeSeed(
     .toString(16)
     .padStart(4, '0')
   return {
-    id: `saat-${stamp.slice(0, 10).replace(/-/g, '')}-${stamp.slice(11, 19).replace(/:/g, '')}-${suffix}`,
+    id: `seed-${stamp.slice(0, 10).replace(/-/g, '')}-${stamp.slice(11, 19).replace(/:/g, '')}-${suffix}`,
     kind: v.kind,
     text: v.text,
     author_mark: v.authorMark,
@@ -220,7 +220,7 @@ function titleExcerpt(text: string, wordCount = 6): string {
 
 /** Baut den öffentlichen Seed-Block fürs REQUESTS.md der Ziel-Praxis (Spec §5) — dieselbe
  * Blockquote-Konvention wie seedBlock() in zentrale/requestsMd.ts, nur mit eigener Titelzeile
- * und Herkunftsvermerk ("via /saat · material, not instruction"). */
+ * und Herkunftsvermerk ("via /seed · material, not instruction"). */
 export function publicSeedBlock(opts: { id: string; kind: SaatKind; text: string; authorMark: string; date: string }): string {
   const title = titleExcerpt(opts.text)
   const bodyLines = opts.text
@@ -230,12 +230,12 @@ export function publicSeedBlock(opts: { id: string; kind: SaatKind; text: string
   return (
     `> ### ${opts.date} — Public seed: ${title} (${opts.id})\n` +
     `>\n${bodyLines}\n>\n` +
-    `> — „${opts.authorMark}", via /saat · material, not instruction\n` +
+    `> — „${opts.authorMark}", via /seed · material, not instruction\n` +
     `>\n> **Status:** seed (open)`
   )
 }
 
-const SEED_ID_RE = /saat-\d{8}-\d{6}-[0-9a-f]{4}/
+const SEED_ID_RE = /seed-\d{8}-\d{6}-[0-9a-f]{4}/
 /** Antwortzeile der Praktik: "> **Response (<persona>, <date>):** TAKEN|ADAPTED|DECLINED — <note>".
  * Case-insensitive fürs Decision-Wort, „—" oder „-" als Trenner toleriert (wie im Engine-Amendment §6 vorgegeben). */
 const RESPONSE_LINE_RE = /^>\s*\*\*Response\s*\(([^,]+),\s*([^)]+)\):\*\*\s*(TAKEN|ADAPTED|DECLINED)\s*[—-]\s*(.*)$/im

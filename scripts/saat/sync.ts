@@ -34,7 +34,7 @@ const FETCH_TIMEOUT_MS = 30_000
 // Blöcke; für die Forward-Reconciliation brauchen wir aber auch die unbeantworteten. Gleiche
 // Abschnittsgrenzen wie der Parser dort (Heading bis zur nächsten "## "), damit ein Seed-Id-
 // Treffer außerhalb des öffentlichen Abschnitts (z. B. in "Seeds from the team") nie zählt.
-const SEED_ID_RE = /saat-\d{8}-\d{6}-[0-9a-f]{4}/g
+const SEED_ID_RE = /seed-\d{8}-\d{6}-[0-9a-f]{4}/g
 
 function seedIdsInPublicSection(md: string): Set<string> {
   const headingMatch = /^## Seeds from the public\s*$/im.exec(md)
@@ -148,6 +148,6 @@ async function main(): Promise<number> {
 main()
   .then((code) => process.exit(code))
   .catch((err) => {
-    console.error(`saat-sync fehlgeschlagen: ${err instanceof Error ? (err.stack ?? err.message) : String(err)}`)
+    console.error(`seed-sync fehlgeschlagen: ${err instanceof Error ? (err.stack ?? err.message) : String(err)}`)
     process.exit(1)
   })

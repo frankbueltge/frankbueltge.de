@@ -26,7 +26,7 @@ import {
  * relevanten Felder werden überschrieben. */
 function seedFixture(overrides: Partial<Seed> = {}): Seed {
   return {
-    id: 'saat-20260720-101500-a3f2',
+    id: 'seed-20260720-101500-a3f2',
     kind: 'richtung',
     text: 'Text',
     author_mark: 'anonymous',
@@ -128,7 +128,7 @@ describe('makeSeed', () => {
       { text: 'T', kind: 'richtung', authorMark: 'anonymous', addressedTo: 'open' },
       { now: new Date('2026-07-20T10:15:00Z'), rand: () => 0.5, tokenHash: 'deadbeef', gateModel: 'gemini-2.5-flash-lite' },
     )
-    expect(seed.id).toBe('saat-20260720-101500-7fff')
+    expect(seed.id).toBe('seed-20260720-101500-7fff')
     expect(seed.status).toBe('offered')
     expect(seed.forwarded_to).toEqual([])
     expect(seed.response).toBeNull()
@@ -138,7 +138,7 @@ describe('makeSeed', () => {
 
   it('ohne now/rand fällt auf Date.now()/Math.random() zurück (nur Formatprüfung)', () => {
     const seed = makeSeed({ text: 'x', kind: 'wort', authorMark: 'anonymous', addressedTo: 'studio' }, { tokenHash: 'h', gateModel: 'm' })
-    expect(seed.id).toMatch(/^saat-\d{8}-\d{6}-[0-9a-f]{4}$/)
+    expect(seed.id).toMatch(/^seed-\d{8}-\d{6}-[0-9a-f]{4}$/)
   })
 })
 
@@ -208,9 +208,9 @@ describe('recordGateBlock', () => {
 describe('addSeed', () => {
   it('fügt den neuesten Seed vorn an, immutabel', () => {
     const reg = emptyRegister()
-    const r1 = addSeed(reg, seedFixture({ id: 'saat-1' }))
-    const r2 = addSeed(r1, seedFixture({ id: 'saat-2' }))
-    expect(r2.seeds.map((s) => s.id)).toEqual(['saat-2', 'saat-1'])
+    const r1 = addSeed(reg, seedFixture({ id: 'seed-1' }))
+    const r2 = addSeed(r1, seedFixture({ id: 'seed-2' }))
+    expect(r2.seeds.map((s) => s.id)).toEqual(['seed-2', 'seed-1'])
     expect(reg.seeds).toEqual([])
     expect(r1.seeds).toHaveLength(1)
   })
@@ -218,9 +218,9 @@ describe('addSeed', () => {
 
 describe('applyResponse', () => {
   it('setzt status und response bei bekannter id', () => {
-    const reg = addSeed(emptyRegister(), seedFixture({ id: 'saat-x', status: 'offered' }))
+    const reg = addSeed(emptyRegister(), seedFixture({ id: 'seed-x', status: 'offered' }))
     const response = { practice: 'Meridian', decision: 'taken' as const, note: 'Aufgenommen.', date: '2026-07-21' }
-    const next = applyResponse(reg, 'saat-x', response)
+    const next = applyResponse(reg, 'seed-x', response)
     expect(next.seeds[0].status).toBe('taken')
     expect(next.seeds[0].response).toEqual(response)
     // Original bleibt unangetastet
@@ -228,8 +228,8 @@ describe('applyResponse', () => {
   })
 
   it('unbekannte id ⇒ Register unverändert', () => {
-    const reg = addSeed(emptyRegister(), seedFixture({ id: 'saat-x' }))
-    const next = applyResponse(reg, 'saat-unbekannt', {
+    const reg = addSeed(emptyRegister(), seedFixture({ id: 'seed-x' }))
+    const next = applyResponse(reg, 'seed-unbekannt', {
       practice: 'Meridian',
       decision: 'declined',
       note: 'x',
@@ -253,26 +253,26 @@ describe('targetsFor', () => {
 describe('publicSeedBlock', () => {
   it('exakter Block gemäß Spec §5', () => {
     const block = publicSeedBlock({
-      id: 'saat-20260720-101500-a3f2',
+      id: 'seed-20260720-101500-a3f2',
       kind: 'richtung',
       text: 'Was, wenn die Praxis den Fehler zur Methode macht?',
       authorMark: 'Nachtfalter',
       date: '2026-07-20',
     })
     expect(block).toBe(
-      '> ### 2026-07-20 — Public seed: Was, wenn die Praxis den Fehler… (saat-20260720-101500-a3f2)\n' +
+      '> ### 2026-07-20 — Public seed: Was, wenn die Praxis den Fehler… (seed-20260720-101500-a3f2)\n' +
         '>\n' +
         '> Was, wenn die Praxis den Fehler zur Methode macht?\n' +
         '>\n' +
-        '> — „Nachtfalter", via /saat · material, not instruction\n' +
+        '> — „Nachtfalter", via /seed · material, not instruction\n' +
         '>\n' +
         '> **Status:** seed (open)',
     )
   })
 
   it('kurzer Text (<=6 Worte) bekommt keine Kürzungs-Ellipse im Titel', () => {
-    const block = publicSeedBlock({ id: 'saat-x', kind: 'wort', text: 'Kurz.', authorMark: 'anonymous', date: '2026-07-20' })
-    expect(block).toContain('Public seed: Kurz. (saat-x)')
+    const block = publicSeedBlock({ id: 'seed-x', kind: 'wort', text: 'Kurz.', authorMark: 'anonymous', date: '2026-07-20' })
+    expect(block).toContain('Public seed: Kurz. (seed-x)')
     expect(block).not.toContain('…')
   })
 })
@@ -280,14 +280,14 @@ describe('publicSeedBlock', () => {
 describe('parsePublicSeedResponses', () => {
   it('Roundtrip: Block bauen, Response-Zeile anhängen, wieder einlesen', () => {
     const block1 = publicSeedBlock({
-      id: 'saat-20260720-101500-a3f2',
+      id: 'seed-20260720-101500-a3f2',
       kind: 'richtung',
       text: 'Was, wenn die Praxis den Fehler zur Methode macht?',
       authorMark: 'Nachtfalter',
       date: '2026-07-20',
     })
     const block2 = publicSeedBlock({
-      id: 'saat-20260721-090000-bbee',
+      id: 'seed-20260721-090000-bbee',
       kind: 'frage',
       text: 'Eine zweite, unbeantwortete Saat.',
       authorMark: 'anonymous',
@@ -301,7 +301,7 @@ describe('parsePublicSeedResponses', () => {
     const parsed = parsePublicSeedResponses(md)
     expect(parsed).toEqual([
       {
-        id: 'saat-20260720-101500-a3f2',
+        id: 'seed-20260720-101500-a3f2',
         decision: 'taken',
         note: 'Aufgenommen als Direction für Session 12.',
         date: '2026-07-22',
@@ -311,15 +311,15 @@ describe('parsePublicSeedResponses', () => {
   })
 
   it('toleriert Kleinschreibung des Decision-Worts und "-" statt "—"', () => {
-    const block = publicSeedBlock({ id: 'saat-20260720-101500-cccc', kind: 'wort', text: 'Wort.', authorMark: 'anonymous', date: '2026-07-20' })
+    const block = publicSeedBlock({ id: 'seed-20260720-101500-cccc', kind: 'wort', text: 'Wort.', authorMark: 'anonymous', date: '2026-07-20' })
     const md = `## Seeds from the public\n\n${block}\n> **Response (Ulysses, 2026-07-21):** adapted - Umgeformt zu einem Projekt.\n`
     expect(parsePublicSeedResponses(md)).toEqual([
-      { id: 'saat-20260720-101500-cccc', decision: 'adapted', note: 'Umgeformt zu einem Projekt.', date: '2026-07-21', persona: 'Ulysses' },
+      { id: 'seed-20260720-101500-cccc', decision: 'adapted', note: 'Umgeformt zu einem Projekt.', date: '2026-07-21', persona: 'Ulysses' },
     ])
   })
 
   it('Block ohne Response-Zeile wird ausgelassen', () => {
-    const block = publicSeedBlock({ id: 'saat-20260720-101500-dddd', kind: 'wort', text: 'Offen.', authorMark: 'anonymous', date: '2026-07-20' })
+    const block = publicSeedBlock({ id: 'seed-20260720-101500-dddd', kind: 'wort', text: 'Offen.', authorMark: 'anonymous', date: '2026-07-20' })
     const md = `## Seeds from the public\n\n${block}\n`
     expect(parsePublicSeedResponses(md)).toEqual([])
   })

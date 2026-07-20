@@ -64,7 +64,7 @@ const RATE_MAX = 3
 const RATE_WINDOW_MS = 10 * 60 * 1000
 const rateMap = new Map()
 
-// GET-Probe cached den Register-Stand kurz, damit /saat-Besuche nicht je einen GitHub-Read kosten.
+// GET-Probe cached den Register-Stand kurz, damit /seed-Besuche nicht je einen GitHub-Read kosten.
 let probeCache = { at: 0, pending: 0, daily_used: 0 }
 const PROBE_TTL_MS = 60 * 1000
 
