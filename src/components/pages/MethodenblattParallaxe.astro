@@ -5,7 +5,7 @@ import type { Locale } from '@/lib/site'
 interface Props { locale: Locale }
 const { locale } = Astro.props
 const de = locale === 'de'
-const workUrl = getRelativeLocaleUrl(locale, '/parallaxe')
+const workUrl = getRelativeLocaleUrl(locale, '/parallax')
 
 // Wortgetreu aus pipelines/protokoll/src/protokoll/parallaxe/prompt.py (Konstante PROMPT).
 // Der publizierte Prompt ist die Transparenzgarantie des Werks.

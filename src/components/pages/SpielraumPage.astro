@@ -352,7 +352,7 @@ const berichtslageText = allUnchecked
     ? `Berichtslage zuletzt geprüft am ${dateFmt.format(new Date(maxChecked as string))}${unreachableCount > 0 ? ` — ${unreachableCount} Quelle(n) zuletzt nicht erreichbar` : ''}`
     : `Reporting status last checked on ${dateFmt.format(new Date(maxChecked as string))}${unreachableCount > 0 ? ` — ${unreachableCount} source(s) last unreachable` : ''}`
 
-const methodUrl = getRelativeLocaleUrl(locale, '/werke/spielraum')
+const methodUrl = getRelativeLocaleUrl(locale, '/werke/headroom')
 const methodLabel = de ? 'Methodenblatt' : 'Method sheet'
 ---
 

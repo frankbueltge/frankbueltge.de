@@ -11,7 +11,7 @@ interface Props { locale: Locale }
 const { locale } = Astro.props
 const de = locale === 'de'
 const localeTag = de ? 'de-DE' : 'en-GB'
-const workUrl = getRelativeLocaleUrl(locale, '/spielraum')
+const workUrl = getRelativeLocaleUrl(locale, '/headroom')
 
 const reg = registerJson as unknown as SpielraumRegister
 

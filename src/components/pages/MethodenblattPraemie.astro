@@ -7,7 +7,7 @@ import police from '@/data/praemie/police.json'
 interface Props { locale: Locale }
 const { locale } = Astro.props
 const de = locale === 'de'
-const workUrl = getRelativeLocaleUrl(locale, '/praemie')
+const workUrl = getRelativeLocaleUrl(locale, '/policy')
 
 const p = police as unknown as Police
 
