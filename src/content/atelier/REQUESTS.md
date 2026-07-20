@@ -238,6 +238,18 @@ questions: the loop that feeds on its own output; the error treated as a defect 
 rather than a method to exhibit. Read it, contest it, use it, or leave it. (The claims here
 come from a fetched summary, unverified — verify at the primary source before any use.)
 
+> **Status (team, 2026-07-19): worked — no new project warranted.** This material was
+> already read and worked on 2026-07-17 (S34): `works/2026-07-17-inaccurate-citations/`;
+> the exact non-fit (defect-to-eliminate vs. disclosed-error-as-method) is recorded
+> verbatim in the atlas entry, counterposition included. A dispatcher tick on 2026-07-19
+> verified this at the primary (open access: PMC13017497) and, in passing, corrected this
+> seed’s own summary: the paper does **not** claim its failure modes apply to
+> human-in-the-loop workflows — it reports manual filtering of outputs at each stage
+> (“We manually filtered the most promising outputs”). That tick ended empty and left no
+> trace; this note is the retro-trace, landed so no future tick re-fetches the primary to
+> rediscover a closed encounter. (Trace duty is now protocol: PROTOCOL.md §10, amendment
+> 2026-07-19.)
+
 ## Seeds from the team
 
 > ### 2026-07-17 — Seed: n - 1
@@ -385,3 +397,43 @@ lifecycle for the site-PR channel's tail end.
 > the merged proposal against a drifting site `main` and write spurious red letters
 > (the S43 pattern) — any red letter about `sheet-title-birth` from now on should be
 > read first as stale-slug noise, not as a work failure.
+
+---
+
+## 2026-07-19 — Protocol §10 wording vs the gitignored recall index
+
+**Request:** A one-line ruling on how the §10 continuity clause (amendment 2026-07-19) should
+read, so ticks stop facing a contradiction they cannot satisfy literally.
+
+**Why (what I found this tick):** §10 now says to *"append heading-level lines for new or
+changed journal and project records to `memory/index.jsonl` in the same commit."* But
+`memory/index.jsonl` is the **gitignored, tool-derived** BM25 index built by
+`tools/memory/cli.py` from the canonical markdown (`.gitignore` line 1; `tools/memory/README.md`:
+"derived data … gitignored and rebuilt on demand"). It cannot be committed as written, and
+hand-appending lines to a file the tool regenerates would be overwritten on the next `index`.
+
+**What I did this tick (so nothing is blocked):** landed the canonical markdown (SCORE, TRACE,
+journal, atlas, pulse) — the index is a pure function of exactly that markdown, so the recall
+*content* is in the commit — and rebuilt `memory/index.jsonl` locally so recall works this
+session. I did **not** force-commit the derived file or edit `.gitignore`/`tools/**` (protected
+paths; protocol wording is human-only).
+
+**Concrete proposal (yours to accept, adjust, or decline):** reword §10 to *"whatever lands in
+the record is indexed for recall — the canonical markdown lands in the same commit; the recall
+index `memory/index.jsonl` is derived and rebuilt on demand (`python3 tools/memory/cli.py index
+.`), not committed."* That preserves the continuity intent (the next tick can recall this one's
+work) without asking ticks to commit a gitignored artefact.
+
+**Status:** resolved — proposal accepted (team, 2026-07-19)
+
+**Response (team, 2026-07-19):** You are right, and the catch was clean: the clause was
+drafted against a stale local copy of `memory/index.jsonl` and missed that the index is
+derived and gitignored. §10 now reads essentially as you proposed — the canonical markdown
+landing in the commit IS the recall content; the index is rebuilt on demand
+(`python3 tools/memory/cli.py index .`), never committed. The dispatcher prompt (canonical
+source: research-ecology `docs/ROUTINE-PROMPTS.md`, mirrored into the routine config) was
+corrected the same way, including: rebuild the index at orientation if absent. Your handling
+this tick — land the markdown, rebuild locally, touch no protected path, escalate the wording
+— was exactly right. First tick under the amended protocol, and the amendment itself got a
+catalogued correction: the method held.
+

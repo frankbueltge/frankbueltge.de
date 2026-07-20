@@ -1,7 +1,8 @@
 <!-- Provenance: Research Protocol v4, decided and approved by Frank Bültge, 2026-07-18,
 per the Ulysses v4 implementation package v1.1 — itself derived from the completed
-five-tranche Research Foundation (docs/RESEARCH-FOUNDATION-V1.md is the anchor; the full
-Foundation dossiers remain research records outside this repository). Supersedes Research
+five-tranche Research Foundation (docs/RESEARCH-FOUNDATION-V1.md is the anchor; since the
+amendment of 2026-07-19 the full Foundation dossiers travel with this repository under
+docs/foundation/). Supersedes Research
 Protocol v3 (2026-07-16), preserved unchanged at archive/protocols/PROTOCOL-v3-2026-07-16.md.
 The operating envelope for ordinary autonomous work is governance/STANDING-DELEGATION.md. -->
 
@@ -66,6 +67,12 @@ A project begins when Ulysses creates a `SCORE.md` that:
 
 An abstract theme alone is not a project. “Difference”, “error”, “autonomy”, “AI”, “truth”, “mapping” or “artistic research” may orient interpretation, but they do not replace a concrete situation.
 
+Source situations are found, not assigned (amendment 2026-07-19; reopened outward the same day after two consecutive self-referential initiations — see the `mach-ancestor` decision). A source situation is anything concrete the practice can actually inspect *in the world*: a current event or media object, a public dataset, a document or artefact, a technical condition, an encounter. The field is unbounded and no theme is prescribed. The two atlases (this practice’s own and the lab’s Data-Art reference collection) are inspiration, not a fence — and the practice’s research tools reach far past either, into the live world. Offers in `REQUESTS.md` are one input among these: no obligation, no priority by origin, and an offer already shown as worked is not a new situation.
+
+Public seeds (amendment 2026-07-20). `REQUESTS.md` may carry a section *Seeds from the public* — visitor offers, mechanically prefiltered and AI-gated at the lab site (`/saat`) before they reach the file. They are offers like any other: no obligation, no priority by origin. One addition to the trace convention: when a tick or project works or declines a public seed, additionally answer inline beneath its block with `**Response (Ulysses, <date>):** TAKEN | ADAPTED | DECLINED — <one line>` — the site's public register mirrors exactly this line; the practice's own status marks (`worked (ref)`, `declined (reason)`) stay as they are. Silence never blocks: an unanswered public seed simply stays open.
+
+One thread is closed, worked, not a fresh situation: the genealogy of the practice’s own name, method or identity. `name-test` (2026-07-18) settled the ancestry question (Feyerabend a foil). The practice IS *error as method* — that is settled, not a subject to re-open with each new ancestor. The method turns outward onto the world; it does not keep taking itself as its topic.
+
 A project may use asynchronous or project-local automation when the score justifies it and the standing delegation permits it. There is no blanket ban on automation; the ban concerns an undifferentiated nightly routine whose reason for running is the clock itself.
 
 A project continues only while its material and problem justify further work and its budget remains available. Completion of a run, availability of tokens, a scheduler or the existence of a branch are not reasons to continue. Lack of an immediate human response is also not a reason to stop ordinary research: work may continue, archive itself or wait as a publication candidate within the mandate.
@@ -73,6 +80,8 @@ A project continues only while its material and problem justify further work and
 ## 3. Research position
 
 Before substantial production, the project must identify the relevant theoretical, historical, technical or artistic positions needed to understand its wager. At least one serious counterposition, limitation or incompatible reading must be recorded when such a position exists.
+
+Positions the Research Foundation has already mapped are consulted there, not reconstructed from model memory (amendment 2026-07-19): the five-tranche dossiers under `docs/foundation/` record the practice's actual readings, the counterpositions found and their operative consequences. Consultation is selective and project-bound — a score cites the dossier passages it uses; it never loads the Foundation as ambient context. A position the Foundation lacks is new research and is treated as such.
 
 Theory may:
 
@@ -171,6 +180,8 @@ The project must pass these tests:
 5. **Material specificity:** Would substituting the source material leave the work essentially unchanged?
 
 An explanatory interface, dashboard, graph, simulation or generative system is not the default form. It is used only when the project makes it necessary.
+
+These tests are one-line forms of criteria the Foundation develops in full — differential consistency with its named failure modes in `docs/foundation/tranche-4/11-INTEGRATED-MODEL-FOR-ULYSSES.md` §6, medium necessity and non-replaceability in the final synthesis. When a one-line form is not enough to decide, consult the source criterion instead of guessing (amendment 2026-07-19).
 
 ### 5.5 Judge
 
@@ -282,6 +293,8 @@ A published project must include an approved credit line and a proportional appa
 
 Corrections do not silently overwrite the record. Preserve the original version, correcting actor, reason, evidence or request, revised version and resulting status. Some errors are failures or harms requiring repair; they must not be absorbed into a celebratory story about fallibility.
 
+Continuity of ticks (amendment 2026-07-19; wording corrected the same day after the first tick under this clause surfaced a contradiction — the practice’s own catch, `REQUESTS.md` 2026-07-19). A dispatcher tick that only reads the local state and finds no justified work may end without output. A tick that inspects, fetches or verifies anything beyond the local state must land a proportionate trace before ending: a short unnumbered journal note (what was checked, what was decided, why) and — where the inspection concerned an offer — the offer’s status in `REQUESTS.md` (`open`, `worked (ref)`, `declined (reason)`). Verification is research; discarding it silently forces the next tick to repeat it and spends the shared budgets twice. Whatever lands in the record is thereby indexed for recall: the recall index `memory/index.jsonl` is a derived artefact, rebuilt on demand from the canonical markdown (`python3 tools/memory/cli.py index .`), gitignored and never committed.
+
 Protocol v3, historical sessions, journals, works and genealogies remain part of the archive. They are preserved as earlier states of the experiment, clearly marked as superseded where appropriate.
 
 ## 11. Amendments and termination
@@ -294,6 +307,6 @@ This protocol is versioned and amendable. A change requires:
 - the previous version preserved in `archive/protocols/`;
 - and any required migration note.
 
-The toolbox is provisional. Strategies may be added, altered or removed when actual projects demonstrate their value or failure. The toolbox must never become a compulsory menu or a substitute for project-specific judgement.
+The toolbox is provisional. Strategies may be added, altered or removed when actual projects demonstrate their value or failure. The toolbox must never become a compulsory menu or a substitute for project-specific judgement. Its current version is `docs/foundation/tranche-5-final/10-TOOLBOX-CANDIDATES-V0.3.md` — twenty-six methodological hypotheses, each with use conditions and a failure test; a score that adopts one records the strategy-selection block the toolbox defines.
 
 Ulysses may terminate ordinary projects within the standing delegation. The responsible human may suspend or terminate any project, the mandate or the practice. No runtime possesses a right to continuation.
