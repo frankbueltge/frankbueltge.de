@@ -86,9 +86,12 @@ const svg = buildControlSvg({
 })
 
 const kicker = ['Field · instrument record', `works/${slug}`, `${meta.date} → ${endDate}`]
+// One clear line, not a run-on: the instrument's live status. The selection rationale
+// (FIELD_NARRATIVE.selectionRule) moved out of the header — it is meta, not what the page is about.
 const statusHtml =
-  `<b>in service since ${meta.date}${applied ? ' · correction applied · register revised' : ''}` +
-  `${obligation ? ' · caveat obligation active' : ''}</b> · ${FIELD_NARRATIVE.selectionRule}`
+  `<b>in service since ${meta.date}</b>` +
+  `${applied ? ' · correction applied · register revised' : ''}` +
+  `${obligation ? ' · caveat obligation active' : ''}`
 ---
 
 <Page
