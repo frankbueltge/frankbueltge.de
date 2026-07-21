@@ -13,7 +13,7 @@
   --at-page: #ece5d6;
   --at-surface: #f6f1e7;
   --at-ink: #232019;
-  --at-ink-2: #6e6558;
+  --at-ink-2: #5c544b;
   --at-hairline: #ddd4c2;
   --at-thread: #2c46c8;
   --at-red: #b03a30;
@@ -52,7 +52,7 @@
 
 .atelier-surface .at-kicker {
   font-family: var(--at-font-record);
-  font-size: 12px;
+  font-size: 12.5px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--at-ink-2);
@@ -82,8 +82,9 @@
 }
 .atelier-surface .at-status {
   font-family: var(--at-font-record);
-  font-size: 14px;
-  color: var(--at-ink-2);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--at-ink);
 }
 .atelier-surface .at-status b { color: var(--at-ink); font-weight: 600; }
 .atelier-surface figure { margin: 26px 0 8px; }
@@ -100,7 +101,7 @@
   border-top: 1px solid var(--at-hairline);
   border-bottom: 1px solid var(--at-hairline);
   font-family: var(--at-font-record);
-  font-size: 12px;
+  font-size: 13px;
   letter-spacing: 0.08em;
   flex-wrap: wrap;
 }
@@ -194,7 +195,7 @@
   margin: 8px 0 10px;
 }
 .atelier-surface .at-tbl-wrap { overflow-x: auto; }
-.atelier-surface table { border-collapse: collapse; width: 100%; font: 12.5px var(--at-font-record); }
+.atelier-surface table { border-collapse: collapse; width: 100%; font: 13.5px var(--at-font-record); }
 .atelier-surface th {
   text-align: left;
   font-weight: 600;
@@ -207,7 +208,8 @@
 .atelier-surface td.q { font-family: var(--at-font-record); font-style: italic; max-width: 52ch; }
 .atelier-surface .at-foot {
   margin-top: 26px;
-  font: 11.5px var(--at-font-record);
+  font: 12.5px var(--at-font-record);
+  line-height: 1.5;
   color: var(--at-ink-2);
   display: flex;
   justify-content: space-between;
@@ -229,8 +231,9 @@
 /* Zimmer (rooms): register lists, shelf rows, prose — in the sheet's serif voice */
 .atelier-surface .at-room-intro {
   font-family: var(--at-font-record);
-  font-size: 15.5px;
-  color: var(--at-ink-2);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--at-ink);
   max-width: 70ch;
   margin: 10px 0 26px;
 }

@@ -12,8 +12,8 @@
    is:global Astro <style> block — Vite bundles it once regardless of how many pages use it. */
 
 :root[data-theme='dark'] .score-map {
-  --score-hairline: #232a33;
-  --score-ink-2: #98a2ad;
+  --score-hairline: #2b333d;
+  --score-ink-2: #aab4bf;
   --score-c-meridian: #3987e5;
   --score-c-ensemble: #d95926;
   --score-c-conductor: #77828d;
@@ -22,8 +22,8 @@
   --score-tip-bg: #161b22;
 }
 :root[data-theme='light'] .score-map {
-  --score-hairline: #d5dbe2;
-  --score-ink-2: #5b6672;
+  --score-hairline: #cfd6de;
+  --score-ink-2: #515b66;
   --score-c-meridian: #2a78d6;
   --score-c-ensemble: #c1481c;
   --score-c-conductor: #6b7684;
@@ -44,7 +44,7 @@
 }
 .score-kicker {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 12.5px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--score-ink-2);
@@ -69,8 +69,9 @@
 }
 .score-status {
   font-family: var(--font-mono);
-  font-size: 14px;
-  color: var(--score-ink-2);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--color-fg);
   margin: 0;
 }
 .score-status b { color: var(--color-fg); font-weight: 600; }
@@ -184,7 +185,7 @@
 
 /* ---- event register table ---- */
 .score-tbl-wrap { overflow-x: auto; }
-.score-record table { border-collapse: collapse; width: 100%; font: 12.5px var(--font-mono); }
+.score-record table { border-collapse: collapse; width: 100%; font: 13.5px var(--font-mono); }
 .score-record th { text-align: left; font-weight: 600; color: var(--color-fg-faint); letter-spacing: 0.06em; }
 .score-record th, .score-record td { border-top: 1px solid var(--color-line); padding: 7px 14px 7px 0; vertical-align: top; }
 .score-mono { white-space: nowrap; color: var(--color-fg-faint); }
@@ -194,7 +195,8 @@
   margin-top: 1.75rem;
   padding-top: 1rem;
   border-top: 1px solid var(--color-line);
-  font: 11.5px var(--font-mono);
+  font: 12.5px var(--font-mono);
+  line-height: 1.5;
   color: var(--color-fg-faint);
   display: flex;
   justify-content: space-between;

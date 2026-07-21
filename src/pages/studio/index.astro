@@ -70,9 +70,11 @@ const evenings = new Set(chronicle.map((e) => e.date)).size
 const premieres = chronicle.filter((e) => e.move === 'ship').length
 
 const kicker = ['Studio · the stage · what is public now', 'studio (Ensemble)', `founded ${chronicle[0]?.date ?? ''}`]
+// One clear line: the stage's tally. The stage-vs-gallery rule (STUDIO_NARRATIVE.stageRule)
+// moved out of the header — it is meta, and the orientNote on the floor already says it.
 const statusHtml =
   `<b>${premieres} premiere${premieres === 1 ? '' : 's'} · ${kills.length} kills · ${stageData.held.length} held · ` +
-  `${sMax} sessions in ${numberWord(evenings)} evenings</b> · ${STUDIO_NARRATIVE.stageRule}`
+  `${sMax} sessions in ${numberWord(evenings)} evenings</b>`
 
 // Stage record — every mark, uncompressed: the chronicle entries that name the premiered
 // work (verbatim search on its title), the encounter events, the standing obligation.

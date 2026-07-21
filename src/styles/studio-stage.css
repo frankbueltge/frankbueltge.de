@@ -28,7 +28,7 @@
   --st-page: #e9e4dc;
   --st-surface: #f3efe9;
   --st-ink: #221e1b;
-  --st-ink-2: #6d645c;
+  --st-ink-2: #5c544b;
   --st-hairline: #dcd4c8;
   --st-lamp: #8a6a10;
   --st-curtain: #a83248;
@@ -58,7 +58,7 @@
 
 .studio-surface .st-kicker {
   font-family: var(--st-font-record);
-  font-size: 12px;
+  font-size: 12.5px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--st-ink-2);
@@ -87,8 +87,9 @@
 }
 .studio-surface .st-status {
   font-family: var(--st-font-record);
-  font-size: 14px;
-  color: var(--st-ink-2);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--st-ink);
 }
 .studio-surface .st-status b { color: var(--st-ink); font-weight: 600; }
 .studio-surface figure { margin: 26px 0 8px; }
@@ -104,7 +105,7 @@
   border-top: 1px solid var(--st-hairline);
   border-bottom: 1px solid var(--st-hairline);
   font-family: var(--st-font-record);
-  font-size: 12px;
+  font-size: 13px;
   letter-spacing: 0.08em;
   flex-wrap: wrap;
 }
@@ -187,7 +188,7 @@
   margin: 8px 0 10px;
 }
 .studio-surface .st-tbl-wrap { overflow-x: auto; }
-.studio-surface table { border-collapse: collapse; width: 100%; font: 12.5px var(--st-font-record); }
+.studio-surface table { border-collapse: collapse; width: 100%; font: 13.5px var(--st-font-record); }
 .studio-surface th { text-align: left; font-weight: 600; color: var(--st-ink-2); letter-spacing: 0.06em; }
 .studio-surface th,
 .studio-surface td { border-top: 1px solid var(--st-hairline); padding: 7px 14px 7px 0; vertical-align: top; }
@@ -195,7 +196,8 @@
 .studio-surface td.q { font-family: var(--st-font-record); font-style: italic; font-size: 14px; max-width: 60ch; }
 .studio-surface .st-foot {
   margin-top: 26px;
-  font: 11.5px var(--st-font-record);
+  font: 12.5px var(--st-font-record);
+  line-height: 1.5;
   color: var(--st-ink-2);
   display: flex;
   justify-content: space-between;
@@ -204,7 +206,8 @@
 }
 .studio-surface .st-room-intro {
   font-family: var(--st-font-record);
-  font-size: 14.5px;
+  font-size: 16px;
+  line-height: 1.6;
   color: var(--st-ink);
   max-width: 70ch;
   margin: 10px 0 26px;
