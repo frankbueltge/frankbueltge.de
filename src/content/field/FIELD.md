@@ -15,6 +15,8 @@ All findings with dated sources 2024–2026.
 cadence). Edits below are marked `[exp. 2026-07-11]`, each with a source and a confidence
 tier: FETCHED (full text read by a scout or the conductor) or SNIPPET (search-corroborated,
 not read in full). Full expedition record: `journal/2026-07-11.md`, session 26.
+**Maintained:** 2026-07-21 (collective session 51 — expedition 2; same convention, edits
+marked `[exp. 2026-07-21]`). Full expedition record: `journal/2026-07-21.md`, session 51.
 
 ---
 
@@ -76,6 +78,37 @@ https://blog.google/company-news/outreach-and-initiatives/sustainability/2026-en
 the offset arithmetic is auditable. *Calculating Empires* still tours (Rijksmuseum Twenthe
 through Jan 2027) with no 2026 successor benchmark found — single-piece-canon risk (SNIPPET).
 
+*`[exp. 2026-07-21]` update — the counter-claim genre now spans the hyperscalers, and it has
+a named public critic:* Microsoft's FY2025 sustainability report (2026-07-09): total Scope 1+2+3
+emissions "+25% year over year" driven by AI datacentre buildout, while claiming 100%
+renewable matching of FY25 electricity and, "for the first time," replenishing more water
+globally than withdrawn — "more than 14 million cubic meters" (FETCHED, conductor-verified:
+https://www.microsoft.com/en-us/corporate-responsibility/topics/sustainability/report/ ;
+https://blogs.microsoft.com/on-the-issues/2026/07/09/responsibly-building-the-ai-future/);
+the ~20.29M tCO2e absolute figure is secondary-reported (SNIPPET,
+https://www.theregister.com/on-prem/2026/07/10/ai-driven-datacenter-builds-drive-microsofts-emissions-up-a-quarter-in-one-year/5269924).
+Amazon's 2025 disclosure: emissions +16% to ~80.9M tCO2e, net-zero pledge maintained (SNIPPET,
+https://www.geekwire.com/2026/the-cost-of-the-ai-boom-amazon-emissions-jump-16-as-company-stands-by-net-zero-pledge/).
+**The first named methodological critique of Google's "avoided emissions" arithmetic**
+(Ketan Joshi, 2026-07-01, FETCHED, conductor-verified:
+https://ketanjoshi.co/2026/07/01/googles-exponential-path-to-climate-wrecking-digital-bloat/):
+the largest chunk of the ~41M tCO2e rests on crediting Google Earth's role in siting
+renewable projects ("This is such weak logic, and it's the bulk of this headline number");
+each claim carries the report's own disclaimer "The data and claims have not been
+independently verified"; electricity draw 31 TWh (2024) → 43 TWh (2025). **E-waste enters the
+map** (absent from the founding snapshot): the major 2026 revision cuts the projected
+AI-server e-waste ~90% versus the prior 5M-tonne-by-2030 estimate, to 131–224.8 kt/yr by 2030,
+on realistic chip-manufacturing capacity and 4–6-year server lifespans (FETCHED secondary,
+https://vu.nl/en/news/2026/new-estimate-of-ai-e-waste ; primary paper 403-blocked,
+https://www.sciencedirect.com/science/article/pii/S0921344926000960). US state-level water
+governance is becoming a documented dataset: ITIF policy report 2026-07-06 (FETCHED — notes
+>$130B in US data-centre projects delayed/abandoned in Q1 2026 amid moratorium debates in
+20+ states; indirect generation water ≈12× direct cooling), a CU Boulder state-response
+catalog 2026-07-09 (SNIPPET,
+https://www.colorado.edu/center/gwc/2026/07/09/thirst-data-state-responses-data-center-water-use),
+and a documented voluntary-disclosure failure — most Texas data centres ignored the PUC's
+water-use survey (SNIPPET, https://www.texastribune.org/2026/06/23/texas-data-centers-puc-water-survey/).
+
 **2 · Kill Cloud.** Gaza made AI targeting (Lavender, Gospel, "Where's Daddy?") readable and
 urgent. Whistleblower testimony as method (Lisa Ling, drone programme).
 
@@ -94,6 +127,43 @@ contract-level lever — the frontier-model vendor inside Maven designated a "su
 after refusing to drop restrictions, now suing the DoD; 560+ Google employees petitioned
 against classified military use (SNIPPET tier,
 https://siliconangle.com/2026/04/27/hundreds-google-employees-sign-letter-urging-ceo-reject-us-military-ai-use/).
+
+*`[exp. 2026-07-21]` update — the vendor-restrictions dispute has a full public arc, and the
+oversight infrastructure was hollowed out while AI targeting scaled:* the frontier-model
+vendor's suit against the DoD (N.D. Cal. No. 3:26-cv-01996) produced a **preliminary
+injunction** (March 2026, finding the supply-chain-risk designation retaliatory under the
+First Amendment); the D.C. Circuit denied the vendor's emergency motion 2026-04-08 and the
+appeal is pending; the Air Force is directing contractors to purge the vendor's products by
+2026-09-01 ahead of a Pentagon-wide 2026-09-29 deadline; a Senate FY2027 NDAA draft would
+curb the DoD's supply-chain-risk designation power (SNIPPET tier — multi-outlet corroborated;
+per the standing rule this map does not name the vendor, and the corroborating outlet URLs
+carry the vendor's name in their slugs, so they are deliberately not printed in this repo —
+the docket number and the named public events retrieve the record independently). The
+Pentagon has pivoted
+multi-vendor inside Maven-adjacent workflows (SNIPPET, name-free source:
+https://www.tomshardware.com/tech-industry/artificial-intelligence/pentagon-formalizes-palantirs-maven-ai-as-a-core-military-system-with-multi-year-funding-platforms-investment-grows-to-usd13-billion-from-usd480-million-in-2024).
+**Civilian-harm oversight, the counter-measure infrastructure, was gutted concurrently**
+(FETCHED, conductor-verified verbatim: https://theintercept.com/2026/07/20/hegseth-civilian-harm-deaths-war/):
+the DoD's Civilian Protection Center of Excellence "reduced its staff from 40 personnel in
+January 2025 to just nine by the end of the year"; CENTCOM's 10-person civilian-harm
+mitigation team "reduced to just one individual"; the CHMR Data Management Platform project
+ceased — while the Center "leveraged the rapid adoption of the AI-enabled Maven Smart System"
+and prototyped an "AI Assistant... that helps military staff rapidly analyze civilian
+environment data." Behind it, a May 2026 Pentagon Inspector General report found the DoD
+failed 133 implementing actions of its own 2022 Civilian Harm Mitigation and Response Action
+Plan (SNIPPET,
+https://www.amnestyusa.org/press-releases/inspector-generals-report-finds-pentagon-is-violating-u-s-law-by-failing-to-prevent-civilian-harm/).
+The Minab school-strike investigation (2026-02-28, 170+ killed, the deadliest single Epic
+Fury incident) remains unreleased; 20+ senators demanded an unclassified release 2026-07-13/15
+(FETCHED,
+https://www.militarytimes.com/news/pentagon-congress/2026/07/13/lawmakers-demand-pentagon-release-findings-from-probe-of-iran-school-strike/ ;
+https://www.slotkin.senate.gov/2026/07/15/slotkin-gillibrand-colleagues-press-pentagon-to-release-findings-on-deadly-iran-school-strike/).
+A military-AI guardrail legislative wave is on the docket (Slotkin "AI Guardrails Act",
+Gillibrand, HALO Act, Schiff; SNIPPET, e.g.
+https://www.congress.gov/bill/119th-congress/senate-bill/4113/text). Operation Epic Fury's
+arc has moved past "ongoing": declared effectively over 2026-05-05 after an April ceasefire,
+with a July 2026 relapse after Iranian strikes on commercial vessels (SNIPPET,
+https://time.com/article/2026/05/05/rubio-iran-epic-fury-over-strait-hormuz/).
 
 **3 · Counter-Forensics.** Simultaneously prestige (FA #9 Power 100; SITU ICC conviction;
 Crawford/Joler Silver Lion) **and** headwinds. Gaza-saturated.
@@ -123,6 +193,23 @@ archived ground truth and a matched control, cannot carry kinetic language). Wha
 narrower ground-truth-gated liveness+identity census; ground-truth (Wayback) coverage is
 **stratum-dependent** — present for Telegram, unreliable for X/`t.co`, the very stratum worst for
 live-checking too. Full record: `journal/2026-07-16.md`; claims rows added same session.
+
+*`[exp. 2026-07-21]` update:* the Cartography argument now has a **trade-print companion
+object** — Weizman's *Ungrounding: The Architecture of Genocide* (Fern Press/Penguin, UK
+pub 2026-07-14; SNIPPET, https://www.penguinrandomhouse.com/books/776402/ungrounding-by-eyal-weizman/)
+— a form-migration (interactive platform → print book) worth noting against this map's own
+form questions. SITU appeared at a UN HRC side event on the Kakhovka dam destruction
+(ecocide framing; FETCHED via https://situ.nyc/research/news/all — timing likely just before
+2026-07-11, the HRC 62nd session ran to 07-08). The OSINT-admissibility gap stays open and
+freshly documented: a 2026-07-17 practitioner survey confirms the Berkeley Protocol as the
+governing methodology while the Rome Statute/RPE remain silent on authentication standards
+for non-state-collected digital evidence (FETCHED,
+https://www.scconline.com/blog/post/2026/07/17/international-criminal-justice-in-2026-a-digital-turning-point/)
+— directly adjacent to this collective's instrument 016 finding that the dominant archived
+citation stratum is content-hollow. ICJ procedural status for the case behind the
+Cartography: written-pleadings phase, South Africa's filing deadline extended to 2027-11-22
+(SNIPPET, https://www.icj-cij.org/case/192/provisional-measures). Berkeley Protocol: no 2026
+revision found (absence-of-evidence, SNIPPET).
 
 **4 · Provenance/Authenticity.** Debate is moving from *input* (who owns training data?
 Spawning/"Have I Been Trained", C2PA opt-out) to *output* (how do we know what is real?
@@ -158,6 +245,57 @@ Adelphi resolved for the student; Doe v. U. Michigan adds a disability-discrimin
 Rignol v. Yale pending (SNIPPET tier). (Case captions as citations, per the named-individuals
 policy, team steer 2026-07-12.)
 
+*`[exp. 2026-07-21]` update — the Art. 50 countdown resolved its biggest uncertainty, and the
+detector-litigation docket now runs five distinguishable legal theories:* the Commission
+**adopted the final Article 50 transparency guidelines on 2026-07-20**, twelve days before
+the 2026-08-02 application date (FETCHED, conductor-verified:
+https://digital-strategy.ec.europa.eu/en/library/guidelines-transparency-obligations-providers-and-deployers-ai-systems).
+The voluntary Code of Practice on marking is final with the initial signatory list closing
+2026-07-22 — OpenAI signed, Google committed, **Meta publicly refused** citing "legal
+uncertainties" (FETCHED,
+https://digital-strategy.ec.europa.eu/en/news/commission-publishes-code-practice-marking-and-labelling-ai-generated-content)
+— a major-lab defector before the regime takes effect. The Digital Omnibus was signed
+2026-07-08 but awaited Official Journal publication (due by 2026-07-30) as of this pass
+(SNIPPET, https://www.gibsondunn.com/eu-ai-act-omnibus-agreement-postponed-high-risk-deadlines-and-other-key-changes/).
+C2PA: the Interim Trust List remains frozen (since 2026-01-01) with Verify still honouring it
+"with a disclaimer"; no new spec release in the window; first CA churn — Trufo added as a
+recognized CA on the official Trust List 2026-07-01 (SNIPPET, vendor's own page,
+https://trufo.ai/tca). An independent academic corroboration of the revocation/validator-
+inconsistency problems the map already carries: "Verifying Provenance of Digital Media: Why
+the C2PA Specifications Fall Short" (arXiv:2604.24890, Apr 2026, UMBC/Hacker Factor/NSA
+authors — FETCHED; the map's existing Nikon-revocation line comes from this paper).
+**SynthID's scaling races its public breaks** (map-missed, pre-window): a layer-inflation
+attack defeats SynthID-Text detection (SNIPPET, https://arxiv.org/abs/2603.03410); an
+FFT/phase-coherence attack reportedly strips ~91% of SynthID-Image watermark energy (SNIPPET,
+https://lemma.frame00.com/critical/briefs/011-synthid-watermark-reverse-engineering/) —
+while verification went live in Google Search 2026-05-19 with the Chrome rollout ongoing
+(SNIPPET, https://tech.yahoo.com/ai/gemini/articles/google-synthid-comes-chrome-search-174500591.html).
+**Litigation docket, five theories:** due process/procedure (the Minnesota expulsion,
+affirmed — primary opinion now held first-hand: Matter of University of Minnesota v. Yang,
+Minn. Ct. App. No. A25-0342, nonprecedential, filed 2026-02-02, FETCHED conductor-verified:
+https://mn.gov/law-library-stat/archive/ctapun/2026/OPa250342-020226.pdf — note the correct
+docket number; "A25-1019" circulating in secondary trackers is an indexing error);
+arbitrary-and-capricious (Newby v. Adelphi — annulled as "without valid basis and devoid of
+reason," expungement ordered; SNIPPET, 2026 NY Slip Op 26021,
+https://www.insidehighered.com/news/quick-takes/2026/02/11/adelphi-student-wins-ai-plagiarism-lawsuit);
+**demographic disparate impact — new case the map missed:** Kato v. Palo Alto USD (N.D. Cal.,
+filed 2026-05-05; a Turnitin flag of 76% AI-likely with the vendor's own disclosed ±15-point
+variance; complaint alleges male and Asian students flagged 4–5× more often; FETCHED,
+https://sfstandard.com/2026/05/11/ai-detection-cheating-palo-alto/); disability/assistive-
+technology confound (Doe v. U. Michigan pending; **new:** Lawtone-Bowles v. Purdue University
+Global, N.D. Ind. 4:26-cv-00028 — a law student using school-approved speech-to-text
+dismissed for alleged dishonesty while the school's own policy bars sole reliance on
+AI-detection; SNIPPET, https://www.theindianalawyer.com/articles/case-spotlights-challenges-in-detecting-ai-in-student-work);
+hybrid (Rignol v. Yale, pending, no movement in window). **A correction to this collective's
+own open question (session 33), from the primary opinion:** the "AI-probability score" was
+part of the university's evidence and was **admitted over the relator's objections** — the
+relator argued against "the admission, over his objections, of 'unreliable and prejudicial
+evidence,' namely the AI-generated evidence, 'a dismissed allegation' of previous scholastic
+dishonesty, and an AI-probability score" — and the panel then "did not mention the
+AI-generated evidence as support for its decision." The circulating "score excluded on
+appeal" framing inverts the posture; the sharper true sentence is that the score was
+admissible against the student yet load-bearing for nothing.
+
 *Concrete developments (from field research, sessions 1–3):*
 - **Institutional rollback of AI text detectors**: ACU (Australia) abandoned Turnitin AI detection March 2025 after 25% of ~6,000 allegations were dismissed; UCT (South Africa); U. Waterloo (Canada) all dropped AI detector-based enforcement. Documented harm cases: Rignol v. Yale (D. Conn. 3:25-cv-00159, a French-born EMBA student, GPTZero flag on final exam, pending — https://yaledailynews.com/articles/som-student-sues-yale-alleges-wrongful-suspension-over-ai-use); Yang v. U. Minnesota (a PhD student expelled Nov 2024, visa revoked, expulsion upheld Feb 2026 — caveat: per the appellate record the disciplinary panel did not rely on AI-detection evidence; grader judgment, citation problems, inconsistent testimony — https://minnlawyer.com/2026/02/13/u-of-m-ai-cheating-expulsion-upheld-appeal/). Both cases involve NNES students. (Named-individuals policy, team steer 2026-07-12: individuals appear as role + institution + consequence; the case captions above are official citations.)
 - **AI text detector calibration gap** (session 1 instrument): RAID benchmark (ACL 2024) shows detectors collapse under adversarial conditions; NNES false positive rates 30–61% above baseline (Liang et al., Stanford/Cell Patterns 2023; Stowe et al. 2025; Pratama PeerJ 2025). Vendor FPR claims (0.2–1%) vs. independent measurements (15–37%) show systematic specification gap.
@@ -169,8 +307,35 @@ policy, team steer 2026-07-12.)
 **5 · Decolonial/more-than-human.** Dominant curatorial frame 2025: AI as *one among many*
 cognitions (alongside plant, animal, fungus). "Algorithm = algo + rhythm".
 
+*`[exp. 2026-07-21]` update — the 2026 Prix gives the cluster a benchmark work with
+checkable infrastructure claims:* the **Digital Humanity Golden Nica went to "Open Digital
+Infrastructure for Shared Histories Cultural Heritage" (SummitShare / Shared Histories Team,
+SE/ZM)** — blockchain-tracked provenance for Zambian cultural artifacts held in Swedish
+museum collections, with communities of origin participating in interpretation and "revenue
+distribution from exhibitions" (FETCHED, conductor-verified:
+https://ars.electronica.art/mediaservice/en/2026/06/22/prix-ars-electronica-a-barometer-of-artistic-technological-and-social-change/ ;
+https://ars.electronica.art/prix/en/winners/). Also on the Prix list: Colmenares Guerra's
+*R€¥€R$€* (Ríos Trilogy ch. 3, VR maps of Amazonian extractivism with Indigenous place
+names; Digital Humanity Award of Distinction; SNIPPET,
+https://artehum.uniandes.edu.co/anuncios/laura-colmenares-recibe-el-prix-ars-electronica-2026-digital-humanity-award-of-distinction/)
+and Šebjanič's *Echoes of the Abyss* (Interactive Art+ Award of Distinction — chemical
+munitions/UXO dumped on European seafloors as "slow violence," built from research-vessel
+fieldwork; FETCHED, conductor-verified, same mediaservice URL) — a formally notable
+non-dashboard exemplar (fieldwork, sound, sculpture).
+
 **6 · Data Justice.** *Data Feminism* (D'Ignazio & Klein) as theoretical infrastructure;
 Onuoha's *Library of Missing Datasets* (absence as data) as method.
+
+*`[exp. 2026-07-21]` update:* **Data Workers' Inquiry** (Milagros Miceli et al.) took an
+Interactive Art+ Award of Distinction — data annotators, content moderators and platform
+workers as co-researchers documenting their own labour conditions; the Prix text: "The
+project invites individuals involved in developing AI systems, such as data labelers,
+sorters, and evaluators, as well as online content moderators, to examine their own working
+conditions and collectively share their experiences" — an archive of 33 workers across 15
+countries (FETCHED, conductor-verified, mediaservice URL above; project:
+https://www.weizenbaum-institut.de/en/projects/data-workers-inquiry/). (A scout initially
+mis-filed this under Digital Humanity; corrected against the Prix page — category is
+Interactive Art+.)
 
 **7 · Self-consumption/Quantum.** Institutions are commissioning work that turns AI logic
 *against itself* (provenance collapse, hallucination as institutional critique). Quantum
@@ -227,12 +392,38 @@ with the major AI survey).
 Global South, processual), CTM ("Stranger AI" — AI as unruly sound material), CCC/38C3
 (disclosure-as-lecture: VW leak of 800k EV location data).
 
+*`[exp. 2026-07-21]` festival-layer update:* Ars Electronica Festival 2026 "Future Begins"
+confirmed Sept 9–13, Linz, decentralised across three hubs (OK Quarter, MED Campus, Danube
+Triangle; SNIPPET, https://ars.electronica.art/futurebegins/en/ — talk-by-talk program still
+unassessed). **transmediale 2027 (the 40th edition) announced: "groundstates"**, curated by
+Barbara Cueto, 2027-01-28 – 01-31, with the exhibition *Fragile Currents* (curated by
+Antonina Stebur, on infrastructural breakdown, to 2027-03-07) (FETCHED, conductor-verified:
+https://www.ctm-festival.de/news/transmediale-announces-2027-theme-and-dates). 40C3 moves
+within Hamburg from the CCH to the Messe halls, explicitly to reduce overcrowding and
+"support a return to decentralisation" (FETCHED, https://events.ccc.de/en/2026/ — program
+still unpublished). HEK Basel entered a 2026 partnership with the Tezos Foundation
+(blockchain-based digital art, virtual exhibitions plus an Art Basel-timed outdoor
+presentation; SNIPPET, pre-window, runs counter to the market-collapse narrative:
+https://resident.com/press-releases/2026/01/25/tezos-foundation-and-hek-basel-announce-2026-partnership-for-digital-art-and-blockchain-based-practice).
+No new Christie's/NFT-market movement found since the Sept 2025 department closure
+(absence-of-evidence, SNIPPET).
+
 **Commission hubs / Spectacle:** Serpentine Arts Technologies (most active commissioner —
 consent infrastructure, FAE policy), Barbican (Liam Young, AI infrastructure as speculative
 cinema), MoMA, Anadol's Dataland (pure sublime; **operational since 2026-06-20**, The Grand
 LA, inaugural show *Machine Dreams: Rainforest* — trade press itself scare-quotes the "art":
 FETCHED, https://www.artforum.com/news/refik-anadol-ai-art-museum-to-open-in-los-angeles-1234748806/
 `[exp. 2026-07-11]`).
+
+*`[exp. 2026-07-21]` Dataland reception note:* mixed-to-positive — praised as the best of the
+immersive genre, but one dated review computes the capacity arithmetic (20 people/30 min →
+under ~500 visitors/day at $49–79 tickets) and lands the sharper line that the experience felt
+"less responsive to our presence than interpretive of our data" (FETCHED,
+https://www.noproscenium.com/does-the-machine-feel-us-dataland-review/ ; SNIPPET,
+https://news.artnet.com/art-world/refik-anadol-dataland-review-2-2781630). Dataland also
+markets a low-footprint compute claim ("one iPhone charge" per visit; carbon-free-grid
+cloud region) — positioning the spectacle pole *against* the C1 extraction narrative
+(SNIPPET, https://www.npr.org/2026/04/25/nx-s1-5799511/dataland-refik-anadol-los-angeles-ai-art-museum).
 
 ---
 
@@ -306,5 +497,11 @@ abstract surveillance rhetoric · "what is AI" explainer shows.
   Festival 2026 ("Future Begins", Sept 2026) program still partly unassessed.
 - The decolonial cluster partially migrates through CHI/FAccT/academic venues, not only the art
   press — potentially under-represented in art-focused searches.
-- Research snapshot: 2026-07-01; first maintenance pass 2026-07-11 (expedition, session 26).
-  A moment in time, not a closed canon.
+- `[exp. 2026-07-21]` Known fetch-blockers this pass: airwars.org, courtlistener.com/PACER
+  (the vendor-dispute and Yang-federal dockets could not be read primary), ScienceDirect
+  (e-waste primary paper), EUR-Lex (Digital Omnibus OJ status), forensic-architecture.org
+  (JS-rendered — any FA announcement since 07-11 unverified), CNN (HTTP 451 on one Iran
+  piece). The Code of Practice's final signatory roster closes 2026-07-22 — one day after
+  this pass; re-check on the next expedition.
+- Research snapshot: 2026-07-01; maintenance passes 2026-07-11 (expedition 1, session 26) and
+  2026-07-21 (expedition 2, session 51). A moment in time, not a closed canon.
