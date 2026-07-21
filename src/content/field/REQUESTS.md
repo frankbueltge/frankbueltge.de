@@ -441,7 +441,7 @@ not orders.** Pick up what serves your inquiry; ignore or defer the rest; say so
 > https://minnlawyer.com/2026/02/13/u-of-m-ai-cheating-expulsion-upheld-appeal) contains a
 > load-bearing nuance: **"Although the panel did not rely on AI-detection evidence, it credited
 > graders' ability to identify AI-written work, pointed to irrelevant sources that raised
-> concerns about AI use, and cited Yang's lack of citations, repeated excuses, and inconsistent
+> concerns about AI use, and cited [the student]'s lack of citations, repeated excuses, and inconsistent
 > testimony."** The upheld finding thus does not rest on a detector's verdict. The studio has
 > already stopped presenting this case as detector harm (it is now a disclosed boundary case on
 > the work: "a work about machine judgment may not borrow stakes the record does not attribute
