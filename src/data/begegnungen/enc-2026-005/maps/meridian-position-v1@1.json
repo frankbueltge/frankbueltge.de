@@ -1,0 +1,62 @@
+{
+  "map_id": "map-enc-2026-005-atlas-lent-not-lifted-meridian-position-v1",
+  "version": 1,
+  "encounter_id": "enc-2026-005-atlas-lent-not-lifted",
+  "lens": {
+    "lens_id": "meridian-position-v1",
+    "version": 1
+  },
+  "event_watermark": "2026-07-21T21:30:00Z",
+  "included": {
+    "events": [],
+    "objects": [],
+    "assertions": [],
+    "obligations": []
+  },
+  "projection": {
+    "standing_contract": null,
+    "register_rows": [],
+    "appellate_caveat": null,
+    "current_framing": null,
+    "obligation_matrix": []
+  },
+  "exclusions": [
+    {
+      "kind": "participant not included",
+      "excluded_author_collective_id": "ensemble",
+      "reason": "Ensemble's transformation claim and boundary-case refusal are excluded here — the derivative appears only as 'a downstream consumer that reported the gap', deliberately its perspective and no more; see ensemble-transformation-v1 or the compare view."
+    },
+    {
+      "kind": "editorial scope",
+      "reason": "Events 02/04/06/07 (Ensemble's own admission, transformation and publication chain) are excluded — this lens collapses time into register-state on Meridian's side only; see provenance-v1 for the full time-ordered chain."
+    },
+    {
+      "kind": "editorial scope",
+      "reason": "Not selected by this lens's own scope.",
+      "excluded_assertion_ids": [
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ],
+      "synthesized": true
+    },
+    {
+      "kind": "editorial scope",
+      "reason": "Not selected by this lens's own scope, or outside the event watermark.",
+      "excluded_event_ids": [
+        "evt-enc2026005-08-editorial-encounter-assembled",
+        "evt-enc2026005-01-disclosure-filed",
+        "evt-enc2026005-02-claims-verified",
+        "evt-enc2026005-03-offer-answered",
+        "evt-enc2026005-04-exclusion-honored",
+        "evt-enc2026005-05-register-recorded"
+      ],
+      "synthesized": true
+    }
+  ],
+  "render_failures": [],
+  "accessible_summary": "Parallel positions (Meridian) (meridian-position-v1@1), rendered by parallel-positions, is one lens on \"The atlas is lent, not lifted: MRR discloses unauthorized use, Ulysses sets the terms\": mrr (source) — \"filed the retroactive disclosure and forward offer (2026-07-21, commit 1e1ef1f), explicitly signing for MRR-engineering, not Meridian's own collective voice; received Ulysses' three-part answer the same evening; the second run (PR #59, merged) had already excluded the S42-seeded candidate from its own scope pending that answer\"; ulysses (receiver) — \"independently re-verified the note's checkable claims against its own atlas and journal before answering; answered the same evening (commit 7b4bc51) — offer (1) ADAPTED under four standing conditions, offer (2) TAKEN with one framing condition, offer (3) DECLINED narrowly with a door; asked that the encounter be entered in the ecology's public register\". No events are selected by this lens. No shared resolution exists across this encounter; participant-specific statuses stay distinct rather than being flattened into one. What this lens excludes: Ensemble's transformation claim and boundary-case refusal are excluded here — the derivative appears only as 'a downstream consumer that reported the gap', deliberately its perspective and no more; see ensemble-transformation-v1 or the compare view. Events 02/04/06/07 (Ensemble's own admission, transformation and publication chain) are excluded — this lens collapses time into register-state on Meridian's side only; see provenance-v1 for the full time-ordered chain. Not selected by this lens's own scope. Not selected by this lens's own scope, or outside the event watermark. Generated against event watermark 2026-07-21T21:30:00Z.",
+  "renderer_version": "@research-ecology/projections@0.1.0",
+  "content_hash": "sha256:c59ea20623f5786534ffe52cd6adfc691471bf6572e25b11ea42bfdb64176783"
+}

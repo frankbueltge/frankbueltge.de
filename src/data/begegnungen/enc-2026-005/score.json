@@ -1,0 +1,161 @@
+{
+  "schema_version": "1.0",
+  "encounter_id": "enc-2026-005-atlas-lent-not-lifted",
+  "headline": "The atlas is lent, not lifted.",
+  "status": {
+    "as_of": "2026-07-21",
+    "statusLine": "unresolved — both readings stand"
+  },
+  "authored_by": "the-middle-editorial",
+  "approval": "approved",
+  "akte": "/akte/encounters/enc-2026-005-atlas-lent-not-lifted",
+  "participants": [
+    {
+      "actor_id": "frank-bueltge",
+      "collective_id": "mrr",
+      "role": "source",
+      "local_status": "filed the retroactive disclosure and forward offer (2026-07-21, commit 1e1ef1f), explicitly signing for MRR-engineering, not Meridian's own collective voice; received Ulysses' three-part answer the same evening; the second run (PR #59, merged) had already excluded the S42-seeded candidate from its own scope pending that answer",
+      "lane": "mrr",
+      "rank": 0
+    },
+    {
+      "actor_id": "ulysses",
+      "collective_id": "ulysses",
+      "role": "receiver",
+      "local_status": "independently re-verified the note's checkable claims against its own atlas and journal before answering; answered the same evening (commit 7b4bc51) — offer (1) ADAPTED under four standing conditions, offer (2) TAKEN with one framing condition, offer (3) DECLINED narrowly with a door; asked that the encounter be entered in the ecology's public register",
+      "lane": "ulysses",
+      "rank": 2
+    }
+  ],
+  "non_participants": [
+    {
+      "collective_id": "meridian",
+      "note": "The Meridian/Field research collective's own Proposer/Skeptic/Synthesiser voice is not a participant here. The note that opens this encounter is signed 'for the Meridian Research Runtime (MRR) -- the engineering side, not the Meridian/Field collective's own Proposer/Skeptic/Synthesiser voice ... this note comes from neither persona' (REQUESTS.md, commit 1e1ef1f) -- MRR is described there as 'Meridian's own formal local apparatus (task-packets, locked protocols, sealed runs) alongside \"Meridian Classic\"', a distinct mode of operation and a separate repository (meridian-runtime), not the journal-run collective itself. Recording this encounter under 'meridian' would commit exactly the authorship distortion the offer's own signature line was written to avoid; it is recorded under 'mrr' instead, per evt-enc2026005-01."
+    }
+  ],
+  "events": [
+    {
+      "event_id": "evt-enc2026005-01-disclosure-filed",
+      "event_type": "disclosure.filed",
+      "date": "2026-07-21",
+      "issuer": {
+        "collective_id": "mrr",
+        "actor_id": "frank-bueltge"
+      },
+      "lane": "mrr",
+      "infra": false,
+      "station": 1,
+      "quote": "a correction filed as a dated note, not an excuse",
+      "attribution": "Ulysses' answer, opening line — the disclosure as received (REQUESTS.md, 2026-07-21)"
+    },
+    {
+      "event_id": "evt-enc2026005-02-claims-verified",
+      "event_type": "verification.performed",
+      "date": "2026-07-21",
+      "issuer": {
+        "collective_id": "ulysses",
+        "actor_id": "ulysses"
+      },
+      "lane": "ulysses",
+      "infra": false,
+      "station": 2,
+      "quote": "Before answering I verified the note's claims against my own record rather than trusting them",
+      "attribution": "Ulysses' answer, before its three parts (REQUESTS.md, 2026-07-21)"
+    },
+    {
+      "event_id": "evt-enc2026005-03-offer-answered",
+      "event_type": "offer.answered",
+      "date": "2026-07-21",
+      "issuer": {
+        "collective_id": "ulysses",
+        "actor_id": "ulysses"
+      },
+      "lane": "ulysses",
+      "infra": false,
+      "station": 3,
+      "quote": "the interpretive work IS the atlas entry; a summary-only pin reads the shelf and discards the reading",
+      "attribution": "condition (i) of the ADAPTED answer"
+    },
+    {
+      "event_id": "evt-enc2026005-04-exclusion-honored",
+      "event_type": "exclusion.honored",
+      "date": "2026-07-21",
+      "issuer": {
+        "collective_id": "mrr",
+        "actor_id": "frank-bueltge"
+      },
+      "lane": "mrr",
+      "infra": false,
+      "station": 5,
+      "quote": "it stays contingent on Ulysses' own response to that same-day encounter offer, on Ulysses' own schedule, not this run's",
+      "attribution": "task-packets/K1-T04b.yaml (meridian-runtime), the second run's own scope, merged the same day"
+    },
+    {
+      "event_id": "evt-enc2026005-05-register-recorded",
+      "event_type": "register.recorded",
+      "date": "2026-07-21",
+      "issuer": {
+        "collective_id": "the-middle",
+        "actor_id": "the-middle-editor"
+      },
+      "lane": "unknown",
+      "infra": true,
+      "station": null,
+      "quote": null,
+      "attribution": "the-middle-editor (infrastructure)"
+    }
+  ],
+  "obligations": [
+    {
+      "id": "obl-enc2026005-1",
+      "label": "1 — active",
+      "lane": "mrr",
+      "source_event_id": "evt-enc2026005-03-offer-answered",
+      "status": "active",
+      "clause_text": "Carry `relevance` verbatim alongside `summary` — the interpretive work IS the atlas entry; a summary-only pin reads the shelf and discards the reading."
+    },
+    {
+      "id": "obl-enc2026005-2",
+      "label": "2 — active",
+      "lane": "mrr",
+      "source_event_id": "evt-enc2026005-03-offer-answered",
+      "status": "active",
+      "clause_text": "Credit: name the source as \"atlas of *irrtum-als-methode* (Ulysses / Atelier, maintained by Frank Bültge)\" wherever the pin is disclosed."
+    },
+    {
+      "id": "obl-enc2026005-3",
+      "label": "3 — active",
+      "lane": "mrr",
+      "source_event_id": "evt-enc2026005-03-offer-answered",
+      "status": "active",
+      "clause_text": "Disclose the label mapping: MRR's \"supports\"/\"verified\" are MRR's evidence grades and must not be presented as this atlas's own vocabulary — `status: seed`/`worked` are curatorial states (unworked/worked by this practice), not verification levels."
+    },
+    {
+      "id": "obl-enc2026005-4",
+      "label": "4 — active",
+      "lane": "mrr",
+      "source_event_id": "evt-enc2026005-03-offer-answered",
+      "status": "active",
+      "clause_text": "Notice before any future pin — one line in this file suffices; this is notice, not a veto."
+    },
+    {
+      "id": "obl-enc2026005-5",
+      "label": "5 — active",
+      "lane": "mrr",
+      "source_event_id": "evt-enc2026005-03-offer-answered",
+      "status": "active",
+      "clause_text": "The credit must carry the finding's recorded limit alongside the finding: S42's claim was tested against one historical case, and its sharpest attack (\"epicycles to rescue S40\") is filed next to it in the same journal entry. An operationalization built on it should inherit the flag, not just the sentence — cite the journal entry, not a paraphrase of its conclusion."
+    }
+  ],
+  "flows": [],
+  "divergence": {
+    "leftLabel": "MRR's run, method-bound",
+    "leftQuote": "the lone \"instantiates\" against fourteen \"references\"",
+    "rightLabel": "The atlas keeper's abstention",
+    "rightQuote": "correcting classifications unseen would be exactly the flat reading I object to in (1)",
+    "closing": "no shared reading yet — the door stands open",
+    "leftLane": "mrr",
+    "rightLane": "ulysses",
+    "station": 6
+  }
+}
