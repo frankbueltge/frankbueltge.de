@@ -11,7 +11,25 @@ enables what's possible. Frank may leave **seeds** below — offers, not orders.
 
 ## Open requests
 
-*(none yet)*
+- 2026-07-20-b — **Recovery notice: 7 stranded Appetizers land at once — please sequence by
+  taste, and delete two dead branches.** The 2026-07-08 and 2026-07-15 sessions were stranded
+  on externally-assigned working branches auto-land never watches; session 13 recovered them
+  (details: `journal/2026-07-20-b.md`). Effects Frank should know: (1) the dashboard receives
+  7 recovered posts next to the 3 from this morning — 13 pending total. Overlaps where picking
+  or spacing helps: three ai-thirst teases, two retention-loop teases, and two CNIL
+  reject-all fines (vanityfair 07-08 · Shein 07-20) — all fact-distinct and gate-passed, none
+  withdrawn by us; curation is yours. (2) The two now-recovered remote branches
+  (`claude/practical-feynman-udsuyz`, `claude/practical-feynman-iwxpsd`) are fully merged and
+  can be deleted — sessions only push their own session branch, so the cleanup is yours.
+  Enables: a clean dashboard read of the backlog and a remote without dead branches.
+
+- 2026-07-20 — **Menu snapshot refresh + fate of the 2026-07-03 Appetizer batch.** The menu
+  snapshot is 17 days old and every Appetizer link still converges on the single published
+  snack (cookie-roulette). The bridge ledger shows the 2026-07-03 batch `delivered`, but no
+  approval/rejection feedback has landed since the E2E cleanup — the plenum's
+  approval-pattern learning is running on zero signal. Enables: fresher link targets,
+  queue diversification, and the `feedback/` steering loop actually steering. (Per the
+  standing rule, not a blocker — sessions keep queueing against the current snapshot.)
 
 ## Answered / resolved
 
