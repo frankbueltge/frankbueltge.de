@@ -10,23 +10,22 @@ import Frame from '@/components/field/surface/Frame.astro'
 import { loadChronicle, entriesForWork } from '@/lib/field/chronicle'
 import { currentScore } from '@/lib/begegnungen'
 import { buildControlSvg, dayRange, type ControlMark } from '@/lib/field/strip'
+import { latestInstrument, type InstrumentMeta } from '@/lib/field/latest'
 import { FIELD_NARRATIVE } from '@/config/field-wording'
 
-const slug = FIELD_NARRATIVE.currentInstrumentSlug
 const metas = import.meta.glob('/src/components/field/werke/*/meta.json', {
   eager: true, import: 'default',
-}) as Record<string, { title?: string; date?: string; medium?: string; embodies?: string }>
+}) as Record<string, InstrumentMeta>
 const metaBySlug = new Map(
   Object.entries(metas).map(([p, m]) => [p.replace('/src/components/field/werke/', '').replace('/meta.json', ''), m]),
 )
-const meta = metaBySlug.get(slug)
-if (!meta?.date) throw new Error(`/field: instrument ${slug} has no committed meta date`)
 
-// deterministic instrument number: position in the (date, slug)-ordered works list
-const ordered = [...metaBySlug.entries()].sort(([sa, a], [sb, b]) =>
-  (a.date ?? '') === (b.date ?? '') ? sa.localeCompare(sb) : (a.date ?? '').localeCompare(b.date ?? ''),
-)
-const instrumentNo = String(ordered.findIndex(([s]) => s === slug) + 1).padStart(3, '0')
+// The featured instrument is Meridian's NEWEST committed work, derived live from the synced
+// mirror — NOT a hand-set pointer. A hardcoded slug (FIELD_NARRATIVE.currentInstrumentSlug) once
+// froze this header at instrument 001 while the engine had already shipped further; the content
+// syncs nightly, so the pointer must follow it on its own. The rule + fail-loud guards live in
+// lib/field/latest.ts under test (latest.test.ts) so the freeze cannot silently return.
+const { slug, meta, instrumentNo } = latestInstrument([...metaBySlug.entries()])
 
 const chronicle = loadChronicle()
 const touching = entriesForWork(chronicle, slug)

@@ -25,8 +25,8 @@
   --at-page: #100e0c;
   --at-surface: #1b1815;
   --at-ink: #e9e2d4;
-  --at-ink-2: #a1988a;
-  --at-hairline: #332e27;
+  --at-ink-2: #c0b6a8;
+  --at-hairline: #3d362f;
   --at-thread: #5c76e6;
   --at-red: #cc584a;
   --at-graphite: #97907f;
@@ -44,7 +44,7 @@
   background: var(--at-surface);
   color: var(--at-ink);
   border: 1px solid var(--at-hairline);
-  font-family: var(--at-font-display);
+  font-family: var(--at-font-record);
 }
 @media (max-width: 640px) {
   .atelier-surface { padding: 1.5rem 1rem 2.5rem; }
@@ -70,7 +70,7 @@
   letter-spacing: normal;
 }
 .atelier-surface .at-h1 {
-  font-family: var(--at-font-display);
+  font-family: var(--at-font-record);
   font-style: italic;
   font-weight: 600;
   color: var(--at-h1-ink);
@@ -131,12 +131,12 @@
 .atelier-surface .comp { stroke: var(--at-graphite); stroke-width: 1.1; fill: none; stroke-dasharray: 5 4; }
 .atelier-surface .ground { stroke: var(--at-graphite); stroke-width: 2.6; }
 .atelier-surface .door { stroke: var(--at-ink-2); stroke-width: 1.4; fill: none; stroke-dasharray: 6 5; }
-.atelier-surface .t-thread { font: italic 14.5px var(--at-font-display); fill: var(--at-thread); }
+.atelier-surface .t-thread { font: italic 14.5px var(--at-font-record); fill: var(--at-thread); }
 .atelier-surface .t-src { font: 11.5px var(--at-font-record); fill: var(--at-ink-2); }
 .atelier-surface .t-sess { font: 600 11px var(--at-font-record); fill: var(--at-red); }
-.atelier-surface .t-work { font: italic 13.5px var(--at-font-display); fill: var(--at-ink); }
+.atelier-surface .t-work { font: italic 13.5px var(--at-font-record); fill: var(--at-ink); }
 .atelier-surface .t-date { font: 10.5px var(--at-font-record); fill: var(--at-ink-2); }
-.atelier-surface .t-bridge { font: italic 12.5px var(--at-font-display); fill: var(--at-ink); }
+.atelier-surface .t-bridge { font: italic 12.5px var(--at-font-record); fill: var(--at-ink); }
 .atelier-surface .t-note-a { font: 11.5px var(--at-font-record); fill: var(--at-ink-2); }
 
 /* jedes Zeichen ist eine Tür — SVG-Anker */
@@ -204,7 +204,7 @@
 .atelier-surface th,
 .atelier-surface td { border-top: 1px solid var(--at-hairline); padding: 7px 14px 7px 0; vertical-align: top; }
 .atelier-surface td.mono { white-space: nowrap; color: var(--at-ink-2); }
-.atelier-surface td.q { font-family: var(--at-font-display); font-style: italic; max-width: 52ch; }
+.atelier-surface td.q { font-family: var(--at-font-record); font-style: italic; max-width: 52ch; }
 .atelier-surface .at-foot {
   margin-top: 26px;
   font: 11.5px var(--at-font-record);
@@ -218,7 +218,7 @@
   margin-top: 22px;
   padding-top: 14px;
   border-top: 1px solid var(--at-hairline);
-  font-family: var(--at-font-display);
+  font-family: var(--at-font-record);
   font-style: italic;
   font-size: 14.5px;
   color: var(--at-ink-2);
@@ -228,7 +228,7 @@
 
 /* Zimmer (rooms): register lists, shelf rows, prose — in the sheet's serif voice */
 .atelier-surface .at-room-intro {
-  font-family: var(--at-font-display);
+  font-family: var(--at-font-record);
   font-size: 15.5px;
   color: var(--at-ink-2);
   max-width: 70ch;
@@ -263,7 +263,7 @@
   min-width: 3.2em;
 }
 .atelier-surface details.at-page-entry > summary .at-sess-title {
-  font-family: var(--at-font-display);
+  font-family: var(--at-font-record);
   font-style: italic;
   font-size: 15px;
   color: var(--at-ink);
@@ -271,7 +271,7 @@
 .atelier-surface details.at-page-entry > summary:hover .at-sess-title { text-decoration: underline; }
 .atelier-surface details.at-page-entry > summary .at-sess-date { margin-left: auto; white-space: nowrap; }
 .atelier-surface .at-prose {
-  font-family: var(--at-font-display);
+  font-family: var(--at-font-record);
   font-size: 15px;
   line-height: 1.65;
   color: var(--at-ink);
@@ -281,7 +281,7 @@
 .atelier-surface .at-prose h1,
 .atelier-surface .at-prose h2,
 .atelier-surface .at-prose h3 {
-  font-family: var(--at-font-display);
+  font-family: var(--at-font-record);
   font-style: italic;
   line-height: 1.25;
   margin: 1.2em 0 0.5em;
@@ -328,7 +328,7 @@
   scroll-margin-top: 4rem;
 }
 .atelier-surface .at-shelf-row h3 {
-  font-family: var(--at-font-display);
+  font-family: var(--at-font-record);
   font-style: italic;
   font-size: 17px;
   margin: 0;
@@ -351,21 +351,27 @@
   margin: 0 0 18px;
   scroll-margin-top: 4rem;
 }
-.atelier-surface .at-work-card h3 { font-family: var(--at-font-display); font-style: italic; font-size: 19px; margin: 0; }
+.atelier-surface .at-work-card h3 { font-family: var(--at-font-record); font-style: italic; font-size: 19px; margin: 0; }
 .atelier-surface .at-work-card h3 a { color: inherit; text-decoration: none; }
 .atelier-surface .at-work-card h3 a:hover { text-decoration: underline; }
 .atelier-surface .at-work-card .at-work-date { font: 11px var(--at-font-record); color: var(--at-ink-2); margin-left: 0.8em; font-style: normal; }
-.atelier-surface .at-work-card p { margin: 0.5em 0 0; font-size: 14.5px; line-height: 1.55; color: var(--at-ink-2); max-width: 80ch; }
-.atelier-surface .at-work-card iframe {
-  display: block;
-  width: 100%;
-  height: 600px;
-  resize: vertical;
-  overflow: auto;
-  border: 1px solid var(--at-hairline);
-  background: #fff;
-  margin-top: 14px;
+.atelier-surface .at-work-card p { margin: 0.7em 0 0; font-family: var(--at-font-record); font-size: 15px; line-height: 1.66; color: var(--at-ink); max-width: 68ch; }
+/* Exhibition model (2026-07-21): the html work is a door to its full-viewport stage
+   (/atelier/werke-html/<slug>/), not a cramped preview iframe. */
+.atelier-surface .at-work-actions { display: flex; align-items: baseline; gap: 1.6em; flex-wrap: wrap; margin-top: 16px; }
+.atelier-surface .at-work-enter {
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 0.05em;
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1.5px solid currentColor;
+  padding-bottom: 3px;
+  transition: opacity 0.15s ease;
 }
+.atelier-surface .at-work-enter:hover { opacity: 0.65; }
+.atelier-surface .at-work-source { font: 11px var(--at-font-record); color: var(--at-ink-2); text-decoration: underline; }
+.atelier-surface .at-work-source:hover { color: var(--at-ink); }
 .atelier-surface .at-work-card .at-work-links {
   display: flex;
   justify-content: space-between;

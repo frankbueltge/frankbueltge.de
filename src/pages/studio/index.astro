@@ -16,7 +16,9 @@ import stageData from '@/data/studio/stage.curated.json'
 import { numberWord } from '@/lib/atelier/sessions'
 
 const chronicle = loadChronicle()
-const ship = chronicle.find((e) => e.move === 'ship')
+// newest premiere, not the first: the chronicle is oldest-first, so find() returned Native
+// Speaker (the earliest ship) — take the last ship entry instead.
+const ship = chronicle.filter((e) => e.move === 'ship').at(-1)
 if (!ship || !ship.works[0]) throw new Error('/studio: no premiered work in the chronicle mirror')
 const slug = ship.works[0]
 

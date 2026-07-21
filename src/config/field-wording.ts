@@ -49,11 +49,11 @@ export const FIELD_GRAMMAR = {
 
 export const FIELD_NARRATIVE = {
   approval: 'draft' as 'draft' | 'approved',
-  /** Auswahlregel des Eingangs — heute deterministisch das Instrument der laufenden
-   * Begegnung; wenn andere Prüfungen existieren, wird die Regel hier fortgeschrieben. */
+  /** Auswahlregel des Eingangs — deterministisch das jüngste committete Instrument,
+   * live aus der gespiegelten Werkliste in field/index.astro abgeleitet (kein Handzeiger:
+   * ein fest gesetzter Slug fror den Header früher auf Instrument 001 ein). */
   selectionRule:
-    'the entry to /field is the instrument currently under verification, not a dashboard — today, the instrument the current encounter corrected (enc-2026-001)',
-  currentInstrumentSlug: '2026-07-01-calibration-gap',
+    'the entry to /field is Meridian’s newest committed instrument — the most recent one entered into service — not a dashboard; it follows the engine’s mirror on its own as new instruments land',
   /** Ehrliche Abweichungen der Site gegenüber dem Mockup-Generator. */
   provenance: {
     trace:
