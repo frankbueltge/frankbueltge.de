@@ -1,0 +1,17 @@
+---
+// The detail page of the CURRENT entrance encounter — the route slug follows the selection
+// rule (until 2026-07-22 this lived hardcoded at /encounters/enc-2026-001/; the old URL is
+// redirected in public/_redirects). One page per build: the current encounter only.
+import Page from '@/layouts/Page.astro'
+import BegegnungDetail from '@/components/pages/BegegnungDetail.astro'
+import { currentEntrance, shortEncounterSlug } from '@/lib/begegnungen'
+
+export function getStaticPaths() {
+  return [{ params: { slug: shortEncounterSlug(currentEntrance.encounter_id) } }]
+}
+
+const entrance = currentEntrance
+---
+<Page title={`${entrance.title} | Frank Bültge`} description={entrance.headline}>
+  <BegegnungDetail />
+</Page>

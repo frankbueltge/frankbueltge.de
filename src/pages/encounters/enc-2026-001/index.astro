@@ -1,9 +1,0 @@
----
-import Page from '@/layouts/Page.astro'
-import BegegnungDetail from '@/components/pages/BegegnungDetail.astro'
-import { currentEntrance } from '@/lib/begegnungen'
-const entrance = currentEntrance
----
-<Page title={`${entrance.title} | Frank Bültge`} description={entrance.headline}>
-  <BegegnungDetail />
-</Page>
