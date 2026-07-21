@@ -1,0 +1,12 @@
+id: JI-03
+title: Add persistence, import and read model
+depends_on: [JI-02]
+goal: Store or import inquiries without creating a second canonical system.
+deliverables:
+  - additive migration or file importer
+  - repositories/query layer
+  - JSON and Markdown export
+acceptance:
+  - State rebuild is deterministic.
+  - Encounters and local objects remain independent references.
+  - Corrections are append-only.

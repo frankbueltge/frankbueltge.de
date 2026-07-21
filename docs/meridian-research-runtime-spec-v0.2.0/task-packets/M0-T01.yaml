@@ -1,0 +1,46 @@
+task_id: M0-T01
+title: Integrate Research Method Kernel contracts
+status: approved
+objective: Add the v0.2 method schemas, runtime domain models, stable enums, canonical serialization and
+  contract validation without adding framework or model-provider dependencies.
+source_of_truth:
+- AGENTS.md
+- docs/08_RESEARCH_METHOD_KERNEL.md
+- docs/17_METHOD_API_AND_EVENTS.md
+- schemas/*.schema.json
+- examples/housing-populism/*.json
+requirements:
+- MRR-MTH-001
+- MRR-MTH-003
+- MRR-MTH-005
+- MRR-MTH-007
+allowed_paths:
+- packages/domain/**
+- packages/method-kernel/contracts/**
+- tests/contract/**
+- tests/property/**
+- scripts/**
+forbidden_changes:
+- API transport
+- database migrations
+- LLM adapters
+- workflow execution
+- claim promotion behavior
+invariants:
+- all method objects use existing MRR identity and revision primitives
+- JSON round trips preserve semantic content and canonical hashes
+- unknown enum values fail closed
+- domain packages remain framework independent
+acceptance_tests:
+- validate every housing-populism example against its schema
+- property test canonical hash stability under map-key reordering
+- negative tests for missing required lineage
+- import-boundary test
+required_output:
+- implementation summary mapped to requirement IDs
+- changed files
+- commands and test results
+- remaining risks and explicit non-implementation notes
+stop_conditions:
+- existing v0.1.1 identity contracts cannot represent a method object without incompatible change
+- generated models would diverge from checked-in schemas

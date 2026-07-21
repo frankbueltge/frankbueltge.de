@@ -1,0 +1,52 @@
+task_id: M6-T01
+title: Complete housing affordability reference vertical slice
+status: approved
+objective: Wire all RMK components into the synthetic housing-affordability and political-support project,
+  including a failed identification path, locked plan, falsification failure, replication discrepancy
+  and bounded non-answer.
+source_of_truth:
+- docs/16_HOUSING_AFFORDABILITY_REFERENCE_PROJECT.md
+- examples/housing-populism/**
+- acceptance/method-*.feature
+- docs/18_METHOD_BENCHMARKS_AND_ACCEPTANCE.md
+requirements:
+- MRR-MTH-001
+- MRR-MTH-006
+- MRR-MTH-010
+- MRR-MTH-054
+- MRR-MTH-110
+- MRR-MTH-123
+- MRR-MTH-127
+- MRR-MTH-130
+allowed_paths:
+- tests/e2e/housing_populism/**
+- tests/fixtures/housing_populism/**
+- adapters/synthetic_analysis/**
+- packages/benchmark/**
+- docs/generated/reference-run/**
+forbidden_changes:
+- real empirical data
+- named real parties as observations
+- hard-coded gate outcomes
+- external publication
+- bypassing a failed method stage
+invariants:
+- the final output is explicitly synthetic
+- software success does not become scientific success
+- at least one branch is killed and remains inspectable
+- the final decision is justified by machine-readable gates
+acceptance_tests:
+- full e2e run from ResearchScore to ResearchDecision
+- replay from sealed inputs
+- all four method feature files pass
+- final report contains no empirical causal claim
+required_output:
+- implementation summary mapped to requirement IDs
+- changed files
+- commands and test results
+- remaining risks and explicit non-implementation notes
+- reference-run object inventory and lineage graph
+- human-readable bounded non-answer
+stop_conditions:
+- slice can pass only by weakening causal or synthetic gates
+- fixtures encode the final answer rather than the generating conditions

@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/mrr/schemas/common.schema.json",
+  "title": "MRR Common Definitions",
+  "$defs": {
+    "urn": {
+      "type": "string",
+      "pattern": "^urn:mrr:[a-z0-9-]+:[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "baseObject": {
+      "type": "object",
+      "required": ["id", "api_version", "kind", "practice_id", "revision", "created_at", "created_by", "content_hash"],
+      "properties": {
+        "id": {"$ref": "#/$defs/urn"},
+        "api_version": {"type": "string", "const": "mrr/v1alpha1"},
+        "kind": {"type": "string", "minLength": 1},
+        "practice_id": {"$ref": "#/$defs/urn"},
+        "revision": {"type": "integer", "minimum": 1},
+        "created_at": {"$ref": "#/$defs/timestamp"},
+        "created_by": {"$ref": "#/$defs/urn"},
+        "content_hash": {"$ref": "#/$defs/sha256"},
+        "supersedes": {"anyOf": [{"$ref": "#/$defs/urn"}, {"type": "null"}]},
+        "labels": {"type": "object", "additionalProperties": {"type": "string"}}
+      }
+    },
+    "signature": {
+      "type": "object",
+      "required": ["signer_practice_id", "key_id", "algorithm", "signed_at", "value"],
+      "properties": {
+        "signer_practice_id": {"$ref": "#/$defs/urn"},
+        "key_id": {"type": "string", "minLength": 1},
+        "algorithm": {"type": "string", "const": "Ed25519"},
+        "signed_at": {"$ref": "#/$defs/timestamp"},
+        "value": {"type": "string", "minLength": 40}
+      },
+      "additionalProperties": false
+    },
+    "artifactRef": {
+      "type": "object",
+      "required": ["artifact_id", "content_hash"],
+      "properties": {
+        "artifact_id": {"$ref": "#/$defs/urn"},
+        "content_hash": {"$ref": "#/$defs/sha256"},
+        "classification": {
+          "type": "string",
+          "enum": ["PUBLIC", "INTERNAL", "RESTRICTED", "SENSITIVE", "PARTICIPANT_IDENTIFIABLE"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "scope": {
+      "type": "object",
+      "properties": {
+        "population": {"type": ["string", "null"]},
+        "time": {"type": ["string", "null"]},
+        "geography": {"type": ["string", "null"]},
+        "conditions": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": false
+    },
+    "budget": {
+      "type": "object",
+      "properties": {
+        "currency": {"type": "string", "minLength": 3, "maxLength": 3},
+        "money_limit": {"type": "number", "minimum": 0},
+        "compute_seconds": {"type": "integer", "minimum": 0},
+        "model_tokens": {"type": "integer", "minimum": 0},
+        "human_review_minutes": {"type": "integer", "minimum": 0}
+      },
+      "additionalProperties": false
+    }
+  }
+}

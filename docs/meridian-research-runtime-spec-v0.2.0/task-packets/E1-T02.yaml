@@ -1,0 +1,52 @@
+task_id: E1-T02
+title: Implement canonical identity, hashing, and signatures
+status: approved
+objective: >
+  Provide framework-independent primitives for MRR identifiers, object
+  revisions, canonical JSON bytes, SHA-256 hashes, and Ed25519 signatures.
+source_of_truth:
+  - AGENTS.md
+  - docs/02_DOMAIN_MODEL.md#identity-revision-and-hashing
+  - docs/04_SECURITY_AND_POLICY.md#federated-security
+  - schemas/common.schema.json
+requirements:
+  - MRR-NFR-001
+  - MRR-NFR-002
+  - MRR-NFR-007
+allowed_paths:
+  - packages/domain/**
+  - packages/crypto/**
+  - tests/unit/**
+  - tests/property/**
+  - pyproject.toml
+forbidden_changes:
+  - API endpoints
+  - database schema
+  - workflow integration
+  - LLM adapters
+invariants:
+  - map key insertion order cannot change a content hash
+  - semantic mutation must change a content hash
+  - signature fields are excluded from signed canonical payload
+  - verification fails closed for invalid or unsupported algorithms
+  - identifiers are stable and not derived from mutable labels
+acceptance_tests:
+  - valid signature verification
+  - invalid signature rejection
+  - map-order-invariant hashing property
+  - semantic-mutation hash property
+  - unsupported-algorithm rejection
+commands:
+  - make format
+  - make lint
+  - make typecheck
+  - make test
+required_output:
+  - implementation summary
+  - changed files
+  - tests and command results
+  - security implications
+  - unresolved specification questions
+stop_conditions:
+  - canonicalization cannot interoperate with RFC 8785 behavior
+  - implementation requires changes outside allowed paths

@@ -1,0 +1,45 @@
+task_id: M4-T01
+title: Implement PreAnalysisPlan lock and amendment protocol
+status: approved
+objective: Implement review, cryptographic locking, immutable revisions, explicit amendments and outcome-access
+  protections for confirmatory plans.
+source_of_truth:
+- docs/12_PREANALYSIS_EXECUTION_AND_ADAPTATION.md
+- schemas/pre-analysis-plan.schema.json
+- examples/housing-populism/pre-analysis-plan.json
+- acceptance/method-preanalysis-lock.feature
+requirements:
+- MRR-MTH-100
+- MRR-MTH-101
+- MRR-MTH-102
+- MRR-MTH-103
+- MRR-MTH-104
+allowed_paths:
+- packages/method-kernel/preanalysis/**
+- packages/crypto/**
+- packages/policy/outcome_access/**
+- tests/unit/preanalysis/**
+- tests/integration/preanalysis_lock/**
+forbidden_changes:
+- analysis execution
+- outcome data ingestion
+- LLM drafting
+- destructive plan edits
+invariants:
+- locked revision is immutable
+- amendments create new revisions
+- confirmatory execution requires exact lock hash
+- outcome access is auditable
+acceptance_tests:
+- execute method-preanalysis-lock.feature
+- lock the housing plan deterministically
+- reject mutation after lock
+- preserve pre- and post-lock amendment history
+required_output:
+- implementation summary mapped to requirement IDs
+- changed files
+- commands and test results
+- remaining risks and explicit non-implementation notes
+stop_conditions:
+- canonical serialization differs from v0.1.1 cryptographic primitives
+- outcome access cannot be represented as an event

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://frankbueltge.de/schemas/encounter-event-1.0.json",
+  "title": "Encounter Event Envelope",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["schema_version", "event_id", "event_type", "issuer", "occurred_at", "source_uri", "payload", "content_hash"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "event_id": {"type": "string", "minLength": 6},
+    "encounter_id": {"type": "string"},
+    "event_type": {"type": "string", "pattern": "^[a-z0-9_.-]+$"},
+    "issuer": {
+      "type": "object",
+      "required": ["collective_id", "actor_id"],
+      "properties": {
+        "collective_id": {"type": "string"},
+        "actor_id": {"type": "string"}
+      }
+    },
+    "occurred_at": {"type": "string", "format": "date-time"},
+    "source_uri": {"type": "string", "format": "uri"},
+    "source_commit": {"type": "string"},
+    "visibility": {"type": "string", "enum": ["public", "embargoed", "private"]},
+    "payload": {"type": "object"},
+    "previous_event_hash": {"type": "string"},
+    "content_hash": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "signature": {"type": "string"},
+    "corrects_event_id": {"type": "string"},
+    "supersedes_event_id": {"type": "string"}
+  }
+}

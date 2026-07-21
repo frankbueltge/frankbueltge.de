@@ -1,0 +1,45 @@
+task_id: M3-T02
+title: Implement DataAssetProfile readiness and crosswalk contracts
+status: approved
+objective: Implement data-asset metadata, access/readiness lifecycle, comparability and join-key risk
+  records, estimand suitability and synthetic-fixture restrictions.
+source_of_truth:
+- docs/11_EVIDENCE_AND_DATA_SCOUTING.md
+- schemas/data-asset-profile.schema.json
+- examples/housing-populism/data-asset-profile.json
+- acceptance/method-synthetic-fixture-isolation.feature
+requirements:
+- MRR-MTH-070
+- MRR-MTH-071
+- MRR-MTH-072
+- MRR-MTH-073
+- MRR-MTH-074
+- MRR-MTH-075
+allowed_paths:
+- packages/method-kernel/data_scout/**
+- packages/policy/data_use/**
+- tests/unit/data_assets/**
+- tests/integration/synthetic_isolation/**
+forbidden_changes:
+- real data ingestion
+- credential handling
+- direct database connectors
+- empirical use of synthetic fixtures
+invariants:
+- access state and quality readiness are separate
+- data suitability is estimand-specific
+- crosswalk uncertainty is preserved
+- synthetic assets can never support empirical claims
+acceptance_tests:
+- execute method-synthetic-fixture-isolation.feature
+- validate housing synthetic asset
+- reject empirical evidence relation from synthetic asset
+- transition readiness only through declared states
+required_output:
+- implementation summary mapped to requirement IDs
+- changed files
+- commands and test results
+- remaining risks and explicit non-implementation notes
+stop_conditions:
+- classification cannot be enforced through current policy layer
+- data readiness would require inspecting restricted bytes in this task

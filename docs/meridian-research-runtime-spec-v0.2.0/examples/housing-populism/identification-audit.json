@@ -1,0 +1,40 @@
+{
+  "id": "urn:mrr:identification-audit:01J00000000000000000000110",
+  "api_version": "mrr/v1alpha1",
+  "kind": "IdentificationAudit",
+  "practice_id": "urn:mrr:practice:01J00000000000000000000001",
+  "revision": 1,
+  "created_at": "2026-07-21T10:00:00Z",
+  "created_by": "urn:mrr:person:01J00000000000000000000002",
+  "content_hash": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "project_id": "urn:mrr:project:01J00000000000000000000100",
+  "design_id": "urn:mrr:research-design:01J00000000000000000000109",
+  "decision": "downgrade",
+  "claim_ceiling": "associational_adjusted",
+  "identifying_assumptions": [
+    "No unmeasured common causes after adjustment."
+  ],
+  "testable_implications": [
+    "Adequate overlap after trimming",
+    "Pre-exposure outcome trends compatible within tolerance"
+  ],
+  "untestable_assumptions": [
+    "No latent political predisposition jointly affects residential exposure and later support."
+  ],
+  "threats": [
+    {
+      "threat": "The synthetic failure fixture contains a latent common cause by construction.",
+      "severity": "critical",
+      "resolution": "Downgrade the branch and prohibit causal promotion."
+    }
+  ],
+  "blocking_conditions": [
+    "Latent-confounding fixture flag"
+  ],
+  "required_diagnostics": [
+    "overlap report",
+    "balance table",
+    "negative-control outcome"
+  ],
+  "rationale": "The reference instance deliberately demonstrates that the runtime must stop causal promotion even when executable estimates exist."
+}

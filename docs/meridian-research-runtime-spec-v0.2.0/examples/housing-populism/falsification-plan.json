@@ -1,0 +1,33 @@
+{
+  "id": "urn:mrr:falsification-plan:01J00000000000000000000112",
+  "api_version": "mrr/v1alpha1",
+  "kind": "FalsificationPlan",
+  "practice_id": "urn:mrr:practice:01J00000000000000000000001",
+  "revision": 1,
+  "created_at": "2026-07-21T10:00:00Z",
+  "created_by": "urn:mrr:person:01J00000000000000000000002",
+  "content_hash": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+  "project_id": "urn:mrr:project:01J00000000000000000000100",
+  "design_id": "urn:mrr:research-design:01J00000000000000000000109",
+  "probes": [
+    {
+      "probe_id": "negative-control-outcome",
+      "probe_type": "negative_control_outcome",
+      "threat": "Residual common-cause bias",
+      "procedure": "Estimate the same adjusted contrast for a synthetic outcome generated before exposure and causally unaffected by it.",
+      "pass_condition": "Absolute standardized effect remains below the fixture tolerance.",
+      "kill_condition": "Negative-control effect exceeds the critical fixture threshold.",
+      "failure_consequence": "kill_branch"
+    },
+    {
+      "probe_id": "taxonomy-sensitivity",
+      "probe_type": "alternative_measurement",
+      "threat": "Result depends on one party-family taxonomy.",
+      "procedure": "Recompute outcomes under two predeclared synthetic taxonomy variants.",
+      "pass_condition": "Direction and material conclusion remain stable.",
+      "kill_condition": "Conclusion reverses under a plausible accepted taxonomy.",
+      "failure_consequence": "contest_claim"
+    }
+  ],
+  "status": "accepted"
+}

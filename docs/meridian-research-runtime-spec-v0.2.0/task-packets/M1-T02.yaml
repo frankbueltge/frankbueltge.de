@@ -1,0 +1,48 @@
+task_id: M1-T02
+title: Implement ConceptMeasurementCharter lifecycle
+status: approved
+objective: Implement versioned concepts, operationalizations, classification taxonomies, relation types,
+  review transitions and dependency impact when measurement changes.
+source_of_truth:
+- docs/09_QUESTION_AND_CONCEPT_COMPILATION.md
+- schemas/concept-measurement-charter.schema.json
+- examples/housing-populism/concept-measurement-charter.json
+requirements:
+- MRR-MTH-025
+- MRR-MTH-026
+- MRR-MTH-027
+- MRR-MTH-028
+- MRR-MTH-029
+- MRR-MTH-030
+- MRR-MTH-032
+- MRR-MTH-033
+- MRR-MTH-034
+- MRR-MTH-035
+allowed_paths:
+- packages/method-kernel/measurement/**
+- packages/domain/dependencies/**
+- tests/unit/measurement/**
+- tests/integration/dependency_impact/**
+forbidden_changes:
+- global party taxonomy
+- silent replacement of user definitions
+- result-driven threshold selection
+- model authority
+invariants:
+- latent and observed constructs remain distinct
+- taxonomy versions are time-addressable
+- alternative measures are preserved
+- accepted revisions are immutable
+acceptance_tests:
+- accept the housing charter fixture
+- reject operationalization missing error and comparability fields
+- superseding a threshold triggers dependency impact
+- preserve contested taxonomy variants
+required_output:
+- implementation summary mapped to requirement IDs
+- changed files
+- commands and test results
+- remaining risks and explicit non-implementation notes
+stop_conditions:
+- measurement objects require destructive mutation
+- local taxonomy cannot remain scoped to a project or practice

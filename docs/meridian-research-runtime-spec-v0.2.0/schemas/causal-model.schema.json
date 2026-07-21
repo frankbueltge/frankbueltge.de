@@ -1,0 +1,175 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/mrr/schemas/causal-model.schema.json",
+  "title": "Causal Model",
+  "type": "object",
+  "required": [
+    "id",
+    "api_version",
+    "kind",
+    "practice_id",
+    "revision",
+    "created_at",
+    "created_by",
+    "content_hash",
+    "project_id",
+    "label",
+    "lens_manifest",
+    "nodes",
+    "edges",
+    "competing_model_ids",
+    "status"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^urn:mrr:[a-z0-9-]+:[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "api_version": {
+      "type": "string",
+      "const": "mrr/v1alpha1"
+    },
+    "kind": {
+      "type": "string",
+      "const": "CausalModel"
+    },
+    "practice_id": {
+      "type": "string",
+      "pattern": "^urn:mrr:[a-z0-9-]+:[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "created_by": {
+      "type": "string",
+      "pattern": "^urn:mrr:[a-z0-9-]+:[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "content_hash": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "project_id": {
+      "type": "string",
+      "pattern": "^urn:mrr:[a-z0-9-]+:[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "label": {
+      "type": "string"
+    },
+    "lens_manifest": {
+      "type": "object",
+      "required": [
+        "author",
+        "purpose",
+        "known_exclusions"
+      ],
+      "properties": {
+        "author": {
+          "type": "string"
+        },
+        "purpose": {
+          "type": "string"
+        },
+        "known_exclusions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "nodes": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "required": [
+          "node_id",
+          "label",
+          "node_type"
+        ],
+        "properties": {
+          "node_id": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "node_type": {
+            "enum": [
+              "exposure",
+              "outcome",
+              "confounder",
+              "mediator",
+              "selector",
+              "modifier",
+              "measurement",
+              "context",
+              "latent",
+              "other"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "from",
+          "to",
+          "edge_type",
+          "rationale"
+        ],
+        "properties": {
+          "from": {
+            "type": "string"
+          },
+          "to": {
+            "type": "string"
+          },
+          "edge_type": {
+            "enum": [
+              "causes",
+              "confounds",
+              "mediates",
+              "selects_into",
+              "measures",
+              "modifies_effect",
+              "induces_missingness",
+              "shares_common_cause",
+              "unknown_relation"
+            ]
+          },
+          "rationale": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "competing_model_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^urn:mrr:[a-z0-9-]+:[0-9A-HJKMNP-TV-Z]{26}$"
+      }
+    },
+    "status": {
+      "enum": [
+        "draft",
+        "reviewed",
+        "accepted",
+        "superseded"
+      ]
+    }
+  },
+  "additionalProperties": false
+}

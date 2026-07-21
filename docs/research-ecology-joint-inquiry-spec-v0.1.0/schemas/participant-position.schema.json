@@ -1,0 +1,211 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://frankbueltge.de/schemas/participant-position.schema.json",
+  "title": "ParticipantPosition",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "position_id",
+    "inquiry_id",
+    "practice_id",
+    "authored_by",
+    "local_status",
+    "local_question",
+    "claimed_changes",
+    "open_objections",
+    "next_action_or_closure",
+    "issued_at",
+    "content_hash"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string"
+    },
+    "position_id": {
+      "type": "string"
+    },
+    "inquiry_id": {
+      "type": "string"
+    },
+    "practice_id": {
+      "type": "string"
+    },
+    "authored_by": {
+      "$ref": "#/$defs/actorRef"
+    },
+    "local_status": {
+      "type": "string"
+    },
+    "local_question": {
+      "type": "string"
+    },
+    "local_project_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "admitted_material_refs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/objectRef"
+      }
+    },
+    "local_output_refs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/objectRef"
+      }
+    },
+    "claimed_changes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "open_objections": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "conditions_or_refusals": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "next_action_or_closure": {
+      "type": "string"
+    },
+    "apparatus_disclosure": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "issued_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "content_hash": {
+      "type": "string",
+      "minLength": 8
+    }
+  },
+  "additionalProperties": true,
+  "$defs": {
+    "actorRef": {
+      "type": "object",
+      "required": [
+        "actor_id",
+        "actor_type"
+      ],
+      "properties": {
+        "actor_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "actor_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "practice_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": true
+    },
+    "objectRef": {
+      "type": "object",
+      "required": [
+        "practice_id",
+        "local_object_id",
+        "version",
+        "content_hash"
+      ],
+      "properties": {
+        "practice_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "local_object_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "content_hash": {
+          "type": "string",
+          "minLength": 8
+        },
+        "canonical_uri": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "uri"
+        },
+        "local_type": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "media_type": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "title": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": true
+    },
+    "resourceEnvelope": {
+      "type": "object",
+      "required": [
+        "max_first_moves_per_practice",
+        "max_return_moves_per_practice",
+        "automatic_extension"
+      ],
+      "properties": {
+        "aggregate_external_cost_eur": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "target_review_window_days": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        },
+        "max_first_moves_per_practice": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "max_return_moves_per_practice": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "automatic_extension": {
+          "const": false
+        }
+      },
+      "additionalProperties": true
+    }
+  }
+}

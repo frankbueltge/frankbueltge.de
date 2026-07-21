@@ -1,0 +1,49 @@
+{
+  "id": "urn:mrr:pre-analysis-plan:01J00000000000000000000111",
+  "api_version": "mrr/v1alpha1",
+  "kind": "PreAnalysisPlan",
+  "practice_id": "urn:mrr:practice:01J00000000000000000000001",
+  "revision": 1,
+  "created_at": "2026-07-21T10:00:00Z",
+  "created_by": "urn:mrr:person:01J00000000000000000000002",
+  "content_hash": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "project_id": "urn:mrr:project:01J00000000000000000000100",
+  "design_id": "urn:mrr:research-design:01J00000000000000000000109",
+  "identification_audit_id": "urn:mrr:identification-audit:01J00000000000000000000110",
+  "status": "locked",
+  "primary_estimand_ids": [
+    "urn:mrr:estimand:01J00000000000000000000105"
+  ],
+  "secondary_estimand_ids": [],
+  "sample_rules": [
+    "Include synthetic renters with one pre-exposure and one eligible post-exposure election observation.",
+    "Apply overlap restriction before outcome estimation."
+  ],
+  "measure_construction": [
+    "housing_cost_burden = housing_cost_total / disposable_income",
+    "exposed = threshold transition under charter revision 1"
+  ],
+  "model_specifications": [
+    "Weighted risk-difference estimator with predeclared covariates",
+    "Associational label enforced because audit downgraded the branch"
+  ],
+  "uncertainty_strategy": "Bootstrap synthetic households with pinned seed and report interval coverage in benchmark assertions.",
+  "missing_data_strategy": "Run complete-case primary fixture and predeclared inverse-probability sensitivity fixture.",
+  "diagnostics": [
+    "overlap",
+    "balance",
+    "weight concentration",
+    "attrition pattern"
+  ],
+  "falsification_tests": [
+    "negative-control outcome",
+    "placebo exposure date"
+  ],
+  "kill_rules": [
+    "Stop if effective sample size falls below fixture threshold.",
+    "Stop if any output requests a causal status above the audit ceiling."
+  ],
+  "amendment_policy": "Any change after lock creates a new revision, records rationale and cannot overwrite the locked object.",
+  "locked_at": "2026-07-21T11:00:00Z",
+  "lock_hash": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+}

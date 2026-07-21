@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/mrr/schemas/research-score.schema.json",
+  "title": "MRR ResearchScore",
+  "allOf": [
+    {"$ref": "common.schema.json#/$defs/baseObject"},
+    {
+      "type": "object",
+      "required": ["kind", "question", "objectives", "non_goals", "scope", "methods", "data_classes", "autonomy", "budgets", "quality_gates", "stop_conditions", "publication_policy", "status", "approvals"],
+      "properties": {
+        "kind": {"const": "ResearchScore"},
+        "question": {"type": "string", "minLength": 10},
+        "background": {"type": "string"},
+        "objectives": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "non_goals": {"type": "array", "items": {"type": "string"}},
+        "scope": {"$ref": "common.schema.json#/$defs/scope"},
+        "starting_assumptions": {"type": "array", "items": {"type": "string"}},
+        "methods": {
+          "type": "object",
+          "required": ["allowed", "prohibited"],
+          "properties": {
+            "allowed": {"type": "array", "items": {"type": "string"}},
+            "prohibited": {"type": "array", "items": {"type": "string"}}
+          },
+          "additionalProperties": false
+        },
+        "data_classes": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string", "enum": ["PUBLIC", "INTERNAL", "RESTRICTED", "SENSITIVE", "PARTICIPANT_IDENTIFIABLE"]}
+        },
+        "ethics_references": {"type": "array", "items": {"type": "string"}},
+        "autonomy": {
+          "type": "object",
+          "additionalProperties": {"type": "string", "enum": ["A0", "A1", "A2", "A3", "A4"]}
+        },
+        "budgets": {"$ref": "common.schema.json#/$defs/budget"},
+        "quality_gates": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "stop_conditions": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "publication_policy": {
+          "type": "object",
+          "required": ["max_disclosure", "external_publication_requires_approval"],
+          "properties": {
+            "max_disclosure": {"type": "string", "enum": ["INTERNAL", "PARTNER_RESTRICTED", "PUBLIC"]},
+            "external_publication_requires_approval": {"const": true}
+          },
+          "additionalProperties": false
+        },
+        "status": {"type": "string", "enum": ["DRAFT", "IN_REVIEW", "APPROVED", "ACTIVE", "REJECTED", "SUSPENDED", "SUPERSEDED", "ARCHIVED"]},
+        "approvals": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/urn"}}
+      }
+    }
+  ],
+  "unevaluatedProperties": false
+}

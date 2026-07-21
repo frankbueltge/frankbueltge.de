@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/mrr/schemas/estimand.schema.json",
+  "title": "Estimand",
+  "type": "object",
+  "required": [
+    "id",
+    "api_version",
+    "kind",
+    "practice_id",
+    "revision",
+    "created_at",
+    "created_by",
+    "content_hash",
+    "project_id",
+    "question_model_id",
+    "label",
+    "estimand_family",
+    "unit",
+    "target_population",
+    "exposure",
+    "contrast",
+    "outcome",
+    "horizon",
+    "aggregation_level",
+    "interference_assumptions",
+    "attrition_policy",
+    "status"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^urn:mrr:[a-z0-9-]+:[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "api_version": {
+      "type": "string",
+      "const": "mrr/v1alpha1"
+    },
+    "kind": {
+      "type": "string",
+      "const": "Estimand"
+    },
+    "practice_id": {
+      "type": "string",
+      "pattern": "^urn:mrr:[a-z0-9-]+:[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "created_by": {
+      "type": "string",
+      "pattern": "^urn:mrr:[a-z0-9-]+:[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "content_hash": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "project_id": {
+      "type": "string",
+      "pattern": "^urn:mrr:[a-z0-9-]+:[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "question_model_id": {
+      "type": "string",
+      "pattern": "^urn:mrr:[a-z0-9-]+:[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "label": {
+      "type": "string"
+    },
+    "estimand_family": {
+      "enum": [
+        "ATE",
+        "ATT",
+        "LATE",
+        "event_study",
+        "controlled_direct_effect",
+        "aggregate_effect",
+        "composition_effect",
+        "descriptive_contrast",
+        "other"
+      ]
+    },
+    "unit": {
+      "type": "string"
+    },
+    "target_population": {
+      "type": "string"
+    },
+    "exposure": {
+      "type": "string"
+    },
+    "contrast": {
+      "type": "string"
+    },
+    "outcome": {
+      "type": "string"
+    },
+    "horizon": {
+      "type": "string"
+    },
+    "aggregation_level": {
+      "type": "string"
+    },
+    "interference_assumptions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "attrition_policy": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "draft",
+        "accepted",
+        "superseded",
+        "infeasible"
+      ]
+    }
+  },
+  "additionalProperties": false
+}

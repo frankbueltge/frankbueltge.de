@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://frankbueltge.de/schemas/transfer-offer-1.0.json",
+  "title": "Transfer Offer Payload",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["offer_id", "source_collective_id", "target", "subject", "proposition", "source_status", "caveats", "rights", "requested_obligations", "correction_channel"],
+  "properties": {
+    "offer_id": {"type": "string"},
+    "source_collective_id": {"type": "string"},
+    "target": {
+      "oneOf": [
+        {"type": "object", "required": ["collective_id"], "properties": {"collective_id": {"type": "string"}}},
+        {"type": "object", "required": ["scope"], "properties": {"scope": {"enum": ["all_collectives", "public"]}}}
+      ]
+    },
+    "subject": {
+      "type": "object",
+      "required": ["collective_id", "local_object_id", "canonical_uri", "local_object_type", "content_hash"],
+      "properties": {
+        "collective_id": {"type": "string"},
+        "local_object_id": {"type": "string"},
+        "object_version": {"type": "string"},
+        "canonical_uri": {"type": "string", "format": "uri"},
+        "local_object_type": {"type": "string"},
+        "media_type": {"type": "string"},
+        "content_hash": {"type": "string"}
+      }
+    },
+    "proposition": {"type": "string", "minLength": 1},
+    "source_status": {
+      "type": "object",
+      "required": ["lifecycle", "epistemic"],
+      "properties": {
+        "lifecycle": {"type": "string"},
+        "epistemic": {"type": "string"},
+        "local_labels": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "caveats": {"type": "array", "items": {"type": "object", "required": ["id", "text"], "properties": {"id": {"type": "string"}, "text": {"type": "string"}, "load_bearing": {"type": "boolean"}}}},
+    "rights": {"type": "object"},
+    "requested_obligations": {"type": "array", "items": {"type": "object", "required": ["id", "clause"], "properties": {"id": {"type": "string"}, "clause": {"type": "string"}, "prominence": {"type": "string"}}}},
+    "proposed_use": {"type": "string"},
+    "correction_channel": {"type": "string", "format": "uri"},
+    "response_deadline": {"type": "string", "format": "date-time"}
+  }
+}

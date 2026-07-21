@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://frankbueltge.de/schemas/assertion-1.0.json",
+  "title": "Authored Assertion",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["assertion_id", "author", "subject", "predicate", "object", "epistemic_status", "content_hash"],
+  "properties": {
+    "assertion_id": {"type": "string"},
+    "encounter_id": {"type": "string"},
+    "author": {
+      "type": "object",
+      "required": ["actor_id"],
+      "properties": {
+        "actor_id": {"type": "string"},
+        "collective_id": {"type": "string"}
+      }
+    },
+    "subject": {"type": "object"},
+    "predicate": {"type": "string", "minLength": 1},
+    "object": {"oneOf": [{"type": "object"}, {"type": "string"}, {"type": "number"}, {"type": "boolean"}]},
+    "rationale": {"type": "string"},
+    "epistemic_status": {"type": "string"},
+    "local_epistemic_status": {"type": "string"},
+    "evidence": {"type": "array", "items": {"type": "object"}},
+    "lifecycle_status": {"type": "string", "default": "active"},
+    "valid_from": {"type": "string", "format": "date-time"},
+    "content_hash": {"type": "string"}
+  }
+}

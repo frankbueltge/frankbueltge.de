@@ -1,0 +1,44 @@
+task_id: M5-T01
+title: Implement falsification probes and kill propagation
+status: approved
+objective: Implement a probe registry, typed falsification outcomes, predeclared failure consequences
+  and deterministic propagation to branches, claims, projections and transfers.
+source_of_truth:
+- docs/13_FALSIFICATION_REPLICATION_GENERALIZATION.md
+- schemas/falsification-plan.schema.json
+- examples/housing-populism/falsification-plan.json
+- acceptance/method-kill-condition-propagation.feature
+requirements:
+- MRR-MTH-120
+- MRR-MTH-121
+- MRR-MTH-122
+- MRR-MTH-123
+- MRR-MTH-132
+- MRR-MTH-133
+allowed_paths:
+- packages/method-kernel/falsification/**
+- packages/domain/dependencies/**
+- packages/domain/corrections/**
+- tests/unit/falsification/**
+- tests/integration/kill_propagation/**
+forbidden_changes:
+- ad hoc post-result probe creation without revision
+- warning-only treatment of declared kill conditions
+- silent claim retention
+invariants:
+- each probe maps to one threat and consequence
+- failed probes are evidence objects
+- kill and downgrade effects are deterministic
+- transferred dependencies receive correction events
+acceptance_tests:
+- execute method-kill-condition-propagation.feature
+- negative-control failure kills housing branch
+- downgrade probe lowers active claim ceiling
+- stale projections are marked or regenerated
+required_output:
+- implementation summary mapped to requirement IDs
+- changed files
+- commands and test results
+- remaining risks and explicit non-implementation notes
+stop_conditions:
+- dependency graph cannot trace method objects to claims and transfers

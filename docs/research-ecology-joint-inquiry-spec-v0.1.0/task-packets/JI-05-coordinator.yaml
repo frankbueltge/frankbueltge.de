@@ -1,0 +1,13 @@
+id: JI-05
+title: Implement parallel_return coordinator
+depends_on: [JI-03, JI-04]
+goal: Provide idempotent procedural coordination with cost and move limits.
+deliverables:
+  - coordinator service/job
+  - event/state derivation
+  - dry-run command
+acceptance:
+  - One first move and one return are enforced.
+  - Duplicate dispatch is idempotent.
+  - No auto-extension, synthesis or publication occurs.
+  - Blocking escalation pauses affected work.

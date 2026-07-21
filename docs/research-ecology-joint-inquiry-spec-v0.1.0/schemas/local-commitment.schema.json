@@ -1,0 +1,254 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://frankbueltge.de/schemas/local-commitment.schema.json",
+  "title": "LocalCommitment",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "commitment_id",
+    "version",
+    "inquiry_id",
+    "practice_id",
+    "issued_by",
+    "local_question",
+    "method_or_operation",
+    "first_move",
+    "conditions_and_refusals",
+    "change_conditions",
+    "max_autonomous_moves",
+    "resource_budget",
+    "local_publication_policy",
+    "status",
+    "issued_at",
+    "content_hash"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string"
+    },
+    "commitment_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "inquiry_id": {
+      "type": "string"
+    },
+    "practice_id": {
+      "type": "string"
+    },
+    "issued_by": {
+      "$ref": "#/$defs/actorRef"
+    },
+    "local_project_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "local_question": {
+      "type": "string",
+      "minLength": 10
+    },
+    "method_or_operation": {
+      "type": "string",
+      "minLength": 1
+    },
+    "first_move": {
+      "type": "string",
+      "minLength": 1
+    },
+    "admitted_input_refs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/objectRef"
+      }
+    },
+    "conditions_and_refusals": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "change_conditions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "planned_output_types": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "max_autonomous_moves": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "resource_budget": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "return_obligation": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "escalation_triggers": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "local_publication_policy": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "DRAFT",
+        "ACTIVE",
+        "COMPLETED",
+        "WITHDRAWN",
+        "BLOCKED",
+        "SUPERSEDED"
+      ]
+    },
+    "source_uri": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "uri"
+    },
+    "issued_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "content_hash": {
+      "type": "string",
+      "minLength": 8
+    }
+  },
+  "additionalProperties": true,
+  "$defs": {
+    "actorRef": {
+      "type": "object",
+      "required": [
+        "actor_id",
+        "actor_type"
+      ],
+      "properties": {
+        "actor_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "actor_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "practice_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": true
+    },
+    "objectRef": {
+      "type": "object",
+      "required": [
+        "practice_id",
+        "local_object_id",
+        "version",
+        "content_hash"
+      ],
+      "properties": {
+        "practice_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "local_object_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "content_hash": {
+          "type": "string",
+          "minLength": 8
+        },
+        "canonical_uri": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "uri"
+        },
+        "local_type": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "media_type": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "title": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": true
+    },
+    "resourceEnvelope": {
+      "type": "object",
+      "required": [
+        "max_first_moves_per_practice",
+        "max_return_moves_per_practice",
+        "automatic_extension"
+      ],
+      "properties": {
+        "aggregate_external_cost_eur": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "target_review_window_days": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        },
+        "max_first_moves_per_practice": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "max_return_moves_per_practice": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "automatic_extension": {
+          "const": false
+        }
+      },
+      "additionalProperties": true
+    }
+  }
+}
