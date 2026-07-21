@@ -12,8 +12,8 @@
   --fd-page: #e8ecea;
   --fd-surface: #f5f7f6;
   --fd-ink: #1c211f;
-  --fd-ink-2: #5d6a64;
-  --fd-hairline: #d3ddd7;
+  --fd-ink-2: #505c56;
+  --fd-hairline: #cdd8d1;
   --fd-grid: #dbe4de;
   --fd-grid-major: #c8d5cd;
   --fd-stamp: #6a3fb5;
@@ -24,9 +24,9 @@
 :root[data-theme='dark'] .field-surface {
   --fd-page: #0c0f12;
   --fd-surface: #12161a;
-  --fd-ink: #dde4e0;
-  --fd-ink-2: #8c9992;
-  --fd-hairline: #28323a;
+  --fd-ink: #e4ebe6;
+  --fd-ink-2: #a7b4ac;
+  --fd-hairline: #303c45;
   --fd-grid: #1d2530;
   --fd-grid-major: #28323e;
   --fd-stamp: #7e5fd3;
@@ -53,7 +53,7 @@
 
 .field-surface .fd-kicker {
   font-family: var(--fd-font-record);
-  font-size: 12px;
+  font-size: 12.5px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--fd-ink-2);
@@ -83,8 +83,9 @@
 }
 .field-surface .fd-status {
   font-family: var(--fd-font-record);
-  font-size: 14px;
-  color: var(--fd-ink-2);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--fd-ink);
 }
 .field-surface .fd-status b { color: var(--fd-ink); font-weight: 600; }
 .field-surface figure { margin: 26px 0 8px; }
@@ -101,7 +102,7 @@
   border-top: 1px solid var(--fd-hairline);
   border-bottom: 1px solid var(--fd-hairline);
   font-family: var(--fd-font-record);
-  font-size: 12px;
+  font-size: 13px;
   letter-spacing: 0.08em;
   flex-wrap: wrap;
 }
@@ -152,7 +153,7 @@
   margin: 8px 0 10px;
 }
 .field-surface .fd-tbl-wrap { overflow-x: auto; }
-.field-surface table { border-collapse: collapse; width: 100%; font: 12.5px var(--fd-font-record); }
+.field-surface table { border-collapse: collapse; width: 100%; font: 13.5px var(--fd-font-record); }
 .field-surface th {
   text-align: left;
   font-weight: 600;
@@ -165,7 +166,8 @@
 .field-surface td.q { font-style: italic; max-width: 60ch; }
 .field-surface .fd-foot {
   margin-top: 26px;
-  font: 11.5px var(--fd-font-record);
+  font: 12.5px var(--fd-font-record);
+  line-height: 1.5;
   color: var(--fd-ink-2);
   display: flex;
   justify-content: space-between;
@@ -174,10 +176,11 @@
 }
 .field-surface .fd-room-intro {
   font-family: var(--fd-font-ui);
-  font-size: 15px;
-  color: var(--fd-ink-2);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--fd-ink);
   max-width: 70ch;
-  margin: 10px 0 26px;
+  margin: 14px 0 28px;
 }
 
 /* Zimmer: Instrumente, Journal, Apparat */
