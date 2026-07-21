@@ -1,0 +1,59 @@
+{
+  "id": "urn:mrr:method-profile:01J00000000000000000000102",
+  "api_version": "mrr/v1alpha1",
+  "kind": "MethodProfile",
+  "practice_id": "urn:mrr:practice:01J00000000000000000000001",
+  "revision": 1,
+  "created_at": "2026-07-21T10:00:00Z",
+  "created_by": "urn:mrr:person:01J00000000000000000000002",
+  "content_hash": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+  "profile_key": "causal_observational",
+  "semantic_version": "0.2.0",
+  "supported_claim_types": [
+    "descriptive",
+    "associational",
+    "causal",
+    "mechanistic",
+    "mixed"
+  ],
+  "required_object_kinds": [
+    "QuestionModel",
+    "ConceptMeasurementCharter",
+    "Estimand",
+    "CausalModel",
+    "DataAssetProfile",
+    "ResearchDesign",
+    "IdentificationAudit",
+    "PreAnalysisPlan",
+    "FalsificationPlan",
+    "ReplicationPlan",
+    "GeneralizationMap"
+  ],
+  "inappropriate_uses": [
+    "Questions whose primary contribution is normative rather than empirical.",
+    "Causal claims based only on cross-sectional correlation.",
+    "Any use of synthetic fixtures as evidence about real populations."
+  ],
+  "claim_gates": {
+    "causal_bounded": [
+      "identification_audit_pass",
+      "locked_preanalysis_plan",
+      "completed_falsification_plan",
+      "replication_or_waiver"
+    ],
+    "associational_adjusted": [
+      "measurement_charter_accepted",
+      "diagnostics_completed"
+    ],
+    "descriptive": [
+      "data_asset_quality_audited"
+    ]
+  },
+  "benchmark_families": [
+    "MB-MTH",
+    "MB-CAU",
+    "MB-FAL",
+    "MB-REP",
+    "MB-GEN"
+  ]
+}

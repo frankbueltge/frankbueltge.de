@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/mrr/schemas/research-decision.schema.json",
+  "title": "Research Decision",
+  "type": "object",
+  "required": [
+    "id",
+    "api_version",
+    "kind",
+    "practice_id",
+    "revision",
+    "created_at",
+    "created_by",
+    "content_hash",
+    "project_id",
+    "milestone",
+    "decision_type",
+    "evidence_considered",
+    "gate_results",
+    "rationale",
+    "affected_object_ids",
+    "next_actions",
+    "reversible",
+    "status"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^urn:mrr:[a-z0-9-]+:[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "api_version": {
+      "type": "string",
+      "const": "mrr/v1alpha1"
+    },
+    "kind": {
+      "type": "string",
+      "const": "ResearchDecision"
+    },
+    "practice_id": {
+      "type": "string",
+      "pattern": "^urn:mrr:[a-z0-9-]+:[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "created_by": {
+      "type": "string",
+      "pattern": "^urn:mrr:[a-z0-9-]+:[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "content_hash": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "project_id": {
+      "type": "string",
+      "pattern": "^urn:mrr:[a-z0-9-]+:[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "milestone": {
+      "type": "string"
+    },
+    "decision_type": {
+      "enum": [
+        "continue",
+        "revise_question",
+        "revise_measurement",
+        "revise_design",
+        "narrow_scope",
+        "expand_scope",
+        "switch_method",
+        "replicate",
+        "collect_more_data",
+        "kill_branch",
+        "stop_insufficient_evidence",
+        "escalate_human_review"
+      ]
+    },
+    "evidence_considered": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^urn:mrr:[a-z0-9-]+:[0-9A-HJKMNP-TV-Z]{26}$"
+      }
+    },
+    "gate_results": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "rationale": {
+      "type": "string"
+    },
+    "affected_object_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^urn:mrr:[a-z0-9-]+:[0-9A-HJKMNP-TV-Z]{26}$"
+      }
+    },
+    "next_actions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "reversible": {
+      "type": "boolean"
+    },
+    "status": {
+      "enum": [
+        "proposed",
+        "accepted",
+        "rejected",
+        "superseded"
+      ]
+    }
+  },
+  "additionalProperties": false
+}

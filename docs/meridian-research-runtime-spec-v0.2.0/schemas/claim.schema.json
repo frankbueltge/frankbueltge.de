@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/mrr/schemas/claim.schema.json",
+  "title": "MRR Claim",
+  "allOf": [
+    {"$ref": "common.schema.json#/$defs/baseObject"},
+    {
+      "type": "object",
+      "required": ["kind", "assertion", "claim_type", "scope", "status", "evidence_relations", "counterevidence_relations", "dependencies", "uncertainty", "known_unknowns", "proposer_id", "verification_ids"],
+      "properties": {
+        "kind": {"const": "Claim"},
+        "assertion": {"type": "string", "minLength": 1},
+        "claim_type": {"type": "string", "enum": ["observational", "causal", "statistical", "methodological", "interpretive", "normative", "speculative"]},
+        "scope": {"$ref": "common.schema.json#/$defs/scope"},
+        "status": {"type": "string", "enum": ["draft", "under_review", "supported", "contested", "contradicted", "unsupported", "unresolved", "review_required", "withdrawn", "superseded", "legacy_unverified"]},
+        "evidence_relations": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/urn"}},
+        "counterevidence_relations": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/urn"}},
+        "dependencies": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/urn"}},
+        "source_family_ids": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/urn"}},
+        "uncertainty": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["kind", "statement"],
+            "properties": {
+              "kind": {"type": "string", "enum": ["measurement", "sampling", "model", "inferential", "source", "contextual", "ethical", "operational", "unknown"]},
+              "statement": {"type": "string", "minLength": 1},
+              "method": {"type": ["string", "null"]}
+            },
+            "additionalProperties": false
+          }
+        },
+        "known_unknowns": {"type": "array", "items": {"type": "string"}},
+        "proposer_id": {"$ref": "common.schema.json#/$defs/urn"},
+        "verification_ids": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/urn"}},
+        "correction_ids": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/urn"}}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"status": {"const": "supported"}}, "required": ["status"]},
+          "then": {
+            "properties": {
+              "evidence_relations": {"minItems": 1},
+              "verification_ids": {"minItems": 1}
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "unevaluatedProperties": false
+}

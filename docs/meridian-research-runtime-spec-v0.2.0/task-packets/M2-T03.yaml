@@ -1,0 +1,54 @@
+task_id: M2-T03
+title: Implement research designs, identification audits and claim ceilings
+status: approved
+objective: Implement ResearchDesign comparison, IdentificationAudit state machine, substantive kill conditions
+  and machine-enforced claim-language ceilings integrated with the existing Claim Service.
+source_of_truth:
+- docs/10_CAUSAL_INFERENCE_AND_DESIGN.md
+- docs/adr/ADR-0004-CAUSAL-CLAIM-GATES.md
+- schemas/research-design.schema.json
+- schemas/identification-audit.schema.json
+- acceptance/method-causal-claim-gate.feature
+requirements:
+- MRR-MTH-047
+- MRR-MTH-048
+- MRR-MTH-049
+- MRR-MTH-050
+- MRR-MTH-051
+- MRR-MTH-052
+- MRR-MTH-053
+- MRR-MTH-054
+- MRR-MTH-055
+- MRR-MTH-056
+- MRR-MTH-058
+- MRR-MTH-059
+allowed_paths:
+- packages/method-kernel/design/**
+- packages/method-kernel/identification/**
+- packages/policy/claim_ceiling/**
+- packages/domain/claims/**
+- tests/unit/design/**
+- tests/integration/claim_ceiling/**
+forbidden_changes:
+- single global design score
+- significance-based promotion
+- silent design deletion
+- narrative-only kill conditions
+invariants:
+- audit precedes primary causal execution
+- audit ceiling is authoritative for machine language
+- failed audit can downgrade or kill but never disappear
+- overrides are explicit and cannot erase failed gates
+acceptance_tests:
+- execute all scenarios in method-causal-claim-gate.feature
+- downgraded housing audit blocks causal claim
+- failed audit cancels eligible primary execution
+- rejected designs remain queryable
+required_output:
+- implementation summary mapped to requirement IDs
+- changed files
+- commands and test results
+- remaining risks and explicit non-implementation notes
+stop_conditions:
+- Claim Service cannot accept method-derived ceilings without weakening existing evidence gates
+- override path can bypass the audit without an event

@@ -1,0 +1,40 @@
+task_id: M5-T02
+title: Implement replication independence and discrepancy handling
+status: approved
+objective: Implement replication plans, independence classification, computational reproduction distinction,
+  concordance metrics and discrepancy adjudication states.
+source_of_truth:
+- docs/13_FALSIFICATION_REPLICATION_GENERALIZATION.md
+- schemas/replication-plan.schema.json
+- examples/housing-populism/replication-plan.json
+requirements:
+- MRR-MTH-124
+- MRR-MTH-125
+- MRR-MTH-126
+- MRR-MTH-127
+- MRR-MTH-135
+allowed_paths:
+- packages/method-kernel/replication/**
+- tests/unit/replication/**
+- tests/integration/replication/**
+forbidden_changes:
+- counting identical reruns as independent replication
+- automatic adjudication by the original executor
+- provider-specific assumptions
+invariants:
+- independence is multidimensional
+- replication discrepancy can contest or block a claim
+- waivers require explicit approval and rationale
+- reproduction and replication remain distinct
+acceptance_tests:
+- classify housing plan as independent reimplementation
+- detect identical code/data rerun as reproduction
+- discordant result blocks support
+- waiver emits policy and audit events
+required_output:
+- implementation summary mapped to requirement IDs
+- changed files
+- commands and test results
+- remaining risks and explicit non-implementation notes
+stop_conditions:
+- runtime cannot compare lineage across executions

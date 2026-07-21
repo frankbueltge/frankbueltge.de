@@ -1,0 +1,282 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://frankbueltge.de/schemas/joint-inquiry.schema.json",
+  "title": "JointInquiry",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "id",
+    "slug",
+    "title",
+    "shared_problem",
+    "why_multiple_practices",
+    "initiated_by",
+    "minimum_participants",
+    "coordination_profile",
+    "status",
+    "visibility",
+    "created_at",
+    "resource_envelope",
+    "publication_policy",
+    "revision"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^ji-[0-9]{4}-[0-9]{3,}$"
+    },
+    "slug": {
+      "type": "string",
+      "minLength": 1
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "public_summary": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "shared_problem": {
+      "type": "string",
+      "minLength": 20
+    },
+    "why_multiple_practices": {
+      "type": "string",
+      "minLength": 20
+    },
+    "initiated_by": {
+      "$ref": "#/$defs/actorRef"
+    },
+    "minimum_participants": {
+      "type": "integer",
+      "minimum": 2
+    },
+    "maximum_participants": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 2
+    },
+    "invited_practice_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "coordination_profile": {
+      "type": "string",
+      "minLength": 1
+    },
+    "custom_coordination_definition": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": true
+    },
+    "status": {
+      "enum": [
+        "PROPOSED",
+        "FORMING",
+        "ACTIVE",
+        "REVIEW",
+        "DORMANT",
+        "ARCHIVED",
+        "CANCELLED"
+      ]
+    },
+    "phase": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "visibility": {
+      "enum": [
+        "private",
+        "participants",
+        "public_record",
+        "public_exposition"
+      ]
+    },
+    "publication_policy": {
+      "enum": [
+        "human_only",
+        "none",
+        "local_only"
+      ]
+    },
+    "resource_envelope": {
+      "$ref": "#/$defs/resourceEnvelope"
+    },
+    "shared_material_refs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/objectRef"
+      }
+    },
+    "source_encounter_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "stop_conditions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "rights_summary": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "affected_public_summary": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    }
+  },
+  "additionalProperties": true,
+  "$defs": {
+    "actorRef": {
+      "type": "object",
+      "required": [
+        "actor_id",
+        "actor_type"
+      ],
+      "properties": {
+        "actor_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "actor_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "practice_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": true
+    },
+    "objectRef": {
+      "type": "object",
+      "required": [
+        "practice_id",
+        "local_object_id",
+        "version",
+        "content_hash"
+      ],
+      "properties": {
+        "practice_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "local_object_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "content_hash": {
+          "type": "string",
+          "minLength": 8
+        },
+        "canonical_uri": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "uri"
+        },
+        "local_type": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "media_type": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "title": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": true
+    },
+    "resourceEnvelope": {
+      "type": "object",
+      "required": [
+        "max_first_moves_per_practice",
+        "max_return_moves_per_practice",
+        "automatic_extension"
+      ],
+      "properties": {
+        "aggregate_external_cost_eur": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "target_review_window_days": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        },
+        "max_first_moves_per_practice": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "max_return_moves_per_practice": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "automatic_extension": {
+          "const": false
+        }
+      },
+      "additionalProperties": true
+    }
+  }
+}

@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/mrr/schemas/replication-plan.schema.json",
+  "title": "Replication Plan",
+  "type": "object",
+  "required": [
+    "id",
+    "api_version",
+    "kind",
+    "practice_id",
+    "revision",
+    "created_at",
+    "created_by",
+    "content_hash",
+    "project_id",
+    "target_run_id",
+    "replication_type",
+    "independence_dimensions",
+    "comparison_metrics",
+    "tolerance_policy",
+    "status"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^urn:mrr:[a-z0-9-]+:[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "api_version": {
+      "type": "string",
+      "const": "mrr/v1alpha1"
+    },
+    "kind": {
+      "type": "string",
+      "const": "ReplicationPlan"
+    },
+    "practice_id": {
+      "type": "string",
+      "pattern": "^urn:mrr:[a-z0-9-]+:[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "created_by": {
+      "type": "string",
+      "pattern": "^urn:mrr:[a-z0-9-]+:[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "content_hash": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "project_id": {
+      "type": "string",
+      "pattern": "^urn:mrr:[a-z0-9-]+:[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "target_run_id": {
+      "type": "string",
+      "pattern": "^urn:mrr:[a-z0-9-]+:[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "replication_type": {
+      "enum": [
+        "computational_reproduction",
+        "independent_reimplementation",
+        "conceptual_replication",
+        "data_replication",
+        "external_replication"
+      ]
+    },
+    "independence_dimensions": {
+      "type": "object",
+      "required": [
+        "principal",
+        "code_path",
+        "model_lineage",
+        "retrieval_path",
+        "data_path",
+        "execution_node"
+      ],
+      "properties": {
+        "principal": {
+          "type": "boolean"
+        },
+        "code_path": {
+          "type": "boolean"
+        },
+        "model_lineage": {
+          "type": "boolean"
+        },
+        "retrieval_path": {
+          "type": "boolean"
+        },
+        "data_path": {
+          "type": "boolean"
+        },
+        "execution_node": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "comparison_metrics": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "tolerance_policy": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "draft",
+        "accepted",
+        "running",
+        "concordant",
+        "discordant",
+        "inconclusive",
+        "waived"
+      ]
+    }
+  },
+  "additionalProperties": false
+}

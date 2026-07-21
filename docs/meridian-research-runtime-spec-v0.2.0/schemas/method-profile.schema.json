@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/mrr/schemas/method-profile.schema.json",
+  "title": "Method Profile",
+  "type": "object",
+  "required": [
+    "id",
+    "api_version",
+    "kind",
+    "practice_id",
+    "revision",
+    "created_at",
+    "created_by",
+    "content_hash",
+    "profile_key",
+    "semantic_version",
+    "supported_claim_types",
+    "required_object_kinds",
+    "inappropriate_uses",
+    "claim_gates"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^urn:mrr:[a-z0-9-]+:[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "api_version": {
+      "type": "string",
+      "const": "mrr/v1alpha1"
+    },
+    "kind": {
+      "type": "string",
+      "const": "MethodProfile"
+    },
+    "practice_id": {
+      "type": "string",
+      "pattern": "^urn:mrr:[a-z0-9-]+:[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "created_by": {
+      "type": "string",
+      "pattern": "^urn:mrr:[a-z0-9-]+:[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "content_hash": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "profile_key": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]+$"
+    },
+    "semantic_version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "supported_claim_types": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "descriptive",
+          "associational",
+          "causal",
+          "predictive",
+          "mechanistic",
+          "interpretive",
+          "normative",
+          "mixed"
+        ]
+      }
+    },
+    "required_object_kinds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "inappropriate_uses": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "claim_gates": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    },
+    "benchmark_families": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": false
+}

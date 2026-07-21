@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://frankbueltge.de/schemas/transfer-response-1.0.json",
+  "title": "Transfer Response Payload",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["response_id", "offer_id", "responder_collective_id", "decision"],
+  "properties": {
+    "response_id": {"type": "string"},
+    "offer_id": {"type": "string"},
+    "responder_collective_id": {"type": "string"},
+    "decision": {"type": "string", "enum": ["accepted", "accepted_with_conditions", "citation_only", "adversarial_material", "deferred", "declined"]},
+    "public_rationale": {"type": "string"},
+    "accepted_obligation_ids": {"type": "array", "items": {"type": "string"}},
+    "rejected_obligation_ids": {"type": "array", "items": {"type": "string"}},
+    "additional_conditions": {"type": "array", "items": {"type": "object"}},
+    "intended_local_use": {"type": "string"},
+    "derivative": {"type": "object", "additionalProperties": true}
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "id": "urn:mrr:node-manifest:01J00000000000000000000015",
+  "api_version": "mrr/v1alpha1",
+  "kind": "NodeManifest",
+  "practice_id": "urn:mrr:practice:01J00000000000000000000001",
+  "revision": 1,
+  "created_at": "2026-07-17T10:05:00Z",
+  "created_by": "urn:mrr:person:01J00000000000000000000002",
+  "content_hash": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "node_id": "urn:mrr:node:01J00000000000000000000003",
+  "capabilities": [
+    {
+      "name": "statistics.recompute",
+      "version": "1.0.0",
+      "input_schema": "urn:mrr:schema:numeric-check:1",
+      "output_schema": "urn:mrr:schema:evidence-crate:1",
+      "max_autonomy": "A2",
+      "approval": "automatic",
+      "network_profile": "none"
+    }
+  ],
+  "restrictions": [
+    "no_raw_personal_data_export"
+  ],
+  "accepted_classifications": [
+    "PUBLIC",
+    "INTERNAL"
+  ],
+  "data_residency": "DE",
+  "transport_modes": [
+    "online",
+    "offline_bundle"
+  ],
+  "valid_from": "2026-07-17T10:00:00Z",
+  "valid_until": "2027-07-17T10:00:00Z",
+  "public_keys": [
+    "did:key:z6MkExample"
+  ],
+  "signature": {
+    "signer_practice_id": "urn:mrr:practice:01J00000000000000000000001",
+    "key_id": "key-2026-01",
+    "algorithm": "Ed25519",
+    "signed_at": "2026-07-17T12:00:00Z",
+    "value": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
+  }
+}

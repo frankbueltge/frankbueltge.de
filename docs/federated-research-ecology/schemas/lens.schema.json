@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://frankbueltge.de/schemas/lens-1.0.json",
+  "title": "Lens Definition",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["lens_id", "version", "name", "author", "purpose", "selection", "renderer", "declared_exclusions", "implementation_hash"],
+  "properties": {
+    "lens_id": {"type": "string"},
+    "version": {"type": "integer", "minimum": 1},
+    "name": {"type": "string"},
+    "author": {"type": "object"},
+    "purpose": {"type": "string"},
+    "selection": {"type": "object"},
+    "evidence_threshold": {"type": "object"},
+    "unknown_type_policy": {"type": "string", "enum": ["show_rupture", "raw_only", "exclude_with_record"]},
+    "renderer": {"type": "string"},
+    "declared_exclusions": {"type": "array", "items": {"type": "object"}},
+    "implementation_hash": {"type": "string"}
+  }
+}

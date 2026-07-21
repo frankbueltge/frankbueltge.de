@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/mrr/schemas/correction-event.schema.json",
+  "title": "MRR CorrectionEvent",
+  "allOf": [
+    {"$ref": "common.schema.json#/$defs/baseObject"},
+    {
+      "type": "object",
+      "required": ["kind", "affected_objects", "correction_type", "severity", "reason", "evidence_refs", "originator_id", "requested_action", "status", "impact_objects"],
+      "properties": {
+        "kind": {"const": "CorrectionEvent"},
+        "affected_objects": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["id", "content_hash"],
+            "properties": {
+              "id": {"$ref": "common.schema.json#/$defs/urn"},
+              "content_hash": {"$ref": "common.schema.json#/$defs/sha256"}
+            },
+            "additionalProperties": false
+          }
+        },
+        "correction_type": {"type": "string", "enum": ["metadata", "source_invalidated", "numeric_error", "method_error", "scope_error", "consent_change", "data_withdrawal", "security", "other"]},
+        "severity": {"type": "string", "enum": ["minor", "material", "critical"]},
+        "reason": {"type": "string", "minLength": 1},
+        "evidence_refs": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/urn"}},
+        "originator_id": {"$ref": "common.schema.json#/$defs/urn"},
+        "requested_action": {"type": "string"},
+        "replacement_object_id": {"anyOf": [{"$ref": "common.schema.json#/$defs/urn"}, {"type": "null"}]},
+        "status": {"type": "string", "enum": ["OPEN", "IMPACT_ANALYSIS", "NOTIFYING", "AWAITING_RESPONSES", "DELIVERY_PENDING", "RESOLVED", "PARTIALLY_RESOLVED", "REJECTED_BY_RECIPIENT"]},
+        "impact_objects": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/urn"}}
+      }
+    }
+  ],
+  "unevaluatedProperties": false
+}

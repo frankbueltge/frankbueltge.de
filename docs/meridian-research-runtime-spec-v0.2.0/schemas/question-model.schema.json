@@ -1,0 +1,167 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/mrr/schemas/question-model.schema.json",
+  "title": "Question Model",
+  "type": "object",
+  "required": [
+    "id",
+    "api_version",
+    "kind",
+    "practice_id",
+    "revision",
+    "created_at",
+    "created_by",
+    "content_hash",
+    "project_id",
+    "research_score_id",
+    "raw_question",
+    "normalized_question",
+    "claim_type",
+    "unresolved_terms",
+    "alternative_readings",
+    "status"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^urn:mrr:[a-z0-9-]+:[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "api_version": {
+      "type": "string",
+      "const": "mrr/v1alpha1"
+    },
+    "kind": {
+      "type": "string",
+      "const": "QuestionModel"
+    },
+    "practice_id": {
+      "type": "string",
+      "pattern": "^urn:mrr:[a-z0-9-]+:[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "created_by": {
+      "type": "string",
+      "pattern": "^urn:mrr:[a-z0-9-]+:[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "content_hash": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "project_id": {
+      "type": "string",
+      "pattern": "^urn:mrr:[a-z0-9-]+:[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "research_score_id": {
+      "type": "string",
+      "pattern": "^urn:mrr:[a-z0-9-]+:[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "raw_question": {
+      "type": "string",
+      "minLength": 5
+    },
+    "normalized_question": {
+      "type": "string",
+      "minLength": 5
+    },
+    "claim_type": {
+      "enum": [
+        "descriptive",
+        "associational",
+        "causal",
+        "predictive",
+        "mechanistic",
+        "interpretive",
+        "normative",
+        "mixed"
+      ]
+    },
+    "unit": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "population": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "exposure": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "comparator": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "outcome": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "time_horizon": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "geography": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "unresolved_terms": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "alternative_readings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "label",
+          "question",
+          "material_difference"
+        ],
+        "properties": {
+          "label": {
+            "type": "string"
+          },
+          "question": {
+            "type": "string"
+          },
+          "material_difference": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "status": {
+      "enum": [
+        "draft",
+        "compiled",
+        "reviewed",
+        "accepted",
+        "superseded"
+      ]
+    }
+  },
+  "additionalProperties": false
+}

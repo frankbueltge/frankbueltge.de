@@ -1,0 +1,54 @@
+{
+  "id": "urn:mrr:data-asset-profile:01J00000000000000000000108",
+  "api_version": "mrr/v1alpha1",
+  "kind": "DataAssetProfile",
+  "practice_id": "urn:mrr:practice:01J00000000000000000000001",
+  "revision": 1,
+  "created_at": "2026-07-21T10:00:00Z",
+  "created_by": "urn:mrr:person:01J00000000000000000000002",
+  "content_hash": "sha256:8888888888888888888888888888888888888888888888888888888888888888",
+  "project_id": "urn:mrr:project:01J00000000000000000000100",
+  "name": "Synthetic housing affordability and political support panel",
+  "owner": "Meridian RMK test fixtures",
+  "authoritative_location": "fixtures://housing-populism/panel-v1",
+  "access_state": "analysis_ready",
+  "license_or_terms": "Internal synthetic test fixture; no empirical use permitted.",
+  "classification": "SYNTHETIC_TEST_FIXTURE",
+  "temporal_coverage": "Synthetic annual and election-wave observations labelled 2015-2025",
+  "geographic_units": [
+    "synthetic_city",
+    "synthetic_electoral_district"
+  ],
+  "observational_unit": "synthetic individual-wave observation",
+  "variables": [
+    "household_id",
+    "city_id",
+    "wave",
+    "housing_cost_total",
+    "disposable_income",
+    "tenure",
+    "party_family_support",
+    "attrition_flag"
+  ],
+  "missingness": [
+    "Deterministic fixture missingness in income and follow-up outcome for negative tests."
+  ],
+  "revision_history": "Generated from a pinned seed and fixture generator version; changes require a new content hash.",
+  "join_keys": [
+    "household_id",
+    "city_id",
+    "wave"
+  ],
+  "risks": [
+    "Accidental presentation as real European data",
+    "Overfitting implementation to one fixture"
+  ],
+  "estimand_suitability": [
+    {
+      "estimand_id": "urn:mrr:estimand:01J00000000000000000000105",
+      "rating": "high",
+      "reason": "Designed solely to exercise the declared estimand and failure paths."
+    }
+  ],
+  "empirical_claims_permitted": false
+}

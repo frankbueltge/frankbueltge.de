@@ -1,0 +1,13 @@
+id: JI-07
+title: Run pilot fixture in dry-run mode
+depends_on: [JI-05, JI-06]
+goal: Prove the complete pipeline without real public publication or unbounded model calls.
+deliverables:
+  - verified current source refs
+  - dry-run event trace
+  - test report
+acceptance:
+  - Three commitments validate.
+  - Mocked moves and return complete.
+  - Inquiry reaches REVIEW.
+  - No public work or exposition is created.

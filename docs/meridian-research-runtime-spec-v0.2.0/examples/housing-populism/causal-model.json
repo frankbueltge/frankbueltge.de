@@ -1,0 +1,85 @@
+{
+  "id": "urn:mrr:causal-model:01J00000000000000000000106",
+  "api_version": "mrr/v1alpha1",
+  "kind": "CausalModel",
+  "practice_id": "urn:mrr:practice:01J00000000000000000000001",
+  "revision": 1,
+  "created_at": "2026-07-21T10:00:00Z",
+  "created_by": "urn:mrr:person:01J00000000000000000000002",
+  "content_hash": "sha256:6666666666666666666666666666666666666666666666666666666666666666",
+  "project_id": "urn:mrr:project:01J00000000000000000000100",
+  "label": "Material pressure with sorting and common-cause threats",
+  "lens_manifest": {
+    "author": "Meridian RMK reference project",
+    "purpose": "Represent one local causal hypothesis for implementation and testing, not a canonical model of European politics.",
+    "known_exclusions": [
+      "media discourse dynamics",
+      "party campaign endogeneity",
+      "cross-border political diffusion"
+    ]
+  },
+  "nodes": [
+    {
+      "node_id": "housing_shock",
+      "label": "Housing-cost burden increase",
+      "node_type": "exposure"
+    },
+    {
+      "node_id": "financial_pressure",
+      "label": "Disposable-income pressure",
+      "node_type": "mediator"
+    },
+    {
+      "node_id": "party_support",
+      "label": "Party-family support",
+      "node_type": "outcome"
+    },
+    {
+      "node_id": "local_economy",
+      "label": "Local economic conditions",
+      "node_type": "confounder"
+    },
+    {
+      "node_id": "residential_sorting",
+      "label": "Residential sorting",
+      "node_type": "selector"
+    }
+  ],
+  "edges": [
+    {
+      "from": "housing_shock",
+      "to": "financial_pressure",
+      "edge_type": "causes",
+      "rationale": "Higher required housing expenditure can reduce residual disposable resources."
+    },
+    {
+      "from": "financial_pressure",
+      "to": "party_support",
+      "edge_type": "mediates",
+      "rationale": "Material strain is a candidate mechanism, not an established fact."
+    },
+    {
+      "from": "local_economy",
+      "to": "housing_shock",
+      "edge_type": "confounds",
+      "rationale": "Local growth can affect both housing costs and political outcomes."
+    },
+    {
+      "from": "local_economy",
+      "to": "party_support",
+      "edge_type": "confounds",
+      "rationale": "Economic conditions can independently affect political support."
+    },
+    {
+      "from": "residential_sorting",
+      "to": "party_support",
+      "edge_type": "selects_into",
+      "rationale": "Migration can change aggregate composition without individual preference change."
+    }
+  ],
+  "competing_model_ids": [
+    "urn:mrr:causal-model:01J00000000000000000000206",
+    "urn:mrr:causal-model:01J00000000000000000000207"
+  ],
+  "status": "accepted"
+}

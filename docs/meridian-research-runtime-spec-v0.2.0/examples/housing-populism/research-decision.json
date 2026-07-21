@@ -1,0 +1,37 @@
+{
+  "id": "urn:mrr:research-decision:01J00000000000000000000117",
+  "api_version": "mrr/v1alpha1",
+  "kind": "ResearchDecision",
+  "practice_id": "urn:mrr:practice:01J00000000000000000000001",
+  "revision": 1,
+  "created_at": "2026-07-21T10:00:00Z",
+  "created_by": "urn:mrr:person:01J00000000000000000000002",
+  "content_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+  "project_id": "urn:mrr:project:01J00000000000000000000100",
+  "milestone": "M6 synthetic vertical-slice evaluation",
+  "decision_type": "stop_insufficient_evidence",
+  "evidence_considered": [
+    "urn:mrr:identification-audit:01J00000000000000000000110",
+    "urn:mrr:data-asset-profile:01J00000000000000000000108",
+    "urn:mrr:pre-analysis-plan:01J00000000000000000000111",
+    "urn:mrr:falsification-plan:01J00000000000000000000112"
+  ],
+  "gate_results": [
+    "G-M03 identification audit downgraded",
+    "G-M08 synthetic fixture isolation passed",
+    "G-M09 causal promotion blocked"
+  ],
+  "rationale": "The synthetic branch is complete as a software acceptance test but is intentionally ineligible to support an empirical causal conclusion.",
+  "affected_object_ids": [
+    "urn:mrr:research-design:01J00000000000000000000109",
+    "urn:mrr:identification-audit:01J00000000000000000000110",
+    "urn:mrr:pre-analysis-plan:01J00000000000000000000111",
+    "urn:mrr:claim:01J00000000000000000000115"
+  ],
+  "next_actions": [
+    "Archive fixture outputs as benchmark artefacts.",
+    "Begin a separate evidence-and-data-scouting project before any real analysis."
+  ],
+  "reversible": true,
+  "status": "accepted"
+}

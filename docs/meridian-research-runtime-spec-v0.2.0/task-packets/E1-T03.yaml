@@ -1,0 +1,57 @@
+task_id: E1-T03
+title: Implement schema-backed core contracts
+status: approved
+objective: >
+  Implement Pydantic v2 models for the supplied v1alpha1 JSON Schemas and a
+  repeatable check that schemas, models, and examples remain compatible.
+source_of_truth:
+  - AGENTS.md
+  - docs/02_DOMAIN_MODEL.md
+  - schemas/common.schema.json
+  - schemas/research-score.schema.json
+  - schemas/node-manifest.schema.json
+  - schemas/task-bundle.schema.json
+  - schemas/claim.schema.json
+  - schemas/evidence-crate.schema.json
+  - schemas/correction-event.schema.json
+requirements:
+  - MRR-FR-001
+  - MRR-FR-020
+  - MRR-FR-030
+  - MRR-FR-050
+  - MRR-FR-060
+  - MRR-FR-090
+allowed_paths:
+  - packages/contracts/**
+  - schemas/**
+  - examples/**
+  - tests/contract/**
+  - scripts/check_contracts.py
+  - pyproject.toml
+forbidden_changes:
+  - changing domain semantics merely to simplify model generation
+  - API endpoints
+  - persistence code
+invariants:
+  - every example validates against JSON Schema and Pydantic
+  - unknown safety-relevant enum values are rejected
+  - datetime parsing is timezone-aware
+  - supported claims require evidence and verification at contract level
+acceptance_tests:
+  - all schemas pass Draft 2020-12 validation
+  - all examples pass schema and Pydantic validation
+  - malformed hash, URN, status, and signature fixtures fail
+  - JSON round-trip preserves semantic values
+commands:
+  - make format
+  - make lint
+  - make typecheck
+  - make test-contract
+required_output:
+  - implementation summary
+  - generated/manual model strategy
+  - changed files
+  - commands and results
+  - schema conflicts
+stop_conditions:
+  - JSON Schema and Pydantic semantics cannot be aligned without a spec change

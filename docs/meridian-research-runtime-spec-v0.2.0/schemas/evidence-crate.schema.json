@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/mrr/schemas/evidence-crate.schema.json",
+  "title": "MRR EvidenceCrate",
+  "allOf": [
+    {"$ref": "common.schema.json#/$defs/baseObject"},
+    {
+      "type": "object",
+      "required": ["kind", "task_id", "run_id", "run_state", "artifacts", "source_records", "evidence_anchors", "proposed_claims", "failures", "known_unknowns", "environment", "sealed", "signature"],
+      "properties": {
+        "kind": {"const": "EvidenceCrate"},
+        "task_id": {"$ref": "common.schema.json#/$defs/urn"},
+        "run_id": {"$ref": "common.schema.json#/$defs/urn"},
+        "run_state": {"type": "string", "enum": ["completed", "failed", "cancelled", "timed_out", "policy_denied", "partial"]},
+        "artifacts": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/artifactRef"}},
+        "source_records": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/urn"}},
+        "evidence_anchors": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/urn"}},
+        "proposed_claims": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/urn"}},
+        "failures": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["code", "category", "message"],
+            "properties": {
+              "code": {"type": "string"},
+              "category": {"type": "string", "enum": ["not_found", "unknown", "null_result", "contradicted", "underpowered", "method_invalidated", "source_unavailable", "execution_error", "policy_denied"]},
+              "message": {"type": "string"}
+            },
+            "additionalProperties": false
+          }
+        },
+        "known_unknowns": {"type": "array", "items": {"type": "string"}},
+        "environment": {
+          "type": "object",
+          "required": ["image_digest", "code_revision", "input_hashes"],
+          "properties": {
+            "image_digest": {"$ref": "common.schema.json#/$defs/sha256"},
+            "code_revision": {"type": "string"},
+            "input_hashes": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/sha256"}},
+            "model_profiles": {"type": "array", "items": {"type": "string"}}
+          },
+          "additionalProperties": false
+        },
+        "sealed": {"const": true},
+        "signature": {"$ref": "common.schema.json#/$defs/signature"}
+      }
+    }
+  ],
+  "unevaluatedProperties": false
+}

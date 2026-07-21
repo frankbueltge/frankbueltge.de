@@ -1,0 +1,148 @@
+{
+  "fixture_notice": "Illustrative schema fixture only. This is not evidence that the described encounter has occurred. The production vertical slice must use a real, audited encounter from the repositories.",
+  "encounter": {
+    "id": "enc-example-001",
+    "title": "A measured object enters an experiential practice",
+    "participants": [
+      {"collective_id": "meridian", "role": "source", "local_status": "transfer_complete"},
+      {"collective_id": "ensemble", "role": "receiver", "local_status": "transformation_active"},
+      {"collective_id": "ulysses", "role": "respondent", "local_status": "challenge_open"}
+    ],
+    "shared_resolution": null
+  },
+  "source_object": {
+    "collective_id": "meridian",
+    "local_object_id": "instrument-example",
+    "object_version": "commit-example-a1",
+    "canonical_uri": "https://example.invalid/field/works/instrument-example",
+    "local_object_type": "verification-instrument",
+    "media_type": "text/html",
+    "content_hash": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "lifecycle_status": "verified",
+    "local_epistemic_status": "SHIPPED_WITH_CAVEATS"
+  },
+  "events": [
+    {
+      "schema_version": "1.0",
+      "event_id": "evt-example-offer",
+      "encounter_id": "enc-example-001",
+      "event_type": "offer.created",
+      "issuer": {"collective_id": "meridian", "actor_id": "meridian-collective"},
+      "occurred_at": "2026-07-01T20:00:00Z",
+      "source_uri": "https://example.invalid/field/federation/outbox/offer.json",
+      "payload": {
+        "offer_id": "offer-example-001",
+        "target_collective_id": "ensemble",
+        "proposition": "Use or contest the instrument under the attached live-status conditions.",
+        "caveats": [
+          {"id": "caveat-1", "text": "The result applies only to the tested configuration.", "load_bearing": true}
+        ],
+        "requested_obligations": [
+          {"id": "obl-1", "clause": "Display the live source status wherever the derived element appears.", "prominence": "load_bearing"},
+          {"id": "obl-2", "clause": "Return discovered factual errors upstream before silently patching the derivative.", "prominence": "normal"}
+        ]
+      },
+      "content_hash": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    },
+    {
+      "schema_version": "1.0",
+      "event_id": "evt-example-response",
+      "encounter_id": "enc-example-001",
+      "event_type": "offer.accepted_with_conditions",
+      "issuer": {"collective_id": "ensemble", "actor_id": "ensemble-collective"},
+      "occurred_at": "2026-07-03T20:00:00Z",
+      "source_uri": "https://example.invalid/studio/federation/outbox/response.json",
+      "payload": {
+        "response_id": "response-example-001",
+        "offer_id": "offer-example-001",
+        "decision": "accepted_with_conditions",
+        "accepted_obligation_ids": ["obl-1", "obl-2"],
+        "additional_conditions": [
+          {"id": "receiver-1", "clause": "The experiential work will not be presented as a faithful visualisation of the instrument."}
+        ],
+        "intended_local_use": "Material for a participatory rule system."
+      },
+      "content_hash": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+    },
+    {
+      "schema_version": "1.0",
+      "event_id": "evt-example-derivative",
+      "encounter_id": "enc-example-001",
+      "event_type": "derivative.published",
+      "issuer": {"collective_id": "ensemble", "actor_id": "ensemble-collective"},
+      "occurred_at": "2026-07-08T20:00:00Z",
+      "source_uri": "https://example.invalid/studio/works/derivative-example",
+      "payload": {
+        "derivative": {
+          "collective_id": "ensemble",
+          "local_object_id": "derivative-example",
+          "local_object_type": "participatory-work",
+          "content_hash": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+        },
+        "preserved": ["tested categories", "source caveat visibility"],
+        "transformed": ["measurement procedure became visitor rule"],
+        "imagined": ["dramaturgical sequence", "spatial response"]
+      },
+      "content_hash": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+    }
+  ],
+  "assertions": [
+    {
+      "assertion_id": "assert-example-ensemble-1",
+      "encounter_id": "enc-example-001",
+      "author": {"actor_id": "ensemble-collective", "collective_id": "ensemble"},
+      "subject": {"local_object_id": "derivative-example"},
+      "predicate": "transforms_through_participation",
+      "object": {"local_object_id": "instrument-example"},
+      "rationale": "The source procedure becomes a rule visitors undergo rather than a result they inspect.",
+      "epistemic_status": "interpretation",
+      "evidence": [{"event_id": "evt-example-derivative"}],
+      "content_hash": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+    },
+    {
+      "assertion_id": "assert-example-ulysses-1",
+      "encounter_id": "enc-example-001",
+      "author": {"actor_id": "ulysses", "collective_id": "ulysses"},
+      "subject": {"local_object_id": "derivative-example"},
+      "predicate": "holds-open-against",
+      "object": "the premise that the measured category remains stable across translation",
+      "rationale": "The derivative repeatedly changes the rule by which a visitor is judged.",
+      "epistemic_status": "interpretation",
+      "evidence": [{"uri": "https://example.invalid/atelier/response-example"}],
+      "content_hash": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+    },
+    {
+      "assertion_id": "assert-example-meridian-response",
+      "encounter_id": "enc-example-001",
+      "author": {"actor_id": "meridian-collective", "collective_id": "meridian"},
+      "subject": {"assertion_id": "assert-example-ulysses-1"},
+      "predicate": "contests",
+      "object": "The source instrument did not claim that the category was ontologically stable; it measured a versioned operational rule.",
+      "epistemic_status": "interpretation",
+      "evidence": [{"local_object_id": "instrument-example"}],
+      "content_hash": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+    }
+  ],
+  "maps": [
+    {
+      "map_id": "map-example-provenance",
+      "lens": "provenance-v1",
+      "form": "event-chain",
+      "excludes": ["private deliberation", "unadmitted machine suggestions"]
+    },
+    {
+      "map_id": "map-example-transformation",
+      "lens": "ensemble-transformation-v1",
+      "form": "layered-object-lineage",
+      "excludes": ["source-internal gauntlet dialogue", "unrealised physical variants"]
+    },
+    {
+      "map_id": "map-example-counter-reading",
+      "lens": "ulysses-local-reading-v1",
+      "form": "bounded-constellation",
+      "render_failures": [
+        {"relation_type": "holds-open-against", "reason": "No renderer registered; raw assertion remains visible."}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/mrr/schemas/node-manifest.schema.json",
+  "title": "MRR NodeManifest",
+  "allOf": [
+    {"$ref": "common.schema.json#/$defs/baseObject"},
+    {
+      "type": "object",
+      "required": ["kind", "node_id", "capabilities", "restrictions", "transport_modes", "valid_from", "valid_until", "public_keys", "signature"],
+      "properties": {
+        "kind": {"const": "NodeManifest"},
+        "node_id": {"$ref": "common.schema.json#/$defs/urn"},
+        "capabilities": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["name", "version", "input_schema", "output_schema", "max_autonomy", "approval", "network_profile"],
+            "properties": {
+              "name": {"type": "string", "pattern": "^[a-z0-9-]+(\\.[a-z0-9-]+)+$"},
+              "version": {"type": "string"},
+              "input_schema": {"type": "string"},
+              "output_schema": {"type": "string"},
+              "max_autonomy": {"type": "string", "enum": ["A0", "A1", "A2", "A3", "A4"]},
+              "approval": {"type": "string", "enum": ["automatic", "human", "dual"]},
+              "network_profile": {"type": "string", "enum": ["none", "allowlist", "unrestricted_forbidden"]}
+            },
+            "additionalProperties": false
+          }
+        },
+        "restrictions": {"type": "array", "items": {"type": "string"}},
+        "accepted_classifications": {"type": "array", "items": {"type": "string"}},
+        "data_residency": {"type": "string"},
+        "transport_modes": {"type": "array", "items": {"type": "string", "enum": ["online", "offline_bundle"]}},
+        "valid_from": {"$ref": "common.schema.json#/$defs/timestamp"},
+        "valid_until": {"$ref": "common.schema.json#/$defs/timestamp"},
+        "public_keys": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "signature": {"$ref": "common.schema.json#/$defs/signature"}
+      }
+    }
+  ],
+  "unevaluatedProperties": false
+}

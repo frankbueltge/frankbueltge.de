@@ -1,0 +1,54 @@
+task_id: M5-T03
+title: Implement GeneralizationMap and ResearchDecision engine
+status: approved
+objective: Implement explicit study-to-target transport bounds, non-claims, adaptive branch decisions
+  and successful stop_insufficient_evidence outcomes.
+source_of_truth:
+- docs/12_PREANALYSIS_EXECUTION_AND_ADAPTATION.md
+- docs/13_FALSIFICATION_REPLICATION_GENERALIZATION.md
+- schemas/generalization-map.schema.json
+- schemas/research-decision.schema.json
+- examples/housing-populism/generalization-map.json
+- examples/housing-populism/research-decision.json
+requirements:
+- MRR-MTH-006
+- MRR-MTH-110
+- MRR-MTH-111
+- MRR-MTH-112
+- MRR-MTH-113
+- MRR-MTH-114
+- MRR-MTH-115
+- MRR-MTH-128
+- MRR-MTH-129
+- MRR-MTH-130
+- MRR-MTH-131
+- MRR-MTH-134
+allowed_paths:
+- packages/method-kernel/generalization/**
+- packages/method-kernel/decisions/**
+- packages/policy/publication/**
+- tests/unit/generalization/**
+- tests/integration/research_decisions/**
+forbidden_changes:
+- automatic scope expansion
+- optimization for statistical significance
+- global winner selection across branches
+- dropping killed branches
+invariants:
+- every external empirical claim has a generalization map
+- explicit non-claims survive projection
+- decisions cite evidence and gate results
+- insufficient evidence is a valid terminal outcome
+acceptance_tests:
+- accept housing explicit non-claims
+- block transport from synthetic to real population
+- persist stop_insufficient_evidence decision
+- retain killed branch in hypothesis forest
+required_output:
+- implementation summary mapped to requirement IDs
+- changed files
+- commands and test results
+- remaining risks and explicit non-implementation notes
+stop_conditions:
+- publication projections cannot preserve non-claims
+- decision engine would need unrestricted model authority

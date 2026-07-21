@@ -1,0 +1,49 @@
+task_id: M7-T01
+title: Build MethodBench and release hardening
+status: approved
+objective: Implement method benchmark families, negative fixtures, property tests, injection resistance
+  for future model-assisted compilers, reviewer evidence views and release gates G-M01 through G-M10.
+source_of_truth:
+- docs/18_METHOD_BENCHMARKS_AND_ACCEPTANCE.md
+- docs/05_EVALUATION_AND_ACCEPTANCE.md
+- AGENTS.md
+- acceptance/**
+requirements:
+- MRR-MTH-004
+- MRR-MTH-008
+- MRR-MTH-009
+- MRR-MTH-010
+- MRR-MTH-187
+allowed_paths:
+- packages/benchmark/**
+- tests/benchmark/**
+- tests/property/**
+- tests/security/**
+- apps/reviewer-ui/**
+- .github/workflows/**
+- scripts/release_gates/**
+forbidden_changes:
+- model-assisted authoritative transitions
+- production empirical research
+- single aggregate quality score
+- release-gate waivers without record
+invariants:
+- benchmarks include failure and unknown outcomes
+- release gates fail closed
+- UI exposes method lineage and non-claims
+- prompt or document content cannot directly issue tools or state transitions
+acceptance_tests:
+- all G-M01 through G-M10 gates executable
+- mutation tests for claim ceiling and synthetic isolation
+- security fixture for prompt injection in evidence text
+- benchmark report separates epistemic, operational and cost metrics
+required_output:
+- implementation summary mapped to requirement IDs
+- changed files
+- commands and test results
+- remaining risks and explicit non-implementation notes
+- release-gate matrix
+- benchmark baseline report
+stop_conditions:
+- benchmarks require provider-specific model behavior before M8
+- reviewer UI would hide failed or rejected method objects

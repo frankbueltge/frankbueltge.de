@@ -1,0 +1,29 @@
+{
+  "id": "urn:mrr:replication-plan:01J00000000000000000000114",
+  "api_version": "mrr/v1alpha1",
+  "kind": "ReplicationPlan",
+  "practice_id": "urn:mrr:practice:01J00000000000000000000001",
+  "revision": 1,
+  "created_at": "2026-07-21T10:00:00Z",
+  "created_by": "urn:mrr:person:01J00000000000000000000002",
+  "content_hash": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+  "project_id": "urn:mrr:project:01J00000000000000000000100",
+  "target_run_id": "urn:mrr:run:01J00000000000000000000113",
+  "replication_type": "independent_reimplementation",
+  "independence_dimensions": {
+    "principal": true,
+    "code_path": true,
+    "model_lineage": true,
+    "retrieval_path": false,
+    "data_path": false,
+    "execution_node": true
+  },
+  "comparison_metrics": [
+    "point-estimate tolerance",
+    "diagnostic classification",
+    "claim-ceiling compliance",
+    "kill-rule concordance"
+  ],
+  "tolerance_policy": "Numeric outputs must agree within the fixture tolerance; branch-state and claim-ceiling outcomes must agree exactly.",
+  "status": "accepted"
+}

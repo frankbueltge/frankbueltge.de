@@ -1,0 +1,47 @@
+task_id: M3-T01
+title: Implement Evidence Matrix and source verification lifecycle
+status: approved
+objective: Implement search strategy records, evidence discovery/extraction/verification states, source-family
+  attribution and explicit unavailable or rejected outcomes without fabricated substitutes.
+source_of_truth:
+- docs/11_EVIDENCE_AND_DATA_SCOUTING.md
+- schemas/evidence-matrix.schema.json
+- examples/housing-populism/evidence-matrix.json
+requirements:
+- MRR-MTH-060
+- MRR-MTH-061
+- MRR-MTH-062
+- MRR-MTH-063
+- MRR-MTH-064
+- MRR-MTH-065
+- MRR-MTH-066
+- MRR-MTH-067
+- MRR-MTH-068
+- MRR-MTH-069
+allowed_paths:
+- packages/method-kernel/evidence_scout/**
+- packages/domain/source_family/**
+- tests/unit/evidence_scout/**
+- tests/integration/source_verification/**
+forbidden_changes:
+- web search provider integration
+- automatic source trust
+- citation hallucination fallback
+- effect-size pooling
+invariants:
+- discovery is not verification
+- unavailable remains a first-class state
+- source count is not evidence independence
+- exact anchors are required for verified extraction
+acceptance_tests:
+- ingest empty draft matrix
+- transition discovered to verified only with required evidence
+- group derivative sources into one family
+- return unavailable instead of nearest substitute
+required_output:
+- implementation summary mapped to requirement IDs
+- changed files
+- commands and test results
+- remaining risks and explicit non-implementation notes
+stop_conditions:
+- existing source model cannot preserve family and anchor lineage

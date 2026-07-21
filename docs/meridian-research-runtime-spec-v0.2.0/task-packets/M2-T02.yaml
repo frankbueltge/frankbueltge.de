@@ -1,0 +1,41 @@
+task_id: M2-T02
+title: Implement causal model graph and competing explanations
+status: approved
+objective: Implement typed, versioned causal models with local lens manifests, graph validation, competing
+  models and explicit distinctions among confounders, mediators, selectors, modifiers and measurements.
+source_of_truth:
+- docs/10_CAUSAL_INFERENCE_AND_DESIGN.md
+- schemas/causal-model.schema.json
+- examples/housing-populism/causal-model.json
+requirements:
+- MRR-MTH-043
+- MRR-MTH-044
+- MRR-MTH-045
+- MRR-MTH-046
+allowed_paths:
+- packages/method-kernel/causal_model/**
+- tests/unit/causal_model/**
+- tests/property/causal_model/**
+forbidden_changes:
+- global canonical DAG
+- automatic truth assignment to edges
+- graph database
+- opaque graph scoring
+invariants:
+- every graph is project-local and authored
+- typed edges remain contestable
+- cycles are handled according to declared graph semantics rather than silently removed
+- competing models remain addressable
+acceptance_tests:
+- validate housing causal model
+- reject edge to unknown node
+- detect invalid role coercion
+- preserve competing model references and lens manifest
+required_output:
+- implementation summary mapped to requirement IDs
+- changed files
+- commands and test results
+- remaining risks and explicit non-implementation notes
+stop_conditions:
+- implementation requires a universal causal ontology
+- graph validation would erase unknown relations

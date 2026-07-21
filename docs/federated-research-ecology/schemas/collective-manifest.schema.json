@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://frankbueltge.de/schemas/collective-manifest-1.0.json",
+  "title": "Collective Manifest",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["schema_version", "collective_id", "name", "description", "protocol_url", "repository_url", "responsible_publisher", "status", "effective_from", "version", "content_hash"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "collective_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]{1,63}$"},
+    "name": {"type": "string", "minLength": 1},
+    "surface_name": {"type": "string"},
+    "description": {"type": "string", "minLength": 1},
+    "protocol_url": {"type": "string", "format": "uri"},
+    "repository_url": {"type": "string", "format": "uri"},
+    "public_url": {"type": "string", "format": "uri"},
+    "responsible_publisher": {"type": "string", "minLength": 1},
+    "status": {"type": "string", "enum": ["active", "dormant", "left", "archived"]},
+    "current_commitments": {"type": "array", "items": {"type": "string"}},
+    "accepted_encounter_types": {"type": "array", "items": {"type": "string"}},
+    "inbox": {"type": "object", "additionalProperties": true},
+    "outbox_url": {"type": "string", "format": "uri"},
+    "runtime_disclosure_policy": {"type": "object", "additionalProperties": true},
+    "effective_from": {"type": "string", "format": "date-time"},
+    "version": {"type": "integer", "minimum": 1},
+    "content_hash": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "signature": {"type": "string"}
+  }
+}

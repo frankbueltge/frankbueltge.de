@@ -1,0 +1,12 @@
+id: JI-02
+title: Implement schemas, types and fixtures
+depends_on: [JI-01]
+goal: Add validated machine-readable contracts and a complete sample inquiry.
+deliverables:
+  - JSON Schemas
+  - framework-native validators/types
+  - ji-2026-001 fixture
+acceptance:
+  - Valid examples pass.
+  - Invalid activation and missing commitments fail.
+  - Unknown local strings remain accepted.

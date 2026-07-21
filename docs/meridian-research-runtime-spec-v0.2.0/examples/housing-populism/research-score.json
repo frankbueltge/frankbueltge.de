@@ -1,0 +1,82 @@
+{
+  "id": "urn:mrr:research-score:01J00000000000000000000101",
+  "api_version": "mrr/v1alpha1",
+  "kind": "ResearchScore",
+  "practice_id": "urn:mrr:practice:01J00000000000000000000001",
+  "revision": 1,
+  "created_at": "2026-07-21T10:00:00Z",
+  "created_by": "urn:mrr:person:01J00000000000000000000002",
+  "content_hash": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+  "question": "To what extent does rising housing-cost unaffordability causally increase support for right-populist or anti-establishment parties in European cities between 2015 and 2025?",
+  "background": "Synthetic reference project used to implement and test the Research Method Kernel. It does not contain empirical findings.",
+  "objectives": [
+    "Compile the causal question into explicit concepts, estimands, designs and claim gates.",
+    "Exercise the full method workflow using synthetic fixtures only."
+  ],
+  "non_goals": [
+    "Producing a real estimate for European cities.",
+    "Publishing a causal political claim.",
+    "Using participant-identifiable or licensed restricted data."
+  ],
+  "scope": {
+    "population": "Synthetic representations of urban renters and city-election panels",
+    "time": "2015-2025",
+    "geography": "Synthetic European-city-like units",
+    "conditions": [
+      "All observations are synthetic fixtures",
+      "No empirical generalization permitted"
+    ]
+  },
+  "starting_assumptions": [
+    "Housing affordability is multidimensional and must not be collapsed into one unreviewed measure.",
+    "Right-populist and anti-establishment classifications require versioned local taxonomies."
+  ],
+  "methods": {
+    "allowed": [
+      "question compilation",
+      "causal modelling",
+      "synthetic panel analysis",
+      "falsification probes"
+    ],
+    "prohibited": [
+      "real-world causal publication",
+      "participant contact",
+      "use of unlicensed restricted data"
+    ]
+  },
+  "data_classes": [
+    "INTERNAL"
+  ],
+  "ethics_references": [],
+  "autonomy": {
+    "retrieve": "A0",
+    "draft": "A1",
+    "execute": "A2",
+    "publish": "A4"
+  },
+  "budgets": {
+    "currency": "EUR",
+    "money_limit": 250,
+    "compute_seconds": 14400,
+    "model_tokens": 500000,
+    "human_review_minutes": 600
+  },
+  "quality_gates": [
+    "No causal claim above the IdentificationAudit claim ceiling.",
+    "No synthetic result may be promoted to an empirical claim.",
+    "No confirmatory run before the PreAnalysisPlan is locked."
+  ],
+  "stop_conditions": [
+    "Critical policy violation",
+    "Synthetic fixture escapes the test namespace",
+    "Identification audit fails"
+  ],
+  "publication_policy": {
+    "max_disclosure": "INTERNAL",
+    "external_publication_requires_approval": true
+  },
+  "status": "APPROVED",
+  "approvals": [
+    "urn:mrr:approval:01J00000000000000000000118"
+  ]
+}

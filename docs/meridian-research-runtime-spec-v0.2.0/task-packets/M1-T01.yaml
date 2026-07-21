@@ -1,0 +1,46 @@
+task_id: M1-T01
+title: Implement deterministic Question Compiler
+status: approved
+objective: Compile structured human input into a QuestionModel while preserving the raw question, exposing
+  unresolved terms and preventing direct transition from prose to execution.
+source_of_truth:
+- docs/09_QUESTION_AND_CONCEPT_COMPILATION.md
+- schemas/question-model.schema.json
+- examples/housing-populism/question-model.json
+- acceptance/method-preanalysis-lock.feature
+requirements:
+- MRR-MTH-002
+- MRR-MTH-020
+- MRR-MTH-021
+- MRR-MTH-022
+- MRR-MTH-023
+- MRR-MTH-024
+- MRR-MTH-031
+allowed_paths:
+- packages/method-kernel/question/**
+- tests/unit/question/**
+- tests/property/question/**
+- tests/fixtures/housing_populism/**
+forbidden_changes:
+- LLM question rewriting
+- automatic acceptance
+- analysis task creation
+- external search
+invariants:
+- raw_question is byte-preserved
+- normalization cannot silently change scope
+- causal questions expose all mandatory slots or mark them unresolved
+- materially distinct readings remain separate
+acceptance_tests:
+- compile the housing question fixture
+- detect missing comparator and horizon
+- property test raw-question preservation
+- reject executable task creation from raw question
+required_output:
+- implementation summary mapped to requirement IDs
+- changed files
+- commands and test results
+- remaining risks and explicit non-implementation notes
+stop_conditions:
+- normalization requires unreviewable semantic inference
+- current command model allows raw questions to issue tasks directly

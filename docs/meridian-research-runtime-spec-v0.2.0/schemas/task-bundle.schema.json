@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/mrr/schemas/task-bundle.schema.json",
+  "title": "MRR TaskBundle",
+  "allOf": [
+    {"$ref": "common.schema.json#/$defs/baseObject"},
+    {
+      "type": "object",
+      "required": ["kind", "origin_practice_id", "target_node_id", "research_score_id", "research_score_revision", "branch_id", "capability", "purpose", "instructions", "inputs", "data_access_mode", "execution", "resource_limits", "network_policy", "output_schema", "classification", "approval_requirement", "expires_at", "nonce", "signature"],
+      "properties": {
+        "kind": {"const": "TaskBundle"},
+        "origin_practice_id": {"$ref": "common.schema.json#/$defs/urn"},
+        "target_node_id": {"$ref": "common.schema.json#/$defs/urn"},
+        "research_score_id": {"$ref": "common.schema.json#/$defs/urn"},
+        "research_score_revision": {"type": "integer", "minimum": 1},
+        "branch_id": {"$ref": "common.schema.json#/$defs/urn"},
+        "capability": {
+          "type": "object",
+          "required": ["name", "version"],
+          "properties": {"name": {"type": "string"}, "version": {"type": "string"}},
+          "additionalProperties": false
+        },
+        "purpose": {"type": "string", "minLength": 1},
+        "instructions": {"type": "object"},
+        "inputs": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/artifactRef"}},
+        "data_access_mode": {"type": "string", "enum": ["none", "read_local", "compute_to_data", "approved_transfer"]},
+        "execution": {
+          "type": "object",
+          "required": ["image_digest", "entrypoint"],
+          "properties": {
+            "image_digest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+            "entrypoint": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+            "code_revision": {"type": "string"}
+          },
+          "additionalProperties": false
+        },
+        "resource_limits": {
+          "type": "object",
+          "required": ["cpu", "memory_mb", "disk_mb", "timeout_seconds"],
+          "properties": {
+            "cpu": {"type": "number", "exclusiveMinimum": 0},
+            "memory_mb": {"type": "integer", "minimum": 64},
+            "disk_mb": {"type": "integer", "minimum": 1},
+            "timeout_seconds": {"type": "integer", "minimum": 1}
+          },
+          "additionalProperties": false
+        },
+        "network_policy": {
+          "type": "object",
+          "required": ["mode", "allowlist"],
+          "properties": {
+            "mode": {"type": "string", "enum": ["deny_all", "allowlist"]},
+            "allowlist": {"type": "array", "items": {"type": "string"}}
+          },
+          "additionalProperties": false
+        },
+        "tools": {"type": "array", "items": {"type": "string"}},
+        "secret_refs": {"type": "array", "items": {"type": "string"}},
+        "output_schema": {"type": "string"},
+        "classification": {"type": "string", "enum": ["PUBLIC", "INTERNAL", "RESTRICTED", "SENSITIVE", "PARTICIPANT_IDENTIFIABLE"]},
+        "approval_requirement": {"type": "string", "enum": ["automatic", "human", "dual"]},
+        "expires_at": {"$ref": "common.schema.json#/$defs/timestamp"},
+        "nonce": {"type": "string", "minLength": 16},
+        "signature": {"$ref": "common.schema.json#/$defs/signature"}
+      }
+    }
+  ],
+  "unevaluatedProperties": false
+}

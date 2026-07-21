@@ -1,0 +1,26 @@
+{
+  "id": "urn:mrr:estimand:01J00000000000000000000105",
+  "api_version": "mrr/v1alpha1",
+  "kind": "Estimand",
+  "practice_id": "urn:mrr:practice:01J00000000000000000000001",
+  "revision": 1,
+  "created_at": "2026-07-21T10:00:00Z",
+  "created_by": "urn:mrr:person:01J00000000000000000000002",
+  "content_hash": "sha256:5555555555555555555555555555555555555555555555555555555555555555",
+  "project_id": "urn:mrr:project:01J00000000000000000000100",
+  "question_model_id": "urn:mrr:question-model:01J00000000000000000000103",
+  "label": "Synthetic individual renter next-election ATT",
+  "estimand_family": "ATT",
+  "unit": "individual urban renter",
+  "target_population": "renters represented in the synthetic longitudinal fixture who experience a measurable rise in housing-cost burden",
+  "exposure": "transition from below to above a predeclared housing-cost-burden threshold",
+  "contrast": "observed outcome under transition versus counterfactual outcome without transition for exposed renters",
+  "outcome": "support for a locally classified party family at the next synthetic election",
+  "horizon": "first election within 24 months after exposure transition",
+  "aggregation_level": "individual probability difference, aggregated as ATT",
+  "interference_assumptions": [
+    "No direct spillover between synthetic households in the reference fixture."
+  ],
+  "attrition_policy": "Synthetic fixture contains deterministic attrition flags; analyses must report complete-case and bounded sensitivity results.",
+  "status": "accepted"
+}

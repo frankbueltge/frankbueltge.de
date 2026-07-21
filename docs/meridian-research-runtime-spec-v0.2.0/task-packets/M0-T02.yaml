@@ -1,0 +1,47 @@
+task_id: M0-T02
+title: Implement method profile registry and policy interface
+status: approved
+objective: Implement a versioned MethodProfile registry, profile-selection contract and policy hooks.
+  Ship causal_observational as the only production-ready profile; all other profiles remain explicit stubs.
+source_of_truth:
+- docs/14_METHOD_PROFILES.md
+- docs/08_RESEARCH_METHOD_KERNEL.md
+- schemas/method-profile.schema.json
+- examples/housing-populism/method-profile.json
+requirements:
+- MRR-MTH-180
+- MRR-MTH-181
+- MRR-MTH-182
+- MRR-MTH-183
+- MRR-MTH-185
+- MRR-MTH-187
+- MRR-MTH-189
+allowed_paths:
+- packages/method-profiles/**
+- packages/method-kernel/profile/**
+- packages/policy/**
+- tests/unit/method_profiles/**
+- tests/contract/**
+forbidden_changes:
+- global profile ranking
+- implicit claim permissions
+- provider-specific prompts
+- production UI
+invariants:
+- profile versions are immutable
+- profile selection is reviewable and attributable
+- no profile inherits epistemic permissions implicitly
+- inappropriate-use rules are machine-readable
+acceptance_tests:
+- load causal_observational by exact semantic version
+- reject unknown or superseded profile without explicit policy
+- prove no global ranking field or function exists
+- negative fixture for inappropriate causal use
+required_output:
+- implementation summary mapped to requirement IDs
+- changed files
+- commands and test results
+- remaining risks and explicit non-implementation notes
+stop_conditions:
+- profile selection requires a global ontology
+- claim gate semantics cannot be expressed through current policy interface

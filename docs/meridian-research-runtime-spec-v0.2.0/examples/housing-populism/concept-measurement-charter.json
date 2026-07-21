@@ -1,0 +1,99 @@
+{
+  "id": "urn:mrr:measurement-charter:01J00000000000000000000104",
+  "api_version": "mrr/v1alpha1",
+  "kind": "ConceptMeasurementCharter",
+  "practice_id": "urn:mrr:practice:01J00000000000000000000001",
+  "revision": 1,
+  "created_at": "2026-07-21T10:00:00Z",
+  "created_by": "urn:mrr:person:01J00000000000000000000002",
+  "content_hash": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+  "project_id": "urn:mrr:project:01J00000000000000000000100",
+  "question_model_id": "urn:mrr:question-model:01J00000000000000000000103",
+  "status": "accepted",
+  "concepts": [
+    {
+      "concept_id": "housing_unaffordability",
+      "name": "Housing-cost unaffordability",
+      "working_definition": "The degree to which required housing expenditure constrains a household’s disposable resources relative to a defined affordability standard.",
+      "excluded_meanings": [
+        "house-price growth alone",
+        "rent level without income denominator"
+      ],
+      "construct_type": "constructed",
+      "contested_alternatives": [
+        "residual-income poverty after housing costs",
+        "subjective financial strain"
+      ],
+      "operationalizations": [
+        {
+          "operation_id": "hcb_ratio",
+          "name": "Housing-cost burden ratio",
+          "formula_or_rule": "total required housing costs / disposable household income",
+          "level": "household",
+          "scale": "continuous ratio and threshold sensitivity variants",
+          "source_fields": [
+            "housing_cost_total",
+            "disposable_income"
+          ],
+          "missingness_policy": "Do not infer zero cost or income; report and model missingness explicitly.",
+          "measurement_error": [
+            "cross-country accounting differences",
+            "income under-reporting",
+            "owner imputed-rent ambiguity"
+          ],
+          "comparability_conditions": [
+            "harmonized disposable-income definition",
+            "tenure-specific reporting"
+          ],
+          "taxonomy_version": null
+        }
+      ]
+    },
+    {
+      "concept_id": "party_support",
+      "name": "Support for right-populist or anti-establishment parties",
+      "working_definition": "Observed vote choice, validated vote intention or aggregate vote share assigned under a versioned local party-family taxonomy.",
+      "excluded_meanings": [
+        "general distrust without party support",
+        "all opposition voting"
+      ],
+      "construct_type": "classified",
+      "contested_alternatives": [
+        "radical-right only",
+        "anti-incumbent vote regardless of ideology"
+      ],
+      "operationalizations": [
+        {
+          "operation_id": "party_family_vote",
+          "name": "Versioned party-family support indicator",
+          "formula_or_rule": "Map party at election date to one or more locally reviewed family labels; retain multi-label and contested states.",
+          "level": "individual or electoral unit",
+          "scale": "binary indicator or vote-share proportion",
+          "source_fields": [
+            "party_id",
+            "election_date",
+            "vote_or_intention"
+          ],
+          "missingness_policy": "Unclassified and contested parties remain explicit unknowns.",
+          "measurement_error": [
+            "party-position change over time",
+            "cross-national taxonomy disagreement"
+          ],
+          "comparability_conditions": [
+            "taxonomy version pinned to election date",
+            "sensitivity analysis across plausible taxonomies"
+          ],
+          "taxonomy_version": "party-family-local/0.1.0"
+        }
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "from": "housing_unaffordability",
+      "to": "party_support",
+      "type": "unknown_relation",
+      "rationale": "The causal relation is the research target and must not be encoded as a fact in the measurement charter."
+    }
+  ]
+}

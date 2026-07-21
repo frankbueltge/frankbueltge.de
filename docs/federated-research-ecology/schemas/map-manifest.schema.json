@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://frankbueltge.de/schemas/map-manifest-1.0.json",
+  "title": "Immutable Map Version",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["map_id", "version", "encounter_id", "lens", "event_watermark", "included", "exclusions", "render_failures", "accessible_summary", "content_hash"],
+  "properties": {
+    "map_id": {"type": "string"},
+    "version": {"type": "integer", "minimum": 1},
+    "encounter_id": {"type": "string"},
+    "lens": {"type": "object", "required": ["lens_id", "version"], "properties": {"lens_id": {"type": "string"}, "version": {"type": "integer"}}},
+    "event_watermark": {"type": "string", "format": "date-time"},
+    "included": {
+      "type": "object",
+      "required": ["events", "objects", "assertions", "obligations"],
+      "properties": {
+        "events": {"type": "array", "items": {"type": "string"}},
+        "objects": {"type": "array", "items": {"type": "string"}},
+        "assertions": {"type": "array", "items": {"type": "string"}},
+        "obligations": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "projection": {"type": "object"},
+    "exclusions": {"type": "array", "items": {"type": "object"}},
+    "render_failures": {"type": "array", "items": {"type": "object"}},
+    "accessible_summary": {"type": "string"},
+    "renderer_version": {"type": "string"},
+    "content_hash": {"type": "string"}
+  }
+}

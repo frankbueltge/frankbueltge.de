@@ -1,0 +1,516 @@
+{
+  "package": "meridian-research-runtime-spec",
+  "version": "0.2.0",
+  "generated_at": "2026-07-21T00:00:00Z",
+  "validation": {
+    "json_schemas": 21,
+    "json_examples": 21,
+    "task_packets": 19,
+    "acceptance_features": 4,
+    "status": "passed"
+  },
+  "files_excluding_manifest": 100,
+  "total_bytes_excluding_manifest": 576452,
+  "entries": [
+    {
+      "path": "AGENTS.md",
+      "bytes": 5101,
+      "sha256": "f194ed742d033ab0f54dd5bd3a7d615ddef80947397193c725bd32204003dbb8"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "bytes": 1136,
+      "sha256": "3fcba3715730b5d674e1b04b658d8a7c3d1a6cc64f636a2db2b0312817bfa411"
+    },
+    {
+      "path": "CLAUDE.md",
+      "bytes": 316,
+      "sha256": "2c9b8a3133f78e0eb7a9123e1a3ffae00c8655c7eeb0afee1186565628ef50ae"
+    },
+    {
+      "path": "CLAUDE_CODE_IMPLEMENTATION_HANDOFF_DE.md",
+      "bytes": 9978,
+      "sha256": "cde041abc0adb872b45e0863f9c5be2d744540ea4dec865dfddd3803c0d3bd46"
+    },
+    {
+      "path": "MERIDIAN_RESEARCH_RUNTIME_SPEC_v0.2.0.md",
+      "bytes": 219516,
+      "sha256": "4ec70481feb6727501883038506f30f70a96b7e43f8fd24aca12d9daaa610fd1"
+    },
+    {
+      "path": "README.md",
+      "bytes": 2296,
+      "sha256": "38f4ba584dc915df229f522076dc9eb63310396649ec9ea704c3871712b1f5d0"
+    },
+    {
+      "path": "START_HERE_CODEX_OR_CLAUDE.md",
+      "bytes": 1747,
+      "sha256": "b2cbb9868ca9b8d3bada636494c2652fe7a2a545bd46685aa1e0878c3f1a3bdc"
+    },
+    {
+      "path": "UMSETZUNGSUPDATE_DE.md",
+      "bytes": 6555,
+      "sha256": "fb353215253c5d5ce0de9612cacd533f4931b970a3bead9978a006ef4b43b2f1"
+    },
+    {
+      "path": "acceptance/method-causal-claim-gate.feature",
+      "bytes": 1556,
+      "sha256": "4764c415580fe41eba803ec9d81edba008c0fceaf916a6bae2d737b37fe4eebc"
+    },
+    {
+      "path": "acceptance/method-kill-condition-propagation.feature",
+      "bytes": 1455,
+      "sha256": "774b849861c3f1c1c4c58425a195de79e34e220e1feb4b141287d593554fb6bf"
+    },
+    {
+      "path": "acceptance/method-preanalysis-lock.feature",
+      "bytes": 1423,
+      "sha256": "8b2b72c91aa4d07be864899bb88b685b05c161297c95f023cb4740ea0ffbb53b"
+    },
+    {
+      "path": "acceptance/method-synthetic-fixture-isolation.feature",
+      "bytes": 1399,
+      "sha256": "7a79477a4ee1353684139e09ad5c7b880c2bb87e29ddb07ed7a0de451e2f619e"
+    },
+    {
+      "path": "docs/00_VISION_AND_GOVERNANCE.md",
+      "bytes": 9349,
+      "sha256": "a1c1aaf37dfca71a77e2fa57b7107bdb9c75e64a35132eb01960620bc4b56ecb"
+    },
+    {
+      "path": "docs/01_SYSTEM_SPEC.md",
+      "bytes": 20529,
+      "sha256": "8a36c75b02c1b38094ed5394bd5d079b2247d72348c6d93d0747ef08d043ed8d"
+    },
+    {
+      "path": "docs/02_DOMAIN_MODEL.md",
+      "bytes": 13907,
+      "sha256": "6d3a4b480239e4362a121029e98b9273235f7cccb0c43f8e718e4002f9814eb9"
+    },
+    {
+      "path": "docs/03_API_AND_EVENTS.md",
+      "bytes": 10169,
+      "sha256": "aed7310dab495db5f93286f4149c445a678eba8f284bf74fe9736f77d5aab895"
+    },
+    {
+      "path": "docs/04_SECURITY_AND_POLICY.md",
+      "bytes": 10665,
+      "sha256": "b8083cc395c1de0cbc522abc459c0a39e00914ddd5a078d54eede10e27d32deb"
+    },
+    {
+      "path": "docs/05_EVALUATION_AND_ACCEPTANCE.md",
+      "bytes": 16240,
+      "sha256": "0c6648679a307104b3223ec61331aa8dc23a03e0268045dc24238af36cfdd381"
+    },
+    {
+      "path": "docs/06_IMPLEMENTATION_PLAN.md",
+      "bytes": 14657,
+      "sha256": "a4f299bd71a26050205b3886e166eb95792f04c2c4e4972997584cd484a19152"
+    },
+    {
+      "path": "docs/07_AGENT_TASK_TEMPLATE.md",
+      "bytes": 7500,
+      "sha256": "47d2afc65f2a696beb0f5814ad6c0607de9f8d6be5795e91a23e75dec6d2b873"
+    },
+    {
+      "path": "docs/08_RESEARCH_METHOD_KERNEL.md",
+      "bytes": 10706,
+      "sha256": "ab8f457c54b452c188616f4d2bd4e7a106fd298036154e4290e868c7e50a55ca"
+    },
+    {
+      "path": "docs/09_QUESTION_AND_CONCEPT_COMPILATION.md",
+      "bytes": 7517,
+      "sha256": "98aef2f9e42cb8adba169cb5edc691a9cd53aaa313bb1879d73b02d15c7f0da0"
+    },
+    {
+      "path": "docs/10_CAUSAL_INFERENCE_AND_DESIGN.md",
+      "bytes": 8414,
+      "sha256": "a68dae6cd448756dc1d8891923cbff35bfe8093d005a8e5471fab377cff57e19"
+    },
+    {
+      "path": "docs/11_EVIDENCE_AND_DATA_SCOUTING.md",
+      "bytes": 6081,
+      "sha256": "39af7994daa94e6daba4c960a8a9b15e13767d24ca3e99bbf9c18b0eebd5e9b0"
+    },
+    {
+      "path": "docs/12_PREANALYSIS_EXECUTION_AND_ADAPTATION.md",
+      "bytes": 6477,
+      "sha256": "f6135b931a674730bab08a598eabc092282c5313761943236492994d4e5da5d1"
+    },
+    {
+      "path": "docs/13_FALSIFICATION_REPLICATION_GENERALIZATION.md",
+      "bytes": 5135,
+      "sha256": "6d0b6076cda25efc58c0e696c9ecc6c1d6bbe1b324ee9bd5461017d1af8ba3a1"
+    },
+    {
+      "path": "docs/14_METHOD_PROFILES.md",
+      "bytes": 4157,
+      "sha256": "0529cefff7b24e47c1dcdaa15a64d3f2e6133625952b9abcb38befe7ca877b8f"
+    },
+    {
+      "path": "docs/15_QUALITATIVE_AND_MIXED_METHODS.md",
+      "bytes": 3174,
+      "sha256": "ca18e4a7472446ae6197735537eab6a2c3e87318f2900743e7f013c4253072b0"
+    },
+    {
+      "path": "docs/16_HOUSING_AFFORDABILITY_REFERENCE_PROJECT.md",
+      "bytes": 8907,
+      "sha256": "8f20f105d22cc588dbbe38e7e1a545a2c688ec940232bd018ffa375c0a667f3d"
+    },
+    {
+      "path": "docs/17_METHOD_API_AND_EVENTS.md",
+      "bytes": 4094,
+      "sha256": "6d933009544199c35645e8451da170961d6910acb32de02ee4faca2943e908c6"
+    },
+    {
+      "path": "docs/18_METHOD_BENCHMARKS_AND_ACCEPTANCE.md",
+      "bytes": 4780,
+      "sha256": "bdf181c595d0c523cfa0420c882458dc6ffc799bd3cdfac7874f44d485898a7d"
+    },
+    {
+      "path": "docs/19_METHOD_IMPLEMENTATION_PLAN.md",
+      "bytes": 5483,
+      "sha256": "d19036380952ccd3cbe6e28b5542d53efe2960ab241716acc5e68fe958a814f9"
+    },
+    {
+      "path": "docs/adr/ADR-0001-NEW-PRACTICE.md",
+      "bytes": 2142,
+      "sha256": "af2e8b1b92221fad03e7da18ef355d934aea3e4b9d7b93cac10adc0a8256ab72"
+    },
+    {
+      "path": "docs/adr/ADR-0002-PARALLEL-OPERATION.md",
+      "bytes": 3326,
+      "sha256": "28c7f34c57ba9610a6022a99f605a14191f3f5d4f99703d690a5375b3fa070ca"
+    },
+    {
+      "path": "docs/adr/ADR-0003-RESEARCH-METHOD-KERNEL.md",
+      "bytes": 1196,
+      "sha256": "435b75a436e986edcc4894f77fcc505eb9905ea396928b5f56f77c3533411768"
+    },
+    {
+      "path": "docs/adr/ADR-0004-CAUSAL-CLAIM-GATES.md",
+      "bytes": 1008,
+      "sha256": "40d24de4e3199cf173a4c09d8e0a75470612af51d62633fd38da629c6ac24466"
+    },
+    {
+      "path": "examples/README.md",
+      "bytes": 285,
+      "sha256": "f35df51c08089544b6a999fd4891b28f301533e03e95180aa1e73764a31f5a35"
+    },
+    {
+      "path": "examples/claim.example.json",
+      "bytes": 1261,
+      "sha256": "7c311bfcb6ea11d0da289d5fb290cd517d7caabbcaa2b27d8e162ed896d76417"
+    },
+    {
+      "path": "examples/correction-event.example.json",
+      "bytes": 1099,
+      "sha256": "d55a0b07c735f84de403e50b57026040fd013001e3aeac3fc21ea2b1938ce2d4"
+    },
+    {
+      "path": "examples/evidence-crate.example.json",
+      "bytes": 1516,
+      "sha256": "63278f4f24ec740506395740dc90faee321cf98e5c3f3f69ef7bc5dd4a46a2c7"
+    },
+    {
+      "path": "examples/housing-populism/README.md",
+      "bytes": 1078,
+      "sha256": "2017dce7efd5edc232f82fd65c6b87d91fab33df40da2a92175552959e9ef76e"
+    },
+    {
+      "path": "examples/housing-populism/causal-model.json",
+      "bytes": 2687,
+      "sha256": "53fcfbed9a06661aa25f3e2df164d3675fba4b00409642e24ff8c74ee057a13f"
+    },
+    {
+      "path": "examples/housing-populism/concept-measurement-charter.json",
+      "bytes": 3953,
+      "sha256": "5e5dd2722a5272f452a1cfa01ce4f45fffcaa90735127dcdd438f2e96d0b7070"
+    },
+    {
+      "path": "examples/housing-populism/data-asset-profile.json",
+      "bytes": 1932,
+      "sha256": "24a733095a7f2834959ae646d4712e8649c88103c80cc87f5a84654185e45ffe"
+    },
+    {
+      "path": "examples/housing-populism/estimand.json",
+      "bytes": 1542,
+      "sha256": "0f8132182d70a4b61c98bd76602379856953f63d4f17a30aa85e3f4ce9587e0a"
+    },
+    {
+      "path": "examples/housing-populism/evidence-matrix.json",
+      "bytes": 556,
+      "sha256": "3e9dc3ffb3f32dec765a6b0e6f38dfc3c7a2e39e6272cdee8771941545be3464"
+    },
+    {
+      "path": "examples/housing-populism/falsification-plan.json",
+      "bytes": 1562,
+      "sha256": "fbccfd3ae4e1c0b4bbd5d885f763439f6454317021f1b22698508ec9d93317c0"
+    },
+    {
+      "path": "examples/housing-populism/generalization-map.json",
+      "bytes": 1356,
+      "sha256": "17baeca7ba5b95894651d1300452638a29de0f0404229fa5331f2de174b8e1d7"
+    },
+    {
+      "path": "examples/housing-populism/identification-audit.json",
+      "bytes": 1528,
+      "sha256": "f1376bc881669e8e1055e105ccc35d567f9975a86e965cabf69d104268597e3a"
+    },
+    {
+      "path": "examples/housing-populism/method-profile.json",
+      "bytes": 1588,
+      "sha256": "555adad2efdccf4f887dc9f0ed6212ad9c98cdb46f07cc4114fe11f0d0143798"
+    },
+    {
+      "path": "examples/housing-populism/pre-analysis-plan.json",
+      "bytes": 2163,
+      "sha256": "7ad6febaa2a02e90c5eee88d56e272ae2145a724c312718cc93bf7ab575a2ac5"
+    },
+    {
+      "path": "examples/housing-populism/question-model.json",
+      "bytes": 2352,
+      "sha256": "5cf568b97263a3ecdd459c2db02b139495039143c905e9b7e0378addbe73910b"
+    },
+    {
+      "path": "examples/housing-populism/replication-plan.json",
+      "bytes": 1091,
+      "sha256": "62d099cad25a2f42ae26dee56f9603b272d48d819af9ac2af7cf5933bdcb1996"
+    },
+    {
+      "path": "examples/housing-populism/research-decision.json",
+      "bytes": 1630,
+      "sha256": "666f07796a1f6b3e83f9585b0be4ac0d3a6212ecf55b634091bf78e3f7d75bda"
+    },
+    {
+      "path": "examples/housing-populism/research-design.json",
+      "bytes": 1909,
+      "sha256": "2713f171079256b212d44d14795a6f30162828ae077f457894cfb00875f571cb"
+    },
+    {
+      "path": "examples/housing-populism/research-score.json",
+      "bytes": 2855,
+      "sha256": "00b19f6630c9ea8896b18daff45937901345ac151b8192493a91428a35ef5a5e"
+    },
+    {
+      "path": "examples/node-manifest.example.json",
+      "bytes": 1401,
+      "sha256": "057a2fb46d2cd31ca687216afcf4e77168f2de88b36cf6c8e938ac480ec64260"
+    },
+    {
+      "path": "examples/research-score.example.json",
+      "bytes": 1904,
+      "sha256": "c5c5197f4a8cbbb225d459739dcc97775bfba59ce5d199772ad5d42e0c6a1cd9"
+    },
+    {
+      "path": "examples/task-bundle.example.json",
+      "bytes": 1931,
+      "sha256": "451adc65bdd2fa95f792d2948a5542150f555146915639eaee081ea03a456f8d"
+    },
+    {
+      "path": "schemas/causal-model.schema.json",
+      "bytes": 3721,
+      "sha256": "d97760d142cb1df82246b1d44345c9d5e0c40857955d9b3cba167e4c9b4b7605"
+    },
+    {
+      "path": "schemas/claim.schema.json",
+      "bytes": 2649,
+      "sha256": "a44c8cd76d1dbdd4cdeb7421e825344dca049d87096973741e15ffd9ee1dfd13"
+    },
+    {
+      "path": "schemas/common.schema.json",
+      "bytes": 2904,
+      "sha256": "4458358f5c2d126546c6f879bd4f069d02a21e440cdad5a72b2cf0a56ff65063"
+    },
+    {
+      "path": "schemas/concept-measurement-charter.schema.json",
+      "bytes": 5090,
+      "sha256": "5434bb5ae60de545086d1d40ebd5230030e6f0c21b71b8cb2dc3d939916f6cc8"
+    },
+    {
+      "path": "schemas/correction-event.schema.json",
+      "bytes": 1929,
+      "sha256": "da7c62b530c74f3b495a8fba0fb3db898e999748dd7e9734e5312e24a072102b"
+    },
+    {
+      "path": "schemas/data-asset-profile.schema.json",
+      "bytes": 3718,
+      "sha256": "3ba13d9749ed0a6d318e2d9630a769fa6e137219c1bbd2e097bac55a1e81ad04"
+    },
+    {
+      "path": "schemas/estimand.schema.json",
+      "bytes": 2578,
+      "sha256": "0f13436c5d839de0a993622a04309c324c3535a3fc1c30064356df98a1f711b2"
+    },
+    {
+      "path": "schemas/evidence-crate.schema.json",
+      "bytes": 2486,
+      "sha256": "6be1c59790064c4035c3e357a116f412fe399e78858b6a439d71fc9de74d5438"
+    },
+    {
+      "path": "schemas/evidence-matrix.schema.json",
+      "bytes": 3202,
+      "sha256": "b7535032171b36ff911b7dd0e4a59ef8791cea999d8e8428ea83ec2664a51ce1"
+    },
+    {
+      "path": "schemas/falsification-plan.schema.json",
+      "bytes": 2560,
+      "sha256": "6e822d923dc707daeed313e701b86e617a47af9d1b87f09779bd3d1d5b5f361e"
+    },
+    {
+      "path": "schemas/generalization-map.schema.json",
+      "bytes": 2572,
+      "sha256": "ccabafb695d5f89eee3f9da5ef492548056852ac5dc2fc23f7b4c9be8d117f77"
+    },
+    {
+      "path": "schemas/identification-audit.schema.json",
+      "bytes": 3202,
+      "sha256": "25f3be4e654562dfb412ca106d6a18fe4a6e6a310084ec73447e45ddf6dbd60f"
+    },
+    {
+      "path": "schemas/method-profile.schema.json",
+      "bytes": 2318,
+      "sha256": "d844b3069fecb066629513b4fc25e3355d0f098b7dfeb9410bb96fde323c8ebc"
+    },
+    {
+      "path": "schemas/node-manifest.schema.json",
+      "bytes": 2084,
+      "sha256": "9eb600d7bf4833ef99b1d67261488865bee5aad362b2992b5fb522e3ed29ee40"
+    },
+    {
+      "path": "schemas/pre-analysis-plan.schema.json",
+      "bytes": 3599,
+      "sha256": "58f7eb794b8001b48d6ef0fd1345f3bcade6122d53e5a843bff4d92d21843d7e"
+    },
+    {
+      "path": "schemas/question-model.schema.json",
+      "bytes": 3241,
+      "sha256": "6862171c3974976e446bfc3320d31aafacec2cc69c68edebdfadc6998eaec0b1"
+    },
+    {
+      "path": "schemas/replication-plan.schema.json",
+      "bytes": 2789,
+      "sha256": "2ce4f8b1912d6d0e2972aa7bc33cb2996c520fcc8f8e0c0195f892bcad4d26ee"
+    },
+    {
+      "path": "schemas/research-decision.schema.json",
+      "bytes": 2655,
+      "sha256": "6be4518e8cb441ec975195d2f254bba16ab0933b33e044f286b8c6cdd9d3321e"
+    },
+    {
+      "path": "schemas/research-design.schema.json",
+      "bytes": 3128,
+      "sha256": "a418cd7df90d52a28ff5aacf692d209d804ab189d6f80295099ca78d2f71307c"
+    },
+    {
+      "path": "schemas/research-score.schema.json",
+      "bytes": 2667,
+      "sha256": "5d6d7331cd2098c4554176a94072f2ab8c2d803ddd5fae135ce8814cd593c992"
+    },
+    {
+      "path": "schemas/task-bundle.schema.json",
+      "bytes": 3439,
+      "sha256": "86cae6e655c6fa9d686f59bae2cf6ad2f23f33a0786dbc4a0f2c621a1f33cce2"
+    },
+    {
+      "path": "task-packets/E1-T01.yaml",
+      "bytes": 1274,
+      "sha256": "64f86a49ae73a031c7723cea181e852e8b989ef38d096964faa70fb21b2c238c"
+    },
+    {
+      "path": "task-packets/E1-T02.yaml",
+      "bytes": 1586,
+      "sha256": "a00689c0b5dd9d10fce403d75a8e379673f64a628857562a96b1ce90c6bb785b"
+    },
+    {
+      "path": "task-packets/E1-T03.yaml",
+      "bytes": 1710,
+      "sha256": "df12c6e215b32d3d1f16be6ef134a69db099c6cb061b7b8a954cd0b4cfa48ac0"
+    },
+    {
+      "path": "task-packets/M0-T01.yaml",
+      "bytes": 1527,
+      "sha256": "cec1337a85afa7ea84d1b7c90f591ffa90dd551b88d9e45f75ac1084b8cb4dac"
+    },
+    {
+      "path": "task-packets/M0-T02.yaml",
+      "bytes": 1595,
+      "sha256": "3bdf2e279c4f8b570f09b2270a6d01141ef06bbf2e4906a68e6c69538ff214f4"
+    },
+    {
+      "path": "task-packets/M1-T01.yaml",
+      "bytes": 1533,
+      "sha256": "c9465b9e9a6c0acc391836ce2e4a86be6b163ed012ac36724a1e2a0ac9b83764"
+    },
+    {
+      "path": "task-packets/M1-T02.yaml",
+      "bytes": 1571,
+      "sha256": "e52f557838d1a123a48ed8bef0c9615b47d4c4786cd05fc59e18a55028da3dce"
+    },
+    {
+      "path": "task-packets/M2-T01.yaml",
+      "bytes": 1259,
+      "sha256": "a740e57098b5454401215b1cef5678d01c326a657dc2a2248bff750c1a577e46"
+    },
+    {
+      "path": "task-packets/M2-T02.yaml",
+      "bytes": 1424,
+      "sha256": "a38a4f259a545e0e1aabb250c699f6083a6493e5ea3d8a2f6cd340edd28659dc"
+    },
+    {
+      "path": "task-packets/M2-T03.yaml",
+      "bytes": 1839,
+      "sha256": "4168873697774ab12897edca61892fa5dfe59d4c308e0f90890198c5c165fb7e"
+    },
+    {
+      "path": "task-packets/M3-T01.yaml",
+      "bytes": 1540,
+      "sha256": "04615579048fe58e77175f14a3233506e9f2684834111404361ee4057e79a3f8"
+    },
+    {
+      "path": "task-packets/M3-T02.yaml",
+      "bytes": 1591,
+      "sha256": "a613cc3a7e003b8530a0930d4d5afe48cb13b3b3d2fae167e397be4f324e577f"
+    },
+    {
+      "path": "task-packets/M4-T01.yaml",
+      "bytes": 1459,
+      "sha256": "292aecd0c78b8441c28780b11575013b14fc8a8d05f83adcc5788e06dc84e862"
+    },
+    {
+      "path": "task-packets/M4-T02.yaml",
+      "bytes": 1570,
+      "sha256": "f5591475a780a002c52bccded131e4121328cbf50410297506391d912a4c80b4"
+    },
+    {
+      "path": "task-packets/M5-T01.yaml",
+      "bytes": 1598,
+      "sha256": "2ed807235241c161815d49fe6efee13d1f5cbdc6000d8a167a737bc77a0e3101"
+    },
+    {
+      "path": "task-packets/M5-T02.yaml",
+      "bytes": 1420,
+      "sha256": "844f9841bc3cc81b542be749e02e12a0f6b9188242f6619658a322f8d9eaa44e"
+    },
+    {
+      "path": "task-packets/M5-T03.yaml",
+      "bytes": 1800,
+      "sha256": "090710725dae88c01a84f63d298838600c27d51c9d8742ac5db446d39efa5df8"
+    },
+    {
+      "path": "task-packets/M6-T01.yaml",
+      "bytes": 1789,
+      "sha256": "c899115ae676e5a5a1fdb13e9d96e0e6816e61b4d8a6295ce742bb3709fab899"
+    },
+    {
+      "path": "task-packets/M7-T01.yaml",
+      "bytes": 1652,
+      "sha256": "9640ed02ffe9134e69e2816906e7f10145f4fe990c32817c21d8707807d05c1c"
+    },
+    {
+      "path": "tools/validate_package.py",
+      "bytes": 6914,
+      "sha256": "5f0df1b706c47ef3f3802d5afcfe7ee63fddceb755f145ad8dc5efc09944ded2"
+    }
+  ]
+}

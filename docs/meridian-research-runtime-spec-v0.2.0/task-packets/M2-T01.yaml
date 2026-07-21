@@ -1,0 +1,38 @@
+task_id: M2-T01
+title: Implement Estimand Builder and validators
+status: approved
+objective: Create explicit estimands for causal branches and validate unit, population, contrast, outcome,
+  horizon, aggregation, interference and attrition semantics.
+source_of_truth:
+- docs/10_CAUSAL_INFERENCE_AND_DESIGN.md
+- schemas/estimand.schema.json
+- examples/housing-populism/estimand.json
+requirements:
+- MRR-MTH-040
+- MRR-MTH-041
+- MRR-MTH-042
+- MRR-MTH-057
+allowed_paths:
+- packages/method-kernel/estimand/**
+- tests/unit/estimand/**
+- tests/property/estimand/**
+forbidden_changes:
+- automatic model specification
+- regression execution
+- claim promotion
+invariants:
+- aggregate and individual estimands are never implicitly interchangeable
+- a statistical coefficient is not an estimand by default
+- each estimand retains exact question lineage
+acceptance_tests:
+- validate housing ATT fixture
+- reject missing exposure contrast
+- reject aggregate-to-individual coercion
+- serialize and hash deterministically
+required_output:
+- implementation summary mapped to requirement IDs
+- changed files
+- commands and test results
+- remaining risks and explicit non-implementation notes
+stop_conditions:
+- estimand semantics would be encoded only as free-form report text

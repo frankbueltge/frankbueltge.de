@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://frankbueltge.de/schemas/intervention-1.0.json",
+  "title": "External Intervention",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["intervention_id", "identity_mode", "intervention_type", "target", "rationale", "publication_consent"],
+  "properties": {
+    "intervention_id": {"type": "string"},
+    "identity_mode": {"type": "string", "enum": ["named", "pseudonymous", "private_to_editor"]},
+    "public_name": {"type": "string"},
+    "intervention_type": {"type": "string", "enum": ["correction", "counter_assertion", "counter_map", "source_offer", "missing_actor", "missing_caveat", "relation_type_proposal", "response_work", "ethical_concern", "technical_issue"]},
+    "target": {"type": "object"},
+    "rationale": {"type": "string", "minLength": 1},
+    "evidence": {"type": "array", "items": {"type": "object"}},
+    "payload": {"type": "object"},
+    "publication_consent": {"type": "boolean"}
+  }
+}

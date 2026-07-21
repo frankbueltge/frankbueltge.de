@@ -1,0 +1,46 @@
+task_id: E1-T01
+title: Bootstrap the Meridian Research Runtime monorepo
+status: approved
+objective: >
+  Create the minimal repository structure, Python project configuration,
+  deterministic quality commands, and CI entrypoints required for later tasks.
+source_of_truth:
+  - AGENTS.md
+  - docs/06_IMPLEMENTATION_PLAN.md#delivery-strategy
+  - docs/06_IMPLEMENTATION_PLAN.md#branch-and-pull-request-policy
+requirements:
+  - MRR-NFR-010
+allowed_paths:
+  - pyproject.toml
+  - Makefile
+  - README.md
+  - packages/**
+  - services/**
+  - workers/**
+  - adapters/**
+  - tests/**
+  - scripts/**
+  - .github/**
+forbidden_changes:
+  - domain behavior
+  - database migrations
+  - model-provider integration
+  - production deployment
+invariants:
+  - core packages do not import FastAPI, Temporal, or provider SDKs
+  - all required make commands exist
+  - an empty test suite is not reported as meaningful feature completion
+acceptance_tests:
+  - make format
+  - make lint
+  - make typecheck
+  - make test
+  - import-boundary test for core packages
+required_output:
+  - implementation summary
+  - changed files
+  - commands and results
+  - dependency rationale
+stop_conditions:
+  - a required tool conflicts with the Python baseline
+  - repository policy requires a different CI platform

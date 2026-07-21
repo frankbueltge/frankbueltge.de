@@ -1,0 +1,44 @@
+task_id: M4-T02
+title: Implement typed Analysis Compiler and synthetic executor
+status: approved
+objective: Compile accepted method objects into a typed workflow graph and execute a deterministic synthetic
+  analysis adapter with complete method-to-run lineage.
+source_of_truth:
+- docs/12_PREANALYSIS_EXECUTION_AND_ADAPTATION.md
+- docs/17_METHOD_API_AND_EVENTS.md
+- docs/16_HOUSING_AFFORDABILITY_REFERENCE_PROJECT.md
+requirements:
+- MRR-MTH-105
+- MRR-MTH-106
+- MRR-MTH-107
+- MRR-MTH-108
+- MRR-MTH-109
+allowed_paths:
+- packages/workflow-compiler/**
+- packages/method-kernel/execution/**
+- adapters/synthetic_analysis/**
+- tests/integration/workflow_compiler/**
+- tests/e2e/housing_populism/**
+forbidden_changes:
+- real external data connectors
+- generated code with direct authority
+- unbounded network access
+- report publication
+invariants:
+- workflow nodes have typed inputs and outputs
+- blocking diagnostics prevent primary estimation
+- every terminal state produces a run record
+- claim candidates retain exact method lineage
+acceptance_tests:
+- compile housing object graph into deterministic workflow
+- run success and failure fixtures
+- reject execution with unresolved blocking diagnostic
+- replay produces the same synthetic artifacts and hashes
+required_output:
+- implementation summary mapped to requirement IDs
+- changed files
+- commands and test results
+- remaining risks and explicit non-implementation notes
+stop_conditions:
+- vertical slice can pass only through hard-coded expected results
+- sandbox cannot enforce declared resource and network policy

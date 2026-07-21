@@ -1,0 +1,144 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/mrr/schemas/research-design.schema.json",
+  "title": "Research Design",
+  "type": "object",
+  "required": [
+    "id",
+    "api_version",
+    "kind",
+    "practice_id",
+    "revision",
+    "created_at",
+    "created_by",
+    "content_hash",
+    "project_id",
+    "method_profile_id",
+    "label",
+    "design_family",
+    "estimand_ids",
+    "sample_frame",
+    "assignment_or_exposure_mechanism",
+    "comparator_construction",
+    "required_data_asset_ids",
+    "identification_assumptions",
+    "diagnostics",
+    "kill_conditions",
+    "expected_failure_modes",
+    "claim_ceiling_before_audit",
+    "status"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^urn:mrr:[a-z0-9-]+:[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "api_version": {
+      "type": "string",
+      "const": "mrr/v1alpha1"
+    },
+    "kind": {
+      "type": "string",
+      "const": "ResearchDesign"
+    },
+    "practice_id": {
+      "type": "string",
+      "pattern": "^urn:mrr:[a-z0-9-]+:[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "created_by": {
+      "type": "string",
+      "pattern": "^urn:mrr:[a-z0-9-]+:[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "content_hash": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "project_id": {
+      "type": "string",
+      "pattern": "^urn:mrr:[a-z0-9-]+:[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "method_profile_id": {
+      "type": "string",
+      "pattern": "^urn:mrr:[a-z0-9-]+:[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "label": {
+      "type": "string"
+    },
+    "design_family": {
+      "type": "string"
+    },
+    "estimand_ids": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "pattern": "^urn:mrr:[a-z0-9-]+:[0-9A-HJKMNP-TV-Z]{26}$"
+      }
+    },
+    "sample_frame": {
+      "type": "string"
+    },
+    "assignment_or_exposure_mechanism": {
+      "type": "string"
+    },
+    "comparator_construction": {
+      "type": "string"
+    },
+    "required_data_asset_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^urn:mrr:[a-z0-9-]+:[0-9A-HJKMNP-TV-Z]{26}$"
+      }
+    },
+    "identification_assumptions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "kill_conditions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "expected_failure_modes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "claim_ceiling_before_audit": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "proposed",
+        "auditing",
+        "eligible",
+        "downgraded",
+        "rejected",
+        "executing",
+        "completed",
+        "invalidated"
+      ]
+    }
+  },
+  "additionalProperties": false
+}

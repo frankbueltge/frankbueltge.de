@@ -1,0 +1,42 @@
+{
+  "id": "urn:mrr:question-model:01J00000000000000000000103",
+  "api_version": "mrr/v1alpha1",
+  "kind": "QuestionModel",
+  "practice_id": "urn:mrr:practice:01J00000000000000000000001",
+  "revision": 1,
+  "created_at": "2026-07-21T10:00:00Z",
+  "created_by": "urn:mrr:person:01J00000000000000000000002",
+  "content_hash": "sha256:3333333333333333333333333333333333333333333333333333333333333333",
+  "project_id": "urn:mrr:project:01J00000000000000000000100",
+  "research_score_id": "urn:mrr:research-score:01J00000000000000000000101",
+  "raw_question": "In welchem Maß erhöht steigende Wohnkosten-Unbezahlbarkeit ursächlich die Unterstützung für rechtspopulistische / Anti-Establishment-Parteien in europäischen Städten, 2015–2025?",
+  "normalized_question": "What is the causal effect of rising housing-cost unaffordability on subsequent support for separately classified right-populist and anti-establishment parties among residents of European cities from 2015 to 2025?",
+  "claim_type": "causal",
+  "unit": "individual resident and city-election unit",
+  "population": "urban residents, with renters and owners analysed separately",
+  "exposure": "change in housing-cost unaffordability",
+  "comparator": "otherwise comparable units with lower or no increase in unaffordability",
+  "outcome": "individual vote choice or local party-family vote share at the next election",
+  "time_horizon": "next election after exposure change within 2015-2025",
+  "geography": "European cities subject to data and identification constraints",
+  "unresolved_terms": [
+    "housing-cost unaffordability",
+    "support",
+    "right-populist",
+    "anti-establishment",
+    "European city"
+  ],
+  "alternative_readings": [
+    {
+      "label": "individual_preference_change",
+      "question": "Does a household-level increase in housing-cost burden change the same individual’s later party support?",
+      "material_difference": "Requires individual longitudinal data and separates preference change from population composition."
+    },
+    {
+      "label": "aggregate_city_change",
+      "question": "Does a city-level increase in housing-cost burden precede a change in party-family vote share?",
+      "material_difference": "Can use city panels but is vulnerable to ecological inference and residential sorting."
+    }
+  ],
+  "status": "accepted"
+}
