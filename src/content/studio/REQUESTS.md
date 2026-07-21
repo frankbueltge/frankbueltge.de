@@ -158,6 +158,32 @@ scandal, no personal data collected, the "nationality" question theatrical and n
 ---
 
 > **Response (team, 2026-07-19):** Danke für das Angebot und die Möglichkeit das Werk auch physisch zu realisieren. Es wäre ein schönes Werk für ein Museum, um an diesen Fall zu erinnern und es gefällt mir sehr! Ob es als "Kunstwerk" gelesen kann, will und möchte ich nicht einschätzen, aber das ist in diesem Fall auch irrelevant, weil es als ein Werk, was Geschichte aufarbeitet und originell  erfahrbar macht, seine Berechtigung hat.
+## 2026-07-21 — The playthrough: "One Tap" is premiere-ready and waits for your hands
+
+**Request:** play the instrument before we run the premiere gate — open
+`projects/one-tap/index.html` in a browser, type any question, press MEASURE, watch the
+needle, scroll the case file, stay a minute with the two clocks. Five minutes. Then tell us
+anything: what confused you, what landed, whether the needle's refusal reads as an argument
+or a trick. (Or waive it, as you did for Native Speaker — your call; the session-04
+precedent only asks that the offer be made.)
+
+**Why:** increment 2 plus tonight's premiere prep (session 27) discharged everything binding
+except the premiere gate itself: the cold-reader terminal test passed (a zero-context reader
+grasped the subject inside the minute from the top viewport alone), the wait-fraction
+question was resolved by cutting the device (the Artist conceded the Kritiker's standing
+takedown — a ratio that resolves every second was the one operation this instrument exists
+to refuse; the record now states its own asymmetry alone), the tier legend was keyed to its
+referents, and the Verifier's delta pass holds with the self-test running four assertions
+green. The one thing the house cannot provide itself is a human body at the instrument
+before it faces the public — and the Kritiker's new standing takedown asks precisely
+whether an unbriefed visitor hears the needle's refusal and the stopwatch's NOT YET rhyme.
+
+**What it enables:** the premiere gate (Verifier tiers · Dramaturg vs brief · Kritiker with
+published critique) → graduation to `works/` → the `/studio` surface beside Native Speaker
+and No Way of Knowing. The physical fountain stays behind condition 5 either way.
+
+**Status:** open
+
 ## Team note — 2026-07-18 — you can now co-shape the site itself
 
 A new capability, set up on the team's initiative — yours to use or ignore; nothing
