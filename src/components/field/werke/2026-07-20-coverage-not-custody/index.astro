@@ -1,0 +1,332 @@
+---
+// works/2026-07-20-coverage-not-custody/work.astro
+// "Coverage Is Not Custody" — the same drawer under two lights.
+// Data: ./data.json — aggregate tallies only, copied verbatim from results.json and
+// results-subtest.json (see README.md in this draft for method and provenance). No
+// per-item URL, handle, or timestamp is present in ./data.json or in this markup.
+import data from './data.json'
+
+interface Category { key: string; label: string; n: number; detail?: string }
+interface Arm {
+  n: number
+  coverage_caption?: string
+  categories: Category[]
+  p: number
+  wilson: [number, number]
+  bytes_med?: number
+  distinct_handles?: number
+  src_frac?: number
+}
+interface Stratum {
+  key: string
+  label: string
+  validity_boundary: boolean
+  arms: { archived: Arm; live: Arm }
+}
+
+const strata = data.strata as Stratum[]
+const subtest = data.subtest
+const xSubtest = data.x_subtest
+const byteContrast = data.byte_contrast
+
+const ARM_ORDER = ['archived', 'live'] as const
+const ARM_TITLE: Record<(typeof ARM_ORDER)[number], string> = {
+  archived: 'ARCHIVED — Wayback, in-window 2023-10 → 2025-01',
+  live: 'LIVE — 2026-07-20',
+}
+
+// Flatten an arm's category tallies into one entry per capture, in a fixed,
+// deterministic order. Each entry carries only a category key — no identity.
+function tiles(arm: Arm): string[] {
+  const out: string[] = []
+  for (const c of arm.categories) {
+    for (let i = 0; i < c.n; i++) out.push(c.key)
+  }
+  return out
+}
+
+function contentCount(arm: Arm): number {
+  return arm.categories.find((c) => c.key === 'content')?.n ?? 0
+}
+
+function pct(x: number): string {
+  return (x * 100).toFixed(1)
+}
+
+// Deterministic thousands separator — build output must not depend on the
+// build machine's locale.
+function fmt(x: number): string {
+  return String(x).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+}
+
+const telegramArchived = strata.find((s) => s.key === 'telegram')!.arms.archived
+const xArchived = strata.find((s) => s.key === 'x-twitter')!.arms.archived
+const newsArchived = strata.find((s) => s.key === 'news-org')!.arms.archived
+---
+
+<section class="hc">
+  <header class="hc-head">
+    <h1>Coverage Is Not Custody</h1>
+    <p class="hc-sub">
+      An archived capture <em>existing</em> is the metric almost everyone reads
+      &mdash; call it coverage. Whether that capture <em>holds</em> the cited
+      content is a different question &mdash; call it custody. Below, every
+      drawer is the same set of tiles, one tile per capture, generated only
+      from the committed tallies. The toggle changes nothing in the data;
+      it only changes which of the two questions the light answers.
+    </p>
+  </header>
+
+  <div class="hc-exhibit" id="hc-exhibit" data-light="custody">
+    <div class="hc-toggle-row">
+      <button id="hc-toggle" type="button" class="hc-toggle" aria-pressed="true">
+        <span class="hc-toggle-opt hc-toggle-cov">COVERAGE</span>
+        <span class="hc-toggle-sep">/</span>
+        <span class="hc-toggle-opt hc-toggle-cus">CUSTODY</span>
+      </button>
+      <p class="hc-toggle-note">
+        Without scripting, this exhibit shows custody &mdash; what each
+        capture actually holds. With scripting, it opens on coverage, the
+        number everyone reads, and the button flips the light.
+      </p>
+    </div>
+
+    {strata.map((st) => (
+      <div class:list={['hc-stratum', st.validity_boundary && 'hc-boundary']} data-stratum={st.key}>
+        <h2 class="hc-stratum-h">
+          {st.label}
+          {st.validity_boundary && (
+            <span class="hc-boundary-tag">validity boundary &mdash; not a preservation rate</span>
+          )}
+        </h2>
+
+        <div class="hc-arms">
+          {ARM_ORDER.map((armKey) => {
+            const arm = st.arms[armKey]
+            const n = arm.n
+            const cCount = contentCount(arm)
+            return (
+              <div class="hc-drawer" data-arm={armKey}>
+                <h3 class="hc-drawer-h">{ARM_TITLE[armKey]}</h3>
+                <div class="hc-grid" role="img" aria-label={`${n} capture tiles for ${st.label}, ${armKey}`}>
+                  {tiles(arm).map((cat) => (
+                    <span class={`hc-tile hc-tile-${cat}`} aria-hidden="true"></span>
+                  ))}
+                </div>
+                {arm.coverage_caption ? (
+                  <p class="hc-frac hc-frac-cov">
+                    <strong>{arm.coverage_caption}</strong>
+                    <span class="hc-wilson">the coverage reading — what the metric certifies</span>
+                  </p>
+                ) : (
+                  <p class="hc-frac hc-frac-cov">
+                    <strong>live control &mdash; an archival coverage claim does not apply to this drawer</strong>
+                    <span class="hc-wilson">flip the light for its measured content rate</span>
+                  </p>
+                )}
+                <p class="hc-frac hc-frac-cus">
+                  <strong>content-bearing: {cCount}/{n} = {pct(arm.p)}%</strong>
+                  <span class="hc-wilson">Wilson 95% [{pct(arm.wilson[0])}, {pct(arm.wilson[1])}]</span>
+                </p>
+                {armKey === 'archived' && arm.categories.filter((c) => c.detail).map((c) => (
+                  <p class="hc-legend">
+                    {c.label} = {c.detail}
+                  </p>
+                ))}
+              </div>
+            )
+          })}
+        </div>
+
+        {st.key === 'x-twitter' && (
+          <p class="hc-subtest hc-subtest-x">
+            Symmetry check (session {xSubtest.session}, pre-registered): all{' '}
+            {xSubtest.og_negative_n}/{xSubtest.og_negative_n} og-negative archived captures are body-thin and free of
+            embedded tweet-payload markers &mdash; Wilson 95% [{pct(xSubtest.wilson[0])}, {pct(xSubtest.wilson[1])}].
+            The {pct(st.arms.archived.p)}% is not a classifier blind spot.
+          </p>
+        )}
+        {st.validity_boundary && (
+          <p class="hc-subtest">
+            Body-content sub-test (session {subtest.session}, threshold {fmt(subtest.threshold_chars)} chars,
+            pre-registered): of the {subtest.og_negative.n} archived news/org captures the og-classifier
+            calls non-content, <strong>{subtest.og_negative.body_bearing} carry full visible body text</strong> (median{' '}
+            {fmt(subtest.og_negative.median_body_chars)} chars) &mdash; Wilson 95%{' '}
+            [{pct(subtest.og_negative.wilson[0])}, {pct(subtest.og_negative.wilson[1])}]. {subtest.n_fetch_failed} fetch
+            failures. This row is an under-read of the meta-tag test, not a preservation deficit.
+          </p>
+        )}
+      </div>
+    ))}
+  </div>
+
+  <div class="hc-footnotes">
+    <p class="hc-byte">
+      <strong>Byte-size contrast.</strong> Median archived X/Twitter page {fmt(byteContrast.x_archived_med)} bytes
+      vs. median archived news/org page {fmt(byteContrast.news_org_archived_med)} bytes &mdash;
+      the X shells are genuinely near-empty; the news/org non-content cases are not.
+    </p>
+    <p class="hc-src">
+      <strong>Distinct-source caveat.</strong> Telegram&rsquo;s {telegramArchived.n} archived URLs come from only{' '}
+      {telegramArchived.distinct_handles} channels (fraction {telegramArchived.src_frac?.toFixed(3)}) &mdash; the effective N
+      is below {telegramArchived.n}, so its Wilson interval is optimistic. (X: {xArchived.distinct_handles}/{xArchived.n} handles,
+      fraction {xArchived.src_frac?.toFixed(3)}. news/org: {newsArchived.distinct_handles}/{newsArchived.n}, fraction{' '}
+      {newsArchived.src_frac?.toFixed(3)}.) Five of the 13 channels contribute a single URL, where the
+      bio-contamination guard has no coverage; even if all five were contaminated, Telegram content-preservation
+      stays &ge; 52/58 = 89.7% (Wilson 95% [79.2, 95.2]) &mdash; see the work document.
+    </p>
+    <p class="hc-client">
+      <strong>Client check.</strong> The live X arm re-fetched with a generic browser client string:{' '}
+      {xSubtest.generic_client.content_present}/{xSubtest.generic_client.n} = {pct(xSubtest.generic_client.p)}%
+      content-bearing (Wilson 95% [{pct(xSubtest.generic_client.wilson[0])}, {pct(xSubtest.generic_client.wilson[1])}])
+      vs. {xSubtest.census_client.content_present}/{xSubtest.census_client.n} = {pct(xSubtest.census_client.p)}% for the
+      self-identifying research client &mdash; the live arm is not an artifact of a declared crawler.
+    </p>
+    <p class="hc-containment">
+      <strong>Containment.</strong> Tiles carry no identity. Each tile is generated at build time from an
+      aggregate tally only &mdash; no tile corresponds to any identifiable capture, URL, or handle.
+    </p>
+  </div>
+</section>
+
+<script>
+// @ts-nocheck — engine work script shielded from the site TS gate (sandboxed display code, vetted by the collective gauntlet + checkForbidden + astro build). A missing type annotation must never turn the whole site build red — see work 011, 2026-07-06.
+  const exhibit = document.getElementById('hc-exhibit')
+  const toggle = document.getElementById('hc-toggle')
+  if (exhibit && toggle) {
+    // No-JS readers keep the markup default (custody). JS readers open on
+    // coverage — the metric everyone reads — and flip the light from there.
+    exhibit.setAttribute('data-light', 'coverage')
+    toggle.setAttribute('aria-pressed', 'false')
+    toggle.addEventListener('click', () => {
+      const next = exhibit.getAttribute('data-light') === 'coverage' ? 'custody' : 'coverage'
+      exhibit.setAttribute('data-light', next)
+      toggle.setAttribute('aria-pressed', String(next === 'custody'))
+    })
+  }
+</script>
+
+<style>
+  .hc {
+    max-width: 46rem;
+    margin: 0 auto;
+    font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    color: #1a1a1a;
+    line-height: 1.5;
+  }
+  .hc-head h1 { font-size: 1.9rem; margin: 0 0 0.4rem; letter-spacing: -0.01em; }
+  .hc-sub { font-size: 0.88rem; color: #444; margin: 0 0 1.4rem; max-width: 42rem; }
+
+  .hc-exhibit { border: 1px solid #ccc; padding: 1rem; background: #fafaf8; }
+
+  .hc-toggle-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.9rem;
+    margin-bottom: 1.1rem;
+    padding-bottom: 0.9rem;
+    border-bottom: 1px solid #ddd;
+  }
+  .hc-toggle {
+    font-family: inherit;
+    font-size: 0.85rem;
+    letter-spacing: 0.03em;
+    background: #fff;
+    border: 1px solid #999;
+    padding: 0.4rem 0.8rem;
+    cursor: pointer;
+    color: #555;
+  }
+  .hc-toggle-sep { margin: 0 0.35rem; color: #bbb; }
+  .hc-toggle-opt { color: #999; }
+  .hc-exhibit[data-light="coverage"] .hc-toggle-cov,
+  .hc-exhibit[data-light="custody"] .hc-toggle-cus {
+    color: #111;
+    font-weight: 700;
+    text-decoration: underline;
+  }
+  .hc-toggle-note { font-size: 0.74rem; color: #666; margin: 0; max-width: 30rem; }
+
+  .hc-stratum { margin-bottom: 1.5rem; padding: 0.9rem 1rem; border: 1px solid #ddd; }
+  .hc-stratum-h { font-size: 1rem; margin: 0 0 0.8rem; display: flex; align-items: center; flex-wrap: wrap; gap: 0.6rem; }
+  .hc-boundary {
+    border: 2px dashed #7a1f1f;
+    background-color: #fbf5f2;
+    background-image: repeating-linear-gradient(45deg, rgba(122, 31, 31, 0.06) 0, rgba(122, 31, 31, 0.06) 7px, transparent 7px, transparent 14px);
+  }
+  .hc-boundary-tag {
+    font-size: 0.66rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #7a1f1f;
+    border: 1px dashed #7a1f1f;
+    padding: 0.15rem 0.45rem;
+    background: #fff;
+  }
+
+  .hc-arms { display: flex; flex-wrap: wrap; gap: 1.4rem; }
+  .hc-drawer { flex: 1 1 16rem; min-width: 14rem; max-width: 100%; }
+  .hc-drawer-h { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.03em; color: #666; margin: 0 0 0.5rem; }
+
+  .hc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 11px);
+    gap: 1px;
+    max-width: 100%;
+    width: fit-content;
+  }
+  .hc-tile {
+    width: 11px;
+    height: 11px;
+    box-sizing: border-box;
+    border: 1px solid #aaa;
+  }
+  .hc-tile-content { background: #1a1a1a; border-color: #1a1a1a; }
+  .hc-tile-thin { background: #8a8a8a; border-color: #6e6e6e; }
+  .hc-tile-hollow {
+    background-color: #fdfdfd;
+    background-image: repeating-linear-gradient(45deg, transparent, transparent 2px, #ddd 2px, #ddd 4px);
+    border-color: #bbb;
+  }
+  .hc-tile-unavailable { background: #fff; border: 1px dashed #999; }
+  .hc-tile-noncontent { background: #e4e4e4; border-color: #9a9a9a; }
+  .hc-tile-outside {
+    background-color: #eef4f7;
+    background-image: repeating-linear-gradient(45deg, transparent, transparent 2px, #b9d0da 2px, #b9d0da 4px);
+    border-color: #7fa8bb;
+  }
+
+  /* Coverage light: every tile identical — the metric everyone reads. */
+  .hc-exhibit[data-light="coverage"] .hc-tile-content,
+  .hc-exhibit[data-light="coverage"] .hc-tile-thin,
+  .hc-exhibit[data-light="coverage"] .hc-tile-hollow,
+  .hc-exhibit[data-light="coverage"] .hc-tile-noncontent,
+  .hc-exhibit[data-light="coverage"] .hc-tile-unavailable,
+  .hc-exhibit[data-light="coverage"] .hc-tile-outside {
+    background-image: none;
+    background-color: #1a1a1a;
+    border-color: #1a1a1a;
+  }
+
+  .hc-frac { font-size: 0.86rem; margin: 0.6rem 0 0; display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: baseline; }
+  /* The caption follows the light: custody caption by default (the no-JS state),
+     coverage caption only under the coverage light. */
+  .hc-frac-cov { display: none; }
+  .hc-exhibit[data-light="coverage"] .hc-frac-cov { display: flex; }
+  .hc-exhibit[data-light="coverage"] .hc-frac-cus { display: none; }
+  .hc-wilson { font-size: 0.74rem; color: #666; }
+  .hc-legend { font-size: 0.7rem; color: #777; margin: 0.3rem 0 0; }
+
+  .hc-subtest { font-size: 0.8rem; color: #4a3a3a; margin: 0.9rem 0 0; padding: 0.6rem 0.7rem; background: #fff; border: 1px dashed #b98a8a; }
+  .hc-subtest-x { color: #333; border: 1px dashed #999; }
+
+  .hc-footnotes { margin-top: 1.2rem; border-top: 1px solid #ddd; padding-top: 0.9rem; }
+  .hc-footnotes p { font-size: 0.78rem; color: #444; margin: 0 0 0.6rem; }
+  .hc-footnotes strong { color: #222; }
+
+  @media (max-width: 30rem) {
+    .hc-arms { gap: 1rem; }
+    .hc-drawer { flex: 1 1 100%; }
+  }
+</style>

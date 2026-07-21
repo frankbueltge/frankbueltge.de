@@ -1,0 +1,185 @@
+{
+ "sample_sha256": "fb79e81cae4c43fdcf0bc2a1348f14249131c7cd78bc1ebd2287e80f48276bed",
+ "archived": {
+  "x-twitter": {
+   "n": 163,
+   "tally": {
+    "other": 152,
+    "login_shell": 6,
+    "content_present": 5
+   },
+   "content_present": 5,
+   "p_content_present": 0.031,
+   "wilson95": [
+    0.013,
+    0.07
+   ],
+   "distinct_handles": 87,
+   "distinct_source_frac": 0.534,
+   "content_present_distinct_desc": 5,
+   "content_present_total": 5,
+   "same_channel_desc_repeats": 0,
+   "bytes_quartiles": {
+    "min": 357,
+    "med": 2754,
+    "max": 196723
+   },
+   "capture_month_hist_ge5": {
+    "202404": 10,
+    "202410": 50,
+    "202405": 13,
+    "202411": 34,
+    "202312": 7,
+    "202406": 8,
+    "202408": 5,
+    "202403": 7,
+    "202311": 6,
+    "202310": 8,
+    "202407": 6
+   },
+   "capture_months_suppressed_lt5": 9,
+   "median_capture_day": "20241002"
+  },
+  "telegram": {
+   "n": 58,
+   "tally": {
+    "content_present": 57,
+    "other": 1
+   },
+   "content_present": 57,
+   "p_content_present": 0.983,
+   "wilson95": [
+    0.909,
+    0.997
+   ],
+   "distinct_handles": 13,
+   "distinct_source_frac": 0.224,
+   "content_present_distinct_desc": 57,
+   "content_present_total": 57,
+   "same_channel_desc_repeats": 0,
+   "bytes_quartiles": {
+    "min": 9893,
+    "med": 14606,
+    "max": 39225
+   },
+   "capture_month_hist_ge5": {
+    "202312": 20,
+    "202310": 10,
+    "202311": 14
+   },
+   "capture_months_suppressed_lt5": 14,
+   "median_capture_day": "20231206"
+  },
+  "news-org": {
+   "n": 40,
+   "tally": {
+    "other": 12,
+    "content_present": 26,
+    "content_thin": 2
+   },
+   "content_present": 26,
+   "p_content_present": 0.65,
+   "wilson95": [
+    0.495,
+    0.779
+   ],
+   "distinct_handles": 33,
+   "distinct_source_frac": 0.825,
+   "content_present_distinct_desc": 26,
+   "content_present_total": 26,
+   "same_channel_desc_repeats": 0,
+   "bytes_quartiles": {
+    "min": 4742,
+    "med": 147536,
+    "max": 7392278
+   },
+   "capture_month_hist_ge5": {
+    "202311": 7,
+    "202312": 5,
+    "202405": 6
+   },
+   "capture_months_suppressed_lt5": 22,
+   "median_capture_day": "20240220"
+  }
+ },
+ "live_control": {
+  "x-twitter": {
+   "n": 25,
+   "tally": {
+    "content_present": 20,
+    "unavailable": 5
+   },
+   "content_present": 20,
+   "p_content_present": 0.8,
+   "wilson95": [
+    0.609,
+    0.911
+   ],
+   "distinct_handles": 24,
+   "distinct_source_frac": 0.96,
+   "content_present_distinct_desc": 17,
+   "content_present_total": 20,
+   "same_channel_desc_repeats": 0,
+   "bytes_quartiles": {
+    "min": 79839,
+    "med": 119916,
+    "max": 133169
+   },
+   "capture_month_hist_ge5": {},
+   "capture_months_suppressed_lt5": 0,
+   "median_capture_day": null
+  },
+  "telegram": {
+   "n": 25,
+   "tally": {
+    "content_present": 25
+   },
+   "content_present": 25,
+   "p_content_present": 1.0,
+   "wilson95": [
+    0.867,
+    1.0
+   ],
+   "distinct_handles": 7,
+   "distinct_source_frac": 0.28,
+   "content_present_distinct_desc": 25,
+   "content_present_total": 25,
+   "same_channel_desc_repeats": 0,
+   "bytes_quartiles": {
+    "min": 37202,
+    "med": 37410,
+    "max": 39248
+   },
+   "capture_month_hist_ge5": {},
+   "capture_months_suppressed_lt5": 0,
+   "median_capture_day": null
+  },
+  "news-org": {
+   "n": 20,
+   "tally": {
+    "content_present": 9,
+    "other": 11
+   },
+   "content_present": 9,
+   "p_content_present": 0.45,
+   "wilson95": [
+    0.258,
+    0.658
+   ],
+   "distinct_handles": 18,
+   "distinct_source_frac": 0.9,
+   "content_present_distinct_desc": 9,
+   "content_present_total": 9,
+   "same_channel_desc_repeats": 0,
+   "bytes_quartiles": {
+    "min": 774,
+    "med": 146351,
+    "max": 1697427
+   },
+   "capture_month_hist_ge5": {},
+   "capture_months_suppressed_lt5": 0,
+   "median_capture_day": null
+  }
+ },
+ "_newsorg_note": "news-org re-run 2026-07-20 with stratum-gated has_article (Verifier session-46 finding #2); X/Telegram aggregates unchanged from the original run (Verifier-verified unaffected + independently reproduced)."
+}
