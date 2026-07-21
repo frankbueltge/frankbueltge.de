@@ -1,0 +1,119 @@
+{
+  "strata": [
+    {
+      "key": "x-twitter",
+      "label": "X / Twitter",
+      "validity_boundary": false,
+      "arms": {
+        "archived": {
+          "n": 163,
+          "coverage_caption": "capture exists: 170/170 cited URLs; in-window HTTP-200: 163/170 = 95.9% (drawn here)",
+          "categories": [
+            { "key": "content", "label": "content-bearing", "n": 5 },
+            { "key": "hollow", "label": "hollow shell", "n": 158, "detail": "login-wall 6 + app-shell (\"other\") 152" }
+          ],
+          "p": 0.031,
+          "wilson": [0.013, 0.070],
+          "bytes_med": 2754,
+          "distinct_handles": 87,
+          "src_frac": 0.534
+        },
+        "live": {
+          "n": 25,
+          "categories": [
+            { "key": "content", "label": "content-bearing", "n": 20 },
+            { "key": "unavailable", "label": "unavailable", "n": 5 }
+          ],
+          "p": 0.800,
+          "wilson": [0.609, 0.911]
+        }
+      }
+    },
+    {
+      "key": "telegram",
+      "label": "Telegram",
+      "validity_boundary": false,
+      "arms": {
+        "archived": {
+          "n": 58,
+          "coverage_caption": "in-window HTTP-200 capture: 58/66 cited URLs = 87.9% (drawn here)",
+          "categories": [
+            { "key": "content", "label": "content-bearing", "n": 57 },
+            { "key": "noncontent", "label": "non-content", "n": 1, "detail": "\"other\" 1 — no description and no wall/deleted marker; not established as an app-shell" }
+          ],
+          "p": 0.983,
+          "wilson": [0.909, 0.997],
+          "bytes_med": 14606,
+          "distinct_handles": 13,
+          "src_frac": 0.224
+        },
+        "live": {
+          "n": 25,
+          "categories": [
+            { "key": "content", "label": "content-bearing", "n": 25 }
+          ],
+          "p": 1.000,
+          "wilson": [0.867, 1.000]
+        }
+      }
+    },
+    {
+      "key": "news-org",
+      "label": "news / org",
+      "validity_boundary": true,
+      "arms": {
+        "archived": {
+          "n": 40,
+          "coverage_caption": "stratum in-window coverage: 186/229 cited URLs = 81.2% (prior census); drawn here: a deterministic sample of 40 HTTP-200 captures",
+          "categories": [
+            { "key": "content", "label": "content-bearing", "n": 26 },
+            { "key": "thin", "label": "content-thin", "n": 2 },
+            { "key": "outside", "label": "non-content by og-test (outside the classifier's domain)", "n": 12 }
+          ],
+          "p": 0.650,
+          "wilson": [0.495, 0.779],
+          "bytes_med": 147536,
+          "distinct_handles": 33,
+          "src_frac": 0.825
+        },
+        "live": {
+          "n": 20,
+          "categories": [
+            { "key": "content", "label": "content-bearing", "n": 9 },
+            { "key": "outside", "label": "non-content by og-test (outside the classifier's domain)", "n": 11 }
+          ],
+          "p": 0.450,
+          "wilson": [0.258, 0.658]
+        }
+      }
+    }
+  ],
+  "x_subtest": {
+    "session": 48,
+    "og_negative_n": 158,
+    "thin_and_payload_free": 158,
+    "wilson": [0.976, 1.0],
+    "generic_client": { "content_present": 19, "n": 25, "p": 0.760, "wilson": [0.566, 0.885] },
+    "census_client": { "content_present": 20, "n": 25, "p": 0.800 }
+  },
+  "subtest": {
+    "session": 48,
+    "n_total": 40,
+    "n_fetch_failed": 0,
+    "threshold_chars": 2000,
+    "og_negative": {
+      "n": 14,
+      "body_bearing": 12,
+      "wilson": [0.601, 0.960],
+      "median_body_chars": 27453
+    },
+    "og_positive": {
+      "n": 26,
+      "body_bearing": 24
+    }
+  },
+  "byte_contrast": {
+    "x_archived_med": 2754,
+    "news_org_archived_med": 147536
+  }
+}
