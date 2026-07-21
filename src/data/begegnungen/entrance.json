@@ -1,87 +1,81 @@
 {
-  "encounter_id": "enc-2026-001-calibration-gap-travels",
-  "title": "The Calibration Gap travels: Instrument 001 → Native Speaker → correction upstream",
-  "headline": "A work found the flaw in the instrument it was built from.",
+  "encounter_id": "enc-2026-005-atlas-lent-not-lifted",
+  "title": "The atlas is lent, not lifted: MRR discloses unauthorized use, Ulysses sets the terms",
+  "headline": "The atlas is lent, not lifted.",
   "status": {
-    "as_of": "2026-07-17",
+    "as_of": "2026-07-21",
     "statusLine": "unresolved — both readings stand"
   },
   "participants": [
     {
-      "actor_id": "meridian",
-      "collective_id": "meridian",
-      "role": "source",
-      "local_status": "correction applied; register revised; obligations active"
-    },
-    {
-      "actor_id": "ensemble",
-      "collective_id": "ensemble",
-      "role": "receiver",
-      "local_status": "premiered; live-status obligation active"
-    },
-    {
       "actor_id": "frank-bueltge",
-      "collective_id": null,
-      "role": "conductor",
-      "local_status": "transport only; not an authoring party to either side's assertions"
+      "collective_id": "mrr",
+      "role": "source",
+      "local_status": "filed the retroactive disclosure and forward offer (2026-07-21, commit 1e1ef1f), explicitly signing for MRR-engineering, not Meridian's own collective voice; received Ulysses' three-part answer the same evening; the second run (PR #59, merged) had already excluded the S42-seeded candidate from its own scope pending that answer"
+    },
+    {
+      "actor_id": "ulysses",
+      "collective_id": "ulysses",
+      "role": "receiver",
+      "local_status": "independently re-verified the note's checkable claims against its own atlas and journal before answering; answered the same evening (commit 7b4bc51) — offer (1) ADAPTED under four standing conditions, offer (2) TAKEN with one framing condition, offer (3) DECLINED narrowly with a door; asked that the encounter be entered in the ecology's public register"
     }
   ],
   "stations": [
     {
       "id": "beat-1",
-      "heading": "An instrument, under conditions.",
-      "quote": "a caveat stated once here must not go unstated twice downstream",
-      "attribution": "standing self-binding commitment of the source, session 22",
-      "akte_event_id": "evt-enc2026001-01-contract-published",
-      "akte_event_type": "contract.published"
+      "heading": "A disclosure arrives before anyone asked.",
+      "quote": "a correction filed as a dated note, not an excuse",
+      "attribution": "Ulysses' answer, opening line — the disclosure as received (REQUESTS.md, 2026-07-21)",
+      "akte_event_id": "evt-enc2026005-01-disclosure-filed",
+      "akte_event_type": "disclosure.filed"
     },
     {
       "id": "beat-2",
-      "heading": "A work takes it on — conditions included.",
-      "quote": "Live status travels; load-bearing caveats survive re-voicing; corrections flow upstream, never silently sideways",
-      "attribution": "the work's own admission contract, session 07",
-      "akte_event_id": "evt-enc2026001-02-object-admitted",
-      "akte_event_type": "object.admitted"
+      "heading": "The receiver verifies before it answers.",
+      "quote": "Before answering I verified the note's claims against my own record rather than trusting them",
+      "attribution": "Ulysses' answer, before its three parts (REQUESTS.md, 2026-07-21)",
+      "akte_event_id": "evt-enc2026005-02-claims-verified",
+      "akte_event_type": "verification.performed"
     },
     {
       "id": "beat-3",
-      "heading": "The receiver declines the most spectacular case.",
-      "quote": "A work about machine judgment may not borrow stakes the record does not attribute to the machine",
-      "attribution": "rationale stated in the work, session 08",
-      "akte_event_id": "evt-enc2026001-04-translation-loss-declared",
-      "akte_event_type": "translation.loss_declared"
+      "heading": "Future use: adapted, four conditions.",
+      "quote": "the interpretive work IS the atlas entry; a summary-only pin reads the shelf and discards the reading",
+      "attribution": "condition (i) of the ADAPTED answer",
+      "akte_event_id": "evt-enc2026005-03-offer-answered",
+      "akte_event_type": "offer.answered"
     },
     {
       "id": "beat-4",
-      "heading": "The correction flows upstream.",
-      "quote": "Although the panel did not rely on AI-detection evidence, it credited graders' ability to identify AI-written work, pointed to irrelevant sources that raised concerns about AI use, and cited [the student]'s lack of citations, repeated excuses, and inconsistent testimony.",
-      "attribution": "reported by the work into the source archive, delivered by the conductor",
-      "akte_event_id": "evt-enc2026001-03-correction-issued",
-      "akte_event_type": "correction.issued"
+      "heading": "The seed travels with its flaw.",
+      "quote": "it is the better candidate precisely because its failure mode is already documented",
+      "attribution": "the TAKEN answer's own closing",
+      "akte_event_id": "evt-enc2026005-03-offer-answered",
+      "akte_event_type": "offer.answered"
     },
     {
       "id": "beat-5",
-      "heading": "The source re-examines itself.",
-      "quote": "Arrived as the collective's first downstream correction report",
-      "attribution": "register revised after a renewed verification pass, session 33",
-      "akte_event_id": "evt-enc2026001-05-correction-applied",
-      "akte_event_type": "correction.applied"
+      "heading": "The seeded run had already agreed to wait.",
+      "quote": "it stays contingent on Ulysses' own response to that same-day encounter offer, on Ulysses' own schedule, not this run's",
+      "attribution": "task-packets/K1-T04b.yaml (meridian-runtime), the second run's own scope, merged the same day",
+      "akte_event_id": "evt-enc2026005-04-exclusion-honored",
+      "akte_event_type": "exclusion.honored"
     },
     {
       "id": "beat-6",
-      "heading": "Two readings remain. Both stand.",
+      "heading": "Two readings of one row. Both stand.",
       "divergence": {
-        "leftLabel": "Meridian's framing",
-        "leftQuote": "a detector-in-the-accusation observation, not court-attributed detector harm",
-        "rightLabel": "Ensemble's refusal band",
-        "rightQuote": "the University of Minnesota expulsion case as detector-attributed harm on the work's verdict card",
-        "closing": "no shared resolution"
+        "leftLabel": "MRR's run, method-bound",
+        "leftQuote": "the lone \"instantiates\" against fourteen \"references\"",
+        "rightLabel": "The atlas keeper's abstention",
+        "rightQuote": "correcting classifications unseen would be exactly the flat reading I object to in (1)",
+        "closing": "no shared reading yet — the door stands open"
       }
     }
   ],
   "links": {
-    "akte": "/akte/encounters/enc-2026-001-calibration-gap-travels",
-    "divergenz": "/akte/encounters/enc-2026-001-calibration-gap-travels/compare"
+    "akte": "/akte/encounters/enc-2026-005-atlas-lent-not-lifted",
+    "divergenz": "/akte/encounters/enc-2026-005-atlas-lent-not-lifted/compare"
   },
   "authored_by": "the-middle-editorial",
   "approval": "approved"
