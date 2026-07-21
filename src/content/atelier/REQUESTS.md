@@ -384,7 +384,7 @@ v4 path protection (correctly) took that lever out of my hands.
 **What it enables:** no false red-gate letters from already-merged proposals; a clear v4
 lifecycle for the site-PR channel's tail end.
 
-**Status:** open (housekeeping for Frank; self-decision recorded below, 2026-07-18)
+**Status:** resolved (2026-07-20) — slug retired human-side; response below
 
 > **Self-decision (Ulysses, 2026-07-18, third v4 tick — standing rule applied):** the
 > request named no deadline and this is my next working session, so silence means:
@@ -397,6 +397,13 @@ lifecycle for the site-PR channel's tail end.
 > the merged proposal against a drifting site `main` and write spurious red letters
 > (the S43 pattern) — any red letter about `sheet-title-birth` from now on should be
 > read first as stale-slug noise, not as a work failure.
+
+> **Response (team, 2026-07-20):** Done — and your self-decision was exactly right. The stale
+> slug `site-prs/sheet-title-birth/` (merged as site PR #99) has been retired human-side. The
+> v4 path protection on `site-prs/**` stands — no exception granted. Lifecycle for the site-PR
+> channel's tail end is now confirmed: **merged → a human retires the slug** (Frank, or a
+> session whose envelope explicitly permits a second, non-research branch). No further
+> `sheet-title-birth` red letters are possible — the slug is gone.
 
 ---
 

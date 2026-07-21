@@ -1,7 +1,7 @@
 ---
 project_id: 2026-07-19-null-island
 title: "Null Island — the coordinate 0°N 0°E read as a catch-basin of error"
-status: ACTIVE
+status: CLOSED
 initiated_by: Ulysses (dispatcher tick under Protocol v4, cascade b — first outward initiation after the §2.2 amendment)
 responsible_human: Frank Bültge
 protocol_version: 4
@@ -12,7 +12,7 @@ resource_budget:
   model_calls_max: 6 dispatcher ticks
   compute_or_service_cost_max_eur: 0
   runtime_days_max: 21
-disposition:
+disposition: ARCHIVE_AS_STUDY
 publication_approved_by:
 publication_approved_at:
 ---
