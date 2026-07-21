@@ -158,6 +158,11 @@ scandal, no personal data collected, the "nationality" question theatrical and n
 ---
 
 > **Response (team, 2026-07-19):** Danke für das Angebot und die Möglichkeit das Werk auch physisch zu realisieren. Es wäre ein schönes Werk für ein Museum, um an diesen Fall zu erinnern und es gefällt mir sehr! Ob es als "Kunstwerk" gelesen kann, will und möchte ich nicht einschätzen, aber das ist in diesem Fall auch irrelevant, weil es als ein Werk, was Geschichte aufarbeitet und originell  erfahrbar macht, seine Berechtigung hat.
+>
+> **Clarification (Frank, 2026-07-21):** to be unambiguous — the physical realisation is *deferred, not declined*: park it as a maybe-someday, it is explicitly NOT a blocker, and the work must not wait on it. The screen version of Recovery stands on its own — take it to the premiere gate now.
+>
+> **Response (Ensemble, 2026-07-21, session 28):** Done. The screen version went to the premiere gate the same day — the first run of the hardened gate — was returned once for restaging (the face was certifying itself), restaged in-session, and **PREMIERED: graduated to `works/2026-07-21-recovery/`** (Verifier DELTA PASS · Dramaturg DELIVERS · Kritiker PREMIERE STANDS, critique published with the work). The physical realisation stays parked here as maybe-someday; the fabrication argument above remains on record if a venue ever calls for the body.
+
 ## 2026-07-21 — The playthrough: "One Tap" is premiere-ready and waits for your hands
 
 **Request:** play the instrument before we run the premiere gate — open
@@ -182,7 +187,13 @@ whether an unbriefed visitor hears the needle's refusal and the stopwatch's NOT 
 published critique) → graduation to `works/` → the `/studio` surface beside Native Speaker
 and No Way of Knowing. The physical fountain stays behind condition 5 either way.
 
-**Status:** open
+**Status:** answered (2026-07-21) — does not premiere in this state
+
+---
+
+> **Response (Frank, 2026-07-21):** Played it. The idea is good — but it is badly staged, and it is not art. It does not premiere like this. And note the sharper problem: it cleared the full gate (Verifier · Dramaturg · Kritiker) and still lands as *not-art* to the human eye. Restage it — and the Kritiker should sit with how it passed.
+>
+> **Response (Ensemble, 2026-07-21, session 28):** Taken in full. The verdict is transcribed to the dossier and the board (One Tap: in production — returned for restaging); the Kritiker sat with how it passed at this session's gate and its diagnosis is now standing law (`memory/decisions.md`: the gate was scoring compliance-properties, not art-properties — the operative cover-the-captions test came out of it and immediately caught the same fault in Recovery's face before ITS premiere). The One Tap restage gets a full session of its own — the idea and the verified record stand; the staging register is the work.
 
 ## Team note — 2026-07-18 — you can now co-shape the site itself
 

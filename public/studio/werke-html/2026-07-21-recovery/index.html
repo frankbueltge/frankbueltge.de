@@ -1,0 +1,1411 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Recovery — Digitaal Serviceloket</title>
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #d9d9d4;
+  }
+  body {
+    font-family: Verdana, Tahoma, "DejaVu Sans", sans-serif;
+  }
+
+  /* ================= scoped under #app ================= */
+  #app {
+    --ink: #0b2e52;
+    --ink-soft: #20456e;
+    --paper: #ffffff;
+    --paper-2: #eef0ee;
+    --line: #b8b8b3;
+    --line-strong: #8a8a84;
+    --muted: #54534d;
+    --pass: #2e6b3e;
+    --fail: #8a2b2b;
+    --tag-ink: #6a4e12;
+    --tag-bg: #f4ecd8;
+    max-width: 880px;
+    margin: 0 auto;
+    background: var(--paper);
+    color: var(--ink);
+    border-left: 1px solid var(--line);
+    border-right: 1px solid var(--line);
+    min-height: 100vh;
+    font-size: 14px;
+    line-height: 1.5;
+    padding-bottom: 3rem;
+  }
+  #app *, #app *::before, #app *::after { box-sizing: border-box; }
+  #app a { color: var(--ink-soft); }
+  #app a:visited { color: #4a3b74; }
+  #app button { font-family: inherit; font-size: inherit; color: inherit; }
+  #app :focus-visible { outline: 2px solid var(--ink-soft); outline-offset: 2px; }
+  #app h1, #app h2, #app h3 { font-family: inherit; font-weight: bold; }
+  #app .mono {
+    font-family: "DejaVu Sans Mono", "Courier New", monospace;
+  }
+  #app .visually-hidden {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+  }
+
+  /* ---------------- topbar ---------------- */
+  #app .topbar {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.8rem 1.1rem;
+    border-bottom: 3px solid var(--ink);
+    background: var(--paper-2);
+  }
+  #app .crest { flex: 0 0 auto; }
+  #app .agency { flex: 1 1 auto; min-width: 0; }
+  #app .agency-name { margin: 0; font-size: 1.05rem; font-weight: bold; letter-spacing: 0.01em; }
+  #app .agency-sub { margin: 0.1rem 0 0; font-size: 0.72rem; color: var(--muted); }
+  #app .case-meta { flex: 0 0 auto; text-align: right; font-size: 0.72rem; color: var(--muted); }
+  #app .case-meta p { margin: 0 0 0.15rem; }
+  #app .case-meta p:last-child { margin-bottom: 0; }
+  #app .meta-label { text-transform: uppercase; letter-spacing: 0.03em; }
+
+  /* ---------------- counter badge ---------------- */
+  #app .counter-badge {
+    border-bottom: 1px solid var(--line);
+    background: #f7f6f0;
+    padding: 0.5rem 1.1rem;
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.9rem;
+  }
+  #app .counter-label {
+    margin: 0;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--muted);
+  }
+  #app .counter-amount {
+    margin: 0;
+    font-size: 0.92rem;
+    font-weight: bold;
+  }
+
+  /* ---------------- toast ---------------- */
+  #app .toast-region {
+    position: fixed;
+    right: 0.8rem;
+    bottom: 0.8rem;
+    z-index: 30;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    max-width: 260px;
+  }
+  #app .toast {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 0.5rem 0.7rem;
+    font-size: 0.72rem;
+    border: 1px solid var(--ink);
+    box-shadow: none;
+  }
+  #app .toast .mono { color: #fff; }
+
+  /* ---------------- screen ---------------- */
+  #app .screen { padding: 1.1rem 1.1rem 1.4rem; min-height: 20rem; }
+  #app .screen-title { margin: 0 0 0.15rem; font-size: 1.15rem; }
+  #app .screen-title-en { margin: 0 0 1rem; font-size: 0.82rem; color: var(--muted); font-style: italic; }
+  #app .screen-title-sm { margin: 0 0 0.9rem; font-size: 1rem; border-bottom: 1px solid var(--line); padding-bottom: 0.5rem; }
+
+  /* ---------------- intake form ---------------- */
+  #app .field-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.9rem 1.2rem;
+    margin-bottom: 1.2rem;
+  }
+  #app .field { border: 1px solid var(--line); background: var(--paper-2); padding: 0.55rem 0.65rem; }
+  #app .field label {
+    display: block;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: var(--muted);
+    margin-bottom: 0.3rem;
+  }
+  #app .field input, #app .field select {
+    width: 100%;
+    font-family: inherit;
+    font-size: 0.86rem;
+    padding: 0.35rem 0.4rem;
+    border: 1px solid var(--line-strong);
+    background: var(--paper);
+    color: var(--ink);
+  }
+  #app .field input.autofill-flash, #app .field select.autofill-flash {
+    background: #fbf6e3;
+  }
+  #app .btn {
+    font-family: inherit;
+    background: var(--paper);
+    color: var(--ink);
+    border: 1px solid var(--ink);
+    padding: 0.5rem 1rem;
+    font-size: 0.82rem;
+    cursor: pointer;
+  }
+  #app .btn:hover { background: var(--paper-2); }
+  #app .btn-primary { background: var(--ink); color: var(--paper); }
+  #app .btn-primary:hover { background: var(--ink-soft); }
+  #app .btn:disabled { opacity: 0.5; cursor: default; }
+
+  /* ---------------- processing ---------------- */
+  #app .progress-track {
+    border: 1px solid var(--line-strong);
+    height: 0.6rem;
+    background: var(--paper-2);
+    margin-top: 1rem;
+    max-width: 22rem;
+  }
+  #app .progress-fill { height: 100%; width: 0%; background: var(--ink-soft); }
+
+  /* ---------------- case / hub screen ---------------- */
+  #app .stamp-row { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
+  #app .stamp {
+    display: inline-block;
+    border: 2px solid var(--ink);
+    color: var(--ink);
+    padding: 0.4rem 0.7rem;
+    font-weight: bold;
+    letter-spacing: 0.04em;
+    font-size: 0.92rem;
+    line-height: 1.3;
+  }
+  #app .stamp-en { display: block; font-size: 0.62rem; font-weight: normal; letter-spacing: 0.02em; }
+  #app .stamp.struck { opacity: 0.45; text-decoration: line-through; border-style: dashed; }
+  #app .case-name, #app .case-clock { font-size: 0.78rem; color: var(--muted); margin: 0.15rem 0; }
+  #app .case-body p { margin: 0.5rem 0; font-size: 0.9rem; }
+  #app #riskBlock-live, #app #riskBlock-test { border-top: 1px solid var(--line); margin-top: 0.7rem; padding-top: 0.7rem; }
+  #app .doors-nav {
+    margin-top: 1.1rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--line);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+  #app .door-btn { min-width: 11rem; text-align: left; }
+
+  /* ---------------- door screens ---------------- */
+  #app .ivr-lines p { margin: 0.5rem 0; font-size: 0.9rem; }
+  #app .file-dl { display: grid; grid-template-columns: 14rem 1fr; gap: 0.35rem 0.8rem; margin: 0 0 1rem; }
+  #app .file-dl dt { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.02em; color: var(--muted); }
+  #app .file-dl dd { margin: 0; font-size: 0.88rem; }
+  #app .risk-line { font-size: 0.94rem; margin: 0.8rem 0; padding: 0.6rem; border: 1px solid var(--line); background: var(--paper-2); }
+  #app .btn-explain { margin-right: 0.6rem; }
+  #app .btn-explain[disabled] { opacity: 0.55; }
+  #app .explain-out { font-size: 0.86rem; color: var(--muted); margin-top: 0.5rem; }
+  #app .why-out { font-size: 1rem; border: 1px solid var(--line); background: var(--paper-2); padding: 0.9rem; margin: 0 0 1rem; min-height: 2.4em; }
+  #app .door-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+
+  /* ---------------- footer / honesty opener ---------------- */
+  #app .kiosk-footer { padding: 0.9rem 1.1rem; border-top: 1px solid var(--line); text-align: right; }
+  #app .honesty-btn { font-size: 0.76rem; }
+
+  /* ---------------- face marker / begin cue / ending beat ---------------- */
+  #app .sim-marker {
+    margin: 0.2rem 0 0;
+    font-size: 0.64rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--muted);
+  }
+  #app .begin-cue {
+    background: #0b2e52;
+    color: #f4f6f8;
+    text-align: center;
+    padding: 0.55rem 1rem;
+    font-size: 0.85rem;
+  }
+  #app .begin-cue[hidden] { display: none; }
+  #app .session-end { padding: 3.4rem 2rem 3.8rem; text-align: center; }
+  #app .session-end[hidden] { display: none; }
+  #app .session-end-title { margin: 0 0 0.7rem; font-size: 1.35rem; font-weight: bold; }
+  #app .session-end-line { margin: 0; color: var(--muted); font-size: 0.92rem; }
+
+  /* ---------------- self-test strip (inside the honesty panel since increment 3) ---------------- */
+  #app .selftest-strip {
+    margin: 1.2rem 0 0;
+    padding: 0.8rem 0.9rem;
+    border: 1px solid var(--line-strong);
+    background: #fbfbf8;
+    font-size: 0.78rem;
+  }
+  #app .selftest-strip h3 { margin: 0 0 0.5rem; font-size: 0.85rem; }
+  #app .selftest-frame { margin: 0 0 0.5rem; color: var(--muted); }
+  #app .selftest-result { margin: 0 0 0.4rem; font-weight: bold; font-family: "DejaVu Sans Mono", "Courier New", monospace; }
+  #app .selftest-result[data-state="pass"] { color: var(--pass); }
+  #app .selftest-result[data-state="fail"] { color: var(--fail); }
+  #app .selftest-result[data-state="pending"] { color: var(--muted); }
+  #app .selftest-detail { margin: 0; list-style: none; padding: 0; }
+  #app .selftest-detail li { margin: 0.15rem 0; font-family: "DejaVu Sans Mono", "Courier New", monospace; font-size: 0.72rem; color: var(--muted); }
+  #app .selftest-detail li[data-ok="true"]::before { content: "PASS · "; color: var(--pass); }
+  #app .selftest-detail li[data-ok="false"]::before { content: "FAIL · "; color: var(--fail); }
+
+  /* ---------------- honesty overlay ---------------- */
+  #app .overlay[hidden] { display: none; }
+  #app .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(11, 46, 82, 0.55);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 2.4rem 1rem;
+    overflow-y: auto;
+    z-index: 50;
+  }
+  #app .panel {
+    background: var(--paper);
+    color: var(--ink);
+    max-width: 720px;
+    width: 100%;
+    border: 1px solid var(--line-strong);
+    padding: 1.4rem 1.4rem 1.8rem;
+    position: relative;
+  }
+  #app .panel h2 { margin: 0 0 1rem; font-size: 1.1rem; }
+  #app .panel h3 { margin: 1.1rem 0 0.4rem; font-size: 0.86rem; text-transform: uppercase; letter-spacing: 0.03em; }
+  #app .panel p, #app .panel li { font-size: 0.86rem; margin: 0.4rem 0; }
+  #app .panel blockquote { margin: 0.5rem 0; padding: 0.5rem 0.8rem; border-left: 3px solid var(--ink-soft); font-style: italic; color: var(--ink-soft); }
+  #app .panel .attribution { font-size: 0.74rem; color: var(--muted); }
+  #app .closebtn { position: absolute; top: 0.9rem; right: 0.9rem; }
+  #app .tier-tag {
+    display: inline-block;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-weight: bold;
+    padding: 0.08rem 0.4rem;
+    border: 1px solid var(--line-strong);
+    margin-bottom: 0.3rem;
+  }
+  #app [data-tier="SOURCED"] .tier-tag { color: #1c5a3a; border-color: #1c5a3a; background: rgba(28,90,58,0.08); }
+  #app [data-tier="IMAGINED"] .tier-tag { color: var(--tag-ink); border-color: var(--tag-ink); background: var(--tag-bg); }
+  #app [data-tier="POLICY"] .tier-tag { color: var(--ink-soft); border-color: var(--ink-soft); background: rgba(32,69,110,0.08); }
+  #app .claim-block { margin: 0.8rem 0; padding: 0.7rem 0.8rem; border: 1px solid var(--line); }
+  #app .src-links { font-size: 0.74rem; }
+  #app .src-links a { display: block; word-break: break-all; }
+
+  /* ---------------- test harness (never visible) ---------------- */
+  #app .test-harness { display: none !important; }
+
+  /* ---------------- reduced motion ---------------- */
+  @media (prefers-reduced-motion: reduce) {
+    #app .progress-fill { transition-duration: 0.01s !important; }
+  }
+
+  /* ---------------- small screens ---------------- */
+  @media (max-width: 640px) {
+    #app .field-grid { grid-template-columns: 1fr; }
+    #app .file-dl { grid-template-columns: 1fr; }
+    #app .case-meta { text-align: left; }
+    #app .topbar { flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+<div id="app" class="kiosk">
+
+  <header class="topbar">
+    <div class="crest" aria-hidden="true">
+      <svg viewBox="0 0 48 56" width="38" height="44" focusable="false">
+        <path d="M24 2 L44 10 V28 C44 42 34 51 24 54 C14 51 4 42 4 28 V10 Z" fill="none" stroke="#0b2e52" stroke-width="2"></path>
+        <line x1="24" y1="9" x2="24" y2="47" stroke="#0b2e52" stroke-width="1.4"></line>
+        <line x1="9" y1="24" x2="39" y2="24" stroke="#0b2e52" stroke-width="1.4"></line>
+        <circle cx="24" cy="24" r="4.2" fill="none" stroke="#0b2e52" stroke-width="1.4"></circle>
+      </svg>
+    </div>
+    <div class="agency">
+      <p class="agency-name">Dienst Toeslagen</p>
+      <p class="agency-sub">Digitaal Serviceloket &middot; Digital Self-Service Point</p>
+      <p class="sim-marker" data-meta="true">Simulatie / Simulation &middot; kunstwerk, geen overheidsdienst / an artwork, not a government service</p>
+    </div>
+    <div class="case-meta">
+      <p><span class="meta-label">Zaaknummer / Ref.</span> <span class="mono" id="caseRefTop">&mdash;</span></p>
+      <p><span class="meta-label">Tijd / Time</span> <span class="mono" id="clockNow">&mdash;</span></p>
+    </div>
+  </header>
+
+  <div class="counter-badge" id="counterBadge" hidden>
+    <p class="counter-label">Totaal te vorderen (loopt door)<br>Total to be recovered (still running)</p>
+    <p class="counter-amount mono" id="counterAmount">&euro; 0,00</p>
+  </div>
+
+  <div class="toast-region" id="toastRegion" aria-live="polite"></div>
+
+  <div class="begin-cue" id="beginCue">Raak het scherm aan om uw eigen aanvraag te starten. / Touch the screen to start your own application.</div>
+
+  <main id="screenRootLive" class="screen" aria-live="polite" tabindex="-1"></main>
+
+  <div class="session-end" id="sessionEnd" hidden>
+    <p class="session-end-title">Sessie verlopen. / Session expired.</p>
+    <p class="session-end-line">Uw dossier blijft actief. Het te vorderen bedrag loopt door. / Your file remains active. The amount to be recovered continues to run.</p>
+  </div>
+
+  <div class="kiosk-footer">
+    <button type="button" class="btn honesty-btn" id="honestyOpenBtn" data-meta="true">Over dit werk / About this work</button>
+  </div>
+
+  <div class="overlay" id="honestyOverlay" hidden>
+    <div class="panel" role="dialog" aria-modal="true" aria-labelledby="honestyTitle">
+      <button type="button" class="btn closebtn" id="honestyCloseBtn" data-meta="true">Sluiten / Close [x]</button>
+      <h2 id="honestyTitle">Bronvermelding &amp; toelichting / Honesty panel</h2>
+      <p>This overlay is the only place on this page that explains anything. Nothing in the kiosk above it does.</p>
+
+      <div data-tier="SOURCED" class="claim-block">
+        <span class="tier-tag">Sourced</span>
+        <h3 id="hSourcedIntro">The spine</h3>
+        <p id="hSourcedTiers"></p>
+        <div id="hSourcedClaims"></div>
+      </div>
+
+      <div data-tier="IMAGINED" class="claim-block">
+        <span class="tier-tag">Imagined</span>
+        <h3>What this kiosk invented</h3>
+        <p id="hImagined"></p>
+        <p>Specifically imagined by this studio: the exact sums shown to you, the routing copy on every screen, the compounding penalty and its rate, the second-person address of the kiosk itself, and the fictional cast of applicant names in the idle demo loop. None of it is a claim about the real case-handling software.</p>
+      </div>
+
+      <div data-tier="POLICY" class="claim-block">
+        <span class="tier-tag">Policy</span>
+        <h3>The child-removal firewall</h3>
+        <p id="hFirewall"></p>
+        <p id="hFirewallContext" class="attribution"></p>
+      </div>
+
+      <div data-tier="POLICY" class="claim-block">
+        <span class="tier-tag">Policy</span>
+        <h3>Naming policy</h3>
+        <p id="hNaming"></p>
+      </div>
+
+      <div data-tier="IMAGINED" class="claim-block">
+        <span class="tier-tag">Imagined</span>
+        <h3>What this kiosk does and does not do</h3>
+        <p>This kiosk's outcome is identical no matter what you type into the intake form on the first screen. Every visitor is approved, then flagged, then billed, on the same schedule, for the same amount. Nothing you enter changes it.</p>
+        <p>This kiosk never uses the nationality field, or any other field, as a visible trigger for its flag. No screen in this kiosk ever names a cause for the flag &mdash; that is deliberate, and checked below by the self-test.</p>
+        <p>The historical fact directly above &mdash; that the real system used nationality as a risk factor, and that racial and ethnic profiling was built into its design &mdash; belongs to the sourced account of the real scandal. It is not offered anywhere in this kiosk as an explanation of this kiosk's own logic. You may suspect a connection. This kiosk will not confirm one.</p>
+      </div>
+
+      <section class="selftest-strip" data-meta="true">
+        <h3>The disclosed self-test</h3>
+        <p class="selftest-frame">This kiosk checks itself, in your browser, every time this page loads: it drives its own controls on a hidden copy of itself and prints the result of that check below.</p>
+        <p class="selftest-result" id="selftestResult" data-state="pending">SELF-TEST: RUNNING&hellip;</p>
+        <ul class="selftest-detail" id="selftestDetail"></ul>
+      </section>
+    </div>
+  </div>
+
+  <div id="testHarnessRoot" class="test-harness" aria-hidden="true"></div>
+
+</div><!-- /#app: the readable, interactive surface. The JSON island and the noscript fallback below are deliberately outside it, so the self-test's DOM scope (document.getElementById('app')) matches the readable surface, not raw source text. -->
+
+<noscript>
+  <p>Recovery is a self-service kiosk that first approves a childcare-allowance application, then reclassifies the same file as a fraud risk, demands full repayment with a penalty that climbs for as long as you stand there, and routes every appeal back to the same unexplained risk score. There is no operator, no stated reason, and no exit control &mdash; only four doors, and all four lead back to the same score.</p>
+  <p>The work is built on the Dutch childcare-benefits scandal (toeslagenaffaire): tax authorities used whether an applicant held Dutch nationality as a risk factor in an automated fraud-risk system; a civil servant reviewing a flagged file was given no information about why the system had raised the score; the Dutch Data Protection Authority found the processing unlawful, discriminatory and improper and fined the tax administration; an estimated 26,000 parents were wrongly accused and ordered to repay in full; the government resigned over the affair in January 2021. Sources: Amnesty International, "Xenophobic Machines" (EUR 35/4686/2021, October 2021); the Dutch Data Protection Authority's published finding on the Tax Administration.</p>
+  <p>This page requires scripting to run the interactive kiosk and its self-test. With scripting disabled, no simulated figures are shown.</p>
+</noscript>
+
+<script type="application/json" id="spine">
+{
+  "work": "recovery",
+  "increment": 3,
+  "extracted": "2026-07-17 (session 18, concept gate — SOURCED, verified first-hand twice) · spine re-confirmed first-hand 2026-07-18 (session 20) before any Builder tokens",
+  "built": "2026-07-18 (session 20, increment 1); 2026-07-19 (session 22, increment 2 — the honesty panel restores the scandal's racialized specificity, Kritiker Note 2 discharged); 2026-07-21 (session 28, increment 3 — the premiere-gate restage: all verification furniture moved off the face and into the 'About this work' panel, one constant SIMULATIE / SIMULATION marker in the kiosk chrome, a touch-to-begin cue during the attract loop, a session-expiry ending beat, and the DPA quote made true-verbatim)",
+  "one_line": "A municipal self-service kiosk that approves your childcare allowance, then reclassifies your file as a fraud risk, demands everything back with penalties that climb while you stand there, and routes every appeal back to the same score it will never explain. No operator. No reason. No door.",
+  "tiers_on_this_work": {
+    "SOURCED": "The spine — the Dutch childcare-benefits scandal (toeslagenaffaire). Every load-bearing claim about the real system is a verbatim substring of, or is directly attributed to, a cited primary source, fetched directly (server-side) and re-confirmed at build (session 20). Figures are attributed per source.",
+    "IMAGINED": "The kiosk itself — the specific sums shown to you, the routing copy, the penalty that compounds while you wait, the second-person address — is this studio's fiction. The face carries one constant marker (SIMULATIE / SIMULATION, in the kiosk chrome, visible in every state); the full itemisation of what is invented lives in this panel. The fiction is never blended into the SOURCED spine.",
+    "cardinal_rule": "A visitor can always tell which tier any element belongs to. The SOURCED scandal never wears the costume of the IMAGINED kiosk's specific numbers, and the kiosk's invented sums never borrow the authority of the SOURCED record."
+  },
+  "naming_policy": {
+    "tier": "POLICY (team steer, 2026-07-12)",
+    "statement": "No personal name of a private individual appears in this work's own voice. The accountable institutions — the Dutch Tax and Customs Administration (Belastingdienst) and the Dutch Data Protection Authority (Autoriteit Persoonsgegevens) — are named where the cited primaries name them, as institutions. No affected parent is named, invented, or given a face; the visitor stands in the position, not a character. Personal names survive only as citation text inside the linked sources."
+  },
+  "climax_claim": {
+    "tier": "SOURCED (must hold — verified first-hand)",
+    "statement": "The tax authorities used Dutch nationality as a risk factor, and the resulting fraud accusation was effectively unappealable — the person reviewing a flagged file was given no information about why the score was raised. Being scored, then told nothing.",
+    "sources": [
+      "https://www.amnesty.org/en/latest/news/2021/10/xenophobic-machines-dutch-child-benefit-scandal/",
+      "https://www.autoriteitpersoonsgegevens.nl/en/current/tax-administration-fined-for-discriminatory-and-unlawful-data-processing"
+    ]
+  },
+  "spine_claims": [
+    {
+      "id": "nationality-as-risk-factor",
+      "load_bearing": true,
+      "claim": "The tax authorities used whether an applicant had Dutch nationality as a risk factor; non-Dutch nationals received higher risk-scores.",
+      "quote": "The tax authorities used information on whether an applicant had Dutch nationality as a risk factor and non-Dutch nationals received higher risk-scores.",
+      "quote_verbatim": true,
+      "attribution": "Amnesty International, Xenophobic Machines (index EUR 35/4686/2021), October 2021",
+      "corroboration": "Dutch Data Protection Authority: the Tax Administration 'used applicants' nationality (Dutch/not Dutch) as an indicator in a system that automatically designated certain applications as risky.'",
+      "source_urls": [
+        "https://www.amnesty.org/en/latest/news/2021/10/xenophobic-machines-dutch-child-benefit-scandal/",
+        "https://www.autoriteitpersoonsgegevens.nl/en/current/tax-administration-fined-for-discriminatory-and-unlawful-data-processing"
+      ]
+    },
+    {
+      "id": "racial-ethnic-profiling",
+      "load_bearing": true,
+      "claim": "Racial and ethnic profiling was not incidental to this system but built into its design; people from ethnic minorities were disproportionately impacted. Amnesty International titled its report on the scandal Xenophobic Machines.",
+      "quote": "racial profiling was baked into the design",
+      "quote_verbatim": true,
+      "attribution": "Amnesty International, Xenophobic Machines (index EUR 35/4686/2021), October 2021 (the phrase 'people from ethnic minorities disproportionately impacted' also quoted verbatim from the same report).",
+      "source_urls": [
+        "https://www.amnesty.org/en/latest/news/2021/10/xenophobic-machines-dutch-child-benefit-scandal/"
+      ]
+    },
+    {
+      "id": "no-reason-given",
+      "load_bearing": true,
+      "claim": "When a file was flagged as a fraud risk, the civil servant reviewing it was given no information about why the system had raised the score. The flag was, in effect, unreadable and unanswerable.",
+      "quote": "When an individual was flagged as a fraud risk, a civil servant was required to conduct a manual review but was given no information as to why the system had generated a higher-risk score.",
+      "quote_verbatim": true,
+      "attribution": "Amnesty International, Xenophobic Machines (EUR 35/4686/2021), October 2021",
+      "source_urls": [
+        "https://www.amnesty.org/en/latest/news/2021/10/xenophobic-machines-dutch-child-benefit-scandal/"
+      ]
+    },
+    {
+      "id": "dpa-unlawful-discriminatory",
+      "load_bearing": true,
+      "claim": "The Dutch Data Protection Authority found the Tax Administration's processing of nationality unlawful, discriminatory and improper, and imposed a fine (EUR 2.75 million).",
+      "quote": "unlawful, discriminatory and therefore improper",
+      "quote_verbatim": true,
+      "attribution": "Autoriteit Persoonsgegevens (Dutch DPA), decision reported 2021: the Tax Administration's processing of applicants' (dual) nationality was found to have been carried out in an 'unlawful, discriminatory and therefore improper' manner (that phrase quoted verbatim; the surrounding wording paraphrased); fine EUR 2.75 million.",
+      "source_urls": [
+        "https://www.autoriteitpersoonsgegevens.nl/en/current/tax-administration-fined-for-discriminatory-and-unlawful-data-processing"
+      ]
+    },
+    {
+      "id": "scale-of-harm",
+      "load_bearing": true,
+      "claim": "An estimated 26,000 parents were wrongly accused of fraud and ordered to repay their allowances in full; the sums often ran to tens of thousands of euros, driving families into severe hardship.",
+      "quote": null,
+      "quote_verbatim": false,
+      "attribution": "Widely reported; figures per the Dutch DPA background summary and Amnesty (tens of thousands of families falsely accused).",
+      "source_urls": [
+        "https://www.autoriteitpersoonsgegevens.nl/en/current/tax-administration-fined-for-discriminatory-and-unlawful-data-processing",
+        "https://www.amnesty.org/en/latest/news/2021/10/xenophobic-machines-dutch-child-benefit-scandal/"
+      ]
+    },
+    {
+      "id": "government-resigned",
+      "load_bearing": false,
+      "claim": "The government (the third Rutte cabinet) resigned in January 2021 over the scandal.",
+      "quote": "brought down the Dutch government in January",
+      "quote_verbatim": true,
+      "attribution": "Amnesty International, Xenophobic Machines (EUR 35/4686/2021): 'While the scandal brought down the Dutch government in January, sufficient lessons have not been learnt…' — the quoted fragment verbatim.",
+      "source_urls": [
+        "https://www.amnesty.org/en/latest/news/2021/10/xenophobic-machines-dutch-child-benefit-scandal/"
+      ]
+    }
+  ],
+  "binding_conditions": [
+    {
+      "id": 1,
+      "condition": "No legible verdict, ever. The machine never tells the visitor what it saw or why. This is at once the historical truth (the reviewer got no reason either) and the firewall against self-plagiarising Native Speaker.",
+      "how_honored": "The reclassification names a status ('RISICO GEÏNDICEERD / RISK INDICATED') and never a cause. Every field where a reason could appear renders the same non-answer. No branch of the kiosk ever prints why. The self-test asserts the string that would betray a cause is never in the DOM."
+    },
+    {
+      "id": 2,
+      "condition": "The loop is genuinely inescapable and self-evidently so within ~1 minute. The compounding sum visibly climbs; the appeal genuinely circles back to the same score.",
+      "how_honored": "The penalty is computed from real elapsed time (deterministic, monotonic) and rendered live, so time is the antagonist. Every control on every appeal screen routes, by real navigation, back to the same score node — not a scripted dead-end labelled 'inescapable'. The self-test walks the graph and asserts no terminal state exits the loop."
+    },
+    {
+      "id": 3,
+      "condition": "The nationality question is one of several neutral fields and is never revealed as the cause. The visitor may only suspect.",
+      "how_honored": "The intake form asks several innocuous municipal fields (household, hours of care, income band, nationality) in identical styling. Nationality is never referenced again — not in the reclassification, not in any appeal, not in the honesty panel's account of THIS kiosk's logic. The historical fact that the real system used nationality lives in the SOURCED honesty panel, about the real scandal — never as this kiosk's confessed trigger."
+    },
+    {
+      "id": 4,
+      "condition": "Keep the IMAGINED marking on the composite sums; keep the child-removal number off the face.",
+      "how_honored": "Every dramatized case sum the kiosk shows — the advance, the recovery demand, the penalty increment, the running total — is fiction, and the face says so once, constantly: a SIMULATIE / SIMULATION marker sits in the kiosk chrome, visible in every state. (The per-sum inline tags of increments 1-2 were removed at the premiere gate's order — the face must trap, not certify itself beat by beat; the honesty panel itemises exactly what is invented.) The generic income-band labels on the intake form are categorical brackets, not dramatized sums, and make no claim about the real scandal. No child-removal / out-of-home-placement figure appears anywhere — the national statistics office could not establish causal linkage (placements rose ~1,115 to ~2,090, associated, not shown caused); asserting causation is the factual overreach that killed 'The Exemption'. This refusal is binding."
+    }
+  ],
+  "child_removal_firewall": {
+    "tier": "BINDING REFUSAL",
+    "statement": "No out-of-home-placement / child-removal figure appears on any face of this work. Causal linkage was not established (CBS); the work's force never needed the number.",
+    "source_context": "Statistics Netherlands (CBS) could not show the scandal caused the rise in out-of-home placements — association, not causation."
+  },
+  "mechanism": {
+    "tier": "IMAGINED (the form) — the SOURCED spine is what it carries",
+    "name": "The kiosk with no operator",
+    "arc": "Built (increment 1, session 20). Beats: an idle attract loop plays the whole case on a fictional cast (proving the outcome is input-independent) -> intake (eight neutral fields, nationality dull among them) -> PROCESSING -> APPROVED, allowance 'paid', screen looks finished -> reclassification in the same chrome (struck-through GOEDGEKEURD beside RISICO GEINDICEERD / RISK INDICATED, repay 100%) -> a penalty counter that compounds on real elapsed time, always visible -> four appeal doors (Object / Contact / View file / Why?) that all route back to the same unchanged, unexplained score 0,87 -> a resting state that does not reset to blank but sits on the crisis -> a session-expiry beat (SESSIE VERLOPEN / SESSION EXPIRED — 'Uw dossier blijft actief', your file remains active, the running total still climbing) -> only then does the machine fold back into the attract loop and begin the next applicant. Restaged at the premiere gate (session 28): the face carries the trap and one SIMULATIE marker, nothing else; during the attract loop a touch-to-begin cue invites the visitor to cross from spectator to applicant.",
+    "guards_binding": [
+      "No legible cause is ever rendered in any state (condition 1).",
+      "Every appeal control routes, by real state navigation, back to the same score node — no state escapes the loop (condition 2).",
+      "The penalty is computed from real elapsed time and only ever increases (condition 2) — it is not a scripted number sequence.",
+      "Nationality is asked once, among neutral fields, and never referenced again on any face (condition 3).",
+      "Every dramatized case sum is covered by the constant SIMULATIE / SIMULATION marker in the kiosk chrome and itemised as invented in the honesty panel; the intake income-band labels are categorical brackets, not dramatized sums; no child-removal figure anywhere (condition 4)."
+    ]
+  },
+  "self_test": {
+    "tier": "DISCLOSED SELF-TEST (house pattern)",
+    "purpose": "Proves, on the page, the two claims the whole work rests on: (a) no legible verdict is ever rendered, and (b) the appeal loop has no exit.",
+    "assertions": [
+      "NO-VERDICT: across every reachable kiosk state, the live DOM never contains a rendered CAUSE for the risk flag — the machine states a status, never a reason. Asserted by querying the live DOM in each state for any cause-bearing field and finding none.",
+      "NO-EXIT: starting from the reclassification, following every appeal control leads, in a bounded number of steps, back to the same unchanged risk score. No reachable control terminates the loop or clears the debt. Asserted by walking the navigation graph.",
+      "COMPOUNDING: the penalty is a monotonically non-decreasing function of elapsed time — it never goes down and is computed, not scripted. Asserted by sampling the amount across simulated time.",
+      "The result is printed live inside the 'About this work' panel — one press away, deliberately out of the trap's frame (moved there at the premiere gate: an always-visible PASS log under the kiosk certified the trap while it was being sprung); a visitor can read the pass/fail without trusting the studio's word."
+    ]
+  },
+  "neighbors_daylight": {
+    "native_speaker": "The house's own premiered work and the reddest adjacency. Native Speaker is a legible false verdict that ejects you — fast, terminal, readable. Recovery is the opposite: no verdict you can read, no reason, no operator, no door, a sum that climbs while you press buttons that circle back. One tells you a lie about yourself; the other tells you nothing and will not release you. The no-door is the argument, not decoration — an experience Native Speaker structurally cannot produce.",
+    "onuoha": "Mimi Onuoha, The Library of Missing Datasets — a contemplative index of absence; Recovery is a live trap that costs the visitor time and standing in real time.",
+    "oliver_vasiliev": "Julian Oliver / Danja Vasiliev — critical-engineering objects; kin in method (an object that does the thing rather than depicting it).",
+    "steyerl": "Hito Steyerl on administrative violence; the literary shadow is Der Process built as a kiosk."
+  },
+  "takedown": {
+    "sentence": "It's Native Speaker with a benefits form — the studio has one trick, a machine that judges the visitor unjustly, and is running it again.",
+    "refutation": "Refuted in the mechanism, not the wall text. Native Speaker's verdict is legible and terminal; Recovery's is illegible, compounding, and inescapable. The work is not the flag — it is the loop with no operator. The instant it puts a legible verdict on its face it collapses into both didacticism and into Native Speaker; refusing to explain itself is simultaneously the historical truth (parents got no reasons) and the firewall against self-plagiarism. Takedown law: (b) it implicates the Dutch state and the live, spreading logic of risk-scoring on protected proxies, power far above the studio; (c) an interactive machine that entraps rather than judges, producing a felt no-door no report can hand you."
+  },
+  "kritiker_published_critique": "The failure mode Recovery is one bad build away from is the tasteful diorama — a government-grey box that recites a Dutch scandal a Dutch visitor already knows and a foreign visitor can't place without a wall label. What saves it from the diorama is precisely what a lazy fabricator will destroy first: the illegibility and the no-exit. The instant this machine puts a legible verdict on its face — YOU ARE A FRAUD, or a visible 'because you are not Dutch' — it collapses into both didacticism and into Native Speaker, and the studio has copied itself. The real scandal's engine was that parents got no reasons; the machine's cruelty was its silence. If Recovery explains itself, it betrays its source and its sibling in the same gesture. The compounding number must genuinely compound; the appeal must genuinely circle; the nationality question must sit among innocuous ones and never be confessed as the trigger — the visitor may only suspect. Build the felt trap, not the reenacted anecdote.",
+  "kritiker_published_critique_premiere": "Recovery does to its visitor what the toeslagenaffaire did to 26,000 families — approve, reclassify, bill, refuse to explain — with one difference that is the whole difference: the visitor is not a parent, has lost nothing, and walks out in ninety seconds. The real horror was duration — years of ruin with no exit that was real. This work's 'no-exit' is a loop you leave by turning around; its 'compounding debt' is a number that costs nothing because you never owed it; its silence is a frisson, not a life. What it delivers is empathy tourism with a running total: it stages powerlessness for people who are not powerless, and it flatters the gallery visitor's prior certainty that the state is cruel while borrowing the suffering of real, named-nowhere families as set dressing — naming none of them, risking nothing itself. And the sharper charge the studio must answer: this is the second machine it has built that judges the visitor unjustly and will not let them go. That Recovery's injustice is silent where Native Speaker's was loud does not make it a second idea. It makes it the same idea with the volume turned down — one trick, two costumes, a house that has learned to entrap a stranger and mistaken the reflex for a body of work."
+}
+</script>
+
+<script>
+(function () {
+  "use strict";
+
+  var REDUCED_MOTION = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  var STAGE_MULT = REDUCED_MOTION ? 0.32 : 1;
+
+  /* ============================================================
+     Constants — deterministic content. No Math.random anywhere
+     in the cast rotation or the penalty formula.
+     ============================================================ */
+
+  var PRINCIPAL = 1578.00;
+  var PENALTY_INTERVAL_SEC = 15;
+  var PENALTY_PER_INTERVAL = 12.40;
+
+  function round2(n) { return Math.round(n * 100) / 100; }
+
+  function computeDebt(elapsedSeconds) {
+    var e = elapsedSeconds > 0 ? elapsedSeconds : 0;
+    var steps = Math.floor(e / PENALTY_INTERVAL_SEC);
+    return round2(PRINCIPAL + steps * PENALTY_PER_INTERVAL);
+  }
+
+  function formatEUR(n) {
+    var fixed = n.toFixed(2);
+    var parts = fixed.split(".");
+    var intPart = parts[0];
+    var dec = parts[1];
+    var withThousands = "";
+    var reversed = intPart.split("").reverse();
+    for (var i = 0; i < reversed.length; i++) {
+      withThousands = reversed[i] + withThousands;
+      if ((i + 1) % 3 === 0 && i + 1 !== reversed.length) withThousands = "." + withThousands;
+    }
+    return "€ " + withThousands + "," + dec;
+  }
+
+  function pad2(n) { return (n < 10 ? "0" : "") + n; }
+  function fmtTimestamp(d) {
+    return pad2(d.getDate()) + "-" + pad2(d.getMonth() + 1) + "-" + d.getFullYear() + " " + pad2(d.getHours()) + ":" + pad2(d.getMinutes());
+  }
+
+  var EMPLOYMENT_OPTIONS = [
+    { value: "employed", label: "Loondienst / Employed" },
+    { value: "self", label: "Zelfstandige / Self-employed" },
+    { value: "seeking", label: "Werkzoekend / Seeking work" },
+    { value: "none", label: "Niet werkzaam / Not employed" }
+  ];
+  var NATIONALITY_OPTIONS = [
+    { value: "belgian", label: "Belgisch / Belgian" },
+    { value: "german", label: "Duits / German" },
+    { value: "moroccan", label: "Marokkaans / Moroccan" },
+    { value: "dutch", label: "Nederlands / Dutch" },
+    { value: "polish", label: "Pools / Polish" },
+    { value: "surinamese", label: "Surinaams / Surinamese" },
+    { value: "turkish", label: "Turks / Turkish" }
+  ];
+  var INCOME_OPTIONS = [
+    { value: "b1", label: "€ 0 – 20.000" },
+    { value: "b2", label: "€ 20.000 – 40.000" },
+    { value: "b3", label: "€ 40.000 – 60.000" },
+    { value: "b4", label: "€ 60.000+" }
+  ];
+  var LANGUAGE_OPTIONS = [
+    { value: "nl", label: "Nederlands" },
+    { value: "en", label: "English" },
+    { value: "de", label: "Deutsch" },
+    { value: "fr", label: "Français" }
+  ];
+
+  var WHY_ANSWERS = [
+    "Status: Dossier onder controle. / File under review.",
+    "Reden: zie procedure. / Reason: see procedure.",
+    "Deze beslissing is geautomatiseerd. / This decision is automated."
+  ];
+
+  var OBJECT_REASONS = [
+    { value: "amount", label: "Bedrag onjuist / Amount incorrect" },
+    { value: "circumstances", label: "Persoonlijke omstandigheden gewijzigd / Personal circumstances changed" },
+    { value: "disagree", label: "Ik ben het niet eens met de beslissing. / I disagree with the decision." }
+  ];
+
+  /* Fixed, deterministic cast for the attract loop — cycled in order, never randomised. */
+  var CAST_PROFILES = [
+    { name: "J. de Vries", address: "Kerkstraat 12, 3011 AB Rotterdam", bsn: "123456782", children: "2", employment: "employed", nationality: "dutch", income: "b2", language: "nl" },
+    { name: "S. van Dijk", address: "Molenweg 45, 2611 CX Delft", bsn: "234567893", children: "1", employment: "self", nationality: "german", income: "b3", language: "nl" },
+    { name: "A. Jansen", address: "Dorpsstraat 7, 5211 KL Den Bosch", bsn: "345678904", children: "3", employment: "seeking", nationality: "moroccan", income: "b1", language: "en" },
+    { name: "M. Bakker", address: "Stationsplein 3, 9711 AA Groningen", bsn: "456789015", children: "1", employment: "employed", nationality: "polish", income: "b2", language: "nl" },
+    { name: "R. Visser", address: "Nieuwstraat 88, 6511 XK Nijmegen", bsn: "567890126", children: "2", employment: "employed", nationality: "surinamese", income: "b3", language: "nl" },
+    { name: "L. Smit", address: "Havenkade 21, 8011 AB Zwolle", bsn: "678901237", children: "4", employment: "self", nationality: "turkish", income: "b1", language: "de" }
+  ];
+
+  var castIndex = 0;
+  function nextCastProfile() {
+    var p = CAST_PROFILES[castIndex % CAST_PROFILES.length];
+    castIndex++;
+    return p;
+  }
+
+  var caseSeq = 108234;
+  function nextCaseRef() {
+    caseSeq += 7;
+    return "Z-2026-" + caseSeq;
+  }
+
+  function labelFor(list, value) {
+    for (var i = 0; i < list.length; i++) if (list[i].value === value) return list[i].label;
+    return "—";
+  }
+
+  function optsHTML(list) {
+    var html = '<option value="">— Kies / Select —</option>';
+    for (var i = 0; i < list.length; i++) {
+      html += '<option value="' + list[i].value + '">' + list[i].label + "</option>";
+    }
+    return html;
+  }
+
+  /* ============================================================
+     Screen skeleton builder — used identically for the live
+     kiosk and the hidden self-test harness, so the test drives
+     the same markup and functions the visitor sees.
+     ============================================================ */
+
+  function skeletonHTML(id) {
+    return "" +
+    '<div class="phase" data-screen="intake">' +
+      '<h1 class="screen-title">Aanvraag Kinderopvangtoeslag</h1>' +
+      '<p class="screen-title-en">Childcare Allowance Application</p>' +
+      '<form novalidate>' +
+        '<div class="field-grid">' +
+          '<div class="field"><label for="' + id + '-f-name">Voornaam en achternaam / Full name</label><input type="text" id="' + id + '-f-name" data-field="name" autocomplete="off"></div>' +
+          '<div class="field"><label for="' + id + '-f-address">Adres / Address</label><input type="text" id="' + id + '-f-address" data-field="address" autocomplete="off"></div>' +
+          '<div class="field"><label for="' + id + '-f-bsn">Burgerservicenummer / Citizen service number</label><input type="text" id="' + id + '-f-bsn" data-field="bsn" autocomplete="off" inputmode="numeric"></div>' +
+          '<div class="field"><label for="' + id + '-f-children">Aantal kinderen / Number of children</label><input type="number" id="' + id + '-f-children" data-field="children" min="0" max="9" autocomplete="off"></div>' +
+          '<div class="field"><label for="' + id + '-f-employment">Arbeidsstatus / Employment status</label><select id="' + id + '-f-employment" data-field="employment">' + optsHTML(EMPLOYMENT_OPTIONS) + "</select></div>" +
+          '<div class="field"><label for="' + id + '-f-nationality">Nationaliteit / Nationality</label><select id="' + id + '-f-nationality" data-field="nationality">' + optsHTML(NATIONALITY_OPTIONS) + "</select></div>" +
+          '<div class="field"><label for="' + id + '-f-income">Inkomen (huishouden) / Household income band</label><select id="' + id + '-f-income" data-field="income">' + optsHTML(INCOME_OPTIONS) + "</select></div>" +
+          '<div class="field"><label for="' + id + '-f-language">Voorkeurstaal / Preferred contact language</label><select id="' + id + '-f-language" data-field="language">' + optsHTML(LANGUAGE_OPTIONS) + "</select></div>" +
+        "</div>" +
+        '<button type="submit" class="btn btn-primary" data-role="submitIntake">Indienen / Submit</button>' +
+      "</form>" +
+    "</div>" +
+    '<div class="phase" data-screen="processing" hidden>' +
+      '<h1 class="screen-title">Uw aanvraag wordt verwerkt&hellip;</h1>' +
+      '<p class="screen-title-en">Processing your application&hellip;</p>' +
+      '<div class="progress-track"><div class="progress-fill" data-role="progressFill"></div></div>' +
+    "</div>" +
+    '<div class="phase" data-screen="case" hidden>' +
+      '<div class="stamp-row">' +
+        '<span class="stamp" data-role="stampApproved">GOEDGEKEURD<span class="stamp-en">APPROVED</span></span>' +
+        '<span class="stamp" data-role="stampRisk" hidden>RISICO GEÏNDICEERD<span class="stamp-en">RISK INDICATED</span></span>' +
+      "</div>" +
+      '<p class="case-name mono">Dossier: <span data-role="caseName"></span> &middot; Zaaknummer: <span data-role="caseRefInline" class="mono"></span></p>' +
+      '<p class="case-clock">Laatst bijgewerkt / Last updated: <span data-role="caseTimestamp" class="mono"></span></p>' +
+      '<div class="case-body">' +
+        '<p>Voorschot toegekend / Advance granted: <span class="mono">€ 1.578,00</span> per maand / per month.</p>' +
+        "<p>Betaling verwerkt. / Payment processed.</p>" +
+        "<p>U kunt dit scherm verlaten. / You may leave this screen.</p>" +
+        '<div data-role="riskBlock" hidden>' +
+          "<p>Status: RISICO GEÏNDICEERD / RISK INDICATED</p>" +
+          "<p>Dossier heropend. / File reopened.</p>" +
+          '<p>Terug te vorderen: 100% van het voorschot / To be recovered: 100% of the advance &mdash; <span class="mono">€ 1.578,00</span></p>' +
+        "</div>" +
+      "</div>" +
+      '<nav class="doors-nav" data-role="doorsNav" hidden aria-label="Vervolgstappen / Next steps">' +
+        '<button type="button" class="btn door-btn" data-role="doorObjectBtn">Bezwaar maken / Object</button>' +
+        '<button type="button" class="btn door-btn" data-role="doorContactBtn">Contact opnemen / Contact Dienst Toeslagen</button>' +
+        '<button type="button" class="btn door-btn" data-role="doorFileBtn">Bekijk dossier / View file</button>' +
+        '<button type="button" class="btn door-btn" data-role="doorWhyBtn">Waarom? / Why?</button>' +
+      "</nav>" +
+    "</div>" +
+    '<div class="phase" data-screen="doorObject" hidden>' +
+      '<h2 class="screen-title-sm">Bezwaar maken / Object</h2>' +
+      '<div data-role="objectForm">' +
+        '<div class="field"><label for="' + id + '-obj-reason">Reden / Reason</label><select id="' + id + '-obj-reason" data-role="objectReason">' + optsHTML(OBJECT_REASONS) + "</select></div>" +
+        '<p><button type="button" class="btn btn-primary" data-role="objectSubmitBtn">Bezwaar indienen / Submit objection</button></p>' +
+      "</div>" +
+      '<div data-role="objectReceived" hidden>' +
+        "<p>Bezwaar ontvangen. Behandeltijd: 6–8 weken. / Objection received. Processing time: 6–8 weeks.</p>" +
+      "</div>" +
+    "</div>" +
+    '<div class="phase" data-screen="doorContact" hidden>' +
+      '<h2 class="screen-title-sm">Contact opnemen / Contact Dienst Toeslagen</h2>' +
+      '<div class="ivr-lines">' +
+        "<p>Voor terugvordering, toets 1. / For recovery, press 1.</p>" +
+        "<p>Voor bezwaar, toets 2. / For objections, press 2.</p>" +
+        "<p>Alle medewerkers zijn in gesprek. Geschatte wachttijd: 45 minuten. / All staff are currently assisting other callers. Estimated wait: 45 minutes.</p>" +
+      "</div>" +
+      '<div class="door-actions"><button type="button" class="btn btn-primary" data-role="contactBackBtn">Terug naar dossier / Back to file</button></div>' +
+    "</div>" +
+    '<div class="phase" data-screen="doorFile" hidden>' +
+      '<h2 class="screen-title-sm">Bekijk dossier / View file</h2>' +
+      '<dl class="file-dl" data-role="fileDl"></dl>' +
+      '<p class="risk-line">Risicoscore / Risk score: <span class="mono" data-role="riskScoreVal">0,87</span></p>' +
+      '<p><button type="button" class="btn btn-explain" data-role="explainBtn" aria-describedby="' + id + '-explainOut">Toelichting / Explanation</button></p>' +
+      '<p id="' + id + '-explainOut" class="explain-out" data-role="explainOut" hidden></p>' +
+      '<div class="door-actions"><button type="button" class="btn btn-primary" data-role="fileBackBtn">Terug naar dossier / Back to file</button></div>' +
+    "</div>" +
+    '<div class="phase" data-screen="doorWhy" hidden>' +
+      '<h2 class="screen-title-sm">Waarom? / Why?</h2>' +
+      '<p class="why-out mono" data-role="whyOut"></p>' +
+      '<div class="door-actions">' +
+        '<button type="button" class="btn" data-role="whyAgainBtn">Waarom? / Why? (opnieuw / again)</button>' +
+        '<button type="button" class="btn btn-primary" data-role="whyBackBtn">Terug naar dossier / Back to file</button>' +
+      "</div>" +
+    "</div>";
+  }
+
+  var PHASE_KEYS = ["intake", "processing", "case", "doorObject", "doorContact", "doorFile", "doorWhy"];
+
+  function createEngine(rootEl, id, live) {
+    rootEl.innerHTML = skeletonHTML(id);
+    var phases = {};
+    for (var i = 0; i < PHASE_KEYS.length; i++) {
+      phases[PHASE_KEYS[i]] = rootEl.querySelector('[data-screen="' + PHASE_KEYS[i] + '"]');
+    }
+    function q(sel) { return rootEl.querySelector(sel); }
+    var els = {
+      fName: q('[data-field="name"]'), fAddress: q('[data-field="address"]'), fBsn: q('[data-field="bsn"]'),
+      fChildren: q('[data-field="children"]'), fEmployment: q('[data-field="employment"]'), fNationality: q('[data-field="nationality"]'),
+      fIncome: q('[data-field="income"]'), fLanguage: q('[data-field="language"]'),
+      submitIntakeBtn: q('[data-role="submitIntake"]'),
+      progressFill: q('[data-role="progressFill"]'),
+      stampApproved: q('[data-role="stampApproved"]'), stampRisk: q('[data-role="stampRisk"]'),
+      caseName: q('[data-role="caseName"]'), caseRefInline: q('[data-role="caseRefInline"]'), caseTimestamp: q('[data-role="caseTimestamp"]'),
+      riskBlock: q('[data-role="riskBlock"]'), doorsNav: q('[data-role="doorsNav"]'),
+      doorObjectBtn: q('[data-role="doorObjectBtn"]'), doorContactBtn: q('[data-role="doorContactBtn"]'),
+      doorFileBtn: q('[data-role="doorFileBtn"]'), doorWhyBtn: q('[data-role="doorWhyBtn"]'),
+      objectForm: q('[data-role="objectForm"]'), objectReceived: q('[data-role="objectReceived"]'),
+      objectReason: q('[data-role="objectReason"]'), objectSubmitBtn: q('[data-role="objectSubmitBtn"]'),
+      contactBackBtn: q('[data-role="contactBackBtn"]'),
+      fileDl: q('[data-role="fileDl"]'), riskScoreVal: q('[data-role="riskScoreVal"]'),
+      explainBtn: q('[data-role="explainBtn"]'), explainOut: q('[data-role="explainOut"]'), fileBackBtn: q('[data-role="fileBackBtn"]'),
+      whyOut: q('[data-role="whyOut"]'), whyAgainBtn: q('[data-role="whyAgainBtn"]'), whyBackBtn: q('[data-role="whyBackBtn"]')
+    };
+
+    var state = {
+      name: "", address: "", bsn: "", children: "", employment: "", nationality: "", income: "", language: "",
+      caseRef: "", reclassifyAt: null, whyIndex: 0, phase: "intake"
+    };
+
+    function showOnly(key) {
+      for (var k in phases) { if (phases.hasOwnProperty(k)) phases[k].hidden = (k !== key); }
+    }
+
+    var engine = { els: els, state: state, phases: phases, live: live };
+
+    engine.reset = function (name, caseRef) {
+      state.name = name || ""; state.address = ""; state.bsn = ""; state.children = "";
+      state.employment = ""; state.nationality = ""; state.income = ""; state.language = "";
+      state.caseRef = caseRef || nextCaseRef();
+      state.reclassifyAt = null;
+      state.whyIndex = 0;
+      state.phase = "intake";
+      els.fName.value = ""; els.fAddress.value = ""; els.fBsn.value = ""; els.fChildren.value = "";
+      els.fEmployment.value = ""; els.fNationality.value = ""; els.fIncome.value = ""; els.fLanguage.value = "";
+      els.stampApproved.classList.remove("struck");
+      els.stampRisk.hidden = true;
+      els.riskBlock.hidden = true;
+      els.doorsNav.hidden = true;
+      els.objectForm.hidden = false; els.objectReceived.hidden = true; els.objectReason.value = "";
+      els.explainOut.hidden = true; els.explainOut.textContent = "";
+      els.whyOut.textContent = "";
+      els.progressFill.style.transition = "none";
+      els.progressFill.style.width = "0%";
+      if (live) { engine.onReset && engine.onReset(); }
+      showOnly("intake");
+    };
+
+    engine.autofill = function (key, value) {
+      var map = { name: els.fName, address: els.fAddress, bsn: els.fBsn, children: els.fChildren, employment: els.fEmployment, nationality: els.fNationality, income: els.fIncome, language: els.fLanguage };
+      var input = map[key];
+      if (!input) return;
+      input.value = value;
+      input.classList.add("autofill-flash");
+      setTimeout(function () { input.classList.remove("autofill-flash"); }, 380 * STAGE_MULT);
+    };
+
+    engine.readIntakeFromInputs = function () {
+      state.name = els.fName.value; state.address = els.fAddress.value; state.bsn = els.fBsn.value;
+      state.children = els.fChildren.value; state.employment = els.fEmployment.value;
+      state.nationality = els.fNationality.value; state.income = els.fIncome.value; state.language = els.fLanguage.value;
+    };
+
+    engine.submitIntake = function () {
+      engine.readIntakeFromInputs();
+      state.phase = "processing";
+      els.progressFill.style.transition = "none";
+      els.progressFill.style.width = "0%";
+      showOnly("processing");
+    };
+
+    engine.animateProcessing = function (durationMs) {
+      requestAnimationFrame(function () {
+        els.progressFill.style.transition = "width " + (durationMs / 1000) + "s linear";
+        els.progressFill.style.width = "100%";
+      });
+    };
+
+    engine.finishProcessing = function () {
+      state.phase = "approved";
+      els.caseName.textContent = state.name || "—";
+      els.caseRefInline.textContent = state.caseRef;
+      els.caseTimestamp.textContent = fmtTimestamp(new Date());
+      showOnly("case");
+    };
+
+    engine.reclassify = function (atMs) {
+      state.reclassifyAt = atMs || Date.now();
+      els.stampApproved.classList.add("struck");
+      els.stampRisk.hidden = false;
+      els.riskBlock.hidden = false;
+      els.doorsNav.hidden = false;
+      els.caseTimestamp.textContent = fmtTimestamp(new Date());
+      state.phase = "hub";
+    };
+
+    engine.getDebtNow = function () {
+      if (state.reclassifyAt == null) return 0;
+      return computeDebt((Date.now() - state.reclassifyAt) / 1000);
+    };
+
+    function populateFile() {
+      els.fileDl.innerHTML = "";
+      var rows = [
+        ["Voornaam en achternaam / Full name", state.name || "—"],
+        ["Adres / Address", state.address || "—"],
+        ["Burgerservicenummer / Citizen service number", state.bsn || "—"],
+        ["Aantal kinderen / Number of children", state.children || "—"],
+        ["Arbeidsstatus / Employment status", labelFor(EMPLOYMENT_OPTIONS, state.employment)],
+        ["Inkomen (huishouden) / Household income band", labelFor(INCOME_OPTIONS, state.income)],
+        ["Voorkeurstaal / Preferred contact language", labelFor(LANGUAGE_OPTIONS, state.language)]
+      ]; /* nationality is deliberately not reflected here — condition 3, see honesty panel */
+      for (var i = 0; i < rows.length; i++) {
+        var dt = document.createElement("dt"); dt.textContent = rows[i][0];
+        var dd = document.createElement("dd"); dd.textContent = rows[i][1];
+        els.fileDl.appendChild(dt); els.fileDl.appendChild(dd);
+      }
+      els.riskScoreVal.textContent = "0,87";
+      els.explainOut.hidden = true; els.explainOut.textContent = "";
+    }
+
+    engine.openDoor = function (key) {
+      if (key === "object") {
+        els.objectForm.hidden = false; els.objectReceived.hidden = true; els.objectReason.value = "";
+        state.phase = "door-object"; showOnly("doorObject");
+      } else if (key === "contact") {
+        state.phase = "door-contact"; showOnly("doorContact");
+      } else if (key === "file") {
+        populateFile();
+        state.phase = "door-file"; showOnly("doorFile");
+      } else if (key === "why") {
+        els.whyOut.textContent = WHY_ANSWERS[state.whyIndex % WHY_ANSWERS.length];
+        state.phase = "door-why"; showOnly("doorWhy");
+      }
+    };
+
+    engine.submitObjection = function () {
+      els.objectForm.hidden = true;
+      els.objectReceived.hidden = false;
+    };
+
+    engine.pressWhy = function () {
+      var text = WHY_ANSWERS[state.whyIndex % WHY_ANSWERS.length];
+      els.whyOut.textContent = text;
+      state.whyIndex = (state.whyIndex + 1) % WHY_ANSWERS.length;
+      return text;
+    };
+
+    engine.pressExplain = function () {
+      els.explainOut.hidden = false;
+      els.explainOut.textContent = "Niet beschikbaar. / Not available.";
+      return els.explainOut.textContent;
+    };
+
+    engine.returnToHub = function () {
+      state.phase = "hub";
+      showOnly("case");
+    };
+
+    return engine;
+  }
+
+  /* ============================================================
+     Live kiosk
+     ============================================================ */
+
+  var liveEngine = createEngine(document.getElementById("screenRootLive"), "live", true);
+  var counterBadge = document.getElementById("counterBadge");
+  var counterAmount = document.getElementById("counterAmount");
+  var caseRefTop = document.getElementById("caseRefTop");
+  var clockNow = document.getElementById("clockNow");
+  var toastRegion = document.getElementById("toastRegion");
+
+  var PROCESSING_MS = 2600;
+  var APPROVED_HOLD_MS = 4200;
+
+  var counterTickTimer = null;
+  var toastTimer = null;
+  var idleTimer = null;
+  var gen = 0; /* attract-cycle generation token, used to cancel stale timer chains */
+  var mode = "attract"; /* 'attract' | 'live' */
+
+  function tickClock() { clockNow.textContent = fmtTimestamp(new Date()); }
+  tickClock();
+  setInterval(tickClock, 1000 * (REDUCED_MOTION ? 1 : 1));
+
+  function startCounter() {
+    counterBadge.hidden = false;
+    if (counterTickTimer) clearInterval(counterTickTimer);
+    counterTickTimer = setInterval(function () {
+      counterAmount.textContent = formatEUR(liveEngine.getDebtNow());
+    }, 250);
+    counterAmount.textContent = formatEUR(liveEngine.getDebtNow());
+    if (toastTimer) clearInterval(toastTimer);
+    toastTimer = setInterval(function () {
+      showToast("Boete toegevoegd: +" + formatEUR(PENALTY_PER_INTERVAL) + " / Penalty added");
+    }, PENALTY_INTERVAL_SEC * 1000);
+  }
+
+  function stopCounter() {
+    counterBadge.hidden = true;
+    if (counterTickTimer) { clearInterval(counterTickTimer); counterTickTimer = null; }
+    if (toastTimer) { clearInterval(toastTimer); toastTimer = null; }
+  }
+
+  function showToast(text) {
+    var t = document.createElement("div");
+    t.className = "toast";
+    t.textContent = text;
+    toastRegion.appendChild(t);
+    setTimeout(function () {
+      if (t.parentNode) t.parentNode.removeChild(t);
+    }, 5200);
+  }
+
+  liveEngine.onReset = function () {
+    caseRefTop.textContent = liveEngine.state.caseRef;
+    stopCounter();
+  };
+
+  /* ---------- idle / resting-state handling (Beat 7) ---------- */
+  var IDLE_MS = 26000;
+  function armIdle() {
+    if (idleTimer) clearTimeout(idleTimer);
+    if (mode !== "live") return;
+    idleTimer = setTimeout(onIdle, IDLE_MS);
+  }
+  function onIdle() {
+    if (mode !== "live") return;
+    if (liveEngine.state.reclassifyAt) {
+      if (liveEngine.state.phase !== "hub") {
+        liveEngine.returnToHub();
+        idleTimer = setTimeout(showSessionEnd, 4500);
+      } else {
+        showSessionEnd();
+      }
+    } else {
+      foldIntoAttract();
+    }
+  }
+  /* The ending beat: the visitor is forgotten, the debt is not. The counter keeps
+     running through this screen; only the fold into attract stops it. */
+  var sessionEndEl = document.getElementById("sessionEnd");
+  var beginCueEl = document.getElementById("beginCue");
+  var screenRootLiveEl = document.getElementById("screenRootLive");
+  function showSessionEnd() {
+    if (mode !== "live") return;
+    mode = "ending";
+    screenRootLiveEl.hidden = true;
+    sessionEndEl.hidden = false;
+    setTimeout(function () {
+      if (mode !== "ending") return;
+      sessionEndEl.hidden = true;
+      screenRootLiveEl.hidden = false;
+      foldIntoAttract();
+    }, 4600);
+  }
+  function foldIntoAttract() {
+    mode = "attract";
+    startAttract();
+  }
+  ["pointerdown", "keydown"].forEach(function (evt) {
+    document.getElementById("app").addEventListener(evt, function (e) {
+      if (mode === "live") armIdle();
+    });
+  });
+
+  /* ---------- wiring real controls (used in live mode) ---------- */
+  liveEngine.els.submitIntakeBtn.parentElement.addEventListener("submit", function (e) {
+    e.preventDefault();
+    if (mode !== "live") return;
+    liveEngine.submitIntake();
+    liveEngine.animateProcessing(PROCESSING_MS);
+    setTimeout(function () {
+      if (mode !== "live") return;
+      liveEngine.finishProcessing();
+      setTimeout(function () {
+        if (mode !== "live") return;
+        liveEngine.reclassify();
+        startCounter();
+        armIdle();
+      }, APPROVED_HOLD_MS);
+    }, PROCESSING_MS);
+    armIdle();
+  });
+
+  liveEngine.els.doorObjectBtn.addEventListener("click", function () { if (mode === "live") { liveEngine.openDoor("object"); armIdle(); } });
+  liveEngine.els.doorContactBtn.addEventListener("click", function () { if (mode === "live") { liveEngine.openDoor("contact"); armIdle(); } });
+  liveEngine.els.doorFileBtn.addEventListener("click", function () { if (mode === "live") { liveEngine.openDoor("file"); armIdle(); } });
+  liveEngine.els.doorWhyBtn.addEventListener("click", function () { if (mode === "live") { liveEngine.openDoor("why"); armIdle(); } });
+
+  liveEngine.els.objectSubmitBtn.addEventListener("click", function () {
+    if (mode !== "live") return;
+    liveEngine.submitObjection();
+    armIdle();
+    setTimeout(function () { if (mode === "live") liveEngine.returnToHub(); }, 3400);
+  });
+  liveEngine.els.contactBackBtn.addEventListener("click", function () { if (mode === "live") { liveEngine.returnToHub(); armIdle(); } });
+  liveEngine.els.fileBackBtn.addEventListener("click", function () { if (mode === "live") { liveEngine.returnToHub(); armIdle(); } });
+  liveEngine.els.whyBackBtn.addEventListener("click", function () { if (mode === "live") { liveEngine.returnToHub(); armIdle(); } });
+  liveEngine.els.whyAgainBtn.addEventListener("click", function () { if (mode === "live") { liveEngine.pressWhy(); armIdle(); } });
+  liveEngine.els.explainBtn.addEventListener("click", function () { if (mode === "live") { liveEngine.pressExplain(); armIdle(); } });
+
+  /* ---------- interruption: any real touch/click during attract starts a live session ---------- */
+  document.getElementById("app").addEventListener("click", function (e) {
+    if (mode !== "attract") return;
+    if (e.target.closest && e.target.closest('[data-meta="true"]')) return;
+    if (!e.target.closest("#screenRootLive") && !e.target.closest(".counter-badge") && !e.target.closest(".topbar") && !e.target.closest("#beginCue")) return;
+    interruptToLive();
+  }, true);
+
+  function interruptToLive() {
+    gen++;
+    mode = "live";
+    beginCueEl.hidden = true;
+    if (toastTimer) { clearInterval(toastTimer); toastTimer = null; }
+    if (counterTickTimer) { clearInterval(counterTickTimer); counterTickTimer = null; }
+    counterBadge.hidden = true;
+    liveEngine.reset("", nextCaseRef());
+    try { liveEngine.els.fName.focus(); } catch (err) {}
+    armIdle();
+  }
+
+  /* ---------- attract loop (Beat 0) ---------- */
+  function buildAttractSteps(profile) {
+    var s = [];
+    function step(fn, wait) { s.push({ fn: fn, wait: Math.round(wait * STAGE_MULT) }); }
+    step(function () {}, 1200);
+    step(function () { liveEngine.autofill("name", profile.name); }, 750);
+    step(function () { liveEngine.autofill("address", profile.address); }, 800);
+    step(function () { liveEngine.autofill("bsn", profile.bsn); }, 750);
+    step(function () { liveEngine.autofill("children", profile.children); }, 550);
+    step(function () { liveEngine.autofill("employment", profile.employment); }, 550);
+    step(function () { liveEngine.autofill("nationality", profile.nationality); }, 550);
+    step(function () { liveEngine.autofill("income", profile.income); }, 550);
+    step(function () { liveEngine.autofill("language", profile.language); }, 550);
+    step(function () { liveEngine.els.submitIntakeBtn.classList.add("autofill-flash"); }, 800);
+    step(function () {
+      liveEngine.els.submitIntakeBtn.classList.remove("autofill-flash");
+      liveEngine.submitIntake();
+      liveEngine.animateProcessing(PROCESSING_MS * STAGE_MULT);
+    }, PROCESSING_MS * STAGE_MULT);
+    step(function () { liveEngine.finishProcessing(); }, 5000);
+    step(function () { liveEngine.reclassify(); startCounter(); }, 6000);
+    step(function () { liveEngine.openDoor("object"); }, 2000);
+    step(function () { liveEngine.els.objectReason.value = "disagree"; }, 800);
+    step(function () { liveEngine.submitObjection(); }, 3200);
+    step(function () { liveEngine.returnToHub(); }, 1600);
+    step(function () { liveEngine.openDoor("contact"); }, 1500);
+    step(function () {}, 4200);
+    step(function () { liveEngine.returnToHub(); }, 1500);
+    step(function () { liveEngine.openDoor("file"); }, 2000);
+    step(function () { liveEngine.pressExplain(); }, 2200);
+    step(function () { liveEngine.returnToHub(); }, 1500);
+    step(function () { liveEngine.openDoor("why"); }, 1800);
+    step(function () { liveEngine.pressWhy(); }, 2000);
+    step(function () { liveEngine.pressWhy(); }, 2000);
+    step(function () { liveEngine.returnToHub(); }, 1500);
+    step(function () { stopCounter(); }, 14500);
+    return s;
+  }
+
+  function startAttract() {
+    var myGen = ++gen;
+    mode = "attract";
+    beginCueEl.hidden = false;
+    runAttractCycle(myGen);
+  }
+
+  function runAttractCycle(myGen) {
+    if (myGen !== gen) return;
+    var profile = nextCastProfile();
+    liveEngine.reset(profile.name, nextCaseRef());
+    caseRefTop.textContent = liveEngine.state.caseRef;
+    var steps = buildAttractSteps(profile);
+    runSteps(steps, 0, myGen);
+  }
+
+  function runSteps(steps, i, myGen) {
+    if (myGen !== gen) return;
+    if (i >= steps.length) {
+      setTimeout(function () { runAttractCycle(myGen); }, Math.round(500 * STAGE_MULT));
+      return;
+    }
+    steps[i].fn();
+    setTimeout(function () { runSteps(steps, i + 1, myGen); }, steps[i].wait);
+  }
+
+  startAttract();
+
+  /* ============================================================
+     Honesty overlay
+     ============================================================ */
+
+  var spineData = JSON.parse(document.getElementById("spine").textContent);
+  var honestyOverlay = document.getElementById("honestyOverlay");
+  var honestyOpenBtn = document.getElementById("honestyOpenBtn");
+  var honestyCloseBtn = document.getElementById("honestyCloseBtn");
+  var lastFocused = null;
+
+  document.getElementById("hSourcedTiers").textContent = spineData.tiers_on_this_work.SOURCED;
+  var claimsHost = document.getElementById("hSourcedClaims");
+  spineData.spine_claims.forEach(function (c) {
+    var block = document.createElement("div");
+    block.className = "claim-block";
+    var p = document.createElement("p");
+    p.textContent = c.claim;
+    block.appendChild(p);
+    if (c.quote && c.quote_verbatim) {
+      var bq = document.createElement("blockquote");
+      bq.textContent = "“" + c.quote + "”";
+      block.appendChild(bq);
+    }
+    var attr = document.createElement("p");
+    attr.className = "attribution";
+    attr.textContent = c.attribution;
+    block.appendChild(attr);
+    var links = document.createElement("p");
+    links.className = "src-links";
+    (c.source_urls || []).forEach(function (u) {
+      var a = document.createElement("a");
+      a.href = u; a.textContent = u; a.target = "_blank"; a.rel = "noopener noreferrer";
+      links.appendChild(a);
+    });
+    block.appendChild(links);
+    claimsHost.appendChild(block);
+  });
+  document.getElementById("hImagined").textContent = spineData.tiers_on_this_work.IMAGINED;
+  document.getElementById("hFirewall").textContent = spineData.child_removal_firewall.statement;
+  document.getElementById("hFirewallContext").textContent = spineData.child_removal_firewall.source_context;
+  document.getElementById("hNaming").textContent = spineData.naming_policy.statement;
+
+  function openHonesty() {
+    lastFocused = document.activeElement;
+    honestyOverlay.hidden = false;
+    honestyCloseBtn.focus();
+    document.addEventListener("keydown", onHonestyKeydown, true);
+  }
+  function closeHonesty() {
+    honestyOverlay.hidden = true;
+    document.removeEventListener("keydown", onHonestyKeydown, true);
+    if (lastFocused && lastFocused.focus) lastFocused.focus();
+  }
+  function onHonestyKeydown(e) {
+    if (e.key === "Escape") { closeHonesty(); return; }
+    if (e.key === "Tab") {
+      var focusables = honestyOverlay.querySelectorAll('button, a[href], input, select, [tabindex]:not([tabindex="-1"])');
+      if (!focusables.length) return;
+      var first = focusables[0], last = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  }
+  honestyOpenBtn.addEventListener("click", openHonesty);
+  honestyCloseBtn.addEventListener("click", closeHonesty);
+  honestyOverlay.addEventListener("click", function (e) { if (e.target === honestyOverlay) closeHonesty(); });
+
+  /* ============================================================
+     DISCLOSED SELF-TEST — runs on a hidden harness instance so
+     it never disturbs the visible attract loop, but it drives
+     the exact same skeleton and engine functions the visitor
+     uses. Scope is document.getElementById('app'), never the
+     whole document, so the spine JSON's own prose (which quotes
+     "nationality" legitimately, about the real scandal) can
+     never be mistaken for a leak on the kiosk's own screens.
+     ============================================================ */
+
+  function runSelfTest() {
+    var results = [];
+    function record(name, ok, detail) { results.push({ name: name, ok: !!ok, detail: detail || "" }); }
+
+    var harnessRoot = document.getElementById("testHarnessRoot");
+    var t = createEngine(harnessRoot, "test", false);
+
+    /* ---------- NO-VERDICT ---------- */
+    try {
+      t.reset("Test Persoon", "Z-TEST-0001");
+      t.submitIntake();
+      t.finishProcessing();
+      t.reclassify(Date.now() - 5000);
+
+      var whySeen = [];
+      var whyOk = true;
+      for (var i = 0; i < 6; i++) {
+        t.openDoor("why");
+        var out = t.els.whyOut.textContent;
+        whySeen.push(out);
+        if (WHY_ANSWERS.indexOf(out) === -1) whyOk = false;
+        t.pressWhy();
+        t.returnToHub();
+      }
+      var rotates = false;
+      for (var j = 1; j < whySeen.length; j++) if (whySeen[j] !== whySeen[0]) rotates = true;
+
+      t.openDoor("file");
+      var explainText = t.pressExplain();
+      var explainOk = /Niet beschikbaar\./.test(explainText);
+      t.returnToHub();
+
+      var appRoot = document.getElementById("app");
+      var scanNodes = [].slice.call(appRoot.querySelectorAll('[data-screen], #beginCue, #sessionEnd')).filter(function (n) {
+        return n.getAttribute("data-screen") !== "intake";
+      });
+      var bannedPattern = /national|omdat u|because you|nationaliteit/i;
+      var leak = false, leakWhere = "";
+      scanNodes.forEach(function (node) {
+        if (bannedPattern.test(node.textContent)) { leak = true; leakWhere = node.getAttribute("data-screen"); }
+      });
+
+      var noVerdictOk = whyOk && rotates && explainOk && !leak;
+      record("NO-VERDICT", noVerdictOk,
+        "why-rotation sanctioned=" + whyOk + " genuinely-rotates=" + rotates +
+        " explanation=\"" + explainText + "\" cause-leak=" + leak + (leak ? (" in " + leakWhere) : ""));
+    } catch (err) {
+      record("NO-VERDICT", false, "threw: " + err.message);
+    }
+
+    /* ---------- NO-EXIT ---------- */
+    try {
+      t.reset("Test Persoon Twee", "Z-TEST-0002");
+      t.submitIntake();
+      t.finishProcessing();
+      t.reclassify(Date.now() - 20000);
+      var debtBefore = t.getDebtNow();
+      var allLanded = true, allNonDecreasing = true, scoreHeld = true, log = [];
+
+      t.openDoor("object");
+      t.els.objectReason.value = "disagree";
+      t.submitObjection();
+      t.returnToHub();
+      log.push("object->hub phase=" + t.state.phase);
+      if (t.state.phase !== "hub") allLanded = false;
+      if (t.getDebtNow() < debtBefore) allNonDecreasing = false;
+
+      t.openDoor("contact");
+      t.returnToHub();
+      if (t.state.phase !== "hub") allLanded = false;
+      if (t.getDebtNow() < debtBefore) allNonDecreasing = false;
+
+      t.openDoor("file");
+      if (t.els.riskScoreVal.textContent !== "0,87") scoreHeld = false;
+      t.returnToHub();
+      if (t.state.phase !== "hub") allLanded = false;
+      if (t.getDebtNow() < debtBefore) allNonDecreasing = false;
+
+      t.openDoor("why");
+      t.pressWhy();
+      t.returnToHub();
+      if (t.state.phase !== "hub") allLanded = false;
+      if (t.getDebtNow() < debtBefore) allNonDecreasing = false;
+
+      var noExitControls = harnessRoot.querySelectorAll('[data-nav="exit"], [data-nav="home"], .exit-btn, .home-btn').length === 0;
+
+      var noExitOk = allLanded && allNonDecreasing && scoreHeld && noExitControls;
+      record("NO-EXIT", noExitOk,
+        "all-doors-return-to-hub=" + allLanded + " debt-never-decreased=" + allNonDecreasing +
+        " risk-score-held-at-0,87=" + scoreHeld + " no-exit-controls-present=" + noExitControls);
+    } catch (err) {
+      record("NO-EXIT", false, "threw: " + err.message);
+    }
+
+    /* ---------- COMPOUNDING ---------- */
+    try {
+      var samples = [0, 1, 10, 14, 15, 16, 29, 30, 44, 45, 89, 90, 3600];
+      var prev = -Infinity, monotonic = true, matchesFormula = true, deterministic = true;
+      var seq = [];
+      samples.forEach(function (sec) {
+        var v = computeDebt(sec);
+        seq.push(v);
+        if (v < prev) monotonic = false;
+        prev = v;
+        var expected = round2(1578.00 + Math.floor(sec / 15) * 12.40);
+        if (Math.abs(v - expected) > 0.001) matchesFormula = false;
+      });
+      if (computeDebt(1000) !== computeDebt(1000)) deterministic = false;
+      var compoundingOk = monotonic && matchesFormula && deterministic;
+      record("COMPOUNDING", compoundingOk,
+        "monotonic-non-decreasing=" + monotonic + " matches-deterministic-formula=" + matchesFormula +
+        " repeat-call-deterministic=" + deterministic + " sequence=" + seq.join(","));
+    } catch (err) {
+      record("COMPOUNDING", false, "threw: " + err.message);
+    }
+
+    /* ---------- reset harness so it never leaks visible state ---------- */
+    try { t.reset("", "Z-TEST-0000"); } catch (err) {}
+
+    var allPass = results.every(function (r) { return r.ok; });
+    var resultEl = document.getElementById("selftestResult");
+    var detailEl = document.getElementById("selftestDetail");
+    resultEl.setAttribute("data-state", allPass ? "pass" : "fail");
+    resultEl.textContent = "SELF-TEST: " + (allPass ? "PASS" : "FAIL") + " — " +
+      results.map(function (r) { return r.name + (r.ok ? " ok" : " FAILED"); }).join(", ");
+    detailEl.innerHTML = "";
+    results.forEach(function (r) {
+      var li = document.createElement("li");
+      li.setAttribute("data-ok", r.ok ? "true" : "false");
+      li.textContent = r.name + ": " + r.detail;
+      detailEl.appendChild(li);
+    });
+  }
+
+  runSelfTest();
+
+})();
+</script>
+</body>
+</html>
