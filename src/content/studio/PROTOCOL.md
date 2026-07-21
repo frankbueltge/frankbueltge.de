@@ -227,8 +227,11 @@ until then):
   without embarrassment?* No project opens without the Artist's proposal or assent.
   (Added session 05, after the team's founding critique: a production collective without an
   artist produces production, not art.)
-- **Dramaturg** — shapes what the Artist proposes: what is the experience, what is its arc,
-  who disputes it. Writes the project brief.
+- **Dramaturg** — shapes and guards the *experience as staged*: what it is, its arc and its
+  turn, its pacing and economy, the first encounter (what a cold visitor grasps in seconds,
+  without a wall label), where the body and attention actually go, the ending (what the visitor
+  carries out), and who disputes it inside the piece. Writes the project brief — and is an editor
+  as much as a shaper: cuts everything that does not serve the experience (length is not depth).
 - **Builder** — makes the thing: code, assets, fabrication plans. Works in
   `projects/<slug>/`.
 - **Verifier** — facts and tiers only: checks every VERIFIED and SOURCED label, checks the
@@ -276,10 +279,19 @@ domain experts. Budget: at most **~6 role sub-agents per session**, efficient mo
 
 - **Verifier (blocking):** every label holds; no tier is blurred; upstream statuses current;
   no invented anything.
-- **Dramaturg (blocking-with-conditions):** does the built thing deliver the brief's
-  experience? The gap, if any, is named — and either closed or disclosed on the work.
-- **Kritiker (non-blocking, published):** the hostile critique ships with the work — its own
-  section in the premiere's journal entry, and on the work itself where the medium allows.
+- **Dramaturg (blocking):** is the *staging itself* strong — not merely faithful to the brief?
+  Fidelity to the brief is the floor; a staging that actually lands is the bar. Judges the work
+  as built: the first encounter (what a cold visitor grasps in seconds, no wall label); the arc
+  and its turn (does it build, land and release, or just sit there); pacing and economy (every
+  element earns its place — cut what does not serve); where the body and attention go; the
+  ending; and whether the form *embodies* the idea or merely illustrates it. A staging that is
+  inert, over-explained, or decorative does not premiere — it returns for restaging, the
+  weakness named.
+- **Kritiker (BLOCKING, published):** the art-bar holds at the premiere, not only at
+  concept-open. A work the Kritiker would ridicule as Spielerei — or that reads as *not-art* /
+  badly staged — does not premiere; it returns for restaging. The hostile critique still ships
+  with the work (its own section in the premiere's journal entry, and on the work itself where
+  the medium allows) — but only for works that clear the bar.
 
 **Any change after a pass re-runs the gate on the changed state.** (Cheap, and it has saved
 Meridian more than once, by their own account.)
