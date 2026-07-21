@@ -7,9 +7,32 @@
 // research-ecology liefert jedes vormals lokalisierte Feld ({ de, en }) jetzt als einfachen
 // englischen String; das frühere `LocalizedText` entfällt.
 import entranceData from '@/data/begegnungen/entrance.json'
-import narrativeData from '@/data/begegnungen/enc-2026-001/narrative.json'
-import scoreData from '@/data/begegnungen/enc-2026-001/score.json'
 import type { ScoreExport } from './score'
+
+// Der Eingang folgt der Auswahlregel (neueste Begegnung mit freigegebener Partitur) — der
+// Export schreibt entrance.json UND den passenden Ordner; Narrative/Partitur werden hier aus
+// dem Ordner der AKTUELLEN Begegnung geladen statt (wie bis 2026-07-22) festverdrahtet aus
+// enc-2026-001. Fail-loud beim Build, wenn der Ordner fehlt: eine stumme 001-Rückfalllösung
+// wäre genau die stale Projektion, die der Export-Vertrag ausschließen soll.
+const narrativeModules = import.meta.glob('/src/data/begegnungen/*/narrative.json', {
+  eager: true
+}) as Record<string, { default: unknown }>
+const scoreModules = import.meta.glob('/src/data/begegnungen/*/score.json', {
+  eager: true
+}) as Record<string, { default: unknown }>
+const currentSlug = (entranceData as { encounter_id: string }).encounter_id
+  .split('-')
+  .slice(0, 3)
+  .join('-')
+const narrativeModule = narrativeModules[`/src/data/begegnungen/${currentSlug}/narrative.json`]
+const scoreModule = scoreModules[`/src/data/begegnungen/${currentSlug}/score.json`]
+if (narrativeModule === undefined || scoreModule === undefined) {
+  throw new Error(
+    `begegnungen: entrance.json nennt ${currentSlug}, aber src/data/begegnungen/${currentSlug}/ fehlt (narrative/score)`
+  )
+}
+const narrativeData = narrativeModule.default
+const scoreData = scoreModule.default
 
 export interface SiteEntranceParticipant {
   actor_id: string

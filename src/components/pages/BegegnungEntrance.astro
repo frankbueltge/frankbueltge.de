@@ -24,8 +24,7 @@ const score = currentScore
 // Interim record location (Frank, 2026-07-16): the middle-web app is not deployed yet, but the
 // record itself is public — research-ecology's fixture IS the ledger. Real links beat disabled
 // placeholders; when the app ships, these swap back to entrance.links.* (see decision-log.md).
-const RECORD_BASE =
-  'https://github.com/frankbueltge/research-ecology/blob/main/fixtures/enc-2026-001-calibration-gap-travels'
+const RECORD_BASE = `https://github.com/frankbueltge/research-ecology/blob/main/fixtures/${entrance.encounter_id}`
 const recordEventsUrl = `${RECORD_BASE}/events.json`
 const recordDivergenceUrl = `${RECORD_BASE}/assertions.json`
 
@@ -66,6 +65,13 @@ const statusMeta =
 
 const approvalChipLabel = score.approval === 'approved' ? 'wording approved' : copy.pendingApproval
 
+// buildScoreSvg's own guard: the map geometry is a fixed seven-event layout hand-built for
+// enc-2026-001; any other count needs the not-yet-built Zeit-Skalierung lens
+// (zeichengrammatik-2026-07-15.md §7). Render the map only where it is honest to do so —
+// for every other encounter the stations themselves ARE the score, and the missing
+// projection is said out loud instead of silently faked.
+const scoreMapAvailable = score.events.length === 7
+
 ---
 
 <main id="main" class="flex-1">
@@ -83,8 +89,20 @@ const approvalChipLabel = score.approval === 'approved' ? 'wording approved' : c
 
   {/* Figur (mit Registerauszug-Tooltip) und Kartenschlüssel sind seit dem Hub-Umbau
       2026-07-16 geteilte Bauteile — der Hub rendert dieselbe Grammatik. */}
-  <ScoreFigure score={score} />
-  <ScoreKey score={score} />
+  {
+    scoreMapAvailable ? (
+      <Fragment>
+        <ScoreFigure score={score} />
+        <ScoreKey score={score} />
+      </Fragment>
+    ) : (
+      <p class="score-status">
+        map projection pending — the station map's geometry is a fixed seven-event layout
+        built for enc-2026-001; a count-general projection (the Zeit-Skalierung lens) is
+        named in the sign grammar, not yet built. The stations below are the score.
+      </p>
+    )
+  }
 
   <section class="score-stations" aria-labelledby="stations-heading">
     <h2 id="stations-heading" class="score-section-heading">{copy.stationsHeading}</h2>
