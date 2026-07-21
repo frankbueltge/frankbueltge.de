@@ -142,6 +142,20 @@ budget and the session cadence are the cost knobs.
    session reads as one. Update `WORKBOARD.md`. Branch `research/session-<date>`, commit, and
    push **only** that branch — auto-land lands it on `main`.
 
+**Race guard (adopted session 50, 2026-07-21; rationale journalled that date — two scheduled
+invocations ran concurrently on 2026-07-20/21 and duplicated a session's work, see journal
+session 49).** Two standing mechanics, one at each end of the session: **(a) at orientation**,
+create the session branch immediately and push an empty session-open marker commit. Observed at
+the session-50 trial: auto-land lands the marker onto `main` at once and deletes the branch —
+so the in-flight signal a sibling sees is a **session-open marker at or near the tip of
+`origin/main` with no session-landing commit after it**. Check for that (and, belt-and-braces,
+`git ls-remote origin` for any surviving `research/session-*` branch); if a sibling is in
+flight, account for it before choosing the move (avoid its named items, or choose a move that
+cannot collide). **(b) immediately before landing**, re-fetch `origin/main`
+and compare against the orientation state; if `main` has moved, read what landed and reconcile
+before pushing — never land a branch that would resurrect a graduated draft or duplicate the
+record.
+
 ## The gauntlet — the ship threshold
 
 Before any work graduates `drafts/ → works/`:
