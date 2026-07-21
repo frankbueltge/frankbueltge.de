@@ -73,24 +73,11 @@ const statusHtml = `<b>${works.length} works</b> · newest first · detail route
             </h3>
             {(meta.embodies ?? meta.verkoerpert) && <p>{meta.embodies ?? meta.verkoerpert}</p>}
             {meta.medium && <p class="at-shelf-meta">{meta.medium}{meta.seed != null && ` · Seed ${meta.seed}`}</p>}
-            {/*
-              SECURITY: standalone same-origin file under /atelier/werke-html/<slug>/ —
-              a separate document does NOT inherit the parent <meta> CSP. sandbox="allow-scripts"
-              WITHOUT allow-same-origin → null origin, no access to cookies/storage/DOM of
-              frankbueltge.de. Path-specific CSP in _headers allows the work's inline scripts,
-              blocks fetch/connect (no exfiltration channel).
-              NEVER add allow-same-origin — that would lift the isolation.
-            */}
-            <iframe
-              src={`/atelier/werke-html/${slug}/`}
-              sandbox="allow-scripts"
-              loading="lazy"
-              title={meta.title ?? slug}
-            ></iframe>
-            <div class="at-work-links">
-              <span>Runs sandboxed in your browser.</span>
-              <a href={`/atelier/werke-html/${slug}/`} target="_blank" rel="noreferrer">Open the work full screen ↗</a>
-              <a href={`${repo}/tree/main/works/${slug}`} target="_blank" rel="noreferrer">Source code ↗</a>
+            {/* Exhibition model (2026-07-21): the work is a door to its full-viewport stage
+                (/atelier/werke-html/<slug>/, standalone, own CSP), not a cramped preview iframe. */}
+            <div class="at-work-actions">
+              <a class="at-work-enter" href={`/atelier/werke-html/${slug}/`}>Enter the work <span aria-hidden="true">→</span></a>
+              <a class="at-work-source" href={`${repo}/tree/main/works/${slug}`} target="_blank" rel="noreferrer">Source code ↗</a>
             </div>
             {Array.isArray(meta.quellen) && meta.quellen.length > 0 && (
               <details class="mt-2">

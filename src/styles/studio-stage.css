@@ -13,8 +13,8 @@
   --st-page: #0e0c0b;
   --st-surface: #141110;
   --st-ink: #eae4da;
-  --st-ink-2: #9a9188;
-  --st-hairline: #2e2825;
+  --st-ink-2: #c0b6a8;
+  --st-hairline: #3d362f;
   --st-lamp: #bd8b21;
   --st-curtain: #c2455a;
   --st-badge-bg: #1c1816;
@@ -50,7 +50,7 @@
   background: var(--st-surface);
   color: var(--st-ink);
   border: 1px solid var(--st-hairline);
-  font-family: var(--st-font-display);
+  font-family: var(--st-font-record);
 }
 @media (max-width: 640px) {
   .studio-surface { padding: 1.5rem 1rem 2.5rem; }
@@ -76,7 +76,7 @@
   letter-spacing: normal;
 }
 .studio-surface .st-h1 {
-  font-family: var(--st-font-display);
+  font-family: var(--st-font-record);
   font-weight: 500;
   letter-spacing: 0.01em;
   color: var(--st-h1-ink);
@@ -144,11 +144,11 @@
    Der Lichthof (paint-order-Halo in Kegel-Kernfarbe) trägt die Lesbarkeit dort, wo der radiale
    Verlauf abfällt: die Zeile trägt ihr eigenes Licht, statt von der Position im Kegel abzuhängen
    (Befund 2026-07-16: Meta-/Attributionszeile soff am Kegelrand ab). */
-.studio-surface .t-worktitle { font: 500 40px var(--st-font-display); fill: #2e250f; letter-spacing: 0.06em; stroke: var(--st-spot-core); stroke-width: 4; paint-order: stroke; stroke-linejoin: round; }
+.studio-surface .t-worktitle { font: 500 40px var(--st-font-record); fill: #2e250f; letter-spacing: 0.06em; stroke: var(--st-spot-core); stroke-width: 4; paint-order: stroke; stroke-linejoin: round; }
 .studio-surface .t-workmeta { font: 12px var(--st-font-record); fill: var(--st-ink-2); }
 .studio-surface .t-inspot { fill: #4a3d1c; stroke: var(--st-spot-core); stroke-width: 3; paint-order: stroke; stroke-linejoin: round; }
 .studio-surface .t-marquee { font: 600 13px var(--st-font-record); fill: #6b4f0e; letter-spacing: 0.34em; stroke: var(--st-spot-core); stroke-width: 3; paint-order: stroke; stroke-linejoin: round; }
-.studio-surface .t-quote-s { font: italic 13.5px var(--st-font-display); fill: #3a2f14; stroke: var(--st-spot-core); stroke-width: 3; paint-order: stroke; stroke-linejoin: round; }
+.studio-surface .t-quote-s { font: italic 13.5px var(--st-font-record); fill: #3a2f14; stroke: var(--st-spot-core); stroke-width: 3; paint-order: stroke; stroke-linejoin: round; }
 .studio-surface .t-kill { font: 11.5px var(--st-font-record); fill: var(--st-ink-2); }
 .studio-surface .t-kill-n { font: 600 12px var(--st-font-record); fill: var(--st-ink); }
 .studio-surface .t-gasse { font: 600 11px var(--st-font-record); letter-spacing: 0.2em; fill: var(--st-ink-2); }
@@ -167,7 +167,7 @@
 .studio-surface .zettel .rule { border: none; border-top: 1px solid var(--st-hairline); margin: 12px auto; width: 60%; }
 .studio-surface .zettel .rule-heavy { border-top: 2px solid var(--st-ink); width: 40%; }
 .studio-surface .zettel .nr { font: 600 12px var(--st-font-record); color: var(--st-lamp); letter-spacing: 0.18em; }
-.studio-surface .zettel .line { font: 19px var(--st-font-display); color: var(--st-ink); margin: 2px 0 18px; line-height: 1.4; }
+.studio-surface .zettel .line { font: 19px var(--st-font-record); color: var(--st-ink); margin: 2px 0 18px; line-height: 1.4; }
 .studio-surface .zettel .move {
   font: 600 10.5px var(--st-font-record);
   letter-spacing: 0.22em;
@@ -175,8 +175,8 @@
   text-transform: uppercase;
 }
 .studio-surface .zettel .kill { color: var(--st-curtain); }
-.studio-surface .zettel .prem { font: 500 30px var(--st-font-display); letter-spacing: 0.04em; color: var(--st-h1-ink); margin: 6px 0 4px; }
-.studio-surface .zettel .edge { font: italic 15px var(--st-font-display); color: var(--st-ink-2); margin-top: 26px; }
+.studio-surface .zettel .prem { font: 500 30px var(--st-font-record); letter-spacing: 0.04em; color: var(--st-h1-ink); margin: 6px 0 4px; }
+.studio-surface .zettel .edge { font: italic 15px var(--st-font-record); color: var(--st-ink-2); margin-top: 26px; }
 
 /* Register (uncompressed table) + Fuß */
 .studio-surface .st-record h2 {
@@ -192,7 +192,7 @@
 .studio-surface th,
 .studio-surface td { border-top: 1px solid var(--st-hairline); padding: 7px 14px 7px 0; vertical-align: top; }
 .studio-surface td.mono { white-space: nowrap; color: var(--st-ink-2); }
-.studio-surface td.q { font-family: var(--st-font-display); font-style: italic; font-size: 14px; max-width: 60ch; }
+.studio-surface td.q { font-family: var(--st-font-record); font-style: italic; font-size: 14px; max-width: 60ch; }
 .studio-surface .st-foot {
   margin-top: 26px;
   font: 11.5px var(--st-font-record);
@@ -203,9 +203,9 @@
   flex-wrap: wrap;
 }
 .studio-surface .st-room-intro {
-  font-family: var(--st-font-display);
-  font-size: 15.5px;
-  color: var(--st-ink-2);
+  font-family: var(--st-font-record);
+  font-size: 14.5px;
+  color: var(--st-ink);
   max-width: 70ch;
   margin: 10px 0 26px;
 }
@@ -218,19 +218,28 @@
   margin: 0 0 18px;
   scroll-margin-top: 4rem;
 }
-.studio-surface .st-work-card h3 { font: 500 22px var(--st-font-display); letter-spacing: 0.04em; margin: 0; }
-.studio-surface .st-work-card .st-work-date { font: 11px var(--st-font-record); color: var(--st-ink-2); margin-left: 0.8em; }
-.studio-surface .st-work-card p { margin: 0.5em 0 0; font-size: 14.5px; line-height: 1.55; color: var(--st-ink-2); max-width: 80ch; }
-.studio-surface .st-work-card iframe {
-  display: block;
-  width: 100%;
-  height: 600px;
-  resize: vertical;
-  overflow: auto;
-  border: 1px solid var(--st-hairline);
-  background: #fff;
-  margin-top: 14px;
+.studio-surface .st-work-card h3 { font: 600 22px var(--st-font-record); letter-spacing: 0; margin: 0; }
+.studio-surface .st-work-card .st-work-date { font: 12px var(--st-font-record); color: var(--st-ink-2); margin-left: 0.8em; }
+.studio-surface .st-work-card p { margin: 0.7em 0 0; font-family: var(--st-font-record); font-size: 15px; line-height: 1.66; color: var(--st-ink); max-width: 68ch; }
+/* Exhibition model (2026-07-21): each work is a door to its full-viewport stage
+   (/studio/werke-html/<slug>/), not a cramped preview iframe. */
+.studio-surface .st-work-card { transition: border-color 0.15s ease; }
+.studio-surface .st-work-card:hover { border-color: var(--st-ink); }
+.studio-surface .st-work-head { display: flex; justify-content: space-between; align-items: baseline; gap: 1.2em; flex-wrap: wrap; }
+.studio-surface .st-work-badge { font: 12.5px var(--st-font-record); color: var(--st-ink-2); text-decoration: underline; white-space: nowrap; }
+.studio-surface .st-work-medium { margin: 0.5em 0 0; font: 12.5px var(--st-font-record); letter-spacing: 0.08em; text-transform: uppercase; color: var(--st-ink-2); }
+.studio-surface .st-work-actions { display: flex; align-items: baseline; gap: 1.8em; flex-wrap: wrap; margin-top: 18px; }
+.studio-surface .st-work-enter {
+  font: 600 14px var(--st-font-record);
+  letter-spacing: 0.02em;
+  color: var(--st-ink);
+  text-decoration: none;
+  border-bottom: 1.5px solid currentColor;
+  padding-bottom: 3px;
+  transition: opacity 0.15s ease;
 }
+.studio-surface .st-work-enter:hover { opacity: 0.6; }
+.studio-surface .st-work-source { font: 12.5px var(--st-font-record); color: var(--st-ink-2); text-decoration: underline; }
 .studio-surface .st-work-card .st-work-links {
   display: flex;
   justify-content: space-between;
@@ -257,10 +266,10 @@
 }
 .studio-surface details.st-day > summary::-webkit-details-marker { display: none; }
 .studio-surface details.st-day > summary .st-day-anchor { color: var(--st-lamp); font-weight: 600; }
-.studio-surface details.st-day > summary .st-day-title { font-family: var(--st-font-display); font-size: 16px; color: var(--st-ink); }
+.studio-surface details.st-day > summary .st-day-title { font-family: var(--st-font-record); font-size: 16px; color: var(--st-ink); }
 .studio-surface details.st-day > summary:hover .st-day-title { text-decoration: underline; }
 .studio-surface .st-prose {
-  font-family: var(--st-font-display);
+  font-family: var(--st-font-record);
   font-size: 15.5px;
   line-height: 1.6;
   color: var(--st-ink);

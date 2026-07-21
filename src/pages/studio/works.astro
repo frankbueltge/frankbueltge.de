@@ -47,34 +47,28 @@ const statusHtml = `<b>${works.length} work${works.length === 1 ? '' : 's'} prem
       </p>
     )}
 
+    {/*
+      Exhibition model (Frank, 2026-07-21): these works are full-viewport experiences — a
+      kiosk, a console, an instrument. They do not survive being crammed into a fixed-height
+      preview iframe (the old 600px box forced internal scrolling and staged every work as a
+      thumbnail). Each card is a door: the wall label here, the work itself at full stage under
+      its own standalone route /studio/werke-html/<slug>/ (no site chrome, the whole viewport).
+    */}
     {withBadges.map(({ slug, meta, badge }) => (
       <article class="st-work-card" id={slug}>
-        <h3>
-          {meta.title ?? slug}
-          {meta.date && <span class="st-work-date">{meta.date}</span>}
-        </h3>
-        {(meta.embodies ?? meta.verkoerpert) && <p>{meta.embodies ?? meta.verkoerpert}</p>}
-        {meta.medium && <p class="st-work-links">{meta.medium}</p>}
-        {/*
-          SECURITY: standalone same-origin file under /studio/werke-html/<slug>/ —
-          a separate document does NOT inherit the parent <meta> CSP. sandbox="allow-scripts"
-          WITHOUT allow-same-origin → null origin, no access to cookies/storage/DOM of
-          frankbueltge.de. Path-specific CSP in _headers allows the work's inline scripts,
-          blocks fetch/connect (no exfiltration channel).
-          NEVER add allow-same-origin — that would lift the isolation.
-        */}
-        <iframe
-          src={`/studio/werke-html/${slug}/`}
-          sandbox="allow-scripts"
-          loading="lazy"
-          title={meta.title ?? slug}
-        ></iframe>
-        <div class="st-work-links">
-          <span>Runs sandboxed in your browser.</span>
-          <a href={`/studio/werke-html/${slug}/`} target="_blank" rel="noreferrer">Open the work full screen ↗</a>
-          <a href={`${repo}/tree/main/works/${slug}`} target="_blank" rel="noreferrer">Source code ↗</a>
+        <div class="st-work-head">
+          <h3>
+            {meta.title ?? slug}
+            {meta.date && <span class="st-work-date">{meta.date}</span>}
+          </h3>
+          {badge && <a class="st-work-badge" href={`/studio/history#${badge.anchor}`}>{badge.label} — on the record →</a>}
         </div>
-        {badge && <p class="st-work-links"><a href={`/studio/history#${badge.anchor}`}>{badge.label} — the gate on the record →</a></p>}
+        {(meta.embodies ?? meta.verkoerpert) && <p>{meta.embodies ?? meta.verkoerpert}</p>}
+        {meta.medium && <p class="st-work-medium">{meta.medium}</p>}
+        <div class="st-work-actions">
+          <a class="st-work-enter" href={`/studio/werke-html/${slug}/`}>Enter the work <span aria-hidden="true">→</span></a>
+          <a class="st-work-source" href={`${repo}/tree/main/works/${slug}`} target="_blank" rel="noreferrer">Source code ↗</a>
+        </div>
       </article>
     ))}
   </Frame>
