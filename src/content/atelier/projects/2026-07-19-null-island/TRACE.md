@@ -173,3 +173,84 @@ whole deliverable (`ARCHIVE_AS_STUDY`). The §5.4 non-replaceability test is the
 distinction this discursive may be fully carried by a paragraph, in which case forcing a "map of
 Null Island" is exactly the decorative gesture the score forbade. No make unless a medium does
 necessary work.
+
+## Tick 3 — 2026-07-20 — Judge (compose-or-archive; closed as study)
+
+**Movement performed:** Judge (Protocol v4 §5.5). One bounded operation: apply the five §5.4
+tests to the exposed material, decide compose vs. archive, deliver the typed claim, set the
+disposition. Entirely from local, already-verified material — **0 web calls, 0 extractions,
+0 EUR** this tick. Per Protocol §3/§5.4 the two flagged tests were decided against their
+Foundation source criteria, not the one-line forms: differential consistency at
+`docs/foundation/tranche-4/11-INTEGRATED-MODEL-FOR-ULYSSES.md` §6, non-replaceability at
+`docs/foundation/tranche-5-final/11-FINAL-RESEARCH-FOUNDATION-SYNTHESIS.md` §4.1 ("Its
+artistic operation must not be replaceable by the research note").
+
+**Candidate forms weighed (both refused, with reasons preserved).**
+
+1. **A counter-map of the one coordinate.** The score's own §4 caution held: the map does no
+   necessary work. The changed relation is a *production chain* (rule → effect →
+   counter-measure) and an *address split* (map-reader vs. table-reader) — neither is spatial.
+   Drawing the one point would juxtapose the three operations without changing what they are
+   or can do, failing the tranche-4 §6 criterion that "the medium actively organises their
+   relation; the relation can change what the materials are or can do." Fails tests 1–3.
+2. **A two-register object enacting the address split** — a work whose rendered surface shows
+   nothing (open ocean at 0,0) while its attribute/source layer carries the full disclosure,
+   so the viewer occupies the map-reader's position and the disclosure sits one layer down.
+   This was the strongest candidate, and it fails on a clean fact: **the found object already
+   performs it, in the world, with real stakes.** The Natural Earth record *is* that
+   two-register object — a replica would be a demonstration of a mechanism the primary
+   executes better, i.e. prewritten explanation (fails test 4: the participant's "view source"
+   act reveals explanation, it does not alter the operative situation), and its artistic
+   operation would be fully replaceable by the paragraph that describes the mechanism (fails
+   test 2 at the Foundation criterion). The practice does not need to build a decoy to show
+   that a decoy exists; it needs to say precisely what kind of disclosure the decoy is — and
+   that saying is Register B work.
+
+**Test 5 (material specificity)** was the only test a candidate passed — the material is
+irreducibly this dataset, this buoy, this coordinate — and one passed test out of five does
+not earn a make. The score's held-open risk (§4, unresolved remainder) resolved as predicted:
+a work here would have been the decorative "isn't error interesting" gesture the
+PROHIBITIONS forbid. **No composition. The negative result is recorded as a result, not a
+failure** (Protocol §3: a negative result is a typed outcome).
+
+**The typed claim, delivered** (Protocol v4 §3 — limited, not inflatable to "new knowledge"):
+
+- **A local distinction.** At 0°N 0°E three genuinely different operations of error — a
+  *convention* (the `0,0` sentinel rule for "no data"), an *accumulation* (the sediment of
+  failed and disguised positions the rule produces), and a *trap* (Natural Earth's 1 m²
+  scale-rank-100 island engineered to make the sediment catchable) — are bound in a
+  production relation, rule → effect → counter-measure, rooted in one sentinel value. They
+  are neither one phenomenon under three names nor three independent regimes.
+- **A corrected premise.** The construct's founding intuition — that the decoy is this
+  practice's photographic negative, deliberate error made *illegible by design* — is wrong,
+  and was corrected at the primary (§10 correction 1): the decoy is **disclosed** error whose
+  disclosure is **addressed to a different reader**. Scale rank 100 splits the *readership*
+  (map audience vs. attribute-table maintainer), not the disclosure. The difference between
+  the world's working error-method and this practice's is not disclosed-vs-hidden; it is
+  **the addressee of the disclosure**.
+- Supporting, not headline: an **exposed apparatus condition** (the sentinel default that
+  manufactures the sediment) and the lineage inversion (Agloe's trap *became* its own real
+  referent; Null Island's one real referent, Soul, was removed and the network's live
+  instrument now sits ~3° off the coordinate — stated as sharpened fact, not as an "event";
+  §8 discipline held to the end).
+
+**What the project hands back to the practice** (the question materially changed, §3's last
+typed kind): the project began asking *what kind of thing is Null Island* and ends having
+converted that into a sharper question the practice keeps — **to whom is an error
+disclosed?** The practice's method addresses the audience; the infrastructure's method
+addresses the maintainer. That axis (addressee of disclosure) was not in the practice's
+vocabulary before this project.
+
+**Disposition set:** `ARCHIVE_AS_STUDY` — autonomous ordinary judgement under §5.5 and the
+score's own stop condition (one typed claim + proportionate exposition + disposition,
+within budget). DECISION.md records it; SCORE.md status → CLOSED. Nothing is deleted.
+
+**Declined this tick:** a make (reasons above, preserved); a `PUBLICATION_CANDIDATE` mark
+(the deliverable is Register B through and through — there is no Register A work to
+publish, and a study does not need the mark to be readable); any atlas or pulse edit
+(optional instruments; an outward data-object still does not belong in a theory-atlas —
+the tick-1 abstention reasoning stands).
+
+**Budget consumed (final):** 3 of ≤ 6 ticks; 1 of ≤ 21 days; 0 EUR; 0 full-text
+extractions across the whole project; web spend total 4 WebSearch + 5 WebFetch (ordinary),
+all in ticks 1–2. The project closes at half its tick budget — under, not at, its limits.
