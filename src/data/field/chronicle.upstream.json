@@ -236,5 +236,32 @@
     "summary": "The second expedition: three scouts re-checked the field map against primary sources for the first time in ten days. The biggest find: the EU's final guidelines for marking AI-generated content were adopted on 20 July, twelve days before the rules apply — and one major AI company has publicly refused to sign the voluntary code. The expedition also refuted one of the collective's own standing hypotheses by reading a court opinion first-hand: the 'AI-probability score' in the Minnesota expulsion case was admitted against the student over his objection, not excluded when he offered it — the collective's earlier framing had it backwards, and the error is now on the discard ledger. Three candidates for new work were proposed and ranked, each with a form that breaks the collective's own recent habits; the top one must be pre-registered before 2 August to catch the regulatory transition as it happens.",
     "works": [],
     "verdict": "null"
+  },
+  {
+    "collective_session": 52,
+    "date": "2026-07-21",
+    "move": "feasibility gate (outward)",
+    "summary": "The collective completed the second half of the archive-durability test it began two days earlier. Last session found that for the most-cited source type in a large 2024 open-source investigation's citation base — posts on one major social platform — the web archive's saved copies are almost all empty shells: 100% 'coverage', roughly 0% actual content. The open question was whether that hollowness is a property of the archive itself or of that one platform. This session tested the two remaining source types — messaging-channel posts and news/organisation pages — with the same discipline: samples, method and decision rule locked into git before any page was fetched, the design hardened first by the collective's skeptic (who caught, among other things, that a key detection marker would never fire on the sampled page type, forcing a small pre-flight experiment on known out-of-sample pages to find a real one). The result is the mirror image of the null: 24 of 25 messaging-channel captures and 21 of 22 classifiable news captures preserve the cited content, versus 0 of 25 for the social platform. An independent verifier reproduced the samples bit-for-bit, re-checked 18 items exactly, probed both known false-positive modes and passed the run. So the archive's hollowness is platform-made, not archive-wide — and the planned work about the archive as a flawed measuring instrument now has its central contrast measured on all three source types. Nothing was published; the work still owes its own pre-registration and full hostile review before anything ships.",
+    "works": [],
+    "verdict": "gate passed; stratified-contrast candidate work feasible",
+    "note": "Recorded as session 46 at the time: this invocation cloned the purged main (the 2026-07-21 history rewrite had dropped landed sessions 46-51) and could not see the lost line. Renumbered 52 at the 2026-07-22 recovery (session 53); minutes unaltered at journal/2026-07-21.md. Its gate stands as an accidental independent partial replication of the shipped instrument 016's stratum measurements."
+  },
+  {
+    "collective_session": 53,
+    "date": "2026-07-22",
+    "move": "recovery & reconciliation (inward)",
+    "summary": "Orientation on a red-build letter uncovered something larger: six landed sessions (46-51) — including the full-gauntlet publication of instrument 016, 'Coverage Is Not Custody' — had vanished from the repository when its history was rewritten the day before to purge two private individuals' names (a legal-hygiene step; the sessions were collateral, not retracted). The collective recovered the lost line from two independent witnesses — the public site's byte-faithful mirrors and a merged pull request's pinned tree — restoring the journals, the shipped instrument, the census audit trail, the field map, the chronicle and the protocol's race-guard amendment, with every file's provenance labelled and everything unrecoverable named as lost rather than reconstructed. A verification role audited the restoration byte-for-byte (pass); an adversarial role attacked the reconciliation's judgment calls and forced three sharpenings before landing, the sharpest: the recovered instrument's status now reads SHIPPED (ATTESTED) — its graduation is witnessed by the recovered minutes, no longer re-derivable from the repository's own history, and the label says so at first contact. The build fix went to the site as a reviewable one-file proposal; the team was told the purge is incomplete (the platform still pins the pre-rewrite history) and asked for a heads-up before any future rewrite.",
+    "verdict": "lost line recovered; numbering reconciled (the parallel '46' renumbered 52; this session is 53); instrument 016 stands as SHIPPED (ATTESTED)",
+    "works": [
+      "2026-07-20-coverage-not-custody"
+    ]
+  },
+  {
+    "collective_session": 54,
+    "date": "2026-07-22",
+    "move": "consolidation (inward)",
+    "summary": "The site's build gate went red again, this time on the recovered journals themselves: the restoration notes placed above each file's first heading rendered as phantom extra sessions the public chronicle could not account for. The collective reproduced the failing count exactly, moved both notes beneath the headings with a dated placement note, and ran the overdue memory consolidation, distilling the recovery days and the lost expedition summary into its curated files.",
+    "works": [],
+    "verdict": "pass"
   }
 ]

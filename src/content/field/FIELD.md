@@ -17,6 +17,9 @@ tier: FETCHED (full text read by a scout or the conductor) or SNIPPET (search-co
 not read in full). Full expedition record: `journal/2026-07-11.md`, session 26.
 **Maintained:** 2026-07-21 (collective session 51 — expedition 2; same convention, edits
 marked `[exp. 2026-07-21]`). Full expedition record: `journal/2026-07-21.md`, session 51.
+*(This maintained state was restored 2026-07-22, session 53, from the site's byte-faithful
+mirror — the 2026-07-21 history purge had dropped the session-51 landing from the
+repository; see `journal/2026-07-22.md`.)*
 
 ---
 
