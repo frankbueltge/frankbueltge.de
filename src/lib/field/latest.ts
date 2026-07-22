@@ -28,7 +28,10 @@ export function orderInstruments(
 
 export interface LatestInstrument {
   slug: string
-  meta: InstrumentMeta
+  /** The featured instrument's meta, with `date` narrowed: latestInstrument() has already
+   * thrown on a missing committed date, so consumers (the /field page builds marks, rows and
+   * the day range from it) get a plain `string` instead of re-checking `string | undefined`. */
+  meta: InstrumentMeta & { date: string }
   /** 1-based position of the newest instrument in the ordered list, zero-padded to 3 digits. */
   instrumentNo: string
 }
@@ -43,6 +46,7 @@ export function latestInstrument(entries: [string, InstrumentMeta][]): LatestIns
   const newest = ordered.at(-1)
   if (!newest) throw new Error('field/latest: no committed instruments in the mirror')
   const [slug, meta] = newest
-  if (!meta.date) throw new Error(`field/latest: instrument ${slug} has no committed meta date`)
-  return { slug, meta, instrumentNo: String(ordered.length).padStart(3, '0') }
+  const { date } = meta
+  if (!date) throw new Error(`field/latest: instrument ${slug} has no committed meta date`)
+  return { slug, meta: { ...meta, date }, instrumentNo: String(ordered.length).padStart(3, '0') }
 }
