@@ -1,0 +1,558 @@
+@prefix mrr: <https://example.invalid/mrr/vocab#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<urn:mrr:agent-role:01KY4PZ13XBPPWVNB3H30MD02H> a prov:Agent .
+
+<urn:mrr:agent-role:01KY4RMN5CACRH52BEKZ54RXYJ> a prov:Agent .
+
+<urn:mrr:method-protocol:01KY1SNYA6CZAYGFVVP0PA2QC0> a mrr:MethodProtocol ;
+    mrr:contentHash "sha256:be781bae5bcd1330126723edbfdb9fde1d90f9dc728211b7c19be09d27194466" ;
+    mrr:createdAt "2026-07-21T07:36:39.508797+00:00"^^xsd:dateTime ;
+    mrr:kind "MethodProtocol" ;
+    mrr:practiceId <urn:mrr:practice:01KY1SNY86X0GDE2N9TVZKT4YF> ;
+    mrr:revision 3 .
+
+<urn:mrr:method-ruling:01KY1SNYM5YT52PGVRMCN49H7D> a mrr:MethodRuling ;
+    mrr:contentHash "sha256:a84c07528ac8f9986f6e8b9a27aa9939b6ac308deb4b6f9bf1a0366f9e370fc6" ;
+    mrr:createdAt "2026-07-21T07:36:39.820586+00:00"^^xsd:dateTime ;
+    mrr:kind "MethodRuling" ;
+    mrr:practiceId <urn:mrr:practice:01KY1SNY86X0GDE2N9TVZKT4YF> ;
+    mrr:revision 2 .
+
+<urn:mrr:method-ruling:01KY1SNYNABM3R1GTAGA3S5D9V> a mrr:MethodRuling ;
+    mrr:contentHash "sha256:3c936efdd4d92955eaebcc49fe0b6d547b60a74db6978ce8cb4c37a9284b31ea" ;
+    mrr:createdAt "2026-07-21T07:36:39.856301+00:00"^^xsd:dateTime ;
+    mrr:kind "MethodRuling" ;
+    mrr:practiceId <urn:mrr:practice:01KY1SNY86X0GDE2N9TVZKT4YF> ;
+    mrr:revision 2 .
+
+<urn:mrr:verification:01KY4PZ13XBPPWVNB3H30MD02K> a prov:Activity,
+        mrr:VerificationResult ;
+    prov:used <urn:mrr:claim:01KY1SNYKA19APBDVN1GQ3RQFS>,
+        <urn:mrr:source-record:01KY1SNYEFWCQYJWDME6QR06DQ>,
+        <urn:mrr:source-record:01KY1SNYESHXC15E34VK4C2P3D>,
+        <urn:mrr:source-record:01KY1SNYF2BEADVNNAEWJEB4H5>,
+        <urn:mrr:source-record:01KY1SNYFB69S1WW9MTNJ7NW30>,
+        <urn:mrr:source-record:01KY1SNYFN8CMCH3Y3YTQRP9RA>,
+        <urn:mrr:source-record:01KY1SNYFYE24QDX64P8T9XBZE>,
+        <urn:mrr:source-record:01KY1SNYG77SYPX4W8AGNSQA9T>,
+        <urn:mrr:source-record:01KY1SNYGCBDB4ZZG17AB7WXD7>,
+        <urn:mrr:source-record:01KY1SNYGNEMN6VTBPCFQMBW4B>,
+        <urn:mrr:source-record:01KY1SNYGY10JDZCKKCP8XQ5T2>,
+        <urn:mrr:source-record:01KY1SNYH8M4GXEMBQA5J9QK95>,
+        <urn:mrr:source-record:01KY1SNYHH3B03FF0Z3C1P8EFC>,
+        <urn:mrr:source-record:01KY1SNYHT8KKXQ1HVRKKC4WFG>,
+        <urn:mrr:source-record:01KY1SNYJ277CYWXYJ6VRT4042>,
+        <urn:mrr:source-record:01KY1SNYJC3TNBZSZ1AG9T4G3D> ;
+    mrr:confidence 0.85 ;
+    mrr:contentHash "sha256:d2a9b8e110509f06475b5befcd5742e5758cc3af6eb0559cce0a836e1076c734" ;
+    mrr:createdAt "2026-07-22T10:46:54.845914+00:00"^^xsd:dateTime ;
+    mrr:evidenceInspected <urn:mrr:source-record:01KY1SNYEFWCQYJWDME6QR06DQ>,
+        <urn:mrr:source-record:01KY1SNYESHXC15E34VK4C2P3D>,
+        <urn:mrr:source-record:01KY1SNYF2BEADVNNAEWJEB4H5>,
+        <urn:mrr:source-record:01KY1SNYFB69S1WW9MTNJ7NW30>,
+        <urn:mrr:source-record:01KY1SNYFN8CMCH3Y3YTQRP9RA>,
+        <urn:mrr:source-record:01KY1SNYFYE24QDX64P8T9XBZE>,
+        <urn:mrr:source-record:01KY1SNYG77SYPX4W8AGNSQA9T>,
+        <urn:mrr:source-record:01KY1SNYGCBDB4ZZG17AB7WXD7>,
+        <urn:mrr:source-record:01KY1SNYGNEMN6VTBPCFQMBW4B>,
+        <urn:mrr:source-record:01KY1SNYGY10JDZCKKCP8XQ5T2>,
+        <urn:mrr:source-record:01KY1SNYH8M4GXEMBQA5J9QK95>,
+        <urn:mrr:source-record:01KY1SNYHH3B03FF0Z3C1P8EFC>,
+        <urn:mrr:source-record:01KY1SNYHT8KKXQ1HVRKKC4WFG>,
+        <urn:mrr:source-record:01KY1SNYJ277CYWXYJ6VRT4042>,
+        <urn:mrr:source-record:01KY1SNYJC3TNBZSZ1AG9T4G3D> ;
+    mrr:findingCount 1 ;
+    mrr:kind "VerificationResult" ;
+    mrr:practiceId <urn:mrr:practice:01KY1SNY86X0GDE2N9TVZKT4YF> ;
+    mrr:recommendation "pass" ;
+    mrr:reviewerRole "blind primary-source verifier (K1-T06, candidate c of the 2026-07-22 owner decision)" ;
+    mrr:revision 1 ;
+    mrr:targetClaim <urn:mrr:claim:01KY1SNYKA19APBDVN1GQ3RQFS> .
+
+<urn:mrr:verification:01KY4PZ1415344RA8QCAW5YG1X> a prov:Activity,
+        mrr:VerificationResult ;
+    prov:used <urn:mrr:claim:01KY1SNYN45EM4Z1VSS3S97Z2M>,
+        <urn:mrr:source-record:01KY1SNYDHG2V573AEMWM2W5H3>,
+        <urn:mrr:source-record:01KY1SNYDWG3ADS9NDR1RXRMGR>,
+        <urn:mrr:source-record:01KY1SNYE5XB3WTPMWA4YZ5F86> ;
+    mrr:confidence 0.95 ;
+    mrr:contentHash "sha256:6619a301c62181f90bbbc0b88d8866c1b21a3c9cb952779fd7842ec9d7d36b73" ;
+    mrr:createdAt "2026-07-22T10:46:54.845914+00:00"^^xsd:dateTime ;
+    mrr:evidenceInspected <urn:mrr:source-record:01KY1SNYDHG2V573AEMWM2W5H3>,
+        <urn:mrr:source-record:01KY1SNYDWG3ADS9NDR1RXRMGR>,
+        <urn:mrr:source-record:01KY1SNYE5XB3WTPMWA4YZ5F86> ;
+    mrr:findingCount 0 ;
+    mrr:kind "VerificationResult" ;
+    mrr:practiceId <urn:mrr:practice:01KY1SNY86X0GDE2N9TVZKT4YF> ;
+    mrr:recommendation "pass" ;
+    mrr:reviewerRole "blind primary-source verifier (K1-T06, candidate c of the 2026-07-22 owner decision)" ;
+    mrr:revision 1 ;
+    mrr:targetClaim <urn:mrr:claim:01KY1SNYN45EM4Z1VSS3S97Z2M> .
+
+<urn:mrr:verification:01KY4RMN5CACRH52BEKZ54RXYH> a prov:Activity,
+        mrr:VerificationResult ;
+    prov:used <urn:mrr:claim:01KY1SNYKA19APBDVN1GQ3RQFS>,
+        <urn:mrr:source-record:01KY1SNYGNEMN6VTBPCFQMBW4B> ;
+    mrr:confidence 0.8 ;
+    mrr:contentHash "sha256:ba90ee1821e241e3a81e35872186d916db9d6c2397527adcbbfc6d1314bd0aef" ;
+    mrr:createdAt "2026-07-22T11:16:12.076560+00:00"^^xsd:dateTime ;
+    mrr:evidenceInspected <urn:mrr:source-record:01KY1SNYGNEMN6VTBPCFQMBW4B> ;
+    mrr:findingCount 5 ;
+    mrr:kind "VerificationResult" ;
+    mrr:practiceId <urn:mrr:practice:01KY1SNY86X0GDE2N9TVZKT4YF> ;
+    mrr:recommendation "fail" ;
+    mrr:reviewerRole "external cross-practice verifier — the Ulysses practice (irrtum-als-methode), candidate d of the owner's 2026-07-22 decision record (Entscheidung 1); bounded review of the single 'instantiates' row (works-hammond-v3-model-collapse), taken by the practice's own decision under its standing terms (offer, not order)" ;
+    mrr:revision 1 ;
+    mrr:targetClaim <urn:mrr:claim:01KY1SNYKA19APBDVN1GQ3RQFS> .
+
+<urn:mrr:evidence-anchor:01KY1SNYDP8ARZXPJZ41KG5ZKM> a prov:Entity,
+        mrr:EvidenceAnchor ;
+    mrr:anchorKind "text" ;
+    mrr:anchorValidationStatus "validated" ;
+    mrr:contentHash "sha256:deef8cc291f214427a0ddbe9305cc9f7d89374edd05b0ebc7962093c3281d62c" ;
+    mrr:createdAt "2026-07-21T07:36:39.606949+00:00"^^xsd:dateTime ;
+    mrr:kind "EvidenceAnchor" ;
+    mrr:practiceId <urn:mrr:practice:01KY1SNY86X0GDE2N9TVZKT4YF> ;
+    mrr:relation "supports" ;
+    mrr:revision 1 ;
+    mrr:sourceRecord <urn:mrr:source-record:01KY1SNYDHG2V573AEMWM2W5H3> .
+
+<urn:mrr:evidence-anchor:01KY1SNYE1PYBWY67T5GS7NEJA> a prov:Entity,
+        mrr:EvidenceAnchor ;
+    mrr:anchorKind "text" ;
+    mrr:anchorValidationStatus "validated" ;
+    mrr:contentHash "sha256:f9b16952bd3748ea11bde671cc547f29825a91147774e0ad4078fb46687485bb" ;
+    mrr:createdAt "2026-07-21T07:36:39.617071+00:00"^^xsd:dateTime ;
+    mrr:kind "EvidenceAnchor" ;
+    mrr:practiceId <urn:mrr:practice:01KY1SNY86X0GDE2N9TVZKT4YF> ;
+    mrr:relation "supports" ;
+    mrr:revision 1 ;
+    mrr:sourceRecord <urn:mrr:source-record:01KY1SNYDWG3ADS9NDR1RXRMGR> .
+
+<urn:mrr:evidence-anchor:01KY1SNYEAWVPY7TPCNXRSX3J2> a prov:Entity,
+        mrr:EvidenceAnchor ;
+    mrr:anchorKind "text" ;
+    mrr:anchorValidationStatus "validated" ;
+    mrr:contentHash "sha256:7b275613f5018cbd18bc6813ecaa4e9e50addee4ceef60fa791e2799fe9f05fe" ;
+    mrr:createdAt "2026-07-21T07:36:39.626644+00:00"^^xsd:dateTime ;
+    mrr:kind "EvidenceAnchor" ;
+    mrr:practiceId <urn:mrr:practice:01KY1SNY86X0GDE2N9TVZKT4YF> ;
+    mrr:relation "supports" ;
+    mrr:revision 1 ;
+    mrr:sourceRecord <urn:mrr:source-record:01KY1SNYE5XB3WTPMWA4YZ5F86> .
+
+<urn:mrr:evidence-anchor:01KY1SNYEM0PYKTJSW5YDZ42RP> a prov:Entity,
+        mrr:EvidenceAnchor ;
+    mrr:anchorKind "text" ;
+    mrr:anchorValidationStatus "validated" ;
+    mrr:contentHash "sha256:9791be3c56ef3d95d827d4f6877a28e903903c1cc057e4807ea7a0ad772c4eb6" ;
+    mrr:createdAt "2026-07-21T07:36:39.636763+00:00"^^xsd:dateTime ;
+    mrr:kind "EvidenceAnchor" ;
+    mrr:practiceId <urn:mrr:practice:01KY1SNY86X0GDE2N9TVZKT4YF> ;
+    mrr:relation "contradicts" ;
+    mrr:revision 1 ;
+    mrr:sourceRecord <urn:mrr:source-record:01KY1SNYEFWCQYJWDME6QR06DQ> .
+
+<urn:mrr:evidence-anchor:01KY1SNYEYNF9BNWWVTMMP83RC> a prov:Entity,
+        mrr:EvidenceAnchor ;
+    mrr:anchorKind "text" ;
+    mrr:anchorValidationStatus "validated" ;
+    mrr:contentHash "sha256:913f2126524ab07f3a2945d363e4752452b5b6616951db629941db738fb9a7b9" ;
+    mrr:createdAt "2026-07-21T07:36:39.646147+00:00"^^xsd:dateTime ;
+    mrr:kind "EvidenceAnchor" ;
+    mrr:practiceId <urn:mrr:practice:01KY1SNY86X0GDE2N9TVZKT4YF> ;
+    mrr:relation "contradicts" ;
+    mrr:revision 1 ;
+    mrr:sourceRecord <urn:mrr:source-record:01KY1SNYESHXC15E34VK4C2P3D> .
+
+<urn:mrr:evidence-anchor:01KY1SNYF7QWAZNQ7K8Z2V8K2J> a prov:Entity,
+        mrr:EvidenceAnchor ;
+    mrr:anchorKind "text" ;
+    mrr:anchorValidationStatus "validated" ;
+    mrr:contentHash "sha256:ce884c2c2a89dfa15090f455b2bfff2812c331475515502a65a0f0fbeec9f417" ;
+    mrr:createdAt "2026-07-21T07:36:39.655711+00:00"^^xsd:dateTime ;
+    mrr:kind "EvidenceAnchor" ;
+    mrr:practiceId <urn:mrr:practice:01KY1SNY86X0GDE2N9TVZKT4YF> ;
+    mrr:relation "contradicts" ;
+    mrr:revision 1 ;
+    mrr:sourceRecord <urn:mrr:source-record:01KY1SNYF2BEADVNNAEWJEB4H5> .
+
+<urn:mrr:evidence-anchor:01KY1SNYFGNTK0XCJPEWHP9ZA3> a prov:Entity,
+        mrr:EvidenceAnchor ;
+    mrr:anchorKind "text" ;
+    mrr:anchorValidationStatus "validated" ;
+    mrr:contentHash "sha256:4d1128c8e208775ae42724a879dfd089d1f4594aac4c7e83c07a20ad744fe939" ;
+    mrr:createdAt "2026-07-21T07:36:39.664422+00:00"^^xsd:dateTime ;
+    mrr:kind "EvidenceAnchor" ;
+    mrr:practiceId <urn:mrr:practice:01KY1SNY86X0GDE2N9TVZKT4YF> ;
+    mrr:relation "contradicts" ;
+    mrr:revision 1 ;
+    mrr:sourceRecord <urn:mrr:source-record:01KY1SNYFB69S1WW9MTNJ7NW30> .
+
+<urn:mrr:evidence-anchor:01KY1SNYFS2EH5BT0NGZKA42E6> a prov:Entity,
+        mrr:EvidenceAnchor ;
+    mrr:anchorKind "text" ;
+    mrr:anchorValidationStatus "validated" ;
+    mrr:contentHash "sha256:b2d5ea5df45885e400507b411ce573a5b627e8fca4ed4e2b55918d273d44fc45" ;
+    mrr:createdAt "2026-07-21T07:36:39.673952+00:00"^^xsd:dateTime ;
+    mrr:kind "EvidenceAnchor" ;
+    mrr:practiceId <urn:mrr:practice:01KY1SNY86X0GDE2N9TVZKT4YF> ;
+    mrr:relation "contradicts" ;
+    mrr:revision 1 ;
+    mrr:sourceRecord <urn:mrr:source-record:01KY1SNYFN8CMCH3Y3YTQRP9RA> .
+
+<urn:mrr:evidence-anchor:01KY1SNYG3C33NCV5B78YYHFB6> a prov:Entity,
+        mrr:EvidenceAnchor ;
+    mrr:anchorKind "text" ;
+    mrr:anchorValidationStatus "validated" ;
+    mrr:contentHash "sha256:f1e23bc420568be0656c2a91062803df3571fcfe90df4e481b8491148489254a" ;
+    mrr:createdAt "2026-07-21T07:36:39.683190+00:00"^^xsd:dateTime ;
+    mrr:kind "EvidenceAnchor" ;
+    mrr:practiceId <urn:mrr:practice:01KY1SNY86X0GDE2N9TVZKT4YF> ;
+    mrr:relation "contradicts" ;
+    mrr:revision 1 ;
+    mrr:sourceRecord <urn:mrr:source-record:01KY1SNYFYE24QDX64P8T9XBZE> .
+
+<urn:mrr:evidence-anchor:01KY1SNYGG26EMGC40Y537ASR2> a prov:Entity,
+        mrr:EvidenceAnchor ;
+    mrr:anchorKind "text" ;
+    mrr:anchorValidationStatus "validated" ;
+    mrr:contentHash "sha256:63faa8057d7894d3c28c61ca1061b7600a58bc5d668058b331c945238c069515" ;
+    mrr:createdAt "2026-07-21T07:36:39.697003+00:00"^^xsd:dateTime ;
+    mrr:kind "EvidenceAnchor" ;
+    mrr:practiceId <urn:mrr:practice:01KY1SNY86X0GDE2N9TVZKT4YF> ;
+    mrr:relation "contradicts" ;
+    mrr:revision 1 ;
+    mrr:sourceRecord <urn:mrr:source-record:01KY1SNYGCBDB4ZZG17AB7WXD7> .
+
+<urn:mrr:evidence-anchor:01KY1SNYGTAQGH16MFWCK305JG> a prov:Entity,
+        mrr:EvidenceAnchor ;
+    mrr:anchorKind "text" ;
+    mrr:anchorValidationStatus "validated" ;
+    mrr:contentHash "sha256:b50af0398346b3feaaff561bf00293ca28fdf4543df69d7ad2a17d1241795787" ;
+    mrr:createdAt "2026-07-21T07:36:39.706067+00:00"^^xsd:dateTime ;
+    mrr:kind "EvidenceAnchor" ;
+    mrr:practiceId <urn:mrr:practice:01KY1SNY86X0GDE2N9TVZKT4YF> ;
+    mrr:relation "supports" ;
+    mrr:revision 1 ;
+    mrr:sourceRecord <urn:mrr:source-record:01KY1SNYGNEMN6VTBPCFQMBW4B> .
+
+<urn:mrr:evidence-anchor:01KY1SNYH3TXCAZST8FK84DEBH> a prov:Entity,
+        mrr:EvidenceAnchor ;
+    mrr:anchorKind "text" ;
+    mrr:anchorValidationStatus "validated" ;
+    mrr:contentHash "sha256:e95e216e757079956f3ece2558fbd0a933c185fc6fc33e0ae9148aaf9ead362b" ;
+    mrr:createdAt "2026-07-21T07:36:39.715561+00:00"^^xsd:dateTime ;
+    mrr:kind "EvidenceAnchor" ;
+    mrr:practiceId <urn:mrr:practice:01KY1SNY86X0GDE2N9TVZKT4YF> ;
+    mrr:relation "contradicts" ;
+    mrr:revision 1 ;
+    mrr:sourceRecord <urn:mrr:source-record:01KY1SNYGY10JDZCKKCP8XQ5T2> .
+
+<urn:mrr:evidence-anchor:01KY1SNYHCRWQW5ABHZPV42AKZ> a prov:Entity,
+        mrr:EvidenceAnchor ;
+    mrr:anchorKind "text" ;
+    mrr:anchorValidationStatus "validated" ;
+    mrr:contentHash "sha256:bf6d16423c8a83ececa8e50abbb90a647365302d552377a377eab484660af01d" ;
+    mrr:createdAt "2026-07-21T07:36:39.724495+00:00"^^xsd:dateTime ;
+    mrr:kind "EvidenceAnchor" ;
+    mrr:practiceId <urn:mrr:practice:01KY1SNY86X0GDE2N9TVZKT4YF> ;
+    mrr:relation "contradicts" ;
+    mrr:revision 1 ;
+    mrr:sourceRecord <urn:mrr:source-record:01KY1SNYH8M4GXEMBQA5J9QK95> .
+
+<urn:mrr:evidence-anchor:01KY1SNYHNFRBM6X7AT0S6WGVA> a prov:Entity,
+        mrr:EvidenceAnchor ;
+    mrr:anchorKind "text" ;
+    mrr:anchorValidationStatus "validated" ;
+    mrr:contentHash "sha256:cc5f98776c9fe357330e639a3b9e9dce9485c5aa589abebcb41f54e75f6dcb67" ;
+    mrr:createdAt "2026-07-21T07:36:39.733844+00:00"^^xsd:dateTime ;
+    mrr:kind "EvidenceAnchor" ;
+    mrr:practiceId <urn:mrr:practice:01KY1SNY86X0GDE2N9TVZKT4YF> ;
+    mrr:relation "contradicts" ;
+    mrr:revision 1 ;
+    mrr:sourceRecord <urn:mrr:source-record:01KY1SNYHH3B03FF0Z3C1P8EFC> .
+
+<urn:mrr:evidence-anchor:01KY1SNYHYMQGHPTZ8MKQY1T2T> a prov:Entity,
+        mrr:EvidenceAnchor ;
+    mrr:anchorKind "text" ;
+    mrr:anchorValidationStatus "validated" ;
+    mrr:contentHash "sha256:44129dc0da3a06275ba25e8fc803ca61156249092510f2bef873de58c7ede287" ;
+    mrr:createdAt "2026-07-21T07:36:39.742505+00:00"^^xsd:dateTime ;
+    mrr:kind "EvidenceAnchor" ;
+    mrr:practiceId <urn:mrr:practice:01KY1SNY86X0GDE2N9TVZKT4YF> ;
+    mrr:relation "contradicts" ;
+    mrr:revision 1 ;
+    mrr:sourceRecord <urn:mrr:source-record:01KY1SNYHT8KKXQ1HVRKKC4WFG> .
+
+<urn:mrr:evidence-anchor:01KY1SNYJ73E11ZYJZ54CBSE02> a prov:Entity,
+        mrr:EvidenceAnchor ;
+    mrr:anchorKind "text" ;
+    mrr:anchorValidationStatus "validated" ;
+    mrr:contentHash "sha256:83afac09efed36a6226c2f978186cb48c0f8696b1bbe512c7522cff0542f8d67" ;
+    mrr:createdAt "2026-07-21T07:36:39.751582+00:00"^^xsd:dateTime ;
+    mrr:kind "EvidenceAnchor" ;
+    mrr:practiceId <urn:mrr:practice:01KY1SNY86X0GDE2N9TVZKT4YF> ;
+    mrr:relation "contradicts" ;
+    mrr:revision 1 ;
+    mrr:sourceRecord <urn:mrr:source-record:01KY1SNYJ277CYWXYJ6VRT4042> .
+
+<urn:mrr:evidence-anchor:01KY1SNYJG6W7DVSDK3ZCX3EC4> a prov:Entity,
+        mrr:EvidenceAnchor ;
+    mrr:anchorKind "text" ;
+    mrr:anchorValidationStatus "validated" ;
+    mrr:contentHash "sha256:8b33beee5eadd322051bdf3518950aa8f7c1c3587483a83b71f1b6b5c1a15fbb" ;
+    mrr:createdAt "2026-07-21T07:36:39.760615+00:00"^^xsd:dateTime ;
+    mrr:kind "EvidenceAnchor" ;
+    mrr:practiceId <urn:mrr:practice:01KY1SNY86X0GDE2N9TVZKT4YF> ;
+    mrr:relation "contradicts" ;
+    mrr:revision 1 ;
+    mrr:sourceRecord <urn:mrr:source-record:01KY1SNYJC3TNBZSZ1AG9T4G3D> .
+
+<urn:mrr:claim:01KY1SNYN45EM4Z1VSS3S97Z2M> a prov:Entity,
+        mrr:Claim ;
+    mrr:assertionLength 790 ;
+    mrr:claimType "observational" ;
+    mrr:contentHash "sha256:602f82f079010237eb798844e1882c3adfb68df6d96660b079aab20322656941" ;
+    mrr:createdAt "2026-07-21T07:36:39.844473+00:00"^^xsd:dateTime ;
+    mrr:evidenceRelation <urn:mrr:evidence-anchor:01KY1SNYDP8ARZXPJZ41KG5ZKM>,
+        <urn:mrr:evidence-anchor:01KY1SNYE1PYBWY67T5GS7NEJA>,
+        <urn:mrr:evidence-anchor:01KY1SNYEAWVPY7TPCNXRSX3J2> ;
+    mrr:kind "Claim" ;
+    mrr:practiceId <urn:mrr:practice:01KY1SNY86X0GDE2N9TVZKT4YF> ;
+    mrr:revision 1 ;
+    mrr:status "draft" .
+
+<urn:mrr:source-record:01KY1SNYG77SYPX4W8AGNSQA9T> a prov:Entity .
+
+<urn:mrr:source-record:01KY1SNYDHG2V573AEMWM2W5H3> a prov:Entity,
+        mrr:SourceRecord ;
+    mrr:contentHash "sha256:95ef5af3bc4db08706e8638f4d8e7852a77593e97b7844108ef038248e682573" ;
+    mrr:createdAt "2026-07-21T07:36:39.601551+00:00"^^xsd:dateTime ;
+    mrr:kind "SourceRecord" ;
+    mrr:practiceId <urn:mrr:practice:01KY1SNY86X0GDE2N9TVZKT4YF> ;
+    mrr:provenanceClass "primary" ;
+    mrr:publicationDate "2023" ;
+    mrr:revision 1 ;
+    mrr:sourceType "peer-reviewed-preprint" ;
+    mrr:title "The Curse of Recursion: Training on Generated Data Makes Models Forget" .
+
+<urn:mrr:source-record:01KY1SNYDWG3ADS9NDR1RXRMGR> a prov:Entity,
+        mrr:SourceRecord ;
+    mrr:contentHash "sha256:85aaaccb1957e94cd0b7fb69cae736c81c40b191e6f122323d5281b33bc406a6" ;
+    mrr:createdAt "2026-07-21T07:36:39.612149+00:00"^^xsd:dateTime ;
+    mrr:kind "SourceRecord" ;
+    mrr:practiceId <urn:mrr:practice:01KY1SNY86X0GDE2N9TVZKT4YF> ;
+    mrr:provenanceClass "primary" ;
+    mrr:publicationDate "2023" ;
+    mrr:revision 1 ;
+    mrr:sourceType "preprint" ;
+    mrr:title "Self-Consuming Generative Models Go MAD" .
+
+<urn:mrr:source-record:01KY1SNYE5XB3WTPMWA4YZ5F86> a prov:Entity,
+        mrr:SourceRecord ;
+    mrr:contentHash "sha256:6d979afb85e40106f118ab738030605bb409815bbef6e5be821c4176cb1354c4" ;
+    mrr:createdAt "2026-07-21T07:36:39.621854+00:00"^^xsd:dateTime ;
+    mrr:kind "SourceRecord" ;
+    mrr:practiceId <urn:mrr:practice:01KY1SNY86X0GDE2N9TVZKT4YF> ;
+    mrr:provenanceClass "primary" ;
+    mrr:publicationDate "2024" ;
+    mrr:revision 1 ;
+    mrr:sourceType "conference-preprint" ;
+    mrr:title "Is Model Collapse Inevitable? Breaking the Curse of Recursion by Accumulating Real and Synthetic Data" .
+
+<urn:mrr:source-record:01KY1SNYEFWCQYJWDME6QR06DQ> a prov:Entity,
+        mrr:SourceRecord ;
+    mrr:contentHash "sha256:abf8b4c2ba9ec011e012c3020d0ae3b5ed31722907508e0e325f0b86579df648" ;
+    mrr:createdAt "2026-07-21T07:36:39.631889+00:00"^^xsd:dateTime ;
+    mrr:kind "SourceRecord" ;
+    mrr:practiceId <urn:mrr:practice:01KY1SNY86X0GDE2N9TVZKT4YF> ;
+    mrr:provenanceClass "secondary" ;
+    mrr:publicationDate "2024" ;
+    mrr:revision 1 ;
+    mrr:sourceType "curated-artwork-record" ;
+    mrr:title "Ent- (non-earthly delights)" .
+
+<urn:mrr:source-record:01KY1SNYESHXC15E34VK4C2P3D> a prov:Entity,
+        mrr:SourceRecord ;
+    mrr:contentHash "sha256:c8b0fb6258190a32fa435bdc975c03d7ef0d5a534f244d18b27b4422f9c95d6a" ;
+    mrr:createdAt "2026-07-21T07:36:39.641384+00:00"^^xsd:dateTime ;
+    mrr:kind "SourceRecord" ;
+    mrr:practiceId <urn:mrr:practice:01KY1SNY86X0GDE2N9TVZKT4YF> ;
+    mrr:provenanceClass "secondary" ;
+    mrr:publicationDate "2025" ;
+    mrr:revision 1 ;
+    mrr:sourceType "curated-artwork-record" ;
+    mrr:title "Wilding AI Lab" .
+
+<urn:mrr:source-record:01KY1SNYF2BEADVNNAEWJEB4H5> a prov:Entity,
+        mrr:SourceRecord ;
+    mrr:contentHash "sha256:3b80f5df0cb96646f6d4a7d5a3235d523b3d3ce76ee8fe7fe14dd88cbcfeed37" ;
+    mrr:createdAt "2026-07-21T07:36:39.651012+00:00"^^xsd:dateTime ;
+    mrr:kind "SourceRecord" ;
+    mrr:practiceId <urn:mrr:practice:01KY1SNY86X0GDE2N9TVZKT4YF> ;
+    mrr:provenanceClass "secondary" ;
+    mrr:publicationDate "2021" ;
+    mrr:revision 1 ;
+    mrr:sourceType "curated-artwork-record" ;
+    mrr:title "AI Delivered: The Abject" .
+
+<urn:mrr:source-record:01KY1SNYFB69S1WW9MTNJ7NW30> a prov:Entity,
+        mrr:SourceRecord ;
+    mrr:contentHash "sha256:3ce5a576829e221bb4572a93adb0c6867a622ef612bc5e0e35d59834558898fc" ;
+    mrr:createdAt "2026-07-21T07:36:39.660028+00:00"^^xsd:dateTime ;
+    mrr:kind "SourceRecord" ;
+    mrr:practiceId <urn:mrr:practice:01KY1SNY86X0GDE2N9TVZKT4YF> ;
+    mrr:provenanceClass "secondary" ;
+    mrr:publicationDate "2024" ;
+    mrr:revision 1 ;
+    mrr:sourceType "curated-artwork-record" ;
+    mrr:title "En attendant le récit / Tales of Narrativelessness" .
+
+<urn:mrr:source-record:01KY1SNYFN8CMCH3Y3YTQRP9RA> a prov:Entity,
+        mrr:SourceRecord ;
+    mrr:contentHash "sha256:935157151fc1d5440cda4e9790aaf5fe5bc486a46bb41962d111a4b2b4f72644" ;
+    mrr:createdAt "2026-07-21T07:36:39.669114+00:00"^^xsd:dateTime ;
+    mrr:kind "SourceRecord" ;
+    mrr:practiceId <urn:mrr:practice:01KY1SNY86X0GDE2N9TVZKT4YF> ;
+    mrr:provenanceClass "secondary" ;
+    mrr:publicationDate "2024" ;
+    mrr:revision 1 ;
+    mrr:sourceType "curated-artwork-record" ;
+    mrr:title "Errorism" .
+
+<urn:mrr:source-record:01KY1SNYFYE24QDX64P8T9XBZE> a prov:Entity,
+        mrr:SourceRecord ;
+    mrr:contentHash "sha256:0a654eb48d230d3a5e3e18720b67f68acbe362104b73c397926d21e00fe58998" ;
+    mrr:createdAt "2026-07-21T07:36:39.678610+00:00"^^xsd:dateTime ;
+    mrr:kind "SourceRecord" ;
+    mrr:practiceId <urn:mrr:practice:01KY1SNY86X0GDE2N9TVZKT4YF> ;
+    mrr:provenanceClass "secondary" ;
+    mrr:publicationDate "2025" ;
+    mrr:revision 1 ;
+    mrr:sourceType "curated-artwork-record" ;
+    mrr:title "Hallucinations of an Artifact" .
+
+<urn:mrr:source-record:01KY1SNYGCBDB4ZZG17AB7WXD7> a prov:Entity,
+        mrr:SourceRecord ;
+    mrr:contentHash "sha256:7299941cb0106074c4b712f5b08ab7f603f98543f41b686ce82dfeec4bd15b7a" ;
+    mrr:createdAt "2026-07-21T07:36:39.692640+00:00"^^xsd:dateTime ;
+    mrr:kind "SourceRecord" ;
+    mrr:practiceId <urn:mrr:practice:01KY1SNY86X0GDE2N9TVZKT4YF> ;
+    mrr:provenanceClass "secondary" ;
+    mrr:publicationDate "2025" ;
+    mrr:revision 1 ;
+    mrr:sourceType "curated-artwork-record" ;
+    mrr:title "The Sleight of the Machine" .
+
+<urn:mrr:source-record:01KY1SNYGY10JDZCKKCP8XQ5T2> a prov:Entity,
+        mrr:SourceRecord ;
+    mrr:contentHash "sha256:537262d122934febd07300a6b39f1d101bfd24a30ec7567dd88cf78a24646189" ;
+    mrr:createdAt "2026-07-21T07:36:39.710857+00:00"^^xsd:dateTime ;
+    mrr:kind "SourceRecord" ;
+    mrr:practiceId <urn:mrr:practice:01KY1SNY86X0GDE2N9TVZKT4YF> ;
+    mrr:provenanceClass "secondary" ;
+    mrr:publicationDate "2026" ;
+    mrr:revision 1 ;
+    mrr:sourceType "curated-artwork-record" ;
+    mrr:title "6,500 Alphabets Make a Map" .
+
+<urn:mrr:source-record:01KY1SNYH8M4GXEMBQA5J9QK95> a prov:Entity,
+        mrr:SourceRecord ;
+    mrr:contentHash "sha256:96ca942f0059520fb419e3c0571def0302d35817ed83a47f069a92e070d71c88" ;
+    mrr:createdAt "2026-07-21T07:36:39.720116+00:00"^^xsd:dateTime ;
+    mrr:kind "SourceRecord" ;
+    mrr:practiceId <urn:mrr:practice:01KY1SNY86X0GDE2N9TVZKT4YF> ;
+    mrr:provenanceClass "secondary" ;
+    mrr:publicationDate "2025" ;
+    mrr:revision 1 ;
+    mrr:sourceType "curated-artwork-record" ;
+    mrr:title "Cybernetics, or Ghosts?" .
+
+<urn:mrr:source-record:01KY1SNYHH3B03FF0Z3C1P8EFC> a prov:Entity,
+        mrr:SourceRecord ;
+    mrr:contentHash "sha256:22131713029ec95375e1b8c894678d3894b84695dbdc2ca5601456897e0c4ea3" ;
+    mrr:createdAt "2026-07-21T07:36:39.729199+00:00"^^xsd:dateTime ;
+    mrr:kind "SourceRecord" ;
+    mrr:practiceId <urn:mrr:practice:01KY1SNY86X0GDE2N9TVZKT4YF> ;
+    mrr:provenanceClass "secondary" ;
+    mrr:publicationDate "2021-22" ;
+    mrr:revision 1 ;
+    mrr:sourceType "curated-artwork-record" ;
+    mrr:title "Matrix Vegetal" .
+
+<urn:mrr:source-record:01KY1SNYHT8KKXQ1HVRKKC4WFG> a prov:Entity,
+        mrr:SourceRecord ;
+    mrr:contentHash "sha256:8598ee406b5fcb0124cd05e7c82c2b3ac4760ba1249e3d30bac689320abc7ea2" ;
+    mrr:createdAt "2026-07-21T07:36:39.738112+00:00"^^xsd:dateTime ;
+    mrr:kind "SourceRecord" ;
+    mrr:practiceId <urn:mrr:practice:01KY1SNY86X0GDE2N9TVZKT4YF> ;
+    mrr:provenanceClass "secondary" ;
+    mrr:publicationDate "2022" ;
+    mrr:revision 1 ;
+    mrr:sourceType "curated-artwork-record" ;
+    mrr:title "Mythmachine" .
+
+<urn:mrr:source-record:01KY1SNYJ277CYWXYJ6VRT4042> a prov:Entity,
+        mrr:SourceRecord ;
+    mrr:contentHash "sha256:25ea2870c880ab51bbb626a39bba870eedb499ce4499814ad293678297aac206" ;
+    mrr:createdAt "2026-07-21T07:36:39.746907+00:00"^^xsd:dateTime ;
+    mrr:kind "SourceRecord" ;
+    mrr:practiceId <urn:mrr:practice:01KY1SNY86X0GDE2N9TVZKT4YF> ;
+    mrr:provenanceClass "secondary" ;
+    mrr:publicationDate "2024/2025 (world premiere)" ;
+    mrr:revision 1 ;
+    mrr:sourceType "curated-artwork-record" ;
+    mrr:title "The Feral: Epoch 1" .
+
+<urn:mrr:source-record:01KY1SNYJC3TNBZSZ1AG9T4G3D> a prov:Entity,
+        mrr:SourceRecord ;
+    mrr:contentHash "sha256:b85f84706557b916d97fd5954a54ac6c5e1c9b908c2a8bfb61d46a9d5d24ed5d" ;
+    mrr:createdAt "2026-07-21T07:36:39.756079+00:00"^^xsd:dateTime ;
+    mrr:kind "SourceRecord" ;
+    mrr:practiceId <urn:mrr:practice:01KY1SNY86X0GDE2N9TVZKT4YF> ;
+    mrr:provenanceClass "secondary" ;
+    mrr:publicationDate "2023-2024" ;
+    mrr:revision 1 ;
+    mrr:sourceType "curated-artwork-record" ;
+    mrr:title "Thousand Lives (BOB lineage)" .
+
+<urn:mrr:claim:01KY1SNYKA19APBDVN1GQ3RQFS> a prov:Entity,
+        mrr:Claim ;
+    mrr:assertionLength 4456 ;
+    mrr:claimType "interpretive" ;
+    mrr:contentHash "sha256:e7282ea697d850e40af3fd7ea44247c5de3249603c1868dae9f31da4cf50579b" ;
+    mrr:counterevidenceRelation <urn:mrr:evidence-anchor:01KY1SNYEM0PYKTJSW5YDZ42RP>,
+        <urn:mrr:evidence-anchor:01KY1SNYEYNF9BNWWVTMMP83RC>,
+        <urn:mrr:evidence-anchor:01KY1SNYF7QWAZNQ7K8Z2V8K2J>,
+        <urn:mrr:evidence-anchor:01KY1SNYFGNTK0XCJPEWHP9ZA3>,
+        <urn:mrr:evidence-anchor:01KY1SNYFS2EH5BT0NGZKA42E6>,
+        <urn:mrr:evidence-anchor:01KY1SNYG3C33NCV5B78YYHFB6>,
+        <urn:mrr:evidence-anchor:01KY1SNYGG26EMGC40Y537ASR2>,
+        <urn:mrr:evidence-anchor:01KY1SNYH3TXCAZST8FK84DEBH>,
+        <urn:mrr:evidence-anchor:01KY1SNYHCRWQW5ABHZPV42AKZ>,
+        <urn:mrr:evidence-anchor:01KY1SNYHNFRBM6X7AT0S6WGVA>,
+        <urn:mrr:evidence-anchor:01KY1SNYHYMQGHPTZ8MKQY1T2T>,
+        <urn:mrr:evidence-anchor:01KY1SNYJ73E11ZYJZ54CBSE02>,
+        <urn:mrr:evidence-anchor:01KY1SNYJG6W7DVSDK3ZCX3EC4> ;
+    mrr:createdAt "2026-07-21T07:36:39.805207+00:00"^^xsd:dateTime ;
+    mrr:evidenceRelation <urn:mrr:evidence-anchor:01KY1SNYGTAQGH16MFWCK305JG> ;
+    mrr:kind "Claim" ;
+    mrr:practiceId <urn:mrr:practice:01KY1SNY86X0GDE2N9TVZKT4YF> ;
+    mrr:revision 3 ;
+    mrr:status "contested" .
+
+<urn:mrr:source-record:01KY1SNYGNEMN6VTBPCFQMBW4B> a prov:Entity,
+        mrr:SourceRecord ;
+    mrr:contentHash "sha256:4a8066ddee85954a1a1666100e20033c381a2e06d5228bdf6e18e4c396e7290c" ;
+    mrr:createdAt "2026-07-21T07:36:39.701507+00:00"^^xsd:dateTime ;
+    mrr:kind "SourceRecord" ;
+    mrr:practiceId <urn:mrr:practice:01KY1SNY86X0GDE2N9TVZKT4YF> ;
+    mrr:provenanceClass "secondary" ;
+    mrr:publicationDate "2025" ;
+    mrr:revision 1 ;
+    mrr:sourceType "curated-artwork-record" ;
+    mrr:title "V3: Model Collapse" .
+
