@@ -38,112 +38,150 @@ interface RegisterEntry {
 }
 const entries = register as RegisterEntry[]
 
-// --- Die Ökologie-Karte (17.07., Frank: "datavism oder data snack tauchen da gar nicht auf")
-// Alle sechs Praktiken als Knoten, jede Begegnung als gerichtete Kante source→receiver —
-// gebaut aus register.json, also automatisch aktuell mit jedem Export. Ulysses' und Franks
-// kantenlose Knoten sind kein Fehler, sondern die Verfassung: dokumentiertes Schweigen bzw.
-// noch keine Begegnung als Partei — sichtbar, nie als Defizit gerendert (§7.2, spec 03 §8.1).
+// --- Die Historien-Karte: eine EINZIGE überschaubare Karte der ganzen Vielheit (Frank,
+// 2026-07-22, Deleuze "macht Karten!") — Chronologie UND Relation in einem Bild statt N
+// gestapelter Detailkarten. Sechs Praktiken als waagerechte Spuren; jede Begegnung ein
+// senkrechter Verbinder an ihrer Ordinalposition (links = früh, rechts = jetzt), der die
+// beteiligten Spuren überbrückt: Quelle gefüllt, Empfänger als Ring. Kein Fließtext im Bild —
+// die eine Zeile pro Begegnung steht in der nummerierten Legende darunter. Ordinal, nicht
+// zeit-skaliert: nur 003–005 tragen ein Datum, echte Zeitabstände wären eine Lüge. Gebaut aus
+// register.json, also mit jedem Export aktuell. Frank/eine Spur ohne Marke = dokumentiertes
+// Schweigen, sichtbar, nie als Defizit (§7.2, spec 03 §8.1).
 const normId = (id: string) =>
-  id === 'frank-bueltge' ? 'frank' : id === 'data-snack-plenum' ? 'data-snack' : id
-const NODES: Record<string, { x: number; y: number; label: string }> = {
-  meridian: { x: 130, y: 84, label: 'Meridian · field' },
-  ensemble: { x: 360, y: 56, label: 'Ensemble · studio' },
-  ulysses: { x: 590, y: 84, label: 'Ulysses · atelier' },
-  datavism: { x: 130, y: 246, label: 'datavism.org' },
-  frank: { x: 360, y: 282, label: 'Frank · conductor' },
-  'data-snack': { x: 590, y: 246, label: 'data-snack.com' },
+  id === 'frank-bueltge' ? 'frank'
+    : id === 'data-snack-plenum' ? 'data-snack'
+    : id === 'mrr' ? 'meridian'
+    : id
+const LANES = [
+  { id: 'meridian', label: 'Meridian · field' },
+  { id: 'ensemble', label: 'Ensemble · studio' },
+  { id: 'ulysses', label: 'Ulysses · atelier' },
+  { id: 'datavism', label: 'datavism.org' },
+  { id: 'data-snack', label: 'data-snack.com' },
+  { id: 'frank', label: 'Frank · conductor' },
+]
+const laneIdx = new Map(LANES.map((l, i) => [l.id, i]))
+const LANE_X0 = 188, LANE_X1 = 912, TOP = 56, LANE_DY = 44
+const laneY = (i: number) => TOP + i * LANE_DY
+const bottomY = laneY(LANES.length - 1)
+const statusClass = (s: string) =>
+  /resolv|premier|deliver|applied/i.test(s) ? 'st-done'
+    : /held|declin/i.test(s) ? 'st-held'
+    : /seed/i.test(s) ? 'st-seed'
+    : 'st-open'
+
+interface HistoryEnc {
+  nr: string; x: number; date: string; headline: string; status: string; cls: string
+  sources: number[]; receivers: number[]; lanes: number[]
 }
-interface Edge { from: string; to: string; nr: string; idx: number }
-const pairIdx = new Map<string, number>()
-const edges: Edge[] = []
-for (const e of entries) {
-  const nr = e.encounter_id.match(/^enc-\d{4}-(\d{3})/)?.[1] ?? e.encounter_id
-  const src = e.participants.filter((p) => p.role === 'source').map((p) => normId(p.id))
-  const rcv = e.participants.filter((p) => p.role === 'receiver').map((p) => normId(p.id))
-  for (const f of src) for (const t of rcv) {
-    if (!NODES[f] || !NODES[t]) continue
-    const key = [f, t].sort().join('|')
-    const idx = pairIdx.get(key) ?? 0
-    pairIdx.set(key, idx + 1)
-    edges.push({ from: f, to: t, nr, idx })
+const asLanes = (e: RegisterEntry, role: string) =>
+  [...new Set(e.participants.filter((p) => p.role === role).map((p) => laneIdx.get(normId(p.id))))]
+    .filter((n): n is number => n !== undefined)
+const histEntries: HistoryEnc[] = entries.map((e, i) => {
+  const sources = asLanes(e, 'source')
+  const receivers = asLanes(e, 'receiver')
+  return {
+    nr: e.encounter_id.match(/^enc-\d{4}-(\d{3})/)?.[1] ?? String(i + 1),
+    x: 0,
+    date: e.status?.as_of ?? '',
+    headline: e.title ?? e.encounter_id,
+    status: e.status?.statusLine ?? '',
+    cls: statusClass(e.status?.statusLine ?? ''),
+    sources,
+    receivers,
+    lanes: [...new Set([...sources, ...receivers])].sort((a, b) => a - b),
   }
-}
-const edgeSvg = edges.map(({ from, to, nr, idx }) => {
-  const a = NODES[from], b = NODES[to]
-  const mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2
-  const dx = b.x - a.x, dy = b.y - a.y, len = Math.hypot(dx, dy) || 1
-  const off = 16 + idx * 20
-  const cx = mx - (dy / len) * off, cy = my + (dx / len) * off
-  const lx = mx - (dy / len) * (off * 0.72), ly = my + (dx / len) * (off * 0.72)
+})
+const stepX = histEntries.length > 1 ? (LANE_X1 - LANE_X0 - 96) / (histEntries.length - 1) : 0
+histEntries.forEach((h, i) => { h.x = LANE_X0 + 64 + i * stepX })
+
+const laneSvg = LANES.map((l, i) => {
+  const y = laneY(i)
+  const active = histEntries.some((h) => h.lanes.includes(i))
   return (
-    `<path d="M ${a.x} ${a.y} Q ${cx} ${cy} ${b.x} ${b.y}" fill="none" stroke="currentColor" stroke-width="1" opacity="0.45" marker-end="url(#eco-arrow)"/>` +
-    `<text x="${lx}" y="${ly}" text-anchor="middle" font-size="10" opacity="0.75">${nr}</text>`
+    `<line x1="${LANE_X0}" y1="${y}" x2="${LANE_X1}" y2="${y}" class="hm-lane${active ? '' : ' hm-idle'}"/>` +
+    `<text x="${LANE_X0 - 14}" y="${y + 3.5}" text-anchor="end" class="hm-lane-label">${l.label}</text>`
   )
 }).join('')
-const nodeSvg = Object.entries(NODES).map(([id, n]) => {
-  const connected = edges.some((e) => e.from === id || e.to === id)
-  return (
-    `<circle cx="${n.x}" cy="${n.y}" r="5" fill="${connected ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="1.2" opacity="${connected ? '0.9' : '0.5'}"/>` +
-    `<text x="${n.x}" y="${n.y + (n.y > 160 ? 22 : -14)}" text-anchor="middle" font-size="11" opacity="0.85">${n.label}</text>`
-  )
+const encSvg = histEntries.map((h) => {
+  const yTop = laneY(h.lanes[0]), yBot = laneY(h.lanes[h.lanes.length - 1])
+  let s = `<line x1="${h.x}" y1="${yTop}" x2="${h.x}" y2="${yBot}" class="hm-arc ${h.cls}"/>`
+  for (const li of h.sources) s += `<circle cx="${h.x}" cy="${laneY(li)}" r="5.5" class="hm-src ${h.cls}"/>`
+  for (const li of h.receivers) s += `<circle cx="${h.x}" cy="${laneY(li)}" r="5.5" class="hm-rcv ${h.cls}"/>`
+  s += `<circle cx="${h.x}" cy="${yTop - 22}" r="10.5" class="hm-badge ${h.cls}"/>`
+  s += `<text x="${h.x}" y="${yTop - 18.3}" text-anchor="middle" class="hm-badge-n">${h.nr}</text>`
+  return s
 }).join('')
-const ecologyMapSvg =
-  `<svg viewBox="0 0 720 320" role="img" aria-label="Map of the ecology: six practices, ${entries.length} recorded encounters as directed edges" style="width:100%;height:auto;font-family:inherit">` +
-  `<defs><marker id="eco-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M 0 0 L 8 4 L 0 8 z" fill="currentColor" opacity="0.55"/></marker></defs>` +
-  edgeSvg + nodeSvg + `</svg>`
+const historyMapSvg =
+  `<svg viewBox="0 0 960 ${bottomY + 40}" role="img" aria-label="History of ${histEntries.length} encounters across six practices, ordered by record — filled = source, ring = receiver" style="width:100%;height:auto">` +
+  laneSvg + encSvg +
+  `<line x1="${LANE_X0}" y1="${bottomY + 20}" x2="${LANE_X1}" y2="${bottomY + 20}" class="hm-axis-line"/>` +
+  `<text x="${LANE_X0}" y="${bottomY + 34}" class="hm-axis">record order — earliest → now</text>` +
+  `<text x="${LANE_X1}" y="${bottomY + 34}" text-anchor="end" class="hm-axis">${histEntries.length} encounters</text>` +
+  `</svg>`
 ---
 <Page title={`${entrance.headline} | Frank Bültge`} description={entrance.status.statusLine}>
   <BegegnungEntrance />
 
-  <section class="mx-auto w-full max-w-4xl px-6 pb-16" aria-labelledby="register-heading">
-    <h2 id="register-heading" class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">
-      The register — every recorded encounter
+  <section class="mx-auto w-full max-w-4xl px-6 pb-16" aria-labelledby="history-heading">
+    <h2 id="history-heading" class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">
+      The history — every encounter, one map
     </h2>
-    <p class="mt-3 text-sm text-fg-muted">
-      The entrance above shows the encounter with an authored score; the ledger records
-      {entries.length} encounters, kept current by the nightly scribe. Each record links to the
-      public register (every quote pinned to a source commit, machine-verified).
+    <p class="mt-3 max-w-2xl text-sm text-fg-muted">
+      One map of the whole ledger: six practices as lanes, every recorded encounter a connector at
+      its place in the record (left = earliest), bridging the practices it joined — filled where a
+      practice is the source, a ring where it receives. An empty lane is not a failure but a
+      documented non-relation. Ordinal, not time-scaled — only the later encounters carry a date.
     </p>
-    <figure class="mt-6 font-mono text-fg-muted" set:html={ecologyMapSvg} />
-    <p class="mt-2 font-mono text-xs text-fg-faint">
-      the ecology map — every recorded encounter as a directed edge (source → receiver), numbered
-      by record · an unfilled node is not a failure: Ulysses' silence is documented non-relation,
-      and the conductor has no recorded encounter as a party yet
-    </p>
-    <div class="mt-5 overflow-x-auto">
-      <table class="w-full border-collapse text-left font-mono text-xs">
-        <thead>
-          <tr class="text-fg-faint">
-            <th class="border-t border-line/60 py-2 pr-4 font-semibold">encounter</th>
-            <th class="border-t border-line/60 py-2 pr-4 font-semibold">status</th>
-            <th class="border-t border-line/60 py-2 pr-4 font-semibold">participants</th>
-            <th class="border-t border-line/60 py-2 font-semibold">record</th>
-          </tr>
-        </thead>
-        <tbody class="text-fg-muted">
-          {entries.map((e) => (
-            <tr>
-              <td class="border-t border-line/60 py-2 pr-4">
-                <span class="text-fg">{e.title ?? e.encounter_id}</span>
-                <span class="block text-fg-faint">{e.encounter_id}{e.approval === 'draft' ? ' · draft' : ''}</span>
-              </td>
-              <td class="border-t border-line/60 py-2 pr-4">
-                {e.status?.statusLine ?? '—'}
-                {e.status?.as_of && <span class="block text-fg-faint">as of {e.status.as_of}</span>}
-                {e.observed?.premiered && (
-                  <span class="block text-fg">
-                    ▲ receiver work premiered{e.observed.premiered_on ? ` ${e.observed.premiered_on}` : ''} (observed){/premiere pending/i.test(e.title ?? '') ? ' — record catching up' : ''}
-                  </span>
-                )}
-              </td>
-              <td class="border-t border-line/60 py-2 pr-4">{e.participants.map((p) => p.id).join(' · ')}</td>
-              <td class="border-t border-line/60 py-2">
-                <a href={e.record_url} target="_blank" rel="noreferrer" class="underline hover:text-fg">record ↗</a>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <figure class="hm-map mt-6 overflow-x-auto" set:html={historyMapSvg} />
+    <ol class="mt-7 space-y-4">
+      {histEntries.map((h, i) => (
+        <li class="flex gap-3 border-t border-line/60 pt-4">
+          <span class={`hm-legend-n ${h.cls}`}>{h.nr}</span>
+          <div class="min-w-0">
+            <p class="text-sm text-fg">{h.headline}</p>
+            <p class="mt-1 font-mono text-xs text-fg-muted">
+              {h.sources.map((li) => LANES[li].label.split(' · ')[0]).join(' + ')} → {h.receivers.map((li) => LANES[li].label.split(' · ')[0]).join(' + ')}
+              {h.status ? ` · ${h.status}` : ''}
+              {h.date ? <span class="text-fg-faint"> · as of {h.date}</span> : null}
+              {' · '}
+              <a href={entries[i].record_url} target="_blank" rel="noreferrer" class="underline hover:text-fg">record ↗</a>
+            </p>
+          </div>
+        </li>
+      ))}
+    </ol>
   </section>
 </Page>
+
+<style is:global>
+  .hm-map svg { width: 100%; height: auto; min-width: 640px; }
+  .hm-map .hm-lane { stroke: var(--color-line); stroke-width: 1; }
+  .hm-map .hm-lane.hm-idle { opacity: 0.5; stroke-dasharray: 2 5; }
+  .hm-map .hm-lane-label { fill: var(--color-fg-muted); font: 12px var(--font-mono, ui-monospace, monospace); }
+  .hm-map .hm-arc { stroke-width: 2.5; }
+  .hm-map .hm-src { stroke: none; }
+  .hm-map .hm-rcv { fill: var(--color-bg); stroke-width: 2.5; }
+  .hm-map .hm-badge { fill: var(--color-bg); stroke-width: 1.5; }
+  .hm-map .hm-badge-n { fill: var(--color-fg); font: 700 11px var(--font-mono, ui-monospace, monospace); }
+  .hm-map .hm-axis { fill: var(--color-fg-faint); font: 11px var(--font-mono, ui-monospace, monospace); letter-spacing: 0.04em; }
+  .hm-map .hm-axis-line { stroke: var(--color-line); stroke-width: 1; }
+
+  .hm-map .hm-arc.st-done, .hm-map .hm-rcv.st-done, .hm-map .hm-badge.st-done { stroke: #3a9d78; }
+  .hm-map .hm-src.st-done { fill: #3a9d78; }
+  .hm-map .hm-arc.st-held, .hm-map .hm-rcv.st-held, .hm-map .hm-badge.st-held { stroke: #c0872a; }
+  .hm-map .hm-src.st-held { fill: #c0872a; }
+  .hm-map .hm-arc.st-seed, .hm-map .hm-rcv.st-seed, .hm-map .hm-badge.st-seed { stroke: #7a6ad0; }
+  .hm-map .hm-src.st-seed { fill: #7a6ad0; }
+  .hm-map .hm-arc.st-open, .hm-map .hm-rcv.st-open, .hm-map .hm-badge.st-open { stroke: var(--color-fg-muted); }
+  .hm-map .hm-src.st-open { fill: var(--color-fg-muted); }
+
+  .hm-legend-n {
+    flex: none; width: 1.7rem; height: 1.7rem; border-radius: 999px;
+    border: 1.5px solid var(--color-fg-muted); display: grid; place-items: center;
+    font: 700 12px var(--font-mono, ui-monospace, monospace); color: var(--color-fg);
+  }
+  .hm-legend-n.st-done { border-color: #3a9d78; }
+  .hm-legend-n.st-held { border-color: #c0872a; }
+  .hm-legend-n.st-seed { border-color: #7a6ad0; }
+</style>
