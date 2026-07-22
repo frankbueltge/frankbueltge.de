@@ -35,9 +35,9 @@ const de: About = {
 }
 
 const en: About = {
-  metaTitle: 'About Frank Bültge — Data & AI Engineer',
+  metaTitle: 'About Frank Bültge — Data Engineering & Analytics',
   metaDesc:
-    'Frank Bültge — Data & AI Engineer. Several main projects around data and AI, each with its own house: a federated research ecology (the current focus), datavism.org, and data-snack.com. Sourced and versioned wherever the apparatus permits; exclusions stay visible.',
+    'Frank Bültge — Data Engineering & Analytics. Several main projects around data and AI, each with its own house: a federated research ecology (the current focus), datavism.org, and data-snack.com. Sourced and versioned wherever the apparatus permits; exclusions stay visible.',
   lede: 'I work with data. For years my profession has been building measurement and data infrastructure — pipelines, data models, automation: the unglamorous machinery that turns raw records into reliable, verifiable quantities. This site is not that job. It is where my own projects live — and where I currently conduct the largest of them in the open.',
   sections: [
     {
