@@ -89,11 +89,24 @@ const RULER_Y = 232
 const LANE_X0 = 210
 const ASOF_X = 1336
 const DIV_X = 1250
-const EVT_X = [340, 470, 600, 730, 860, 970, 1060]
 const LANE_Y_BY_RANK = [300, 450, 580]
-/** The conductor (thin) lane's ported stop point — assemble_variants.py hand-places it at the
- * 5th event slot rather than spanning the full width, visually marking it as transport-only. */
-const THIN_LANE_STOP_X = EVT_X[4]
+
+// Ordinal event positions — the Zeit-Skalierung lens (zeichengrammatik-2026-07-15.md §7),
+// now built. Instead of a fixed seven-slot array, positions are DERIVED from the ledger's own
+// event count so any encounter renders (not only the ported enc-2026-001). The original,
+// hand-placed seven-event mockup layout is returned verbatim when the count is seven — so the
+// ported encounter stays pixel-identical, no silent re-layout — while every other count spreads
+// evenly across the same ruler span (EVT_SPAN_X0 … EVT_SPAN_X1). Still ordinal (ledger order),
+// as the ruler caption states; a true date-scaled placement would be a further lens on top.
+const PORTED_EVT_X = [340, 470, 600, 730, 860, 970, 1060]
+const EVT_SPAN_X0 = PORTED_EVT_X[0]
+const EVT_SPAN_X1 = PORTED_EVT_X[PORTED_EVT_X.length - 1]
+function eventPositions(count: number): number[] {
+  if (count === PORTED_EVT_X.length) return PORTED_EVT_X
+  if (count <= 1) return [Math.round((EVT_SPAN_X0 + EVT_SPAN_X1) / 2)]
+  const step = (EVT_SPAN_X1 - EVT_SPAN_X0) / (count - 1)
+  return Array.from({ length: count }, (_, i) => Math.round(EVT_SPAN_X0 + i * step))
+}
 /** Greedy word-wrap budget for the divergence terminal's inline quotes (matches the design
  * session's own line lengths, ~44 chars — docs/design/variants-2026-07-15/a-observatorium.html). */
 const DIVERGENCE_QUOTE_WRAP = 44
@@ -211,14 +224,15 @@ function flowPath(x1: number, y1: number, x2: number, y2: number): string {
  * assemble_variants.py's `build_svg()` structure exactly: graticule, day ruler, lanes, flows,
  * obligations, events, divergence terminal, as-of edge. */
 export function buildScoreSvg(score: ScoreExport): string {
-  if (score.events.length !== EVT_X.length) {
-    throw new Error(
-      `buildScoreSvg: geometry ported from assemble_variants.py assumes exactly ${EVT_X.length} ` +
-        `ledger events (this encounter's fixed layout); got ${score.events.length}. A different ` +
-        `count needs the Zeit-Skalierung lens (zeichengrammatik-2026-07-15.md §7) — a different, ` +
-        `not-yet-built generator, not a silent re-layout of this one.`,
-    )
+  if (score.events.length === 0) {
+    throw new Error('buildScoreSvg: an encounter with no ledger events has no score to draw')
   }
+  // Count-general ordinal geometry (the Zeit-Skalierung lens): the event x-positions come from
+  // the ledger's own length. Seven events reproduce the ported mockup exactly; any other count
+  // spreads evenly across the same span. THIN_LANE_STOP keeps the conductor lane visibly short
+  // (~70% along the events, matching the mockup's hand-placed 5th-of-7 stop) at any count.
+  const EVT_X = eventPositions(score.events.length)
+  const THIN_LANE_STOP_X = EVT_X[Math.floor((EVT_X.length - 1) * 0.7)]
 
   const laneRank = new Map<string, number>()
   for (const p of score.participants) if (p.lane && p.rank !== undefined) laneRank.set(p.lane, p.rank)

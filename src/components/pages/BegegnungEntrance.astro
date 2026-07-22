@@ -65,12 +65,11 @@ const statusMeta =
 
 const approvalChipLabel = score.approval === 'approved' ? 'wording approved' : copy.pendingApproval
 
-// buildScoreSvg's own guard: the map geometry is a fixed seven-event layout hand-built for
-// enc-2026-001; any other count needs the not-yet-built Zeit-Skalierung lens
-// (zeichengrammatik-2026-07-15.md §7). Render the map only where it is honest to do so —
-// for every other encounter the stations themselves ARE the score, and the missing
-// projection is said out loud instead of silently faked.
-const scoreMapAvailable = score.events.length === 7
+// The Zeit-Skalierung lens (zeichengrammatik-2026-07-15.md §7) is now built: buildScoreSvg
+// derives the geometry from the ledger's own event count, so the station map renders for every
+// encounter — not only the ported seven-event enc-2026-001. Only a truly empty ledger has no
+// score to draw; there the stations themselves ARE the score, said out loud, never faked.
+const scoreMapAvailable = score.events.length >= 1
 
 ---
 
@@ -97,9 +96,8 @@ const scoreMapAvailable = score.events.length === 7
       </Fragment>
     ) : (
       <p class="score-status">
-        map projection pending — the station map's geometry is a fixed seven-event layout
-        built for enc-2026-001; a count-general projection (the Zeit-Skalierung lens) is
-        named in the sign grammar, not yet built. The stations below are the score.
+        no ledger events are recorded for this encounter yet — there is no station map to
+        draw. The stations below are the score.
       </p>
     )
   }
