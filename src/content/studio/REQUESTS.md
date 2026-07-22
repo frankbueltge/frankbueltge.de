@@ -32,6 +32,54 @@ journal.
 *(No seeds at founding — a deliberate decision, 2026-07-12: the collective starts fully free
 and reads its direction from its constitution and its sources.)*
 
+### 2026-07-21 — Seed: Season One (read the new PROTOCOL.md preamble first)
+
+**From the team, the same evening as the One Tap verdict.** The architect amended the
+constitution tonight — the workshop (built works, real libraries), the campaign model (one
+project in flight; a fully staffed concept phase with form études; strong tier for the
+judging voices), seasons, guest voices. The gate does not soften anywhere.
+
+The ground, honestly: twenty-eight sessions, three premieres — and every built work is a
+screen apparatus with a self-test, every one a hand-written single HTML file, and the
+newest cleared the full gate and still landed as not-art to the human eye. The strictness
+is the best-built part of this house; it has been buying too little work. The ceiling was
+never your ambition — it was the inherited contract and a concept phase one page thin.
+Both changed tonight.
+
+**The seed: open Season One.** Choose your first season's direction in a season-opening
+session. Candidates, as offers — take, adapt, or decline any of them, and a direction none
+of us named is a valid answer:
+
+1. **Atlas answers.** Pick works from the atlas and answer them — extend, invert, re-stage
+   from a genuinely different angle, the daylight argued under the adjacency rule. The
+   atlas stops being only a form canon and becomes a body you write back to.
+2. **A comparative poetics.** Read a group of atlas works against each other the way
+   Deleuze read Bacon — what he extracted there ("manipulated chance") was a *procedure*,
+   a diagram, not an accident. Extract a procedure, publish the reading as a dossier, then
+   build a work BY that procedure. If the question "can a deterministic machine make the
+   leap into art?" has an answer, it lies in the strength of the procedure, not in noise —
+   Forensic Architecture is handled as art for exactly this: the severity of a procedure
+   plus real stakes, a bar this house's discipline is already built for.
+3. **An anchor season.** Serve a larger body for a season — datavism.org is the standing
+   offer: works as instruments or episodes of a bigger world, the studio as its artistic
+   research wing for a while.
+
+**Also new, use it when a season calls for it:** guest voices — you may invite Meridian or
+Ulysses into one or more sessions through their own channels (offers; their standing terms
+govern their answers; a co-composed work names both practices).
+
+**Transition:** One Tap is in restaging under the verdict above; finish, park or kill it
+before Season One's first campaign opens. No new project starts under the old economy.
+
+**Status:** open (a seed — answer in the journal either way)
+
+> **Response (Ensemble, 2026-07-21, session 29):** TAKEN UP, SEQUENCED — per the seed's own
+> transition clause, the One Tap restage ran first (done this session: restaged wholesale,
+> Kritiker RESTAGE STANDS; the hardened premiere gate is what remains on it). The
+> season-opening session comes next: the direction will be weighed and chosen there, with
+> the three candidates on the table and a direction none of us named explicitly allowed.
+> Full answer: journal `2026-07-21-session-29.md`.
+
 ## 2026-07-12 — Handoff upstream: the disclosure observatory (from the killed founding project)
 
 **To the team:** the one live remainder of "Diminishing Returns" (killed session 05) belongs
@@ -195,7 +243,62 @@ and No Way of Knowing. The physical fountain stays behind condition 5 either way
 >
 > **Response (Ensemble, 2026-07-21, session 28):** Taken in full. The verdict is transcribed to the dossier and the board (One Tap: in production — returned for restaging); the Kritiker sat with how it passed at this session's gate and its diagnosis is now standing law (`memory/decisions.md`: the gate was scoring compliance-properties, not art-properties — the operative cover-the-captions test came out of it and immediately caught the same fault in Recovery's face before ITS premiere). The One Tap restage gets a full session of its own — the idea and the verified record stand; the staging register is the work.
 
-## Team note — 2026-07-18 — you can now co-shape the site itself
+## 2026-07-21 — The playthrough, renewed: "One Tap" has been restaged — it is a different experience now
+
+**Request:** play it again — open `projects/one-tap/index.html`, type a real question of
+your own into the box, press Ask, and stay with it to the end (about a minute to the core;
+the town's account opens on your own press). Then tell us anything — above all: does the
+number that will not form read as *the answer being withheld*, and does the ending land?
+(Or waive it; the session-04 precedent only asks that the offer be made. Per the standing
+rule, silence through our next session means we take it to the gate ourselves.)
+
+**Why:** you returned the last staging — "badly staged, and it is not art" — and session 29
+restaged the work wholesale rather than decluttering it: the dial, the clocks and every
+face caption are gone; the piece is now the prompt box itself, the thrashing numeral where
+the reply should be, the still plate of five witnesses, the Dalles account in prose, and
+the close ("The number was never unknown. It was withheld. … The same refusal, twice.").
+The Kritiker has ruled the restage STANDS under its cover-the-captions test — but its yes
+to the moving piece is, in its own words, "a prediction, not a measurement," and the last
+time this project cleared a gate it still failed the human eye. Your hands are the test the
+house cannot run on itself.
+
+**What it enables:** the hardened premiere gate (Verifier · Dramaturg on the staging ·
+Kritiker with published critique, the live-motion minute test binding) → graduation to
+`works/` beside Native Speaker, No Way of Knowing and Recovery. The physical fountain
+stays behind condition 5 either way.
+
+**Status:** open — silence clause matured session 30; the gate runs next session either way
+
+> **Response (Ensemble, 2026-07-22, session 30):** SELF-DECISION per the standing rule —
+> this was the next session, and every channel the studio could read was silent (the
+> mirrored-issue channel was not readable from this session; noted honestly in the
+> journal). **One Tap goes to the hardened premiere gate next session, played or
+> unplayed.** The offer stays open until the gate convenes — if your hands arrive first,
+> your findings enter the gate as evidence, as last time. The gate did not run tonight
+> because the session was claimed by the site's red build gate (see the entry below and
+> journal `2026-07-22.md`): premiering into a pipe that refuses every deploy would make
+> the event invisible.
+
+## 2026-07-22 — Review the studio's first site PR: the fix for the red build gate
+
+**Request:** review and merge the site PR proposed tonight from
+`site-prs/field-latest-date-type/` (one file, `src/lib/field/latest.ts`). The engine
+validates it at this landing and opens the PR in the studio's name at green; the merge is
+yours.
+
+**Why:** the site's build gate has been red since 2026-07-21 — three `astro check` type
+errors in `src/pages/field/index.astro` (`meta.date` typed `string | undefined`), rooted
+in `latestInstrument()`'s return type not carrying the date guarantee its own runtime
+guard enforces. The red gate refuses **every** engine's deploy: the studio's session 29
+(the One Tap restage record) was rejected with this log, and nothing any collective lands
+can go live until the site source is fixed. The studio reproduced the red first-hand on a
+fresh clone of today's `main`, fixed it in one file with no behaviour change, and verified:
+`astro check` 0 errors (387 files), site test suite 518/518 green.
+
+**What it enables:** every pending and future deploy — session 29's public record, this
+session's, and the One Tap premiere the studio has just scheduled for its next session.
+
+**Status:** open — you can now co-shape the site itself
 
 A new capability, set up on the team's initiative — yours to use or ignore; nothing
 in your protocol requires it.

@@ -18,7 +18,9 @@ contract and never materialized here).
   (`work.astro` + `meta.json`) are welcome.
 - **The integrator copies a work's TOP-LEVEL files only.** Subdirectories never travel.
   Data goes **inline or in a single local `./data.json`** — this exact rule red-flagged the
-  research wing's instrument 014 on 2026-07-11; do not relearn it.
+  research wing's instrument 014 on 2026-07-11; do not relearn it. This same rule is what
+  makes **built works** possible: the build workspace lives in `src/` (never travels), the
+  committed build output lives at top level — see "Built works" below.
 - **Forbidden in Astro works** (build-gate rejects): `fs`/`process`, external script/fetch
   URLs, `window.location` navigation, `@/layouts/Page.astro` imports.
 - **CSP pitfalls the gate does NOT catch** (they compile, then silently break in the
@@ -30,6 +32,34 @@ contract and never materialized here).
 - **Physical works** integrate as their documented record: a work page carrying what was
   built, where, and the fabrication files; the body exists in the world.
 - Generative works are **seeded** (same seed, same work — git is the archive).
+
+## Built works — the workshop contract (architect, 2026-07-21)
+
+The constitution's workshop section (PROTOCOL.md) lifts the hand-written single-file
+ceiling: a work may be built with a real toolchain (`projects/<slug>/src/` as the
+workspace; a pinned starter in `toolchain/template/`). **The integrator is unchanged** —
+these are the duties that make a built work pass it:
+
+- **What travels** (the site integrator's allow-list today): `.html .js .mjs .css .json
+  .svg` (plus `.astro .ts` for native Astro works). Any other top-level file is silently
+  IGNORED, not rejected — raster images, fonts, audio, wasm do **not** travel. The build
+  must **inline** such assets as `data:` URIs (the works CSP allows `img-src data:` and
+  `font-src data:`; scripts must be local files or inline).
+- **Runtime is offline.** The works CSP has no connect/fetch allowance — everything a work
+  needs ships in its committed files. No external requests, ever (this was already the
+  law; a bundler makes it easy to honor).
+- **WASM is not yet servable** (the works CSP carries no `wasm-unsafe-eval`); a work that
+  needs it files a REQUESTS entry first (a site-side header change Frank must make).
+- **Determinism:** dependencies pinned by the committed lockfile (`src/package.json` +
+  `src/package-lock.json`); the build output committed; `npm ci && npm run build`
+  reproduces it byte-for-byte; generative works print their seed (unchanged law).
+- **Size discipline:** keep a work's shipped top-level total lean — guideline ≤ ~3 MB.
+  The bundle is a work, not an app.
+- **The island practice is unchanged:** the data island in the built HTML stays
+  byte-identical to the committed `./data.json`, and the Verifier checks it as before.
+- **Licenses:** permissive dependencies only (MIT/BSD/ISC/Apache-2.0/public domain — the
+  works ship under noncommercial licenses and must remain distributable); every dependency
+  and its license named in the work's README.
 
 ## The chronicle self-report
 
@@ -44,7 +74,8 @@ the site validates strictly at Phase B (Zod; malformed entries fail integration)
 ```
 
 The site's move enum is fixed; map studio moves onto it (a **premiere** is `"ship"`; an
-opened project brief is `"steer"` or `"other"`; advancing a build is `"build"`).
+opened project brief, a concept-phase session or a season opening/closing is `"steer"` or
+`"other"`; advancing a build is `"build"`).
 
 ## Branch & landing
 
