@@ -1,0 +1,90 @@
+{
+  "_meta": {
+    "generated_from": "src/data/meridian/export",
+    "method": "counts via SPARQL over the joined RO-Crate+PROV graph; verbatim findings read from the object bodies",
+    "deterministic": true,
+    "triples": 509
+  },
+  "export_meta": {
+    "root": "claim graph (no crate)",
+    "standard": "RO-Crate 1.1 + W3C-PROV",
+    "object_count": 42,
+    "artifact_count": 0,
+    "date_published": "2026-07-22T11:16:12.076560Z"
+  },
+  "claim": {
+    "urn": "urn:mrr:claim:01KY1SNYKA19APBDVN1GQ3RQFS",
+    "content_hash": "sha256:e7282ea697d850e40af3fd7ea44247c5de3249603c1868dae9f31da4cf50579b",
+    "analysis": "instantiation-vs-reference-classification",
+    "type": "interpretive",
+    "status": "contested",
+    "supporting": 1,
+    "contradicting": 13,
+    "verification_count": 2
+  },
+  "verifications": [
+    {
+      "urn": "urn:mrr:verification:01KY4RMN5CACRH52BEKZ54RXYH",
+      "recommendation": "fail",
+      "confidence": 0.8,
+      "finding_count": 5,
+      "inspected": 1,
+      "reviewer_role": "external cross-practice verifier — the Ulysses practice (irrtum-als-methode), candidate d of the owner's 2026-07-22 decision record (Entscheidung 1); bounded review of the single 'instantiates' row (works-hammond-v3-model-collapse), taken by the practice's own decision under its standing terms (offer, not order)",
+      "findings": [
+        {
+          "severity": "material",
+          "statement": "Ground 1 (verifier's wording, verbatim): \"The generation count fails Step 1 as written. The criterion demands model-generated output fed back as training input \"across at least two generations.\" Documented: the V1→V2 pass fed camera images of *real visitors and spaces* — that is the first generation of model output, not feedback of it; the V2→V3 pass is the first and only documented pass in which model-derived content (V2's AI imagery, materialized in the installation) re-enters a training set; and V4 is documented by its own venue as an *archive* of the project's production traces — \"props, equipment, tests, contact strips, raw files and digital traces\" (https://stills.org/exhibitions/felicity-hammond-variations/) — not a further trained generation. One pass, not two — and the run pinned chapter V3, where the count is exactly one.\""
+        },
+        {
+          "severity": "material",
+          "statement": "Ground 2 (verifier's wording, verbatim): \"The channel re-grounds itself in real data at every pass — the remedy regime of the run's own theory rows. What feeds forward is re-photography of a physical installation and its audience: \"photographs and data were collected from the exhibition spaces and people in them\" (https://thephotographersgallery.org.uk/whats-on/felicity-hammond-v3-model-collapse); the artist fitted security cameras to the installations, \"imaging the viewers and, thanks to a reflective wall opposite, themselves\" (https://www.1854.photography/2025/06/in-the-studio-felicity-hammond/). A camera cannot capture the model's output without also capturing the world around it — visitors, architecture, reflections, material surface — so fresh real data enters the loop at every pass *by construction*. Under the three theory rows the run pinned from my atlas, that is precisely the documented *anti-collapse* condition (Gerstgrasser: accumulate-don't-replace; Alemohammad: fresh real data at each loop iteration; Dohmatob: any clean fraction π>0 halts the plateau) — the reading carried in the `relevance` fields the first run dropped. The work stages the *name* of model collapse while its documented mechanism enacts the *cure*.\""
+        },
+        {
+          "severity": "material",
+          "statement": "Ground 3 (verifier's wording, verbatim): \"The charter's own Step-2 boundary, applied consistently, catches V3. Row 14 (Giraud) was classified \"contradicts\" because \"successive human ARTISTS feed one continuous AI\" — human-curated feeding. Hammond's channel is at least as governed: \"I'm re-enacting the images\"; \"I don't feel like I want to use it as an integral part of the machine of art production\" (1854, artist's words). The feedback is authored — selected, collaged, painted — not a mechanical retraining loop. If human governance disqualifies Giraud, it weakens Hammond identically. (This is also my S42 finding operating in reverse: governance of the channel, not its existence, decides what the loop does.)\""
+        },
+        {
+          "severity": "minor",
+          "statement": "Ground 4 (verifier's wording, verbatim): \"The artist warns against the literal reading the classification performs. \"None of these are descriptive about the process, it's more a sort of theatre\" (1854). Nowhere in the documentation reached this session is it technically established that a model was actually *trained* on the collected corpus, as opposed to the images being used as prompt or conditioning material; \"used as training sets\" is the venue's phrase, not a technical disclosure. Marked as unresolved uncertainty, cutting both ways.\""
+        },
+        {
+          "severity": "material",
+          "statement": "Comparison note (recording session): the pinned corpus row's classification_basis reads the decisive_move as clearing step 1 \"across at least three named generations (V1-V4)\"; the primary documentation reached by the verifier supports exactly one documented model-derived training pass (V2→V3) — V1→V2 fed camera images of real visitors and spaces, and V4 is documented by its own venue as an archive of production traces, not a further trained generation. The sentence carrying the difference is the venue's \"used as training sets for each subsequent variation, including V3\" read against Stills' description of V4. The pinned row's verification_status 'verified' is not contested here; what this record contests is the classification_basis's generation arithmetic."
+        }
+      ]
+    },
+    {
+      "urn": "urn:mrr:verification:01KY4PZ13XBPPWVNB3H30MD02K",
+      "recommendation": "pass",
+      "confidence": 0.85,
+      "finding_count": 1,
+      "inspected": 15,
+      "reviewer_role": "blind primary-source verifier (K1-T06, candidate c of the 2026-07-22 owner decision)",
+      "findings": [
+        {
+          "severity": "minor",
+          "statement": "Row works-ubermorgen-next-biennial-machine: blind classification agrees (references-only), but the row's underlying source verification remains 'pending' in the pinned corpus — classification agreement does not substitute for the missing source verification; the claim's honest-status machinery already accounts for it."
+        }
+      ]
+    }
+  ],
+  "sources": {
+    "total": 17,
+    "primary": 3,
+    "secondary": 14
+  },
+  "dissent": {
+    "invariant": "MRR-FR-077",
+    "preserved": true
+  },
+  "context_claim": {
+    "urn": "urn:mrr:claim:01KY1SNYN45EM4Z1VSS3S97Z2M",
+    "content_hash": "sha256:602f82f079010237eb798844e1882c3adfb68df6d96660b079aab20322656941",
+    "analysis": "model-collapse-mechanism-theory-confirmation",
+    "type": "observational",
+    "status": "draft",
+    "supporting": 3,
+    "contradicting": 0,
+    "verification_count": 1
+  }
+}

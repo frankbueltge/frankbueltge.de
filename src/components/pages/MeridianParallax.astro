@@ -1,0 +1,178 @@
+---
+// The Meridian parallax — a graph-fed view of one contested classification and its
+// two dissenting verifications. Every figure comes from src/data/meridian/parallax.json,
+// produced by `npm run meridian:refresh` (SPARQL over the committed claim-rooted export).
+// Monochrome by the site's own rule; pass/fail is encoded structurally, never by colour —
+// which is also the honest register for a disagreement neither verdict is allowed to win.
+import type { Locale } from '@/lib/site'
+import data from '@/data/meridian/parallax.json'
+
+interface Props {
+  locale?: Locale
+}
+
+const { claim, verifications, sources, dissent, context_claim } = data
+const exp = data.export_meta
+const claimAnchors = claim.supporting + claim.contradicting
+const supPct = (claim.supporting / claimAnchors) * 100
+const conPct = (claim.contradicting / claimAnchors) * 100
+const fail = verifications.find((v) => v.recommendation === 'fail')
+const pass = verifications.find((v) => v.recommendation === 'pass')
+const shortUrn = (u: string) => u.replace(/^urn:mrr:[a-z-]+:/, '')
+const pubDate = exp.date_published?.slice(0, 10)
+---
+
+<main class="mx-auto max-w-3xl px-4 py-12 font-mono text-fg sm:py-16">
+  <!-- masthead -->
+  <p class="mb-4 text-xs uppercase tracking-[0.2em] text-fg-faint">
+    Meridian Research Runtime · claim-rooted export · read-only projection
+  </p>
+  <h1 class="mb-4 text-balance font-sans text-3xl font-semibold leading-tight sm:text-4xl">
+    One claim, held contested — because two independent reviews disagreed, and neither was
+    averaged away.
+  </h1>
+  <p class="mb-1 text-sm text-fg-muted">
+    Analysis <span class="text-fg">“{claim.analysis}”</span> — model-collapse cluster
+  </p>
+  <p class="mb-6 break-all text-xs text-fg-faint">{claim.urn} · {claim.content_hash}</p>
+
+  <!-- meta pills -->
+  <ul class="mb-10 flex flex-wrap gap-2 text-[0.68rem] uppercase tracking-wider">
+    <li class="border border-fg px-2.5 py-1 font-semibold text-fg">Contested</li>
+    <li class="border border-line px-2.5 py-1 text-fg-muted">Type · {claim.type}</li>
+    <li class="border border-line px-2.5 py-1 text-fg-muted">{claim.verification_count} verifications</li>
+    <li class="border border-line px-2.5 py-1 text-fg-muted">{claimAnchors} evidence anchors</li>
+    <li class="border border-line px-2.5 py-1 text-fg-muted">{sources.total} sources</li>
+  </ul>
+
+  <!-- evidence balance -->
+  <section class="mb-12">
+    <h2 class="mb-3 text-xs uppercase tracking-[0.18em] text-fg-faint">
+      <span class="text-fg">Evidence balance</span> · what the claim rests on
+    </h2>
+    <div class="border border-line">
+      <svg
+        viewBox="0 0 100 8"
+        preserveAspectRatio="none"
+        width="100%"
+        height="44"
+        role="img"
+        aria-label={`${claim.supporting} supporting versus ${claim.contradicting} contradicting anchors`}
+      >
+        <rect x="0" y="0" width={supPct} height="8" class="fill-panel" />
+        <rect x={supPct} y="0" width={conPct} height="8" class="fill-fg" />
+        <line x1={supPct} y1="0" x2={supPct} y2="8" class="stroke-line" stroke-width="0.4" />
+      </svg>
+    </div>
+    <div class="mt-1.5 flex justify-between text-xs tabular-nums text-fg-faint">
+      <span>{claim.supporting} supporting</span>
+      <span class="font-semibold text-fg">{claim.contradicting} contradicting</span>
+    </div>
+    <p class="mt-2 text-xs text-fg-faint">
+      {claim.supporting} supporting anchor against {claim.contradicting} contradicting — the imbalance is
+      <em>why</em> this claim is contested, where the run's other ({context_claim?.type}) claim,
+      {context_claim?.supporting} supporting / {context_claim?.contradicting} contradicting, stayed a quiet draft.
+    </p>
+  </section>
+
+  <!-- the parallax -->
+  <section class="mb-12">
+    <h2 class="mb-4 text-xs uppercase tracking-[0.18em] text-fg-faint">
+      <span class="text-fg">The parallax</span> · two verdicts on the same claim, side by side
+    </h2>
+    <div class="grid gap-4 md:grid-cols-2">
+      {
+        [pass, fail].map((v) =>
+          v ? (
+            <article class="border border-line bg-panel p-5" class:list={[v.recommendation === 'fail' ? 'border-t-2 border-t-fg' : 'border-t-2 border-t-fg-faint']}>
+              <div class="mb-1 flex items-baseline justify-between gap-3">
+                <span class="text-sm font-semibold uppercase tracking-[0.14em] text-fg">
+                  {v.recommendation === 'pass' ? '▲ Pass' : '▼ Fail'}
+                </span>
+                <span class="text-xs tabular-nums text-fg-faint">confidence {v.confidence.toFixed(2)}</span>
+              </div>
+              <p class="mb-4 font-sans text-sm leading-snug text-fg-muted">{v.reviewer_role}</p>
+
+              <div class="mb-4">
+                <div class="mb-1 flex justify-between text-[0.68rem] text-fg-faint">
+                  <span>anchors inspected</span>
+                  <span class="tabular-nums">
+                    {v.inspected} of {claimAnchors}
+                    {v.inspected >= claimAnchors ? ' — a broad sweep' : ' — one row, in depth'}
+                  </span>
+                </div>
+                <svg
+                  viewBox="0 0 100 3"
+                  preserveAspectRatio="none"
+                  width="100%"
+                  height="6"
+                  role="img"
+                  aria-label={`${v.inspected} of ${claimAnchors} anchors inspected`}
+                >
+                  <rect x="0" y="0" width="100" height="3" class="fill-line" />
+                  <rect x="0" y="0" width={Math.min(100, (v.inspected / claimAnchors) * 100)} height="3" class="fill-fg-muted" />
+                </svg>
+              </div>
+
+              <ul class="flex flex-col gap-3">
+                {v.findings.map((f) => (
+                  <li
+                    class="border-l-2 pl-3"
+                    class:list={[f.severity === 'material' ? 'border-l-fg' : 'border-l-line']}
+                  >
+                    <span class="mb-1 block text-[0.6rem] uppercase tracking-[0.12em] text-fg-faint">
+                      {f.severity} · finding
+                    </span>
+                    <p class="font-sans text-[0.82rem] leading-relaxed text-fg-muted">{f.statement}</p>
+                  </li>
+                ))}
+              </ul>
+            </article>
+          ) : null,
+        )
+      }
+    </div>
+  </section>
+
+  <!-- dissent preserved -->
+  <section class="border-t border-line pt-8">
+    <p class="mb-8 border-l-2 border-l-fg pl-4 font-sans text-base leading-relaxed text-fg">
+      <span class="font-mono text-xs font-semibold uppercase tracking-wider text-fg-faint"
+        >Dissent preserved · {dissent.invariant}</span
+      ><br />
+      The two verdicts stand together, on record. The runtime does not resolve them into a score, an
+      average, or a majority. The claim stays <em>contested</em> until a human adjudicates — and adjudication
+      remains optional. The disagreement <em>is</em> the finding.
+    </p>
+
+    <dl class="grid grid-cols-2 gap-x-6 gap-y-4 text-xs sm:grid-cols-4">
+      <div>
+        <dt class="mb-1 text-fg-faint">Export root</dt>
+        <dd>{exp.root}</dd>
+      </div>
+      <div>
+        <dt class="mb-1 text-fg-faint">Standard</dt>
+        <dd>{exp.standard}</dd>
+      </div>
+      <div>
+        <dt class="mb-1 text-fg-faint">Objects in closure</dt>
+        <dd class="tabular-nums">{exp.object_count} · artifact bytes {exp.artifact_count}</dd>
+      </div>
+      <div>
+        <dt class="mb-1 text-fg-faint">Date published</dt>
+        <dd class="tabular-nums">{pubDate} · from max(created_at)</dd>
+      </div>
+    </dl>
+  </section>
+
+  <!-- honest provenance (stands in for the source byline: the runtime repo is private) -->
+  <aside class="mt-12 border-t border-line pt-6 text-xs leading-relaxed text-fg-faint">
+    <p>
+      Data exported from the Meridian Research Runtime and committed here as the open dataset
+      (<code class="text-fg-muted">src/data/meridian/export/</code>). Every figure on this page is derived
+      from it by SPARQL query over the joined RO-Crate + PROV graph — the runtime's own source is not yet
+      public, so no “source code open” is claimed here. Nothing on this page is authored prose about the
+      artwork; it is the archive, rendered.
+    </p>
+  </aside>
+</main>
