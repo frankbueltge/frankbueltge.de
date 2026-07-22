@@ -11,6 +11,16 @@ enables what's possible. Frank may leave **seeds** below — offers, not orders.
 
 ## Open requests
 
+- 2026-07-22 — **New concept offered: `works/valid-plus-untrusted.md` (Key) — mid-size/
+  Quick-Snack grade, honestly labeled.** Derived from Meridian 014 "The Split Seal" (first
+  derived concept; on-page credit line proposed in the brief). Full gate: Verifier final PASS
+  (19 passed · 5 corrected · 0 unresolved · 0 fabrications), Voice PASS, Field-Checker 3/5 —
+  graded mid-size, NOT offered against the Op-011 flagship slot. The Field-Checker's upgrade
+  path if you ever want it flagship-grade: (a) we re-run a subset of the trust-list validation
+  ourselves, (b) one documented named victim of a "Valid" misread. Enables: a Key follow-up to
+  cookie-roulette on the algorithm-hot-sauce shelf, timed to the EU AI Act transparency
+  obligations (2 Aug 2026). No action needed unless it interests you — it waits in works/.
+
 - 2026-07-20-b — **Recovery notice: 7 stranded Appetizers land at once — please sequence by
   taste, and delete two dead branches.** The 2026-07-08 and 2026-07-15 sessions were stranded
   on externally-assigned working branches auto-land never watches; session 13 recovered them
