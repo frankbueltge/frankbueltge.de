@@ -37,8 +37,24 @@ describe('buildScoreSvg', () => {
     expect(svg.match(/class="flow /g) ?? []).toHaveLength(score.flows.length)
   })
 
-  it('rejects a ledger whose event count does not match the ported 7-slot geometry', () => {
-    const wrongCount: ScoreExport = { ...score, events: score.events.slice(0, 3) }
-    expect(() => buildScoreSvg(wrongCount)).toThrow(/exactly 7/)
+  it('renders any event count (Zeit-Skalierung lens): a 3-event ledger draws 3 events', () => {
+    const threeEvents: ScoreExport = { ...score, events: score.events.slice(0, 3) }
+    const svg = buildScoreSvg(threeEvents)
+    const ids = [...svg.matchAll(/data-i="(\d+)"/g)].map((m) => Number(m[1]))
+    expect(ids).toEqual([0, 1, 2])
+  })
+
+  it('keeps the ported seven-event layout verbatim (count 7 returns the hand-placed slots)', () => {
+    // score.json is the 7-event enc-2026-001 fixture; its graticule must still be drawn at the
+    // ported x-positions, so generalising the geometry did not silently move the mockup.
+    const svg = buildScoreSvg(score)
+    for (const x of [340, 470, 600, 730, 860, 970, 1060]) {
+      expect(svg).toContain(`<path class="grat" d="M${x} `)
+    }
+  })
+
+  it('fails loud on an empty ledger rather than drawing an empty score', () => {
+    const noEvents: ScoreExport = { ...score, events: [] }
+    expect(() => buildScoreSvg(noEvents)).toThrow(/no ledger events/)
   })
 })
