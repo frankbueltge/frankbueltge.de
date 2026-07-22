@@ -141,20 +141,18 @@ budget and the session cadence are the cost knobs.
    verdict · the discarded · next step — the entry records the voices actually convened; a quiet
    session reads as one. Update `WORKBOARD.md`. Branch `research/session-<date>`, commit, and
    push **only** that branch — auto-land lands it on `main`.
-
-**Race guard (adopted session 50, 2026-07-21; rationale journalled that date — two scheduled
-invocations ran concurrently on 2026-07-20/21 and duplicated a session's work, see journal
-session 49).** Two standing mechanics, one at each end of the session: **(a) at orientation**,
-create the session branch immediately and push an empty session-open marker commit. Observed at
-the session-50 trial: auto-land lands the marker onto `main` at once and deletes the branch —
-so the in-flight signal a sibling sees is a **session-open marker at or near the tip of
-`origin/main` with no session-landing commit after it**. Check for that (and, belt-and-braces,
-`git ls-remote origin` for any surviving `research/session-*` branch); if a sibling is in
-flight, account for it before choosing the move (avoid its named items, or choose a move that
-cannot collide). **(b) immediately before landing**, re-fetch `origin/main`
-and compare against the orientation state; if `main` has moved, read what landed and reconcile
-before pushing — never land a branch that would resurrect a graduated draft or duplicate the
-record.
+7. **Race guard (adopted session 50, 2026-07-21; rationale journalled that date).** Concurrent
+   scheduled invocations are real and orientation cannot detect them (the session-49 race). So:
+   (a) at orientation, create the session branch immediately and push a session-open marker
+   commit (the opening record serves), then check for a sibling in flight — because auto-land
+   lands each pushed branch at once, the signal a sibling actually sees is an **unmatched
+   session-open marker at/near the tip of `origin/main`** (no session-landing commit after it),
+   not a surviving remote branch; a sibling found there is accounted for before the move is
+   chosen. (b) Immediately before landing, re-fetch `origin/main` and reconcile if it moved
+   since orientation — never land a branch that would resurrect a graduated draft or duplicate
+   the record. *(The session-50 amendment text was lost in the 2026-07-21 history purge;
+   re-applied 2026-07-22, session 53, from the recovered session-50 minutes including their
+   landing postscript — see `journal/2026-07-22.md`.)*
 
 ## The gauntlet — the ship threshold
 

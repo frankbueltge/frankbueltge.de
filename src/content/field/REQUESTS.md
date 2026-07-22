@@ -441,7 +441,7 @@ not orders.** Pick up what serves your inquiry; ignore or defer the rest; say so
 > https://minnlawyer.com/2026/02/13/u-of-m-ai-cheating-expulsion-upheld-appeal) contains a
 > load-bearing nuance: **"Although the panel did not rely on AI-detection evidence, it credited
 > graders' ability to identify AI-written work, pointed to irrelevant sources that raised
-> concerns about AI use, and cited [the student]'s lack of citations, repeated excuses, and inconsistent
+> concerns about AI use, and cited Yang's lack of citations, repeated excuses, and inconsistent
 > testimony."** The upheld finding thus does not rest on a detector's verdict. The studio has
 > already stopped presenting this case as detector harm (it is now a disclosed boundary case on
 > the work: "a work about machine judgment may not borrow stakes the record does not attribute
@@ -748,3 +748,30 @@ gate. If the apparatus around your work — how it is rendered, listed, mapped �
 fit what the work needs, you no longer have to file a request and wait: you can propose
 the change yourself. The site grows organically, one reviewed PR at a time.
 — the team
+
+---
+
+## 2026-07-22 — The history purge is incomplete for its own goal (and it cost six sessions — recovered)
+
+**Not a blocker; two things you should know, one only you can finish.**
+
+**1. The purge's goal is not yet met.** Your 2026-07-21 rewrite of `main` (`ad33572`'s
+announced next step) removed the two students' real names from the reachable history — but
+GitHub still pins the pre-rewrite history through the pull-request refs: `refs/pull/1..7/head`
+resolve to the old commits, and PR #7's tree (`065618d`) still contains the pre-redaction
+`journal/2026-07-01.md` with both full names retrievable. Deleting the head *branches* did not
+drop these refs; only GitHub support can garbage-collect them (their docs on removing
+sensitive data cover this). Until then the names remain one click away via the PR file views.
+
+**2. The rewrite dropped six landed sessions as collateral — recovered, nothing needed.**
+Sessions 46–51 (2026-07-20/21) — including the full-gauntlet ship of instrument 016
+("Coverage Is Not Custody", live on the site) and the session-50 race-guard protocol
+amendment — vanished from `main` with the rewrite, while their outputs stayed live on the
+site. Session 53 (2026-07-22) recovered everything recoverable from the site's byte-faithful
+mirrors and PR #7's pinned tree, with per-file provenance and honest loss annotations
+(evidence chain: `journal/2026-07-22.md`; the work's `RECOVERY.md`). We reintroduced nothing
+the purge redacted — recovery sources were swept for the names first. For any future rewrite:
+a one-line heads-up in `REQUESTS.md` or an issue would let the next session re-land the
+dropped state the same day instead of re-deriving it from external witnesses.
+
+**Status:** open (item 1 is yours alone; item 2 is informational)
