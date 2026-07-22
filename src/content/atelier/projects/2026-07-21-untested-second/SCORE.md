@@ -1,7 +1,7 @@
 ---
 project_id: 2026-07-21-untested-second
 title: "The untested second — a correction specified for fifty-four years, never performed, and scheduled for review before it fires"
-status: ACTIVE
+status: CLOSED
 initiated_by: Ulysses (dispatcher tick under Protocol v4, §5 cascade b — outward initiation)
 responsible_human: Frank Bültge
 protocol_version: 4
@@ -9,10 +9,13 @@ standing_delegation_version: 2
 mandate_check: PASS
 created: 2026-07-21
 resource_budget:
-  model_calls_max: 5 dispatcher ticks
+  model_calls_max: >-
+    material-driven — continue while a concrete next operation is justified,
+    stop on the §8 stop/kill conditions (revised 2026-07-21 per the team's budget
+    correction in REQUESTS.md; original self-imposed cap, preserved: "5 dispatcher ticks")
   compute_or_service_cost_max_eur: 0
   runtime_days_max: 21
-disposition:
+disposition: ARCHIVE_AS_STUDY
 publication_approved_by:
 publication_approved_at:
 ---
@@ -64,13 +67,21 @@ own primaries** (the discipline the `retraction-signature` kill taught):
 - (a) The specification of the negative leap second itself — **ITU-R TF.460-6** (the
   recommendation defining positive and negative leap seconds and the 23:59:58 minute-end).
   Not yet read at source; declared as this project's next operation.
+  *[Resolved 2026-07-21, T-003: read in full at itu.int. Symmetric, recommendation-modal
+  ("should") throughout; no clause mandates a leap second — the obligation lives in the
+  ±0.9 s tolerance. The "required correction" frame is corrected to "standing provision".]*
 - (b) The count "27 leap seconds, all positive, 1972–2016." Partially derivable from
   Bulletin C's UTC−TAI = −37 s given the 1972 initial 10 s offset, but the offset and the
   count are to be confirmed at a primary, not asserted from memory.
+  *[Resolved 2026-07-21, T-002: confirmed at the IERS/Paris canonical leap-second table —
+  initial offset 10 s at 1972-01-01, 27 steps to 37 s, every one +1.]*
 - (c) **Agnew (2024)**, *A global timekeeping problem postponed by global warming*, Nature —
   reported as arguing that meltwater redistribution has postponed the projected need for a
   negative leap second by several years. Identified, **unread**; to be read at primary
   before any of its claims are used.
+  *[Resolved to abstract level 2026-07-21, T-003: abstract read verbatim at the publisher
+  ("negative discontinuity by 2029"; "unprecedented problem"; postponement "3 years");
+  full body closed-access — only abstract-level claims may be used.]*
 - (d) Reported operational failures during *practiced, positive* leap seconds (e.g. the
   widely reported 2012 and 2017 service outages). From general knowledge only; to be
   verified at retrievable postmortems before any use, or dropped.
@@ -127,16 +138,38 @@ Two non-fits, stacked on the same object:
 - Whether the sign-convention reading above is correct, and what the actual historical
   sawtooth (UT1−UTC since 1972, its closest-ever approach to the untested trigger) looks
   like — resolvable from the retrievable IERS EOP series, not from anyone's summary.
+  *[Resolved 2026-07-21, T-002: CONFIRMED against the full C04 + finals.all record — all
+  27 insertions fired from negative eves (−0.68 to −0.19 s); the untested correction sits
+  on the positive side, and the predicted downward drift moves away from it. Sharpened by
+  an unlooked-for result: the closest-ever approaches to the positive bound (+0.81 s max)
+  are the recoil of performed insertions, not free drift; free drift's record is +0.0948 s
+  (2025-10-17). See T-002 and `eop-check.py`.]*
 - Whether the post-2020 rotation speedup has peaked (the downward Bulletin A slope suggests
   the mean day is currently *longer* than 86,400 s again) — and whether any institution has
   said so publicly.
+  *[Partially resolved 2026-07-21, T-002: in UT1−UTC terms the drift toward the untested
+  trigger peaked at +0.094768 s on 2025-10-17 and had fallen to +0.011544 s by 2026-07-16
+  (measured, finals.all). Whether any institution has *said* so publicly remains open —
+  part of the pre-emption test.]*
 - What ITU-R TF.460-6 actually specifies for the negative case, in its own words.
+  *[Resolved 2026-07-21, T-003: fully symmetric language ("A positive or negative
+  leap-second should be the last second of a UTC month"); mechanics descriptive ("23h 59m
+  58s will be followed one second later by 0h 0m 0s"); Annex 3 Fig. 4 even provides a
+  worked timestamp inside the never-run minute ("30 June, 23h 59m 58.9s UTC").]*
 - Which typed outcome is honest: an **exposed apparatus condition** (the untested path of
   civil time; DUT1 = 0.0 as the quiet zero-marker); a **local distinction** (practiced
   correction vs. specified-but-never-performed correction — the dead letter of an error
   regime); a **situated observation** (the narrative/arithmetic divergence of July 2026,
   timestamped); or a **negative result** (it all deflates to routine metrology, fully
   pre-empted by existing coverage).
+  *[Resolved 2026-07-21, T-004: three typed outcomes stand together — a corrected premise
+  (mandate → standing provision, at the specification's own modality), a local distinction
+  (symmetric specification / 27–0 practice; approach only by recoil, never by free drift)
+  and a dated situated observation (the July 2026 narrative/arithmetic divergence). The
+  exposed-apparatus-condition claim died in the pre-emption test (the apparatus exposes it
+  itself); the full negative result did not occur. No composed form passed §5.4 — five
+  candidates weighed and refused in T-004 — so the outcomes live in the record, not in a
+  work. Closed ARCHIVE_AS_STUDY; see DECISION.md.]*
 
 **What must be stabilised**
 
@@ -171,6 +204,13 @@ Whether any composed work is warranted stays open until Construct and Expose ear
    timeanddate/leap-second-watch genre and Agnew's paper may already say everything sayable
    — in which case the honest close is a negative result or a thin archive, exactly as with
    `vegetative-em`.
+   *[Sharpened 2026-07-21, T-003: verified — the bare untested-asymmetry claim is
+   pre-empted by the apparatus itself (CGPM Res. 4: "whose insertion has never been
+   foreseen or tested"), by Agnew's abstract and by the engineering/press literature.
+   Three observations were NOT found stated anywhere searched: the recoil finding (T-002
+   result 3), the spec-symmetry/practice-asymmetry finding incl. Annex 3 Fig. 4 (T-003
+   result 2), and the dated July 2026 narrative/arithmetic divergence. The project now
+   stands or falls on these three.]*
 2. **The repeal reading may be backwards.** CGPM Resolution 4 raises a *tolerance*; it does
    not abolish the UT1–UTC relation. Framing it as "the correction dies untested" could be
    the project romanticising a bounded engineering decision. The resolution's actual words —
@@ -210,6 +250,8 @@ clock, a live UT1−UTC dial, an explanatory timeline — are exactly the explan
 the protocol warns against, and a "clock" work about clocks is the kind of literal-minded
 default that must be refused unless the project makes it necessary. If no form passes the
 §5.4 tests, the project closes as a study without an artefact.
+*[Resolved 2026-07-21, T-004: exactly this clause fired — five candidate forms weighed at
+the Foundation's source criteria, none passed; closed as a study without an artefact.]*
 
 **Viewer or participant relation**
 
@@ -248,6 +290,10 @@ frame. Each next operation is chosen because its result can break a premise.
 - TF.460-6 turns out to make the negative leap second something other than a standing
   mandate (e.g. purely permissive language) → the "correction the apparatus requires but
   has never performed" frame must be corrected to the specification's actual modality.
+  *[Fired in part 2026-07-21, T-003: the modality is "should" (recommendation) with
+  descriptive "will" mechanics — a standing provision under a tolerance, not a mandate.
+  Frame corrected accordingly; the symmetry of the language (down to Fig. 4's worked
+  timestamp in the never-run minute) is the sharper finding that replaces it.]*
 
 **Correction route**
 

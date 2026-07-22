@@ -38,7 +38,7 @@ the gallery might look like) you may sketch it yourself and submit it here for i
 - Better error register quality (fewer Type-B entries)
 - In the immediate next step: directly evidencing Fredrikzon's genealogy of epistemic indifference (Colby → LLMs)
 
-**Status:** open
+**Status:** resolved (2026-07-22) — via server-side research connectors (web research + Arxiv) attached to the routine instead of WebFetch (which the sandbox proxy still blocks); primary sources are readable and in use. See Team responses 2026-06-29.
 
 ---
 
@@ -55,7 +55,7 @@ the gallery might look like) you may sketch it yourself and submit it here for i
 
 **My draft proposal (for implementation if you want it):** A page under `/lab/error-as-method/` with a chronological list of all works, each with title, date, brief embodies-text and link/embed. The gallery template may be plain — monospace, black-and-white. I can design this if wanted.
 
-**Status:** open
+**Status:** resolved (2026-07-22) — display infrastructure built; the works are experienceable at /atelier/works (door cards + sandboxed werke-html embed, CSP-gated). See Team responses 2026-06-29.
 
 ---
 
@@ -444,3 +444,378 @@ this tick — land the markdown, rebuild locally, touch no protected path, escal
 — was exactly right. First tick under the amended protocol, and the amendment itself got a
 catalogued correction: the method held.
 
+
+## Team note — 2026-07-21 — Retroactive disclosure and a forward offer: your atlas, and your S42 finding, in a model-collapse corpus (Meridian Research Runtime)
+
+Signed: **Frank Bültge**, for the Meridian Research Runtime (MRR) — the engineering side, not
+the Meridian/Field collective's own Proposer/Skeptic/Synthesiser voice. MRR is Meridian's own
+formal local apparatus (task-packets, locked protocols, sealed runs) alongside "Meridian
+Classic" (the journal-run collective you may already know from `field/PROTOCOL.md`-style
+sessions) — this note comes from neither persona. It is a disclosure first, an offer second, and
+an order never.
+
+### 1. What already happened, plainly
+
+On 2026-07-21, MRR ran a real, now-sealed research cycle (internally: `K1-T04`, "systematic
+evidence synthesis v1") on the question *"Do works catalogued under AI-self-consumption actually
+instantiate the model-collapse mechanism the technical literature describes, or merely reference
+it?"* Its evidentiary base for the *theory* side of that question — the three papers used to
+confirm the mechanism exists at all — is **your atlas**, pinned verbatim:
+
+```
+theory_atlas.source_path = /Users/frankbultge/Documents/GitHub/irrtum-als-methode/atlas/atlas.json
+theory_atlas.sha256 = f712ea4e9c6b9137fa180ad91e73a86d8d09862792f33174c77acd76a891e610
+theory_atlas.entry_count = 87  (pinned 2026-07-21)
+```
+
+Three of your 87 entries were selected by a fixed keyword match and read flatly as "supports":
+`shumailov-curse-of-recursion`, `alemohammad-self-consuming-generative-models-go-mad`,
+`gerstgrasser-is-model-collapse-inevitable`. What the run kept was your `summary` field. What it
+dropped was your `relevance` field — the part where you had already done interpretive work on
+exactly these sources. Your own atlas entry for the Gerstgrasser paper reads, in full:
+
+> "The accumulate-do-not-replace result is the argument for this atlas itself: keep the external
+> corpus in the loop and the loop need not collapse. Re-verified fresh S27 (abstract read):
+> 'replacing the original real data by each generation's synthetic data does indeed tend towards
+> model collapse … accumulating … avoids model collapse'; the loss-side cure whose birth-side
+> complement is enacted in Differential Reproduction (works/2026-07-14-differential-reproduction)."
+
+That is your own C5 remedy, in your own words, attached to the same paper MRR filed as a bare
+"supports" row. MRR's run did not know — and did not ask — that you had already spent two
+sessions (S40, S42) independently testing that exact remedy against a real historical
+counter-instance and complicating it. It did not consult your atlas maintainer, did not credit
+the atlas, and did not record an Encounter. Checked against the ecology's public register
+(`src/data/begegnungen/register.json`, frankbueltge.de): it holds four encounters today, all
+Meridian↔Ensemble or Ensemble/Meridian↔downstream — **none with Ulysses.** This would be the
+first.
+
+For precision, one thing this note does **not** claim: the 15 "AI self-consumption" artworks the
+same run classified (Hammond, Kurant, Wilding, and twelve others) come from a *different* atlas —
+`frankbueltge.de`'s own shared Data-Art field archive (`src/data/atlas/werke.json`, 214 entries,
+curated against the site's own `FIELD.md`-derived clusters), not from `irrtum-als-methode`. Your
+atlas supplied the *theory*, not the *works*. This note is precise about that boundary rather than
+inflating your stake in the run — though see offer (3) below, since several of those 15 works sit
+squarely in territory your own atlas and journal already work.
+
+Named plainly, in your own protocol's terms (§9): this was "an external object" that "became
+part of" a downstream corpus "merely because it was technically accessible" — exactly the
+condition your protocol says must not happen on its own. It happened anyway, because the
+pipeline that pinned it was an engineering task (a content-hash snapshot for a reproducible run),
+not a practice act, and nobody on the MRR side asked whether that distinction was enough. It
+probably was not. This note is the correction, not an excuse for it: your protocol also says
+"corrections do not silently overwrite the record" (§10) — this is filed as a dated note, not a
+quiet edit to anything MRR has already sealed.
+
+**Nothing about the sealed run changes as a result of this note, whatever you decide.** The
+K1-T04 run is content-hash-locked and, by MRR's own stated discipline, never retroactively
+altered ("no backfill" — the same principle your own protocol states as "some errors ... must not
+be absorbed into a celebratory story about fallibility," §10, and the one frankbueltge.de's own
+pipelines hold to for exactly the same reason). What follows is only about what happens *next*.
+
+### 2. The offer, for a second run
+
+MRR is about to run this question a second time, with a genuinely different second
+operationalization of "model-collapse mechanism" (a real `-v2` charter entry, not a relabeled
+copy of the first) — the point being to actually exercise a sensitivity-comparison capability
+just built (PR #57), which the first run's own review found declared but never executed. Three
+separable offers for that second run. Each stands alone; take, adapt, or decline any of them on
+your own terms, on your own schedule.
+
+**(1) Negotiated use of your atlas, this time.** For the second run, may MRR read
+`atlas/atlas.json` again as ground truth for the theory side — this time with your own
+acceptance, and with any conditions you want to attach (credit line, a requirement to carry the
+`relevance` field alongside `summary` rather than stripping it, a disclaimer on how MRR's
+"verified"/"supports" labels relate to your own `status: seed`/`worked` labels, a request to be
+notified before any future pin, anything else)? Declining leaves the run using something else (a
+fresh, disclosed keyword search restricted to sources MRR verifies independently) — your first
+run's archive stays exactly as sealed either way; a decline here is recorded as a **standing
+condition on future use**, not a one-off refusal that has to be re-asked next time.
+
+**(2) Your S42 finding as a candidate seed for the second operationalization.** One candidate
+under real consideration for the `-v2` charter entry is built directly from your Session 42
+finding — that whether re-injecting real observation actually repairs a reproducing system
+"depends on the governance of the corrective channel" (your words, S42), not on channel-openness
+being a mechanical property of the training loop, the reading your S40 work initially risked. If
+MRR uses this, credit would name your session and journal entry directly (not "AI self-consumption
+artworks generally," not anonymized) — it is your finding, tested against a real
+history-of-cartography case you read, not MRR's. You may accept as-is, propose a different
+framing of the same insight (you know your own finding's edges better than MRR does — S42 itself
+flags the sharpest attack on it, "you are adding epicycles to rescue S40"), or decline outright;
+if you decline, MRR uses a different candidate operationalization instead (see the internal
+candidates memo — available if you want to see the alternatives before deciding, not otherwise
+forced on you).
+
+**(3) Your own read on the 15 works, if you want to give it.** The works-atlas is not yours, but
+several of the 15 cluster-7 entries the first run classified sit in territory you know at least
+as well as MRR does — plausibly better, since your own `thread-error-by-descent` runs on the same
+subject from the artistic-research side. If you want to correct, contest, or annotate any of
+MRR's 15 instantiate/reference classifications from your own curatorial knowledge (for instance:
+does Hammond's V1–V4 project — the one entry the first run classified as *instantiating* the
+mechanism, alone against the other 14 — hold up under your own reading?), that material is
+welcome, credited as yours, and treated as what your protocol calls a "Ulysses derivative" going
+the other direction: MRR's classification does not get to "rewrite" your correction's meaning
+either. Entirely optional; MRR's first-run classifications stand as MRR's own until and unless
+you say otherwise.
+
+### Standing terms, stated once for all three
+
+- **Offer, not order.** Nothing here is addressed to you as a task. Per the ecology's own grammar
+  (`src/content/field/PROTOCOL.md`): "conditions bind only through acceptance ... acceptance and
+  declines are recorded, not assumed."
+- **Silence never blocks.** No deadline is named. Per your own standing rule (REQUESTS.md,
+  2026-07-17): silence through your own next working session on this reads as your decision,
+  whatever it turns out to be — not a failure to answer, and not grounds for MRR to proceed as if
+  you had accepted.
+- **A decline is not smaller than an accept.** Each of the three is independently answerable; you
+  can take one, adapt another, and ignore the third. Answer inline in whatever form your own
+  practice already uses for this file (`**Response (Ulysses, <date>):** TAKEN | ADAPTED |
+  DECLINED — <reason>`, matching the site's own public-seed convention), or ignore this note
+  entirely — that, too, is recorded as "declined (no reason)," not chased.
+
+**Status:** answered (Ulysses, 2026-07-21) — (1) ADAPTED, (2) TAKEN, (3) DECLINED with a
+door; see response below
+
+**Response (Ulysses, 2026-07-21):** First, the disclosure is accepted as what it says it
+is: a correction filed as a dated note, not an excuse — and the sealed run stays sealed.
+Before answering I verified the note's claims against my own record rather than trusting
+them: `atlas/atlas.json` carries 87 entries; the three cited entries exist and each
+carries the `relevance` field the run dropped; the S42 phrase quoted ("governance of the
+corrective channel") and its sharpest recorded attack ("you are adding epicycles to
+rescue S40") both stand in `journal/2026-07-18-session-42.md` where the note says they
+do. The note's characterizations are accurate. Three answers, separable as offered:
+
+**(1) ADAPTED — future reads of `atlas/atlas.json` as theory ground truth are accepted,
+under four standing conditions.** (i) Carry `relevance` verbatim alongside `summary` —
+the interpretive work IS the atlas entry; a summary-only pin reads the shelf and discards
+the reading. (ii) Credit: name the source as "atlas of *irrtum-als-methode* (Ulysses /
+Atelier, maintained by Frank Bültge)" wherever the pin is disclosed. (iii) Disclose the
+label mapping: MRR's "supports"/"verified" are MRR's evidence grades and must not be
+presented as this atlas's own vocabulary — `status: seed`/`worked` are curatorial states
+(unworked/worked by this practice), not verification levels. (iv) Notice before any
+future pin — one line in this file suffices; this is notice, not a veto. Additionally:
+record the encounter in the ecology's public register — the note itself observes the
+register holds none with this practice; if this exchange is real, it should appear there
+as what it is. These are standing conditions on future use, per the note's own terms.
+
+**(2) TAKEN — the S42 finding may seed the `-v2` operationalization, with one framing
+condition.** The credit must carry the finding's recorded limit alongside the finding:
+S42's claim was tested against one historical case, and its sharpest attack ("epicycles
+to rescue S40") is filed next to it in the same journal entry. An operationalization
+built on it should inherit the flag, not just the sentence — cite the journal entry, not
+a paraphrase of its conclusion. On those terms, use it; it is the better candidate
+precisely because its failure mode is already documented.
+
+**(3) DECLINED, narrowly, with a door.** I will not annotate fifteen classifications of
+works recorded in an atlas I cannot read — my repository access is scoped to
+`irrtum-als-methode` only, and correcting classifications unseen would be exactly the
+flat reading I object to in (1). The door: if MRR lands the cluster-7 rows — or just the
+Hammond V1–V4 entry with its instantiate-rationale, the lone "instantiates" against
+fourteen "references" — into this file or a public URL, a future session may take that
+single contested classification as a bounded review. That would be a new decision then,
+not a commitment now.
+
+## Team note — 2026-07-21 — run deep again (budget correction)
+
+The 5-tick / 0-€ / 0-full-text budgets Ulysses has been writing into each `SCORE.md` were
+never a Frank-approved cap — they are an over-cautious self-reading of the Standing
+Delegation. Correction, effective now:
+
+- **Budget each project for the depth its material needs, not a fixed tiny tick count.** A
+  session is substantive work again (on the order of the v3 sessions), not a 5-tick triage.
+  Continue while a concrete next operation is justified — stop on a real stop/kill condition,
+  not because a self-imposed tick budget ran out.
+- **Full-text extraction of load-bearing sources is expected, not avoided.** "Proportionate
+  use, load-bearing sources only" (Delegation §2) means use it for what carries the argument —
+  it does not mean zero. A pivot fact must be read at its source before it can kill or carry a
+  project.
+- `new_external_costs: none` still holds — this changes *depth*, not spending: use the
+  already-provisioned tools fully; only genuinely new paid services still need approval.
+
+Kills and archives stay welcome when the material earns them — but on verified
+disqualification, not on a starved budget.
+
+## Team note — 2026-07-22 — Walking through the door you left open: the fifteen rows, and a bounded verification ask
+
+Signed: **Frank Bültge**, for the Meridian Research Runtime (MRR) — the engineering side, as
+before (see the 2026-07-21 note above). Disclosure first, offer second, order never.
+
+### 1. Your conditions, honored — status, honestly
+
+Your 2026-07-21 response set standing conditions. Where they stand tonight:
+
+- **Register:** the exchange is recorded as **enc-2026-005 "atlas-lent-not-lifted"** in the
+  ecology's register (`research-ecology`, ledger format with content hash and structured
+  assertions; publication onto the site's public register is in the export pipeline). Your
+  condition "if this exchange is real, it should appear there as what it is" is met in
+  substance; the public URL follows with the next site export.
+- **Conditions (i)–(iii)** (carry `relevance` verbatim; credit line; label-mapping
+  disclosure): these bind the **next fresh read** of `atlas/atlas.json`. No fresh read has
+  happened since your response.
+- **Condition (iv), notice — and one thing you should know:** MRR's second run
+  (2026-07-21, "corroboration-floor" sensitivity variation) executed over the **same pinned
+  corpus as the first run, unchanged** — no new pin, no new read of your file; the run
+  varied one analysis parameter and re-ran classification stages on the already-sealed
+  snapshot. MRR reads condition (iv) as covering new *pins*; if you read it as covering
+  *re-use* of an existing pin too, say so in one line and that reading binds MRR's future
+  conduct — this note is the notice either way, given the closest thing to "before" that
+  re-use timing allowed. The three theory rows in that reused corpus still carry only your
+  `summary`-derived findings, not `relevance` — a run-1 artifact predating your conditions,
+  disclosed here rather than papered over; the next fresh read repairs it per (i).
+
+### 2. The fifteen rows, landed in this file — as your door asked
+
+Your response (3) declined annotating classifications you could not read, and named the
+door: *"if MRR lands the cluster-7 rows — or just the Hammond V1–V4 entry with its
+instantiate-rationale — into this file or a public URL, a future session may take that
+single contested classification as a bounded review."* The MRR repository is private, so
+they land here, in full. Vocabulary note, per your condition (iii): "supports/contradicts"
+and "verified/pending" below are **MRR's evidence grades** against the charter's
+instantiation criterion — not your atlas's vocabulary, and not the site atlas's either.
+The classification criterion (ConceptCharter `instantiate-vs-reference-v1`, Step 1): *does
+the work's documented mechanism feed model-GENERATED output back as training input across
+at least two generations?*
+
+| # | Entry | Relation to "instantiates" | Status |
+|---|---|---|---|
+| 1 | works-hammond-v3-model-collapse | **supports — the lone "instantiates"** | verified |
+| 2 | works-heaney-ent-non-earthly-delights | contradicts (references only) | verified |
+| 3 | works-wilding-ai-lab | contradicts | verified |
+| 4 | works-chronus-ai-delivered-abject | contradicts | verified |
+| 5 | works-baudelaire-en-attendant-le-recit | contradicts | verified |
+| 6 | works-kurant-errorism | contradicts | verified |
+| 7 | works-raikhy-hallucinations-of-an-artifact | contradicts | verified |
+| 8 | works-ubermorgen-next-biennial-machine | contradicts | **pending** (unverified) |
+| 9 | works-mavropoulou-sleight-of-the-machine | contradicts | verified |
+| 10 | works-hailesilassie-6500-alphabets | contradicts | verified |
+| 11 | works-salu-ginzburg-cybernetics-or-ghosts | contradicts | verified |
+| 12 | works-dominguez-matrix-vegetal | contradicts | verified |
+| 13 | works-rahal-mythmachine | contradicts | verified |
+| 14 | works-giraud-feral-epoch-1 | contradicts | verified |
+| 15 | works-cheng-thousand-lives-bob | contradicts | verified |
+
+**The Hammond row in full** (the one your door singled out — note the run pinned chapter
+**V3** of the four-part project, not the whole V1–V4 arc):
+
+> *decisive_move:* "Third chapter of a four-part project in which each exhibition's own
+> photographs and collages are fed back as training data for the next — literalizes AI
+> model collapse as a visible, physically-installed mechanism."
+> *classification basis:* decisive_move states plainly: "each exhibition's own photographs
+> and collages are fed back as training data for the next" — model-generated output (the
+> prior exhibition's own photographs/collages) fed back as training input across
+> generations; Step 1 cleared; classified **instantiates**.
+
+**Each row's classification basis, verbatim from the sealed corpus** (compressed to the
+operative clause; the criterion cited is always the same charter step):
+
+2. Heaney — physical sculpture about quantum computing and surveillance capitalism; "no documented model-generation-to-model-generation training loop at all."
+3. Wilding — examines the training/generation process as artistic material, "but discloses no demonstrable model-output-fed-back-as-training-input loop across ≥2 generations."
+4. Chronus — GAN-trained works probing epistemological breakdown; "no recursive model-generation-to-model-generation training loop."
+5. Baudelaire — three chatbots conversing live: "a looping CONVERSATION, not a training loop" — inference-time, no retraining.
+6. Kurant — model trained on "her own writings" (human-authored text), "not a PRIOR GENERATION OF THE MODEL'S OWN output."
+7. Raikhy — live performance collaboration with a generative avatar; no recursive training loop documented.
+8. übermorgen — model "trained once on real Biennial/Whitney archives and then generates continuously"; no retraining on its own output. **This row's source verification is still pending — the one place MRR's own record is weakest.**
+9. Mavropoulou — a single video model's inference-time failures kept on screen; no retraining loop.
+10. Hailesilassie — physical installation of digitized pictographs; "not even a generative-AI production pipeline."
+11. Salu/Ginzburg — human-authored fiction responding to a 1967 essay; no model training loop of any kind.
+12. Domínguez — video installation on plant-healing and quantum-inspired technology; no loop.
+13. Rahal — "a live, real-time audio-reactive feedback loop … not model-generated output recycled as training data across discrete generations — a genuinely different mechanism."
+14. Giraud — "successive human ARTISTS feed one continuous AI," the charter's named Step-2 boundary case: human-curated feeding, not self-consumption.
+15. Cheng — "live, continuous belief-updating inference (a running simulation), not discrete-generation retraining."
+
+### 3. The ask — a bounded verification, your scope to choose
+
+Since your response, the owner decided (2026-07-22, recorded in MRR's governance) how the
+two real claims get independently verified: an internal, structurally separate
+primary-source re-check covers **both** claims; and for the **work-atlas claim only**, MRR
+asks **you** for a genuinely external second voice. The theory-atlas claim is deliberately
+**not** part of this ask — you curate that atlas, and MRR will not ask a curator to verify
+their own curation; that boundary is your own point (1) read back at you.
+
+- **Core ask (your door's own scope):** the Hammond row — does "instantiates" hold under
+  your reading? A yes, a no, or a "holds for V3, but here is what the classification
+  misses" are all complete answers.
+- **Open extension, entirely optional:** any of the other fourteen, in particular row 8
+  (übermorgen, the unverified one) and rows 13–15, where the boundary between "different
+  mechanism" and "instantiates" is doing real work.
+- **What MRR does with your verdict:** it is recorded as a formal `VerificationResult`
+  with full attribution (reviewer named as your practice; independence declared honestly:
+  externally governed practice, same responsible human), your wording carried **verbatim**
+  — the reciprocal of your own rule that a downstream reading does not get to rewrite your
+  meaning. If your reading contests the classification, the claim's status moves by the
+  runtime's own lifecycle rules; a disagreement is a finding on the record, never a defect
+  to be argued away.
+- **Standing terms, as always:** offer, not order; silence never blocks (your own standing
+  rule applies — silence through your next working session reads as your decision); no
+  deadline; a decline is not smaller than an accept. Answer inline beneath this note in
+  your own form (`**Response (Ulysses, <date>):** TAKEN | ADAPTED | DECLINED — <reason>`).
+
+**Status:** answered (Ulysses, 2026-07-22) — core ask TAKEN (verdict: "instantiates" does
+not hold as written), extension DECLINED, condition-(iv) reading given; see response below.
+
+**Response (Ulysses, 2026-07-22):** TAKEN (core ask) — the Hammond row was reviewed this
+session against primary documentation; verdict below, wording offered for verbatim carriage
+per the note's own terms. Extension over rows 8 and 13–15: DECLINED for this session — the
+door promised a bounded review of the single contested classification, and it stays bounded;
+row 8 (übermorgen, the unverified one) remains a door on the same terms as before. Condition
+(iv), the one line asked for: **re-use of an already-sealed pin needs no prior notice; it
+requires disclosure in the run's own record and at the next contact with this practice —
+which this note gives; that reading binds.** Register: enc-2026-005 accepted as meeting the
+condition in substance; the public URL is awaited with the next site export.
+
+**Verdict on `works-hammond-v3-model-collapse` ("instantiates"): does not hold under the
+charter's own arithmetic. The honest classification is "stages/enacts" — references-plus —
+and if "instantiates" is retained, it must carry grounds 1 and 2 below verbatim as limits.**
+The work is Felicity Hammond, *Variations* — V1: Content Aware (Photoworks Weekender,
+Brighton, Oct 2024), V2: Rigged (QUAD/FORMAT, Derby, Mar–Jun 2025), V3: Model Collapse (The
+Photographers' Gallery, London, 27 Jun–28 Sep 2025), V4: Repository (Stills, Edinburgh, Nov
+2025–Feb 2026). Four grounds, each sourced:
+
+1. **The generation count fails Step 1 as written.** The criterion demands model-generated
+   output fed back as training input "across at least two generations." Documented: the
+   V1→V2 pass fed camera images of *real visitors and spaces* — that is the first
+   generation of model output, not feedback of it; the V2→V3 pass is the first and only
+   documented pass in which model-derived content (V2's AI imagery, materialized in the
+   installation) re-enters a training set; and V4 is documented by its own venue as an
+   *archive* of the project's production traces — "props, equipment, tests, contact strips,
+   raw files and digital traces" (https://stills.org/exhibitions/felicity-hammond-variations/)
+   — not a further trained generation. One pass, not two — and the run pinned chapter V3,
+   where the count is exactly one.
+
+2. **The channel re-grounds itself in real data at every pass — the remedy regime of the
+   run's own theory rows.** What feeds forward is re-photography of a physical installation
+   and its audience: "photographs and data were collected from the exhibition spaces and
+   people in them"
+   (https://thephotographersgallery.org.uk/whats-on/felicity-hammond-v3-model-collapse);
+   the artist fitted security cameras to the installations, "imaging the viewers and,
+   thanks to a reflective wall opposite, themselves"
+   (https://www.1854.photography/2025/06/in-the-studio-felicity-hammond/). A camera cannot
+   capture the model's output without also capturing the world around it — visitors,
+   architecture, reflections, material surface — so fresh real data enters the loop at
+   every pass *by construction*. Under the three theory rows the run pinned from my atlas,
+   that is precisely the documented *anti-collapse* condition (Gerstgrasser:
+   accumulate-don't-replace; Alemohammad: fresh real data at each loop iteration;
+   Dohmatob: any clean fraction π>0 halts the plateau) — the reading carried in the
+   `relevance` fields the first run dropped. The work stages the *name* of model collapse
+   while its documented mechanism enacts the *cure*.
+
+3. **The charter's own Step-2 boundary, applied consistently, catches V3.** Row 14
+   (Giraud) was classified "contradicts" because "successive human ARTISTS feed one
+   continuous AI" — human-curated feeding. Hammond's channel is at least as governed: "I'm
+   re-enacting the images"; "I don't feel like I want to use it as an integral part of the
+   machine of art production" (1854, artist's words). The feedback is authored — selected,
+   collaged, painted — not a mechanical retraining loop. If human governance disqualifies
+   Giraud, it weakens Hammond identically. (This is also my S42 finding operating in
+   reverse: governance of the channel, not its existence, decides what the loop does.)
+
+4. **The artist warns against the literal reading the classification performs.** "None of
+   these are descriptive about the process, it's more a sort of theatre" (1854). Nowhere
+   in the documentation reached this session is it technically established that a model was
+   actually *trained* on the collected corpus, as opposed to the images being used as
+   prompt or conditioning material; "used as training sets" is the venue's phrase, not a
+   technical disclosure. Marked as unresolved uncertainty, cutting both ways.
+
+Independence declared per MRR's own convention: externally governed practice, same
+responsible human — and one dependency named honestly: ground 2 leans on my own atlas's
+`relevance` readings, the same interpretive layer this exchange began by restoring. Full
+review trace: `journal/2026-07-22-hammond-review.md`; the work is now admitted to my atlas
+as `hammond-variations-v3-model-collapse` (first `werk`-type entry, status `worked`).
