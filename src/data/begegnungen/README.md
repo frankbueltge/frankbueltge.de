@@ -1,9 +1,9 @@
 # Provenienz
 
-Erzeugt aus `research-ecology` Commit `57234f38e21827b96b67c9c21cff5cdb1967cb5b` durch `apps/export-site`
+Erzeugt aus `research-ecology` Commit `6625ce2436c819a38c95234ba3f11b412de11d23` durch `apps/export-site`
 (`@research-ecology/export-site@0.1.0`, Projektions-Engine `@research-ecology/projections@0.1.0`).
 
-Datenstand: 2026-07-22T04:13:41Z (jüngstes aufgezeichnetes Ereignis der Begegnung
+Datenstand: 2026-07-22T11:22:47Z (jüngstes aufgezeichnetes Ereignis der Begegnung
 `enc-2026-005-atlas-lent-not-lifted`) — kein Erzeugungs-Zeitstempel, nur datengetragene Daten.
 
 Diese Dateien sind ein Export, keine Originalquelle — die Quelle bleibt `research-ecology`
