@@ -22,6 +22,23 @@ export interface Werk {
  *  Gleichstand; die öffentliche Sortierung ist chronologisch über `WERKE_CHRONO`. */
 export const WERKE: Werk[] = [
   {
+    id: 'on-record',
+    title: 'On Record',
+    subtitle: {
+      de: 'Two independent verifications of one claim, kept in disagreement.',
+      en: 'Two independent verifications of one claim, kept in disagreement.',
+    },
+    status: 'live',
+    since: '2026-07-23',
+    href: '/on-record',
+    description: {
+      de: 'A graph-fed view of one real research claim from the Meridian runtime and the two independent verifications that disagreed about it — a pass and a fail, side by side. The runtime refuses to average genuine disagreement into a false consensus, so the claim stays contested, on record. Every figure is derived by SPARQL query over a claim-rooted RO-Crate + W3C-PROV export committed to the repo — nothing on the page is authored prose about the work; it is the archive, rendered.',
+      en: 'A graph-fed view of one real research claim from the Meridian runtime and the two independent verifications that disagreed about it — a pass and a fail, side by side. The runtime refuses to average genuine disagreement into a false consensus, so the claim stays contested, on record. Every figure is derived by SPARQL query over a claim-rooted RO-Crate + W3C-PROV export committed to the repo — nothing on the page is authored prose about the work; it is the archive, rendered.',
+    },
+    methodHref: '/werke/on-record',
+    tier: 'experiment',
+  },
+  {
     id: 'spielraum',
     title: { de: 'Spielraum', en: 'Headroom' },
     subtitle: {

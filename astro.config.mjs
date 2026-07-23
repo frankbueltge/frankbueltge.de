@@ -56,11 +56,7 @@ export default defineConfig({
   // Sitemap, unabhängig davon, ob Google robots.txt beachtet.
   integrations: [
     sitemap({
-      filter: (page) =>
-        !/\/protokoll\/\d{4}-\d{2}-\d{2}\//.test(page) &&
-        !/\/steuerzentrale(\/|$)/.test(page) &&
-        !/\/on-record(\/|$)/.test(page) &&
-        !/\/werke\/on-record(\/|$)/.test(page),
+      filter: (page) => !/\/protokoll\/\d{4}-\d{2}-\d{2}\//.test(page) && !/\/steuerzentrale(\/|$)/.test(page),
     }),
     mdx(),
   ],
