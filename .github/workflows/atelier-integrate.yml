@@ -41,9 +41,9 @@ jobs:
           BOT_TOKEN: ${{ secrets.ATELIER_BOT_TOKEN }}
         run: |
           if [ -n "$BOT_TOKEN" ]; then
-            git clone --depth 1 "https://x-access-token:${BOT_TOKEN}@github.com/frankbueltge/irrtum-als-methode" /tmp/atelier
+            git clone --depth 1 "https://x-access-token:${BOT_TOKEN}@github.com/frankbueltge/ulysses" /tmp/atelier
           else
-            git clone --depth 1 https://github.com/frankbueltge/irrtum-als-methode /tmp/atelier
+            git clone --depth 1 https://github.com/frankbueltge/ulysses /tmp/atelier
           fi
 
       - name: Integrate works (html + astro + md) + sync journal/docs
@@ -101,7 +101,7 @@ jobs:
           if [ -n "$FEEDBACK" ] && [ -n "$BOT_TOKEN" ]; then
             DATE=$(date -u +%F)
             (
-              git clone --depth 1 "https://x-access-token:${BOT_TOKEN}@github.com/frankbueltge/irrtum-als-methode" /tmp/fb-rej
+              git clone --depth 1 "https://x-access-token:${BOT_TOKEN}@github.com/frankbueltge/ulysses" /tmp/fb-rej
               mkdir -p /tmp/fb-rej/atelier-feedback
               printf '%s\n' "$FEEDBACK" > "/tmp/fb-rej/atelier-feedback/${DATE}-rejections.md"
               cd /tmp/fb-rej && git config user.name "Atelier-Integrate" && git config user.email "atelier-integrate@frankbueltge.de"
@@ -122,12 +122,12 @@ jobs:
           # Issue an Frank ZUERST — läuft immer, auch wenn der BOT_TOKEN-Block unten fehlschlägt.
           gh issue create --repo frankbueltge/frankbueltge.de \
             --title "Atelier-Integrate rot ($DATE)" \
-            --body "Der nächtliche Atelier-Build ist fehlgeschlagen; kein Deploy. Log-Auszug im Workflow-Lauf. Feedback wurde in irrtum-als-methode/atelier-feedback/${DATE}.md geschrieben." || true
+            --body "Der nächtliche Atelier-Build ist fehlgeschlagen; kein Deploy. Log-Auszug im Workflow-Lauf. Feedback wurde in ulysses/atelier-feedback/${DATE}.md geschrieben." || true
           # Feedback in IHR Repo (sie liest es nächste Sitzung) — defensiv: Fehler hier
           # dürfen das Issue-Erstellen oben nicht blockieren (daher nachgelagert + || true).
           if [ -n "$BOT_TOKEN" ]; then
             (
-              git clone --depth 1 "https://x-access-token:${BOT_TOKEN}@github.com/frankbueltge/irrtum-als-methode" /tmp/fb
+              git clone --depth 1 "https://x-access-token:${BOT_TOKEN}@github.com/frankbueltge/ulysses" /tmp/fb
               mkdir -p /tmp/fb/atelier-feedback
               printf '# Build-Feedback %s\n\nDein letzter Beitrag hat das Gate nicht bestanden (kein Deploy; letzter guter Stand bleibt live). Auszug:\n\n```\n%s\n```\n\nKorrigiere das betroffene Werk in `works/<slug>/` und committe erneut.\n' "$DATE" "$LOG" > "/tmp/fb/atelier-feedback/${DATE}.md"
               cd /tmp/fb && git config user.name "Atelier-Integrate" && git config user.email "atelier-integrate@frankbueltge.de"

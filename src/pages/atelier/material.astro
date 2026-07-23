@@ -25,7 +25,7 @@ interface AtlasEntry {
 const entries = atlasData as AtlasEntry[]
 
 const worked = entries.filter((e) => e.status === 'worked' || e.session_read != null).length
-const kicker = ['Atelier · material', 'irrtum-als-methode', `${entries.length} sources on the shelf`]
+const kicker = ['Atelier · material', 'ulysses', `${entries.length} sources on the shelf`]
 const statusHtml =
   `<b>${entries.length} sources</b> · ${worked} read or worked · every line the practice’s own, verbatim`
 ---

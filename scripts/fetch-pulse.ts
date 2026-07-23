@@ -30,7 +30,7 @@ const WEEK_COUNT = 13
 // workspace convention as ~/Documents/GitHub/CLAUDE.md describes ("each subdirectory is an
 // independent project"). Resolved from cwd rather than hard-coded to one machine's username.
 const GH_ROOT = resolve(process.cwd(), '..')
-const REPOS = ['field-research', 'irrtum-als-methode', 'studio', 'research-ecology', 'frankbueltge.de']
+const REPOS = ['field-research', 'ulysses', 'studio', 'research-ecology', 'frankbueltge.de']
 
 /** ISO 8601 week-numbering, the standard "nearest Thursday" algorithm (UTC throughout). */
 function isoWeekOf(date: Date): { year: number; week: number } {

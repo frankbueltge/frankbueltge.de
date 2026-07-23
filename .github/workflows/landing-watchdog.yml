@@ -24,7 +24,7 @@ jobs:
         run: |
           set -euo pipefail
           DATE=$(date -u +%F)
-          for REPO in irrtum-als-methode field-research studio; do
+          for REPO in ulysses field-research studio; do
             BRANCHES=$(git ls-remote "https://github.com/frankbueltge/$REPO" \
               | grep -E 'refs/heads/(research/session-|ulysses/|claude/)' \
               | sed 's|.*refs/heads/||') || true

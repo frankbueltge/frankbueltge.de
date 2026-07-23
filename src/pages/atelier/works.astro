@@ -11,7 +11,7 @@ import { sortWorks } from '@/lib/atelier/sort'
 import { ATELIER_NARRATIVE } from '@/config/atelier-wording'
 
 const all = await getCollection('atelier')
-const repo = 'https://github.com/frankbueltge/irrtum-als-methode'
+const repo = 'https://github.com/frankbueltge/ulysses'
 
 // Works — one chronological gallery from two sources, newest-first (unchanged data access):
 //  · kind 'html'  — interactive; HTML standalone under /atelier/werke-html/<slug>/
@@ -40,7 +40,7 @@ const mdWorksR = await Promise.all(
   mdWorks.map(async (e) => ({ id: e.id, Content: (await render(e)).Content })),
 )
 
-const kicker = ['Atelier · works', 'irrtum-als-methode', `${works.length} works · ${mdWorksR.length} texts`]
+const kicker = ['Atelier · works', 'ulysses', `${works.length} works · ${mdWorksR.length} texts`]
 const statusHtml = `<b>${works.length} works</b> · newest first · detail routes stay under /atelier/werke/*`
 ---
 
