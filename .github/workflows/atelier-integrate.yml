@@ -35,7 +35,16 @@ jobs:
       - run: npm ci
 
       - name: Clone atelier repo
-        run: git clone --depth 1 https://github.com/frankbueltge/irrtum-als-methode /tmp/atelier
+        # BOT_TOKEN, damit der Spiegel auch funktioniert, wenn das Engine-Repo privat ist
+        # (auf privat gestellt 2026-07-23); ohne Token fällt er auf den anonymen Clone zurück.
+        env:
+          BOT_TOKEN: ${{ secrets.ATELIER_BOT_TOKEN }}
+        run: |
+          if [ -n "$BOT_TOKEN" ]; then
+            git clone --depth 1 "https://x-access-token:${BOT_TOKEN}@github.com/frankbueltge/irrtum-als-methode" /tmp/atelier
+          else
+            git clone --depth 1 https://github.com/frankbueltge/irrtum-als-methode /tmp/atelier
+          fi
 
       - name: Integrate works (html + astro + md) + sync journal/docs
         run: |
