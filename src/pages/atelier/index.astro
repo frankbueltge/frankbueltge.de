@@ -1,41 +1,176 @@
 ---
-// /atelier — der Eingang (Stufe 0, 2026-07-20, Franks Auftrag: verständliche Haustür).
-// Ein erklärender Absatz und vier Türen; keine Rail — die Rail gehört den Zimmern, jede
-// Tür unten führt in eines. Das Blatt (die bisherige Eingangsseite) lebt unverändert als
-// Zimmer unter /atelier/sheet weiter. Wortlaute: ATELIER_NARRATIVE.entrance (draft bis
-// Franks Merge dieses PRs).
+// /atelier — der Eingang, v2 (2026-07-23): die Haustür wird zur Karte.
+// Anlass: das publizierte Prozessmodell „Kartographie statt Kopie / Cartography, not Tracing" (Werk 2026-07-24,
+// Franks Publikationsentscheidung) — der Eingang übernimmt dessen Vokabular: eine
+// gezeichnete Karte der Praxis (Werke als Tintenplatten, Projekte als Linien darunter),
+// die Türreihe (ATP 508: „The plane is like a row of doors"), ein Modell-Band mit den
+// sechs Postulaten wörtlich aus dem Werk. Alles zur Bauzeit aus committeten Spiegeln
+// gezeichnet (meta.json · SCORE-Frontmatter · PROTOCOL.md), kein Client-JS.
+// Stufe-0-Prinzip bleibt: verständliche Haustür, keine Rail — die Rail gehört den Zimmern.
+// Wortlaute: ATELIER_NARRATIVE.entrance (Stufe 0) + entranceV2 (draft bis Franks Merge).
 import Page from '@/layouts/Page.astro'
 import { ATELIER_NARRATIVE, ATELIER_DRAFT_LABEL } from '@/config/atelier-wording'
+import { sortWorks } from '@/lib/atelier/sort'
+import rhizome from '@/data/atelier/rhizome.json'
 import '@/styles/atelier-sheet.css'
 
 const E = ATELIER_NARRATIVE.entrance
+const V2 = ATELIER_NARRATIVE.entranceV2
 const isDraft = ATELIER_NARRATIVE.approval !== 'approved'
 
-// Live counts — same read-only mirrors the sheet uses.
+// ————————————————————————————————— data: committed mirrors, read-only —————
+// Works — both sources, newest first (same globs the works room uses).
+const htmlMeta = import.meta.glob('/src/content/atelier/works/*/meta.json', {
+  eager: true, import: 'default',
+}) as Record<string, any>
+const nativeMeta = import.meta.glob('/src/components/atelier/werke/*/meta.json', {
+  eager: true, import: 'default',
+}) as Record<string, any>
+const works = sortWorks([
+  ...Object.entries(htmlMeta).map(([path, meta]) => ({
+    slug: path.replace('/src/content/atelier/works/', '').replace('/meta.json', ''),
+    kind: 'html' as const, date: meta.date as string | undefined, meta,
+  })),
+  ...Object.entries(nativeMeta).map(([path, meta]) => ({
+    slug: path.replace('/src/components/atelier/werke/', '').replace('/meta.json', ''),
+    kind: 'astro' as const, date: meta.date as string | undefined, meta,
+  })),
+])
+const worksCount = works.length
+const newestWork = works[0]
+
+// Projects — SCORE frontmatter only (id, title, status, created, disposition).
 const projectScores = import.meta.glob('/src/content/atelier/projects/*/SCORE.md', {
   eager: true, query: '?raw', import: 'default',
 }) as Record<string, string>
-const activeProjects = Object.values(projectScores).filter((raw) =>
-  /^status:\s*ACTIVE\s*$/m.test(raw.split('\n---')[0]),
-).length
-const htmlMeta = import.meta.glob('/src/content/atelier/works/*/meta.json', { eager: true, import: 'default' })
-const nativeMeta = import.meta.glob('/src/components/atelier/werke/*/meta.json', { eager: true, import: 'default' })
-const worksCount = Object.keys(htmlMeta).length + Object.keys(nativeMeta).length
+const fmField = (raw: string, key: string): string | undefined =>
+  raw.split('\n---')[0].match(new RegExp(`^${key}:\\s*"?([^"\\n]*)"?\\s*$`, 'm'))?.[1]?.trim() || undefined
+const projects = Object.entries(projectScores)
+  .map(([path, raw]) => ({
+    id: path.replace('/src/content/atelier/projects/', '').replace('/SCORE.md', ''),
+    title: fmField(raw, 'title'),
+    status: fmField(raw, 'status'),
+    created: fmField(raw, 'created'),
+    disposition: fmField(raw, 'disposition'),
+  }))
+  .sort((a, b) => (a.created ?? a.id) < (b.created ?? b.id) ? -1 : 1)
+const activeProjects = projects.filter((p) => p.status === 'ACTIVE')
+const dispCount = (d: string) => projects.filter((p) => p.disposition === d).length
+
+// Toolbox version — parsed from the mirrored constitution (PROTOCOL.md §11 pointer).
+const protoRaw = Object.values(import.meta.glob('/src/content/atelier/PROTOCOL.md', {
+  eager: true, query: '?raw', import: 'default',
+}) as Record<string, string>)[0] ?? ''
+const toolboxVersion = protoRaw.match(/10-TOOLBOX-CANDIDATES-V(\d+\.\d+)\.md/)?.[1] ?? '0.4'
+
+// Sheet — the rhizome as the practice reads it.
+const rhKinds = (rhizome.nodes as Array<{ kind?: string }>).reduce<Record<string, number>>(
+  (acc, n) => ((acc[n.kind ?? '?'] = (acc[n.kind ?? '?'] ?? 0) + 1), acc), {})
+const rhEdges = (rhizome.edges as unknown[]).length
+
+// ————————————————————————————————— the map: built at build time ———————————
+// Time scale bends at 18 July (protocol v4): the nightly register gets 58% of the
+// width, the project phase the rest — a map privileges legibility over uniform scale,
+// and says so (provenance line below the figure).
+const DAY = 86400000
+const t = (d: string) => Date.parse(d + 'T00:00:00Z')
+const T0 = t('2026-06-28')
+const T1 = t('2026-07-18')
+const dated = [
+  ...works.filter((w) => w.date).map((w) => t(w.date!)),
+  ...projects.filter((p) => p.created).map((p) => t(p.created!)),
+]
+const T2 = Math.max(...dated) + DAY / 2
+const W = 960, H = 232, padL = 16, padR = 46
+const innerW = W - padL - padR
+const xOf = (ts: number): number =>
+  ts <= T1
+    ? padL + ((ts - T0) / (T1 - T0)) * innerW * 0.58
+    : padL + innerW * 0.58 + ((ts - T1) / (T2 - T1)) * innerW * 0.42
+const Y0 = 128 // the baseline the slabs stand on
+
+// Deterministic per-slug jitter (no randomness — the map redraws identically).
+const hash = (s: string): number => {
+  let h = 0
+  for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0
+  return Math.abs(h)
+}
+
+// Works → slabs standing on the line; same-day slabs fan out around their date.
+const CURATED = '2026-07-24-kartographie-statt-kopie'
+const byDate = new Map<string, typeof works>()
+for (const w of works.filter((w) => w.date)) {
+  byDate.set(w.date!, [...(byDate.get(w.date!) ?? []), w])
+}
+const slabs = [...byDate.entries()].flatMap(([date, group]) =>
+  group.map((w, i) => {
+    const cx = xOf(t(date)) + (i - (group.length - 1) / 2) * 6
+    const h = 15 + (hash(w.slug) % 17) // 15–31px, deterministic
+    return {
+      slug: w.slug,
+      title: (w.meta.title ?? w.slug) as string,
+      date,
+      href: w.kind === 'astro' ? `/atelier/werke/${w.slug}` : `/atelier/werke-html/${w.slug}/`,
+      x: cx - 2.5, y: Y0 - h, w: 5, h,
+      curated: w.slug === CURATED,
+    }
+  }),
+)
+
+// Projects → lines hanging under the baseline; the mark at the end is the disposition.
+const projByDate = new Map<string, typeof projects>()
+for (const p of projects.filter((p) => p.created)) {
+  projByDate.set(p.created!, [...(projByDate.get(p.created!) ?? []), p])
+}
+const projLines = [...projByDate.entries()].flatMap(([date, group]) =>
+  group.map((p, i) => {
+    const x = xOf(t(date)) + (i - (group.length - 1) / 2) * 8
+    return {
+      id: p.id, title: p.title ?? p.id, status: p.status, disposition: p.disposition,
+      x, y1: Y0 + 8, x2: x + 12, y2: Y0 + 34,
+      label: `${p.title ?? p.id} — ${p.status}${p.disposition ? ` · ${p.disposition}` : ''}`,
+    }
+  }),
+)
+
+// The baseline itself: gently hand-set (deterministic waver), open toward the right.
+const baselinePts = Array.from({ length: 13 }, (_, i) => {
+  const x = padL - 6 + ((W - padR + 34 - padL + 6) / 12) * i
+  const y = Y0 + (i === 0 || i === 12 ? 0 : ((hash('line' + i) % 5) - 2) * 0.7)
+  return `${x.toFixed(1)},${y.toFixed(1)}`
+}).join(' ')
+
+const xNightlyMid = (xOf(T0) + xOf(T1)) / 2
+const xV4Mid = (xOf(T1) + xOf(T2)) / 2
 
 const doors = [
-  // Tür-Labels nennen ihr ZIEL (Frank, 24.07.: „man klickt auf 'what's happening' und landet
-  // im Tab PROJECTS") — das Label trägt den Raumnamen, die Zeile darunter erklärt ihn.
   {
     href: '/atelier/projects',
     label:
-      activeProjects > 0
-        ? `projects — ${activeProjects} in progress`
-        : 'projects — none in progress',
+      activeProjects.length > 0
+        ? `now — ${activeProjects.length} project${activeProjects.length === 1 ? '' : 's'} in progress`
+        : 'now — no project in progress',
     text: E.doors.now,
+    data: `${projects.length} projects on the record · ${dispCount('KILL')} killed · ${dispCount('ARCHIVE_AS_STUDY')} archived as study · ${dispCount('PUBLISH')} published`,
   },
-  { href: '/atelier/works', label: `works — ${worksCount} so far`, text: E.doors.works },
-  { href: '/atelier/foundation', label: 'about — the operating model', text: E.doors.foundation },
-  { href: '/atelier/sheet', label: 'the working sheet', text: E.doors.sheet },
+  {
+    href: '/atelier/works',
+    label: `works — ${worksCount} so far`,
+    text: E.doors.works,
+    data: newestWork ? `${V2.doorData.worksNewest}: ${newestWork.meta.title ?? newestWork.slug} · ${newestWork.date ?? ''}` : undefined,
+  },
+  {
+    href: '/atelier/foundation',
+    label: 'what this is',
+    text: E.doors.foundation,
+    data: `${V2.doorData.foundationLine} · Toolbox v${toolboxVersion}`,
+  },
+  {
+    href: '/atelier/sheet',
+    label: 'the working sheet',
+    text: E.doors.sheet,
+    data: `${rhKinds.work ?? 0} works · ${rhKinds.thread ?? 0} threads · ${rhKinds.source ?? 0} sources · ${rhEdges} ties — ${V2.doorData.sheetLine}`,
+  },
 ]
 ---
 
@@ -52,20 +187,106 @@ const doors = [
     <h1 class="at-h1">{E.h1}</h1>
     <p class="at-entrance-lede">{E.lede}</p>
 
+    <!-- ——— the map: the practice, drawn ——— -->
+    <figure class="at-map" aria-label={V2.mapHeading}>
+      <figcaption class="at-map-head">{V2.mapHeading}</figcaption>
+      <div class="at-map-scroll">
+        <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={V2.mapCaption}>
+          {/* baseline — the line of the practice, open toward the right */}
+          <polyline points={baselinePts} class="m-line" />
+          <path d={`M ${W - padR + 30} ${Y0} l 9 0 m -3.5 -3 l 3.5 3 l -3.5 3`} class="m-line" />
+
+          {/* phase brackets */}
+          <line x1={xOf(T0)} y1={Y0 + 52} x2={xOf(T1) - 4} y2={Y0 + 52} class="m-phase" />
+          <text x={xNightlyMid} y={Y0 + 66} class="m-caption" text-anchor="middle">
+            nightly register S1–S44 · 28 Jun – 18 Jul 2026
+          </text>
+          <line x1={xOf(T1) + 4} y1={Y0 + 52} x2={W - padR + 20} y2={Y0 + 52} class="m-phase" />
+          <text x={xV4Mid} y={Y0 + 66} class="m-caption" text-anchor="middle">
+            bounded projects · Protocol v4 →
+          </text>
+          <line x1={xOf(T1)} y1={Y0 - 6} x2={xOf(T1)} y2={Y0 + 46} class="m-seam" />
+
+          {/* works — ink slabs standing on the line; the red slab is the curated v4 publication */}
+          {slabs.map((s) => (
+            <a href={s.href} class="m-slab-link">
+              <rect x={s.x} y={s.y} width={s.w} height={s.h} class={s.curated ? 'm-slab m-slab-curated' : 'm-slab'}>
+                <title>{s.title} · {s.date}{s.curated ? ' — first curated v4 publication' : ''}</title>
+              </rect>
+            </a>
+          ))}
+
+          {/* projects — lines hanging under the baseline, marked by disposition */}
+          {projLines.map((p) => (
+            <g class="m-proj">
+              <title>{p.label}</title>
+              <line x1={p.x} y1={p.y1} x2={p.x2} y2={p.y2}
+                class={p.status === 'ACTIVE' ? 'm-proj-line m-proj-active' : 'm-proj-line'} />
+              {p.status === 'ACTIVE' && (
+                <path d={`M ${p.x2} ${p.y2} l 5 5 m -1 -5 l 1 5 l -5 -1`} class="m-proj-line m-proj-active" />
+              )}
+              {p.disposition === 'KILL' && (
+                <path d={`M ${p.x2 - 3} ${p.y2 - 3} l 6 6 M ${p.x2 + 3} ${p.y2 - 3} l -6 6`} class="m-mark-kill" />
+              )}
+              {p.disposition === 'ARCHIVE_AS_STUDY' && (
+                <rect x={p.x2 - 3} y={p.y2 - 3} width={6} height={6} class="m-mark-archive" />
+              )}
+              {p.disposition === 'PUBLISH' && (
+                <>
+                  <circle cx={p.x2} cy={p.y2} r={3.4} class="m-mark-publish" />
+                  <line x1={p.x2} y1={p.y2 - 4} x2={p.x} y2={Y0 + 2} class="m-publish-tie" />
+                </>
+              )}
+            </g>
+          ))}
+        </svg>
+      </div>
+      <figcaption class="at-map-legend">
+        {V2.mapCaption} · below the line: projects — ✕ killed · ▢ archived as study · ● published · ⤳ active
+      </figcaption>
+      <figcaption class="at-map-prov">
+        {V2.mapProvenance} · time scale bends at 18 Jul (protocol v4)
+      </figcaption>
+    </figure>
+
+    <!-- ——— the row of doors ——— -->
+    <p class="at-doors-caption">{V2.doorsCaption}</p>
     <nav class="at-doors" aria-label="Doors into the atelier">
       {doors.map((d) => (
         <a class="at-door-card" href={d.href}>
           <span class="d-label">{d.label} →</span>
           <span class="d-text">{d.text}</span>
+          {d.data && <span class="d-data">{d.data}</span>}
         </a>
       ))}
     </nav>
+
+    <!-- ——— the model behind the practice ——— -->
+    <section class="at-model" aria-label={V2.model.heading}>
+      <h2 class="at-model-head">{V2.model.heading}</h2>
+      <p class="at-model-lede">{V2.model.lede}</p>
+      <ul class="at-postulates">
+        {V2.model.postulates.map((p) => (
+          <li>
+            <a class="at-postulate" href={`/atelier/werke/${CURATED}`}>
+              <span class="p-axis">P{p.n} · {p.axis}</span>
+              <span class="p-pair"><b>{p.is}</b>, <i>not {p.not}</i></span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <p class="at-model-toolbox">{V2.model.toolboxLine}</p>
+      <p class="at-model-links">
+        <a href={`/atelier/werke/${CURATED}`}>{V2.model.workLink}</a>
+        <a href="/atelier/foundation">{V2.model.foundationLink}</a>
+      </p>
+    </section>
 
     <p class="at-quiet">
       deeper:
       <a href="/atelier/journal">journal archive (nightly phase)</a> ·
       <a href="/atelier/protocol">constitution</a> ·
-      <a href="/atelier/apparatus">apparatus — how the machine runs</a> ·
+      <a href="/atelier/apparatus">apparatus</a> ·
       <a href="/atelier/requests">team channel</a>
     </p>
 
@@ -78,50 +299,156 @@ const doors = [
 <style>
   .at-entrance-lede {
     max-width: 62ch;
-    margin: 1.25rem 0 2rem;
+    margin: 1.25rem 0 1.75rem;
     font-size: 0.95rem;
     line-height: 1.65;
+  }
+
+  /* ——— the map ——— */
+  .at-map { margin: 0 0 2.25rem; }
+  .at-map-head {
+    font-size: 12.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--at-ink-2);
+    margin-bottom: 0.4rem;
+  }
+  .at-map-scroll { overflow-x: auto; }
+  .at-map svg { width: 100%; min-width: 680px; height: auto; display: block; }
+  .m-line { fill: none; stroke: var(--at-graphite); stroke-width: 1.1; }
+  .m-phase { stroke: var(--at-hairline); stroke-width: 1; }
+  .m-seam { stroke: var(--at-hairline); stroke-width: 1; stroke-dasharray: 2 3; }
+  .m-caption { font-family: var(--at-font-record); font-size: 9.5px; fill: var(--at-ink-2); }
+  .m-slab { fill: var(--at-ink); }
+  .m-slab-link:hover .m-slab, .m-slab-link:focus .m-slab { fill: var(--at-thread); }
+  .m-slab-curated { fill: var(--at-red); }
+  .m-slab-link:hover .m-slab-curated, .m-slab-link:focus .m-slab-curated { fill: var(--at-red); opacity: 0.75; }
+  .m-proj-line { fill: none; stroke: var(--at-graphite); stroke-width: 1.1; }
+  .m-proj-active { stroke: var(--at-thread); stroke-dasharray: 4 3; }
+  .m-mark-kill { stroke: var(--at-ink-2); stroke-width: 1.2; fill: none; }
+  .m-mark-archive { fill: none; stroke: var(--at-ink-2); stroke-width: 1.1; }
+  .m-mark-publish { fill: var(--at-red); }
+  .m-publish-tie { stroke: var(--at-red); stroke-width: 0.9; stroke-dasharray: 1.5 2.5; }
+  .at-map-legend, .at-map-prov {
+    font-family: var(--at-font-record);
+    font-size: 0.72rem;
+    line-height: 1.55;
+    color: var(--at-ink-2);
+    margin-top: 0.45rem;
+    max-width: 90ch;
+  }
+  .at-map-prov { opacity: 0.7; margin-top: 0.15rem; }
+
+  /* ——— doors ——— */
+  .at-doors-caption {
+    font-family: var(--at-font-record);
+    font-size: 0.78rem;
+    color: var(--at-ink-2);
+    margin: 0 0 0.6rem;
   }
   .at-doors {
     display: grid;
     grid-template-columns: 1fr;
     gap: 0.75rem;
-    margin: 0 0 1.5rem;
+    margin: 0 0 2.25rem;
   }
   @media (min-width: 640px) {
-    .at-doors {
-      grid-template-columns: 1fr 1fr;
-    }
+    .at-doors { grid-template-columns: 1fr 1fr; }
   }
   .at-door-card {
     display: flex;
     flex-direction: column;
     gap: 0.4rem;
     padding: 0.9rem 1rem;
-    border: 1px solid currentColor;
+    border: 1px solid var(--at-hairline);
+    background: var(--at-surface);
     text-decoration: none;
     color: inherit;
+    transition: border-color 120ms ease, transform 120ms ease;
   }
-  .at-door-card:hover .d-label {
-    text-decoration: underline;
+  .at-door-card:hover, .at-door-card:focus-visible {
+    border-color: var(--at-thread);
+    transform: translateY(-1px);
   }
-  .d-label {
-    font-weight: 700;
-    font-size: 0.85rem;
-    letter-spacing: 0.02em;
-  }
-  .d-text {
-    font-size: 0.8rem;
+  .at-door-card:hover .d-label { text-decoration: underline; }
+  .d-label { font-weight: 700; font-size: 0.85rem; letter-spacing: 0.02em; }
+  .d-text { font-size: 0.8rem; line-height: 1.5; opacity: 0.75; }
+  .d-data {
+    font-family: var(--at-font-record);
+    font-size: 0.7rem;
     line-height: 1.5;
-    opacity: 0.75;
+    color: var(--at-ink-2);
+    border-top: 1px solid var(--at-hairline);
+    padding-top: 0.4rem;
+    margin-top: auto;
   }
-  .at-quiet {
-    font-size: 0.75rem;
-    opacity: 0.7;
-    margin-bottom: 2.5rem;
+
+  /* ——— the model band ——— */
+  .at-model {
+    border: 1px solid var(--at-hairline);
+    background: var(--at-badge-bg);
+    padding: 1.1rem 1.2rem 1.2rem;
+    margin: 0 0 2rem;
   }
-  .at-quiet a {
-    text-decoration: underline;
+  .at-model-head {
+    font-family: var(--at-font-record);
+    font-size: 12.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--at-ink-2);
+    margin: 0 0 0.5rem;
+  }
+  .at-model-lede {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    max-width: 72ch;
+    margin: 0 0 0.9rem;
+  }
+  .at-postulates {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.55rem;
+    padding: 0;
+    margin: 0 0 0.9rem;
+  }
+  @media (min-width: 640px) { .at-postulates { grid-template-columns: repeat(3, 1fr); } }
+  @media (min-width: 960px) { .at-postulates { grid-template-columns: repeat(6, 1fr); } }
+  .at-postulate {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    height: 100%;
+    padding: 0.55rem 0.65rem;
+    border: 1px solid var(--at-hairline);
+    background: var(--at-surface);
+    text-decoration: none;
     color: inherit;
+    transition: border-color 120ms ease;
   }
+  .at-postulate:hover, .at-postulate:focus-visible { border-color: var(--at-thread); }
+  .p-axis {
+    font-family: var(--at-font-record);
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--at-ink-2);
+  }
+  .p-pair { font-size: 0.8rem; line-height: 1.35; }
+  .p-pair b { font-weight: 700; }
+  .p-pair i { color: var(--at-ink-2); }
+  .at-model-toolbox {
+    font-family: var(--at-font-record);
+    font-size: 0.72rem;
+    line-height: 1.55;
+    color: var(--at-ink-2);
+    margin: 0 0 0.6rem;
+  }
+  .at-model-links { display: flex; gap: 1.4em; flex-wrap: wrap; font-size: 0.8rem; margin: 0; }
+  .at-model-links a { color: inherit; text-decoration: underline; }
+  .at-model-links a:hover { color: var(--at-thread); }
+
+  .at-quiet { font-size: 0.75rem; opacity: 0.7; margin-bottom: 2.5rem; }
+  .at-quiet a { text-decoration: underline; color: inherit; }
 </style>

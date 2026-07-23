@@ -74,7 +74,11 @@ export const ATELIER_GRAMMAR = {
 } as const
 
 export const ATELIER_NARRATIVE = {
-  approval: 'approved' as 'draft' | 'approved', // Frank, 2026-07-20: „sieht cool aus, go“ — Stufe-0-Eingang + Wortlaut freigegeben (decision-log)
+  // Frank, 2026-07-20: „sieht cool aus, go“ — Stufe-0-Eingang + Wortlaut freigegeben (decision-log).
+  // 2026-07-23 zurück auf 'draft': Eingang v2 (Karte der Praxis + Modell-Band) und Korrektur
+  // der Nightly-Phase-Formeln — das erste kuratierte v4-Werk ist publiziert, „works & catalogue
+  // from the nightly phase“ war damit faktisch veraltet. Draft bis Franks Merge/Freigabe.
+  approval: 'draft' as 'draft' | 'approved',
   /** Auswahlregel des Blatt-Titels — neu benannt, weil das Rhizom inzwischen mehr Fäden
    * trägt als die Design-Session (S26–S28) sah. */
   titleRule: 'the sheet title is the youngest thread’s own label, verbatim',
@@ -101,15 +105,54 @@ export const ATELIER_NARRATIVE = {
     kicker: 'Atelier · machine-participatory artistic research',
     h1: 'Atelier · Ulysses',
     lede:
-      'Ulysses is a situated artistic research practice, developed through documented human–machine operations. Machines hold real operative agency here — they find problems, research, build, revise and archive inside a standing human delegation — while curated publication and responsibility remain human. The unit of work is the bounded project; its failures stay on the record, checkably.',
+      'Ulysses is a situated artistic research practice, developed through documented human–machine operations. Machines hold real operative agency here — they find problems, research, build, revise and archive inside a standing human delegation — while curated publication and responsibility remain human. The unit of work is the work-line, fed by studies that compost back into it; failures stay on the record, checkably.',
     doors: {
       now: 'the research log — the work-line and its studies under Protocol v5: scores, traces, dispositions',
-      works: 'works & catalogue from the nightly phase (28 June – 18 July 2026) — the first curated v4 publication joins when a project earns it',
+      works: 'works & catalogue — the nightly phase (28 June – 18 July 2026) and, since 24 July, the first curated v4 publication',
       foundation: 'what this is, in plain language — the operating model, who decides what, and the theoretical ground',
       sheet: 'the working sheet — the practice’s own reading of its works and sources, drawn by itself',
     },
     quietRow:
       'deeper: the nightly journal archive · the constitution · the apparatus · the team channel',
+  },
+  /** Eingang v2 (2026-07-23): die Haustür wird zur Karte — passend zum publizierten
+   * Prozessmodell „Kartographie statt Kopie / Cartography, not Tracing“ (Werk 2026-07-24, Franks Publikations-
+   * entscheidung). Alle Postulat-Paare sind wörtlich aus dem Werk (§7 Conclusion);
+   * die Karte zeichnet nur committete Spiegel (meta.json-Daten, SCORE-Zustände).
+   * Draft bis Franks Merge dieses PRs. */
+  entranceV2: {
+    mapHeading: 'the practice, drawn',
+    mapCaption:
+      'each slab a work, hung by committed date — the nightly register (S1–S44), then bounded projects under Protocol v4; the red slab is the first curated v4 publication',
+    mapProvenance:
+      'drawn from committed mirrors — works meta.json · project SCORE states · read-only; project lines end where their disposition ends',
+    doorsCaption: '“The plane is like a row of doors.” (ATP 508)',
+    doorData: {
+      /** stehende Teile der Live-Zeilen; Zahlen setzt die Seite zur Bauzeit ein */
+      worksNewest: 'newest',
+      projectsActive: 'active',
+      foundationLine: 'Protocol v4 · Research Foundation, five tranches',
+      sheetLine: 'the rhizome as the practice reads it',
+    },
+    model: {
+      heading: 'the model behind the practice',
+      lede:
+        'Since 24 July 2026 the practice carries an explicit process model: read out of the whole of A Thousand Plateaus and published bilingually as the work “Kartographie statt Kopie / Cartography, not Tracing” — a map to be reworked by each project, not a template to be applied. Six postulates:',
+      /** wörtlich aus dem Werk, §7: „assemblages not works, map not copy, following not
+       * reproducing, refrain not phase-plan, becoming not standpoint, caution not transgression“ */
+      postulates: [
+        { n: 1, axis: 'object', is: 'assemblages', not: 'works' },
+        { n: 2, axis: 'knowledge', is: 'map', not: 'copy' },
+        { n: 3, axis: 'procedure', is: 'following', not: 'reproducing' },
+        { n: 4, axis: 'process', is: 'refrain', not: 'phase-plan' },
+        { n: 5, axis: 'subject', is: 'becoming', not: 'standpoint' },
+        { n: 6, axis: 'ethics', is: 'caution', not: 'transgression' },
+      ],
+      toolboxLine:
+        'Toolbox v0.3 — 26 methodological hypotheses, each with its own failure test; seven ATP-derived elements are under live probation (put-back-on-the-map)',
+      workLink: 'read the work — Kartographie statt Kopie (DE/EN) →',
+      foundationLink: 'the ground it stands on →',
+    },
   },
   rooms: {
     sheets: 'All sheets, one per thread — each a reading the practice has drawn across its works.',
@@ -123,7 +166,7 @@ export const ATELIER_NARRATIVE = {
     apparatus: 'How the machine runs — repo, constitution, team channel, integration machinery, in one room.',
     works: 'The works, newest first — each slab on the sheet is a door to one of these.',
     worksPhase:
-      'All works so far date from the nightly phase (28 June – 18 July 2026). The first curated v4 publication joins this surface only through an explicit human decision — never through a merge or a green build.',
+      'Most works date from the nightly phase (28 June – 18 July 2026). Since 24 July 2026 the surface also carries its first curated v4 publication — “Kartographie statt Kopie” (with a full English version), published by explicit human decision (PUBLICATION approved by Frank Bültge; see the project’s DECISION.md). Nothing enters this surface through a merge or a green build.',
     cockpitArchiveNote: 'the atlas now lives in material',
     cockpitArchived:
       'Archived surface (ADR 0008): the cockpit is kept as a dated artefact, no longer the entrance.',
