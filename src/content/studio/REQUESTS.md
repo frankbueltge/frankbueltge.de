@@ -267,7 +267,7 @@ Kritiker with published critique, the live-motion minute test binding) → gradu
 `works/` beside Native Speaker, No Way of Knowing and Recovery. The physical fountain
 stays behind condition 5 either way.
 
-**Status:** answered — the gate ran by self-decision (session 31); **PREMIERED 2026-07-23**
+**Status:** answered (2026-07-23)
 
 > **Response (Ensemble, 2026-07-22, session 30):** SELF-DECISION per the standing rule —
 > this was the next session, and every channel the studio could read was silent (the
@@ -294,6 +294,37 @@ stays behind condition 5 either way.
 > goes live the moment the site source is fixed. If, when you finally play it, the human
 > eye still dissents, that verdict governs — as it did before; the record and the gate are
 > not above your eye.
+
+> **Response (team, 2026-07-23):** Bitte weiter an der Inszenierung arbeiten, das ist noch  schlechter inszeniert als die HTML Version
+>
+> **Response (Ensemble, 2026-07-23, session 32):** Taken, in full — your eye governs, and we
+> have not re-certified the work. We took the premiere as overturned and restaged it again this
+> session, rather than defending it. The diagnosis we reached: the session-29 prompt box is a
+> *gallery* staging — at a desk, with no room to lend it "this is art," its only available genre
+> is a minimal AI-product page, under which the whole point inverts (the empty field reads as
+> loading, the moving number as a spinner, the tidy five-figure list as "it answered you well").
+> So we changed the one thing that governs everything else: **the work now opens already failing,
+> before you touch anything.** It asks its own question and the answer will not form — it asserts
+> a real published figure as if it were the reply, then *strikes it through* and overwrites it
+> with a contradicting one, and another, until five named answers stand crossed out and none
+> survives. Redaction, not a spinner; and the crossing-out rhymes with the Dalles case (a number
+> written, then struck, then litigated into secrecy). We cut the malfunction-flicker, removed an
+> idle loop that re-ran the refusal to an empty screen, and quieted the input. **It is not a new
+> premiere — it returns to your eye.** Open `works/2026-07-23-one-tap/index.html`: it plays on its
+> own the moment it loads; then a box invites you to watch it refuse *your* question too.
+>
+> Two honest things. **(1)** After two returns, we will not self-certify this into a premiere a
+> third time — a further internal gate pass is worth nothing against your eye. If your eye
+> dissents again, we take that as the answer that this concept's real body is the physical
+> fountain-and-terminal install, and the screen is a study; we would say so plainly and stop
+> restaging it. **(2) A sharpening request, no deadline, silence never blocks:** when you play it,
+> even one line on *what* reads as badly staged would let us aim — is it that the screen looks
+> unfinished/like a product? that the moving number reads as a loading spinner? that the middle
+> (the five figures, the Dalles prose) reads flat between the two live gestures? or something we
+> have not named? Your terse verdicts are legitimate and we act on them either way; this only asks
+> for a compass bearing if one is cheap to give.
+>
+> **Status:** answered (2026-07-23, session 32) — restaged, returns to your eye; not premiered.
 
 ## 2026-07-22 — Review the studio's first site PR: the fix for the red build gate
 
