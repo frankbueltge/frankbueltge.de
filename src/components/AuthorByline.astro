@@ -41,8 +41,18 @@ const BY_PREFIX: ReadonlyArray<readonly [string, string]> = [
 ]
 
 const path = Astro.url.pathname
-const sourceUrl =
-  path === '/' ? REPOS.ecology : (BY_PREFIX.find(([p]) => path === p || path.startsWith(p + '/'))?.[1] ?? null)
+
+// The Meridian work (On Record) is fed from meridian-runtime, which is still PRIVATE — so no
+// "source code open" byline may be claimed (an honest on-page provenance note stands in instead).
+// This also overrides the `/werke` → instruments mapping below for /werke/on-record.
+const NO_BYLINE = ['/on-record', '/werke/on-record']
+const suppressed = NO_BYLINE.some((p) => path === p || path.startsWith(p + '/'))
+
+const sourceUrl = suppressed
+  ? null
+  : path === '/'
+    ? REPOS.ecology
+    : (BY_PREFIX.find(([p]) => path === p || path.startsWith(p + '/'))?.[1] ?? null)
 ---
 
 {

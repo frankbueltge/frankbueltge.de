@@ -1,0 +1,108 @@
+---
+// Method sheet for "On Record" (the Meridian parallax). English-only. Numbers come from the
+// same view model the instrument renders, so the sheet cannot drift from the page.
+import data from '@/data/meridian/parallax.json'
+
+const { claim, verifications, sources, export_meta: exp } = data
+const claimAnchors = claim.supporting + claim.contradicting
+---
+
+<div class="mx-auto max-w-2xl px-4 py-14 font-mono">
+  <p class="mb-2 text-[11px] uppercase tracking-[0.2em] text-fg-faint">Method sheet</p>
+  <h1 class="mb-8 font-sans text-2xl font-semibold">On Record</h1>
+
+  <section class="mb-10 border border-line bg-panel/60 p-5">
+    <h2 class="mb-2 text-[11px] uppercase tracking-[0.18em] text-fg-faint">What this is</h2>
+    <p class="leading-relaxed text-fg-muted">
+      An instrument that reads one real research claim out of a sealed archive and shows the two
+      independent verifications that disagreed about it — a <em>pass</em> and a <em>fail</em>, kept side
+      by side. The point is the preservation: a runtime that refuses to resolve a genuine disagreement
+      into a score, an average, or a majority. The claim stays contested; the disagreement is on record.
+    </p>
+  </section>
+
+  <div class="space-y-9 text-sm leading-relaxed text-fg-muted">
+    <section>
+      <h2 class="mb-2 font-semibold text-fg">1. Source &amp; provenance</h2>
+      <p>
+        A claim-rooted export from the Meridian Research Runtime's K1-T04 archive, committed here as the
+        open dataset (<code class="text-fg-muted">src/data/meridian/export/</code>): {exp.object_count} objects
+        as {exp.standard}, every one content-hashed (sha256). The closure holds the two claims, {claimAnchors}
+        evidence anchors for the contested one, {sources.total} source records ({sources.primary} primary
+        theory preprints, {sources.secondary} secondary curated-artwork records), and all
+        {verifications.length} verifications. No artifact bytes ship (<code class="text-fg-muted">artifact_count 0</code>):
+        the sealed inputs are the run's material, the claim graph is its research output. Licence: the lab
+        line is noncommercial (works &amp; data under CC BY-NC-SA 4.0).
+      </p>
+    </section>
+
+    <section>
+      <h2 class="mb-2 font-semibold text-fg">2. Cadence</h2>
+      <p>
+        A pinned snapshot, not a feed. The export is a versioned artifact in the repository; a rebuild reads
+        exactly these bytes and no others. Git is the archive — every state of this page is reproducible from
+        the commit. <code class="text-fg-muted">datePublished</code> is the maximum <code
+          class="text-fg-muted">created_at</code
+        > across the exported objects ({exp.date_published?.slice(0, 10)}), never a wall-clock read.
+      </p>
+    </section>
+
+    <section>
+      <h2 class="mb-2 font-semibold text-fg">3. Processing</h2>
+      <p>
+        The RO-Crate / PROV metadata is a provenance <em>skeleton</em> — kinds, hashes, and
+        <code class="text-fg-muted">prov:used</code> edges. The research substance (pass/fail,
+        evidence-vs-counterevidence, reviewer role, confidence) lives in the object bodies. The pipeline
+        (<code class="text-fg-muted">npm run meridian:refresh</code>) joins both layers into one RDF graph,
+        then answers each question the page asks by SPARQL query; the verbatim findings are read from the
+        bodies. Deterministic throughout: no network, no clock, no model. Both the portable graph
+        (<code class="text-fg-muted">mrr-graph.ttl</code>) and the view model
+        (<code class="text-fg-muted">parallax.json</code>) are committed.
+      </p>
+    </section>
+
+    <section>
+      <h2 class="mb-2 font-semibold text-fg">Dissent, not averaged</h2>
+      <p>
+        The classifications and verdicts are research judgments — disclosed, attributed, and independently
+        verified; the runtime's core (assembly, sealing, hashing, export) is deterministic and adds no model
+        output to the authoritative record. Where two verifications disagree, invariant MRR-FR-077 keeps both
+        on the record rather than collapsing them to a false consensus. Here that is a broad primary-source
+        <em>pass</em> (confidence {verifications.find((v) => v.recommendation === 'pass')?.confidence.toFixed(2)},
+        {claimAnchors > 0 ? ' many anchors inspected' : ''}) against a narrow, deep cross-practice
+        <em>fail</em> (confidence {verifications.find((v) => v.recommendation === 'fail')?.confidence.toFixed(2)},
+        one row, five findings). The claim's status — contested — is the honest sum.
+      </p>
+    </section>
+
+    <section>
+      <h2 class="mb-2 font-semibold text-fg">4. Limits of the method</h2>
+      <ul class="ml-4 list-disc space-y-1.5">
+        <li>The empirical base is thin: two claims from a single run. This shows that dissent is preserved, not how often it arises.</li>
+        <li>The runtime's own source is still private; only the export is open here. No “source code open” is claimed, and the open leave-behind is incomplete until the runtime opens.</li>
+        <li>Independence is designed but unexercised under a single principal — the cross-practice verifier is one practice, not a federation.</li>
+        <li>In this run no source backs more than one classification, so “which source carries the most” is structurally flat; it becomes informative only across an overlapping corpus.</li>
+        <li>The related corpora (the encounter register, the Ulysses atlas) reference this work only by name, not by shared identifier — cross-practice questions are not yet machine-answerable.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2 class="mb-2 font-semibold text-fg">5. Compute footprint</h2>
+      <p>
+        Negligible and local: the refresh runs in seconds on the committed snapshot — no cloud job, no API
+        key, no network, no model. The site itself is static.
+      </p>
+    </section>
+
+    <section>
+      <h2 class="mb-2 font-semibold text-fg">6. Change log</h2>
+      <ul class="ml-4 list-disc space-y-1.5">
+        <li>v1 (2026-07) — first edition: the claim-rooted export, joined graph, SPARQL view model, and the parallax of the two verifications.</li>
+      </ul>
+    </section>
+  </div>
+
+  <p class="mt-12 border-t border-line pt-6 text-sm">
+    <a href="/on-record" class="underline transition-colors hover:text-fg">To the instrument →</a>
+  </p>
+</div>
