@@ -13,6 +13,7 @@ html, body { margin: 0; padding: 0; background: #0d0c0b; }
   --dim: #8f887a;
   --dimmer: #5d574c;
   --accent: #cf6a45;
+  --strike: #b8503a;
   --rule: rgba(233, 226, 210, 0.16);
   --font-prose: Georgia, 'Times New Roman', Times, serif;
   --font-numeral: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -33,7 +34,7 @@ html, body { margin: 0; padding: 0; background: #0d0c0b; }
   outline-offset: 2px;
 }
 
-/* ---------- chrome (the one constant marker + About) ---------- */
+/* ---------- chrome (the one constant tier marker + About) ---------- */
 #work .chrome {
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -41,18 +42,18 @@ html, body { margin: 0; padding: 0; background: #0d0c0b; }
   justify-content: space-between;
   align-items: baseline;
   gap: 12px;
-  padding: 10px 16px;
+  padding: 9px 16px;
   font-family: var(--font-mono);
-  font-size: 0.68rem;
+  font-size: 0.62rem;
   letter-spacing: 0.04em;
-  color: var(--dim);
+  color: var(--dimmer);
   background: #0d0c0b;
   z-index: 20;
 }
 #work .chrome-line { max-width: 46em; }
 #work .about-btn {
   font-family: var(--font-mono);
-  font-size: 0.68rem;
+  font-size: 0.62rem;
   letter-spacing: 0.04em;
   color: var(--dim);
   background: none;
@@ -64,88 +65,153 @@ html, body { margin: 0; padding: 0; background: #0d0c0b; }
 }
 #work .about-btn:hover { color: var(--ink); border-color: var(--dim); }
 
-/* ---------- the field (attract / thrash / statement) ---------- */
+/* ---------- the field (the overture: the answer that will not form) ---------- */
 #work .field {
-  min-height: 92vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 72px 20px 40px;
 }
-#work .well {
-  min-height: 46vh;
+#work .overture {
   width: 100%;
+  max-width: 760px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#work .posed-q {
+  margin: 0 0 6vh;
+  text-align: center;
+  font-family: var(--font-prose);
+  font-size: clamp(1.4rem, 3.4vw, 2.2rem);
+  line-height: 1.3;
+  color: var(--ink);
+}
+#work .answer {
+  width: 100%;
+  min-height: 44vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  gap: 10px;
 }
-#work .well-numeral {
-  font-family: var(--font-numeral);
-  font-weight: 800;
-  line-height: 1;
-  color: var(--ink);
-  white-space: nowrap;
-  will-change: transform;
-}
-#work .well-sub {
-  margin-top: 14px;
-  min-height: 2.4em;
-  text-align: center;
-  font-family: var(--font-mono);
-}
-#work .well-owner { font-size: 0.8rem; color: var(--dim); letter-spacing: 0.05em; }
-#work .well-boundary { font-size: 0.65rem; color: var(--dimmer); letter-spacing: 0.05em; margin-top: 3px; }
-
-#work .statement {
-  max-width: 34em;
-  text-align: center;
-  font-size: 1.25rem;
-  line-height: 1.7;
-  color: var(--ink);
-}
-#work .statement p { margin: 0.4em 0; }
-
-#work .ask {
-  margin-top: 5vh;
-  width: min(620px, 92vw);
+/* the answer keeps asserting a published figure and striking it out; nothing survives.
+   at rest, every line is struck — no figure is ever left standing as "the answer". */
+#work .attempts {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 12px;
   align-items: center;
+  gap: 12px;
 }
-#work .ask-label {
-  font-size: 1.05rem;
+#work .attempts li {
+  font-family: var(--font-numeral);
+  font-weight: 800;
+  line-height: 1.04;
+  white-space: nowrap;
+  text-align: center;
+  color: var(--dimmer);
+  text-decoration: line-through;
+  text-decoration-color: var(--strike);
+  text-decoration-thickness: 2px;
+  opacity: 0;
+  transition: color 0.3s ease, opacity 0.45s ease;
+}
+#work .attempts li.seen { opacity: 1; }
+#work .attempts li .at-fig { display: inline-block; font-size: 1.15rem; transition: font-size 0.3s ease; }
+#work .attempts li .at-owner {
+  display: block;
+  margin-top: 4px;
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: 0.68rem;
+  letter-spacing: 0.05em;
+  color: var(--dimmer);
+  white-space: normal;
+  text-decoration: none;
+}
+/* the one figure being asserted right now — clean, at its magnitude size — for the
+   instant before it, too, is struck. it is never left standing. */
+#work .attempts li.live {
   color: var(--ink);
+  text-decoration: none;
+  opacity: 1;
+}
+#work .attempts li.live .at-owner { color: var(--dim); }
+
+#work .verdict {
+  margin-top: 5vh;
+  max-width: 34em;
+  text-align: center;
+  font-size: 1.2rem;
+  line-height: 1.7;
+  color: var(--ink);
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+#work .verdict.in { opacity: 1; }
+#work .verdict p { margin: 0.35em 0; }
+
+/* ---------- ask your own (the embodiment tap — optional, not a gate) ---------- */
+#work .ask {
+  margin-top: 6vh;
+  width: min(560px, 92vw);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+#work .ask.in { opacity: 1; }
+#work .ask-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--dim);
+}
+#work .ask-echo {
+  min-height: 1.2em;
   font-style: italic;
+  font-size: 0.98rem;
+  color: var(--dim);
+  text-align: center;
 }
 #work .ask-row { display: flex; width: 100%; gap: 10px; }
 #work .ask-input {
   flex: 1;
   font-family: var(--font-prose);
-  font-size: 1.05rem;
+  font-style: italic;
+  font-size: 1rem;
   color: var(--ink);
-  background: rgba(233, 226, 210, 0.05);
-  border: 1px solid var(--rule);
-  border-radius: 3px;
-  padding: 12px 14px;
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--rule);
+  border-radius: 0;
+  padding: 8px 2px;
   caret-color: var(--accent);
 }
-#work .ask-input:focus { border-color: var(--dim); }
+#work .ask-input::placeholder { color: var(--dimmer); font-style: italic; }
+#work .ask-input:focus { border-bottom-color: var(--dim); }
 #work .ask-btn {
   font-family: var(--font-mono);
-  font-size: 0.85rem;
+  font-size: 0.74rem;
   letter-spacing: 0.08em;
-  color: var(--field);
-  background: var(--ink);
+  color: var(--dim);
+  background: none;
   border: none;
-  border-radius: 3px;
-  padding: 12px 22px;
+  border-bottom: 1px solid var(--rule);
+  border-radius: 0;
+  padding: 8px 4px;
   cursor: pointer;
 }
-#work .ask-btn:hover { background: #fff; }
+#work .ask-btn:hover { color: var(--ink); border-bottom-color: var(--dim); }
 
 /* ---------- the record (plate / cue / town / close) ---------- */
 #work .record {
@@ -153,6 +219,13 @@ html, body { margin: 0; padding: 0; background: #0d0c0b; }
   margin: 0 auto;
   padding: 0 20px 90px;
   scroll-margin-top: 96px;
+}
+#work .plate-lead {
+  font-family: var(--font-prose);
+  font-size: 1.05rem;
+  font-style: italic;
+  color: var(--ink);
+  margin: 0 0 6px;
 }
 #work .plate { list-style: none; margin: 0; padding: 0; }
 #work .plate li {
@@ -210,15 +283,35 @@ html, body { margin: 0; padding: 0; background: #0d0c0b; }
 
 #work .town { margin-top: 8px; scroll-margin-top: 96px; }
 #work .town p { margin: 1em 0; font-size: 1rem; color: var(--ink); }
-#work .close-lines { margin-top: 110px; }
+
+/* the close, given its own clearing to detonate in */
+#work .close-lines {
+  margin-top: 40vh;
+  min-height: 60vh;
+}
 #work .close-lines p {
-  margin: 0.45em 0;
-  font-size: 1.2rem;
+  margin: 0.5em 0;
+  font-size: 1.25rem;
   color: var(--ink);
 }
-#work .close-lines .close-last { font-style: italic; margin-top: 1.3em; }
+#work .close-lines .close-last { font-style: italic; margin-top: 1.5em; font-size: 1.45rem; }
 
-#work .record .ask { margin: 60px auto 0; }
+/* the returned box — quieted: a consequence, not a retry */
+#work .return-box {
+  margin-top: 12vh;
+  padding-top: 22px;
+  border-top: 1px solid var(--rule);
+  opacity: 0.62;
+}
+#work .return-box .rb-line {
+  font-family: var(--font-prose);
+  font-style: italic;
+  font-size: 0.98rem;
+  color: var(--dim);
+  margin: 0 0 12px;
+}
+#work .return-box .ask { margin-top: 0; opacity: 1; }
+#work .return-box .ask-label { color: var(--dimmer); }
 
 /* ---------- About overlay ---------- */
 #work .about-overlay {
@@ -281,6 +374,15 @@ html, body { margin: 0; padding: 0; background: #0d0c0b; }
 #work .noscript-content p, #work .noscript-content li { font-size: 0.95rem; color: var(--ink); }
 #work .ns-src { font-family: var(--font-mono); font-size: 0.7rem; color: var(--dim); word-break: break-all; }
 
+@media (prefers-reduced-motion: reduce) {
+  #work .attempts li,
+  #work .attempts li .at-fig,
+  #work .verdict,
+  #work .ask,
+  #work .plate li,
+  #work .cue { transition: none; }
+}
+
 @media (max-width: 560px) {
   #work .chrome { flex-direction: column; gap: 6px; align-items: flex-start; }
   #work .field { padding-top: 96px; }
@@ -292,36 +394,37 @@ html, body { margin: 0; padding: 0; background: #0d0c0b; }
 <div id="work">
 
   <div class="chrome">
-    <span class="chrome-line">An instrument, not a service. The figures are real and published; nothing you type is sent or answered.</span>
+    <span class="chrome-line">IMAGINED instrument · SOURCED figures · nothing you type is sent or answered</span>
     <button class="about-btn" id="aboutBtn" type="button" aria-haspopup="dialog">About this work</button>
   </div>
 
   <div id="stage">
 
     <section class="field" id="field">
-      <div class="well" id="well">
-        <div class="well-numeral" id="wellNumeral" aria-hidden="true"></div>
-        <div class="well-sub" aria-hidden="true">
-          <div class="well-owner" id="wellOwner"></div>
-          <div class="well-boundary" id="wellBoundary"></div>
+      <div class="overture" id="overture">
+        <p class="posed-q" id="posedQ">How much water did one question to a machine just cost?</p>
+        <div class="answer" id="answer">
+          <ul class="attempts" id="attempts" data-ml-context="pin-cycling" aria-label="Answers this instrument asserts and strikes out"></ul>
         </div>
-        <div class="statement" id="statement" hidden>
+        <div class="verdict" id="verdict">
           <p>The cost of one question is not knowable.</p>
           <p>Five figures have been published &mdash; they stand up to two thousand times apart,</p>
           <p>and no two of them measured the same thing.</p>
         </div>
-      </div>
 
-      <form class="ask" id="askForm">
-        <label class="ask-label" for="askInput">Ask it anything.</label>
-        <div class="ask-row">
-          <input class="ask-input" id="askInput" type="text" autocomplete="off">
-          <button class="ask-btn" id="askBtn" type="submit">Ask</button>
-        </div>
-      </form>
+        <form class="ask" id="askForm">
+          <label class="ask-label" for="askInput">Ask it your own question. It will refuse you too.</label>
+          <div class="ask-echo" id="askEcho" aria-live="polite"></div>
+          <div class="ask-row">
+            <input class="ask-input" id="askInput" type="text" autocomplete="off" placeholder="type a question">
+            <button class="ask-btn" id="askBtn" type="submit">Ask</button>
+          </div>
+        </form>
+      </div>
     </section>
 
     <section class="record" id="record" hidden>
+      <p class="plate-lead" id="plateLead">Five answers, at rest &mdash; and no two of them measured the same thing.</p>
       <ul class="plate" id="plate" aria-label="Five published figures, at rest, each different"></ul>
       <button class="cue" id="cueBtn" type="button" hidden>But one town&rsquo;s number &mdash; one figure, one year &mdash; took thirteen months in court to pry loose.&ensp;<span class="cue-arrow">read on&nbsp;&darr;</span></button>
       <div class="town" id="town" hidden>
@@ -334,6 +437,9 @@ html, body { margin: 0; padding: 0; background: #0d0c0b; }
         <p>The number was never unknown. It was withheld.</p>
         <p>Yours, by non-disclosure. The town&rsquo;s, by thirteen months of litigation.</p>
         <p class="close-last">The same refusal, twice.</p>
+        <div class="return-box" id="returnBox" hidden>
+          <p class="rb-line">And the next question you ask &mdash; anywhere &mdash; now waits the same way.</p>
+        </div>
       </div>
     </section>
 
@@ -342,7 +448,7 @@ html, body { margin: 0; padding: 0; background: #0d0c0b; }
   <div class="about-overlay" id="aboutOverlay" hidden role="dialog" aria-modal="true" aria-label="About this work">
     <div class="about-inner">
       <div class="about-head">
-        <span class="about-title">ONE TAP &middot; ENSEMBLE &middot; RESTAGED 2026-07-21 &middot; SEED 20260720</span>
+        <span class="about-title">ONE TAP &middot; ENSEMBLE &middot; RESTAGED 2026-07-23 &middot; SEED 20260720</span>
         <button class="about-close" id="aboutClose" type="button">Close</button>
       </div>
 
@@ -369,7 +475,7 @@ html, body { margin: 0; padding: 0; background: #0d0c0b; }
 
       <h2>Disclosure</h2>
       <p>Nothing typed into this page is sent, stored, or answered. The refusal is the only answer that exists.</p>
-      <p>With reduced motion requested, the number steps through the five figures in discrete jumps rather than thrashing continuously; it settles on none &mdash; only the record of all five holds.</p>
+      <p>The answer asserts each published figure in turn and strikes it out; it settles on none &mdash; only the record of all five holds. With reduced motion requested, the fades and size changes are suppressed: the figures simply appear and are struck.</p>
 
       <h2>Self-test</h2>
       <ul class="selftest-list" id="selfTestList"></ul>
@@ -382,13 +488,13 @@ html, body { margin: 0; padding: 0; background: #0d0c0b; }
   "work": "one-tap",
   "increment": 3,
   "extracted": "2026-07-20 (session 24) — conductor first-hand, before any Builder tokens; increment 2 extracted 2026-07-21 (session 26) — the session-25 findings re-verified from primaries first-hand before any edit",
-  "restaged": "2026-07-21 (session 29) — the staging recomposed after the human playthrough returned the work ('badly staged, and it is not art'); no fact, pin, date or quote changed",
-  "one_line": "You type your own question into the one box everyone knows, and press Ask. The answer that should come back — what your question cost in water — will not form: five published figures, up to two thousand times apart, no two of which measured the same thing, cycle where the reply should be and settle on nothing. Then the record deepens: when a newspaper asked for even one town's annual figure, the city sued the newspaper to keep the number secret — thirteen months in court, the city's costs paid by Google. The number was never unknown. It was withheld.",
+  "restaged": "2026-07-21 (session 29) — the staging recomposed after the human playthrough returned the work ('badly staged, and it is not art'). 2026-07-23 (session 32) — restaged again after the human eye returned the work a SECOND time ('keep working on the staging — this is even worse staged than the HTML version'): the piece now opens in the middle of its own failure to answer, before any tap, and the answers assert-and-cancel rather than cycling. No fact, pin, date or quote changed at either restage.",
+  "one_line": "The work opens already trying to answer, and failing: to its own posed question — how much water did one question to a machine just cost? — it asserts a published figure as if it were the reply, then strikes it through with a contradicting one, and another, until five named answers stand crossed out and none survives; no two of them measured the same thing. Only then does a box appear, inviting you to watch it refuse your own question too. Then the record deepens: when a newspaper asked for even one town's annual figure, the city sued the newspaper to keep the number secret — thirteen months in court, the city's costs paid by Google. The number was never unknown. It was withheld.",
   "subject": "Unknowability engineered by power — not 'AI is thirsty'.",
   "tiers_on_this_work": {
     "SOURCED": "The spine — every dial pin, every Dalles case-file line, every quotation. Each carries a real, retrievable URL, fetched first-hand at build (2026-07-20; re-verified and extended 2026-07-21). No pin is invented, none is smoothed; the disagreement between them is the finding.",
-    "IMAGINED": "The instrument itself — the dark field, the prompt box's staging, the thrashing numeral's seeded motion and its magnitude-mapped type size, the second-person address. The numeral's motion is the studio's construction and asserts nothing; the values it cycles, and comes to rest on, are the record. Marked by the one constant chrome line on the face.",
-    "cardinal_rule": "A visitor can always tell which tier an element belongs to: what moves is made (IMAGINED) and never claims to measure; what stands still and carries a name — the five witnesses, the town's account — is the record (SOURCED) and never moves. One constant chrome line names the frame."
+    "IMAGINED": "The instrument itself — the dark field, the work's own posed question, the answer that opens already asserting-and-cancelling (each published figure typed as if it were THE reply, held a beat, then struck through and overwritten by a contradicting one, the strikes accumulating into a wreckage of five crossed-out named answers that holds none), its seeded order and magnitude-mapped type size, the second-person address. The motion and the strikes are the studio's construction and assert nothing; the values asserted, and the fact that none survives, are the record. Marked by the one constant tier line on the face.",
+    "cardinal_rule": "A visitor can always tell which tier an element belongs to: what moves and strikes itself out is made (IMAGINED) — it never claims a value is false, only that no single one can stand; what stands STILL and carries a name — the five witnesses on the plate, the town's account — is the record (SOURCED), is never struck, and never moves. The strike belongs to the IMAGINED overture only; a real figure on the plate is never crossed out (that would imply it is untrue — it is not; the figures are all real and irreconcilable). One constant tier line names the frame."
   },
   "core_claim": {
     "tier": "SOURCED (the exact form matters — this replaced session 18's invented ratio, sharpened at increment 1, and re-scoped at increment 2 when the Mistral figure joined the dial)",
@@ -397,8 +503,9 @@ html, body { margin: 0; padding: 0; background: #0d0c0b; }
   },
   "dial": {
     "unit": "mL of water per query — but the pins do not even agree on what 'a query' or 'water' means; that non-comparability is part of the finding and is carried on the work",
-    "scale": "logarithmic — since the session-29 restage the scale is typographic: the numeral's type size maps log10 over the published range (0.26 mL → ≈519 mL), an 18 px floor to roughly two-fifths of the viewport",
+    "scale": "logarithmic — the asserted answer's type size maps log10 over the published range (0.26 mL → ≈519 mL), a floor of ~30 px to roughly a third of the viewport, so the two-thousand-fold disagreement is delivered to the body as size before it is stated in words",
     "restage_note_session29": "The engraved dial, the needle and the calibration-plate voice were cut at the session-29 restage (the work was returned by the human playthrough: 'badly staged, and it is not art'). The pins are unchanged and remain the spine: cycled by the thrashing numeral while the answer tries to form, then rendered at rest as the still plate — five witnesses, each with owner, year and boundary. The three spread statements render in About; on the face the spread is staged as the numeral's changing size and stated in the statement words ('up to two thousand times apart').",
+    "restage_note_session32": "Session 32 (2026-07-23), after the human eye returned the work a second time ('even worse staged than the HTML version'). The staging diagnosis (Artist, strong tier): the session-29 quiet prompt box, at a desk with no exhibition to lean on, read as a minimal AI-product page — so its empty field read as loading whitespace, the cycling numeral as a spinner, and the tidy five-figure plate as 'it returned five well-cited results', i.e. the refusal read as its own opposite; and every artistic gesture sat behind a tap the clean opening gave no reason to perform. The fix keeps every fact and pin: the piece now OPENS in the middle of its own failure, before any tap — the work asks its own question and the answer asserts a figure, holds it a readable beat, then strikes it through and overwrites it with a contradicting one, the strikes accumulating into a wreckage of five crossed-out named answers that holds none; then the verdict; then the plate at rest, reframed as five that cancel; then an optional box ('Ask it your own question. It will refuse you too.'). The pixel jitter (malfunction vocabulary that read as a broken widget) was cut. The strike/withholding grammar rhymes with the Dalles case — a figure written, then struck, then withheld — so Act 1 and Act 2 are one gesture at two scales. NOT a new premiere: it returns to the human eye, not to self-certification.",
     "spread_statements": [
       "Between the independent estimates alone: roughly 70x (7.1 mL → ~519 mL).",
       "Between the companies' own medians and the largest independent estimate: roughly 2,000x (0.26 mL → ~519 mL).",
@@ -545,7 +652,8 @@ html, body { margin: 0; padding: 0; background: #0d0c0b; }
     "resolution_of_condition_3": "The static locked-box ritual is DROPPED. In its place: the visitor's own question gets a real, running stopwatch — TIME SINCE YOU ASKED / ANSWERED: NOT YET — which is genuinely live (the visitor's real elapsed session time, computed from the clock, not dramatized) and genuinely never resolves, because the per-query answer genuinely does not exist. Beside it, the town's own counter, closed: ASKED SEPTEMBER 2021 / ANSWERED AFTER 13 MONTHS IN COURT. No fake form, no fake delay, no aestheticized inconvenience — nothing is submitted anywhere and the page says so.",
     "increment2_rebalance": "Session 26, against the standing takedown from the session-24 gate: the clocks no longer sit at equal weight. The SOURCED counter of the record moves first and carries the large engraved type and the wider column; the visitor's IMAGINED stopwatch is demoted — second, narrower, thin and translucent — and made to state, live, its own reading as a fraction of the thirteen months ('= 1 / N OF THE NEWSPAPER'S WAIT'), recomputed every second from real elapsed time. The asymmetry is no longer a risk the layout manages; it is a reading the instrument takes. Role precision holds: the thirteen-month wait belonged to the newspaper that asked — the town sued. Basis for the arithmetic disclosed in the honesty panel: the cited figure itself is operationalized at the average month length (13 × 30.44 days = 395.72 days = 34,190,208 seconds), because any date-difference would invent day-level precision the sources do not state. (Superseded in part at session 27: the fraction line was cut — see session27_resolution.)",
     "session27_resolution": "Session 27 (premiere prep, 2026-07-21): the live fraction line is CUT — '= 1 / N OF THE NEWSPAPER'S WAIT', its edge-case line ('YOU HAVE NOW WAITED LONGER THAN THE NEWSPAPER DID.'), the 34,190,208-second basis arithmetic and the WAIT-FRACTION self-test assertion are all removed; no computation replaces them. The Artist's resolution, upheld by the Kritiker over the only zero-context felt data on record: a ratio is a resolved number, recomputed every second, about the person standing there — the one operation this instrument exists to refuse — and dressing the visitor's smallness in the newspaper's thirteen months gave it a documentary alibi, not a different subject. What remains is the rhyme: the needle never rests because no disclosed figure exists for it to rest on; the demoted stopwatch never resolves because no mechanism to answer exists at all. The stopwatch stays at its full four-axis demotion, a real elapsed-time clock stating only TIME SINCE YOU ASKED / ANSWERED: NOT YET. The wait-fraction measured the visitor's smallness, not the record's asymmetry, and has been cut — the record now states its own asymmetry alone, in engraved words, and the demoted clock keeps only the one honest thing it ever needed to say: it, too, has not resolved.",
-    "session29_restage": "Session 29 (the restage): the stopwatch is CUT entirely — the last visitor-idle-time device, the session-27 line of reasoning carried to its end. The town's closed counter is folded into the town-account prose on the face ('Thirteen months later…'); the full dated timeline with sources stays one press away, in About. The rhyme the session-27 takedown doubted now has one subject and one voice: the withheld number — refused once by non-disclosure (the answer that will not form) and once by litigation (thirteen months in court) — stated in the work's own close as escalation, not echo."
+    "session29_restage": "Session 29 (the restage): the stopwatch is CUT entirely — the last visitor-idle-time device, the session-27 line of reasoning carried to its end. The town's closed counter is folded into the town-account prose on the face ('Thirteen months later…'); the full dated timeline with sources stays one press away, in About. The rhyme the session-27 takedown doubted now has one subject and one voice: the withheld number — refused once by non-disclosure (the answer that will not form) and once by litigation (thirteen months in court) — stated in the work's own close as escalation, not echo.",
+    "session32_restage": "Session 32: unchanged in fact — the town's account stays in prose on the face, the dated timeline one press away. What changed is the register that now binds Act 1 to Act 2: the small-scale refusal is staged as a figure written and then STRUCK OUT (the answer overwritten before it can stand), and the Dalles case is a figure written and then LITIGATED INTO SECRECY. Both are the same act — a number asserted and then withheld — which is what the close has always claimed ('The same refusal, twice'). The close is given its own clearing to land, and the returned box is quieted to read as consequence, not a retry."
   },
   "self_test": {
     "tier": "DISCLOSED SELF-TEST (house pattern) — runs on every load; since the session-29 restage it prints inside About (one press away), per the standing verification-furniture law",
@@ -553,15 +661,16 @@ html, body { margin: 0; padding: 0; background: #0d0c0b; }
       "NO-SETTLED-NUMBER: in every reachable state, the DOM never renders an mL figure outside an attributed node — the page structurally cannot present 'the cost' as one number. Asserted by scanning rendered text for mL-figures and checking each sits inside a node attributed data-ml-context=pin/pin-cycling/scale/spread.",
       "PINS-MATCH-ISLAND: the five witness lines on the still plate are exactly the pins in the JSON data island — none invented, none dropped, labels byte-equal. Asserted by rebuilding the plate from the island and comparing.",
       "SEEDED: the numeral's cycling is a pure function of a fixed, printed seed — same seed, same run (git is the archive). Asserted by re-running the first N samples of the seeded generator against stored expected values.",
-      "SETTLES-ON-NONE: a full run of the thrash sequencer, executed as a pure function, visits every one of the five published values at least twice and terminates holding none — the numeral structurally cannot end on an answer. Asserted at load and re-checked after each ask."
+      "SETTLES-ON-NONE: a full run of the refusal sequencer, executed as a pure function, asserts every one of the five published values at least twice and terminates holding none — the answer structurally cannot end on a value. Asserted at load and re-checked after each ask."
     ],
     "session27_note": "The fifth assertion (WAIT-FRACTION) was removed at session 27 together with the device it verified — see act2_counter.session27_resolution.",
-    "session29_note": "REAL-CLOCK was removed at session 29 together with the stopwatch it verified; SETTLES-ON-NONE was added, so the suite verifies the restaged piece's central claim directly. Four assertions."
+    "session29_note": "REAL-CLOCK was removed at session 29 together with the stopwatch it verified; SETTLES-ON-NONE was added, so the suite verifies the restaged piece's central claim directly. Four assertions.",
+    "session32_note": "Unchanged in count and intent at the session-32 restage: the same four assertions run every load. 'thrash sequencer' is now the 'refusal sequencer' (assertion-and-cancellation instead of a cycling numeral); SETTLES-ON-NONE verifies the same structural claim — the pure function asserts all five and terminates holding none — and now also underwrites the wreckage the visitor sees (five distinct figures struck, none surviving)."
   },
   "binding_conditions_status": [
     { "id": 1, "condition": "Screen-first, no fabrication on faith", "status": "HONORED — this increment is the browser instrument standing alone; no fountain, no cabinet, no fabrication scheduled." },
-    { "id": 2, "condition": "State the 70x explicitly; label each pin model + year", "status": "HONORED, RESTAGED — the face states the widest spread in the statement words ('up to two thousand times apart') and stages it as the numeral's magnitude-mapped size; all three numeric spreads render in About; every pin carries who + year + boundary on the still plate, with full scope, contested-by and sources in About." },
-    { "id": 3, "condition": "Act 2 live, or dropped", "status": "HONORED, RESTAGED — the locked-box ritual stayed dropped; the visitor-idle stopwatch was cut at session 29 (see act2_counter.session29_restage); the town's thirteen months carry Act 2 in prose on the face, the full cited timeline one press away." },
+    { "id": 2, "condition": "State the 70x explicitly; label each pin model + year", "status": "HONORED, RESTAGED (session 32) — the face states the widest spread in the verdict words ('up to two thousand times apart') and stages it as the magnitude-mapped size of each asserted-then-struck answer; each asserted answer carries its owner; all three numeric spreads render in About; every pin carries who + year + boundary on the still plate, with full scope, contested-by and sources in About." },
+    { "id": 3, "condition": "Act 2 live, or dropped", "status": "HONORED, RESTAGED — the locked-box ritual stayed dropped; the visitor-idle stopwatch was cut at session 29; the town's thirteen months carry Act 2 in prose on the face, the full cited timeline one press away. Session 32: the strike/withholding register now binds Act 2 to Act 1 (a figure struck out; a figure litigated into secrecy — the same act)." },
     { "id": 4, "condition": "Fact-lock before publication", "status": "HONORED — defendants correction rendered (newspaper + reporter, residents-line as labelled commentary); $153k hedged to >$100k on the face, components now attributed with the disagreement named (session-25 order, re-verified from the OregonLive/Tribune Content Agency report); 2021 figure primary-confirmed and rendered with '>a quarter'; the ~15 mL revision DROPPED from the work entirely (no primary); the contested-by quote corrected to its origin outlet's verbatim (The Verge: 'spreads', not the pickup's 'sends')." },
     { "id": 5, "condition": "No fabrication until screen passes AND Recovery resolves", "status": "HONORED — nothing physical scheduled; the physical fountain remains behind this gate and Recovery's open fabrication question." }
   ],
@@ -583,7 +692,13 @@ html, body { margin: 0; padding: 0; background: #0d0c0b; }
     "standing_takedown_session29": {
       "sentence": "A chatbot that won't answer is a one-note UX gag about a grievance everyone already shares: the flickering number is a spinner with pretensions, and once you've had the two-second joke there's no second reading — the Dalles case is doing all the real work and doesn't need the broken box in front of it.",
       "refutation_in_the_restage": "(a) finding: the first work to stage the field's published self-disagreement as a single answer that cannot decide even its own order of magnitude — each value wearing the name of who published it and what it differently measured; the 'spinner' carries five cited claims that genuinely will not reconcile. (b) risk upward: the turn points at power, not at UX — a named company funding a named city's thirteen-month lawsuit against the newspaper that asked, every line primary-sourced. (c) second reading: the payoff is not the broken box (that lands in seconds) but the escalation — your number won't form, the town's number took a court fight, the number was never unknown, only withheld — carried out into every real prompt box the visitor types into afterward. Nothing is faked: you really ask, there really is no answer, and the reason is named.",
-      "status": "The premiere gate's measure."
+      "status": "OVERTURNED BY THE HUMAN EYE, a second time (2026-07-23). The session-29 restage cleared the hardened premiere gate on the strong tier (session 31) and premiered — and the human eye then played it and returned it again: 'keep working on the staging — this is even worse staged than the HTML version.' The model-run gate has now passed this work three times and the human eye has rejected it twice; the eye governs (the record and the gate are not above it). The session-32 restage answers this verdict; it does NOT re-certify."
+    },
+    "standing_takedown_session32": {
+      "diagnosis": "Why the gate kept passing what the eye rejected (Artist, session 32): the session-29 quiet prompt box is a GALLERY staging — it borrows 'this is art' from the room, the plinth, the approach ritual. At a desk, with none of that present, its only available genre is 'minimal AI-product page', and under that genre every gesture inverts: the empty field reads as loading whitespace, the cycling numeral as a spinner ('computing… please wait'), and the tidy five-figure plate as 'it returned five well-cited results' — so the refusal reads as its own opposite, a thorough answer. The premiere gate itself flagged this ('install dependency', 'lives partly outside the work', the opening 'risks reading as a login screen no one approaches') and discharged it with a README instead of a fix. A README is not staging; the human at a desk hit the undisclosed truth.",
+      "sentence": "An interface that theatrically crosses out its own answers is still just a fancier spinner — you replaced 'loading…' with 'loading, dramatically', and the auto-running overture you bolted on to fix the dead opening is the exact screensaver-refusing-no-one the studio already rejected, now flattered with the word 'overture'; a cold eye reads animated strike-throughs as a slick product transition, because brands ship precisely that.",
+      "answer_in_the_session32_restage": "The strike is not motion dressed on a loader: it is semantic contradiction with named owners, and — unlike every loader and every brand transition, which end in the successful state — this sequence's TERMINAL state is the wreckage itself: five contradictory sourced claims held struck at once, no answer produced. 'We cannot answer you, and here are five cited sources proving no one can' is the one thing no product interface will ever ship; that commercial impossibility is the tell that reads as art without a caption. The overture answers the screensaver charge by its terminal difference: it runs once, ends in a verdict and a persistent record, and hands over a box that re-runs the refusal on the visitor's OWN words — its liveness points outward, not at idle decoration. CONCEDED HONESTLY: if even this — refusal-first, contradiction-grammar, wreckage-terminal — still reads to a cold desk eye as product motion, the takedown wins and the concept's body is the physical install, the screen a study. That judgment is the human eye's to make on THIS staging; it has not yet been tested (the eye's two rejections were of an annotated diagram, then a quiet product — neither a screen work that opens by visibly breaking).",
+      "status": "The measure the human eye is asked to judge next. This restage is NOT a premiere; it returns to the eye."
     }
   },
   "neighbors_daylight_carried": "From the concept gate (dossier): Crawford/Joler (diagram read vs. instrument watched), Onuoha (archival absence vs. absence dispensed live), Julian Oliver's Harvest (true-metered process vs. a process driven by the absence of a true number — formal inversion, the sharpest neighbor, named), Paglen/Burrington (infrastructure photographed vs. a number withheld), Disnovation (generalized eco-critique vs. one litigated case)."
@@ -663,29 +778,24 @@ html, body { margin: 0; padding: 0; background: #0d0c0b; }
       "mistral-2025": "Mistral",
       "gpt4-email-2024": "The Washington Post × UC Riverside"
     };
-    var SHORT_BOUNDARY = {
-      "gemini-2025": "on-site cooling water only",
-      "chatgpt-2025": "no methodology given",
-      "gpt3-2023": "electricity-generation water included",
-      "mistral-2025": "full lifecycle, reviewed",
-      "gpt4-email-2024": "one email — electricity water included"
-    };
 
-    // ---------- size mapping (typographic scale) ----------
+    // ---------- size mapping (magnitude, typographic) ----------
     var LOG_MIN = Math.log10(0.26);
     var LOG_MAX = Math.log10(519);
     function sizeFor(v) {
       var frac = (Math.log10(v) - LOG_MIN) / (LOG_MAX - LOG_MIN);
       frac = Math.max(0, Math.min(1, frac));
-      var ceil = Math.min(window.innerWidth, window.innerHeight) * 0.42;
-      return Math.round(18 + (ceil - 18) * frac);
+      var ceil = Math.min(window.innerWidth, window.innerHeight) * 0.34;
+      return Math.round(30 + (ceil - 30) * frac);
     }
 
-    // ---------- the thrash sequencer (pure function of the seed) ----------
-    function buildThrashSchedule(full) {
+    // ---------- the refusal sequencer (pure function of the seed) ----------
+    // Each pass is a shuffled visit of all five pins; a full run is two passes,
+    // so every value is asserted at least twice. It terminates holding NONE.
+    function buildRefusalSchedule(full) {
       var rng = mulberry32(SEED);
       var steps = [];
-      var lastPin = -1;
+      var last = -1;
       function shuffled() {
         var arr = [0, 1, 2, 3, 4];
         for (var i = arr.length - 1; i > 0; i--) {
@@ -694,103 +804,94 @@ html, body { margin: 0; padding: 0; background: #0d0c0b; }
         }
         return arr;
       }
-      function fill(budgetMs, minMs, maxMs, decel) {
-        var t = 0;
-        var bag = [];
-        while (t < budgetMs) {
-          if (!bag.length) {
-            bag = shuffled();
-            if (bag[0] === lastPin) bag.push(bag.shift());
-          }
-          var p = bag.shift();
-          var frac = decel ? t / budgetMs : rng();
-          var ms = Math.round(minMs + (maxMs - minMs) * frac);
-          steps.push({ pin: p, ms: ms });
-          lastPin = p;
-          t += ms;
+      var passes = full ? 2 : 1;
+      for (var p = 0; p < passes; p++) {
+        var bag = shuffled();
+        if (bag[0] === last) bag.push(bag.shift());
+        for (var i = 0; i < bag.length; i++) {
+          // hold each asserted answer long enough to read it as a real, named claim
+          var ms = full ? (p === 1 && i >= bag.length - 2 ? 1150 : 900) : 700;
+          steps.push({ pin: bag[i], ms: ms });
+          last = bag[i];
         }
       }
-      if (full) {
-        fill(5600, 250, 400, false);   // full thrash
-        fill(4000, 600, 1200, true);   // deceleration
-      } else {
-        fill(2500, 250, 400, false);
-        fill(1500, 500, 900, true);
-      }
-      return { steps: steps, terminal: "resolve", heldPin: null };
-    }
-
-    function buildSteppedSchedule(full) {
-      // reduced-motion path: discrete jumps, island order, settles on none
-      var steps = [];
-      var cycles = full ? 2 : 1;
-      for (var c = 0; c < cycles; c++) {
-        for (var i = 0; i < pins.length; i++) steps.push({ pin: i, ms: 1100 });
-      }
-      return { steps: steps, terminal: "resolve", heldPin: null };
+      return { steps: steps, terminal: "wreck", heldPin: null };
     }
 
     // ---------- DOM handles ----------
-    var wellNumeral = document.getElementById("wellNumeral");
-    var wellOwner = document.getElementById("wellOwner");
-    var wellBoundary = document.getElementById("wellBoundary");
-    var statement = document.getElementById("statement");
+    var overture = document.getElementById("overture");
+    var posedQ = document.getElementById("posedQ");
+    var attempts = document.getElementById("attempts");
+    var verdict = document.getElementById("verdict");
     var askForm = document.getElementById("askForm");
     var askInput = document.getElementById("askInput");
+    var askEcho = document.getElementById("askEcho");
     var record = document.getElementById("record");
     var plate = document.getElementById("plate");
     var cueBtn = document.getElementById("cueBtn");
     var town = document.getElementById("town");
     var closeLines = document.getElementById("closeLines");
+    var returnBox = document.getElementById("returnBox");
     var announcer = document.getElementById("announcer");
     var field = document.getElementById("field");
-    var well = document.getElementById("well");
 
-    var phase = "attract"; // attract | thrash | statement | resolved
-    var hasResolvedOnce = false;
+    var phase = "idle"; // idle | running | wreck | done
+    var hasRunOnce = false;
     var timers = [];
     function later(fn, ms) { timers.push(setTimeout(fn, ms)); }
     function clearTimers() { timers.forEach(clearTimeout); timers = []; }
 
-    // mark the well as cycling attributed values (tier scan context)
-    well.setAttribute("data-ml-context", "pin-cycling");
-
     function announce(text) { announcer.textContent = text; }
 
-    // ---------- jitter (full-motion path only) ----------
-    var jitterRng = mulberry32(SEED ^ 0x5f3759df);
-    var jitterRaf = null;
-    function jitterLoop() {
-      if (phase !== "thrash" || reduceMotion) { wellNumeral.style.transform = ""; jitterRaf = null; return; }
-      var dx = (jitterRng() - 0.5) * 7;
-      var dy = (jitterRng() - 0.5) * 5;
-      wellNumeral.style.transform = "translate(" + dx.toFixed(1) + "px," + dy.toFixed(1) + "px)";
-      jitterRaf = requestAnimationFrame(jitterLoop);
-    }
-
-    // ---------- rendering a step ----------
-    function showStep(pinIdx) {
+    // ---------- the answer lines (one per distinct figure; each asserted then struck) ----------
+    // A figure is never left standing clean: at rest every line is struck. The "live"
+    // (clean, magnitude-sized) state is a brief, moving instant, not the resting image.
+    var lineFor = {};                          // pin id -> its <li>
+    function ensureLine(pinIdx) {
       var p = pins[pinIdx];
-      wellNumeral.textContent = p.label;
-      var size = sizeFor(pinValue(p));
-      wellNumeral.style.fontSize = size + "px";
-      // every value renders whole: cap the size to the well's width
-      var maxW = well.clientWidth * 0.96;
-      if (wellNumeral.scrollWidth > maxW) {
-        size = Math.max(18, Math.floor(size * maxW / wellNumeral.scrollWidth));
-        wellNumeral.style.fontSize = size + "px";
-      }
-      wellOwner.textContent = SHORT_OWNER[p.id] || "";
-      wellBoundary.textContent = SHORT_BOUNDARY[p.id] || "";
+      if (lineFor[p.id]) return lineFor[p.id];
+      var li = document.createElement("li");
+      li.setAttribute("data-label", p.label);
+      var fig = document.createElement("span");
+      fig.className = "at-fig";
+      fig.textContent = p.label;
+      var owner = document.createElement("span");
+      owner.className = "at-owner";
+      owner.textContent = SHORT_OWNER[p.id] || "";
+      li.appendChild(fig); li.appendChild(owner);
+      attempts.appendChild(li);
+      lineFor[p.id] = li;
+      return li;
     }
-    function clearWellText() {
-      wellNumeral.textContent = "";
-      wellOwner.textContent = "";
-      wellBoundary.textContent = "";
-      wellNumeral.style.transform = "";
+    function assertLive(pinIdx) {
+      var p = pins[pinIdx];
+      var li = ensureLine(pinIdx);
+      li.classList.add("seen", "live");
+      var fig = li.querySelector(".at-fig");
+      var size = sizeFor(pinValue(p));
+      fig.style.fontSize = size + "px";
+      // keep every value whole on any viewport
+      var maxW = attempts.clientWidth || (Math.min(window.innerWidth, 760) - 40);
+      if (fig.scrollWidth > maxW * 0.98) {
+        fig.style.fontSize = Math.max(30, Math.floor(size * maxW * 0.98 / fig.scrollWidth)) + "px";
+      }
+    }
+    function strikeLive(pinIdx) {
+      var li = lineFor[pins[pinIdx].id];
+      if (!li) return;
+      li.classList.remove("live");            // now struck (the default li state), compact
+      var fig = li.querySelector(".at-fig");
+      if (fig) fig.style.fontSize = "";        // fall back to the compact struck size
     }
 
-    // ---------- the plate (five witnesses) ----------
+    function clearOverture() {
+      clearTimers();
+      attempts.innerHTML = "";
+      lineFor = {};
+      verdict.classList.remove("in");
+    }
+
+    // ---------- the plate (five witnesses, at rest — SOURCED, they never move) ----------
     function buildPlateNodes() {
       var frag = document.createDocumentFragment();
       pins.forEach(function (p) {
@@ -819,65 +920,59 @@ html, body { margin: 0; padding: 0; background: #0d0c0b; }
       if (!plate.childNodes.length) plate.appendChild(buildPlateNodes());
       record.hidden = false;
       var items = plate.querySelectorAll("li");
-      items.forEach(function (li, i) { later(function () { li.classList.add("lit"); }, 250 + i * 420); });
+      items.forEach(function (li, i) { later(function () { li.classList.add("lit"); }, 250 + i * 380); });
       if (town.hidden) {
         cueBtn.hidden = false;
-        later(function () { cueBtn.classList.add("lit"); }, 250 + items.length * 420);
+        later(function () { cueBtn.classList.add("lit"); }, 250 + items.length * 380);
       }
-      announce("Five published figures, at rest, each different: " +
-        pins.map(function (p) { return p.label + ", " + p.who; }).join("; ") + ".");
+      announce("Five published figures now stand at rest below, each from a different source and each measuring something different; they are listed in full, and no two of them can be reconciled.");
     }
 
-    // ---------- the sequence ----------
-    function runSequence(full) {
-      phase = "thrash";
-      statement.hidden = true;
-      clearWellText();
-      var schedule = reduceMotion ? buildSteppedSchedule(full) : buildThrashSchedule(full);
-      var t = 400; // ignition beat
-      announce("The instrument is trying to answer, and cannot settle.");
+    // ---------- the overture: the answer that will not form ----------
+    // Each figure is asserted clean (at magnitude size) for a brief instant, then struck.
+    // Between strike and the next assertion, every line on screen is struck — so the
+    // resting image is never a clean figure standing as "the answer", but crossed-out
+    // numbers holding none.
+    function runRefusal(full) {
+      phase = "running";
+      clearOverture();
+      var schedule = buildRefusalSchedule(full);
+      var t = 350;
+      announce(full
+        ? "The instrument tries to answer. Every figure it asserts is struck out by a contradicting one, and none is left standing."
+        : "It refuses your question too: the same figures, asserted and struck, none able to stand.");
       schedule.steps.forEach(function (step) {
-        later(function () { showStep(step.pin); }, t);
+        var pin = step.pin;
+        var cleanMs = Math.min(360, Math.round(step.ms * 0.42));
+        later(function () { assertLive(pin); }, t);
+        later(function () { strikeLive(pin); }, t + cleanMs);
         t += step.ms;
       });
-      if (!reduceMotion) { later(function () { if (!jitterRaf) jitterLoop(); }, 400); }
-
-      if (full) {
-        later(function () {
-          phase = "statement";
-          clearWellText();
-          statement.hidden = false;
-          announce("The cost of one question is not knowable. Five figures have been published, up to two thousand times apart, and no two of them measured the same thing.");
-        }, t + 200);
-        later(function () {
-          phase = "resolved";
-          statement.hidden = true;
-          hasResolvedOnce = true;
-          field.classList.add("after-resolve");
-          field.style.minHeight = "0";
-          well.style.minHeight = "0";
-          record.appendChild(askForm);
-          revealPlate();
+      later(function () {
+        // every line is struck; nothing is live — the answer holds none
+        phase = "wreck";
+        verdict.classList.add("in");
+        announce("The cost of one question is not knowable. Five figures have been published, up to two thousand times apart, and no two of them measured the same thing.");
+        if (full && !hasRunOnce) {
+          hasRunOnce = true;
+          later(function () { askForm.classList.add("in"); }, 900);
+          later(function () { revealPlate(); phase = "done"; runSelfTest("after overture"); }, 1500);
+        } else {
+          phase = "done";
           runSelfTest("after ask");
-        }, t + 200 + (reduceMotion ? 5000 : 6000));
-      } else {
-        later(function () {
-          phase = "resolved";
-          clearWellText();
-          announce("It refused again. The record below has not changed.");
-          runSelfTest("after ask");
-        }, t + 200);
-      }
+        }
+      }, t + 250);
     }
 
     askForm.addEventListener("submit", function (e) {
       e.preventDefault();
-      if (phase === "thrash" || phase === "statement") return;
+      if (phase === "running") return;
       if (!askInput.value.trim()) { askInput.focus(); return; }
-      var full = !hasResolvedOnce;
-      if (!full) { well.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" }); }
-      runSequence(full);
-      askInput.focus();
+      var q = askInput.value.trim();
+      askEcho.textContent = "You asked: " + q;
+      overture.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+      runRefusal(false);
+      askInput.blur();
     });
 
     // ---------- the cue / the deepening ----------
@@ -888,41 +983,15 @@ html, body { margin: 0; padding: 0; background: #0d0c0b; }
       cueBtn.parentNode.replaceChild(line, cueBtn);
       town.hidden = false;
       closeLines.hidden = false;
+      later(function () { returnBox.hidden = false; }, 400);
       town.setAttribute("tabindex", "-1");
       town.focus({ preventScroll: true });
       town.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
     });
 
-    // ---------- idle reset (janitorial, for the next stranger) ----------
-    var lastActivity = Date.now();
-    ["pointerdown", "keydown", "scroll", "input"].forEach(function (ev) {
-      window.addEventListener(ev, function () { lastActivity = Date.now(); }, { passive: true });
-    });
-    setInterval(function () {
-      if (phase !== "resolved") return;
-      if (Date.now() - lastActivity < 120000) return;
-      clearTimers();
-      phase = "attract";
-      hasResolvedOnce = false;
-      clearWellText();
-      statement.hidden = true;
-      record.hidden = true;
-      plate.innerHTML = "";
-      if (!record.contains(cueBtn)) {
-        var oldLine = record.querySelector(".cue-line");
-        if (oldLine) oldLine.parentNode.replaceChild(cueBtn, oldLine);
-      }
-      cueBtn.classList.remove("lit");
-      cueBtn.hidden = true;
-      town.hidden = true;
-      closeLines.hidden = true;
-      field.style.minHeight = "";
-      well.style.minHeight = "";
-      field.appendChild(askForm);
-      askInput.value = "";
-      announce("");
-      window.scrollTo(0, 0);
-    }, 5000);
+    // The refusal runs ONCE on load (below) — it is not re-performed to an empty desk.
+    // There is no idle re-run loop: a screensaver that refuses no one was the very charge
+    // this project was returned for. Between visitors, a fresh load re-runs the overture.
 
     // ---------- About overlay ----------
     var aboutOverlay = document.getElementById("aboutOverlay");
@@ -1060,12 +1129,12 @@ html, body { margin: 0; padding: 0; background: #0d0c0b; }
     }
 
     function testSettlesOnNone() {
-      var schedule = reduceMotion ? buildSteppedSchedule(true) : buildThrashSchedule(true);
+      var schedule = buildRefusalSchedule(true);
       var counts = [0, 0, 0, 0, 0];
       schedule.steps.forEach(function (s) { counts[s.pin]++; });
       var allTwice = counts.every(function (c) { return c >= 2; });
-      var endsHeld = schedule.terminal === "resolve" && schedule.heldPin === null;
-      return { pass: allTwice && endsHeld, detail: "visits " + counts.join("/") + ", terminal holds none" };
+      var endsHeld = schedule.terminal === "wreck" && schedule.heldPin === null;
+      return { pass: allTwice && endsHeld, detail: "asserts " + counts.join("/") + ", terminal holds none" };
     }
 
     function runSelfTest(runLabel) {
@@ -1078,7 +1147,7 @@ html, body { margin: 0; padding: 0; background: #0d0c0b; }
         ["NO-SETTLED-NUMBER — no mL figure outside an attributed node", testNoSettledNumber()],
         ["PINS-MATCH-ISLAND — the still plate equals the data island", testPinsMatchIsland()],
         ["SEEDED — same seed, same run", testSeeded()],
-        ["SETTLES-ON-NONE — a full run visits all five and holds none", testSettlesOnNone()]
+        ["SETTLES-ON-NONE — a full run asserts all five and holds none", testSettlesOnNone()]
       ].forEach(function (pair) {
         var li = document.createElement("li");
         var res = pair[1];
@@ -1089,7 +1158,8 @@ html, body { margin: 0; padding: 0; background: #0d0c0b; }
     }
 
     runSelfTest("at load");
-    askInput.focus();
+    // the refusal opens the work — before any tap
+    later(function () { runRefusal(true); }, 650);
   })();
   </script>
 
