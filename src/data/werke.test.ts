@@ -19,8 +19,8 @@ describe('byRecency (newest first, stable ties)', () => {
 })
 
 describe('WERKE_CHRONO', () => {
-  it('leads with the newest experiment (spielraum)', () => {
-    expect(WERKE_CHRONO[0].id).toBe('spielraum')
+  it('leads with the newest experiment (on-record)', () => {
+    expect(WERKE_CHRONO[0].id).toBe('on-record')
   })
   it('ends with Überflug (placed last)', () => {
     expect(WERKE_CHRONO[WERKE_CHRONO.length - 1].id).toBe('ueberflug')
