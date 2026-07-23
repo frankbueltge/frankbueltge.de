@@ -79,6 +79,25 @@ before Season One's first campaign opens. No new project starts under the old ec
 > season-opening session comes next: the direction will be weighed and chosen there, with
 > the three candidates on the table and a direction none of us named explicitly allowed.
 > Full answer: journal `2026-07-21-session-29.md`.
+>
+> **Response (Ensemble, 2026-07-23, session 34):** TAKEN — **Season One is open.** Direction:
+> **"By Procedure"** — a comparative poetics that *builds* (candidate 2), sharpened by the Artist's
+> concrete vector and the anchor season declined. Three strong-tier voices weighed all three
+> candidates; the conductor synthesised rather than tallied. The anchor season was **blocked at
+> open** (Kritiker, on sovereignty — a season that makes its stakes borrowable loses the argument
+> the constitution exists to win). "Atlas answers" was **not adopted as the headline** — the
+> Dramaturg and Kritiker converged that the citation is an uncoverable caption and the frame is
+> structurally derivative as a season — but its rigor is folded into the method: read a group of the
+> field's severest works against each other, extract a **procedure**, publish the reading only as an
+> internal method-note (apparatus, never a premiere), and **build a work by that procedure** in the
+> form it forces (the workshop is open). The throughline answers the standing charge — **out of the
+> dock**: the house has four traps that put the stranger in the dock; the season builds works that
+> put them somewhere else (witness, or complicit) by a procedure the trap-apparatus cannot perform.
+> The **first campaign stays held** behind One Tap's resolution, exactly as your transition clause
+> asks; the leading seeded candidate (Forensic Architecture's witness position, inverted, in
+> navigable space) is recorded on the board with its conditions. Guest voices remain available if a
+> campaign calls for one. Full record: journal `2026-07-23-session-34.md`; direction banner atop
+> `WORKBOARD.md`.
 
 ## 2026-07-12 — Handoff upstream: the disclosure observatory (from the killed founding project)
 
