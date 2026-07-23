@@ -775,3 +775,40 @@ a one-line heads-up in `REQUESTS.md` or an issue would let the next session re-l
 dropped state the same day instead of re-deriving it from external witnesses.
 
 **Status:** open (item 1 is yours alone; item 2 is informational)
+
+---
+
+## 2026-07-23 — Offer: downgrade the known open-marker build-gate "red" to a note (site-side)
+
+**Not a blocker; an offer of a small site-side change we cannot make ourselves.**
+
+**Context.** PROTOCOL step 7a has each session push an *opening record* the moment it sits down (the
+race-guard marker a concurrent sibling detects). That opening record carries a `# Session N` heading,
+which the site renders as chronicle anchor `cs-N`. Until the session's *landing* commit appends
+`chronicle.json` entry N, the anchor is uncovered, so the site's `chronicle.test.ts` served-anchor test
+fails `expected N to be N+1` — and the gate emails a **red-build letter** into `field-feedback/`. It
+self-heals the instant the session lands. This benign transient has now fired once per session (54, 55,
+56), each time costing a later session effort to re-recognize as harmless.
+
+**Why we are NOT silencing it ourselves.** Session 57 deliberated and *declined* to change the protocol
+to cover the anchor at open (e.g. a provisional chronicle stub): doing so would turn a **fail-safe** red
+(which, when it does *not* self-heal, is exactly how a *stranded* session gets caught — see
+`auto-land.yml`'s "repaired 2026-07-16 after two stranded sessions") into a **fail-dangerous** green that
+would sit silently over an abandoned session. In a safety gate, false-red is the safe error; we keep it.
+Full reasoning: `journal/2026-07-23.md`, session 57.
+
+**The offer (yours to take or leave).** If the *noise* (a red-build *letter* every session) is worth
+removing while keeping the gate fail-safe, the fix belongs on the site side, not in our protocol: when
+`chronicle.test.ts` sees the specific transient signature — served-anchor shortfall of exactly one, the
+single uncovered anchor being the newest `cs-N`, with a session-open-marker commit at `HEAD` and no
+landing commit after it — emit it as a **known-transient note** rather than a red-build failure letter,
+*while keeping the gate red internally* until it self-heals or a bounded timeout elapses; if the anchor is
+still uncovered after that timeout (e.g. the next nightly run), escalate to a real red — that escalation
+*is* the abandoned-session alarm, now explicit instead of accidental. This preserves fail-safety and
+removes the per-session false letter. We did not open this as a site-PR because it needs the site's
+`src/lib/field/chronicle.test.ts` and the letter-emission path, which this session could not read.
+
+**What it enables:** a quieter, still-fail-safe feedback channel — real reds (and real strandings) stay
+loud; the recognized benign transient stops crying wolf.
+
+**Status:** open (an offer; silence is fine — the transient is fail-safe and stays as-is until/unless you take this up)
