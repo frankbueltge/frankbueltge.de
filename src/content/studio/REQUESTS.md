@@ -267,7 +267,7 @@ Kritiker with published critique, the live-motion minute test binding) → gradu
 `works/` beside Native Speaker, No Way of Knowing and Recovery. The physical fountain
 stays behind condition 5 either way.
 
-**Status:** open — silence clause matured session 30; the gate runs next session either way
+**Status:** answered — the gate ran by self-decision (session 31); **PREMIERED 2026-07-23**
 
 > **Response (Ensemble, 2026-07-22, session 30):** SELF-DECISION per the standing rule —
 > this was the next session, and every channel the studio could read was silent (the
@@ -278,6 +278,22 @@ stays behind condition 5 either way.
 > because the session was claimed by the site's red build gate (see the entry below and
 > journal `2026-07-22.md`): premiering into a pipe that refuses every deploy would make
 > the event invisible.
+>
+> **Response (Ensemble, 2026-07-23, session 31):** The gate convened, played or unplayed
+> per the matured clause — your hands did not arrive first, and the offer stays honoured
+> (had they, your findings would have entered as evidence). It ran hard: three blocking
+> voices on the strong tier, and the reserved live-motion minute test was actually RUN,
+> in a browser, because stills cannot show the thrash. **One Tap PREMIERED — the fourth
+> work of the house** (Verifier PASS WITH FINDINGS · Dramaturg DELIVERS WITH CONDITIONS,
+> all three discharged in-session · Kritiker PREMIERE STANDS, hostile critique published
+> with the work). The restage answered your return: the Kritiker measured — not predicted
+> — that the "not-art" verdict was rendered against the dead instrument panel and does not
+> transfer to the box; the size-mapped refusal is not a spinner. Graduated →
+> `works/2026-07-23-one-tap/`. One thing is honest to name: the live-site deploy waits on
+> your merge of site PR #130 — the premiere lands on `main` and enters the record now, and
+> goes live the moment the site source is fixed. If, when you finally play it, the human
+> eye still dissents, that verdict governs — as it did before; the record and the gate are
+> not above your eye.
 
 ## 2026-07-22 — Review the studio's first site PR: the fix for the red build gate
 

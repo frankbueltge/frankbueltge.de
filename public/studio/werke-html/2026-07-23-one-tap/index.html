@@ -1,0 +1,1098 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>One Tap — an instrument that cannot settle</title>
+<style>
+html, body { margin: 0; padding: 0; background: #0d0c0b; }
+
+#work {
+  --field: #0d0c0b;
+  --ink: #e9e2d2;
+  --dim: #8f887a;
+  --dimmer: #5d574c;
+  --accent: #cf6a45;
+  --rule: rgba(233, 226, 210, 0.16);
+  --font-prose: Georgia, 'Times New Roman', Times, serif;
+  --font-numeral: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-mono: 'DejaVu Sans Mono', 'Courier New', Courier, monospace;
+  background: var(--field);
+  color: var(--ink);
+  font-family: var(--font-prose);
+  min-height: 100vh;
+  line-height: 1.55;
+}
+
+#work * { box-sizing: border-box; }
+#work a { color: inherit; }
+#work a:focus-visible,
+#work button:focus-visible,
+#work input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ---------- chrome (the one constant marker + About) ---------- */
+#work .chrome {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  padding: 10px 16px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  color: var(--dim);
+  background: #0d0c0b;
+  z-index: 20;
+}
+#work .chrome-line { max-width: 46em; }
+#work .about-btn {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  color: var(--dim);
+  background: none;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  padding: 3px 10px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+#work .about-btn:hover { color: var(--ink); border-color: var(--dim); }
+
+/* ---------- the field (attract / thrash / statement) ---------- */
+#work .field {
+  min-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 72px 20px 40px;
+}
+#work .well {
+  min-height: 46vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+#work .well-numeral {
+  font-family: var(--font-numeral);
+  font-weight: 800;
+  line-height: 1;
+  color: var(--ink);
+  white-space: nowrap;
+  will-change: transform;
+}
+#work .well-sub {
+  margin-top: 14px;
+  min-height: 2.4em;
+  text-align: center;
+  font-family: var(--font-mono);
+}
+#work .well-owner { font-size: 0.8rem; color: var(--dim); letter-spacing: 0.05em; }
+#work .well-boundary { font-size: 0.65rem; color: var(--dimmer); letter-spacing: 0.05em; margin-top: 3px; }
+
+#work .statement {
+  max-width: 34em;
+  text-align: center;
+  font-size: 1.25rem;
+  line-height: 1.7;
+  color: var(--ink);
+}
+#work .statement p { margin: 0.4em 0; }
+
+#work .ask {
+  margin-top: 5vh;
+  width: min(620px, 92vw);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+#work .ask-label {
+  font-size: 1.05rem;
+  color: var(--ink);
+  font-style: italic;
+}
+#work .ask-row { display: flex; width: 100%; gap: 10px; }
+#work .ask-input {
+  flex: 1;
+  font-family: var(--font-prose);
+  font-size: 1.05rem;
+  color: var(--ink);
+  background: rgba(233, 226, 210, 0.05);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 12px 14px;
+  caret-color: var(--accent);
+}
+#work .ask-input:focus { border-color: var(--dim); }
+#work .ask-btn {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  color: var(--field);
+  background: var(--ink);
+  border: none;
+  border-radius: 3px;
+  padding: 12px 22px;
+  cursor: pointer;
+}
+#work .ask-btn:hover { background: #fff; }
+
+/* ---------- the record (plate / cue / town / close) ---------- */
+#work .record {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0 20px 90px;
+  scroll-margin-top: 96px;
+}
+#work .plate { list-style: none; margin: 0; padding: 0; }
+#work .plate li {
+  border-top: 1px solid var(--rule);
+  padding: 18px 2px;
+  opacity: 0;
+  transition: opacity 1.1s ease;
+}
+#work .plate li.lit { opacity: 1; }
+#work .plate .w-fig {
+  display: block;
+  font-family: var(--font-numeral);
+  font-weight: 800;
+  font-size: 1.7rem;
+  color: var(--ink);
+}
+#work .plate .w-who { display: block; margin-top: 4px; font-size: 0.95rem; color: var(--ink); }
+#work .plate .w-meta { display: block; margin-top: 2px; font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.04em; color: var(--dim); }
+#work .plate .w-scope { display: block; margin-top: 5px; font-size: 0.83rem; color: var(--dim); font-style: italic; }
+
+#work .cue {
+  display: block;
+  width: 100%;
+  margin: 34px 0 0;
+  padding: 16px 2px;
+  font-family: var(--font-prose);
+  font-style: italic;
+  font-size: 1.05rem;
+  text-align: left;
+  color: var(--ink);
+  background: none;
+  border: none;
+  border-top: 1px solid var(--rule);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 1.1s ease;
+}
+#work .cue.lit { opacity: 1; }
+#work .cue:hover { color: #fff; }
+#work .cue-arrow {
+  font-family: var(--font-mono);
+  font-style: normal;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  white-space: nowrap;
+}
+#work .cue-line {
+  margin: 34px 0 0;
+  padding: 16px 2px 0;
+  font-style: italic;
+  font-size: 1.05rem;
+  border-top: 1px solid var(--rule);
+}
+
+#work .town { margin-top: 8px; scroll-margin-top: 96px; }
+#work .town p { margin: 1em 0; font-size: 1rem; color: var(--ink); }
+#work .close-lines { margin-top: 110px; }
+#work .close-lines p {
+  margin: 0.45em 0;
+  font-size: 1.2rem;
+  color: var(--ink);
+}
+#work .close-lines .close-last { font-style: italic; margin-top: 1.3em; }
+
+#work .record .ask { margin: 60px auto 0; }
+
+/* ---------- About overlay ---------- */
+#work .about-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: #0d0c0b;
+  overflow-y: auto;
+  padding: 30px 20px 60px;
+}
+#work .about-inner { max-width: 700px; margin: 0 auto; }
+#work .about-head { display: flex; justify-content: space-between; align-items: baseline; gap: 14px; }
+#work .about-title { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.08em; color: var(--dim); }
+#work .about-close {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--ink);
+  background: none;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  padding: 4px 12px;
+  cursor: pointer;
+}
+#work .about-inner h2 {
+  font-size: 1rem;
+  font-weight: normal;
+  font-style: italic;
+  margin: 2.2em 0 0.6em;
+  color: var(--ink);
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 6px;
+}
+#work .about-inner p, #work .about-inner li { font-size: 0.9rem; color: var(--dim); }
+#work .about-inner p strong { color: var(--ink); font-weight: normal; }
+#work .about-pin { margin: 1.1em 0; }
+#work .about-pin .ap-fig { color: var(--ink); font-family: var(--font-numeral); font-weight: 800; }
+#work .about-quote { border-left: 2px solid var(--rule); margin: 0.5em 0 0.5em 2px; padding-left: 12px; font-style: italic; }
+#work .about-src { font-family: var(--font-mono); font-size: 0.68rem; word-break: break-all; }
+#work .about-src a { color: var(--dim); }
+#work .selftest-list { list-style: none; padding: 0; font-family: var(--font-mono); font-size: 0.72rem; }
+#work .selftest-list li { margin: 0.5em 0; }
+#work .st-pass { color: #7da87d; }
+#work .st-fail { color: var(--accent); }
+
+/* ---------- utility ---------- */
+#work .visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+#work [hidden] { display: none !important; }
+
+/* ---------- noscript ---------- */
+#work .noscript-content { max-width: 640px; margin: 0 auto; padding: 80px 20px; }
+#work .noscript-content h2 { font-size: 1.1rem; font-style: italic; font-weight: normal; border-bottom: 1px solid var(--rule); padding-bottom: 6px; margin-top: 2em; }
+#work .noscript-content p, #work .noscript-content li { font-size: 0.95rem; color: var(--ink); }
+#work .ns-src { font-family: var(--font-mono); font-size: 0.7rem; color: var(--dim); word-break: break-all; }
+
+@media (max-width: 560px) {
+  #work .chrome { flex-direction: column; gap: 6px; align-items: flex-start; }
+  #work .field { padding-top: 96px; }
+  #work .ask-row { flex-direction: column; }
+}
+</style>
+</head>
+<body>
+<div id="work">
+
+  <div class="chrome">
+    <span class="chrome-line">An instrument, not a service. The figures are real and published; nothing you type is sent or answered.</span>
+    <button class="about-btn" id="aboutBtn" type="button" aria-haspopup="dialog">About this work</button>
+  </div>
+
+  <div id="stage">
+
+    <section class="field" id="field">
+      <div class="well" id="well">
+        <div class="well-numeral" id="wellNumeral" aria-hidden="true"></div>
+        <div class="well-sub" aria-hidden="true">
+          <div class="well-owner" id="wellOwner"></div>
+          <div class="well-boundary" id="wellBoundary"></div>
+        </div>
+        <div class="statement" id="statement" hidden>
+          <p>The cost of one question is not knowable.</p>
+          <p>Five figures have been published &mdash; they stand up to two thousand times apart,</p>
+          <p>and no two of them measured the same thing.</p>
+        </div>
+      </div>
+
+      <form class="ask" id="askForm">
+        <label class="ask-label" for="askInput">Ask it anything.</label>
+        <div class="ask-row">
+          <input class="ask-input" id="askInput" type="text" autocomplete="off">
+          <button class="ask-btn" id="askBtn" type="submit">Ask</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="record" id="record" hidden>
+      <ul class="plate" id="plate" aria-label="Five published figures, at rest, each different"></ul>
+      <button class="cue" id="cueBtn" type="button" hidden>But one town&rsquo;s number &mdash; one figure, one year &mdash; took thirteen months in court to pry loose.&ensp;<span class="cue-arrow">read on&nbsp;&darr;</span></button>
+      <div class="town" id="town" hidden>
+        <p>In The Dalles, Oregon, Google&rsquo;s data centers used 355.1 million gallons of water in 2020 &mdash; 29% of all the water the city used.</p>
+        <p>When the regional newspaper asked, in a public-records request, how much water those data centers used, the city answered by going to court: a reverse public-records lawsuit against the newspaper and its reporter, to keep the figure secret. Google funded the city&rsquo;s legal costs.</p>
+        <p>The county district attorney ruled that &ldquo;the city failed to meet its burden to show that Google&rsquo;s water usage is a trade secret.&rdquo; After thirteen months in court, the city dropped the case and released ten years of data. Its legal fees &mdash; more than $100,000 &mdash; were paid by Google.</p>
+        <p>Afterward, Google told the Associated Press it would no longer treat its site-level water use as a trade secret at any of its data centers nationwide.</p>
+      </div>
+      <div class="close-lines" id="closeLines" hidden>
+        <p>The number was never unknown. It was withheld.</p>
+        <p>Yours, by non-disclosure. The town&rsquo;s, by thirteen months of litigation.</p>
+        <p class="close-last">The same refusal, twice.</p>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="about-overlay" id="aboutOverlay" hidden role="dialog" aria-modal="true" aria-label="About this work">
+    <div class="about-inner">
+      <div class="about-head">
+        <span class="about-title">ONE TAP &middot; ENSEMBLE &middot; RESTAGED 2026-07-21 &middot; SEED 20260720</span>
+        <button class="about-close" id="aboutClose" type="button">Close</button>
+      </div>
+
+      <h2>What this is</h2>
+      <p id="aboutOneLine"></p>
+
+      <h2>What is real and what is made</h2>
+      <p id="aboutTierSourced"></p>
+      <p id="aboutTierImagined"></p>
+      <p id="aboutTierRule"></p>
+
+      <h2>The spread, in numbers</h2>
+      <div id="aboutSpreads" data-ml-context="spread"></div>
+      <p id="aboutScaleLine" data-ml-context="scale"></p>
+
+      <h2>The five figures, in full</h2>
+      <div id="aboutPins"></div>
+      <p id="aboutCaveat"></p>
+      <p id="aboutCaveatGrounds"></p>
+
+      <h2>The Dalles record, dated and sourced</h2>
+      <div id="aboutTimeline"></div>
+      <p id="aboutCommentary"></p>
+
+      <h2>Disclosure</h2>
+      <p>Nothing typed into this page is sent, stored, or answered. The refusal is the only answer that exists.</p>
+      <p>With reduced motion requested, the number steps through the five figures in discrete jumps rather than thrashing continuously; it settles on none &mdash; only the record of all five holds.</p>
+
+      <h2>Self-test</h2>
+      <ul class="selftest-list" id="selfTestList"></ul>
+    </div>
+  </div>
+
+  <div class="visually-hidden" id="announcer" aria-live="polite"></div>
+
+  <script type="application/json" id="island">{
+  "work": "one-tap",
+  "increment": 3,
+  "extracted": "2026-07-20 (session 24) — conductor first-hand, before any Builder tokens; increment 2 extracted 2026-07-21 (session 26) — the session-25 findings re-verified from primaries first-hand before any edit",
+  "restaged": "2026-07-21 (session 29) — the staging recomposed after the human playthrough returned the work ('badly staged, and it is not art'); no fact, pin, date or quote changed",
+  "one_line": "You type your own question into the one box everyone knows, and press Ask. The answer that should come back — what your question cost in water — will not form: five published figures, up to two thousand times apart, no two of which measured the same thing, cycle where the reply should be and settle on nothing. Then the record deepens: when a newspaper asked for even one town's annual figure, the city sued the newspaper to keep the number secret — thirteen months in court, the city's costs paid by Google. The number was never unknown. It was withheld.",
+  "subject": "Unknowability engineered by power — not 'AI is thirsty'.",
+  "tiers_on_this_work": {
+    "SOURCED": "The spine — every dial pin, every Dalles case-file line, every quotation. Each carries a real, retrievable URL, fetched first-hand at build (2026-07-20; re-verified and extended 2026-07-21). No pin is invented, none is smoothed; the disagreement between them is the finding.",
+    "IMAGINED": "The instrument itself — the dark field, the prompt box's staging, the thrashing numeral's seeded motion and its magnitude-mapped type size, the second-person address. The numeral's motion is the studio's construction and asserts nothing; the values it cycles, and comes to rest on, are the record. Marked by the one constant chrome line on the face.",
+    "cardinal_rule": "A visitor can always tell which tier an element belongs to: what moves is made (IMAGINED) and never claims to measure; what stands still and carries a name — the five witnesses, the town's account — is the record (SOURCED) and never moves. One constant chrome line names the frame."
+  },
+  "core_claim": {
+    "tier": "SOURCED (the exact form matters — this replaced session 18's invented ratio, sharpened at increment 1, and re-scoped at increment 2 when the Mistral figure joined the dial)",
+    "statement": "No reconcilable per-query water figure exists. Independent estimates span ~70x (7.1 mL to ~519 mL). In 2025 the companies began answering: Google offered a median of 0.26 mL (in a paper that is not peer-reviewed and counts only on-site cooling water), the OpenAI chief executive blogged 'about 0.000085 gallons' (no methodology given) — and Mistral published 45 mL per 400-token reply as a full-lifecycle figure under ISO 14040/44, externally reviewed. The dial now spans roughly 2,000x and no two pins measure the same thing — the model, the unit or the water boundary always differs — because the inputs (per-site water efficiency, per-model energy, query mix, lifecycle scope) are still not public across the industry. A disclosure that can be checked is achievable — one company produced one. The needle still has nowhere to rest.",
+    "honesty_note": "The work may NOT claim 'no company has ever disclosed a per-query number' — since August 2025 that is false. It may NOT claim 'no disclosed number can be checked at all' — since July 2025 that is false too: Mistral's figure carries a published, externally reviewed methodology. It claims what is true: the published numbers span more than three orders of magnitude, no two of them measured the same thing, they cannot be reconciled into an answer for the question you just asked — and of the companies' own three answers, only one arrives with a reviewable methodology."
+  },
+  "dial": {
+    "unit": "mL of water per query — but the pins do not even agree on what 'a query' or 'water' means; that non-comparability is part of the finding and is carried on the work",
+    "scale": "logarithmic — since the session-29 restage the scale is typographic: the numeral's type size maps log10 over the published range (0.26 mL → ≈519 mL), an 18 px floor to roughly two-fifths of the viewport",
+    "restage_note_session29": "The engraved dial, the needle and the calibration-plate voice were cut at the session-29 restage (the work was returned by the human playthrough: 'badly staged, and it is not art'). The pins are unchanged and remain the spine: cycled by the thrashing numeral while the answer tries to form, then rendered at rest as the still plate — five witnesses, each with owner, year and boundary. The three spread statements render in About; on the face the spread is staged as the numeral's changing size and stated in the statement words ('up to two thousand times apart').",
+    "spread_statements": [
+      "Between the independent estimates alone: roughly 70x (7.1 mL → ~519 mL).",
+      "Between the companies' own medians and the largest independent estimate: roughly 2,000x (0.26 mL → ~519 mL).",
+      "Between the companies' own disclosures: roughly 170x (0.26 mL → 45 mL) — and no two of them measured the same thing."
+    ],
+    "pins": [
+      {
+        "id": "gemini-2025",
+        "ml": 0.26,
+        "label": "0.26 mL",
+        "who": "Google — company technical paper",
+        "model": "Gemini Apps, median text prompt",
+        "year": 2025,
+        "scope": "On-site data-center water only; not peer-reviewed. Excludes the water consumed generating the electricity — the larger share by most accounts.",
+        "contested_by": "The UC Riverside researcher whose team produced the 2023 peer-reviewed estimate: \"They're just hiding the critical information. This really spreads the wrong message to the world.\" (to The Verge, August 2025)",
+        "source_urls": [
+          "https://arxiv.org/abs/2508.15734",
+          "https://cloud.google.com/blog/products/infrastructure/measuring-the-environmental-impact-of-ai-inference",
+          "https://www.technologyreview.com/2025/08/21/1122288/google-gemini-ai-energy/",
+          "https://www.theverge.com/report/763080/google-ai-gemini-water-energy-emissions-study",
+          "https://www.pcgamer.com/software/ai/theyre-just-hiding-the-critical-information-google-says-its-gemini-ai-sips-a-mere-five-drops-of-water-per-text-prompt-but-experts-disagree-with-its-findings/"
+        ]
+      },
+      {
+        "id": "chatgpt-2025",
+        "ml": 0.32,
+        "label": "≈0.32 mL",
+        "who": "OpenAI's chief executive — personal blog post",
+        "model": "ChatGPT, 'the average query'",
+        "year": 2025,
+        "scope": "No methodology, no scope, no source given. Verbatim: \"It also uses about 0.000085 gallons of water; roughly one fifteenth of a teaspoon.\"",
+        "contested_by": null,
+        "source_urls": [
+          "https://blog.samaltman.com/the-gentle-singularity"
+        ]
+      },
+      {
+        "id": "gpt3-2023",
+        "ml_low": 7.1,
+        "ml_high": 47.5,
+        "label": "7.1 – 47.5 mL",
+        "who": "UC Riverside / UT Arlington researchers — peer-reviewed (arXiv 2304.03271, 2023; Communications of the ACM, 2025)",
+        "model": "GPT-3, one medium-length request (range = where and when it runs: Ireland → Washington)",
+        "year": 2023,
+        "scope": "Includes off-site water for electricity generation. The authors call their own estimate \"on the conservative side\" — actual consumption \"could be several times higher.\"",
+        "contested_by": "A skeptic (a personal blog, cited on the work as opinion) argues the bottle-per-prompt framing is a miscalculation.",
+        "source_urls": [
+          "https://arxiv.org/abs/2304.03271",
+          "https://cacm.acm.org/sustainability-and-computing/making-ai-less-thirsty/",
+          "https://blog.andymasley.com/p/an-example-of-what-i-consider-a-misleading"
+        ]
+      },
+      {
+        "id": "mistral-2025",
+        "ml": 45,
+        "label": "45 mL",
+        "who": "Mistral — company lifecycle assessment, with France's ecological transition agency (ADEME) and Carbone 4; peer-reviewed by Resilio and Hubblo",
+        "model": "Mistral Large 2 / Le Chat, one 400-token reply",
+        "year": 2025,
+        "scope": "Full lifecycle Water Consumption Potential (ISO 14040/44 + GHG Protocol Product Standard) — includes the water behind electricity generation and hardware manufacturing. As of the last check (2026-07-23), the only company per-query figure with a reviewed methodology.",
+        "contested_by": null,
+        "source_urls": [
+          "https://mistral.ai/news/our-contribution-to-a-global-environmental-standard-for-ai",
+          "https://www.theregister.com/2025/07/24/mistral_environmental_report_ai_cost/"
+        ]
+      },
+      {
+        "id": "gpt4-email-2024",
+        "ml": 519,
+        "label": "≈519 mL",
+        "who": "The Washington Post × UC Riverside",
+        "model": "GPT-4, one 100-word email",
+        "year": 2024,
+        "scope": "Includes electricity-generation water; a different unit than the other pins (one email, not one prompt) — printed as such.",
+        "contested_by": null,
+        "source_urls": [
+          "https://www.washingtonpost.com/technology/2024/09/18/energy-ai-use-electricity-water-data-centers/"
+        ]
+      }
+    ],
+    "dropped_pin": {
+      "id": "reported-15ml",
+      "note": "A reported ~15 mL downward revision for GPT-4 exists only in secondary aggregation with no primary quote (session 23: 'primary-pending'). Per binding condition 4(d) it is NOT on the dial and NOT in the case file. Dropping it entirely is cleaner than an asterisk: the dial already carries the field's real spread from primaries."
+    },
+    "non_comparability_caveat": "The pins differ by model (GPT-3 / GPT-4 / Gemini / Mistral Large 2), year (2023–2025), unit (per prompt / per 100-word email / per 400-token reply / median), and scope (on-site cooling only / with electricity-generation water / full lifecycle including hardware manufacturing). That is not noise around one true value — it is the documentary state of what the public is permitted to know. Each pin is labelled with model + year + scope on the face (binding condition 2).",
+    "caveat_grounds_note": "GPT-3 pin, caveat grounds — the authors' 2025 CACM version grounds its \"could be several times higher\" caveat in: server-level inference energy measured for comparable deployed models (Llama-3-70B, Falcon-180B), deployment in third-party colocation data centers rather than the provider's own, and a deliberately conservative electricity-water-intensity factor."
+  },
+  "dalles_case": {
+    "tier": "SOURCED — every line checked against a retrievable source first-hand, 2026-07-20; fee components re-verified 2026-07-21 from the OregonLive/Tribune Content Agency report carried by govtech (binding condition 4; session-25 order)",
+    "why_it_is_here": "The per-query number is unknowable at the small end; The Dalles is what happened when a public asked at the large end — one town, one annual figure, thirteen months in court.",
+    "timeline": [
+      {
+        "date": "2010",
+        "fact": "Google's data centers in The Dalles, Oregon used 104.3 million gallons of water.",
+        "source_urls": ["https://columbiacommunityconnection.com/the-dalles/good-day-for-journalism-the-dalles-google-abdicate-in-water-fight-with-oregonian"]
+      },
+      {
+        "date": "2020",
+        "fact": "355.1 million gallons — 29% of the city's entire water consumption.",
+        "source_urls": ["https://columbiacommunityconnection.com/the-dalles/good-day-for-journalism-the-dalles-google-abdicate-in-water-fight-with-oregonian"]
+      },
+      {
+        "date": "2021",
+        "fact": "274.5 million gallons — 'more than a quarter of all the water used in the city.'",
+        "quote_verbatim": "[T]he search giant consumed 274.5 million gallons (about 1.2 billion liters) of water during 2021 at its facilities in The Dalles alone.",
+        "source_urls": ["https://www.theregister.com/2022/12/19/google_datacenters_dalles/", "https://www.rcfp.org/dalles-google-oregonian-settlement/"]
+      },
+      {
+        "date": "September 2021",
+        "fact": "The regional newspaper (The Oregonian/OregonLive) files a public-records request for Google's water use.",
+        "source_urls": ["https://www.rcfp.org/dalles-google-oregonian-settlement/"]
+      },
+      {
+        "date": "December 2021",
+        "fact": "The city of The Dalles files a reverse public-records lawsuit — against the newspaper and its reporter, to keep the figure secret. Google funds the city's legal costs.",
+        "defendant_correction": "BINDING (session 23 Verifier): the defendants were the newspaper and its reporter — NOT 'the town's own residents'. That residents were the ones left unable to learn the figure is commentary, and is rendered as commentary, separately.",
+        "source_urls": ["https://www.rcfp.org/dalles-google-oregonian-settlement/"]
+      },
+      {
+        "date": "2022",
+        "fact": "The Wasco County district attorney sides with the newspaper: 'the city failed to meet its burden to show that Google's water usage is a trade secret.'",
+        "quote_verbatim": "the city failed to meet its burden to show that Google's water usage is a trade secret",
+        "source_urls": ["https://www.rcfp.org/dalles-google-oregonian-settlement/"]
+      },
+      {
+        "date": "14 December 2022",
+        "fact": "After 13 months in court, the city drops the case and releases ten years of data. The city's legal fees: more than $100,000, all paid by Google. The published fee accounts themselves disagree — $106,000 plus a $53,000 settlement payment to the Reporters Committee for Freedom of the Press, by the city's own statement; $153,000 in total, by the local paper's.",
+        "quote_verbatim": "The city said Wednesday that its own legal costs total $106,000, and that Google has committed to covering those expenses as well as the $53,000 settlement.",
+        "figure_policy": "Load-bearing face line stays '>$100,000, paid by Google' (binding condition 4b). Components are etched only as attributed: $106,000 + $53,000 per the city's statement (OregonLive/Tribune Content Agency, carried by govtech), the $153,000 total per the local reporting that states it, and the disagreement between the accounts named — per the session-25 order.",
+        "source_urls": ["https://columbiacommunityconnection.com/the-dalles/good-day-for-journalism-the-dalles-google-abdicate-in-water-fight-with-oregonian", "https://www.rcfp.org/dalles-google-oregonian-settlement/", "https://www.govtech.com/analytics/the-dalles-ore-settles-lawsuit-over-google-data-centers"]
+      },
+      {
+        "date": "December 2022 (aftermath)",
+        "fact": "Google tells the Associated Press it will 'no longer seek to protect its site-level water-use numbers as a trade secret at any of its data centers nationwide.'",
+        "quote_verbatim": "no longer seek to protect its site-level water-use numbers as a trade secret at any of its data centers nationwide",
+        "source_urls": ["https://www.rcfp.org/dalles-google-oregonian-settlement/"]
+      }
+    ],
+    "commentary_labelled": "COMMENTARY, kept separate from the record above: the people who could not learn the number for those thirteen months were the town's residents — the suit was not against them, but the secrecy was at their expense.",
+    "naming_policy": "The reporter's personal name appears only as citation text inside linked sources, never in the work's own voice (standing policy, session 08). Companies, institutions and office-holders acting in office (the city, the DA, Google) are named where the cited sources name them."
+  },
+  "act2_counter": {
+    "tier": "IMAGINED (the form) — carrying two real clocks",
+    "resolution_of_condition_3": "The static locked-box ritual is DROPPED. In its place: the visitor's own question gets a real, running stopwatch — TIME SINCE YOU ASKED / ANSWERED: NOT YET — which is genuinely live (the visitor's real elapsed session time, computed from the clock, not dramatized) and genuinely never resolves, because the per-query answer genuinely does not exist. Beside it, the town's own counter, closed: ASKED SEPTEMBER 2021 / ANSWERED AFTER 13 MONTHS IN COURT. No fake form, no fake delay, no aestheticized inconvenience — nothing is submitted anywhere and the page says so.",
+    "increment2_rebalance": "Session 26, against the standing takedown from the session-24 gate: the clocks no longer sit at equal weight. The SOURCED counter of the record moves first and carries the large engraved type and the wider column; the visitor's IMAGINED stopwatch is demoted — second, narrower, thin and translucent — and made to state, live, its own reading as a fraction of the thirteen months ('= 1 / N OF THE NEWSPAPER'S WAIT'), recomputed every second from real elapsed time. The asymmetry is no longer a risk the layout manages; it is a reading the instrument takes. Role precision holds: the thirteen-month wait belonged to the newspaper that asked — the town sued. Basis for the arithmetic disclosed in the honesty panel: the cited figure itself is operationalized at the average month length (13 × 30.44 days = 395.72 days = 34,190,208 seconds), because any date-difference would invent day-level precision the sources do not state. (Superseded in part at session 27: the fraction line was cut — see session27_resolution.)",
+    "session27_resolution": "Session 27 (premiere prep, 2026-07-21): the live fraction line is CUT — '= 1 / N OF THE NEWSPAPER'S WAIT', its edge-case line ('YOU HAVE NOW WAITED LONGER THAN THE NEWSPAPER DID.'), the 34,190,208-second basis arithmetic and the WAIT-FRACTION self-test assertion are all removed; no computation replaces them. The Artist's resolution, upheld by the Kritiker over the only zero-context felt data on record: a ratio is a resolved number, recomputed every second, about the person standing there — the one operation this instrument exists to refuse — and dressing the visitor's smallness in the newspaper's thirteen months gave it a documentary alibi, not a different subject. What remains is the rhyme: the needle never rests because no disclosed figure exists for it to rest on; the demoted stopwatch never resolves because no mechanism to answer exists at all. The stopwatch stays at its full four-axis demotion, a real elapsed-time clock stating only TIME SINCE YOU ASKED / ANSWERED: NOT YET. The wait-fraction measured the visitor's smallness, not the record's asymmetry, and has been cut — the record now states its own asymmetry alone, in engraved words, and the demoted clock keeps only the one honest thing it ever needed to say: it, too, has not resolved.",
+    "session29_restage": "Session 29 (the restage): the stopwatch is CUT entirely — the last visitor-idle-time device, the session-27 line of reasoning carried to its end. The town's closed counter is folded into the town-account prose on the face ('Thirteen months later…'); the full dated timeline with sources stays one press away, in About. The rhyme the session-27 takedown doubted now has one subject and one voice: the withheld number — refused once by non-disclosure (the answer that will not form) and once by litigation (thirteen months in court) — stated in the work's own close as escalation, not echo."
+  },
+  "self_test": {
+    "tier": "DISCLOSED SELF-TEST (house pattern) — runs on every load; since the session-29 restage it prints inside About (one press away), per the standing verification-furniture law",
+    "assertions": [
+      "NO-SETTLED-NUMBER: in every reachable state, the DOM never renders an mL figure outside an attributed node — the page structurally cannot present 'the cost' as one number. Asserted by scanning rendered text for mL-figures and checking each sits inside a node attributed data-ml-context=pin/pin-cycling/scale/spread.",
+      "PINS-MATCH-ISLAND: the five witness lines on the still plate are exactly the pins in the JSON data island — none invented, none dropped, labels byte-equal. Asserted by rebuilding the plate from the island and comparing.",
+      "SEEDED: the numeral's cycling is a pure function of a fixed, printed seed — same seed, same run (git is the archive). Asserted by re-running the first N samples of the seeded generator against stored expected values.",
+      "SETTLES-ON-NONE: a full run of the thrash sequencer, executed as a pure function, visits every one of the five published values at least twice and terminates holding none — the numeral structurally cannot end on an answer. Asserted at load and re-checked after each ask."
+    ],
+    "session27_note": "The fifth assertion (WAIT-FRACTION) was removed at session 27 together with the device it verified — see act2_counter.session27_resolution.",
+    "session29_note": "REAL-CLOCK was removed at session 29 together with the stopwatch it verified; SETTLES-ON-NONE was added, so the suite verifies the restaged piece's central claim directly. Four assertions."
+  },
+  "binding_conditions_status": [
+    { "id": 1, "condition": "Screen-first, no fabrication on faith", "status": "HONORED — this increment is the browser instrument standing alone; no fountain, no cabinet, no fabrication scheduled." },
+    { "id": 2, "condition": "State the 70x explicitly; label each pin model + year", "status": "HONORED, RESTAGED — the face states the widest spread in the statement words ('up to two thousand times apart') and stages it as the numeral's magnitude-mapped size; all three numeric spreads render in About; every pin carries who + year + boundary on the still plate, with full scope, contested-by and sources in About." },
+    { "id": 3, "condition": "Act 2 live, or dropped", "status": "HONORED, RESTAGED — the locked-box ritual stayed dropped; the visitor-idle stopwatch was cut at session 29 (see act2_counter.session29_restage); the town's thirteen months carry Act 2 in prose on the face, the full cited timeline one press away." },
+    { "id": 4, "condition": "Fact-lock before publication", "status": "HONORED — defendants correction rendered (newspaper + reporter, residents-line as labelled commentary); $153k hedged to >$100k on the face, components now attributed with the disagreement named (session-25 order, re-verified from the OregonLive/Tribune Content Agency report); 2021 figure primary-confirmed and rendered with '>a quarter'; the ~15 mL revision DROPPED from the work entirely (no primary); the contested-by quote corrected to its origin outlet's verbatim (The Verge: 'spreads', not the pickup's 'sends')." },
+    { "id": 5, "condition": "No fabrication until screen passes AND Recovery resolves", "status": "HONORED — nothing physical scheduled; the physical fountain remains behind this gate and Recovery's open fabrication question." }
+  ],
+  "takedown": {
+    "sentence": "A FOIA-request LARP with a nice fountain attached — the audience already knows companies hide numbers, and performing bureaucratic delay for gallery-goers aestheticizes inconvenience at no cost to the artist.",
+    "refutation_in_this_increment": "(a) finding: the first instrument to put the field's published self-disagreement — now including the companies' own contested 2025 medians and the one reviewed lifecycle figure — on one calibrated dial, where the widening is visible as motion, not prose; (b) risk upward: it names a specific company funding a specific municipality's 13-month legal effort against a newspaper, until a DA overruled it — every line primary-sourced; (c) form: a live needle refusing to settle, a stopwatch that genuinely cannot stop. The LARP charge dies with the ritual: nothing is performed, nothing pretends to be submitted; both clocks are real.",
+    "standing_takedown_session24": {
+      "sentence": "Pairing the visitor's own idle five seconds with a town's thirteen-month court fight, at equal visual weight, doesn't refuse aestheticized inconvenience — it just moved the aestheticization from a locked box to a stopwatch, and dressed up the audience's boredom as if it belonged in the same courtroom.",
+      "refutation_in_increment_2": "'Equal visual weight' is made false on four axes at once — position (the record's counter first), column width (wider), type size (larger, engraved), material (fixed plate vs. thin and translucent). And the stopwatch no longer coexists with the courtroom clock as a competing spectacle: every second, it computes and announces its own reading as a fraction of the thirteen months, so the visitor's wait is not dressed up as comparable — it is measured against the record and found microscopic, live, by disclosed arithmetic. The fraction is the refusal of comparability, spoken continuously, not a caption asserting it once. (The fraction device itself was subsequently cut at session 27 — see standing_takedown_session26.)"
+    },
+    "standing_takedown_session26": {
+      "sentence": "A stopwatch that no longer competes for weight with the courtroom clock still spends every second doing the same trick: converting the visitor's own idle time into content. The denominator got more honest, but the subject of the instrument's liveness is still the visitor watching themselves shrink — self-deprecation is not the same as refusing the frame.",
+      "resolution_session27": "Conceded and discharged by subtraction, not by defense: the Artist's resolution accepted the sentence's premise — the fraction's true subject was the visitor — and cut the device (act2_counter.session27_resolution). The Kritiker upheld the cut over the cold reader's outward-pointing felt response, ruling that the response arrived by way of exactly the operation the sentence condemns: a resolved ratio, ticking, about the person standing there."
+    },
+    "standing_takedown_session27": {
+      "sentence": "The fraction is gone, and with it the one operation this instrument was ever built to refuse — but a cut ratio doesn't automatically become a rhyme; it only becomes one if a visitor actually hears the needle's refusal and the stopwatch's 'NOT YET' as making the same argument. Premiere gate: does an unbriefed visitor register two honest non-resolutions echoing each other, or does the demoted clock just recede into chrome nobody reads — a rhyme that only the Artist can hear because the Artist wrote both halves?",
+      "status": "Empirically confirmed by the human playthrough (2026-07-21: the unbriefed visitor did not hear the rhyme), then discharged by transformation at the session-29 restage: the stopwatch half was cut and the rhyme re-founded on one subject — the withheld number, refused twice (non-disclosure, litigation) — spoken in the work's own close. The session-29 sentence replaces this as the premiere gate's measure."
+    },
+    "standing_takedown_session29": {
+      "sentence": "A chatbot that won't answer is a one-note UX gag about a grievance everyone already shares: the flickering number is a spinner with pretensions, and once you've had the two-second joke there's no second reading — the Dalles case is doing all the real work and doesn't need the broken box in front of it.",
+      "refutation_in_the_restage": "(a) finding: the first work to stage the field's published self-disagreement as a single answer that cannot decide even its own order of magnitude — each value wearing the name of who published it and what it differently measured; the 'spinner' carries five cited claims that genuinely will not reconcile. (b) risk upward: the turn points at power, not at UX — a named company funding a named city's thirteen-month lawsuit against the newspaper that asked, every line primary-sourced. (c) second reading: the payoff is not the broken box (that lands in seconds) but the escalation — your number won't form, the town's number took a court fight, the number was never unknown, only withheld — carried out into every real prompt box the visitor types into afterward. Nothing is faked: you really ask, there really is no answer, and the reason is named.",
+      "status": "The premiere gate's measure."
+    }
+  },
+  "neighbors_daylight_carried": "From the concept gate (dossier): Crawford/Joler (diagram read vs. instrument watched), Onuoha (archival absence vs. absence dispensed live), Julian Oliver's Harvest (true-metered process vs. a process driven by the absence of a true number — formal inversion, the sharpest neighbor, named), Paglen/Burrington (infrastructure photographed vs. a number withheld), Disnovation (generalized eco-critique vs. one litigated case)."
+}
+</script>
+
+  <noscript>
+    <div class="noscript-content">
+      <h2>One Tap &mdash; this instrument answers by refusing to</h2>
+      <p>Without scripting it cannot move &mdash; but the refusal was never in the motion; it is in the record.</p>
+
+      <h2>The statement</h2>
+      <p>The cost of one question is not knowable: five figures have been published, they stand up to two thousand times apart, and no two of them measured the same thing.</p>
+
+      <h2>Five published figures, each different</h2>
+      <ul>
+        <li><strong>0.26 mL</strong> &mdash; Google &mdash; company technical paper &middot; Gemini Apps, median text prompt &middot; 2025 &middot; On-site data-center water only; not peer-reviewed. Excludes the water consumed generating the electricity &mdash; the larger share by most accounts. Contested by the UC Riverside researcher whose team produced the 2023 peer-reviewed estimate: &ldquo;They&rsquo;re just hiding the critical information. This really spreads the wrong message to the world.&rdquo; (to The Verge, August 2025)
+          <br><span class="ns-src"><a href="https://arxiv.org/abs/2508.15734">arxiv.org/abs/2508.15734</a> &middot; <a href="https://www.theverge.com/report/763080/google-ai-gemini-water-energy-emissions-study">theverge.com</a></span></li>
+        <li><strong>&asymp;0.32 mL</strong> &mdash; OpenAI&rsquo;s chief executive &mdash; personal blog post &middot; ChatGPT, &ldquo;the average query&rdquo; &middot; 2025 &middot; No methodology, no scope, no source given. Verbatim: &ldquo;It also uses about 0.000085 gallons of water; roughly one fifteenth of a teaspoon.&rdquo;
+          <br><span class="ns-src"><a href="https://blog.samaltman.com/the-gentle-singularity">blog.samaltman.com</a></span></li>
+        <li><strong>7.1 &ndash; 47.5 mL</strong> &mdash; UC Riverside / UT Arlington researchers &mdash; peer-reviewed &middot; GPT-3, one medium-length request &middot; 2023 &middot; Includes off-site water for electricity generation. The authors call their own estimate &ldquo;on the conservative side&rdquo; &mdash; actual consumption &ldquo;could be several times higher.&rdquo;
+          <br><span class="ns-src"><a href="https://arxiv.org/abs/2304.03271">arxiv.org/abs/2304.03271</a> &middot; <a href="https://cacm.acm.org/sustainability-and-computing/making-ai-less-thirsty/">cacm.acm.org</a></span></li>
+        <li><strong>45 mL</strong> &mdash; Mistral &mdash; company lifecycle assessment with ADEME and Carbone 4, peer-reviewed by Resilio and Hubblo &middot; Mistral Large 2 / Le Chat, one 400-token reply &middot; 2025 &middot; Full lifecycle Water Consumption Potential (ISO 14040/44 + GHG Protocol Product Standard).
+          <br><span class="ns-src"><a href="https://mistral.ai/news/our-contribution-to-a-global-environmental-standard-for-ai">mistral.ai</a> &middot; <a href="https://www.theregister.com/2025/07/24/mistral_environmental_report_ai_cost/">theregister.com</a></span></li>
+        <li><strong>&asymp;519 mL</strong> &mdash; The Washington Post &times; UC Riverside &middot; GPT-4, one 100-word email &middot; 2024 &middot; Includes electricity-generation water; a different unit than the other pins (one email, not one prompt).
+          <br><span class="ns-src"><a href="https://www.washingtonpost.com/technology/2024/09/18/energy-ai-use-electricity-water-data-centers/">washingtonpost.com</a></span></li>
+      </ul>
+
+      <h2>The town</h2>
+      <p>In The Dalles, Oregon, Google&rsquo;s data centers used 355.1 million gallons of water in 2020 &mdash; 29% of all the water the city used.</p>
+      <p>When the regional newspaper asked, in a public-records request, how much water those data centers used, the city answered by going to court: a reverse public-records lawsuit against the newspaper and its reporter, to keep the figure secret. Google funded the city&rsquo;s legal costs.</p>
+      <p>The county district attorney ruled that &ldquo;the city failed to meet its burden to show that Google&rsquo;s water usage is a trade secret.&rdquo; After thirteen months in court, the city dropped the case and released ten years of data. Its legal fees &mdash; more than $100,000 &mdash; were paid by Google.</p>
+      <p>Afterward, Google told the Associated Press it would no longer treat its site-level water use as a trade secret at any of its data centers nationwide.</p>
+      <p class="ns-src">Timeline sources: <a href="https://www.rcfp.org/dalles-google-oregonian-settlement/">rcfp.org</a> &middot; <a href="https://columbiacommunityconnection.com/the-dalles/good-day-for-journalism-the-dalles-google-abdicate-in-water-fight-with-oregonian">columbiacommunityconnection.com</a> &middot; <a href="https://www.theregister.com/2022/12/19/google_datacenters_dalles/">theregister.com</a> &middot; <a href="https://www.govtech.com/analytics/the-dalles-ore-settles-lawsuit-over-google-data-centers">govtech.com</a>. The published fee accounts themselves disagree &mdash; $106,000 plus a $53,000 settlement payment to the Reporters Committee for Freedom of the Press, by the city&rsquo;s own statement; $153,000 in total, by the local paper&rsquo;s. COMMENTARY, kept separate from the record: the people who could not learn the number for those thirteen months were the town&rsquo;s residents &mdash; the suit was not against them, but the secrecy was at their expense.</p>
+
+      <h2>The close</h2>
+      <p>The number was never unknown. It was withheld. Yours, by non-disclosure. The town&rsquo;s, by thirteen months of litigation. The same refusal, twice.</p>
+
+      <p class="ns-src">An instrument, not a service. Nothing typed here is sent, stored, or answered. SOURCED: the figures, the town&rsquo;s account, every quotation &mdash; each with a retrievable URL. IMAGINED: the staging. SEED 20260720.</p>
+    </div>
+  </noscript>
+
+  <script>
+  (function () {
+    "use strict";
+
+    var SEED = 20260720;
+
+    function mulberry32(a) {
+      return function () {
+        a |= 0; a = a + 0x6D2B79F5 | 0;
+        var t = Math.imul(a ^ (a >>> 15), 1 | a);
+        t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+      };
+    }
+
+    var EXPECTED_SEED_VALUES = [
+      0.937925250036642, 0.8310530125163496, 0.050957355881109834,
+      0.8604431573767215, 0.9193871186580509
+    ];
+
+    var island = JSON.parse(document.getElementById("island").textContent);
+    var pins = island.dial.pins;
+
+    var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    // ---------- pin display data ----------
+    function pinValue(p) {
+      if (typeof p.ml === "number") return p.ml;
+      return Math.sqrt(p.ml_low * p.ml_high);
+    }
+    var SHORT_OWNER = {
+      "gemini-2025": "Google",
+      "chatgpt-2025": "OpenAI’s chief executive",
+      "gpt3-2023": "UC Riverside / UT Arlington",
+      "mistral-2025": "Mistral",
+      "gpt4-email-2024": "The Washington Post × UC Riverside"
+    };
+    var SHORT_BOUNDARY = {
+      "gemini-2025": "on-site cooling water only",
+      "chatgpt-2025": "no methodology given",
+      "gpt3-2023": "electricity-generation water included",
+      "mistral-2025": "full lifecycle, reviewed",
+      "gpt4-email-2024": "one email — electricity water included"
+    };
+
+    // ---------- size mapping (typographic scale) ----------
+    var LOG_MIN = Math.log10(0.26);
+    var LOG_MAX = Math.log10(519);
+    function sizeFor(v) {
+      var frac = (Math.log10(v) - LOG_MIN) / (LOG_MAX - LOG_MIN);
+      frac = Math.max(0, Math.min(1, frac));
+      var ceil = Math.min(window.innerWidth, window.innerHeight) * 0.42;
+      return Math.round(18 + (ceil - 18) * frac);
+    }
+
+    // ---------- the thrash sequencer (pure function of the seed) ----------
+    function buildThrashSchedule(full) {
+      var rng = mulberry32(SEED);
+      var steps = [];
+      var lastPin = -1;
+      function shuffled() {
+        var arr = [0, 1, 2, 3, 4];
+        for (var i = arr.length - 1; i > 0; i--) {
+          var j = Math.floor(rng() * (i + 1));
+          var tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+        }
+        return arr;
+      }
+      function fill(budgetMs, minMs, maxMs, decel) {
+        var t = 0;
+        var bag = [];
+        while (t < budgetMs) {
+          if (!bag.length) {
+            bag = shuffled();
+            if (bag[0] === lastPin) bag.push(bag.shift());
+          }
+          var p = bag.shift();
+          var frac = decel ? t / budgetMs : rng();
+          var ms = Math.round(minMs + (maxMs - minMs) * frac);
+          steps.push({ pin: p, ms: ms });
+          lastPin = p;
+          t += ms;
+        }
+      }
+      if (full) {
+        fill(5600, 250, 400, false);   // full thrash
+        fill(4000, 600, 1200, true);   // deceleration
+      } else {
+        fill(2500, 250, 400, false);
+        fill(1500, 500, 900, true);
+      }
+      return { steps: steps, terminal: "resolve", heldPin: null };
+    }
+
+    function buildSteppedSchedule(full) {
+      // reduced-motion path: discrete jumps, island order, settles on none
+      var steps = [];
+      var cycles = full ? 2 : 1;
+      for (var c = 0; c < cycles; c++) {
+        for (var i = 0; i < pins.length; i++) steps.push({ pin: i, ms: 1100 });
+      }
+      return { steps: steps, terminal: "resolve", heldPin: null };
+    }
+
+    // ---------- DOM handles ----------
+    var wellNumeral = document.getElementById("wellNumeral");
+    var wellOwner = document.getElementById("wellOwner");
+    var wellBoundary = document.getElementById("wellBoundary");
+    var statement = document.getElementById("statement");
+    var askForm = document.getElementById("askForm");
+    var askInput = document.getElementById("askInput");
+    var record = document.getElementById("record");
+    var plate = document.getElementById("plate");
+    var cueBtn = document.getElementById("cueBtn");
+    var town = document.getElementById("town");
+    var closeLines = document.getElementById("closeLines");
+    var announcer = document.getElementById("announcer");
+    var field = document.getElementById("field");
+    var well = document.getElementById("well");
+
+    var phase = "attract"; // attract | thrash | statement | resolved
+    var hasResolvedOnce = false;
+    var timers = [];
+    function later(fn, ms) { timers.push(setTimeout(fn, ms)); }
+    function clearTimers() { timers.forEach(clearTimeout); timers = []; }
+
+    // mark the well as cycling attributed values (tier scan context)
+    well.setAttribute("data-ml-context", "pin-cycling");
+
+    function announce(text) { announcer.textContent = text; }
+
+    // ---------- jitter (full-motion path only) ----------
+    var jitterRng = mulberry32(SEED ^ 0x5f3759df);
+    var jitterRaf = null;
+    function jitterLoop() {
+      if (phase !== "thrash" || reduceMotion) { wellNumeral.style.transform = ""; jitterRaf = null; return; }
+      var dx = (jitterRng() - 0.5) * 7;
+      var dy = (jitterRng() - 0.5) * 5;
+      wellNumeral.style.transform = "translate(" + dx.toFixed(1) + "px," + dy.toFixed(1) + "px)";
+      jitterRaf = requestAnimationFrame(jitterLoop);
+    }
+
+    // ---------- rendering a step ----------
+    function showStep(pinIdx) {
+      var p = pins[pinIdx];
+      wellNumeral.textContent = p.label;
+      var size = sizeFor(pinValue(p));
+      wellNumeral.style.fontSize = size + "px";
+      // every value renders whole: cap the size to the well's width
+      var maxW = well.clientWidth * 0.96;
+      if (wellNumeral.scrollWidth > maxW) {
+        size = Math.max(18, Math.floor(size * maxW / wellNumeral.scrollWidth));
+        wellNumeral.style.fontSize = size + "px";
+      }
+      wellOwner.textContent = SHORT_OWNER[p.id] || "";
+      wellBoundary.textContent = SHORT_BOUNDARY[p.id] || "";
+    }
+    function clearWellText() {
+      wellNumeral.textContent = "";
+      wellOwner.textContent = "";
+      wellBoundary.textContent = "";
+      wellNumeral.style.transform = "";
+    }
+
+    // ---------- the plate (five witnesses) ----------
+    function buildPlateNodes() {
+      var frag = document.createDocumentFragment();
+      pins.forEach(function (p) {
+        var li = document.createElement("li");
+        li.setAttribute("data-ml-context", "pin");
+        li.setAttribute("data-label", p.label);
+        var fig = document.createElement("span");
+        fig.className = "w-fig";
+        fig.textContent = p.label;
+        var who = document.createElement("span");
+        who.className = "w-who";
+        who.textContent = p.who;
+        var meta = document.createElement("span");
+        meta.className = "w-meta";
+        meta.textContent = p.model + " · " + p.year;
+        var scope = document.createElement("span");
+        scope.className = "w-scope";
+        scope.textContent = p.scope;
+        li.appendChild(fig); li.appendChild(who); li.appendChild(meta); li.appendChild(scope);
+        frag.appendChild(li);
+      });
+      return frag;
+    }
+
+    function revealPlate() {
+      if (!plate.childNodes.length) plate.appendChild(buildPlateNodes());
+      record.hidden = false;
+      var items = plate.querySelectorAll("li");
+      items.forEach(function (li, i) { later(function () { li.classList.add("lit"); }, 250 + i * 420); });
+      if (town.hidden) {
+        cueBtn.hidden = false;
+        later(function () { cueBtn.classList.add("lit"); }, 250 + items.length * 420);
+      }
+      announce("Five published figures, at rest, each different: " +
+        pins.map(function (p) { return p.label + ", " + p.who; }).join("; ") + ".");
+    }
+
+    // ---------- the sequence ----------
+    function runSequence(full) {
+      phase = "thrash";
+      statement.hidden = true;
+      clearWellText();
+      var schedule = reduceMotion ? buildSteppedSchedule(full) : buildThrashSchedule(full);
+      var t = 400; // ignition beat
+      announce("The instrument is trying to answer, and cannot settle.");
+      schedule.steps.forEach(function (step) {
+        later(function () { showStep(step.pin); }, t);
+        t += step.ms;
+      });
+      if (!reduceMotion) { later(function () { if (!jitterRaf) jitterLoop(); }, 400); }
+
+      if (full) {
+        later(function () {
+          phase = "statement";
+          clearWellText();
+          statement.hidden = false;
+          announce("The cost of one question is not knowable. Five figures have been published, up to two thousand times apart, and no two of them measured the same thing.");
+        }, t + 200);
+        later(function () {
+          phase = "resolved";
+          statement.hidden = true;
+          hasResolvedOnce = true;
+          field.classList.add("after-resolve");
+          field.style.minHeight = "0";
+          well.style.minHeight = "0";
+          record.appendChild(askForm);
+          revealPlate();
+          runSelfTest("after ask");
+        }, t + 200 + (reduceMotion ? 5000 : 6000));
+      } else {
+        later(function () {
+          phase = "resolved";
+          clearWellText();
+          announce("It refused again. The record below has not changed.");
+          runSelfTest("after ask");
+        }, t + 200);
+      }
+    }
+
+    askForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      if (phase === "thrash" || phase === "statement") return;
+      if (!askInput.value.trim()) { askInput.focus(); return; }
+      var full = !hasResolvedOnce;
+      if (!full) { well.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" }); }
+      runSequence(full);
+      askInput.focus();
+    });
+
+    // ---------- the cue / the deepening ----------
+    cueBtn.addEventListener("click", function () {
+      var line = document.createElement("p");
+      line.className = "cue-line";
+      line.textContent = "But one town’s number — one figure, one year — took thirteen months in court to pry loose.";
+      cueBtn.parentNode.replaceChild(line, cueBtn);
+      town.hidden = false;
+      closeLines.hidden = false;
+      town.setAttribute("tabindex", "-1");
+      town.focus({ preventScroll: true });
+      town.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+    });
+
+    // ---------- idle reset (janitorial, for the next stranger) ----------
+    var lastActivity = Date.now();
+    ["pointerdown", "keydown", "scroll", "input"].forEach(function (ev) {
+      window.addEventListener(ev, function () { lastActivity = Date.now(); }, { passive: true });
+    });
+    setInterval(function () {
+      if (phase !== "resolved") return;
+      if (Date.now() - lastActivity < 120000) return;
+      clearTimers();
+      phase = "attract";
+      hasResolvedOnce = false;
+      clearWellText();
+      statement.hidden = true;
+      record.hidden = true;
+      plate.innerHTML = "";
+      if (!record.contains(cueBtn)) {
+        var oldLine = record.querySelector(".cue-line");
+        if (oldLine) oldLine.parentNode.replaceChild(cueBtn, oldLine);
+      }
+      cueBtn.classList.remove("lit");
+      cueBtn.hidden = true;
+      town.hidden = true;
+      closeLines.hidden = true;
+      field.style.minHeight = "";
+      well.style.minHeight = "";
+      field.appendChild(askForm);
+      askInput.value = "";
+      announce("");
+      window.scrollTo(0, 0);
+    }, 5000);
+
+    // ---------- About overlay ----------
+    var aboutOverlay = document.getElementById("aboutOverlay");
+    var aboutBtn = document.getElementById("aboutBtn");
+    var aboutClose = document.getElementById("aboutClose");
+    aboutBtn.addEventListener("click", function () {
+      aboutOverlay.hidden = false;
+      aboutClose.focus();
+    });
+    function closeAbout() {
+      aboutOverlay.hidden = true;
+      aboutBtn.focus();
+    }
+    aboutClose.addEventListener("click", closeAbout);
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && !aboutOverlay.hidden) closeAbout();
+    });
+
+    // ---------- About content (from the island) ----------
+    function textEl(tag, cls, text) {
+      var el = document.createElement(tag);
+      if (cls) el.className = cls;
+      el.textContent = text;
+      return el;
+    }
+    document.getElementById("aboutOneLine").textContent = island.one_line;
+    document.getElementById("aboutTierSourced").textContent = "SOURCED — " + island.tiers_on_this_work.SOURCED;
+    document.getElementById("aboutTierImagined").textContent = "IMAGINED — " + island.tiers_on_this_work.IMAGINED;
+    document.getElementById("aboutTierRule").textContent = island.tiers_on_this_work.cardinal_rule;
+
+    var spreadsBox = document.getElementById("aboutSpreads");
+    island.dial.spread_statements.forEach(function (s) { spreadsBox.appendChild(textEl("p", null, s)); });
+    document.getElementById("aboutScaleLine").textContent = "Scale: " + island.dial.scale + ".";
+
+    var pinsBox = document.getElementById("aboutPins");
+    pins.forEach(function (p) {
+      var div = document.createElement("div");
+      div.className = "about-pin";
+      div.setAttribute("data-ml-context", "pin");
+      var head = document.createElement("p");
+      var fig = document.createElement("span");
+      fig.className = "ap-fig";
+      fig.textContent = p.label;
+      head.appendChild(fig);
+      head.appendChild(document.createTextNode(" — " + p.who + " · " + p.model + " · " + p.year));
+      div.appendChild(head);
+      div.appendChild(textEl("p", null, "Scope: " + p.scope));
+      if (p.contested_by) div.appendChild(textEl("p", "about-quote", "Contested: " + p.contested_by));
+      var src = document.createElement("p");
+      src.className = "about-src";
+      p.source_urls.forEach(function (u, i) {
+        if (i) src.appendChild(document.createTextNode(" · "));
+        var a = document.createElement("a");
+        a.href = u; a.textContent = u;
+        src.appendChild(a);
+      });
+      div.appendChild(src);
+      pinsBox.appendChild(div);
+    });
+    document.getElementById("aboutCaveat").textContent = island.dial.non_comparability_caveat;
+    document.getElementById("aboutCaveatGrounds").textContent = island.dial.caveat_grounds_note;
+
+    var tlBox = document.getElementById("aboutTimeline");
+    island.dalles_case.timeline.forEach(function (t) {
+      var div = document.createElement("div");
+      div.className = "about-pin";
+      var head = document.createElement("p");
+      var strong = document.createElement("strong");
+      strong.textContent = t.date;
+      head.appendChild(strong);
+      head.appendChild(document.createTextNode(" — " + t.fact));
+      div.appendChild(head);
+      if (t.quote_verbatim) div.appendChild(textEl("p", "about-quote", "“" + t.quote_verbatim + "”"));
+      var src = document.createElement("p");
+      src.className = "about-src";
+      t.source_urls.forEach(function (u, i) {
+        if (i) src.appendChild(document.createTextNode(" · "));
+        var a = document.createElement("a");
+        a.href = u; a.textContent = u;
+        src.appendChild(a);
+      });
+      div.appendChild(src);
+      tlBox.appendChild(div);
+    });
+    document.getElementById("aboutCommentary").textContent = island.dalles_case.commentary_labelled;
+
+    // ---------- self-test (runs every load; prints inside About) ----------
+    function testNoSettledNumber() {
+      var re = /(\d[\d,]*(?:\.\d+)?)\s*mL/g;
+      var violations = 0;
+      var scanned = 0;
+      var walker = document.createTreeWalker(document.getElementById("work"), NodeFilter.SHOW_TEXT, {
+        acceptNode: function (node) {
+          var p = node.parentNode;
+          while (p) {
+            if (p.nodeName === "SCRIPT" || p.nodeName === "NOSCRIPT" || p.nodeName === "STYLE") return NodeFilter.FILTER_REJECT;
+            p = p.parentNode;
+          }
+          return NodeFilter.FILTER_ACCEPT;
+        }
+      });
+      var node;
+      while ((node = walker.nextNode())) {
+        var text = node.textContent;
+        if (!re.test(text)) { re.lastIndex = 0; continue; }
+        re.lastIndex = 0;
+        scanned++;
+        var el = node.parentNode;
+        var ctxEl = el && el.closest ? el.closest("[data-ml-context]") : null;
+        var ctx = ctxEl ? ctxEl.getAttribute("data-ml-context") : null;
+        if (["pin", "pin-cycling", "scale", "spread"].indexOf(ctx) === -1) violations++;
+      }
+      return { pass: violations === 0, detail: scanned + " mL-figure node(s), " + violations + " unattributed" };
+    }
+
+    function testPinsMatchIsland() {
+      var container = plate.childNodes.length ? plate : (function () {
+        var tmp = document.createElement("ul");
+        tmp.appendChild(buildPlateNodes());
+        return tmp;
+      })();
+      var expected = pins.map(function (p) { return p.label; });
+      var rendered = Array.prototype.map.call(container.querySelectorAll("li"), function (li) {
+        return li.getAttribute("data-label");
+      });
+      var pass = expected.length === rendered.length && expected.every(function (v, i) { return v === rendered[i]; });
+      return { pass: pass, detail: "expected " + expected.length + ", rendered " + rendered.length };
+    }
+
+    function testSeeded() {
+      var rng = mulberry32(SEED);
+      var got = [rng(), rng(), rng(), rng(), rng()];
+      var pass = got.every(function (v, i) { return Math.abs(v - EXPECTED_SEED_VALUES[i]) < 1e-9; });
+      return { pass: pass, detail: "seed " + SEED };
+    }
+
+    function testSettlesOnNone() {
+      var schedule = reduceMotion ? buildSteppedSchedule(true) : buildThrashSchedule(true);
+      var counts = [0, 0, 0, 0, 0];
+      schedule.steps.forEach(function (s) { counts[s.pin]++; });
+      var allTwice = counts.every(function (c) { return c >= 2; });
+      var endsHeld = schedule.terminal === "resolve" && schedule.heldPin === null;
+      return { pass: allTwice && endsHeld, detail: "visits " + counts.join("/") + ", terminal holds none" };
+    }
+
+    function runSelfTest(runLabel) {
+      var list = document.getElementById("selfTestList");
+      list.innerHTML = "";
+      var head = document.createElement("li");
+      head.textContent = "RUN: " + runLabel;
+      list.appendChild(head);
+      [
+        ["NO-SETTLED-NUMBER — no mL figure outside an attributed node", testNoSettledNumber()],
+        ["PINS-MATCH-ISLAND — the still plate equals the data island", testPinsMatchIsland()],
+        ["SEEDED — same seed, same run", testSeeded()],
+        ["SETTLES-ON-NONE — a full run visits all five and holds none", testSettlesOnNone()]
+      ].forEach(function (pair) {
+        var li = document.createElement("li");
+        var res = pair[1];
+        li.className = res.pass ? "st-pass" : "st-fail";
+        li.textContent = (res.pass ? "[PASS] " : "[FAIL] ") + pair[0] + " (" + res.detail + ")";
+        list.appendChild(li);
+      });
+    }
+
+    runSelfTest("at load");
+    askInput.focus();
+  })();
+  </script>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,210 @@
+{
+  "work": "one-tap",
+  "increment": 3,
+  "extracted": "2026-07-20 (session 24) — conductor first-hand, before any Builder tokens; increment 2 extracted 2026-07-21 (session 26) — the session-25 findings re-verified from primaries first-hand before any edit",
+  "restaged": "2026-07-21 (session 29) — the staging recomposed after the human playthrough returned the work ('badly staged, and it is not art'); no fact, pin, date or quote changed",
+  "one_line": "You type your own question into the one box everyone knows, and press Ask. The answer that should come back — what your question cost in water — will not form: five published figures, up to two thousand times apart, no two of which measured the same thing, cycle where the reply should be and settle on nothing. Then the record deepens: when a newspaper asked for even one town's annual figure, the city sued the newspaper to keep the number secret — thirteen months in court, the city's costs paid by Google. The number was never unknown. It was withheld.",
+  "subject": "Unknowability engineered by power — not 'AI is thirsty'.",
+  "tiers_on_this_work": {
+    "SOURCED": "The spine — every dial pin, every Dalles case-file line, every quotation. Each carries a real, retrievable URL, fetched first-hand at build (2026-07-20; re-verified and extended 2026-07-21). No pin is invented, none is smoothed; the disagreement between them is the finding.",
+    "IMAGINED": "The instrument itself — the dark field, the prompt box's staging, the thrashing numeral's seeded motion and its magnitude-mapped type size, the second-person address. The numeral's motion is the studio's construction and asserts nothing; the values it cycles, and comes to rest on, are the record. Marked by the one constant chrome line on the face.",
+    "cardinal_rule": "A visitor can always tell which tier an element belongs to: what moves is made (IMAGINED) and never claims to measure; what stands still and carries a name — the five witnesses, the town's account — is the record (SOURCED) and never moves. One constant chrome line names the frame."
+  },
+  "core_claim": {
+    "tier": "SOURCED (the exact form matters — this replaced session 18's invented ratio, sharpened at increment 1, and re-scoped at increment 2 when the Mistral figure joined the dial)",
+    "statement": "No reconcilable per-query water figure exists. Independent estimates span ~70x (7.1 mL to ~519 mL). In 2025 the companies began answering: Google offered a median of 0.26 mL (in a paper that is not peer-reviewed and counts only on-site cooling water), the OpenAI chief executive blogged 'about 0.000085 gallons' (no methodology given) — and Mistral published 45 mL per 400-token reply as a full-lifecycle figure under ISO 14040/44, externally reviewed. The dial now spans roughly 2,000x and no two pins measure the same thing — the model, the unit or the water boundary always differs — because the inputs (per-site water efficiency, per-model energy, query mix, lifecycle scope) are still not public across the industry. A disclosure that can be checked is achievable — one company produced one. The needle still has nowhere to rest.",
+    "honesty_note": "The work may NOT claim 'no company has ever disclosed a per-query number' — since August 2025 that is false. It may NOT claim 'no disclosed number can be checked at all' — since July 2025 that is false too: Mistral's figure carries a published, externally reviewed methodology. It claims what is true: the published numbers span more than three orders of magnitude, no two of them measured the same thing, they cannot be reconciled into an answer for the question you just asked — and of the companies' own three answers, only one arrives with a reviewable methodology."
+  },
+  "dial": {
+    "unit": "mL of water per query — but the pins do not even agree on what 'a query' or 'water' means; that non-comparability is part of the finding and is carried on the work",
+    "scale": "logarithmic — since the session-29 restage the scale is typographic: the numeral's type size maps log10 over the published range (0.26 mL → ≈519 mL), an 18 px floor to roughly two-fifths of the viewport",
+    "restage_note_session29": "The engraved dial, the needle and the calibration-plate voice were cut at the session-29 restage (the work was returned by the human playthrough: 'badly staged, and it is not art'). The pins are unchanged and remain the spine: cycled by the thrashing numeral while the answer tries to form, then rendered at rest as the still plate — five witnesses, each with owner, year and boundary. The three spread statements render in About; on the face the spread is staged as the numeral's changing size and stated in the statement words ('up to two thousand times apart').",
+    "spread_statements": [
+      "Between the independent estimates alone: roughly 70x (7.1 mL → ~519 mL).",
+      "Between the companies' own medians and the largest independent estimate: roughly 2,000x (0.26 mL → ~519 mL).",
+      "Between the companies' own disclosures: roughly 170x (0.26 mL → 45 mL) — and no two of them measured the same thing."
+    ],
+    "pins": [
+      {
+        "id": "gemini-2025",
+        "ml": 0.26,
+        "label": "0.26 mL",
+        "who": "Google — company technical paper",
+        "model": "Gemini Apps, median text prompt",
+        "year": 2025,
+        "scope": "On-site data-center water only; not peer-reviewed. Excludes the water consumed generating the electricity — the larger share by most accounts.",
+        "contested_by": "The UC Riverside researcher whose team produced the 2023 peer-reviewed estimate: \"They're just hiding the critical information. This really spreads the wrong message to the world.\" (to The Verge, August 2025)",
+        "source_urls": [
+          "https://arxiv.org/abs/2508.15734",
+          "https://cloud.google.com/blog/products/infrastructure/measuring-the-environmental-impact-of-ai-inference",
+          "https://www.technologyreview.com/2025/08/21/1122288/google-gemini-ai-energy/",
+          "https://www.theverge.com/report/763080/google-ai-gemini-water-energy-emissions-study",
+          "https://www.pcgamer.com/software/ai/theyre-just-hiding-the-critical-information-google-says-its-gemini-ai-sips-a-mere-five-drops-of-water-per-text-prompt-but-experts-disagree-with-its-findings/"
+        ]
+      },
+      {
+        "id": "chatgpt-2025",
+        "ml": 0.32,
+        "label": "≈0.32 mL",
+        "who": "OpenAI's chief executive — personal blog post",
+        "model": "ChatGPT, 'the average query'",
+        "year": 2025,
+        "scope": "No methodology, no scope, no source given. Verbatim: \"It also uses about 0.000085 gallons of water; roughly one fifteenth of a teaspoon.\"",
+        "contested_by": null,
+        "source_urls": [
+          "https://blog.samaltman.com/the-gentle-singularity"
+        ]
+      },
+      {
+        "id": "gpt3-2023",
+        "ml_low": 7.1,
+        "ml_high": 47.5,
+        "label": "7.1 – 47.5 mL",
+        "who": "UC Riverside / UT Arlington researchers — peer-reviewed (arXiv 2304.03271, 2023; Communications of the ACM, 2025)",
+        "model": "GPT-3, one medium-length request (range = where and when it runs: Ireland → Washington)",
+        "year": 2023,
+        "scope": "Includes off-site water for electricity generation. The authors call their own estimate \"on the conservative side\" — actual consumption \"could be several times higher.\"",
+        "contested_by": "A skeptic (a personal blog, cited on the work as opinion) argues the bottle-per-prompt framing is a miscalculation.",
+        "source_urls": [
+          "https://arxiv.org/abs/2304.03271",
+          "https://cacm.acm.org/sustainability-and-computing/making-ai-less-thirsty/",
+          "https://blog.andymasley.com/p/an-example-of-what-i-consider-a-misleading"
+        ]
+      },
+      {
+        "id": "mistral-2025",
+        "ml": 45,
+        "label": "45 mL",
+        "who": "Mistral — company lifecycle assessment, with France's ecological transition agency (ADEME) and Carbone 4; peer-reviewed by Resilio and Hubblo",
+        "model": "Mistral Large 2 / Le Chat, one 400-token reply",
+        "year": 2025,
+        "scope": "Full lifecycle Water Consumption Potential (ISO 14040/44 + GHG Protocol Product Standard) — includes the water behind electricity generation and hardware manufacturing. As of the last check (2026-07-23), the only company per-query figure with a reviewed methodology.",
+        "contested_by": null,
+        "source_urls": [
+          "https://mistral.ai/news/our-contribution-to-a-global-environmental-standard-for-ai",
+          "https://www.theregister.com/2025/07/24/mistral_environmental_report_ai_cost/"
+        ]
+      },
+      {
+        "id": "gpt4-email-2024",
+        "ml": 519,
+        "label": "≈519 mL",
+        "who": "The Washington Post × UC Riverside",
+        "model": "GPT-4, one 100-word email",
+        "year": 2024,
+        "scope": "Includes electricity-generation water; a different unit than the other pins (one email, not one prompt) — printed as such.",
+        "contested_by": null,
+        "source_urls": [
+          "https://www.washingtonpost.com/technology/2024/09/18/energy-ai-use-electricity-water-data-centers/"
+        ]
+      }
+    ],
+    "dropped_pin": {
+      "id": "reported-15ml",
+      "note": "A reported ~15 mL downward revision for GPT-4 exists only in secondary aggregation with no primary quote (session 23: 'primary-pending'). Per binding condition 4(d) it is NOT on the dial and NOT in the case file. Dropping it entirely is cleaner than an asterisk: the dial already carries the field's real spread from primaries."
+    },
+    "non_comparability_caveat": "The pins differ by model (GPT-3 / GPT-4 / Gemini / Mistral Large 2), year (2023–2025), unit (per prompt / per 100-word email / per 400-token reply / median), and scope (on-site cooling only / with electricity-generation water / full lifecycle including hardware manufacturing). That is not noise around one true value — it is the documentary state of what the public is permitted to know. Each pin is labelled with model + year + scope on the face (binding condition 2).",
+    "caveat_grounds_note": "GPT-3 pin, caveat grounds — the authors' 2025 CACM version grounds its \"could be several times higher\" caveat in: server-level inference energy measured for comparable deployed models (Llama-3-70B, Falcon-180B), deployment in third-party colocation data centers rather than the provider's own, and a deliberately conservative electricity-water-intensity factor."
+  },
+  "dalles_case": {
+    "tier": "SOURCED — every line checked against a retrievable source first-hand, 2026-07-20; fee components re-verified 2026-07-21 from the OregonLive/Tribune Content Agency report carried by govtech (binding condition 4; session-25 order)",
+    "why_it_is_here": "The per-query number is unknowable at the small end; The Dalles is what happened when a public asked at the large end — one town, one annual figure, thirteen months in court.",
+    "timeline": [
+      {
+        "date": "2010",
+        "fact": "Google's data centers in The Dalles, Oregon used 104.3 million gallons of water.",
+        "source_urls": ["https://columbiacommunityconnection.com/the-dalles/good-day-for-journalism-the-dalles-google-abdicate-in-water-fight-with-oregonian"]
+      },
+      {
+        "date": "2020",
+        "fact": "355.1 million gallons — 29% of the city's entire water consumption.",
+        "source_urls": ["https://columbiacommunityconnection.com/the-dalles/good-day-for-journalism-the-dalles-google-abdicate-in-water-fight-with-oregonian"]
+      },
+      {
+        "date": "2021",
+        "fact": "274.5 million gallons — 'more than a quarter of all the water used in the city.'",
+        "quote_verbatim": "[T]he search giant consumed 274.5 million gallons (about 1.2 billion liters) of water during 2021 at its facilities in The Dalles alone.",
+        "source_urls": ["https://www.theregister.com/2022/12/19/google_datacenters_dalles/", "https://www.rcfp.org/dalles-google-oregonian-settlement/"]
+      },
+      {
+        "date": "September 2021",
+        "fact": "The regional newspaper (The Oregonian/OregonLive) files a public-records request for Google's water use.",
+        "source_urls": ["https://www.rcfp.org/dalles-google-oregonian-settlement/"]
+      },
+      {
+        "date": "December 2021",
+        "fact": "The city of The Dalles files a reverse public-records lawsuit — against the newspaper and its reporter, to keep the figure secret. Google funds the city's legal costs.",
+        "defendant_correction": "BINDING (session 23 Verifier): the defendants were the newspaper and its reporter — NOT 'the town's own residents'. That residents were the ones left unable to learn the figure is commentary, and is rendered as commentary, separately.",
+        "source_urls": ["https://www.rcfp.org/dalles-google-oregonian-settlement/"]
+      },
+      {
+        "date": "2022",
+        "fact": "The Wasco County district attorney sides with the newspaper: 'the city failed to meet its burden to show that Google's water usage is a trade secret.'",
+        "quote_verbatim": "the city failed to meet its burden to show that Google's water usage is a trade secret",
+        "source_urls": ["https://www.rcfp.org/dalles-google-oregonian-settlement/"]
+      },
+      {
+        "date": "14 December 2022",
+        "fact": "After 13 months in court, the city drops the case and releases ten years of data. The city's legal fees: more than $100,000, all paid by Google. The published fee accounts themselves disagree — $106,000 plus a $53,000 settlement payment to the Reporters Committee for Freedom of the Press, by the city's own statement; $153,000 in total, by the local paper's.",
+        "quote_verbatim": "The city said Wednesday that its own legal costs total $106,000, and that Google has committed to covering those expenses as well as the $53,000 settlement.",
+        "figure_policy": "Load-bearing face line stays '>$100,000, paid by Google' (binding condition 4b). Components are etched only as attributed: $106,000 + $53,000 per the city's statement (OregonLive/Tribune Content Agency, carried by govtech), the $153,000 total per the local reporting that states it, and the disagreement between the accounts named — per the session-25 order.",
+        "source_urls": ["https://columbiacommunityconnection.com/the-dalles/good-day-for-journalism-the-dalles-google-abdicate-in-water-fight-with-oregonian", "https://www.rcfp.org/dalles-google-oregonian-settlement/", "https://www.govtech.com/analytics/the-dalles-ore-settles-lawsuit-over-google-data-centers"]
+      },
+      {
+        "date": "December 2022 (aftermath)",
+        "fact": "Google tells the Associated Press it will 'no longer seek to protect its site-level water-use numbers as a trade secret at any of its data centers nationwide.'",
+        "quote_verbatim": "no longer seek to protect its site-level water-use numbers as a trade secret at any of its data centers nationwide",
+        "source_urls": ["https://www.rcfp.org/dalles-google-oregonian-settlement/"]
+      }
+    ],
+    "commentary_labelled": "COMMENTARY, kept separate from the record above: the people who could not learn the number for those thirteen months were the town's residents — the suit was not against them, but the secrecy was at their expense.",
+    "naming_policy": "The reporter's personal name appears only as citation text inside linked sources, never in the work's own voice (standing policy, session 08). Companies, institutions and office-holders acting in office (the city, the DA, Google) are named where the cited sources name them."
+  },
+  "act2_counter": {
+    "tier": "IMAGINED (the form) — carrying two real clocks",
+    "resolution_of_condition_3": "The static locked-box ritual is DROPPED. In its place: the visitor's own question gets a real, running stopwatch — TIME SINCE YOU ASKED / ANSWERED: NOT YET — which is genuinely live (the visitor's real elapsed session time, computed from the clock, not dramatized) and genuinely never resolves, because the per-query answer genuinely does not exist. Beside it, the town's own counter, closed: ASKED SEPTEMBER 2021 / ANSWERED AFTER 13 MONTHS IN COURT. No fake form, no fake delay, no aestheticized inconvenience — nothing is submitted anywhere and the page says so.",
+    "increment2_rebalance": "Session 26, against the standing takedown from the session-24 gate: the clocks no longer sit at equal weight. The SOURCED counter of the record moves first and carries the large engraved type and the wider column; the visitor's IMAGINED stopwatch is demoted — second, narrower, thin and translucent — and made to state, live, its own reading as a fraction of the thirteen months ('= 1 / N OF THE NEWSPAPER'S WAIT'), recomputed every second from real elapsed time. The asymmetry is no longer a risk the layout manages; it is a reading the instrument takes. Role precision holds: the thirteen-month wait belonged to the newspaper that asked — the town sued. Basis for the arithmetic disclosed in the honesty panel: the cited figure itself is operationalized at the average month length (13 × 30.44 days = 395.72 days = 34,190,208 seconds), because any date-difference would invent day-level precision the sources do not state. (Superseded in part at session 27: the fraction line was cut — see session27_resolution.)",
+    "session27_resolution": "Session 27 (premiere prep, 2026-07-21): the live fraction line is CUT — '= 1 / N OF THE NEWSPAPER'S WAIT', its edge-case line ('YOU HAVE NOW WAITED LONGER THAN THE NEWSPAPER DID.'), the 34,190,208-second basis arithmetic and the WAIT-FRACTION self-test assertion are all removed; no computation replaces them. The Artist's resolution, upheld by the Kritiker over the only zero-context felt data on record: a ratio is a resolved number, recomputed every second, about the person standing there — the one operation this instrument exists to refuse — and dressing the visitor's smallness in the newspaper's thirteen months gave it a documentary alibi, not a different subject. What remains is the rhyme: the needle never rests because no disclosed figure exists for it to rest on; the demoted stopwatch never resolves because no mechanism to answer exists at all. The stopwatch stays at its full four-axis demotion, a real elapsed-time clock stating only TIME SINCE YOU ASKED / ANSWERED: NOT YET. The wait-fraction measured the visitor's smallness, not the record's asymmetry, and has been cut — the record now states its own asymmetry alone, in engraved words, and the demoted clock keeps only the one honest thing it ever needed to say: it, too, has not resolved.",
+    "session29_restage": "Session 29 (the restage): the stopwatch is CUT entirely — the last visitor-idle-time device, the session-27 line of reasoning carried to its end. The town's closed counter is folded into the town-account prose on the face ('Thirteen months later…'); the full dated timeline with sources stays one press away, in About. The rhyme the session-27 takedown doubted now has one subject and one voice: the withheld number — refused once by non-disclosure (the answer that will not form) and once by litigation (thirteen months in court) — stated in the work's own close as escalation, not echo."
+  },
+  "self_test": {
+    "tier": "DISCLOSED SELF-TEST (house pattern) — runs on every load; since the session-29 restage it prints inside About (one press away), per the standing verification-furniture law",
+    "assertions": [
+      "NO-SETTLED-NUMBER: in every reachable state, the DOM never renders an mL figure outside an attributed node — the page structurally cannot present 'the cost' as one number. Asserted by scanning rendered text for mL-figures and checking each sits inside a node attributed data-ml-context=pin/pin-cycling/scale/spread.",
+      "PINS-MATCH-ISLAND: the five witness lines on the still plate are exactly the pins in the JSON data island — none invented, none dropped, labels byte-equal. Asserted by rebuilding the plate from the island and comparing.",
+      "SEEDED: the numeral's cycling is a pure function of a fixed, printed seed — same seed, same run (git is the archive). Asserted by re-running the first N samples of the seeded generator against stored expected values.",
+      "SETTLES-ON-NONE: a full run of the thrash sequencer, executed as a pure function, visits every one of the five published values at least twice and terminates holding none — the numeral structurally cannot end on an answer. Asserted at load and re-checked after each ask."
+    ],
+    "session27_note": "The fifth assertion (WAIT-FRACTION) was removed at session 27 together with the device it verified — see act2_counter.session27_resolution.",
+    "session29_note": "REAL-CLOCK was removed at session 29 together with the stopwatch it verified; SETTLES-ON-NONE was added, so the suite verifies the restaged piece's central claim directly. Four assertions."
+  },
+  "binding_conditions_status": [
+    { "id": 1, "condition": "Screen-first, no fabrication on faith", "status": "HONORED — this increment is the browser instrument standing alone; no fountain, no cabinet, no fabrication scheduled." },
+    { "id": 2, "condition": "State the 70x explicitly; label each pin model + year", "status": "HONORED, RESTAGED — the face states the widest spread in the statement words ('up to two thousand times apart') and stages it as the numeral's magnitude-mapped size; all three numeric spreads render in About; every pin carries who + year + boundary on the still plate, with full scope, contested-by and sources in About." },
+    { "id": 3, "condition": "Act 2 live, or dropped", "status": "HONORED, RESTAGED — the locked-box ritual stayed dropped; the visitor-idle stopwatch was cut at session 29 (see act2_counter.session29_restage); the town's thirteen months carry Act 2 in prose on the face, the full cited timeline one press away." },
+    { "id": 4, "condition": "Fact-lock before publication", "status": "HONORED — defendants correction rendered (newspaper + reporter, residents-line as labelled commentary); $153k hedged to >$100k on the face, components now attributed with the disagreement named (session-25 order, re-verified from the OregonLive/Tribune Content Agency report); 2021 figure primary-confirmed and rendered with '>a quarter'; the ~15 mL revision DROPPED from the work entirely (no primary); the contested-by quote corrected to its origin outlet's verbatim (The Verge: 'spreads', not the pickup's 'sends')." },
+    { "id": 5, "condition": "No fabrication until screen passes AND Recovery resolves", "status": "HONORED — nothing physical scheduled; the physical fountain remains behind this gate and Recovery's open fabrication question." }
+  ],
+  "takedown": {
+    "sentence": "A FOIA-request LARP with a nice fountain attached — the audience already knows companies hide numbers, and performing bureaucratic delay for gallery-goers aestheticizes inconvenience at no cost to the artist.",
+    "refutation_in_this_increment": "(a) finding: the first instrument to put the field's published self-disagreement — now including the companies' own contested 2025 medians and the one reviewed lifecycle figure — on one calibrated dial, where the widening is visible as motion, not prose; (b) risk upward: it names a specific company funding a specific municipality's 13-month legal effort against a newspaper, until a DA overruled it — every line primary-sourced; (c) form: a live needle refusing to settle, a stopwatch that genuinely cannot stop. The LARP charge dies with the ritual: nothing is performed, nothing pretends to be submitted; both clocks are real.",
+    "standing_takedown_session24": {
+      "sentence": "Pairing the visitor's own idle five seconds with a town's thirteen-month court fight, at equal visual weight, doesn't refuse aestheticized inconvenience — it just moved the aestheticization from a locked box to a stopwatch, and dressed up the audience's boredom as if it belonged in the same courtroom.",
+      "refutation_in_increment_2": "'Equal visual weight' is made false on four axes at once — position (the record's counter first), column width (wider), type size (larger, engraved), material (fixed plate vs. thin and translucent). And the stopwatch no longer coexists with the courtroom clock as a competing spectacle: every second, it computes and announces its own reading as a fraction of the thirteen months, so the visitor's wait is not dressed up as comparable — it is measured against the record and found microscopic, live, by disclosed arithmetic. The fraction is the refusal of comparability, spoken continuously, not a caption asserting it once. (The fraction device itself was subsequently cut at session 27 — see standing_takedown_session26.)"
+    },
+    "standing_takedown_session26": {
+      "sentence": "A stopwatch that no longer competes for weight with the courtroom clock still spends every second doing the same trick: converting the visitor's own idle time into content. The denominator got more honest, but the subject of the instrument's liveness is still the visitor watching themselves shrink — self-deprecation is not the same as refusing the frame.",
+      "resolution_session27": "Conceded and discharged by subtraction, not by defense: the Artist's resolution accepted the sentence's premise — the fraction's true subject was the visitor — and cut the device (act2_counter.session27_resolution). The Kritiker upheld the cut over the cold reader's outward-pointing felt response, ruling that the response arrived by way of exactly the operation the sentence condemns: a resolved ratio, ticking, about the person standing there."
+    },
+    "standing_takedown_session27": {
+      "sentence": "The fraction is gone, and with it the one operation this instrument was ever built to refuse — but a cut ratio doesn't automatically become a rhyme; it only becomes one if a visitor actually hears the needle's refusal and the stopwatch's 'NOT YET' as making the same argument. Premiere gate: does an unbriefed visitor register two honest non-resolutions echoing each other, or does the demoted clock just recede into chrome nobody reads — a rhyme that only the Artist can hear because the Artist wrote both halves?",
+      "status": "Empirically confirmed by the human playthrough (2026-07-21: the unbriefed visitor did not hear the rhyme), then discharged by transformation at the session-29 restage: the stopwatch half was cut and the rhyme re-founded on one subject — the withheld number, refused twice (non-disclosure, litigation) — spoken in the work's own close. The session-29 sentence replaces this as the premiere gate's measure."
+    },
+    "standing_takedown_session29": {
+      "sentence": "A chatbot that won't answer is a one-note UX gag about a grievance everyone already shares: the flickering number is a spinner with pretensions, and once you've had the two-second joke there's no second reading — the Dalles case is doing all the real work and doesn't need the broken box in front of it.",
+      "refutation_in_the_restage": "(a) finding: the first work to stage the field's published self-disagreement as a single answer that cannot decide even its own order of magnitude — each value wearing the name of who published it and what it differently measured; the 'spinner' carries five cited claims that genuinely will not reconcile. (b) risk upward: the turn points at power, not at UX — a named company funding a named city's thirteen-month lawsuit against the newspaper that asked, every line primary-sourced. (c) second reading: the payoff is not the broken box (that lands in seconds) but the escalation — your number won't form, the town's number took a court fight, the number was never unknown, only withheld — carried out into every real prompt box the visitor types into afterward. Nothing is faked: you really ask, there really is no answer, and the reason is named.",
+      "status": "The premiere gate's measure."
+    }
+  },
+  "neighbors_daylight_carried": "From the concept gate (dossier): Crawford/Joler (diagram read vs. instrument watched), Onuoha (archival absence vs. absence dispensed live), Julian Oliver's Harvest (true-metered process vs. a process driven by the absence of a true number — formal inversion, the sharpest neighbor, named), Paglen/Burrington (infrastructure photographed vs. a number withheld), Disnovation (generalized eco-critique vs. one litigated case)."
+}
