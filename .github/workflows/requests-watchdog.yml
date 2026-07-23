@@ -35,7 +35,7 @@ jobs:
           from datetime import date, timedelta
 
           CUTOFF = date.today() - timedelta(days=10)
-          REPOS = ["irrtum-als-methode", "field-research", "studio", "data-snack-plenum"]
+          REPOS = ["ulysses", "field-research", "studio", "data-snack-plenum"]
           # Spiegel von TEAM_SECTION_RE (src/lib/zentrale/requestsMd.ts): Team-eigene Sections.
           TEAM_SECTION = re.compile(r"^(seeds\b|team note\b|team responses\b)", re.I)
 

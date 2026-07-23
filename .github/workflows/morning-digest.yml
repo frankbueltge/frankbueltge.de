@@ -35,12 +35,12 @@ jobs:
 
           # 1) Engine-Sessions der letzten 24h (Commits auf main, ohne Merge-/Bot-Rauschen)
           BODY+="### Sessions"$'\n'
-          for REPO in field-research irrtum-als-methode studio data-snack-plenum; do
+          for REPO in field-research ulysses studio data-snack-plenum; do
             LINES=$(gh api "repos/frankbueltge/$REPO/commits?since=$SINCE&per_page=15" \
               --jq '[.[] | select(.commit.message | test("session|Session|Research day|Plenum|Auto-land research")) | "- **'"$REPO"'**: " + (.commit.message | split("\n")[0] | .[0:140])] | join("\n")' 2>/dev/null || echo "")
             if [ -n "$LINES" ]; then BODY+="$LINES"$'\n'
             # Atelier arbeitet seit Protokoll v4 projektbasiert — eine Nacht ohne Landung ist normal, kein Alarm.
-            elif [ "$REPO" = "irrtum-als-methode" ]; then BODY+="- **$REPO**: keine Landung (projektbasierte Praxis, v4 — kein nächtlicher Takt geschuldet)"$'\n'
+            elif [ "$REPO" = "ulysses" ]; then BODY+="- **$REPO**: keine Landung (projektbasierte Praxis, v4 — kein nächtlicher Takt geschuldet)"$'\n'
             else BODY+="- **$REPO**: keine Session gelandet"$'\n'; fi
           done
 

@@ -10,7 +10,7 @@ import Page from '@/layouts/Page.astro'
 import Frame from '@/components/atelier/surface/Frame.astro'
 
 const all = await getCollection('atelier')
-const repo = 'https://github.com/frankbueltge/irrtum-als-methode'
+const repo = 'https://github.com/frankbueltge/ulysses'
 
 // Group the mirrored project records by project id: projects/<id>/<file>
 const recordEntries = all.filter((e) => e.id.startsWith('projects/'))
@@ -69,7 +69,7 @@ const stateLabel = (p: ProjectView) =>
 
 const kicker = [
   'Atelier · projects — the research log',
-  'irrtum-als-methode',
+  'ulysses',
   `${activeCount} active · ${projects.length - activeCount} closed`,
 ]
 const statusHtml =

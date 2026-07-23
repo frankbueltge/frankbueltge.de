@@ -10,7 +10,7 @@
 // data-doc modal swapping there is unaffected.
 const REPO_BY_NS = {
   field: 'https://github.com/frankbueltge/field-research',
-  atelier: 'https://github.com/frankbueltge/irrtum-als-methode',
+  atelier: 'https://github.com/frankbueltge/ulysses',
   plenum: 'https://github.com/frankbueltge/data-snack-plenum',
 }
 

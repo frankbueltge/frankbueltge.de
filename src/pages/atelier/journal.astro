@@ -16,7 +16,7 @@ const register = sessionRegister(journal.map((e) => e.id))
 const notes = journalNotes(journal.map((e) => e.id))
 const bodyById = new Map(journal.map((e) => [e.id, e.body ?? '']))
 
-const repo = 'https://github.com/frankbueltge/irrtum-als-methode'
+const repo = 'https://github.com/frankbueltge/ulysses'
 const rootDocs = new Set(all.filter((e) => !e.id.includes('/')).map((e) => e.id))
 
 const foldOut = (id: string, fallbackDate: string) => {
@@ -30,7 +30,7 @@ const entries = [...register].reverse().map((p) => ({ ...p, ...foldOut(p.id, p.d
 // v4 dispatcher ticks — unnumbered, newest first, rendered as their own strand below.
 const noteEntries = [...notes].reverse().map((note) => ({ ...note, ...foldOut(note.id, note.date) }))
 
-const kicker = ['Atelier · journal', 'irrtum-als-methode', `S1–S${register.length}`]
+const kicker = ['Atelier · journal', 'ulysses', `S1–S${register.length}`]
 const statusHtml =
   `<b>${register.length} pages</b> · one line per session, the newest night open · ` +
   `<a href="/atelier/history" class="underline">the spine — the drawn register →</a>`

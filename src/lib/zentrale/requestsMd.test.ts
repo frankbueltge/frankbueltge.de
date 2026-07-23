@@ -324,8 +324,8 @@ describe('parseInboxIssueTitle', () => {
 
   it('rundreist mit Doppelpunkt und Halbgeviertstrich in der Heading', () => {
     const heading = '2026-07-18 — Seed: a title — with an em dash and: a colon'
-    const title = `Request aus irrtum-als-methode: ${heading}`
-    expect(parseInboxIssueTitle(title)).toEqual({ repo: 'irrtum-als-methode', heading })
+    const title = `Request aus ulysses: ${heading}`
+    expect(parseInboxIssueTitle(title)).toEqual({ repo: 'ulysses', heading })
   })
 
   it('null bei unbekanntem Titelformat', () => {

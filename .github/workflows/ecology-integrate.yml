@@ -46,7 +46,7 @@ jobs:
         run: |
           git clone https://github.com/frankbueltge/research-ecology /tmp/ecology
           git clone https://github.com/frankbueltge/field-research /tmp/engines/field-research
-          git clone https://github.com/frankbueltge/irrtum-als-methode /tmp/engines/irrtum-als-methode
+          git clone https://github.com/frankbueltge/ulysses /tmp/engines/ulysses
           git clone https://github.com/frankbueltge/studio /tmp/engines/studio
 
       - name: Install research-ecology
@@ -57,7 +57,7 @@ jobs:
         working-directory: /tmp/ecology
         run: |
           npx tsx apps/importer/src/cli.ts --repo /tmp/engines/field-research --collective meridian
-          npx tsx apps/importer/src/cli.ts --repo /tmp/engines/irrtum-als-methode --collective ulysses
+          npx tsx apps/importer/src/cli.ts --repo /tmp/engines/ulysses --collective ulysses
           npx tsx apps/importer/src/cli.ts --repo /tmp/engines/studio --collective ensemble
 
       - name: Gate — export contract (determinism + schema)
