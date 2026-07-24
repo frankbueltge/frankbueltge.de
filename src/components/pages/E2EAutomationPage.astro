@@ -13,10 +13,14 @@ const figures = [
   { n: '40–80 %', l: 'citation accuracy', s: 'deep-research systems, field-wide', tone: 'warn' },
 ]
 
+// Balkenbreiten als Tailwind-Klassen, NICHT als style-Attribut: die Site-CSP führt
+// Style-Hashes (Astro-CSP), damit wird 'unsafe-inline' ignoriert und Inline-Styles
+// verworfen — die Balken standen alle auf 100 % (Befund 2026-07-25, drei CSP-Fehler
+// in der Konsole). Klassen landen im erlaubten Stylesheet.
 const gradient = [
-  { lab: 'Data analysis', v: 85.5 },
-  { lab: 'Literature search', v: 82.1 },
-  { lab: 'Synthesis / interpretation', v: 57.9 },
+  { lab: 'Data analysis', v: 85.5, w: 'w-[85.5%]' },
+  { lab: 'Literature search', v: 82.1, w: 'w-[82.1%]' },
+  { lab: 'Synthesis / interpretation', v: 57.9, w: 'w-[57.9%]' },
 ]
 
 const sources = [
@@ -70,7 +74,7 @@ const sources = [
       <div class="flex items-center gap-3 py-1.5">
         <span class="w-40 shrink-0 text-[13px] text-fg-muted">{g.lab}</span>
         <span class="h-3 flex-1 overflow-hidden rounded-sm bg-line">
-          <span class="block h-full rounded-sm bg-accent" style={`width:${g.v}%`}></span>
+          <span class:list={['block h-full rounded-sm bg-accent', g.w]}></span>
         </span>
         <span class="w-14 shrink-0 text-right font-mono text-[13px] tabular-nums">{g.v} %</span>
       </div>
