@@ -144,12 +144,14 @@ const xNightlyMid = (xOf(T0) + xOf(T1)) / 2
 const xV4Mid = (xOf(T1) + xOf(T2)) / 2
 
 const doors = [
+  // Tür-Labels nennen ihr ZIEL (Wording-Kanon 24.07.: kein „now"/„what's happening" —
+  // das Label trägt den Raumnamen, die Zeile darunter erklärt ihn).
   {
     href: '/atelier/projects',
     label:
       activeProjects.length > 0
-        ? `now — ${activeProjects.length} project${activeProjects.length === 1 ? '' : 's'} in progress`
-        : 'now — no project in progress',
+        ? `research log — ${activeProjects.length} line${activeProjects.length === 1 ? '' : 's'} active`
+        : 'research log — no line active',
     text: E.doors.now,
     data: `${projects.length} projects on the record · ${dispCount('KILL')} killed · ${dispCount('ARCHIVE_AS_STUDY')} archived as study · ${dispCount('PUBLISH')} published`,
   },
@@ -161,7 +163,7 @@ const doors = [
   },
   {
     href: '/atelier/foundation',
-    label: 'what this is',
+    label: 'about — the operating model',
     text: E.doors.foundation,
     data: `${V2.doorData.foundationLine} · Toolbox v${toolboxVersion}`,
   },
@@ -282,12 +284,20 @@ const doors = [
       </p>
     </section>
 
+    {/* Zwei Reihen statt einer (Frank, 24.07.: die alte Struktur „muss sinnvoll archiviert
+        werden") — was gilt, und was abgeschlossene Phase ist, sauber getrennt. */}
     <p class="at-quiet">
-      deeper:
-      <a href="/atelier/journal">journal archive (nightly phase)</a> ·
-      <a href="/atelier/protocol">constitution</a> ·
-      <a href="/atelier/apparatus">apparatus</a> ·
+      current:
+      <a href="/atelier/protocol">constitution — Protocol v5, the work-line protocol</a> ·
+      <a href="/atelier/apparatus">apparatus — how the machine runs</a> ·
       <a href="/atelier/requests">team channel</a>
+    </p>
+    <p class="at-quiet">
+      archive — the closed phases:
+      <a href="/atelier/journal">nightly journal, S1–S44</a> ·
+      <a href="/atelier/history">the spine</a> ·
+      <a href="/atelier/sheets">the sheets</a>
+      <span>— nightly sessions 28 Jun – 18 Jul · bounded projects (v4) 18–24 Jul, preserved in the research log</span>
     </p>
 
     <footer class="at-foot">
