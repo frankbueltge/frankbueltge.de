@@ -50,13 +50,16 @@ export default defineConfig({
       },
     },
   },
-  // Tages-Snapshots (/protokoll/<datum>) sind noindex + aus der Sitemap — dünn & wächst
-  // täglich; Frische trägt die aktuelle /protokoll-Seite + das Archiv-Register.
+  // Tages-Snapshots (/protocol/<datum>) sind noindex + aus der Sitemap — dünn & wächst
+  // täglich; Frische trägt die aktuelle /protocol-Seite + das Archiv-Register.
+  // ACHTUNG: Der Werk-Pfad wurde 2026-07-20 von /protokoll → /protocol umbenannt (siehe
+  // public/_redirects); das Regex hier hing noch am alten deutschen Slug, wodurch ~35 dünne
+  // noindex-Snapshots wieder in die Sitemap geraten sind (widersprüchliches Signal). Fix: /protocol.
   // /steuerzentrale ist ein privates Operator-Werkzeug (noindex, token-gated) — nie in der
   // Sitemap, unabhängig davon, ob Google robots.txt beachtet.
   integrations: [
     sitemap({
-      filter: (page) => !/\/protokoll\/\d{4}-\d{2}-\d{2}\//.test(page) && !/\/steuerzentrale(\/|$)/.test(page),
+      filter: (page) => !/\/protocol\/\d{4}-\d{2}-\d{2}(\/|$)/.test(page) && !/\/steuerzentrale(\/|$)/.test(page),
     }),
     mdx(),
   ],
