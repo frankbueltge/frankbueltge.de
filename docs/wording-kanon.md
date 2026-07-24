@@ -58,6 +58,16 @@ geholt). Wer Selbstbeschreibungen ändert, zieht dieses Dokument im selben Commi
 | „cinematic" (datavism) | gestrichen 16.07. |
 | Zahlen in Beschreibungstexten (z. B. „214 works") | veralten nächtlich — Zahlen nur aus Daten rendern |
 
+## Der Name (Frank, 24.07. spät)
+
+Der Name **Frank Bültge** erscheint NUR: im Masthead (TopBar/Footer), auf `/about`, im
+Impressum/Datenschutz, in `<title>`-Tags und JSON-LD (unsichtbar, trägt die Namenssuche),
+in der einen Dirigenten-Zeile auf der Startseite (`conductorLine`) und als echte Byline
+unter selbst verfassten Essays (AuthorshipNote/AuthorByline). **Nirgends sonst** — keine
+„practice by Frank Bültge"-, „Machinery composed and steered by Frank Bültge"-,
+„Frank Bültge decides"-Prosa auf Unterseiten; dort sprechen Rollen: „the responsible
+human", „the architect & conductor", „the human decides".
+
 ## Prinzipien
 
 - **Auskunft statt Poesie** an Eingängen: jede Seite beantwortet zuerst „was ist das hier?",

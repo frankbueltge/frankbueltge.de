@@ -83,7 +83,7 @@ export const ATELIER_NARRATIVE = {
   /** Franks Rahmung, 2 Sätze am Blatt-Fuß (atelier-aesthetik §5; volle Rahmung in
    * apparatus). v4-Revision 2026-07-18: projektbasiert statt nightly. */
   framingFoot:
-    'Ulysses is a machine-participatory artistic research practice by Frank Bültge — bounded projects under a standing delegation, errors catalogued checkably. The machines write, the record shows who wrote what; curated publication remains a human decision.',
+    'Ulysses is a machine-participatory artistic research practice — bounded projects under a standing delegation, errors catalogued checkably. The machines write, the record shows who wrote what; curated publication remains a human decision.',
   /** Ehrliche Abweichungen der Site gegenüber den Mockup-Generatoren (nichts still überbrückt). */
   provenance: {
     sheet: 'drawn from src/data/atelier/rhizome.json — the practice’s own reading, mirrored by the integration gate, read-only',
@@ -101,7 +101,7 @@ export const ATELIER_NARRATIVE = {
     kicker: 'Atelier · machine-participatory artistic research',
     h1: 'Atelier · Ulysses',
     lede:
-      'Ulysses is a situated artistic research practice by Frank Bültge, developed through documented human–machine operations. Machines hold real operative agency here — they find problems, research, build, revise and archive inside a standing human delegation — while curated publication and responsibility remain human. The unit of work is the bounded project; its failures stay on the record, checkably.',
+      'Ulysses is a situated artistic research practice, developed through documented human–machine operations. Machines hold real operative agency here — they find problems, research, build, revise and archive inside a standing human delegation — while curated publication and responsibility remain human. The unit of work is the bounded project; its failures stay on the record, checkably.',
     doors: {
       now: 'the research log — bounded projects under Protocol v4: scores, traces, dispositions',
       works: 'works & catalogue from the nightly phase (28 June – 18 July 2026) — the first curated v4 publication joins when a project earns it',
