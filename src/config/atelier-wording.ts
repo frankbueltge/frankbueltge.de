@@ -33,7 +33,7 @@ export const ATELIER_GRAMMAR = {
    * Labels unverändert, nur die Tür des Blatts zeigt auf den neuen Ort. */
   rail: [
     { label: 'this sheet', href: '/atelier/sheet', hint: 'the current working sheet' },
-    { label: 'projects', href: '/atelier/projects', hint: 'the research log — bounded projects under Protocol v4 (v4 revision 2026-07-19)' },
+    { label: 'projects', href: '/atelier/projects', hint: 'the research log — the work-line and its studies under Protocol v5 (2026-07-24)' },
     { label: 'sheets', href: '/atelier/sheets', hint: 'all sheets, one per thread' },
     { label: 'works', href: '/atelier/works', hint: 'works & catalogue — existing URLs stay' },
     { label: 'journal', href: '/atelier/journal', hint: 'the journal as session register, S1…' },
@@ -103,7 +103,7 @@ export const ATELIER_NARRATIVE = {
     lede:
       'Ulysses is a situated artistic research practice, developed through documented human–machine operations. Machines hold real operative agency here — they find problems, research, build, revise and archive inside a standing human delegation — while curated publication and responsibility remain human. The unit of work is the bounded project; its failures stay on the record, checkably.',
     doors: {
-      now: 'the research log — bounded projects under Protocol v4: scores, traces, dispositions',
+      now: 'the research log — the work-line and its studies under Protocol v5: scores, traces, dispositions',
       works: 'works & catalogue from the nightly phase (28 June – 18 July 2026) — the first curated v4 publication joins when a project earns it',
       foundation: 'what this is, in plain language — the operating model, who decides what, and the theoretical ground',
       sheet: 'the working sheet — the practice’s own reading of its works and sources, drawn by itself',
@@ -114,9 +114,9 @@ export const ATELIER_NARRATIVE = {
   rooms: {
     sheets: 'All sheets, one per thread — each a reading the practice has drawn across its works.',
     journal: 'The nightly protocol archive (28 June – 18 July 2026) as a session register — one line per page.',
-    journalNotesHeading: 'Under Protocol v4 — dispatcher ticks (not sessions)',
+    journalNotesHeading: 'After the nightly phase — dispatcher ticks (not sessions)',
     journalNotes:
-      'Protocol v4 dissolved the nightly session as the unit of practice. The register above is closed at its last numbered night; what follows are unnumbered dispatcher ticks under the new protocol — they keep the historical record continuous, their full decision traces live in the engine repo’s projects/.',
+      'Protocol v4 dissolved the nightly session as the unit of practice. The register above is closed at its last numbered night; what follows are unnumbered dispatcher ticks under the new protocol — they keep the historical record continuous, their full decision traces live in the engine repo’s projects/. Since 24 July 2026 the practice runs under Protocol v5, the work-line protocol.',
     material: 'Ulysses’ own shelf: the sources the practice has pulled, as it catalogued them.',
     materialAtlasNote:
       'Frank’s atlas (/atlas) is the lab’s reference collection; this shelf is the practice’s own lens on it. Each points at the other.',
