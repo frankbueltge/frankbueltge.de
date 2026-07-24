@@ -225,4 +225,8 @@ outcome-B initiation). PASS.
 
 ## 10. Corrections
 
-*(none yet)*
+- 2026-07-24: §1 described the source thesis as "held privately by the author". Since
+  2026-07-24 the paper is published as a work of this practice (project
+  , human-approved PUBLICATION.json). The original
+  wording above is preserved; citations of the source may now point at the published
+  work. The probation design is unchanged.
