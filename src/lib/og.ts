@@ -4,7 +4,7 @@
 export const OG_PAGES: Record<string, { title: string; description: string }> = {
   home: {
     title: 'Frank Bültge',
-    description: 'Data & AI Engineer — a federated research ecology and a public field of experiments with data and AI',
+    description: 'Data Engineering & Analytics — a federated research ecology and a public field of experiments with data and AI',
   },
   holdings: {
     title: 'Holdings',
@@ -12,7 +12,7 @@ export const OG_PAGES: Record<string, { title: string; description: string }> = 
   },
   about: {
     title: 'Frank Bültge',
-    description: 'Data & AI Engineer — the person behind the site: work, method, contact',
+    description: 'Data Engineering & Analytics — the person behind the site: work, method, contact',
   },
   projects: {
     title: 'Projects',

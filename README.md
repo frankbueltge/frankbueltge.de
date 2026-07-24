@@ -1,6 +1,6 @@
 # frankbueltge.de
 
-Personal site of **[Frank Bültge](https://frankbueltge.de)** — Data & AI Engineer — and the
+Personal site of **[Frank Bültge](https://frankbueltge.de)** — Data Engineering & Analytics — and the
 public entrance to **a federated research ecology**: three locally constituted, machine-run
 research practices and a contact zone where their work meets. English-only. One law governs
 everything published here: **make it verifiable** — no claim without evidence, no AI output

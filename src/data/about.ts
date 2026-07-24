@@ -8,9 +8,9 @@ export type About = {
 }
 
 const de: About = {
-  metaTitle: 'Über Frank Bültge — Data & AI Engineer',
+  metaTitle: 'Über Frank Bültge — Data Engineering & Analytics',
   metaDesc:
-    'Frank Bültge — Data & AI Engineer. Ein öffentliches Experimentierfeld mit Daten und Code: kleine Experimente, die etwas aus offenen Quellen messen, ihre Quellen nennen und offenlegen, wie sie gemacht sind.',
+    'Frank Bültge — Data Engineering & Analytics. Ein öffentliches Experimentierfeld mit Daten und Code: kleine Experimente, die etwas aus offenen Quellen messen, ihre Quellen nennen und offenlegen, wie sie gemacht sind.',
   lede: 'Ich arbeite mit Daten. Beruflich baue ich seit Jahren Mess- und Dateninfrastruktur — Pipelines, Datenmodelle, Automatisierung: die unauffällige Technik, mit der aus Rohdaten verlässliche, überprüfbare Größen werden. Diese Seite ist nicht dieser Beruf. Sie ist mein öffentliches Experimentierfeld: Hier untersuche ich öffentlich, was Messung sichtbar macht und was sie übersieht. Was hier steht, sind Versuche und erste Annäherungen, kein fertiges Werk.',
   sections: [
     {
@@ -35,9 +35,9 @@ const de: About = {
 }
 
 const en: About = {
-  metaTitle: 'About Frank Bültge — Data & AI Engineer',
+  metaTitle: 'About Frank Bültge — Data Engineering & Analytics',
   metaDesc:
-    'Frank Bültge — Data & AI Engineer. Several main projects around data and AI, each with its own house: a federated research ecology (the current focus), datavism.org, and data-snack.com. Sourced and versioned wherever the apparatus permits; exclusions stay visible.',
+    'Frank Bültge — Data Engineering & Analytics. Several main projects around data and AI, each with its own house: a federated research ecology (the current focus), datavism.org, and data-snack.com. Sourced and versioned wherever the apparatus permits; exclusions stay visible.',
   lede: 'I work with data. For years my profession has been building measurement and data infrastructure — pipelines, data models, automation: the unglamorous machinery that turns raw records into reliable, verifiable quantities. This site is not that job. It is where my own projects live — and where I currently conduct the largest of them in the open.',
   sections: [
     {
