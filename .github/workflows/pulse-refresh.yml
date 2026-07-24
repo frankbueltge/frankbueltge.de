@@ -1,0 +1,62 @@
+name: Puls nightly refresh
+
+# Der Commit-Puls des Hubs (src/data/pulse/pulse.json) war seit seiner Anlage am
+# 2026-07-16 ein einmaliger, manueller Snapshot — der nächtliche Refresh war laut
+# scripts/fetch-pulse.ts ausdrücklich „a later, separate work item". Das ist dieses
+# Item (2026-07-24): täglich nach den Nightlies und der Gegenmessung wird der
+# Snapshot neu gezogen und committet; der Push löst den Deploy aus, die Startseite
+# zeigt damit wieder einen aktuellen „as of"-Stand.
+#
+# fetch-pulse.ts liest die Schwester-Checkouts neben dem Site-Checkout (GH_ROOT = ..):
+# hier werden die vier Geschwister-Repos flach daneben geklont — --shallow-since deckt
+# das rollierende 13-Wochen-Fenster ab, mehr History braucht der Puls nicht.
+
+on:
+  schedule:
+    - cron: '25 6 * * *' # täglich 06:25 UTC — nach atelier/field/studio-Nightlies und Gegenmessung (06:00)
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: frankbueltge.de
+      - name: Geschwister-Repos klonen (13-Wochen-Fenster)
+        run: |
+          SINCE=$(date -u -d '100 days ago' +%F)
+          for r in field-research ulysses studio research-ecology; do
+            git clone --shallow-since="$SINCE" "https://github.com/frankbueltge/$r" "$r"
+          done
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Snapshot ziehen
+        working-directory: frankbueltge.de
+        run: |
+          npm ci
+          npm run pulse:refresh
+      - name: Committen
+        working-directory: frankbueltge.de
+        run: |
+          git config user.name "Puls"
+          git config user.email "puls@frankbueltge.de"
+          git add src/data/pulse/pulse.json
+          if git diff --cached --quiet; then
+            echo "Keine Änderungen."
+            exit 0
+          fi
+          git commit -m "puls: nightly refresh ($(date -u +%F))"
+          # Gegen Push-Races (parallele Cron-/Repo-Commits): rebasen + mehrfach versuchen.
+          for i in 1 2 3 4 5; do
+            if git pull --rebase --autostash origin main && git push origin HEAD:main; then
+              exit 0
+            fi
+            sleep $((i * 7))
+          done
+          echo "Push nach 5 Versuchen gescheitert" >&2
+          exit 1
