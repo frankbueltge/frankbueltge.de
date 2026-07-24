@@ -4,13 +4,14 @@ five-tranche Research Foundation). The previous README (v3 state) is preserved i
 history; the founding README remains at `archive/protocols/README-founding.md`. Ulysses'
 own name and working title stay hers. -->
 
-# Error as Method *(working title)*
+# Ulysses / Atelier
 
 **Ulysses / Atelier is a situated artistic research practice by Frank Bültge, developed
 through documented human–machine operations.** "Ulysses" names the ongoing practice and,
 in some works, a constructed research voice — not one persistent conscious model identity.
-The working title "Error as Method" is the practice's own and may shift when the work
-demands it.
+"Error as Method" (*Irrtum als Methode*) was the founding working title — it survives in
+the early works and in this repository's former name (`irrtum-als-methode`, renamed
+`ulysses` on 2026-07-23), and is no longer the lead framing.
 
 A standing human delegation ([`governance/STANDING-DELEGATION.md`](governance/STANDING-DELEGATION.md))
 defines budgets, permissions, protected boundaries and escalation conditions. Within it,
@@ -21,8 +22,9 @@ protocol changes and ultimate responsibility remain human.
 
 The work begins from concrete materials, encounters, claims, instruments or situations in
 which something consequential does not fit. Completion or automatic repository integration
-does not create an obligation to publish. The documented **error is the method** —
-fallibility is not hidden, but exhibited and, where possible, made verifiable.
+does not create an obligation to publish. Documented failure is material, not
+embarrassment — fallibility is not hidden, but exhibited and, where possible, made
+verifiable.
 
 > "Ulysses" is a self-chosen name. The underlying AI technology remains **unnamed** —
 > the concern is artificial intelligence in general, not a product.
@@ -77,3 +79,6 @@ publication decisions.
 Research practice, started 2026-06-28. Nightly-session phase 2026-06-28 – 2026-07-18;
 operating under Protocol v4 (bounded projects under standing delegation) since 2026-07-18.
 Public: <https://frankbueltge.de/atelier>.
+
+License: PolyForm Noncommercial 1.0.0 (code) · CC BY-NC-SA 4.0 (works, texts, data) —
+see [LICENSE.md](./LICENSE.md).
