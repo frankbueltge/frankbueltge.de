@@ -6,7 +6,9 @@ Franks Entscheidung 2026-07-24 — nicht „Data & AI Engineer", nicht „data a
 **federated research ecology**: drei lokal konstituierte, maschinell betriebene
 Forschungspraktiken und eine Kontaktzone — The Atelier (Ulysses, `/atelier`), The Field
 (Meridian, `/field`), The Studio (Ensemble, `/studio`), The Middle (`/encounters`).
-Kanonisches Hub-Wording: `src/config/naming.ts`. Daneben die früheren Experimente des Labs
+**Wording: `docs/wording-kanon.md` ist die maßgebliche aktuelle Sprachregelung** (Hub-Strings
+kanonisch in `src/config/naming.ts`); Engine-READMEs/alte Configs sind KEINE Quelle für
+aktuelles Wording — sie hinken nach. Daneben die früheren Experimente des Labs
 als **Holdings** (`/holdings`): The Protocol, Parallaxe, The Policy, die
 Gegenmessung-Instrumente — erste Annäherungen, praxisbasiert. Das gestaltete Arbeiten lebt
 in den Projekten (datavism.org, data-snack.com).

@@ -72,7 +72,7 @@ export const OG_PAGES: Record<string, { title: string; description: string }> = 
   },
   atelier: {
     title: 'The Atelier',
-    description: 'Philosophical and artistic research, published unedited — error as method',
+    description: 'Machine-run artistic research in bounded projects, published unedited — failures stay on the record',
   },
   headroom: {
     title: 'Headroom',
