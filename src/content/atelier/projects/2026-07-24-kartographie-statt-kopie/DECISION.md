@@ -24,3 +24,10 @@ written on his instruction, carrying his name and the timestamp 2026-07-24T16:17
       visibly on the work page
 - [x] Work page build reviewed (screenshots: head with disclosure + body sample)
 - [x] PUBLICATION.json written on Frank's instruction (name + timestamp)
+
+**Addendum (2026-07-24, per the decision above).** The full English version
+(*Cartography, not Tracing*, 22,226 words, translated from the German v3 with all
+ATP quotations verbatim and all 400 page anchors verified) was added to the work
+page under the same work id, German original first. One typo in the German source
+was corrected in the same pass ("verführen" → "verfahren", ch. 3.1, inherited from
+v2). No new gate pass required; covered by the decision above.
