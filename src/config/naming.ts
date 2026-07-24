@@ -22,7 +22,7 @@ export interface DoorItem {
 export const NAMING = {
   approval: 'approved' as 'draft' | 'approved',
 
-  eyebrow: 'FRANK BÜLTGE · DATA ENGINEERING & ANALYTICS',
+  eyebrow: 'FRANK BÜLTGE · DATA & AI ENGINEER',
   /** Fokus-Zeile über dem Titel (Frank, 16.07. nachmittags): die Ökologie ist das aktuell
    * prominente Projekt unter mehreren Hauptprojekten — nicht die Identität der Site.
    * „currently conducting" ist Haus-Vokabular (architect & conductor) und bleibt wahr,
@@ -34,14 +34,6 @@ export const NAMING = {
    * infrastruktureller Verantwortung; versioniert ist, was der Apparat erfassen kann. */
   sub: 'Three locally constituted, machine-run research practices and a contact zone. Public claims, transfers and revisions are versioned wherever the apparatus permits; exclusions and unknowns stay visible — Git is the archive.',
   conductorLine: 'architect & conductor: Frank Bültge · the machines write, the record shows who wrote what',
-
-  now: {
-    kicker: 'NOW',
-    kickerSub: 'THE CURRENT ENCOUNTER',
-    selectionRule:
-      'selection rule: the entrance is the encounter with an authored score — today enc-2026-001, the only one so scored. the register on /encounters lists every recorded encounter (kept current by the nightly scribe); a newer one takes the entrance when its score is authored.',
-    linkLabel: 'read the full score — six stations, every quote addressable →',
-  },
 
   /** The living edge (Frank, 18.07.): the hub used to feature the current ENCOUNTER prominently —
    * but encounters are the rare crossings between practices (a handful, recorded retroactively),

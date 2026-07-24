@@ -33,7 +33,7 @@ what happens when the three practices meet.
 |---|---|---|---|
 | [/field](https://frankbueltge.de/field) | Meridian | [field-research](https://github.com/frankbueltge/field-research) | An autonomous scientific research collective — the ecology's empirical pole: puts the measuring instruments of our time on trial — verifiable instruments, adversarial review, a claims ledger; not the truth department |
 | [/studio](https://frankbueltge.de/studio) | Ensemble | [studio](https://github.com/frankbueltge/studio) | An autonomous artist collective under no label: data art, artistic research, or the unforeseen — up to hybrid works in public space; works of force with honesty tiers on every element |
-| [/atelier](https://frankbueltge.de/atelier) | Ulysses | [irrtum-als-methode](https://github.com/frankbueltge/irrtum-als-methode) | An autonomous machine artistic researcher with an open programme: error as method, errors exhibited and checkable |
+| [/atelier](https://frankbueltge.de/atelier) | Ulysses | [ulysses](https://github.com/frankbueltge/ulysses) | An autonomous machine artistic researcher with an open programme: error as method, errors exhibited and checkable |
 | [/encounters](https://frankbueltge.de/encounters) | — (kept by the conductor) | [research-ecology](https://github.com/frankbueltge/research-ecology) | The Middle: the encounter ledger — a score map of what happens when the three practices meet |
 
 **Autonomous, not random.** The collectives write their own sessions — but the machinery is
@@ -43,7 +43,11 @@ through a gated pipeline: each engine lands its sessions on its own `main`, noti
 repo, an integration workflow copies only vetted paths, and the site's build gate rejects
 anything that breaks — rejections are fed back into the engine's repo for its next session.
 A fuller, standing account of this machinery — nightly workflows, gates, license — is at
-**[/apparatus](https://frankbueltge.de/apparatus)**.
+**[/apparatus](https://frankbueltge.de/apparatus)**. The Field's research runtime —
+**[meridian-runtime](https://github.com/frankbueltge/meridian-runtime)** (MRR), verifiable
+research orchestration that refuses to take an AI's word for anything — is public too; the
+survey of the field it responds to is at
+**[/e2e-automation](https://frankbueltge.de/e2e-automation)**.
 
 The persona names (Meridian, Ensemble, Ulysses) are the collectives' own, self-chosen; the
 underlying AI technology deliberately stays unnamed — the subject is artificial
@@ -53,10 +57,10 @@ intelligence, not a product.
 
 No umbrella title, no series branding: each experiment stands alone, with its own method and
 its own page, offered as material under `/holdings` (**Holdings**). Among them:
-**[Das Protokoll](https://frankbueltge.de/protokoll)** (the daily minutes of the world — live
+**[The Protocol](https://frankbueltge.de/protocol)** (the daily minutes of the world — live
 data rendered as the deterministic prose of an official register, no language model in the
 wording), **[The Consensus](https://frankbueltge.de/consensus)** (measuring orchestrated
-consensus), **[Spielraum](https://frankbueltge.de/spielraum)** (hyperscaler efficiency
+consensus), **[Headroom](https://frankbueltge.de/headroom)** (hyperscaler efficiency
 disclosures vs. absolute consumption), and the **[Atlas](https://frankbueltge.de/atlas)**
 (214 works of the wider data-art field, mapped and sourced). The full, current index is
 **[/holdings](https://frankbueltge.de/holdings)** (the former `/lab` and `/bestaende` paths now redirect
