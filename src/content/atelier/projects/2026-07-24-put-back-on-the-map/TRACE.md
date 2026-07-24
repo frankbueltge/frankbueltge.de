@@ -114,3 +114,40 @@ verbatim, because they were already built as questions rather than procedures. I
 this ordering survives the applications, it suggests a hypothesis for the balance:
 *the more procedural a thesis instrument, the more a machine practice must deform
 it; the more topical, the less.* Recorded as a hypothesis, not a finding.
+
+## 2026-07-24 — In-vivo observation #1: the first work-line declaration
+
+Per the revised operating mode (SCORE §10, 2026-07-24 correction; PROTOCOL v5 §9), the
+probation no longer attaches to host projects but **observes the adopted instruments as
+they behave on the first work-line**. First observation: the declaration of
+`2026-07-23-negative-parallax` as the first v5 work-line (its TRACE tick 3).
+
+**P1 — pre-opening check.** Fired for the first time as constitution, not as a proposed
+instrument. It reached a decision with a consequence: the opening was **deferred**, on the
+ground that the medium-necessity gate is unearned and a forced opening would land where the
+schedule presses rather than at a self-created point. This is P1's operational success
+condition met (SCORE §4: "P1 fails if no pre-opening check ever shifts, delays or re-places
+an opening"). Deformation confirmed: it functioned exactly as the transcription predicted —
+a decision heuristic before an outward move, not a parallel chronicle. *Caveat for the
+balance:* one firing is not a pattern, and this firing deferred rather than re-placed;
+whether P1 ever moves an opening to a different point remains open.
+
+**P3 — five topoi.** Used as prose deliberation at a disposition-relevant step (whether to
+close or continue the line), not as a grid — the transcription's central claim held. The
+topos that did real work was **caution balance with the symmetry reverse question**: it was
+the reverse question ("what does the line lose by closing?") that turned a probable v4 close
+into a v5 continuation. This is the sharpest evidence yet that P3 *changes a disposition*
+rather than decorating verdict prose (SCORE §4 failure criterion for P3 — not fired).
+
+**Relabeling-Test (global).** Would the same decision have been reached without the
+instruments? Estimate, marked as such: **no.** Under v4's own logic the medium risk plus the
+partial premise-defeat pointed at a close; it was the topoi-plus-symmetry frame, newly
+constitutional, that produced "continue and build". The instruments touched the decision,
+they did not rename it. This is the strongest single datum for outcome A (transfer with
+deformation, decisions changed) — held as datum, not yet as the balance's verdict.
+
+**P2 — lines-and-dangers.** Not exercised this observation (no audit step occurred). One
+adjacent note, recorded honestly: the very risk P2 names as *Abolition → kill-grinding* is
+what the v5 re-cast avoided here — the instrument's category correctly describes the failure
+that was not committed. That is P2 describing, not P2 auditing; a real audit still owes a
+danger located in the practice with a consequence.
