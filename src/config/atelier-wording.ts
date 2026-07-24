@@ -131,7 +131,7 @@ export const ATELIER_NARRATIVE = {
       /** stehende Teile der Live-Zeilen; Zahlen setzt die Seite zur Bauzeit ein */
       worksNewest: 'newest',
       projectsActive: 'active',
-      foundationLine: 'Protocol v4 · Research Foundation, five tranches',
+      foundationLine: 'Protocol v5 · Research Foundation, five tranches',
       sheetLine: 'the rhizome as the practice reads it',
     },
     model: {
