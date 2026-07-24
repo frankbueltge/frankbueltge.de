@@ -11,10 +11,10 @@ export const ui = {
     'nav.menu': 'Menü öffnen',
     'theme.toggle': 'Design: Auto / Hell / Dunkel',
 
-    'meta.home.title': 'Frank Bültge — Data & AI Engineer',
-    'meta.home.desc': 'Frank Bültge — Data & AI Engineer. Ein öffentliches Experimentierfeld mit Daten, Code und KI: kleine Experimente, die etwas aus offenen Quellen messen, ihre Quellen nennen und offenlegen, wie sie gemacht sind.',
+    'meta.home.title': 'Frank Bültge — Data Engineering & Analytics',
+    'meta.home.desc': 'Frank Bültge — Data Engineering & Analytics. Ein öffentliches Experimentierfeld mit Daten, Code und KI: kleine Experimente, die etwas aus offenen Quellen messen, ihre Quellen nennen und offenlegen, wie sie gemacht sind.',
 
-    'hero.roleLead': 'Data & AI Engineer',
+    'hero.roleLead': 'Data Engineering & Analytics',
     'hero.roleRest': ' — ich baue Dateninfrastruktur und experimentiere mit Daten, Code und KI.',
     'home.protokollLink': 'Vollständiges Protokoll',
     'home.beruflich': 'Eigene Projekte',
@@ -136,10 +136,10 @@ export const ui = {
     'nav.menu': 'Open menu',
     'theme.toggle': 'Theme: Auto / Light / Dark',
 
-    'meta.home.title': 'Frank Bültge — Data & AI Engineer',
-    'meta.home.desc': 'Frank Bültge — Data & AI Engineer. Currently conducting a federated research ecology: three locally constituted, machine-run research practices and a contact zone — public claims and revisions versioned wherever the apparatus permits, Git as the archive.',
+    'meta.home.title': 'Frank Bültge — Data Engineering & Analytics',
+    'meta.home.desc': 'Frank Bültge — Data Engineering & Analytics. Currently conducting a federated research ecology: three locally constituted, machine-run research practices and a contact zone — public claims and revisions versioned wherever the apparatus permits, Git as the archive.',
 
-    'hero.roleLead': 'Data & AI Engineer',
+    'hero.roleLead': 'Data Engineering & Analytics',
     'hero.roleRest': ' — I build data infrastructure and experiment with data, code and AI.',
     'home.protokollLink': 'Full minutes',
     'home.beruflich': 'Side projects',

@@ -22,7 +22,7 @@ export interface DoorItem {
 export const NAMING = {
   approval: 'approved' as 'draft' | 'approved',
 
-  eyebrow: 'FRANK BÜLTGE · DATA & AI ENGINEER',
+  eyebrow: 'FRANK BÜLTGE · DATA ENGINEERING & ANALYTICS',
   /** Fokus-Zeile über dem Titel (Frank, 16.07. nachmittags): die Ökologie ist das aktuell
    * prominente Projekt unter mehreren Hauptprojekten — nicht die Identität der Site.
    * „currently conducting" ist Haus-Vokabular (architect & conductor) und bleibt wahr,

@@ -1,6 +1,8 @@
 # CLAUDE.md — frankbueltge.de
 
-Persönliche Website von Frank Bültge (Data & AI Engineer) — öffentlicher Eingang zu einer
+Persönliche Website von Frank Bültge (Rollen-Zeile: „Data Engineering & Analytics",
+Franks Entscheidung 2026-07-24 — nicht „Data & AI Engineer", nicht „data artist") —
+öffentlicher Eingang zu einer
 **federated research ecology**: drei lokal konstituierte, maschinell betriebene
 Forschungspraktiken und eine Kontaktzone — The Atelier (Ulysses, `/atelier`), The Field
 (Meridian, `/field`), The Studio (Ensemble, `/studio`), The Middle (`/encounters`).
