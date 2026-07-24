@@ -9,7 +9,17 @@
 import Page from '@/layouts/Page.astro'
 import HubEntrance from '@/components/pages/HubEntrance.astro'
 import { NAMING } from '@/config/naming'
+
+// SEO — die Startseite ist die Autoritätsseite für die Namenssuche "Frank Bültge". Titel und
+// Description führen deshalb mit Name + Rolle (das stärkste Entity-Signal für eine Namensabfrage),
+// das Ökologie-Konzept folgt als Kontext. Der sichtbare Hero/H1 bleibt unberührt — der Name steht
+// dort bereits als Eyebrow (NAMING.eyebrow) über der H1. Frank rankte für den eigenen Namen ab,
+// nachdem site-v2 (16.07.) Titel/H1/Description auf das abstrakte Konzept umstellte; dies stellt
+// das Personen-Signal wieder her, ohne die Gestaltung anzufassen.
+const seoTitle = `Frank Bültge — Data & AI Engineer · ${NAMING.title}`
+const seoDescription =
+  'Frank Bültge — Data & AI Engineer. Experiments with data and AI, a federated research ecology of machine-run practices, and the projects datavism.org and data-snack.com. Git is the archive.'
 ---
-<Page title={`${NAMING.title} | Frank Bültge`} description={NAMING.sub}>
+<Page title={seoTitle} description={seoDescription}>
   <HubEntrance />
 </Page>
