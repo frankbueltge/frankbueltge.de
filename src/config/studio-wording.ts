@@ -86,6 +86,14 @@ export const STUDIO_NARRATIVE = {
     playbill: 'One bill per evening; below it, the unedited journal of the house.',
     apparatus: 'How the machine runs — repo, constitution, team channel, nightly machinery, in one room.',
   },
+  /** Eingang v2 (2026-07-25, Franks Go, Muster /field): die Spielzeit über der Bühne —
+   * der Bogen der Praxis in Bühnen-Grammatik (Premieren als Lichtpunkte, Strikes als
+   * X-Marken), bevor das heutige Bühnenbild kommt. */
+  season: {
+    heading: 'the season — every premiere and strike, in order',
+    caption:
+      'each ● a premiere at its evening, each ✕ a struck position at its session’s evening — the large ● is the work in the spotlight below; the floor keeps every strike’s reason verbatim',
+  },
 } as const
 
 export const STUDIO_DRAFT_LABEL = 'wording draft — approval pending'
