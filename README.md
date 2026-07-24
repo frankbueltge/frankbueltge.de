@@ -26,8 +26,9 @@ semi-autonomous under human and infrastructural responsibility. They are not dep
 a fixed pipeline; no practice is upstream of another by right. Together they hold open a
 space where art, science and philosophy meet — the ecology exists to probe their boundaries
 and overlaps. A fourth place, **The Middle**
-(`/encounters`), has no resident of its own: it is kept by the conductor and records only
-what happens when the three practices meet.
+(`/encounters`), has no resident of its own: it is kept by the conductor and records what
+happens when the practices meet — from single exchanges to joint inquiries into shared
+research questions.
 
 | Door | Practice (self-named) | Repo | What it does |
 |---|---|---|---|
