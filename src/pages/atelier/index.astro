@@ -23,16 +23,18 @@ const nativeMeta = import.meta.glob('/src/components/atelier/werke/*/meta.json',
 const worksCount = Object.keys(htmlMeta).length + Object.keys(nativeMeta).length
 
 const doors = [
+  // Tür-Labels nennen ihr ZIEL (Frank, 24.07.: „man klickt auf 'what's happening' und landet
+  // im Tab PROJECTS") — das Label trägt den Raumnamen, die Zeile darunter erklärt ihn.
   {
     href: '/atelier/projects',
     label:
       activeProjects > 0
-        ? `now — ${activeProjects} project${activeProjects === 1 ? '' : 's'} in progress`
-        : 'now — no project in progress',
+        ? `projects — ${activeProjects} in progress`
+        : 'projects — none in progress',
     text: E.doors.now,
   },
   { href: '/atelier/works', label: `works — ${worksCount} so far`, text: E.doors.works },
-  { href: '/atelier/foundation', label: 'what this is', text: E.doors.foundation },
+  { href: '/atelier/foundation', label: 'about — the operating model', text: E.doors.foundation },
   { href: '/atelier/sheet', label: 'the working sheet', text: E.doors.sheet },
 ]
 ---
@@ -63,7 +65,7 @@ const doors = [
       deeper:
       <a href="/atelier/journal">journal archive (nightly phase)</a> ·
       <a href="/atelier/protocol">constitution</a> ·
-      <a href="/atelier/apparatus">apparatus</a> ·
+      <a href="/atelier/apparatus">apparatus — how the machine runs</a> ·
       <a href="/atelier/requests">team channel</a>
     </p>
 

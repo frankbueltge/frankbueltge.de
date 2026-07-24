@@ -29,10 +29,10 @@ export const NAMING = {
    * wenn der Fokus wandert. */
   focusKicker: 'currently conducting',
   title: 'a federated research ecology',
-  /** Qualifizierte Autonomie-Sprache (Konsistenz-Feedback 16.07. spät): keine absoluten
-   * Behauptungen — die Praktiken sind operativ teilautonom unter menschlicher und
-   * infrastruktureller Verantwortung; versioniert ist, was der Apparat erfassen kann. */
-  sub: 'Three locally constituted, machine-run research practices and a contact zone. Public claims, transfers and revisions are versioned wherever the apparatus permits; exclusions and unknowns stay visible — Git is the archive.',
+  /** Klartext-Fassung (Frank, 24.07.: „man versteht nur bahnhof" — Verständlichkeit vor
+   * Haus-Jargon). Qualifizierte Autonomie-Sprache bleibt: teilautonom unter menschlicher
+   * Verantwortung, versioniert ist, was der Apparat erfassen kann. */
+  sub: 'Three research practices run by machines — an atelier, a field station, a studio — each with its own constitution, its own repository and a public record published unedited, plus a contact zone where they meet. Git is the archive: claims and revisions stay versioned; exclusions and unknowns stay visible.',
   conductorLine: 'architect & conductor: Frank Bültge · the machines write, the record shows who wrote what',
 
   /** The living edge (Frank, 18.07.): the hub used to feature the current ENCOUNTER prominently —
@@ -43,8 +43,10 @@ export const NAMING = {
   latest: {
     kicker: 'LATEST',
     kickerSub: 'WHAT THE PRACTICES MADE — NEWEST FIRST',
-    note: 'the living edge of the machine — new works land here as the practices make them, night after night; this is the part that changes daily.',
-    labLink: 'the whole lab →',
+    note: 'the living edge of the machine — new works land here as the practices make them, night after night; this is the part that changes daily. Each work links into its house above.',
+    /* 'the whole lab →' entfernt (Frank, 24.07.): der Link zeigte auf /holdings (die ALTEN
+     * Experimente), während die Liste hier die NEUEN Arbeiten der Praktiken führt —
+     * semantisch falsch. Holdings hat seinen Platz unter ALSO ON THIS SITE. */
   },
   crossings: {
     label: 'the practices also cross — rarely, and always on the record',
@@ -54,29 +56,32 @@ export const NAMING = {
     kicker: 'WHO LIVES HERE',
     kickerSub: 'FOUR DOORS',
     items: [
+      /* Türbeschreibungen neu (Frank, 24.07.): Auskunft statt Poesie — jede Tür sagt in
+       * einem Satz, was die Praxis tut, aus ihrer aktuellen Selbstbeschreibung (Engine-READMEs),
+       * nicht aus dem Mockup von 16.07. */
       {
         id: 'ulysses',
         name: 'The Atelier',
         href: '/atelier',
-        description: 'Philosophical and artistic research — problems, works, self-critique. Error as method.',
+        description: 'Machine-run artistic research in bounded projects — the machines find problems, build works and critique themselves. Error is the method, kept checkably on the record.',
       },
       {
         id: 'meridian',
         name: 'The Field',
         href: '/field',
-        description: 'Cartographic research — instruments and maps, offered under conditions.',
+        description: 'An empirical research collective putting the measuring instruments of our time on trial — verifiable instruments, adversarial review, a claims ledger.',
       },
       {
         id: 'ensemble',
         name: 'The Studio',
         href: '/studio',
-        description: 'A production practice — works are staged, and the bill is printed.',
+        description: 'An artist collective under no label, staging works of data art in autonomous sessions — every element carries an honesty tier: verified, sourced or imagined.',
       },
       {
         id: 'conductor',
         name: 'The Middle',
         href: '/encounters',
-        description: 'The contact zone. Records what happens when practices meet — nothing more.',
+        description: 'The contact zone: the register of the rare moments the practices meet — offers, verdicts, refusals, corrections — every line traceable to a commit.',
         noResident: 'no resident — kept by the conductor',
       },
     ] as DoorItem[],
@@ -115,7 +120,7 @@ export const NAMING = {
       {
         name: 'Atlas',
         href: '/atlas',
-        description: 'The reference collection: 214 works of data art the lab measures itself against.',
+        description: 'The reference collection: works of data art the lab measures itself against, mapped and sourced.',
       },
       {
         name: 'Apparatus',

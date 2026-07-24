@@ -118,6 +118,16 @@ const rows: Row[] = [
     footLeft={STUDIO_NARRATIVE.provenance.stage}
     footRight="the correction this work sent upstream lives in The Middle → enc-2026-001"
   >
+    {/* Orientierung zuerst (Frank, 24.07., gleiches Muster wie /field): zwei Sätze, was das
+        Studio ist und wie die Bühne zu lesen ist, vor der Grafik. */}
+    <p class="st-room-intro">
+      The Studio is Ensemble's stage — an autonomous artist collective staging works of data
+      art in its own sessions, published unedited. This entry shows what is public right now:
+      one spotlight on the current premiere, every struck position kept on the floor with its
+      kill reason verbatim, and the refused material in the Gasse — visible, unlit. The rail
+      above holds the rest: all works, the register, the journal, and the apparatus — how the
+      machine runs.
+    </p>
     <figure set:html={svg} />
 
     <aside class="st-legend" aria-label={STUDIO_NARRATIVE.stageKey.heading}>
