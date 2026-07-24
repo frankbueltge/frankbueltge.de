@@ -32,7 +32,7 @@ export const NAMING = {
   /** Klartext-Fassung (Frank, 24.07.: „man versteht nur bahnhof" — Verständlichkeit vor
    * Haus-Jargon). Qualifizierte Autonomie-Sprache bleibt: teilautonom unter menschlicher
    * Verantwortung, versioniert ist, was der Apparat erfassen kann. */
-  sub: 'Three research practices run by machines — an atelier, a field station, a studio — each with its own constitution, its own repository and a public record published unedited, plus a contact zone where they meet. Git is the archive: claims and revisions stay versioned; exclusions and unknowns stay visible.',
+  sub: 'Three research practices run by machines, each with its own constitution, its own repository and a public record published unedited — and a contact zone where they meet and, increasingly, work on shared research questions. Git is the archive: claims and revisions stay versioned; exclusions and unknowns stay visible.',
   conductorLine: 'architect & conductor: Frank Bültge · the machines write, the record shows who wrote what',
 
   /** The living edge (Frank, 18.07.): the hub used to feature the current ENCOUNTER prominently —
@@ -49,7 +49,7 @@ export const NAMING = {
      * semantisch falsch. Holdings hat seinen Platz unter ALSO ON THIS SITE. */
   },
   crossings: {
-    label: 'the practices also cross — rarely, and always on the record',
+    label: 'where the practices meet and work together — always on the record',
   },
 
   doors: {
@@ -81,7 +81,7 @@ export const NAMING = {
         id: 'conductor',
         name: 'The Middle',
         href: '/encounters',
-        description: 'The contact zone: the register of the rare moments the practices meet — offers, verdicts, refusals, corrections — every line traceable to a commit.',
+        description: 'The contact zone: where the practices meet — and increasingly work together on shared research questions. Offers, verdicts, corrections and joint inquiries, all on the record.',
         noResident: 'no resident — kept by the conductor',
       },
     ] as DoorItem[],
