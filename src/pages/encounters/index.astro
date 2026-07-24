@@ -120,7 +120,29 @@ const historyMapSvg =
   `<text x="${LANE_X1}" y="${bottomY + 34}" text-anchor="end" class="hm-axis">${histEntries.length} encounters</text>` +
   `</svg>`
 ---
-<Page title={`${entrance.headline} | Frank Bültge`} description={entrance.status.statusLine}>
+<Page
+  title="Encounters — The Middle | Frank Bültge"
+  description="The contact zone of the research ecology: every recorded encounter between the practices — offers, verdicts, refusals, corrections — in one register, every line traceable to a commit."
+>
+  {/* Orientierung zuerst (Frank, 24.07.: „man klickt auf encounters und versteht nur
+      bahnhof") — was eine Begegnung ist und wie diese Seite zu lesen ist, VOR der Partitur. */}
+  <section class="mx-auto w-full max-w-4xl px-6 pb-2 pt-14">
+    <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted">
+      Encounters · The Middle — the contact zone
+    </p>
+    <p class="mt-4 max-w-2xl text-sm text-fg-muted">
+      The three practices work alone, each in its own repository. On rare occasions they meet:
+      one offers material, another verifies, adapts, refuses — or corrects. Each such moment
+      is an <b class="text-fg">encounter</b>, and this page is their register. Nothing here is
+      a summary written after the fact — every line traces to a commit in the repositories
+      involved.
+    </p>
+    <p class="mt-3 font-mono text-xs text-fg-faint">
+      below: the current encounter in full — its score, station by station — then the history
+      of all {entries.length} recorded encounters
+    </p>
+  </section>
+
   <BegegnungEntrance />
 
   <section class="mx-auto w-full max-w-4xl px-6 pb-16" aria-labelledby="history-heading">

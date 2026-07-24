@@ -109,6 +109,26 @@ const isDraft = NAMING.approval !== 'approved'
     </div>
   </section>
 
+  {/* Reihenfolge (Frank, 24.07.): erst WER hier wohnt (Orientierung), dann was sie zuletzt
+      gemacht haben — ein Besucher soll die Werktitel einordnen können, bevor er sie liest. */}
+  <section class="mt-20 border-t border-line/60 pt-16" id="doors">
+    <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted">
+      <b class="text-fg">{NAMING.doors.kicker}</b> · {NAMING.doors.kickerSub}
+    </p>
+    <div class="doors mt-7 grid gap-3.5 sm:grid-cols-2 lg:grid-cols-4">
+      {doors.map((d) => (
+        <a href={d.href} class:list={['door', `door-${d.id}`, 'block rounded-[10px] border border-line bg-panel p-5 pt-5 transition-colors hover:border-fg-faint']}>
+          <h3 class="text-[19px] font-semibold tracking-[-0.01em]">{d.name}</h3>
+          <p class="mt-2 min-h-[4.2em] text-sm text-fg-muted">{d.description}</p>
+          <span class="mt-3 block font-mono text-[11px] text-fg-faint">{d.meta}</span>
+        </a>
+      ))}
+    </div>
+    <div class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1.5 font-mono text-xs text-fg-faint">
+      <a href={getRelativeLocaleUrl(locale, '/encounters')} class="transition-colors hover:text-fg">{NAMING.crossings.label} ({encounterCount}) →</a>
+    </div>
+  </section>
+
   <section class="mt-20 border-t border-line/60 pt-16" id="latest">
     <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted">
       <b class="text-fg">{NAMING.latest.kicker}</b> · {NAMING.latest.kickerSub}
@@ -126,27 +146,6 @@ const isDraft = NAMING.approval !== 'approved'
         </li>
       ))}
     </ul>
-
-    <div class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1.5 font-mono text-xs text-fg-faint">
-      <a href={getRelativeLocaleUrl(locale, '/holdings')} class="text-fg-muted transition-colors hover:text-fg">{NAMING.latest.labLink}</a>
-      <span aria-hidden="true">·</span>
-      <a href={getRelativeLocaleUrl(locale, '/encounters')} class="transition-colors hover:text-fg">{NAMING.crossings.label} ({encounterCount}) →</a>
-    </div>
-  </section>
-
-  <section class="mt-20 border-t border-line/60 pt-16" id="doors">
-    <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted">
-      <b class="text-fg">{NAMING.doors.kicker}</b> · {NAMING.doors.kickerSub}
-    </p>
-    <div class="doors mt-7 grid gap-3.5 sm:grid-cols-2 lg:grid-cols-4">
-      {doors.map((d) => (
-        <a href={d.href} class:list={['door', `door-${d.id}`, 'block rounded-[10px] border border-line bg-panel p-5 pt-5 transition-colors hover:border-fg-faint']}>
-          <h3 class="text-[19px] font-semibold tracking-[-0.01em]">{d.name}</h3>
-          <p class="mt-2 min-h-[4.2em] text-sm text-fg-muted">{d.description}</p>
-          <span class="mt-3 block font-mono text-[11px] text-fg-faint">{d.meta}</span>
-        </a>
-      ))}
-    </div>
   </section>
 
   <section class="mt-20 border-t border-line/60 pt-16" id="travel">
