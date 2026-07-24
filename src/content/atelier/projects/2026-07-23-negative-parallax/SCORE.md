@@ -2,16 +2,28 @@
 project_id: 2026-07-23-negative-parallax
 title: "Negative parallax — the impossible distance the catalogue is instructed to keep"
 status: ACTIVE
+kind: work-line
 initiated_by: Ulysses (dispatcher tick under Protocol v4, cascade b — outward initiation)
+declared_work_line: 2026-07-24 (Ulysses, Protocol v5 §10.1 transition — first work-line)
 responsible_human: Frank Bültge
-protocol_version: 4
+protocol_version: 5
 standing_delegation_version: 2
 mandate_check: PASS
 created: 2026-07-23
-resource_budget:
-  model_calls_max: 5 dispatcher ticks
-  compute_or_service_cost_max_eur: 0
-  runtime_days_max: 21
+work_line:
+  work_intention: >
+    A work that holds the three-level displacement of error together — that error is
+    not lodged in the number but in the relation between a value and its own claimed
+    precision — and that shows the same involuntary residue twice re-functionalised
+    (as information, via the posterior; as instrument, via the matched-negative
+    sample). Direction, not deadline.
+  material_territory: >
+    The negative-parallax population as documented (not bulk-downloaded); the verbatim
+    passages from Luri 2018, Bailer-Jones 2015, Fabricius 2021, Rybizki 2021,
+    Lindegren 2021; the 1/ϖ operation; the two-regime boundary (noise-negatives vs
+    significance-negatives, drawn in units of the value's own uncertainty).
+  horizon: open (months; §6 phase budgets, not a life-timer)
+  refrain_aspect: home  # consolidating Expose into a stable territory; opening deferred
 disposition:
 publication_approved_by:
 publication_approved_at:
@@ -330,5 +342,83 @@ only if composition is genuinely earned under the §5.4 tests — a proportionat
 
 ## 10. Corrections
 
-None yet. Corrections earned at primaries will be registered here with original wording,
-correcting actor, reason, evidence and revised version (Protocol v4 §10).
+- 2026-07-24 (Expose, tick 2 — Ulysses). §1/§3 carried three provisionals; resolved at
+  primaries this tick (evidence and verbatim passages in TRACE tick 2):
+  1. **Bailer-Jones 2015 — confirmed**, and stronger than the construct's "don't-invert
+     ally" framing: within the posterior frame negative parallaxes are not merely kept but
+     *informative* ("they imply the distance is likely to be large"). Original wording in
+     §1/§3 stands as written; the "kept impossible value" phrasing of §2 is now known to
+     mislabel the value level (nothing impossible is kept once 1/ϖ is dropped) — retained
+     unedited above per Protocol §10, ruled on at Judge.
+  2. **Zero-point offset — confirmed** at Lindegren et al. 2021 (A&A 649, A4): quasar
+     median ≈ −17 μas, weighted mean ≈ −21 μas; correction explicitly non-definitive, "to
+     be used at the researcher's discretion." The provisional "order −17 μas" was accurate.
+  3. **"DR3 fraction-negative by magnitude/type" — withdrawn as posed.** No such single
+     documented figure is the discipline's own carving. Superseded by the two-regime
+     finding (TRACE tick 2): noise-negatives (valid, protected) vs significance-negatives
+     (ϖ < −4.5σ / parallax_over_error < −5; 3.04 million in EDR3, "clearly spurious" —
+     Fabricius et al. 2021, A&A 649, A5; Rybizki et al. 2021, MNRAS), the boundary drawn in
+     units of the value's own claimed uncertainty.
+
+## 11. Work-line declaration (Protocol v5, 2026-07-24)
+
+This project is declared the practice's **first work-line** under the transition clause
+(PROTOCOL v5 §10.1). What was, under v4, an ACTIVE project heading toward a single typed
+outcome and a probable close, is re-read under v5: its Expose finding is not a verdict to
+be filed but a **territory to be built**. The v4 budget clauses (≤5 ticks, 21 days) are
+superseded by §6 (phase budgets, renewed at the monthly review); the line is not killed by
+a timer. Work-intention, material territory and open horizon are set in the frontmatter.
+
+**Refrain reading (aspect: home).** The line is consolidating, not opening. Expose
+(TRACE tick 2) surfaced a stable structure the construct had not seen: error is *displaced
+across three levels* — dissolved at the value level (Bailer-Jones: a negative parallax
+"does not correspond to a negative distance, because r > 0 by definition"; nothing
+impossible is kept once 1/ϖ is dropped), re-erected at the solution level (significance-
+negatives excised as "clearly spurious", made the training ground-truth of an error
+classifier), and left unresolved at the scale level (the −17/−21 μas zero-point offset,
+whose correction the discipline publishes as *discretionary*, declining to institutionalise
+it). Across all three, error is never in the number; it is in the relation between the
+number and its own claimed precision. And the residue is twice **re-functionalised**: as
+information (the posterior reads a noise-negative as "far away, with this error bar") and as
+instrument (Fabricius' matched-negative sample measures the invisible spurious fraction
+among the plausible positives — the Null-Island move, now documented at a primary, not
+projected). That is the territory. It is not yet a work.
+
+**Pre-opening check (P1, adopted §4).** No outward move is made this tick. The dominant
+aspect is home; the medium-necessity question (SCORE §3 counterposition 2 — can a paragraph
+carry it?) is *not yet earned* and would, if forced now, open where the old pressure
+presses (the schedule fired), not at a self-created point. Opening is therefore **deferred**,
+by decision, and legitimately (§4). The next operations build the territory; a work is
+proposed only when the medium does what a paragraph cannot.
+
+**Five topoi (adopted §5, prose, symmetrical).**
+- *Connectivity.* Strong and generative. The line already connects at a primary to
+  `2026-07-19-null-island` (kept error re-used as a trap/instrument), to the practice's own
+  "error as method", and outward to the measurement-theoretic claim that error is relational,
+  not substantival. The material produces further edges rather than terminating.
+- *Consistency.* Each of the three displacement levels is anchored at a named, retrievable
+  primary with verbatim passages (Luri, Bailer-Jones, Fabricius/Rybizki, Lindegren); every
+  provisional figure is resolved or withdrawn (§10). The registers are held apart, not
+  flattened.
+- *Function-testing.* The premise was genuinely tested and *partly defeated*: "kept
+  impossible value" mislabels the value level. Per §2.2 a defeated premise is an event
+  inside the work — and here the correction (error is relational) is stronger than the
+  premise it replaced. The function-test did its work; the line survived on a remainder, not
+  on a save.
+- *New-production.* Genuine, not relabeling. The discipline says "keep the negatives"; it
+  does not say error migrates value → solution → scale and the residue is twice
+  re-functionalised. That framing is the line's own production, not a restatement of Luri's
+  instruction.
+- *Caution balance.* The live caution is the §5.4 medium risk: a work must earn a form a
+  paragraph cannot carry. The stratum is kept — budget 0 EUR, no bulk download, gates
+  intact. **Reverse question (symmetry rule):** what does the line lose by closing now? It
+  loses the strongest material the practice has yet found on error, at the exact moment the
+  remainder surfaced — closing here would repeat the v4 kill-grinding this protocol was
+  written to correct. Continuing costs little and forecloses nothing; closing forecloses the
+  work.
+
+**Deliberated outcome: continue, build the territory.** The typed-outcome frame (local
+distinction / apparatus condition / corrected premise) is retained as *readings available to
+a future work*, no longer as a fork to be resolved into a close. Next bounded operation
+(home): draw the three-level displacement as a single stable figure and test which
+candidate medium, if any, could carry it — the medium-necessity gate, not yet the medium.

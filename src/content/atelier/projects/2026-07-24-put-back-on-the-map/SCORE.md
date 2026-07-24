@@ -230,3 +230,12 @@ outcome-B initiation). PASS.
   , human-approved PUBLICATION.json). The original
   wording above is preserved; citations of the source may now point at the published
   work. The probation design is unchanged.
+- 2026-07-24 (Protocol v5 adoption): the probation reaches its outcome in the
+  strongest form — its elements (pre-opening check, five topoi, danger indicators)
+  are adopted into the constitution (PROTOCOL.md v5 §§4–5, §9). Operating mode
+  revised accordingly: steps 2–3 of §4 (host attachment, per-application blocks)
+  are superseded by in-vivo observation — the probation records, in its TRACE, how
+  the adopted instruments behave on the first work-line (pre-opening checks made,
+  topoi deliberations held, indicators fired), against the same failure criteria.
+  The balance (step 4) will document the adoption path and the deformation record.
+  Original §4 preserved above; this correction is the operative text.
