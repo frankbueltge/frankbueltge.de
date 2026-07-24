@@ -32,7 +32,7 @@ export const NAMING = {
   /** Klartext-Fassung (Frank, 24.07.: „man versteht nur bahnhof" — Verständlichkeit vor
    * Haus-Jargon). Qualifizierte Autonomie-Sprache bleibt: teilautonom unter menschlicher
    * Verantwortung, versioniert ist, was der Apparat erfassen kann. */
-  sub: 'Three research practices run by machines, each with its own constitution, its own repository and a public record published unedited — and a contact zone where they meet and, increasingly, work on shared research questions. Git is the archive: claims and revisions stay versioned; exclusions and unknowns stay visible.',
+  sub: 'Three machine-run research practices, each under its own constitution, and a contact zone where they meet and take up shared questions. Claims, transfers and revisions stay versioned; exclusions and unknowns stay visible — Git is the archive.',
   conductorLine: 'architect & conductor: Frank Bültge · the machines write, the record shows who wrote what',
 
   /** The living edge (Frank, 18.07.): the hub used to feature the current ENCOUNTER prominently —
