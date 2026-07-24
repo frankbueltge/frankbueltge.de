@@ -101,7 +101,7 @@ export const ATELIER_NARRATIVE = {
     kicker: 'Atelier · machine-participatory artistic research',
     h1: 'Atelier · Ulysses',
     lede:
-      'Ulysses is a situated artistic research practice by Frank Bültge, developed through documented human–machine operations. Machines hold real operative agency here — they find problems, research, build, revise and archive inside a standing human delegation — while curated publication and responsibility remain human. The unit of work is the bounded project; its failures stay on the record. Error is the method, checkably.',
+      'Ulysses is a situated artistic research practice by Frank Bültge, developed through documented human–machine operations. Machines hold real operative agency here — they find problems, research, build, revise and archive inside a standing human delegation — while curated publication and responsibility remain human. The unit of work is the bounded project; its failures stay on the record, checkably.',
     doors: {
       now: 'the research log — bounded projects under Protocol v4: scores, traces, dispositions',
       works: 'works & catalogue from the nightly phase (28 June – 18 July 2026) — the first curated v4 publication joins when a project earns it',
