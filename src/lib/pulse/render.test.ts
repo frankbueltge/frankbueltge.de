@@ -81,7 +81,12 @@ describe('smooth', () => {
 
 describe('formatWeekRange', () => {
   it('formats a same-year window as "W..–W.. YYYY"', () => {
-    expect(formatWeekRange(snapshot.weeks)).toBe('W17–W29 2026')
+    // Fixture statt Live-Snapshot: das Fenster rollt wöchentlich (fetch-pulse.ts,
+    // "last 13 ISO weeks"), ein gepinnter Snapshot-Wert bräche bei jedem Roll —
+    // so brach der erste Nightly-Refresh am 2026-07-24 den Deploy. Die
+    // Formatbehauptung selbst bleibt unverändert.
+    const weeks: PulseWeek[] = [makeWeek(new Array(84).fill(0), { iso_year: 2026, iso_week: 17 }), makeWeek(new Array(84).fill(0), { iso_year: 2026, iso_week: 29 })]
+    expect(formatWeekRange(weeks)).toBe('W17–W29 2026')
   })
 
   it('formats a window crossing a year boundary with both years shown', () => {
