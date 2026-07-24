@@ -10,7 +10,7 @@ import Frame from '@/components/field/surface/Frame.astro'
 import { loadChronicle, entriesForWork } from '@/lib/field/chronicle'
 import { currentScore } from '@/lib/begegnungen'
 import { buildControlSvg, dayRange, type ControlMark } from '@/lib/field/strip'
-import { latestInstrument, type InstrumentMeta } from '@/lib/field/latest'
+import { latestInstrument, orderInstruments, type InstrumentMeta } from '@/lib/field/latest'
 import { FIELD_NARRATIVE } from '@/config/field-wording'
 
 const metas = import.meta.glob('/src/components/field/werke/*/meta.json', {
@@ -85,6 +85,34 @@ const svg = buildControlSvg({
   penLabel: 'in service',
 })
 
+// ——— the shelf band (Eingang v2, 2026-07-25): every instrument on the tape, at its
+// committed date — same total order and numbering as the featured derivation (latest.ts),
+// so the band and the header can never disagree. Same-day instruments fan out around
+// their date. No inline style attributes (CSP: style hashes ignore 'unsafe-inline').
+const bandEntries = orderInstruments([...metaBySlug.entries()]).filter(([, m]) => m.date)
+const noBySlug = new Map(bandEntries.map(([s], i) => [s, String(i + 1).padStart(3, '0')]))
+const bandT = (d: string) => Date.parse(d + 'T00:00:00Z')
+const B0 = bandT(bandEntries[0][1].date!)
+const B1 = bandT(meta.date)
+const BW = 960, BH = 92, bPadL = 16, bPadR = 46, BY = 56
+const bandX = (ts: number) =>
+  B1 === B0 ? bPadL : bPadL + ((ts - B0) / (B1 - B0)) * (BW - bPadL - bPadR)
+const byDay = new Map<string, typeof bandEntries>()
+for (const e of bandEntries) {
+  const d = e[1].date!
+  byDay.set(d, [...(byDay.get(d) ?? []), e])
+}
+const bandTicks = [...byDay.entries()].flatMap(([d, group]) =>
+  group.map(([tSlug, m], i) => ({
+    slug: tSlug,
+    no: noBySlug.get(tSlug)!,
+    title: m.title ?? tSlug,
+    date: d,
+    x: bandX(bandT(d)) + (i - (group.length - 1) / 2) * 7,
+    current: tSlug === slug,
+  })),
+)
+
 const kicker = ['Field · instrument record', `works/${slug}`, `${meta.date} → ${endDate}`]
 // One clear line, not a run-on: the instrument's live status. The selection rationale
 // (FIELD_NARRATIVE.selectionRule) moved out of the header — it is meta, not what the page is about.
@@ -107,15 +135,36 @@ const statusHtml =
     footRight="the correction’s two readings live in The Middle → enc-2026-001; this plate keeps the local record"
   >
     {/* Orientierung zuerst (Frank, 24.07.: „man landet auf 'This instrument' und versteht
-        nur bahnhof") — zwei Sätze, was das Feld ist und was man hier sieht, vor dem Streifen. */}
+        nur bahnhof") — was das Feld ist, dann die Praxis als Band, dann das lebende Exponat. */}
     <p class="fd-room-intro">
       The Field is Meridian's station — an autonomous research collective putting the
-      measuring instruments of our time on trial. Its entry is not a dashboard but the newest
-      instrument in service: the record strip below carries every committed mark — built,
-      reviewed, corrected from outside, obligation standing. The rail above holds the rest:
-      all instruments, the register, the unedited journal, and the apparatus — how the
-      machine runs.
+      measuring instruments of our time on trial. The band below shows every instrument the
+      collective has committed, at its date; the newest one is in service, and its full
+      record strip follows — built, reviewed, corrected from outside, obligation standing.
+      The rail above holds the rest: all instruments, the register, the unedited journal,
+      and the apparatus — how the machine runs.
     </p>
+
+    <figure class="fd-band" aria-label={FIELD_NARRATIVE.shelf.heading}>
+      <figcaption class="fd-band-head">{FIELD_NARRATIVE.shelf.heading}</figcaption>
+      <div class="fd-band-scroll">
+        <svg viewBox={`0 0 ${BW} ${BH}`} role="img" aria-label={FIELD_NARRATIVE.shelf.caption}>
+          <line x1={bPadL - 6} y1={BY} x2={BW - bPadR + 26} y2={BY} class="b-tape" />
+          <path d={`M ${BW - bPadR + 26} ${BY} l 9 0 m -3.5 -3 l 3.5 3 l -3.5 3`} class="b-tape" />
+          {bandTicks.map((tk) => (
+            <a href={`/field/werke/${tk.slug}`} class="b-tick-link">
+              <title>{`instrument ${tk.no} — ${tk.title} · ${tk.date}`}</title>
+              <line x1={tk.x} y1={BY} x2={tk.x} y2={BY - (tk.current ? 30 : 17)} class={tk.current ? 'b-tick b-tick-current' : 'b-tick'} />
+              {tk.current && <circle cx={tk.x} cy={BY - 34} r={3.2} class="b-tick-head" />}
+            </a>
+          ))}
+          <text x={bPadL} y={BY + 18} class="b-cap">{bandEntries[0][1].date}</text>
+          <text x={BW - bPadR} y={BY + 18} text-anchor="end" class="b-cap">{meta.date} · in service — the strip below</text>
+        </svg>
+      </div>
+      <figcaption class="fd-band-legend">{FIELD_NARRATIVE.shelf.caption}</figcaption>
+    </figure>
+
     <figure set:html={svg} />
 
     {meta.embodies && (
@@ -141,5 +190,55 @@ const statusHtml =
         </table>
       </div>
     </section>
+
+    {/* Die zweite Spur (2026-07-25): die Runtime-Linie, klar attribuiert — nicht die Stimme
+        des Kollektivs (enc-2026-005 authorship honesty). Löst zugleich die Verwaisung von
+        /on-record und /e2e-automation. */}
+    <section class="fd-record fd-runtime">
+      <h2>{FIELD_NARRATIVE.runtime.heading}</h2>
+      <p class="fd-room-intro">{FIELD_NARRATIVE.runtime.body}</p>
+      <p class="fd-runtime-links">
+        <a href="/on-record">On Record — thirteen contradictions, kept visible →</a>
+        <a href="/e2e-automation">the field survey — end-to-end AI research automation →</a>
+        <a href="https://github.com/frankbueltge/meridian-runtime" target="_blank" rel="noreferrer">meridian-runtime — the source ↗</a>
+      </p>
+    </section>
   </Frame>
 </Page>
+
+<style>
+  .fd-band { margin: 0 0 1.9rem; }
+  .fd-band-head {
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-fg-faint);
+    margin-bottom: 0.35rem;
+  }
+  .fd-band-scroll { overflow-x: auto; }
+  .fd-band svg { width: 100%; min-width: 640px; height: auto; display: block; }
+  .b-tape { fill: none; stroke: var(--color-fg-muted); stroke-width: 1.1; }
+  .b-tick { stroke: var(--color-fg-faint); stroke-width: 2; }
+  .b-tick-link:hover .b-tick, .b-tick-link:focus .b-tick { stroke: var(--color-fg); }
+  .b-tick-current { stroke: var(--color-fg); stroke-width: 2.6; }
+  .b-tick-head { fill: var(--color-fg); }
+  .b-cap {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 10.5px;
+    fill: var(--color-fg-faint);
+  }
+  .fd-band-legend {
+    font-size: 0.74rem;
+    line-height: 1.55;
+    color: var(--color-fg-faint);
+    margin-top: 0.4rem;
+    max-width: 90ch;
+  }
+  .fd-runtime-links { display: flex; flex-direction: column; gap: 0.35rem; margin-top: 0.6rem; }
+  .fd-runtime-links a {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.78rem;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+</style>
