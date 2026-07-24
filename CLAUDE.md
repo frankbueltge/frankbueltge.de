@@ -1,12 +1,16 @@
 # CLAUDE.md — frankbueltge.de
 
-Persönliche Website von Frank Bültge (Data & AI Engineer) — ein öffentliches
-**Experimentierfeld** mit **Daten und KI** (inkl. ML und symbolischer KI). Die Experimente
-(Protokoll, Halbwertszeit, Parallaxe, Police) sind erste Annäherungen, praxisbasiert, auf dem
-Weg zu einer künstlerischen Forschung. Das gestaltete Arbeiten lebt in den Projekten
-(datavism.org, data-snack.com). Positionierung: `docs/superpowers/specs/2026-06-20-ehrliche-umrahmung-design.md`.
+Persönliche Website von Frank Bültge (Data & AI Engineer) — öffentlicher Eingang zu einer
+**federated research ecology**: drei lokal konstituierte, maschinell betriebene
+Forschungspraktiken und eine Kontaktzone — The Atelier (Ulysses, `/atelier`), The Field
+(Meridian, `/field`), The Studio (Ensemble, `/studio`), The Middle (`/encounters`).
+Kanonisches Hub-Wording: `src/config/naming.ts`. Daneben die früheren Experimente des Labs
+als **Holdings** (`/holdings`): The Protocol, Parallaxe, The Policy, die
+Gegenmessung-Instrumente — erste Annäherungen, praxisbasiert. Das gestaltete Arbeiten lebt
+in den Projekten (datavism.org, data-snack.com).
+Positionierung: `docs/superpowers/specs/2026-06-20-ehrliche-umrahmung-design.md`.
 
-**Neue Lab-Linie: Gegenmessung / Counter-Measurement** — messen, was Macht im Dunkeln lässt,
+**Lab-Linie: Gegenmessung / Counter-Measurement** — messen, was Macht im Dunkeln lässt,
 und nachprüfbar machen. Erstes Instrument „The Consensus" misst orchestrierten Konsens
 (`docs/superpowers/specs/2026-06-22-gegenmessung-echo-design.md`).
 
@@ -26,7 +30,9 @@ cd pipelines/protokoll && source .venv/bin/activate && pytest -q
 
 ## Architektur in einem Absatz
 
-Astro 5, statisch, zweisprachig (de unter `/`, en unter `/en`), Tailwind v4,
+Astro 5, statisch, **English-only seit 2026-07-16** (deutsche Alt-Routen 301en via
+`public/_redirects`; Impressum/Datenschutz bleiben deutsch; Werk-Slugs englisch seit
+2026-07-20: `/protocol`, `/policy`, `/headroom`), Tailwind v4,
 Mono-Skin fest. **Git ist das Archiv:** Pipelines committen versionierte
 JSON-Snapshots ins Repo (kein dynamisches Lesen aus Cloud-Diensten zur Laufzeit).
 Die Protokoll-Pipelines (`pipelines/protokoll/`, Python 3.12) laufen als nächtliche
@@ -74,7 +80,9 @@ Parallaxe via Gemini-AI-Studio-Key (statt BigQuery/Vertex).
 | `pipelines/protokoll/` | Python-Pipeline (Adapter, Assembler, GitHub-Committer, Runbook in README.md) |
 | `src/content/protokoll/` | kanonisches Archiv (Tages-JSONs) |
 | `src/lib/protokoll/` | Typen, Datenzugriff, Tagesordnung, Renderer + Tests |
-| `src/pages/protokoll/`, `src/pages/werke/` | Routen (DE; EN-Spiegel unter `src/pages/en/`) |
+| `src/pages/protocol/`, `src/pages/holdings/`, `src/pages/{field,studio,atelier,encounters}/` | Routen (English-only; Alt-Slugs 301en via `public/_redirects`) |
+| `src/config/naming.ts` | kanonisches Wording des Hubs (single source of truth, Wortlaut abgenommen) |
+| `.github/workflows/{field,studio,atelier,ecology,plenum}-integrate.yml` | gated integration: Engine-Repos → Site (nur geprüfte Pfade) |
 | `docs/superpowers/specs/`, `docs/superpowers/plans/` | Design-Specs und Implementierungspläne |
 | `src/lib/zentrale/`, `functions/api/zentrale/`, `src/pages/steuerzentrale/` | private Steuerzentrale (Status + Antworten), Design-Notiz `docs/design/2026-07-17-steuerzentrale.md` |
 

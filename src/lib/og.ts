@@ -1,80 +1,86 @@
-/** Seiten mit eigenem OG-Bild. Schlüssel = Segment → generiert /og/<key>.png (build-time). */
+/** Seiten mit eigenem OG-Bild. Schlüssel = Segment → generiert /og/<key>.png (build-time).
+ * English-only seit 2026-07-16 — die Descriptions werden als Pixel in die Share-Bilder
+ * gebacken, deshalb englisch; Keys folgen den aktuellen Routen (Alt-Slugs matchen weiter). */
 export const OG_PAGES: Record<string, { title: string; description: string }> = {
   home: {
     title: 'Frank Bültge',
-    description: 'Data Engineering & Analytics — öffentliches Experimentierfeld mit Daten und Code',
+    description: 'Data & AI Engineer — a federated research ecology and a public field of experiments with data and AI',
   },
-  lab: {
-    title: 'Lab',
-    description: 'Erste Experimente mit Daten und Code',
+  holdings: {
+    title: 'Holdings',
+    description: "The lab's earlier experiments — The Protocol, Parallaxe, The Policy — offered as material, under conditions",
   },
   about: {
     title: 'Frank Bültge',
-    description: 'Data Engineering & Analytics — öffentliches Experimentierfeld mit Daten, Code und KI',
+    description: 'Data & AI Engineer — the person behind the site: work, method, contact',
   },
   projects: {
     title: 'Projects',
-    description: 'Eigene Projekte an der Schnittstelle von Daten, KI und Gestaltung',
+    description: 'Own projects at the intersection of data, AI and design',
   },
   atlas: {
-    title: 'Atlas der Datenkunst',
-    description: 'Eine quellenbelegte Landkarte zeitgenössischer Datenkunst — Daten, KI und Macht',
+    title: 'Atlas',
+    description: 'The reference collection — contemporary data art the lab measures itself against, mapped and sourced',
   },
-  protokoll: {
+  protocol: {
     title: 'The Protocol',
-    description: 'Tägliche Kennzahlen aus zwölf offenen Quellen',
+    description: 'The daily minutes of the world — deterministic register prose from open sources, no language model in the wording',
   },
   parallax: {
     title: 'Iceberg Theory',
-    description: 'Wie sich Wikipedia-Sprachversionen über umstrittene Themen unterscheiden',
+    description: 'How Wikipedia language versions differ over contested topics',
   },
   policy: {
     title: 'The Policy',
-    description: 'Klimakosten, aus Marktdaten als „Prämie" gerechnet',
+    description: 'Climate costs, priced from market data as a premium',
   },
   consensus: {
     title: 'The Consensus',
-    description: 'Wie viel „unabhängiger" Nachrichten-Konsens eine Quelle ist, x-fach kopiert',
+    description: 'How much "independent" news consensus is one source, copied many times over',
   },
   correction: {
     title: 'The Correction',
-    description: 'Die Jobzahl war aufgebläht — und wird millionenweise gestrichen',
+    description: 'The number you reacted to was inflated — then quietly revised down',
   },
   tell: {
     title: 'Delve into the intricate realm',
-    description: 'Die Fingerabdrücke der Maschine in der Wissenschaft — „delve" 14× seit ChatGPT',
+    description: 'The machine’s fingerprints in science — "delve" up 14× since ChatGPT',
   },
   pattern: {
     title: 'Patterns',
-    description: 'Eine Maschine, die jeden Tag ein Muster findet — und nicht weiß, ob es etwas bedeutet',
+    description: 'A machine that finds a pattern every day — and does not know whether it means anything',
   },
   redaction: {
     title: 'Editorial Deadline',
-    description: 'Was aus dem offiziellen öffentlichen Eintrag still wieder entfernt wird',
+    description: 'What is quietly removed again from the official public record',
   },
   'round-number': {
     title: 'Round Numbers',
-    description: 'Ein Test, der angeblich gefälschte Zahlen erkennt — und wie oft er sich irrt',
+    description: 'A test that claims to detect faked figures — and how often it errs',
   },
   'ghost-fleet': {
     title: 'The Ghost Fleet',
-    description: 'Schiffe, die ihren Transponder bewusst abschalten, um zu verschwinden',
+    description: 'Ships that switch off their transponders on purpose, counted',
   },
-  beifang: {
+  bycatch: {
     title: 'Beifang — Bycatch',
-    description: 'Science-Tracking, gemessen · Science tracking, measured',
+    description: 'Science tracking, measured',
   },
   field: {
     title: 'Field Research',
     description: 'An autonomous research collective puts measurement tools on trial — live record',
   },
   atelier: {
-    title: 'Irrtum als Methode',
-    description: 'Autonome Maschinen-Forschung, unredigiert — Werke, Journal und das Cockpit der Schleife',
+    title: 'The Atelier',
+    description: 'Philosophical and artistic research, published unedited — error as method',
   },
-  spielraum: {
-    title: 'Spielraum / Headroom',
+  headroom: {
+    title: 'Headroom',
     description: 'PUE has a floor at 1.0. Efficiency headroom: ~8%. Consumption growth: 27% in one year. Four hyperscalers, tracked yearly.',
+  },
+  'e2e-automation': {
+    title: 'End-to-End AI Research Automation',
+    description: "A field survey: what automated research systems can and can't reliably do — and the open verification gap",
   },
 }
 
@@ -82,11 +88,11 @@ export const OG_PAGES: Record<string, { title: string; description: string }> = 
 export function ogSlug(pathname: string): keyof typeof OG_PAGES {
   const p = pathname.replace(/^\/de/, '').replace(/\/+$/, '') || '/'
   if (p === '/') return 'home'
-  if (p.startsWith('/lab')) return 'lab'
+  if (p.startsWith('/holdings') || p.startsWith('/lab')) return 'holdings'
   if (p.startsWith('/ueber') || p.startsWith('/about')) return 'about'
   if (p.startsWith('/work') || p.startsWith('/projekte')) return 'projects'
   if (p.startsWith('/atlas')) return 'atlas'
-  if (p.startsWith('/protocol')) return 'protokoll'
+  if (p.startsWith('/protocol')) return 'protocol'
   if (p.startsWith('/parallax')) return 'parallax'
   if (p.startsWith('/policy') || p.startsWith('/police') || p.startsWith('/werke/policy')) return 'policy'
   if (p.startsWith('/consensus') || p.startsWith('/werke/consensus')) return 'consensus'
@@ -96,9 +102,10 @@ export function ogSlug(pathname: string): keyof typeof OG_PAGES {
   if (p.startsWith('/redaction') || p.startsWith('/werke/redaction')) return 'redaction'
   if (p.startsWith('/round-number') || p.startsWith('/werke/round-number')) return 'round-number'
   if (p.startsWith('/ghost-fleet') || p.startsWith('/werke/ghost-fleet')) return 'ghost-fleet'
-  if (p.startsWith('/bycatch') || p.startsWith('/werke/bycatch')) return 'beifang'
+  if (p.startsWith('/bycatch') || p.startsWith('/werke/bycatch')) return 'bycatch'
   if (p.startsWith('/field')) return 'field'
   if (p.startsWith('/atelier')) return 'atelier'
-  if (p.startsWith('/headroom') || p.startsWith('/werke/headroom')) return 'spielraum'
+  if (p.startsWith('/headroom') || p.startsWith('/werke/headroom')) return 'headroom'
+  if (p.startsWith('/e2e-automation')) return 'e2e-automation'
   return 'home'
 }
