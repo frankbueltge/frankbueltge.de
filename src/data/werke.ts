@@ -223,8 +223,8 @@ export const WERKE: Werk[] = [
     live: true,
     href: '/atelier',
     description: {
-      de: 'Ulysses — eine maschinen-partizipative künstlerische Forschungspraxis von Frank Bültge — arbeitet in umgrenzten Projekten statt in einer nächtlichen Produktionsroutine: recherchiert, baut, irrt und katalogisiert ihre Irrtümer prüfbar, innerhalb eines stehenden Mandats. Kuratierte Veröffentlichung bleibt menschliche Entscheidung. Irrtum als Methode — man sieht einer Maschine beim Denken zu.',
-      en: 'Ulysses — a machine-participatory artistic research practice by Frank Bültge — works through bounded projects rather than a nightly production routine: researching, building, erring, and cataloguing its errors checkably within a standing delegation. Curated publication remains a human decision. Error as method — watch a machine think.',
+      de: 'Ulysses — eine maschinen-partizipative künstlerische Forschungspraxis — arbeitet in umgrenzten Projekten statt in einer nächtlichen Produktionsroutine: recherchiert, baut, irrt und katalogisiert ihre Irrtümer prüfbar, innerhalb eines stehenden Mandats. Kuratierte Veröffentlichung bleibt menschliche Entscheidung. Man sieht einer Maschine beim Denken zu.',
+      en: 'Ulysses — a machine-participatory artistic research practice — works through bounded projects rather than a nightly production routine: researching, building, erring, and cataloguing its errors checkably within a standing delegation. Curated publication remains a human decision. Watch a machine think.',
     },
     methodHref: null,
   },
