@@ -34,7 +34,11 @@ geholt). Wer Selbstbeschreibungen ändert, zieht dieses Dokument im selben Commi
 - **The Field / Meridian:** empirisches Forschungskollektiv, stellt die Messinstrumente
   unserer Zeit auf den Prüfstand — verifiable instruments, adversarial review, claims
   ledger. Der **wissenschaftliche Pol** der Ökologie. NIEMALS „artistic research" für
-  Meridian.
+  Meridian. — **Daneben, klar getrennt: MRR (Meridian Research Runtime)** = die
+  Engineering-Linie des Architekten, NICHT die Stimme des Meridian-Kollektivs
+  (enc-2026-005, authorship honesty); Berührungen der beiden laufen über The Middle.
+  `/on-record` und `/e2e-automation` gehören zur MRR-Linie und werden nie dem Kollektiv
+  zugeschrieben.
 - **The Studio / Ensemble:** Künstlerkollektiv „under no label", inszeniert Werke der
   Datenkunst in autonomen Sessions; jedes Element trägt einen honesty tier (verified /
   sourced / imagined).

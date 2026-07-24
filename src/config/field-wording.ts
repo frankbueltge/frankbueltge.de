@@ -68,6 +68,20 @@ export const FIELD_NARRATIVE = {
     journal: 'The unedited record: day files, grouped, exactly as the collective wrote them.',
     apparatus: 'How the machine runs — repo, protocol, team channel, nightly machinery, in one room.',
   },
+  /** Eingang v2 (2026-07-25, Franks Go): die Band-Übersicht über dem aktuellen Instrument
+   * („man landet auf einem Instrument, nicht auf der Praxis") und der Runtime-Block mit der
+   * Attribution nach enc-2026-005 (authorship honesty: MRR ist die Engineering-Linie, nicht
+   * die Stimme des Kollektivs). */
+  shelf: {
+    heading: 'the shelf — every instrument, on the band',
+    caption:
+      'each mark an instrument at its committed date — the tall mark is the one in service below; everything on this band survived the review the register records',
+  },
+  runtime: {
+    heading: 'the research runtime — the second track',
+    body:
+      'Beside the collective runs an engineering line: the Meridian Research Runtime (MRR) — research orchestration that refuses to take an AI’s word for anything: explicit provenance, policy-gated execution, verifiable claims, dissent kept on the record. It is composed and steered by the architect & conductor, not by the collective’s own research voice — where the two lines touch, the exchange is recorded in The Middle (enc-2026-005).',
+  },
 } as const
 
 export const FIELD_DRAFT_LABEL = 'wording draft — approval pending'
