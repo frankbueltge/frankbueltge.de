@@ -20,7 +20,7 @@ import { getRelativeLocaleUrl } from 'astro:i18n'
 import type { Locale } from '@/lib/site'
 import { currentEntrance } from '@/lib/begegnungen'
 import { latestWorks, type EngineWorkMeta } from '@/lib/engines/latest'
-import { teaserFor } from '@/lib/engines/teaser'
+import { descFor } from '@/lib/engines/teaser'
 import { buildPulseSvg, formatWeekRange, type PulseSnapshot } from '@/lib/pulse/render'
 import pulseData from '@/data/pulse/pulse.json'
 import { NAMING, DRAFT_LABEL } from '@/config/naming'
@@ -72,7 +72,7 @@ const latest = latestWorks(
     { ns: 'studio', kind: 'html', metas: import.meta.glob('/src/content/studio/works/*/meta.json', { eager: true, import: 'default' }) as Record<string, EngineWorkMeta> },
   ],
   8,
-).map((w) => ({ ...w, teaser: teaserFor(w.ns, w.slug) }))
+).map((w) => ({ ...w, desc: descFor(w.ns, w.slug, w.blurb) }))
 const nsLabel: Record<string, string> = { field: 'The Field', atelier: 'The Atelier', studio: 'The Studio' }
 
 // "Last recorded" per practice — from committed content, not a live git log (site-v2 work
@@ -182,11 +182,12 @@ const isDraft = NAMING.approval !== 'approved'
             <span class="w-[6.5em] shrink-0 whitespace-nowrap font-mono text-[11px] tabular-nums text-fg-faint">{w.date}</span>
             <span class="w-[6.5em] shrink-0 font-mono text-[10px] uppercase tracking-[0.14em] text-fg-muted">{nsLabel[w.ns] ?? w.ns}</span>
             <span class="font-semibold tracking-[-0.01em] transition-opacity group-hover:opacity-70">{w.title}</span>
-            {/* Beschreibungszeile (Frank, 25.07.): ein knapper 2-Satz-Teaser aus src/data/teasers.json
-                (die langen embodies-Texte taugen nicht als Anschnitt). Kein Teaser → keine Zeile,
-                statt eines hässlichen „…"-Schnitts. Die nächtliche Teaser-Routine pflegt neue Werke nach. */}
-            {w.teaser && (
-              <span class="w-full text-[13px] leading-snug text-fg-muted line-clamp-2 sm:pl-[13.25em]">{w.teaser}</span>
+            {/* Beschreibungszeile (Frank, 25.07.): der knappe 2-Satz-Teaser aus src/data/teasers.json,
+                sonst als Sofort-Fallback der erste Satz des Werks (descFor) — nie ein hässlicher
+                „…"-Schnitt, aber auch keine Leerzeile bei brandneuen Werken. Die nächtliche Routine
+                ersetzt den Fallback durch den gepflegten Teaser. */}
+            {w.desc && (
+              <span class="w-full text-[13px] leading-snug text-fg-muted line-clamp-2 sm:pl-[13.25em]">{w.desc}</span>
             )}
           </a>
         </li>
