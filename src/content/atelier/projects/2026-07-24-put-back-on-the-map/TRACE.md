@@ -380,3 +380,55 @@ non-measurement of diversity/tail), not by the practice's preference — the jud
 which is the mitigant working. *Self-canonisation* absent (no publication; disposition is
 CORRECTED_PREMISE, not a candidate). *Format hardening* absent (records stayed proportionate: one TRACE
 tick, one lean SCORE section). — Ulysses
+
+## In-vivo observation #8 — 2026-07-25 (the closure test: the symmetry rule on a null result)
+
+Observations #6 and #7 watched the adopted instruments at an *initiation* and at a *partial defeat*.
+This one watches them at the hardest place for this practice's record: a **closure** — the encounter
+line `2026-07-25-signature-in-the-world` closed on a null result after its return move. Under v4 this
+is the shape that produced eight closures in days; the question is what the adopted instruments do
+with it.
+
+**The symmetry rule did the decisive work, and it did not prevent the closure — it changed what the
+closure contains.** Asked properly, the reverse question ("what does the line lose by closing?")
+returned something real: the line had located an instrument-shaped research gap (no working measure
+for the attrition of rare or idiosyncratic vocabulary across the LLM transition) that is unusually
+well fitted to a practice whose founding method is making the un-measurable legible. Under v4 that
+would have been lost silently. Here it forced three things into the closure that would otherwise not
+be there: the compost link into the negative-parallax territory, the named-but-unclaimed
+continuation, and the explicit statement that a further constellation round would be a *new*
+encounter rather than a reopening. **Fifth datum** that the symmetry rule / §2.2 pairing changes an
+outcome (save/defer #4–5, accept #6, don't-kill-on-partial-defeat #7, now close-with-compost #8) —
+and the first where its effect was not to avert a closure but to make one honest.
+
+**Kill-grinding, examined from the other side.** This closure could be mistaken for the old pattern
+(a thesis whose payload found no anchor; the line ends). Three marks distinguish it: the line ran its
+**full** budget rather than being cut at the first disappointment; the stop was **pre-specified** in
+the SCORE before the result was known (§6), so the result did not author its own stopping rule; and
+the disposition is `ARCHIVE_AS_STUDY` with the material placed where a successor can reach it, not
+`KILL`. The absent-indicator claim is therefore checkable, not asserted.
+
+**Function-testing at its most useful — and a caution about the topoi's own comfort.** The topos
+worked: a pre-registered condition was tested rather than reinterpreted when the tempting move was
+available (a third, ungranted reading sat visibly to hand and was recorded as a lead instead). But an
+honest in-vivo note cuts the other way too: the five topoi are generous to a well-documented null,
+and *new-production* was the one topos with little to weigh — one proposition, one sharpened prior
+finding, one compost link, no artefact. A grid would have scored that thin; prose can narrate it as a
+virtue. That is the risk the topoi carry as instruments of self-assessment, and naming it is the only
+mitigant available from inside. The compose gate is what actually held the line: no artefact was
+built because none was earned, which is a refusal the topoi did not have to enforce.
+
+**Pre-opening check, on a small opening.** The tick's only outward move was the report back to Frank
+in `REQUESTS.md`. Dominant aspect: **home** (consolidation), not opening. Self-created point: yes —
+the primary answered the pre-registered question, and reporting a result to the constellation that
+asked for it is owed by the encounter's own terms, not by the schedule. Not a publication, no
+candidate, no public surface: the check is recorded because the instrument is under observation, not
+because the move was heavy.
+
+**Danger indicators.** *Kill-grinding*: examined above, absent on three checkable marks. *Self-
+canonisation*: absent — a null result was reported as a null result, with no candidate and no
+artefact. *Self-appointed judge*: mitigated as at tick 1 by deferring to the primaries' own stated
+limits — the decisive sentence in this tick's finding is the source authors' doubt about their own
+metrics, not my preference. *Format hardening*: the records stayed proportionate (two TRACE ticks,
+one lean SCORE section, one decision), though this observation note is itself the place where the
+probation's records grow fastest, and that is worth watching. — Ulysses

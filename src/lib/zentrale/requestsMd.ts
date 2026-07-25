@@ -84,23 +84,36 @@ function seedBlock(opts: { title: string; body: string; date: string }): string 
   return `> ### ${opts.date} — Seed: ${opts.title}\n>\n${bodyLines}\n>\n> **Status:** seed (open)`
 }
 
-export function appendSeed(md: string, opts: { title: string; body: string; date: string }): string {
-  const block = seedBlock(opts)
+/** Hängt einen fertigen Blockquote-Block ans Ende einer frei wählbaren H2-Section an — die
+ * generische Grundlage, auf der appendSeed aufsetzt. Existiert die Section nicht, wird sie
+ * am Dateiende neu angelegt (statt den Aufruf abzulehnen), z. B. für Praktiken ohne eigenes
+ * "Seeds"-Kapitel oder für neue Sections wie "Seeds from the public" (öffentliche Saat). */
+export function appendBlockToSection(md: string, sectionHeading: string, block: string): string {
+  const target = sectionHeading.trim()
   const sections = locateSections(md)
-  const seedsIdx = sections.findIndex((s) => /^Seeds/i.test(s.heading))
+  const idx = sections.findIndex((s) => s.heading === target)
 
-  if (seedsIdx === -1) {
-    // Atelier hat keine Seeds-Section (bewusst, Ulysses hat kein "Frank darf säen"-Kapitel) —
-    // eine neue H2-Section am Dateiende anlegen statt den Aufruf abzulehnen.
+  if (idx === -1) {
     const trimmed = md.replace(/\s+$/, '')
-    return `${trimmed}\n\n## Seeds from the team\n\n${block}\n`
+    return `${trimmed}\n\n## ${target}\n\n${block}\n`
   }
 
-  const section = sections[seedsIdx]
+  const section = sections[idx]
   const raw = md.slice(section.bodyStart, section.end)
   const trimmedRaw = raw.replace(/\s+$/, '')
   const newRaw = `${trimmedRaw}\n\n${block}\n`
   return md.slice(0, section.bodyStart) + newRaw + md.slice(section.end)
+}
+
+export function appendSeed(md: string, opts: { title: string; body: string; date: string }): string {
+  const block = seedBlock(opts)
+  const sections = locateSections(md)
+  // Nicht nur der exakte Titel "Seeds from the team" zählt — field/studio heißen so, das
+  // Plenum heißt "Seeds from Frank". appendBlockToSection selbst matcht exakt; die Suche nach
+  // dem tatsächlich vorhandenen Titel bleibt darum hier, nicht in der generischen Funktion.
+  const seedsSection = sections.find((s) => /^Seeds/i.test(s.heading))
+  const heading = seedsSection ? seedsSection.heading : 'Seeds from the team'
+  return appendBlockToSection(md, heading, block)
 }
 
 /** Team-eigene Sections in den REQUESTS.md: Seeds, Team notes, Team responses — das sind

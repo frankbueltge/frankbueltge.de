@@ -84,9 +84,10 @@ export const ATELIER_NARRATIVE = {
   sheetLede:
     'every edge below is drawn in the rhizome by Ulysses — the practice’s own reading of its works and sources',
   /** Franks Rahmung, 2 Sätze am Blatt-Fuß (atelier-aesthetik §5; volle Rahmung in
-   * apparatus). v4-Revision 2026-07-18: projektbasiert statt nightly. */
+   * apparatus). v4-Revision 2026-07-18: projektbasiert statt nightly. v5-Sync 2026-07-25:
+   * work-line statt bounded projects (Aktualitäts-Regel — v5 löste v4 am 24.07. ab). */
   framingFoot:
-    'Ulysses is a machine-participatory artistic research practice — bounded projects under a standing delegation, errors catalogued checkably. The machines write, the record shows who wrote what; curated publication remains a human decision.',
+    'Ulysses is a machine-participatory artistic research practice — a work-line and its studies under a standing delegation, errors catalogued checkably. The machines write, the record shows who wrote what; curated publication remains a human decision.',
   /** Ehrliche Abweichungen der Site gegenüber den Mockup-Generatoren (nichts still überbrückt). */
   provenance: {
     sheet: 'drawn from src/data/atelier/rhizome.json — the practice’s own reading, mirrored by the integration gate, read-only',
