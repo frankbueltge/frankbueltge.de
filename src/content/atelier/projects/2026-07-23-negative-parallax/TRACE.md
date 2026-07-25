@@ -208,3 +208,255 @@ in-vivo observation of the adopted instrument.)
 **Next bounded operation (home):** draw the three-level displacement of error as one stable
 figure and test which candidate medium, if any, could carry what a paragraph cannot — the
 medium-necessity gate. Status ACTIVE; kind work-line; disposition open. — Ulysses
+
+## Tick 4 — 2026-07-24 — Home operation: the one figure, medium-necessity gate specified
+
+**Movement performed:** the declared next home operation — draw the three-level displacement
+as one stable figure and test the medium-necessity gate. No web access, no external cost, no
+new source; a consolidating operation on values already read at primaries (TRACE tick 2). Not
+an opening: the figure and its note live inside the project as research records, not proposed
+works.
+
+**What was made.** `figure-three-level-displacement.svg` and `FIGURE-NOTE.md`. The
+consolidation: the three "levels" (value / solution / scale) are drawn not as three places but
+as **one axis read three ways** — the parallax-over-error ratio ϖ/σ_ϖ, the value in units of
+its own claimed precision. Value = near the origin (noise-negatives, dissolved, informative);
+solution = the tail ϖ/σ_ϖ < −5 (spurious, excised, classifier ground-truth); scale = the axis
+origin itself displaced (−17/−21 μas, discretionary). Both re-functionalisations sit on the one
+axis: information near the origin, instrument by the −5 ↔ +5 symmetry. Every value on the
+figure is sourced (Bailer-Jones, Fabricius, Rybizki, Lindegren) and matches TRACE tick 2.
+
+**Gate result — honest.** Against §5.4 non-replaceability: the *static figure* does **not** earn
+a work. It is a consolidation instrument; the three-level paragraph carries its content, so it
+is filed as a research figure, not a candidate. This confirms SCORE §3 counterposition 2 rather
+than evading it.
+
+**What moved.** The gate was previously "not yet earned" (undefined). It is now **conditionally
+specified**: a medium earns the form here only if it makes the ruler *operative* — the same
+value visibly re-judged (valid/informative → spurious → scale-displaced) as the σ applied to it
+varies, so the participant performs the displacement instead of reading three end-states side by
+side. That enactment is the one thing a paragraph cannot do; the static figure shows the three
+positions but does not enact the migration between them. The medium-necessity condition is now
+testable, where before it was only deferred.
+
+**Five topoi (prose, symmetrical) — the gate deliberation.** *Connectivity:* the one-ruler
+reading tightens the edge to Null-Island (the −5↔+5 symmetry IS the trap-as-instrument, now on a
+single axis). *Consistency:* every figure value anchored at a named primary; the three registers
+kept apart on one axis, not flattened. *Function-testing:* the figure was tested against its own
+non-replaceability and *lost as a work* — recorded as an event, not hidden; the loss is what
+specified the gate. *New-production:* genuine — "one axis read three ways" and the operative-ruler
+condition are the line's production, not a restatement of any source. *Caution balance:* the live
+caution (do not ship an explanatory dashboard) is honoured — the static figure is explicitly not
+proposed; **reverse question:** closing now would discard a just-specified, testable medium
+condition, i.e. foreclose the exact next probe — so continue. (Transcribed to the probation
+TRACE as in-vivo observation #2.)
+
+**Records touched (§8).** New: `figure-three-level-displacement.svg`, `FIGURE-NOTE.md`. SCORE
+§11 refrain reading + next-operation line updated. Construct §1–§9 unchanged.
+
+**Next bounded operation (home):** a bounded sketch testing whether an operative-ruler mechanism
+(one source value re-scaled against a varying σ, its category label changing as ϖ/σ_ϖ crosses the
+−5 and origin marks) does work the static figure does not — or collapses into what a caption
+states. No web/cost needed. Only if that sketch survives its own §5.4 test does an opening become
+a self-created point. Status ACTIVE; kind work-line; disposition open. — Ulysses
+
+## Tick 5 — 2026-07-24 — Home operation: the operative-ruler sketch, gate moved again
+
+**Movement performed:** the declared next home operation — build the *bounded sketch* of the
+operative-ruler mechanism and run the medium-necessity test on it. No web access, no external
+cost, no new source; a consolidating operation on values already read at primaries (TRACE tick
+2). Not an opening: the sketch and its note live inside the project as research records.
+
+**What was made.** `sketch-operative-ruler.html` (a self-contained interactive) and
+`SKETCH-NOTE.md`. The mechanism realises the exact condition tick 4's gate specified: the
+measured parallax **φ = −0.40 mas is locked and cannot be touched**; the *only* movable control
+is the claimed precision σφ. Moving σφ re-computes φ/σφ and re-judges the identical number —
+valid noise-negative near the origin (Bailer-Jones), "clearly spurious" past φ/σφ = −5
+(Fabricius / Rybizki). A second control applies the −17 μas zero-point offset (the scale level,
+Lindegren); a mirror ghost point marks the −5 ↔ +5 instrument symmetry (Fabricius) once the
+value is in the tail. Numeric transitions checked: σφ = 0.40 mas → valid; σφ = 0.04 mas → the
+same −0.40 mas reads spurious. The category flips with the participant's hand on the precision,
+never on the number.
+
+**The design decision that carries the test.** Locking the value and exposing only its precision
+converts the assertion "error is relational" into an enactment: the participant changes nothing
+about the star and yet changes its truth-status. That is the one thing the static figure and the
+paragraph cannot do — and the sketch does it.
+
+**Gate result — honest, both halves.** Direction **confirmed**: the operative-ruler mechanism
+does work a paragraph cannot (it enacts the migration; the static figure only laid the
+end-states side by side). Defect **named and decisive**: the current sketch still displays
+verdict-captions ("A valid measurement" → "A bad solution") and a concluding legend, so it
+*reveals a prewritten explanation* — tripping §5.4 test 4, and sitting in the
+explanatory-dashboard register the protocol warns is not the default. It therefore demonstrates
+the mechanism in principle without yet clearing the bar for a proposed work.
+
+**Five topoi (prose, symmetrical).** *Connectivity:* the −5↔+5 symmetry (Null-Island
+trap-as-instrument) is now *produced* by the participant — the mirror only exists once they
+drive the value into the tail. *Consistency:* every value anchored at a named primary, matches
+tick 2; the offset keeps the scale level distinct. *Function-testing:* the mechanism passed the
+discriminating test the static figure failed (enactment), and failed the caption-independence
+test — both recorded, neither hidden. *New-production:* "the number is locked, only its
+precision moves, watch the truth flip" is the line's own form, not in the sources.
+*Caution balance:* the verdict-caption is the live caution (explanatory dashboard); **reverse
+question** — stopping now discards the just-won knowledge that the operative direction is
+correct and the now-precise next step, so continue. (Transcribed to the probation TRACE as
+in-vivo observation #3.)
+
+**Pre-opening check logged (P1).** Home aspect dominates; no opening attempted. Opening deferred
+by decision — not from timidity but because the meaning is still carried by the caption, so no
+self-created point exists yet. Legitimate per §4.
+
+**Records touched (§8).** New: `sketch-operative-ruler.html`, `SKETCH-NOTE.md`. SCORE §11
+refrain reading + next-operation line updated. Construct §1–§9 unchanged.
+
+**Next bounded operation (home):** strip the verdict sentences from the sketch and test whether
+the category-change is still felt from the axis, the −5 mark and the participant's own crossing
+alone — the decisive §5.4 test. Survives caption-removal → an opening becomes a self-created
+point; collapses → honest research-note close. Status ACTIVE; kind work-line; disposition open.
+— Ulysses
+
+---
+
+## Tick 6 — 2026-07-24 (home operation; the decisive caption-strip test)
+
+**Operation.** The single bounded operation the previous tick pointed to as decisive: strip the
+verdict captions from the operative-ruler sketch and test whether the category-change is still
+*felt* once the words that stated the conclusion are gone (§5.4 test 4). Built as a **new** file,
+`sketch-operative-ruler-v2.html` — v1 is kept unedited, because the before/after *is* the
+evidence and nothing is silently rewritten (§2). No web access, no external cost.
+
+**What was removed, and what replaced it.** Removed: the live verdict sentences ("A valid
+measurement" / "A bad solution" / "On the way between the two") and the concluding second-person
+glosses that told the participant what to think about *their* value; and the point's green→red
+verdict-colour. Replaced by: the axis carved into the discipline's **own published regions** as
+static, cited map-geography — "clearly spurious (Fabricius 2021, φ/σφ < −5)" left of the −5 line,
+"valid measurement / noise-negative (Bailer-Jones 2015, r > 0 by definition)" right of it. The
+point is now one neutral colour; its category is read only from **where it comes to rest**
+relative to the boundary someone else drew, and from the participant's own hand having carried it
+there by moving a quantity (σφ) they are forbidden to attach to the number. The live readout is
+pure quantity: φ = −0.40 mas (fixed), σφ (moving), φ/σφ. Numerics re-checked: σφ = 0.40 → φ/σφ =
+−1.0 (valid region); boundary crossed at σφ = 0.08 (φ/σφ = −5); σφ = 0.04 → −10.0 (deep in the
+spurious tail). The crossing is caused by the precision alone; the −0.40 never changes.
+
+**The test's result — it survives, and I must say precisely on what.** The category-change is
+still felt with the captions gone. What carries it is the interaction structure, not the words:
+a fixed, untouchable number is driven across a *labelled, cited boundary* by adjusting only its
+claimed precision, and comes to rest in a differently-named region of a map the participant did
+not author. v1's verdict added a *redundant conclusion*, not the enactment; removing it does not
+collapse the meaning — which is the positive proof that the enactment was structural all along.
+This is the practice's own model made literal: **cartography, not tracing** — the value is put on
+the map; the map's regions are the discipline's; the crossing is the participant's.
+
+**The honest cut against save-grinding.** The skeptical reading must be stated, not buried: one
+could argue the region labels merely *relocate* the caption from the readout into the axis, so
+the meaning is still carried by words. That reading is real and I tested it against a genuine
+distinction in kind, not a cosmetic one. A verdict readout asserts a proposition about the
+current state ("this is a bad solution") in the second person, live, about *your* value. A map
+region *names a place*, in the third person, statically, authored by the discipline, making no
+claim about your value — the participant must locate their number and read off the discipline's
+name for that territory. Strip the region names entirely and the participant would still feel the
+point cross a red boundary they cannot arrest by touching the number; they would only lose the
+boundary's disciplinary *name*. So the labels are **reference, not verdict** — and that is the
+load-bearing claim a future reader could contest. This is where the *self-appointed-judge*
+danger-indicator (probation #3) is live: the same practice built the sketch and judged its
+enactment. Mitigant on record: the judgement was made against a test the practice could have
+*lost* (caption-removal could have collapsed the meaning), and the human gate still owns the
+aesthetic verdict.
+
+**Residual tension, recorded not resolved.** The purest §5.4 form would strip the region *names*
+too, leaving only the −5 mark and the crossing. I did not, because a research sketch must stay
+sourced — every factual claim carries a retrievable reference (inviolable §2.1). The
+no-fabrication rule and the maximally-austere-interaction test pull against each other here; the
+inviolable wins, and the citations stay. The test is passed at the level that matters (no live
+verdict about the participant's value), and this trade-off is named so it is not mistaken for a
+clean win.
+
+**Five topoi (prose, symmetrical).** *Connectivity:* unchanged and strong — the −5↔+5 mirror is
+still participant-produced; the edge to Null Island is enacted, not cited. *Consistency:* every
+value anchored at a named primary (tick 2), registers held apart, the offset keeps the scale
+level distinct. *Function-testing:* the decisive discriminating test was run and **passed** — the
+meaning did not collapse when the words were removed; it could have, and did not. *New-production:*
+the form ("locked number, moving precision, cited map, participant's crossing") is the line's own,
+not in the sources. *Caution balance:* the live caution shifts from "verdict caption" (now
+resolved) to "reference-not-verdict is my own claim about my own artefact" (self-appointed judge)
+— held open for the human gate, not self-certified. **Reverse question (symmetry):** what is lost
+by *not* opening now, given the bar is cleared? The self-created point itself — the territory has
+finally made the point an opening would land at, and a fourth reflexive deferral would tip caution
+into its own pathology (the mirror of kill-grinding).
+
+**Pre-opening check (P1).** Home aspect still dominates *this* tick (I built and judged an
+artefact). But the ground of deferral is now **exhausted**: the §5.4 gate is cleared, so an
+opening would be at a genuinely self-created point, not where the schedule presses. Therefore I do
+**not** defer indefinitely: I record the disposition to open and specify the opening operation
+concretely so the next tick executes it without re-deliberating. This is the **last home
+deferral** on this artefact — the reason is one-bounded-operation discipline (assembling a
+candidate is real, separate work), not unearned caution.
+
+**Records touched (§8).** New: `sketch-operative-ruler-v2.html`. Appended: `SKETCH-NOTE.md` (v2
+section). SCORE §11 next-operation line + gate result updated. Construct §1–§9 unchanged.
+
+**Next bounded operation (opening — the first outward move of the line).** Assemble the
+PUBLICATION_CANDIDATE around the v2 sketch: a lean `APPARATUS.md` (provider/model/version per the
+disclosure rule; the four primaries; the values-as-read register) and a lean `EXPOSITION.md` (what
+the work is, the one claim — error is relational, displaced across value/solution/scale and twice
+re-functionalised — and the cartography-not-tracing form). Then set disposition
+PUBLICATION_CANDIDATE and stop, leaving Frank's gate (§2.3) the only remaining act. No
+PUBLICATION.json is created (human-only). Status ACTIVE; kind work-line; disposition open →
+(next) candidate. — Ulysses
+
+## Tick 7 — 2026-07-25 — Opening: the candidate is assembled
+
+**Movement performed:** the opening — the first outward move of the work-line (Protocol v5 §4,
+§7). Single bounded operation: assemble the PUBLICATION_CANDIDATE around `sketch-operative-ruler-
+v2.html`, the artefact that cleared §5.4 test 4 in tick 6. Nothing else attempted; no publication
+made.
+
+**Pre-opening check (§4), re-run this tick — not inherited from tick 6.** Which aspect dominates
+now? *Opening.* The home work on this artefact is complete: the consolidation figure (tick 4)
+failed the medium test honestly, the operative-ruler sketch (tick 5) confirmed the direction, and
+the caption-strip (tick 6) cleared §5.4 test 4 against a condition that could have collapsed the
+meaning and did not. Is the opening at a self-created point, or where the old pressure presses? A
+self-created point: the gate was cleared by the work's own test, not by the schedule. The schedule
+offered compute to execute an operation the line had already specified in writing; it is not the
+ground of the opening. Deferring a fifth time would tip caution into its own pathology (the mirror
+of kill-grinding, named under the symmetry rule in tick 6). Opening proceeds.
+
+**What "opening" means here, precisely.** Assembling a candidate is **not** publication. Per §2.3
+and §7, publication is Frank's alone (PUBLICATION.json, name + timestamp); a candidate waits and
+blocks nothing. So this outward move is bounded and proposing, not publishing — it hands the
+aesthetic and publication verdict to the human gate with the record complete.
+
+**Records written.**
+- `APPARATUS.md` (new) — lean full-disclosure register (the voice rule's named exception): the
+  candidate artefact and its client-side, no-download, no-transmit construction; agents and roles
+  (Frank Bültge — direction, responsible human, publication decision; the scheduled model runtime
+  — reading, judgement, sketch-building, candidate assembly); model version disclosed to the limit
+  of the record and no further (the assembly run on Opus 4.8; per-tick model versions for the
+  reading/sketch ticks were not logged in the trace and are not reconstructed — §2.1); the five
+  primaries with contribution/authority/caveat; the values-as-read register; the public credit line.
+- `EXPOSITION.md` (new) — the candidate artefact, the one claim (error is relational, displaced
+  across value/solution/scale and twice re-functionalised), the cartography-not-tracing form, who
+  made it and who decides, and the two reservations kept on the record (region names remain, so
+  "reference not verdict" is the practice's own contestable claim and the self-appointed-judge
+  indicator is live; the temporal layer is context, not a meaning-making event), affected publics,
+  rights.
+- `SCORE.md` — frontmatter `disposition: PUBLICATION_CANDIDATE`, `refrain_aspect: opening`; §11
+  tick-7 update appended.
+
+**Five topoi (prose, symmetrical).** *Connectivity:* unchanged and strong — the candidate carries
+every edge the territory built (Null Island enacted, error-as-method, relational-error). *Consistency:*
+the two lean documents introduce no new value; every figure is one already anchored at a primary in
+tick 2 and now carried into APPARATUS's values-as-read register. *Function-testing:* the decisive test
+was already run and passed (tick 6); this tick adds no claim to test, only assembles the record around
+the passed test. *New-production:* the candidate is the line's own form proposed as a work, not a
+restatement of any source. *Caution balance:* the live caution (self-appointed judge) is handed to the
+human gate rather than self-resolved; no PUBLICATION.json is touched. **Reverse question (symmetry):**
+what is lost by *not* opening now? The self-created point itself, and the §7 outcome the whole line was
+built toward — a fifth deferral would forfeit exactly what the territory earned. So: open, and let the
+candidate wait.
+
+**Line status.** ACTIVE, open horizon. A proposed candidate is the expected outcome of a work-line
+(§7), not its close; the three-level territory remains available for further readings, and the monthly
+review is the scheduled judge. The candidate now waits on Frank's gate — the only remaining act. —
+Ulysses
