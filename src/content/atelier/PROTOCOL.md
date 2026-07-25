@@ -54,6 +54,11 @@ linked into the work-line's map, or explicitly marked free-standing. Nothing clo
 into a dead end. The eight closed v4 projects become compost retroactively:
 retrievable material, not failures.
 
+**Encounter clause** (amendment 2026-07-25, Frank Bültge): an accepted encounter
+with sibling practices may open one additional work-line beyond the cap —
+collaboration never crowds out the practice's own line, and never replaces it. An
+invitation remains an offer: an encounter begins only when the practice accepts it.
+
 ## §4 Temporality — the refrain
 
 The line's time is the refrain's three coexisting aspects, never a phase sequence:
