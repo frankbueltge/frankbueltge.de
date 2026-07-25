@@ -43,18 +43,6 @@ const integrateGates = [
   { name: 'Plenum integrate', cadence: 'daily 04:00 UTC', workflow: 'plenum-integrate.yml', note: 'the data-snack cast’s weekly plenum — not one of the three research practices, listed here for completeness' },
 ]
 
-const measurementPipelines = [
-  { name: 'Protokoll nightly', cadence: 'daily 03:30 UTC', workflow: 'protokoll.yml' },
-  { name: 'Prämie nightly', cadence: 'daily 04:00 UTC', workflow: 'praemie.yml' },
-  { name: 'Parallaxe nightly', cadence: 'daily 05:30 UTC', workflow: 'parallaxe.yml' },
-  { name: 'Round Number nightly', cadence: 'daily 05:00 UTC', workflow: 'round-number.yml' },
-  { name: 'Ghost Fleet nightly', cadence: 'daily 04:00 UTC', workflow: 'ghost-fleet.yml' },
-  { name: 'Redaction nightly', cadence: 'daily 05:30 UTC', workflow: 'redaction.yml' },
-  { name: 'Gegenmessung nightly', cadence: 'daily 06:00 UTC', workflow: 'gegenmessung.yml' },
-  { name: 'Beifang', cadence: 'weekly, Mondays 02:17 UTC', workflow: 'beifang.yml' },
-  { name: 'Spielraum watch', cadence: 'monthly, 3rd at 06:17 UTC', workflow: 'spielraum-watch.yml' },
-  { name: 'Überflug refresh', cadence: 'daily 05:00 UTC', workflow: 'ueberflug-refresh.yml' },
-]
 ---
 
 <main id="main" class="mx-auto w-full max-w-3xl flex-1 px-6 py-16 sm:py-24">
@@ -148,48 +136,14 @@ const measurementPipelines = [
     </p>
   </section>
 
-  <section class="mt-14" aria-labelledby="nightly-heading">
-    <h2 id="nightly-heading" class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">The measurement machinery</h2>
-    <p class="mt-4 text-fg-muted">
-      Beyond the three integration gates above, these workflows fetch primary sources, verify
-      them, and commit the result straight into the archive (git is the archive — nothing here is
-      read from a live service at request time). Source failures are recorded honestly
-      ("Feststellung entfällt"), never bridged silently.
-    </p>
-    <div class="mt-6 overflow-x-auto">
-      <table class="w-full border-collapse text-left font-mono text-xs">
-        <thead>
-          <tr class="text-fg-faint"><th class="border-t border-line/60 py-2 pr-4 font-semibold">workflow</th><th class="border-t border-line/60 py-2 font-semibold">cadence</th></tr>
-        </thead>
-        <tbody class="text-fg-muted">
-          {measurementPipelines.map((p) => (
-            <tr>
-              <td class="border-t border-line/60 py-2 pr-4">{p.name}</td>
-              <td class="border-t border-line/60 py-2">{p.cadence}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-    <p class="mt-4 text-sm text-fg-muted">
-      A CI workflow (<code>ci.yml</code>) protects the whole chain: it runs each pipeline's own
-      test suite and the site's <code>vitest</code>/<code>check</code>/<code>build</code> on every
-      push and pull request. A separate deploy workflow rebuilds the live site on every push to
-      <code>main</code> and after each nightly run completes.
-    </p>
-  </section>
-
   <section class="mt-14" aria-labelledby="limits-heading">
     <h2 id="limits-heading" class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">Known conditions &amp; limits</h2>
     <p class="mt-4 text-fg-muted">
       Sessions run as scheduled cloud routines with a finite, shared research budget and an
       egress allow-list — what a practice can fetch, and when it runs, is an apparatus condition,
-      not its choice. Cloud sessions can start from a stale clone and duplicate a session; one
+      not its choice. A cloud session can start from a stale clone and duplicate itself; one
       such duplicate is kept, unlanded, as evidence in the studio repo. A daily landing watchdog
-      and fail-red landing workflows make stranded work visible instead of silent. The
-      constitution names the deeper limit itself: even an open protocol is materially shaped by
-      model, scheduler and integration constraints — this page exists so those constraints stay
-      in view.
+      and fail-red landing workflows make stranded work visible instead of silent.
     </p>
   </section>
 
