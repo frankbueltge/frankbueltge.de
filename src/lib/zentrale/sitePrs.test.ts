@@ -12,10 +12,11 @@ const apiPr = (over: Record<string, unknown> = {}) => ({
 })
 
 describe('isEngineHead', () => {
-  it('erkennt die drei Engine-Namespaces', () => {
+  it('erkennt die drei Engine-Namespaces und den Currency-Kanal', () => {
     expect(isEngineHead('atelier/pr-insel')).toBe(true)
     expect(isEngineHead('field/pr-karte-2')).toBe(true)
     expect(isEngineHead('studio/pr-a')).toBe(true)
+    expect(isEngineHead('currency/pr-error-as-method-retired')).toBe(true)
   })
   it('lehnt alles andere ab', () => {
     expect(isEngineHead('feat/zentrale-site-prs')).toBe(false)
@@ -60,6 +61,13 @@ describe('enginePrs', () => {
   })
   it('überspringt fremde PRs (menschliche Branches) still', () => {
     expect(enginePrs([apiPr({ head: { ref: 'feat/hub-work-first' } }), apiPr()])).toHaveLength(1)
+  })
+  it('mappt den operator-seitigen Currency-Kanal mit eigener Kennung', () => {
+    const [pr] = enginePrs([apiPr({ number: 120, head: { ref: 'currency/pr-v5-label' }, title: 'Protocol label v4→v5' })])
+    expect(pr.ns).toBe('currency')
+    expect(pr.persona).toBe('Currency check')
+    expect(pr.label).toBe('Currency · site freshness')
+    expect(pr.slug).toBe('v5-label')
   })
   it('sortiert als Warteschlange: älteste zuerst', () => {
     const prs = enginePrs([
