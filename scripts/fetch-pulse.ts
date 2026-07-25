@@ -32,6 +32,16 @@ const WEEK_COUNT = 13
 const GH_ROOT = resolve(process.cwd(), '..')
 const REPOS = ['field-research', 'ulysses', 'studio', 'research-ecology', 'frankbueltge.de']
 
+// The pulse measures the MACHINES' activity (Frank, 2026-07-25): for the four engine repos
+// the real work happens across their session/feature branches, so they are counted with
+// `git log --all` — the nightly must clone them with all branches present (--no-single-branch)
+// for this to reproduce. The site repo (frankbueltge.de) is Frank's own; its work lands on
+// main and its human feature branches are not "the ridge before dawn", so it is counted on
+// HEAD/main only. NOTE: `--all` is why the count is far higher than a main-only count would be
+// (field-research alone: ~170 on main vs ~690 across all branches) — that difference IS the
+// machine activity the hero is meant to show.
+const ALL_BRANCHES = new Set(['field-research', 'ulysses', 'studio', 'research-ecology'])
+
 /** ISO 8601 week-numbering, the standard "nearest Thursday" algorithm (UTC throughout). */
 function isoWeekOf(date: Date): { year: number; week: number } {
   const d = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()))
@@ -73,7 +83,16 @@ for (const repo of REPOS) {
   const repoPath = join(GH_ROOT, repo)
   const out = execFileSync(
     'git',
-    ['-C', repoPath, 'log', `--since=${firstMonday.toISOString().slice(0, 10)}`, '--format=%aI'],
+    [
+      // Engines: --all (session/feature branches = the machine activity). Site repo: the
+      // explicit `main` ref, NOT HEAD — so the count is deterministic regardless of which
+      // branch happens to be checked out locally, and the nightly (actions/checkout of main,
+      // fetch-depth 0) reproduces exactly the same number instead of drifting.
+      '-C', repoPath, 'log',
+      ...(ALL_BRANCHES.has(repo) ? ['--all'] : ['main']),
+      `--since=${firstMonday.toISOString().slice(0, 10)}`,
+      '--format=%aI',
+    ],
     { encoding: 'utf8' },
   )
   const stamps = out.split('\n').filter(Boolean)

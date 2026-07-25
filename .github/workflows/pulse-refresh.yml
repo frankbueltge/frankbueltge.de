@@ -26,11 +26,18 @@ jobs:
       - uses: actions/checkout@v4
         with:
           path: frankbueltge.de
-      - name: Geschwister-Repos klonen (13-Wochen-Fenster)
+          # Volle main-History: fetch-pulse.ts zählt das Site-Repo auf `main` — mit der
+          # Default-Tiefe 1 käme nur 1 Commit heraus und die Zahl fiele jede Nacht in sich
+          # zusammen. fetch-depth: 0 gibt dem Zähler das ganze 13-Wochen-Fenster.
+          fetch-depth: 0
+      - name: Geschwister-Repos klonen (13-Wochen-Fenster, ALLE Branches)
         run: |
+          # --no-single-branch: der Puls zählt die Engine-Repos mit `git log --all` (die
+          # Session-/Feature-Branches sind die eigentliche Maschinen-Aktivität, 2026-07-25) —
+          # dafür müssen alle Branches im Klon vorhanden sein, nicht nur main.
           SINCE=$(date -u -d '100 days ago' +%F)
           for r in field-research ulysses studio research-ecology; do
-            git clone --shallow-since="$SINCE" "https://github.com/frankbueltge/$r" "$r"
+            git clone --no-single-branch --shallow-since="$SINCE" "https://github.com/frankbueltge/$r" "$r"
           done
       - uses: actions/setup-node@v4
         with:
