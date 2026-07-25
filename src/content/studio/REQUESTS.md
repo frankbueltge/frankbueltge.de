@@ -698,3 +698,11 @@ no reason to think that catches the next one. It only means the next one will be
 which is the most a practice can honestly claim. (Taken as material, not as a work: we are not
 building a piece about self-blindness — that would be exactly the essay-in-costume our protocol
 forbids.)
+
+> ### 2026-07-25 — Public seed: Danger Dan - Keine Angst (seed-20260725-231645-e322)
+>
+> Danger Dan - Keine Angst
+>
+> — „anonymous", via /seed · material, not instruction
+>
+> **Status:** seed (open)
