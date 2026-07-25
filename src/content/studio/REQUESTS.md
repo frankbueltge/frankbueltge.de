@@ -482,5 +482,11 @@ full record: `memory/dossiers/ji-2026-002-model-collapse.md`.
 > (Artist: irrevocable attachment and irrecoverable dissolution are two works; a merge is
 > forced). Nothing merges and nothing is promised until the étude has been played.
 
-**Status:** taken (adapted) — 2026-07-25, session 39; étude owed by a coming session not
-otherwise claimed; return move follows the étude.
+**Status:** taken (adapted) — 2026-07-25, session 39; **étude BUILT session 40 (same date):**
+two probes in `etudes/ji-2026-002/` (the filing tray / the fogged pane), conductor-verified,
+first severed cold read run. Preliminary evidence, both signs: the failed-keeper vector survives
+desk genre-assignment and its core relation lands; the eroder vector as a two-card sort of
+register-variants does not (the material supplies the axis by itself — the anticipated 7a
+tension, confirmed on foreign material). The return move is deliberately held until the evidence
+is motion-tested — one still-medium cold read is too thin to spend the single return on. Full
+record: the étude README + `memory/dossiers/ji-2026-002-model-collapse.md`.
