@@ -29,7 +29,7 @@ from .model import (
     Verworfen,
 )
 from .score import SCHWELLE, gewichte, sammle_signale
-from .sources import eflux, openalex, wikidata
+from .sources import artbase, eflux, openalex, wikidata
 from .verify import KOPF, jetzt, pruefe
 
 AUSGABE = Path("pipelines/atlas-scout/kandidaten")
@@ -106,7 +106,12 @@ def laufe(
     with httpx.Client(follow_redirects=True, headers=KOPF) as client:
         for saat in saatgut:
             try:
-                if thema is not None:
+                if thema is not None and atlas_name == ATLAS_WERKE:
+                    # Werke zu einem Feld: ArtBase ist kuratiert und strukturiert —
+                    # Titel, Urheber und Jahr kommen fertig, kein Modell nötig.
+                    rohfunde = artbase.ernte(themen.hole(thema).werk_marker)
+                    quelle = "artbase"
+                elif thema is not None:
                     rohfunde = openalex.ernte_thema(themen.hole(thema).literatur)
                     quelle = "openalex"
                 elif meldungs_modus:
@@ -127,7 +132,8 @@ def laufe(
                 else:
                     rohfunde = wikidata.ernte(saat.urheber)
                     quelle = "wikidata"
-            except (openalex.QuellenAusfall, wikidata.QuellenAusfall, eflux.QuellenAusfall) as fehler:
+            except (openalex.QuellenAusfall, wikidata.QuellenAusfall,
+                    eflux.QuellenAusfall, artbase.QuellenAusfall) as fehler:
                 ausfaelle.append(Ausfall(quelle=atlas_name, ausgehend_von=saat.id, vermerk=str(fehler)))
                 continue
 

@@ -67,6 +67,14 @@ def sammle_signale(rohfund: dict, saat: Eintrag, jahr_jetzt: int) -> dict[str, f
 
     # Signale, die es nur bei der Modell-Extraktion gibt (Werke-Atlas). Bei allen anderen
     # Quellen bleiben sie null und fallen aus der Gewichtung heraus.
+    # Kuratierte Sammlung (ArtBase): Der Eintrag ist bereits von Menschen geprüft.
+    # Alter zählt hier NICHT gegen das Werk — eine Sonifikationsarbeit von 2004 ist
+    # kanonisch, nicht veraltet. Deshalb hat dieser Zweig kein Aktualitätssignal.
+    if quellsignale.get("kuratiert"):
+        signale["kuratiert"] = 1.0
+        signale["datiert"] = 1.0 if rohfund.get("jahr") else 0.0
+        signale["urheber_bekannt"] = 0.0 if rohfund.get("urheber") in ("", "unbekannt") else 1.0
+
     if "zuversicht" in quellsignale:
         signale["zuversicht"] = {"hoch": 1.0, "mittel": 0.6, "niedrig": 0.25}.get(
             quellsignale.get("zuversicht", ""), 0.25
@@ -102,7 +110,15 @@ def gewichte(signale: dict[str, float]) -> tuple[float, tuple[str, ...]]:
         return 0.0, ("Titel identisch mit dem Saatgut-Eintrag",)
 
     # --- vorläufig, ersetzbar ---------------------------------------------------
-    if "zuversicht" in signale:
+    if "kuratiert" in signale:
+        # Werke-Atlas aus kuratierter Sammlung: Die Auswahl hat schon jemand getroffen.
+        # Bewertet wird nur noch die Vollständigkeit des Datensatzes.
+        gewichtung = {
+            "kuratiert": 0.50,
+            "datiert": 0.25,
+            "urheber_bekannt": 0.25,
+        }
+    elif "zuversicht" in signale:
         # Werke-Atlas: aus einer Meldung extrahiert. Es gibt keine Zitationen, dafür
         # sagt das Modell, wie eindeutig der Text das Werk trägt. Die Feldzuordnung
         # zählt, weil ein Werk ohne Feld auf der Karte nirgends liegt.
