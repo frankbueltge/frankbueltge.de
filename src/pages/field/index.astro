@@ -9,7 +9,7 @@ import Page from '@/layouts/Page.astro'
 import Frame from '@/components/field/surface/Frame.astro'
 import { loadChronicle, entriesForWork } from '@/lib/field/chronicle'
 import { currentScore } from '@/lib/begegnungen'
-import { buildControlSvg, dayRange, type ControlMark } from '@/lib/field/strip'
+import { buildControlSvg, plateSpan, type ControlMark } from '@/lib/field/strip'
 import { latestInstrument, orderInstruments, type InstrumentMeta } from '@/lib/field/latest'
 import { FIELD_NARRATIVE } from '@/config/field-wording'
 
@@ -74,8 +74,13 @@ if (contract && obligation) {
 rows.sort((a, b) => a.date.replace(/^since /, '') === b.date.replace(/^since /, '') ? 0 : b.date.replace(/^since /, '').localeCompare(a.date.replace(/^since /, '')))
 
 marks.sort((a, b) => (a.date === b.date ? 0 : a.date.localeCompare(b.date)))
-const endDate = [score.status.as_of, ...marks.map((m) => m.date)].sort().at(-1)!
-const days = dayRange(meta.date, endDate)
+// The plate spans every mark, not just [meta.date, endDate]: a chronicle stamp or ledger event
+// dated before the featured work's committed date would otherwise fall off the plate (dx throws).
+// And the span may legitimately be a single day — a work shipped today has meta.date equal to the
+// newest mark date and nothing dated later; buildControlSvg renders that one-day plate instead of
+// failing the whole build (the 2026-07-24 red: instrument 017 shipped, /field crashed).
+const days = plateSpan(meta.date, marks.map((m) => m.date), score.status.as_of)
+const endDate = days[days.length - 1]
 
 const svg = buildControlSvg({
   days,

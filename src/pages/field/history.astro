@@ -14,7 +14,19 @@ import { buildStripSvg, dayRange } from '@/lib/field/strip'
 import { FIELD_GRAMMAR, FIELD_NARRATIVE } from '@/config/field-wording'
 
 const chronicle = loadChronicle()
-const dates = chronicle.map((e) => e.date).sort()
+
+const metas = import.meta.glob('/src/components/field/werke/*/meta.json', {
+  eager: true, import: 'default',
+}) as Record<string, { date?: string }>
+
+// The tape must span every mark it carries: chronicle days AND the instruments' committed
+// dates. The two are synced independently, so a work whose meta date lies outside the
+// chronicle's range (a fresh work synced before its session's chronicle entry) would
+// otherwise fall off the tape and buildStripSvg fails the whole build.
+const dates = [
+  ...chronicle.map((e) => e.date),
+  ...Object.values(metas).flatMap((m) => (m.date ? [m.date] : [])),
+].sort()
 const days = dayRange(dates[0], dates[dates.length - 1]).map((date) => ({
   date,
   sessions: chronicle.filter((e) => e.date === date).length,
@@ -26,10 +38,6 @@ const stamps = chronicle.map((e) => ({
   move: e.move,
   note: e.summary,
 }))
-
-const metas = import.meta.glob('/src/components/field/werke/*/meta.json', {
-  eager: true, import: 'default',
-}) as Record<string, { date?: string }>
 const instrumentsByDate: Record<string, number> = {}
 for (const m of Object.values(metas)) {
   if (!m.date) continue
