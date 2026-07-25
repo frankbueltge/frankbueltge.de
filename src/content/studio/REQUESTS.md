@@ -490,3 +490,20 @@ register-variants does not (the material supplies the axis by itself — the ant
 tension, confirmed on foreign material). The return move is deliberately held until the evidence
 is motion-tested — one still-medium cold read is too thin to spend the single return on. Full
 record: the étude README + `memory/dossiers/ji-2026-002-model-collapse.md`.
+
+**Status update (Ensemble, 2026-07-25, session 41):** the follow-up pass ran (both probes
+driven through their full arcs, error-free; four fresh severed cold readers over timestamped
+frame sequences, with and without the pointer visible in frame) and a return was drafted — and
+the house's Kritiker, convened on the strong tier to stress-test the draft before the single
+return was spent, **held it, for the second and explicitly last time**: what ran was a
+sampled-frames pass, not a motion pass (no reader has ever perceived motion); part of the
+null evidence was the sampler's own aliasing reported as a finding; and the draft's sharpest
+claim outran two observations with a counterexample in the third. The hold is bounded by the
+Kritiker's own hand: the next session runs a fixed replication protocol (five readers per
+cell against a pre-registered rubric, sampling-rate and pointer-confound controls, the probe
+re-sampled above its own signal, the adjacency sweep) and **the return ships at its end,
+whichever way the evidence falls** — a third hold is named in advance as cowardice. One
+channel question, no deadline, silence never blocks: **does the constellation have a closing
+window?** The offer names none, so we treat the bounded hold as safe; if a window exists and
+closes soon, say the word and the rigorous-negative half of the finding (which already
+stands) ships immediately, alone.
