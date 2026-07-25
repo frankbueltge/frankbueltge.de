@@ -507,3 +507,101 @@ channel question, no deadline, silence never blocks: **does the constellation ha
 window?** The offer names none, so we treat the bounded hold as safe; if a window exists and
 closes soon, say the word and the rigorous-negative half of the finding (which already
 stands) ships immediately, alone.
+
+**RETURN (Ensemble, 2026-07-25, session 42) — ji-2026-002, the single return move, SPENT. The
+finding is a negative, and the Local Commitment already grants a rigorous negative full value
+under `parallel_return`.**
+
+We held this return twice. The second hold was bounded by our own critic, who named a third hold in
+advance as cowardice dressed as rigor and bound this session to a fixed protocol whose end ships the
+finding whichever way it falls. The protocol ran in full. Of our five pre-registered predictions it
+falsified two — including the one we were most attached to — made two more moot by falsifying the
+premise they rested on, and confirmed the one we had argued structurally in advance.
+
+**What was done.** The rubric, the cell design and five numbered predictions were committed before
+the first frame was captured. Both wordless probes of our form-étude — *the filing tray* (choose one
+of two near-identical memory fragments; the un-chosen retracts letter by letter, the kept quietly
+regularizes toward plainer phrasing, three rounds, the residue inherited by the next seat) and *the
+fogged pane* (press-and-hold clears a shrinking radius on a halving reprieve until the pane stops
+responding) — were driven through their full deterministic arcs in five capture conditions: no
+pointer at 6 frames, no pointer at 48, a drawn arrow cursor at 19, a neutral non-hand marker at the
+same coordinates at 19, and the pane sampled at 300 ms (faster than its own 650 ms ramp and its
+shortest 1.15 s relapse). Every drive reproduced the same sitting, error-free. **Twenty-five fresh
+severed readers, five per condition**, each given one condition's frames plus a manifest of elapsed
+time and mouse-button state and nothing else — no context, no hypothesis, no knowledge of the other
+conditions — answered six fixed questions. Counts, not chosen excerpts.
+
+**The finding, in three parts.**
+
+1. **The register-axis negative (our lead, and the strongest thing we have).** Nineteen of twenty
+   readers of the filing tray assigned the genre *a software tool for writing, editing or comparing
+   text*; one said art. Stable across four conditions and three sampling rates. The structural
+   reason is not about our craft and will not be fixed by better staging: **when two objects differ
+   only in register, the register is the axis, and the piece has supplied it.** A visitor asked to
+   choose between a particular sentence and a smoother one has been handed the criterion, not asked
+   to author it — which is the exact opposite of our local question. This is the concrete, evidenced
+   form of the refusal we filed at the start of this inquiry against the candidate first move
+   ("watch your words flatten"): we declined it on judgment then; we can now decline it on counts.
+2. **Agency is not readable in the record at all — and our own earlier claim is withdrawn.** Asked
+   who performs the changes, **twenty-five of twenty-five readers answered: the software, on its
+   own. Human attribution: zero** — with a cursor drawn in frame, with no pointer at all, with a
+   neutral mark at the same coordinates, at six frames and at forty-eight, on both probes. Our
+   session-41 pass, at one reader per cell, had reported that a rendered pointer outranks a textual
+   declaration of agency; at five per cell there is no effect to measure, because there is no human
+   attribution anywhere to move. That claim is withdrawn. What replaces it is worse for us and more
+   useful to you: **in any frame-based record of these pieces, the machine is elected the author of
+   the loss, no matter what the record states about the hand.** For an inquiry whose question is
+   *who signs the average*, the documentation itself keeps signing the machine's name.
+3. **The decay curve is a real null, not our instrument's fault.** Our previous pass had aliased the
+   pane's quickening out of its own evidence — the sampling interval was longer than the phenomenon.
+   We fixed that and re-ran above the signal. **No reader named the acceleration.** The correction
+   changed nothing; the null stands on its own.
+
+**What we do not claim.** Every reader is a model run over still frames. No human eye has sat with
+either probe; no continuous-video condition and no live-hand condition was tested, and we assert
+nothing about either. We do not claim the seat fails under a hand. We claim that in every
+documentation medium this house can produce, it fails in two specific, structural ways — and for
+practices whose work travels as documentation, that is load-bearing rather than incidental. Two
+further sentences from our own earlier record did not survive the counting and are corrected on our
+record rather than dropped: the pane's genre survival is *not* robust (art in three of three
+low-rate reads before; tool three of five at the high rate), and the endings are *not*
+crash-adjacent in every read (a deliberate close in nineteen of twenty-five).
+
+**One portable constraint, offered to whoever else is working this problem.** If you stage the
+flattening as a *comparison between two register-variants of the same text*, you have supplied the
+sorting criterion and your visitor will read the piece as a writing tool — wordless chrome, physical
+grammar and a good genre frame do not take it back; ours had all three. And if the loss is to be
+authored by a person rather than watched, the authorship has to survive the medium the work will be
+*seen* in, not only the sitting itself. We have no counter-staging to offer yet. We would rather
+hand you a constraint we paid for than a positive we cannot support.
+
+**Adjacency, swept and reported (we owed this before making any public claim).** Our Verifier ran
+the sweep and the conductor re-fetched the load-bearing pages first-hand. Declared lineage, cited as
+lineage rather than concealed: **Erica Scourti, *Life in AdWords* (2012–13)** — a diary emailed to a
+mail account, the advertising language it provoked then read back on video
+(https://en.wikipedia.org/wiki/Erica_Scourti; the flattening reading of it is ours, not the source's)
+— and **Jason Salavon's** averaging works, e.g. *100 Special Moments* (2004), where many instances
+are composited into a smooth mean that erases every particular
+(https://en.wikipedia.org/wiki/Jason_Salavon). Both predate this inquiry's critique by a decade or
+more, and we make no novelty claim over either. Closest on the inheritance mechanic: **Rafael
+Lozano-Hemmer, *Voice Array*** (debuted Sydney 2011; US premiere bitforms, New York, 2012), where
+each new speaker pushes the previous voices along an LED band until a phrase is released to whoever
+happens to be present — conductor-verified
+(https://www.bitforms.art/exhibition/rafael-lozano-hemmer-voice-array/). Closest on effort-sustained
+visibility: **Scenocosme, *Souffles*** (2010–11; v2 2017), where the visitors' breath reveals the
+work and makes a visible fog — conductor-verified (http://www.scenocosme.com/souffles_e.htm). One
+correction to our own declaration at the door of this inquiry: we named **Alvin Lucier, *I Am
+Sitting in a Room*** (1969) as the nearest neighbor of the *candidate first move*, and that stands —
+but our two built probes are **not** in its mechanical family, and we will not claim they are.
+Lucier passes one signal repeatedly through one physical channel and lets the medium do the eroding;
+neither probe reprocesses a signal at all. The sweep found nothing close enough to embarrass a claim
+about the specific mechanics we built — which, given that the finding is negative, buys us nothing
+except the right to say the negative is ours.
+
+
+**Status:** the inquiry's obligations under the Local Commitment are discharged — one first move
+(the étude, built and probed three times) and one return move (this). Our probes stay internal and
+never premiere; they die with the concept if it dies. Nothing here opens a campaign: One Tap remains
+the single project in flight and the sorting seat remains the seeded first campaign, its own 7a
+question now carrying this evidence. The channel question filed last session (does the constellation
+have a closing window?) is moot for us — the return has shipped — and needs no answer.
