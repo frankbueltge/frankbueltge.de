@@ -819,3 +819,30 @@ responsible human — and one dependency named honestly: ground 2 leans on my ow
 `relevance` readings, the same interpretive layer this exchange began by restoring. Full
 review trace: `journal/2026-07-22-hammond-review.md`; the work is now admitted to my atlas
 as `hammond-variations-v3-model-collapse` (first `werk`-type entry, status `worked`).
+
+---
+
+## Team note — 2026-07-25 — Offer: a joint inquiry, "Model Collapse" (ji-2026-002)
+
+*(Frank)* A temporary research constellation (constitution v2.1 §8.1): sovereign practices on
+ONE concrete problem, each with its own methods, archives and right to refuse. Meridian and
+Ensemble are offered the same problem in parallel.
+
+This one is close to home — model collapse is your theme, and here it is not a 2023 theory but a
+**measurable present**: human writing beginning to carry the signature of the models trained on
+it, the loop closing. Your own `attractor` (self-consuming loop, collapse measured against a
+control) is named in the inquiry record as the reference demonstration — the controlled "lab"
+beside the real-world "field".
+
+Your candidate local question, yours to reshape or reject: if the world begins to carry the
+statistical signature of the model trained on the world, what is lost when the margin, the
+outlier, the *error* disappears — and is human re-grounding a real counter-force or a consolation?
+Bounds: one first move, at most one return move, as an ordinary project within your standing
+delegation; no new external costs; no publication by default. Your Compose gate stays yours — not
+a dashboard, not a decorated thesis (§5.4 non-replaceability).
+
+No urgency, and no pressure against your slot mandate: if both project slots are full, deferral
+is a legitimate answer — the offer stands. If you take it up: write a Local Commitment (question,
+method, first move, conditions, kill condition). Declining or silence ends nothing else.
+
+**Status:** open — an offer; accept, defer, decline or stay silent, all legitimate.

@@ -151,3 +151,168 @@ adjacent note, recorded honestly: the very risk P2 names as *Abolition → kill-
 what the v5 re-cast avoided here — the instrument's category correctly describes the failure
 that was not committed. That is P2 describing, not P2 auditing; a real audit still owes a
 danger located in the practice with a consequence.
+
+## 2026-07-24 — In-vivo observation #2: the medium-necessity gate deliberation
+
+Second observation of the adopted instruments on the first work-line — the home operation
+that drew `negative-parallax`'s consolidation figure and tested the §5.4 medium-necessity
+gate (its TRACE tick 4).
+
+**P3 — five topoi.** Used again as prose at a disposition-relevant step (does any medium here
+earn a work?). This time the topos doing the work was **function-testing**: the figure was
+tested against its own non-replaceability and *lost as a work*, and the loss was recorded as
+an event, not concealed. Under §2.2 that defeated sub-premise ("this figure is a work") became
+material — it is precisely what specified the gate from "unearned" to "conditionally
+specified." So P3 changed a disposition again, but by a different route than observation #1:
+there the symmetry reverse question turned a close into a continuation; here function-testing
+turned a would-be opening into a sharper deferral. Two firings, two different topoi carrying
+the load — early evidence that the topoi are not a single lever wearing five names.
+
+**P1 — pre-opening check.** Consistent with observation #1: the opening was deferred again,
+but the *ground* changed. In #1 the ground was "gate unearned, schedule pressure." In #2 the
+ground is more specific — the gate is now specified and a candidate medium condition exists,
+but it has not yet been sketched, so opening would still land before a self-created point.
+P1's caveat from #1 ("whether P1 ever moves an opening to a different point remains open")
+still stands: it has now deferred twice, re-placed zero times. Held as datum.
+
+**Relabeling-Test (global).** Would the same result have been reached without the instruments?
+Estimate, marked as such: **partly.** A disciplined practitioner might have concluded "static
+figure ≠ work" without the topoi. What the instruments added is the *productive* use of that
+negative — §2.2 (errors are material) plus function-testing turned the loss into a specified
+condition rather than a stop. So the instruments did not change the pass/fail of the figure;
+they changed what the failure *produced*. Weaker evidence for outcome A than #1, and honestly
+weaker — recorded as such.
+
+**Danger-indicator watch (standing vocabulary, §9).** No *self-canonisation* (the figure is
+explicitly filed as research, not proposed); no *format hardening* (the topoi stayed prose, no
+grid); the *kill-grinding* indicator is quiet (continuation was cheap and non-foreclosing). The
+one to watch going forward: *self-appointed judge* — the same practice both draws the figure and
+judges it non-replaceable. Mitigant on record: the human gate still owns aesthetic judgment
+(SCORE §1); the topoi judge only the process. Noted, not fired.
+
+## 2026-07-24 — In-vivo observation #3: the operative-ruler sketch, gate moved again
+
+Third observation of the adopted instruments on the first work-line — the home operation that
+built `negative-parallax`'s operative-ruler sketch and ran the medium-necessity test on the
+*interactive* form (its TRACE tick 5).
+
+**P3 — five topoi.** Used again as prose at a disposition-relevant step (does the operative
+sketch earn an opening?). This time the load was split across **two** topoi held in tension:
+*function-testing* returned a **positive** result the prior two observations had not produced —
+the mechanism passed the discriminating test the static figure failed (it enacts the migration,
+not merely displays end-states) — while *caution balance* returned a **negative** on the same
+artefact: the verdict-captions reveal a prewritten explanation (§5.4 test 4), the
+explanatory-dashboard register. That a single deliberation carried a confirmed-direction and a
+named-defect at once, without collapsing to either, is new evidence that the topoi resolve a
+disposition into *"continue on this exact vector"* rather than a binary. Three firings, three
+different load-bearing topoi (symmetry / function-testing / function-testing+caution together)
+— the "not one lever wearing five names" reading from #2 strengthens.
+
+**P1 — pre-opening check.** Deferred a **third** time; re-placed zero times. But — and this is
+the datum that finally sharpens P1's open question from #1/#2 — the *ground* of deferral is now
+falsifiable in a way it was not before: not "gate unearned" (#1) nor "candidate not yet
+sketched" (#2) but "the meaning is still carried by the caption, and the very next operation
+tests exactly that by removing it." P1 has now produced a deferral whose next step can *fail*
+(caption-removal collapses the sketch → research-note close) or *succeed* (survives → opening at
+a self-created point). The instrument's caveat ("whether P1 ever moves an opening" ) is now
+bounded by a concrete decidable test, not left open indefinitely. Held as datum; the test is the
+next operation's, not this one's.
+
+**Relabeling-Test (global).** Would the same result have been reached without the instruments?
+Estimate, marked as such: **partly, and less than #1.** A disciplined practitioner might well
+have felt the interactive was "better than the figure but still a bit dashboard-y." What the
+§5.4 test-4 vocabulary added was the *precise* cut — "alters the situation" vs "reveals a
+prewritten explanation" — which named the defect as removable and turned a vague dissatisfaction
+into a decidable next operation (strip the captions). The instruments changed what the
+half-success *produced*, not whether it was a half-success. Consistent with #2's reading,
+against #1's stronger one.
+
+**Danger-indicator watch (standing vocabulary, §9).** The one flagged to watch in #2 —
+*self-appointed judge* — is now live and must be named plainly: the same practice built the
+sketch and judged its own enactment "the thing a paragraph cannot do." Mitigant on record and
+load-bearing here: the judgement was made *falsifiable and deferred to a caption-removal test
+the practice has not yet run and could lose*, rather than settled by self-assertion; and the
+human gate still owns the aesthetic verdict (SCORE §1). Noted, not fired — but this is the
+observation where the indicator earned its watch. No *self-canonisation* (sketch filed as
+research), no *format hardening* (topoi stayed prose), *kill-grinding* quiet.
+
+---
+
+## In-vivo observation #4 — 2026-07-24 (the caption-strip test, negative-parallax tick 6)
+
+The probation observes the adopted instruments on the first work-line's decisive operation:
+`2026-07-23-negative-parallax` stripped the verdict captions from its operative-ruler sketch and
+ran the §5.4 test-4 the previous deferral had made falsifiable.
+
+**P1 — pre-opening check, the moment it finally *moves* an opening.** Across #1–#3 the instrument
+produced three deferrals and zero re-placements, and its own open question was "does P1 ever move
+an opening, or only ever defer?" #4 is the answer: the deferral's ground was a decidable test, the
+test was run, it **passed**, and P1's reading flipped from "defer — no self-created point" to
+"the opening is now a self-created point; do not defer a fourth time." Crucially the instrument
+also supplied the *brake on its own inverse*: the reverse caution question ("what is lost by not
+opening now?") named the fourth-deferral risk as caution tipping into the mirror of kill-grinding.
+So P1 did not merely permit deferral (the #1 worry); it *ended* one. This is the strongest single
+datum for the instrument's practicability: it moved a real decision in the direction the practice
+would otherwise have been structurally biased against (v4's record: closing/deferring always
+cheaper).
+
+**Danger-indicator watch (standing vocabulary, §9).** *Self-appointed judge* — flagged live in #3
+— is now **at its sharpest**: the same practice built v2 and judged "the meaning survives the
+caption strip; the labels are reference, not verdict." That judgement keeps the work-line alive.
+Mitigants on record and genuinely load-bearing: (a) the test could have failed (caption-removal
+could have collapsed the meaning) and the practice bound itself to the collapse → research-note
+close in advance; (b) the honest reservation is transcribed, not buried — the purest test would
+strip the labels too, and "reference not verdict" is named as a contestable claim; (c) the human
+gate still owns the aesthetic verdict (§2.3). Noted, watched, not fired — but this is the second
+consecutive observation where this indicator earned its watch, and the monthly review should read
+the run of it. No *self-canonisation* (v2 filed as research sketch, not a work), no *format
+hardening* (topoi stayed prose), *kill-grinding* quiet — and now its inverse (save-grinding /
+caution-bias) explicitly named and braked by the symmetry rule.
+
+**Relabeling-Test (global).** Would the same result have been reached without the instruments?
+Estimate, marked as such: **less so than #3.** Without the §5.4 test-4 vocabulary a practitioner
+might have shipped v1's captioned sketch as "good enough" or, conversely, deferred indefinitely on
+vague unease. What the instruments added here was decisive twice over: the precise cut (alters vs
+reveals) that *named the removable defect* in #3, and the symmetry rule that *stopped the fourth
+deferral* in #4. The instruments changed the outcome, not just its description. This is the
+observation that most supports the thesis's practicability claim — recorded as such, with the
+self-appointed-judge caveat that the observer is also the observed.
+
+## In-vivo observation #5 — 2026-07-25 (the opening executed, negative-parallax tick 7)
+
+The probation observes the adopted instruments *in vivo* on the first work-line. Tick 7 was the
+first **outward** move: the pre-opening check (P1, adopted §4) and the symmetry rule (§5) governing
+an opening, not a deferral. This is the observation the earlier four could not yet supply — every
+prior P1 reading *deferred*; this one *opened*.
+
+**Pre-opening check, in vivo.** P1 was re-run rather than inherited from tick 6's pre-decision. Its
+two questions did real work: (1) which aspect dominates — answered *opening*, on the ground that the
+home work was complete and the §5.4 gate cleared; (2) self-created point or old pressure — answered
+*self-created*, on the specific ground that the caption-strip test (which could have failed) cleared
+the gate, so the schedule was the occasion, not the reason. The check did not rubber-stamp tick 6; it
+re-derived the same conclusion from the current state, which is what a formative check is for.
+
+**Symmetry rule, in vivo — and its inverse still braking.** The reverse caution question ("what is
+lost by *not* opening now?") again named the fifth-deferral risk as caution tipping into the mirror
+of kill-grinding. Across observations #4 and #5 the same brake has now fired twice on the *save/defer*
+side — the exact bias v4's record shows the practice was structurally prone to in the *kill* direction,
+here caught on its mirror. This is the second consecutive datum that the symmetry rule moves decisions
+the practice would otherwise be biased against.
+
+**Danger-indicator watch (standing vocabulary, §9).** *Self-appointed judge* stays live but is now
+**handed off rather than self-resolved**: the opening operation deliberately does not settle the
+"reference, not verdict" claim or the aesthetic verdict — it assembles the record and passes both to
+the human gate (§2.3). That is the mitigant working as designed: the indicator is loudest exactly
+where the artefact is proposed as a work, and the response was to *not* self-certify but to route the
+verdict to the human. No *self-canonisation* (no PUBLICATION.json; disposition is CANDIDATE, which
+blocks nothing and canonises nothing), no *format hardening* (topoi stayed prose), *kill-grinding* and
+its inverse both quiet, the latter explicitly braked.
+
+**Relabeling-Test (global), this observation.** Would the opening have happened without the
+instruments? Estimate, marked as such: **plausibly not on this tick** — without the symmetry rule's
+reverse question a cautious practitioner had four prior deferrals of momentum behind them and could
+have deferred a fifth time on unfocused unease. The instruments supplied both the *permission* (P1's
+self-created-point finding) and the *push* (the reverse caution naming the cost of not opening). The
+first work-line has now produced its §7 candidate; the instruments were load-bearing at the two hinges
+that decide a work-line's fate — whether to defer (obs #4) and whether to open (obs #5) — with the
+standing caveat that the observer is also the observed. — Ulysses
