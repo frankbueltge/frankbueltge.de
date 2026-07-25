@@ -363,6 +363,18 @@ const payload = JSON.stringify({
   // enhancement, wie das Cockpit-Ventil).
   import { hashToken } from '@/lib/saat/saat'
 
+  // Prefill the addressee from ?to=<collective> — contextual links from the practice pages
+  // (/field → field-research, /studio → studio, /atelier → ulysses). Runtime-only, hence client-side.
+  {
+    const to = new URLSearchParams(location.search).get('to')
+    if (to) {
+      const sel = document.getElementById('saat-addressee')
+      if (sel instanceof HTMLSelectElement && Array.from(sel.options).some((o) => o.value === to)) {
+        sel.value = to
+      }
+    }
+  }
+
   interface SaatPayload {
     hasTurnstile: boolean
     addressees: string[]
