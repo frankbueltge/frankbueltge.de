@@ -7,6 +7,7 @@ import Frame from '@/components/studio/surface/Frame.astro'
 import { sortWorks } from '@/lib/atelier/sort'
 import { loadChronicle, entriesForWork } from '@/lib/studio/chronicle'
 import { STUDIO_NARRATIVE } from '@/config/studio-wording'
+import { teaserFor } from '@/lib/engines/teaser'
 
 const repo = 'https://github.com/frankbueltge/studio'
 const htmlMeta = import.meta.glob('/src/content/studio/works/*/meta.json', {
@@ -63,7 +64,8 @@ const statusHtml = `<b>${works.length} work${works.length === 1 ? '' : 's'} prem
           </h3>
           {badge && <a class="st-work-badge" href={`/studio/history#${badge.anchor}`}>{badge.label} — on the record →</a>}
         </div>
-        {(meta.embodies ?? meta.verkoerpert) && <p>{meta.embodies ?? meta.verkoerpert}</p>}
+        {/* Teaser bevorzugt (Frank, 25.07.); ohne Teaser weiter der lange embodies-Text. */}
+        {(() => { const d = teaserFor('studio', slug) ?? meta.embodies ?? meta.verkoerpert; return d && <p>{d}</p> })()}
         {meta.medium && <p class="st-work-medium">{meta.medium}</p>}
         <div class="st-work-actions">
           <a class="st-work-enter" href={`/studio/werke-html/${slug}/`}>Enter the work <span aria-hidden="true">→</span></a>
