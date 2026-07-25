@@ -20,9 +20,9 @@ import { getRelativeLocaleUrl } from 'astro:i18n'
 import type { Locale } from '@/lib/site'
 import { currentEntrance } from '@/lib/begegnungen'
 import { latestWorks, type EngineWorkMeta } from '@/lib/engines/latest'
+import { teaserFor } from '@/lib/engines/teaser'
 import { buildPulseSvg, formatWeekRange, type PulseSnapshot } from '@/lib/pulse/render'
 import pulseData from '@/data/pulse/pulse.json'
-import register from '@/data/begegnungen/register.json'
 import { NAMING, DRAFT_LABEL } from '@/config/naming'
 
 const locale = (Astro.currentLocale ?? 'en') as Locale
@@ -52,9 +52,8 @@ const latest = latestWorks(
     { ns: 'studio', kind: 'html', metas: import.meta.glob('/src/content/studio/works/*/meta.json', { eager: true, import: 'default' }) as Record<string, EngineWorkMeta> },
   ],
   8,
-)
+).map((w) => ({ ...w, teaser: teaserFor(w.ns, w.slug) }))
 const nsLabel: Record<string, string> = { field: 'The Field', atelier: 'The Atelier', studio: 'The Studio' }
-const encounterCount = (register as unknown[]).length
 
 // "Last recorded" per practice — from committed content, not a live git log (site-v2 work
 // order §3.3: "deterministisch zur Buildzeit, KEINE Netz-/Uhr-Zugriffe"). Journal filenames are
@@ -138,9 +137,6 @@ const isDraft = NAMING.approval !== 'approved'
         </a>
       ))}
     </div>
-    <div class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1.5 font-mono text-xs text-fg-faint">
-      <a href={getRelativeLocaleUrl(locale, '/encounters')} class="transition-colors hover:text-fg">{NAMING.crossings.label} ({encounterCount}) →</a>
-    </div>
   </section>
 
   <section class="mt-20 border-t border-line/60 pt-16" id="latest">
@@ -156,11 +152,11 @@ const isDraft = NAMING.approval !== 'approved'
             <span class="w-[6.5em] shrink-0 whitespace-nowrap font-mono text-[11px] tabular-nums text-fg-faint">{w.date}</span>
             <span class="w-[6.5em] shrink-0 font-mono text-[10px] uppercase tracking-[0.14em] text-fg-muted">{nsLabel[w.ns] ?? w.ns}</span>
             <span class="font-semibold tracking-[-0.01em] transition-opacity group-hover:opacity-70">{w.title}</span>
-            {/* Beschreibungszeile (Frank, 25.07.): automatisch aus der Werk-Meta (embodies) —
-                latestWorks liefert sie als blurb; w-full bricht sie unter den Titel, line-clamp-1
-                hält sie auf eine Zeile. Neue Werke bekommen die Zeile ohne Zutun. */}
-            {w.blurb && (
-              <span class="w-full text-[13px] leading-snug text-fg-faint line-clamp-1 sm:pl-[13.25em]">{w.blurb}</span>
+            {/* Beschreibungszeile (Frank, 25.07.): ein knapper 2-Satz-Teaser aus src/data/teasers.json
+                (die langen embodies-Texte taugen nicht als Anschnitt). Kein Teaser → keine Zeile,
+                statt eines hässlichen „…"-Schnitts. Die nächtliche Teaser-Routine pflegt neue Werke nach. */}
+            {w.teaser && (
+              <span class="w-full text-[13px] leading-snug text-fg-muted line-clamp-2 sm:pl-[13.25em]">{w.teaser}</span>
             )}
           </a>
         </li>
