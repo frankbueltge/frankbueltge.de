@@ -1,7 +1,7 @@
 ---
 project_id: 2026-07-25-signature-in-the-world
 title: "The signature in the world — model collapse as a measurable present, and re-grounding as counter-force or consolation"
-status: ACTIVE
+status: CLOSED
 kind: work-line
 sub_kind: encounter        # opened under the encounter clause (PROTOCOL v5 §3, amendment 2026-07-25)
 encounter_ref: ji-2026-002 # joint inquiry "Model Collapse" (REQUESTS.md, team note 2026-07-25)
@@ -29,10 +29,12 @@ work_line:
     governance finding. NOT: a general theory of model collapse (the atlas already holds it);
     NOT the practice's own self-collapse (a CLOSED thread).
   horizon: open (months; §6 phase budgets) — but bounded by the encounter terms below
-  refrain_aspect: territory   # tick 1 done — first move read at the primary; still inward, no outward move
+  refrain_aspect: home        # tick 2 done — return move read, budget spent, outcome consolidated
   tick1_outcome: corrected-premise (split anchor — mechanism measured, consequence conjecture; §8 + TRACE)
-# disposition stays empty: line ACTIVE and open; a corrected premise is an event inside the work (§2.2), not a routing decision
-disposition:
+  tick2_outcome: negative-result-with-a-shape (the asymmetry of instruments; §9 + TRACE + DECISION)
+# ARCHIVE_AS_STUDY, not KILL: the move budget the offer set (one + one) is spent, a typed outcome is
+# reached and reported, and the findings compost into 2026-07-23-negative-parallax. Nothing failed.
+disposition: ARCHIVE_AS_STUDY
 publication_approved_by:
 publication_approved_at:
 ---
@@ -173,3 +175,50 @@ across the LLM transition (what Kobak structurally cannot give); more common-wor
 evidence would add nothing. If no such measurement exists at the present, that absence is
 the reportable outcome — the consequence leg stays conjecture, honestly, and the encounter
 closes on this corrected premise, composted, not spun into a work about failure.
+
+## 9. Return-move finding and close (2026-07-25, tick 2 — home)
+
+The return move (§4) is taken and the encounter's move budget (one + one) is spent. Its
+pre-registered condition was met almost exactly: a primary does exist that measures
+**diversity attrition in a human corpus across the LLM transition** with a pre-LLM control —
+Fitterer, Gangl & Ulbrich, *Testing English News Articles for Lexical Homogenization Due to
+Widespread Use of Large Language Models*, ACL 2025 Student Research Workshop
+(https://aclanthology.org/2025.acl-srw.95/): two ≈30,000-article samples of the NOW news
+corpus, 2018 against 2024, measured with MATTR, Maas and MTLD, plus a Style-Word Ratio built
+on Kobak et al.'s marker words.
+
+**Result, and the typed outcome.** The influence is there and the loss is not measurable:
+
+- **Arrival — measured, and the instrument is portable.** SWR 0.230% → 0.347% (difference
+  0.117% against an intra-corpus variation of 0.016%). Kobak's PubMed instrument, transplanted
+  to news, detects the model's register in a second domain.
+- **Attrition — tested, null, instrument disavowed.** No diversity metric supports
+  homogenisation: MATTR and Maas move inside sampling variation; MTLD rises by 40.20 (the only
+  diversity change clearing its ICV of 5.06) — i.e. *away* from the hypothesis, which the
+  authors discount on the ground that a genuine rise would show across all measures. Verbatim:
+  "We find no conclusive effect of the use of LLMs on the lexical diversity of our dataset." And
+  their own outlook doubts the instruments, pointing to exactly where this thesis lives —
+  "increases in diversity within certain domains may obscure losses of rare or context-specific
+  words."
+- **The finding: the asymmetry of instruments.** Presence is measurable and travels; absence is
+  not measurable, and that is now a tested claim rather than an assumption. So the field's one
+  remedy — keep fresh real data in the loop — can at present be neither confirmed as a
+  counter-force nor convicted as a consolation. The obstruction sits in the measuring apparatus,
+  not in the state of the world. **S42 sharpened by one step:** a corrective channel whose
+  failure mode is unmeasurable cannot be governed at all — governance presupposes an instrument.
+
+**Compost (§3), into `2026-07-23-negative-parallax`:** the same relational-error grammar one
+level up — the loss is not in the corpus but in the relation between a corpus and an instrument
+that cannot register the class of thing it would need to register; and ignoring the un-measurable
+part is again the tempting fix that *is* the error. Recorded in that line's TRACE.
+
+**Lead left standing, not taken (abstract-level only, marked as such):** Geng & Trotta,
+*Human-LLM Coevolution: Evidence from Academic Writing*, arXiv:2502.09606 — human writers
+apparently steering *away* from marker words once these were publicly named. A third possibility
+the thesis did not pose; a third move the offer did not grant.
+
+**Close.** `status: CLOSED`, `disposition: ARCHIVE_AS_STUDY`, per the §6 stop condition and the
+five-topoi deliberation with the reverse question in `DECISION.md`. No work earned (§5.4: the
+finding says itself in prose), so no candidate and no artefact — the compose gate held. The
+result is reported back to Frank in `REQUESTS.md`; if the constellation opens a further round,
+that is a new encounter under §3, not a reopening. — Ulysses
