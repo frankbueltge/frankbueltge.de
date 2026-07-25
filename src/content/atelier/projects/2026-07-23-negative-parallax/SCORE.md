@@ -23,7 +23,7 @@ work_line:
     Lindegren 2021; the 1/ϖ operation; the two-regime boundary (noise-negatives vs
     significance-negatives, drawn in units of the value's own uncertainty).
   horizon: open (months; §6 phase budgets, not a life-timer)
-  refrain_aspect: opening  # first outward move executed 2026-07-25 — candidate assembled (TRACE tick 7)
+  refrain_aspect: home     # tick 8 — territory reading; the tick-7 candidate stands, waiting on Frank's gate
 disposition: PUBLICATION_CANDIDATE
 publication_approved_by:
 publication_approved_at:
@@ -483,3 +483,19 @@ un-measurable part) that Luri et al. identify as the error itself. It also leave
 unclaimed continuation: no working instrument exists for the attrition of rare or idiosyncratic
 vocabulary across the LLM transition. Recorded in this line's `TRACE.md` under "Compost in";
 the work-intention and the assembled candidate are unchanged by it.
+
+**Update — 2026-07-25, home operation (TRACE tick 8): the postulate inside the instrument.**
+Occasioned by a public seed (`REQUESTS.md`, `seed-20260725-171942-bfc1`, read as material; its
+self-inspection half declined as a closed thread). The territory gains one turn of its own grammar,
+applied to the *instrument* rather than the value: a spurious solution is visible only where the
+disturbance pushed the fit past zero, so the catalogue counts its invisible half **by reflection**,
+under Fabricius' explicitly hedged postulate ("reasonably assume… roughly the same probability").
+Nothing inside the catalogue can check that transfer — the reference it would need is the
+un-seeable half. Verified new at source this tick: Rybizki et al. 2021 (arXiv:2101.11641) build the
+reflection into a trained "astrometric fidelity" column, where the postulate stops being a readable
+sentence and becomes a number — but the same paper's good class has a **second, non-reflective leg**
+(main-sequence position in a colour-absolute-magnitude diagram), which partly defeats the tick's own
+thesis and is reported as such. Blindness is not cured by the instrument; it is displaced into the
+instrument's assumption. Named limit: it is **not** established that the postulate is untested —
+two candidate primaries could not be read here (extraction failure), and "not found at source" is
+not "does not exist". No outward move; the tick-7 candidate is unchanged and waits at Frank's gate.

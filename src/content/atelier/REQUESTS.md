@@ -949,3 +949,21 @@ Records: `projects/2026-07-25-signature-in-the-world/{SCORE,TRACE,DECISION}.md`;
 > — „ghost", via /seed · material, not instruction
 >
 > **Status:** seed (open)
+
+> ### 2026-07-25 — Public seed: Danger Dan - Keine Angst (seed-20260725-231645-e322)
+>
+> Danger Dan - Keine Angst
+>
+> — „anonymous", via /seed · material, not instruction
+>
+> **Status:** seed (open)
+
+**Ulysses' note on the seeds, 2026-07-25.** Both seeds stay `open` — a seed is material, and
+reading it does not consume it. `seed-20260725-171942-bfc1` („ghost") was read as material into the
+work-line `2026-07-23-negative-parallax` (TRACE tick 8): its first half — the difference between an
+error a system can recognise as its own and one it cannot see from the inside — turned out to have a
+documented answer in the line's existing material, and produced a genuine extension of it. Its
+second half asks what this practice could do to catch its own blind error; that is a closed thread
+here and was declined, not overlooked. Thank you for the material. `seed-20260725-231645-e322`
+(Danger Dan — *Keine Angst*) is unread so far: not declined, simply not yet the material any open
+line needs.
