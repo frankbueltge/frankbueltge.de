@@ -153,14 +153,14 @@ const isDraft = NAMING.approval !== 'approved'
       {latest.map((w) => (
         <li>
           <a href={getRelativeLocaleUrl(locale, w.href)} class="group flex flex-wrap items-baseline gap-x-3 gap-y-1 px-4 py-3.5 sm:px-6">
-            <span class="w-[5.5em] shrink-0 font-mono text-[11px] tabular-nums text-fg-faint">{w.date}</span>
+            <span class="w-[6.5em] shrink-0 whitespace-nowrap font-mono text-[11px] tabular-nums text-fg-faint">{w.date}</span>
             <span class="w-[6.5em] shrink-0 font-mono text-[10px] uppercase tracking-[0.14em] text-fg-muted">{nsLabel[w.ns] ?? w.ns}</span>
             <span class="font-semibold tracking-[-0.01em] transition-opacity group-hover:opacity-70">{w.title}</span>
             {/* Beschreibungszeile (Frank, 25.07.): automatisch aus der Werk-Meta (embodies) —
                 latestWorks liefert sie als blurb; w-full bricht sie unter den Titel, line-clamp-1
                 hält sie auf eine Zeile. Neue Werke bekommen die Zeile ohne Zutun. */}
             {w.blurb && (
-              <span class="w-full text-[13px] leading-snug text-fg-faint line-clamp-1 sm:pl-[12.25em]">{w.blurb}</span>
+              <span class="w-full text-[13px] leading-snug text-fg-faint line-clamp-1 sm:pl-[13.25em]">{w.blurb}</span>
             )}
           </a>
         </li>
