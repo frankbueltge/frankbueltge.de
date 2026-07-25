@@ -1,0 +1,44 @@
+# Teaser-PRs auto-mergen (Frank, 2026-07-25: „mach b" — Teaser sollen ohne manuellen Merge
+# live gehen). Der nächtliche Teaser-Writer öffnet seine Vorschläge als `currency/pr-teasers-*`
+# (sichtbar in der Steuerzentrale). Dieser Workflow merged sie, SOBALD die CI grün ist —
+# aber NUR die Teaser-PRs: die Currency-Drift-PRs (`currency/pr-<anderes>`) bleiben bewusst
+# gegated und werden hier nie angefasst. Teaser sind harmlose Bildunterschriften, keine
+# Tatsachenbehauptungen; ein Fehlgriff ist ein Ein-Zeilen-Edit oder ein Revert.
+#
+# Ausgelöst durch das Ende eines CI-Laufs (workflow_run), NICHT durch PR-Code — dieser Job
+# checkt nie den PR-Inhalt aus, er ruft nur `gh` gegen die API. So gibt es keine
+# Code-Injection-Fläche aus dem PR.
+name: Teaser auto-merge
+
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  automerge:
+    # Nur bei grüner CI und nur für den Teaser-Branch-Präfix (schließt Drift-PRs aus).
+    if: >-
+      github.event.workflow_run.conclusion == 'success' &&
+      startsWith(github.event.workflow_run.head_branch, 'currency/pr-teasers-')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Merge the teaser PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: ${{ github.event.workflow_run.head_branch }}
+          REPO: ${{ github.repository }}
+        run: |
+          PR=$(gh pr list --repo "$REPO" --head "$BRANCH" --state open \
+                 --json number --jq '.[0].number // empty')
+          if [ -z "$PR" ]; then
+            echo "No open PR for $BRANCH — nothing to merge."
+            exit 0
+          fi
+          echo "Auto-merging teaser PR #$PR ($BRANCH) — CI is green."
+          gh pr merge "$PR" --repo "$REPO" --merge --delete-branch \
+            || echo "Merge skipped (not mergeable / conflict) — left open for review."
