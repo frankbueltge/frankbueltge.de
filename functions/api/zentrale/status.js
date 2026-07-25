@@ -35,7 +35,7 @@ const UA = 'frankbueltge.de steuerzentrale'
 const COLLECTIVES = [
   { repo: 'field-research', label: 'Field · Meridian', integrate: 'Field-Integrate', chronicle: true },
   { repo: 'studio', label: 'Studio · Ensemble', integrate: 'Studio-Integrate', chronicle: true },
-  { repo: 'irrtum-als-methode', label: 'Atelier · Ulysses', integrate: 'Atelier-Integrate', vitalSigns: true },
+  { repo: 'ulysses', label: 'Atelier · Ulysses', integrate: 'Atelier-Integrate', vitalSigns: true },
   { repo: 'data-snack-plenum', label: 'Plenum', integrate: 'Plenum-Integrate' },
 ]
 
@@ -103,7 +103,7 @@ async function buildPayload(token) {
     { name: 'sitePrs', run: () => ghGet(token, '/repos/frankbueltge/frankbueltge.de/pulls?state=open&per_page=50') },
     { name: 'chronicle:field-research', run: () => rawJson('frankbueltge/field-research', 'chronicle.json') },
     { name: 'chronicle:studio', run: () => rawJson('frankbueltge/studio', 'chronicle.json') },
-    { name: 'vitalSigns:irrtum-als-methode', run: () => rawJson('frankbueltge/irrtum-als-methode', 'pulse/vital-signs.json') },
+    { name: 'vitalSigns:ulysses', run: () => rawJson('frankbueltge/ulysses', 'pulse/vital-signs.json') },
   ]
 
   const settled = await Promise.allSettled(tasks.map((t) => t.run()))

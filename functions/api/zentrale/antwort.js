@@ -27,7 +27,7 @@ const API_BASE = 'https://api.github.com'
 const SITE_REPO = 'frankbueltge/frankbueltge.de'
 const UA = 'frankbueltge.de steuerzentrale'
 
-const COLLECTIVE_REPOS = ['field-research', 'studio', 'irrtum-als-methode', 'data-snack-plenum']
+const COLLECTIVE_REPOS = ['field-research', 'studio', 'ulysses', 'data-snack-plenum']
 const ACTIONS = ['answer', 'acknowledge', 'seed']
 const DECISIONS = ['enabled', 'declined', 'note']
 
