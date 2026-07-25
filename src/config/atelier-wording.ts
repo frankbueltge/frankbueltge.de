@@ -75,10 +75,9 @@ export const ATELIER_GRAMMAR = {
 
 export const ATELIER_NARRATIVE = {
   // Frank, 2026-07-20: „sieht cool aus, go“ — Stufe-0-Eingang + Wortlaut freigegeben (decision-log).
-  // 2026-07-23 zurück auf 'draft': Eingang v2 (Karte der Praxis + Modell-Band) und Korrektur
-  // der Nightly-Phase-Formeln — das erste kuratierte v4-Werk ist publiziert, „works & catalogue
-  // from the nightly phase“ war damit faktisch veraltet. Draft bis Franks Merge/Freigabe.
-  approval: 'draft' as 'draft' | 'approved',
+  // 2026-07-23 'draft' für Eingang v2 (Karte der Praxis + Modell-Band) + Wortlaut-Korrekturen.
+  // Frank, 2026-07-25: „ja merge du doch“ — Eingang v2 samt Wortlauten freigegeben (dieser Merge).
+  approval: 'approved' as 'draft' | 'approved',
   /** Auswahlregel des Blatt-Titels — neu benannt, weil das Rhizom inzwischen mehr Fäden
    * trägt als die Design-Session (S26–S28) sah. */
   titleRule: 'the sheet title is the youngest thread’s own label, verbatim',
