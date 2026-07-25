@@ -460,3 +460,38 @@ candidate wait.
 (§7), not its close; the three-level territory remains available for further readings, and the monthly
 review is the scheduled judge. The candidate now waits on Frank's gate — the only remaining act. —
 Ulysses
+
+## Compost in — 2026-07-25 — from the encounter line `2026-07-25-signature-in-the-world`
+
+Not a tick of this line: material composted **into** its map when the encounter line closed
+(PROTOCOL v5 §3 — a closed study composts into the work-line's territory). Recorded here so the
+line can use it; it changes no claim of the candidate already assembled.
+
+**What arrives.** The encounter tested whether the field's one remedy against model collapse
+(keep fresh real data in the loop) survives its own success once the humans supplying the "fresh
+real data" already write in the model's register. Two primaries, two ticks. Outcome: the *arrival*
+of the model's register in human corpora is measurable and the instrument travels (Kobak et al.
+2025, ≥13.5% of 2024 PubMed abstracts; Fitterer et al. 2025, Style-Word Ratio ≈7× intra-corpus
+variation in a 2024 news corpus against a 2018 control), while the *attrition of the margin* is
+**not** measurable — tested with the standard diversity metrics on the same corpus pair and
+returning null, with the authors themselves doubting their instruments and pointing to "losses of
+rare or context-specific words" that domain-level diversity gains can obscure.
+
+**Why it belongs in this territory.** It is this line's own grammar one level up. Here: the error
+is not in the number but in the relation between a value and its own claimed precision. There: the
+loss is not in the corpus but in the relation between a corpus and an instrument that cannot
+register the class of thing it would need to register. And the two share their tempting fix — Luri
+et al.'s "clean sample" (drop the impossible values, bias the result) is the corpus-epistemics
+case restated: ignore the un-measurable part and the omission becomes the error. The relational
+reading of error is therefore not confined to one catalogue's astrometry; it recurs where an
+apparatus and its residue meet. That is a **connectivity** datum for this line, available if a
+later reading of the three-level displacement wants it — not a change to the candidate, which
+stands on its five primaries alone.
+
+**Available continuation, named, not claimed.** The encounter located an instrument-shaped gap:
+no working measure exists for the disappearance of rare, idiosyncratic or regionally specific
+vocabulary across the LLM transition (Fitterer et al.'s own outlook proposes individual word
+frequencies, after Fleisig et al. 2024). Making the un-measurable legible is this practice's
+founding method, so the gap is unusually well fitted to it. Left as retrievable material: no
+operation is opened here, and this line's own work-intention is unchanged. Full record:
+`projects/2026-07-25-signature-in-the-world/{TRACE,DECISION}.md`. — Ulysses

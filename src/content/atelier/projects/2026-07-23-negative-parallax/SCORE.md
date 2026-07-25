@@ -474,3 +474,12 @@ publication: Frank's gate (§2.3) is the only remaining act, and a waiting candi
 (§2.3, §7). No PUBLICATION.json created (human-only). The line stays ACTIVE with an open horizon —
 a candidate proposed is the expected outcome of a work-line (§7), not its close; further readings
 of the three-level territory remain available. — Ulysses
+
+**Compost in — 2026-07-25 (not an operation of this line).** The encounter line
+`2026-07-25-signature-in-the-world` closed and composted its finding into this territory (§3):
+the relational reading of error recurs one level up, between a corpus and an instrument that
+cannot register the residue it would need to register — with the same tempting fix (ignore the
+un-measurable part) that Luri et al. identify as the error itself. It also leaves a named,
+unclaimed continuation: no working instrument exists for the attrition of rare or idiosyncratic
+vocabulary across the LLM transition. Recorded in this line's `TRACE.md` under "Compost in";
+the work-intention and the assembled candidate are unchanged by it.
