@@ -1,0 +1,65 @@
+{
+  "instrument": "Where the Chain Breaks",
+  "status": "Built session 58 (2026-07-23); reworked + gauntleted session 59 (2026-07-24) — see README for the full gauntlet record",
+  "built_session": 58,
+  "built_date": "2026-07-23",
+  "gauntlet_session": 59,
+  "gauntlet_date": "2026-07-24",
+  "docks_onto": "instrument 016, Coverage Is Not Custody (works/2026-07-20-coverage-not-custody/)",
+  "standard_under_test": {
+    "name": "Berkeley Protocol on Digital Open Source Investigations",
+    "publisher": "UN OHCHR + Human Rights Center, UC Berkeley School of Law",
+    "edition_fetched": "2024-01 posting of the 2022 edition",
+    "url": "https://www.ohchr.org/sites/default/files/2024-01/OHCHR_BerkeleyProtocol.pdf",
+    "pdf_sha256": "caa5ea4806545658e0cfd21ed5d21c0250922903eece89bf58d26756dac3a0ae",
+    "pdf_bytes": 3166259,
+    "verified_first_hand_session_58": true,
+    "re_verified_first_hand_session_59": "all quoted phrases re-confirmed verbatim; printed paragraph numbers 153, 154, 155, 167 confirmed; the six-phase enumeration is verbatim but sits in the UNNUMBERED chapter summary + investigation-cycle figure (no printed 'para 139')",
+    "six_phases_chapter_summary": [
+      {"key": "a", "name": "online inquiry", "gloss": "processes for discovering information"},
+      {"key": "b", "name": "preliminary assessment", "gloss": "processes for determining whether to collect"},
+      {"key": "c", "name": "collection", "gloss": "processes for capturing digital items from the Internet"},
+      {"key": "d", "name": "preservation", "gloss": "processes for ensuring that the information collected is stored and retrievable"},
+      {"key": "e", "name": "verification", "gloss": "processes for evaluating the reliability of sources and content"},
+      {"key": "f", "name": "investigative analysis", "gloss": "processes for interpreting data, drawing conclusions and identifying gaps"}
+    ],
+    "collection_minimum_para155": {
+      "verbatim_lead": "the first three items (uniform resource locator (URL), Hypertext Markup Language (HTML) source code and full-page capture) serve as a minimum standard for providing evidence in court",
+      "items": [
+        {"key": "a", "name": "Target web address (URL/URI)", "verbatim": "the web address of the collected content ... should be recorded"},
+        {"key": "b", "name": "Source code (HTML)", "verbatim": "investigators must capture the HTML source code of the web page ... The HTML source code will contribute to the authentication of the material collected"},
+        {"key": "c", "name": "Full-page capture", "verbatim": "investigators should first take a screen capture of the target web page with the date and time indicated. The reason for this process is to have the best possible representation of what was seen at the time of collection"},
+        {"key": "d", "name": "Embedded media files", "verbatim": "if downloading a web page with videos or images ... those specific items"}
+      ]
+    },
+    "chain_of_custody_para167_verbatim": "Chain of custody refers to the chronological documentation of the sequence of custodians of a piece of information or evidence, and documentation of the control, date and time, transfer, analysis and disposition of any such evidence. Once collected, a digital item's chain of custody should be maintained by putting in place a proper digital preservation system.",
+    "capture_fidelity_para153_154_verbatim": "content that has potential probative value may require a more thorough and sound method of capture (e.g. through assigning a hash value); [the capture should be] close to its original format as possible. Any alterations, transformations or conversions caused by the collection process should be documented."
+  },
+  "measurement_016": {
+    "source": "works/2026-07-20-coverage-not-custody/results.json",
+    "sample_sha256": "fb79e81cae4c43fdcf0bc2a1348f14249131c7cd78bc1ebd2287e80f48276bed",
+    "census_subject": "the 513 external-citation base of a public 2026 counter-forensic investigation report (per instrument 016; the term 'courtroom-deployed' was struck at the session-59 gauntlet as unsourced in-repo — no legal-deployment citation was found)",
+    "verified_first_hand_session_58": true,
+    "x_twitter": {
+      "coverage_captures_exist": "170/170 cited URLs have an archived capture; 163 with an in-window HTTP-200 capture",
+      "custody_content_present_archived": {"k": 5, "n": 163, "p": 0.031, "wilson95": [0.013, 0.07]},
+      "live_control_content_present": {"k": 20, "n": 25, "p": 0.80, "wilson95": [0.609, 0.911]},
+      "reading": "the content is bot-servable live in 2026 (live arm 80%, 20/25); the archived capture holds the platform login/bot-shell, not the cited content (archived 3.1%). CAUSAL LIMIT (016's caveat, restored session 59): the live arm shows the content is servable in 2026, NOT that the platform served it to the archive's crawler at capture time (median 2024-10). The '0/25 across every in-window capture (not just the earliest)' permanence check is the session-45 spike, not 016 — 016 scored the earliest capture per URL.",
+      "platform_note": "platform-gated / login-walled; the crawler is served a bot-shell"
+    },
+    "telegram_counter_case": {
+      "custody_content_present_archived": {"k": 57, "n": 58, "p": 0.983, "wilson95": [0.909, 0.997]},
+      "live_control_content_present": {"k": 25, "n": 25, "p": 1.0, "wilson95": [0.867, 1.0]},
+      "reading": "faithful mirror — the archived capture IS the best possible representation of what was seen; item (c) is satisfied in substance. The break is platform-specific, not archive-general."
+    },
+    "newsorg_excluded": {
+      "figure": "26/40 = 0.65",
+      "why_excluded": "declared a classifier validity boundary in 016, NOT a preservation rate (the structural-envelope classifier under-reads article bodies). Kept out of the seam claim."
+    }
+  },
+  "the_break": {
+    "where": "at COLLECTION — between the Protocol's item (a) [URL recorded] and item (c) [full-page capture: 'the best possible representation of what was seen at the time of collection']",
+    "mechanism": "COVERAGE (the durability proxy the field reads) tests only that a capture exists at the URL — the Protocol's item (a), and the preservation criterion 'stored and retrievable' as worded. It never implements the Protocol's item (c). A login/bot-shell capture satisfies (a) and 'retrievable' while failing (c) in substance; chain of custody (para 167) then faithfully documents the custody of a shell.",
+    "honest_scoping": "The Protocol NAMES the missing checkpoint (item (c), and the verification phase's 'reliability of sources and content'). The break is not a defect in the Protocol's full text, nor a claim that any specific investigation relied on coverage; it is the substitution that occurs IF 'an archived capture exists' is read as 'the evidence is preserved to the Protocol's court minimum'. Demonstrated on a real archive corpus, not assumed. Scoped to platform-gated content (X/Twitter here); Telegram passes item (c) and does not break."
+  }
+}

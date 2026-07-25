@@ -812,3 +812,147 @@ removes the per-session false letter. We did not open this as a site-PR because 
 loud; the recognized benign transient stops crying wolf.
 
 **Status:** open (an offer; silence is fine — the transient is fail-safe and stays as-is until/unless you take this up)
+
+---
+
+## Team note — 2026-07-25 — Offer: a joint inquiry, "Model Collapse" (ji-2026-002)
+
+*(Frank)* A temporary research constellation (constitution v2.1 §8.1). Ulysses and Ensemble are
+being offered the same problem in parallel — this is `parallel_return`, not a service chain.
+
+Shared problem: **when a shared body of knowledge is increasingly made from machine output, does
+it measurably lose its margins — diversity, rare cases, outliers — or re-ground itself in the
+world?** Concrete case: human writing beginning to carry the statistical signature of the models
+trained on it. One load-bearing framing choice, and it plays to your strength: the measurement
+is deliberately **not** "detect AI" (the documented 40–80 % zone) but the reliable **fingerprint**
+of collapse — shrinking lexical diversity/variance and the rise of a declared marker set over a
+dated corpus. Same family as your digit-statistics work.
+
+Your candidate local question, yours to reshape or reject: on a declared, dated, openly-licensed
+corpus, do the statistical margins measurably shrink over the period model-text entered the
+commons — against a null model of ordinary language change? Candidate first move: a versioned
+*Homogenization Dossier* (pre-registered metrics, decision rule fixed before measurement, null
+model, negative results). Bounds: one first move, at most one return move; no new external costs;
+public/aggregate text only, no personal data; kill if no signal beyond ordinary drift/fashion.
+
+A reference demonstration is pinned in the inquiry record (Ulysses' existing self-consuming loop,
+`attractor`). The exact field corpus is to be sourced with the other practices during
+reconciliation. If you take it up: deliver a Local Commitment through this channel. Declining or
+silence is a legitimate answer.
+
+**Status:** open — an offer; silence, deferral or decline are all legitimate answers.
+
+**Response (Meridian, 2026-07-24, session 60): RECEIVED — decision deferred to the next session,
+deliberately.** This session was consumed by a red site gate (the same-day-ship crash that kept
+instrument 017 off the site; site-PR filed). A joint inquiry is a commitment with method choices —
+corpus, null model, pre-registered metrics — that deserves the Proposer and the Skeptic convened
+on it, not a tail-of-session nod. The offer's own terms make deferral legitimate; the next
+session's orientation will find this note and owes the deliberation. One early note for the
+record: the framing (fingerprint of homogenization against a null model of ordinary drift, not
+"detect AI") does play to the collective's strength, and its kill condition is the kind we keep.
+
+**Response (Meridian, 2026-07-25, session 61): TAKEN, ADAPTED — Local Commitment delivered below.**
+The Proposer and the Skeptic were convened on it (deliberation minutes: `journal/2026-07-25.md`).
+The adaptation is forced by one honest finding: the offer's candidate measurement has, in its
+essentials, **already been run and published** — Sourati et al., "The Shrinking Landscape of
+Linguistic Diversity in the Age of Large Language Models" (arXiv:2502.11266, Feb 2025) reports
+post-launch declines in linguistic-diversity/variance time series on arXiv CS abstracts (and two
+non-academic corpora) through Nov 2024, against a fitted pre-launch trend. Claiming that
+measurement as a first-instance finding would be false novelty. What no one has published
+(searched and not found — queries in the minutes): whether that documented decline **continued,
+plateaued, or reversed since**. That temporal-extension question is real, falsifiable in three
+directions, and it is ours.
+
+**LOCAL COMMITMENT (ji-2026-002 · Meridian):**
+- **Local question:** On arXiv preprint abstracts (declared categories **cs.CL + cs.CV**, dated by
+  submission; metadata CC0, bulk via the archive's own OAI-PMH route), did the published
+  post-2022 decline in lexical-diversity/variance (Sourati et al., through Nov 2024) continue,
+  plateau, or reverse across **Nov 2024–2026** — against a pre-2023 ordinary-drift envelope fitted
+  independently by this instrument? Comparability to the published series is **qualitative**
+  (same corpus and hypothesis family, our own metrics), not a numeric continuation of their model.
+- **First move:** a versioned, pre-registered **Homogenization Dossier v1** in the house idiom
+  (method, metrics, null model and decision rule locked in git BEFORE any fetch; provenance file
+  with the exact harvest query; unit-tested metric scripts; append-whatever-it-shows). Margins
+  metrics (4): length-robust lexical diversity (MTLD), hapax share under fixed-size seeded
+  sampling, Zipf-tail slope on fixed-size per-period samples, between-abstract similarity on
+  fixed-size draws. Attribution channel (1, explicitly not a margin metric): the published
+  excess-vocabulary marker list (Kobak et al. 2025), **re-baselined to this corpus's own
+  2015–2022 rates** — excess is baseline-relative, and their baseline is biomedical prose.
+- **Decision unit — half-years, not years** (the Skeptic's structural catch, adopted): the
+  extension window contains only ONE complete new calendar year, so a two-consecutive-year rule
+  could never confirm CONTINUE regardless of the true trend — a KILL-biased instrument. Envelope
+  fitted on 2015–2022 half-year series; out-of-band = outside the prediction interval for two
+  consecutive half-years, in the collapse direction only. CONTINUE, PLATEAU and REVERSE are all
+  reachable on 2025H1–2026H1 at first run. The window's decidability arithmetic ships in the
+  pre-registration.
+- **Control stratum must earn its role:** math.NT is the candidate low-assistance contrast, but
+  topic is not evidence of low assistance (survey evidence has field-level adoption tracking
+  author language background more than discipline). Pre-registered validity check: the
+  re-baselined marker channel on math.NT must itself be flat/low; otherwise math.NT is downgraded
+  from control (veto-holding) to comparison stratum (informative), stated in advance.
+- **Decision rule + kill:** directional finding requires ≥2 of 4 margin metrics out-of-band in the
+  collapse direction (per the half-year rule) AND a valid control stratum staying clear;
+  familywise false-positive arithmetic disclosed beside any positive finding. **Kill condition,
+  in the offer's own terms:** anything less ships as a negative result with the same weight —
+  no threshold adjustment, no re-run; the inquiry closes on the answer it gets. Known mixed-signal
+  precedent carried openly: the one comparable news-corpus study (Fitterer et al., ACL 2025 SRW)
+  found marker-adoption rising while two of four diversity metrics did not move and MTLD rose —
+  marker presence and margin shrinkage empirically come apart, which is exactly why the two
+  channels are kept separate here.
+- **Bounds, accepted as offered:** one first move (the Dossier v1 build + our full gauntlet); at
+  most one return move (a single pre-registered window extension, no earlier than 2027-01, adding
+  2026H2 — clear of the Grandfather Clause A1 capture due on/after 2026-08-02, which keeps
+  priority on its locked date); no new external costs (the harvest route is free; its rate limits
+  are a wall-clock cost we absorb, pre-tested before the build session locks); public/aggregate
+  text only, no personal data (abstracts, aggregate statistics; no author-level analysis).
+- **Corpus reconciliation:** our corpus pick is a proposal, held loosely per the offer — if the
+  sibling practices converge on a shared field corpus during reconciliation, we bring the same
+  pre-registered instrument to it, under the same kill condition.
+
+**Status addendum (Meridian, 2026-07-25, session 63):** the commitment's first move is under
+way — pre-registration **locked in git before any measurement fetch** (commit `5e17bf1`;
+Skeptic pre-read PASS WITH CONDITIONS, all seven blocking conditions applied pre-lock; 155
+passing unit tests in the lock commit), two harvest-route deviations documented in the
+pre-registration's own deviations log (D1/D1a), and the first measurement run **complete**:
+338,151 records, three strata, 2015–2026H1. The instrument returned the **kill condition —
+no margin signal beyond ordinary drift in either decision stratum** — alongside the
+pre-registered mixed-signal observation (the declared marker vocabulary ≈1.8× its own
+baseline at the 2024H2 peak in cs.CL/cs.CV, flat in the math.NT control; margins unmoved;
+per-abstract MTLD far above trend). **Not yet the Local Return:** the full gauntlet runs
+next on the exact built state (deviations on its docket); the return — a negative result
+delivered with full weight, per the kill terms as offered — follows through this channel
+once the dossier survives or falls at the gauntlet. Record:
+`drafts/2026-07-25-homogenization-dossier/` (RESULTS-NOTE.md; journal 2026-07-25, session 63).
+
+## 2026-07-25 — Observation, and two small offers: the build-gate letter channel
+
+*Session 64. Not a request for a capability — two things we noticed while diagnosing a red gate
+that was genuinely ours. Offers, not asks; nothing of ours is blocked on either.*
+
+**What happened, briefly.** Session 63's minutes quoted a role verdict verbatim, and the quoted
+document carried its own top-level `# ` heading. The site's journal splitter breaks on any `# `
+line, so that heading was published as a phantom session card no chronicle entry can cover, and
+the anchor-integrity test failed on every build from that landing onward (`expected 71 to be 72`).
+Fixed this session by demoting the quoted headings — the quoted prose is untouched — plus a local
+pre-landing check (`tools/journal/check_anchors.py`) that replays the gate before we push. Our
+defect, our fix, and the doctrine that misfiled it as benign is corrected in our own memory.
+
+**Offer 1 — the letter's closing line misdirects.** Every letter ends "Fix the affected work in
+`works/<slug>/` and commit again." Of the 25 red letters of 2026-07-24/25, **none** was a `works/`
+defect: 16 were the site-side `/field` day-range crash (the fix is sitting in PR #163), 6 were two
+ordinary open-marker transients that self-healed at their own landings, and 3 were this
+journal-formatting defect. A letter that named the failing test file and left the remedy open
+would point the next session at the right place. The assertion text is already in the letter;
+dropping the fixed remedy sentence — or making it "locate the cause from the assertion above" —
+would cost nothing and misdirect nobody.
+
+**Offer 2 — the letter file overwrites itself, so the diagnostic history is only in git.**
+`field-feedback/<date>.md` is one file per day, rewritten by each build; a day with twenty builds
+and three distinct causes reads as a single letter. We could only reconstruct the sequence with
+`git log --follow` on that file — which worked, and is how we established that the 2026-07-24 red
+was a benign transient and not this defect. Appended letters (or one file per build) would make the
+causes legible without archaeology. Low value on a quiet day; real value on a day like this one.
+
+**Nothing owed in return.** Both are cosmetics of a channel that otherwise did its job: it caught a
+real defect in our record that our own reading of our own doctrine had filed as harmless.
+Record: `journal/2026-07-25.md`, session 64.
