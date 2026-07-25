@@ -1,0 +1,109 @@
+name: Atlas-Scout nightly
+
+# Legt Kandidaten für beide Atlanten vor. Nimmt nichts auf: geschrieben wird ausschließlich
+# nach pipelines/atlas-scout/kandidaten/, nie in atlas.json oder werke.json (per AST-Prüfung
+# im Test erzwungen).
+#
+# Drei Läufe:
+#   1. Nachbarschaft — Zitationsumfeld bestehender Theorie-Einträge (OpenAlex, schlüsselfrei)
+#   2. Thematischer Sweep — eines der neuen Felder 8–13, rotierend (OpenAlex, schlüsselfrei)
+#   3. Werke — Ausstellungsmeldungen von e-flux, Extraktion durch ein Modell.
+#      Läuft nur, wenn ANTHROPIC_API_KEY gesetzt ist; ohne Schlüssel wird der Lauf
+#      übersprungen und das im Step-Summary vermerkt, statt still nichts zu tun.
+
+on:
+  schedule:
+    - cron: '0 5 * * *' # täglich 05:00 UTC — nach den Integrate-Läufen, vor Gegenmessung
+  workflow_dispatch:
+    inputs:
+      anzahl:
+        description: 'Saatgut-Einträge in diesem Lauf'
+        required: false
+        default: '10'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: atlas-scout
+  cancel-in-progress: false
+
+jobs:
+  scout:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # volle History → git pull --rebase im Commit-Schritt funktioniert
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Abhängigkeiten
+        run: pip install --no-cache-dir -e "pipelines/atlas-scout[dev]"
+
+      - name: Tests (Grenzprüfung inbegriffen)
+        run: cd pipelines/atlas-scout && python -m pytest -q
+
+      - name: Nachbarschaft (Theorie-Atlas)
+        env:
+          ATLAS_SCOUT_MAILTO: f.bueltge@gmail.com # OpenAlex „polite pool"
+        run: |
+          set -u
+          # Deterministische Rotation: der Tag im Jahr verschiebt das Saatgut-Fenster,
+          # damit der Atlas über die Nächte einmal umrundet wird — ohne Zufall.
+          ANZAHL="${{ github.event.inputs.anzahl || '10' }}"
+          VERSATZ=$(( $(date -u +%j) * ANZAHL ))
+          echo "Saatgut-Fenster: Versatz $VERSATZ, Anzahl $ANZAHL"
+          python -m atlas_scout.run --atlas theorie --anzahl "$ANZAHL" --versatz "$VERSATZ" \
+            | tee -a lauf.log
+
+      - name: Thematischer Sweep (neues Feld, rotierend)
+        env:
+          ATLAS_SCOUT_MAILTO: f.bueltge@gmail.com
+        run: |
+          set -u
+          # Sechs neue Felder (8–13), eines pro Nacht — nach sechs Nächten von vorn.
+          FELD=$(( 8 + $(date -u +%j) % 6 ))
+          python -m atlas_scout.run --atlas theorie --thema "$FELD" | tee -a lauf.log
+
+      - name: Werke aus Ausstellungsmeldungen
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          set -u
+          if [ -z "${ANTHROPIC_API_KEY:-}" ]; then
+            echo "ANTHROPIC_API_KEY nicht gesetzt — Werke-Lauf übersprungen." | tee -a lauf.log
+            exit 0
+          fi
+          pip install --no-cache-dir "anthropic>=0.69"
+          python -m atlas_scout.run --atlas werke --anzahl 25 | tee -a lauf.log
+
+      - name: Zusammenfassung
+        if: always()
+        run: |
+          {
+            echo '### Atlas-Scout'
+            echo '```'
+            cat lauf.log 2>/dev/null || echo 'kein Lauf-Protokoll'
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Committen
+        run: |
+          git config user.name "Atlas-Scout"
+          git config user.email "atlas-scout@frankbueltge.de"
+          git add pipelines/atlas-scout/kandidaten 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "Keine neuen Kandidaten."
+            exit 0
+          fi
+          git commit -m "atlas-scout: Kandidaten $(date -u +%F)"
+          # Gegen Push-Races mit den übrigen nächtlichen Läufen: rebasen + mehrfach versuchen.
+          for i in 1 2 3 4 5; do
+            if git pull --rebase --autostash origin main && git push origin HEAD:main; then
+              echo "Gepusht."; exit 0
+            fi
+            echo "Push-Versuch $i fehlgeschlagen, neu …"; sleep 5
+          done
+          echo "::error::Push nach 5 Versuchen fehlgeschlagen"; exit 1
