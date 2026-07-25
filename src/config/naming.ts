@@ -127,31 +127,8 @@ export const NAMING = {
     ],
   },
 
-  rest: {
-    kicker: 'ALSO ON THIS SITE',
-    items: [
-      {
-        name: 'Holdings',
-        href: '/holdings',
-        description: "The lab's earlier experiments — The Protocol, Parallaxe, The Policy — offered as material, under conditions.",
-      },
-      {
-        name: 'Atlas',
-        href: '/atlas',
-        description: 'The reference collection: works of data art the lab measures itself against, mapped and sourced.',
-      },
-      {
-        name: 'Apparatus',
-        href: '/apparatus',
-        description: 'How the machinery runs — models, nightly routines, gates, and who answers for them.',
-      },
-      {
-        name: 'About',
-        href: '/about',
-        description: 'The person behind the site — work, method, contact.',
-      },
-    ],
-  },
+  /* `rest` („ALSO ON THIS SITE") entfernt (Frank, 25.07.): Apparatus hängt am Hero,
+   * Holdings/Atlas/About stehen in der Top-Nav — die Sektion war durchgehend redundant. */
 
   /** The caption under the hero pulse. The wrapping phrasing is the design session's — the
    * bracketed bits (week range, commit count, as-of stamp) are filled in from the committed

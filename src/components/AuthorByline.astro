@@ -50,10 +50,11 @@ const path = Astro.url.pathname
 // On Record (/on-record, /werke/on-record) is fed from meridian-runtime, which became PUBLIC
 // on 2026-07-24 — it now claims the same "source code open" byline as every other instrument,
 // pointing at the runtime repo (mapped explicitly in BY_PREFIX above, ahead of the generic /werke).
+// The hub ('/') carries NO byline (Frank, 2026-07-25): the homepage is not "an instrument" —
+// its source-openness is stated in the footer instead. Only pages that ARE a surface of a
+// specific repo get the line; everything else (About, Atlas, Projects, the hub, legal) omits it.
 const sourceUrl =
-  path === '/'
-    ? REPOS.ecology
-    : (BY_PREFIX.find(([p]) => path === p || path.startsWith(p + '/'))?.[1] ?? null)
+  BY_PREFIX.find(([p]) => path === p || path.startsWith(p + '/'))?.[1] ?? null
 ---
 
 {
