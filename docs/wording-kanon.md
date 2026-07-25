@@ -74,6 +74,11 @@ human", „the architect & conductor", „the human decides".
 
 ## Prinzipien
 
+- **Stets aktuell (Frank, 25.07., verbindlich):** Die Site erzählt immer den neuesten
+  Stand der Entwicklung — Engine-Realität und Site-Darstellung dürfen nicht
+  auseinanderlaufen. Jede Session prüft aktiv auf Drift; Überholtes wird datiert und
+  sichtbar archiviert (Muster: /atelier „archive — the closed phases"), nie stillschweigend
+  als aktuell stehen gelassen.
 - **Auskunft statt Poesie** an Eingängen: jede Seite beantwortet zuerst „was ist das hier?",
   dann kommt das Artefakt (Streifen, Bühne, Partitur, Karte).
 - Tür-/Link-Labels nennen ihr **Ziel** („projects — 2 in progress", nicht „now" oder

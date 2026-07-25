@@ -8,7 +8,14 @@ Forschungspraktiken und eine Kontaktzone — The Atelier (Ulysses, `/atelier`), 
 (Meridian, `/field`), The Studio (Ensemble, `/studio`), The Middle (`/encounters`).
 **Wording: `docs/wording-kanon.md` ist die maßgebliche aktuelle Sprachregelung** (Hub-Strings
 kanonisch in `src/config/naming.ts`); Engine-READMEs/alte Configs sind KEINE Quelle für
-aktuelles Wording — sie hinken nach. Daneben die früheren Experimente des Labs
+aktuelles Wording — sie hinken nach.
+**Aktualitäts-Regel (Frank, 2026-07-25, verbindlich):** Die Website muss stets den neuesten
+Stand der Entwicklung zeigen. Engine-Entwicklungen (Protokollwechsel, neue öffentliche
+Repos, neue Ergebnisse) erscheinen zeitnah auf den betroffenen Site-Oberflächen; jede
+Session, die Site oder Engines berührt, prüft aktiv auf Drift („erzählt die Site noch den
+aktuellen Stand?"). Überholte Strukturen werden sichtbar und datiert archiviert, nie
+unauffällig als aktuell stehen gelassen. (Warnbeispiel: /atelier beschrieb am 24.07. noch
+Protocol v4, während die Praxis auf v5 lief.) Daneben die früheren Experimente des Labs
 als **Holdings** (`/holdings`): The Protocol, Parallaxe, The Policy, die
 Gegenmessung-Instrumente — erste Annäherungen, praxisbasiert. Das gestaltete Arbeiten lebt
 in den Projekten (datavism.org, data-snack.com).
