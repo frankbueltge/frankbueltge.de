@@ -28,7 +28,7 @@ import { lastChronicle, latestJournal, trimLine } from '@/lib/maschinenraum'
 import { loadChronicle as loadFieldChronicle } from '@/lib/field/chronicle'
 import { loadChronicle as loadStudioChronicle } from '@/lib/studio/chronicle'
 
-// Maschinenraum-Teaser (Franks Auftrag 2026-07-25): der letzte gelandete Stand je Praxis,
+// Maschinenraum-Teaser (Franks Auftrag 2026-07-25): the last landed state je Praxis,
 // eine Zeile, aus denselben committeten Spiegeln wie /maschinenraum.
 const mrAtelier = latestJournal(
   import.meta.glob('/src/content/atelier/journal/*.md', { eager: true, query: '?raw', import: 'default' }) as Record<string, string>,
@@ -186,19 +186,19 @@ const isDraft = NAMING.approval !== 'approved'
 
   <section class="mt-20 border-t border-line/60 pt-16" id="maschinenraum">
     <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted">
-      <b class="text-fg">Maschinenraum</b> · der letzte gelandete Stand
-      <a href="/maschinenraum" class="ml-2 normal-case tracking-normal text-fg-faint underline hover:text-fg">→ ganze Übersicht</a>
+      <b class="text-fg">Maschinenraum</b> · the last landed state
+      <a href="/maschinenraum" class="ml-2 normal-case tracking-normal text-fg-faint underline hover:text-fg">→ full view</a>
     </p>
     <ul class="mt-6 divide-y divide-line/60 overflow-hidden rounded-[10px] border border-line bg-panel">
       {mrRows.map((r) => (
         <li class="flex flex-wrap items-baseline gap-x-3 gap-y-1 px-4 py-3 sm:px-6">
           <span class="w-[5.5em] shrink-0 font-mono text-[11px] tabular-nums text-fg-faint">{r.date ?? '—'}</span>
           <span class="w-[11em] shrink-0 font-mono text-[10px] uppercase tracking-[0.14em] text-fg-muted">{r.label}</span>
-          <span class="text-sm text-fg-muted">{r.line ?? 'kein Spiegel'}</span>
+          <span class="text-sm text-fg-muted">{r.line ?? 'no mirror'}</span>
         </li>
       ))}
     </ul>
-    <p class="mt-3 font-mono text-[11px] text-fg-faint">nur committete Spiegel — je Zeile der Stand ihrer Quelle; Details und Verabredungen im <a href="/maschinenraum" class="underline hover:text-fg">Maschinenraum</a></p>
+    <p class="mt-3 font-mono text-[11px] text-fg-faint">committed mirrors only — each row carries its source's own state; details and joint inquiries in the <a href="/maschinenraum" class="underline hover:text-fg">Maschinenraum</a></p>
   </section>
 
   <section class="mt-20 border-t border-line/60 pt-16" id="travel">
