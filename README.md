@@ -63,7 +63,8 @@ data rendered as the deterministic prose of an official register, no language mo
 wording), **[The Consensus](https://frankbueltge.de/consensus)** (measuring orchestrated
 consensus), **[Headroom](https://frankbueltge.de/headroom)** (hyperscaler efficiency
 disclosures vs. absolute consumption), and the **[Atlas](https://frankbueltge.de/atlas)**
-(214 works of the wider data-art field, mapped and sourced). The full, current index is
+(the reference collection of the wider data-art field, mapped and sourced — the live count
+is shown on the page itself). The full, current index is
 **[/holdings](https://frankbueltge.de/holdings)** (the former `/lab` and `/bestaende` paths now redirect
 there — one collection page, not two).
 
