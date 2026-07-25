@@ -49,18 +49,48 @@ def artikeltext(html: str) -> str:
     return LEERRAUM.sub(" ", TAGS.sub(" ", treffer.group())).strip()
 
 
+# Der Meldungsstrom ist ein Feuerwehrschlauch: Von sechs zufälligen Meldungen enthielt
+# am 2026-07-25 keine ein Werk für den Atlas (Fotografie, Sammlungsjubiläum, zwei
+# Kuratoren-Ernennungen, Guss-Skulptur). e-flux filtert nicht serverseitig — `?search=`
+# liefert unabhängig von der Abfrage dieselben 15 Meldungen. Also filtern wir davor,
+# damit der teure Schritt nur sieht, was überhaupt in Frage kommt.
+MARKER = (
+    "data", "dataset", "algorithm", "artificial intelligence", " ai ", " ai,", " ai.",
+    "machine learning", "neural", "computation", "computational", "software",
+    "simulation", "generative", "archive", "sensor", "satellite", "surveillance",
+    "database", "network", "digital", "code", "sonification", "visualisation",
+    "visualization", "model", "internet", "platform", "automation", "robot",
+)
+MINDESTTREFFER = 3
+
+
+def ist_aussichtsreich(text: str, mindesttreffer: int = MINDESTTREFFER) -> bool:
+    """Grobe Vorauswahl vor dem Modellschritt.
+
+    Bewusst großzügig: Der Filter soll offensichtlich Unpassendes aussortieren, nicht
+    entscheiden. Was hier durchfällt, sieht kein Modell — ein zu enger Filter wäre
+    deshalb teurer als ein zu weiter.
+    """
+    klein = text.lower()
+    return sum(1 for m in MARKER if m in klein) >= mindesttreffer
+
+
 def meldungs_pfade(html: str) -> list[str]:
     """Die Einzelmeldungen einer Listenseite, Reihenfolge erhalten, ohne Dubletten."""
     return list(dict.fromkeys(MELDUNG.findall(html)))
 
 
-def hole_meldungen(*, seiten: int = 1, grenze: int = 20) -> list[dict]:
+def hole_meldungen(
+    *, seiten: int = 1, grenze: int = 20, filtern: bool = True
+) -> list[dict]:
     """Meldungen mit Fließtext. Ein Eintrag: {"url", "text"}.
 
-    `seiten` blättert die Übersicht durch, `grenze` deckelt die Gesamtzahl — der teure
-    Teil ist nicht das Holen, sondern die Modell-Extraktion danach.
+    `seiten` blättert die Übersicht durch, `grenze` deckelt die **durchgelassenen**
+    Meldungen — der teure Teil ist nicht das Holen, sondern die Extraktion danach.
+    `filtern=False` schaltet die Vorauswahl ab (zum Nachmessen ihrer Trefferquote).
     """
     meldungen: list[dict] = []
+    gesehen = 0
     with httpx.Client(follow_redirects=True, headers=KOPF) as client:
         for seite in range(1, seiten + 1):
             url = LISTE if seite == 1 else f"{LISTE}page/{seite}/"
@@ -79,5 +109,8 @@ def hole_meldungen(*, seiten: int = 1, grenze: int = 20) -> list[dict]:
                 text = artikeltext(seiten_html)
                 if len(text) < 200:
                     continue  # zu dünn, um etwas herauszulesen
-                meldungen.append({"url": BASIS + pfad, "text": text})
+                gesehen += 1
+                if filtern and not ist_aussichtsreich(text):
+                    continue
+                meldungen.append({"url": BASIS + pfad, "text": text, "gesehen": gesehen})
     return meldungen
