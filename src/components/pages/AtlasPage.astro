@@ -71,6 +71,19 @@ const FAMILIE: Record<number, string> = {
 const FAMILIE_LABEL: Record<string, string> = de
   ? { macht: 'Macht', erkenntnis: 'Erkenntnis', ausdruck: 'Ausdruck' }
   : { macht: 'power', erkenntnis: 'knowing', ausdruck: 'expression' }
+// Der Atlas begann als Gegenwartskarte — vor 2015 lag nichts darin. Die Netzkunst der
+// Nullerjahre ist aber nicht Vorgeschichte, sondern die Ebene, auf der die heutigen
+// Arbeiten stehen (Asendorf, Levin, Polli, ted davis). Sie wird deshalb als eigene
+// Schicht geführt und nicht untergemischt.
+const SCHICHT_GRENZE = 2013
+const epocheVon = (jahr: string): 'archiv' | 'gegenwart' => {
+  const n = Number.parseInt(String(jahr).slice(0, 4), 10)
+  return Number.isFinite(n) && n < SCHICHT_GRENZE ? 'archiv' : 'gegenwart'
+}
+const EPOCHE: Record<string, string> = de
+  ? { archiv: `Archiv (vor ${SCHICHT_GRENZE})`, gegenwart: 'Gegenwart' }
+  : { archiv: `archive (pre-${SCHICHT_GRENZE})`, gegenwart: 'present' }
+
 const MEDIUM: Record<string, string> = de
   ? { digital: 'digital', hybrid: 'hybrid', physical: 'physisch' }
   : { digital: 'digital', hybrid: 'hybrid', physical: 'physical' }
@@ -91,6 +104,7 @@ const copy = de
       lPhysical: 'physisch/öffentlich',
       fField: 'Feld',
       fMedium: 'Medium',
+      fEpoche: 'Schicht',
       fAxis: 'Standpunkt',
       all: 'Alle',
       showing: 'sichtbar',
@@ -113,6 +127,7 @@ const copy = de
       lPhysical: 'physical/public',
       fField: 'Cluster',
       fMedium: 'Medium',
+      fEpoche: 'Layer',
       fAxis: 'Stance',
       all: 'All',
       showing: 'showing',
@@ -142,6 +157,11 @@ const clusterKeys = Object.keys(CLUSTER)
 // wäre ein einzelnes „Macht"-Etikett über allen Chips nur Rauschen.
 const familienKeys = ['macht', 'erkenntnis', 'ausdruck'].filter((f) =>
   clusterKeys.some((c) => FAMILIE[c] === f),
+)
+// Wie bei den Feldern: aus den Daten abgeleitet. Solange der Atlas rein gegenwärtig
+// ist, erscheint die Zeile gar nicht — erst wenn Archivwerke aufgenommen sind.
+const epochenKeys = (['archiv', 'gegenwart'] as const).filter((e) =>
+  works.some((w) => epocheVon(w.year) === e),
 )
 const mediumKeys = ['digital', 'hybrid', 'physical']
 const axisKeys = ['investigation', 'mixed', 'spectacle']
@@ -190,6 +210,17 @@ const axisKeys = ['investigation', 'mixed', 'spectacle']
           </>
         ))}
       </div>
+      {epochenKeys.length > 1 && (
+        <div class="flex flex-wrap items-center gap-1.5">
+          <span class="mr-1 w-16 shrink-0 font-mono text-xs uppercase tracking-wider text-fg-faint">{copy.fEpoche}</span>
+          <button type="button" data-filter="epoche" data-value="all" aria-pressed="true" class="chip">{copy.all}</button>
+          {epochenKeys.map((e) => (
+            <button type="button" data-filter="epoche" data-value={e} aria-pressed="false" class="chip">
+              {EPOCHE[e]} <span class="text-fg-faint">{works.filter((w) => epocheVon(w.year) === e).length}</span>
+            </button>
+          ))}
+        </div>
+      )}
       <div class="flex flex-wrap items-center gap-1.5">
         <span class="mr-1 w-16 shrink-0 font-mono text-xs uppercase tracking-wider text-fg-faint">{copy.fMedium}</span>
         <button type="button" data-filter="medium" data-value="all" aria-pressed="true" class="chip">{copy.all}</button>
@@ -214,6 +245,7 @@ const axisKeys = ['investigation', 'mixed', 'spectacle']
           data-card
           data-clusters={w.clusters.join(' ')}
           data-medium={w.medium_class}
+          data-epoche={epocheVon(w.year)}
           data-axis={w.axis_pole}
           class="flex flex-col rounded-xl border border-line bg-panel p-4 transition-colors hover:border-fg-faint"
         >
@@ -271,7 +303,7 @@ const axisKeys = ['investigation', 'mixed', 'spectacle']
   if (root) {
     const cards = Array.from(root.querySelectorAll<HTMLElement>('[data-card]'))
     const countEl = root.querySelector<HTMLElement>('[data-count]')
-    const state: Record<string, string> = { cluster: 'all', medium: 'all', axis: 'all' }
+    const state: Record<string, string> = { cluster: 'all', medium: 'all', axis: 'all', epoche: 'all' }
 
     const apply = () => {
       let n = 0
@@ -280,7 +312,8 @@ const axisKeys = ['investigation', 'mixed', 'spectacle']
         const okC = state.cluster === 'all' || clusters.includes(state.cluster)
         const okM = state.medium === 'all' || card.dataset.medium === state.medium
         const okA = state.axis === 'all' || card.dataset.axis === state.axis
-        const show = okC && okM && okA
+        const okE = state.epoche === 'all' || card.dataset.epoche === state.epoche
+        const show = okC && okM && okA && okE
         card.hidden = !show
         if (show) n++
       }
