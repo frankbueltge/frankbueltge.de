@@ -77,8 +77,11 @@ jobs:
             git add -A src/content/field src/components/field src/pages/field src/data/field/chronicle.upstream.json
             if [ -d public/field/werke-html ]; then git add -A public/field/werke-html; fi
             git commit -m "field: integrate $(date -u +%F)"
-            git pull --rebase --autostash origin main
-            git push
+            for attempt in 1 2 3 4 5; do
+              git pull --rebase --autostash origin main && git push && break
+              [ "$attempt" = 5 ] && { echo "push failed after 5 rebase attempts (concurrent push race)" >&2; exit 1; }
+              echo "push race — rebasing and retrying ($attempt/5)"; sleep $((attempt * 5))
+            done
           else
             echo "no changes"
           fi
@@ -111,9 +114,16 @@ jobs:
           DATE=$(date -u +%F)
           LOG=$(tail -40 /tmp/validate.log 2>/dev/null || echo "see workflow run")
           # Issue to Frank FIRST — always runs, even if the BOT_TOKEN block below fails.
-          gh issue create --repo frankbueltge/frankbueltge.de \
-            --title "Field-Integrate red ($DATE)" \
-            --body "The nightly field build failed; no deploy. Log excerpt in the workflow run. Feedback was written to field-research/field-feedback/${DATE}.md." || true
+          # Dedup (2026-07-25): a persistent red must not flood the Steuerzentrale inbox —
+          # comment on the existing open issue instead of opening a new one each run.
+          PREFIX="Field-Integrate red"
+          BODY="The nightly field build failed; no deploy. Log excerpt in the workflow run. Feedback was written to field-research/field-feedback/${DATE}.md."
+          EXISTING=$(gh issue list --repo frankbueltge/frankbueltge.de --state open --limit 100 --json number,title --jq --arg p "$PREFIX" '[.[]|select(.title|startswith($p))][0].number // empty')
+          if [ -n "$EXISTING" ]; then
+            gh issue comment "$EXISTING" --repo frankbueltge/frankbueltge.de --body "Still red on $DATE ($(date -u +%H:%MZ), run ${GITHUB_RUN_ID:-?}) — same failure, no duplicate opened." || true
+          else
+            gh issue create --repo frankbueltge/frankbueltge.de --title "$PREFIX ($DATE)" --body "$BODY" || true
+          fi
           # Feedback into the engine's repo (it reads it next session) — defensive: errors here
           # must not block the issue creation above (hence || true).
           if [ -n "$BOT_TOKEN" ]; then

@@ -110,8 +110,11 @@ jobs:
               --body "Ecology-Integrate hat eine neue Begegnung exportiert und als PR angelegt statt automatisch zu committen. Branch: $BRANCH." || true
           else
             git commit -m "ecology: Begegnungs-Export vom $DATE (research-ecology $SHA) — Regeneration der freigegebenen Projektion"
-            git pull --rebase origin main
-            git push origin HEAD:main
+            for attempt in 1 2 3 4 5; do
+              git pull --rebase origin main && git push origin HEAD:main && break
+              [ "$attempt" = 5 ] && { echo "push failed after 5 rebase attempts (concurrent push race)" >&2; exit 1; }
+              echo "push race — rebasing and retrying ($attempt/5)"; sleep $((attempt * 5))
+            done
           fi
 
       - name: On failure — issue to Frank (ein rotes Gate darf nie still sein)
@@ -122,6 +125,12 @@ jobs:
           DATE=$(date -u +%F)
           LOG=$(tail -40 /tmp/gate.log 2>/dev/null || echo "see workflow run")
           BODY=$(printf 'Importer/Gate/Export fehlgeschlagen - kein Oekologie-Commit; der letzte gute Export bleibt live. Log-Auszug:\n\n```\n%s\n```\n\nTypische Ursache laut Arbeitsstrang 5.3: Engines haben neues Vokabular erfunden (das SOLLEN sie) - dann Pins/Schema bewusst erweitern, siehe research-ecology tests/contract/.' "$LOG")
-          gh issue create --repo frankbueltge/frankbueltge.de \
-            --title "Ecology-Integrate rot ($DATE)" \
-            --body "$BODY" || true
+          # Dedup (2026-07-25): ein anhaltendes Rot darf die Steuerzentrale-Inbox nicht fluten —
+          # bestehendes offenes Issue kommentieren statt jedes Mal ein neues anlegen.
+          PREFIX="Ecology-Integrate rot"
+          EXISTING=$(gh issue list --repo frankbueltge/frankbueltge.de --state open --limit 100 --json number,title --jq --arg p "$PREFIX" '[.[]|select(.title|startswith($p))][0].number // empty')
+          if [ -n "$EXISTING" ]; then
+            gh issue comment "$EXISTING" --repo frankbueltge/frankbueltge.de --body "Weiter rot am $DATE ($(date -u +%H:%MZ), Lauf ${GITHUB_RUN_ID:-?}) — gleicher Fehler, kein Duplikat angelegt." || true
+          else
+            gh issue create --repo frankbueltge/frankbueltge.de --title "$PREFIX ($DATE)" --body "$BODY" || true
+          fi

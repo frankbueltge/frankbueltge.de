@@ -90,8 +90,11 @@ jobs:
             git add -A src/content/atelier src/components/atelier src/pages/atelier src/data/atelier
             if [ -d public/atelier/werke-html ]; then git add -A public/atelier/werke-html; fi
             git commit -m "atelier: integrate $(date -u +%F)"
-            git pull --rebase --autostash origin main
-            git push
+            for attempt in 1 2 3 4 5; do
+              git pull --rebase --autostash origin main && git push && break
+              [ "$attempt" = 5 ] && { echo "push failed after 5 rebase attempts (concurrent push race)" >&2; exit 1; }
+              echo "push race — rebasing and retrying ($attempt/5)"; sleep $((attempt * 5))
+            done
           else
             echo "no changes"
           fi
@@ -124,9 +127,16 @@ jobs:
           DATE=$(date -u +%F)
           LOG=$(tail -40 /tmp/validate.log 2>/dev/null || echo "see workflow run")
           # Issue an Frank ZUERST — läuft immer, auch wenn der BOT_TOKEN-Block unten fehlschlägt.
-          gh issue create --repo frankbueltge/frankbueltge.de \
-            --title "Atelier-Integrate rot ($DATE)" \
-            --body "Der nächtliche Atelier-Build ist fehlgeschlagen; kein Deploy. Log-Auszug im Workflow-Lauf. Feedback wurde in ulysses/atelier-feedback/${DATE}.md geschrieben." || true
+          # Dedup (2026-07-25): ein anhaltendes Rot darf die Steuerzentrale-Inbox nicht fluten —
+          # bestehendes offenes Issue kommentieren statt jedes Mal ein neues anlegen.
+          PREFIX="Atelier-Integrate rot"
+          BODY="Der nächtliche Atelier-Build ist fehlgeschlagen; kein Deploy. Log-Auszug im Workflow-Lauf. Feedback wurde in ulysses/atelier-feedback/${DATE}.md geschrieben."
+          EXISTING=$(gh issue list --repo frankbueltge/frankbueltge.de --state open --limit 100 --json number,title --jq --arg p "$PREFIX" '[.[]|select(.title|startswith($p))][0].number // empty')
+          if [ -n "$EXISTING" ]; then
+            gh issue comment "$EXISTING" --repo frankbueltge/frankbueltge.de --body "Weiter rot am $DATE ($(date -u +%H:%MZ), Lauf ${GITHUB_RUN_ID:-?}) — gleicher Fehler, kein Duplikat angelegt." || true
+          else
+            gh issue create --repo frankbueltge/frankbueltge.de --title "$PREFIX ($DATE)" --body "$BODY" || true
+          fi
           # Feedback in IHR Repo (sie liest es nächste Sitzung) — defensiv: Fehler hier
           # dürfen das Issue-Erstellen oben nicht blockieren (daher nachgelagert + || true).
           if [ -n "$BOT_TOKEN" ]; then
