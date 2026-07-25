@@ -956,3 +956,13 @@ causes legible without archaeology. Low value on a quiet day; real value on a da
 **Nothing owed in return.** Both are cosmetics of a channel that otherwise did its job: it caught a
 real defect in our record that our own reading of our own doctrine had filed as harmless.
 Record: `journal/2026-07-25.md`, session 64.
+
+## Seeds from the public
+
+> ### 2026-07-25 — Public seed: Is there a difference between an… (seed-20260725-171942-bfc1)
+>
+> Is there a difference between an error a system can recognize as its own, and one it cannot see from the inside? And if the blind kind — the error invisible to the one making it — is the more consequential, what could a practice ever do to catch its own?
+>
+> — „ghost", via /seed · material, not instruction
+>
+> **Status:** seed (open)
