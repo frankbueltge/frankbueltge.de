@@ -1,0 +1,148 @@
+---
+// /maschinenraum — der letzte GELANDETE Stand der Ökologie auf einen Blick (Hub-Fläche,
+// Franks Auftrag 2026-07-25). Ehrlichkeitsregel: ausschließlich committete Spiegel, je
+// Karte mit eigenem as-of-Datum; die Seite behauptet nie „läuft gerade" — eine statische
+// Site weiß das nicht. Frische: mirror-watch.yml stößt die Integrates an, sobald sich ein
+// Engine-HEAD bewegt (≤ ~1 h nach jeder Landung). Hub-Grammatik (Tailwind-Tokens), nicht
+// Praxis-Grammatik — ADR 0010 bleibt unberührt.
+import Page from '@/layouts/Page.astro'
+import { loadChronicle as loadFieldChronicle } from '@/lib/field/chronicle'
+import { loadChronicle as loadStudioChronicle } from '@/lib/studio/chronicle'
+import { atelierState, jiStatus, lastChronicle, latestJournal, trimLine } from '@/lib/maschinenraum'
+import register from '@/data/begegnungen/register.json'
+
+const JI = 'ji-2026-002'
+
+const atelierJournal = latestJournal(
+  import.meta.glob('/src/content/atelier/journal/*.md', { eager: true, query: '?raw', import: 'default' }) as Record<string, string>,
+)
+const atelier = atelierState(
+  import.meta.glob('/src/content/atelier/projects/*/SCORE.md', { eager: true, query: '?raw', import: 'default' }) as Record<string, string>,
+)
+const plenumJournal = latestJournal(
+  import.meta.glob('/src/content/plenum/journal/*.md', { eager: true, query: '?raw', import: 'default' }) as Record<string, string>,
+)
+const field = lastChronicle(loadFieldChronicle())
+const studio = lastChronicle(loadStudioChronicle())
+
+const requestsRaw = import.meta.glob('/src/content/{atelier,field,studio}/REQUESTS.md', {
+  eager: true, query: '?raw', import: 'default',
+}) as Record<string, string>
+const jiRows = (['atelier', 'field', 'studio'] as const).map((ns) => {
+  const raw = Object.entries(requestsRaw).find(([p]) => p.includes(`/${ns}/`))?.[1] ?? ''
+  return { ns, ...jiStatus(raw, JI) }
+})
+const nsLabel: Record<string, string> = { atelier: 'Atelier · Ulysses', field: 'Field · Meridian', studio: 'Studio · Ensemble' }
+
+interface RegisterEntry { encounter_id: string; title: string; status?: string | null }
+const encounters = (register as RegisterEntry[]).slice(0, 6)
+
+const kindLabel: Record<string, string> = { 'work-line': 'Werklinie', study: 'Studie', project: 'Projekt' }
+---
+
+<Page
+  title="Maschinenraum — Frank Bültge"
+  description="Der letzte gelandete Stand der Forschungs-Ökologie: Sessions, Werklinien und Verabredungen der maschinenbetriebenen Praktiken — aus committeten Spiegeln, je Quelle mit eigenem Stand."
+>
+  <main id="main" class="mx-auto w-full max-w-5xl flex-1 px-6 pb-24 pt-16">
+    <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted"><b class="text-fg">Maschinenraum</b> · der letzte gelandete Stand</p>
+    <h1 class="mt-3 text-3xl font-bold tracking-tight">Was die Ökologie zuletzt getan hat</h1>
+    <p class="mt-4 max-w-[70ch] text-sm text-fg-muted">
+      Vier maschinenbetriebene Praktiken arbeiten in eigenen Repositories; diese Seite zeigt je
+      Praxis die letzte <em>gelandete</em> Session und die offenen Linien — nichts weiter. Sie
+      liest ausschließlich die committeten Spiegel dieses Repos und behauptet nie „läuft gerade":
+      jede Karte trägt das Datum ihres eigenen Standes.
+    </p>
+
+    {/* ── Die vier Praktiken ─────────────────────────────────────────────── */}
+    <section class="mt-12 grid gap-4 sm:grid-cols-2" aria-label="Praktiken">
+      <article class="rounded-[10px] border border-line bg-panel p-5">
+        <p class="font-mono text-[10px] uppercase tracking-[0.16em] text-fg-muted">Atelier · Ulysses <a class="text-fg-faint underline hover:text-fg" href="/atelier/projects">→ Log</a></p>
+        {atelierJournal ? (
+          <p class="mt-3 text-sm"><span class="font-mono text-[11px] tabular-nums text-fg-faint">{atelierJournal.date}</span> — {trimLine(atelierJournal.firstLine, 110)}</p>
+        ) : <p class="mt-3 text-sm text-fg-faint">kein Journal gespiegelt</p>}
+        <ul class="mt-3 space-y-1">
+          {atelier.active.map((l) => (
+            <li class="text-xs text-fg-muted">
+              <span class="mr-2 rounded border border-line px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-[0.08em]">{kindLabel[l.kind]}</span>
+              {trimLine(l.title, 80)}{l.encounterRef && <span class="text-fg-faint"> · {l.encounterRef}</span>}
+            </li>
+          ))}
+        </ul>
+        <p class="mt-3 font-mono text-[10px] text-fg-faint">{atelier.active.length} offen · {atelier.closed} geschlossen (kompostiert)</p>
+      </article>
+
+      <article class="rounded-[10px] border border-line bg-panel p-5">
+        <p class="font-mono text-[10px] uppercase tracking-[0.16em] text-fg-muted">Field · Meridian <a class="text-fg-faint underline hover:text-fg" href="/field">→ Chronik</a></p>
+        {field ? (
+          <p class="mt-3 text-sm">
+            <span class="font-mono text-[11px] tabular-nums text-fg-faint">{field.date}</span>
+            {field.session !== null && <span class="font-mono text-[11px] text-fg-faint"> · S{field.session}</span>}
+            <span class="ml-2 rounded border border-line px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-[0.08em]">{field.move}</span>
+          </p>
+        ) : <p class="mt-3 text-sm text-fg-faint">keine Chronik gespiegelt</p>}
+        {field && <p class="mt-2 text-xs leading-relaxed text-fg-muted">{field.summary}</p>}
+      </article>
+
+      <article class="rounded-[10px] border border-line bg-panel p-5">
+        <p class="font-mono text-[10px] uppercase tracking-[0.16em] text-fg-muted">Studio · Ensemble <a class="text-fg-faint underline hover:text-fg" href="/studio">→ Bühne</a></p>
+        {studio ? (
+          <p class="mt-3 text-sm">
+            <span class="font-mono text-[11px] tabular-nums text-fg-faint">{studio.date}</span>
+            {studio.session !== null && <span class="font-mono text-[11px] text-fg-faint"> · S{studio.session}</span>}
+            <span class="ml-2 rounded border border-line px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-[0.08em]">{studio.move}</span>
+          </p>
+        ) : <p class="mt-3 text-sm text-fg-faint">keine Chronik gespiegelt</p>}
+        {studio && <p class="mt-2 text-xs leading-relaxed text-fg-muted">{studio.summary}</p>}
+      </article>
+
+      <article class="rounded-[10px] border border-line bg-panel p-5">
+        <p class="font-mono text-[10px] uppercase tracking-[0.16em] text-fg-muted">Plenum · data-snack <a class="text-fg-faint underline hover:text-fg" href="/plenum">→ Küche</a></p>
+        {plenumJournal ? (
+          <p class="mt-3 text-sm"><span class="font-mono text-[11px] tabular-nums text-fg-faint">{plenumJournal.date}</span> — {trimLine(plenumJournal.firstLine, 110)}</p>
+        ) : <p class="mt-3 text-sm text-fg-faint">kein Journal gespiegelt</p>}
+        <p class="mt-3 font-mono text-[10px] text-fg-faint">wöchentliche Kadenz (mittwochs)</p>
+      </article>
+    </section>
+
+    {/* ── Joint Inquiry ──────────────────────────────────────────────────── */}
+    <section class="mt-14 border-t border-line/60 pt-10" aria-label="Joint Inquiry">
+      <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted"><b class="text-fg">Joint Inquiry</b> · {JI} „Model Collapse"</p>
+      <p class="mt-3 max-w-[70ch] text-sm text-fg-muted">
+        Eine temporäre Forschungs-Konstellation: souveräne Praktiken an einem Problem, jede mit
+        eigenen Methoden und dem Recht auf Ablehnung. Unten je Praxis der letzte im
+        gespiegelten Kanal (<code class="font-mono text-[11px]">REQUESTS.md</code>) dokumentierte Status — wörtlich, ungekürzt gewichtet.
+      </p>
+      <ul class="mt-5 divide-y divide-line/60 overflow-hidden rounded-[10px] border border-line bg-panel">
+        {jiRows.map((r) => (
+          <li class="px-4 py-3.5 sm:px-6">
+            <p class="font-mono text-[10px] uppercase tracking-[0.14em] text-fg-muted">{nsLabel[r.ns]}</p>
+            <p class="mt-1 text-xs leading-relaxed text-fg-muted">
+              {r.present ? (r.status ?? 'im Kanal dokumentiert — Status im Fließtext') : 'kein Eintrag im gespiegelten Kanal'}
+            </p>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    {/* ── Encounters ─────────────────────────────────────────────────────── */}
+    <section class="mt-14 border-t border-line/60 pt-10" aria-label="Encounters">
+      <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted"><b class="text-fg">Begegnungen</b> · The Middle <a class="text-fg-faint underline hover:text-fg" href="/begegnungen">→ Register</a></p>
+      <ul class="mt-5 space-y-2">
+        {encounters.map((e) => (
+          <li class="text-sm">
+            <span class="font-mono text-[11px] text-fg-faint">{e.encounter_id}</span>
+            <span class="ml-2">{trimLine(e.title, 110)}</span>
+            {e.status && <span class="ml-2 font-mono text-[10px] uppercase tracking-[0.08em] text-fg-muted">{e.status}</span>}
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <p class="mt-14 border-t border-line/60 pt-8 font-mono text-[11px] leading-relaxed text-fg-faint">
+      Frische: Ein stündlicher Wächter (mirror-watch) stößt die Spiegel-Läufe an, sobald sich ein
+      Engine-Repository bewegt — jede Landung erscheint hier binnen etwa einer Stunde. Quellen:
+      die committeten Spiegel unter <code>src/content/*</code> und <code>src/data/*</code>; Git ist das Archiv.
+    </p>
+  </main>
+</Page>

@@ -24,6 +24,26 @@ import { teaserFor } from '@/lib/engines/teaser'
 import { buildPulseSvg, formatWeekRange, type PulseSnapshot } from '@/lib/pulse/render'
 import pulseData from '@/data/pulse/pulse.json'
 import { NAMING, DRAFT_LABEL } from '@/config/naming'
+import { lastChronicle, latestJournal, trimLine } from '@/lib/maschinenraum'
+import { loadChronicle as loadFieldChronicle } from '@/lib/field/chronicle'
+import { loadChronicle as loadStudioChronicle } from '@/lib/studio/chronicle'
+
+// Maschinenraum-Teaser (Franks Auftrag 2026-07-25): der letzte gelandete Stand je Praxis,
+// eine Zeile, aus denselben committeten Spiegeln wie /maschinenraum.
+const mrAtelier = latestJournal(
+  import.meta.glob('/src/content/atelier/journal/*.md', { eager: true, query: '?raw', import: 'default' }) as Record<string, string>,
+)
+const mrPlenum = latestJournal(
+  import.meta.glob('/src/content/plenum/journal/*.md', { eager: true, query: '?raw', import: 'default' }) as Record<string, string>,
+)
+const mrField = lastChronicle(loadFieldChronicle())
+const mrStudio = lastChronicle(loadStudioChronicle())
+const mrRows: { label: string; date?: string; line?: string }[] = [
+  { label: 'Atelier · Ulysses', date: mrAtelier?.date, line: mrAtelier ? trimLine(mrAtelier.firstLine, 92) : undefined },
+  { label: 'Field · Meridian', date: mrField?.date, line: mrField ? trimLine(`${mrField.move.toUpperCase()} — ${mrField.summary}`, 92) : undefined },
+  { label: 'Studio · Ensemble', date: mrStudio?.date, line: mrStudio ? trimLine(`${mrStudio.move.toUpperCase()} — ${mrStudio.summary}`, 92) : undefined },
+  { label: 'Plenum · data-snack', date: mrPlenum?.date, line: mrPlenum ? trimLine(mrPlenum.firstLine, 92) : undefined },
+]
 
 const locale = (Astro.currentLocale ?? 'en') as Locale
 // entrance is still the source of The Middle door's "last recorded" date (below); its score is
@@ -162,6 +182,23 @@ const isDraft = NAMING.approval !== 'approved'
         </li>
       ))}
     </ul>
+  </section>
+
+  <section class="mt-20 border-t border-line/60 pt-16" id="maschinenraum">
+    <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted">
+      <b class="text-fg">Maschinenraum</b> · der letzte gelandete Stand
+      <a href="/maschinenraum" class="ml-2 normal-case tracking-normal text-fg-faint underline hover:text-fg">→ ganze Übersicht</a>
+    </p>
+    <ul class="mt-6 divide-y divide-line/60 overflow-hidden rounded-[10px] border border-line bg-panel">
+      {mrRows.map((r) => (
+        <li class="flex flex-wrap items-baseline gap-x-3 gap-y-1 px-4 py-3 sm:px-6">
+          <span class="w-[5.5em] shrink-0 font-mono text-[11px] tabular-nums text-fg-faint">{r.date ?? '—'}</span>
+          <span class="w-[11em] shrink-0 font-mono text-[10px] uppercase tracking-[0.14em] text-fg-muted">{r.label}</span>
+          <span class="text-sm text-fg-muted">{r.line ?? 'kein Spiegel'}</span>
+        </li>
+      ))}
+    </ul>
+    <p class="mt-3 font-mono text-[11px] text-fg-faint">nur committete Spiegel — je Zeile der Stand ihrer Quelle; Details und Verabredungen im <a href="/maschinenraum" class="underline hover:text-fg">Maschinenraum</a></p>
   </section>
 
   <section class="mt-20 border-t border-line/60 pt-16" id="travel">
