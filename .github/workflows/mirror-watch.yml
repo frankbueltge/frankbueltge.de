@@ -1,0 +1,44 @@
+name: Mirror watch
+
+# Frische-Mechanik für den Maschinenraum (Franks Auftrag 2026-07-25): die Integrate-Läufe
+# spiegeln die Engine-Repos bislang nur per Tages-Cron — Sessions landeten also bis zu einem
+# Tag verspätet auf der Site. Dieser Wächter prüft stündlich, ob sich ein Engine-HEAD seit
+# dem letzten Spiegel-Commit bewegt hat, und stößt dann NUR den betroffenen Integrate an.
+# Integrates sind idempotent (keine Änderung → kein Commit → kein Deploy) — ein überflüssiger
+# Anstoß ist harmlos, ein verpasster kostet nur die nächste Stunde.
+
+on:
+  schedule:
+    - cron: '40 * * * *' # stündlich, versetzt zu den Tages-Crons der Integrates
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Engine-HEADs gegen letzte Spiegel-Commits prüfen
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          # Paare: Engine-Repo → (Integrate-Workflow, Spiegel-Commit-Präfix auf main)
+          check () {
+            engine="$1"; workflow="$2"; prefix="$3"
+            head_date=$(gh api "repos/frankbueltge/$engine/commits/HEAD" --jq '.commit.committer.date')
+            mirror_date=$(gh api "repos/${{ github.repository }}/commits?per_page=50" \
+              --jq "[.[] | select(.commit.message | startswith(\"$prefix\"))][0].commit.committer.date // empty")
+            echo "$engine: HEAD=$head_date, letzter Spiegel=${mirror_date:-nie}"
+            if [ -z "$mirror_date" ] || [ "$head_date" \> "$mirror_date" ]; then
+              echo "→ $workflow anstoßen"
+              gh workflow run "$workflow" -R "${{ github.repository }}"
+            fi
+          }
+          check ulysses            atelier-integrate.yml  "atelier: integrate"
+          check field-research     field-integrate.yml    "field: integrate"
+          check studio             studio-integrate.yml   "studio: integrate"
+          check data-snack-plenum  plenum-integrate.yml   "plenum: integrate"
+          check research-ecology   ecology-integrate.yml  "ecology: "
