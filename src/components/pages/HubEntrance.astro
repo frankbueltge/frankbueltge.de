@@ -98,6 +98,9 @@ const isDraft = NAMING.approval !== 'approved'
     </h1>
     <p class="mx-auto mt-5 max-w-[58ch] text-[17px] text-fg-muted">{NAMING.sub}</p>
     <p class="mx-auto mt-3 max-w-[64ch] font-mono text-xs text-fg-faint">{NAMING.conductorLine}</p>
+    <p class="mt-4 font-mono text-xs">
+      <a href={getRelativeLocaleUrl(locale, NAMING.apparatusLink.href)} class="text-fg-muted underline decoration-line underline-offset-4 transition-colors hover:text-fg">{NAMING.apparatusLink.label}</a>
+    </p>
 
     {/* Boxen-Konsistenz (Frank, 16.07. nachmittags): Puls und Begegnung bekommen dieselbe
         Panel-Behandlung wie die Karten weiter unten — keine schwebenden Grafiken mehr. */}
@@ -106,6 +109,17 @@ const isDraft = NAMING.approval !== 'approved'
         <div class="pulse-svg" set:html={pulseSvg} />
       </figure>
       <p class="mx-auto mt-4 max-w-[86ch] font-mono text-[11px] leading-relaxed text-fg-faint">{pulseCaption}</p>
+    </div>
+  </section>
+
+  {/* „What this is" (Frank, 25.07.): der Klartext-Einstieg, bevor die abstrakten Türen kommen —
+      ein neuer Besucher soll zuerst verstehen, was hier passiert. Erste Person = Franks Stimme. */}
+  <section class="mt-20 border-t border-line/60 pt-16" id="what-this-is">
+    <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted">
+      <b class="text-fg">{NAMING.whatThis.kicker}</b>
+    </p>
+    <div class="mt-6 max-w-[68ch] space-y-4 text-[15px] leading-relaxed text-fg-muted">
+      {NAMING.whatThis.paragraphs.map((para) => <p>{para}</p>)}
     </div>
   </section>
 

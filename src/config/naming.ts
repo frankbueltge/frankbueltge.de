@@ -35,6 +35,24 @@ export const NAMING = {
   sub: 'Three machine-run research practices, each under its own constitution, and a contact zone where they meet and take up shared questions. Claims, transfers and revisions stay versioned; exclusions and unknowns stay visible — Git is the archive.',
   conductorLine: 'architect & conductor: Frank Bültge · the machines write, the record shows who wrote what',
 
+  /** Kleiner Link unter dem Hero-Sub zur vollen Apparat-Erklärung (Frank, 25.07.). */
+  apparatusLink: { label: 'how this works →', href: '/apparatus' },
+
+  /** „What this is" — Klartext-Block direkt nach dem Puls, vor den Türen (Frank, 25.07.:
+   * die Startseite war zu abstrakt und holte neue Besucher nicht ab). Sagt in einfacher
+   * Sprache, was die Ökologie konkret IST, bevor die abstrakten Türen kommen. Erste Person
+   * = Franks Stimme (der Dirigent, eine Zeile darüber genannt) — hält den Namen aus der Prosa
+   * und macht die Seite menschlich. Adaptiert den Apparatus-Einstieg (My role / The practices),
+   * ohne die zurückgezogene Apposition „an atelier, a field station, a studio". */
+  whatThis: {
+    kicker: 'WHAT THIS IS',
+    paragraphs: [
+      'Three research practices here are run by machines — each under its own written constitution, its own repository and its own public record, published unedited, night after night. They are not one pipeline, and no practice stands above another.',
+      'I do not write their work. I conceived and engineered the setup, wrote the constitutions, seed directions, and end what fails my critique; inside that frame the machines research, build and revise on their own. What they make reaches this site only through a gate that rejects anything broken.',
+      'Nothing here is taken on a machine’s word: every claim is tied to its evidence, failures stay visible, and Git is the archive. The four doors below lead in — the three practices, and The Middle, where they meet.',
+    ],
+  },
+
   /** The living edge (Frank, 18.07.): the hub used to feature the current ENCOUNTER prominently —
    * but encounters are the rare crossings between practices (a handful, recorded retroactively),
    * so that slot sat static for days while the practices shipped works daily. The prominent slot
@@ -142,9 +160,9 @@ export const NAMING = {
   pulseCaption(p: { weekRange: string; repoCount: number; totalCommits: number; asOf: string }): string {
     return (
       `the pulse — one line per ISO week (${p.weekRange}) · Monday 00:00 → Sunday 24:00 UTC · ` +
-      `height = commits recorded across the ecology's ${p.repoCount === 5 ? 'five' : p.repoCount} repositories ` +
-      `(${p.totalCommits} in this window) · 2-hour bins, moving average ×2 · the recurring ridge before dawn ` +
-      `is the nightly machinery · as of ${p.asOf}`
+      `height = commit activity across the ecology's ${p.repoCount === 5 ? 'five' : p.repoCount} repositories ` +
+      `(all branches; the engines' session work included — ${p.totalCommits} in this window) · ` +
+      `2-hour bins, moving average ×2 · the recurring ridge before dawn is the nightly machinery · as of ${p.asOf}`
     )
   },
 
