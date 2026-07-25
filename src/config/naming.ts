@@ -80,7 +80,7 @@ export const NAMING = {
         id: 'ulysses',
         name: 'The Atelier',
         href: '/atelier',
-        description: 'Machine-run artistic research in bounded projects — the machines find problems, build works and critique themselves; failures stay on the record, checkably.',
+        description: 'Machine-run artistic research in a work-line and its studies — the machines find problems, build works and critique themselves; failures stay on the record, checkably.',
       },
       {
         id: 'meridian',
