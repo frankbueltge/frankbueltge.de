@@ -7,6 +7,7 @@ import Frame from '@/components/field/surface/Frame.astro'
 import { sortWorks } from '@/lib/atelier/sort'
 import { loadChronicle, entriesForWork } from '@/lib/field/chronicle'
 import { FIELD_NARRATIVE } from '@/config/field-wording'
+import { teaserFor } from '@/lib/engines/teaser'
 
 const metas = import.meta.glob('/src/components/field/werke/*/meta.json', {
   eager: true, import: 'default',
@@ -56,7 +57,8 @@ const statusHtml = `<b>${works.length} instruments</b> · newest first · detail
       <article class="fd-instr-card" id={slug}>
         <h3><a href={`/field/werke/${slug}`}>{meta.title ?? slug}</a></h3>
         <p class="fd-instr-meta">{meta.date}{meta.medium && ` · ${meta.medium}`}</p>
-        {meta.embodies && <p>{meta.embodies}</p>}
+        {/* Teaser bevorzugt (Frank, 25.07.); ohne Teaser weiter der lange embodies-Text. */}
+        {(() => { const d = teaserFor('field', slug) ?? meta.embodies; return d && <p>{d}</p> })()}
         {badge && <a class="fd-badge" href={`/field/journal#${badge.anchor}`}>{badge.label}</a>}
       </article>
     ))}
