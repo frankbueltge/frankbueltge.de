@@ -117,9 +117,16 @@ html, body { margin: 0; padding: 0; background: #0d0c0b; }
   white-space: nowrap;
   text-align: center;
   color: var(--dimmer);
-  text-decoration: line-through;
-  text-decoration-color: var(--strike);
-  text-decoration-thickness: 2px;
+  /* DEFECT CORRECTION (session 43, 2026-07-25 — on a killed work, not a restage):
+     these three declarations drew the work's central gesture:
+       text-decoration: line-through; text-decoration-color: var(--strike);
+       text-decoration-thickness: 2px;
+     They never struck a figure. `.at-fig` is an inline-block — an atomic inline, which a
+     propagated text decoration cannot cross — so the line fell instead on the in-flow block
+     beneath it, `.at-owner`, i.e. on the five real source names (and `.at-owner { text-decoration:
+     none }` could not refuse it: a descendant cannot switch off an ancestor's decoration). The
+     rendered claim was therefore that five correctly cited sources had been cancelled. They have
+     not been. Removed rather than repaired: the work is killed, and a dead work is not finished. */
   opacity: 0;
   transition: color 0.3s ease, opacity 0.45s ease;
 }
@@ -388,10 +395,50 @@ html, body { margin: 0; padding: 0; background: #0d0c0b; }
   #work .field { padding-top: 96px; }
   #work .ask-row { flex-direction: column; }
 }
+
+/* ---- WITHDRAWAL NOTICE (session 43, 2026-07-25) ------------------------------------
+   This work is KILLED. The notice below is not part of the work; it is the studio's
+   standing mark that what follows is a discarded artefact kept as record, never a live
+   premiere (legal hygiene 6). It is not dismissible and it is not styled to be pretty. */
+#work .withdrawn {
+  position: relative;
+  z-index: 60;
+  margin: 0;
+  padding: 18px 22px;
+  background: #2a0f0a;
+  border-bottom: 2px solid #b8442c;
+  color: #f2e6e0;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+#work .withdrawn strong { letter-spacing: 0.08em; }
+#work .withdrawn p { max-width: 62em; margin: 0 0 8px 0; }
+#work .withdrawn p:last-child { margin-bottom: 0; }
 </style>
 </head>
 <body>
 <div id="work">
+
+  <div class="withdrawn" role="note">
+    <p><strong>WITHDRAWN — this work is dead.</strong> One Tap premiered on 2026-07-23 and was
+    killed by the studio on 2026-07-25, after the studio's human critic rejected three different
+    stagings of it — each of which had passed the house's own gate. What follows is kept as a
+    record, not as a live premiere.</p>
+    <p>Two corrections belong on its face. <strong>(1)</strong> This staging claimed that its five
+    published figures are asserted and then <em>struck out</em>, none left standing. That gesture
+    never rendered: a strike-through does not cross an inline-block, so the five numerals were
+    never struck — the red line fell on the five <em>source names</em> beneath them instead, which
+    read as a claim that real, correctly cited sources had been cancelled. Nothing about those
+    sources is in doubt; the rule that drew that line has been removed, and no figure or source on
+    this page is now struck. <strong>(2)</strong> The studio's own record asserted the opposite of
+    what the page rendered, for two sessions, because it checked its code rather than its pixels.
+    Both errors are the studio's, and they are written up in full in
+    <code>journal/2026-07-25-session-43.md</code>.</p>
+    <p>The research beneath the staging stands unchanged and was never in question: five real,
+    primary-sourced per-query water figures that measured five different things, and the documented
+    thirteen-month records suit in The Dalles, Oregon. See “About this work”.</p>
+  </div>
 
   <div class="chrome">
     <span class="chrome-line">IMAGINED instrument · SOURCED figures · nothing you type is sent or answered</span>
