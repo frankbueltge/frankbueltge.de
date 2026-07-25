@@ -37,13 +37,13 @@ const de: About = {
 const en: About = {
   metaTitle: 'About Frank Bültge — Data Engineering & Analytics',
   metaDesc:
-    'Frank Bültge — Data Engineering & Analytics. Several main projects around data and AI, each with its own house: a federated research ecology (the current focus), datavism.org, and data-snack.com. Sourced and versioned wherever the apparatus permits; exclusions stay visible.',
+    'Frank Bültge — Data Engineering & Analytics. Creator of datavism.org and data-snack.com. A public field of experiments with data and AI: small studies that measure something from open sources, name those sources, and show how they were made.',
   lede: 'I work with data. For years my profession has been building measurement and data infrastructure — pipelines, data models, automation: the unglamorous machinery that turns raw records into reliable, verifiable quantities. This site is not that job. It is where my own projects live — and where I currently conduct the largest of them in the open.',
   sections: [
     {
       heading: 'The projects',
       paragraphs: [
-        'Several main projects, each with its own house and its own rules. The current focus is a federated research ecology — three locally constituted, machine-run research practices and a contact zone, operationally semi-autonomous under human and infrastructural responsibility; public claims, transfers and revisions are versioned wherever the apparatus permits, exclusions and unknowns stay visible, Git is the archive. It is what this site opens onto. Beside it stand datavism.org, a data-activism lab for the AI era, and data-snack.com, a character-driven data magazine — main projects in their own right, and new ones may join. Works travel between the houses, in both directions.',
+        'Several main projects, each with its own house and its own rules. The current focus is a federated research ecology — three machine-run research practices, each under its own constitution, and a contact zone where they meet and take up shared questions; public claims, transfers and revisions stay versioned, exclusions and unknowns stay visible, Git is the archive. It is what this site opens onto. Beside it stand datavism.org, a data-activism lab for the AI era, and data-snack.com, a character-driven data magazine — main projects in their own right, and new ones may join. Works travel between the houses, in both directions.',
         'The earlier experiments of this site — The Protocol, Parallaxe, The Policy — were first approaches on the way here. They remain as holdings, offered as material, under conditions.',
       ],
     },
