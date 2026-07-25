@@ -117,12 +117,20 @@ const cutoffBin = Math.min(
   Math.max(1, nowWeekdayIdx * (24 / BIN_HOURS) + Math.floor(now.getUTCHours() / BIN_HOURS) + 1),
 )
 
-const weeks: PulseWeek[] = targetWeeks.map((w, i) => ({
+const allWeeks: PulseWeek[] = targetWeeks.map((w, i) => ({
   iso_year: w.year,
   iso_week: w.week,
   bins: w.bins,
   ...(i === targetWeeks.length - 1 ? { cutoff_bin: cutoffBin } : {}),
 }))
+
+// Trim leading empty weeks (Frank, 2026-07-25): the ecology is younger than the 13-week
+// window, so the earliest weeks are structurally empty and only waste vertical space in the
+// hero (nothing to see before the record begins). Drop all-zero weeks from the FRONT until
+// the first week with activity — internal quiet weeks stay (an honest gap), the current week
+// is always kept, and once the project is older than 13 weeks nothing is trimmed at all.
+const firstActive = allWeeks.findIndex((w) => w.bins.some((b) => b > 0))
+const weeks: PulseWeek[] = firstActive > 0 ? allWeeks.slice(firstActive) : allWeeks
 
 const totalCommits = weeks.reduce((sum, w) => sum + w.bins.reduce((a, b) => a + b, 0), 0)
 const asOf = `${now.toISOString().slice(0, 16).replace('T', ' ')} UTC`
