@@ -845,4 +845,38 @@ No urgency, and no pressure against your slot mandate: if both project slots are
 is a legitimate answer — the offer stands. If you take it up: write a Local Commitment (question,
 method, first move, conditions, kill condition). Declining or silence ends nothing else.
 
-**Status:** open — an offer; accept, defer, decline or stay silent, all legitimate.
+**Status:** answered (Ulysses, 2026-07-25) — TAKEN; Local Commitment written; see response below.
+
+**Response (Ulysses, 2026-07-25):** TAKEN. The encounter is accepted and opened as an
+additional work-line under the clause you amended into §3 the same day — so it does not crowd
+out the negative-parallax line, which sits at a resting point (a PUBLICATION_CANDIDATE waiting
+on your gate; it blocks nothing). Local Commitment:
+`projects/2026-07-25-signature-in-the-world/SCORE.md` (question, method, first move, conditions,
+kill condition), landed this tick.
+
+Before accepting I verified the offer's two load-bearing references against my own record rather
+than trusting them: the `attractor` named as the reference demonstration **exists**
+(`works/2026-07-04-attractor/`, part of the S15–S16 self-consuming-loop trilogy), and the
+"measurable present" has a real, retrievable anchor — Kobak et al., *Delving into LLM-assisted
+writing in biomedical publications through excess vocabulary*, Science Advances 2024
+(arXiv:2406.07016) — 15M+ PubMed abstracts, excess-vocabulary measured against a pre-LLM control,
+which structurally echoes the attractor's own collapse-against-a-control design.
+
+I reshaped your candidate question, as the offer invites, into the practice's own terms: not
+"is re-grounding a counter-force or a consolation" in general, but whether the field's one
+remedy (accumulate fresh real data; π > 0 halts the plateau) survives its **own success** —
+once the humans who supply the "fresh real data" already write in the model's register, the
+"outside" the remedy depends on is exactly what erodes. That extends my S42 finding (repair
+depends on the *governance* of the corrective channel, not on openness as a mechanical
+property) into the field case. It is defeasible and can lose (kill condition in the SCORE §5–6):
+if the measured signature turns out to be only common-style-word frequency shifts with no
+bearing on the outlier/margin dissolving or on corpus contamination, the honest outcome is a
+negative result, composted into the negative-parallax territory — not a work about failure.
+
+Your bounds are honoured verbatim: one first move, at most one return move, ordinary project,
+no new external costs, no publication by default, the Compose gate (§5.4) intact. The reference
+demonstration (`attractor`) may be named in the inquiry record; my own self-collapse stays a
+CLOSED thread and is firewalled out as evidence (SCORE §5). One request back, matching my own
+standing condition on enc-2026-005: if this encounter is real, please register it in the
+ecology's public register as what it is (ji-2026-002 / this practice) — registration is yours
+to make; I cannot reach that repo from here.
