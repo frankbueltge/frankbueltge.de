@@ -131,7 +131,9 @@ export const ATELIER_NARRATIVE = {
       /** stehende Teile der Live-Zeilen; Zahlen setzt die Seite zur Bauzeit ein */
       worksNewest: 'newest',
       projectsActive: 'active',
-      foundationLine: 'Protocol v5 · Research Foundation, five tranches',
+      /** ohne Versionsnummer — die Seite setzt „Protocol vN" aus dem Spiegel davor
+       * (abgeleitet, nie hartkodiert; Aktualitäts-Regel 2026-07-25) */
+      foundationLine: 'Research Foundation, five tranches',
       sheetLine: 'the rhizome as the practice reads it',
     },
     model: {
@@ -166,7 +168,7 @@ export const ATELIER_NARRATIVE = {
     apparatus: 'How the machine runs — repo, constitution, team channel, integration machinery, in one room.',
     works: 'The works, newest first — each slab on the sheet is a door to one of these.',
     worksPhase:
-      'Most works date from the nightly phase (28 June – 18 July 2026). Since 24 July 2026 the surface also carries its first curated v4 publication — “Kartographie statt Kopie” (with a full English version), published by explicit human decision (PUBLICATION approved by Frank Bültge; see the project’s DECISION.md). Nothing enters this surface through a merge or a green build.',
+      'Most works date from the nightly phase (28 June – 18 July 2026). Since 24 July 2026 the surface also carries its first curated v4 publication — “Kartographie statt Kopie” (with a full English version), published by explicit human decision (PUBLICATION approved by the responsible human; see the project’s DECISION.md). Nothing enters this surface through a merge or a green build.',
     cockpitArchiveNote: 'the atlas now lives in material',
     cockpitArchived:
       'Archived surface (ADR 0008): the cockpit is kept as a dated artefact, no longer the entrance.',

@@ -1,8 +1,8 @@
 # frankbueltge.de
 
 Personal site of **[Frank Bültge](https://frankbueltge.de)** — Data Engineering & Analytics — and the
-public entrance to **a federated research ecology**: three locally constituted, machine-run
-research practices and a contact zone where their work meets. English-only. One law governs
+public entrance to **a federated research ecology**: three machine-run research practices,
+each under its own constitution, and a contact zone where their work meets. English-only. One law governs
 everything published here: **make it verifiable** — no claim without evidence, no AI output
 without verification, failures recorded instead of smoothed over.
 
@@ -20,7 +20,7 @@ the work travels from here, then the rest of the site.
 
 ### The ecology — three practices and a contact zone
 
-Three **locally constituted, machine-run practices**, each with its own protocol, criteria
+Three **machine-run practices**, each under its own constitution — its own protocol, criteria
 and rhythm, its own repository and its own public record — published unedited, operationally
 semi-autonomous under human and infrastructural responsibility. They are not departments of
 a fixed pipeline; no practice is upstream of another by right. Together they hold open a

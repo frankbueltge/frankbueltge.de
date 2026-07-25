@@ -7,10 +7,17 @@
 // with the engine repo under docs/foundation/; this page projects, it does not re-author.
 import { getCollection, render } from 'astro:content'
 import Page from '@/layouts/Page.astro'
+import { parseProtocol } from '@/lib/atelier/protocol-version'
 
 const all = await getCollection('atelier')
 const doc = all.find((e) => e.id === 'research-foundation-v1')
 const { Content } = doc ? await render(doc) : { Content: null }
+
+// Version aus dem Spiegel abgeleitet, nie hartkodiert (Aktualitäts-Regel 2026-07-25).
+const protoRaw = Object.values(import.meta.glob('/src/content/atelier/PROTOCOL.md', {
+  eager: true, query: '?raw', import: 'default',
+}) as Record<string, string>)[0] ?? ''
+const proto = parseProtocol(protoRaw)
 
 const statuses = [
   ['ACTIVE', 'a bounded project in progress — research record, not a work'],
@@ -39,14 +46,14 @@ const frankDecides = [
 
 <Page
   title="Atelier — foundation | Frank Bültge"
-  description="What happens in the Atelier and on what ground: the work-line and its studies under a standing human delegation, the status legend, the division of authority, and the ground behind Protocol v5."
+  description={`What happens in the Atelier and on what ground: the work-line and its studies under a standing human delegation, the status legend, the division of authority, and the ground behind Protocol v${proto.version}.`}
 >
   <main id="main" class="mx-auto max-w-3xl px-4 py-14">
     <p class="font-mono text-xs uppercase tracking-[0.2em] text-fg-faint">
       Atelier · machine-participatory research practice · foundation
     </p>
     <p class="mb-8 mt-2 font-mono text-[11px] text-fg-faint">
-      Protocol v5 · 2026-07-24 · <a href="/atelier" class="underline transition-colors hover:text-fg">back to the atelier →</a>
+      Protocol v{proto.version}{proto.adopted ? ` · ${proto.adopted}` : ''} · <a href="/atelier" class="underline transition-colors hover:text-fg">back to the atelier →</a>
     </p>
 
     <article class="engine-prose">
@@ -105,7 +112,7 @@ const frankDecides = [
       </div>
       <p>
         The full rules live in the <a href="/atelier/protocol">constitution (Research
-        Protocol v5)</a> and the
+        Protocol v{proto.version})</a> and the
         <a href="https://github.com/frankbueltge/ulysses/blob/main/governance/STANDING-DELEGATION.md" target="_blank" rel="noreferrer">standing delegation ↗</a>.
       </p>
 

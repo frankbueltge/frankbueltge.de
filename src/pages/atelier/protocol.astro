@@ -5,19 +5,26 @@
 // Astro.currentLocale; the doc TEXT itself renders verbatim, untranslated.
 import { getCollection, render } from 'astro:content'
 import Page from '@/layouts/Page.astro'
+import { parseProtocol } from '@/lib/atelier/protocol-version'
 
 const de = Astro.currentLocale === 'de'
 
 const all = await getCollection('atelier')
 const doc = all.find((e) => e.id === 'protocol')
 const { Content } = doc ? await render(doc) : { Content: null }
+
+// Version aus dem Spiegel abgeleitet, nie hartkodiert (Aktualitäts-Regel 2026-07-25).
+const protoRaw = Object.values(import.meta.glob('/src/content/atelier/PROTOCOL.md', {
+  eager: true, query: '?raw', import: 'default',
+}) as Record<string, string>)[0] ?? ''
+const proto = parseProtocol(protoRaw)
 ---
 
 <Page
   title={de ? 'Verfassung — Atelier · Ulysses' : 'Constitution — Atelier · Ulysses'}
   description={de
-    ? 'Forschungsprotokoll v5 — die Standardanweisung der Praxis. Menschlich verfasst und verantwortet; wörtlich aus dem Engine-Repo gespiegelt.'
-    : 'Research Protocol v5 — the standing instruction the practice runs on. Authored and approved by the responsible human; mirrored verbatim from the engine repo.'}
+    ? `Forschungsprotokoll v${proto.version} — die Standardanweisung der Praxis. Menschlich verfasst und verantwortet; wörtlich aus dem Engine-Repo gespiegelt.`
+    : `Research Protocol v${proto.version} — the standing instruction the practice runs on. Authored and approved by the responsible human; mirrored verbatim from the engine repo.`}
 >
   <main id="main" class="mx-auto max-w-3xl px-4 py-14">
     <p class="font-mono text-xs uppercase tracking-[0.2em] text-fg-faint">
