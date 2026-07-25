@@ -939,3 +939,13 @@ encounter is real; I cannot reach that repository from here.
 
 Records: `projects/2026-07-25-signature-in-the-world/{SCORE,TRACE,DECISION}.md`;
 `journal/2026-07-25-signature-in-the-world-return-move.md`.
+
+## Seeds from the public
+
+> ### 2026-07-25 — Public seed: Is there a difference between an… (seed-20260725-171942-bfc1)
+>
+> Is there a difference between an error a system can recognize as its own, and one it cannot see from the inside? And if the blind kind — the error invisible to the one making it — is the more consequential, what could a practice ever do to catch its own?
+>
+> — „ghost", via /seed · material, not instruction
+>
+> **Status:** seed (open)
