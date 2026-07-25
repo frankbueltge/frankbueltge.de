@@ -15,6 +15,8 @@ Wikibase-Properties (2026-07-25 geprüft):
 """
 from __future__ import annotations
 
+import re
+
 import httpx
 
 API = "https://artbase.rhizome.org/api.php"
@@ -45,14 +47,25 @@ def _hole(client: httpx.Client, params: dict) -> dict:
     return antwort.json()
 
 
-def _suche(client: httpx.Client, begriff: str, grenze: int) -> list[str]:
-    """Q-IDs zu einem Suchbegriff, Hauptnamensraum."""
+def _suche(client: httpx.Client, begriff: str, grenze: int) -> dict[str, str]:
+    """Q-IDs zu einem Suchbegriff samt Textschnipsel, Hauptnamensraum.
+
+    Die Wikibase-Entitäten tragen keine Prosa — die Beschreibung liegt als eigene
+    Entität ohne Textwert vor (P123 → Q…, geprüft 2026-07-25). Der Suchschnipsel ist
+    das einzige Stück Fließtext, das die API herausgibt.
+    """
     daten = _hole(client, {
         "action": "query", "list": "search", "srsearch": begriff,
         "srnamespace": 0, "srlimit": grenze,
     })
-    treffer = daten.get("query", {}).get("search", [])
-    return [t["title"] for t in treffer if t.get("title", "").startswith("Q")]
+    gefunden: dict[str, str] = {}
+    for treffer in daten.get("query", {}).get("search", []):
+        titel = treffer.get("title", "")
+        if not titel.startswith("Q"):
+            continue
+        roh = treffer.get("snippet") or ""
+        gefunden[titel] = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", roh)).strip()
+    return gefunden
 
 
 def _entitaeten(client: httpx.Client, qids: list[str]) -> dict:
@@ -101,9 +114,10 @@ def ernte(marker: tuple[str, ...], *, grenze: int = 12) -> list[dict]:
     with httpx.Client(follow_redirects=True, headers=KOPF) as client:
         for begriff in marker:
             try:
-                qids = [q for q in _suche(client, begriff, grenze) if q not in gesehen]
+                gefunden = _suche(client, begriff, grenze)
             except QuellenAusfall:
                 continue  # ein einzelner Begriff darf ausfallen
+            qids = [q for q in gefunden if q not in gesehen]
             if not qids:
                 continue
             gesehen.update(qids)
@@ -136,6 +150,7 @@ def ernte(marker: tuple[str, ...], *, grenze: int = 12) -> list[dict]:
                         "eigene_webseite": False,
                         "kuratiert": True,  # ArtBase ist eine kuratierte Sammlung
                         "begriffe": [begriff],
+                        "schnipsel": gefunden.get(qid, ""),
                     },
                 })
     return funde

@@ -1,14 +1,11 @@
 #!/bin/bash
 # Nächtlicher Atlas-Scout auf dem eigenen Rechner.
 #
-# Warum lokal und nicht in GitHub Actions: Die Nachbarschaft und die thematischen Sweeps
-# laufen dort bereits (OpenAlex ist schlüsselfrei, siehe .github/workflows/atlas-scout.yml).
-# Der Werke-Schritt braucht ein Modell, und ein per `ant auth login` angelegtes Profil
-# lebt in ~/.config/anthropic — Actions sieht es nicht. Wer das Abo nutzt statt eines
-# API-Keys, lässt diesen Schritt deshalb hier laufen.
+# Dasselbe wie der nächtliche GitHub-Actions-Lauf, nur lokal — für alle, die den Scout
+# auf dem eigenen Rechner laufen lassen wollen statt in Actions. Es braucht weder
+# Schlüssel noch Modell: OpenAlex und ArtBase sind beide schlüsselfrei.
 #
 # Einrichten:
-#   ant auth login
 #   launchctl load ~/Library/LaunchAgents/de.frankbueltge.atlas-scout.plist
 #
 # Von Hand:
@@ -40,14 +37,16 @@ FELD=$(( 8 + 10#$(date -u +%j) % 6 ))
 vermerk "Thematischer Sweep, Feld $FELD"
 "$PYTHON" -m atlas_scout.run --atlas theorie --thema "$FELD" 2>&1 | tee -a "$PROTOKOLL"
 
-# 3. Werke aus Ausstellungsmeldungen — braucht ein Modell.
-if ant auth status >/dev/null 2>&1 && ant auth status 2>&1 | grep -q "not configured"; then
-  vermerk "kein ant-Profil — Werke-Schritt übersprungen (ant auth login)"
-elif [ -z "${ANTHROPIC_API_KEY:-}" ] && ! command -v ant >/dev/null 2>&1; then
-  vermerk "weder ant-Profil noch API-Key — Werke-Schritt übersprungen"
-else
-  vermerk "Werke aus Meldungen"
-  "$PYTHON" -m atlas_scout.run --atlas werke --anzahl 25 2>&1 | tee -a "$PROTOKOLL"
-fi
+# 3. Werke: zwei der sechs neuen Felder je Nacht (ArtBase, schlüsselfrei).
+ERSTES=$(( 8 + (10#$(date -u +%j) * 2) % 6 ))
+ZWEITES=$(( 8 + (10#$(date -u +%j) * 2 + 1) % 6 ))
+for FELD in "$ERSTES" "$ZWEITES"; do
+  vermerk "Werke, Feld $FELD"
+  "$PYTHON" -m atlas_scout.run --atlas werke --thema "$FELD" 2>&1 | tee -a "$PROTOKOLL"
+done
+
+# 4. Aufnehmen: reihum über die Felder, gedeckelt, als "toVerify" markiert.
+vermerk "Aufnahme"
+"$PYTHON" -m atlas_scout.aufnahme --hoechstzahl 30 2>&1 | tee -a "$PROTOKOLL"
 
 vermerk "── Lauf beendet ──"
