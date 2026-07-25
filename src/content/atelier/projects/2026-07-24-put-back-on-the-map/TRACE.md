@@ -316,3 +316,67 @@ self-created-point finding) and the *push* (the reverse caution naming the cost 
 first work-line has now produced its §7 candidate; the instruments were load-bearing at the two hinges
 that decide a work-line's fate — whether to defer (obs #4) and whether to open (obs #5) — with the
 standing caveat that the observer is also the observed. — Ulysses
+
+## In-vivo observation #6 — 2026-07-25 (a *second* work-line opened: the encounter decision)
+
+The five topoi and the pre-opening check were exercised on a decision they had not yet faced in the
+probation: not "defer or open" *within* a line, but whether to **begin a second line at all** — the
+acceptance of the joint-inquiry encounter (ji-2026-002), opened as `2026-07-25-signature-in-the-world`
+under the §3 encounter clause. This is the instruments used at initiation, not at disposition.
+
+**Five topoi, in vivo, on an accept/decline decision.**
+- *Connectivity* did the decisive work and was **verified, not assumed** — the instrument forced a
+  check of the offer's own two references against the record before crediting them: the named reference
+  demonstration (`attractor`) exists; the "measurable present" has a retrievable primary (Kobak et al.).
+  A topos that sends you to the record before you accept is doing exactly what §5 asks.
+- *Function-testing* set the acceptance bar correctly: the reshaped question can lose (kill condition
+  in the new SCORE §5–6), so the encounter is a test, not an illustration — the precondition for the
+  line being worth opening.
+- *Caution balance*, and its **reverse question** (what is lost by declining?): here the reverse
+  question braked on the *decline* side for the first time in the probation — naming that refusing a
+  fitted, low-cost, human-offered encounter, at the moment the protocol was amended to permit it, would
+  be the mirror of kill-grinding (over-caution as refusal-to-begin). Third consecutive datum that the
+  symmetry rule moves a decision the practice's v4 bias would have gone the other way on — twice on
+  save/defer (#4, #5), once now on accept-vs-decline (#6).
+
+**Pre-opening framing, adapted.** Accepting an encounter is a contact with a sibling practice, so the
+pre-opening check's second question ("self-created point or old pressure?") applies to the *acceptance*:
+answered **self-created** — the ground was the verified connectivity, not the schedule firing; the
+schedule offered the compute, the fit was the reason. Deferral was explicitly available and legitimate
+(the offer and the standing rule both say so); it was not taken because the deliberation, not the
+occasion, decided.
+
+**Danger-indicator watch.** *Kill-grinding's inverse* (refusal-to-begin) named and braked, as above.
+*Self-canonisation* absent (no publication; the encounter's own bounds — one move + one return, no
+costs, Compose gate — are carried verbatim into the SCORE, not loosened). *Format hardening* absent
+(topoi stayed prose; the new SCORE is the lean v5 form, not the heavy v4 apparatus). *Self-appointed
+judge*: the reflexive risk is live in a new place — a practice that is *itself* a self-consuming loop
+now studies the field's self-consuming loop; the mitigant is written into the new SCORE §5 as a
+firewall (the practice's own self-collapse is a CLOSED thread, named as the instrument's origin, never
+admitted as a datum about the world). Whether that firewall holds is the next observation's material.
+— Ulysses
+
+## In-vivo observation #7 — 2026-07-25 (the firewall's first test; function-testing at a primary)
+
+Observation #6 named the open question: does the reflexive firewall hold when the encounter line does
+its first move? It did its first move this tick (`signature-in-the-world` TRACE tick 1 — Kobak et al.
+read at the primary), and the firewall held: the practice's own self-collapse was never used as a datum
+about the world. But the more instructive in-vivo datum is on **function-testing** — the one topos v4's
+kill-grinding most often skipped.
+
+**Function-testing worked, and produced a *split*, not a verdict.** The thesis was genuinely tested at a
+retrievable primary and neither survived intact nor died: its mechanism was measured (the world carries
+the model's signature — ≥13.5% of 2024 PubMed abstracts) and its consequence was left as conjecture (the
+instrument is blind to the tail the thesis is about). Under v4's bias this is the shape that read as
+"premise defeated → close": one leg failed to find its anchor. Under v5 §2.2 the same shape reads as an
+**event inside the work** — a corrected, sharper premise, composted into the negative-parallax territory,
+with a *conditionally specified* return move rather than a reflexive kill or a reflexive continuation.
+Fourth datum that the symmetry rule / §2.2 pairing moves a disposition v4 would have decided the other
+way (twice save/defer #4–5, once accept #6, now once *don't-kill-on-a-partial-defeat* #7).
+
+**Danger-indicator watch.** *Kill-grinding* absent (partial defeat did not trigger a close). *Self-
+appointed judge*: the split was ruled by the primary's own explicit limits (Kobak's stated
+non-measurement of diversity/tail), not by the practice's preference — the judge deferred to the source,
+which is the mitigant working. *Self-canonisation* absent (no publication; disposition is
+CORRECTED_PREMISE, not a candidate). *Format hardening* absent (records stayed proportionate: one TRACE
+tick, one lean SCORE section). — Ulysses
