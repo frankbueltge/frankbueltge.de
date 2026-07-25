@@ -29,7 +29,14 @@ export default defineConfig({
         "default-src 'self'",
         "img-src 'self' data:",
         "font-src 'self' data:",
-        "connect-src 'self'",
+        // Zwei dokumentierte Ausnahmen für /saat (Design-Spec 2026-07-20-oeffentliche-
+        // saat-design.md §4/§10, D2): Turnstile (Cloudflare, bot check vor dem Gate — selber
+        // Anbieter wie das Hosting) und raw.githubusercontent.com (Client liest das committete
+        // Register für die Status-Abfrage per Claim-Token, ohne eigenen Server). Sonst bleibt
+        // connect-src 'self'.
+        "connect-src 'self' https://challenges.cloudflare.com https://raw.githubusercontent.com",
+        // Turnstile rendert seine Challenge in einem Iframe von derselben Domain.
+        "frame-src https://challenges.cloudflare.com",
         "object-src 'none'",
         "base-uri 'self'",
       ],
@@ -39,9 +46,11 @@ export default defineConfig({
         // (die opten bewusst aus der Verarbeitung aus). Der Hash unten deckt das Anti-FOUC-Theme-
         // Skript im <head> von Base.astro ab. Bei Änderung dieses Skripts neu berechnen:
         //   build → sha256-base64 des <script>-Inhalts in dist/index.html.
+        // challenges.cloudflare.com lädt das Turnstile-Widget-Script auf /saat (s. o.).
         resources: [
           "'self'",
           "'sha256-OTbzFulzUa/0o/iJq0xir83lv5aDayqRCmxs9tqjupU='",
+          'https://challenges.cloudflare.com',
         ],
       },
       styleDirective: {
