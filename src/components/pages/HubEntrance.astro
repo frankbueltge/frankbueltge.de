@@ -156,6 +156,12 @@ const isDraft = NAMING.approval !== 'approved'
             <span class="w-[5.5em] shrink-0 font-mono text-[11px] tabular-nums text-fg-faint">{w.date}</span>
             <span class="w-[6.5em] shrink-0 font-mono text-[10px] uppercase tracking-[0.14em] text-fg-muted">{nsLabel[w.ns] ?? w.ns}</span>
             <span class="font-semibold tracking-[-0.01em] transition-opacity group-hover:opacity-70">{w.title}</span>
+            {/* Beschreibungszeile (Frank, 25.07.): automatisch aus der Werk-Meta (embodies) —
+                latestWorks liefert sie als blurb; w-full bricht sie unter den Titel, line-clamp-1
+                hält sie auf eine Zeile. Neue Werke bekommen die Zeile ohne Zutun. */}
+            {w.blurb && (
+              <span class="w-full text-[13px] leading-snug text-fg-faint line-clamp-1 sm:pl-[12.25em]">{w.blurb}</span>
+            )}
           </a>
         </li>
       ))}
@@ -179,19 +185,10 @@ const isDraft = NAMING.approval !== 'approved'
     </p>
   </section>
 
-  <section class="mt-20 border-t border-line/60 pt-16" id="rest">
-    <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted">
-      <b class="text-fg">{NAMING.rest.kicker}</b>
-    </p>
-    <div class="mt-7 grid gap-3.5 sm:grid-cols-2">
-      {NAMING.rest.items.map((it) => (
-        <a href={it.href} class="rounded-[10px] border border-line bg-panel p-4.5 transition-colors hover:border-fg-faint">
-          <h3 class="text-base font-semibold">{it.name}</h3>
-          <p class="mt-1.5 text-sm text-fg-muted">{it.description}</p>
-        </a>
-      ))}
-    </div>
-  </section>
+  {/* „ALSO ON THIS SITE" entfernt (Frank, 25.07.): Apparatus hängt jetzt am Hero
+      („how this works →"), Holdings/Atlas/About stehen in der Top-Nav — die Sektion war
+      durchgehend redundant. Holdings sind ohnehin eigene, frühere Projekte, keine
+      Nebenseiten der Ökologie. */}
 </main>
 
 <style>
