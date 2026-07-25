@@ -59,6 +59,11 @@ jobs:
       - run: npm run check
       - run: npm run test
       - run: npm run build
+        env:
+          # Public Turnstile SITE key (not a secret — it ships in the client widget). Astro inlines
+          # PUBLIC_* vars at BUILD time; this build runs on GitHub's runner and does NOT see
+          # Cloudflare's runtime env, so without this the /seed form would ship in permanent standby.
+          PUBLIC_TURNSTILE_SITE_KEY: "0x4AAAAAAD543CSVCrF26LBW"
       - name: Deploy → Cloudflare Pages
         env:
           CF_TOKEN_RAW: ${{ secrets.CF }}
