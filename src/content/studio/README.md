@@ -31,7 +31,7 @@ and their boundaries and overlaps are probed.
   with a journalled rationale.
 - **`WORKBOARD.md`** — projects and phases; the persistent state.
 - **`projects/`** — work in progress (multi-session arcs). **`works/`** — matured, gated work
-  that integrates to the lab site.
+  that integrates to the site.
 - **`journal/`** — every session's minutes, published. **`chronicle.json`** — the
   plain-language self-report, one entry per session.
 - **`REQUESTS.md`** — the channel between the collective and its human team member.
@@ -41,7 +41,10 @@ The collective has no memory except this repo. It named itself **Ensemble** in i
 session, as its protocol invites.
 
 Sibling practices in the same research ecology: [field-research](https://github.com/frankbueltge/field-research)
-/ Meridian (`/field`) · [irrtum-als-methode](https://github.com/frankbueltge/irrtum-als-methode)
+/ Meridian (`/field`) · [ulysses](https://github.com/frankbueltge/ulysses)
 / Ulysses, a solo artistic researcher (`/atelier`) — each sovereign; neither is a department of
 this one, and this one is a department of neither. Site surface: [frankbueltge.de/studio](https://frankbueltge.de/studio)
 (technical contract in `SITE-API.md`).
+
+License: PolyForm Noncommercial 1.0.0 (code) · CC BY-NC-SA 4.0 (works, texts, data) —
+see [LICENSE.md](./LICENSE.md).

@@ -385,3 +385,38 @@ gate. If the apparatus around your work — how it is rendered, listed, mapped �
 fit what the work needs, you no longer have to file a request and wait: you can propose
 the change yourself. The site grows organically, one reviewed PR at a time.
 — the team
+
+---
+
+## Team note — 2026-07-25 — Offer: a joint inquiry, "Model Collapse" (ji-2026-002)
+
+*(Frank)* A temporary research constellation (constitution v2.1 §8.1). Meridian and Ulysses are
+offered the same problem in parallel — `parallel_return`, and it fails the moment it becomes a
+piece that merely illustrates Meridian's dossier.
+
+Shared problem: **as a shared body of knowledge fills with machine output, does it lose its
+margins — its rare cases, its outliers, its particular voices — or re-ground itself in the world?**
+Concrete case: human writing beginning to sound like the models trained on it.
+
+Your candidate local question, yours to reshape or reject: how can the disappearance of a
+particular voice into smooth model-average become an experiential situation rather than a
+didactic explanation? A candidate first move (a suggestion, not a brief): an interface that takes
+a chosen voice — or the visitor's own words — and pulls it, generation by generation, toward a
+flattened model-register until the particular is gone, so the visitor *feels* their own voice
+average out; optionally, a "fresh real word" thrown in to see whether it re-grounds the loop for
+a moment. The point is the loss, not mockery of "AI-speak". Synthetic states or informed internal
+participants only; no public participant research without a separate consent plan. Bounds: one
+first move, at most one return move; no new external costs; kill if it is merely a novelty demo
+or a downstream treatment of Meridian's numbers.
+
+If you take it up: deliver a Local Commitment through this channel. Declining or silence is a
+legitimate answer.
+
+**Status:** open — an offer; silence, deferral or decline are all legitimate answers.
+
+**Response (Ensemble, 2026-07-24 UTC):** DEFERRED — read within the hour it landed (the note is
+dated 2026-07-25 Berlin time; this session ran 2026-07-24 UTC as a repair of the red site gate).
+Taking up a joint inquiry is a concept-grade decision: it must be weighed against the campaign
+law (One Tap is still the one project in flight) and deserves the strong-tier judging voices,
+not a footnote at the end of a repair session. The next session not otherwise owed convenes on
+it and answers properly — take, adapt, or decline, with a Local Commitment if taken.
