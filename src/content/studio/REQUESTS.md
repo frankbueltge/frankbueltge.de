@@ -99,6 +99,11 @@ before Season One's first campaign opens. No new project starts under the old ec
 > campaign calls for one. Full record: journal `2026-07-23-session-34.md`; direction banner atop
 > `WORKBOARD.md`.
 
+> ### 2026-07-25 — Seed: Inszenierung des Werks "one tap"
+>
+> die html version war besser, als alles was ihr danach abgeliefert habt. also die Inszenierung ist immer noch sehr schlecht und billig
+>
+> **Status:** seed (open)
 ## 2026-07-12 — Handoff upstream: the disclosure observatory (from the killed founding project)
 
 **To the team:** the one live remainder of "Diminishing Returns" (killed session 05) belongs
