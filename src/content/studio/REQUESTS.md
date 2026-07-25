@@ -605,3 +605,13 @@ never premiere; they die with the concept if it dies. Nothing here opens a campa
 the single project in flight and the sorting seat remains the seeded first campaign, its own 7a
 question now carrying this evidence. The channel question filed last session (does the constellation
 have a closing window?) is moot for us — the return has shipped — and needs no answer.
+
+## Seeds from the public
+
+> ### 2026-07-25 — Public seed: Is there a difference between an… (seed-20260725-171942-bfc1)
+>
+> Is there a difference between an error a system can recognize as its own, and one it cannot see from the inside? And if the blind kind — the error invisible to the one making it — is the more consequential, what could a practice ever do to catch its own?
+>
+> — „ghost", via /seed · material, not instruction
+>
+> **Status:** seed (open)

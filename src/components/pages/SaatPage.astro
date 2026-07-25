@@ -179,6 +179,7 @@ const payload = JSON.stringify({
   statusNotFound: txt.statusNotFound,
   statusFetchError: txt.statusFetchError,
   responseNoteLabel: txt.responseNoteLabel,
+  registerEmpty: txt.registerEmpty,
   copyLabel: txt.copyLabel,
   copiedLabel: txt.copiedLabel,
 }).replace(/</g, '\\u003c')
@@ -305,6 +306,7 @@ const payload = JSON.stringify({
     <h2 id="saat-register-h" class="font-mono text-xs uppercase tracking-[0.2em] text-fg-muted">{txt.registerHeading}</h2>
     <p class="mt-3 max-w-[64ch] text-sm text-fg-muted">{txt.registerIntro}</p>
 
+    <div data-saat="register-body">
     {seeds.length === 0 ? (
       <p class="mt-6 text-sm text-fg-faint">{txt.registerEmpty}</p>
     ) : (
@@ -333,6 +335,7 @@ const payload = JSON.stringify({
         ))}
       </ul>
     )}
+    </div>
   </section>
 
   {/* ── Gate-Transparenz (Spec §4, §7) ─────────────────────────────────── */}
@@ -390,6 +393,7 @@ const payload = JSON.stringify({
     statusNotFound: string
     statusFetchError: string
     responseNoteLabel: string
+    registerEmpty: string
     copyLabel: string
     copiedLabel: string
   }
@@ -412,6 +416,7 @@ const payload = JSON.stringify({
         statusNotFound: '',
         statusFetchError: '',
         responseNoteLabel: '',
+        registerEmpty: '',
         copyLabel: 'copy',
         copiedLabel: 'copied',
       }
@@ -573,6 +578,47 @@ const payload = JSON.stringify({
       statusResult.textContent = DATA.statusFetchError
     }
   })
+
+  // Register-Liste stets aktuell: aus dem Live-register.json (dieselbe Quelle wie die
+  // Token-Abfrage) neu rendern, sobald JS lädt — ein frisch freigegebener Seed erscheint so
+  // sofort, ohne Rebuild und unabhängig vom HTML-Cache. Die SSR-Liste bleibt Fallback.
+  const registerBody = document.querySelector<HTMLElement>('[data-saat="register-body"]')
+  if (registerBody) {
+    const esc = (s: unknown) =>
+      String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c] ?? c))
+    fetch(REGISTER_URL, { cache: 'no-store' })
+      .then((r) => (r.ok ? r.json() : null))
+      .then(
+        (reg: {
+          seeds?: Array<{
+            ts: string
+            text: string
+            author_mark: string
+            kind: string
+            addressed_to: string
+            status: string
+            response: { practice: string; decision: string; note: string; date: string } | null
+          }>
+        } | null) => {
+          if (!reg || !Array.isArray(reg.seeds)) return
+          const seeds = [...reg.seeds].sort((a, b) => String(b.ts).localeCompare(String(a.ts)))
+          if (seeds.length === 0) {
+            registerBody.innerHTML = `<p class="mt-6 text-sm text-fg-faint">${esc(DATA.registerEmpty)}</p>`
+            return
+          }
+          const items = seeds
+            .map((s) => {
+              const resp = s.response
+                ? `<p class="mt-3 border-t border-line/60 pt-3 text-sm text-fg-muted"><span class="font-mono text-xs uppercase tracking-[0.12em] text-fg-faint">${esc(DATA.responseNoteLabel)}</span> ${esc(DATA.statusLabels[s.response.decision] ?? s.response.decision)} — ${esc(s.response.note)} <span class="ml-1 text-fg-faint">(${esc(s.response.practice)}, ${esc(s.response.date)})</span></p>`
+                : ''
+              return `<li class="p-4 sm:p-5"><div class="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[11px] uppercase tracking-[0.12em] text-fg-faint"><span>${esc(String(s.ts).slice(0, 10))}</span><span aria-hidden="true">·</span><span>${esc(DATA.kindLabels[s.kind] ?? s.kind)}</span><span aria-hidden="true">·</span><span>${esc(DATA.addresseeLabels[s.addressed_to] ?? s.addressed_to)}</span><span aria-hidden="true">·</span><span class="rounded-full border border-line px-2 py-0.5 normal-case tracking-normal text-fg-muted">${esc(DATA.statusLabels[s.status] ?? s.status)}</span></div><p class="mt-2 whitespace-pre-line text-[15px] leading-relaxed text-fg">${esc(s.text)}</p><p class="mt-2 font-mono text-xs text-fg-faint">— ${esc(s.author_mark)}</p>${resp}</li>`
+            })
+            .join('')
+          registerBody.innerHTML = `<ul class="mt-6 divide-y divide-line/60 overflow-hidden rounded-[10px] border border-line bg-panel">${items}</ul>`
+        },
+      )
+      .catch(() => {})
+  }
 </script>
 
 <style>
