@@ -113,7 +113,7 @@ const encSvg = histEntries.map((h) => {
   return s
 }).join('')
 const historyMapSvg =
-  `<svg viewBox="0 0 960 ${bottomY + 40}" role="img" aria-label="History of ${histEntries.length} encounters across six practices, ordered by record — filled = source, ring = receiver" style="width:100%;height:auto">` +
+  `<svg viewBox="0 0 960 ${bottomY + 40}" role="img" aria-label="History of ${histEntries.length} encounters across six practices, ordered by record — filled = source, ring = receiver">` +
   laneSvg + encSvg +
   `<line x1="${LANE_X0}" y1="${bottomY + 20}" x2="${LANE_X1}" y2="${bottomY + 20}" class="hm-axis-line"/>` +
   `<text x="${LANE_X0}" y="${bottomY + 34}" class="hm-axis">record order — earliest → now</text>` +

@@ -10,6 +10,7 @@
 // Wortlaute: ATELIER_NARRATIVE.entrance (Stufe 0) + entranceV2 (draft bis Franks Merge).
 import Page from '@/layouts/Page.astro'
 import { ATELIER_NARRATIVE, ATELIER_DRAFT_LABEL } from '@/config/atelier-wording'
+import { parseProtocol } from '@/lib/atelier/protocol-version'
 import { sortWorks } from '@/lib/atelier/sort'
 import rhizome from '@/data/atelier/rhizome.json'
 import '@/styles/atelier-sheet.css'
@@ -62,6 +63,8 @@ const protoRaw = Object.values(import.meta.glob('/src/content/atelier/PROTOCOL.m
   eager: true, query: '?raw', import: 'default',
 }) as Record<string, string>)[0] ?? ''
 const toolboxVersion = protoRaw.match(/10-TOOLBOX-CANDIDATES-V(\d+\.\d+)\.md/)?.[1] ?? '0.4'
+// Protokoll-Version aus demselben Spiegel abgeleitet (Aktualitäts-Regel 2026-07-25).
+const proto = parseProtocol(protoRaw)
 
 // Sheet — the rhizome as the practice reads it.
 const rhKinds = (rhizome.nodes as Array<{ kind?: string }>).reduce<Record<string, number>>(
@@ -165,7 +168,7 @@ const doors = [
     href: '/atelier/foundation',
     label: 'about — the operating model',
     text: E.doors.foundation,
-    data: `${V2.doorData.foundationLine} · Toolbox v${toolboxVersion}`,
+    data: `Protocol v${proto.version} · ${V2.doorData.foundationLine} · Toolbox v${toolboxVersion}`,
   },
   {
     href: '/atelier/sheet',
@@ -288,7 +291,7 @@ const doors = [
         werden") — was gilt, und was abgeschlossene Phase ist, sauber getrennt. */}
     <p class="at-quiet">
       current:
-      <a href="/atelier/protocol">constitution — Protocol v5, the work-line protocol</a> ·
+      <a href="/atelier/protocol">constitution — Protocol v{proto.version}</a> ·
       <a href="/atelier/apparatus">apparatus — how the machine runs</a> ·
       <a href="/atelier/requests">team channel</a>
     </p>

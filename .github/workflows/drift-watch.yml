@@ -1,0 +1,31 @@
+# Drift-Wächter, Voll-Lauf (Aktualitäts-Regel, Frank 2026-07-25): die Website muss stets
+# den neuesten Stand der Entwicklung zeigen. Nächtlich NACH den Integrate-Läufen
+# (atelier 03:00/09:00/15:00/21:00 · field 03:30 · studio 04:00 UTC): prüft zusätzlich zum
+# statischen CI-Teil die Spiegel-Frische gegen die Engine-Repos. Ein roter Lauf heißt:
+# die Site erzählt einen alten Stand — GitHub benachrichtigt, der Step-Summary sagt, was
+# genau abweicht und welcher Integrate-Workflow zu starten ist.
+name: Drift watch
+
+on:
+  schedule:
+    - cron: '45 4 * * *'   # 06:45 Berlin (Sommerzeit) — nach allen Nightly-Integrates
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: drift-watch
+
+jobs:
+  drift:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Drift check (static + mirror freshness)
+        env:
+          DRIFT_NETWORK: '1'
+        run: node scripts/drift-check.mjs
