@@ -9,6 +9,7 @@ schreibt er nicht — die Aufnahme bleibt der bestehende Vorgang.
 from __future__ import annotations
 
 import argparse
+import json
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -80,6 +81,7 @@ def laufe(
     thema: int | None = None,
     quelle_name: str = "auto",
     extraktor=None,
+    extraktion: list[dict] | None = None,
 ) -> Lauf:
     begonnen = jetzt()
     wurzel = wurzel or Path.cwd()
@@ -108,10 +110,16 @@ def laufe(
                     rohfunde = openalex.ernte_thema(themen.hole(thema).literatur)
                     quelle = "openalex"
                 elif meldungs_modus:
-                    meldungen = eflux.hole_meldungen(seiten=2, grenze=anzahl)
-                    rohfunde, _ = extract.extrahiere(
-                        meldungen, wurzel / atlas_modul.PFAD_WERKE, extraktor
-                    )
+                    if extraktion is not None:
+                        # Extraktion kam von außen (Claude-Code-Routine): nur einlesen.
+                        rohfunde = extract.aus_ergebnis(
+                            extraktion, wurzel / atlas_modul.PFAD_WERKE
+                        )
+                    else:
+                        meldungen = eflux.hole_meldungen(seiten=2, grenze=anzahl)
+                        rohfunde, _ = extract.extrahiere(
+                            meldungen, wurzel / atlas_modul.PFAD_WERKE, extraktor
+                        )
                     quelle = "eflux"
                 elif atlas_name == ATLAS_THEORIE:
                     rohfunde = openalex.ernte(saat.titel, saat.doi, saat.urheber)
@@ -206,8 +214,26 @@ def main(argv: list[str] | None = None) -> int:
         "--quelle", choices=["auto", "eflux", "wikidata"], default="auto",
         help="Quelle für den Werke-Atlas (Vorgabe: eflux)",
     )
+    parser.add_argument(
+        "--nur-holen", type=Path, default=None, metavar="DATEI",
+        help="Meldungen holen und nach DATEI schreiben, dann aufhören (kein Modell)",
+    )
+    parser.add_argument(
+        "--extraktion-aus", type=Path, default=None, metavar="DATEI",
+        help="fertige Extraktion einlesen statt selbst zu extrahieren",
+    )
     parser.add_argument("--trocken", action="store_true", help="nur ausgeben, nichts schreiben")
     args = parser.parse_args(argv)
+
+    # Schritt 1 der Werke-Strecke: holen. Braucht kein Modell und läuft überall.
+    if args.nur_holen is not None:
+        meldungen = eflux.hole_meldungen(seiten=2, grenze=args.anzahl)
+        args.nur_holen.parent.mkdir(parents=True, exist_ok=True)
+        args.nur_holen.write_text(
+            json.dumps(meldungen, indent=2, ensure_ascii=False), encoding="utf-8"
+        )
+        print(f"{len(meldungen)} Meldungen → {args.nur_holen}")
+        return 0
 
     if args.thema is not None:
         thema = themen.hole(args.thema)  # wirft früh, wenn es das Feld nicht gibt
@@ -221,8 +247,14 @@ def main(argv: list[str] | None = None) -> int:
             file=sys.stderr,
         )
 
+    extraktion = None
+    if args.extraktion_aus is not None:
+        extraktion = json.loads(args.extraktion_aus.read_text(encoding="utf-8"))
+        print(f"Extraktion eingelesen: {len(extraktion)} Meldungen")
+
     lauf = laufe(
-        args.atlas, args.anzahl, args.versatz, thema=args.thema, quelle_name=args.quelle
+        args.atlas, args.anzahl, args.versatz,
+        thema=args.thema, quelle_name=args.quelle, extraktion=extraktion,
     )
 
     print(f"Atlas {lauf.atlas}: {lauf.atlas_eintraege} Einträge, Saatgut {len(lauf.saatgut)}")

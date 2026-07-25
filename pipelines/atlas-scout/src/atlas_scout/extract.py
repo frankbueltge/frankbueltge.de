@@ -104,6 +104,31 @@ def baue_system_prompt(werke_pfad: Path, beispiele: int = 50) -> str:
     )
 
 
+def aus_ergebnis(ergebnisse: list[dict], werke_pfad: Path) -> list[dict]:
+    """Rohfunde aus einer außerhalb erzeugten Extraktion.
+
+    Der Modellschritt läuft nicht über die API, sondern in einer Claude-Code-Routine
+    unter dem Abo — sie liest `meldungen.json` und schreibt `extraktion.json`. Dieses
+    Ergebnis kommt hier herein und durchläuft danach unverändert Abgleich,
+    Identifier-Prüfung und Bewertung.
+
+    Erwartete Form je Eintrag: {"url": …, "werke": [ … wie im SCHEMA … ]}
+    """
+    system = baue_system_prompt(werke_pfad)
+    prompt_hash = hashlib.sha256(system.encode("utf-8")).hexdigest()
+    meldungen = [{"url": e.get("url", ""), "text": ""} for e in ergebnisse]
+    antworten = iter(ergebnisse)
+
+    def _durchreichen(_system: str, _text: str) -> dict:
+        return next(antworten, {"werke": []})
+
+    rohfunde, _ = extrahiere(meldungen, werke_pfad, _durchreichen)
+    for fund in rohfunde:
+        fund["signale"]["modell"] = "claude-code-routine"
+        fund["signale"]["prompt_sha256"] = prompt_hash
+    return rohfunde
+
+
 def _anthropic_extraktor(system: str, text: str) -> dict:
     import anthropic
 
