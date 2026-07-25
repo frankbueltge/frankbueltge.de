@@ -26,6 +26,10 @@ const works = worksData as Work[]
 
 const de = locale === 'de'
 
+// Felder 1–7 kartieren Daten, KI und Macht — der Stand der ersten Fassung (2026).
+// Felder 8–13 sind die Erweiterung vom 2026-07-25: Datenkunst, die nicht von Macht
+// handelt. Sie erscheinen in der Filterleiste erst, sobald sie belegt sind (clusterKeys
+// wird aus den Daten abgeleitet), damit die Seite keine leeren Felder behauptet.
 const CLUSTER: Record<number, string> = de
   ? {
       1: 'Material- & planetare KI-Kosten',
@@ -35,6 +39,12 @@ const CLUSTER: Record<number, string> = de
       5: 'Dekolonial / more-than-human',
       6: 'Data Justice / Data-Feminismus',
       7: 'KI-Selbstverzehr / Quanten',
+      8: 'Wahrnehmung & Maßstab',
+      9: 'Zeit & Archiv',
+      10: 'Fehler & Rauschen',
+      11: 'Körper & Intimität',
+      12: 'Sprache & Generativität',
+      13: 'Material & Sinne',
     }
   : {
       1: 'Material & planetary AI cost',
@@ -44,7 +54,23 @@ const CLUSTER: Record<number, string> = de
       5: 'Decolonial / more-than-human',
       6: 'Data justice / data feminism',
       7: 'AI self-consumption / quantum',
+      8: 'Perception & scale',
+      9: 'Time & archive',
+      10: 'Error & noise',
+      11: 'Body & intimacy',
+      12: 'Language & generativity',
+      13: 'Material & senses',
     }
+
+// Drei Familien, damit die Karte bei dreizehn Feldern lesbar bleibt.
+const FAMILIE: Record<number, string> = {
+  1: 'macht', 2: 'macht', 3: 'macht', 4: 'macht', 5: 'macht', 6: 'macht', 7: 'macht',
+  8: 'erkenntnis', 9: 'erkenntnis', 10: 'erkenntnis',
+  11: 'ausdruck', 12: 'ausdruck', 13: 'ausdruck',
+}
+const FAMILIE_LABEL: Record<string, string> = de
+  ? { macht: 'Macht', erkenntnis: 'Erkenntnis', ausdruck: 'Ausdruck' }
+  : { macht: 'power', erkenntnis: 'knowing', ausdruck: 'expression' }
 const MEDIUM: Record<string, string> = de
   ? { digital: 'digital', hybrid: 'hybrid', physical: 'physisch' }
   : { digital: 'digital', hybrid: 'hybrid', physical: 'physical' }
@@ -56,7 +82,7 @@ const copy = de
   ? {
       kicker: 'Ein lebendiges Verzeichnis',
       intro:
-        'Eine quellenbelegte Landkarte zeitgenössischer Datenkunst — Werke, in denen Daten, KI und Macht aufeinandertreffen. Global, nach sieben Feldern geordnet, jede Angabe mit abrufbarer Quelle.',
+        'Eine quellenbelegte Landkarte zeitgenössischer Datenkunst — Werke, die Daten und KI als Material und als Gegenstand nehmen: was sie kosten, was sie verbergen, was sie wahrnehmbar machen, was sie sagen lassen. Global, nach thematischen Feldern geordnet, jede Angabe mit abrufbarer Quelle.',
       fuelPre: 'Futter für das Kollektiv im ',
       fuelMid: ' und fürs ',
       lWorks: 'Werke',
@@ -71,14 +97,14 @@ const copy = de
       unverified: 'ungeprüft',
       source: 'Quelle',
       method:
-        'Zusammengetragen in 16 parallelen Recherche-Durchgängen; jede Angabe gegen eine abrufbare Quelle geprüft — nichts erfunden. Unsichere Einordnungen sind als „ungeprüft" markiert. Ein Werk kann in mehreren Feldern liegen. Standpunkt: Untersuchung (KI als Gegenstand) ↔ Spektakel (KI als Medium).',
+        'Zusammengetragen in 16 parallelen Recherche-Durchgängen; jede Angabe gegen eine abrufbare Quelle geprüft — nichts erfunden. Unsichere Einordnungen sind als „ungeprüft" markiert. Ein Werk kann in mehreren Feldern liegen. Standpunkt: Untersuchung (KI als Gegenstand) ↔ Spektakel (KI als Medium). Die Karte begann als Kartierung von Daten, KI und Macht (Felder 1–7); am 25.07.2026 wurde sie um Felder erweitert, die nicht von Macht handeln (8–13) — Erkenntnis und Ausdruck.',
       field: 'Feld',
       atelier: 'Atelier',
     }
   : {
       kicker: 'A living index',
       intro:
-        'A source-cited map of contemporary data art — works where data, AI and power meet. Global, ordered by seven clusters, every entry with a retrievable source.',
+        'A source-cited map of contemporary data art — works that take data and AI as material and as subject: what they cost, what they hide, what they let us perceive, what they let us say. Global, ordered by thematic fields, every entry with a retrievable source.',
       fuelPre: 'Fuel for the collective in the ',
       fuelMid: ' and for the ',
       lWorks: 'works',
@@ -93,7 +119,7 @@ const copy = de
       unverified: 'unverified',
       source: 'source',
       method:
-        'Compiled across 16 parallel research passes; every entry checked against a retrievable source — nothing invented. Uncertain classifications are flagged “unverified”. A work can sit in several clusters. Stance: investigation (AI as subject) ↔ spectacle (AI as medium).',
+        'Compiled across 16 parallel research passes; every entry checked against a retrievable source — nothing invented. Uncertain classifications are flagged “unverified”. A work can sit in several clusters. Stance: investigation (AI as subject) ↔ spectacle (AI as medium). The map began as a survey of data, AI and power (fields 1–7); on 2026-07-25 it was widened with fields that are not about power (8–13) — knowing and expression.',
       field: 'Field',
       atelier: 'Atelier',
     }
@@ -105,7 +131,18 @@ const physical = works.filter((w) => w.medium_class === 'physical').length
 const clusterCounts: Record<number, number> = {}
 for (const w of works) for (const c of w.clusters) clusterCounts[c] = (clusterCounts[c] ?? 0) + 1
 
-const clusterKeys = [1, 2, 3, 4, 5, 6, 7]
+// Aus den Daten abgeleitet, nicht fest verdrahtet: ein neu angelegtes Feld erscheint in
+// der Filterleiste erst, sobald ein Werk darin liegt. Die Seite behauptet damit keine
+// Felder, die noch leer sind — und wächst ohne weitere Codeänderung mit dem Atlas.
+const clusterKeys = Object.keys(CLUSTER)
+  .map(Number)
+  .filter((c) => (clusterCounts[c] ?? 0) > 0)
+  .sort((a, b) => a - b)
+// Familien nur zeigen, solange mehr als eine belegt ist — bei ausschließlich Feldern 1–7
+// wäre ein einzelnes „Macht"-Etikett über allen Chips nur Rauschen.
+const familienKeys = ['macht', 'erkenntnis', 'ausdruck'].filter((f) =>
+  clusterKeys.some((c) => FAMILIE[c] === f),
+)
 const mediumKeys = ['digital', 'hybrid', 'physical']
 const axisKeys = ['investigation', 'mixed', 'spectacle']
 ---
@@ -140,10 +177,17 @@ const axisKeys = ['investigation', 'mixed', 'spectacle']
       <div class="flex flex-wrap items-center gap-1.5">
         <span class="mr-1 w-16 shrink-0 font-mono text-xs uppercase tracking-wider text-fg-faint">{copy.fField}</span>
         <button type="button" data-filter="cluster" data-value="all" aria-pressed="true" class="chip">{copy.all}</button>
-        {clusterKeys.map((c) => (
-          <button type="button" data-filter="cluster" data-value={String(c)} aria-pressed="false" class="chip" title={CLUSTER[c]}>
-            <span class="font-mono">{c}</span> · {CLUSTER[c]} <span class="text-fg-faint">{clusterCounts[c] ?? 0}</span>
-          </button>
+        {familienKeys.map((f) => (
+          <>
+            {familienKeys.length > 1 && (
+              <span class="ml-2 font-mono text-[0.65rem] uppercase tracking-wider text-fg-faint">{FAMILIE_LABEL[f]}</span>
+            )}
+            {clusterKeys.filter((c) => FAMILIE[c] === f).map((c) => (
+              <button type="button" data-filter="cluster" data-value={String(c)} aria-pressed="false" class="chip" title={CLUSTER[c]}>
+                <span class="font-mono">{c}</span> · {CLUSTER[c]} <span class="text-fg-faint">{clusterCounts[c] ?? 0}</span>
+              </button>
+            ))}
+          </>
         ))}
       </div>
       <div class="flex flex-wrap items-center gap-1.5">

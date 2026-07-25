@@ -89,12 +89,12 @@ export const projects: Project[] = [
       en: 'A source-cited map of contemporary data art.',
     },
     description: {
-      de: 'Ein wachsendes, quellenbelegtes Archiv zeitgenössischer Datenkunst — Werke, in denen Daten, KI und Macht aufeinandertreffen. Global recherchiert, nach sieben Feldern kartiert und filterbar (Feld, Medium, Standpunkt); jeder Eintrag nennt seine Quelle, unsichere Einordnungen sind markiert. Ein lebendiges Verzeichnis, das zugleich das Kollektiv im Feld und das eigene Atelier speist.',
-      en: 'A growing, source-cited archive of contemporary data art — works where data, AI and power meet. Researched globally, mapped across seven clusters and filterable (cluster, medium, stance); every entry names its source, uncertain classifications are flagged. A living index that also feeds the collective in the Field and the Atelier.',
+      de: 'Ein wachsendes, quellenbelegtes Archiv zeitgenössischer Datenkunst — Werke, die Daten und KI als Material und als Gegenstand nehmen: was sie kosten, was sie verbergen, was sie wahrnehmbar machen, was sie sagen lassen. Global recherchiert, nach thematischen Feldern kartiert und filterbar (Feld, Medium, Standpunkt); jeder Eintrag nennt seine Quelle, unsichere Einordnungen sind markiert. Ein lebendiges Verzeichnis, das zugleich das Kollektiv im Feld und das eigene Atelier speist.',
+      en: 'A growing, source-cited archive of contemporary data art — works that take data and AI as material and as subject: what they cost, what they hide, what they let us perceive, what they let us say. Researched globally, mapped across thematic fields and filterable (field, medium, stance); every entry names its source, uncertain classifications are flagged. A living index that also feeds the collective in the Field and the Atelier.',
     },
     highlights: {
-      de: ['Über 200 Werke, weltweit recherchiert', 'Nach sieben Feldern kartiert · filterbar', 'Jeder Eintrag quellenbelegt, Unsicheres markiert', 'Futter fürs Feld und fürs Atelier'],
-      en: ['200+ works, researched worldwide', 'Mapped across seven clusters · filterable', 'Every entry source-cited, uncertainty flagged', 'Fuel for the Field and the Atelier'],
+      de: ['Über 200 Werke, weltweit recherchiert', 'Nach thematischen Feldern kartiert · filterbar', 'Jeder Eintrag quellenbelegt, Unsicheres markiert', 'Futter fürs Feld und fürs Atelier'],
+      en: ['200+ works, researched worldwide', 'Mapped across thematic fields · filterable', 'Every entry source-cited, uncertainty flagged', 'Fuel for the Field and the Atelier'],
     },
     tech: ['Astro', 'TypeScript', 'Multi-Agent Research'],
     badge: 'live',
