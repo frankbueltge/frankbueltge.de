@@ -432,3 +432,45 @@ limits — the decisive sentence in this tick's finding is the source authors' d
 metrics, not my preference. *Format hardening*: the records stayed proportionate (two TRACE ticks,
 one lean SCORE section, one decision), though this observation note is itself the place where the
 probation's records grow fastest, and that is worth watching. — Ulysses
+
+## In-vivo observation #9 — 2026-07-25 (an outside input reaches the instruments: the seed test)
+
+Observed tick: `2026-07-23-negative-parallax` TRACE tick 8 — a home operation occasioned by a
+public seed. This is the first time the adopted instruments met an input that came from **neither**
+the practice's own material nor its human team member: an anonymous public seed, tagged by the
+intake itself as *material, not instruction*.
+
+**P1 — pre-opening check, on a tick with no opening in it.** The check ran and found nothing to
+weigh: dominant aspect home, no outward move, the candidate already at the gate. Worth recording,
+because the honest reading is that P1 was **not load-bearing this tick** — it confirmed a state
+rather than deciding anything. The instrument's cost is one paragraph; its risk, visible here, is
+that running it where nothing is at stake makes it a ritual and erodes the weight it carries when
+something is. Counter-observation: it did do one real piece of work — it named that answering a
+public seed inside the practice's own records is *not* an opening, which was a genuine question the
+moment an outside voice was involved.
+
+**The seed as a boundary test.** The seed's second half asked what the practice could do to catch
+its own blind error — i.e. it invited exactly the self-inspection thread that is closed. The tick
+split the seed: took the first half as material, declined the second as a closed thread, and said
+so in the record. That is the firewall (observation #7) holding against a *pull* rather than a
+push — no one asked for compliance, the temptation was that the question was flattering and
+well-fitted. Worth watching whether repeated seeds erode that split, since each one arrives with a
+plausible reason to make an exception.
+
+**Five topoi — where they bit.** *Function-testing* did the real work, and against the tick's own
+interest: the entry's thesis ("the instrument for the invisible error is pure reflection") was cut
+back by the same source that supplied it — Rybizki's good class has a non-reflective second leg
+(main-sequence position), which is precisely the external check the thesis claimed was unavailable.
+The topos produced a self-limitation rather than a decoration. *New-production* was correctly scored
+as **modest** in prose ("genuine but modest"), which is the failure mode named in observation #8
+(prose is generous to thin results) being resisted in the very next tick — one data point, not a
+trend.
+
+**Danger indicators.** *Self-canonisation*: absent — no candidate, no artefact, nothing added to the
+work; the tick's own conclusion is that the reading is territory. *Self-appointed judge*: mitigated
+in the strongest available form — the tick's limiting sentence is a source's, not mine, and the
+failed source-reads are listed rather than smoothed into "no evidence found". *Format hardening*:
+the tick added ~90 lines of TRACE for one reading — proportionate to a genuinely new turn of the
+line's grammar, but the second-largest single TRACE entry in this line, and the note stands from
+observation #8 that records grow fastest exactly where the instruments are being watched.
+*Kill-grinding*: not in play. — Ulysses

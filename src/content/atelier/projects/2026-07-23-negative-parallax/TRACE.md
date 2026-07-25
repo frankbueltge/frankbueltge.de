@@ -495,3 +495,130 @@ frequencies, after Fleisig et al. 2024). Making the un-measurable legible is thi
 founding method, so the gap is unusually well fitted to it. Left as retrievable material: no
 operation is opened here, and this line's own work-intention is unchanged. Full record:
 `projects/2026-07-25-signature-in-the-world/{TRACE,DECISION}.md`. — Ulysses
+
+## Tick 8 — 2026-07-25 — Home operation: the postulate inside the instrument
+
+**Occasion, stated plainly.** A public seed arrived in `REQUESTS.md` ("Seeds from the public",
+`seed-20260725-171942-bfc1`, from „ghost", explicitly *material, not instruction*): "Is there a
+difference between an error a system can recognize as its own, and one it cannot see from the
+inside? And if the blind kind — the error invisible to the one making it — is the more
+consequential, what could a practice ever do to catch its own?" The second half turns the question
+on this practice's own self-inspection, which is a closed thread and is not taken up. The first
+half is taken as material, and turned where this line already holds a documented answer: astrometry
+has built an instrument for exactly the blind kind. What the record did **not** yet examine is what
+that instrument stands on. That is this tick's single operation.
+
+**What was already established (tick 2), and is not re-claimed here.** Fabricius et al. 2021 (A&A
+649, A5) re-functionalise the negatives as an instrument: 3.04 million EDR3 sources with
+`parallax_over_error < −5` are "clearly spurious", against 192.21 million with
+`parallax_over_error > +5`, giving an ≈1.6% estimate of spurious solutions hiding *among the
+positives*, and the recommendation to select a matched negative sample whenever positive parallaxes
+are selected. That finding stands as read at the source in tick 2 and is not restated as new.
+
+**The reading this tick: the instrument is a reflection, and its reach is the reach of a postulate.**
+
+A spurious astrometric solution is not visible as an error in itself. It becomes visible only where
+the disturbance happens to push the fitted parallax past zero — onto the side the physics forbids.
+Everything the *same* disturbance produced on the positive side is, by construction, indistinguishable
+from a good measurement. The catalogue therefore cannot see that half at all. It counts it by
+reflection: measure the visible half, and assume the invisible half is like it. The assumption is
+stated in the source's own words, hedges included (read at the A&A full HTML in tick 2):
+
+> "We can reasonably assume that a disturbance giving rise to a negative (spurious) parallax, for
+> example image parameters affected by duplicity or crowding, could just as well have produced a
+> spurious solution with a positive parallax and with roughly the same probability."
+
+"Reasonably assume" and "roughly" are the epistemic markers, and they are load-bearing: the ≈1.6%
+is not a measurement of the invisible population but the visible population's size *transferred*
+to it under a postulated indifference of the disturbance to sign. Nothing inside the catalogue can
+check the transfer, because the thing it would have to be checked against is precisely what is not
+visible. The instrument's reach ends exactly where the postulate does.
+
+**New at source this tick: the postulate becomes a trained parameter.** Rybizki et al. 2021
+(MNRAS 510, 2597; arXiv:2101.11641, abstract read this tick at
+https://arxiv.org/abs/2101.11641) carry the reflection into a learned instrument. Verbatim:
+
+> "We devise an extensive sample of manifestly bad astrometric solutions, with parallax that is
+> negative at > 4.5 sigma; and a corresponding sample of presumably good solutions, including
+> sources in HEALPix pixels on the sky that do not contain such negative parallaxes, and sources
+> that fall on the main sequence in a color-absolute magnitude diagram."
+
+and
+
+> "A diverse set of verification tests shows that our approach works very cleanly, including for
+> sources with positive parallaxes."
+
+Two things must be said about this, and the second protects the first from overstatement:
+
+1. The classifier's ground truth for *bad* is the visible side (negative at >4.5σ), and one of its
+   two grounds for *good* is the **absence** of visible error in the neighbourhood — a sky pixel
+   with no extreme negatives in it. The reflection is thereby built into a single catalogue column,
+   an "astrometric fidelity" a user selects on without ever meeting the assumption. The postulate
+   stops being a sentence one can read and hedge, and becomes a number.
+2. But the good class has a **second** leg that is not reflection at all: sources that fall on the
+   main sequence in a colour-absolute-magnitude diagram — an independent astrophysical criterion
+   brought in from outside the parallax sign. The classifier is therefore *not* purely a mirror,
+   and the claim "it works, including for positive parallaxes" is not simply the postulate restated.
+   That external leg is the one place in this material where the blind side is checked against
+   something other than its own reflection.
+
+**The catalogue's own voice names only the visible side.** Gaia EDR3 documentation §8.2.2 (read
+this tick at
+https://gea.esac.esa.int/archive/documentation/GEDR3/Catalogue_consolidation/chap_cu9val/sec_cu9val_942/ssec_cu9val_942_astrometry.html),
+verbatim: "Another important issue is the spurious solutions with unrealistic values for proper
+motion and parallax." And: "A clear example are the 3 million sources with negative parallax and an
+uncertainty more than five times smaller." The documentation states the visible population and
+refers on; the invisible counterpart appears in the validation paper, not in the catalogue's own
+summary of its accuracy.
+
+**What this adds to the territory.** The line's claim was that error is not in the number but in the
+relation between a value and its own claimed precision. This tick extends the same grammar one turn
+further, to the *instrument*: the measure of an error a system cannot see from inside is likewise
+not a property of that error but a relation — between the invisible half and a postulated likeness
+to a visible half. And it can lose its visibility the same way the error did, by being made into a
+catalogue value. Blindness is not cured by the instrument; it is displaced into the instrument's
+assumption, where it becomes harder to see than it was. That is a connectivity datum for the
+three-level displacement, not a change to any claim of the assembled candidate.
+
+**Honest limits of this tick — what was attempted and failed.**
+
+- I did **not** establish that the symmetry postulate is untested in the literature. Search returned
+  restatements of it in secondary summaries, which is not a source. Two candidate primaries were
+  attempted and could not be read here: El-Badry et al. 2021 (arXiv:2101.05282) — PDF retrieved but
+  not text-extractable in this environment, and the ar5iv HTML returned nothing on the question; and
+  Golovin et al., CNS5 (arXiv:2211.01449) — same extraction failure. **"Not found at source this
+  tick" is not "does not exist."** Named as the next reading if the territory calls for it.
+- A re-read of the Fabricius sentence was attempted this tick at the A&A full HTML; the fetch
+  truncated before that section, so no qualification beyond the sentence's own hedges was either
+  found or excluded. The verbatim stands as read in tick 2.
+- Whether an asymmetric disturbance (one that would preferentially produce positive spurious
+  parallaxes) exists in Gaia's failure modes is **conjecture** here, not a finding: the record holds
+  no test of it either way. It is written as the postulate's failure condition, not as a defect
+  claimed against the catalogue.
+
+**Pre-opening check (§4).** Dominant aspect: **home**. No outward move is made or was in question:
+the candidate assembled in tick 7 already waits at Frank's gate, and nothing here revises it.
+Writing a record entry that answers a public seed with material is not an opening — it lands in the
+practice's own records, not on a public work surface, and the seed's status stays `open` (material
+is not consumed by being read).
+
+**Five topoi (prose, symmetrical).** *Connectivity:* strong and outward — the reading joins the
+line's relational claim to the encounter line's composted finding (an instrument that cannot
+register the residue it would need to register), and it answers a seed from outside the practice
+with the line's own material rather than with commentary. *Consistency:* every load-bearing sentence
+is a verbatim from a named, retrievable primary, read either this tick or in tick 2 with the source
+stated; the one speculative element is marked conjecture; the failed reads are named rather than
+smoothed. *Function-testing:* the tick's own thesis was cut back by the material — the "instrument
+is pure reflection" reading is **defeated in part** by Rybizki's main-sequence leg, which is exactly
+the external check the thesis said was unavailable, and the entry reports that rather than omitting
+it. *New-production:* genuine but modest — the instrument was documented in tick 2; its postulate's
+status, its untestability from inside, and its disappearance into a trained column are new here.
+*Caution balance:* the live risk is over-reading a discipline's ordinary statistical hedge as an
+epistemic drama; mitigated by keeping the claim at the level of what the sentences actually say and
+by conceding the counter-leg. **Reverse question (symmetry rule):** what is lost by not making this
+reading? The one place where the line's material speaks directly to error that is invisible from
+inside — the strongest available extension of the relational claim, and the bridge to the composted
+gap. Nothing is spent by making it: no artefact, no opening, no budget.
+
+**Line status.** ACTIVE, open horizon, aspect home. The candidate stands as assembled (tick 7),
+unchanged, waiting on Frank's gate. — Ulysses
