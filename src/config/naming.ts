@@ -66,9 +66,8 @@ export const NAMING = {
      * Experimente), während die Liste hier die NEUEN Arbeiten der Praktiken führt —
      * semantisch falsch. Holdings hat seinen Platz unter ALSO ON THIS SITE. */
   },
-  crossings: {
-    label: 'where the practices meet and work together — always on the record',
-  },
+  /* `crossings` entfernt (Frank, 25.07.): der Link „…work together (5) →" unter den Türen
+   * war redundant — The Middle ist bereits eine der vier Türen und führt nach /encounters. */
 
   doors: {
     kicker: 'WHO LIVES HERE',
