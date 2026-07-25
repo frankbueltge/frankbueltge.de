@@ -16,16 +16,26 @@ export interface EnginePr {
   excerpt: string
 }
 
-// Nur Branches dieser Form sind Engine-Vorschläge — alles andere (menschliche Feature-
+// Nur Branches dieser Form sind Schleusen-Vorschläge — alles andere (menschliche Feature-
 // Branches) geht die Zentrale nichts an. Dieselbe Grenze prüft site-pr.js server-seitig
 // vor jedem Merge/Close, damit der Endpoint nie fremde PRs anfasst.
-const HEAD_RE = /^(atelier|field|studio)\/pr-([a-z0-9-]+)$/
+// `currency` ist der operator-seitige vierte Kanal (2026-07-25): der nächtliche
+// Aktualitäts-Agent (drift/currency check) legt seine Fixes als `currency/pr-<slug>` ab,
+// damit sie in derselben Schleuse landen wie die Kollektiv-Vorschläge — Frank entscheidet
+// aus einem Panel. Kein Kollektiv, deshalb eigene, ehrliche Kennung statt Persona-Tarnung.
+const HEAD_RE = /^(atelier|field|studio|currency)\/pr-([a-z0-9-]+)$/
 
-const PERSONA: Record<string, string> = { atelier: 'Ulysses', field: 'Meridian', studio: 'Ensemble' }
+const PERSONA: Record<string, string> = {
+  atelier: 'Ulysses',
+  field: 'Meridian',
+  studio: 'Ensemble',
+  currency: 'Currency check',
+}
 const LABEL: Record<string, string> = {
   atelier: 'Atelier · Ulysses',
   field: 'Field · Meridian',
   studio: 'Studio · Ensemble',
+  currency: 'Currency · site freshness',
 }
 
 const EXCERPT_LEN = 400

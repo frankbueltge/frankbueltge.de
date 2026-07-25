@@ -93,3 +93,16 @@ soweit ist:
 3. `TELEGRAM_WEBHOOK_SECRET` erzeugen (eigener Zufalls-Token, prüft eingehende Updates).
 4. Einmalig `setWebhook` auf `https://frankbueltge.de/api/zentrale/telegram` mit
    `secret_token` aufrufen.
+
+## Nachtrag 2026-07-25 — vierter Kanal: der Aktualitäts-Agent (currency)
+
+Die Site-PR-Schleuse trägt jetzt neben den drei Kollektiven einen operator-seitigen
+Kanal `currency`. Der nächtliche Aktualitäts-Agent (Cloud-Routine, Sonnet) vergleicht die
+Engine-Repos gegen die Site + `docs/wording-kanon.md`, und legt jeden nötigen Fix als PR
+mit Branch `currency/pr-<slug>` ab. Diese PRs erscheinen im Site-PRs-Block wie
+Kollektiv-Vorschläge, tragen aber die eigene Kennung „Currency · site freshness" (kein
+Persona-Tarnen — der Agent ist Infrastruktur, kein Kollektiv). Frank entscheidet aus
+demselben Panel (mergen → live, oder ablehnen). So bleibt die Sicherheits-Gewohnheit
+gewahrt: LLM-geschriebener Fließtext geht nie unbemerkt live, aber die Handarbeit
+schrumpft auf einen Klick. Grenze in `sitePrs.ts` (`HEAD_RE`), server-seitig in
+`site-pr.js` über dieselbe `isEngineHead`-Prüfung erzwungen.
