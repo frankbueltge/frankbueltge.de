@@ -14,8 +14,24 @@ SCHREIBEND = {"write_text", "write_bytes", "unlink", "rename", "replace", "mkdir
 ATLAS_DATEIEN = ("atlas.json", "werke.json")
 
 
+# Genau ein Modul darf in den Werke-Atlas schreiben: die automatische Aufnahme.
+# Sie ist die bewusste Ausnahme (siehe aufnahme.py) — alles andere legt nur vor.
+AUFNAHME = "aufnahme.py"
+
+
 def _module():
-    return sorted(QUELLEN.rglob("*.py"))
+    return sorted(p for p in QUELLEN.rglob("*.py") if p.name != AUFNAHME)
+
+
+def test_nur_die_aufnahme_darf_in_den_werke_atlas_schreiben():
+    """Die Ausnahme bleibt eine Ausnahme — und nur für werke.json, nicht für atlas.json."""
+    quelltext = (QUELLEN / AUFNAHME).read_text(encoding="utf-8")
+    assert "atlas.json" not in quelltext.replace("werke.json", ""), (
+        "die Aufnahme darf den Theorie-Atlas nicht anfassen"
+    )
+    assert 'verify_status": "toVerify"' in quelltext or '"toVerify"' in quelltext, (
+        "automatisch Aufgenommenes muss als ungeprüft markiert sein"
+    )
 
 
 def test_kein_modul_nennt_einen_atlas_pfad_in_einem_schreibaufruf():

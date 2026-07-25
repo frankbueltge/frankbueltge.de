@@ -1,15 +1,19 @@
 name: Atlas-Scout nightly
 
-# Legt Kandidaten für beide Atlanten vor. Nimmt nichts auf: geschrieben wird ausschließlich
-# nach pipelines/atlas-scout/kandidaten/, nie in atlas.json oder werke.json (per AST-Prüfung
-# im Test erzwungen).
+# Sucht Kandidaten für beide Atlanten und nimmt sie im Werke-Atlas automatisch auf.
 #
-# Drei Läufe:
+# Der Theorie-Atlas bekommt nur Vorschläge — er wird im Ulysses-Repo geführt und dort
+# aufgenommen. Der Werke-Atlas wächst selbsttätig: geprüfte Kandidaten wandern in
+# werke.json, markiert als `verify_status: "toVerify"`. Genau ein Modul darf das
+# (`aufnahme.py`), erzwungen per AST-Prüfung im Test.
+#
+# Vier Läufe:
 #   1. Nachbarschaft — Zitationsumfeld bestehender Theorie-Einträge (OpenAlex, schlüsselfrei)
 #   2. Thematischer Sweep — eines der neuen Felder 8–13, rotierend (OpenAlex, schlüsselfrei)
-#   3. Werke — Ausstellungsmeldungen von e-flux, Extraktion durch ein Modell.
-#      Läuft nur, wenn ANTHROPIC_API_KEY gesetzt ist; ohne Schlüssel wird der Lauf
-#      übersprungen und das im Step-Summary vermerkt, statt still nichts zu tun.
+#   3. Werke — Rhizome ArtBase, zwei Felder je Nacht (kuratierte Werkeinträge)
+#   4. Aufnahme — geprüfte Kandidaten wandern automatisch in werke.json, markiert
+#      als `verify_status: "toVerify"`. Die Karte zeigt sie mit „?"; Git ist die
+#      Rücknahme. Kein Schlüssel, kein Modell, keine Kosten.
 
 on:
   schedule:
@@ -67,17 +71,22 @@ jobs:
           FELD=$(( 8 + $(date -u +%j) % 6 ))
           python -m atlas_scout.run --atlas theorie --thema "$FELD" | tee -a lauf.log
 
-      - name: Werke aus Ausstellungsmeldungen
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      - name: Werke suchen (ArtBase, zwei Felder je Nacht)
         run: |
           set -u
-          if [ -z "${ANTHROPIC_API_KEY:-}" ]; then
-            echo "ANTHROPIC_API_KEY nicht gesetzt — Werke-Lauf übersprungen." | tee -a lauf.log
-            exit 0
-          fi
-          pip install --no-cache-dir "anthropic>=0.69"
-          python -m atlas_scout.run --atlas werke --anzahl 25 | tee -a lauf.log
+          # Zwei der sechs neuen Felder pro Nacht — nach drei Nächten sind alle durch.
+          ERSTES=$(( 8 + (10#$(date -u +%j) * 2) % 6 ))
+          ZWEITES=$(( 8 + (10#$(date -u +%j) * 2 + 1) % 6 ))
+          for FELD in "$ERSTES" "$ZWEITES"; do
+            python -m atlas_scout.run --atlas werke --thema "$FELD" | tee -a lauf.log
+          done
+
+      - name: Aufnehmen
+        run: |
+          set -u
+          # Reihum über die Felder, gedeckelt. Aufgenommenes ist als „toVerify"
+          # markiert — die Karte zeigt es mit „?", und Git nimmt es zurück.
+          python -m atlas_scout.aufnahme --hoechstzahl 30 | tee -a lauf.log
 
       - name: Zusammenfassung
         if: always()
@@ -93,12 +102,12 @@ jobs:
         run: |
           git config user.name "Atlas-Scout"
           git config user.email "atlas-scout@frankbueltge.de"
-          git add pipelines/atlas-scout/kandidaten 2>/dev/null || true
+          git add pipelines/atlas-scout/kandidaten src/data/atlas/werke.json 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "Keine neuen Kandidaten."
             exit 0
           fi
-          git commit -m "atlas-scout: Kandidaten $(date -u +%F)"
+          git commit -m "atlas-scout: Kandidaten und Aufnahme $(date -u +%F)"
           # Gegen Push-Races mit den übrigen nächtlichen Läufen: rebasen + mehrfach versuchen.
           for i in 1 2 3 4 5; do
             if git pull --rebase --autostash origin main && git push origin HEAD:main; then

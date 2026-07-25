@@ -190,6 +190,8 @@ def laufe(
                     pruefung=befund,
                     punkte=punkte,
                     punkte_begruendung=begruendung,
+                    notiz=(rohfund.get("signale", {}).get("schnipsel")
+                           or rohfund.get("signale", {}).get("beschreibung") or None),
                 ))
 
     kandidaten.sort(key=lambda k: -k.punkte)

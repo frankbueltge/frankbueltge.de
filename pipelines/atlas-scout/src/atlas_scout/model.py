@@ -61,6 +61,9 @@ class Kandidat:
     pruefung: Pruefung
     punkte: float                     # Rangwert aus score.py
     punkte_begruendung: tuple[str, ...]
+    # Fließtext aus der Quelle, unbearbeitet. Bei ArtBase der Suchschnipsel — die
+    # einzige Prosa, die die API herausgibt. Wird nie umformuliert.
+    notiz: str | None = None
     annotation: Annotation | None = None
 
 
