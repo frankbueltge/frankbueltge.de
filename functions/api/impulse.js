@@ -13,7 +13,7 @@
 // in-memory pro Isolate (best effort) über einen NICHT persistierten IP-Hash.
 //
 // Scharf geschaltet wird das Ventil ausschließlich über das Secret IMPULSE_GITHUB_TOKEN
-// (fine-grained PAT, nur irrtum-als-methode, nur Contents read/write) in den Pages-
+// (fine-grained PAT, nur ulysses, nur Contents read/write) in den Pages-
 // Umgebungsvariablen. Ohne Token: GET → ready:false, POST → 503. Kein Token im Repo.
 import {
   validateImpulse,
@@ -22,7 +22,7 @@ import {
   INBOX_PENDING_CAP,
 } from '../../src/lib/atelier/impulse'
 
-const REPO = 'frankbueltge/irrtum-als-methode'
+const REPO = 'frankbueltge/ulysses'
 const INBOX_PATH = 'pulse/impulse-inbox.json'
 const API = `https://api.github.com/repos/${REPO}/contents/${INBOX_PATH}`
 const UA = 'frankbueltge.de cockpit valve'
