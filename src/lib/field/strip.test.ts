@@ -3,7 +3,7 @@
 // drawn, never dropped), and the pure day-range arithmetic (no clock).
 import { describe, expect, it } from 'vitest'
 import { FIELD_GRAMMAR } from '@/config/field-wording'
-import { buildControlSvg, buildStripSvg, dayRange, type ControlInput, type StripInput } from './strip'
+import { buildControlSvg, buildStripSvg, dayRange, plateSpan, type ControlInput, type StripInput } from './strip'
 
 describe('approved field grammar (static formulas, test-protected)', () => {
   it('keeps the data-edge formula verbatim', () => {
@@ -129,5 +129,52 @@ describe('buildControlSvg', () => {
     const svg = buildControlSvg(controlInput)
     expect(svg.match(/class="obl-f"/g) ?? []).toHaveLength(1)
     expect(svg).toContain('caveat-preservation — active')
+  })
+
+  it('renders a single-day plate (a work shipped today) instead of failing the build', () => {
+    // The 2026-07-24 red: the featured instrument's committed date was the newest mark date,
+    // so dayRange collapsed to one day and the old <2 guard took /field down with it.
+    const oneDay: ControlInput = {
+      days: dayRange('2026-07-24', '2026-07-24'),
+      marks: [
+        { date: '2026-07-24', label: 'built — the instrument enters service', kind: 'instr' },
+        { date: '2026-07-24', label: 'S59 — ship: graduated', kind: 'stamp', letter: 'S' },
+      ],
+      penLabel: 'in service',
+    }
+    const svg = buildControlSvg(oneDay)
+    expect(svg).toContain('built — the instrument enters service')
+    expect(svg.match(/class="stamp"/g) ?? []).toHaveLength(1)
+    expect(svg).toContain('in service')
+    expect(svg.match(/class="pen"/g) ?? []).toHaveLength(1)
+  })
+
+  it('refuses only the empty plate', () => {
+    expect(() => buildControlSvg({ days: [], marks: [], penLabel: 'in service' })).toThrow(
+      /need at least one day/,
+    )
+  })
+})
+
+describe('plateSpan', () => {
+  it('spans from the earliest mark to the latest of marks and as_of — a mark before the committed date widens the plate', () => {
+    // the real 017 shape after its chronicle build stamp: built 07-24, stamps 07-23 (build) and
+    // 07-24 (ship), ledger as_of 07-22 — the plate must carry the 07-23 stamp, not throw on it
+    expect(plateSpan('2026-07-24', ['2026-07-23', '2026-07-24'], '2026-07-22')).toEqual([
+      '2026-07-23',
+      '2026-07-24',
+    ])
+  })
+
+  it('yields the legitimate one-day span for a work shipped today', () => {
+    expect(plateSpan('2026-07-24', ['2026-07-24'], '2026-07-22')).toEqual(['2026-07-24'])
+  })
+
+  it('extends to a later as_of', () => {
+    expect(plateSpan('2026-07-20', ['2026-07-20'], '2026-07-22')).toEqual([
+      '2026-07-20',
+      '2026-07-21',
+      '2026-07-22',
+    ])
   })
 })

@@ -244,11 +244,27 @@ export interface ControlInput {
   penLabel: string
 }
 
+/**
+ * Wall-clock span of an instrument's record plate: from the earliest of the work's committed
+ * date and its mark dates to the latest of those and the ledger's as_of. Every mark is on the
+ * plate by construction — a mark dated before the committed date (a build stamp the day before
+ * the ship) widens the span instead of falling off it — and a work shipped today yields the
+ * legitimate one-day span. Lives here, not inline in the page, so the derivation stays tested.
+ */
+export function plateSpan(metaDate: string, markDates: string[], asOf: string): string[] {
+  const start = [metaDate, ...markDates].sort()[0]
+  const end = [asOf, metaDate, ...markDates].sort().at(-1)!
+  return dayRange(start, end)
+}
+
 /** Builds the Kontrollblatt SVG, mirroring field_viz.py's control_svg() structure. */
 export function buildControlSvg(input: ControlInput): string {
   const { days } = input
-  if (days.length < 2) throw new Error('buildControlSvg: need at least two days')
-  const step = Math.min(MAX_STEP, Math.floor((1282 - X0) / (days.length - 1)))
+  // A single-day plate is a real state, not an error: an instrument shipped today has exactly
+  // one wall-clock day of service (built mark, ship stamp and pen all on the same date). Only
+  // the empty plate is refused; the one-day geometry degenerates cleanly (every mark at X0).
+  if (days.length < 1) throw new Error('buildControlSvg: need at least one day')
+  const step = days.length === 1 ? 0 : Math.min(MAX_STEP, Math.floor((1282 - X0) / (days.length - 1)))
   const dxMap = new Map(days.map((d, i) => [d, X0 + i * step]))
   const dx = (date: string) => {
     const x = dxMap.get(date)
