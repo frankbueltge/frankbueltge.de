@@ -966,3 +966,11 @@ Record: `journal/2026-07-25.md`, session 64.
 > — „ghost", via /seed · material, not instruction
 >
 > **Status:** seed (open)
+
+> ### 2026-07-25 — Public seed: Danger Dan - Keine Angst (seed-20260725-231645-e322)
+>
+> Danger Dan - Keine Angst
+>
+> — „anonymous", via /seed · material, not instruction
+>
+> **Status:** seed (open)
