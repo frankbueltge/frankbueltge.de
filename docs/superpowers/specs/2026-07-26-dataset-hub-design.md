@@ -1,7 +1,8 @@
 # Dataset-Hub — Architektur-Design
 
 **Datum:** 2026-07-26 · **Status:** ABGENOMMEN (Frank, 2026-07-26 „go") — §8 ENTSCHIEDEN: eigenes Repo `dataset-hub`, Metadaten CC0
-**Umsetzung:** Repo [`frankbueltge/dataset-hub`](https://github.com/frankbueltge/dataset-hub) angelegt; **Phase 1 (Messrunde) abgeschlossen 2026-07-26** — sechs Quellen vermessen, Register: `dataset-hub/messungen/register.md` (DataCite GO, Zenodo GO/Anreicherung, OpenAIRE zurückgestellt bei 99,5 % Überlappung, EU ODP nachmessen, HuggingFace Entscheidung Frank, data.gov NO-GO derzeit)
+**Umsetzung:** Repo [`frankbueltge/dataset-hub`](https://github.com/frankbueltge/dataset-hub); **Phase 1 (Messrunde) abgeschlossen 2026-07-26** — Register: `dataset-hub/messungen/register.md` (DataCite GO, Zenodo GO/Anreicherung, OpenAIRE zurückgestellt bei 99,5 % Überlappung, EU ODP nachmessen, data.gov NO-GO derzeit). **Phase 2 gestartet 2026-07-26** (Franks „go"): Schema v0.1.0 eingefroren (`dataset-hub/schema/`), DataCite-Adapter inkrementell in Betrieb, Snapshots als getaggte Releases.
+**Dokumentierte Quellen-Ausnahme (Frank, 2026-07-26):** HuggingFace führt kein URL-Feld — Zugriffsweg darf dort aus dem dokumentierten API-Vertrag gebildet werden, aber **nur mit Pflicht-Auflösung (HTTP) vor jeder Aufnahme**; die Regel „nie URLs konstruieren" bleibt sonst unangetastet (Details: `dataset-hub/schema/SCHEMA.md`).
 **Auftrag:** `docs/research/2026-07-26-dataset-hub-startauftrag.md` (Bauregeln dort sind verbindlich)
 **Vorab-Messung:** §3.2, Stichprobe vom 2026-07-26 — alle Zahlen tatsächlich abgefragt, keine geschätzt
 
