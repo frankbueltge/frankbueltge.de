@@ -90,10 +90,16 @@ Deployed to Cloudflare Pages via GitHub Actions on every push to `main`.
 
 ## License — noncommercial
 
-**Code:** [PolyForm Noncommercial 1.0.0](./LICENSE.md) — use, modify and share for
-noncommercial purposes only. **Works, texts, images and data:**
-[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/). Commercial use of
-anything in this repository is not permitted. See [LICENSE.md](./LICENSE.md).
+**Code:** [Apache 2.0](./LICENSE.md) — use, modify and share, including commercially,
+with attribution. **Works, texts and images:**
+[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) — free to share and adapt,
+including commercially, if you give credit. **Data and archive snapshots:**
+[CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/).
+
+Open since 2026-07-26 (previously PolyForm NC / CC BY-NC-SA). The reservation against
+AI *training* is declared separately in [`public/robots.txt`](./public/robots.txt), not
+through the licence. **Exception:** seeds submitted via `/seed` remain CC BY-NC-SA 4.0 —
+promised to submitters, not retroactively changeable. See [LICENSE.md](./LICENSE.md).
 
 ## Why this repo is public
 
