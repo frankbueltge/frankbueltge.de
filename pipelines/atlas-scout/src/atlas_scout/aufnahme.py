@@ -46,6 +46,12 @@ QUELLEN_VORGABEN = {
     # Recherchierte Gegenwartswerke. Ort, Medium und Form kommen als Zusatz vom Fund
     # selbst; hier stehen nur die Rückfallwerte, wenn die Quelle nichts hergab.
     # „hybrid"/„mixed" sind die neutralen Werte des Atlas, keine Behauptung.
+    "dataphys": {
+        "venue_prize": "dataphys.org — List of Physical Visualizations",
+        "medium_class": "physical",
+        "form": "physical-installation",
+        "axis_pole": "mixed",
+    },
     "tavily": {
         "venue_prize": "—",
         "medium_class": "hybrid",

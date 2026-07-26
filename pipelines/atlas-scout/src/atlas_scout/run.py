@@ -29,7 +29,7 @@ from .model import (
     Verworfen,
 )
 from .score import SCHWELLE, gewichte, sammle_signale
-from .sources import artbase, eflux, openalex, wikidata
+from .sources import artbase, dataphys, eflux, openalex, wikidata
 from .verify import KOPF, jetzt, pruefe
 
 AUSGABE = Path("pipelines/atlas-scout/kandidaten")
@@ -86,13 +86,14 @@ def laufe(
     begonnen = jetzt()
     wurzel = wurzel or Path.cwd()
     stand = atlas_modul.lade(atlas_name, wurzel)
-    meldungs_modus = atlas_name == ATLAS_WERKE and quelle_name in ("auto", "eflux")
+    meldungs_modus = atlas_name == ATLAS_WERKE and quelle_name == "eflux"
+    dataphys_modus = atlas_name == ATLAS_WERKE and quelle_name == "dataphys"
 
     if thema is not None:
         # Thematischer Sweep: für ein neues Feld gibt es noch keine Einträge,
         # von denen aus zu gehen wäre.
         saatgut = [_thema_als_saat(thema)]
-    elif meldungs_modus:
+    elif meldungs_modus or dataphys_modus:
         saatgut = [SAAT_MELDUNGEN]
     else:
         saatgut = _saatgut(stand, anzahl, versatz)
@@ -106,7 +107,12 @@ def laufe(
     with httpx.Client(follow_redirects=True, headers=KOPF) as client:
         for saat in saatgut:
             try:
-                if thema is not None and atlas_name == ATLAS_WERKE:
+                if dataphys_modus:
+                    # Datenphysikalisierung: Feld 13. Ohne Urheber — der steht nur in
+                    # der Prosa, und Raten wäre Fehlzuschreibung (siehe dataphys.py).
+                    rohfunde = dataphys.ernte(grenze=anzahl)
+                    quelle = "dataphys"
+                elif thema is not None and atlas_name == ATLAS_WERKE:
                     # Werke zu einem Feld: ArtBase ist kuratiert und strukturiert —
                     # Titel, Urheber und Jahr kommen fertig, kein Modell nötig.
                     rohfunde = artbase.ernte(themen.hole(thema).werk_marker)
@@ -133,7 +139,8 @@ def laufe(
                     rohfunde = wikidata.ernte(saat.urheber)
                     quelle = "wikidata"
             except (openalex.QuellenAusfall, wikidata.QuellenAusfall,
-                    eflux.QuellenAusfall, artbase.QuellenAusfall) as fehler:
+                    eflux.QuellenAusfall, artbase.QuellenAusfall,
+                    dataphys.QuellenAusfall) as fehler:
                 ausfaelle.append(Ausfall(quelle=atlas_name, ausgehend_von=saat.id, vermerk=str(fehler)))
                 continue
 
@@ -219,7 +226,7 @@ def main(argv: list[str] | None = None) -> int:
         help=f"thematischer Sweep statt Nachbarschaft; neue Felder: {list(themen.NEUE_FELDER)}",
     )
     parser.add_argument(
-        "--quelle", choices=["auto", "eflux", "wikidata"], default="auto",
+        "--quelle", choices=["auto", "artbase", "dataphys", "eflux", "wikidata"], default="auto",
         help="Quelle für den Werke-Atlas (Vorgabe: eflux)",
     )
     parser.add_argument(
