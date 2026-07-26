@@ -227,7 +227,9 @@ const axisKeys = ['investigation', 'mixed', 'spectacle']
         </div>
         {familienKeys.map((f) => (
           <div class="flex flex-wrap items-center gap-1.5">
-            <span class="mr-1 w-20 shrink-0 text-right font-mono text-[0.65rem] uppercase tracking-wider text-fg-faint">{FAMILIE_LABEL[f]}</span>
+            {/* Familienname als eigene Zeile, damit die Chips linksbündig stehen und
+                nicht hinter einer Beschriftungsspalte eingerückt beginnen. */}
+            <span class="w-full font-mono text-[0.65rem] uppercase tracking-wider text-fg-faint">{FAMILIE_LABEL[f]}</span>
             {clusterKeys.filter((c) => FAMILIE[c] === f).map((c) => (
               <button type="button" data-filter="cluster" data-value={String(c)} aria-pressed="false" class="chip" title={CLUSTER[c]}>
                 <span class="font-mono text-fg-faint">{c}</span> {CLUSTER[c]} <span class="text-fg-faint">{clusterCounts[c] ?? 0}</span>
