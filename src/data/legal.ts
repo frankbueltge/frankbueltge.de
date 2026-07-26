@@ -57,6 +57,15 @@ const datenschutzDe: LegalPage = {
         'Die Inhaltsprüfung übernimmt ein KI-Modell (aktuell gemini-2.5-flash-lite, Google AI Studio); der vollständige Prüftext ist auf /seed wörtlich veröffentlicht. Vom Gate blockierte Inhalte werden nicht gespeichert — erfasst wird nur ein Zähler je Ablehnungsgrund.',
       ],
     },
+    {
+      heading: 'Dataset Register (/datasets)',
+      paragraphs: [
+        'Das Dataset Register weist öffentlich verfügbare Datensätze nach. Die Angaben stammen aus den öffentlichen Schnittstellen der Quellkataloge (derzeit DataCite, ArcGIS Hub, Hugging Face) und werden wörtlich übernommen — Titel, Herausgeber, Erscheinungsjahr, Lizenz, Zugriffsweg sowie die Namen der Urheberinnen und Urheber und, sofern von der Quelle angegeben, deren ORCID-Kennung.',
+        'Damit werden personenbezogene Daten verarbeitet: die Namen der an einem Datensatz beteiligten Personen. Rechtsgrundlage ist das berechtigte Interesse an einem nachprüfbaren wissenschaftlichen Nachweis (Art. 6 Abs. 1 lit. f DSGVO). Die Angaben sind von den Betroffenen selbst im wissenschaftlichen Kontext veröffentlicht worden; sie werden unverändert wiedergegeben, nicht angereichert, nicht mit anderen Quellen verknüpft und nicht zu Profilen verdichtet.',
+        'Wer die Nennung des eigenen Namens im Register nicht wünscht, kann der Verarbeitung widersprechen (Art. 21 DSGVO) — formlos per E-Mail an hello@frankbueltge.de unter Angabe des Eintrags. Der Eintrag wird dann aus dem veröffentlichten Bestand entfernt. Dasselbe gilt für Hinweise auf fehlerhafte Angaben oder auf Einträge, die dort nicht hingehören.',
+        'Die Snapshots des Registers sind versioniert und öffentlich abrufbar; eine Entfernung wirkt für künftige Stände. Ältere, bereits veröffentlichte Stände bleiben als Archiv bestehen — darauf wird hier ausdrücklich hingewiesen.',
+      ],
+    },
     { heading: 'Deine Rechte', paragraphs: ['Auskunft, Berichtigung, Löschung, Einschränkung, Datenübertragbarkeit, Widerspruch sowie Beschwerde bei einer Aufsichtsbehörde.'] },
   ],
 }
@@ -75,6 +84,15 @@ const datenschutzEn: LegalPage = {
         'At /seed you can offer this research a seed — text, kind, pseudonym, and addressee. If the gate accepts it, the submission is first held privately for review (a short-lived holding store, no public access) and is published in the public register (Git-versioned, permanently viewable) under CC BY-NC-SA 4.0 only after manual approval; if it is not approved, it is discarded and never published. Submitting constitutes consent to publication in the event of approval (Art. 6(1)(a) GDPR). No email address is collected.',
         'To rate-limit submissions, IP address and user agent are hashed; the hash exists only ephemerally in the function’s memory and is never stored (Art. 6(1)(f) GDPR). Bot screening is done by Cloudflare Turnstile; Cloudflare’s own privacy notice applies to that check.',
         'Content review is done by a named AI model (currently gemini-2.5-flash-lite, Google AI Studio); the full review prompt is published verbatim on /seed. Content blocked by this gate is not stored — only a counter per rejection reason is kept.',
+      ],
+    },
+    {
+      heading: 'Dataset Register (/datasets)',
+      paragraphs: [
+        'The Dataset Register records publicly available datasets. Its entries come from the public interfaces of source catalogues (currently DataCite, ArcGIS Hub, Hugging Face) and are reproduced verbatim — title, publisher, year, licence, access route, together with the names of the creators and, where the source states it, their ORCID identifier.',
+        'This means personal data is processed: the names of people involved in a dataset. The legal basis is the legitimate interest in a verifiable scholarly record (Art. 6(1)(f) GDPR). The information was published by those people themselves in a scholarly context; it is reproduced unchanged, not enriched, not linked with other sources, and not compiled into profiles.',
+        'Anyone who does not want their name listed can object to the processing (Art. 21 GDPR) — informally by email to hello@frankbueltge.de, naming the entry. The entry will then be removed from the published record. The same applies to reports of incorrect entries or entries that do not belong there.',
+        'Snapshots of the register are versioned and publicly retrievable; a removal takes effect for future snapshots. Earlier, already published snapshots remain as an archive — this is stated here explicitly.',
       ],
     },
     { heading: 'Your rights', paragraphs: ['Access, rectification, erasure, restriction, portability, objection, and the right to lodge a complaint with a supervisory authority.'] },
