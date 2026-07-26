@@ -21,17 +21,18 @@ import metaRaw from '@/data/datasets/meta.json'
 export type Pruefstand = 'none' | 'versucht' | 'landing' | 'download'
 export type EintragStatus = 'ungeprueft' | 'geprueft' | 'markiert' | 'zurueckgezogen'
 
+/** Schlanker Suchindex — genau die Felder, die Suche, Filter und Ergebnisliste
+ *  brauchen. Zugriffs-URL, Quell-ID und Werk-Zugehörigkeit stehen bewusst NICHT hier:
+ *  sie werden nur auf den Einzelseiten gebraucht und lägen sonst im Browser-Download,
+ *  der mit jedem Eintrag mitwächst (details.json wird nur beim Bauen gelesen). */
 export interface DatasetEntry {
   i: string
-  w: string
   q: string
-  p: string
   g: string
   t: string
   h: string
   j: number | null
   l: string
-  u: string
   v: Pruefstand
   s: number | null
   z: EintragStatus
@@ -99,7 +100,10 @@ export function licenceLabel(l: string): string {
 
 /** Deterministisch aus den Feldern des Eintrags zusammengesetzt — kein Zitat der
  *  Quelle, sondern ein Formatierungsvorschlag; die Seite weist selbst darauf hin. */
-export function suggestedCitation(e: Pick<DatasetEntry, 't' | 'h' | 'j' | 'u'>): string {
+export function suggestedCitation(
+  e: Pick<DatasetEntry, 't' | 'h' | 'j'>,
+  url: string,
+): string {
   const lead = [e.h || null, e.j ? `(${e.j})` : null].filter(Boolean).join(' ')
-  return `${lead ? `${lead}. ` : ''}${e.t}. ${e.u}`
+  return `${lead ? `${lead}. ` : ''}${e.t}.${url ? ` ${url}` : ''}`
 }
