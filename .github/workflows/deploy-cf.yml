@@ -65,10 +65,19 @@ jobs:
       # Gate vor dem Deploy (P0.4, 16.07.): check + test laufen HIER, nicht nur im parallelen
       # CI — Bot-Pushes der Nightlies (GITHUB_TOKEN) lösen `on: push` nicht aus, dieser Job
       # ist auf dem workflow_run-Pfad also das einzige Netz. Rot statt blind live.
+      # GITHUB_TOKEN für alle drei Schritte: check/test/build holen die Registerdaten aus
+      # dem jüngsten dataset-hub-Release (scripts/hole-dataset-daten.mjs). Ohne Token
+      # greift das Limit für anonyme API-Zugriffe und der Lauf bricht mit HTTP 403 ab —
+      # so passiert am 26.07., und richtig laut statt still mit leerem Register.
       - run: npm run check
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: npm run test
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: npm run build
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # Public Turnstile SITE key (not a secret — it ships in the client widget). Astro inlines
           # PUBLIC_* vars at BUILD time; this build runs on GitHub's runner and does NOT see
           # Cloudflare's runtime env, so without this the /seed form would ship in permanent standby.
