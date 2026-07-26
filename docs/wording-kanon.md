@@ -47,6 +47,23 @@ geholt). Wer Selbstbeschreibungen ändert, zieht dieses Dokument im selben Commi
   moments"/„rarely" — das widerspricht der laufenden joint-first-Richtung (research-ecology,
   seit 19.07., erste Joint Inquiries in Vorbereitung 24.07.).
 
+## Catalogues (Frank, 26.07.)
+
+Der Nav-Punkt **„Atlas" wird zu „Catalogues"** und hält zwei maschinell gepflegte
+Nachschlagewerke: **Atlas of Data Art** (`/atlas`, Name bleibt — verdient und zutreffend)
+und **Dataset Register** (`/datasets`, neu). Kanonische Wortlaute in `naming.ts`
+(`NAMING.catalogues`).
+
+- Abgrenzung: Catalogues verzeichnen, was es **in der Welt** gibt. `/holdings` hält die
+  **eigenen** früheren Arbeiten. Das Quellen-Regal des Ateliers (`/atelier/material`) ist
+  das Inventar **einer Praxis** und bleibt dort — es wurde geprüft und bewusst NICHT in den
+  Sammelpunkt gezogen (Frank, 26.07.).
+- **„Hub" ist für die Dataset-Fläche gesperrt:** In dieser Codebasis bezeichnet „hub" die
+  **Startseite** der Ökologie (`naming.ts`: „the hub's own wordings"). Das Repository darf
+  `dataset-hub` heißen, die Site-Fläche heißt **Dataset Register**.
+- Zahlen (Einträge, Werke) stehen **nie** in den Beschreibungstexten — sie veralten
+  nächtlich und werden ausschließlich aus den Daten gerendert.
+
 ## Schwarze Liste (zurückgezogen — nie als aktuell verwenden)
 
 | Phrase | Status |
@@ -58,6 +75,7 @@ geholt). Wer Selbstbeschreibungen ändert, zieht dieses Dokument im selben Commi
 | „Data & AI Engineer" | verworfen 24.07. |
 | „data artist" / „Datenkünstler" | nie |
 | „the whole lab" / `/lab` | Route und Begriff ersetzt durch `/holdings` (Sammelseite) |
+| „Dataset Hub" als Site-Fläche | „hub" ist die Startseite; die Fläche heißt **Dataset Register** (26.07.) |
 | „locally constituted" / „wherever the apparatus permits" | entnebelt 24.07. (Hero-Untertitel) |
 | „cinematic" (datavism) | gestrichen 16.07. |
 | Zahlen in Beschreibungstexten (z. B. „214 works") | veralten nächtlich — Zahlen nur aus Daten rendern |

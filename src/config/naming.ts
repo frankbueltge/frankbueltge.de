@@ -129,6 +129,32 @@ export const NAMING = {
   /* `rest` („ALSO ON THIS SITE") entfernt (Frank, 25.07.): Apparatus hängt am Hero,
    * Holdings/Atlas/About stehen in der Top-Nav — die Sektion war durchgehend redundant. */
 
+  /** Sammelpunkt für die maschinell gepflegten Nachschlagewerke (Frank, 26.07.): der
+   * Nav-Punkt „Atlas" wird zu „Catalogues" und hält Atlas UND Dataset Register — beides
+   * wächst ohne menschliches Zutun und verzeichnet, was es in der WELT gibt (im
+   * Unterschied zu /holdings, wo eigene Arbeiten liegen, und zum Regal des Ateliers
+   * unter /atelier/material, das das Inventar EINER Praxis ist und dort bleibt).
+   * „Hub" ist hier bewusst NICHT verwendet — der Begriff bezeichnet in dieser Codebasis
+   * die Startseite der Ökologie; das Repo darf `dataset-hub` heißen, die Fläche nicht.
+   * Zahlen stehen NICHT in diesen Texten (Kanon: Zahlen nur aus Daten rendern). */
+  catalogues: {
+    kicker: 'CATALOGUES',
+    title: 'what exists, catalogued by machine',
+    sub: 'Two reference works that grow on their own: they record what is out there, cite where each entry came from, and state what is missing rather than filling the gap.',
+    items: [
+      {
+        name: 'Atlas of Data Art',
+        href: '/atlas',
+        description: 'A source-cited map of contemporary data art — works where data, AI and power meet, arranged by field rather than by date.',
+      },
+      {
+        name: 'Dataset Register',
+        href: '/datasets',
+        description: 'A machine-readable record of publicly available datasets: every entry carries a verbatim access route, the state of its verification, and the gaps the register knows about. Queryable as versioned snapshots, not only readable in a browser.',
+      },
+    ],
+  },
+
   /** The caption under the hero pulse. The wrapping phrasing is the design session's — the
    * bracketed bits (week range, commit count, as-of stamp) are filled in from the committed
    * snapshot (src/data/pulse/pulse.json) at render time, never hard-coded, so the caption never
