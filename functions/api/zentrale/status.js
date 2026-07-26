@@ -25,6 +25,7 @@ import {
   summarizeCommits,
   chronicleLast,
   vitalSignsLast,
+  cacheIsUsable,
   newestJournalEntry,
   journalTitle,
   buildInbox,
@@ -249,16 +250,29 @@ export async function onRequestGet(context) {
   const token = (env.ZENTRALE_GITHUB_TOKEN || '').trim()
   if (!token) return json(503, { ok: false, code: 'not-connected' })
 
-  const refresh = new URL(request.url).searchParams.get('refresh') === '1'
+  const params = new URL(request.url).searchParams
+  const refresh = params.get('refresh') === '1'
+  // `since` = Zeitstempel der letzten schreibenden Aktion, den der Browser mitschickt
+  // (Antwort, Ack, PR-Merge/Close). Ein Cache-Eintrag, der VOR dieser Aktion gebaut wurde,
+  // zeigt garantiert einen überholten Stand — dann wird neu geholt, egal welches Isolate
+  // die Anfrage bekommt. Ohne das erschien eine gerade abgearbeitete Sache nach einem
+  // Reload bis zu drei Minuten lang wieder als offen.
+  const sinceRaw = Number(params.get('since'))
+  const since = Number.isFinite(sinceRaw) && sinceRaw > 0 ? sinceRaw : null
 
-  if (!refresh && cache.payload && Date.now() - cache.at < CACHE_TTL_MS) {
+  if (!refresh && cache.payload && cacheIsUsable(cache.at, Date.now(), CACHE_TTL_MS, since)) {
     return json(200, { ...cache.payload, cached: true })
   }
 
   if (!inflight) {
+    // Gestempelt wird der BEGINN des Durchlaufs, nicht sein Ende: Die GitHub-Antworten
+    // stammen von diesem Zeitpunkt an. Mit der Endzeit sähe ein Durchlauf, der vor einer
+    // Schreibaktion begann und danach fertig wurde, jünger aus als sie — und der
+    // since-Vergleich oben würde ihn fälschlich durchwinken.
+    const startedAt = Date.now()
     inflight = buildPayload(token)
       .then((payload) => {
-        cache = { at: Date.now(), payload }
+        cache = { at: startedAt, payload }
         return payload
       })
       .finally(() => {
