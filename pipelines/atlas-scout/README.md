@@ -47,6 +47,7 @@ menschliches Urteil. Quellenausfälle stehen als `ausfaelle` im Lauf und werden 
 | **Thematischer Sweep** | Theorie | OpenAlex | `--atlas theorie --thema 10` |
 | **Werke zu einem Feld** | Werke | Rhizome ArtBase | `--atlas werke --thema 13` |
 | **Datenphysikalisierung** | Werke | dataphys.org | `--atlas werke --quelle dataphys` |
+| **Gegenwartswerke** | Werke | S+T+ARTS Prize | `--atlas werke --quelle starts` |
 | **Externe Funde** | Werke | beliebig | `python -m atlas_scout.extern funde.json` |
 | **Aufnahme** | Werke | — | `python -m atlas_scout.aufnahme --hoechstzahl 30` |
 
@@ -97,7 +98,7 @@ noch einmal gemacht werden müssen — und damit auffällt, wenn sich etwas änd
 | Wikidata | 9 von 25 Urhebern gefunden, **1 von 25** mit erfassten Werken. Trägt zeitgenössische Medienkunst nicht | verworfen |
 | e-flux | Nur 15 Meldungen erreichbar (`?page=` und `?search=` werden ignoriert, Liste ist JS-gesteuert). Von sechs gelesenen Meldungen enthielt **keine** ein Werk für den Atlas | verworfen |
 | Tavily | Läuft, aber schlüsselfrei auf ~1 Suche/Stunde gedeckelt. Die Antwortgenerierung **erfindet**: von fünf Werkangaben zwei URLs frei erfunden, eine Zuschreibung falsch | nur zum Finden von Quellen |
-| Ars Electronica, STARTS | JS-gerendert, ohne rendernden Abruf nicht lesbar | offen |
+| **S+T+ARTS Prize** | JS-gerendert — Tavilys Extract rendert, danach fester Aufbau (`* ## [Titel](URL) / ## Urheber (LAND)`), per Parser lesbar. Braucht `TAVILY_API_KEY`, aber kein Modell | **im Einsatz** |
 
 ### Abdeckungsgrenzen
 
@@ -105,8 +106,12 @@ noch einmal gemacht werden müssen — und damit auffällt, wenn sich etwas änd
 - **dataphys** ist historisch geprägt und nennt den Urheber nur in der Prosa, nicht als
   Feld. Der Adapter lässt ihn deshalb leer; die Aufnahme weist solche Kandidaten ab
   („kein Urheber"). Sie warten, bis eine Routine die Prosa liest.
-- **Gegenwartswerke** sind dadurch unterrepräsentiert. Die Häuser mit den aktuellen
-  Arbeiten sind genau die JS-gerenderten.
+- **S+T+ARTS** schließt die Gegenwartslücke, liefert aber keine Feldzuordnung — welches
+  Feld ein Werk trägt, steht in keiner Jurybeschreibung als Angabe. Die Kandidaten warten
+  wie die dataphys-Einträge auf den Urteilsschritt.
+- Das Jahr bei S+T+ARTS ist das **Auszeichnungsjahr**, nicht zwingend das Entstehungsjahr.
+  Es steht deshalb auch im `venue_prize` („S+T+ARTS Prize 2026"), damit der Eintrag nicht
+  mehr behauptet, als er trägt.
 
 ## Grenzen
 
@@ -131,8 +136,12 @@ noch einmal gemacht werden müssen — und damit auffällt, wenn sich etwas änd
 
 ```
 05:00 UTC  .github/workflows/atlas-scout.yml   Suchen, prüfen, aufnehmen (kein Modell)
-06:00 UTC  Claude-Code-Routine                 Prosa lesen, Urheber nachtragen
+06:00 UTC  Claude-Code-Routine                 Urheber lesen, Felder zuordnen
 ```
+
+Zwei Lücken füllt nur der zweite Lauf, weil sie Urteil brauchen: der Urheber bei
+dataphys (steht nur in der Prosa) und die Feldzuordnung bei S+T+ARTS (steht nirgends).
+Beide Male weist die Aufnahme unvollständige Kandidaten ab, statt zu raten.
 
 Der zweite Lauf ist eine Routine auf claude.ai, kein Repo-Artefakt — er braucht Urteil und
 läuft deshalb unter dem Abo, nicht in Actions. Actions kennt das Abo nicht; jeder

@@ -29,7 +29,7 @@ from .model import (
     Verworfen,
 )
 from .score import SCHWELLE, gewichte, sammle_signale
-from .sources import artbase, dataphys, openalex
+from .sources import artbase, dataphys, openalex, starts
 from .verify import KOPF, jetzt, pruefe
 
 AUSGABE = Path("pipelines/atlas-scout/kandidaten")
@@ -85,12 +85,13 @@ def laufe(
     wurzel = wurzel or Path.cwd()
     stand = atlas_modul.lade(atlas_name, wurzel)
     dataphys_modus = atlas_name == ATLAS_WERKE and quelle_name == "dataphys"
+    starts_modus = atlas_name == ATLAS_WERKE and quelle_name == "starts"
 
     if thema is not None:
         # Thematischer Sweep: für ein neues Feld gibt es noch keine Einträge,
         # von denen aus zu gehen wäre.
         saatgut = [_thema_als_saat(thema)]
-    elif dataphys_modus:
+    elif dataphys_modus or starts_modus:
         saatgut = [SAAT_LISTE]
     else:
         saatgut = _saatgut(stand, anzahl, versatz)
@@ -104,7 +105,12 @@ def laufe(
     with httpx.Client(follow_redirects=True, headers=KOPF) as client:
         for saat in saatgut:
             try:
-                if dataphys_modus:
+                if starts_modus:
+                    # Gegenwartswerke: die Gewinnerseiten sind JS-gerendert, Tavily
+                    # rendert sie, der Rest ist ein Parser — kein Modell.
+                    rohfunde = starts.ernte(grenze=anzahl)
+                    quelle = "starts"
+                elif dataphys_modus:
                     # Datenphysikalisierung: Feld 13. Ohne Urheber — der steht nur in
                     # der Prosa, und Raten wäre Fehlzuschreibung (siehe dataphys.py).
                     rohfunde = dataphys.ernte(grenze=anzahl)
@@ -121,7 +127,7 @@ def laufe(
                     rohfunde = openalex.ernte(saat.titel, saat.doi, saat.urheber)
                     quelle = "openalex"
             except (openalex.QuellenAusfall, artbase.QuellenAusfall,
-                    dataphys.QuellenAusfall) as fehler:
+                    dataphys.QuellenAusfall, starts.QuellenAusfall) as fehler:
                 ausfaelle.append(Ausfall(quelle=atlas_name, ausgehend_von=saat.id, vermerk=str(fehler)))
                 continue
 
@@ -207,7 +213,7 @@ def main(argv: list[str] | None = None) -> int:
         help=f"thematischer Sweep statt Nachbarschaft; neue Felder: {list(themen.NEUE_FELDER)}",
     )
     parser.add_argument(
-        "--quelle", choices=["auto", "artbase", "dataphys"], default="auto",
+        "--quelle", choices=["auto", "artbase", "dataphys", "starts"], default="auto",
         help="Quelle für den Werke-Atlas (Vorgabe: artbase über --thema)",
     )
     parser.add_argument("--trocken", action="store_true", help="nur ausgeben, nichts schreiben")
