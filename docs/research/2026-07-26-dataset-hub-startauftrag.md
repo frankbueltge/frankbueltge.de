@@ -4,9 +4,17 @@
 die Lehren daraus stehen unten und sind der Grund, warum dieser Auftrag so knapp und die
 Reihenfolge so streng ist.
 
-**Modell für die Architekturphase: Opus 5.** Der Bulk ist Rohrlegerarbeit ohne Modell, aber
-die Identitätsfrage (unten) ist ein konzeptionell schweres Problem, bei dem eine falsche
-Entscheidung erst nach Wochen auffällt.
+**Modell für die Architekturphase: Fable 5.** Die Identitätsfrage (unten) ist im Feld nicht
+gelöst, nicht bloß aufwendig — konkurrierende Standards, Versionskonventionen, an die sich
+niemand hält, Aggregator- gegen Quell-Einträge. Fällt die Setzung falsch, zeigt sich das
+nach Wochen an einer Datenbank voller Dubletten. Fable ist für genau diese Sorte Aufgabe
+gebaut: die härtesten ungelösten Probleme, Ersthieb-Entwürfe gut spezifizierter Systeme,
+Mehrdeutigkeit durchdringen. Für die Umsetzung danach genügt Opus 5 oder Sonnet 5; der Bulk
+(Kataloge abgrasen, normalisieren, prüfen) braucht überhaupt kein Modell.
+
+**Der Auftrag ist absichtlich knapp gehalten.** Fable liefert schlechter, wenn man ihm die
+Schrittfolge vorgibt — Ziel und Randbedingungen ja, Regieanweisung nein. Was unten steht,
+sind Bedingungen und offene Fragen, keine Anleitung.
 
 ---
 
@@ -79,14 +87,18 @@ Sie stammen aus dem Atlas-Scout und haben sich dort teuer bewährt.
 - **Ausfälle vermerken, nie überbrücken.** Ein leeres Ergebnis darf nie wie „nichts
   gefunden" aussehen, wenn es „Quelle nicht erreichbar" heißt.
 
-### Reihenfolge
+### Zwei Bedingungen an den Weg
 
-1. Design-Dokument mit den vier Entscheidungen. Vorlegen, nicht gleich bauen.
-2. Quellenmessung: pro Kandidat-Katalog die Trefferzahl, die Feldabdeckung und die
-   Maschinenlesbarkeit **messen und protokollieren**. Erst danach Adapter.
-3. Ein Adapter, eine Quelle, Ende zu Ende, mit Tests. Dann skalieren.
-4. Aufnahme mit Schranken. Dann der nächtliche Lauf.
-5. Oberfläche zuletzt — sie zeigt, was da ist, und bestimmt nicht, was aufgenommen wird.
+**Messen kommt vor Bauen.** Jede Quelle wird geprüft und das Ergebnis protokolliert —
+Trefferzahl, Feldabdeckung, Maschinenlesbarkeit —, bevor ein Adapter dafür entsteht. Beim
+Atlas-Scout wurden zwei Adapter fertiggebaut, ehe die Messung zeigte, dass die Quellen
+nichts tragen.
+
+**Die Oberfläche folgt den Daten, nicht umgekehrt.** Sie zeigt, was aufgenommen wurde; sie
+darf nicht bestimmen, was aufgenommen wird.
+
+Alles Weitere — in welcher Reihenfolge du die vier Entscheidungen angehst, wie du prüfst,
+wann du vorlegst — entscheide selbst. Leg das Design vor, bevor die Pipeline steht.
 
 ### Offene Frage an Frank
 
