@@ -64,6 +64,9 @@ class Kandidat:
     # Fließtext aus der Quelle, unbearbeitet. Bei ArtBase der Suchschnipsel — die
     # einzige Prosa, die die API herausgibt. Wird nie umformuliert.
     notiz: str | None = None
+    # Quellenspezifische Angaben, die die Aufnahme übernehmen darf (Ort, Medium, Form).
+    # Nur was in der Quelle stand — fehlt etwas, bleibt es weg statt geraten zu werden.
+    zusatz: dict | None = None
     annotation: Annotation | None = None
 
 
