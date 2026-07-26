@@ -105,5 +105,12 @@ human", „the architect & conductor", „the human decides".
   („how the machine runs").
 - Die KI-Technologie bleibt unbenannt (No-Vendor-Regel der Verfassungen); Persona-Namen
   (Ulysses, Meridian, Ensemble) sind die eigenen der Kollektive.
-- Lizenz-Zeile: „code PolyForm NC 1.0.0 · works CC BY-NC-SA 4.0 · Git is the archive"
-  (lab-weit nichtkommerziell, seit 12.07.; lab-pipelines angeglichen 24.07.).
+- Lizenz-Zeile: **„code Apache 2.0 · works CC BY 4.0 · data CC0 · Git is the archive"**
+  (Frank, 26.07. — löst die lab-weite Nichtkommerzialität vom 12.07. ab). Begründung:
+  Die NC-Klausel blockierte genau die Weiterverwendung, die Reichweite schafft — wenn ein
+  Werk viral geht, sind es kommerzielle Multiplikatoren, die es verbreiten. Der
+  KI-Vorbehalt hängt seit 26.07. nicht mehr an der Lizenz, sondern an der Crawler-Politik
+  (`public/robots.txt`, `docs/design/2026-07-26-crawler-politik.md`).
+  **Ausnahme:** Saat-Einreichungen (`/seed`) bleiben CC BY-NC-SA 4.0 — das war
+  Einreichenden zugesagt und ist nicht rückwirkend änderbar.
+  Entscheidungsgrundlage: `docs/design/2026-07-26-lizenz-entscheidungsvorlage.md`.

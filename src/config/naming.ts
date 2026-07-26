@@ -170,7 +170,7 @@ export const NAMING = {
 
   footer: {
     tagline: 'a federated research ecology · frankbueltge.de',
-    licenseLine: 'code PolyForm NC 1.0.0 · works CC BY-NC-SA 4.0 · Git is the archive',
+    licenseLine: 'code Apache 2.0 · works CC BY 4.0 · data CC0 · Git is the archive',
   },
 } as const
 
