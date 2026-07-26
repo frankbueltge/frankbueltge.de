@@ -79,6 +79,33 @@ curl -s -o /dev/null -w "%{http_code}\n" -A "OAI-SearchBot/1.0" https://frankbue
 curl -s -o /dev/null -w "%{http_code}\n" -A "GPTBot/1.2"       https://frankbueltge.de/   # gesperrt bleibt gesperrt
 ```
 
+## 3a. Stand nach Franks erster Umstellung (gemessen 2026-07-26, abends)
+
+**Schritt (a) erledigt:** Die verwaltete robots.txt ist abgeschaltet — ausgeliefert wird
+jetzt `public/robots.txt` aus dem Repo (94 Zeilen, kein „Cloudflare Managed content"-Block
+mehr). Die Politik ist damit korrekt **deklariert**.
+
+**Schritt (b) steht noch aus:** Die Kantensperre wirkt unverändert. Gemessene Antworten:
+
+| Kennung | Antwort |
+|---|---|
+| Browser, Googlebot | 200 |
+| OAI-SearchBot, PerplexityBot, Claude-SearchBot | **403** |
+| ClaudeBot, GPTBot | 403 (so gewollt) |
+
+Der 403 kommt als `content-type: text/plain` mit dem Rumpf „Your request was blocked."
+und **ohne** `cf-mitigated`-Header — die Signatur der KI-Bot-Sperre, nicht der WAF.
+
+**Folge:** Die zitierenden Agenten kommen weiterhin nicht herein; die Deklaration in der
+robots.txt läuft insoweit leer. Für das eigentliche Ziel (in KI-Antworten zitiert werden)
+ist Schritt (b) der wirksame.
+
+**Messvorbehalt, unverändert:** Die Kennungen wurden von außen gesetzt. Cloudflare
+verifiziert echte Bots zusätzlich per IP, also ist von außen nicht entscheidbar, ob auch
+die *verifizierten* Retrieval-Agenten abgewiesen werden oder nur die Fälschungen.
+Authoritativ ist allein die Crawler-Liste im Dashboard unter AI Crawl Control — dort steht
+je Crawler Allow/Block, und dort ist auch der tatsächliche Bot-Verkehr sichtbar.
+
 ## 4. Technische Notiz
 
 `/steuerzentrale` wird **nicht** per `Disallow` gesperrt. Die Seite trägt bereits
