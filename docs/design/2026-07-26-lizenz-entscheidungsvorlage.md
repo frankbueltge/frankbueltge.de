@@ -1,6 +1,15 @@
 # Lizenz — Entscheidungsvorlage
 
-**Datum:** 2026-07-26 · **Status:** VORLAGE, wartet auf Franks Entscheidung
+**Datum:** 2026-07-26 · **Status:** ENTSCHIEDEN (Frank, 2026-07-26) — **Variante „durchgehend offen"**:
+Code Apache 2.0, Werke/Texte CC BY 4.0, Daten CC0; Saat bleibt CC BY-NC-SA.
+Umgesetzt in sechs Repos, `naming.ts`, Kanon, Apparatus und Methodenblatt.
+
+Franks Begründung: Werke sollen auch kommerziell verwendbar sein — „falls da wirklich mal
+ein großartiges Werk entstehen sollte, was viral geht". Dazu eine Richtigstellung, die den
+Grund eher stärkt: **Zitieren war nie verboten** (Zitatrecht, §51 UrhG). NC blockierte die
+vollständige Übernahme in kommerziellem Zusammenhang — also genau die Multiplikatoren, die
+Reichweite erzeugen. **Hinweis:** CC-Lizenzen sind unwiderruflich; wer ein Werk unter CC BY
+erhalten hat, behält diese Rechte dauerhaft.
 **Anlass:** Frank, 2026-07-26: „die Entscheidung für non-commercial war damals aus dem
 Bauch heraus und ich weiß gar nicht, ob das überhaupt sinnvoll ist."
 **Kein Rechtsrat.** Das hier ist eine strukturierte Abwägung, keine anwaltliche Auskunft.
