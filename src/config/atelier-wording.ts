@@ -151,7 +151,7 @@ export const ATELIER_NARRATIVE = {
         { n: 6, axis: 'ethics', is: 'caution', not: 'transgression' },
       ],
       toolboxLine:
-        'Toolbox v0.3 — 26 methodological hypotheses, each with its own failure test; seven ATP-derived elements are under live probation (put-back-on-the-map)',
+        'Toolbox v0.3 — 26 methodological hypotheses, each with its own failure test; the put-back-on-the-map probation adopted three of them into the constitution 24 July 2026 (pre-opening check, the five topoi, the danger vocabulary)',
       workLink: 'read the work — Kartographie statt Kopie (DE/EN) →',
       foundationLink: 'the ground it stands on →',
     },
