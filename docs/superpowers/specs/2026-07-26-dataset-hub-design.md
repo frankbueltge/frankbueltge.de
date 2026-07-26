@@ -1,6 +1,7 @@
 # Dataset-Hub — Architektur-Design
 
-**Datum:** 2026-07-26 · **Status:** ENTWURF ZUR ABNAHME (Frank) — §8 ENTSCHIEDEN (Frank, 2026-07-26): eigenes Repo `dataset-hub`, Metadaten CC0
+**Datum:** 2026-07-26 · **Status:** ABGENOMMEN (Frank, 2026-07-26 „go") — §8 ENTSCHIEDEN: eigenes Repo `dataset-hub`, Metadaten CC0
+**Umsetzung:** Repo [`frankbueltge/dataset-hub`](https://github.com/frankbueltge/dataset-hub) angelegt; **Phase 1 (Messrunde) abgeschlossen 2026-07-26** — sechs Quellen vermessen, Register: `dataset-hub/messungen/register.md` (DataCite GO, Zenodo GO/Anreicherung, OpenAIRE zurückgestellt bei 99,5 % Überlappung, EU ODP nachmessen, HuggingFace Entscheidung Frank, data.gov NO-GO derzeit)
 **Auftrag:** `docs/research/2026-07-26-dataset-hub-startauftrag.md` (Bauregeln dort sind verbindlich)
 **Vorab-Messung:** §3.2, Stichprobe vom 2026-07-26 — alle Zahlen tatsächlich abgefragt, keine geschätzt
 
