@@ -135,9 +135,21 @@ noch einmal gemacht werden müssen — und damit auffällt, wenn sich etwas änd
 ## Nachtläufe
 
 ```
-05:00 UTC  .github/workflows/atlas-scout.yml   Suchen, prüfen, aufnehmen (kein Modell)
-06:00 UTC  Claude-Code-Routine                 Urheber lesen, Felder zuordnen
+05:00 UTC   .github/workflows/atlas-scout.yml   Suchen, prüfen, aufnehmen (kein Modell)
+06:00 UTC   Routine „Urteilsschritte"           Urheber lesen, Felder zuordnen
+07:00 UTC   Routine „Theorie-Atlas aufnehmen"   Kandidaten → ulysses/atlas/atlas.json
+1. d. M.    Routine „Ablehnungsverzeichnis"     Monatsbericht nach berichte/
 ```
+
+Die drei Routinen liegen auf claude.ai, nicht im Repo. Der Theorie-Lauf schreibt in
+ein anderes Repo (`ulysses`) und committet als Persona mit `@ulysses.invalid` — der
+Werke-Atlas bleibt hier, der Theorie-Atlas gehört dem Atelier.
+
+Der Monatsbericht ist kein Wartungsbericht. Das Ablehnungsverzeichnis wächst mit jedem
+Lauf; über Monate wird daraus eine Messung des Verfahrens gegen sich selbst — welche
+Quelle nur noch Dubletten liefert, welches Feld beharrlich Ablehnungen sammelt, welches
+Werk offensichtlich hineingehört und trotzdem scheitert. Der Bericht ändert nichts, er
+schlägt vor.
 
 Zwei Lücken füllt nur der zweite Lauf, weil sie Urteil brauchen: der Urheber bei
 dataphys (steht nur in der Prosa) und die Feldzuordnung bei S+T+ARTS (steht nirgends).
