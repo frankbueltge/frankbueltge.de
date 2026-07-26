@@ -17,7 +17,7 @@ from pathlib import Path
 import httpx
 
 from . import atlas as atlas_modul
-from . import extract, themen
+from . import themen
 from .model import (
     ATLAS_THEORIE,
     ATLAS_WERKE,
@@ -29,7 +29,7 @@ from .model import (
     Verworfen,
 )
 from .score import SCHWELLE, gewichte, sammle_signale
-from .sources import artbase, dataphys, eflux, openalex, wikidata
+from .sources import artbase, dataphys, openalex
 from .verify import KOPF, jetzt, pruefe
 
 AUSGABE = Path("pipelines/atlas-scout/kandidaten")
@@ -68,8 +68,8 @@ def _thema_als_saat(nummer: int) -> atlas_modul.Eintrag:
     )
 
 
-SAAT_MELDUNGEN = atlas_modul.Eintrag(
-    id="eflux-meldungen", titel="", urheber="", jahr=None, url=None, doi=None, schlagworte=(),
+SAAT_LISTE = atlas_modul.Eintrag(
+    id="dataphys-liste", titel="", urheber="", jahr=None, url=None, doi=None, schlagworte=(),
 )
 
 
@@ -80,21 +80,18 @@ def laufe(
     wurzel: Path | None = None,
     thema: int | None = None,
     quelle_name: str = "auto",
-    extraktor=None,
-    extraktion: list[dict] | None = None,
 ) -> Lauf:
     begonnen = jetzt()
     wurzel = wurzel or Path.cwd()
     stand = atlas_modul.lade(atlas_name, wurzel)
-    meldungs_modus = atlas_name == ATLAS_WERKE and quelle_name == "eflux"
     dataphys_modus = atlas_name == ATLAS_WERKE and quelle_name == "dataphys"
 
     if thema is not None:
         # Thematischer Sweep: für ein neues Feld gibt es noch keine Einträge,
         # von denen aus zu gehen wäre.
         saatgut = [_thema_als_saat(thema)]
-    elif meldungs_modus or dataphys_modus:
-        saatgut = [SAAT_MELDUNGEN]
+    elif dataphys_modus:
+        saatgut = [SAAT_LISTE]
     else:
         saatgut = _saatgut(stand, anzahl, versatz)
     jahr_jetzt = datetime.now(timezone.utc).year
@@ -120,26 +117,10 @@ def laufe(
                 elif thema is not None:
                     rohfunde = openalex.ernte_thema(themen.hole(thema).literatur)
                     quelle = "openalex"
-                elif meldungs_modus:
-                    if extraktion is not None:
-                        # Extraktion kam von außen (Claude-Code-Routine): nur einlesen.
-                        rohfunde = extract.aus_ergebnis(
-                            extraktion, wurzel / atlas_modul.PFAD_WERKE
-                        )
-                    else:
-                        meldungen = eflux.hole_meldungen(seiten=2, grenze=anzahl)
-                        rohfunde, _ = extract.extrahiere(
-                            meldungen, wurzel / atlas_modul.PFAD_WERKE, extraktor
-                        )
-                    quelle = "eflux"
                 elif atlas_name == ATLAS_THEORIE:
                     rohfunde = openalex.ernte(saat.titel, saat.doi, saat.urheber)
                     quelle = "openalex"
-                else:
-                    rohfunde = wikidata.ernte(saat.urheber)
-                    quelle = "wikidata"
-            except (openalex.QuellenAusfall, wikidata.QuellenAusfall,
-                    eflux.QuellenAusfall, artbase.QuellenAusfall,
+            except (openalex.QuellenAusfall, artbase.QuellenAusfall,
                     dataphys.QuellenAusfall) as fehler:
                 ausfaelle.append(Ausfall(quelle=atlas_name, ausgehend_von=saat.id, vermerk=str(fehler)))
                 continue
@@ -226,50 +207,18 @@ def main(argv: list[str] | None = None) -> int:
         help=f"thematischer Sweep statt Nachbarschaft; neue Felder: {list(themen.NEUE_FELDER)}",
     )
     parser.add_argument(
-        "--quelle", choices=["auto", "artbase", "dataphys", "eflux", "wikidata"], default="auto",
-        help="Quelle für den Werke-Atlas (Vorgabe: eflux)",
-    )
-    parser.add_argument(
-        "--nur-holen", type=Path, default=None, metavar="DATEI",
-        help="Meldungen holen und nach DATEI schreiben, dann aufhören (kein Modell)",
-    )
-    parser.add_argument(
-        "--extraktion-aus", type=Path, default=None, metavar="DATEI",
-        help="fertige Extraktion einlesen statt selbst zu extrahieren",
+        "--quelle", choices=["auto", "artbase", "dataphys"], default="auto",
+        help="Quelle für den Werke-Atlas (Vorgabe: artbase über --thema)",
     )
     parser.add_argument("--trocken", action="store_true", help="nur ausgeben, nichts schreiben")
     args = parser.parse_args(argv)
-
-    # Schritt 1 der Werke-Strecke: holen. Braucht kein Modell und läuft überall.
-    if args.nur_holen is not None:
-        meldungen = eflux.hole_meldungen(seiten=2, grenze=args.anzahl)
-        args.nur_holen.parent.mkdir(parents=True, exist_ok=True)
-        args.nur_holen.write_text(
-            json.dumps(meldungen, indent=2, ensure_ascii=False), encoding="utf-8"
-        )
-        print(f"{len(meldungen)} Meldungen → {args.nur_holen}")
-        return 0
 
     if args.thema is not None:
         thema = themen.hole(args.thema)  # wirft früh, wenn es das Feld nicht gibt
         print(f"Thematischer Sweep: Feld {thema.nummer} — {thema.name} ({thema.familie})")
 
-    if args.atlas == ATLAS_WERKE and args.quelle == "wikidata":
-        print(
-            "Hinweis: der Wikidata-Adapter ist nicht tragfähig — gemessen 1 von 25 Urhebern\n"
-            "mit dort erfassten Werken. Ein leeres Ergebnis heißt hier NICHT, dass es nichts\n"
-            "zu finden gäbe. Begründung: README.md\n",
-            file=sys.stderr,
-        )
-
-    extraktion = None
-    if args.extraktion_aus is not None:
-        extraktion = json.loads(args.extraktion_aus.read_text(encoding="utf-8"))
-        print(f"Extraktion eingelesen: {len(extraktion)} Meldungen")
-
     lauf = laufe(
-        args.atlas, args.anzahl, args.versatz,
-        thema=args.thema, quelle_name=args.quelle, extraktion=extraktion,
+        args.atlas, args.anzahl, args.versatz, thema=args.thema, quelle_name=args.quelle
     )
 
     print(f"Atlas {lauf.atlas}: {lauf.atlas_eintraege} Einträge, Saatgut {len(lauf.saatgut)}")
