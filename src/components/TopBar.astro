@@ -1,7 +1,10 @@
 ---
 // site-v2 work order §5 (decisions doc 2026-07-16 §1.7): the hub-era nav — Encounters, the
-// three practice doors, Holdings, Atlas, Projects, About. The Middle has no nav entry of its
-// own (Encounters is its register; as a hub door it is called The Middle, decisions doc §1.7).
+// three practice doors, Holdings, Catalogues, Projects, About. The Middle has no nav entry of
+// its own (Encounters is its register; as a hub door it is called The Middle, decisions doc §1.7).
+// "Atlas" → "Catalogues" (Frank, 2026-07-26, wording-kanon.md): the nav point now leads to the
+// collection page for both machine-kept reference works (Atlas of Data Art + Dataset Register);
+// /atlas itself stays a live route, just no longer directly in the top nav.
 // The language toggle is gone — German is dropped site-wide (§1.5, work order §6); this file
 // used to carry a `hasAlternate`/`otherUrl` pair deciding when to show a DE/EN switch, which no
 // longer applies to a single-locale site.
@@ -15,7 +18,7 @@ const nav = [
   { href: '/field', label: 'Field' },
   { href: '/studio', label: 'Studio' },
   { href: '/holdings', label: 'Holdings' },
-  { href: '/atlas', label: 'Atlas' },
+  { href: '/catalogues', label: 'Catalogues' },
   { href: '/work', label: 'Projects' },
   { href: '/about', label: 'About' },
 ]

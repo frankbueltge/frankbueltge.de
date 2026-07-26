@@ -1,0 +1,100 @@
+---
+// /datasets/[id] — eine Register-Einzelseite. Zeigt genau die Felder, die eintraege.json
+// für diesen Eintrag führt; kein Feld wird geraten oder ergänzt (Kanon-Regel). Die Quelle
+// exportiert derzeit kein Urheber- oder Beschreibungsfeld (nur Herausgeber) — deshalb
+// fehlt eine "Urheber"-Zeile und JSON-LD "description" hier grundsätzlich, nicht weil wir
+// sie unterschlagen, sondern weil der Snapshot sie (noch) nicht liefert.
+import { SITE } from '@/lib/site'
+import {
+  accessLabel,
+  licenceLabel,
+  isAccessibleForFree,
+  suggestedCitation,
+  type DatasetEntry,
+} from '@/lib/datasets'
+
+interface Props {
+  entry: DatasetEntry
+}
+const { entry } = Astro.props
+const canonical = `${SITE.url}/datasets/${entry.i}`
+
+// JSON-LD: nur Felder, die der Eintrag tatsächlich führt. "url" zeigt auf die wörtliche
+// Zugriffs-URL der Quelle (das Dataset selbst), nicht auf diese Seite — die Seite ist
+// über @id/mainEntityOfPage referenziert.
+const jsonLd: Record<string, unknown> = {
+  '@context': 'https://schema.org',
+  '@type': 'Dataset',
+  '@id': `${canonical}#dataset`,
+  mainEntityOfPage: canonical,
+  name: entry.t,
+  url: entry.u,
+  identifier: { '@type': 'PropertyValue', propertyID: entry.q, value: entry.p },
+}
+if (entry.l) jsonLd.license = entry.l
+if (entry.h) jsonLd.publisher = { '@type': 'Organization', name: entry.h }
+const free = isAccessibleForFree(entry.v)
+if (free !== undefined) jsonLd.isAccessibleForFree = free
+---
+
+<main id="main" class="mx-auto w-full max-w-2xl flex-1 px-6 py-16 sm:py-24">
+  <p class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">
+    <a href="/datasets" class="hover:text-fg">Dataset Register</a> / entry
+  </p>
+  <h1 class="mt-4 text-[clamp(24px,4vw,38px)] font-bold leading-tight tracking-[-0.02em]">{entry.t}</h1>
+
+  {entry.z === 'ungeprueft' && (
+    <p class="mt-4 inline-block rounded-lg border border-line bg-panel px-3 py-1.5 text-xs text-fg-muted">
+      entry unverified — automatically admitted from its source, not yet human-reviewed
+    </p>
+  )}
+
+  <dl class="mt-8 grid grid-cols-[auto_1fr] gap-x-6 gap-y-2.5 text-sm">
+    <dt class="text-fg-faint">Publisher</dt>
+    <dd class="text-fg">{entry.h || 'not stated'}</dd>
+
+    <dt class="text-fg-faint">Year</dt>
+    <dd class="text-fg">{entry.j ?? 'not stated'}</dd>
+
+    <dt class="text-fg-faint">Granularity</dt>
+    <dd class="text-fg">{entry.g}</dd>
+
+    <dt class="text-fg-faint">Licence</dt>
+    <dd class="text-fg">{licenceLabel(entry.l)}</dd>
+
+    <dt class="text-fg-faint">Access</dt>
+    <dd class="text-fg">{accessLabel(entry.v, entry.s)}</dd>
+
+    <dt class="text-fg-faint">Source</dt>
+    <dd class="text-fg">{entry.q}</dd>
+
+    <dt class="text-fg-faint">Source ID</dt>
+    <dd class="break-all font-mono text-xs text-fg">{entry.p}</dd>
+  </dl>
+
+  <p class="mt-8">
+    <a
+      href={entry.u}
+      rel="noopener noreferrer"
+      target="_blank"
+      class="break-all text-fg underline decoration-line underline-offset-4 hover:decoration-fg"
+    >
+      {entry.u} ↗
+    </a>
+  </p>
+  <p class="mt-1.5 text-xs text-fg-faint">
+    The access route above is copied verbatim from the source — never constructed or guessed.
+  </p>
+
+  <section class="mt-10 border-t border-line pt-6">
+    <h2 class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">Suggested citation</h2>
+    <p class="mt-2 text-sm leading-relaxed text-fg-muted">{suggestedCitation(entry)}</p>
+    <p class="mt-1.5 text-xs text-fg-faint">
+      Assembled from this entry's own fields — not a publisher-issued citation string.
+    </p>
+  </section>
+
+  <p class="mt-10 text-xs text-fg-faint"><a href="/datasets" class="hover:text-fg">← back to the Dataset Register</a></p>
+</main>
+
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
