@@ -128,7 +128,11 @@ jobs:
           # Dedup (2026-07-25): ein anhaltendes Rot darf die Steuerzentrale-Inbox nicht fluten —
           # bestehendes offenes Issue kommentieren statt jedes Mal ein neues anlegen.
           PREFIX="Ecology-Integrate rot"
-          EXISTING=$(gh issue list --repo frankbueltge/frankbueltge.de --state open --limit 100 --json number,title --jq --arg p "$PREFIX" '[.[]|select(.title|startswith($p))][0].number // empty')
+          # gh kennt kein --arg (das ist ein jq-Flag, kein gh-Flag) — daher echtes jq hinter der
+          # Pipe. `|| true`: dieser Schritt IST der Melder; scheitert die Dedup-Abfrage, muss die
+          # Meldung trotzdem rausgehen — ein Duplikat ist allemal besser als Stille.
+          EXISTING=$(gh issue list --repo frankbueltge/frankbueltge.de --state open --limit 100 --json number,title \
+            | jq -r --arg p "$PREFIX" '[.[]|select(.title|startswith($p))][0].number // empty' || true)
           if [ -n "$EXISTING" ]; then
             gh issue comment "$EXISTING" --repo frankbueltge/frankbueltge.de --body "Weiter rot am $DATE ($(date -u +%H:%MZ), Lauf ${GITHUB_RUN_ID:-?}) — gleicher Fehler, kein Duplikat angelegt." || true
           else

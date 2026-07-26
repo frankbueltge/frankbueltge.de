@@ -113,7 +113,11 @@ jobs:
           # comment on the existing open issue instead of opening a new one each run.
           PREFIX="Plenum-Integrate red"
           BODY="The nightly plenum build failed; no deploy. Log excerpt in the workflow run. Feedback was written to data-snack-plenum/plenum-feedback/${DATE}.md."
-          EXISTING=$(gh issue list --repo frankbueltge/frankbueltge.de --state open --limit 100 --json number,title --jq --arg p "$PREFIX" '[.[]|select(.title|startswith($p))][0].number // empty')
+          # gh has no --arg (that is a jq flag, not a gh flag) — hence real jq behind the pipe.
+          # `|| true`: this step IS the notifier; if the dedup lookup fails, the report must
+          # still go out — a duplicate issue beats silence.
+          EXISTING=$(gh issue list --repo frankbueltge/frankbueltge.de --state open --limit 100 --json number,title \
+            | jq -r --arg p "$PREFIX" '[.[]|select(.title|startswith($p))][0].number // empty' || true)
           if [ -n "$EXISTING" ]; then
             gh issue comment "$EXISTING" --repo frankbueltge/frankbueltge.de --body "Still red on $DATE ($(date -u +%H:%MZ), run ${GITHUB_RUN_ID:-?}) — same failure, no duplicate opened." || true
           else
