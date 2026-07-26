@@ -1,8 +1,7 @@
 # Startauftrag: Dataset-Hub
 
 Übergabe an eine eigene Session. Entstanden am 2026-07-26 aus dem Bau des Atlas-Scouts —
-die Lehren daraus stehen unten und sind der Grund, warum dieser Auftrag so knapp und die
-Reihenfolge so streng ist.
+die Lehren daraus stehen unten und sind der Grund für die Bauregeln.
 
 **Modell für die Architekturphase: Fable 5.** Die Identitätsfrage (unten) ist im Feld nicht
 gelöst, nicht bloß aufwendig — konkurrierende Standards, Versionskonventionen, an die sich
@@ -38,8 +37,9 @@ gefunden, geprüft und aufgenommen, ohne dass jemand sichtet.
 
 ### Beginne mit der Architektur, nicht mit Code
 
-Vier Entscheidungen, in dieser Reihenfolge. Halte sie in einem Design-Dokument fest,
-bevor die erste Zeile Pipeline entsteht.
+Vier Entscheidungen. Die erste ist die tragende, die übrigen hängen an ihr; in welcher
+Ordnung du sie angehst, ist deine Sache. Halte sie in einem Design-Dokument fest, bevor die
+erste Zeile Pipeline entsteht.
 
 **1. Dataset-Identität — die schwierigste Frage.** Dasselbe Dataset erscheint bei DataCite,
 Zenodo, re3data und einem CKAN-Portal unter verschiedenen DOIs. Dazu: Versionen
