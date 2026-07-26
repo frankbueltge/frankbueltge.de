@@ -6,7 +6,9 @@
   "description": "Frank Bültge — Data Engineering & Analytics. Static Astro site, English-only, Git as the archive.",
   "scripts": {
     "dev": "astro dev",
+    "prebuild": "node scripts/hole-dataset-daten.mjs",
     "build": "astro build",
+    "datasets:refresh": "DATASET_DATEN_FRISCH=1 node scripts/hole-dataset-daten.mjs",
     "preview": "astro preview",
     "check": "astro check",
     "test": "vitest run",

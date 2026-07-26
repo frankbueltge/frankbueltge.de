@@ -233,6 +233,28 @@ const isDraft = NAMING.approval !== 'approved'
       („how this works →"), Holdings/Atlas/About stehen in der Top-Nav — die Sektion war
       durchgehend redundant. Holdings sind ohnehin eigene, frühere Projekte, keine
       Nebenseiten der Ökologie. */}
+
+  {/* Catalogues auf der Startseite (Frank, 26.07.): die beiden maschinell gepflegten
+      Nachschlagewerke sind Infrastruktur der Ökologie, nicht bloß ein Nav-Punkt — sie
+      wachsen nächtlich weiter und verdienen einen eigenen Einstieg. Zahlen NICHT hier
+      hartschreiben (Kanon) — sie stehen auf /catalogues, aus den Daten gerendert. */}
+  <section class="mt-20 border-t border-line/60 pt-16" id="catalogues">
+    <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted">
+      <b class="text-fg">{NAMING.catalogues.kicker}</b> · {NAMING.catalogues.title}
+    </p>
+    <p class="mt-4 max-w-[64ch] text-sm leading-relaxed text-fg-muted">{NAMING.catalogues.sub}</p>
+    <div class="mt-7 grid gap-3.5 sm:grid-cols-2">
+      {NAMING.catalogues.items.map((it) => (
+        <a href={getRelativeLocaleUrl(locale, it.href)} class="rounded-[10px] border border-line bg-panel p-4.5 transition-colors hover:border-fg-faint">
+          <h3 class="text-base font-semibold">{it.name}</h3>
+          <p class="mt-1.5 text-sm text-fg-muted">{it.description}</p>
+        </a>
+      ))}
+    </div>
+    <p class="mt-4.5 font-mono text-xs text-fg-faint">
+      <a href={getRelativeLocaleUrl(locale, '/catalogues')} class="underline decoration-line underline-offset-4 transition-colors hover:text-fg">both catalogues →</a>
+    </p>
+  </section>
 </main>
 
 <style>
