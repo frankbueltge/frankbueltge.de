@@ -24,6 +24,11 @@ export function workJsonLd(w: Werk, locale: Locale, canonical: string) {
     url: canonical,
     inLanguage: locale === 'de' ? 'de-DE' : 'en',
     isAccessibleForFree: true,
+    // Die Lizenz gehört ans WERK, nicht nur in die Fußzeile: CC BY verlangt
+    // Namensnennung, aber genannt wird nur, wer auffindbar macht, WIE zu nennen ist.
+    // Maschinen (Suchmaschinen, Antwortsysteme) lesen sie hier.
+    license: 'https://creativecommons.org/licenses/by/4.0/',
+    copyrightHolder: { '@id': `${SITE.url}/#person` },
     creator: { '@id': `${SITE.url}/#person` },
     author: { '@id': `${SITE.url}/#person` },
     publisher: { '@id': `${SITE.url}/#person` },
