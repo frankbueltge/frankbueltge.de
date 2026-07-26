@@ -172,6 +172,7 @@
     } | null
     chronicle: { date: string; summary: string; verdict: string | null; session: number | null } | null
     vitalSigns: { date: string | null; closure: number | null; session: number | null } | null
+    journal: { date: string; title: string; url: string | null } | null
     strandedIssues: { number: number; title: string; url: string }[]
   }
 
@@ -336,6 +337,21 @@
     return n.toFixed(2).replace('.', ',')
   }
 
+  // 'YYYY-MM-DD' → '26.07.'. Bewusst nicht fmtRel: ein Tagesdatum trägt keine Uhrzeit, und
+  // "vor 5 h" würde eine Genauigkeit vortäuschen, die in der Quelle nicht steht.
+  function fmtDay(date: string | null): string {
+    if (!date) return '—'
+    const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(date)
+    return m ? `${m[3]}.${m[2]}.` : date
+  }
+
+  function daysSince(date: string | null): number | null {
+    if (!date) return null
+    const then = new Date(`${date}T00:00:00Z`).getTime()
+    if (Number.isNaN(then)) return null
+    return Math.floor((Date.now() - then) / 86_400_000)
+  }
+
   // ── DOM-Referenzen ──────────────────────────────────────────────────────
   const gateSection = document.querySelector<HTMLElement>('[data-zx="gate"]')
   const gateForm = document.querySelector<HTMLFormElement>('[data-zx="gate-form"]')
@@ -492,8 +508,32 @@
       card.append(el('p', { class: 'mt-2 text-sm italic text-fg-muted' }, quote))
     }
 
+    // Das Atelier führt keine Chronik — sein tägliches Lebenszeichen ist der Journaleintrag.
+    // Gleiche Optik wie das Chronik-Zitat, damit die Karte nicht als die stille unter vieren
+    // dasteht, obwohl die Praxis arbeitet.
+    if (c.journal) {
+      const line = el('p', { class: 'mt-2 text-sm italic text-fg-muted' }, `„${c.journal.title}“`)
+      const meta = el('span', { class: 'not-italic text-fg-faint' }, ` · Journal ${fmtDay(c.journal.date)}`)
+      if (c.journal.url) {
+        meta.append(' ')
+        meta.append(el('a', { href: c.journal.url, target: '_blank', rel: 'noreferrer', class: 'underline hover:text-fg' }, 'lesen ↗'))
+      }
+      line.append(meta)
+      card.append(line)
+    }
+
+    // Vitalzeichen: bleiben sichtbar, aber DATIERT. Die Zahl stammt aus Protokoll v4; unter v5
+    // schreibt Ulysses sie nicht mehr fort. Eine undatierte, eingefrorene Kennzahl liest sich
+    // wie ein aktueller Messwert — genau das soll die Zentrale nicht tun.
     if (c.vitalSigns && typeof c.vitalSigns.closure === 'number') {
-      card.append(el('p', { class: 'mt-2 font-mono text-xs text-fg-faint' }, `closure ${fmtClosure(c.vitalSigns.closure)}`))
+      const age = daysSince(c.vitalSigns.date)
+      const line = el(
+        'p',
+        { class: 'mt-2 font-mono text-xs text-fg-faint' },
+        `closure ${fmtClosure(c.vitalSigns.closure)} · Stand ${fmtDay(c.vitalSigns.date)}`,
+      )
+      if (age !== null && age > 2) line.append(` — seit ${age} Tagen unverändert (v4-Kennzahl)`)
+      card.append(line)
     }
 
     if (c.strandedIssues.length > 0) {

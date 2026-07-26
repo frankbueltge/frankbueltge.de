@@ -1,6 +1,15 @@
 // src/lib/zentrale/status.test.ts
 import { describe, it, expect } from 'vitest'
-import { latestRunPerWorkflow, summarizeCommits, chronicleLast, vitalSignsLast, ageDays, buildInbox } from './status'
+import {
+  latestRunPerWorkflow,
+  summarizeCommits,
+  chronicleLast,
+  vitalSignsLast,
+  newestJournalEntry,
+  journalTitle,
+  ageDays,
+  buildInbox,
+} from './status'
 
 describe('latestRunPerWorkflow', () => {
   it('behält pro Workflow-Namen nur den jüngsten Lauf, auch bei durcheinandergewürfelter Eingabe', () => {
@@ -117,6 +126,71 @@ describe('vitalSignsLast', () => {
     expect(vitalSignsLast('kaputt')).toBeNull()
     expect(vitalSignsLast({ history: 'kaputt' })).toBeNull()
     expect(vitalSignsLast({ history: [] })).toBeNull()
+  })
+})
+
+describe('newestJournalEntry', () => {
+  const listing = [
+    { type: 'file', name: '2026-07-25-negative-parallax-candidate.md', html_url: 'https://x/a', download_url: 'https://raw/a' },
+    { type: 'file', name: '2026-07-26-negative-parallax-the-rulers-own-unit.md', html_url: 'https://x/b', download_url: 'https://raw/b' },
+    { type: 'file', name: '2026-07-24-put-back-on-the-map-initiation.md', html_url: 'https://x/c', download_url: 'https://raw/c' },
+  ]
+
+  it('wählt nach Datumspräfix, nicht nach Listenreihenfolge', () => {
+    expect(newestJournalEntry(listing)).toEqual({
+      name: '2026-07-26-negative-parallax-the-rulers-own-unit.md',
+      date: '2026-07-26',
+      url: 'https://x/b',
+      downloadUrl: 'https://raw/b',
+    })
+  })
+
+  it('mehrere Einträge am selben Tag: alphabetisch letzter, damit die Anzeige nicht springt', () => {
+    const sameDay = [
+      { type: 'file', name: '2026-07-25-signature-in-the-world-return-move.md' },
+      { type: 'file', name: '2026-07-25-signature-in-the-world-first-move.md' },
+    ]
+    expect(newestJournalEntry(sameDay)?.name).toBe('2026-07-25-signature-in-the-world-return-move.md')
+    // Umgekehrte Eingabereihenfolge muss dasselbe liefern.
+    expect(newestJournalEntry([...sameDay].reverse())?.name).toBe('2026-07-25-signature-in-the-world-return-move.md')
+  })
+
+  it('ignoriert Verzeichnisse, Nicht-Markdown und Namen ohne Datumspräfix', () => {
+    const mixed = [
+      { type: 'dir', name: '2026-07-26-ein-verzeichnis' },
+      { type: 'file', name: 'README.md' },
+      { type: 'file', name: '2026-07-20-echt.md' },
+      { type: 'file', name: '2026-07-27-kein-markdown.txt' },
+    ]
+    expect(newestJournalEntry(mixed)?.name).toBe('2026-07-20-echt.md')
+  })
+
+  it('fremde/leere Eingabe → null statt Wurf', () => {
+    expect(newestJournalEntry(null)).toBeNull()
+    expect(newestJournalEntry([])).toBeNull()
+    expect(newestJournalEntry({ message: 'Not Found' })).toBeNull()
+    expect(newestJournalEntry([null, 'x', 42])).toBeNull()
+  })
+})
+
+describe('journalTitle', () => {
+  it('nimmt die erste Überschrift und streicht das vorangestellte Datum', () => {
+    const md = "# 2026-07-26 — The ruler's own unit\n\nYesterday's tick ended with a list…"
+    expect(journalTitle(md)).toBe("The ruler's own unit")
+  })
+
+  it('Überschrift ohne Datum bleibt unangetastet', () => {
+    expect(journalTitle('# Was der Apparat nicht sieht\n\nText')).toBe('Was der Apparat nicht sieht')
+  })
+
+  it('rät nichts aus dem Fließtext, wenn es keine Überschrift gibt', () => {
+    expect(journalTitle('Nur Fließtext, keine Raute.\n\nNoch mehr Text.')).toBeNull()
+    expect(journalTitle('')).toBeNull()
+    expect(journalTitle(null)).toBeNull()
+  })
+
+  it('ignoriert ## und tiefere Ebenen sowie Rauten ohne Leerzeichen', () => {
+    expect(journalTitle('## Unterabschnitt\n\n#kein-heading\n\n# Echte Überschrift')).toBe('Echte Überschrift')
   })
 })
 
