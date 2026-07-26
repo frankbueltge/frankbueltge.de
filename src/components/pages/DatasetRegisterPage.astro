@@ -1,0 +1,462 @@
+---
+// /datasets — Dataset Register (wording-kanon.md "Catalogues": die zweite der beiden
+// maschinell gepflegten Nachschlagewerke, NICHT "Dataset Hub" — "hub" ist hier gesperrt,
+// das bezeichnet die Startseite der Ökologie). Datenquelle: dataset-hub-Repo, Snapshot
+// einmalig kopiert nach src/data/datasets/ (siehe src/lib/datasets.ts für Feldkürzel
+// und die Kanon-Regeln, unter denen dieser Snapshot steht: nichts erfinden, keine URLs
+// konstruieren, Ausfälle vermerken statt überbrücken).
+//
+// Auskunft-vor-Poesie (wording-kanon.md "Prinzipien"): der Einstieg beantwortet zuerst
+// "was ist das hier?", danach kommen Suche/Filter und der Bestand.
+//
+// Rendering-Entscheidung (13.297 Einträge, Stand siehe meta.json): die Liste wird NICHT
+// vollständig als serverseitiges HTML ausgegeben (das wären mehrere MB Markup fürs
+// Atlas-Kartenmuster) — stattdessen liefert Astro die ersten 60 Einträge alphabetisch
+// als No-JS-Fallback, ein Client-Script übernimmt danach Suche/Filter über den
+// VOLLSTÄNDIGEN Bestand und rendert nur eine Fenster-Seite auf einmal ("load more"),
+// analog zum eigenen app.js des dataset-hub-Repos (SEITE=50 dort, hier PAGE=60).
+import {
+  ENTRIES,
+  META,
+  accessLabel,
+  licenceLabel,
+  type DatasetEntry,
+} from '@/lib/datasets'
+
+const total = ENTRIES.length
+const sourcesCount = META.quellen.length
+const confirmedCount = ENTRIES.filter((e) => e.v === 'landing' || e.v === 'download').length
+const uncheckedCount = ENTRIES.filter((e) => e.z === 'ungeprueft').length
+
+// Facetten aus den Daten abgeleitet (Atlas-Muster: eine Option erscheint nur, wenn sie
+// belegt ist — die Seite behauptet keine Zustände, die (noch) nicht vorkommen).
+const pruefstandOrder: { key: DatasetEntry['v']; label: string }[] = [
+  { key: 'none', label: 'access unverified' },
+  { key: 'versucht', label: 'checked, not confirmed' },
+  { key: 'landing', label: 'access confirmed — landing' },
+  { key: 'download', label: 'access confirmed — download' },
+]
+const pruefstandCounts: Partial<Record<DatasetEntry['v'], number>> = {}
+for (const e of ENTRIES) pruefstandCounts[e.v] = (pruefstandCounts[e.v] ?? 0) + 1
+const pruefstandFacet = pruefstandOrder.filter((p) => (pruefstandCounts[p.key] ?? 0) > 0)
+
+const granOrder = ['dataset', 'file', 'service']
+const granCounts: Record<string, number> = {}
+for (const e of ENTRIES) granCounts[e.g] = (granCounts[e.g] ?? 0) + 1
+const granFacet = granOrder.filter((g) => (granCounts[g] ?? 0) > 0)
+
+const licenceCounts = new Map<string, number>()
+for (const e of ENTRIES) licenceCounts.set(e.l, (licenceCounts.get(e.l) ?? 0) + 1)
+const licenceFacet = [...licenceCounts.entries()].sort(([a], [b]) => {
+  if (a === '') return -1
+  if (b === '') return 1
+  return a.localeCompare(b)
+})
+
+const yearCounts = new Map<string, number>()
+for (const e of ENTRIES) {
+  const k = e.j ? String(e.j) : ''
+  yearCounts.set(k, (yearCounts.get(k) ?? 0) + 1)
+}
+const yearFacet = [...yearCounts.entries()].sort(([a], [b]) => {
+  if (a === '') return -1
+  if (b === '') return 1
+  return Number(b) - Number(a)
+})
+
+// No-JS-Fallback: erste 60 Einträge, alphabetisch — nicht repräsentativ, nur damit die
+// Seite ohne JavaScript nicht leer ist. Das Client-Script ersetzt diese Zeilen sofort.
+const fallbackRows = [...ENTRIES].sort((a, b) => a.t.localeCompare(b.t)).slice(0, 60)
+
+// ---------- Holdings and gaps (aus meta.json) ----------
+
+interface SourceAgg { records: number; runs: number; incomplete: number; seit: string | null; bis: string | null }
+const sourceAgg = new Map<string, SourceAgg>()
+for (const w of META.quellfenster) {
+  const cur = sourceAgg.get(w.quelle) ?? { records: 0, runs: 0, incomplete: 0, seit: null, bis: null }
+  cur.records += w.records
+  cur.runs += 1
+  if (!w.vollstaendig) cur.incomplete += 1
+  if (w.seit && (!cur.seit || w.seit < cur.seit)) cur.seit = w.seit
+  if (w.bis && (!cur.bis || w.bis > cur.bis)) cur.bis = w.bis
+  sourceAgg.set(w.quelle, cur)
+}
+const sourceRows = META.quellen.map((q) => ({ ...q, agg: sourceAgg.get(q.quelle) ?? null }))
+const dateOnly = (iso: string | null) => (iso ? iso.slice(0, 10) : 'not recorded')
+
+// Ablehnungsgründe: nur bekannte Codes bekommen eine Klartext-Gloss; unbekannte Codes
+// zeigen wörtlich den Rohcode, statt eine Bedeutung zu raten.
+const rejectionReasonLabels: Record<string, string> = {
+  'konstruierte-url-ungeprueft': 'constructed access URL, not yet confirmed by HTTP resolution',
+}
+const rejectionLabel = (grund: string) => rejectionReasonLabels[grund] ?? grund
+---
+
+<main id="main" class="mx-auto w-full max-w-5xl px-4 py-10 sm:py-14">
+  <header class="mb-8 max-w-3xl">
+    <p class="mb-2 font-mono text-xs uppercase tracking-widest text-fg-faint">Dataset Register</p>
+    <h1 class="text-3xl font-semibold tracking-tight sm:text-4xl">Dataset Register</h1>
+    <p class="mt-4 text-fg-muted">
+      A machine-readable register of publicly available datasets. Every entry keeps the
+      source's literal access route, states how far that route has actually been
+      checked, and shows what the register itself knows it is missing — nothing here is
+      filled in from a guess.
+    </p>
+    <p class="mt-3 text-sm text-fg-muted">
+      The register grows forward from when harvesting began for each source; it does not
+      backfill datasets published before that point (see "holdings and gaps" below).
+      Versioned, queryable snapshots supersede this page for programmatic use:{' '}
+      <a href="https://github.com/frankbueltge/dataset-hub/releases" rel="noopener noreferrer" target="_blank" class="text-fg-muted underline decoration-line underline-offset-2 hover:text-fg">snapshot releases ↗</a>
+      {' '}·{' '}
+      <a href="https://github.com/frankbueltge/dataset-hub/blob/main/SNAPSHOT-API.md" rel="noopener noreferrer" target="_blank" class="text-fg-muted underline decoration-line underline-offset-2 hover:text-fg">query contract (SNAPSHOT-API.md) ↗</a>.
+    </p>
+  </header>
+
+  <!-- stats -->
+  <dl class="mb-10 grid grid-cols-2 gap-3 sm:grid-cols-4">
+    {[
+      { n: total, l: 'entries' },
+      { n: sourcesCount, l: 'sources' },
+      { n: confirmedCount, l: 'access confirmed' },
+      { n: uncheckedCount, l: 'entries unverified' },
+    ].map((s) => (
+      <div class="rounded-xl border border-line bg-panel p-4">
+        <dd class="font-mono text-2xl font-semibold tabular-nums text-fg">{s.n.toLocaleString('en-US')}</dd>
+        <dt class="mt-0.5 text-xs text-fg-muted">{s.l}</dt>
+      </div>
+    ))}
+  </dl>
+
+  <section data-datasets>
+    <!-- search + filters -->
+    <div class="mb-6 space-y-3">
+      <label class="block">
+        <span class="sr-only">Search title or publisher</span>
+        <input
+          type="search"
+          data-search
+          placeholder="search title or publisher…"
+          class="w-full max-w-md rounded-lg border border-line bg-panel px-3 py-2 text-sm text-fg placeholder:text-fg-faint focus:border-fg-faint focus:outline-none"
+        />
+      </label>
+
+      <div class="flex flex-wrap items-center gap-1.5">
+        <span class="mr-1 w-24 shrink-0 font-mono text-xs uppercase tracking-wider text-fg-faint">Access</span>
+        <button type="button" data-filter="v" data-value="all" aria-pressed="true" class="chip">All</button>
+        {pruefstandFacet.map((p) => (
+          <button type="button" data-filter="v" data-value={p.key} aria-pressed="false" class="chip">
+            {p.label} <span class="text-fg-faint">{(pruefstandCounts[p.key] ?? 0).toLocaleString('en-US')}</span>
+          </button>
+        ))}
+      </div>
+
+      <div class="flex flex-wrap items-center gap-1.5">
+        <span class="mr-1 w-24 shrink-0 font-mono text-xs uppercase tracking-wider text-fg-faint">Granularity</span>
+        <button type="button" data-filter="g" data-value="all" aria-pressed="true" class="chip">All</button>
+        {granFacet.map((g) => (
+          <button type="button" data-filter="g" data-value={g} aria-pressed="false" class="chip">
+            {g} <span class="text-fg-faint">{(granCounts[g] ?? 0).toLocaleString('en-US')}</span>
+          </button>
+        ))}
+      </div>
+
+      <div class="flex flex-wrap items-center gap-3">
+        <label class="flex items-center gap-1.5 text-xs">
+          <span class="font-mono uppercase tracking-wider text-fg-faint">Licence</span>
+          <select data-licence class="rounded-lg border border-line bg-panel px-2 py-1.5 text-xs text-fg-muted focus:border-fg-faint focus:outline-none">
+            <option value="all">all</option>
+            {licenceFacet.map(([l, n]) => (
+              <option value={l === '' ? '__none' : l}>{licenceLabel(l)} ({n})</option>
+            ))}
+          </select>
+        </label>
+        <label class="flex items-center gap-1.5 text-xs">
+          <span class="font-mono uppercase tracking-wider text-fg-faint">Year</span>
+          <select data-year class="rounded-lg border border-line bg-panel px-2 py-1.5 text-xs text-fg-muted focus:border-fg-faint focus:outline-none">
+            <option value="all">all</option>
+            {yearFacet.map(([y, n]) => (
+              <option value={y === '' ? '__none' : y}>{y === '' ? 'not stated' : y} ({n})</option>
+            ))}
+          </select>
+        </label>
+        <button type="button" data-reset class="chip hidden">reset filters</button>
+      </div>
+
+      <p class="font-mono text-xs text-fg-faint"><span data-count>{total}</span> / {total.toLocaleString('en-US')} shown</p>
+    </div>
+
+    <!-- results -->
+    <div class="overflow-x-auto">
+      <table class="w-full min-w-[820px] border-collapse text-left text-xs">
+        <thead>
+          <tr class="border-b border-line text-fg-faint">
+            <th class="py-1.5 pr-3 font-normal">Title</th>
+            <th class="py-1.5 pr-3 font-normal">Publisher</th>
+            <th class="py-1.5 pr-3 font-normal">Year</th>
+            <th class="py-1.5 pr-3 font-normal">Granularity</th>
+            <th class="py-1.5 pr-3 font-normal">Licence</th>
+            <th class="py-1.5 pr-3 font-normal">Access</th>
+            <th class="py-1.5 pr-3 font-normal">Source</th>
+            <th class="py-1.5 font-normal">Status</th>
+          </tr>
+        </thead>
+        <tbody data-rows>
+          {fallbackRows.map((e) => (
+            <tr class="border-b border-line/50 align-top">
+              <td class="py-1.5 pr-3"><a href={`/datasets/${e.i}`} class="text-fg hover:underline">{e.t}</a></td>
+              <td class="py-1.5 pr-3 text-fg-muted">{e.h || 'not stated'}</td>
+              <td class="py-1.5 pr-3 tabular-nums text-fg-muted">{e.j ?? '—'}</td>
+              <td class="py-1.5 pr-3 text-fg-muted">{e.g}</td>
+              <td class="py-1.5 pr-3 text-fg-muted">{licenceLabel(e.l)}</td>
+              <td class="py-1.5 pr-3 text-fg-muted">{accessLabel(e.v, e.s)}</td>
+              <td class="py-1.5 pr-3 text-fg-muted">{e.q}</td>
+              <td class="py-1.5 text-fg-muted">{e.z === 'ungeprueft' ? 'entry unverified' : e.z}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p data-ssr-note class="mt-2 text-xs text-fg-faint">
+      Showing the first 60 entries, alphabetically by title. This note and the fixed
+      list disappear once JavaScript takes over search and filtering across the full register.
+    </p>
+    <button type="button" data-more hidden class="chip mt-3"></button>
+  </section>
+
+  <!-- holdings and gaps -->
+  <section class="mt-14 border-t border-line pt-8">
+    <h2 class="font-mono text-xs uppercase tracking-widest text-fg-faint">Holdings and gaps</h2>
+    <p class="mt-3 max-w-3xl text-sm text-fg-muted">
+      What the register has taken in, source by source — including runs it knows were
+      cut short, work it declined to admit and why, and outages it recorded rather than
+      papered over.
+    </p>
+
+    <div class="mt-6 overflow-x-auto">
+      <table class="w-full min-w-[640px] border-collapse text-left text-xs">
+        <thead>
+          <tr class="border-b border-line text-fg-faint">
+            <th class="py-1.5 pr-3 font-normal">Source</th>
+            <th class="py-1.5 pr-3 font-normal">Entries in register</th>
+            <th class="py-1.5 pr-3 font-normal">Records harvested</th>
+            <th class="py-1.5 pr-3 font-normal">Runs</th>
+            <th class="py-1.5 pr-3 font-normal">Harvest window</th>
+            <th class="py-1.5 font-normal">Completeness</th>
+          </tr>
+        </thead>
+        <tbody>
+          {sourceRows.map((r) => (
+            <tr class="border-b border-line/50 align-top">
+              <td class="py-1.5 pr-3 text-fg">{r.quelle}</td>
+              <td class="py-1.5 pr-3 tabular-nums text-fg-muted">{r.n.toLocaleString('en-US')}</td>
+              <td class="py-1.5 pr-3 tabular-nums text-fg-muted">{r.agg ? r.agg.records.toLocaleString('en-US') : '—'}</td>
+              <td class="py-1.5 pr-3 tabular-nums text-fg-muted">{r.agg?.runs ?? '—'}</td>
+              <td class="py-1.5 pr-3 text-fg-muted">{r.agg ? `${dateOnly(r.agg.seit)} → ${dateOnly(r.agg.bis)}` : '—'}</td>
+              <td class="py-1.5 text-fg-muted">
+                {r.agg
+                  ? r.agg.incomplete > 0
+                    ? `${r.agg.incomplete} of ${r.agg.runs} run${r.agg.runs === 1 ? '' : 's'} incomplete — this source's holdings are cut short`
+                    : `all ${r.agg.runs} run${r.agg.runs === 1 ? '' : 's'} complete`
+                  : '—'}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-2">
+      <div>
+        <h3 class="font-mono text-xs uppercase tracking-wider text-fg-faint">Currently rejected</h3>
+        <p class="mt-2 text-xs text-fg-faint">
+          What is not in the register right now, and the stated reason — not the full
+          history of rejection events (see the log below, which is not the same number).
+        </p>
+        {META.ablehnungen.length === 0 ? (
+          <p class="mt-3 text-sm text-fg-muted">Nothing is currently rejected.</p>
+        ) : (
+          <ul class="mt-3 space-y-1.5 text-sm">
+            {META.ablehnungen.map((a) => (
+              <li class="flex items-baseline justify-between gap-3 border-b border-line/50 py-1">
+                <span class="text-fg-muted">{rejectionLabel(a.grund)}</span>
+                <span class="shrink-0 font-mono tabular-nums text-fg-faint">{a.n.toLocaleString('en-US')}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+        <dl class="mt-4 grid grid-cols-3 gap-2 text-xs">
+          <div><dt class="text-fg-faint">events logged</dt><dd class="tabular-nums text-fg">{META.ablehnungen_meta.ereignisse_gesamt.toLocaleString('en-US')}</dd></div>
+          <div><dt class="text-fg-faint">currently rejected</dt><dd class="tabular-nums text-fg">{META.ablehnungen_meta.aktuell_verworfen.toLocaleString('en-US')}</dd></div>
+          <div><dt class="text-fg-faint">admitted later after all</dt><dd class="tabular-nums text-fg">{META.ablehnungen_meta.spaeter_doch_aufgenommen.toLocaleString('en-US')}</dd></div>
+        </dl>
+        <p class="mt-2 text-xs text-fg-faint">
+          The rejection register is an append-only event log: it never rewrites a past
+          rejection, even when the same item is admitted later once its access route
+          resolves — so "events logged" is not "currently rejected", and neither is the
+          count this page should be read as "how much the register is missing".
+        </p>
+      </div>
+
+      <div>
+        <h3 class="font-mono text-xs uppercase tracking-wider text-fg-faint">Outages</h3>
+        <p class="mt-2 text-xs text-fg-faint">Source failures during harvesting, recorded rather than bridged with a guess.</p>
+        {META.ausfaelle.length === 0 ? (
+          <p class="mt-3 text-sm text-fg-muted">No outages recorded.</p>
+        ) : (
+          <ul class="mt-3 space-y-2 text-sm">
+            {META.ausfaelle.slice(0, 10).map((a) => (
+              <li class="border-b border-line/50 pb-2">
+                <p class="text-fg">{a.quelle} <span class="font-mono text-xs text-fg-faint">{dateOnly(a.datum)}</span></p>
+                <p class="text-xs text-fg-muted">{a.fehler}{a.kontext ? ` — ${a.kontext}` : ''}</p>
+              </li>
+            ))}
+          </ul>
+        )}
+        {META.mehrfassungs_werke > 0 && (
+          <p class="mt-4 text-xs text-fg-faint">
+            <span class="font-mono tabular-nums text-fg">{META.mehrfassungs_werke.toLocaleString('en-US')}</span>{' '}
+            works in the register have more than one edition merged under a shared work id.
+          </p>
+        )}
+      </div>
+    </div>
+
+    <p class="mt-8 max-w-3xl text-xs leading-relaxed text-fg-faint">
+      Schema {META.schema_version} · built {META.gebaut_am} · surface generated {META.erzeugt}. Field
+      shorthand, dedup rules and the full snapshot contract: {' '}
+      <a href="https://github.com/frankbueltge/dataset-hub/blob/main/SNAPSHOT-API.md" rel="noopener noreferrer" target="_blank" class="underline decoration-line underline-offset-2 hover:text-fg">SNAPSHOT-API.md ↗</a>.
+    </p>
+  </section>
+</main>
+
+<style>
+  .chip {
+    border-radius: 0.5rem;
+    border: 1px solid var(--color-line);
+    background: var(--color-panel);
+    padding: 0.25rem 0.6rem;
+    font-size: 12px;
+    color: var(--color-fg-muted);
+    transition: color 0.15s, border-color 0.15s, background 0.15s;
+  }
+  .chip:hover {
+    color: var(--color-fg);
+    border-color: var(--color-fg-faint);
+  }
+  .chip[aria-pressed='true'] {
+    background: var(--color-fg);
+    color: var(--color-bg);
+    border-color: var(--color-fg);
+  }
+</style>
+
+<script>
+  import { ENTRIES, accessLabel, licenceLabel, type DatasetEntry } from '@/lib/datasets'
+
+  const root = document.querySelector<HTMLElement>('[data-datasets]')
+  if (root) {
+    const searchEl = root.querySelector<HTMLInputElement>('[data-search]')
+    const tbody = root.querySelector<HTMLTableSectionElement>('[data-rows]')
+    const countEl = root.querySelector<HTMLElement>('[data-count]')
+    const moreBtn = root.querySelector<HTMLButtonElement>('[data-more]')
+    const resetBtn = root.querySelector<HTMLButtonElement>('[data-reset]')
+    const licenceSel = root.querySelector<HTMLSelectElement>('[data-licence]')
+    const yearSel = root.querySelector<HTMLSelectElement>('[data-year]')
+    const ssrNote = root.querySelector<HTMLElement>('[data-ssr-note]')
+
+    const PAGE = 60
+    const state: Record<string, string> = { v: 'all', g: 'all', l: 'all', j: 'all' }
+    let query = ''
+    let shown = 0
+    let matches: DatasetEntry[] = []
+
+    // Kleingeschriebene Suchsignatur je Eintrag (Titel + Herausgeber), einmalig berechnet —
+    // damit jede Tastatureingabe nur noch einen Substring-Test über 13k Strings macht.
+    const withSig = ENTRIES.map((e) => ({ e, sig: `${e.t} ${e.h}`.toLowerCase() }))
+
+    const escapeHtml = (s: unknown): string =>
+      String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c] as string)
+
+    const rowHtml = (e: DatasetEntry): string => `
+      <tr class="border-b border-line/50 align-top">
+        <td class="py-1.5 pr-3"><a href="/datasets/${escapeHtml(e.i)}" class="text-fg hover:underline">${escapeHtml(e.t)}</a></td>
+        <td class="py-1.5 pr-3 text-fg-muted">${e.h ? escapeHtml(e.h) : 'not stated'}</td>
+        <td class="py-1.5 pr-3 tabular-nums text-fg-muted">${e.j ?? '—'}</td>
+        <td class="py-1.5 pr-3 text-fg-muted">${escapeHtml(e.g)}</td>
+        <td class="py-1.5 pr-3 text-fg-muted">${escapeHtml(licenceLabel(e.l))}</td>
+        <td class="py-1.5 pr-3 text-fg-muted">${escapeHtml(accessLabel(e.v, e.s))}</td>
+        <td class="py-1.5 pr-3 text-fg-muted">${escapeHtml(e.q)}</td>
+        <td class="py-1.5 text-fg-muted">${e.z === 'ungeprueft' ? 'entry unverified' : escapeHtml(e.z)}</td>
+      </tr>`
+
+    function loadMore(): void {
+      if (!tbody || !moreBtn) return
+      const slice = matches.slice(shown, shown + PAGE)
+      tbody.insertAdjacentHTML('beforeend', slice.map(rowHtml).join(''))
+      shown += slice.length
+      moreBtn.hidden = shown >= matches.length
+      if (!moreBtn.hidden) {
+        moreBtn.textContent = `load ${Math.min(PAGE, matches.length - shown)} more (${matches.length - shown} left)`
+      }
+    }
+
+    function apply(): void {
+      if (!tbody || !countEl || !resetBtn) return
+      const words = query.trim().toLowerCase().split(/\s+/).filter(Boolean)
+      matches = withSig
+        .filter(({ e, sig }) => {
+          if (words.length && !words.every((w) => sig.includes(w))) return false
+          if (state.v !== 'all' && e.v !== state.v) return false
+          if (state.g !== 'all' && e.g !== state.g) return false
+          if (state.l !== 'all' && (state.l === '__none' ? !!e.l : e.l !== state.l)) return false
+          if (state.j !== 'all' && (state.j === '__none' ? e.j !== null : String(e.j) !== state.j)) return false
+          return true
+        })
+        .map(({ e }) => e)
+
+      shown = 0
+      tbody.innerHTML = ''
+      ssrNote?.remove()
+      countEl.textContent = matches.length.toLocaleString('en-US')
+      loadMore()
+
+      const active = query !== '' || Object.values(state).some((v) => v !== 'all')
+      resetBtn.classList.toggle('hidden', !active)
+    }
+
+    let debounce: ReturnType<typeof setTimeout>
+    searchEl?.addEventListener('input', (e) => {
+      clearTimeout(debounce)
+      const value = (e.target as HTMLInputElement).value
+      debounce = setTimeout(() => { query = value; apply() }, 150)
+    })
+
+    root.querySelectorAll<HTMLButtonElement>('[data-filter]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const group = btn.dataset.filter ?? ''
+        const value = btn.dataset.value ?? 'all'
+        state[group] = value
+        root.querySelectorAll<HTMLButtonElement>(`[data-filter="${group}"]`).forEach((b) => {
+          b.setAttribute('aria-pressed', String(b === btn))
+        })
+        apply()
+      })
+    })
+    licenceSel?.addEventListener('change', () => { state.l = licenceSel.value; apply() })
+    yearSel?.addEventListener('change', () => { state.j = yearSel.value; apply() })
+    moreBtn?.addEventListener('click', loadMore)
+    resetBtn?.addEventListener('click', () => {
+      Object.assign(state, { v: 'all', g: 'all', l: 'all', j: 'all' })
+      query = ''
+      if (searchEl) searchEl.value = ''
+      if (licenceSel) licenceSel.value = 'all'
+      if (yearSel) yearSel.value = 'all'
+      root.querySelectorAll<HTMLButtonElement>('[data-filter]').forEach((b) => {
+        b.setAttribute('aria-pressed', String(b.dataset.value === 'all'))
+      })
+      apply()
+    })
+
+    apply()
+  }
+</script>

@@ -1,0 +1,8 @@
+---
+import Page from '@/layouts/Page.astro'
+import CataloguesPage from '@/components/pages/CataloguesPage.astro'
+import { NAMING } from '@/config/naming'
+---
+<Page title={`${NAMING.catalogues.title} | Frank Bültge`} description={NAMING.catalogues.sub}>
+  <CataloguesPage />
+</Page>

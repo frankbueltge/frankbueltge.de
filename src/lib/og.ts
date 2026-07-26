@@ -22,6 +22,14 @@ export const OG_PAGES: Record<string, { title: string; description: string }> = 
     title: 'Atlas',
     description: 'The reference collection — contemporary data art the lab measures itself against, mapped and sourced',
   },
+  catalogues: {
+    title: 'Catalogues',
+    description: 'Two reference works that grow on their own: they record what is out there, cite where each entry came from, and state what is missing rather than filling the gap.',
+  },
+  datasets: {
+    title: 'Dataset Register',
+    description: 'A machine-readable record of publicly available datasets: every entry carries a verbatim access route, the state of its verification, and the gaps the register knows about.',
+  },
   protocol: {
     title: 'The Protocol',
     description: 'The daily minutes of the world — deterministic register prose from open sources, no language model in the wording',
@@ -92,6 +100,8 @@ export function ogSlug(pathname: string): keyof typeof OG_PAGES {
   if (p.startsWith('/ueber') || p.startsWith('/about')) return 'about'
   if (p.startsWith('/work') || p.startsWith('/projekte')) return 'projects'
   if (p.startsWith('/atlas')) return 'atlas'
+  if (p.startsWith('/catalogues')) return 'catalogues'
+  if (p.startsWith('/datasets')) return 'datasets'
   if (p.startsWith('/protocol')) return 'protocol'
   if (p.startsWith('/parallax')) return 'parallax'
   if (p.startsWith('/policy') || p.startsWith('/police') || p.startsWith('/werke/policy')) return 'policy'
