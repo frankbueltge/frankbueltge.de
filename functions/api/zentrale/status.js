@@ -20,7 +20,15 @@
 // Umgebungsvariablen: ZENTRALE_SECRET (Auth-Header-Vergleich, konstante Zeit über
 // checkToken) und ZENTRALE_GITHUB_TOKEN (Lesezugriff auf die vier Kollektiv-Repos + dieses
 // Repo). Kein Token wird je geloggt oder in eine Fehlermeldung eingebettet.
-import { latestRunPerWorkflow, summarizeCommits, chronicleLast, vitalSignsLast, buildInbox } from '../../../src/lib/zentrale/status'
+import {
+  latestRunPerWorkflow,
+  summarizeCommits,
+  chronicleLast,
+  vitalSignsLast,
+  newestJournalEntry,
+  journalTitle,
+  buildInbox,
+} from '../../../src/lib/zentrale/status'
 import { enginePrs } from '../../../src/lib/zentrale/sitePrs'
 import { checkToken } from '../../../src/lib/zentrale/auth'
 
@@ -30,12 +38,19 @@ const UA = 'frankbueltge.de steuerzentrale'
 
 // Die vier Kollektive — Reihenfolge ist auch die Anzeigereihenfolge im Dashboard.
 // `integrate` ist der Workflow-Präfix (vor dem Bindestrich = Präfix für Namens-/Issue-Abgleich);
-// `chronicle`/`vitalSigns` markieren, welche zusätzliche Engine-Datei ein Kollektiv führt —
-// Atelier hat Vitalzeichen statt Chronik (Ulysses' eigene Konvention), Plenum hat keins von beiden.
+// `chronicle`/`vitalSigns`/`journal` markieren, welche zusätzliche Engine-Datei ein Kollektiv
+// führt — Plenum hat keins davon.
+//
+// Atelier (2026-07-26): Die Vitalzeichen bleiben stehen, sind aber ein v4-Artefakt — Protokoll
+// v5 (adoptiert 2026-07-24, Arbeitslinien) kennt sie nicht mehr, die Datei steht seit dem
+// 19.07. still. Deshalb kommt das eigentliche "was macht die Praxis gerade" jetzt aus dem
+// Journal, das Ulysses nachweislich täglich schreibt. Die tote Kennzahl wird nicht versteckt,
+// sondern in der Anzeige datiert — überholte Strukturen sichtbar und datiert, nie unauffällig
+// als aktuell (CLAUDE.md, Aktualitäts-Regel).
 const COLLECTIVES = [
   { repo: 'field-research', label: 'Field · Meridian', integrate: 'Field-Integrate', chronicle: true },
   { repo: 'studio', label: 'Studio · Ensemble', integrate: 'Studio-Integrate', chronicle: true },
-  { repo: 'ulysses', label: 'Atelier · Ulysses', integrate: 'Atelier-Integrate', vitalSigns: true },
+  { repo: 'ulysses', label: 'Atelier · Ulysses', integrate: 'Atelier-Integrate', vitalSigns: true, journal: true },
   { repo: 'data-snack-plenum', label: 'Plenum', integrate: 'Plenum-Integrate' },
 ]
 
@@ -79,6 +94,43 @@ async function rawJson(repo, path) {
   }
 }
 
+// Wie rawJson, nur für Text (Journal-Markdown) — wirft nie.
+async function rawText(url) {
+  try {
+    const res = await fetch(url, { headers: { 'user-agent': UA } })
+    if (!res.ok) return null
+    return await res.text()
+  } catch {
+    return null
+  }
+}
+
+// Jüngster Journaleintrag einer Praxis: Verzeichnis auflisten (authentifiziert — die
+// Contents-API zählt sonst gegen das magere 60/h-Kontingent der Worker-IP), dann NUR die
+// jüngste Datei nachladen. Zwei Anfragen, kein Massendownload von 80 Einträgen.
+//
+// Wirft nie: das Journal ist ein ergänzendes Signal wie Chronik/Vitalzeichen, kein
+// Kernstatus. Fehlt es, bleibt die Karte an dieser Stelle ehrlich leer — die restliche
+// Antwort darf davon nicht abhängen (siehe Ausfall-Politik oben).
+async function journalSignal(token, repo) {
+  try {
+    const listing = await ghGet(token, `/repos/frankbueltge/${repo}/contents/journal`)
+    const newest = newestJournalEntry(listing)
+    if (!newest) return null
+    // Nur der Kopf wird gebraucht; die Einträge sind lange Prosa, der Titel steht oben.
+    const markdown = newest.downloadUrl ? await rawText(newest.downloadUrl) : null
+    return {
+      date: newest.date,
+      // Ohne lesbare Überschrift lieber der Dateiname als gar nichts — er trägt die
+      // Arbeitslinie im Klartext ("negative-parallax-the-rulers-own-unit").
+      title: journalTitle(markdown) ?? newest.name.replace(/\.md$/, '').replace(/^\d{4}-\d{2}-\d{2}-/, '').replace(/-/g, ' '),
+      url: newest.url,
+    }
+  } catch {
+    return null
+  }
+}
+
 // Matcht Workflow-Namen wie "Field integrate" oder "Field-Integrate" case-insensitiv gegen
 // den Kollektiv-Präfix — die Actions-Workflow-Namen im Repo trennen Präfix und "integrate"
 // mit einem Leerzeichen, die Kollektiv-Config selbst mit einem Bindestrich; beides zulassen.
@@ -104,6 +156,7 @@ async function buildPayload(token) {
     { name: 'chronicle:field-research', run: () => rawJson('frankbueltge/field-research', 'chronicle.json') },
     { name: 'chronicle:studio', run: () => rawJson('frankbueltge/studio', 'chronicle.json') },
     { name: 'vitalSigns:ulysses', run: () => rawJson('frankbueltge/ulysses', 'pulse/vital-signs.json') },
+    { name: 'journal:ulysses', run: () => journalSignal(token, 'ulysses') },
   ]
 
   const settled = await Promise.allSettled(tasks.map((t) => t.run()))
@@ -162,6 +215,7 @@ async function buildPayload(token) {
       },
       chronicle: c.chronicle ? chronicleLast(results[`chronicle:${c.repo}`]) : null,
       vitalSigns: c.vitalSigns ? vitalSignsLast(results[`vitalSigns:${c.repo}`]) : null,
+      journal: c.journal ? (results[`journal:${c.repo}`] ?? null) : null,
       strandedIssues: strandedFor(c.repo),
     }
   })
