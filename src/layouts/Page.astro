@@ -3,6 +3,7 @@ import Base from './Base.astro'
 import TopBar from '@/components/TopBar.astro'
 import Footer from '@/components/Footer.astro'
 import AuthorByline from '@/components/AuthorByline.astro'
+import AttributionBlock from '@/components/AttributionBlock.astro'
 
 interface Props {
   title: string
@@ -17,6 +18,10 @@ const { title, description, noindex } = Astro.props
   <slot />
   {/* Die Byline entscheidet selbst pfadbasiert, ob die Seite eine Quelle hat (16.07.) —
       kein Layout-Gate mehr; Seiten ohne passendes Repo rendern schlicht keine Zeile. */}
+  {/* Nennungszeile unter Werken der Praxen (Frank, 26.07.): CC BY verlangt Namensnennung,
+      also muss die Site sie zum Kopieren anbieten. Entscheidet selbst pfadbasiert — Flächen
+      ohne eigene Praxis rendern nichts. */}
+  <AttributionBlock pageTitle={title} />
   <AuthorByline />
   <Footer />
 </Base>

@@ -1,0 +1,111 @@
+---
+// Die Nennungszeile unter jedem Werk (Frank, 26.07.). CC BY 4.0 VERLANGT Namensnennung —
+// aber genannt wird in der Praxis nur, wer es leicht macht. Ohne eine fertige Zeile zum
+// Kopieren schreiben Nachnutzende irgendetwas hin, meistens „gefunden im Netz".
+//
+// Gestaffelt (Franks Entscheidung 26.07.): sichtbar steht die PRAXIS, die das Werk gemacht
+// hat; der Rechteinhaber steht in der Zeile darunter. Das hält den Wording-Kanon ein
+// (Franks Name erscheint nicht in der Prosa der Unterseiten) und macht ihn trotzdem
+// auffindbar — die Nennungszeile ist genau die Stelle, an der ein Rückverweis entsteht.
+//
+// Pfadbasiert wie die AuthorByline: die Werkseiten der Praxen werden von den
+// Integrations-Workflows erzeugt und dürfen nicht einzeln angefasst werden — sonst wäre
+// die Zeile beim nächsten nächtlichen Lauf wieder weg.
+import { SITE } from '@/lib/site'
+
+interface Props {
+  /** Der volle <title> der Seite, z. B. „Exit Prohibited — Atelier | Frank Bültge". */
+  pageTitle?: string
+}
+const { pageTitle } = Astro.props
+
+const LIZENZ = { name: 'CC BY 4.0', url: 'https://creativecommons.org/licenses/by/4.0/' }
+
+/** Pfad-Präfix → Praxis, die als Urheberin genannt wird. Reihenfolge zählt: das erste
+ *  passende Präfix gewinnt. Flächen ohne eigene Praxis (About, Recht, Register) bekommen
+ *  keine Zeile — eine falsche Zuschreibung wäre schlimmer als keine. */
+const PRAXIS: ReadonlyArray<readonly [string, string]> = [
+  ['/atelier/werke', 'Ulysses'],
+  ['/field/werke', 'Meridian'],
+  ['/studio/werke', 'Ensemble'],
+  ['/plenum/werke', 'the practices of the ecology'],
+]
+
+const pfad = Astro.url.pathname.replace(/^\/de/, '').replace(/\/+$/, '') || '/'
+const treffer = PRAXIS.find(([p]) => pfad === p || pfad.startsWith(`${p}/`))
+const praxis = treffer?.[1]
+
+// Werktitel deterministisch aus dem Seitentitel schälen, nicht raten: erst alles vor
+// dem „|" (schneidet den Site-Namen ab), dann ein angehängtes Flächen-Suffix. Bleibt
+// nichts Brauchbares übrig, entfällt der Titel — die URL trägt die Zeile ohnehin.
+const FLAECHEN = ['Atelier', 'Field', 'Studio', 'Plenum']
+const roh = (pageTitle ?? '').split('|')[0].trim()
+const ohneFlaeche = FLAECHEN.reduce(
+  (s, f) => (s.endsWith(`— ${f}`) ? s.slice(0, -(f.length + 2)).trim() : s),
+  roh,
+)
+const werktitel = ohneFlaeche.length > 1 ? ohneFlaeche : ''
+
+const kanonisch = `${SITE.url}${pfad}`
+const zitierzeile = praxis
+  ? [praxis, werktitel && `“${werktitel}”`, kanonisch, `${LIZENZ.name}.`]
+      .filter(Boolean)
+      .join(' — ') + ' Rightsholder: Frank Bültge.'
+  : ''
+---
+
+{praxis && (
+  <aside class="mx-auto w-full max-w-3xl px-6 pb-10">
+    <div class="rounded-[10px] border border-line bg-panel p-4">
+      <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+        How to credit this work
+      </p>
+      <p class="mt-2.5 text-sm leading-relaxed text-fg">
+        <span class="font-semibold">{praxis}</span>, a machine-run practice at
+        {' '}<a href={SITE.url} class="underline decoration-line underline-offset-4 hover:decoration-fg">frankbueltge.de</a>.
+        {' '}Licensed under{' '}
+        <a href={LIZENZ.url} rel="license noopener" target="_blank" class="underline decoration-line underline-offset-4 hover:decoration-fg">{LIZENZ.name}</a>
+        {' '}— free to share and adapt, including commercially, if you give credit.
+      </p>
+      <p class="mt-1 text-xs text-fg-muted">Rightsholder: Frank Bültge</p>
+
+      <p class="mt-3.5 font-mono text-xs text-fg-faint">Ready to copy:</p>
+      <div class="mt-1.5 flex items-start gap-2">
+        <code
+          id="zitierzeile"
+          class="flex-1 select-all break-words rounded-md border border-line bg-bg px-2.5 py-2 font-mono text-xs leading-relaxed text-fg-muted"
+        >{zitierzeile}</code>
+        <button
+          type="button"
+          data-kopieren
+          class="shrink-0 rounded-md border border-line px-2.5 py-2 font-mono text-xs text-fg-muted transition-colors hover:border-fg-faint hover:text-fg"
+        >copy</button>
+      </div>
+    </div>
+  </aside>
+
+  <script>
+    // Kein Zwang: ohne JS bleibt die Zeile per select-all markierbar und kopierbar.
+    const knopf = document.querySelector<HTMLButtonElement>('[data-kopieren]')
+    const feld = document.getElementById('zitierzeile')
+    knopf?.addEventListener('click', async () => {
+      if (!feld?.textContent) return
+      try {
+        await navigator.clipboard.writeText(feld.textContent)
+        const vorher = knopf.textContent
+        knopf.textContent = 'copied'
+        setTimeout(() => { knopf.textContent = vorher }, 1600)
+      } catch {
+        // Zwischenablage verweigert (Berechtigung, unsicherer Kontext): Text markieren,
+        // damit die Nutzerin selbst kopieren kann — nie so tun, als hätte es geklappt.
+        const bereich = document.createRange()
+        bereich.selectNodeContents(feld)
+        const auswahl = window.getSelection()
+        auswahl?.removeAllRanges()
+        auswahl?.addRange(bereich)
+        knopf.textContent = 'select & copy'
+        setTimeout(() => { knopf.textContent = 'copy' }, 2400)
+      }
+    })
+  </script>
+)}
