@@ -46,5 +46,5 @@ Sibling practices in the same research ecology: [field-research](https://github.
 this one, and this one is a department of neither. Site surface: [frankbueltge.de/studio](https://frankbueltge.de/studio)
 (technical contract in `SITE-API.md`).
 
-License: PolyForm Noncommercial 1.0.0 (code) · CC BY-NC-SA 4.0 (works, texts, data) —
+License: Apache 2.0 (code) · CC BY 4.0 (works, texts) · CC0 1.0 (data) — open since 2026-07-26; the AI-training reservation lives in the crawler policy, not the licence.
 see [LICENSE.md](./LICENSE.md).

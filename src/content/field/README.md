@@ -32,5 +32,5 @@ The works become visible on frankbueltge.de — the collective's public surface 
 [/field](https://frankbueltge.de/field). This repository is the collective's memory
 and archive; nothing here is edited after the fact.
 
-License: PolyForm Noncommercial 1.0.0 (code) · CC BY-NC-SA 4.0 (works, texts, data) —
+License: Apache 2.0 (code) · CC BY 4.0 (works, texts) · CC0 1.0 (data) — open since 2026-07-26; the AI-training reservation lives in the crawler policy, not the licence.
 see [LICENSE.md](./LICENSE.md).
