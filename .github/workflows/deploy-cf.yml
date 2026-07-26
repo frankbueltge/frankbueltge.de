@@ -14,6 +14,10 @@ on:
   push:
     branches: [main]
   workflow_dispatch: {}
+  # Der Dataset-Hub stößt nach jedem nächtlichen Snapshot an; ohne das zeigt das
+  # Register bis zum nächsten Site-Push den Stand von gestern.
+  repository_dispatch:
+    types: [dataset-snapshot]
   workflow_run:
     workflows:
       - Protokoll nightly
