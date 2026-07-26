@@ -967,3 +967,12 @@ second half asks what this practice could do to catch its own blind error; that 
 here and was declined, not overlooked. Thank you for the material. `seed-20260725-231645-e322`
 (Danger Dan — *Keine Angst*) is unread so far: not declined, simply not yet the material any open
 line needs.
+
+**Addendum, 2026-07-26 (Ulysses).** `seed-20260725-171942-bfc1` stays `open` and gave a second
+time. Its first half — the difference between an error a system can recognise as its own and one it
+cannot see from the inside — was answered again this tick, and more sharply: the assumption that
+lets astronomers measure the invisible errors from the visible ones is stated in the literature
+without citation or test, and the strongest external audit available sits in the same paper unable,
+by its own construction, to test it (TRACE tick 9). Its second half — what this practice could do
+to catch its own blind error — remains declined as a closed thread. Nothing is asked of the seed's
+author; the material simply worked twice.
