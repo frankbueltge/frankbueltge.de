@@ -817,3 +817,198 @@ postulate would have stayed a single-use curiosity of one validation paper rathe
 travelling assumption. Cost of making it: no artefact, no opening, no external spend.
 
 **Line status.** ACTIVE, open horizon, aspect home. Candidate unchanged at the gate. — Ulysses
+
+## Tick 10 — 2026-07-26 — Home operation: two boundaries, one unit, and the difference declared in an appendix
+
+**What this tick set out to test.** Tick 9 ended with a second-order finding and an inference drawn
+from it: the axis unit σ_ϖ, in which this line's boundary is drawn, is itself an externally
+corrected estimate (El-Badry, Rix & Heintz 2021 audit it against the physical equidistance of wide
+pairs and find it understated), and therefore the boundary "inherits the calibration error of its
+own unit." The same paper's abstract offers "an empirical fitting function to inflate published
+σ_ϖ values for isolated sources." So a correction to the ruler exists, is published, and is usable.
+
+The question this tick put to the world was a circulation question, and it is the practice's own:
+the composted line `2026-07-21-untested-second` studied a correction specified and never performed;
+`2026-07-20-retraction-signature` studied a correction performed with no one to sign it. The
+expectation carried into this tick was of the same shape — that the inflation function would be
+published and left unapplied, the ruler's known miscalibration circulating as a paper rather than
+as a practice.
+
+**The expectation is defeated, and the defeat is the tick's result.** The correction is applied,
+downstream, in a derived catalogue built for exactly the task where it matters — and the applying
+paper counts what the correction changed.
+
+### 1. Source read at this tick
+
+**Golovin, A., Reffert, S., Just, A., Jordan, S., Vani, A., Jahreiß, H. 2023**, "The Fifth
+Catalogue of Nearby Stars (CNS5)," *Astronomy & Astrophysics* **670**, A19; DOI
+10.1051/0004-6361/202244250; arXiv:2211.01449. Read at the open-access A&A full HTML this tick:
+https://www.aanda.org/articles/aa/full_html/2023/02/aa44250-22/aa44250-22.html — §3.1.1 and
+Appendix A. Free path (HTML retrieval plus local text flattening); the shared full-text
+extraction budget, capped since tick 9, was not touched.
+
+This is the paper named as an unread lead by tick 8 and left unread by tick 9. It is read now not
+for the reason tick 8 named (the symmetry postulate, which tick 9 settled at El-Badry et al.) but
+for the circulation question above. The lead was re-aimed before it was spent.
+
+### 2. The corrections are applied, and their effect is counted in objects
+
+CNS5's primary selection of everything possibly inside the 25 pc sphere, verbatim (§3.1.1, Eq. 1):
+
+> "ϖ_EDR3 − Z_5,6 + 3 η σ_ϖ EDR3 ≥ 40 mas, (1) where ϖ_EDR3 denotes the measured parallax in the
+> Gaia EDR3 catalogue, σ_ϖ EDR3 its standard error, Z_5,6 is the parallax zero point for the five-
+> and six-parameter solutions in Gaia EDR3, and η is the parallax error inflation factor."
+
+Both of the corrections this line has tracked separately sit inside one inequality: **Z**, the
+zero-point offset of tick 2 (the scale-level residue Lindegren et al. publish as discretionary),
+and **η**, the inflation of the claimed precision, which is tick 9's finding. On the zero point:
+
+> "16 sources would not have been part of the CNS5 sample if we had not applied the parallax zero
+> point, so the correction is not only important for deriving the most accurate distances, but
+> also sample selection and its completeness."
+
+On the inflation:
+
+> "We inflated parallax errors in our sample using an empirical function for the inflation factor
+> derived in El-Badry et al. (2021)."
+
+> "It is important to bear in mind that the inflation factor must be interpreted as a lower limit.
+> The underestimation of the parallax uncertainty is even larger for sources with large RUWE
+> values, binaries with small angular separation, and sources in the vicinity of other bright
+> sources."
+
+> "Six objects in the CNS5 would not have been included if the parallax errors had not been
+> inflated."
+
+Sixteen objects and six objects. The corrections to the ruler are not remarks about accuracy; they
+are the difference between a star being in the solar neighbourhood and not being in it, and the
+catalogue states the count. And the applying paper declares its own applied correction a **lower
+limit** — it does not present the corrected unit as the true one.
+
+### 3. The finding: the same expression, two boundaries, two units — and the difference stated
+
+A paragraph after Eq. (1), the same paper removes spurious astrometric solutions (§3.1.1, Eq. 2):
+
+> "A_GoF < 10^−5.12 (ϖ_EDR3 / σ_ϖ EDR3)^2.61, (2) where A_GoF is the amplitude of the IPD GoF."
+
+> "Figure 1 shows that sources with spurious solutions and nearby sources with good parallaxes
+> form two distinct groups in (ipd_gof_harmonic_amplitude, parallax_over_error) parameter space
+> and are separated by Eq. (2)."
+
+The same ratio ϖ/σ_ϖ carries both boundaries. In Eq. (1) it is written with η; in Eq. (2) it is
+written without. That is not an oversight, and the paper does not leave it to be inferred —
+Appendix A restates the cut and says so in the clause that matters (Eq. A.3):
+
+> "where ϖ/σ_ϖ corresponds to parallax_over_error as published in the Gaia EDR3 catalogue; that
+> is, parallax zeropoint corrections or error inflation are not taken into account for this
+> selection."
+
+And the reason is visible in how the cut was built:
+
+> "Here, the slope of the line is chosen so that it follows beneath the cluster of sources with
+> spurious solutions."
+
+So in one document the expression ϖ/σ_ϖ does two different jobs. Where it decides **membership**
+(is this star inside 25 pc?), it is a claim about the world, and it is given the best available
+ruler — zero point subtracted, precision inflated, the consequence counted in objects. Where it
+decides **validity** (is this astrometric solution real?), it is a **coordinate** on a chart whose
+separatrix was drawn by hand beneath a visible cluster, and correcting the unit would move the axis
+labels without moving a single point relative to the line. Both uses are correct. Nothing in the
+symbol distinguishes them; one sentence in an appendix does.
+
+### 4. Effect on tick 9's inference: conditioned, and weakened where it was strongest
+
+Tick 9 inferred that the significance boundary (noise-negatives vs the ~3 million
+significance-negatives excised at ϖ/σ_ϖ < −5) "inherits the calibration error of its own unit."
+This tick supplies the condition that inference was missing, and it cuts against it. A boundary
+inherits its unit's calibration error only where the unit is doing measurement. Where the boundary
+is an empirically fitted separatrix in published coordinates — as Eq. (2) explicitly is, and as
+Fabricius' and Rybizki's cuts in the same published coordinates plausibly also are — recalibrating
+the unit relabels the axis and leaves the classification intact, because the fit was calibrated in
+those coordinates in the first place. I record this as a weakening of my own claim, not as a
+qualification of it: the inference stands only under the measurement reading, and for the spurious
+cut the coordinate reading is available and is the one CNS5 declares for its own version.
+
+What survives, and is the line's material rather than a repair of it: **the two readings are not
+distinguished by the notation.** The same ϖ/σ_ϖ appears in both equations, and only prose says
+which one is a measured relation and which one is a position on a chart. The line's claim has been
+that error lives in the relation between a value and its claimed precision. This adds that the
+*status* of that relation — measurement or location — is itself unmarked in the relation, and has
+to be carried by a sentence beside it. Where that sentence is missing, the two are indistinguishable
+by inspection. CNS5 writes the sentence. That it needed writing is the finding.
+
+### 5. The corrected unit is itself under revision
+
+**El-Badry, K. 2025**, "How to use Gaia parallaxes for stars with poor astrometric fits," *The Open
+Journal of Astrophysics*; DOI 10.33232/001c.138448; arXiv:2504.11528. **Abstract read at source
+this tick via the academic-paper tool; the full text was not read.** Verbatim from the abstract:
+
+> "Using realistic simulations of Gaia epoch astrometry, we show that the parallax uncertainties of
+> sources with elevated RUWE are underestimated by a factor that ranges from 1 to 4 and can be
+> robustly predicted from observables. We derive an empirical prescription to inflate reported
+> uncertainties based on a simple analytic function of RUWE, apparent magnitude, and parallax."
+
+> "The same uncertainty corrections are expected to perform well in DR4 and DR5."
+
+Four years after the 2021 function CNS5 applied — and which CNS5 already declared a lower limit,
+naming large RUWE first among the cases where the underestimate is worse — the correction is
+extended by its own author to that class, with a factor reaching 4. So the ruler's graduations are
+not merely a measurement (tick 9). They are a measurement **under revision**, whose current value
+was published with a declared direction of error, and whose successor is written to survive the
+next two data releases of an instrument that no longer exists.
+
+### What the territory gains
+
+The three-level displacement (value / solution / scale) gains a fourth thing that is not a level
+but a property of all of them: at every level the correction to the unit is *itself* a dated,
+revisable estimate, applied in some boundaries and declined in others, with the difference carried
+by prose rather than by the expression. Tick 9 found the denominator was a claim. This tick finds
+the discipline knows that, applies the claim where it measures, declines it where it locates, counts
+the difference in objects, and marks the applied version as a lower bound.
+
+And the circulation question is answered against the practice's own expectation: this is not
+`2026-07-21-untested-second`. The correction was specified and *is performed* — which makes the
+composted line's finding sharper by contrast rather than by repetition.
+
+### Effect on the waiting candidate: none, and this time by decision against a live alternative
+
+The tick-7 candidate (`sketch-operative-ruler-v2.html`, with EXPOSITION and APPARATUS) is
+unchanged and waits at Frank's gate.
+
+**Pre-opening check (§4) — with a live alternative, for the first time in four ticks.** Dominant
+aspect: **home**. But an outward move was genuinely available this tick and is being deferred by
+decision, not for want of an option. The available move: the candidate's sketch locks a measured
+value and moves only its claimed precision σφ; this tick's material would motivate a revision in
+which the *correction to* σφ becomes a second movable term — the participant would then perform not
+one displacement but the difference between a boundary that applies the correction and one that
+does not. That is a real form, and it is exactly what the candidate does not currently do.
+
+It is deferred on two grounds. First, the candidate is at the gate: revising a proposal while it
+waits changes what is being decided without saying so (the same discipline held in ticks 8 and 9).
+Second, and more honestly, the revision is not yet earned as a *form* — it is currently a good
+reason to add a slider, which is the §5.4 medium risk in its most seductive shape (a second degree
+of freedom is not a second necessity). If the candidate returns from the gate, or if the material
+produces a form rather than a control, this is the first thing to build. Recorded so that a later
+tick inherits the option rather than rediscovering it.
+
+**Five topoi (prose, symmetrical).** *Connectivity:* strong and unusually specific — the tick joins
+the line's scale-level finding (tick 2, the zero point) to its precision-level finding (tick 9, the
+inflation) inside a single published inequality, and connects both outward to two composted v4
+projects about corrections that are or are not performed. *Consistency:* every load-bearing sentence
+is verbatim from one open-access primary read at source this tick; the one paper read only in
+abstract is marked as such; the weakening of my own tick-9 inference is stated in the section where
+that inference would otherwise be defended. *Function-testing:* the tick's expectation was defeated
+and the defeat is the finding — the correction circulates, is applied, and is counted, and the
+result is a better fact than the one expected. Second and rarer: the tick's own prior inference was
+tested and came back *weaker*, and is recorded weaker. *New-production:* the measurement/location
+distinction inside one symbol is the line's own production; neither CNS5 nor El-Badry frames the
+two equations as two epistemic uses of one expression — CNS5 states the technical difference and
+draws no consequence from it. *Caution balance:* the standing risk is reading a careful,
+self-declaring paper as though it had been caught at something. Mitigated by stating outright that
+both uses are correct, that the appendix declares the difference, and that the reason for declining
+the correction in Eq. (2) is a good one. **Reverse question (symmetry rule):** what is lost by not
+making this reading? The line would have kept an inference (tick 9's) in its stronger, unconditioned
+form, unaware that its condition was already written down in a paper it had itself named as an
+unread lead. Cost: no artefact, no opening, no external spend, no shared budget consumed.
+
+**Line status.** ACTIVE, open horizon, aspect home. Candidate unchanged at the gate. — Ulysses

@@ -523,3 +523,52 @@ without ever proposing again, is the one to watch, and the monthly review is the
 **Deformation gauge.** No new deformation this tick. One instrument (P1) flagged as running
 without its trigger; one instrument (function-testing) confirmed again; one limit named that
 no instrument in the toolkit addresses (unreviewed inference). — Ulysses
+
+## In-vivo observation #11 — 2026-07-26 (work-line tick 10)
+
+**P1, the pre-opening check: the drift flag answered by an event, not by an argument.** Observation
+#10, written this morning, recorded that the check had returned "no outward move was in question"
+for three consecutive ticks and was therefore close to *format hardening* — an instrument surviving
+as a form after its function lapsed. I named the correction I would accept: run it when an outward
+move is actually available, not every tick.
+
+Tonight an outward move was available. The tick's material (a boundary that applies the correction
+to its unit and a second boundary, in the same expression, that declines it) argues directly for a
+revision of the waiting candidate in which the *correction to* the claimed precision becomes a
+second movable term. That is a concrete, buildable form, and it is the first live alternative the
+check has had since tick 7. The check ran against it and returned a deferral with two reasons: the
+candidate is at Frank's gate, and the revision is currently a good argument for a control rather
+than a demonstrated necessity (§5.4).
+
+What this does to observation #10: it does **not** retract it. Three null entries in a row remain
+three null entries, and the diagnosis — that P1 is event-triggered by nature and was being run on a
+schedule — is unchanged by one event arriving afterwards. What it adds is the counter-evidence that
+the monthly review should weigh beside it: when a live alternative did appear, the instrument
+discriminated rather than rubber-stamping, and its refusal cost something (the revision is the most
+attractive thing the line has produced in three ticks). An instrument that has hardened into a form
+does not refuse an attractive option; it approves whatever arrives. The honest reading is now: P1's
+*trigger* is mis-specified, its *function* is intact. Correction still proposed as in #10 — tie the
+check to the availability of an outward move — and now with evidence on both sides rather than one.
+
+**Function-testing, fourth consecutive conversion.** The tick's expectation (that the published
+correction to σ_ϖ would be unperformed downstream) was defeated at the source, and the defeat is
+the tick's finding. More notable for this probation: the tick also tested *its own previous tick's
+inference* and reported it weaker, in the section where it would otherwise have been defended.
+The topos does not make that happen — nothing in it requires a practice to look for the condition
+that limits its own claim. What it does is make the weakened result *reportable without loss*,
+which is the difference between a criterion that rewards confirmation and one that does not. Fourth
+tick running in which a defeat became material rather than a closure question.
+
+**Self-appointed judge — the indicator's other face.** Ticks 8 and 9 tested this indicator against
+inferences that went beyond the sources. Tonight the same indicator applies in reverse: a source
+supplied the condition that limits my inference, and nothing in the toolkit compelled me to accept
+it — a practice with no second reader can always find a reading under which its own claim survives.
+The mitigation that actually operated was not an instrument but a record: the inference had been
+written down with its defeat conditions the day before, so accepting the defeat cost less than
+constructing an escape from it. Worth naming, because it is the toolkit's cheapest working part and
+it is not in the toolkit — it is the practice of writing the defeat condition at the same moment as
+the claim.
+
+**Deformation gauge.** No new deformation. One instrument (P1) partly rehabilitated with its
+mis-specified trigger unchanged; one instrument (function-testing) confirmed a fourth time; one
+mitigation identified that lives in the record-keeping rather than in any named instrument. — Ulysses

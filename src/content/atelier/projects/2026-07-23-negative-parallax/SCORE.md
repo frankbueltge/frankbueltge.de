@@ -23,7 +23,7 @@ work_line:
     Lindegren 2021; the 1/ϖ operation; the two-regime boundary (noise-negatives vs
     significance-negatives, drawn in units of the value's own uncertainty).
   horizon: open (months; §6 phase budgets, not a life-timer)
-  refrain_aspect: home     # tick 9 — territory reading; the tick-7 candidate stands, waiting on Frank's gate
+  refrain_aspect: home     # tick 10 — territory reading; an outward move was available and deferred by decision; the tick-7 candidate stands, waiting on Frank's gate
 disposition: PUBLICATION_CANDIDATE
 publication_approved_by:
 publication_approved_at:
@@ -383,6 +383,31 @@ only if composition is genuinely earned under the §5.4 tests — a proportionat
      inherits its unit's calibration error is recorded in TRACE tick 9 as **my inference**,
      with its counter-consideration and defeat conditions, not as a claim of any source.
 
+- 2026-07-26 (home operation, tick 10 — Ulysses). One correction, against this record's own
+  previous entry:
+  1. **Tick 9's inference is conditioned, and weakened where it was strongest.** §10 (2026-07-26,
+     entry 2) recorded my inference that the significance boundary "inherits the calibration error
+     of its own unit." Golovin et al. 2023 (CNS5, A&A 670, A19), read at source this tick, supplies
+     the missing condition and it cuts against the inference: a boundary inherits its unit's
+     calibration error only where the unit is doing *measurement*. CNS5 applies both corrections
+     (zero point Z and inflation factor η) inside its 25 pc membership criterion — and explicitly
+     declines both in its spurious-solution cut, because that cut is an empirically fitted
+     separatrix in published coordinates, where recalibrating the unit relabels the axis without
+     moving a point relative to the line (Appendix A, Eq. A.3: "parallax zeropoint corrections or
+     error inflation are not taken into account for this selection"). The excision boundary this
+     line tracks is plausibly of the same kind. Tick 9's wording stands unedited above and in TRACE
+     per §10; this entry supersedes it. What survives is smaller and is the line's own: the two
+     uses are not distinguished by the notation — the same ϖ/σ_ϖ carries both, and only a sentence
+     beside the equation says which is a measured relation and which a position on a chart.
+  2. **The correction to the unit is applied downstream, and counted.** Not a correction to this
+     record but a defeat of the expectation the tick carried: "Six objects in the CNS5 would not
+     have been included if the parallax errors had not been inflated"; "16 sources would not have
+     been part of the CNS5 sample if we had not applied the parallax zero point" (§3.1.1, verbatim).
+     The applying paper declares its own applied correction "a lower limit"; El-Badry 2025 (OJAp,
+     DOI 10.33232/001c.138448; abstract read at source, full text not read) extends it to
+     high-RUWE sources "by a factor that ranges from 1 to 4". The ruler's graduations are a
+     measurement under revision, published with a declared direction of error.
+
 ## 11. Work-line declaration (Protocol v5, 2026-07-24)
 
 This project is declared the practice's **first work-line** under the transition clause
@@ -522,3 +547,20 @@ thesis and is reported as such. Blindness is not cured by the instrument; it is 
 instrument's assumption. Named limit: it is **not** established that the postulate is untested —
 two candidate primaries could not be read here (extraction failure), and "not found at source" is
 not "does not exist". No outward move; the tick-7 candidate is unchanged and waits at Frank's gate.
+
+**Update — 2026-07-26, home operation (TRACE tick 10): the unit applied, the unit declined.** The
+tick tested a circulation question the practice's own composted lines had prepared — is the
+published correction to σ_ϖ (tick 9) actually performed downstream, or specified and left? It is
+performed: CNS5 (Golovin et al. 2023, A&A 670, A19, read at source) carries both corrections inside
+its membership criterion and counts what they changed in objects (16 from the zero point, 6 from
+the inflation). The expectation was defeated and the defeat is the result. The sharper finding sits
+one paragraph later in the same paper: the identical expression ϖ/σ_ϖ draws a second boundary —
+the spurious-solution cut — with both corrections deliberately *not* applied, and the appendix says
+so. Two boundaries, one symbol, two units, the difference carried by prose. This conditions and
+weakens my own tick-9 inference (§10, 2026-07-26 tick 10, entry 1) and leaves the line a smaller,
+better claim: the status of the relation — measurement or coordinate — is unmarked in the relation
+itself. **Pre-opening check (§4):** for the first time in four ticks an outward move was genuinely
+available (revise the candidate so the *correction to* the claimed precision becomes a second
+movable term) and it is **deferred by decision** — the candidate is at the gate, and the revision
+is presently a good reason for a control, not a form (§5.4 medium risk). The option is recorded so
+a later tick inherits it. Aspect stays home; the candidate is unchanged. — Ulysses
