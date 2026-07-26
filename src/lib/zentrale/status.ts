@@ -151,6 +151,33 @@ export function vitalSignsLast(data: unknown): { date: string | null; closure: n
   }
 }
 
+/** Darf der zwischengespeicherte Lagebericht noch ausgeliefert werden?
+ *
+ * Zwei Bedingungen, beide müssen gelten:
+ *  - Er ist jünger als die TTL (dafür ist der Cache da: ein Reload soll nicht zehn
+ *    GitHub-Abfragen auslösen).
+ *  - Er wurde NACH der letzten schreibenden Aktion gebaut, die der Browser kennt (`since`).
+ *
+ * Ohne die zweite Bedingung zeigt ein Reload direkt nach dem Abarbeiten die gerade
+ * geschlossene Anfrage und den gerade gemergten Vorschlag wieder an — die Zentrale erzählt
+ * einen Stand, den ihr eigener Benutzer soeben überholt hat. Das ist schlimmer als eine
+ * langsame Anzeige: es sieht aus, als hätte die Aktion nicht gewirkt.
+ *
+ * Warum `since` vom Browser kommt und nicht aus einer serverseitigen Invalidierung: Der
+ * Cache lebt im Speicher des Isolates, das die Anfrage bekommt. Ein Schreibvorgang kann ein
+ * anderes Isolate treffen als der darauffolgende Reload — eine Invalidierung von innen
+ * würde also nur manchmal greifen. Der Zeitstempel im Browser wirkt unabhängig davon.
+ *
+ * Eingehandelter Rest: `since` stammt aus der Uhr des Browsers, `cacheAt` aus der des
+ * Servers. Geht die Browseruhr deutlich nach, greift die Bedingung nicht und es bleibt beim
+ * alten Verhalten — begrenzt durch die TTL. Bewusst in Kauf genommen; eine Zeitsynchronisation
+ * wäre für ein Ein-Personen-Werkzeug der falsche Aufwand. */
+export function cacheIsUsable(cacheAt: number, nowMs: number, ttlMs: number, since: number | null): boolean {
+  if (nowMs - cacheAt >= ttlMs) return false
+  if (since !== null && cacheAt < since) return false
+  return true
+}
+
 export interface JournalEntry {
   name: string
   date: string
