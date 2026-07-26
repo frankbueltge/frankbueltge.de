@@ -106,6 +106,38 @@ die *verifizierten* Retrieval-Agenten abgewiesen werden oder nur die Fälschunge
 Authoritativ ist allein die Crawler-Liste im Dashboard unter AI Crawl Control — dort steht
 je Crawler Allow/Block, und dort ist auch der tatsächliche Bot-Verkehr sichtbar.
 
+## 3b. Korrektur — das Dashboard widerlegt die Außenmessung (2026-07-26, 19:06)
+
+Der Vorbehalt aus §3a hat sich bestätigt, und zwar zugunsten des Ziels: **Die
+Retrieval-Agenten kommen bereits durch.** Aus dem Dashboard (letzte 24 Stunden):
+
+| | |
+|---|---|
+| von Cloudflare erkannte KI-Crawler-Anfragen | 233 |
+| davon zugelassen | 193 |
+| erfolglos | 40 |
+| meistbesuchter Pfad | `frankbueltge.de/` mit 28 erfolgreichen Abrufen |
+
+Zugelassene Anfragen je Anbieter: **Google 83 · Microsoft 58 · Anthropic 34
+(Claude-SearchBot allein 36 Anfragen) · OpenAI 16 (ChatGPT-User) · Apple 2**.
+Bei ByteDance, Perplexity, Common Crawl, DuckDuckGo und Huawei: 0.
+
+**Damit ist die Außenmessung aus §3a als Artefakt widerlegt:** Die 403 galten den
+*gefälschten* Kennungen (unverifizierte Herkunfts-IP), nicht der Politik. Verifizierte
+Retrieval-Agenten werden durchgelassen und holen sich die Seiten aktiv.
+
+**Nebenwirkung, ehrlich vermerkt:** Ein erheblicher Teil der 40 erfolglosen Anfragen
+dürfte aus den Prüfaufrufen dieser Session stammen (rund 17 Abrufe mit gefälschten
+KI-Kennungen). Die Kennzahl ist insoweit durch unsere eigene Messung verunreinigt.
+**Konsequenz: keine weiteren Spoof-Tests** — die Crawler-Liste im Dashboard ist die
+verlässliche Quelle, nicht ein curl von außen.
+
+**Was noch zu prüfen bleibt (Frank, im Dashboard unter „Crawlers →"):** ob die
+Trainings-Crawler ausdrücklich auf *Block* stehen. Ihre 0 zugelassenen Anfragen lassen
+offen, ob sie gesperrt sind oder in den 24 Stunden schlicht nicht vorbeikamen. Seit die
+verwaltete robots.txt aus ist, deklariert `public/robots.txt` den Trainings-Vorbehalt —
+das ist eine Bitte; eine Sperre in der Crawler-Liste wäre ein Zaun.
+
 ## 4. Technische Notiz
 
 `/steuerzentrale` wird **nicht** per `Disallow` gesperrt. Die Seite trägt bereits
