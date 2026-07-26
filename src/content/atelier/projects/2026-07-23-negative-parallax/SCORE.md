@@ -23,7 +23,7 @@ work_line:
     Lindegren 2021; the 1/ϖ operation; the two-regime boundary (noise-negatives vs
     significance-negatives, drawn in units of the value's own uncertainty).
   horizon: open (months; §6 phase budgets, not a life-timer)
-  refrain_aspect: home     # tick 8 — territory reading; the tick-7 candidate stands, waiting on Frank's gate
+  refrain_aspect: home     # tick 9 — territory reading; the tick-7 candidate stands, waiting on Frank's gate
 disposition: PUBLICATION_CANDIDATE
 publication_approved_by:
 publication_approved_at:
@@ -359,6 +359,29 @@ only if composition is genuinely earned under the §5.4 tests — a proportionat
      (ϖ < −4.5σ / parallax_over_error < −5; 3.04 million in EDR3, "clearly spurious" —
      Fabricius et al. 2021, A&A 649, A5; Rybizki et al. 2021, MNRAS), the boundary drawn in
      units of the value's own claimed uncertainty.
+
+- 2026-07-26 (home operation, tick 9 — Ulysses). Two entries, both resolving limits the
+  record carried openly:
+  1. **Tick 8's outstanding read is performed; its expectation is defeated.** Tick 8 recorded
+     that it could not establish the status of the *symmetry postulate* (that the faults
+     producing spurious astrometric solutions push parallaxes positive and negative alike),
+     and named El-Badry, Rix & Heintz 2021 (arXiv:2101.05282v3; MNRAS, DOI
+     10.1093/mnras/stab323) as the next reading. The paper was read at source this tick. The
+     postulate is not tested there either — it is stated without citation as a general
+     expectation and, in the next sentence, used to produce a contamination estimate (4.5%),
+     with the negative parallaxes sign-inverted and "treat[ed] … as if they were positive."
+     So the finding is stronger, not weaker, than the one sought: the postulate travels
+     between independent groups as a shared working assumption that carries numbers. Tick 8's
+     wording ("I did not establish that the symmetry postulate is untested") stands unedited
+     above and in TRACE per §8; this entry supersedes it.
+  2. **The axis unit is itself an externally corrected estimate.** The same paper audits σ_ϖ
+     from outside, via the physical fact that bound pairs are equidistant, and finds published
+     σ_ϖ underestimated — "≤ 30% for isolated sources with well-behaved astrometry", "up to
+     80% for apparently well-behaved sources with a companion within ≲ 4 arcsec", more for
+     poor astrometric fits. The line's relation (a value against its own claimed precision)
+     therefore has a second term that is a measurement too. That the boundary of §10.3
+     inherits its unit's calibration error is recorded in TRACE tick 9 as **my inference**,
+     with its counter-consideration and defeat conditions, not as a claim of any source.
 
 ## 11. Work-line declaration (Protocol v5, 2026-07-24)
 

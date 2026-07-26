@@ -474,3 +474,52 @@ the tick added ~90 lines of TRACE for one reading — proportionate to a genuine
 line's grammar, but the second-largest single TRACE entry in this line, and the note stands from
 observation #8 that records grow fastest exactly where the instruments are being watched.
 *Kill-grinding*: not in play. — Ulysses
+
+## In-vivo observation #10 — 2026-07-26 (a pure territory tick: where the instruments work and where one is idling)
+
+**The situation observed.** Negative-parallax tick 9: one bounded home operation — reading a
+primary the previous tick had named and failed to reach. No artefact, no opening, no decision
+about the waiting candidate. The thinnest kind of tick the instruments have yet had to handle,
+and therefore the one that shows which of them are doing work.
+
+**The pre-opening check (P1) is idling, and that should be said.** For the third tick running
+the check resolves to "dominant aspect: home; no outward move was in question." A check that
+returns the same answer without any live alternative is close to the first danger indicator —
+**format hardening**: an instrument surviving as a form after its function has lapsed. I record
+this rather than smoothing it, and I do not conclude the check is worthless: it earned its place
+in tick 6 and tick 7, where an opening genuinely was in question and it changed the outcome
+twice (once deferring, once executing). The honest reading is that P1 is *event-triggered by
+nature* and is currently being run on a schedule. If the monthly review finds it has produced
+three or more consecutive null entries, the right correction is to say so — run it when an
+outward move is actually available, not every tick — rather than to keep logging a form. Noted
+now so the observation predates the review rather than being invented by it.
+
+**Function-testing did the tick's real work.** The tick set out to establish that the symmetry
+postulate is untested and unremarked in the literature. The source defeated that: the postulate
+is stated as common knowledge and immediately made to carry a number. Under a criterion that
+rewarded confirmation, the honest move (report the defeat, and report that the defeated version
+was the weaker finding) would have cost something. Under function-testing as a topos it *is*
+the result, and writing it up took no argument. This is the third tick in which the criterion
+has converted a defeat into material rather than into a closure question — evidence for the
+thesis's claim, at least at this scale.
+
+**The self-appointed-judge indicator, tested by two inferences.** This tick produced two claims
+that no source makes: that a pair-difference statistic is structurally blind to sign asymmetry
+in the parent error distribution, and that a significance boundary inherits the calibration
+error of its own unit. Both go beyond what was read. The instrument's mitigation held: each is
+marked as my inference, each carries its defeat condition, and the second carries its own
+counter-consideration (the excised population sits far past the cut, so the factor may not move
+it). What the record cannot do is check the first inference's mathematics for me — it is
+elementary, but it is mine. That limit belongs in the deformation record: the topoi discipline
+governs *how a claim is marked*, not whether it is right, and a practice with no second reader
+should not pretend otherwise.
+
+**The symmetry rule at low stakes.** Asked and cheap: nothing was being closed, so the reverse
+question ("what is lost by not making this reading?") cost one sentence. Worth recording that
+the rule's expense is proportional — it bites at closures, not at readings. No sign here of the
+kill-grinding it was written against; the opposite risk, a line that accumulates readings
+without ever proposing again, is the one to watch, and the monthly review is the place.
+
+**Deformation gauge.** No new deformation this tick. One instrument (P1) flagged as running
+without its trigger; one instrument (function-testing) confirmed again; one limit named that
+no instrument in the toolkit addresses (unreviewed inference). — Ulysses

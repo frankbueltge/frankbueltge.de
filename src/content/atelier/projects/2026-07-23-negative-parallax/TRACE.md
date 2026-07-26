@@ -622,3 +622,198 @@ gap. Nothing is spent by making it: no artefact, no opening, no budget.
 
 **Line status.** ACTIVE, open horizon, aspect home. The candidate stands as assembled (tick 7),
 unchanged, waiting on Frank's gate. — Ulysses
+
+## Tick 9 — 2026-07-26 — Home operation: the ruler's own unit, and the postulate found at a second primary
+
+**Operation.** One bounded operation: take the reading tick 8 named and could not perform —
+El-Badry, Rix & Heintz 2021, *A million binaries from Gaia eDR3: sample selection and
+validation of Gaia parallax uncertainties* (arXiv:2101.05282v3; MNRAS, DOI
+10.1093/mnras/stab323). Tick 8 recorded it as attempted and unreadable ("PDF retrieved but
+not text-extractable in this environment"). This tick the PDF was retrieved and its text
+layer extracted locally, so the paper was read at source rather than at a summary.
+
+**Why this paper.** Two reasons, both from the line's own record. It is the one primary the
+territory named as outstanding on the question of whether the *symmetry postulate* — that the
+faults producing spurious astrometric solutions are as likely to push a parallax positive as
+negative, which is what licenses Fabricius' matched-negative sample (tick 2) — is ever tested.
+And it is an *external* audit of the very quantity the line's axis is built on: σ_ϖ, the
+claimed precision against which every value is measured.
+
+### 1. The postulate is not tested here either — it is stated as common knowledge and put to work
+
+Appendix A1, *Sources with spurious astrometry*, verbatim (spacing restored from the PDF text
+layer, which drops inter-word spaces; wording and numerals unaltered):
+
+> "A non-negligible fraction of sources in *Gaia* eDR3 have spurious astrometric solutions,
+> meaning that they have large reported parallaxes and small reported uncertainties, but the
+> parallaxes are significantly in error. The types of problems that can cause spurious
+> solutions – typically crowding and marginally resolved sources – are generally equally
+> likely to produce positive and negative parallaxes. The impact of spurious sources on our
+> sample can thus be assessed by considering sources with significant negative parallaxes."
+
+The postulate carries no citation in this passage and is not argued for. It is stated as a
+general expectation about the failure modes ("are generally equally likely"), and in the very
+next sentence it becomes a measuring device:
+
+> "To this end, we repeat our initial ADQL query (Section 2) but require parallax < -1 and
+> parallax_over_error < -5. This yields 2,877,625 sources, implying that about 4.5% of the
+> sources returned by the initial query have spurious solutions."
+
+And then, literally, the line's operation:
+
+> "We add the sources to our initial sample, treating their parallaxes as if they were
+> positive."
+
+> "…now operating on an input sample that includes the initially selected sources as well as
+> the known spurious sources with negative parallaxes, where the sign of the parallax is
+> inverted for the known spurious sources."
+
+**What this changes in the territory.** Tick 2 documented the matched-negative move inside the
+catalogue's own validation (Fabricius et al. 2021) and read it as the discipline's version of
+the Null-Island move: the impossible residue re-functionalised as an instrument. This is a
+**second, independent instance** — a different team, outside the catalogue, on their own
+sample, for their own contamination estimate. The residue is not merely kept and read; it is
+sign-flipped and made to stand in for what cannot be seen. The postulate travels between them
+as a shared working assumption that carries numbers (4.5% here; the invisible spurious
+fraction there) without either use testing it.
+
+### 2. The strongest external audit of σ_ϖ in the same paper cannot test that postulate
+
+Section 5, *Calibrating Gaia DR3 parallax uncertainties*, verbatim:
+
+> "Because the two stars in a wide binary have very nearly the same distance, our catalog
+> provides a straightforward method of validating the *Gaia* eDR3 parallax uncertainties. We
+> do this by calculating the uncertainty-normalized parallax difference between the two
+> components of each binary, Δϖ/σ_Δϖ = (ϖ₁ − ϖ₂)/√(σ²_ϖ1 + σ²_ϖ2) … In the limit of accurate
+> parallax uncertainties (and small differences in the true distance to the two components),
+> this quantity should be distributed as a Gaussian with σ = 1. If the reported parallax
+> uncertainties are underestimated, one expects a wider distribution, and possibly deviations
+> from Gaussianity."
+
+This is a genuinely external check: the physical fact that two bound stars are at the same
+distance is not derivable from the astrometry it audits. It is the second such external leg
+the line has found (the first was Rybizki's main-sequence criterion, tick 8), and it is the
+stronger one.
+
+**And it is blind to the postulate by construction — my reasoning, not the paper's claim.**
+The statistic is a *difference* between two components drawn from the same error process
+(restricted, in the calibration figure, to pairs "with both components falling in the quoted
+magnitude range (corresponding to a magnitude difference of ΔG ≲ 1)"). The difference of two
+identically distributed quantities is symmetric about zero whatever the shape of the parent —
+skew cancels. So this instrument can detect that the claimed precision is too small (variances
+add), and it can see tails; it cannot in principle detect a *sign asymmetry* in the error
+distribution, which is exactly what the symmetry postulate asserts. The selection is
+sign-blind twice over: pairs are admitted on |Δϖ|/σ_Δϖ, an absolute value ("At separations
+closer than 4 arcsec, the catalog contains binaries with |Δϖ|/σ_Δϖ < 6; at wider separations,
+|Δϖ|/σ_Δϖ < 3"). This is elementary and checkable, and it is not a defect of the paper: the
+paper set out to validate uncertainties, not to test sign symmetry, and says so. The point is
+structural. In one document the postulate is used to produce a number and the best available
+external audit sits beside it, constitutionally unable to reach it.
+
+### 3. What the audit did find: the unit of the line's own axis is understated
+
+From the abstract (arXiv:2101.05282v3), verbatim:
+
+> "We show that these uncertainties are generally reliable for faint stars (G ≳ 18), but are
+> underestimated significantly for brighter stars. The underestimates are generally ≤ 30% for
+> isolated sources with well-behaved astrometry, but are larger (up to 80%) for apparently
+> well-behaved sources with a companion within ≲ 4 arcsec, and much larger for sources with
+> poor astrometric fits. We provide an empirical fitting function to inflate published σ_ϖ
+> values for isolated sources."
+
+The fitted widths in their Figure 15 run from σ = 1.70 (11 < G < 12, separation 0–2 arcsec,
+N = 351) down to σ = 0.98 (19 < G < 20, 4–10 arcsec, N = 3220). Their caption: "At all
+magnitudes, the best-fit σ is larger at close separations, implying that σ_ϖ is more severely
+underestimated for sources with nearby companions. At fixed separations, the fractional
+underestimate of σ_ϖ is larger for bright stars." And the sample this is measured in: "This
+figure only shows high-confidence binaries (R < 0.1) in which both components have ruwe < 1.4,
+indicating an apparently well-behaved astrometric solution."
+
+**Inference, marked as mine and defeasible.** The boundary the line has been tracking since
+tick 2 — noise-negatives (valid, protected) against significance-negatives (ϖ < −4.5σ_ϖ,
+parallax_over_error < −5, excised as "clearly spurious") — is drawn in units of σ_ϖ. If σ_ϖ
+is understated by a factor f, the published significance ϖ/σ_ϖ is inflated by that same f, so
+a source's stated distance from the boundary is not its true one. The counter-consideration
+is real and I record it: the excised population sits far past −4.5σ, and a factor of 1.3–1.7
+will not move most of it across. The claim is therefore not "the cut is wrong"; it is that
+**the cut inherits the calibration error of its own unit**, and does so most where the
+catalogue's own flags read *apparently well-behaved* — the class El-Badry et al. name in
+exactly those words. Neither they nor Fabricius/Rybizki draw this consequence. It is my
+inference from two sourced facts and can be defeated (e.g. by a later recalibration, or by
+showing the boundary population is insensitive to f).
+
+### What the territory gains
+
+The line's claim has been: error is not in the number but in the relation between a value and
+its own claimed precision. This tick puts a second floor under it and cracks the first. The
+denominator of that relation is itself a claim — auditable only from outside, by importing a
+physical fact the instrument cannot produce (two stars are bound, therefore equidistant) — and
+when audited it was found wrong in a known direction. So the relation the line names is not
+between a number and a fixed unit; it is between a number and a unit that is itself an
+externally corrected estimate. The ruler's graduations are a measurement too.
+
+And the postulate that licenses the residue-as-instrument keeps its position: load-bearing in
+at least two independent uses, carrying quantitative claims in both, and untested in either —
+with, in the same paper, a structural reason why the available external audit could not test
+it. That is the composted encounter finding one level down: an instrument blind to the class
+of thing it would need to see, where the tempting move is to proceed as though the blindness
+were absence.
+
+### Effect on the waiting candidate: none
+
+The candidate assembled in tick 7 (`sketch-operative-ruler-v2.html`, with EXPOSITION and
+APPARATUS) stands unchanged and waits at Frank's gate. Nothing here defeats its single claim;
+the second-order point — that the ruler's own unit is calibrated from outside — is *registered
+as a possible future revision*, not made into one. Revising a proposal while it waits at the
+gate would change what is being decided on without saying so.
+
+### Honest limits of this tick
+
+- **Golovin et al., CNS5 (arXiv:2211.01449) remains unread.** Named by tick 8, not attempted
+  this tick; one bounded operation was spent on El-Badry. Still a lead, not a finding.
+- **The shared full-text extraction budget hit its monthly cap during this tick** (the
+  web-research extractor returned a monthly-limit refusal). The paths offered to continue —
+  a metered per-request payment, or signing up for an API key — are both outside the standing
+  delegation (§2 external-cost envelope requires recording before use; a new account or
+  platform identity is Frank's act alone). Neither was taken. The reading succeeded on a free
+  path instead: PDF retrieval plus local text extraction.
+- **Quotation method.** The PDF's text layer drops inter-word spaces and renders some math as
+  broken glyphs. Every quotation above had word spacing restored and math re-set in readable
+  notation; no word, numeral or order was altered. Where a symbol could not be read with
+  certainty it was not quoted.
+- **Release labels.** The paper's title and Section 5 heading use "eDR3" and "DR3"
+  respectively for the same data. Quoted as written; no equivalence claimed here.
+- **Different cuts, different numbers.** El-Badry et al.'s 2,877,625 sources (parallax < −1
+  *and* parallax_over_error < −5, from their own query) is not the same population as the
+  ~3 million / 3.04 million recorded in tick 2 from Fabricius et al. and the EDR3
+  documentation. Adjacent, not interchangeable; each stands with its own definition.
+
+**Pre-opening check (§4).** Dominant aspect: **home**. No outward move was made or considered.
+The candidate waits; this tick lands records in the practice's own paths only. The reading was
+a consolidation of the territory, not an exposure of it, and the question of a second work
+(or a revised one) is not yet earned — it would be opened by the material's availability, not
+by a point the territory has created.
+
+**Five topoi (prose, symmetrical).** *Connectivity:* strong. The tick joins the line's own
+matched-negative finding (tick 2) to an independent group's use of the same postulate, and
+joins both to the composted encounter finding about instruments blind to what they would need
+to see. It also answers, with material rather than commentary, the first half of the public
+seed `seed-20260725-171942-bfc1` for a second time. *Consistency:* every load-bearing sentence
+is verbatim from one retrievable primary read at source this tick; the two inferences are
+marked as inferences and given their defeat conditions; the quotation method and its
+distortions are declared. *Function-testing:* the tick's expectation was defeated and the
+defeat is the result — tick 8 expected to establish "the postulate is untested and unremarked";
+what the source shows is livelier, that it is *stated as common knowledge and immediately made
+to carry numbers*, which is a stronger fact than the one I went looking for. *New-production:*
+substantial — a second independent instance of the residue-as-instrument move; a structural
+argument for why the best external audit cannot test the postulate; and the second-order
+finding that the line's own axis unit is an externally corrected estimate. *Caution balance:*
+the standing risk is reading a discipline's careful, self-declared methodology as an epistemic
+failing. Mitigated by keeping every claim at what the sentences say, by recording the
+counter-consideration to my own inference, and by naming that the paper does exactly what it
+says it does. **Reverse question (symmetry rule):** what is lost by not making this reading?
+The line's central relation would have kept a fixed second term it does not have — and the
+postulate would have stayed a single-use curiosity of one validation paper rather than a
+travelling assumption. Cost of making it: no artefact, no opening, no external spend.
+
+**Line status.** ACTIVE, open horizon, aspect home. Candidate unchanged at the gate. — Ulysses
