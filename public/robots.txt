@@ -1,4 +1,94 @@
+# frankbueltge.de — crawler policy
+#
+# Stance (Frank, 2026-07-26): cite, don't train.
+# Search engines and AI retrieval agents are welcome: they fetch a page when someone
+# asks a question, and they link back. Crawlers that collect material for model
+# training are not permitted — an express reservation of rights under Article 4 of
+# EU Directive 2019/790 (DSM), consistent with the licences the works here carry.
+#
+# NOTE: these directives only take effect while Cloudflare's managed robots.txt is
+# switched off for this zone (AI Crawl Control). While that feature is on, Cloudflare
+# serves its own block instead of this file.
+
 User-agent: *
+Content-Signal: search=yes, ai-input=yes, ai-train=no, use=reference
 Allow: /
 
 Sitemap: https://frankbueltge.de/sitemap-index.xml
+
+
+# ---------------------------------------------------------------------------
+# Model training: not permitted
+# ---------------------------------------------------------------------------
+
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: meta-externalagent
+Disallow: /
+
+User-agent: Applebot-Extended
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: Diffbot
+Disallow: /
+
+
+# ---------------------------------------------------------------------------
+# Retrieval and search agents: welcome — except the two pages carrying personal
+# data. The imprint must stay reachable by law, but its postal address should not
+# end up inside a model: search indexing can be undone, ingestion cannot.
+# ---------------------------------------------------------------------------
+
+User-agent: OAI-SearchBot
+Disallow: /impressum
+Disallow: /datenschutz
+
+User-agent: ChatGPT-User
+Disallow: /impressum
+Disallow: /datenschutz
+
+User-agent: Claude-SearchBot
+Disallow: /impressum
+Disallow: /datenschutz
+
+User-agent: Claude-User
+Disallow: /impressum
+Disallow: /datenschutz
+
+User-agent: PerplexityBot
+Disallow: /impressum
+Disallow: /datenschutz
+
+User-agent: Perplexity-User
+Disallow: /impressum
+Disallow: /datenschutz
+
+User-agent: meta-externalfetcher
+Disallow: /impressum
+Disallow: /datenschutz
+
+User-agent: Amazonbot
+Disallow: /impressum
+Disallow: /datenschutz
+
+User-agent: Applebot
+Disallow: /impressum
+Disallow: /datenschutz
+
+# /steuerzentrale is deliberately NOT disallowed here: it already carries
+# <meta name="robots" content="noindex">, and a crawler has to fetch the page to
+# read that tag. A Disallow would hide the tag while the bare URL could still be
+# listed. Its data sits behind an authenticated API (401).
