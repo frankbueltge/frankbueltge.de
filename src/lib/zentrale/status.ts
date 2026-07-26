@@ -151,6 +151,64 @@ export function vitalSignsLast(data: unknown): { date: string | null; closure: n
   }
 }
 
+export interface JournalEntry {
+  name: string
+  date: string
+  url: string | null
+  downloadUrl: string | null
+}
+
+const JOURNAL_NAME_RE = /^(\d{4}-\d{2}-\d{2})-(.+)\.md$/
+
+/** Wählt den jüngsten Journaleintrag aus einer GitHub-Contents-Auflistung von `journal/`.
+ *
+ * Warum überhaupt: Das Atelier führt seit Protokoll v5 (2026-07-24, Arbeitslinien) keine
+ * pulse/vital-signs.json mehr — die Datei ist ein v4-Artefakt und steht seit 2026-07-19
+ * still. Sein tatsächlich täglich geschriebenes Lebenszeichen sind die Journaleinträge; die
+ * Zentrale liest deshalb dort, statt eine tote Kennzahl weiterzuzeigen.
+ *
+ * Sortiert wird über das Datumspräfix des Dateinamens, NICHT über die Listenreihenfolge (die
+ * GitHub-API sortiert alphabetisch, was zufällig meist passt — darauf zu bauen ist genau der
+ * Bug, der auffällt, wenn es einmal nicht passt). Mehrere Einträge am selben Tag sind normal
+ * (ein Eintrag pro Zug); ihre Reihenfolge innerhalb des Tages steht im Dateinamen nicht, also
+ * gewinnt der alphabetisch letzte — willkürlich, aber deterministisch, damit die Anzeige
+ * zwischen zwei Abrufen nicht springt. */
+export function newestJournalEntry(listing: unknown): JournalEntry | null {
+  if (!Array.isArray(listing)) return null
+  let best: JournalEntry | null = null
+  for (const raw of listing) {
+    if (!raw || typeof raw !== 'object') continue
+    const e = raw as Record<string, unknown>
+    if (e.type !== 'file' || typeof e.name !== 'string') continue
+    const match = JOURNAL_NAME_RE.exec(e.name)
+    if (!match) continue
+    const entry: JournalEntry = {
+      name: e.name,
+      date: match[1],
+      url: typeof e.html_url === 'string' ? e.html_url : null,
+      downloadUrl: typeof e.download_url === 'string' ? e.download_url : null,
+    }
+    if (!best || entry.date > best.date || (entry.date === best.date && entry.name > best.name)) {
+      best = entry
+    }
+  }
+  return best
+}
+
+/** Zieht die Überschrift aus einem Journaleintrag: die erste `# `-Zeile, ohne das
+ * vorangestellte Datum ("# 2026-07-26 — The ruler's own unit" → "The ruler's own unit").
+ * Nur der Kopf der Datei wird angesehen — findet sich dort keine Überschrift, gibt es null
+ * statt einer geratenen Zeile aus dem Fließtext. */
+export function journalTitle(markdown: unknown): string | null {
+  if (typeof markdown !== 'string') return null
+  for (const line of markdown.split('\n').slice(0, 20)) {
+    const heading = /^#\s+(.*\S)\s*$/.exec(line)
+    if (!heading) continue
+    return heading[1].replace(/^\d{4}-\d{2}-\d{2}\s*[—–-]\s*/, '').trim() || null
+  }
+  return null
+}
+
 /** Ganze Tage, abgerundet (Verweildauer, kein Kalendertag-Delta) — 23:00 gestern bis 01:00
  * heute sind 2 Stunden, nicht "ein Tag alt". */
 export function ageDays(fromIso: string, nowIso: string): number {
