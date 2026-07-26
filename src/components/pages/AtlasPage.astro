@@ -76,9 +76,17 @@ const FAMILIE_LABEL: Record<string, string> = de
 // Arbeiten stehen (Asendorf, Levin, Polli, ted davis). Sie wird deshalb als eigene
 // Schicht geführt und nicht untergemischt.
 const SCHICHT_GRENZE = 2013
+
+// Zwei Einträge tragen Prosa im Jahresfeld, weil das Projekt läuft („toolkit ongoing
+// since ~2014", „developed ~2019–2023"). Die erste Jahreszahl im String ist dafür die
+// vertretbare Lesung — die ersten vier Zeichen sind es nicht.
+const jahrZahl = (jahr: string): number | null => {
+  const treffer = String(jahr).match(/\d{4}/)
+  return treffer ? Number.parseInt(treffer[0], 10) : null
+}
 const epocheVon = (jahr: string): 'archiv' | 'gegenwart' => {
-  const n = Number.parseInt(String(jahr).slice(0, 4), 10)
-  return Number.isFinite(n) && n < SCHICHT_GRENZE ? 'archiv' : 'gegenwart'
+  const n = jahrZahl(jahr)
+  return n !== null && n < SCHICHT_GRENZE ? 'archiv' : 'gegenwart'
 }
 const EPOCHE: Record<string, string> = de
   ? { archiv: `Archiv (vor ${SCHICHT_GRENZE})`, gegenwart: 'Gegenwart' }
@@ -104,10 +112,12 @@ const copy = de
       lPhysical: 'physisch/öffentlich',
       fField: 'Feld',
       fMedium: 'Medium',
+      fJahr: 'Jahr',
       fEpoche: 'Schicht',
       fAxis: 'Standpunkt',
       all: 'Alle',
       showing: 'sichtbar',
+      reset: 'Filter zurücksetzen',
       unverified: 'ungeprüft',
       source: 'Quelle',
       method:
@@ -127,10 +137,12 @@ const copy = de
       lPhysical: 'physical/public',
       fField: 'Cluster',
       fMedium: 'Medium',
+      fJahr: 'Year',
       fEpoche: 'Layer',
       fAxis: 'Stance',
       all: 'All',
       showing: 'showing',
+      reset: 'reset filters',
       unverified: 'unverified',
       source: 'source',
       method:
@@ -163,6 +175,19 @@ const familienKeys = ['macht', 'erkenntnis', 'ausdruck'].filter((f) =>
 const epochenKeys = (['archiv', 'gegenwart'] as const).filter((e) =>
   works.some((w) => epocheVon(w.year) === e),
 )
+
+// Jahrzehnte statt Schieberegler: dieselbe Chip-Sprache wie die übrigen Filter, ohne
+// zusätzliche Bedienlogik. Aus den Daten abgeleitet, deshalb wächst die Reihe mit.
+const dekadeVon = (jahr: string): number | null => {
+  const n = jahrZahl(jahr)
+  return n !== null ? Math.floor(n / 10) * 10 : null
+}
+const dekadenCounts: Record<number, number> = {}
+for (const w of works) {
+  const d = dekadeVon(w.year)
+  if (d !== null) dekadenCounts[d] = (dekadenCounts[d] ?? 0) + 1
+}
+const dekadenKeys = Object.keys(dekadenCounts).map(Number).sort((a, b) => a - b)
 const mediumKeys = ['digital', 'hybrid', 'physical']
 const axisKeys = ['investigation', 'mixed', 'spectacle']
 ---
@@ -193,49 +218,69 @@ const axisKeys = ['investigation', 'mixed', 'spectacle']
 
   <section data-atlas>
     <!-- filters -->
-    <div class="mb-6 space-y-3">
-      <div class="flex flex-wrap items-center gap-1.5">
-        <span class="mr-1 w-16 shrink-0 font-mono text-xs uppercase tracking-wider text-fg-faint">{copy.fField}</span>
-        <button type="button" data-filter="cluster" data-value="all" aria-pressed="true" class="chip">{copy.all}</button>
+    <div class="mb-6 space-y-5">
+      <!-- Thema: je Familie eine Zeile, damit dreizehn Felder lesbar bleiben -->
+      <div class="space-y-1.5">
+        <div class="flex flex-wrap items-center gap-1.5">
+          <span class="mr-1 w-20 shrink-0 font-mono text-xs uppercase tracking-wider text-fg-faint">{copy.fField}</span>
+          <button type="button" data-filter="cluster" data-value="all" aria-pressed="true" class="chip">{copy.all}</button>
+        </div>
         {familienKeys.map((f) => (
-          <>
-            {familienKeys.length > 1 && (
-              <span class="ml-2 font-mono text-[0.65rem] uppercase tracking-wider text-fg-faint">{FAMILIE_LABEL[f]}</span>
-            )}
+          <div class="flex flex-wrap items-center gap-1.5">
+            <span class="mr-1 w-20 shrink-0 text-right font-mono text-[0.65rem] uppercase tracking-wider text-fg-faint">{FAMILIE_LABEL[f]}</span>
             {clusterKeys.filter((c) => FAMILIE[c] === f).map((c) => (
               <button type="button" data-filter="cluster" data-value={String(c)} aria-pressed="false" class="chip" title={CLUSTER[c]}>
-                <span class="font-mono">{c}</span> · {CLUSTER[c]} <span class="text-fg-faint">{clusterCounts[c] ?? 0}</span>
+                <span class="font-mono text-fg-faint">{c}</span> {CLUSTER[c]} <span class="text-fg-faint">{clusterCounts[c] ?? 0}</span>
               </button>
             ))}
-          </>
+          </div>
         ))}
       </div>
-      {epochenKeys.length > 1 && (
+
+      <!-- Zeit, Form, Standpunkt -->
+      <div class="space-y-1.5 border-t border-line pt-4">
+        {dekadenKeys.length > 1 && (
+          <div class="flex flex-wrap items-center gap-1.5">
+            <span class="mr-1 w-20 shrink-0 font-mono text-xs uppercase tracking-wider text-fg-faint">{copy.fJahr}</span>
+            <button type="button" data-filter="dekade" data-value="all" aria-pressed="true" class="chip">{copy.all}</button>
+            {dekadenKeys.map((d) => (
+              <button type="button" data-filter="dekade" data-value={String(d)} aria-pressed="false" class="chip">
+                <span class="font-mono">{d}er</span> <span class="text-fg-faint">{dekadenCounts[d]}</span>
+              </button>
+            ))}
+          </div>
+        )}
+        {epochenKeys.length > 1 && (
+          <div class="flex flex-wrap items-center gap-1.5">
+            <span class="mr-1 w-20 shrink-0 font-mono text-xs uppercase tracking-wider text-fg-faint">{copy.fEpoche}</span>
+            <button type="button" data-filter="epoche" data-value="all" aria-pressed="true" class="chip">{copy.all}</button>
+            {epochenKeys.map((e) => (
+              <button type="button" data-filter="epoche" data-value={e} aria-pressed="false" class="chip">
+                {EPOCHE[e]} <span class="text-fg-faint">{works.filter((w) => epocheVon(w.year) === e).length}</span>
+              </button>
+            ))}
+          </div>
+        )}
         <div class="flex flex-wrap items-center gap-1.5">
-          <span class="mr-1 w-16 shrink-0 font-mono text-xs uppercase tracking-wider text-fg-faint">{copy.fEpoche}</span>
-          <button type="button" data-filter="epoche" data-value="all" aria-pressed="true" class="chip">{copy.all}</button>
-          {epochenKeys.map((e) => (
-            <button type="button" data-filter="epoche" data-value={e} aria-pressed="false" class="chip">
-              {EPOCHE[e]} <span class="text-fg-faint">{works.filter((w) => epocheVon(w.year) === e).length}</span>
-            </button>
+          <span class="mr-1 w-20 shrink-0 font-mono text-xs uppercase tracking-wider text-fg-faint">{copy.fMedium}</span>
+          <button type="button" data-filter="medium" data-value="all" aria-pressed="true" class="chip">{copy.all}</button>
+          {mediumKeys.map((m) => (
+            <button type="button" data-filter="medium" data-value={m} aria-pressed="false" class="chip">{MEDIUM[m]}</button>
           ))}
         </div>
-      )}
-      <div class="flex flex-wrap items-center gap-1.5">
-        <span class="mr-1 w-16 shrink-0 font-mono text-xs uppercase tracking-wider text-fg-faint">{copy.fMedium}</span>
-        <button type="button" data-filter="medium" data-value="all" aria-pressed="true" class="chip">{copy.all}</button>
-        {mediumKeys.map((m) => (
-          <button type="button" data-filter="medium" data-value={m} aria-pressed="false" class="chip">{MEDIUM[m]}</button>
-        ))}
+        <div class="flex flex-wrap items-center gap-1.5">
+          <span class="mr-1 w-20 shrink-0 font-mono text-xs uppercase tracking-wider text-fg-faint">{copy.fAxis}</span>
+          <button type="button" data-filter="axis" data-value="all" aria-pressed="true" class="chip">{copy.all}</button>
+          {axisKeys.map((a) => (
+            <button type="button" data-filter="axis" data-value={a} aria-pressed="false" class="chip">{AXIS[a]}</button>
+          ))}
+        </div>
       </div>
-      <div class="flex flex-wrap items-center gap-1.5">
-        <span class="mr-1 w-16 shrink-0 font-mono text-xs uppercase tracking-wider text-fg-faint">{copy.fAxis}</span>
-        <button type="button" data-filter="axis" data-value="all" aria-pressed="true" class="chip">{copy.all}</button>
-        {axisKeys.map((a) => (
-          <button type="button" data-filter="axis" data-value={a} aria-pressed="false" class="chip">{AXIS[a]}</button>
-        ))}
+
+      <div class="flex items-center gap-3 border-t border-line pt-3">
+        <p class="font-mono text-xs text-fg-faint"><span data-count>{total}</span> / {total} {copy.showing}</p>
+        <button type="button" data-reset class="chip hidden">{copy.reset}</button>
       </div>
-      <p class="font-mono text-xs text-fg-faint"><span data-count>{total}</span> / {total} {copy.showing}</p>
     </div>
 
     <!-- grid -->
@@ -246,6 +291,7 @@ const axisKeys = ['investigation', 'mixed', 'spectacle']
           data-clusters={w.clusters.join(' ')}
           data-medium={w.medium_class}
           data-epoche={epocheVon(w.year)}
+          data-dekade={String(dekadeVon(w.year) ?? '')}
           data-axis={w.axis_pole}
           class="flex flex-col rounded-xl border border-line bg-panel p-4 transition-colors hover:border-fg-faint"
         >
@@ -303,7 +349,8 @@ const axisKeys = ['investigation', 'mixed', 'spectacle']
   if (root) {
     const cards = Array.from(root.querySelectorAll<HTMLElement>('[data-card]'))
     const countEl = root.querySelector<HTMLElement>('[data-count]')
-    const state: Record<string, string> = { cluster: 'all', medium: 'all', axis: 'all', epoche: 'all' }
+    const resetEl = root.querySelector<HTMLButtonElement>('[data-reset]')
+    const state: Record<string, string> = { cluster: 'all', medium: 'all', axis: 'all', epoche: 'all', dekade: 'all' }
 
     const apply = () => {
       let n = 0
@@ -313,12 +360,24 @@ const axisKeys = ['investigation', 'mixed', 'spectacle']
         const okM = state.medium === 'all' || card.dataset.medium === state.medium
         const okA = state.axis === 'all' || card.dataset.axis === state.axis
         const okE = state.epoche === 'all' || card.dataset.epoche === state.epoche
-        const show = okC && okM && okA && okE
+        const okD = state.dekade === 'all' || card.dataset.dekade === state.dekade
+        const show = okC && okM && okA && okE && okD
         card.hidden = !show
         if (show) n++
       }
       if (countEl) countEl.textContent = String(n)
+      // Der Zurücksetzen-Knopf erscheint erst, wenn es etwas zurückzusetzen gibt.
+      const aktiv = Object.values(state).some((v) => v !== 'all')
+      resetEl?.classList.toggle('hidden', !aktiv)
     }
+
+    resetEl?.addEventListener('click', () => {
+      for (const group of Object.keys(state)) state[group] = 'all'
+      root.querySelectorAll<HTMLButtonElement>('[data-filter]').forEach((b) => {
+        b.setAttribute('aria-pressed', String(b.dataset.value === 'all'))
+      })
+      apply()
+    })
 
     root.querySelectorAll<HTMLButtonElement>('[data-filter]').forEach((btn) => {
       btn.addEventListener('click', () => {
