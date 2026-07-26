@@ -1,137 +1,139 @@
 # Atlas-Scout
 
-Sucht nachts die Nachbarschaft bestehender Atlas-Einträge ab und **legt Kandidaten vor**.
-Er nimmt nichts auf. `atlas.json` und `werke.json` werden ausschließlich lesend geöffnet;
-eine AST-Prüfung in `tests/test_grenze.py` erzwingt das, damit die Zusage nicht bloß in
-dieser Datei steht.
+Sucht nachts Quellen ab, legt Kandidaten vor und nimmt sie im **Werke-Atlas** automatisch
+auf. Der **Theorie-Atlas** bekommt nur Vorschläge — er wird im Ulysses-Repo geführt und
+dort aufgenommen.
+
+Genau ein Modul darf in `werke.json` schreiben (`aufnahme.py`); `tests/test_grenze.py`
+erzwingt das über den Syntaxbaum. In `atlas.json` schreibt nichts.
+
+**Der Lauf braucht kein Modell und keinen Schlüssel.** Alle Quellen sind schlüsselfrei,
+alle Schritte deterministisch. Wo Urteil nötig ist (Prosa lesen), übernimmt das eine
+getrennte Claude-Code-Routine unter dem Abo — nicht die Pipeline. Module, die selbst eine
+Modell-API aufrufen, gehören nicht hierher; zwei solche wurden am 2026-07-26 entfernt.
 
 ## Warum
 
 Das Atlas-README des Ateliers benennt den Zweck: eine geschlossene Selbsttrainings-Schleife
 kollabiert, wenn keine Punkte aus einer anderen Verteilung nachkommen. Der Atlas ist diese
-andere Verteilung — und wird nur dann eine, wenn ihn jemand erweitert. Bisher geschieht das
-in Sessions, also unregelmäßig und nur dort, wo die Aufmerksamkeit ohnehin schon war.
+andere Verteilung — und wird nur dann eine, wenn ihn jemand erweitert.
 
-## Was der Lauf tut
+## Der Lauf
 
 ```
-ernten  →  abgleichen  →  bewerten  →  prüfen  →  vorlegen
+ernten  →  abgleichen  →  bewerten  →  prüfen  →  vorlegen  →  aufnehmen
 ```
 
-1. **Ernten** — Zitationsnachbarschaft des Saatgut-Eintrags (OpenAlex, schlüsselfrei).
+1. **Ernten** — je Quelle ein Adapter (siehe unten).
 2. **Abgleichen** — gegen DOI, URL und normierten Titel des Bestands.
 3. **Bewerten** — `score.py`; alles unter `SCHWELLE` fällt raus.
 4. **Prüfen** — der Identifier wird tatsächlich aufgelöst. Das ist die Aufnahmeregel des
    Atlas („verified, retrievable identifier"), vorgezogen auf den Scout. Erst hier, weil es
    der teuerste Schritt ist.
-5. **Vorlegen** — eine Kandidatendatei unter `kandidaten/<atlas>/YYYY-MM-DD.json`.
+5. **Vorlegen** — `kandidaten/<atlas>/YYYY-MM-DD*.json`.
+6. **Aufnehmen** — nur Werke-Atlas, nur über harte Schranken, markiert als
+   `verify_status: "toVerify"`. Die Karte zeigt solche Einträge mit „?", Git nimmt zurück.
 
 Verworfenes wird **mitgeschrieben**, nicht weggeworfen: mit Grund und Herkunft. Das
 Verzeichnis der Ablehnungen ist über die Monate eine Messung von Maschinenvorschlag gegen
-menschliches Urteil — im selben Format, nachprüfbar.
+menschliches Urteil. Quellenausfälle stehen als `ausfaelle` im Lauf und werden nie
+überbrückt.
 
-Quellenausfälle stehen als `ausfaelle` im Lauf. Sie werden nie überbrückt.
+## Betriebsarten
 
-## Betrieb
+| Art | Atlas | Quelle | Aufruf |
+|---|---|---|---|
+| **Nachbarschaft** | Theorie | OpenAlex | `--atlas theorie --anzahl 10 --versatz N` |
+| **Thematischer Sweep** | Theorie | OpenAlex | `--atlas theorie --thema 10` |
+| **Werke zu einem Feld** | Werke | Rhizome ArtBase | `--atlas werke --thema 13` |
+| **Datenphysikalisierung** | Werke | dataphys.org | `--atlas werke --quelle dataphys` |
+| **Externe Funde** | Werke | beliebig | `python -m atlas_scout.extern funde.json` |
+| **Aufnahme** | Werke | — | `python -m atlas_scout.aufnahme --hoechstzahl 30` |
 
 ```bash
 cd pipelines/atlas-scout
 python3 -m venv .venv && .venv/bin/pip install -e ".[dev]"
-
-# aus dem Repo-Wurzelverzeichnis:
-./pipelines/atlas-scout/.venv/bin/python -m atlas_scout.run --atlas theorie --anzahl 10
-./pipelines/atlas-scout/.venv/bin/python -m atlas_scout.run --atlas theorie --trocken
-
 cd pipelines/atlas-scout && .venv/bin/python -m pytest -q
 ```
 
-`--versatz` verschiebt das Saatgut-Fenster. Der nächtliche Workflow leitet ihn aus dem
-Tag im Jahr ab, damit der Atlas über die Zeit einmal umrundet wird — deterministisch,
-ohne Zufall.
-
-### Optionale Annotation
-
-Ein Modellschritt, getrennt vom Lauf, weil er Geld kostet und einen Schlüssel braucht:
-
-```bash
-export ANTHROPIC_API_KEY=…
-.venv/bin/pip install -e ".[annotate]"
-.venv/bin/python -m atlas_scout.annotate kandidaten/theorie/2026-07-25.json
-```
-
-Er schreibt je Kandidat einen Relevanz-**Vorschlag** und einen Einwand, beides mit Modell
-und Prompt-Hash. Modell: `claude-sonnet-5` bei `effort: low`. Der Atlas-Wortschatz liegt als
-stabiler Präfix im System-Prompt, damit das Prompt-Caching greift.
-
-Der Vorschlag ist nie eine Feststellung. Wer ihn übernimmt, übernimmt ihn als eigenen Satz.
-
-## Drei Betriebsarten
-
-| Art | Atlas | Quelle | Modell | Aufruf |
-|---|---|---|---|---|
-| **Nachbarschaft** | Theorie | OpenAlex | keins | `--atlas theorie` |
-| **Thematischer Sweep** | Theorie | OpenAlex | keins | `--atlas theorie --thema 10` |
-| **Meldungen** | Werke | e-flux | Haiku 4.5 | `--atlas werke` |
+Aufrufe aus dem Repo-Wurzelverzeichnis mit `./pipelines/atlas-scout/.venv/bin/python`.
 
 ### Thematischer Sweep
 
 Die Nachbarschaftssuche wächst nur aus dem, was schon im Atlas steht — sie kann per
-Konstruktion kein neues Feld eröffnen. Für die Felder 8–13 gibt es noch keine Einträge,
-von denen aus zu gehen wäre; der Sweep sucht deshalb direkt.
+Konstruktion kein neues Feld eröffnen. Der Sweep sucht direkt.
 
 Ohne Domänenschranke ist er unbrauchbar: OpenAlex' Volltextsuche traf bei „error"
 Genom-Assemblies und RMSE-Metriken. Die Suche läuft darum nur in **Arts & Humanities
 (fields/12)** und **Social Sciences (fields/33)** und nur über Titel und Abstract.
 
-Die Feldnummern und ihre Abfragen stehen in `themen.py` — sie sind bindend, weil sie so
-in `AtlasPage.astro` stehen und als `clusters` im Werke-Atlas landen. Ein Abgleich zwischen
-beiden steht unter Testschutz (`test_themen.py`).
+Feldnummern und Abfragen stehen in `themen.py`. Sie sind bindend, weil sie so in
+`AtlasPage.astro` stehen und als `clusters` im Werke-Atlas landen; der Abgleich zwischen
+beiden steht unter Testschutz.
 
-### Meldungen (Werke-Atlas)
+### Externe Funde (`extern.py`)
 
-Für zeitgenössische Datenkunst gibt es **keine strukturierte Quelle** — gemessen am
-2026-07-25:
+Für Quellen, die die Pipeline nicht selbst erreicht — eine Handrecherche, ein Suchdienst
+am MCP-Anschluss. Eine JSON-Liste durchläuft Abgleich, Prüfung und Bewertung wie jeder
+andere Kandidat:
 
-| Quelle | Befund |
-|---|---|
-| Wikidata | 9 von 25 Urhebern gefunden, **1 von 25** mit erfassten Werken |
-| Rhizome ArtBase | 3.845 Artikel, Wikibase, aktiv — aber Netzkunst der 1999er–2010er |
-| Ars Electronica, STARTS | JS-gerendert, ohne Playwright nicht lesbar |
-| ZKM | server-gerendert, brauchbar als Reserve |
-| Wikipedia | „Data art", „Generative art" existieren nicht als Kategorien |
-| **e-flux** | **server-gerendert, paginiert, ~3.700–6.700 Zeichen je Meldung** |
+```json
+[{"titel": "…", "urheber": "…", "jahr": 2025, "url": "https://…", "feld": 13,
+  "quelle": "dataphys", "ort": "…", "medium_class": "physical", "form": "…",
+  "notiz": "unbearbeiteter Quelltext"}]
+```
 
-Also Extraktion statt Sammlung: `sources/eflux.py` holt Meldungen (ohne Modell),
-`extract.py` liest Werke heraus (mit Modell), danach greifen Abgleich, Identifier-Prüfung
-und Bewertung unverändert.
+`jahr` darf null sein — dann fällt der Fund bei der Aufnahme durch. Das ist gewollt.
 
-Der Extraktor ist einsteckbar — `extrahiere(meldungen, pfad, extraktor)` nimmt jede
-Funktion `(system, text) -> dict`. Die Tests fahren die ganze Strecke damit ohne Schlüssel
-und ohne Netz.
+## Quellenmessung (2026-07-25/26)
 
-**Der Wikidata-Adapter** bleibt als Gerüst liegen (`--quelle wikidata`) und meldet beim
-Aufruf, dass ein leeres Ergebnis dort kein Befund ist.
+Vier Quellen geprüft, zwei tragfähig. Die Messungen bleiben hier stehen, damit sie nicht
+noch einmal gemacht werden müssen — und damit auffällt, wenn sich etwas ändert.
+
+| Quelle | Befund | Stand |
+|---|---|---|
+| **Rhizome ArtBase** | 3.845 Einträge, Wikibase, aktiv gepflegt, schlüsselfrei. Kuratierte Werkeinträge mit Titel, Urheber, Jahr | **im Einsatz** |
+| **dataphys.org** | 431 kuratierte Einträge zu Datenphysikalisierung, 343 ab 1980, Kategorien als CSS-Klassen | **im Einsatz** |
+| Wikidata | 9 von 25 Urhebern gefunden, **1 von 25** mit erfassten Werken. Trägt zeitgenössische Medienkunst nicht | verworfen |
+| e-flux | Nur 15 Meldungen erreichbar (`?page=` und `?search=` werden ignoriert, Liste ist JS-gesteuert). Von sechs gelesenen Meldungen enthielt **keine** ein Werk für den Atlas | verworfen |
+| Tavily | Läuft, aber schlüsselfrei auf ~1 Suche/Stunde gedeckelt. Die Antwortgenerierung **erfindet**: von fünf Werkangaben zwei URLs frei erfunden, eine Zuschreibung falsch | nur zum Finden von Quellen |
+| Ars Electronica, STARTS | JS-gerendert, ohne rendernden Abruf nicht lesbar | offen |
+
+### Abdeckungsgrenzen
+
+- **ArtBase** endet um 2012 (Netzkunst-Schwerpunkt 1999–2010er).
+- **dataphys** ist historisch geprägt und nennt den Urheber nur in der Prosa, nicht als
+  Feld. Der Adapter lässt ihn deshalb leer; die Aufnahme weist solche Kandidaten ab
+  („kein Urheber"). Sie warten, bis eine Routine die Prosa liest.
+- **Gegenwartswerke** sind dadurch unterrepräsentiert. Die Häuser mit den aktuellen
+  Arbeiten sind genau die JS-gerenderten.
 
 ## Grenzen
 
 - Der Scout urteilt nicht über Qualität. `score.py` misst Rezeption, Aktualität,
-  Zugänglichkeit und Begriffsnähe — nichts davon ist ein Argument für die Aufnahme.
-- Die Gewichtung in `score.py::gewichte()` ist eine Setzung. Sie bestimmt, was nach oben
-  gespült wird, und damit auch, wogegen der Atlas mit der Zeit blind wird.
-- Die Identifier-Prüfung sagt, dass ein Ziel antwortet — nicht, dass dort der Volltext liegt.
-- OpenAlex findet nicht jeden Atlas-Eintrag. Ein nicht auflösbares Saatgut liefert null
-  Kandidaten; das ist kein Ausfall, sondern ein leeres Ergebnis.
-- Ein falsch aufgelöstes Saatgut wäre schlimmer als keines: die Titelsuche muss deshalb
+  Zugänglichkeit, Begriffsnähe, Vollständigkeit — nichts davon ist ein Argument für die
+  Aufnahme.
+- Die Gewichtung in `score.py::gewichte()` ist eine Setzung, inzwischen dreifach
+  (Literatur, Extraktion, kuratierte Sammlung). Sie bestimmt, was nach oben gespült wird,
+  und damit auch, wogegen der Atlas mit der Zeit blind wird.
+- Die Identifier-Prüfung sagt, dass ein Ziel antwortet — **nicht**, dass Titel, Urheber und
+  Jahr dazu stimmen. Gegen erfundene Domains hilft sie, gegen Fehlzuschreibung nicht. Das
+  ist die Grenze jeder deterministischen Prüfung von Modellausgabe.
+- Ein falsch aufgelöstes Saatgut wäre schlimmer als keines: die OpenAlex-Titelsuche muss
   zusätzlich im Autor passen (`_autor_passt`). Ohne diese Prüfung schlug der Lauf am
   2026-07-25 Meteorologie-Datensätze vor, weil Schwabs „Experimental Systems" ein fremdes
   Paper getroffen hatte.
-- Die Extraktion ist der einzige Schritt, dessen Ausgabe nicht nachgerechnet werden kann.
-  Sie trägt Modell und Prompt-Hash am Kandidaten; erfundene Feldnummern werden verworfen,
-  weil sie sonst still in die öffentliche Karte fielen (die Filterleiste leitet ihre
-  Schlüssel aus den Daten ab).
-- Der Systemprompt der Extraktion muss über 4096 Token bleiben, sonst cached Haiku
-  stillschweigend nicht. Gemessen: 25 Beispiele ≈ 3.039 Token (cached **nicht**),
-  50 ≈ 5.326 (cached). Die Untergrenze steht unter Testschutz.
-- **Ungeprüft:** Der Modellschritt ist nie gegen die echte API gelaufen — im Entwicklungs-
-  rechner liegt kein `ANTHROPIC_API_KEY`. Die Strecke ist mit eingestecktem Extraktor
-  vollständig getestet, der Aufruf selbst nicht.
+- **URLs nie aus Titeln konstruieren.** Beim Einspeisen gelesener Funde sind so am
+  2026-07-26 drei erfundene URLs entstanden — die Prüfschranke hat sie abgewiesen, aber es
+  kostet einen Lauf. `url`, `titel` und `jahr` wörtlich aus dem Kandidatensatz übernehmen.
+
+## Nachtläufe
+
+```
+05:00 UTC  .github/workflows/atlas-scout.yml   Suchen, prüfen, aufnehmen (kein Modell)
+06:00 UTC  Claude-Code-Routine                 Prosa lesen, Urheber nachtragen
+```
+
+Der zweite Lauf ist eine Routine auf claude.ai, kein Repo-Artefakt — er braucht Urteil und
+läuft deshalb unter dem Abo, nicht in Actions. Actions kennt das Abo nicht; jeder
+Modellaufruf dort bräuchte einen eigenen Schlüssel.
