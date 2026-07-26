@@ -18,6 +18,11 @@ on:
   # Register bis zum nächsten Site-Push den Stand von gestern.
   repository_dispatch:
     types: [dataset-snapshot]
+  # Rückfallebene ohne Cross-Repo-Token: kurz nach dem nächtlichen Lauf des
+  # Dataset-Hubs (03:20 UTC) einmal neu bauen, damit das Register nicht tagelang
+  # einen älteren Stand zeigt, falls der Dispatch mangels Token ausbleibt.
+  schedule:
+    - cron: "50 3 * * *"
   workflow_run:
     workflows:
       - Protokoll nightly
