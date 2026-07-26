@@ -49,9 +49,28 @@ besser, als jeder Crawl liefern könnte.
 
 ## 3. Ausstehende Handlung (nur Frank)
 
-Im **Cloudflare-Dashboard → Zone frankbueltge.de → AI Crawl Control** die verwaltete
-robots.txt bzw. die pauschale KI-Bot-Sperre **abschalten**, damit `public/robots.txt`
-greift. Solange die Voreinstellung aktiv ist, ist die committete Datei wirkungslos.
+Zwei Einstellungen, beide unter `dash.cloudflare.com` → Zone **frankbueltge.de**.
+(Die Menübezeichnungen wandern zwischen Cloudflare-Versionen; maßgeblich ist, was die
+Prüfbefehle unten anschließend sagen.)
+
+**a) Verwaltete robots.txt abschalten** — Sidebar **AI Crawl Control** (früher „AI
+Audit"), dort der Abschnitt zur robots.txt-Verwaltung: „Managed robots.txt" bzw.
+„Content Signals" auf **aus**. Ergebnis: Cloudflare hört auf, den eigenen Block
+auszuliefern, und `public/robots.txt` aus dem Repo wird sichtbar. Solange das an ist,
+ist die committete Datei wirkungslos.
+
+**b) Die Kantensperre differenzieren** — im selben Bereich stehen die einzelnen
+Crawler mit Allow/Block. Gewünscht:
+
+| gesperrt lassen (Training) | freigeben (Retrieval, zitiert mit Link) |
+|---|---|
+| GPTBot · ClaudeBot · CCBot · Google-Extended · meta-externalagent · Bytespider · Applebot-Extended | OAI-SearchBot · ChatGPT-User · Claude-SearchBot · Claude-User · PerplexityBot · Perplexity-User · Applebot · Amazonbot |
+
+Falls es die Einzelsteuerung im Tarif nicht gibt, ersatzweise unter **Security → Bots**
+den Schalter „Block AI Scrapers and Crawlers" auf **aus** stellen — dann trägt allein
+die robots.txt die Politik. Das ist schwächer (robots.txt ist eine Bitte, kein Zaun),
+aber besser als die jetzige Pauschalsperre, die auch die zitierenden Agenten aussperrt.
+
 Danach nachprüfen:
 
 ```bash
