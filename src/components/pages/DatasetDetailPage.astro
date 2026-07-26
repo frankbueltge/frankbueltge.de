@@ -1,9 +1,12 @@
 ---
-// /datasets/[id] — eine Register-Einzelseite. Zeigt genau die Felder, die eintraege.json
-// für diesen Eintrag führt; kein Feld wird geraten oder ergänzt (Kanon-Regel). Die Quelle
-// exportiert derzeit kein Urheber- oder Beschreibungsfeld (nur Herausgeber) — deshalb
-// fehlt eine "Urheber"-Zeile und JSON-LD "description" hier grundsätzlich, nicht weil wir
-// sie unterschlagen, sondern weil der Snapshot sie (noch) nicht liefert.
+// /datasets/[id] — eine Register-Einzelseite. Zeigt genau die Felder, die der Snapshot
+// für diesen Eintrag führt; kein Feld wird geraten oder ergänzt (Kanon-Regel).
+//
+// Zwei Datenquellen mit verschiedenem Zweck: eintraege.json ist der schlanke Index, der
+// auch im Browser landet (Suche/Filter); details.json trägt Beschreibung, Urheber, Lizenz-
+// Wortlaut und Räumlichkeit und wird NUR hier beim Bauen gelesen — es erreicht den Browser
+// nie und darf deshalb groß sein. schema.org/Dataset wertet genau diese Felder aus.
+import details from '@/data/datasets/details.json'
 import { SITE } from '@/lib/site'
 import {
   accessLabel,
@@ -18,6 +21,15 @@ interface Props {
 }
 const { entry } = Astro.props
 const canonical = `${SITE.url}/datasets/${entry.i}`
+
+interface EntryDetail {
+  beschreibung?: string
+  urheber?: { name: string; orcid?: string }[]
+  lizenz_roh?: Record<string, unknown>[]
+  raeumlichkeit?: unknown[]
+}
+const detail = ((details as Record<string, EntryDetail>)[entry.i] ?? {}) as EntryDetail
+const creators = detail.urheber ?? []
 
 // JSON-LD: nur Felder, die der Eintrag tatsächlich führt. "url" zeigt auf die wörtliche
 // Zugriffs-URL der Quelle (das Dataset selbst), nicht auf diese Seite — die Seite ist
@@ -35,6 +47,17 @@ if (entry.l) jsonLd.license = entry.l
 if (entry.h) jsonLd.publisher = { '@type': 'Organization', name: entry.h }
 const free = isAccessibleForFree(entry.v)
 if (free !== undefined) jsonLd.isAccessibleForFree = free
+// Beschreibung und Urheber stammen wörtlich aus der Quelle. Fehlen sie dort, fehlen sie
+// auch hier — nichts wird aus dem Titel abgeleitet oder generiert.
+if (detail.beschreibung) jsonLd.description = detail.beschreibung
+if (creators.length) {
+  jsonLd.creator = creators.map((c) =>
+    c.orcid
+      ? { '@type': 'Person', name: c.name, identifier: c.orcid }
+      : { '@type': 'Person', name: c.name },
+  )
+}
+if (entry.j) jsonLd.datePublished = String(entry.j)
 ---
 
 <main id="main" class="mx-auto w-full max-w-2xl flex-1 px-6 py-16 sm:py-24">
@@ -49,7 +72,18 @@ if (free !== undefined) jsonLd.isAccessibleForFree = free
     </p>
   )}
 
+  {detail.beschreibung && (
+    <p class="mt-6 whitespace-pre-line text-[15px] leading-relaxed text-fg-muted">
+      {detail.beschreibung}
+    </p>
+  )}
+
   <dl class="mt-8 grid grid-cols-[auto_1fr] gap-x-6 gap-y-2.5 text-sm">
+    <dt class="text-fg-faint">Creators</dt>
+    <dd class="text-fg">
+      {creators.length ? creators.map((c) => c.name).join(' · ') : 'not stated'}
+    </dd>
+
     <dt class="text-fg-faint">Publisher</dt>
     <dd class="text-fg">{entry.h || 'not stated'}</dd>
 
