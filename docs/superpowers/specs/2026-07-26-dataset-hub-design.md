@@ -1,6 +1,6 @@
 # Dataset-Hub — Architektur-Design
 
-**Datum:** 2026-07-26 · **Status:** ENTWURF ZUR ABNAHME (Frank) — offene Entscheidungen in §8
+**Datum:** 2026-07-26 · **Status:** ENTWURF ZUR ABNAHME (Frank) — §8 ENTSCHIEDEN (Frank, 2026-07-26): eigenes Repo `dataset-hub`, Metadaten CC0
 **Auftrag:** `docs/research/2026-07-26-dataset-hub-startauftrag.md` (Bauregeln dort sind verbindlich)
 **Vorab-Messung:** §3.2, Stichprobe vom 2026-07-26 — alle Zahlen tatsächlich abgefragt, keine geschätzt
 
@@ -313,13 +313,11 @@ Jede Phase endet mit einer Vorlage an Frank in Klartext; nichts geht ohne Go liv
 - Keine Vollständigkeits-Behauptung: der Bestand trägt je Quelle Zähler „geerntet von
   gemeldet", die Lücke ist beziffert statt verschwiegen.
 
-## 8. Offene Entscheidungen (Frank)
+## 8. Entscheidungen (Frank, 2026-07-26 — ENTSCHIEDEN)
 
-1. **Repo:** Empfehlung **eigenes Repo `dataset-hub`** — der Hub ist Infrastruktur der
-   Ökologie, kein Lab-Experiment; er braucht eigene Release-Zyklen (Snapshots als
-   Release-Assets, §4.3) und eigene Actions-Budgets. In der Site bliebe nur die spätere
-   Oberflächen-Anbindung.
-2. **Lizenz:** Code gern Lab-Standard (PolyForm NC). Für die **Katalog-Metadaten**
-   empfiehlt sich dagegen **CC0** (alternativ CC-BY): ein NC-belegtes Metadatenregister
-   behindert genau die Forschenden-Nutzung, die das Ziel ist, und fiele am eigenen
-   Prüfstein (§4.4) durch. Franks Entscheidung.
+1. **Repo: eigenes Repo `dataset-hub`.** Der Hub ist Infrastruktur der Ökologie, kein
+   Lab-Experiment; er braucht eigene Release-Zyklen (Snapshots als Release-Assets, §4.3)
+   und eigene Actions-Budgets. In der Site bleibt nur die spätere Oberflächen-Anbindung.
+2. **Lizenz: Katalog-Metadaten CC0**, Code Lab-Standard (PolyForm NC 1.0.0). Damit
+   besteht der Hub seinen eigenen Prüfstein (§4.4): er ist selbst ein offen verfügbares
+   Dataset. Metadaten-CC0 entspricht der Praxis der großen Register (DataCite, Crossref).
