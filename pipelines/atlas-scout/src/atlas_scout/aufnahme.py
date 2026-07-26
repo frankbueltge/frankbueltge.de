@@ -43,6 +43,15 @@ QUELLEN_VORGABEN = {
         # 89 Einträgen der häufigste.
         "axis_pole": "mixed",
     },
+    # Recherchierte Gegenwartswerke. Ort, Medium und Form kommen als Zusatz vom Fund
+    # selbst; hier stehen nur die Rückfallwerte, wenn die Quelle nichts hergab.
+    # „hybrid"/„mixed" sind die neutralen Werte des Atlas, keine Behauptung.
+    "tavily": {
+        "venue_prize": "—",
+        "medium_class": "hybrid",
+        "form": "hybrid",
+        "axis_pole": "mixed",
+    },
 }
 
 
@@ -77,7 +86,8 @@ def pruefe_kandidat(kandidat: dict, bekannt_url: set[str], bekannt_titel: set[st
 def als_eintrag(kandidat: dict) -> dict:
     """Baut den Atlas-Eintrag. Nichts wird ergänzt, was nicht in der Quelle steht."""
     quelle = kandidat["herkunft"]["quelle"]
-    vorgaben = QUELLEN_VORGABEN[quelle]
+    # Zusatzangaben des Funds gehen den Rückfallwerten der Quelle vor.
+    vorgaben = {**QUELLEN_VORGABEN[quelle], **(kandidat.get("zusatz") or {})}
     feld = _feld_aus_saat(kandidat["herkunft"]["ausgehend_von"])
     return {
         "title": kandidat["titel"],
