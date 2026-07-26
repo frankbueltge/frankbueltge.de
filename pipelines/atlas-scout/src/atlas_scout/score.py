@@ -67,19 +67,24 @@ def sammle_signale(rohfund: dict, saat: Eintrag, jahr_jetzt: int) -> dict[str, f
 
     # Signale, die es nur bei der Modell-Extraktion gibt (Werke-Atlas). Bei allen anderen
     # Quellen bleiben sie null und fallen aus der Gewichtung heraus.
-    # Kuratierte Sammlung (ArtBase): Der Eintrag ist bereits von Menschen geprüft.
-    # Alter zählt hier NICHT gegen das Werk — eine Sonifikationsarbeit von 2004 ist
-    # kanonisch, nicht veraltet. Deshalb hat dieser Zweig kein Aktualitätssignal.
+    # Kuratierte Sammlung (ArtBase, dataphys, S+T+ARTS, externe Funde): Die Auswahl hat
+    # schon jemand getroffen. Gemessen wird deshalb nur die Vollständigkeit des
+    # Datensatzes — und zwar nur an Größen, die tatsächlich variieren.
+    #
+    # `kuratiert` selbst ist hier absichtlich KEIN Signal: es ist in diesem Zweig für
+    # jeden Kandidaten 1.0. Eine Konstante mit Gewicht macht die Punktzahl konstant —
+    # beobachtet 2026-07-26: alle 325 Kandidaten lagen bei genau 1.000, Schwelle und
+    # Sortierung waren wirkungslos.
+    #
+    # Alter zählt nicht gegen das Werk: eine Sonifikationsarbeit von 2004 ist kanonisch,
+    # nicht veraltet. Deshalb kein Aktualitätssignal in diesem Zweig.
     if quellsignale.get("kuratiert"):
-        signale["kuratiert"] = 1.0
         signale["datiert"] = 1.0 if rohfund.get("jahr") else 0.0
         signale["urheber_bekannt"] = 0.0 if rohfund.get("urheber") in ("", "unbekannt") else 1.0
-
-    if "zuversicht" in quellsignale:
-        signale["zuversicht"] = {"hoch": 1.0, "mittel": 0.6, "niedrig": 0.25}.get(
-            quellsignale.get("zuversicht", ""), 0.25
-        )
-        signale["feldzuordnung"] = 1.0 if quellsignale.get("felder") else 0.0
+        # Ein Eintrag ohne Prosa ist für den Atlas fast wertlos — er nennt ein Werk,
+        # sagt aber nicht, was daran entscheidend ist.
+        beschreibung = (quellsignale.get("schnipsel") or "").strip()
+        signale["beschrieben"] = min(1.0, len(beschreibung) / 160.0)
 
     return signale
 
@@ -110,31 +115,31 @@ def gewichte(signale: dict[str, float]) -> tuple[float, tuple[str, ...]]:
         return 0.0, ("Titel identisch mit dem Saatgut-Eintrag",)
 
     # --- vorläufig, ersetzbar ---------------------------------------------------
-    if "kuratiert" in signale:
-        # Werke-Atlas aus kuratierter Sammlung: Die Auswahl hat schon jemand getroffen.
-        # Bewertet wird nur noch die Vollständigkeit des Datensatzes.
+    if "beschrieben" in signale:
+        # Werke-Atlas aus kuratierter Sammlung. Nur variable Größen, sonst wird die
+        # Punktzahl konstant (siehe sammle_signale).
         gewichtung = {
-            "kuratiert": 0.50,
+            "urheber_bekannt": 0.40,
+            "beschrieben": 0.35,
             "datiert": 0.25,
-            "urheber_bekannt": 0.25,
-        }
-    elif "zuversicht" in signale:
-        # Werke-Atlas: aus einer Meldung extrahiert. Es gibt keine Zitationen, dafür
-        # sagt das Modell, wie eindeutig der Text das Werk trägt. Die Feldzuordnung
-        # zählt, weil ein Werk ohne Feld auf der Karte nirgends liegt.
-        gewichtung = {
-            "zuversicht": 0.45,
-            "feldzuordnung": 0.30,
-            "aktualitaet": 0.25,
         }
     else:
-        # Theorie-Atlas: aus der Literatur geerntet.
+        # Theorie-Atlas, aus der Literatur geerntet.
+        #
+        # `rezeption` ist absichtlich das kleinste Gewicht. Zitationszahl misst, wie
+        # weit ein Text schon im Kanon steht — und der Atlas existiert laut seinem
+        # eigenen README als die ANDERE Verteilung gegen eine geschlossene Schleife.
+        # Ihn nach Rezeption zu füllen würde genau die Schleife nachbauen.
+        #
+        # `frei_zugaenglich` wiegt am schwersten: ein Eintrag, der nicht gelesen werden
+        # kann, dient dem Reservoir nicht. Der Atlas unterscheidet open access von
+        # paywalled ausdrücklich.
         gewichtung = {
-            "rezeption": 0.30,
+            "frei_zugaenglich": 0.30,
+            "begriffsnaehe": 0.25,
             "aktualitaet": 0.20,
             "nach_saatgut": 0.15,
-            "frei_zugaenglich": 0.20,
-            "begriffsnaehe": 0.15,
+            "rezeption": 0.10,
         }
     punkte = sum(signale.get(name, 0.0) * anteil for name, anteil in gewichtung.items())
     # ----------------------------------------------------------------------------
