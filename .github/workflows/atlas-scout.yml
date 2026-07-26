@@ -10,7 +10,9 @@ name: Atlas-Scout nightly
 # Vier Läufe:
 #   1. Nachbarschaft — Zitationsumfeld bestehender Theorie-Einträge (OpenAlex, schlüsselfrei)
 #   2. Thematischer Sweep — eines der neuen Felder 8–13, rotierend (OpenAlex, schlüsselfrei)
-#   3. Werke — Rhizome ArtBase, zwei Felder je Nacht (kuratierte Werkeinträge)
+#   3. Werke — Rhizome ArtBase (zwei Felder je Nacht), dataphys.org, S+T+ARTS Prize
+#   3b. Der S+T+ARTS-Schritt braucht TAVILY_API_KEY (Rendern JS-gerenderter Seiten),
+#      aber kein Modell — Tavily rendert, ein Parser liest.
 #   4. Aufnahme — geprüfte Kandidaten wandern automatisch in werke.json, markiert
 #      als `verify_status: "toVerify"`. Die Karte zeigt sie mit „?"; Git ist die
 #      Rücknahme. Kein Schlüssel, kein Modell, keine Kosten.
@@ -80,6 +82,16 @@ jobs:
           for FELD in "$ERSTES" "$ZWEITES"; do
             python -m atlas_scout.run --atlas werke --thema "$FELD" | tee -a lauf.log
           done
+
+      - name: Gegenwartswerke (S+T+ARTS Prize)
+        env:
+          TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
+        run: |
+          set -u
+          # Die Gewinnerseiten sind JS-gerendert; Tavilys Extract rendert sie, den Rest
+          # liest ein Parser. Ohne Schlüssel vermerkt der Lauf einen Ausfall und macht
+          # weiter — er findet dann nichts, behauptet aber auch nichts.
+          python -m atlas_scout.run --atlas werke --quelle starts --anzahl 40 | tee -a lauf.log
 
       - name: Aufnehmen
         run: |

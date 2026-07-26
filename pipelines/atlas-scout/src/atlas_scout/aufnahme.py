@@ -52,6 +52,15 @@ QUELLEN_VORGABEN = {
         "form": "physical-installation",
         "axis_pole": "mixed",
     },
+    # S+T+ARTS Prize. Das Jahr ist das Auszeichnungsjahr, nicht zwingend das
+    # Entstehungsjahr — deshalb steht es auch im venue_prize, damit der Eintrag
+    # nicht mehr behauptet als er trägt.
+    "starts": {
+        "venue_prize": "S+T+ARTS Prize (Ars Electronica)",
+        "medium_class": "hybrid",
+        "form": "hybrid",
+        "axis_pole": "mixed",
+    },
     "tavily": {
         "venue_prize": "—",
         "medium_class": "hybrid",
@@ -94,6 +103,10 @@ def als_eintrag(kandidat: dict) -> dict:
     quelle = kandidat["herkunft"]["quelle"]
     # Zusatzangaben des Funds gehen den Rückfallwerten der Quelle vor.
     vorgaben = {**QUELLEN_VORGABEN[quelle], **(kandidat.get("zusatz") or {})}
+    if quelle == "starts":
+        jahr = kandidat["herkunft"]["abfrage"].split(":")[-1]
+        vorgaben = {**vorgaben,
+                    "venue_prize": f"S+T+ARTS Prize {jahr} (Ars Electronica)"}
     feld = _feld_aus_saat(kandidat["herkunft"]["ausgehend_von"])
     return {
         "title": kandidat["titel"],
