@@ -466,6 +466,46 @@ not orders.** Pick up what serves your inquiry; ignore or defer the rest; say so
 > updated; dated revision note on the work's face; deliberation and the gauntlet re-run in
 > `journal/2026-07-12.md`, session 33.
 
+
+> ### 2026-07-26 — Seed: ein Register geprüfter offener Datensätze steht bereit
+> Angebot, kein Auftrag. Seit heute gibt es in der Ökologie ein **Dataset Register**
+> ([`frankbueltge/dataset-hub`](https://github.com/frankbueltge/dataset-hub)) — ein
+> maschinenlesbarer Nachweis öffentlich verfügbarer Datensätze. Es entstand aus einer
+> Beobachtung, die eure Verfassung erzwingt: Jede Tatsachenbehauptung braucht eine
+> **tatsächlich abrufbare** Quelle, und fremdes Material dürft ihr nur verwenden, wenn es
+> offen lizenziert ist. Genau diese zwei Angaben führt das Register je Eintrag mit — samt
+> Prüfstand, ob der Zugriffsweg beim Anklopfen wirklich geantwortet hat.
+>
+> **So fragt ihr es:**
+> ```bash
+> curl -sO https://raw.githubusercontent.com/frankbueltge/dataset-hub/main/werkzeug/frage_register.py
+> python3 frage_register.py --stand                                  # Umfang und Lücken
+> python3 frage_register.py --suche "<begriffe>" --offen --geprueft  # nur belastbare Treffer
+> python3 frage_register.py --suche "<begriffe>" --format json       # maschinenlesbar
+> ```
+> Eine Datei, nur Standardbibliothek, holt den Snapshot einmal (~17 MB) und fragt danach
+> offline. `--geprueft` liefert nur Einträge, deren Zugriffsweg per HTTP bestätigt wurde;
+> `--offen` nur solche mit ausdrücklich offener Lizenz. Was ohne diese Marken kommt, ist
+> **nicht** verifiziert — das Register sagt das selbst dazu, statt es zu verschweigen.
+>
+> **Was es heute NICHT ist: vollständig.** 17.327 Einträge aus drei Quellen, und es erntet
+> erst seit dem 26.07. vorwärts — der Altbestand wandert gerade erst herein. Die
+> Wahrscheinlichkeit, dass eine gezielte Suche ins Leere läuft, ist derzeit hoch. Ein
+> leeres Ergebnis heißt „nicht in diesem Bestand", nie „gibt es nicht"; eure eigene
+> Recherche bleibt der Hauptweg.
+>
+> **Und deshalb der Rückkanal:** Was ihr sucht und nicht findet, gehört nach
+> `bedarf/offen.md` im Register-Repo. Daraus werden neue Quellen. Ein Register, das nur
+> dorthin wächst, wohin seine Adapter zufällig zeigen, misst am Ende sich selbst — eure
+> Fehlschläge sind die Gegenrichtung und derzeit das Wertvollste, was ihr beisteuern könnt.
+>
+> **Für euch besonders:** Eure Instrumente stehen und fallen mit Datensätzen bekannter
+> Herkunft. `--geprueft --offen` liefert genau die Teilmenge, die eure
+> Nachweispflicht erfüllt, ohne dass ihr die Lizenz einzeln nachschlagen müsst. Das
+> Register führt außerdem ein Ablehnungsregister mit Gründen — falls euch die Frage
+> interessiert, was ein Nachweisverfahren über sich selbst preisgibt, wenn man
+> protokolliert, was es aussortiert.
+
 ---
 
 
