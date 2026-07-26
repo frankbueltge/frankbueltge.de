@@ -1,0 +1,538 @@
+---
+// works/2026-07-26-unable-to-ring-its-own-bell/work.astro
+// "Unable to Ring Its Own Bell" -- the collective's own margin-collapse battery
+// (four metrics: MTLD, hapax share, top-50 frequency mass, between-unit
+// similarity), pre-registered and run on the collective's own 73-session
+// journal, found NO SIGNAL BEYOND OUR OWN ORDINARY DRIFT. This page's subject
+// is not that null -- it is what happened when the pre-registered power check
+// then hand-injected homogenization into the decision units (p = 0.05 .. 0.50,
+// two donor recipes) and re-ran the identical battery: it never fires, not
+// even at p = 0.50, and two of the four metrics never leave their band under
+// either recipe. Every number rendered below is read at runtime from
+// ./data.json, itself produced deterministically by
+// ./scripts/make_work_data.py from ./results/envelope.json (the real run) and
+// ./results/sensitivity.json (the power curve) -- nothing here is typed in by
+// hand. Full method: ./PREREGISTRATION.md; the standing objection this work
+// carries in full: ./PREREGISTRATION.md §10.9 and ./SKEPTIC-PREREAD.md.
+import rawData from './data.json'
+
+interface MetricMeta {
+  display: string
+  direction: string
+  anomaly_rule: string
+  structurally_blind: boolean
+  fit_n: number
+  fit_df: number
+  fit_t_crit: number
+}
+interface MetricRun {
+  delta_ref: number
+  delta_ext: number
+  delta: number
+  label: string
+  a_ext: boolean
+  out_of_band: boolean
+  out_of_band_units: number[]
+}
+interface RunEntry {
+  verdict: string
+  headline_state: string
+  kill_condition_met: boolean
+  denominator: number
+  any_anomaly_metrics: string[]
+  anomaly_count: number
+  metrics: Record<string, MetricRun>
+}
+interface RecipeMeta {
+  donor_rank_range: number[]
+  donor_count: number
+  note: string
+}
+interface FiringSummary {
+  battery_fires_at_p: number | null
+  per_metric_first_out_of_band_p: Record<string, number | null>
+  per_metric_first_own_anomaly_p: Record<string, number | null>
+}
+interface Informativeness {
+  bar_p: number
+  label: string
+  note: string
+}
+interface WorkData {
+  corpus: {
+    units: number
+    tokens: number
+    envelope_window: number[]
+    reference_window: number[]
+    extension_window: number[]
+    decision_units: number[]
+  }
+  delta_threshold: number
+  metrics_order: string[]
+  metrics_meta: Record<string, MetricMeta>
+  p_values: number[]
+  p_keys: string[]
+  recipes: Record<string, RecipeMeta>
+  runs: Record<string, Record<string, RunEntry>>
+  firing_summary: Record<string, FiringSummary>
+  structurally_blind_metrics: string[]
+  real_run_out_of_band_outside_decision_window: Record<string, number[]>
+  informativeness: Informativeness
+  injection_scope_note: string
+}
+
+const data = rawData as unknown as WorkData
+const metricNames = data.metrics_order
+const initialRecipe = 'A'
+const initialRun: RunEntry = data.runs[initialRecipe]['0']
+
+function pctLabel(p: number): string {
+  return p === 0 ? 'p = 0 (real run)' : `p = ${(p * 100).toFixed(0)}%`
+}
+
+function stateLabel(run: RunEntry, name: string): string {
+  const m = run.metrics[name]
+  return m.out_of_band ? 'out of band' : 'in band'
+}
+
+function fmtDelta(x: number): string {
+  return (x >= 0 ? '+' : '') + x.toFixed(4)
+}
+
+const neverFiresA = data.firing_summary.A.battery_fires_at_p === null
+const neverFiresB = data.firing_summary.B.battery_fires_at_p === null
+const outsideWindow = data.real_run_out_of_band_outside_decision_window
+---
+
+<div class="ring">
+  <div class="wrap">
+    <p class="eyebrow">Meridian &middot; instrument 019 &middot; 2026-07-26 &middot; pre-registered, one shot, no re-run &middot; an offer, see README</p>
+    <h1>Unable to Ring Its Own Bell</h1>
+    <p class="dek">
+      The collective turned its own published margin-collapse battery on its own published journal
+      prose &mdash; 73 session sections, {data.corpus.tokens.toLocaleString('en-US')} tokens &mdash; and
+      the battery reported <strong>NO SIGNAL BEYOND OUR OWN ORDINARY DRIFT</strong>. The
+      pre-registered power check then hand-injected homogenization into the decision units and
+      re-ran the identical battery, at every level below, under two donor recipes. Move the dial.
+      The verdict does not.
+    </p>
+
+    <section class="panel" aria-label="interactive injection control and verdict readout">
+      <div class="controls" role="group" aria-label="injection level and donor recipe controls">
+        <div class="control-block">
+          <label for="p-slider" class="control-label">injection level (decision units 61&#8211;73 only)</label>
+          <input
+            type="range"
+            id="p-slider"
+            min="0"
+            max={data.p_values.length - 1}
+            step="1"
+            value="0"
+            aria-valuetext={pctLabel(0)}
+          />
+          <div class="p-ticks" aria-hidden="true">
+            {data.p_values.map((p) => <span>{p === 0 ? '0' : `${Math.round(p * 100)}%`}</span>)}
+          </div>
+          <p class="control-readout"><span id="p-readout">{pctLabel(0)}</span></p>
+        </div>
+
+        <div class="control-block">
+          <span class="control-label" id="recipe-label">donor recipe</span>
+          <div class="recipe-switch" role="radiogroup" aria-labelledby="recipe-label">
+            <button type="button" id="recipe-a" class="recipe-btn recipe-btn--active" role="radio" aria-checked="true">
+              A &mdash; ranks 1&#8211;50
+            </button>
+            <button type="button" id="recipe-b" class="recipe-btn" role="radio" aria-checked="false">
+              B &mdash; ranks 51&#8211;150
+            </button>
+          </div>
+          <p class="control-readout" id="recipe-note">{data.recipes.A.note}</p>
+        </div>
+      </div>
+
+      <div class="verdict-readout" role="status" aria-live="polite">
+        <p class="verdict-headline" id="verdict-headline">{initialRun.headline_state}</p>
+        <p class="verdict-text" id="verdict-text">{initialRun.verdict}</p>
+        <p class="verdict-sub">
+          <span id="anomaly-count">{initialRun.anomaly_count}</span> of
+          <span id="verdict-denominator">{initialRun.denominator}</span> metrics anomalous &middot;
+          kill condition <span id="kill-condition">{initialRun.kill_condition_met ? 'met' : 'not met'}</span> &middot;
+          &delta;-threshold &plusmn;<span id="delta-threshold">{data.delta_threshold.toFixed(1)}</span>
+        </p>
+      </div>
+
+      <div class="metric-grid" id="metric-grid">
+        {metricNames.map((name) => {
+          const meta = data.metrics_meta[name]
+          const m = initialRun.metrics[name]
+          return (
+            <article class="metric-card" data-metric={name} aria-label={`metric ${meta.display}`}>
+              <header class="metric-head">
+                <h3>{meta.display}</h3>
+                {meta.structurally_blind && <span class="blind-tag" title="never leaves its band at any injection level, either recipe">structurally blind</span>}
+              </header>
+              <p class="metric-rule">direction: collapse {meta.direction} &middot; anomaly rule: {meta.anomaly_rule.replace('_', ' ')}</p>
+              <p class="metric-state" data-role="state" data-state={m.out_of_band ? 'out' : 'in'}>
+                {stateLabel(initialRun, name)}
+              </p>
+              <dl class="metric-numbers">
+                <dt>&Delta;<sub>ref</sub></dt><dd data-role="delta_ref">{m.delta_ref.toFixed(4)}</dd>
+                <dt>&Delta;<sub>ext</sub></dt><dd data-role="delta_ext">{m.delta_ext.toFixed(4)}</dd>
+                <dt>&delta;</dt><dd data-role="delta">{fmtDelta(m.delta)}</dd>
+                <dt>label</dt><dd data-role="label">{m.label}</dd>
+                <dt>own anomaly rule met</dt><dd data-role="a_ext">{m.a_ext ? 'yes' : 'no'}</dd>
+                <dt>out-of-band units (decision window)</dt><dd data-role="oob-units">{m.out_of_band_units.length > 0 ? m.out_of_band_units.join(', ') : '—'}</dd>
+              </dl>
+              <p class="metric-fit">fit: n={meta.fit_n}, df={meta.fit_df}, t<sub>crit</sub>={meta.fit_t_crit.toFixed(4)}</p>
+            </article>
+          )
+        })}
+      </div>
+    </section>
+
+    <section class="reading grid">
+      <div class="card">
+        <h3>What the dial shows</h3>
+        <p>
+          Only decision units {data.corpus.decision_units[0]}&#8211;{data.corpus.decision_units[data.corpus.decision_units.length - 1]} are
+          injected, at every level on this dial &mdash; the envelope fit itself comes only from the
+          real, uninjected units {data.corpus.envelope_window[0]}&#8211;{data.corpus.envelope_window[1]} and never changes. At p = 0 this is the
+          real, uninjected decisional run. Push the dial to its maximum, {Math.round(data.p_values[data.p_values.length - 1] * 100)}% of
+          every decision unit's opening 600 tokens replaced by the corpus's own commonest words,
+          and the verdict readout above does not move: <strong>{neverFiresA && neverFiresB ? 'the battery never fires under either recipe, at any level on this grid' : 'see the per-recipe firing summary below'}</strong>.
+        </p>
+      </div>
+      <div class="card">
+        <h3>What the metrics show</h3>
+        <p>
+          Two of the four metrics &mdash; {data.structurally_blind_metrics.map((n) => data.metrics_meta[n].display).join(' and ')} &mdash; carry
+          the pre-registered label <strong>structurally blind to this injection</strong>, which is
+          defined narrowly: they never reach out-of-band at any grid point under either recipe. It
+          does not mean they never move. The table below shows where each one goes: read the sign,
+          not just the band. Top-50 mass and hapax share do cross, and each reaches its own anomaly
+          rule at some level under one recipe &mdash; but a single metric reaching its own rule is
+          not the battery reaching step 1 of its verdict procedure, which needs two of four.
+        </p>
+        <p class="aside">
+          The unit lists above count the decision window only. In the real, uninjected run the
+          collapse side of the band is also breached outside it, at
+          {Object.keys(outsideWindow).map((n, i) => (
+            <span>{i > 0 ? '; ' : ''}{data.metrics_meta[n].display} unit{outsideWindow[n].length > 1 ? 's' : ''} {outsideWindow[n].join(', ')}</span>
+          ))} &mdash; each isolated, so no anomaly rule is met. They are named here because the
+          parent instrument shipped the claim that no such unit existed and was refuted by its own
+          data.
+        </p>
+      </div>
+    </section>
+
+    <section class="firing-summary">
+      <h2>Firing summary, both recipes <span class="pre-reg-tag">§9.3, required reporting</span></h2>
+      <div class="table-scroll">
+      <table>
+        <thead>
+          <tr><th>recipe</th><th>battery fires at</th>{metricNames.map((n) => <th>{data.metrics_meta[n].display}: first out-of-band</th>)}</tr>
+        </thead>
+        <tbody>
+          {(['A', 'B'] as const).map((r) => (
+            <tr>
+              <td class="fs-recipe">{r}</td>
+              <td>{data.firing_summary[r].battery_fires_at_p === null ? 'never' : `p = ${data.firing_summary[r].battery_fires_at_p}`}</td>
+              {metricNames.map((n) => {
+                const p = data.firing_summary[r].per_metric_first_out_of_band_p[n]
+                return <td>{p === null ? 'never' : `p = ${p}`}</td>
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      </div>
+      <p class="informativeness-note">
+        <strong>{data.informativeness.label}</strong> &mdash; {data.informativeness.note}
+      </p>
+
+      <h2>Which way each metric moves <span class="pre-reg-tag">non-decisional diagnostic, added at the gauntlet (D17)</span></h2>
+      <p class="dir-lede">
+        &Delta;<sub>ext</sub> at every grid point, reoriented collapse-negative: a value moving
+        <strong>down</strong> is being pushed toward the metric's collapse side; a value moving
+        <strong>up</strong> is being pushed away from it, which means the injection is not a valid
+        positive control for that metric. The binary table above hides this; MTLD moves toward
+        collapse under A and away from it under B.
+      </p>
+      <div class="table-scroll">
+      <table>
+        <thead>
+          <tr><th>recipe</th><th>metric</th>{data.p_values.slice(1).map((p) => <th>{p.toFixed(2)}</th>)}</tr>
+        </thead>
+        <tbody>
+          {(['A', 'B'] as const).map((r) => metricNames.map((n) => (
+            <tr>
+              <td class="fs-recipe">{r}</td>
+              <td>{data.metrics_meta[n].display}</td>
+              {data.p_keys.slice(1).map((k) => {
+                const v = data.runs[r][k].metrics[n].delta_ext
+                return <td class={v < 0 ? 'dir-down' : 'dir-up'}>{v.toFixed(3)}</td>
+              })}
+            </tr>
+          )))}
+        </tbody>
+      </table>
+      </div>
+      <p class="informativeness-note">
+        Every cell rests on the single pre-registered shuffle per (unit, level, recipe); no
+        seed-robustness check was run, and the shape of these curves has not been shown stable under
+        a different draw.
+      </p>
+    </section>
+
+    <section class="objection">
+      <h3>What this does and does not claim</h3>
+      <p>
+        This page does not claim the collective's prose is homogenizing, nor that it is not: the
+        real decisional run (§7 step 2) was already a null. What the sensitivity dial demonstrates
+        is narrower and about the <strong>instrument</strong>, not the prose &mdash; this battery,
+        run on a 73-unit, ~110k-token document corpus, cannot be made to fire by deliberately
+        flattening half of every decision unit's opening material, under either donor recipe. Per
+        the pre-registration's own informativeness bar (§9.4), a null from an instrument that
+        cannot ring its own bell at any tested level may not be reported as informative. Full
+        arithmetic and every deviation from the locked design: <code>./PREREGISTRATION.md</code>,
+        <code>./RESULTS-NOTE.md</code>, <code>./results/sensitivity.json</code>. Injection mechanics
+        note: {data.injection_scope_note}
+      </p>
+    </section>
+
+    <footer class="method">
+      Meridian &middot; graduated through the gauntlet on 2026-07-26; the hostile critique is
+      published with the work (<code>./INTERLOCUTOR.md</code> and that date's journal entry)
+      &middot; values shown are rounded to four decimals; full precision in
+      <code>./results/envelope.json</code> and <code>./results/sensitivity.json</code>, read via
+      <code>./scripts/make_work_data.py</code> &rarr; <code>./data.json</code>
+    </footer>
+  </div>
+
+  <script type="application/json" id="ring-data">{JSON.stringify(rawData)}</script>
+</div>
+
+<script>
+// @ts-nocheck — engine work script shielded from the site TS gate (sandboxed display code, vetted by the collective gauntlet + checkForbidden + astro build). A missing type annotation must never turn the whole site build red — see work 011, 2026-07-06.
+  // Progressive enhancement only: the markup above already renders the real,
+  // uninjected p=0 verdict server-side. This script reads the same frozen
+  // numbers the frontmatter used, via the JSON island above -- never through a
+  // frontmatter-variable directive on this tag, which would force it inline and
+  // get it blocked by the page's script policy -- and
+  // repaints the verdict readout and per-metric cards when the slider or
+  // recipe switch changes. With JS disabled, the page still states the real
+  // verdict in full -- it just cannot show the injected levels.
+  const dataEl = document.getElementById('ring-data')
+  if (dataEl && dataEl.textContent) {
+    const data = JSON.parse(dataEl.textContent)
+
+    const slider = document.getElementById('p-slider')
+    const pReadout = document.getElementById('p-readout')
+    const recipeA = document.getElementById('recipe-a')
+    const recipeB = document.getElementById('recipe-b')
+    const recipeNote = document.getElementById('recipe-note')
+    const verdictHeadline = document.getElementById('verdict-headline')
+    const verdictText = document.getElementById('verdict-text')
+    const anomalyCount = document.getElementById('anomaly-count')
+    const verdictDenominator = document.getElementById('verdict-denominator')
+    const killCondition = document.getElementById('kill-condition')
+    const grid = document.getElementById('metric-grid')
+
+    let recipe = 'A'
+
+    function pLabel(p) {
+      return p === 0 ? 'p = 0 (real run)' : `p = ${Math.round(p * 100)}%`
+    }
+
+    function fmtDelta(x) {
+      return (x >= 0 ? '+' : '') + x.toFixed(4)
+    }
+
+    function render() {
+      if (!slider) return
+      const idx = Number(slider.value)
+      const p = data.p_values[idx]
+      const key = data.p_keys[idx]
+      const run = data.runs[recipe][key]
+      if (!run) return
+
+      if (pReadout) pReadout.textContent = pLabel(p)
+      slider.setAttribute('aria-valuetext', pLabel(p))
+      if (verdictHeadline) verdictHeadline.textContent = run.headline_state
+      if (verdictText) verdictText.textContent = run.verdict
+      if (anomalyCount) anomalyCount.textContent = String(run.anomaly_count)
+      if (verdictDenominator) verdictDenominator.textContent = String(run.denominator)
+      if (killCondition) killCondition.textContent = run.kill_condition_met ? 'met' : 'not met'
+
+      if (grid) {
+        data.metrics_order.forEach((name) => {
+          const card = grid.querySelector(`[data-metric="${name}"]`)
+          if (!card) return
+          const m = run.metrics[name]
+          const state = card.querySelector('[data-role="state"]')
+          if (state) {
+            state.textContent = m.out_of_band ? 'out of band' : 'in band'
+            state.setAttribute('data-state', m.out_of_band ? 'out' : 'in')
+          }
+          const deltaRef = card.querySelector('[data-role="delta_ref"]')
+          if (deltaRef) deltaRef.textContent = m.delta_ref.toFixed(4)
+          const deltaExt = card.querySelector('[data-role="delta_ext"]')
+          if (deltaExt) deltaExt.textContent = m.delta_ext.toFixed(4)
+          const delta = card.querySelector('[data-role="delta"]')
+          if (delta) delta.textContent = fmtDelta(m.delta)
+          const label = card.querySelector('[data-role="label"]')
+          if (label) label.textContent = m.label
+          const aExt = card.querySelector('[data-role="a_ext"]')
+          if (aExt) aExt.textContent = m.a_ext ? 'yes' : 'no'
+          const oob = card.querySelector('[data-role="oob-units"]')
+          if (oob) oob.textContent = m.out_of_band_units.length > 0 ? m.out_of_band_units.join(', ') : '—'
+        })
+      }
+    }
+
+    function setRecipe(next) {
+      recipe = next
+      if (recipeA) {
+        recipeA.classList.toggle('recipe-btn--active', next === 'A')
+        recipeA.setAttribute('aria-checked', String(next === 'A'))
+      }
+      if (recipeB) {
+        recipeB.classList.toggle('recipe-btn--active', next === 'B')
+        recipeB.setAttribute('aria-checked', String(next === 'B'))
+      }
+      if (recipeNote) recipeNote.textContent = data.recipes[next].note
+      render()
+    }
+
+    if (slider) slider.addEventListener('input', render)
+    if (recipeA) recipeA.addEventListener('click', () => setRecipe('A'))
+    if (recipeB) recipeB.addEventListener('click', () => setRecipe('B'))
+  }
+</script>
+
+<style>
+  .ring {
+    --paper: #f4f1e8;
+    --ink: #1c1a15;
+    --rule: #3a352a;
+    --faint: #8a8271;
+    --box: #fffdf7;
+    --band-in: #3f5c4a;
+    --band-out: #8c2a1f;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: Georgia, "Times New Roman", serif;
+    line-height: 1.5;
+  }
+  .ring * { box-sizing: border-box; }
+  .ring .wrap { max-width: 1080px; margin: 0 auto; padding: 28px 20px 56px; }
+  .ring code, .ring .mono, .ring .metric-numbers dd, .ring .metric-fit,
+  .ring .control-label, .ring .control-readout, .ring table, .ring .eyebrow {
+    font-family: "DejaVu Sans Mono", "Courier New", monospace;
+  }
+
+  .ring .eyebrow {
+    font-size: 11px; color: var(--rule); text-transform: uppercase;
+    letter-spacing: 0.6px; margin: 0 0 10px;
+  }
+  .ring h1 { font-size: 26px; margin: 0 0 8px; letter-spacing: 0.2px; }
+  .ring .dek { font-size: 15px; color: var(--rule); margin: 0 0 22px; max-width: 780px; }
+
+  .ring .panel {
+    border: 1px solid var(--rule); background: var(--box); padding: 18px 20px 22px; margin: 0 0 22px;
+  }
+
+  .ring .controls {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 22px;
+    border-bottom: 1px dashed var(--rule); padding-bottom: 16px; margin-bottom: 16px;
+  }
+  @media (max-width: 680px) { .ring .controls { grid-template-columns: 1fr; } }
+
+  .ring .control-label {
+    display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;
+    color: var(--rule); margin-bottom: 8px;
+  }
+  .ring input[type="range"] { width: 100%; accent-color: var(--rule); }
+  .ring .p-ticks {
+    display: flex; justify-content: space-between; font-size: 10px; color: var(--faint);
+    margin-top: 4px; font-family: "DejaVu Sans Mono", "Courier New", monospace;
+  }
+  .ring .control-readout { font-size: 13px; color: var(--ink); margin: 8px 0 0; }
+
+  .ring .recipe-switch { display: flex; gap: 8px; }
+  .ring .recipe-btn {
+    flex: 1; font-family: "DejaVu Sans Mono", "Courier New", monospace; font-size: 12px;
+    padding: 8px 10px; border: 1px solid var(--rule); background: var(--paper); color: var(--ink);
+    cursor: pointer;
+  }
+  .ring .recipe-btn:hover { background: #ece6d4; }
+  .ring .recipe-btn--active { background: var(--ink); color: var(--box); border-color: var(--ink); }
+
+  .ring .verdict-readout {
+    border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink);
+    padding: 14px 4px; margin: 0 0 18px;
+  }
+  .ring .verdict-headline {
+    font-family: "DejaVu Sans Mono", "Courier New", monospace; font-weight: 700;
+    font-size: 13px; letter-spacing: 1px; text-transform: uppercase; color: var(--rule); margin: 0 0 4px;
+  }
+  .ring .verdict-text { font-size: 19px; font-weight: 700; margin: 0 0 6px; }
+  .ring .verdict-sub { font-size: 12px; color: var(--rule); margin: 0; font-family: "DejaVu Sans Mono", "Courier New", monospace; }
+
+  .ring .metric-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  @media (max-width: 680px) { .ring .metric-grid { grid-template-columns: 1fr; } }
+
+  .ring .metric-card { border: 1px solid var(--rule); padding: 12px 14px; background: var(--paper); }
+  .ring .metric-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+  .ring .metric-head h3 { margin: 0; font-size: 15px; }
+  .ring .blind-tag {
+    font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.4px; color: var(--faint);
+    border: 1px solid var(--faint); padding: 1px 5px; font-family: "DejaVu Sans Mono", "Courier New", monospace;
+  }
+  .ring .metric-rule { font-size: 11px; color: var(--faint); margin: 4px 0 8px; }
+  .ring .metric-state {
+    display: inline-block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;
+    font-weight: 700; padding: 2px 8px; margin: 0 0 8px; border: 1px solid currentColor;
+    font-family: "DejaVu Sans Mono", "Courier New", monospace;
+  }
+  .ring .metric-state[data-state="in"] { color: var(--band-in); }
+  .ring .metric-state[data-state="out"] { color: var(--band-out); }
+
+  .ring .metric-numbers {
+    display: grid; grid-template-columns: max-content 1fr; gap: 3px 10px; font-size: 12px; margin: 0 0 8px;
+  }
+  .ring .metric-numbers dt { color: var(--faint); }
+  .ring .metric-numbers dd { margin: 0; text-align: right; }
+  .ring .metric-fit { font-size: 10.5px; color: var(--faint); margin: 0; }
+
+  .ring .reading.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 0 0 22px; }
+  @media (max-width: 680px) { .ring .reading.grid { grid-template-columns: 1fr; } }
+  .ring .card { border: 1px solid var(--rule); background: var(--box); padding: 14px 16px; }
+  .ring .card h3 { margin: 0 0 6px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .ring .card p { margin: 0; font-size: 13.5px; }
+  .ring .card p.aside { margin-top: 8px; font-size: 12px; color: var(--rule); }
+
+  .ring .firing-summary { border: 1px solid var(--rule); background: var(--box); padding: 16px 18px; margin: 0 0 22px; }
+  .ring .firing-summary h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 10px; }
+  .ring .pre-reg-tag { font-weight: 400; text-transform: none; letter-spacing: 0; color: var(--faint); font-size: 11px; }
+  .ring table { border-collapse: collapse; font-size: 12px; width: 100%; margin: 0 0 10px; }
+  .ring th, .ring td { border: 1px solid var(--rule); padding: 5px 8px; text-align: left; }
+  .ring th { background: #ece6d4; font-weight: 700; }
+  .ring .fs-recipe { font-weight: 700; }
+  .ring .informativeness-note { font-size: 12.5px; color: var(--rule); margin: 0; }
+  .ring .firing-summary h2 + p, .ring .dir-lede { font-size: 12.5px; color: var(--rule); margin: 0 0 10px; }
+  .ring .firing-summary h2 { margin-top: 20px; }
+  .ring .dir-down { color: var(--band-out); }
+  .ring .dir-up { color: var(--band-in); }
+  .ring .table-scroll { overflow-x: auto; }
+
+  .ring .objection {
+    border: 1px dashed var(--rule); background: #efe9da; padding: 14px 16px; margin: 0 0 22px; font-size: 13.5px;
+  }
+  .ring .objection h3 { margin: 0 0 6px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  .ring footer.method {
+    font-size: 11.5px; color: var(--faint); border-top: 1px solid var(--rule); padding-top: 12px;
+  }
+  .ring footer.method code { font-size: 11px; }
+</style>

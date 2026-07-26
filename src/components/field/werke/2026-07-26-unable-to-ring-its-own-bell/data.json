@@ -1,0 +1,1114 @@
+{
+  "corpus": {
+    "decision_units": [
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73
+    ],
+    "envelope_window": [
+      1,
+      47
+    ],
+    "extension_window": [
+      61,
+      73
+    ],
+    "reference_window": [
+      48,
+      60
+    ],
+    "tokens": 110329,
+    "units": 73
+  },
+  "delta_threshold": 0.5,
+  "firing_summary": {
+    "A": {
+      "battery_fires_at_p": null,
+      "per_metric_first_out_of_band_p": {
+        "hapax_share": 0.15,
+        "mtld": null,
+        "similarity": null,
+        "top50_mass": 0.2
+      },
+      "per_metric_first_own_anomaly_p": {
+        "hapax_share": null,
+        "mtld": null,
+        "similarity": null,
+        "top50_mass": 0.3
+      }
+    },
+    "B": {
+      "battery_fires_at_p": null,
+      "per_metric_first_out_of_band_p": {
+        "hapax_share": 0.25,
+        "mtld": null,
+        "similarity": null,
+        "top50_mass": null
+      },
+      "per_metric_first_own_anomaly_p": {
+        "hapax_share": 0.25,
+        "mtld": null,
+        "similarity": null,
+        "top50_mass": null
+      }
+    }
+  },
+  "informativeness": {
+    "bar_p": 0.2,
+    "label": "UNABLE-TO-RING-ITS-OWN-BELL",
+    "note": "§9.4: applicable when §7's real decisional verdict is a step-2 null. Computed here unconditionally as the required sensitivity diagnostic regardless of what the real decisional run returned; see results/envelope.json for that verdict."
+  },
+  "injection_scope_note": "Only decision units 61-73 are injected, simultaneously, for a given (p, recipe). The envelope fit itself is computed solely from the real, uninjected envelope-era units 1-47 and is identical across every (p, recipe) cell above. The injected similarity metric's trailing window for a decision unit mixes that unit's injected prefix (and any other decision unit inside its window) with the REAL prefixes of non-decision-unit window members -- intended, not an error (task note).",
+  "metrics_meta": {
+    "hapax_share": {
+      "anomaly_rule": "two_consecutive",
+      "direction": "low",
+      "display": "hapax share",
+      "fit_df": 42,
+      "fit_n": 44,
+      "fit_t_crit": 2.0181,
+      "structurally_blind": false
+    },
+    "mtld": {
+      "anomaly_rule": "two_consecutive",
+      "direction": "low",
+      "display": "MTLD",
+      "fit_df": 42,
+      "fit_n": 44,
+      "fit_t_crit": 2.0181,
+      "structurally_blind": true
+    },
+    "similarity": {
+      "anomaly_rule": "five_apart",
+      "direction": "high",
+      "display": "similarity (trailing)",
+      "fit_df": 27,
+      "fit_n": 29,
+      "fit_t_crit": 2.0518,
+      "structurally_blind": true
+    },
+    "top50_mass": {
+      "anomaly_rule": "two_consecutive",
+      "direction": "high",
+      "display": "top-50 mass",
+      "fit_df": 42,
+      "fit_n": 44,
+      "fit_t_crit": 2.0181,
+      "structurally_blind": false
+    }
+  },
+  "metrics_order": [
+    "mtld",
+    "hapax_share",
+    "top50_mass",
+    "similarity"
+  ],
+  "p_keys": [
+    "0",
+    "0.05",
+    "0.1",
+    "0.15",
+    "0.2",
+    "0.25",
+    "0.3",
+    "0.4",
+    "0.5"
+  ],
+  "p_values": [
+    0.0,
+    0.05,
+    0.1,
+    0.15,
+    0.2,
+    0.25,
+    0.3,
+    0.4,
+    0.5
+  ],
+  "real_run_out_of_band_outside_decision_window": {
+    "similarity": [
+      13
+    ],
+    "top50_mass": [
+      28
+    ]
+  },
+  "recipes": {
+    "A": {
+      "donor_count": 50,
+      "donor_rank_range": [
+        1,
+        50
+      ],
+      "note": "near-universal function words; expected close to invisible to metric 4 (similarity) via idf-zeroing -- under test, not assumed."
+    },
+    "B": {
+      "donor_count": 100,
+      "donor_rank_range": [
+        51,
+        150
+      ],
+      "note": "not near-universal; can move a within-window TF-IDF cosine."
+    }
+  },
+  "runs": {
+    "A": {
+      "0": {
+        "anomaly_count": 0,
+        "any_anomaly_metrics": [],
+        "denominator": 4,
+        "headline_state": "NO SIGNAL",
+        "kill_condition_met": true,
+        "metrics": {
+          "hapax_share": {
+            "a_ext": false,
+            "delta": -0.0908,
+            "delta_ext": 1.2088,
+            "delta_ref": 1.2996,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          },
+          "mtld": {
+            "a_ext": false,
+            "delta": -0.2448,
+            "delta_ext": 0.0063,
+            "delta_ref": 0.2511,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          },
+          "similarity": {
+            "a_ext": false,
+            "delta": 1.2789,
+            "delta_ext": 1.8793,
+            "delta_ref": 0.6004,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          },
+          "top50_mass": {
+            "a_ext": false,
+            "delta": -0.5383,
+            "delta_ext": 0.8622,
+            "delta_ref": 1.4004,
+            "label": "NO-ANOMALY",
+            "out_of_band": true,
+            "out_of_band_units": [
+              66
+            ]
+          }
+        },
+        "verdict": "NO SIGNAL BEYOND OUR OWN ORDINARY DRIFT"
+      },
+      "0.05": {
+        "anomaly_count": 0,
+        "any_anomaly_metrics": [],
+        "denominator": 4,
+        "headline_state": "NO SIGNAL",
+        "kill_condition_met": true,
+        "metrics": {
+          "hapax_share": {
+            "a_ext": false,
+            "delta": -0.4549,
+            "delta_ext": 0.8447,
+            "delta_ref": 1.2996,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          },
+          "mtld": {
+            "a_ext": false,
+            "delta": -0.0447,
+            "delta_ext": 0.2064,
+            "delta_ref": 0.2511,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          },
+          "similarity": {
+            "a_ext": false,
+            "delta": 1.4012,
+            "delta_ext": 2.0016,
+            "delta_ref": 0.6004,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          },
+          "top50_mass": {
+            "a_ext": false,
+            "delta": -0.5993,
+            "delta_ext": 0.8012,
+            "delta_ref": 1.4004,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          }
+        },
+        "verdict": "NO SIGNAL BEYOND OUR OWN ORDINARY DRIFT"
+      },
+      "0.1": {
+        "anomaly_count": 0,
+        "any_anomaly_metrics": [],
+        "denominator": 4,
+        "headline_state": "NO SIGNAL",
+        "kill_condition_met": true,
+        "metrics": {
+          "hapax_share": {
+            "a_ext": false,
+            "delta": -0.7422,
+            "delta_ext": 0.5574,
+            "delta_ref": 1.2996,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          },
+          "mtld": {
+            "a_ext": false,
+            "delta": -0.2893,
+            "delta_ext": -0.0381,
+            "delta_ref": 0.2511,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          },
+          "similarity": {
+            "a_ext": false,
+            "delta": 1.6336,
+            "delta_ext": 2.234,
+            "delta_ref": 0.6004,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          },
+          "top50_mass": {
+            "a_ext": false,
+            "delta": -1.1003,
+            "delta_ext": 0.3001,
+            "delta_ref": 1.4004,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          }
+        },
+        "verdict": "NO SIGNAL BEYOND OUR OWN ORDINARY DRIFT"
+      },
+      "0.15": {
+        "anomaly_count": 0,
+        "any_anomaly_metrics": [],
+        "denominator": 4,
+        "headline_state": "NO SIGNAL",
+        "kill_condition_met": true,
+        "metrics": {
+          "hapax_share": {
+            "a_ext": false,
+            "delta": -1.4696,
+            "delta_ext": -0.17,
+            "delta_ref": 1.2996,
+            "label": "NO-ANOMALY",
+            "out_of_band": true,
+            "out_of_band_units": [
+              64
+            ]
+          },
+          "mtld": {
+            "a_ext": false,
+            "delta": -0.4194,
+            "delta_ext": -0.1683,
+            "delta_ref": 0.2511,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          },
+          "similarity": {
+            "a_ext": false,
+            "delta": 1.532,
+            "delta_ext": 2.1324,
+            "delta_ref": 0.6004,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          },
+          "top50_mass": {
+            "a_ext": false,
+            "delta": -1.3238,
+            "delta_ext": 0.0767,
+            "delta_ref": 1.4004,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          }
+        },
+        "verdict": "NO SIGNAL BEYOND OUR OWN ORDINARY DRIFT"
+      },
+      "0.2": {
+        "anomaly_count": 0,
+        "any_anomaly_metrics": [],
+        "denominator": 4,
+        "headline_state": "NO SIGNAL",
+        "kill_condition_met": true,
+        "metrics": {
+          "hapax_share": {
+            "a_ext": false,
+            "delta": -1.4507,
+            "delta_ext": -0.1511,
+            "delta_ref": 1.2996,
+            "label": "NO-ANOMALY",
+            "out_of_band": true,
+            "out_of_band_units": [
+              69
+            ]
+          },
+          "mtld": {
+            "a_ext": false,
+            "delta": -0.6959,
+            "delta_ext": -0.4447,
+            "delta_ref": 0.2511,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          },
+          "similarity": {
+            "a_ext": false,
+            "delta": 1.5599,
+            "delta_ext": 2.1603,
+            "delta_ref": 0.6004,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          },
+          "top50_mass": {
+            "a_ext": false,
+            "delta": -1.9212,
+            "delta_ext": -0.5207,
+            "delta_ref": 1.4004,
+            "label": "NO-ANOMALY",
+            "out_of_band": true,
+            "out_of_band_units": [
+              66
+            ]
+          }
+        },
+        "verdict": "NO SIGNAL BEYOND OUR OWN ORDINARY DRIFT"
+      },
+      "0.25": {
+        "anomaly_count": 0,
+        "any_anomaly_metrics": [],
+        "denominator": 4,
+        "headline_state": "NO SIGNAL",
+        "kill_condition_met": true,
+        "metrics": {
+          "hapax_share": {
+            "a_ext": false,
+            "delta": -1.6187,
+            "delta_ext": -0.3191,
+            "delta_ref": 1.2996,
+            "label": "NO-ANOMALY",
+            "out_of_band": true,
+            "out_of_band_units": [
+              64
+            ]
+          },
+          "mtld": {
+            "a_ext": false,
+            "delta": -0.7377,
+            "delta_ext": -0.4865,
+            "delta_ref": 0.2511,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          },
+          "similarity": {
+            "a_ext": false,
+            "delta": 1.4344,
+            "delta_ext": 2.0348,
+            "delta_ref": 0.6004,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          },
+          "top50_mass": {
+            "a_ext": false,
+            "delta": -2.5049,
+            "delta_ext": -1.1045,
+            "delta_ref": 1.4004,
+            "label": "NO-ANOMALY",
+            "out_of_band": true,
+            "out_of_band_units": [
+              64,
+              66
+            ]
+          }
+        },
+        "verdict": "NO SIGNAL BEYOND OUR OWN ORDINARY DRIFT"
+      },
+      "0.3": {
+        "anomaly_count": 1,
+        "any_anomaly_metrics": [
+          "top50_mass"
+        ],
+        "denominator": 4,
+        "headline_state": "NO SIGNAL",
+        "kill_condition_met": true,
+        "metrics": {
+          "hapax_share": {
+            "a_ext": false,
+            "delta": -1.4111,
+            "delta_ext": -0.1114,
+            "delta_ref": 1.2996,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          },
+          "mtld": {
+            "a_ext": false,
+            "delta": -0.9476,
+            "delta_ext": -0.6965,
+            "delta_ref": 0.2511,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          },
+          "similarity": {
+            "a_ext": false,
+            "delta": 1.4946,
+            "delta_ext": 2.095,
+            "delta_ref": 0.6004,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          },
+          "top50_mass": {
+            "a_ext": true,
+            "delta": -3.5121,
+            "delta_ext": -2.1116,
+            "delta_ref": 1.4004,
+            "label": "NEW-ONSET",
+            "out_of_band": true,
+            "out_of_band_units": [
+              61,
+              62,
+              63,
+              64,
+              65,
+              66,
+              69,
+              72,
+              73
+            ]
+          }
+        },
+        "verdict": "NO SIGNAL BEYOND OUR OWN ORDINARY DRIFT"
+      },
+      "0.4": {
+        "anomaly_count": 1,
+        "any_anomaly_metrics": [
+          "top50_mass"
+        ],
+        "denominator": 4,
+        "headline_state": "NO SIGNAL",
+        "kill_condition_met": true,
+        "metrics": {
+          "hapax_share": {
+            "a_ext": false,
+            "delta": -1.7318,
+            "delta_ext": -0.4322,
+            "delta_ref": 1.2996,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          },
+          "mtld": {
+            "a_ext": false,
+            "delta": -1.3141,
+            "delta_ext": -1.0629,
+            "delta_ref": 0.2511,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          },
+          "similarity": {
+            "a_ext": false,
+            "delta": 1.5893,
+            "delta_ext": 2.1897,
+            "delta_ref": 0.6004,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          },
+          "top50_mass": {
+            "a_ext": true,
+            "delta": -5.5835,
+            "delta_ext": -4.1831,
+            "delta_ref": 1.4004,
+            "label": "NEW-ONSET",
+            "out_of_band": true,
+            "out_of_band_units": [
+              61,
+              62,
+              63,
+              64,
+              65,
+              66,
+              67,
+              68,
+              69,
+              70,
+              71,
+              72,
+              73
+            ]
+          }
+        },
+        "verdict": "NO SIGNAL BEYOND OUR OWN ORDINARY DRIFT"
+      },
+      "0.5": {
+        "anomaly_count": 1,
+        "any_anomaly_metrics": [
+          "top50_mass"
+        ],
+        "denominator": 4,
+        "headline_state": "NO SIGNAL",
+        "kill_condition_met": true,
+        "metrics": {
+          "hapax_share": {
+            "a_ext": false,
+            "delta": -1.7216,
+            "delta_ext": -0.422,
+            "delta_ref": 1.2996,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          },
+          "mtld": {
+            "a_ext": false,
+            "delta": -1.5908,
+            "delta_ext": -1.3396,
+            "delta_ref": 0.2511,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          },
+          "similarity": {
+            "a_ext": false,
+            "delta": 1.4423,
+            "delta_ext": 2.0427,
+            "delta_ref": 0.6004,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          },
+          "top50_mass": {
+            "a_ext": true,
+            "delta": -7.5118,
+            "delta_ext": -6.1113,
+            "delta_ref": 1.4004,
+            "label": "NEW-ONSET",
+            "out_of_band": true,
+            "out_of_band_units": [
+              61,
+              62,
+              63,
+              64,
+              65,
+              66,
+              67,
+              68,
+              69,
+              70,
+              71,
+              72,
+              73
+            ]
+          }
+        },
+        "verdict": "NO SIGNAL BEYOND OUR OWN ORDINARY DRIFT"
+      }
+    },
+    "B": {
+      "0": {
+        "anomaly_count": 0,
+        "any_anomaly_metrics": [],
+        "denominator": 4,
+        "headline_state": "NO SIGNAL",
+        "kill_condition_met": true,
+        "metrics": {
+          "hapax_share": {
+            "a_ext": false,
+            "delta": -0.0908,
+            "delta_ext": 1.2088,
+            "delta_ref": 1.2996,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          },
+          "mtld": {
+            "a_ext": false,
+            "delta": -0.2448,
+            "delta_ext": 0.0063,
+            "delta_ref": 0.2511,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          },
+          "similarity": {
+            "a_ext": false,
+            "delta": 1.2789,
+            "delta_ext": 1.8793,
+            "delta_ref": 0.6004,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          },
+          "top50_mass": {
+            "a_ext": false,
+            "delta": -0.5383,
+            "delta_ext": 0.8622,
+            "delta_ref": 1.4004,
+            "label": "NO-ANOMALY",
+            "out_of_band": true,
+            "out_of_band_units": [
+              66
+            ]
+          }
+        },
+        "verdict": "NO SIGNAL BEYOND OUR OWN ORDINARY DRIFT"
+      },
+      "0.05": {
+        "anomaly_count": 0,
+        "any_anomaly_metrics": [],
+        "denominator": 4,
+        "headline_state": "NO SIGNAL",
+        "kill_condition_met": true,
+        "metrics": {
+          "hapax_share": {
+            "a_ext": false,
+            "delta": 0.0042,
+            "delta_ext": 1.3038,
+            "delta_ref": 1.2996,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          },
+          "mtld": {
+            "a_ext": false,
+            "delta": 0.4307,
+            "delta_ext": 0.6818,
+            "delta_ref": 0.2511,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          },
+          "similarity": {
+            "a_ext": false,
+            "delta": 1.2906,
+            "delta_ext": 1.891,
+            "delta_ref": 0.6004,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          },
+          "top50_mass": {
+            "a_ext": false,
+            "delta": 0.1276,
+            "delta_ext": 1.528,
+            "delta_ref": 1.4004,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          }
+        },
+        "verdict": "NO SIGNAL BEYOND OUR OWN ORDINARY DRIFT"
+      },
+      "0.1": {
+        "anomaly_count": 0,
+        "any_anomaly_metrics": [],
+        "denominator": 4,
+        "headline_state": "NO SIGNAL",
+        "kill_condition_met": true,
+        "metrics": {
+          "hapax_share": {
+            "a_ext": false,
+            "delta": -0.1003,
+            "delta_ext": 1.1993,
+            "delta_ref": 1.2996,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          },
+          "mtld": {
+            "a_ext": false,
+            "delta": 0.8112,
+            "delta_ext": 1.0623,
+            "delta_ref": 0.2511,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          },
+          "similarity": {
+            "a_ext": false,
+            "delta": 1.5044,
+            "delta_ext": 2.1048,
+            "delta_ref": 0.6004,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          },
+          "top50_mass": {
+            "a_ext": false,
+            "delta": 0.5809,
+            "delta_ext": 1.9813,
+            "delta_ref": 1.4004,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          }
+        },
+        "verdict": "NO SIGNAL BEYOND OUR OWN ORDINARY DRIFT"
+      },
+      "0.15": {
+        "anomaly_count": 0,
+        "any_anomaly_metrics": [],
+        "denominator": 4,
+        "headline_state": "NO SIGNAL",
+        "kill_condition_met": true,
+        "metrics": {
+          "hapax_share": {
+            "a_ext": false,
+            "delta": -0.1178,
+            "delta_ext": 1.1819,
+            "delta_ref": 1.2996,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          },
+          "mtld": {
+            "a_ext": false,
+            "delta": 1.2575,
+            "delta_ext": 1.5087,
+            "delta_ref": 0.2511,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          },
+          "similarity": {
+            "a_ext": false,
+            "delta": 1.4455,
+            "delta_ext": 2.0459,
+            "delta_ref": 0.6004,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          },
+          "top50_mass": {
+            "a_ext": false,
+            "delta": 1.1402,
+            "delta_ext": 2.5406,
+            "delta_ref": 1.4004,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          }
+        },
+        "verdict": "NO SIGNAL BEYOND OUR OWN ORDINARY DRIFT"
+      },
+      "0.2": {
+        "anomaly_count": 0,
+        "any_anomaly_metrics": [],
+        "denominator": 4,
+        "headline_state": "NO SIGNAL",
+        "kill_condition_met": true,
+        "metrics": {
+          "hapax_share": {
+            "a_ext": false,
+            "delta": -0.8806,
+            "delta_ext": 0.419,
+            "delta_ref": 1.2996,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          },
+          "mtld": {
+            "a_ext": false,
+            "delta": 1.4938,
+            "delta_ext": 1.7449,
+            "delta_ref": 0.2511,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          },
+          "similarity": {
+            "a_ext": false,
+            "delta": 1.5266,
+            "delta_ext": 2.127,
+            "delta_ref": 0.6004,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          },
+          "top50_mass": {
+            "a_ext": false,
+            "delta": 1.5385,
+            "delta_ext": 2.9389,
+            "delta_ref": 1.4004,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          }
+        },
+        "verdict": "NO SIGNAL BEYOND OUR OWN ORDINARY DRIFT"
+      },
+      "0.25": {
+        "anomaly_count": 1,
+        "any_anomaly_metrics": [
+          "hapax_share"
+        ],
+        "denominator": 4,
+        "headline_state": "NO SIGNAL",
+        "kill_condition_met": true,
+        "metrics": {
+          "hapax_share": {
+            "a_ext": true,
+            "delta": -2.5196,
+            "delta_ext": -1.22,
+            "delta_ref": 1.2996,
+            "label": "NEW-ONSET",
+            "out_of_band": true,
+            "out_of_band_units": [
+              63,
+              64,
+              65,
+              66,
+              69
+            ]
+          },
+          "mtld": {
+            "a_ext": false,
+            "delta": 1.4334,
+            "delta_ext": 1.6845,
+            "delta_ref": 0.2511,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          },
+          "similarity": {
+            "a_ext": false,
+            "delta": 1.3649,
+            "delta_ext": 1.9653,
+            "delta_ref": 0.6004,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          },
+          "top50_mass": {
+            "a_ext": false,
+            "delta": 1.7072,
+            "delta_ext": 3.1077,
+            "delta_ref": 1.4004,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          }
+        },
+        "verdict": "NO SIGNAL BEYOND OUR OWN ORDINARY DRIFT"
+      },
+      "0.3": {
+        "anomaly_count": 1,
+        "any_anomaly_metrics": [
+          "hapax_share"
+        ],
+        "denominator": 4,
+        "headline_state": "NO SIGNAL",
+        "kill_condition_met": true,
+        "metrics": {
+          "hapax_share": {
+            "a_ext": true,
+            "delta": -4.3431,
+            "delta_ext": -3.0435,
+            "delta_ref": 1.2996,
+            "label": "NEW-ONSET",
+            "out_of_band": true,
+            "out_of_band_units": [
+              61,
+              62,
+              63,
+              64,
+              65,
+              66,
+              67,
+              68,
+              69,
+              72,
+              73
+            ]
+          },
+          "mtld": {
+            "a_ext": false,
+            "delta": 1.3616,
+            "delta_ext": 1.6128,
+            "delta_ref": 0.2511,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          },
+          "similarity": {
+            "a_ext": false,
+            "delta": 1.5058,
+            "delta_ext": 2.1062,
+            "delta_ref": 0.6004,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          },
+          "top50_mass": {
+            "a_ext": false,
+            "delta": 2.0739,
+            "delta_ext": 3.4743,
+            "delta_ref": 1.4004,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          }
+        },
+        "verdict": "NO SIGNAL BEYOND OUR OWN ORDINARY DRIFT"
+      },
+      "0.4": {
+        "anomaly_count": 1,
+        "any_anomaly_metrics": [
+          "hapax_share"
+        ],
+        "denominator": 4,
+        "headline_state": "NO SIGNAL",
+        "kill_condition_met": true,
+        "metrics": {
+          "hapax_share": {
+            "a_ext": true,
+            "delta": -5.8571,
+            "delta_ext": -4.5575,
+            "delta_ref": 1.2996,
+            "label": "NEW-ONSET",
+            "out_of_band": true,
+            "out_of_band_units": [
+              61,
+              62,
+              63,
+              64,
+              65,
+              66,
+              67,
+              68,
+              69,
+              70,
+              72,
+              73
+            ]
+          },
+          "mtld": {
+            "a_ext": false,
+            "delta": 1.2691,
+            "delta_ext": 1.5203,
+            "delta_ref": 0.2511,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          },
+          "similarity": {
+            "a_ext": false,
+            "delta": 1.3484,
+            "delta_ext": 1.9488,
+            "delta_ref": 0.6004,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          },
+          "top50_mass": {
+            "a_ext": false,
+            "delta": 2.6591,
+            "delta_ext": 4.0596,
+            "delta_ref": 1.4004,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          }
+        },
+        "verdict": "NO SIGNAL BEYOND OUR OWN ORDINARY DRIFT"
+      },
+      "0.5": {
+        "anomaly_count": 1,
+        "any_anomaly_metrics": [
+          "hapax_share"
+        ],
+        "denominator": 4,
+        "headline_state": "NO SIGNAL",
+        "kill_condition_met": true,
+        "metrics": {
+          "hapax_share": {
+            "a_ext": true,
+            "delta": -6.6662,
+            "delta_ext": -5.3666,
+            "delta_ref": 1.2996,
+            "label": "NEW-ONSET",
+            "out_of_band": true,
+            "out_of_band_units": [
+              61,
+              62,
+              63,
+              64,
+              65,
+              66,
+              67,
+              68,
+              69,
+              70,
+              71,
+              72,
+              73
+            ]
+          },
+          "mtld": {
+            "a_ext": false,
+            "delta": 0.7562,
+            "delta_ext": 1.0074,
+            "delta_ref": 0.2511,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          },
+          "similarity": {
+            "a_ext": false,
+            "delta": 0.9239,
+            "delta_ext": 1.5243,
+            "delta_ref": 0.6004,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          },
+          "top50_mass": {
+            "a_ext": false,
+            "delta": 2.764,
+            "delta_ext": 4.1644,
+            "delta_ref": 1.4004,
+            "label": "NO-ANOMALY",
+            "out_of_band": false,
+            "out_of_band_units": []
+          }
+        },
+        "verdict": "NO SIGNAL BEYOND OUR OWN ORDINARY DRIFT"
+      }
+    }
+  },
+  "structurally_blind_metrics": [
+    "mtld",
+    "similarity"
+  ]
+}
