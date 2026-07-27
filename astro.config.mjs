@@ -1,7 +1,6 @@
 // @ts-check
 import { defineConfig } from 'astro/config'
 import sitemap from '@astrojs/sitemap'
-import datasetWerke from './src/data/datasets/werke.json' with { type: 'json' }
 import mdx from '@astrojs/mdx'
 import tailwindcss from '@tailwindcss/vite'
 import rehypeRepoLinks from './src/lib/engines/rehype-repo-links.mjs'
@@ -13,16 +12,6 @@ import rehypeRepoLinks from './src/lib/engines/rehype-repo-links.mjs'
 // call sites that already use them (src/i18n/ui.ts's t() dictionary keeps its unused `de` half
 // too, for the same reason: smaller diff, zero behavioural difference with one locale).
 // Astro ships the content layer as static HTML (top CWV, crawlable); WebGL lives in islands.
-// Fassungsseiten direkt aus werke.json ableiten statt aus einer zweiten, abgeleiteten
-// Datei: eine solche Datei müsste mitgepflegt und mitgeliefert werden und wäre die
-// erste, die still veraltet.
-// Cast nötig: ohne ihn leitet TypeScript aus den 6.158 Schlüsseln Literaltypen ab
-// und bricht mit „union type too complex" ab. Gebraucht wird hier ohnehin nur die
-// Fassungs-Id.
-const werkeTyped = /** @type {Record<string, { f: { i: string }[] }>} */ (datasetWerke)
-const fassungsSeiten = new Set(
-  Object.values(werkeTyped).flatMap((w) => w.f.map((v) => `/datasets/${v.i}`)),
-)
 
 export default defineConfig({
   site: 'https://frankbueltge.de',
@@ -80,15 +69,14 @@ export default defineConfig({
   // Sitemap, unabhängig davon, ob Google robots.txt beachtet.
   integrations: [
     sitemap({
-      // Fassungsseiten des Dataset Registers bleiben abrufbar, gehören aber nicht in
-      // die Sitemap: ihre kanonische Adresse ist die Werk-Seite (siehe
-      // src/pages/datasets/[id].astro). Gemessen am 27.07. sinkt die ausgewiesene
-      // Fläche damit von 16.494 auf 8.579 Register-Seiten, ohne dass ein Eintrag
-      // verschwindet. Die Liste kommt aus den Daten, nicht aus einem Namensmuster.
+      // Das Dataset Register hatte bis 2026-07-27 eine Unterseite je Eintrag bzw. je
+      // Werk; der Sitemap-Filter musste die abgeleiteten Fassungsseiten hier wieder
+      // ausschließen. Mit dem Rückbau auf eine kuratierte Liste (docs/design/
+      // 2026-07-27-register-rueckbau-und-scouts.md) entfallen beide — es gibt nur noch
+      // /datasets selbst, und damit nichts mehr zu filtern.
       filter: (page) =>
         !/\/protocol\/\d{4}-\d{2}-\d{2}(\/|$)/.test(page) &&
-        !/\/steuerzentrale(\/|$)/.test(page) &&
-        !fassungsSeiten.has(new URL(page).pathname.replace(/\/$/, '')),
+        !/\/steuerzentrale(\/|$)/.test(page),
     }),
     mdx(),
   ],

@@ -255,6 +255,8 @@
     commit?: Record<string, unknown>
     issue?: Record<string, unknown>
     warning?: string
+    /** Nur bei code 'not-found': ob das Issue trotzdem geschlossen werden konnte. */
+    issueClosed?: boolean
   }
 
   const REPO_LABELS: Record<string, string> = {
@@ -647,8 +649,24 @@
           }
           return
         }
+        // Die Anfrage steht nicht mehr in REQUESTS.md: Die Praxis hat sie selbst abgeräumt,
+        // Franks Antwort wurde NICHT geschrieben. Der Text sagt beides — die halbe Wahrheit
+        // („Praxis hat entschieden“) ließe offen, ob die Antwort nun drinsteht oder nicht.
         if (result.code === 'not-found') {
-          card.replaceChildren(el('p', { class: 'text-sm text-fg-muted' }, 'Die Praxis hat inzwischen selbst entschieden — Issue wird geschlossen'))
+          if (result.issueClosed) markMutation()
+          const p = el(
+            'p',
+            { class: 'text-sm text-fg-muted' },
+            'Nicht mehr in REQUESTS.md — die Praxis hat die Stelle selbst abgeräumt. Deine Antwort wurde nicht geschrieben.',
+          )
+          p.append(
+            el(
+              'span',
+              { class: 'block text-xs' },
+              result.issueClosed ? '✓ Issue geschlossen' : 'Issue konnte nicht geschlossen werden — auf GitHub erledigen.',
+            ),
+          )
+          card.replaceChildren(p)
           return
         }
         if (result.code === 'conflict') {

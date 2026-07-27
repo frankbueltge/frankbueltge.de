@@ -1,6 +1,7 @@
 # Dataset Register — Rückbau und Scouts
 
-**Datum:** 2026-07-27 (abends) · **Status:** ENTSCHEIDUNG (Frank) — Umsetzung offen
+**Datum:** 2026-07-27 (abends) · **Status:** ENTSCHIEDEN und **Rückbau umgesetzt** (§6, §11);
+die Scouts stehen aus
 **Geht vor:** `2026-07-27-register-neufassung.md` (vom selben Tag, vormittags).
 Die Neufassung bleibt als Beleg stehen, ist aber in ihrem Kernpunkt überholt: Sie
 definierte ein Relevanzkriterium aus Stichwörtern. Das trägt nicht (§3).
@@ -51,6 +52,18 @@ Erweiterung nie bekommen hat.
 **Wer die Themen beurteilt, liest zuerst `src/components/pages/AtlasPage.astro`
 (`CLUSTER`, `FAMILIE`) — nicht die Design-Notiz vom Vormittag.**
 
+**Nachgemessen bei der Umsetzung (27.07., abends): die Schnittmenge ist null.**
+Gegen die 16.507 DOIs im Register wurden alle DOIs gehalten, die die vier Engine-Repos
+(`ulysses`, `field-research`, `studio`, `meridian-runtime`) je zitiert haben — 89
+eindeutige. **Überschneidung: 0.** Kein einziger Registereintrag ist etwas, wonach je
+eine Praxis gegriffen hat.
+
+Ehrlich dazu: Ein Teil davon ist strukturell — die Praxen zitieren überwiegend *Paper*,
+das Register hielt *Datensätze*; die Null ist also nicht allein ein Relevanzversagen.
+Der Schluss überlebt das trotzdem: Dieser Bestand hat der Forschung, für die er gebaut
+wurde, kein einziges Mal gedient. (Zugleich ist es das Argument für Franks zweiten
+Katalog: Was die Praxen tatsächlich brauchen, sind zu großen Teilen Paper.)
+
 ## 4. Das Vorbild steht schon im Repo — zweimal
 
 | | Muster | Umfang | Felder |
@@ -87,10 +100,16 @@ Ulysses' 98 Einträge sind der Anfangsbestand, nicht 16.516 zu filternde.
 - Der größte Teil des Bestands
 - Sehr wahrscheinlich die 8.590 Unterseiten — die Zielstruktur ist eine Liste
 
-**Offen (Frank entscheidet):**
-- Wie tief der Rückbau geht und was der Anfangsbestand ist
-- Ob das Register auf `frankbueltge.de` bleibt oder auf eine Subdomain zieht
-- Ob die jetzigen Unterseiten bis dahin `noindex` bekommen (siehe §8)
+**Entschieden (Frank, 2026-07-27 abends):**
+- **Auf Null.** Nicht gefiltert, nicht beschnitten — der Bestand der Website geht auf 0,
+  alle Unterseiten fallen weg. Der Neuaufbau muss einen belegbaren Bezug zur Forschung
+  der research ecology haben.
+- **Bleibt auf `frankbueltge.de`.** Nach dem Rückbau ist es eine kuratierte Liste, kein
+  Massenbestand — die Subdomain war nur als Brandmauer gegen dieses Problem erwogen.
+- **Rückbau zuerst, Scouts danach.** Damit ist `noindex` gegenstandslos: Die Seiten sind
+  weg, statt unbegründet weiterzustehen.
+- **Zwei Kataloge**, nicht einer: Die Scouts sehen zuerst, woran die Praxen forschen, und
+  suchen von dort aus — **Datensätze** ins Register, **Paper** in einen eigenen Katalog.
 
 ## 7. Rechtslage (geprüft 2026-07-27, gilt weiter)
 
@@ -155,3 +174,74 @@ Zeit" nach einem einzigen Wiederholungsversuch.
 Gefunden wurden sie jedes Mal erst beim Nachmessen. Die Reihenfolge ist **messen →
 schließen → sagen**, nicht sagen → messen → korrigieren. Und: kleinere Schritte, mehr
 Halt dazwischen. Der Umfang dieser Sitzung war selbst eine Fehlerquelle.
+
+## 11. Der Rückbau, wie er ausgeführt wurde (2026-07-27, abends)
+
+Gemessen am gebauten `dist/`, nicht geschätzt:
+
+| | vorher | nachher |
+|---|---:|---:|
+| Dateien im Deployment | 8.883 | **292** |
+| Registerseiten | 8.590 | **1** (`/datasets`) |
+| Sitemap-URLs | 8.714 | **124** |
+| Registerdaten beim Bauen | 14 MB aus einem fremden Release | committet, 2 Bytes (`[]`) |
+
+**Was entfiel**
+
+- `src/pages/datasets/[id].astro`, `src/pages/datasets/work/[id].astro` und die beiden
+  Detail-Komponenten — die alten URLs liefern jetzt 404, was Google für dauerhaft
+  entfernte Seiten ausdrücklich empfiehlt (§8). Standzeit rund ein Tag.
+- `scripts/hole-dataset-daten.mjs` samt der Hooks `prebuild`/`precheck`/`pretest`. Damit
+  auch der `GITHUB_TOKEN` in `deploy-cf.yml` und der `repository_dispatch`-Trigger
+  `dataset-snapshot` nebst Rückfall-Cron: **Der Bau greift auf kein fremdes Repo mehr zu.**
+- Der Sitemap-Filter für die abgeleiteten Fassungsseiten in `astro.config.mjs` — es gibt
+  nichts mehr zu filtern.
+- `src/lib/datasets.ts` (Kernbestand, Prüfstand, Werk-Ebene, Feldkürzel).
+
+**Was entstand**
+
+- `src/data/register/datasets.json` — `[]`. Committet, wie `src/data/atlas/werke.json`:
+  Kuratiert heißt klein genug fürs Repo. Die Gitignore-Regel für `src/data/datasets/`
+  bleibt stehen, damit der alte 45-MB-Abzug nicht versehentlich hineinrutscht.
+- `src/lib/register.ts` — der neue Typ. **`relevance` ist Pflichtfeld:** Ein Eintrag kann
+  nicht existieren, ohne zu sagen, warum er zählt. Das ist §4 in Codeform und die einzige
+  Schranke, die gegen unbegrenztes Sammeln wirkt.
+- `/datasets` als datierte Rückbau-Auskunft statt als leere Fläche (Aktualitäts-Regel:
+  Überholtes wird sichtbar und datiert archiviert, nie unauffällig stehen gelassen).
+
+**Nachgezogen, weil sonst unwahr:** die Katalogkarte in `src/config/naming.ts` (versprach
+Snapshot-Abfragbarkeit) und beide Fassungen des Datenschutz-Abschnitts in
+`src/data/legal.ts` — die 20.082 Namen und 15.240 ORCID-Kennungen sind von dieser Domain
+entfernt; der Hinweis auf die fortbestehenden Archivstände im `dataset-hub` und der
+Art.-21-Weg bleiben, gelten dort aber jetzt ausdrücklich auch für das Archiv.
+
+## 12. Was als Nächstes zu bauen ist
+
+**Der Scout existiert bereits** — `pipelines/atlas-scout/` mit `atlas-scout.yml`,
+nächtlich, schlüsselfrei über OpenAlex. Er bringt alles mit, was §1 verlangt:
+
+| gefordert | vorhanden in `atlas_scout/model.py` |
+|---|---|
+| Kandidat trägt seine Herkunft | `Herkunft` (Quelle, Abfrage, Abrufzeit) |
+| Identifier geprüft | `Pruefung` (HTTP-Status, geprüftes Ziel, Vermerk) |
+| Ablehnungsregister | `Verworfen` (mit Grund) |
+| Ausfälle vermerken | `Ausfall` |
+| Begründung als Vorschlag, nie Behauptung | `Annotation.relevanz_vorschlag` + `prompt_sha256` |
+| aktuelle Themenkarte | `themen.py` — Felder 1–13 **inkl. der Erweiterung vom 25.07.** |
+| genau ein Modul darf schreiben | `aufnahme.py`, per AST-Test erzwungen |
+
+Der Register-Scout ist deshalb **kein Neubau, sondern ein dritter Atlas** neben `theorie`
+und `werke` (`model.py`, `ATLAS_*`) — der Paper-Katalog ein vierter. Zu bauen bleibt:
+
+1. Ein Saatgut-Schritt, der **aus den Praxen liest**, statt aus einer Themenliste: woran
+   arbeiten `ulysses`, `field-research`, `studio` gerade? Das ist der Punkt, an dem sich
+   die Richtung tatsächlich umdreht (§1) — alles andere ist schon da.
+2. Quellen für Datensätze (DataCite/Zenodo **gezielt abgefragt**, nicht als Bulk) und für
+   Paper (OpenAlex, arXiv).
+3. Der Paper-Katalog als eigene Fläche, sobald er etwas zu zeigen hat.
+
+**Warum der Scout bei 448 landete und das Register bei 16.516:** Der Scout muss jeden
+Kandidaten gegen ein Feld punkten und den Identifier auflösen, bevor er aufnimmt —
+`punkte_begruendung` ist Pflichtfeld. Das Register hatte kein Feld, gegen das es punkten
+musste. Ein Sieb ohne Begründungspflicht skaliert unbegrenzt; das ist keine Eigenschaft
+der Datenmenge, sondern des Verfahrens.

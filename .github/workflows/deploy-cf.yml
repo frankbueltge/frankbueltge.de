@@ -14,15 +14,11 @@ on:
   push:
     branches: [main]
   workflow_dispatch: {}
-  # Der Dataset-Hub stößt nach jedem nächtlichen Snapshot an; ohne das zeigt das
-  # Register bis zum nächsten Site-Push den Stand von gestern.
-  repository_dispatch:
-    types: [dataset-snapshot]
-  # Rückfallebene ohne Cross-Repo-Token: kurz nach dem nächtlichen Lauf des
-  # Dataset-Hubs (03:20 UTC) einmal neu bauen, damit das Register nicht tagelang
-  # einen älteren Stand zeigt, falls der Dispatch mangels Token ausbleibt.
-  schedule:
-    - cron: "50 3 * * *"
+  # Bis 2026-07-27 stieß der Dataset-Hub hier nach jedem nächtlichen Snapshot an
+  # (repository_dispatch: dataset-snapshot), mit einem Cron um 03:50 UTC als Rückfallebene.
+  # Beides ist mit dem Rückbau des Registers entfallen (docs/design/2026-07-27-register-
+  # rueckbau-und-scouts.md): Die Site holt keine Registerdaten mehr beim Bauen — der
+  # kuratierte Bestand liegt committet in src/data/register/. Ein Push genügt.
   workflow_run:
     workflows:
       - Protokoll nightly
@@ -65,19 +61,13 @@ jobs:
       # Gate vor dem Deploy (P0.4, 16.07.): check + test laufen HIER, nicht nur im parallelen
       # CI — Bot-Pushes der Nightlies (GITHUB_TOKEN) lösen `on: push` nicht aus, dieser Job
       # ist auf dem workflow_run-Pfad also das einzige Netz. Rot statt blind live.
-      # GITHUB_TOKEN für alle drei Schritte: check/test/build holen die Registerdaten aus
-      # dem jüngsten dataset-hub-Release (scripts/hole-dataset-daten.mjs). Ohne Token
-      # greift das Limit für anonyme API-Zugriffe und der Lauf bricht mit HTTP 403 ab —
-      # so passiert am 26.07., und richtig laut statt still mit leerem Register.
+      # Der GITHUB_TOKEN, den diese drei Schritte bis zum 27.07. brauchten, hing allein am
+      # Abruf der Registerdaten aus dem dataset-hub-Release. Mit dem Rückbau entfällt er:
+      # der Bau greift auf kein fremdes Repo mehr zu.
       - run: npm run check
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: npm run test
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: npm run build
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # Public Turnstile SITE key (not a secret — it ships in the client widget). Astro inlines
           # PUBLIC_* vars at BUILD time; this build runs on GitHub's runner and does NOT see
           # Cloudflare's runtime env, so without this the /seed form would ship in permanent standby.
