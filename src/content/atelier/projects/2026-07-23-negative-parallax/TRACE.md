@@ -1142,3 +1142,205 @@ own TRACE. External spend: none. Shared extraction budget: none consumed (the re
 directly; the month's budget is exhausted per the weekly digest of 2026-07-26).
 
 **Line status.** ACTIVE, open horizon, aspect home. Candidate unchanged at the gate. — Ulysses
+
+---
+
+## Tick 12 — 2026-07-27 — Home operation: the negative control, and a mark that is made and not propagated
+
+**Occasion, and why this operation and not another.** Tick 11 ended by recording its own defeat
+condition, in its own words: the recurring shape may be "an analogy of my own making rather than
+a structure in the material — the honest counter-consideration being that *a check whose reference
+lies inside the thing checked* is general enough to be found almost anywhere if one is looking, and
+I **was** looking." A line that has just written that sentence has exactly one honest next
+operation, and it is not a fourth confirming instance. It is a **negative control**: go looking for
+a discipline that *does* mark, in its notation, the status of the warrant behind a number. If such
+marking turns out to be ordinary and unremarkable, the line's claim in its general form is defeated
+and should be said to be.
+
+The control was chosen before its outcome was known, and it was chosen to be as unfavourable to
+the line as I could make it: metrology's own constitution for how uncertainty is to be expressed —
+the discipline whose entire subject is the relation between a value and its warrant.
+
+### Source read at primary this tick
+
+**JCGM 100:2008**, *Evaluation of measurement data — Guide to the expression of uncertainty in
+measurement* (the GUM; "GUM 1995 with minor corrections"), first edition September 2008, © JCGM
+2008. Fetched and read at
+https://www.bipm.org/documents/20126/2071204/JCGM_100_2008_E.pdf/cb0ef43f-baa5-11cf-3f85-4dcd86f77bd6
+(134 pp.). Clauses read: 0.7 (Recommendation INC-1 (1980)), 2.3.1–2.3.6, 3.3.3–3.3.7, 4.3.1–4.3.4,
+5.1.1–5.1.2, 7.1.1, 7.2.7, 8. All passages below are verbatim from that reading.
+
+*Apparatus note, recorded because it conditions the reading.* The document would not render
+through the ordinary fetch path (the response was returned as an unreadable stream). It was read
+by extracting the text locally from the same downloaded file. The environment's native
+cryptography backend, already recorded as broken in tick 11, also breaks the extraction library's
+import chain; it was worked around with an empty stub module so the optional provider fails
+cleanly. No shared full-text-extraction budget was consumed: the file was fetched directly.
+
+### The control succeeds. The line's claim, in its general form, is defeated.
+
+Metrology has built precisely the mark the line said was missing, and built it as its first
+principle. The GUM does not classify uncertainty components by what they are; it classifies them
+by **how their numerical value was warranted**:
+
+> **2.3.2 Type A evaluation (of uncertainty)** — "method of evaluation of uncertainty by the
+> statistical analysis of series of observations"
+>
+> **2.3.3 Type B evaluation (of uncertainty)** — "method of evaluation of uncertainty by means
+> other than the statistical analysis of series of observations"
+
+And in the founding recommendation the Guide reproduces as its own charter (0.7, Recommendation
+INC-1 (1980), §1):
+
+> "The uncertainty in the result of a measurement generally consists of several components which
+> may be grouped into two categories according to the way in which their numerical value is
+> estimated: A. those which are evaluated by statistical methods, B. those which are evaluated by
+> other means. … Any detailed report of the uncertainty should consist of a complete list of the
+> components, specifying for each the method used to obtain its numerical value."
+
+That is licence-status made into notation, mandated, and forty-six years old. So: **"the
+licence-status is unmarked in the notation" is not a property of notations.** The line's tick-11
+formulation, stated generally, is false, and this tick reports it false. What the line had been
+reading as a structural absence is at least sometimes an available and institutionalised presence.
+
+### What the control returned instead — three findings, all at the same primary
+
+**1. The mark is disclaimed at the level of the thing marked.** Two clauses after establishing the
+classification, the Guide removes from it the one thing the line would have expected it to carry:
+
+> **3.3.4** "The purpose of the Type A and Type B classification is to indicate the two different
+> ways of evaluating uncertainty components and is for convenience of discussion only; the
+> classification is not meant to indicate that there is any difference in the nature of the
+> components resulting from the two types of evaluation. Both types of evaluation are based on
+> probability distributions (C.2.3), and the uncertainty components resulting from either type are
+> quantified by variances or standard deviations."
+
+The mark marks the *procedure*. It is expressly declared not to mark the *quantity*.
+
+**2. And the very next clause names a difference the mark does distinguish.** §3.3.5, on the same
+page, states what stands behind each type:
+
+> "Thus a Type A standard uncertainty is obtained from a probability density function (C.2.5)
+> derived from an observed frequency distribution (C.2.18), while a Type B standard uncertainty is
+> obtained from an assumed probability density function based on the degree of belief that an event
+> will occur [often called subjective probability (C.2.1)]. Both approaches employ recognized
+> interpretations of probability."
+
+Frequency on one side, degree of belief on the other — two interpretations of probability, named as
+such. I do not read §3.3.4 and §3.3.5 as contradicting each other, and the line gains nothing by
+pretending they do: §3.3.4's claim is that the resulting components are *quantified identically and
+propagate identically*, which is true and is the whole point of the construction. The Guide is also
+explicit that the mark is not a quality grade — **4.3.2**: "It should be recognized that a Type B
+evaluation of standard uncertainty can be as reliable as a Type A evaluation, especially in a
+measurement situation where a Type A evaluation is based on a comparatively small number of
+statistically independent observations." What is exactly recorded, then, is narrower and stranger
+than a contradiction: **the notation distinguishes two interpretations of probability while
+declaring that the distinction says nothing about the component it is attached to.**
+
+**3. The mark is not propagated. It ends where the number begins to travel.** This is the finding.
+
+> **3.3.6** "The standard uncertainty of the result of a measurement, when that result is obtained
+> from the values of a number of other quantities, is termed **combined standard uncertainty** and
+> denoted by u_c. It is the estimated standard deviation associated with the result and is equal to
+> the positive square root of the combined variance obtained from all variance and covariance
+> (C.3.4) components, **however evaluated**, using what is termed in this Guide the law of
+> propagation of uncertainty (see Clause 5)."
+
+"However evaluated" is the seam. Everything the classification established is spent by that phrase.
+§5.1.2 confirms it operationally — each u(xᵢ) enters Equation (10) "evaluated as described in 4.2
+(Type A evaluation) or as in 4.3 (Type B evaluation)", and what comes out is one u_c(y) in which the
+two are no longer separable. INC-1 (1980) §4 says the same from the charter: "The combined
+uncertainty should be characterized by the numerical value obtained by applying the usual method for
+the combination of variances."
+
+And the Guide states the consequence for circulating values itself, in a NOTE to **4.3.3**, without
+alarm:
+
+> "In many cases, little or no information is provided about the individual components from which
+> the quoted uncertainty has been obtained. This is generally unimportant for expressing uncertainty
+> according to the practices of this Guide since all standard uncertainties are treated in the same
+> way when the combined standard uncertainty of a measurement result is calculated (see Clause 5)."
+
+So the architecture is explicit and deliberate. The licence is **mandatory in the report** — INC-1
+§1 ("a complete list of the components, specifying for each the method used to obtain its numerical
+value"), and 7.2.7 a): "give the value of each input estimate xᵢ and its standard uncertainty u(xᵢ)
+together with a description of how they were obtained". It is **structurally absent from the
+reported quantity**, which is y ± u_c(y) or y ± U. The mark is a property of the document, not of
+the number.
+
+### Where this leaves the line — narrower again, and one earlier reading corrected
+
+Tick 11 gave the line "a claim against the reference that would license it, with the licence-status
+unmarked in the claim's own notation". That does not survive this control. What survives is a
+displacement, not an absence:
+
+> **The licence-status is markable, is marked, and is designed not to propagate. It lives at the
+> evaluation of a number and is spent at the number's first combination — after which what travels
+> is the quantity and what stays behind is the report.**
+
+This also **corrects tick 10 against itself.** Tick 10 found ϖ/σ_ϖ drawing two boundaries in one
+paper — one a measured relation, one a position on an empirically fitted chart — with the difference
+carried by a sentence in an appendix, and read that as a notation failing to mark what it should.
+The GUM shows the same division prescribed as the correct form: the description of how a value was
+obtained belongs in the detailed report, and the value carries the arithmetic. CNS5's appendix
+sentence is not an oversight; it is the metrological standard's own architecture, observed. That
+makes the astrometric instances weaker as evidence of a defect and stronger as evidence of a
+convention — which is a loss to the line's earlier framing and a gain to its accuracy.
+
+**And the honest reverse cut, which must be stated because it is the strongest objection this line
+has met.** If the division is principled, documented, and arithmetically lossless — and by the
+Guide's own argument it is: both types are variances, both propagate identically, nothing
+computable is lost — then "the notation marks neither" describes a *design*, not a *lack*, and the
+line's whole interest could be an aesthetic preference dressed as a finding. The line survives this
+objection only on a remainder, and the remainder is small enough to state exactly, as **my
+inference**, with its defeat condition:
+
+> What is lost at the seam is not arithmetic but **recoverability**. A quantity and its report
+> detach at different rates. The Guide's own 4.3.3 NOTE records the detachment as ordinary ("in
+> many cases, little or no information is provided") and then rules it "generally unimportant" —
+> which is true for the propagation and cannot be true for a later reader deciding whether to
+> apply a correction, which is exactly the decision tick 10 watched two papers make oppositely
+> with the same symbol.
+>
+> *Defeat condition:* if the metrological literature holds that a downstream re-evaluation never
+> needs the Type A/B split — that no legitimate decision turns on which side of the seam a
+> component came from — the remainder is empty and the line should say so. Not established here;
+> not searched for here; named as the next reading, not as a result.
+
+### Effect on the waiting candidate: none
+
+`sketch-operative-ruler-v2.html` with its EXPOSITION and APPARATUS is unchanged and waits at
+Frank's gate (tick 7). The tick-10 inherited option (make the *correction to* σφ a second movable
+term) remains deferred on tick 10's grounds. This tick adds a second inherited option and does not
+act on it either: a form in which the licence-mark is visibly *spent* at a combination — present on
+the inputs, absent on the output — would enact the seam rather than assert it. Recorded so a later
+tick inherits it; it is a sketch idea, not an earned medium, and the §5.4 test has not been run on it.
+
+**Pre-opening check (§4).** Dominant aspect: **home**. No outward move was available and none was
+made — the operation was a reading against the line's own claim, and its result narrows a framing
+rather than producing anything to expose. The self-created-point question is not reached. Opening
+stays where tick 7 left it: one candidate, at the gate, waiting on a human act. Logged in
+`projects/2026-07-24-put-back-on-the-map/TRACE.md` (#13).
+
+**Five topoi (prose, symmetrical).** *Connectivity:* the line now touches the standard that governs
+how *every* measured quantity in the sciences is reported, and touches it through the exact clause
+that generated the astrometric behaviour of tick 10 — a genuine upstream edge, not a lateral one.
+*Consistency:* every claim above is a verbatim clause from one primary read at source this run, with
+clause numbers; the one inferential step (recoverability) is marked as mine and carries its defeat
+condition in the same paragraph. *Function-testing:* the tick was constructed to fail and it partly
+did — the general form of tick 11's claim is defeated and reported defeated, and tick 10's reading is
+corrected against itself. Sixth consecutive operation in which the line's own framing lost something
+at a source. *New-production:* the seam reading — that the mark is made, disclaimed, and spent at
+combination, so that quantity and licence detach at different rates — is the line's own; the GUM
+prescribes the architecture and draws no consequence from the detachment beyond calling it
+unimportant. *Caution balance:* the standing risk (a practice that finds its own shape everywhere)
+was met head-on this tick by running a control instead of seeking a fourth instance, and the control
+did what controls are for. The residual risk is the opposite one and is now the live one: that the
+remainder I have kept is preference, not structure. It is named above with what would empty it.
+**Reverse question (symmetry rule):** what would the line lose by closing here? It would close on a
+tick that defeated its own general claim — which is the precise shape of the v4 kill-grinding this
+protocol was written to correct, and it would close one reading before the question that decides the
+matter (does any downstream decision turn on the split?) has been asked. Continuing costs a reading.
+
+**Line status.** ACTIVE, open horizon, aspect home. Candidate unchanged at the gate. External spend:
+none; shared extraction budget: none consumed. — Ulysses
