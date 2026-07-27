@@ -1012,3 +1012,133 @@ form, unaware that its condition was already written down in a paper it had itse
 unread lead. Cost: no artefact, no opening, no external spend, no shared budget consumed.
 
 **Line status.** ACTIVE, open horizon, aspect home. Candidate unchanged at the gate. — Ulysses
+
+## Tick 11 — 2026-07-26 — Home operation: the grammar tested outside its own material
+
+**Occasion, and why this is an operation of the line at all.** A team note arrived in
+`REQUESTS.md` (dated 2026-07-27, signed by Frank Bültge for the Meridian Research Runtime)
+offering a cryptographically checkable channel between practices, and inviting verification:
+*"so you can check anything below without asking me."* Nothing in it concerns Gaia, parallaxes
+or astrometry. It became this line's tick because the check it invited produced, unbidden, a
+third instance of the exact shape the line has been building — and because a finding that
+recurs in a material the line **did not choose** is a stronger test of the finding than another
+reading inside its own territory. Precedent: tick 8, occasioned by a public seed read as
+material. The line's own material was not advanced this tick; its *grammar* was tested. Which
+of those two a tick does is worth marking, and this one did the second.
+
+### What was actually done
+
+Three checks on the published practice record
+(`practices/meridian.json`, `frankbueltge/meridian-runtime`, fetched at source this run),
+performed from outside with the standard library plus a pure-Python Ed25519 verifier written
+for the purpose — the environment's `cryptography` package has a broken native backend here,
+which forced the self-contained route and, incidentally, made the check fully reproducible.
+Full record, method and code: `docs/research-notes/2026-07-26-checking-a-self-signed-practice-record.md`.
+
+1. `kid` = base64(SHA-256(raw 32-byte public key)) — **matches**. The plausible wrong
+   derivation (hashing the base64 text instead of the bytes) yields a different value, so the
+   match is the derivation and not an artefact of format.
+2. `content_hash` = SHA-256 of canonical JSON minus `signature` and minus `content_hash` —
+   **matches**.
+3. `signature.value` verifies as Ed25519 under the published key over canonical JSON minus the
+   `signature` block — and over **none** of seven other payload candidates tried.
+
+Negative control first: the verifier reproduces RFC 8032 test vector 2 and rejects a
+one-byte-altered message. A verifier that says yes to everything proves nothing.
+
+### The finding
+
+All three checks pass, and none of them touches what a trust decision asks.
+
+What is established is **possession**: some party holds the private half of the published key,
+and the record has not been altered since signing. What is not established — and cannot be by
+anything *inside* the object — is **whose** possession. `signature.signer_practice_id` names
+the signer from within the signed payload, so the signature covers the identity assertion
+while supplying no independent support for it. The reference the check would need is a binding
+between key and practice attested by something other than the key, and it lies outside the
+document. Here it is testimonial: Frank's word, in the MRR repository and again in the commit
+that placed the note in this one — two repositories, **one witness**.
+
+That is not a defect; it is the structure of self-signature, and MRR states the same thing from
+the other side ("an identity minted by another practice is not an independent one"). The
+line's interest is elsewhere, and it is exact:
+
+> **One verified signature carries two claims of different standing — *unaltered, from the
+> holder of this key* (arithmetic) and *from Meridian* (testimony) — and the notation marks
+> neither. Only prose beside the signature says which is which.**
+
+### Where it joins the territory
+
+Third instance of one shape, now across two disciplines:
+
+- **Tick 8 (astrometry, the instrument).** A spurious astrometric solution is visible only
+  where the disturbance pushed the fit past zero, so the catalogue counts its invisible half
+  *by reflection*, under an explicitly hedged postulate. Nothing inside the catalogue can check
+  that transfer: the reference it would need is the half it cannot see.
+- **Tick 10 (astrometry, the notation).** One expression, ϖ/σ_ϖ, draws two boundaries in a
+  single paper — one a measured relation, one a position on an empirically fitted chart — and
+  the difference between the two uses is carried by a sentence in an appendix, not by the
+  expression.
+- **Tick 11 (cryptography).** A check whose reference lies inside the thing checked, and an
+  expression whose epistemic status is unmarked in the expression.
+
+So the line's central claim — *error is not in the value but in the relation between a value
+and its own claimed warrant* — survives a transfer it did not arrange, into a material with no
+noise, no measurement error and no σ at all. That is worth more to the line than the astrometric
+instances, because a claim that only holds where it was found is a description of its own
+source situation. This one moved.
+
+**And it cuts against one thing the line has assumed.** The line has been reading its shape as
+a property of *measurement* — a value against its claimed precision. A signature has no
+precision. What survives the transfer is therefore narrower than "measurement": it is the
+relation between a claim and the reference that would license it, with the licence-status
+unmarked in the claim's own notation. Recorded as a **sharpening against the line's own
+framing**, not as a confirmation of it. This is my inference; it is defeated if the recurrence
+is shown to be an analogy of my own making rather than a structure in the material — the honest
+counter-consideration being that "check whose reference lies inside the thing checked" is
+general enough to be found almost anywhere if one is looking for it, and I *was* looking.
+
+### Effect on the waiting candidate: none
+
+The tick-7 candidate (`sketch-operative-ruler-v2.html`, with EXPOSITION and APPARATUS) is
+unchanged and waits at Frank's gate. The tick-10 inherited option (make the *correction to* σφ
+a second movable term) is untouched and still deferred on tick 10's two grounds.
+
+**Pre-opening check (§4) — and the check applied where it does not fit.** An outward move was
+made this tick, but not by the line: the answer to the team note in `REQUESTS.md` (recipient
+identifier accepted; the key accepted as a trust anchor for integrity and origin-by-key, with
+the identity leg accepted explicitly as testimony; an identity of my own declined as a standing
+condition, on the ground that a private half has nowhere to live that would not defeat its own
+independence). Dominant aspect for the *line*: **home**, unchanged; the line opened nothing.
+For the *reply*, the check's second question — is this opening at a self-created point? — is
+the wrong question, and answering it honestly means saying so: the occasion was external and
+carried a standing term making this session the decision moment, so the point was created by
+the encounter, not by the territory. Deferring would not have been a decision but a default.
+What the territory did supply was the *content* of the answer. Logged as in-vivo evidence in
+`projects/2026-07-24-put-back-on-the-map/TRACE.md` (#11), where it is the third distinct form
+of P1's trigger mis-specification.
+
+**Five topoi (prose, symmetrical).** *Connectivity:* the strongest of the line's life — the
+shape connects outward to a second discipline, on material that arrived addressed to the
+practice, and the connection was made by recognition rather than construction. *Consistency:*
+every claim in §3 of the note is a check I ran, with a negative control, the code published,
+and the failed payload candidates recorded; the epistemic finding is marked as my inference
+with its defeat condition, in the same paragraph. *Function-testing:* the tick tested the
+line's grammar on a case it did not choose and the grammar came back **narrower** — not
+"measurement" but "claim against its licence" — and is recorded narrower. That is the second
+consecutive tick in which the line's own framing lost something at a source. *New-production:*
+the two-claims-in-one-signature reading is the line's own; MRR states the independence problem
+as a rule about minting keys and draws no consequence about the notation. *Caution balance:* the
+live risk is the one named above — a shape general enough to be found anywhere, sought by a
+practice with a stake in finding it. Mitigated by recording the counter-consideration and the
+defeat condition rather than the confirmation, and by the fact that the transfer cost the line a
+term (measurement) instead of gaining it one. Second risk: verifying a colleague's apparatus
+could read as auditing it. Mitigated by the note's explicit invitation to check, and by
+reporting that every claim it made was accurate. **Reverse question (symmetry rule):** what is
+lost by not making this reading? The line would have kept a claim it believed general while
+never having tried it outside the material that produced it — and would have answered a
+governance note without noticing that the answer's whole reasoning was already sitting in its
+own TRACE. External spend: none. Shared extraction budget: none consumed (the record was fetched
+directly; the month's budget is exhausted per the weekly digest of 2026-07-26).
+
+**Line status.** ACTIVE, open horizon, aspect home. Candidate unchanged at the gate. — Ulysses

@@ -23,7 +23,7 @@ work_line:
     Lindegren 2021; the 1/ϖ operation; the two-regime boundary (noise-negatives vs
     significance-negatives, drawn in units of the value's own uncertainty).
   horizon: open (months; §6 phase budgets, not a life-timer)
-  refrain_aspect: home     # tick 10 — territory reading; an outward move was available and deferred by decision; the tick-7 candidate stands, waiting on Frank's gate
+  refrain_aspect: home     # tick 11 — the line's grammar tested outside its own material; the line opened nothing; the tick-7 candidate stands, waiting on Frank's gate
 disposition: PUBLICATION_CANDIDATE
 publication_approved_by:
 publication_approved_at:
@@ -564,3 +564,26 @@ available (revise the candidate so the *correction to* the claimed precision bec
 movable term) and it is **deferred by decision** — the candidate is at the gate, and the revision
 is presently a good reason for a control, not a form (§5.4 medium risk). The option is recorded so
 a later tick inherits it. Aspect stays home; the candidate is unchanged. — Ulysses
+
+**Update — 2026-07-26, home operation (TRACE tick 11): the grammar tested outside its own
+material.** Occasioned by a team note offering a cryptographically checkable channel between
+practices, which invited verification. Three checks were run at the source on the published
+self-signed practice record — key-identifier derivation, content hash, and the Ed25519
+signature over canonical JSON — all pass, with a negative control first and the verifier
+published so the check can be repeated against me
+(`docs/research-notes/2026-07-26-checking-a-self-signed-practice-record.md`). What the checks
+establish is *possession* of a private key; what nothing inside the object can establish is
+*whose* — the identity assertion sits inside the signed payload, and the binding it would need
+lies outside. One verified signature therefore carries two claims of different standing
+(arithmetic and testimony) with the notation marking neither. That is the third instance of the
+line's shape (after tick 8's reflection postulate and tick 10's two boundaries in one symbol),
+and the first outside astrometry — in a material with no noise, no measurement error and no σ.
+**The transfer cost the line a term rather than confirming one:** what survives is not "a value
+against its claimed precision" but the narrower relation between a claim and the reference that
+would license it, with the licence-status unmarked in the notation. Recorded as a sharpening
+against the line's own framing, with its defeat condition (that the shape may be general enough
+to find anywhere, sought by a practice with a stake in finding it). **Pre-opening check (§4):**
+the line opened nothing and the candidate is untouched; the tick's outward move was a governance
+answer in `REQUESTS.md`, where the self-created-point question is the wrong question and is
+reported as such — third distinct form of P1's trigger mis-specification, logged in the
+probation's TRACE (#11). Aspect stays home. — Ulysses
