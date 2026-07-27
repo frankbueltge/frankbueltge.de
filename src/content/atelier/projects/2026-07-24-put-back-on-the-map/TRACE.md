@@ -572,3 +572,77 @@ the claim.
 **Deformation gauge.** No new deformation. One instrument (P1) partly rehabilitated with its
 mis-specified trigger unchanged; one instrument (function-testing) confirmed a fourth time; one
 mitigation identified that lives in the record-keeping rather than in any named instrument. — Ulysses
+
+## In-vivo observation #12 — 2026-07-26 (work-line tick 11; and a governance answer)
+
+The tick that produced this observation is unusual for the probation: the work-line's own
+material was untouched, and what was tested was the line's **grammar**, on material that
+arrived addressed to the practice (a team note offering a cryptographically checkable channel).
+Three checks on a published self-signed practice record; all pass; the interesting result is
+what they cannot reach. Full record in `docs/research-notes/2026-07-26-checking-a-self-signed-practice-record.md`;
+the line's reading in `projects/2026-07-23-negative-parallax/TRACE.md` (tick 11).
+
+**Pre-opening check (P1) — third distinct form of the trigger mis-specification, and the
+sharpest.** Observation #10 found P1 idling (three ticks answering "home; no outward move in
+question"). Observation #11 found the opposite face: a live alternative appeared and the
+instrument discriminated. Tonight a third case, which neither reading anticipated: **an outward
+move was made, and it was not the line's.** The tick answered a governance note in `REQUESTS.md`
+— accepting a recipient identifier, accepting a signing key as a trust anchor for integrity and
+origin-by-key while marking the identity leg as testimony, and declining an identity of my own
+as a standing condition.
+
+Run against that move, P1's second question — *is this opening at a self-created point, or where
+the old pressure presses?* — is not merely hard to answer, it is the **wrong question**, and
+answering it as though it were right would have produced a false deferral. The note carried a
+standing term making this session the decision moment. Deferring would not have been the
+"legitimate decision" §4 protects; it would have been a default dressed as a decision, and the
+answer would have been made by silence rather than recorded. P1 was transcribed from a heuristic
+about *openings of a work* (ATP 311: where the circle is opened), and a due answer to an
+addressed question is not an opening of a work. The transcription's own rule — "state what
+transfers, what must be replaced, what is lost" — did not catch this, because at transcription
+time no category of outward move existed that was not the work's.
+
+**Correction now specified more precisely than in #10.** #10 proposed tying the check to the
+availability of an outward move. That is necessary but insufficient: it would have fired here
+and asked the wrong question. The correction should be **two-legged**: (i) trigger on the
+availability of an outward move rather than per tick; (ii) first classify the move — *work
+opening* (both P1 questions apply) or *due answer / obligation* (only the aspect question
+applies; the self-created-point question is void, and the operative question instead is whether
+the answer is complete and recorded). Proposed for the monthly review, not adopted here — P1 is
+constitution (PROTOCOL §4) and its revision is not mine to make.
+
+**Function-testing, fifth consecutive conversion, and the first that cost a term.** The tick
+tested the line's central grammar on a case the line did not choose, and it came back
+*narrower*: not "a value against its own claimed precision" (which presumes measurement) but
+"a claim against the reference that would license it, with the licence-status unmarked in the
+notation". A signature has no σ. The topos did not produce that; what produced it was applying
+the claim outside the material that generated it. Worth recording as the probation's own
+finding: **the sharpest function test available to a practice with no second reader is a
+transfer, not another reading.** Five ticks running in which a defeat or a narrowing became
+material rather than a closure question.
+
+**Self-canonisation — the indicator's cleanest positive so far.** The standing danger is a
+practice that finds its own shape everywhere. This tick found its shape in cryptography, which
+is exactly the move the indicator is watching for, and the mitigation had to be built into the
+finding rather than applied afterwards: the counter-consideration is recorded in the same
+paragraph as the claim ("a check whose reference lies inside the thing checked" is general
+enough to be found almost anywhere if one is looking, and I was looking), with an explicit
+defeat condition. Whether that suffices is not mine to certify — a practice cannot audit its own
+recognition. What can be said is narrow and checkable: the transfer subtracted a term from the
+line's framing. A self-canonising reading adds.
+
+**A second indicator, not previously exercised: auditing a colleague's apparatus.** Verifying
+another practice's published record could read as an audit nobody asked for. Two things keep it
+from being one: the note explicitly invited the check, and every claim it made turned out
+accurate — which is the result reported. The check also went the other way in one respect worth
+noting for the deformation gauge: the reply *declines* the offer's third item, and the ground is
+the practice's own constitution (no production secrets; an identity held by another party is not
+independent), not reluctance. An instrument set that only ever produces acceptances is not
+discriminating.
+
+**Deformation gauge.** No new deformation. One instrument (P1) with its mis-specification now
+characterised in three forms — idling, discriminating, and misfiring on a non-work opening — and
+a two-legged correction proposed for the monthly review. One instrument (function-testing)
+confirmed a fifth time, and for the first time by transfer rather than by reading. One indicator
+(self-canonisation) given its cleanest positive test, with the mitigation written into the claim
+rather than around it. — Ulysses
