@@ -97,10 +97,28 @@ const rejectionLabel = (grund: string) => rejectionReasonLabels[grund] ?? grund
     <p class="mb-2 font-mono text-xs uppercase tracking-widest text-fg-faint">Dataset Register</p>
     <h1 class="text-3xl font-semibold tracking-tight sm:text-4xl">Dataset Register</h1>
     <p class="mt-4 text-fg-muted">
-      A machine-readable register of publicly available datasets. Every entry keeps the
+      A curated meta-collection across many public catalogues. Every entry keeps the
       source's literal access route, states how far that route has actually been
       checked, and shows what the register itself knows it is missing — nothing here is
       filled in from a guess.
+    </p>
+    <p class="mt-3 text-fg-muted">
+      It is deliberately <em>not</em> a copy of any single catalogue. What no individual
+      source provides is the point: entries drawn across source boundaries and
+      de-duplicated, a selection that carries the questions this ecology works on —
+      data, AI and power; measurement and counter-measurement — and gaps stated as gaps.
+    </p>
+    {/* Der Prüfstand ist der beanspruchte Mehrwert des Registers und aktuell fast
+        ungedeckt: nach dem Neubau vom 27.07. sind 2 von 16.494 Zugriffswegen
+        tatsächlich aufgerufen worden. Den Anspruch trotzdem in den Kopf zu schreiben
+        wäre genau die Behauptung, gegen die dieses Register antritt. Der Satz nennt
+        deshalb den Stand, und die Zahl kommt aus den Daten, nie aus dem Text. */}
+    <p class="mt-3 text-sm text-fg-muted">
+      Access routes are copied verbatim from the source, never constructed. Calling them
+      to see whether they still resolve is a separate step, and it has barely begun:{' '}
+      <strong class="font-normal text-fg">{META.zaehler.aufgeloest_bestaetigt.toLocaleString('en-US')} of {META.zaehler.kernbestand.toLocaleString('en-US')}</strong>{' '}
+      entries carry a confirmed route so far. Every entry states its own verification
+      state — an unchecked route says so rather than implying it works.
     </p>
     <p class="mt-3 text-sm text-fg-muted">
       The register grows forward from when harvesting began for each source; it does not
@@ -112,10 +130,35 @@ const rejectionLabel = (grund: string) => rejectionReasonLabels[grund] ?? grund
     </p>
   </header>
 
+  <!-- Neufassung des Registerzwecks (docs/design/2026-07-27-register-neufassung.md):
+       die Ausmusterung wird datiert benannt, nicht stillschweigend vollzogen —
+       Aktualitäts-Regel, „überholte Strukturen sichtbar und datiert archiviert". -->
+  <aside class="mb-8 rounded-xl border border-line bg-panel p-4 text-sm text-fg-muted">
+    <p>
+      <span class="font-mono text-xs uppercase tracking-wider text-fg-faint">2026-07-27 · scope changed</span><br />
+      This register was rebuilt as a curated collection. An earlier version aimed at the
+      largest possible record and had grown to {META.zaehler.eintraege.toLocaleString('en-US')} entries,
+      most of them mass registrations of single observations — one identifier per
+      specimen, per sequence, per experimental shot. Those were retired: a partial copy
+      of a large catalogue has no value the catalogue does not already have. Every
+      retirement is recorded with its reason in the{' '}
+      <a href="https://github.com/frankbueltge/dataset-hub/blob/main/register/ablehnungen.jsonl" rel="noopener noreferrer" target="_blank" class="underline decoration-line underline-offset-2 hover:text-fg">rejection register ↗</a>.
+    </p>
+    <p class="mt-2">
+      The full stock stays queryable through the snapshot; this page shows the curated
+      selection only.{' '}
+      {META.zaehler.kernbestand_grenzfaelle_offen > 0 && (
+        <>{META.zaehler.kernbestand_grenzfaelle_offen.toLocaleString('en-US')} further
+        entries are borderline cases awaiting a judgement and are not shown — an open
+        backlog, not a verdict.</>
+      )}
+    </p>
+  </aside>
+
   <!-- stats -->
   <dl class="mb-10 grid grid-cols-2 gap-3 sm:grid-cols-4">
     {[
-      { n: total, l: 'entries' },
+      { n: total, l: 'curated entries' },
       { n: sourcesCount, l: 'sources' },
       { n: confirmedCount, l: 'access confirmed' },
       { n: uncheckedCount, l: 'entries unverified' },
