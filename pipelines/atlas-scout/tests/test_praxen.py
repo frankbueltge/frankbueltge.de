@@ -80,3 +80,25 @@ def test_json_ist_vollstaendig_und_lesbar(wurzel: Path):
     # Herkunft muss am Korn hängen: WER hat wann zitiert.
     assert korn["praxen"] == ["atelier", "field"]
     assert korn["juengste_nennung"] and korn["fundstellen"][0]["datei"]
+
+
+def test_provenienzmaterial_zaehlt_nicht_als_zitat(tmp_path: Path):
+    """Ein Auflösungsprotokoll ist ein UNTERSUCHTES Objekt, keine Quelle.
+
+    Gemessen am 2026-07-28: 200 der 332 Saatkörner kamen aus einer einzigen Datei —
+    `works/…/provenance/register-records/aufloesungen.jsonl`, den GBIF-Downloads, die
+    ein Werk am Dataset Register gemessen hat. Ungefiltert hätten sie den Katalog mit
+    Biodiversitäts-Downloads geflutet: genau die Masse, für die das Register am Vortag
+    zurückgebaut wurde.
+    """
+    _repo(tmp_path, "field-research", {
+        "journal/2026-07-01.md": "Gelesen: https://doi.org/10.1215/2834703X-11700255",
+        "works/w/provenance/register-records/aufloesungen.jsonl":
+            '{"quell_id": "10.15468/dl.u9d3ap", "http_status": 403}',
+        "memory/rohdaten/messung.json": '{"doi": "10.9999/gemessen-nicht-zitiert"}',
+    })
+    saat = sammle(tmp_path, {"field": "field-research"})
+    kennungen = {k.kennung for k in saat.koerner}
+    assert "10.1215/2834703x-11700255" in kennungen, "echtes Zitat bleibt"
+    assert "10.15468/dl.u9d3ap" not in kennungen, "Provenienzprotokoll fällt weg"
+    assert "10.9999/gemessen-nicht-zitiert" not in kennungen, "Rohdaten fallen weg"

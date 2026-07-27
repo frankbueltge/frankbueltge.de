@@ -84,6 +84,32 @@ def _ist_pruefstueck(relativ: Path) -> bool:
         return True
     return teile[-1].startswith("test_") or teile[-1].startswith("test.")
 
+
+# Verzeichnisse, in denen Kennungen als UNTERSUCHTES MATERIAL liegen, nicht als Quelle.
+PROVENIENZ_ORDNER = frozenset({"provenance", "provenienz", "rohdaten", "raw", "messungen"})
+
+
+def _ist_rohmaterial(relativ: Path) -> bool:
+    """Gemessenes Material zählt nicht als Zitat.
+
+    Der Fall, an dem das auffiel (2026-07-28): `field-research/works/
+    2026-07-26-one-line-for-ten-thousand/provenance/register-records/aufloesungen.jsonl`
+    enthält 1.070 Auflösungsprotokolle — GBIF-Occurrence-Downloads mit HTTP 403, die das
+    Werk am Dataset Register GEMESSEN hat. **200 der 332 Saatkörner kamen aus dieser
+    einen Datei.** Ungefiltert hätten sie den Paper-Katalog mit
+    Biodiversitäts-Downloads geflutet: exakt die Sorte Masse, für die das Register am
+    Vortag zurückgebaut wurde.
+
+    Der Unterschied ist der Punkt: Ein Zitat ist eine Quelle, auf die sich eine Praxis
+    STÜTZT. Ein Auflösungsprotokoll ist ein Objekt, das sie UNTERSUCHT hat. Beide sehen
+    im Dateisystem gleich aus — eine DOI ist eine DOI —, und genau deshalb muss die
+    Unterscheidung über den Ort laufen, an dem sie liegt.
+
+    Gemessen: ohne Filter 332 Körner, mit Filter 132. Die 200 stammen ausschließlich aus
+    Provenienz-Material; kein einziges Korn verliert dadurch seine letzte Fundstelle.
+    """
+    return bool(PROVENIENZ_ORDNER & {t.lower() for t in relativ.parts[:-1]})
+
 # DOI: das Präfix ist normiert (10.x/…), der Suffix praktisch beliebig — deshalb bricht
 # das Muster an Zeichen ab, die in Prosa und JSON den Bezeichner beenden, nicht an einer
 # Zeichenklasse für „gültige DOI-Zeichen" (die gibt es nicht).
@@ -188,7 +214,7 @@ def _lies_repo(praxis: str, repo_name: str, wurzel: Path) -> tuple[dict, Ausfall
         relativ_pfad = pfad.relative_to(repo)
         if UEBERSPRUNGENE_ORDNER & set(relativ_pfad.parts):
             continue
-        if _ist_pruefstueck(relativ_pfad):
+        if _ist_pruefstueck(relativ_pfad) or _ist_rohmaterial(relativ_pfad):
             continue
         try:
             roh = pfad.read_text(encoding="utf-8", errors="ignore")
