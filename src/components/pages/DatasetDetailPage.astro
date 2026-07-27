@@ -22,6 +22,21 @@ interface Props {
 const { entry } = Astro.props
 const canonical = `${SITE.url}/datasets/${entry.i}`
 
+interface Version {
+  i: string
+  t: string
+  j: number | null
+  q: string
+  /** hat eine eigene Unterseite (= im Kernbestand)? Nur dann wird verlinkt. */
+  s: boolean
+}
+interface Relation {
+  typ: string
+  ziel: string
+  schema: string
+  /** gesetzt, wenn das Ziel selbst im Register liegt — der interne Verweis */
+  i?: string
+}
 interface EntryDetail {
   zugang_url?: string
   quell_id?: string
@@ -29,9 +44,27 @@ interface EntryDetail {
   urheber?: { name: string; orcid?: string }[]
   lizenz_roh?: Record<string, unknown>[]
   raeumlichkeit?: unknown[]
+  fassungen?: Version[]
+  beziehungen?: Relation[]
+  beziehungen_gesamt?: number
 }
 const detail = ((details as Record<string, EntryDetail>)[entry.i] ?? {}) as EntryDetail
 const creators = detail.urheber ?? []
+const versions = detail.fassungen ?? []
+const relations = detail.beziehungen ?? []
+// Interne Verweise sind der Teil, den nur dieses Register hat: das Ziel liegt selbst
+// im Bestand. Sie stehen deshalb zuerst und werden als Verweis gezeigt, nicht als DOI.
+const internalRelations = relations.filter((r) => r.i)
+const externalRelations = relations.filter((r) => !r.i)
+const shownRelations = relations.length
+const totalRelations = detail.beziehungen_gesamt ?? shownRelations
+
+/** DataCite-Relationstypen sind CamelCase-Kennungen („IsSupplementTo"). Für die Anzeige
+ *  aufgetrennt und kleingeschrieben — der Wortlaut der Quelle bleibt erhalten, nur die
+ *  Schreibweise wird lesbar. */
+function relationLabel(typ: string): string {
+  return typ.replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase()
+}
 // Zugriffsweg und Quell-ID stehen in details.json statt im Suchindex — sie werden nur
 // hier gebraucht und würden den Browser-Download sonst unnötig vergrößern.
 const zugangUrl = detail.zugang_url ?? ''
@@ -110,6 +143,16 @@ if (entry.j) jsonLd.datePublished = String(entry.j)
 
     <dt class="text-fg-faint">Source ID</dt>
     <dd class="break-all font-mono text-xs text-fg">{quellId}</dd>
+
+    {/* Warum hat dieser Eintrag überhaupt eine Seite? Seit der Neufassung
+        (docs/design/2026-07-27-register-neufassung.md, §4) bekommt nur der
+        Kernbestand Unterseiten — die Zugehörigkeit wird begründet, nicht behauptet. */}
+    <dt class="text-fg-faint">In collection</dt>
+    <dd class="text-fg">
+      {entry.k === 'urteil'
+        ? 'selected by review — a borderline case decided on the record'
+        : 'selected by rule — the title names a subject this collection covers'}
+    </dd>
   </dl>
 
   <p class="mt-8">
@@ -125,6 +168,70 @@ if (entry.j) jsonLd.datePublished = String(entry.j)
   <p class="mt-1.5 text-xs text-fg-faint">
     The access route above is copied verbatim from the source — never constructed or guessed.
   </p>
+
+  {/* Fassungen und Beziehungen sind das, was ein Datensatzblatt der Quelle NICHT zeigt:
+      dort steht immer genau ein Datensatz. Das Register kennt die Gruppierung (Dedup
+      R1–R4) und die geernteten Beziehungen — und weiß, welche davon auf Einträge
+      zeigen, die es selbst führt. */}
+  {versions.length > 0 && (
+    <section class="mt-10 border-t border-line pt-6">
+      <h2 class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">
+        Other versions of this work
+      </h2>
+      <p class="mt-2 text-xs text-fg-faint">
+        Grouped by this register, not stated as a group by the source.
+      </p>
+      <ul class="mt-3 space-y-1.5 text-sm">
+        {versions.map((v) => (
+          <li class="flex gap-2">
+            <span class="shrink-0 font-mono text-xs tabular-nums text-fg-faint">{v.j ?? '—'}</span>
+            {v.s ? (
+              <a href={`/datasets/${v.i}`} class="text-fg-muted underline decoration-line underline-offset-2 hover:text-fg">{v.t}</a>
+            ) : (
+              /* Kein Verweis ins Leere: diese Fassung ist im Bestand, aber nicht im
+                 Kernbestand und hat deshalb keine eigene Seite. Verschweigen wäre
+                 falsch — das Werk hätte sonst weniger Fassungen, als es hat. */
+              <span class="text-fg-muted">{v.t} <span class="text-fg-faint">— in the register, no page here</span></span>
+            )}
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+
+  {relations.length > 0 && (
+    <section class="mt-10 border-t border-line pt-6">
+      <h2 class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">
+        Related records
+      </h2>
+      <p class="mt-2 text-xs text-fg-faint">
+        Relations as the source states them. {internalRelations.length > 0 && (
+          <>{internalRelations.length === 1
+            ? 'One of them points'
+            : `${internalRelations.length} of them point`} to a record this register holds itself.</>
+        )}
+        {totalRelations > shownRelations && (
+          <> Showing {shownRelations} of {totalRelations.toLocaleString('en-US')}.</>
+        )}
+      </p>
+      <ul class="mt-3 space-y-1.5 text-sm">
+        {internalRelations.map((r) => (
+          <li class="flex flex-wrap gap-x-2">
+            <span class="shrink-0 font-mono text-xs text-fg-faint">{relationLabel(r.typ)}</span>
+            <a href={`/datasets/${r.i}`} class="break-all text-fg-muted underline decoration-line underline-offset-2 hover:text-fg">{r.ziel}</a>
+          </li>
+        ))}
+        {externalRelations.map((r) => (
+          <li class="flex flex-wrap gap-x-2">
+            <span class="shrink-0 font-mono text-xs text-fg-faint">{relationLabel(r.typ)}</span>
+            {/* Aussenverweise werden NICHT zu Links konstruiert — der Bezeichner steht
+                wörtlich da, so wie die Quelle ihn nennt (Kanon-Regel). */}
+            <span class="break-all text-fg-muted">{r.ziel} <span class="text-fg-faint">({r.schema})</span></span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
 
   <section class="mt-10 border-t border-line pt-6">
     <h2 class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">Suggested citation</h2>

@@ -9,7 +9,14 @@
 //
 // Feldkürzel in eintraege.json (dataset-hub/oberflaeche/generiere_index.py):
 // i=id, w=werk_id, q=quelle, p=quell_id, g=granularität, t=titel, h=herausgeber,
-// j=jahr, l=lizenz-id, u=zugriffs-url (wörtlich), v=prüfstand, s=http-status, z=status.
+// j=jahr, l=lizenz-id, u=zugriffs-url (wörtlich), v=prüfstand, s=http-status, z=status,
+// k=herkunft des Kernbestand-Merkmals.
+//
+// Seit der Neufassung des Registerzwecks (docs/design/2026-07-27-register-neufassung.md,
+// §4) enthält eintraege.json NUR den Kernbestand — die kuratierte Auswahl, die die
+// Themen der Ökologie trägt. Der übrige Bestand ist nicht verschwunden: er bleibt über
+// den Snapshot abfragbar, den die Praxen laden, hat aber keine Seite auf dieser Domain.
+// META.zaehler führt beide Größen, damit die Seite den Ausschnitt benennen kann.
 //
 // Das aktuelle Export-Schema führt kein Urheber- oder Beschreibungsfeld (nur
 // Herausgeber) — Detailseiten zeigen deshalb keine "Urheber"-Zeile und kein
@@ -20,6 +27,11 @@ import metaRaw from '@/data/datasets/meta.json'
 
 export type Pruefstand = 'none' | 'versucht' | 'landing' | 'download'
 export type EintragStatus = 'ungeprueft' | 'geprueft' | 'markiert' | 'zurueckgezogen'
+
+/** Woher das Kernbestand-Merkmal kommt: 'regel' = ein Begriff im Titel entschied
+ *  deterministisch, 'urteil' = die Urteilsroutine hat den Grenzfall entschieden.
+ *  Die Einzelseite sagt das, statt die Zugehörigkeit unbegründet zu behaupten. */
+export type KernbestandHerkunft = 'regel' | 'urteil'
 
 /** Schlanker Suchindex — genau die Felder, die Suche, Filter und Ergebnisliste
  *  brauchen. Zugriffs-URL, Quell-ID und Werk-Zugehörigkeit stehen bewusst NICHT hier:
@@ -36,6 +48,7 @@ export interface DatasetEntry {
   v: Pruefstand
   s: number | null
   z: EintragStatus
+  k: KernbestandHerkunft
 }
 
 export const ENTRIES = eintraegeRaw as unknown as DatasetEntry[]
@@ -53,12 +66,21 @@ export interface DatasetMeta {
   schema_version: string
   gebaut_am: string
   zaehler: {
+    /** der GANZE Bestand (Snapshot der Praxen) — nicht die Zahl der Seiten hier */
     eintraege: number
     werke: number
     fundstellen: number
     abgelehnt_gesamt: number
     aufgeloest_versucht: number
     aufgeloest_bestaetigt: number
+    /** die kuratierte Auswahl, die diese Oberfläche zeigt */
+    kernbestand: number
+    kernbestand_regel: number
+    kernbestand_urteil: number
+    /** Grenzfälle, die noch auf ein Urteil warten — offener Arbeitsvorrat, nicht
+     *  „verworfen". Sichtbar gemacht, damit ein unbearbeiteter Stapel nicht wie
+     *  ein leerer aussieht. */
+    kernbestand_grenzfaelle_offen: number
   }
   mehrfassungs_werke: number
   quellfenster: SourceWindow[]
