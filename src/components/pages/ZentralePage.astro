@@ -157,6 +157,11 @@
   // ausschließlich über el()/Text-Kinder ins DOM (nie innerHTML) — auch Commit-Messages und
   // Issue-Excerpts sind Kollektiv-Text, keine vertrauenswürdige Auszeichnung.
   const TOKEN_KEY = 'zentraleToken'
+  // Zeitstempel der letzten schreibenden Aktion (Antwort, Ack, PR mergen/schließen). Der
+  // Status-Endpunkt cacht drei Minuten; ohne diese Marke zeigt ein Reload direkt nach dem
+  // Abarbeiten die erledigte Sache wieder als offen an. localStorage, nicht sessionStorage —
+  // die Marke muss auch in einem frisch geöffneten Tab gelten. Siehe cacheIsUsable().
+  const MUTATED_KEY = 'zentraleMutatedAt'
 
   interface ZxCollective {
     repo: string
@@ -387,6 +392,23 @@
     }
   }
 
+  /** Nach jeder erfolgreichen schreibenden Aktion aufzurufen. */
+  function markMutation(): void {
+    try {
+      localStorage.setItem(MUTATED_KEY, String(Date.now()))
+    } catch {
+      /* private mode — dann bleibt es beim Cache-Verhalten; „Aktualisieren“ hilft weiterhin */
+    }
+  }
+
+  function lastMutation(): string | null {
+    try {
+      return localStorage.getItem(MUTATED_KEY)
+    } catch {
+      return null
+    }
+  }
+
   function showGate(message?: string): void {
     if (loadingEl) loadingEl.hidden = true
     if (notConnected) notConnected.hidden = true
@@ -608,6 +630,7 @@
       try {
         const result = await postAntwort(payload)
         if (result.ok) {
+          markMutation()
           if (decision === 'enabled') {
             const p = el('p', { class: 'text-sm text-fg' }, '✓ enabled — committet')
             const url = commitUrlOf(result.commit)
@@ -737,6 +760,7 @@
       try {
         const result = await postSitePr(payload)
         if (result.ok) {
+          markMutation()
           const text = kind === 'merge' ? '✓ gemergt — Deploy läuft' : '✓ abgelehnt (geschlossen)'
           const p = el('p', { class: 'text-sm text-fg' }, text)
           if (result.warning) p.append(el('span', { class: 'block text-xs text-amber-500' }, result.warning))
@@ -975,7 +999,16 @@
       refreshBtn.textContent = 'Aktualisiert …'
     }
     try {
-      const res = await fetch(`/api/zentrale/status${refresh ? '?refresh=1' : ''}`, {
+      // Ohne erzwungenen Abruf wird der Zeitstempel der letzten schreibenden Aktion
+      // mitgeschickt: Der Server verwirft damit einen Cache-Eintrag, der älter ist als sie.
+      const params = new URLSearchParams()
+      if (refresh) params.set('refresh', '1')
+      else {
+        const since = lastMutation()
+        if (since) params.set('since', since)
+      }
+      const query = params.toString()
+      const res = await fetch(`/api/zentrale/status${query ? `?${query}` : ''}`, {
         headers: { 'X-Zentrale-Auth': token },
       })
       if (res.status === 401) {
