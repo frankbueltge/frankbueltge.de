@@ -1,9 +1,11 @@
 ---
+// Maßgebliche Fassung (deutsch) — Impressumspflicht nach § 5 DDG. Die englische
+// Übersetzung liegt unter /imprint.
 import Page from '@/layouts/Page.astro'
 import LegalPageView from '@/components/pages/LegalPage.astro'
 import { impressum } from '@/data/legal'
-const page = impressum.en
+const page = impressum.de
 ---
 <Page title={`${page.metaTitle} | Frank Bültge`} description={page.metaTitle}>
-  <LegalPageView page={page} />
+  <LegalPageView page={page} andereFassung={{ href: '/imprint', label: 'English version →' }} />
 </Page>
