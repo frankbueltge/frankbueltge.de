@@ -1,6 +1,13 @@
 ---
 import type { Locale } from '@/lib/site'
 import worksData from '@/data/atlas/werke.json'
+import {
+  FAMILIE,
+  FAMILIE_LABEL_DE,
+  FAMILIE_LABEL_EN,
+  THEMEN_LABELS_DE,
+  THEMEN_LABELS_EN,
+} from '@/config/themen'
 
 interface Props {
   locale: Locale
@@ -30,47 +37,12 @@ const de = locale === 'de'
 // Felder 8–13 sind die Erweiterung vom 2026-07-25: Datenkunst, die nicht von Macht
 // handelt. Sie erscheinen in der Filterleiste erst, sobald sie belegt sind (clusterKeys
 // wird aus den Daten abgeleitet), damit die Seite keine leeren Felder behauptet.
-const CLUSTER: Record<number, string> = de
-  ? {
-      1: 'Material- & planetare KI-Kosten',
-      2: 'KI im Krieg / Kill Cloud',
-      3: 'Counter-Forensics / OSINT',
-      4: 'Provenance / Authentizität',
-      5: 'Dekolonial / more-than-human',
-      6: 'Data Justice / Data-Feminismus',
-      7: 'KI-Selbstverzehr / Quanten',
-      8: 'Wahrnehmung & Maßstab',
-      9: 'Zeit & Archiv',
-      10: 'Fehler & Rauschen',
-      11: 'Körper & Intimität',
-      12: 'Sprache & Generativität',
-      13: 'Material & Sinne',
-    }
-  : {
-      1: 'Material & planetary AI cost',
-      2: 'AI in war / kill cloud',
-      3: 'Counter-forensics / OSINT',
-      4: 'Provenance / authenticity',
-      5: 'Decolonial / more-than-human',
-      6: 'Data justice / data feminism',
-      7: 'AI self-consumption / quantum',
-      8: 'Perception & scale',
-      9: 'Time & archive',
-      10: 'Error & noise',
-      11: 'Body & intimacy',
-      12: 'Language & generativity',
-      13: 'Material & senses',
-    }
-
-// Drei Familien, damit die Karte bei dreizehn Feldern lesbar bleibt.
-const FAMILIE: Record<number, string> = {
-  1: 'macht', 2: 'macht', 3: 'macht', 4: 'macht', 5: 'macht', 6: 'macht', 7: 'macht',
-  8: 'erkenntnis', 9: 'erkenntnis', 10: 'erkenntnis',
-  11: 'ausdruck', 12: 'ausdruck', 13: 'ausdruck',
-}
-const FAMILIE_LABEL: Record<string, string> = de
-  ? { macht: 'Macht', erkenntnis: 'Erkenntnis', ausdruck: 'Ausdruck' }
-  : { macht: 'power', erkenntnis: 'knowing', ausdruck: 'expression' }
+//
+// Die Labels standen bis 2026-07-27 hier inline. Seit der Paper-Katalog dieselben Felder
+// benennt, liegen sie in src/config/themen.ts — eine Kopie wäre die erste, die still
+// veraltet, und genau daran scheiterte das alte Relevanzkriterium des Registers.
+const CLUSTER: Record<number, string> = de ? THEMEN_LABELS_DE : THEMEN_LABELS_EN
+const FAMILIE_LABEL: Record<string, string> = de ? FAMILIE_LABEL_DE : FAMILIE_LABEL_EN
 // Der Atlas begann als Gegenwartskarte — vor 2015 lag nichts darin. Die Netzkunst der
 // Nullerjahre ist aber nicht Vorgeschichte, sondern die Ebene, auf der die heutigen
 // Arbeiten stehen (Asendorf, Levin, Polli, ted davis). Sie wird deshalb als eigene

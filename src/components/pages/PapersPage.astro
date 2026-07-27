@@ -1,0 +1,161 @@
+---
+// /papers — Paper-Katalog (wording-kanon.md "Catalogues": ab 2026-07-27 der dritte
+// Nachschlagewerk-Eintrag neben Atlas und Dataset Register).
+//
+// Frank, 2026-07-27: „datasets für das register und einen weiteren katalog für die
+// sammlung von papers". Gebaut aus dem, was die Praxen tatsächlich zitieren — siehe
+// src/lib/papers.ts für Herkunft und Abgrenzung zu Ulysses' Theorie-Atlas.
+//
+// Rendering: vollständig serverseitig. 134 Einträge sind ein paar hundert KB Markup —
+// der Vorgänger brauchte eine Client-Suche, weil er 16.516 führte. Das ist kein
+// technischer Fortschritt, sondern die Folge davon, dass jeder Eintrag begründet ist.
+//
+// Zahlen NUR aus den Daten (Kanon-Regel) — kein Wert steht im Fließtext.
+import { PAPERS, authorLine, grundLabel, praxisLabel, pruefLabel } from '@/lib/papers'
+import { THEMEN_LABELS } from '@/config/themen'
+
+const total = PAPERS.length
+const mitEigenerBegruendung = PAPERS.filter((p) => p.relevanz_herkunft === 'praxis').length
+const vonMehreren = PAPERS.filter((p) => p.zitiert_von.length > 1).length
+const ausScout = PAPERS.filter((p) => p.weg === 'scout').length
+const ausUrteil = PAPERS.filter((p) => p.relevanz_herkunft === 'urteil').length
+
+// Jüngstes zuerst: was gerade gebraucht wird, steht oben. Einträge ohne Datum ans Ende,
+// statt sie mit einem erfundenen Datum einzureihen.
+const sortiert = [...PAPERS].sort((a, b) => {
+  const av = a.zuletzt_gebraucht ?? ''
+  const bv = b.zuletzt_gebraucht ?? ''
+  if (av !== bv) return bv.localeCompare(av)
+  return (b.jahr ?? 0) - (a.jahr ?? 0)
+})
+
+// Praxis-Facette aus den Daten abgeleitet — eine Praxis erscheint nur, wenn sie
+// wirklich zitiert (Atlas-Muster: keine Zustände behaupten, die nicht vorkommen).
+const praxisZaehler = new Map<string, number>()
+for (const p of PAPERS) for (const w of p.zitiert_von) {
+  praxisZaehler.set(w, (praxisZaehler.get(w) ?? 0) + 1)
+}
+const praxisFacette = [...praxisZaehler.entries()].sort((a, b) => b[1] - a[1])
+---
+
+<main id="main" class="mx-auto w-full max-w-4xl px-4 py-10 sm:py-14">
+  <header class="mb-8 max-w-3xl">
+    <p class="mb-2 font-mono text-xs uppercase tracking-widest text-fg-faint">Papers</p>
+    <h1 class="text-3xl font-semibold tracking-tight sm:text-4xl">Paper Catalogue</h1>
+    <p class="mt-4 text-fg-muted">
+      What this ecology's three research practices actually read. Every entry is here
+      because a practice reached for it in its own work — the catalogue starts from use,
+      not from a search of everything that exists.
+    </p>
+    <p class="mt-3 text-fg-muted">
+      Each entry says who cites it and when it was last picked up, and each one shows
+      where its reason came from. A sentence written by a practice is reproduced verbatim.
+      A sentence written by a model names the model, the date and what it was reading —
+      it is a proposal to the practice, never a substitute for its own reading. Where
+      nobody has written one at all, the entry carries the plain record of its use.
+    </p>
+    <p class="mt-3 text-fg-muted">
+      Nothing here is marked as read over until a person or a practice says so. Every
+      entry can be unfolded to show the file it was found in, the rule under which it was
+      admitted, and whether its access route answered when asked.
+    </p>
+  </header>
+
+  <!-- Kennzahlen: gezählt, nie behauptet. -->
+  <section class="mb-10 grid grid-cols-2 gap-3 sm:grid-cols-4">
+    {[
+      { wert: total, label: 'entries' },
+      { wert: mitEigenerBegruendung, label: 'with a written reason' },
+      { wert: vonMehreren, label: 'cited by more than one' },
+      { wert: ausUrteil, label: 'reason written by a model' },
+    ].map((k) => (
+      <div class="rounded-lg border border-line bg-panel p-4">
+        <div class="font-mono text-2xl font-semibold tabular-nums text-fg">{k.wert}</div>
+        <div class="mt-1 font-mono text-[10px] uppercase leading-tight tracking-wider text-fg-faint">
+          {k.label}
+        </div>
+      </div>
+    ))}
+  </section>
+
+  {praxisFacette.length > 0 && (
+    <p class="mb-8 font-mono text-xs text-fg-faint">
+      cited by —
+      {praxisFacette.map(([p, n], i) => (
+        <span>{i > 0 ? ' · ' : ' '}{praxisLabel(p)} <span class="tabular-nums">{n}</span></span>
+      ))}
+    </p>
+  )}
+
+  <ol class="space-y-5">
+    {sortiert.map((p) => (
+      <li class="rounded-xl border border-line bg-panel p-5">
+        <div class="flex items-start justify-between gap-3">
+          <h2 class="text-base font-semibold leading-snug text-fg">
+            <a href={p.url} rel="noopener" class="hover:underline decoration-line underline-offset-4">
+              {p.titel}
+            </a>
+          </h2>
+          {p.verify_status === 'toVerify' && (
+            <span
+              class="shrink-0 font-mono text-xs text-fg-faint"
+              title="the use is documented; nobody has written down why it matters yet">?</span>
+          )}
+        </div>
+
+        <p class="mt-1 font-mono text-xs text-fg-faint">
+          {authorLine(p.urheber)}{p.jahr ? ` · ${p.jahr}` : ''}{p.ort ? ` · ${p.ort}` : ''}
+        </p>
+
+        <p class="mt-3 text-sm leading-relaxed text-fg-muted">{p.relevanz}</p>
+
+        <div class="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[11px] text-fg-faint">
+          <a href={p.url} rel="noopener" class="hover:text-fg">{p.kennung}</a>
+          {/* Preprint neben Veröffentlichung: beide Kennungen bleiben auffindbar. */}
+          {p.weitere_kennungen?.map((k) => <span>also {k}</span>)}
+          {p.frei_zugaenglich && <span>open access</span>}
+          {p.zitiert_von.length > 0 && (
+            <span>cited by {p.zitiert_von.map(praxisLabel).join(', ')}</span>
+          )}
+          {p.zuletzt_gebraucht && <span>last used {p.zuletzt_gebraucht}</span>}
+          {p.felder.map((f) => (
+            <span class="rounded border border-line px-1.5 py-0.5">
+              {THEMEN_LABELS[f] ?? `field ${f}`}
+            </span>
+          ))}
+        </div>
+
+        {/* Der Beleg: warum der Eintrag hier steht, wo das nachzulesen ist, und ob die
+            Adresse geprüft wurde. Frank, 2026-07-28: „alles muss geprüft und annotiert
+            werden, woher was kommt und warum es aufgenommen wurde." Das gehört sichtbar
+            an den Eintrag, nicht nur ins JSON — sonst ist es keine Rechenschaft. */}
+        <details class="mt-3 border-t border-line pt-2">
+          <summary class="cursor-pointer font-mono text-[11px] text-fg-faint hover:text-fg">
+            admitted because {grundLabel(p.aufnahmegrund)} · {pruefLabel(p)}
+          </summary>
+          <ul class="mt-2 space-y-1 font-mono text-[11px] text-fg-faint">
+            {p.fundstellen?.map((f) => <li>found in {f}</li>)}
+            {p.pruef_vermerk && <li>note: {p.pruef_vermerk}</li>}
+            <li>
+              route: {p.weg === 'scout' ? 'scout enrichment' : 'from the practices'} ·
+              reason for the sentence above: {
+                p.relevanz_herkunft === 'praxis'
+                  ? 'written by the practice, reproduced verbatim'
+                  : p.relevanz_herkunft === 'urteil'
+                    ? `written by ${p.urteil?.modell ?? 'a model'} on ${p.urteil?.am ?? 'an unrecorded date'}, from the ${p.urteil?.grundlage ?? 'source'} — a proposal to the practice, not a substitute for its reading`
+                    : 'record of use — nobody has written the reason yet'
+              }
+            </li>
+          </ul>
+        </details>
+      </li>
+    ))}
+  </ol>
+
+  {total === 0 && (
+    <p class="text-sm leading-relaxed text-fg-muted">
+      Empty — the catalogue is built from the practices' own citations and has not been
+      run yet. Not a source outage.
+    </p>
+  )}
+</main>

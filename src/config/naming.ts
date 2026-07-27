@@ -140,7 +140,11 @@ export const NAMING = {
   catalogues: {
     kicker: 'CATALOGUES',
     title: 'what exists, catalogued by machine',
-    sub: 'Two reference works that grow on their own: they record what is out there, cite where each entry came from, and state what is missing rather than filling the gap.',
+    /* „Two" → „Three" am 2026-07-27: Der Paper-Katalog ist als dritter dazugekommen
+     * (Frank: „datasets für das register und einen weiteren katalog für die sammlung
+     * von papers"). Die Zahl steht ausnahmsweise im Text, weil sie den Satzbau trägt —
+     * sie wandert in die Prüfung von naming.test.ts, damit sie nicht still veraltet. */
+    sub: 'Three reference works that grow on their own: they record what is out there, cite where each entry came from, and state what is missing rather than filling the gap.',
     items: [
       {
         name: 'Atlas of Data Art',
@@ -158,6 +162,15 @@ export const NAMING = {
         name: 'Dataset Register',
         href: '/datasets',
         description: 'A curated record of datasets this research has actually reached for: every entry carries a verbatim access route, how far that route has been checked, and one sentence saying why it counts here. An entry cannot exist without its reason.',
+      },
+      {
+        /* Neu am 2026-07-27. Der Katalog entsteht aus derselben Suche wie das Register:
+         * Die Praxen zitieren überwiegend Paper — gemessen waren von 89 je zitierten
+         * DOIs null im Datensatz-Register. Ein Katalog nur für Datensätze hätte die
+         * Forschung zur Hälfte bedient. */
+        name: 'Paper Catalogue',
+        href: '/papers',
+        description: 'What the three research practices actually read. Each entry is here because a practice reached for it in its own work, and carries the record of that use: who cites it, when it was last picked up, and — where someone wrote one down — why it matters.',
       },
     ],
   },
