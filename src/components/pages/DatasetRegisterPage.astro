@@ -16,37 +16,38 @@
 // VOLLSTÄNDIGEN Bestand und rendert nur eine Fenster-Seite auf einmal ("load more"),
 // analog zum eigenen app.js des dataset-hub-Repos (SEITE=50 dort, hier PAGE=60).
 import {
-  ENTRIES,
+  LISTE,
   META,
   accessLabel,
   licenceLabel,
-  type DatasetEntry,
+  rowHref,
+  type ListRow,
 } from '@/lib/datasets'
 
-const total = ENTRIES.length
+const total = LISTE.length
 const sourcesCount = META.quellen.length
-const confirmedCount = ENTRIES.filter((e) => e.v === 'landing' || e.v === 'download').length
-const uncheckedCount = ENTRIES.filter((e) => e.z === 'ungeprueft').length
+const confirmedCount = LISTE.filter((e) => e.v === 'landing' || e.v === 'download').length
+const uncheckedCount = LISTE.filter((e) => e.z === 'ungeprueft').length
 
 // Facetten aus den Daten abgeleitet (Atlas-Muster: eine Option erscheint nur, wenn sie
 // belegt ist — die Seite behauptet keine Zustände, die (noch) nicht vorkommen).
-const pruefstandOrder: { key: DatasetEntry['v']; label: string }[] = [
+const pruefstandOrder: { key: ListRow['v']; label: string }[] = [
   { key: 'none', label: 'access unverified' },
   { key: 'versucht', label: 'checked, not confirmed' },
   { key: 'landing', label: 'access confirmed — landing' },
   { key: 'download', label: 'access confirmed — download' },
 ]
-const pruefstandCounts: Partial<Record<DatasetEntry['v'], number>> = {}
-for (const e of ENTRIES) pruefstandCounts[e.v] = (pruefstandCounts[e.v] ?? 0) + 1
+const pruefstandCounts: Partial<Record<ListRow['v'], number>> = {}
+for (const e of LISTE) pruefstandCounts[e.v] = (pruefstandCounts[e.v] ?? 0) + 1
 const pruefstandFacet = pruefstandOrder.filter((p) => (pruefstandCounts[p.key] ?? 0) > 0)
 
 const granOrder = ['dataset', 'file', 'service']
 const granCounts: Record<string, number> = {}
-for (const e of ENTRIES) granCounts[e.g] = (granCounts[e.g] ?? 0) + 1
+for (const e of LISTE) granCounts[e.g] = (granCounts[e.g] ?? 0) + 1
 const granFacet = granOrder.filter((g) => (granCounts[g] ?? 0) > 0)
 
 const licenceCounts = new Map<string, number>()
-for (const e of ENTRIES) licenceCounts.set(e.l, (licenceCounts.get(e.l) ?? 0) + 1)
+for (const e of LISTE) licenceCounts.set(e.l, (licenceCounts.get(e.l) ?? 0) + 1)
 const licenceFacet = [...licenceCounts.entries()].sort(([a], [b]) => {
   if (a === '') return -1
   if (b === '') return 1
@@ -54,7 +55,7 @@ const licenceFacet = [...licenceCounts.entries()].sort(([a], [b]) => {
 })
 
 const yearCounts = new Map<string, number>()
-for (const e of ENTRIES) {
+for (const e of LISTE) {
   const k = e.j ? String(e.j) : ''
   yearCounts.set(k, (yearCounts.get(k) ?? 0) + 1)
 }
@@ -66,7 +67,7 @@ const yearFacet = [...yearCounts.entries()].sort(([a], [b]) => {
 
 // No-JS-Fallback: erste 60 Einträge, alphabetisch — nicht repräsentativ, nur damit die
 // Seite ohne JavaScript nicht leer ist. Das Client-Script ersetzt diese Zeilen sofort.
-const fallbackRows = [...ENTRIES].sort((a, b) => a.t.localeCompare(b.t)).slice(0, 60)
+const fallbackRows = [...LISTE].sort((a, b) => a.t.localeCompare(b.t)).slice(0, 60)
 
 // ---------- Holdings and gaps (aus meta.json) ----------
 
@@ -158,7 +159,7 @@ const rejectionLabel = (grund: string) => rejectionReasonLabels[grund] ?? grund
   <!-- stats -->
   <dl class="mb-10 grid grid-cols-2 gap-3 sm:grid-cols-4">
     {[
-      { n: total, l: 'curated entries' },
+      { n: total, l: 'works and entries' },
       { n: sourcesCount, l: 'sources' },
       { n: confirmedCount, l: 'access confirmed' },
       { n: uncheckedCount, l: 'entries unverified' },
@@ -246,7 +247,7 @@ const rejectionLabel = (grund: string) => rejectionReasonLabels[grund] ?? grund
         <tbody data-rows>
           {fallbackRows.map((e) => (
             <tr class="border-b border-line/50 align-top">
-              <td class="py-1.5 pr-3"><a href={`/datasets/${e.i}`} class="text-fg hover:underline">{e.t}</a></td>
+              <td class="py-1.5 pr-3"><a href={rowHref(e)} class="text-fg hover:underline">{e.t}</a>{e.w ? <span class="text-fg-faint"> · {e.n} versions</span> : null}</td>
               <td class="py-1.5 pr-3 text-fg-muted">{e.h || 'not stated'}</td>
               <td class="py-1.5 pr-3 tabular-nums text-fg-muted">{e.j ?? '—'}</td>
               <td class="py-1.5 pr-3 text-fg-muted">{e.g}</td>
@@ -394,7 +395,7 @@ const rejectionLabel = (grund: string) => rejectionReasonLabels[grund] ?? grund
 </style>
 
 <script>
-  import { ENTRIES, accessLabel, licenceLabel, type DatasetEntry } from '@/lib/datasets'
+  import { LISTE, accessLabel, licenceLabel, rowHref, type ListRow } from '@/lib/datasets'
 
   const root = document.querySelector<HTMLElement>('[data-datasets]')
   if (root) {
@@ -411,18 +412,18 @@ const rejectionLabel = (grund: string) => rejectionReasonLabels[grund] ?? grund
     const state: Record<string, string> = { v: 'all', g: 'all', l: 'all', j: 'all' }
     let query = ''
     let shown = 0
-    let matches: DatasetEntry[] = []
+    let matches: ListRow[] = []
 
     // Kleingeschriebene Suchsignatur je Eintrag (Titel + Herausgeber), einmalig berechnet —
     // damit jede Tastatureingabe nur noch einen Substring-Test über 13k Strings macht.
-    const withSig = ENTRIES.map((e) => ({ e, sig: `${e.t} ${e.h}`.toLowerCase() }))
+    const withSig = LISTE.map((e) => ({ e, sig: `${e.t} ${e.h}`.toLowerCase() }))
 
     const escapeHtml = (s: unknown): string =>
       String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c] as string)
 
-    const rowHtml = (e: DatasetEntry): string => `
+    const rowHtml = (e: ListRow): string => `
       <tr class="border-b border-line/50 align-top">
-        <td class="py-1.5 pr-3"><a href="/datasets/${escapeHtml(e.i)}" class="text-fg hover:underline">${escapeHtml(e.t)}</a></td>
+        <td class="py-1.5 pr-3"><a href="${escapeHtml(rowHref(e))}" class="text-fg hover:underline">${escapeHtml(e.t)}</a>${e.w ? ` <span class="text-fg-faint">· ${e.n} versions</span>` : ''}</td>
         <td class="py-1.5 pr-3 text-fg-muted">${e.h ? escapeHtml(e.h) : 'not stated'}</td>
         <td class="py-1.5 pr-3 tabular-nums text-fg-muted">${e.j ?? '—'}</td>
         <td class="py-1.5 pr-3 text-fg-muted">${escapeHtml(e.g)}</td>

@@ -24,6 +24,8 @@
 // Snapshot sie (noch) nicht mitbringt.
 import eintraegeRaw from '@/data/datasets/eintraege.json'
 import metaRaw from '@/data/datasets/meta.json'
+import worksRaw from '@/data/datasets/werke.json'
+import listeRaw from '@/data/datasets/liste.json'
 
 export type Pruefstand = 'none' | 'versucht' | 'landing' | 'download'
 export type EintragStatus = 'ungeprueft' | 'geprueft' | 'markiert' | 'zurueckgezogen'
@@ -95,6 +97,72 @@ export interface DatasetMeta {
 }
 
 export const META = metaRaw as unknown as DatasetMeta
+
+/** Eine Fassung innerhalb eines Werks, wie werke.json sie führt. */
+export interface WorkVersion {
+  i: string
+  t: string
+  j: number | null
+  l: string
+  q: string
+  v?: Pruefstand
+  pv: Pruefstand
+  s: number | null
+}
+
+/** Ein Werk mit MEHREREN Fassungen. Werke mit genau einer Fassung stehen bewusst
+ *  nicht in werke.json: eine Werk-Seite wäre dort eine Dublette der Eintragsseite
+ *  und schüfe genau das Problem, das die Werk-Ebene löst (5.127 der 8.579 Werke
+ *  hatten zwei Fassungen — 10.254 paarweise fast identische Seiten). */
+export interface DatasetWork {
+  /** Titel des Vertreters */
+  t: string
+  h: string
+  /** Eintrags-Id des Vertreters */
+  v: string
+  /** woher der Vertreter kommt: 'quelle' = die Fassungen zeigen selbst auf ihn
+   *  (IsPreviousVersionOf/IsVersionOf/IsIdenticalTo), 'juengster' = niemand zeigt,
+   *  also entschied das Jahr. Der Unterschied steht auf der Seite: welche Fassung
+   *  die aktuelle ist, behauptet das Register nicht von sich aus. */
+  vg: 'quelle' | 'juengster'
+  n: number
+  /** Felder, in denen die Fassungen einander widersprechen (Lizenz, Herausgeber) —
+   *  benannt statt geglättet. */
+  abw: string[]
+  f: WorkVersion[]
+}
+
+export const WORKS = worksRaw as unknown as Record<string, DatasetWork>
+
+/** Eine Zeile der Registerliste = eine INDEXIERBARE Seite, nicht ein Eintrag.
+ *  Entweder ein Werk mit mehreren Fassungen (`w: 1`, Adresse /datasets/work/<i>)
+ *  oder ein Eintrag ohne Geschwister (`w: 0`, Adresse /datasets/<i>). Ohne diese
+ *  Unterscheidung stünden 24 Zeilen mit demselben Titel in der Liste, die alle auf
+ *  dieselbe Werk-Seite zeigen. */
+export interface ListRow extends DatasetEntry {
+  /** 1 = Werk-Seite, 0 = Eintragsseite */
+  w: 0 | 1
+  /** Zahl der Fassungen (1 bei Eintragsseiten) */
+  n: number
+  /** Felder, in denen die Fassungen einander widersprechen — oder null */
+  abw: string[] | null
+}
+
+export const LISTE = listeRaw as unknown as ListRow[]
+
+/** Adresse einer Listenzeile — Werk oder Eintrag. Nie andernorts zusammensetzen:
+ *  ein Verweis auf die Fassungsseite eines Mehrfassungs-Werks zeigt auf eine Seite,
+ *  die selbst sagt, dass sie nicht die kanonische ist. */
+export function rowHref(r: Pick<ListRow, 'i' | 'w'>): string {
+  return r.w ? `/datasets/work/${r.i}` : `/datasets/${r.i}`
+}
+
+/** Eintrags-Id → Werk-Id, aber NUR für Werke mit mehreren Fassungen. Damit weiß
+ *  eine Fassungsseite, wohin ihr canonical zeigt; Einträge ohne Geschwister
+ *  bleiben ihre eigene kanonische Adresse. */
+export const WORK_OF_ENTRY: Record<string, string> = Object.fromEntries(
+  Object.entries(WORKS).flatMap(([werkId, w]) => w.f.map((v) => [v.i, werkId])),
+)
 
 /** Ehrliche Zugriffs-Marke — behauptet nie mehr, als tatsächlich geprüft wurde
  *  (SNAPSHOT-API.md "Drei Regeln beim Lesen"). landing/download = per HTTP bestätigt;
