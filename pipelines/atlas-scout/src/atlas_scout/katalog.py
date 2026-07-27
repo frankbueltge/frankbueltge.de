@@ -37,6 +37,7 @@ import httpx
 from .atlas import normiere_titel, slugifiziere
 from .praxen import Saat, Saatkorn
 from .themen import THEMEN
+from .verify import pruefe
 
 OPENALEX = "https://api.openalex.org/works"
 ARXIV = "http://export.arxiv.org/api/query"
@@ -53,6 +54,19 @@ class QuellenAusfall(RuntimeError):
     """Quelle nicht erreichbar oder unbrauchbare Antwort."""
 
 
+# Die zwei Wege, auf denen ein Katalog wächst (Frank, 2026-07-28). Jeder Eintrag trägt
+# seinen Weg, seine Fundstelle und seinen Aufnahmegrund — sonst ist er nicht aufnahmefähig.
+WEG_PRAXIS = "praxis"  # eine Praxis benutzt oder führt den Text
+WEG_SCOUT = "scout"  # der Scout hat ihn in der Nachbarschaft gefunden
+
+# Aufnahmegründe. Sie beantworten „warum steht das hier?" — nicht „warum zählt es?"
+# (das ist `relevanz`). Der Unterschied ist wichtig: Der Grund ist eine Regel, die
+# angewandt wurde, die Relevanz ist ein Urteil über den Inhalt.
+GRUND_ZITIERT = "zitiert"  # im Fließtext einer Praxis zitiert, Fundstelle nachgewiesen
+GRUND_KURATIERT = "kuratiert"  # in der eigenen Leseliste einer Praxis geführt
+GRUND_NACHBARSCHAFT = "nachbarschaft"  # Zitationsumfeld eines Katalogeintrags
+
+
 @dataclass(frozen=True)
 class Katalogeintrag:
     id: str
@@ -60,13 +74,30 @@ class Katalogeintrag:
     urheber: tuple[str, ...]
     jahr: int | None
     ort: str  # Zeitschrift, Verlag, Repositorium — wörtlich aus der Quelle
-    kennung: str  # DOI oder "arXiv:<id>"
+    kennung: str  # DOI, "arXiv:<id>" oder — wenn die Quelle keine führt — die URL
     url: str
     frei_zugaenglich: bool
     felder: tuple[int, ...]
     zusammenfassung: str
+
+    # ── Warum der Eintrag ZÄHLT (Urteil über den Inhalt) ──────────────────────────
     relevanz: str
     relevanz_herkunft: str  # "praxis" (wörtlich übernommen) | "gebrauch" (Beleg)
+
+    # ── Woher er KOMMT und warum er AUFGENOMMEN wurde (Regel, nicht Urteil) ───────
+    weg: str  # WEG_PRAXIS | WEG_SCOUT
+    aufnahmegrund: str  # GRUND_*
+    # Wo genau: „ulysses/journal/2026-07-01.md" bzw. „Nachbarschaft von 10.1038/…".
+    # Ohne mindestens eine Fundstelle ist ein Eintrag nicht belegt.
+    fundstellen: tuple[str, ...]
+
+    # ── Prüfung des Zugriffswegs ──────────────────────────────────────────────────
+    # Bestätigt sind nur 200/203/206. HTTP 202 ist KEINE Bestätigung (die
+    # figshare-Familie antwortet automatisierten Anfragen so — Design-Notiz §9.5).
+    geprueft: bool
+    pruef_status: int | None
+    pruef_vermerk: str | None
+
     zitiert_von: tuple[str, ...]
     zuletzt_gebraucht: str | None
     verify_status: str
@@ -299,6 +330,11 @@ def baue(
             kennung = gefunden.get("doi") or (
                 korn.kennung if korn.art == "doi" else f"arXiv:{korn.kennung}"
             )
+            # Zugriffsweg prüfen, bevor der Eintrag entsteht. Bis 2026-07-28 fehlte das
+            # hier — der Katalog übernahm die Adresse, die OpenAlex nannte, ohne je
+            # anzufragen, ob sie trägt. „Identifier prüfen heißt: HTTP-Antwort geholt"
+            # (Bauregel des Startauftrags), und das galt für den Katalog nicht.
+            befund = pruefe(gefunden["url"], client) if gefunden["url"] else None
             eintraege.append(Katalogeintrag(
                 id=slugifiziere(
                     (gefunden["urheber"] or ["unbekannt"])[0], gefunden["titel"]
@@ -316,6 +352,16 @@ def baue(
                 zusammenfassung=gefunden["zusammenfassung"],
                 relevanz=eigener_satz or _gebrauchsbeleg(korn),
                 relevanz_herkunft="praxis" if eigener_satz else "gebrauch",
+                weg=WEG_PRAXIS,
+                aufnahmegrund=GRUND_ZITIERT,
+                # Die Fundstellen aus dem Saatkorn: Repo und Datei, in denen zitiert
+                # wurde. Sie sind der Beleg — ohne sie wäre „zitiert" eine Behauptung.
+                fundstellen=tuple(
+                    dict.fromkeys(f"{f.repo}/{f.datei}" for f in korn.fundstellen)
+                ),
+                geprueft=bool(befund and befund.aufgeloest),
+                pruef_status=befund.status if befund else None,
+                pruef_vermerk=befund.vermerk if befund else "keine Adresse zu prüfen",
                 zitiert_von=korn.praxen,
                 zuletzt_gebraucht=korn.juengste_nennung,
                 # Wörtlich von einer Praxis begründet = gelesen. Sonst wartet der
@@ -414,6 +460,15 @@ def fuehre_zusammen(eintraege: list[Katalogeintrag]) -> list[Katalogeintrag]:
             zusammenfassung=anfuehrer.zusammenfassung,
             relevanz=anfuehrer.relevanz,
             relevanz_herkunft=anfuehrer.relevanz_herkunft,
+            weg=anfuehrer.weg,
+            aufnahmegrund=anfuehrer.aufnahmegrund,
+            # Alle Fundstellen aller Mitglieder — der Beleg wächst beim Zusammenführen,
+            # er schrumpft nicht.
+            fundstellen=tuple(dict.fromkeys(f for e in mitglieder for f in e.fundstellen)),
+            geprueft=any(e.geprueft for e in mitglieder),
+            pruef_status=next((e.pruef_status for e in mitglieder if e.geprueft),
+                              anfuehrer.pruef_status),
+            pruef_vermerk=anfuehrer.pruef_vermerk if not any(e.geprueft for e in mitglieder) else None,
             zitiert_von=tuple(praxen),
             zuletzt_gebraucht=max(daten) if daten else None,
             verify_status=anfuehrer.verify_status,
@@ -447,6 +502,12 @@ def als_json(eintraege: list[Katalogeintrag]) -> str:
                 "zusammenfassung": e.zusammenfassung,
                 "relevanz": e.relevanz,
                 "relevanz_herkunft": e.relevanz_herkunft,
+                "weg": e.weg,
+                "aufnahmegrund": e.aufnahmegrund,
+                "fundstellen": list(e.fundstellen),
+                "geprueft": e.geprueft,
+                "pruef_status": e.pruef_status,
+                "pruef_vermerk": e.pruef_vermerk,
                 "zitiert_von": list(e.zitiert_von),
                 "zuletzt_gebraucht": e.zuletzt_gebraucht,
                 "verify_status": e.verify_status,
@@ -477,15 +538,28 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--grenze", type=int, default=None, help="nur N Saatkörner (Probe)")
     args = parser.parse_args(argv)
 
+    # ── Weg 1a: kuratierte Sammlungen der Praxen, direkt übernommen ──────────────
+    # Zuerst, weil sie das bestbegründete Material tragen: Einträge mit einem von der
+    # Praxis geschriebenen relevance-Satz. Sie brauchen keine Auflösung — sie sind
+    # bereits vollständig — und sie dürfen bei der Zusammenführung den Ton angeben.
+    from .sammlungen import lies as lies_sammlungen
+
+    gesammelt, sammlungs_ausfaelle = lies_sammlungen(args.repos)
+    print(f"kuratierte Sammlungen: {len(gesammelt)} Einträge")
+    for vermerk in sammlungs_ausfaelle:
+        print(f"   AUSFALL {vermerk}")
+
+    # ── Weg 1b: Zitate im Fließtext der Repos, gegen OpenAlex/arXiv aufgelöst ─────
     saat = sammle(args.repos)
     print(f"Saatgut: {len(saat.koerner)} Körner aus {len(saat.gelesene_repos)} Repos")
     for ausfall in saat.ausfaelle:
         print(f"   AUSFALL {ausfall.praxis}: {ausfall.vermerk}")
 
-    eintraege, ausfaelle = baue(saat, args.wurzel, grenze=args.grenze)
-    roh = len(eintraege)
-    eintraege = fuehre_zusammen(eintraege)
-    print(f"aufgelöst: {roh} · nach Zusammenführung: {len(eintraege)} · nicht aufgelöst: {len(ausfaelle)}")
+    aufgeloest, ausfaelle = baue(saat, args.wurzel, grenze=args.grenze)
+    roh = len(gesammelt) + len(aufgeloest)
+    eintraege = fuehre_zusammen(gesammelt + aufgeloest)
+    print(f"zusammen: {roh} · nach Zusammenführung: {len(eintraege)} · "
+          f"nicht aufgelöst: {len(ausfaelle)}")
     for ausfall in ausfaelle:
         print(f"   – {ausfall.art} {ausfall.kennung[:52]}: {ausfall.vermerk}")
 
