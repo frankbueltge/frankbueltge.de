@@ -178,3 +178,13 @@ def test_abstract_wird_aus_dem_invertierten_index_zurueckgebaut():
     assert _abstract(werk) == "Model collapse is real"
     assert _abstract({}) == ""
     assert _abstract({"abstract_inverted_index": None}) == ""
+
+
+def test_titel_auszeichnung_verhindert_keine_zusammenfuehrung():
+    """OpenAlex liefert Titel teils mit HTML. Unbereinigt hielt die Normalisierung
+    „i gaia i edr3" gegen „gaia edr3" — dieselbe Arbeit stand zweimal im Katalog."""
+    from atlas_scout.katalog import _aus_openalex
+
+    werk = {"title": "A classifier for spurious solutions in <i>Gaia</i> eDR3",
+            "authorships": [], "concepts": []}
+    assert _aus_openalex(werk)["titel"] == "A classifier for spurious solutions in Gaia eDR3"

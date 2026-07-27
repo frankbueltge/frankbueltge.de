@@ -196,8 +196,16 @@ def _abstract(werk: dict) -> str:
     return " ".join(stellen[i] for i in sorted(stellen))
 
 
+# OpenAlex gibt Titel teils mit Auszeichnung heraus („A classifier for spurious
+# astrometric solutions in <i>Gaia</i> eDR3"). Die Marken sind kein Teil des Titels — und
+# sie verhindern die Zusammenführung: Beobachtet am 2026-07-28 standen die Zeitschriften-
+# und die arXiv-Fassung desselben Gaia-Papers doppelt im Katalog, weil die
+# Titelnormalisierung „i gaia i edr3" gegen „gaia edr3" hielt.
+MUSTER_MARKUP = re.compile(r"<[^>]+>")
+
+
 def _aus_openalex(werk: dict) -> dict | None:
-    titel = (werk.get("title") or "").strip()
+    titel = MUSTER_MARKUP.sub("", werk.get("title") or "").strip()
     if not titel:
         return None
     doi = (werk.get("doi") or "").replace("https://doi.org/", "") or None
