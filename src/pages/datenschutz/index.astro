@@ -1,9 +1,12 @@
 ---
+// Maßgebliche Fassung (deutsch). Rechtsgrundlagen nach DSGVO, Verantwortlicher in
+// Deutschland — siehe public/_redirects und CLAUDE.md: „Impressum/Datenschutz bleiben
+// deutsch (Rechtstexte)". Die englische Übersetzung liegt unter /privacy.
 import Page from '@/layouts/Page.astro'
 import LegalPageView from '@/components/pages/LegalPage.astro'
 import { datenschutz } from '@/data/legal'
-const page = datenschutz.en
+const page = datenschutz.de
 ---
 <Page title={`${page.metaTitle} | Frank Bültge`} description={page.metaTitle}>
-  <LegalPageView page={page} />
+  <LegalPageView page={page} andereFassung={{ href: '/privacy', label: 'English version →' }} />
 </Page>
