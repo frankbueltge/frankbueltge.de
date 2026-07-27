@@ -48,6 +48,25 @@ UEBERSPRUNGENE_ORDNER = frozenset(
 )
 
 
+def _stutze_doi(roh: str) -> str:
+    """Schneidet ab, was der Fundort angehängt hat — aber nicht, was zur DOI gehört.
+
+    Zwei Fälle, die sich beißen (beide gemessen am 2026-07-27):
+      - Alte Elsevier-DOIs FÜHREN Klammern: `10.1016/0004-3702(71)90010-5`.
+        Ein Muster, das an `)` abbricht, zerschneidet sie.
+      - Markdown-Links ENDEN auf `)`: `[Titel](https://doi.org/10.1234/foo)`.
+        Ein Muster, das `)` durchlässt, nimmt die schließende Klammer mit.
+
+    Die Balance entscheidet: Eine schließende Klammer gehört nur dazu, wenn vorher eine
+    öffnende steht. Überzählige `)` fallen hinten weg, danach noch die üblichen
+    Satzzeichen. Damit bleiben beide Fälle heil, ohne dass eine Quelle geraten wird.
+    """
+    doi = roh
+    while doi.count(")") > doi.count("("):
+        doi = doi[: doi.rfind(")")]
+    return doi.rstrip(".,;:/")
+
+
 def _ist_pruefstueck(relativ: Path) -> bool:
     """Testdateien zählen nicht als Zitat.
 
@@ -68,7 +87,7 @@ def _ist_pruefstueck(relativ: Path) -> bool:
 # DOI: das Präfix ist normiert (10.x/…), der Suffix praktisch beliebig — deshalb bricht
 # das Muster an Zeichen ab, die in Prosa und JSON den Bezeichner beenden, nicht an einer
 # Zeichenklasse für „gültige DOI-Zeichen" (die gibt es nicht).
-MUSTER_DOI = re.compile(r"10\.\d{4,9}/[^\s\"'\\,\]}<>)]+")
+MUSTER_DOI = re.compile(r"10\.\d{4,9}/[^\s\"'`\\,\]}<>]+")
 MUSTER_ARXIV = re.compile(r"arxiv\.org/abs/([0-9]{4}\.[0-9]{4,5})(?:v\d+)?", re.I)
 
 
@@ -178,7 +197,7 @@ def _lies_repo(praxis: str, repo_name: str, wurzel: Path) -> tuple[dict, Ausfall
 
         gefunden: set[tuple[str, str]] = set()
         for m in MUSTER_DOI.findall(roh):
-            kennung = normiere_doi(m.rstrip(".,;:)"))
+            kennung = normiere_doi(_stutze_doi(m))
             if kennung:
                 gefunden.add(("doi", kennung))
         for m in MUSTER_ARXIV.findall(roh):
