@@ -245,3 +245,105 @@ Kandidaten gegen ein Feld punkten und den Identifier auflösen, bevor er aufnimm
 `punkte_begruendung` ist Pflichtfeld. Das Register hatte kein Feld, gegen das es punkten
 musste. Ein Sieb ohne Begründungspflicht skaliert unbegrenzt; das ist keine Eigenschaft
 der Datenmenge, sondern des Verfahrens.
+
+---
+
+## 13. Die Kataloge, wie sie in der Nacht auf den 28.07. gebaut wurden
+
+Frank hat den Auftrag in drei Schritten präzisiert, und jeder hat etwas verändert:
+
+1. „auch Datensätze oder Paper, die **potentiell relevant** sind" → die Scouts suchen
+   nach außen, nicht nur ab, was schon zitiert ist.
+2. „**alle** Zitate **ALLER** Praxen sollen im Paper-Katalog landen" → Vollständigkeit
+   gegenüber den Praxen, nicht nur gegenüber auflösbaren Kennungen.
+3. „alles muss **geprüft und annotiert** werden, woher was kommt und **warum** es
+   aufgenommen wurde" → Belegpflicht als Pflichtfeld, nicht als gute Absicht.
+
+### Was steht
+
+| | Stand |
+|---|---:|
+| Paper-Katalog (`/papers`, Fläche gebaut, noch nicht live) | **206** |
+| davon mit einem von einer Praxis GESCHRIEBENEN Begründungssatz | 97 |
+| davon von mehr als einer Praxis zitiert | 100 |
+| davon mit per HTTP bestätigtem Zugriffsweg | 92 |
+| **ohne Fundstelle** | **0** |
+| Dataset Register (`/datasets`) | 0 |
+
+Aufnahmegründe: 123 `zitiert` (Repo und Datei als Beleg), 83 `kuratiert`.
+Beitrag je Praxis: meridian 139 · atelier 124 · field 40 · **studio 4**.
+
+### Die beiden Wege
+
+**Weg 1 — von den Praxen.** `sammlungen.py` übernimmt kuratierte Listen direkt
+(`ulysses/atlas/atlas.json`, Meridians Zitationsmanifeste); `praxen.py` + `katalog.py`
+lösen zusätzlich auf, was im Fließtext zitiert wird. Erweitert wird der Katalog dadurch,
+dass die Praxen weiterarbeiten — er liest ihre Repos.
+
+**Weg 2 — Scout-Anreicherung.** `vorschlaege.py` sucht die Zitationsnachbarschaft ab
+(OpenAlex, schlüsselfrei), gedeckelt auf 8 Vorschläge je Saatkorn und 12 Saatkörner je
+Lauf. Ergebnis sind **Kandidaten in `kandidaten/`, keine Einträge** — der Scout findet
+und prüft den Identifier, er urteilt nicht.
+
+### Der Weg zu Datensätzen ist gemessen zu
+
+| Weg | Ergebnis |
+|---|---:|
+| DataCite-Rückverweise (Typ Dataset) auf 20 Paper-DOIs | 1 |
+| OpenAlex: Datensätze, die diese Paper zitieren | 0 |
+| DataCite-Themensuche „glitch error aesthetics" | 0 |
+| DataCite-Themensuche „data physicalisation sonification" | 0 |
+| DataCite-Themensuche „algorithmic bias audit" | 38, Spitzentreffer unpassend |
+
+Kunsttheorie, Medienwissenschaft und Critical AI hinterlegen selten Datensätze mit
+DataCite-Verknüpfung. **Das Register bleibt deshalb bei Null**, bis ein Weg dorthin
+gemessen trägt — es mit Themensuche zu füllen brächte dasselbe Rauschen wie der Bestand,
+der gestern zurückgebaut wurde.
+
+### Fünf Fehler, die erst das Nachmessen gefunden hat
+
+1. **OpenAlex führt unter `10.48550/arxiv.2305.17493` einen fremden Datensatz.** „The
+   Curse of Recursion" wäre als „Dynamic / ME-JEPA v2.0.0-rc1" in den Katalog gegangen,
+   mit korrekt aussehender Kennung. **Für arXiv-Kennungen ist arXiv die Autorität.**
+2. **DOIs tragen mal Verlags-Pfad, mal Klammern, die dazugehören.** 14 von 71 mehrteilig,
+   die Mehrzahl zu Recht (`10.7551/mitpress/…`, `10.1093/mnras/…`). Abschneiden hätte die
+   echten zerstört; es entscheidet eine **Auflösungsleiter**, und die Klammer-Balance
+   trennt Elsevier-DOI von Markdown-Link.
+3. **Feldzuordnung** aus `concepts` allein traf nichts, ohne Wortgrenzen zu viel
+   („care" in „scarce"). Drei Varianten gemessen (79/58/13). Genommen wurden Wortgrenzen
+   — und die Zuordnung ist im Code ausdrücklich **vorläufiger Hinweis**, kein Urteil.
+4. **Katalogeinträge wurden nie per HTTP geprüft.** „Identifier prüfen heißt: HTTP-Antwort
+   geholt" galt für den Katalog nicht. Jetzt schon.
+5. **Der schwerste, weil er der Fehler von gestern war.** `praxen.py` siebte Zitate nach
+   DOI/arXiv — einem formalen Merkmal — und ließ **67 von Ulysses' 94 Atlas-Einträgen**
+   fallen, weil sie nur eine Repositoriums-URL tragen. Ausgerechnet die tragen alle einen
+   handgeschriebenen Begründungssatz. Zweimal am selben Tag dieselbe Verwechslung: einmal
+   Stichwort statt Relevanz, einmal DOI statt Zitat. **Ein formales Merkmal filtert
+   zuverlässig das Beste weg, weil das Beste sich nicht an Formalia hält.**
+
+### Die Unterscheidung, die aus Franks drittem Punkt folgt
+
+**`relevanz` ist ein Urteil über den Inhalt. `aufnahmegrund` ist eine angewandte Regel.**
+Das zurückgebaute Register konnte nicht sagen, warum ein Eintrag drinstand — nicht weil
+die Antwort fehlte, sondern weil es keine Regel gab, die man hätte nennen können.
+
+### Was offen ist
+
+- **Live-Schaltung von `/papers`.** Neue öffentliche Fläche mit realen Autorennamen —
+  wartet auf Franks Wort. Branch `scout/saatgut-aus-den-praxen` ist gepusht, `main`
+  unberührt.
+- **Die Urteilsroutine.** Sie schreibt die 109 fehlenden Begründungssätze und beurteilt
+  die Scout-Kandidaten. Läuft als Claude-Code-Routine unter dem Abo, nicht in der
+  Pipeline (kein Modell-API-Aufruf dort).
+- **`katalog-scout.yml`** ist verdrahtet (nächtlich 05:30 UTC), aber noch nie gelaufen.
+- **Randbefund:** `src/pages/datenschutz/index.astro` liefert fest `datenschutz.en` aus.
+  Die deutsche Fassung wird nirgends gerendert, obwohl CLAUDE.md „Impressum/Datenschutz
+  bleiben deutsch" sagt. Altbestand, nicht heute entstanden — eine Entscheidung für Frank.
+
+### Die Praxen sind unterrichtet
+
+Seeds in `ulysses`, `field-research` und `studio` (`REQUESTS.md`, gepusht): Die drei
+Kataloge existieren, die Praxen können sie nutzen und erweitern, Scouts erweitern sie
+parallel mit Vorschlägen zur Vertiefung — **Angebot, keine Pflichtlektüre**. Jeder Seed
+stellt zuerst den Seed vom 26.07. richtig, der auf ein Register mit 17.327 abfragbaren
+Einträgen verweist, das es nicht mehr gibt.
