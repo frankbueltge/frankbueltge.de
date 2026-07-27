@@ -230,7 +230,31 @@ async function handleAnswer(token, body) {
     return json(502, { ok: false, code: 'upstream' })
   }
   if (!result.ok) {
-    if (result.reason === 'not-found') return json(404, { ok: false, code: 'not-found' })
+    // "not-found" heißt wörtlich: Die Überschrift steht nicht mehr in REQUESTS.md. Die
+    // Praxis hat die Stelle in einer eigenen Sitzung abgeräumt — sie darf nach Frist selbst
+    // entscheiden (Standing Rule 2026-07-17). Franks Antwort kann also nirgends hin.
+    //
+    // Das Issue wird trotzdem geschlossen (Franks Entscheidung 2026-07-27): Sonst bliebe eine
+    // erledigte Sache als offene Anfrage in der Inbox und im Morgendigest stehen — genau die
+    // Sorte Zombie, die eine Zentrale unbrauchbar macht.
+    //
+    // Der Kommentar hält ausdrücklich fest, dass KEINE Antwort geschrieben wurde. Sonst
+    // stünde später im Archiv ein geschlossener Vorgang, der aussieht, als hätte Frank
+    // geantwortet — das Issue ist Teil des öffentlichen Protokolls, nicht nur eine Merkliste.
+    if (result.reason === 'not-found') {
+      const note =
+        `Diese Anfrage steht nicht mehr in REQUESTS.md — die Praxis hat die Stelle selbst abgeräumt.\n` +
+        `Es wurde KEINE Antwort geschrieben (versucht: ${decision}). Geschlossen aus der Steuerzentrale.`
+      try {
+        await commentOnIssue(token, issueNumber, note)
+        await closeIssue(token, issueNumber)
+      } catch {
+        // Auch das darf scheitern, ohne den Befund zu verschlucken: Die Karte sagt dann
+        // ehrlich, dass das Issue offen geblieben ist.
+        return json(404, { ok: false, code: 'not-found', issueClosed: false })
+      }
+      return json(404, { ok: false, code: 'not-found', issueClosed: true })
+    }
     return json(409, { ok: false, code: 'conflict' })
   }
 
