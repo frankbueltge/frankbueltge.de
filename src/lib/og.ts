@@ -28,7 +28,11 @@ export const OG_PAGES: Record<string, { title: string; description: string }> = 
   },
   datasets: {
     title: 'Dataset Register',
-    description: 'A machine-readable record of publicly available datasets: every entry carries a verbatim access route, the state of its verification, and the gaps the register knows about.',
+    description: 'A curated record of datasets this research has actually reached for: a verbatim access route, how far it has been checked, and one sentence on why the entry counts.',
+  },
+  papers: {
+    title: 'Paper Catalogue',
+    description: 'What the three research practices actually read — each entry here because a practice reached for it, with the record of that use attached.',
   },
   protocol: {
     title: 'The Protocol',
@@ -102,6 +106,7 @@ export function ogSlug(pathname: string): keyof typeof OG_PAGES {
   if (p.startsWith('/atlas')) return 'atlas'
   if (p.startsWith('/catalogues')) return 'catalogues'
   if (p.startsWith('/datasets')) return 'datasets'
+  if (p.startsWith('/papers')) return 'papers'
   if (p.startsWith('/protocol')) return 'protocol'
   if (p.startsWith('/parallax')) return 'parallax'
   if (p.startsWith('/policy') || p.startsWith('/police') || p.startsWith('/werke/policy')) return 'policy'

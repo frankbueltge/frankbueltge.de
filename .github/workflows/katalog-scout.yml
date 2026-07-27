@@ -1,0 +1,102 @@
+name: Katalog-Scout nightly
+
+# Baut den Paper-Katalog (/papers) aus dem, was die drei Praxen tatsächlich zitieren.
+#
+# Die Richtung ist der Punkt (docs/design/2026-07-27-register-rueckbau-und-scouts.md §1):
+# Nicht sammeln, was es gibt, und hoffen — sondern von der Forschung her sammeln. Das
+# Saatgut sind die Zitate der Praxen; ein Zitat ist ein Gebrauchsbeleg und trägt seine
+# Begründung schon, bevor der Scout losläuft.
+#
+# Zwei Schritte:
+#   1. Praxis-Repos flach klonen (alle vier öffentlich) — nur so kommt der Runner an die
+#      Journale und Korpora, in denen zitiert wird. Die Site spiegelt davon nur einen Teil.
+#   2. Saatgut sammeln, Kennungen auflösen, src/data/register/papers.json schreiben.
+#
+# Schlüsselfrei: OpenAlex (polite pool via mailto) für DOIs, arXiv für Preprints.
+# Kein Modell-API-Aufruf — der Katalogbau ist deterministisch. Die Begründungssätze
+# schreibt die Urteilsroutine getrennt unter dem Abo (Bauregel des Startauftrags).
+#
+# ACHTUNG bei der Klontiefe: `praxen.py` liest das Datum der jüngsten Änderung je Datei
+# über `git log`. Mit `--depth 1` kennt der Klon nur einen Commit, und JEDE Datei bekäme
+# dasselbe Datum — die Sortierung „was gerade in Arbeit ist" wäre wertlos. Deshalb
+# `--filter=blob:none` statt `--depth`: volle History, aber ohne Dateiinhalte zu laden.
+
+on:
+  schedule:
+    - cron: '30 5 * * *' # täglich 05:30 UTC — nach dem Atlas-Scout (05:00)
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: katalog-scout
+  cancel-in-progress: false
+
+jobs:
+  katalog:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # volle History → git pull --rebase im Commit-Schritt funktioniert
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Abhängigkeiten
+        run: pip install --no-cache-dir -e "pipelines/atlas-scout[dev]"
+
+      - name: Tests
+        run: cd pipelines/atlas-scout && python -m pytest -q
+
+      - name: Praxis-Repos holen
+        run: |
+          set -eu
+          mkdir -p ../praxen
+          for repo in ulysses field-research studio meridian-runtime; do
+            # blob:none statt depth: die Commit-History wird gebraucht (Datum je Datei),
+            # die Blobs erst beim Lesen — spart Bandbreite ohne die Zeitachse zu kappen.
+            git clone --filter=blob:none --quiet \
+              "https://github.com/frankbueltge/$repo.git" "../praxen/$repo" \
+              || echo "::warning::$repo nicht klonbar — der Lauf vermerkt den Ausfall"
+          done
+          ls -1 ../praxen
+
+      - name: Katalog bauen
+        env:
+          ATLAS_SCOUT_MAILTO: f.bueltge@gmail.com # OpenAlex „polite pool"
+        run: |
+          set -eu
+          python -m atlas_scout.katalog --repos ../praxen --wurzel . | tee lauf.log
+
+      - name: Zusammenfassung
+        if: always()
+        run: |
+          {
+            echo '### Katalog-Scout'
+            echo '```'
+            cat lauf.log 2>/dev/null || echo 'kein Lauf-Protokoll'
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Committen
+        run: |
+          set -eu
+          git config user.name "Katalog-Scout"
+          git config user.email "katalog-scout@frankbueltge.de"
+          git add src/data/register/papers.json
+          if git diff --cached --quiet; then
+            echo "Keine Änderung am Katalog."
+            exit 0
+          fi
+          git commit -m "katalog-scout: Paper-Katalog $(date -u +%F)"
+          # Gegen Push-Races mit den übrigen nächtlichen Läufen: rebasen + mehrfach versuchen.
+          for i in 1 2 3 4 5; do
+            if git pull --rebase --autostash origin main && git push origin HEAD:main; then
+              echo "Gepusht."; exit 0
+            fi
+            echo "Push-Versuch $i fehlgeschlagen, neu …"; sleep 5
+          done
+          echo "::error::Push nach 5 Versuchen fehlgeschlagen"; exit 1

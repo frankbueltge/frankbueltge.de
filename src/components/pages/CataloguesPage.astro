@@ -7,10 +7,12 @@
 import { NAMING } from '@/config/naming'
 import worksData from '@/data/atlas/werke.json'
 import { ENTRIES as datasetEntries } from '@/lib/register'
+import { PAPERS } from '@/lib/papers'
 
 const counts: Record<string, number> = {
   '/atlas': (worksData as unknown[]).length,
   '/datasets': datasetEntries.length,
+  '/papers': PAPERS.length,
 }
 ---
 
