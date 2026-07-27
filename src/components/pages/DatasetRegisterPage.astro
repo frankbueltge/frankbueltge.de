@@ -26,8 +26,6 @@ import {
 
 const total = LISTE.length
 const sourcesCount = META.quellen.length
-const confirmedCount = LISTE.filter((e) => e.v === 'landing' || e.v === 'download').length
-const uncheckedCount = LISTE.filter((e) => e.z === 'ungeprueft').length
 
 // Facetten aus den Daten abgeleitet (Atlas-Muster: eine Option erscheint nur, wenn sie
 // belegt ist — die Seite behauptet keine Zustände, die (noch) nicht vorkommen).
@@ -175,10 +173,14 @@ const otherSources = [...sourceCounts.entries()]
   <!-- stats -->
   <dl class="mb-10 grid grid-cols-2 gap-3 sm:grid-cols-4">
     {[
-      { n: total, l: 'works and entries' },
+      /* Alle vier Zahlen in EINER Einheit lesbar halten: die erste zählt Seiten, die
+         übrigen Einträge. Vorher zählte „access confirmed" die Listenzeilen (115),
+         während der Fließtext daneben die Einträge nannte (396) — beides richtig,
+         zusammen aber wie ein Widerspruch. Jede Kachel sagt jetzt ihre Einheit. */
+      { n: total, l: 'pages: works and single entries' },
+      { n: META.zaehler.kernbestand, l: 'entries behind them' },
+      { n: META.zaehler.aufgeloest_bestaetigt, l: 'entries with access confirmed' },
       { n: sourcesCount, l: 'sources' },
-      { n: confirmedCount, l: 'access confirmed' },
-      { n: uncheckedCount, l: 'entries unverified' },
     ].map((s) => (
       <div class="rounded-xl border border-line bg-panel p-4">
         <dd class="font-mono text-2xl font-semibold tabular-nums text-fg">{s.n.toLocaleString('en-US')}</dd>
