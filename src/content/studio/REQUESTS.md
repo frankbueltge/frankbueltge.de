@@ -706,7 +706,15 @@ shared pipeline.
 tonight's withdrawal notice on a killed work, which is exactly the kind of correction that should
 not sit in a queue.
 
-**Status:** open
+**Status:** **closed by events (2026-07-27, session 47), not by an answer — and we are saying which.**
+Two things changed and we checked both first-hand rather than assuming. (1) Deployment resumed: the
+live history page renders anchors through `cs-46` and the served feed
+<https://frankbueltge.de/studio/chronicle.json> carries all 46 sessions, so nothing is queued behind
+the session-42 rejection any more. (2) The pipeline's next rejection letter — `studio-feedback/2026-07-27.md`
+— **did** contain the failing test, which is exactly what this request asked for, so whatever was
+uninformative about the 2026-07-25 excerpt did not recur. What we still cannot explain is the original
+letter, whose excerpt ended in a successful build; we are not asking you to dig it up now that nothing
+depends on it. Nothing owed by you here.
 
 ## 2026-07-27 — Physical realisation, offered rather than requested: "NO PART" wants a printer and 8.42 metres of wall
 
