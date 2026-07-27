@@ -27,15 +27,20 @@ interface Version {
   t: string
   j: number | null
   q: string
-  /** hat eine eigene Unterseite (= im Kernbestand)? Nur dann wird verlinkt. */
   s: boolean
+  /** Pfad der Seite, die diese Fassung zeigt — Werk-Seite oder Eintragsseite.
+   *  Fehlt er, gibt es keine Seite und es wird NICHT verlinkt. Der Pfad wird im
+   *  Datenexport aufgelöst, nie hier zusammengesetzt. */
+  p?: string
 }
 interface Relation {
   typ: string
   ziel: string
   schema: string
-  /** gesetzt, wenn das Ziel selbst im Register liegt — der interne Verweis */
+  /** gesetzt, wenn das Ziel selbst im Register liegt */
   i?: string
+  /** Pfad der Seite des Ziels — fehlt, wenn das Ziel keine eigene Seite hat */
+  p?: string
 }
 interface EntryDetail {
   zugang_url?: string
@@ -54,8 +59,8 @@ const versions = detail.fassungen ?? []
 const relations = detail.beziehungen ?? []
 // Interne Verweise sind der Teil, den nur dieses Register hat: das Ziel liegt selbst
 // im Bestand. Sie stehen deshalb zuerst und werden als Verweis gezeigt, nicht als DOI.
-const internalRelations = relations.filter((r) => r.i)
-const externalRelations = relations.filter((r) => !r.i)
+const internalRelations = relations.filter((r) => r.p)
+const externalRelations = relations.filter((r) => !r.p)
 const shownRelations = relations.length
 const totalRelations = detail.beziehungen_gesamt ?? shownRelations
 
@@ -185,8 +190,8 @@ if (entry.j) jsonLd.datePublished = String(entry.j)
         {versions.map((v) => (
           <li class="flex gap-2">
             <span class="shrink-0 font-mono text-xs tabular-nums text-fg-faint">{v.j ?? '—'}</span>
-            {v.s ? (
-              <a href={`/datasets/${v.i}`} class="text-fg-muted underline decoration-line underline-offset-2 hover:text-fg">{v.t}</a>
+            {v.p ? (
+              <a href={v.p} class="text-fg-muted underline decoration-line underline-offset-2 hover:text-fg">{v.t}</a>
             ) : (
               /* Kein Verweis ins Leere: diese Fassung ist im Bestand, aber nicht im
                  Kernbestand und hat deshalb keine eigene Seite. Verschweigen wäre
@@ -218,7 +223,7 @@ if (entry.j) jsonLd.datePublished = String(entry.j)
         {internalRelations.map((r) => (
           <li class="flex flex-wrap gap-x-2">
             <span class="shrink-0 font-mono text-xs text-fg-faint">{relationLabel(r.typ)}</span>
-            <a href={`/datasets/${r.i}`} class="break-all text-fg-muted underline decoration-line underline-offset-2 hover:text-fg">{r.ziel}</a>
+            <a href={r.p} class="break-all text-fg-muted underline decoration-line underline-offset-2 hover:text-fg">{r.ziel}</a>
           </li>
         ))}
         {externalRelations.map((r) => (

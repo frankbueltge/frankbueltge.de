@@ -105,9 +105,12 @@ export interface WorkVersion {
   j: number | null
   l: string
   q: string
-  v?: Pruefstand
   pv: Pruefstand
   s: number | null
+  /** wörtlicher Zugriffsweg dieser Fassung, aus der Quelle — nie konstruiert */
+  u: string
+  /** Quell-Id (DOI o. Ä.) dieser Fassung */
+  p: string
 }
 
 /** Ein Werk mit MEHREREN Fassungen. Werke mit genau einer Fassung stehen bewusst
