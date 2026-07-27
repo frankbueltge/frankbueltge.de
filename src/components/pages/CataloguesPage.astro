@@ -6,7 +6,7 @@
 // den Daten (Kanon-Regel: Zahlen nie in Beschreibungstexten, nie geraten).
 import { NAMING } from '@/config/naming'
 import worksData from '@/data/atlas/werke.json'
-import { ENTRIES as datasetEntries } from '@/lib/datasets'
+import { ENTRIES as datasetEntries } from '@/lib/register'
 
 const counts: Record<string, number> = {
   '/atlas': (worksData as unknown[]).length,

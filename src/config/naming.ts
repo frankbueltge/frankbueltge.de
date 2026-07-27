@@ -148,9 +148,16 @@ export const NAMING = {
         description: 'A source-cited map of contemporary data art — works where data, AI and power meet, arranged by field rather than by date.',
       },
       {
+        /* Wortlaut neu gefasst am 2026-07-27 (Rückbau, docs/design/2026-07-27-register-
+         * rueckbau-und-scouts.md). Die vorige Fassung versprach „a machine-readable record
+         * of publicly available datasets … queryable as versioned snapshots" — das
+         * beschrieb den Massenbestand, den es auf dieser Fläche nicht mehr gibt. Die
+         * Snapshots bestehen weiter, aber im dataset-hub, nicht als das, was diese Karte
+         * anbietet. Abgenommener Wortlaut wird hier nur geändert, weil er unwahr geworden
+         * ist — nicht aus Geschmack. */
         name: 'Dataset Register',
         href: '/datasets',
-        description: 'A machine-readable record of publicly available datasets: every entry carries a verbatim access route, the state of its verification, and the gaps the register knows about. Queryable as versioned snapshots, not only readable in a browser.',
+        description: 'A curated record of datasets this research has actually reached for: every entry carries a verbatim access route, how far that route has been checked, and one sentence saying why it counts here. An entry cannot exist without its reason.',
       },
     ],
   },
