@@ -23,7 +23,7 @@ import path from 'node:path'
 
 const REPO = 'frankbueltge/dataset-hub'
 const ZIEL = path.resolve('src/data/datasets')
-const DATEIEN = ['eintraege.json', 'meta.json', 'details.json', 'werke.json']
+const DATEIEN = ['eintraege.json', 'meta.json', 'details.json', 'werke.json', 'liste.json']
 
 const kopf = { 'User-Agent': 'frankbueltge.de-build', Accept: 'application/vnd.github+json' }
 if (process.env.GITHUB_TOKEN) kopf.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`
