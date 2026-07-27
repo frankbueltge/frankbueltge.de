@@ -1,0 +1,29 @@
+---
+// Eine statische Seite je Werk mit MEHREREN Fassungen (Stand 27.07.: 6.158).
+// Werke mit genau einer Fassung stehen nicht in werke.json und bekommen hier keine
+// Seite — ihre Eintragsseite IST die kanonische Adresse. Damit sinkt die indexierbare
+// Fläche von 16.494 auf 8.579 Seiten, ohne dass ein Eintrag verschwindet.
+import Page from '@/layouts/Page.astro'
+import DatasetWorkPage from '@/components/pages/DatasetWorkPage.astro'
+import { WORKS, licenceLabel, type DatasetWork } from '@/lib/datasets'
+
+export function getStaticPaths() {
+  return Object.entries(WORKS).map(([workId, work]) => ({
+    params: { id: workId },
+    props: { workId, work },
+  }))
+}
+
+const { workId, work } = Astro.props as { workId: string; work: DatasetWork }
+const years = work.f.map((v) => v.j).filter((j): j is number => typeof j === 'number')
+const span = years.length && Math.min(...years) !== Math.max(...years)
+  ? `${Math.min(...years)}–${Math.max(...years)}`
+  : years.length
+    ? String(years[0])
+    : ''
+const bits = [work.h, span || null].filter(Boolean).join(' · ')
+const description = `${bits ? `${bits} — ` : ''}${work.n} recorded versions · licence: ${licenceLabel(work.f[0].l)}. Grouped by the Dataset Register from the relations the sources state.`
+---
+<Page title={`${work.t} | Dataset Register | Frank Bültge`} description={description}>
+  <DatasetWorkPage workId={workId} work={work} />
+</Page>

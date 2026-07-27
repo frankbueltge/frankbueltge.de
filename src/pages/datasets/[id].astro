@@ -1,10 +1,19 @@
 ---
-// Eine statische Seite je Register-Eintrag (Stand: ~13.300, siehe src/data/datasets/meta.json
-// "zaehler.eintraege"). getStaticPaths über ALLE Einträge — keine Kappung nötig, der Build
-// hat sie in der Praxis geschafft (siehe Abschlussbericht der Session, die diese Route anlegte).
+// Eine statische Seite je KERNBESTAND-Eintrag. ENTRIES enthält seit der Neufassung des
+// Registerzwecks (docs/design/2026-07-27-register-neufassung.md, §4) nur noch die
+// kuratierte Auswahl — der übrige Bestand bleibt über den Snapshot abfragbar, bekommt
+// hier aber keine Seite. Deshalb braucht getStaticPaths keinen eigenen Filter: die
+// Auswahl ist bereits im Datenexport getroffen (dataset-hub/oberflaeche/generiere_index.py).
+// Aktuelle Zahl: src/data/datasets/meta.json → "zaehler.kernbestand".
 import Page from '@/layouts/Page.astro'
 import DatasetDetailPage from '@/components/pages/DatasetDetailPage.astro'
-import { ENTRIES, licenceLabel, accessLabel, type DatasetEntry } from '@/lib/datasets'
+import {
+  ENTRIES,
+  WORK_OF_ENTRY,
+  licenceLabel,
+  accessLabel,
+  type DatasetEntry,
+} from '@/lib/datasets'
 
 export function getStaticPaths() {
   return ENTRIES.map((entry) => ({ params: { id: entry.i }, props: { entry } }))
@@ -13,7 +22,17 @@ export function getStaticPaths() {
 const { entry } = Astro.props as { entry: DatasetEntry }
 const bits = [entry.h, entry.j ? String(entry.j) : null, entry.g].filter(Boolean).join(' · ')
 const description = `${bits ? `${bits} — ` : ''}licence: ${licenceLabel(entry.l)} · ${accessLabel(entry.v, entry.s)}. Source: ${entry.q}.`
+
+// Gehört der Eintrag zu einem Werk mit mehreren Fassungen, ist die Werk-Seite die
+// kanonische Adresse: dort steht die Fassungsgeschichte, hier stünde dieselbe Angabe
+// ein zweites (drittes, viertes) Mal. Die Seite bleibt vollständig abrufbar — sie
+// wird nur nicht als die maßgebliche ausgegeben.
+const workId = WORK_OF_ENTRY[entry.i]
 ---
-<Page title={`${entry.t} | Dataset Register | Frank Bültge`} description={description}>
+<Page
+  title={`${entry.t} | Dataset Register | Frank Bültge`}
+  description={description}
+  canonicalPath={workId ? `/datasets/work/${workId}/` : undefined}
+>
   <DatasetDetailPage entry={entry} />
 </Page>
