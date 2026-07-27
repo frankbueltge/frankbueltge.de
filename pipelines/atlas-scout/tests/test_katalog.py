@@ -14,6 +14,8 @@ def _eintrag(**abweichung) -> Katalogeintrag:
         id="x", titel="Ein Titel", urheber=("Ada Lovelace",), jahr=2024, ort="",
         kennung="10.1/a", url="https://example.invalid", frei_zugaenglich=False,
         felder=(), zusammenfassung="", relevanz="…", relevanz_herkunft="gebrauch",
+        weg="praxis", aufnahmegrund="zitiert", fundstellen=("ulysses/journal/x.md",),
+        geprueft=True, pruef_status=200, pruef_vermerk=None,
         zitiert_von=("atelier",), zuletzt_gebraucht="2026-07-01", verify_status="toVerify",
     )
     return Katalogeintrag(**{**grund, **abweichung})
@@ -118,3 +120,51 @@ class TestZusammenfuehrung:
                      urheber=("Jane Doe",)),
         ])
         assert len(zusammen) == 2
+
+
+class TestBelegpflicht:
+    """Frank, 2026-07-28: „alles muss geprüft und annotiert werden, woher was kommt und
+    warum es in die kataloge/register aufgenommen wurde."
+
+    Diese Prüfungen halten die Pflicht fest. Ein Eintrag ohne Weg, ohne Aufnahmegrund
+    oder ohne Fundstelle ist kein Katalogeintrag, sondern eine Behauptung.
+    """
+
+    def test_jeder_eintrag_traegt_weg_grund_und_fundstelle(self):
+        e = _eintrag()
+        assert e.weg in {"praxis", "scout"}
+        assert e.aufnahmegrund in {"zitiert", "kuratiert", "nachbarschaft"}
+        assert e.fundstellen, "ohne Fundstelle ist der Eintrag nicht belegt"
+
+    def test_zusammenfuehrung_sammelt_fundstellen_statt_sie_zu_verlieren(self):
+        """Der Beleg wächst beim Zusammenführen, er schrumpft nicht."""
+        zusammen = fuehre_zusammen([
+            _eintrag(fundstellen=("ulysses/journal/a.md",)),
+            _eintrag(fundstellen=("field-research/memory/claims.md",)),
+        ])
+        assert set(zusammen[0].fundstellen) == {
+            "ulysses/journal/a.md", "field-research/memory/claims.md"
+        }
+
+    def test_eine_bestaetigte_pruefung_setzt_sich_durch(self):
+        """Wurde EINE der zusammengeführten Adressen bestätigt, gilt der Text als
+        erreichbar — die anderen Fassungen ändern daran nichts."""
+        zusammen = fuehre_zusammen([
+            _eintrag(geprueft=False, pruef_status=None, pruef_vermerk="noch nicht angefragt"),
+            _eintrag(geprueft=True, pruef_status=200, pruef_vermerk=None),
+        ])
+        assert zusammen[0].geprueft is True
+        assert zusammen[0].pruef_status == 200
+        assert zusammen[0].pruef_vermerk is None
+
+
+def test_nur_echte_iso_daten_kommen_ins_datumsfeld():
+    """Gemessen am 2026-07-28: Ulysses' session_read führt einmal `tick 2026-07-22`.
+    Wörtlich übernommen sortierte dieser Wert über den 27.07. — „t" kommt hinter jeder
+    Ziffer. Wörtlichkeit gilt für Prosa; ein Sortierfeld muss auch die Form haben."""
+    from atlas_scout.sammlungen import _lesedatum
+
+    assert _lesedatum("2026-07-22") == "2026-07-22"
+    assert _lesedatum("tick 2026-07-22") == "2026-07-22"
+    assert _lesedatum("irgendwann") is None
+    assert _lesedatum(None) is None

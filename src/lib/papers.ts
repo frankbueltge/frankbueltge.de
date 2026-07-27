@@ -24,6 +24,17 @@ export type RelevanceSource = 'praxis' | 'gebrauch'
 
 export type VerifyStatus = 'verified' | 'toVerify'
 
+/** Die zwei Wege, auf denen ein Katalog wächst (Frank, 2026-07-28):
+ *  `praxis` = eine Praxis benutzt oder führt den Text · `scout` = in der
+ *  Zitationsnachbarschaft gefunden, als Anreicherung. */
+export type Weg = 'praxis' | 'scout'
+
+/** Warum der Eintrag AUFGENOMMEN wurde — eine angewandte Regel, kein Urteil über den
+ *  Inhalt (das ist `relevanz`). Der Unterschied ist der ganze Punkt: Das alte Register
+ *  konnte nicht sagen, warum ein Eintrag drinstand, weil es keine Regel gab, die man
+ *  hätte nennen können. */
+export type Aufnahmegrund = 'zitiert' | 'kuratiert' | 'nachbarschaft'
+
 export interface PaperEntry {
   id: string
   /** Wörtlich aus der Quelle. */
@@ -44,8 +55,23 @@ export interface PaperEntry {
    *  Leer heißt „noch nicht eingeordnet" — nie ein geratenes Feld. */
   felder: number[]
   zusammenfassung: string
+
+  /** Warum der Eintrag ZÄHLT — Urteil über den Inhalt. */
   relevanz: string
   relevanz_herkunft: RelevanceSource
+
+  /** Woher er KOMMT und warum er aufgenommen wurde — Regel, nicht Urteil. */
+  weg: Weg
+  aufnahmegrund: Aufnahmegrund
+  /** Wo genau: `ulysses/journal/2026-07-01.md` bzw. die kuratierte Sammlung.
+   *  Ohne mindestens eine Fundstelle ist ein Eintrag nicht belegt. */
+  fundstellen: string[]
+
+  /** Prüfung des Zugriffswegs. Bestätigt sind nur 200/203/206 — HTTP 202 ist keine
+   *  Bestätigung (die figshare-Familie antwortet automatisierten Anfragen so). */
+  geprueft: boolean
+  pruef_status: number | null
+  pruef_vermerk: string | null
   /** Welche Praxen den Eintrag zitieren: 'atelier' | 'field' | 'studio' | 'meridian'. */
   zitiert_von: string[]
   /** ISO-Datum der jüngsten Nennung — das Maß für „gerade in Arbeit". */
@@ -64,6 +90,19 @@ const praxisNamen: Record<string, string> = {
   meridian: 'Meridian',
 }
 export const praxisLabel = (p: string): string => praxisNamen[p] ?? p
+
+/** Klartext für den Aufnahmegrund. Er beantwortet „warum steht das hier?" in einem
+ *  Halbsatz — die Fundstelle daneben belegt es. */
+const gruendeText: Record<Aufnahmegrund, string> = {
+  zitiert: 'cited in the practice’s own writing',
+  kuratiert: 'held in the practice’s own reading list',
+  nachbarschaft: 'found in the citation neighbourhood of an entry',
+}
+export const grundLabel = (g: Aufnahmegrund): string => gruendeText[g] ?? g
+
+/** Klartext für den Prüfbefund. Ungeprüft heißt ungeprüft — nicht „nicht erreichbar". */
+export const pruefLabel = (e: Pick<PaperEntry, 'geprueft' | 'pruef_status'>): string =>
+  e.geprueft ? `access confirmed (HTTP ${e.pruef_status})` : 'access not yet confirmed'
 
 /** Autorenzeile: bis zu drei Namen, danach „et al." — gekürzt, nicht erfunden. */
 export const authorLine = (urheber: string[]): string => {

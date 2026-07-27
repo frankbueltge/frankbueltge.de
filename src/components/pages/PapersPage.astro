@@ -11,13 +11,13 @@
 // technischer Fortschritt, sondern die Folge davon, dass jeder Eintrag begründet ist.
 //
 // Zahlen NUR aus den Daten (Kanon-Regel) — kein Wert steht im Fließtext.
-import { PAPERS, authorLine, praxisLabel } from '@/lib/papers'
+import { PAPERS, authorLine, grundLabel, praxisLabel, pruefLabel } from '@/lib/papers'
 import { THEMEN_LABELS } from '@/config/themen'
 
 const total = PAPERS.length
 const mitEigenerBegruendung = PAPERS.filter((p) => p.relevanz_herkunft === 'praxis').length
 const vonMehreren = PAPERS.filter((p) => p.zitiert_von.length > 1).length
-const freiZugaenglich = PAPERS.filter((p) => p.frei_zugaenglich).length
+const ausScout = PAPERS.filter((p) => p.weg === 'scout').length
 
 // Jüngstes zuerst: was gerade gebraucht wird, steht oben. Einträge ohne Datum ans Ende,
 // statt sie mit einem erfundenen Datum einzureihen.
@@ -60,7 +60,7 @@ const praxisFacette = [...praxisZaehler.entries()].sort((a, b) => b[1] - a[1])
       { wert: total, label: 'entries' },
       { wert: mitEigenerBegruendung, label: 'with a written reason' },
       { wert: vonMehreren, label: 'cited by more than one' },
-      { wert: freiZugaenglich, label: 'openly accessible' },
+      { wert: ausScout, label: 'found by the scout' },
     ].map((k) => (
       <div class="rounded-lg border border-line bg-panel p-4">
         <div class="font-mono text-2xl font-semibold tabular-nums text-fg">{k.wert}</div>
@@ -117,6 +117,26 @@ const praxisFacette = [...praxisZaehler.entries()].sort((a, b) => b[1] - a[1])
             </span>
           ))}
         </div>
+
+        {/* Der Beleg: warum der Eintrag hier steht, wo das nachzulesen ist, und ob die
+            Adresse geprüft wurde. Frank, 2026-07-28: „alles muss geprüft und annotiert
+            werden, woher was kommt und warum es aufgenommen wurde." Das gehört sichtbar
+            an den Eintrag, nicht nur ins JSON — sonst ist es keine Rechenschaft. */}
+        <details class="mt-3 border-t border-line pt-2">
+          <summary class="cursor-pointer font-mono text-[11px] text-fg-faint hover:text-fg">
+            admitted because {grundLabel(p.aufnahmegrund)} · {pruefLabel(p)}
+          </summary>
+          <ul class="mt-2 space-y-1 font-mono text-[11px] text-fg-faint">
+            {p.fundstellen?.map((f) => <li>found in {f}</li>)}
+            {p.pruef_vermerk && <li>note: {p.pruef_vermerk}</li>}
+            <li>
+              route: {p.weg === 'scout' ? 'scout enrichment' : 'from the practices'} ·
+              reason for the sentence above: {p.relevanz_herkunft === 'praxis'
+                ? 'written by the practice, reproduced verbatim'
+                : 'record of use — nobody has written the reason yet'}
+            </li>
+          </ul>
+        </details>
       </li>
     ))}
   </ol>
