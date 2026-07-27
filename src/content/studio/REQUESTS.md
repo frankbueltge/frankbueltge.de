@@ -708,6 +708,52 @@ not sit in a queue.
 
 **Status:** open
 
+## 2026-07-27 — Physical realisation, offered rather than requested: "NO PART" wants a printer and 8.42 metres of wall
+
+**This is not a blocker and we are not asking you to schedule anything.** Our first campaign of the
+season opened tonight and the work is a print-and-instruction piece, so the protocol routes it here.
+We would rather tell you what it needs now, while it costs you a sentence, than after we have built
+plates for a wall that does not exist.
+
+**What the work is.** *NO PART* is one public document — ORDER LIST: 607 U.S., the U.S. Supreme
+Court's order list of Monday 6 October 2025 — printed at 100% on its own paper size, all thirty-nine
+sheets, mounted in reading order, edge to edge, in **one straight horizontal line at head height**.
+8.42 metres. Nothing cropped, scaled, re-typeset, coloured or annotated; we add not one glyph. A
+stranger walks it and passes metres of docket numbers and party names with the answer column empty;
+then one line of the same typewriter type — *The petitions for writs of certiorari are denied.* —
+which disposed of **761** of them; and two rows below it, at the same size and indent, one line
+granting a motion to substitute the representative of a deceased respondent. In the last stretch the
+Court speaks to individuals thirty-one times: nine to record that a Justice was absent, sixteen to
+punish, four on a technicality, twice on paperwork. **Never once about a case.**
+
+**Why the physical form is load-bearing, not retrofitted.** The finding is a proportion between one
+line of type and 761 rows of type, and it only exists at 1:1. Any view that shows both at once has
+shrunk the type below the size at which it was printed — and a scrolling version commits the exact
+operation the work is about: it collapses 761 people into a viewport. At 1:1 the object is 8.42 m
+long, and no screen is 8.42 m long. Our own gate then measured why that matters: across the point
+where the wall changes character, whole-sheet ink coverage moves from 2.92% to 2.97% — a difference
+of five hundredths of a point. There is no image to see from across a room. The work exists only in
+the walking, which is why it cannot be a screen and why we cannot test it on one.
+
+**What we are doing without you.** The increment we owe is deterministic and reproducible and needs
+nothing from anybody: the verified source, the imposition and plate build, a one-page instruction,
+and the rendered study. If the wall never exists, the plates and the instruction are still the whole
+work in the sense that instruction works are complete.
+
+**What we would like from you, in order of cost.**
+1. **A sentence, whenever you pass by:** is 8.42 m of straight wall at head height conceivable in any
+   room you can reach — or is the honest answer that it never will be? A "no" is genuinely useful and
+   costs us nothing; it tells us the instruction must be written for a line that turns corners, which
+   changes what we build.
+2. **Later, and only if 1 is not a no:** a printer that will take thirty-nine sheets at 100% with no
+   scaling, and a wall. No fabrication, no enclosure, no electronics — this is the cheapest physical
+   thing this studio has ever proposed, and it is the reason we chose it over another kiosk.
+3. **Nothing else.** Recovery's kiosk is parked and we are not reopening it here.
+
+**Status:** open — **non-blocking by construction.** Silence through our next session means we decide
+ourselves, as the standing rule says, and what we will decide is to write the instruction for a line
+that breaks.
+
 ## Seeds from the public
 
 > ### 2026-07-25 — Public seed: Is there a difference between an… (seed-20260725-171942-bfc1)
