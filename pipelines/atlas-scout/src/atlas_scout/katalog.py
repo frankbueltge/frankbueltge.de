@@ -82,7 +82,14 @@ class Katalogeintrag:
 
     # ── Warum der Eintrag ZÄHLT (Urteil über den Inhalt) ──────────────────────────
     relevanz: str
-    relevanz_herkunft: str  # "praxis" (wörtlich übernommen) | "gebrauch" (Beleg)
+    # "praxis"   — von einer Praxis geschrieben, wörtlich übernommen
+    # "gebrauch" — nur der Beleg, WER wann zitiert hat; sagt DASS, nicht WARUM
+    # "urteil"   — von der Urteilsroutine geschrieben (Modell benannt in `urteil`)
+    relevanz_herkunft: str
+    # Nachweis des Urteilsschritts. Gesetzt NUR bei relevanz_herkunft == "urteil":
+    # welches Modell, wann, auf welcher Grundlage. Ohne diesen Block wäre ein
+    # maschinell geschriebener Satz von einem der Praxis nicht zu unterscheiden — und
+    # genau das darf nicht passieren (Kanon: KI-Schritte offenlegen und markieren).
 
     # ── Woher er KOMMT und warum er AUFGENOMMEN wurde (Regel, nicht Urteil) ───────
     weg: str  # WEG_PRAXIS | WEG_SCOUT
@@ -105,6 +112,11 @@ class Katalogeintrag:
     # veröffentlichten. Sie verschwinden beim Zusammenführen nicht, sondern bleiben
     # nachweisbar: Wer über die arXiv-Kennung sucht, soll den Eintrag finden.
     weitere_kennungen: tuple[str, ...] = ()
+    # Nachweis des Urteilsschritts. Gesetzt NUR bei relevanz_herkunft == "urteil":
+    # welches Modell, wann, auf welcher Grundlage. Ohne diesen Block wäre ein maschinell
+    # geschriebener Satz von einem der Praxis nicht zu unterscheiden — und genau das
+    # darf nicht passieren (Kanon: KI-Schritte offenlegen und als solche markieren).
+    urteil: dict | None = None
 
 
 @dataclass(frozen=True)
@@ -157,6 +169,33 @@ def _felder_aus_begriffen(*texte: str) -> tuple[int, ...]:
     )
 
 
+def _abstract(werk: dict) -> str:
+    """Baut den Abstract aus OpenAlex' `abstract_inverted_index` zusammen.
+
+    OpenAlex speichert Abstracts invertiert (`{"wort": [Positionen]}`) — aus
+    lizenzrechtlichen Gründen, weil der invertierte Index kein zusammenhängender Text
+    ist. Zurückgebaut ergibt er den Originalwortlaut; er wird hier NICHT umformuliert,
+    nur wieder in Reihenfolge gebracht.
+
+    Warum das nachgezogen wurde: Ohne Abstract hatten 58 der 109 unbeurteilten Einträge
+    nur einen Titel als Grundlage. Über einen Titel lässt sich nicht redlich urteilen,
+    ob ein Text für eine Forschung zählt — die Urteilsroutine hätte raten müssen.
+    """
+    index = werk.get("abstract_inverted_index")
+    if not isinstance(index, dict) or not index:
+        return ""
+    stellen: dict[int, str] = {}
+    for wort, positionen in index.items():
+        if not isinstance(positionen, list):
+            continue
+        for pos in positionen:
+            if isinstance(pos, int):
+                stellen[pos] = wort
+    if not stellen:
+        return ""
+    return " ".join(stellen[i] for i in sorted(stellen))
+
+
 def _aus_openalex(werk: dict) -> dict | None:
     titel = (werk.get("title") or "").strip()
     if not titel:
@@ -176,7 +215,7 @@ def _aus_openalex(werk: dict) -> dict | None:
         "url": ort or (f"https://doi.org/{doi}" if doi else werk.get("id") or ""),
         "frei_zugaenglich": bool(ort),
         "begriffe": begriffe,
-        "zusammenfassung": "",
+        "zusammenfassung": _abstract(werk),
         # Die maßgebliche DOI kommt aus der Quelle, nicht aus dem Fundort: Im Repo steht
         # sie oft als Teil einer Verlags-URL und trägt dann Pfad mit
         # (`10.1162/octo.a.545/137249/latent-spaces-ai-art-und-…`). Was hier steht, ist
