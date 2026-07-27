@@ -5,6 +5,7 @@ import {
   summarizeCommits,
   chronicleLast,
   vitalSignsLast,
+  cacheIsUsable,
   newestJournalEntry,
   journalTitle,
   ageDays,
@@ -126,6 +127,38 @@ describe('vitalSignsLast', () => {
     expect(vitalSignsLast('kaputt')).toBeNull()
     expect(vitalSignsLast({ history: 'kaputt' })).toBeNull()
     expect(vitalSignsLast({ history: [] })).toBeNull()
+  })
+})
+
+describe('cacheIsUsable', () => {
+  const TTL = 180_000 // 3 Minuten, wie in der Pages Function
+
+  it('frischer Eintrag ohne Schreibaktion: verwendbar', () => {
+    expect(cacheIsUsable(1_000_000, 1_060_000, TTL, null)).toBe(true)
+  })
+
+  it('älter als die TTL: nicht verwendbar', () => {
+    expect(cacheIsUsable(1_000_000, 1_180_000, TTL, null)).toBe(false)
+    // Genau auf der Grenze zählt als abgelaufen.
+    expect(cacheIsUsable(1_000_000, 1_000_000 + TTL, TTL, null)).toBe(false)
+  })
+
+  it('vor der letzten Schreibaktion gebaut: nicht verwendbar, auch wenn er frisch ist', () => {
+    // Der Fall aus der Praxis: Cache um 23:17 gebaut, um 23:18 gemergt und geschlossen,
+    // um 23:19 neu geladen. Frisch genug — und trotzdem überholt.
+    expect(cacheIsUsable(1_000_000, 1_120_000, TTL, 1_060_000)).toBe(false)
+  })
+
+  it('nach der letzten Schreibaktion gebaut: wieder verwendbar', () => {
+    // Nach dem erzwungenen Neuaufbau darf der Cache wieder greifen — sonst löste jeder
+    // Reload nach einer Aktion erneut zehn GitHub-Abfragen aus.
+    expect(cacheIsUsable(1_100_000, 1_120_000, TTL, 1_060_000)).toBe(true)
+    // Gleichstand zählt als "danach gebaut".
+    expect(cacheIsUsable(1_060_000, 1_120_000, TTL, 1_060_000)).toBe(true)
+  })
+
+  it('TTL schlägt auch bei alter Schreibaktion durch', () => {
+    expect(cacheIsUsable(1_000_000, 1_500_000, TTL, 900_000)).toBe(false)
   })
 })
 
