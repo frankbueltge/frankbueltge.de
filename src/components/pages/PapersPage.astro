@@ -18,6 +18,7 @@ const total = PAPERS.length
 const mitEigenerBegruendung = PAPERS.filter((p) => p.relevanz_herkunft === 'praxis').length
 const vonMehreren = PAPERS.filter((p) => p.zitiert_von.length > 1).length
 const ausScout = PAPERS.filter((p) => p.weg === 'scout').length
+const ausUrteil = PAPERS.filter((p) => p.relevanz_herkunft === 'urteil').length
 
 // Jüngstes zuerst: was gerade gebraucht wird, steht oben. Einträge ohne Datum ans Ende,
 // statt sie mit einem erfundenen Datum einzureihen.
@@ -47,10 +48,16 @@ const praxisFacette = [...praxisZaehler.entries()].sort((a, b) => b[1] - a[1])
       not from a search of everything that exists.
     </p>
     <p class="mt-3 text-fg-muted">
-      Each entry says who cites it and when it was last picked up. Where a practice wrote
-      down why the text matters to it, that sentence is reproduced verbatim; where nobody
-      has written one yet, the entry carries the record of its use instead and is marked
-      as not yet read over.
+      Each entry says who cites it and when it was last picked up, and each one shows
+      where its reason came from. A sentence written by a practice is reproduced verbatim.
+      A sentence written by a model names the model, the date and what it was reading —
+      it is a proposal to the practice, never a substitute for its own reading. Where
+      nobody has written one at all, the entry carries the plain record of its use.
+    </p>
+    <p class="mt-3 text-fg-muted">
+      Nothing here is marked as read over until a person or a practice says so. Every
+      entry can be unfolded to show the file it was found in, the rule under which it was
+      admitted, and whether its access route answered when asked.
     </p>
   </header>
 
@@ -60,7 +67,7 @@ const praxisFacette = [...praxisZaehler.entries()].sort((a, b) => b[1] - a[1])
       { wert: total, label: 'entries' },
       { wert: mitEigenerBegruendung, label: 'with a written reason' },
       { wert: vonMehreren, label: 'cited by more than one' },
-      { wert: ausScout, label: 'found by the scout' },
+      { wert: ausUrteil, label: 'reason written by a model' },
     ].map((k) => (
       <div class="rounded-lg border border-line bg-panel p-4">
         <div class="font-mono text-2xl font-semibold tabular-nums text-fg">{k.wert}</div>
@@ -131,9 +138,13 @@ const praxisFacette = [...praxisZaehler.entries()].sort((a, b) => b[1] - a[1])
             {p.pruef_vermerk && <li>note: {p.pruef_vermerk}</li>}
             <li>
               route: {p.weg === 'scout' ? 'scout enrichment' : 'from the practices'} ·
-              reason for the sentence above: {p.relevanz_herkunft === 'praxis'
-                ? 'written by the practice, reproduced verbatim'
-                : 'record of use — nobody has written the reason yet'}
+              reason for the sentence above: {
+                p.relevanz_herkunft === 'praxis'
+                  ? 'written by the practice, reproduced verbatim'
+                  : p.relevanz_herkunft === 'urteil'
+                    ? `written by ${p.urteil?.modell ?? 'a model'} on ${p.urteil?.am ?? 'an unrecorded date'}, from the ${p.urteil?.grundlage ?? 'source'} — a proposal to the practice, not a substitute for its reading`
+                    : 'record of use — nobody has written the reason yet'
+              }
             </li>
           </ul>
         </details>

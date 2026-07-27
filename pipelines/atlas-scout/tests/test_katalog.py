@@ -168,3 +168,13 @@ def test_nur_echte_iso_daten_kommen_ins_datumsfeld():
     assert _lesedatum("tick 2026-07-22") == "2026-07-22"
     assert _lesedatum("irgendwann") is None
     assert _lesedatum(None) is None
+
+
+def test_abstract_wird_aus_dem_invertierten_index_zurueckgebaut():
+    """OpenAlex speichert Abstracts invertiert. Zurückgebaut, nicht umformuliert."""
+    from atlas_scout.katalog import _abstract
+
+    werk = {"abstract_inverted_index": {"Model": [0], "collapse": [1], "is": [2], "real": [3]}}
+    assert _abstract(werk) == "Model collapse is real"
+    assert _abstract({}) == ""
+    assert _abstract({"abstract_inverted_index": None}) == ""

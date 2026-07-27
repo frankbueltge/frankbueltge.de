@@ -16,11 +16,23 @@
 // Bauzeit geholt — kuratiert heißt klein genug fürs Repo.
 import eintraegeRaw from '@/data/register/papers.json'
 
-/** Woher der Begründungssatz stammt. `praxis` = eine Praxis hat ihn selbst geschrieben
- *  (wörtlich übernommen aus Ulysses' Atlas). `gebrauch` = der nachprüfbare Beleg, WER
- *  den Eintrag wann zitiert hat — er sagt DASS, nicht WARUM, und wartet auf die
- *  Urteilsroutine. Die Fläche macht den Unterschied sichtbar, statt ihn einzuebnen. */
-export type RelevanceSource = 'praxis' | 'gebrauch'
+/** Woher der Begründungssatz stammt, absteigend nach Gewicht.
+ *  Die Fläche macht den Unterschied sichtbar, statt ihn einzuebnen:
+ *  `praxis`   — eine Praxis hat ihn selbst geschrieben, wörtlich übernommen
+ *  `urteil`   — die Urteilsroutine, von einem benannten Modell (siehe `urteil`)
+ *  `gebrauch` — nur der Beleg, wer wann zitiert hat; sagt DASS, nicht WARUM */
+export type RelevanceSource = 'praxis' | 'urteil' | 'gebrauch'
+
+/** Nachweis des Urteilsschritts. Nur gesetzt bei `relevanz_herkunft === 'urteil'`.
+ *  Ohne diesen Block wäre ein maschinell geschriebener Satz von einem der Praxis nicht
+ *  zu unterscheiden — und genau das darf nicht passieren. */
+export interface Urteil {
+  modell: string
+  am: string
+  /** `abstract` | `volltext` | `fundstelle` — worauf sich das Urteil stützt. */
+  grundlage: string
+  sitzung: string
+}
 
 export type VerifyStatus = 'verified' | 'toVerify'
 
@@ -59,6 +71,8 @@ export interface PaperEntry {
   /** Warum der Eintrag ZÄHLT — Urteil über den Inhalt. */
   relevanz: string
   relevanz_herkunft: RelevanceSource
+  /** Nur bei `relevanz_herkunft === 'urteil'` gesetzt. */
+  urteil?: Urteil | null
 
   /** Woher er KOMMT und warum er aufgenommen wurde — Regel, nicht Urteil. */
   weg: Weg
