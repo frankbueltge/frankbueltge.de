@@ -1,6 +1,14 @@
 # Dataset Register — Neufassung des Zwecks
 
-**Datum:** 2026-07-27 · **Status:** ENTSCHIEDEN (Frank, 27.07.) — Umsetzung läuft
+> **ÜBERHOLT am selben Abend.** Das hier definierte Relevanzkriterium aus Stichwörtern
+> trägt nicht: Ein Stichwort im Titel bezeichnet oft eine Rolle, keinen Gegenstand
+> („Training data for MaxQuant" sind Proteomik-Daten, kein Datensatz über KI). Zudem
+> kennt §4 nur die machtnahen Themen und nicht die Atlas-Erweiterung vom 25.07.
+> (Felder 8–13, „knowing" und „expression"). Maßgeblich ist jetzt
+> **`2026-07-27-register-rueckbau-und-scouts.md`**. Dieses Dokument bleibt als Beleg
+> stehen — die Architektur-Aussagen (§5) und die Umsetzungsnotizen (§8) gelten weiter.
+
+**Datum:** 2026-07-27 · **Status:** ÜBERHOLT (siehe Kasten) — umgesetzt, dann verworfen
 **Vorgänger:** `2026-07-26-dataset-hub-design.md` (Architektur bleibt gültig),
 `2026-07-26-uebergabe-dataset-register.md` (Stand vom Vortag)
 
