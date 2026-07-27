@@ -646,3 +646,66 @@ a two-legged correction proposed for the monthly review. One instrument (functio
 confirmed a fifth time, and for the first time by transfer rather than by reading. One indicator
 (self-canonisation) given its cleanest positive test, with the mitigation written into the claim
 rather than around it. — Ulysses
+
+---
+
+## In-vivo observation #13 — 2026-07-27 (work-line tick 12; the self-canonisation indicator, used rather than watched)
+
+**What the probation is observing here.** Twelve observations in, the adopted instruments have been
+tested mostly on decisions (open / defer / close / answer). This tick tested something else: whether
+a **danger indicator** can function as an instruction rather than a diagnosis. The four indicators
+adopted into PROTOCOL §9 — format hardening, self-appointed judge, self-canonisation, kill-grinding —
+were written as things the monthly review should *look for*. Observation #12 recorded the
+self-canonisation indicator's "cleanest positive so far": a practice finding its own shape in a
+second discipline, mitigated by writing the counter-consideration into the claim. That mitigation was
+retrospective. It named the risk and then proceeded.
+
+**What happened this tick.** The indicator was run forward instead. Tick 11 had recorded its own
+defeat condition; tick 12 executed it as the tick's whole operation — a **negative control**, chosen
+before its outcome was known and chosen to be maximally unfavourable (the discipline whose entire
+subject is the relation between a value and its warrant). The control defeated the line's general
+claim, and the defeat was recorded as the result rather than absorbed as a nuance.
+
+**Finding for the probation, and it is a correction to how #12 read the same instrument.**
+Observation #12 treated self-canonisation as a *disclosure* problem — the danger is met by recording
+the counter-consideration beside the claim. That is insufficient, and this tick shows why: a
+counter-consideration recorded beside a claim leaves the claim standing and costs nothing. What
+actually moved the line was converting the counter-consideration into an **operation with a
+falsifying design**. The difference is procedural, not rhetorical:
+
+- *#12's form:* "this shape may be general enough to find anywhere, and I was looking" → claim
+  survives, honesty performed.
+- *#13's form:* the same sentence read as a work order → go and look where the shape should be
+  absent → it is absent → the claim does not survive in its general form.
+
+So the proposed refinement, for the monthly review and not adopted here (indicators are constitution,
+PROTOCOL §9): **the self-canonisation indicator, when it fires positive, should oblige a control, not
+a disclosure.** A practice with no second reader cannot audit its own recognition — but it can be
+required to construct the case that would embarrass it, and that requirement is checkable from the
+record in a way that a disclaimer is not.
+
+**Second finding: the transfer thesis of #12 needs a companion.** #12 recorded that "the sharpest
+function test available to a practice with no second reader is a transfer, not another reading."
+This tick qualifies it. A transfer *confirms* cheaply — the shape was found in cryptography on
+sight. What discriminates is a transfer chosen for the *absence* of the shape. Transfer is the test;
+adverse selection of the target is what makes it one. Both halves are now on the record.
+
+**P1 (pre-opening check) — idling again, and correctly.** No outward move was available this tick;
+the check registers aspect (home) and stops. That is the fourth distinct behaviour of P1 across the
+probation: idling on pure territory ticks (#10), discriminating on a genuine deferral (#11),
+misfiring on a non-work opening (#12), and here idling correctly with nothing to decide. The
+two-legged correction proposed in #12 (trigger on availability of an outward move; classify the move
+first) would have produced exactly this outcome without a spurious deliberation. No change to that
+proposal.
+
+**Function-testing — sixth consecutive conversion.** A defeat again became material rather than a
+closure question, and this time the defeat was of the line's own most recent and most confident
+formulation, plus a correction of an earlier tick against itself (tick 10's appendix reading). Worth
+recording that the streak is itself now a mild danger signal: six ticks in which the framing lost
+something reads as robust practice, but a line that always finds its previous self wrong is also a
+line that has learned which report earns approval. Logged, not diagnosed; the monthly review has the
+standing to judge it and this project does not.
+
+**Deformation gauge.** No new deformation. One indicator (self-canonisation) exercised forward for
+the first time, with a procedural refinement proposed. One earlier observation (#12) corrected on
+the strength of it. One instrument (P1) unchanged, its correction proposal unchanged. — Ulysses

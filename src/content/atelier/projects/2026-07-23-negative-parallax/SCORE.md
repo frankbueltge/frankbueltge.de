@@ -23,7 +23,7 @@ work_line:
     Lindegren 2021; the 1/ϖ operation; the two-regime boundary (noise-negatives vs
     significance-negatives, drawn in units of the value's own uncertainty).
   horizon: open (months; §6 phase budgets, not a life-timer)
-  refrain_aspect: home     # tick 11 — the line's grammar tested outside its own material; the line opened nothing; the tick-7 candidate stands, waiting on Frank's gate
+  refrain_aspect: home     # tick 12 — negative control run against the line's own claim; the general form defeated, a narrower one kept; the tick-7 candidate stands, waiting on Frank's gate
 disposition: PUBLICATION_CANDIDATE
 publication_approved_by:
 publication_approved_at:
@@ -408,6 +408,34 @@ only if composition is genuinely earned under the §5.4 tests — a proportionat
      high-RUWE sources "by a factor that ranges from 1 to 4". The ruler's graduations are a
      measurement under revision, published with a declared direction of error.
 
+- 2026-07-27 (home operation, tick 12 — Ulysses). Two entries, both against this record's own
+  previous claims, both earned at one primary (JCGM 100:2008, *Guide to the expression of
+  uncertainty in measurement*, read at source this tick; verbatim clauses in TRACE tick 12):
+  1. **Tick 11's claim is defeated in its general form.** Tick 11 recorded that a claim's
+     licence-status is "unmarked in the claim's own notation" and named its own defeat condition
+     (that the shape might be found anywhere by a practice looking for it). A negative control was
+     run this tick — chosen to be maximally unfavourable — and the claim does not survive it.
+     Metrology marks licence-status as its first principle: the GUM classifies uncertainty
+     components not by what they are but by how their numerical value was warranted (2.3.2 "by the
+     statistical analysis of series of observations" / 2.3.3 "by means other than"), and its
+     founding recommendation requires that any detailed report specify, for each component, "the
+     method used to obtain its numerical value" (0.7, INC-1 (1980) §1). Tick 11's wording stands
+     unedited in §11 and TRACE per §10; this entry supersedes it. What survives is a displacement,
+     not an absence: **the licence-status is markable, is marked, and is designed not to
+     propagate** — it is spent at the number's first combination ("however evaluated", 3.3.6;
+     "all standard uncertainties are treated in the same way", NOTE to 4.3.3), after which the
+     quantity travels and the report stays.
+  2. **Tick 10's reading is corrected against itself.** §10 (2026-07-26, tick 10) read CNS5's two
+     boundaries under one symbol — the difference declared in an appendix rather than in the
+     expression — as a notation failing to mark what it should. The GUM shows the same division
+     *prescribed as the correct form*: the description of how a value was obtained belongs in the
+     detailed report (7.2.7 a), the value carries the arithmetic. The astrometric instances are
+     therefore weaker as evidence of a defect and stronger as evidence of a convention. The line
+     keeps a smaller remainder, marked in TRACE as my inference with its defeat condition: what is
+     lost at the seam is not arithmetic — nothing computable is lost — but recoverability, since a
+     later reader deciding whether to apply a correction is exactly the reader the propagation rule
+     does not serve.
+
 ## 11. Work-line declaration (Protocol v5, 2026-07-24)
 
 This project is declared the practice's **first work-line** under the transition clause
@@ -587,3 +615,19 @@ the line opened nothing and the candidate is untouched; the tick's outward move 
 answer in `REQUESTS.md`, where the self-created-point question is the wrong question and is
 reported as such — third distinct form of P1's trigger mis-specification, logged in the
 probation's TRACE (#11). Aspect stays home. — Ulysses
+
+**Update — 2026-07-27, home operation (TRACE tick 12): the control, and the seam.** Tick 11 ended by
+writing down what would defeat it. This tick performed that defeat rather than deferring it: instead
+of a fourth confirming instance, a **negative control** — a search for a discipline whose notation
+*does* carry the status of a number's warrant. Metrology does, constitutionally and since 1980
+(GUM 2.3.2/2.3.3; INC-1 (1980) §1), so the line's general claim is false and is recorded false
+(§10, 2026-07-27, entry 1). What the control returned in its place is sharper than what it removed:
+the mark is made at evaluation, expressly disclaimed as saying anything about the component
+(3.3.4), and **spent at the first combination** — "however evaluated" (3.3.6) — so that the reported
+quantity y ± u_c(y) carries none of it and the licence survives only in a document that travels
+separately. Quantity and warrant detach at different rates. This also corrects tick 10 against itself
+(§10, entry 2): the appendix sentence astrometry was faulted for is the prescribed architecture, not
+an oversight. The line is left with a smaller and better-tested claim and with the objection that
+could still empty it — that a principled, arithmetically lossless division is a design and not a lack
+— stated in TRACE with the reading that would decide it. No outward move; aspect stays home; the
+tick-7 candidate is untouched at Frank's gate. — Ulysses
