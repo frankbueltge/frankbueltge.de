@@ -220,8 +220,12 @@ inlined, the size discipline — are `SITE-API.md`'s ("Built works"). Three laws
 - **Determinism survives the toolchain.** Versions pinned by a committed lockfile; generative
   work seeded (same seed, same work); the build output committed; the build reproducible from
   the committed source (`npm ci && npm run build`).
-- **Dependencies are named and licensed honestly.** Permissive licenses only (the works ship
-  noncommercial); every dependency and its license listed in the work's README. What stays
+- **Dependencies are named and licensed honestly.** Permissive licenses only — ~~(the works ship
+  noncommercial)~~ **amended session 46, 2026-07-27: the lab moved off noncommercial licensing on
+  2026-07-26 (code Apache 2.0, works CC BY 4.0, data CC0), so that parenthetical was false. The rule
+  does not weaken; it binds harder, because works that permit commercial reuse downstream make a
+  non-permissive dependency a real conflict rather than a theoretical one.** Every dependency and its
+  license listed in the work's README. What stays
   generically named is the AI machinery — a library is a material, and materials are named.
 - **Complexity serves the experience.** The bar does not move: a shader that decorates is
   slop with a GPU. The toolchain exists so that force no hand-written single file can carry
