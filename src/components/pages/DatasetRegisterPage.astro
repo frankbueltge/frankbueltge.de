@@ -159,24 +159,16 @@ const otherSources = [...sourceCounts.entries()]
        die Ausmusterung wird datiert benannt, nicht stillschweigend vollzogen —
        Aktualitäts-Regel, „überholte Strukturen sichtbar und datiert archiviert". -->
   <aside class="mb-8 rounded-xl border border-line bg-panel p-4 text-sm text-fg-muted">
+    {/* Gekürzt am 27.07. (Frank): die Tatsache bleibt nachprüfbar, die Ausführlichkeit
+        geht. Wer die Einzelheiten will, findet sie im Ablehnungsregister — dort steht
+        jede Ausmusterung mit Grund, nicht nur die Zusammenfassung. */}
     <p>
       <span class="font-mono text-xs uppercase tracking-wider text-fg-faint">2026-07-27 · scope changed</span><br />
-      This register was rebuilt as a curated collection. An earlier version aimed at the
-      largest possible record and had grown to {META.zaehler.eintraege.toLocaleString('en-US')} entries,
-      most of them mass registrations of single observations — one identifier per
-      specimen, per sequence, per experimental shot. Those were retired: a partial copy
-      of a large catalogue has no value the catalogue does not already have. Every
-      retirement is recorded with its reason in the{' '}
+      Rebuilt as a curated collection: mass registrations of single observations were
+      retired, each recorded with its reason in the{' '}
       <a href="https://github.com/frankbueltge/dataset-hub/blob/main/register/ablehnungen.jsonl" rel="noopener noreferrer" target="_blank" class="underline decoration-line underline-offset-2 hover:text-fg">rejection register ↗</a>.
-    </p>
-    <p class="mt-2">
       The full stock stays queryable through the snapshot; this page shows the curated
-      selection only.{' '}
-      {META.zaehler.kernbestand_grenzfaelle_offen > 0 && (
-        <>{META.zaehler.kernbestand_grenzfaelle_offen.toLocaleString('en-US')} further
-        entries are borderline cases awaiting a judgement and are not shown — an open
-        backlog, not a verdict.</>
-      )}
+      selection only.
     </p>
   </aside>
 
