@@ -91,6 +91,17 @@ const rejectionReasonLabels: Record<string, string> = {
   'konstruierte-url-ungeprueft': 'constructed access URL, not yet confirmed by HTTP resolution',
 }
 const rejectionLabel = (grund: string) => rejectionReasonLabels[grund] ?? grund
+
+// Quellenanteile für die Namensnennung — gezählt, nicht behauptet. Steht die Zahl im
+// Text, veraltet sie beim nächsten Bau; so folgt sie den Daten.
+const sourceCounts = new Map<string, number>()
+for (const e of LISTE) sourceCounts.set(e.q, (sourceCounts.get(e.q) ?? 0) + 1)
+const datacitePart = ((sourceCounts.get('datacite') ?? 0) / (LISTE.length || 1) * 100)
+  .toFixed(sourceCounts.get('datacite') === LISTE.length ? 0 : 1)
+const otherSources = [...sourceCounts.entries()]
+  .filter(([q]) => q !== 'datacite')
+  .sort((a, b) => b[1] - a[1])
+  .map(([q, n]) => `${q} (${n.toLocaleString('en-US')})`)
 ---
 
 <main id="main" class="mx-auto w-full max-w-5xl px-4 py-10 sm:py-14">
@@ -128,6 +139,19 @@ const rejectionLabel = (grund: string) => rejectionReasonLabels[grund] ?? grund
       <a href="https://github.com/frankbueltge/dataset-hub/releases" rel="noopener noreferrer" target="_blank" class="text-fg-muted underline decoration-line underline-offset-2 hover:text-fg">snapshot releases ↗</a>
       {' '}·{' '}
       <a href="https://github.com/frankbueltge/dataset-hub/blob/main/SNAPSHOT-API.md" rel="noopener noreferrer" target="_blank" class="text-fg-muted underline decoration-line underline-offset-2 hover:text-fg">query contract (SNAPSHOT-API.md) ↗</a>.
+    </p>
+    {/* Namensnennung der Hauptquelle. DataCite stellt seine Metadaten unter CC0 —
+        rechtlich verlangt es also nichts, bittet in seinen Community-Normen aber um
+        Nennung als Quelle. Dieselbe Ökologie besteht für ihre eigenen Werke auf
+        Namensnennung; sie hier wegzulassen, weil niemand sie einklagen kann, wäre
+        billig. Der Anteil kommt aus den Daten, nicht aus dem Text. */}
+    <p class="mt-3 text-sm text-fg-muted">
+      Most of this register is built from the{' '}
+      <a href="https://datacite.org/" rel="noopener noreferrer" target="_blank" class="text-fg-muted underline decoration-line underline-offset-2 hover:text-fg">DataCite</a>{' '}
+      Public Data File, whose metadata DataCite places in the public domain under CC0
+      ({datacitePart}% of the entries shown here). The remainder comes from{' '}
+      {otherSources.join(', ')}. DataCite's waiver covers the metadata — not the
+      datasets it points to, and not the rights of the people named in it.
     </p>
   </header>
 
