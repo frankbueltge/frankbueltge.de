@@ -1,0 +1,14 @@
+---
+// Courtesy translation. Binding version: /impressum (German).
+import Page from '@/layouts/Page.astro'
+import LegalPageView from '@/components/pages/LegalPage.astro'
+import { impressum } from '@/data/legal'
+const page = impressum.en
+---
+<Page title={`${page.metaTitle} | Frank Bültge`} description={page.metaTitle}>
+  <LegalPageView
+    page={page}
+    istUebersetzung
+    andereFassung={{ href: '/impressum', label: '← Deutsche Fassung (maßgeblich)' }}
+  />
+</Page>

@@ -1,12 +1,41 @@
 ---
+// Rechtstexte gibt es in zwei Fassungen. Maßgeblich ist die DEUTSCHE — der
+// Verantwortliche sitzt in Deutschland, und die Erklärung nennt deutsche Rechtsgrundlagen
+// (Art. 6 Abs. 1 DSGVO). Die englische Fassung ist eine Übersetzung für Lesende von
+// außerhalb und steht unter eigener Adresse (/privacy, /imprint).
+//
+// Warum das hier steht: Bis 2026-07-28 lieferten /impressum UND /datenschutz fest die
+// englische Fassung aus, obwohl public/_redirects und CLAUDE.md beide ausdrücklich
+// festhalten „Impressum/Datenschutz bleiben deutsch (Rechtstexte)". Die deutsche Fassung
+// lag ungenutzt in legal.ts. Eine Übersetzung als maßgebliche Fassung auszuliefern ist
+// bei einer Datenschutzerklärung kein Schönheitsfehler.
 import type { LegalPage } from '@/data/legal'
 
-interface Props { page: LegalPage }
-const { page } = Astro.props
+interface Props {
+  page: LegalPage
+  /** Adresse der jeweils anderen Sprachfassung. */
+  andereFassung?: { href: string; label: string }
+  /** Nur die Übersetzung sagt, dass sie eine ist. */
+  istUebersetzung?: boolean
+}
+const { page, andereFassung, istUebersetzung = false } = Astro.props
 ---
 
 <main id="main" class="mx-auto w-full max-w-2xl flex-1 px-6 py-16 sm:py-24">
+  {andereFassung && (
+    <p class="mb-6 font-mono text-xs text-fg-faint">
+      <a href={andereFassung.href} class="underline decoration-line underline-offset-4 hover:text-fg">
+        {andereFassung.label}
+      </a>
+    </p>
+  )}
   <h1 class="text-[clamp(30px,4vw,44px)] font-bold tracking-[-0.02em]">{page.heading}</h1>
+  {istUebersetzung && (
+    <p class="mt-4 rounded-lg border border-line bg-panel p-3 text-sm text-fg-muted">
+      This is a courtesy translation. The binding version is the German one — the
+      controller is based in Germany and the text cites German legal grounds.
+    </p>
+  )}
   {page.draftNote && (
     <div class="mt-6 flex gap-3 rounded-xl border border-amber-500/40 bg-amber-500/10 p-4 text-sm text-amber-200">
       <span>⚠</span><p>{page.draftNote}</p>

@@ -22,7 +22,10 @@ from atlas_scout.themen import (
 )
 
 WURZEL = Path(__file__).resolve().parents[3]
-ATLAS_SEITE = WURZEL / "src/components/pages/AtlasPage.astro"
+# Die Feldlabels standen bis 2026-07-27 inline in AtlasPage.astro. Seit der
+# Paper-Katalog dieselben Felder benennt, liegen sie in einer gemeinsamen Quelle —
+# eine Kopie wäre die erste, die still veraltet.
+THEMEN_KONFIG = WURZEL / "src/config/themen.ts"
 
 
 def test_dreizehn_felder_lueckenlos_von_eins():
@@ -64,12 +67,26 @@ def test_hole_wirft_verstaendlich_bei_unbekanntem_feld():
 
 def test_feldnummern_decken_sich_mit_der_atlas_seite():
     """Die Karte im Frontend und die Themen hier dürfen nicht auseinanderlaufen."""
-    quelltext = ATLAS_SEITE.read_text(encoding="utf-8")
-    # Der englische CLUSTER-Block ist der maßgebliche (die Site ist English-only).
-    block = quelltext.split("const FAMILIE:")[0]
+    quelltext = THEMEN_KONFIG.read_text(encoding="utf-8")
+    # Der englische Block ist der maßgebliche (die Site ist English-only).
+    block = quelltext.split("THEMEN_LABELS_DE")[0]
     im_frontend = {int(n) for n in re.findall(r"^\s+(\d+): '", block, re.M)}
     assert im_frontend == set(THEMEN), (
         f"Frontend kennt {sorted(im_frontend)}, themen.py kennt {sorted(THEMEN)}"
+    )
+
+
+def test_familienzuordnung_deckt_sich_mit_dem_frontend():
+    """Auch die drei Familien müssen beidseitig dieselben Felder gruppieren.
+
+    Neu am 2026-07-27: Beim Auslagern der Labels ist FAMILIE mitgewandert — ohne
+    Wächter wäre das die nächste Kopie gewesen, die still veraltet.
+    """
+    quelltext = THEMEN_KONFIG.read_text(encoding="utf-8")
+    block = quelltext.split("export const FAMILIE:")[1].split("}")[0]
+    im_frontend = {int(n) for n in re.findall(r"(\d+):\s*'", block)}
+    assert im_frontend == set(THEMEN), (
+        f"Frontend gruppiert {sorted(im_frontend)}, themen.py kennt {sorted(THEMEN)}"
     )
 
 

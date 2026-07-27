@@ -1,0 +1,14 @@
+---
+// Courtesy translation. Binding version: /datenschutz (German).
+import Page from '@/layouts/Page.astro'
+import LegalPageView from '@/components/pages/LegalPage.astro'
+import { datenschutz } from '@/data/legal'
+const page = datenschutz.en
+---
+<Page title={`${page.metaTitle} | Frank Bültge`} description={page.metaTitle}>
+  <LegalPageView
+    page={page}
+    istUebersetzung
+    andereFassung={{ href: '/datenschutz', label: '← Deutsche Fassung (maßgeblich)' }}
+  />
+</Page>
