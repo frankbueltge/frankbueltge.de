@@ -9,11 +9,12 @@ interface Props {
   title: string
   description: string
   noindex?: boolean
+  canonicalPath?: string
 }
-const { title, description, noindex } = Astro.props
+const { title, description, noindex, canonicalPath } = Astro.props
 ---
 
-<Base title={title} description={description} noindex={noindex}>
+<Base title={title} description={description} noindex={noindex} canonicalPath={canonicalPath}>
   <TopBar />
   <slot />
   {/* Die Byline entscheidet selbst pfadbasiert, ob die Seite eine Quelle hat (16.07.) —

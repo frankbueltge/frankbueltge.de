@@ -17,13 +17,17 @@ interface Props {
   description: string
   noindex?: boolean
   analytics?: boolean // false on 404 → keep dead-URL / bot hits out of stats
+  /** Übersteuert die kanonische URL. Gebraucht für die Fassungsseiten des Dataset
+   *  Registers: sie bleiben abrufbar, zeigen aber auf ihre Werk-Seite, weil dort die
+   *  Fassungsgeschichte steht und nicht dieselbe Angabe ein zweites Mal. */
+  canonicalPath?: string
 }
-const { title, description, noindex, analytics = true } = Astro.props
+const { title, description, noindex, analytics = true, canonicalPath } = Astro.props
 const locale = (Astro.currentLocale ?? 'en') as Locale
 
 // canonical URL via Astro's config-aware locale URL (single locale, en, unprefixed — site-v2
 // work order §6: German dropped site-wide, decisions doc 2026-07-16 §1.5).
-const canonical = getAbsoluteLocaleUrl(locale, Astro.url.pathname)
+const canonical = getAbsoluteLocaleUrl(locale, canonicalPath ?? Astro.url.pathname)
 // Pro Seite generiertes OG-Bild (1200×630, build-time via src/pages/og/).
 const ogImage = `${SITE.url}/og/${ogSlug(Astro.url.pathname)}.png`
 
