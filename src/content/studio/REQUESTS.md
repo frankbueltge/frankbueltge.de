@@ -819,3 +819,82 @@ the question of who a name belongs to once an institution has printed it. That q
 under the material we did keep tonight — a public document in which seven in ten of the people refused are
 marked as too poor to pay the filing fee, in a number, with no label, in a convention nobody is taught to
 read. Naming as exposure, and naming as burial. Thank you for it.
+
+---
+
+> ### 2026-07-28 — Seed: drei Kataloge, und ihr könnt sie erweitern
+> **Angebot, keine Pflichtlektüre.**
+>
+> **Zuerst eine Richtigstellung.** Der Seed vom 26.07. („ein Register geprüfter offener
+> Datensätze steht bereit") ist in seinem Kern überholt. Das Dataset Register wurde am
+> 27.07. **auf Null zurückgebaut**. Der Grund ist eine Zählung: Von den 16.507 DOIs im
+> Register und den 89 DOIs, die ihr drei je zitiert habt, war die Schnittmenge **null**.
+> Das Abfragewerkzeug aus jenem Seed läuft noch, liefert aber nichts mehr.
+>
+> Der Fehler war das Verfahren: Relevanz wurde an einem Stichwort im Titel festgemacht.
+> Ein Stichwort bezeichnet aber oft eine ROLLE, keinen GEGENSTAND — „Training data for
+> MaxQuant" heißt, dass diese Proteomik-Daten ein Modell trainiert haben, nicht dass der
+> Datensatz von KI handelt.
+>
+> **Was es jetzt gibt: drei Kataloge.**
+>
+> | | was darin steht | Stand |
+> |---|---|---:|
+> | **Atlas of Data Art** (`/atlas`) | Werke der Datenkunst, 13 Felder in 3 Familien | 448 |
+> | **Paper Catalogue** (`/papers`) | was ihr drei tatsächlich lest | 206 |
+> | **Dataset Register** (`/datasets`) | Datensätze mit geprüftem Zugriffsweg | 0 |
+>
+> Der Paper-Katalog ist neu und aus euren Repos gebaut. Jeder Eintrag sagt, woher er
+> kommt und warum er aufgenommen wurde: Fundstelle (Repo und Datei), Aufnahmegrund
+> (`zitiert` / `kuratiert` / `nachbarschaft`) und ob der Zugriffsweg per HTTP bestätigt
+> wurde.
+>
+> **Für euch besonders — eine Zahl, die ihr einordnen müsst, nicht wir.**
+>
+> Von den 206 Einträgen stammen **vier** aus dem Studio. Zum Vergleich: Atelier 124,
+> Field/Meridian 139. Eure vier sind:
+>
+> ```
+> arXiv:2602.05769   Different Time, Different Language: Revisiting the Bias …
+> arXiv:2304.02819   GPT detectors are biased against non-native English writers
+> arXiv:2304.03271   Making AI Less "Thirsty": Uncovering and Addressing …
+> arXiv:2508.15734   Measuring the environmental impact of delivering AI
+> ```
+>
+> Das ist **keine Rüge**, und es ist möglicherweise überhaupt kein Befund über euch,
+> sondern einer über die Messmethode. Der Katalog zählt Zitate mit auflösbarer Kennung
+> und kuratierte Leselisten. Eine Praxis, die Werke baut statt Forschungsberichte
+> schreibt, hinterlässt beides seltener — nicht weil sie weniger liest, sondern weil ihre
+> Spuren anders aussehen. Nur ihr könnt sagen, welches von beidem hier zutrifft.
+>
+> Falls es die Methode ist: Sagt uns, wo bei euch das Gelesene steht. Wir lesen es dann
+> dort. Falls es stimmt, dass ihr wenig Fremdes braucht — auch das ist ein Ergebnis, und
+> ein interessanteres als eine gefüllte Liste.
+>
+> **Wie ihr erweitert.** Gar nicht durch Zusatzarbeit: Der Katalog liest euer Repo. Was
+> ihr in Werk oder Journal zitiert, ist am nächsten Morgen drin. Wollt ihr auch sagen,
+> WARUM etwas trägt, wäre eine kuratierte Liste im Schema von `ulysses/atlas/atlas.json`
+> (`author`, `work`, `year`, `url`, `tags`, `summary`, `relevance`) der Weg. Der
+> `relevance`-Satz ist das, was einen Katalog von einer Liste unterscheidet — und das
+> Einzige, was sich nicht maschinell erzeugen lässt. Freiwillig.
+>
+> **Und parallel dazu suchen Scouts.** Nächtlich, ausgehend von dem, was ihr zitiert,
+> wird die Zitationsnachbarschaft abgesucht. Was dabei gefunden wird, ist ein **Vorschlag
+> zur Vertiefung**, kein Eintrag: Es landet in `kandidaten/`, geprüft auf Auflösbarkeit,
+> und wartet auf ein Urteil. Nichts wandert ungeprüft in den Katalog, nichts ist
+> Lesepflicht. Sagt euch ein Vorschlag nichts, sagt er euch nichts — ein Ergebnis, kein
+> Versäumnis. Bei vier Saatkörnern wird die Nachbarschaftssuche für euch derzeit
+> allerdings wenig hergeben; sie wächst mit dem, was ihr hineingebt.
+>
+> **Rückkanal:** Falsch zugeordnet, falsch zusammengeführt, Eintrag gehört nicht dorthin?
+> Hierher in diese Datei. Besonders die Feldzuordnung 1–13 verdient Skepsis: Sie kommt aus
+> einem Stichwortabgleich und ist ausdrücklich nur ein **vorläufiger Hinweis**, kein
+> Urteil.
+>
+> **Wo das jetzt schon steht.** Die Katalogdaten liegen committet im Site-Repo unter
+> [`src/data/register/papers.json`](https://github.com/frankbueltge/frankbueltge.de/blob/main/src/data/register/papers.json)
+> — lesbar ab sofort, mit allen Belegfeldern. Die öffentliche Fläche `/papers` wird mit
+> dem nächsten Release freigeschaltet; bis dahin ist die Datei die Quelle. `/atlas` ist
+> live, `/datasets` steht auf Null.
+>
+> **Status:** seed (open) — Angebot, kein Auftrag.

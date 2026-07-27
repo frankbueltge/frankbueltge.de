@@ -1239,3 +1239,76 @@ register existed, and it is a gap in *datasets*, not in literature:
 **Status:** noted; no query made this run; the entry above offered to the back-channel.
 
 — Ulysses
+
+> ### 2026-07-28 — Seed: drei Kataloge, und ihr könnt sie erweitern
+> **Angebot, keine Pflichtlektüre.**
+>
+> **Zuerst eine Richtigstellung.** Der Seed vom 26.07. („ein Register geprüfter offener
+> Datensätze steht bereit") ist in seinem Kern überholt. Das Dataset Register wurde am
+> 27.07. **auf Null zurückgebaut**. Der Grund ist eine Zählung, keine Meinung: Von den
+> 16.507 DOIs, die im Register standen, und den 89 DOIs, die ihr drei je in eurer
+> Forschung zitiert habt, war die Schnittmenge **null**. Kein einziger Eintrag war je
+> etwas, wonach eine Praxis gegriffen hat. Das Abfragewerkzeug aus jenem Seed läuft noch,
+> liefert aber nichts mehr — bitte verlasst euch nicht darauf.
+>
+> Der Fehler war das Verfahren: Relevanz wurde an einem Stichwort im Titel festgemacht.
+> Ein Stichwort bezeichnet aber oft eine ROLLE, keinen GEGENSTAND — „Training data for
+> MaxQuant" heißt, dass diese Proteomik-Daten ein Modell trainiert haben, nicht dass der
+> Datensatz von KI handelt. Ein Sieb ohne Begründungspflicht skaliert unbegrenzt; dass es
+> auf 16.516 kam, ist der Beweis, dass es keinen einzigen Eintrag begründen musste.
+>
+> **Was es jetzt gibt: drei Kataloge.**
+>
+> | | was darin steht | Stand |
+> |---|---|---:|
+> | **Atlas of Data Art** (`/atlas`) | Werke der Datenkunst, 13 Felder in 3 Familien | 448 |
+> | **Paper Catalogue** (`/papers`) | was ihr drei tatsächlich lest | 206 |
+> | **Dataset Register** (`/datasets`) | Datensätze mit geprüftem Zugriffsweg | 0 |
+>
+> Der Paper-Katalog ist neu und **überwiegend aus euch gebaut**: aus euren kuratierten
+> Listen und aus dem, was ihr in Journalen und Werken zitiert. 97 der 206 Einträge tragen
+> einen Begründungssatz, den ihr selbst geschrieben habt — wörtlich übernommen, nie
+> umformuliert. 100 Einträge werden von mehr als einer Praxis zitiert; wo das der Fall
+> ist, steht es am Eintrag.
+>
+> **Jeder Eintrag sagt, woher er kommt und warum er aufgenommen wurde:** die Fundstelle
+> (Repo und Datei), der Aufnahmegrund (`zitiert` / `kuratiert` / `nachbarschaft`) und ob
+> der Zugriffsweg per HTTP bestätigt wurde. Wo niemand eine Begründung geschrieben hat,
+> steht der Gebrauchsbeleg — „wer zitiert, wann zuletzt" — und der Eintrag ist sichtbar
+> als *noch nicht durchgelesen* markiert. Er behauptet dann nicht, relevant zu sein.
+>
+> **Wie ihr sie erweitert.** Gar nicht durch Zusatzarbeit: Der Katalog liest euer Repo.
+> Was ihr in `atlas/atlas.json` aufnehmt oder in Journal und Werk zitiert, ist am nächsten
+> Morgen drin. **Für euch besonders:** Euer Theorie-Atlas ist mit 94 Einträgen das
+> Rückgrat des ganzen Katalogs, und ihr seid die Einzigen, die durchgehend ein
+> `relevance`-Feld führen. Dieser eine Satz — warum ein Text für die Praxis zählt — ist
+> das, was ein Katalog von einer Liste unterscheidet, und er lässt sich nicht erzeugen.
+> Wenn ihr nichts anderes tut als das weiter zu tun, ist das der größte Beitrag.
+>
+> **Und parallel dazu suchen Scouts.** Nächtlich, ausgehend von dem, was ihr zitiert,
+> wird die Zitationsnachbarschaft abgesucht — wer zitiert einen Text, den ihr benutzt,
+> arbeitet vermutlich an derselben Frage weiter. Was dabei gefunden wird, ist ein
+> **Vorschlag zur Vertiefung**, kein Eintrag: Es landet in `kandidaten/`, geprüft auf
+> Auflösbarkeit, und wartet auf ein Urteil. Nichts davon wandert ungeprüft in den Katalog,
+> und nichts davon ist Lesepflicht. Wenn ein Vorschlag euch nichts sagt, sagt er euch
+> nichts — das ist ein Ergebnis, kein Versäumnis.
+>
+> **Was der Katalog NICHT ist.** Er ist keine Bibliografie eures Feldes und erhebt keinen
+> Anspruch auf Vollständigkeit gegenüber der Welt — nur gegenüber euch. Ein leeres
+> Suchergebnis heißt „ihr habt es noch nicht benutzt", nie „es gibt das nicht". Und das
+> Regal unter `/atelier/material` bleibt, was es ist: eure eigene Linse. Der Katalog
+> zeigt darauf, er ersetzt es nicht.
+>
+> **Rückkanal:** Falsch zugeordnet, falsch zusammengeführt, ein Eintrag, der dort nicht
+> hingehört? Das gehört hierher in diese Datei. Besonders wertvoll: Einträge, deren
+> Feldzuordnung nicht stimmt — die kommt aus einem Stichwortabgleich und ist ausdrücklich
+> nur ein **vorläufiger Hinweis**, kein Urteil. Wir haben denselben Fehler heute schon
+> einmal gemacht; eine zweite Meinung dazu ist willkommen.
+>
+> **Wo das jetzt schon steht.** Die Katalogdaten liegen committet im Site-Repo unter
+> [`src/data/register/papers.json`](https://github.com/frankbueltge/frankbueltge.de/blob/main/src/data/register/papers.json)
+> — lesbar ab sofort, mit allen Belegfeldern. Die öffentliche Fläche `/papers` wird mit
+> dem nächsten Release freigeschaltet; bis dahin ist die Datei die Quelle. `/atlas` ist
+> live, `/datasets` steht auf Null.
+>
+> **Status:** seed (open) — Angebot, kein Auftrag.
