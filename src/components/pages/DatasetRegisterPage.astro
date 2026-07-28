@@ -1,137 +1,232 @@
 ---
-// /datasets — Dataset Register (wording-kanon.md "Catalogues": die zweite der beiden
-// maschinell gepflegten Nachschlagewerke, NICHT "Dataset Hub" — "hub" ist gesperrt, das
-// bezeichnet die Startseite der Ökologie).
+// /datasets — Dataset Register.
 //
-// Stand 2026-07-27: zurückgebaut auf Null (docs/design/2026-07-27-register-rueckbau-und-
-// scouts.md, Franks Entscheidung). Diese Seite zeigt deshalb einen leeren Bestand — und
-// sagt, warum, statt so zu tun, als sei nur noch nichts gefunden worden. Die
-// Aktualitäts-Regel (CLAUDE.md) verlangt genau das: überholte Strukturen werden sichtbar
-// und datiert archiviert, nie unauffällig als aktuell stehen gelassen.
+// Stand 2026-07-28: nicht mehr leer. Der Bestand kommt aus den Datenquellen, die die
+// eigenen Werke nächtlich abrufen (src/lib/register.ts erklärt, warum das der Weg ist
+// und welche fünf Suchwege vorher gemessen und verworfen wurden).
 //
-// Auskunft-vor-Poesie (wording-kanon.md "Prinzipien"): zuerst "was ist das hier?", dann
-// der Befund, dann der Bestand.
-//
-// Zur Kanon-Regel "Zahlen nur aus Daten rendern": Die laufende Zahl kommt aus ENTRIES.
-// Die Zahlen im Rückbau-Abschnitt beschreiben einen VERGANGENEN, datierten Stand — sie
-// sind Protokoll, keine Live-Angabe, und als solches gestempelt. Sie dürfen hier fest
-// stehen, weil sie sich nie wieder ändern können; ein veralteter Live-Wert wäre eine
-// Lüge, ein datierter Vergangenheitswert ist ein Beleg.
-import { ENTRIES } from '@/lib/register'
+// Auskunft-vor-Poesie: zuerst „was ist das hier?", dann der Befund, dann der Bestand.
+// Zahlen NUR aus den Daten — kein Wert steht im Fließtext.
+import { ENTRIES, werkLabel, zugangLabel } from '@/lib/register'
 
 const total = ENTRIES.length
-const RUECKBAU_DATUM = '2026-07-27'
+const bestaetigt = ENTRIES.filter((e) => e.geprueft).length
+const gesperrt = ENTRIES.filter((e) => e.zugang_gesperrt).length
+const vonMehreren = ENTRIES.filter((e) => e.benutzt_von.length > 1).length
+
+const zaehle = <T,>(werte: T[]) => {
+  const m = new Map<T, number>()
+  for (const w of werte) m.set(w, (m.get(w) ?? 0) + 1)
+  return m
+}
+const werkFacette = [...zaehle(ENTRIES.flatMap((e) => e.benutzt_von)).entries()]
+  .sort((a, b) => b[1] - a[1])
+
+// Zugangszustände als Facette — die vier sind der eigentliche Gegenstand dieses
+// Registers, und sie sind bewusst nicht zu „geprüft/ungeprüft" eingeebnet.
+const zugangFacette = [
+  { key: 'confirmed', label: 'access confirmed', n: bestaetigt },
+  { key: 'gated', label: 'gated', n: gesperrt },
+  { key: 'template', label: 'template only', n: ENTRIES.filter((e) => e.nur_vorlage).length },
+  {
+    key: 'silent', label: 'no answer',
+    n: ENTRIES.filter((e) => !e.geprueft && !e.zugang_gesperrt && !e.nur_vorlage).length,
+  },
+].filter((z) => z.n > 0)
+
+const zustand = (e: (typeof ENTRIES)[number]) =>
+  e.geprueft ? 'confirmed' : e.zugang_gesperrt ? 'gated' : e.nur_vorlage ? 'template' : 'silent'
+
+// Bestätigte zuerst, dann alphabetisch: Was nachweislich antwortet, steht oben.
+const sortiert = [...ENTRIES].sort((a, b) => {
+  if (a.geprueft !== b.geprueft) return a.geprueft ? -1 : 1
+  return a.titel.localeCompare(b.titel)
+})
 ---
 
-<main id="main" class="mx-auto w-full max-w-3xl px-4 py-10 sm:py-14">
-  <header class="mb-10">
+<main id="main" class="mx-auto w-full max-w-4xl px-4 py-10 sm:py-14">
+  <header class="mb-8 max-w-3xl">
     <p class="mb-2 font-mono text-xs uppercase tracking-widest text-fg-faint">Dataset Register</p>
     <h1 class="text-3xl font-semibold tracking-tight sm:text-4xl">Dataset Register</h1>
     <p class="mt-4 text-fg-muted">
-      A curated record of datasets that this ecology's research has actually reached for.
-      Every entry carries the source's literal access route, how far that route has been
-      checked, and — this is the part that matters — one sentence saying why the entry
-      counts for the work going on here.
+      The public data this ecology's own works actually retrieve. Every entry names the
+      work that fetches it and the file the call is written in — and states how far the
+      access route was confirmed when it was last asked.
     </p>
     <p class="mt-3 text-fg-muted">
-      It is deliberately small. An entry cannot exist without its reason, and a reason
-      cannot be generated from a keyword. That constraint is the whole design.
+      The register does not collect what exists. It reads what runs. A call in the source
+      of a nightly pipeline is a stronger warrant than a citation: a citation says someone
+      read this once, a scheduled fetch says it is load-bearing tonight.
     </p>
   </header>
 
-  <!-- Der Befund. Datiert, weil er ein Ereignis ist und kein Zustand. -->
-  <section class="mb-10 rounded-xl border border-line bg-panel p-6">
-    <p class="font-mono text-xs uppercase tracking-widest text-fg-faint">
-      Reset · {RUECKBAU_DATUM}
-    </p>
-    <h2 class="mt-3 text-lg font-semibold text-fg">The register was rolled back to zero</h2>
+  <!-- Der Rückbau bleibt sichtbar und datiert, statt unter dem neuen Bestand zu
+       verschwinden (Aktualitäts-Regel). -->
+  <details class="mb-8 rounded-xl border border-line bg-panel p-5">
+    <summary class="cursor-pointer font-mono text-xs uppercase tracking-widest text-fg-faint hover:text-fg">
+      How this register got here · reset 2026-07-27
+    </summary>
     <p class="mt-3 text-sm leading-relaxed text-fg-muted">
-      Until this date the register held 16,516 entries, harvested by running a keyword
+      Until 27 July 2026 the register held 16,516 entries, harvested by running a keyword
       sieve over 56,620,404 DataCite records, and published 8,590 pages. It was rolled
-      back to nothing — not trimmed, not re-filtered — because the method underneath it
-      measured the wrong thing.
+      back to nothing — not trimmed, not re-filtered. What settled it was a count: of the
+      16,507 DOIs in the register and the 89 the practices had ever cited, the overlap was
+      <strong class="font-semibold text-fg">zero</strong>. A keyword in a title names a
+      role, not a subject; a sieve counts word occurrences and reports it as relevance.
     </p>
     <p class="mt-3 text-sm leading-relaxed text-fg-muted">
-      A keyword in a title usually names a <em>role</em>, not a <em>subject</em>.
-      “Training data for MaxQuant” means these proteomics measurements trained a model —
-      not that the dataset is about AI. The same trap sits under “neural network”,
-      “surveillance”, “census”. A sieve counts word occurrences and reports it as
-      relevance.
+      Five ways of <em>searching</em> for suitable datasets were then measured and found
+      empty: DataCite back-references (1 hit across 20 papers), OpenAlex dataset
+      neighbourhood (0), and three topic searches (0, 0, and 38 with unusable top hits).
+      The holdings had been retrieving sixty public sources all along.
     </p>
     <p class="mt-3 text-sm leading-relaxed text-fg-muted">
-      What settled it was a count rather than an opinion. Of the 16,507 DOIs in the
-      register and the 89 DOIs the three practices had ever cited in their own research,
-      the overlap was <strong class="font-semibold text-fg">zero</strong>. Part of that
-      gap is structural — the practices mostly cite papers, the register held datasets —
-      but the conclusion survives it: this holding had never once served the research it
-      was built for.
+      Nothing measured was destroyed: the earlier harvest, its rejection log and its
+      failure notes remain in the
+      <a href="https://github.com/frankbueltge/dataset-hub" rel="noopener"
+         class="underline decoration-line underline-offset-4 hover:text-fg">dataset-hub</a>
+      repository as a quarry, not as a record on display.
     </p>
-    <p class="mt-3 text-sm leading-relaxed text-fg-muted">
-      Nothing measured was destroyed. The harvest, the rejection log with its reasons, the
-      source windows and the failure notes all remain in the
-      <a
-        href="https://github.com/frankbueltge/dataset-hub"
-        class="underline decoration-line underline-offset-4 hover:text-fg"
-        rel="noopener">dataset-hub</a> repository, where they are a quarry to be worked,
-      not a record to be displayed. What ended is the claim that those 16,516 entries were
-      relevant — a claim nobody had ever checked, one entry at a time.
-    </p>
+  </details>
+
+  <section class="mb-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
+    {[
+      { wert: total, label: 'sources in use' },
+      { wert: bestaetigt, label: 'access confirmed' },
+      { wert: gesperrt, label: 'exist but gated' },
+      { wert: vonMehreren, label: 'used by more than one work' },
+    ].map((k) => (
+      <div class="rounded-lg border border-line bg-panel p-4">
+        <div class="font-mono text-2xl font-semibold tabular-nums text-fg">{k.wert}</div>
+        <div class="mt-1 font-mono text-[10px] uppercase leading-tight tracking-wider text-fg-faint">
+          {k.label}
+        </div>
+      </div>
+    ))}
   </section>
 
-  <!-- Der Bestand. Bei 0 sagt die Seite, dass 0 der ehrliche Stand ist. -->
-  <section class="mb-10">
-    <div class="flex items-baseline justify-between gap-4 border-b border-line pb-3">
-      <h2 class="text-lg font-semibold text-fg">Holdings</h2>
-      <div class="text-right">
-        <span class="font-mono text-2xl font-semibold tabular-nums text-fg">{total}</span>
-        <span class="ml-2 font-mono text-[10px] uppercase tracking-wider text-fg-faint">
-          entries
-        </span>
+  <section data-register>
+    <div class="mb-6 space-y-3 border-y border-line py-4">
+      {[
+        { gruppe: 'werk', titel: 'used by',
+          optionen: werkFacette.map(([w, n]) => ({ wert: w, label: werkLabel(w), n })) },
+        { gruppe: 'zugang', titel: 'access',
+          optionen: zugangFacette.map((z) => ({ wert: z.key, label: z.label, n: z.n })) },
+      ].filter((g) => g.optionen.length > 1).map((g) => (
+        <div class="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+          <span class="w-16 shrink-0 font-mono text-[10px] uppercase tracking-wider text-fg-faint">
+            {g.titel}
+          </span>
+          <button type="button" data-filter={g.gruppe} data-value="all" aria-pressed="true"
+            class="rounded border border-line px-2 py-0.5 font-mono text-[11px] text-fg-faint aria-pressed:border-fg-faint aria-pressed:text-fg hover:text-fg"
+          >all</button>
+          {g.optionen.map((o) => (
+            <button type="button" data-filter={g.gruppe} data-value={o.wert} aria-pressed="false"
+              class="rounded border border-line px-2 py-0.5 font-mono text-[11px] text-fg-faint aria-pressed:border-fg-faint aria-pressed:text-fg hover:text-fg"
+            >{o.label} <span class="tabular-nums opacity-60">{o.n}</span></button>
+          ))}
+        </div>
+      ))}
+      <div class="flex items-center gap-3 pt-1">
+        <p class="font-mono text-xs text-fg-faint"><span data-count>{total}</span> / {total} shown</p>
+        <button type="button" data-reset
+          class="hidden rounded border border-line px-2 py-0.5 font-mono text-[11px] text-fg-faint hover:text-fg"
+        >reset</button>
       </div>
     </div>
 
-    {total === 0 ? (
-      <p class="mt-4 text-sm leading-relaxed text-fg-muted">
-        Empty, and that is the accurate state — not a source outage, not a failed build.
-        The register is being grown again from the other direction: instead of collecting
-        what exists and hoping something useful is in it, it will collect from the
-        research outwards.
-      </p>
-    ) : (
-      <ul class="mt-4 space-y-4">
-        {ENTRIES.map((e) => (
-          <li class="rounded-lg border border-line bg-panel p-4">
-            <div class="flex items-baseline justify-between gap-3">
-              <h3 class="font-semibold text-fg">{e.title}</h3>
-              {e.verify_status === 'toVerify' && (
-                <span
-                  class="shrink-0 font-mono text-xs text-fg-faint"
-                  title="admitted by the scout, not yet read over by hand">?</span>
-              )}
-            </div>
-            <p class="mt-2 text-sm leading-relaxed text-fg-muted">{e.relevance}</p>
-            <p class="mt-2 font-mono text-xs text-fg-faint">
-              <a href={e.access_url} class="hover:text-fg" rel="noopener">{e.identifier}</a>
-            </p>
-          </li>
-        ))}
-      </ul>
-    )}
+    <ol class="space-y-4">
+      {sortiert.map((e) => (
+        <li
+          class="rounded-xl border border-line bg-panel p-5"
+          data-card
+          data-werk={e.benutzt_von.join(' ')}
+          data-zugang={zustand(e)}
+        >
+          <div class="flex items-start justify-between gap-3">
+            <h2 class="text-base font-semibold leading-snug text-fg">
+              <a href={e.zugriff_url} rel="noopener"
+                 class="hover:underline decoration-line underline-offset-4">{e.titel}</a>
+            </h2>
+            {e.verify_status === 'toVerify' && (
+              <span class="shrink-0 font-mono text-xs text-fg-faint"
+                    title="the use is documented; nobody has read the entry over yet">?</span>
+            )}
+          </div>
+
+          <p class="mt-2 text-sm leading-relaxed text-fg-muted">{e.relevanz}</p>
+
+          <div class="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[11px] text-fg-faint">
+            <span>{e.host}</span>
+            <span>{zugangLabel(e)}</span>
+            <span>used by {e.benutzt_von.map(werkLabel).join(', ')}</span>
+          </div>
+
+          <details class="mt-3 border-t border-line pt-2">
+            <summary class="cursor-pointer font-mono text-[11px] text-fg-faint hover:text-fg">
+              admitted because a work of this ecology retrieves it
+            </summary>
+            <ul class="mt-2 space-y-1 font-mono text-[11px] text-fg-faint">
+              {e.fundstellen.map((f) => <li>call written in {f}</li>)}
+              {e.adressen.map((a) => <li class="break-all">fetches {a}</li>)}
+              {e.pruef_vermerk && <li>note: {e.pruef_vermerk}</li>}
+            </ul>
+          </details>
+        </li>
+      ))}
+    </ol>
   </section>
 
-  <!-- Was kommt. Als Vorhaben markiert, nicht als bestehende Fläche. -->
-  <section>
-    <h2 class="border-b border-line pb-3 text-lg font-semibold text-fg">What comes next</h2>
-    <p class="mt-4 text-sm leading-relaxed text-fg-muted">
-      Nightly scouts will read what the three practices are actually working on and search
-      outwards from there — for datasets, which land here, and for papers, which get a
-      catalogue of their own. What they find is an extension of the material the practices
-      run into anyway, not a parallel collection beside it.
+  {total === 0 && (
+    <p class="text-sm leading-relaxed text-fg-muted">
+      Empty, and that is the accurate state — not a source outage, not a failed build.
     </p>
-    <p class="mt-3 text-sm leading-relaxed text-fg-muted">
-      Anything a scout admits is marked as unread until someone has gone over it, and the
-      version history is the way back. This surface stays at zero until there is something
-      here that earned its place.
-    </p>
-  </section>
+  )}
 </main>
+
+<script>
+  // Dasselbe Muster wie AtlasPage und PapersPage.
+  const root = document.querySelector<HTMLElement>('[data-register]')
+  if (root) {
+    const cards = Array.from(root.querySelectorAll<HTMLElement>('[data-card]'))
+    const countEl = root.querySelector<HTMLElement>('[data-count]')
+    const resetEl = root.querySelector<HTMLButtonElement>('[data-reset]')
+    const MEHRWERTIG = new Set(['werk'])
+    const state: Record<string, string> = { werk: 'all', zugang: 'all' }
+
+    const apply = () => {
+      let n = 0
+      for (const card of cards) {
+        const show = Object.entries(state).every(([gruppe, wert]) => {
+          if (wert === 'all') return true
+          const feld = card.dataset[gruppe] ?? ''
+          return MEHRWERTIG.has(gruppe) ? feld.split(' ').includes(wert) : feld === wert
+        })
+        card.hidden = !show
+        if (show) n++
+      }
+      if (countEl) countEl.textContent = String(n)
+      resetEl?.classList.toggle('hidden', !Object.values(state).some((v) => v !== 'all'))
+    }
+
+    resetEl?.addEventListener('click', () => {
+      for (const gruppe of Object.keys(state)) state[gruppe] = 'all'
+      root.querySelectorAll<HTMLButtonElement>('[data-filter]').forEach((b) => {
+        b.setAttribute('aria-pressed', String(b.dataset.value === 'all'))
+      })
+      apply()
+    })
+
+    root.querySelectorAll<HTMLButtonElement>('[data-filter]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const gruppe = btn.dataset.filter ?? ''
+        state[gruppe] = btn.dataset.value ?? 'all'
+        root.querySelectorAll<HTMLButtonElement>(`[data-filter="${gruppe}"]`)
+          .forEach((b) => b.setAttribute('aria-pressed', String(b === btn)))
+        apply()
+      })
+    })
+
+    apply()
+  }
+</script>
