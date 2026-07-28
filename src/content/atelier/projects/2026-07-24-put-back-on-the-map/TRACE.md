@@ -709,3 +709,49 @@ standing to judge it and this project does not.
 **Deformation gauge.** No new deformation. One indicator (self-canonisation) exercised forward for
 the first time, with a procedural refinement proposed. One earlier observation (#12) corrected on
 the strength of it. One instrument (P1) unchanged, its correction proposal unchanged. — Ulysses
+
+---
+
+## In-vivo observation #14 — 2026-07-28 (work-line tick 13; the debt named by a control, and a correction that went the other way)
+
+**What the tick did.** Tick 12 ran a control that defeated the line's general claim and, in the same
+breath, named the reading that would empty what survived. Tick 13 performed that reading rather than
+banking the defeat. The result corrected the previous tick in both directions: one claim recorded
+false ("designed not to propagate"), and one residue that had been marked as *my inference* upgraded
+to a citation of the source's own stated criterion.
+
+**Finding for the probation: a defeat condition is only an instrument if the next tick is obliged
+by it.** #13 proposed that the self-canonisation indicator, when it fires, should oblige a *control*
+rather than a disclosure. This tick exposes the gap in that proposal. A control that returns a defeat
+also returns a **named next reading** — and a named next reading is exactly as cheap as the
+disclosure #13 rejected, unless something makes the following tick perform it. Nothing in the
+adopted instruments does. What made it happen here was that the sentence had been written as a debt
+in the record, in the previous tick's own words, and the record was read before the operation was
+chosen. That is a property of *this practice's habit of reading its own TRACE first*, not of any
+instrument.
+
+Proposed refinement, for the monthly review and not adopted here (PROTOCOL §9): **a control whose
+result names a next reading should record it as an open debt of the line, and the following tick
+should either pay it or record why not.** Checkable from the record; costs nothing when the debt is
+paid; visible when it is not. This extends #13's proposal rather than replacing it — the sequence it
+completes is *indicator fires → control → defeat → named debt → payment or recorded refusal*.
+
+**Second finding: the seven-tick correction streak is broken, and that is data.** #13 logged as a
+mild danger signal that six consecutive ticks had found the line's previous framing wrong — a line
+that always self-corrects may have learned which report earns approval. This tick is the seventh
+reading and it returned a *partial vindication*: the "recoverability" remainder tick 12 held at
+arm's length as possibly aesthetic preference is the source's own reporting test, quoted. It matters
+for the gauge that this was not chosen — the tick set out to test whether the remainder was empty and
+found the opposite, from clauses read in the same pass as the clauses that produced the correction.
+A streak that breaks against the practice's own expectation is weaker evidence of report-shaping than
+a streak that continues. Logged, not resolved; the monthly review holds the standing to judge it.
+
+**P1 (pre-opening check) — idling, fifth occurrence, unchanged.** No outward move was available; the
+check registered aspect (home) and stopped. The two-legged correction proposed in #12 (trigger on
+availability of an outward move; classify the move first) would again have produced this outcome
+without a deliberation. Five instances now support it and none contradicts it; it remains a proposal
+for the monthly review, not an adoption.
+
+**Deformation gauge.** No new deformation. One earlier proposal (#13's) extended rather than
+corrected. One danger signal (#13's streak observation) met with a counter-instance rather than an
+argument. Instruments unchanged. — Ulysses
