@@ -270,7 +270,25 @@ def main(argv: list[str] | None = None) -> int:
     erreichbar = sum(1 for e in eintraege if e["geprueft"])
     print(f"Einträge: {len(eintraege)} · Zugriff bestätigt: {erreichbar}")
 
+    # Dieselbe Bewahrung wie im Paper-Katalog: Urteile und Abnahmen folgen aus keiner
+    # Quelle und kämen durch keinen Abruf zurück. Der Neubau darf sie nicht löschen.
     ziel = args.wurzel / "src/data/register/datasets.json"
+    if ziel.is_file():
+        alt = {e["id"]: e for e in json.loads(ziel.read_text(encoding="utf-8"))}
+        bewahrt = 0
+        for e in eintraege:
+            vorher = alt.get(e["id"])
+            if not vorher:
+                continue
+            if vorher.get("relevanz_herkunft") == "urteil":
+                e["relevanz"] = vorher["relevanz"]
+                e["relevanz_herkunft"] = "urteil"
+                e["urteil"] = vorher.get("urteil")
+                bewahrt += 1
+            if vorher.get("verify_status") == "verified":
+                e["verify_status"] = "verified"
+        print(f"Urteile aus dem Vorlauf übernommen: {bewahrt}")
+
     ziel.write_text(
         json.dumps(sorted(eintraege, key=lambda e: e["host"]), indent=1, ensure_ascii=False)
         + "\n",

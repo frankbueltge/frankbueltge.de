@@ -29,7 +29,7 @@ import json
 import re
 import time
 import xml.etree.ElementTree as ET
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from pathlib import Path
 
 import httpx
@@ -549,6 +549,13 @@ def als_json(eintraege: list[Katalogeintrag]) -> str:
                 "zusammenfassung": e.zusammenfassung,
                 "relevanz": e.relevanz,
                 "relevanz_herkunft": e.relevanz_herkunft,
+                # MUSS mitgeschrieben werden. Ohne diesen Block steht ein maschinell
+                # geschriebener Satz unattribuiert zwischen den Sätzen der Praxen — und
+                # das ist schlimmer, als das Urteil ganz zu verlieren. Beobachtet am
+                # 2026-07-28: Der Neubau bewahrte die 27 Urteile korrekt, aber als_json()
+                # ließ ihren Nachweis fallen, weil das Feld beim Erweitern des
+                # Datenmodells hier nie ergänzt wurde.
+                "urteil": e.urteil,
                 "weg": e.weg,
                 "aufnahmegrund": e.aufnahmegrund,
                 "fundstellen": list(e.fundstellen),
@@ -610,7 +617,14 @@ def main(argv: list[str] | None = None) -> int:
     for ausfall in ausfaelle:
         print(f"   – {ausfall.art} {ausfall.kennung[:52]}: {ausfall.vermerk}")
 
+    # Urteile aus dem bestehenden Katalog übernehmen, BEVOR geschrieben wird.
     ziel = args.wurzel / "src/data/register/papers.json"
+    if ziel.is_file():
+        alt = json.loads(ziel.read_text(encoding="utf-8"))
+        vorher_urteile = sum(1 for e in alt if e.get("relevanz_herkunft") == "urteil")
+        eintraege = bewahre_urteile(eintraege, alt)
+        nachher = sum(1 for e in eintraege if e.relevanz_herkunft == "urteil")
+        print(f"Urteile übernommen: {nachher} von {vorher_urteile} aus dem Vorlauf")
     ziel.parent.mkdir(parents=True, exist_ok=True)
     ziel.write_text(als_json(eintraege), encoding="utf-8")
     print(f"geschrieben: {ziel}")
@@ -621,3 +635,56 @@ if __name__ == "__main__":
     import sys
 
     sys.exit(main())
+
+
+def bewahre_urteile(neu: list[Katalogeintrag], alt: list[dict]) -> list[Katalogeintrag]:
+    """Trägt Urteile und Abnahmen aus dem bestehenden Katalog in den neuen Bau.
+
+    **Warum das existieren muss.** `main()` baut den Katalog jede Nacht aus den Quellen
+    neu und schrieb ihn bis 2026-07-28 ungelesen über die alte Datei. Damit hätte der
+    Lauf um 05:30 UTC alle 27 geschriebenen Urteile gelöscht — Arbeit, die nicht aus einer
+    Quelle folgt und darum durch keinen Abruf zurückkommt. Ein Katalog, der seine eigene
+    Beurteilung nächtlich vergisst, kann nicht kuratiert werden; er kann nur sammeln.
+
+    Die Rangfolge bleibt dieselbe wie bei der Zusammenführung:
+
+      praxis  > urteil > gebrauch
+
+    Hat eine Praxis seit dem letzten Lauf eine Begründung geschrieben, gewinnt sie gegen
+    das Maschinenurteil — das ist der erwünschte Weg, und der neue Bau bringt sie mit.
+    Ist der neue Eintrag dagegen nur ein Gebrauchsbeleg und stand vorher ein Urteil da,
+    wird das Urteil samt Nachweis übernommen.
+
+    `verify_status: "verified"` wird immer bewahrt: Das setzt nur ein Mensch oder eine
+    Praxis, und ein Neubau kann es nicht erzeugen.
+    """
+    frueher = {e.get("id"): e for e in alt if e.get("id")}
+    # Zweiter Schlüssel: Die id wird aus Autor und Titel abgeleitet und ändert sich, wenn
+    # die Quelle ihre Angaben korrigiert. Die Kennung ist stabiler.
+    nach_kennung = {
+        (e.get("kennung") or "").lower(): e for e in alt if e.get("kennung")
+    }
+
+    bewahrt: list[Katalogeintrag] = []
+    for eintrag in neu:
+        vorher = frueher.get(eintrag.id) or nach_kennung.get(eintrag.kennung.lower())
+        if not vorher:
+            bewahrt.append(eintrag)
+            continue
+
+        aenderungen: dict = {}
+        # Ein Urteil überlebt, solange keine Praxis inzwischen selbst geschrieben hat.
+        if (
+            vorher.get("relevanz_herkunft") == "urteil"
+            and eintrag.relevanz_herkunft != "praxis"
+        ):
+            aenderungen["relevanz"] = vorher.get("relevanz", eintrag.relevanz)
+            aenderungen["relevanz_herkunft"] = "urteil"
+            aenderungen["urteil"] = vorher.get("urteil")
+        # Eine Abnahme kann ein Neubau nicht erzeugen — sie wird nur übernommen.
+        if vorher.get("verify_status") == "verified":
+            aenderungen["verify_status"] = "verified"
+
+        bewahrt.append(replace(eintrag, **aenderungen) if aenderungen else eintrag)
+
+    return bewahrt
