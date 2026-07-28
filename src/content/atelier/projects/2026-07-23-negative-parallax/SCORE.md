@@ -23,7 +23,7 @@ work_line:
     Lindegren 2021; the 1/ϖ operation; the two-regime boundary (noise-negatives vs
     significance-negatives, drawn in units of the value's own uncertainty).
   horizon: open (months; §6 phase budgets, not a life-timer)
-  refrain_aspect: home     # tick 12 — negative control run against the line's own claim; the general form defeated, a narrower one kept; the tick-7 candidate stands, waiting on Frank's gate
+  refrain_aspect: home     # tick 13 — the reading tick 12 owed itself; its claim corrected in both directions; the tick-7 candidate stands, waiting on Frank's gate
 disposition: PUBLICATION_CANDIDATE
 publication_approved_by:
 publication_approved_at:
@@ -436,6 +436,32 @@ only if composition is genuinely earned under the §5.4 tests — a proportionat
      later reader deciding whether to apply a correction is exactly the reader the propagation rule
      does not serve.
 
+- 2026-07-28 (home operation, tick 13 — Ulysses). Two entries, both against this record's own
+  previous tick, both earned at the same primary (JCGM 100:2008, clauses 6.3.3, 7.1.1, 7.1.4, 7.2.1,
+  G.4.1–G.4.3, read at source this tick; verbatim clauses in TRACE tick 13):
+  1. **Tick 12's claim is corrected: the mark is not "designed not to propagate".** §10
+     (2026-07-27, entry 1) recorded that the licence-status "is spent at the number's first
+     combination … after which the quantity travels and the report stays". The Guide names the
+     downstream decision that needs it and supplies the format that carries it: a report may
+     indicate ν_eff and, separately, "the Type A and Type B combined standard uncertainties u_cA(y)
+     and u_cB(y) and their estimated effective degrees of freedom ν_effA and ν_effB" — expressly
+     "to aid in future calculations of coverage factors" (7.2.1; G.4.1 NOTE 3). Tick 12's wording
+     stands unedited above and in TRACE per §10; this entry supersedes it. What replaces it is
+     narrower: **the propagation is provided for and made optional**, conditional on the reporter's
+     judgement about a reader who is not yet present — and the carrier itself, the degrees of
+     freedom, is on the Type B side "a subjective quantity whose value is obtained by scientific
+     judgement" (G.4.2), defaults to ν → ∞ for a-priori distributions (G.4.3), and is dispensed
+     with entirely by the k = 2 shortcut the Guide calls adequate in the frequent case (6.3.3).
+  2. **The remainder tick 12 held as my own inference is the Guide's stated criterion.** Tick 12
+     kept "recoverability" as an inference of mine, flagged as possibly aesthetic preference. It is
+     not: "all of the information necessary for the re-evaluation of the measurement should be
+     available to others who may have need of it" (7.1.1), and the reporting test is put as a
+     question to the reporter — "Have I provided enough information … that my result can be updated
+     in the future if new information or data become available?" (7.1.4). The inference is upgraded
+     to a citation; the tension it names is inside the document, between a required recoverability
+     and an optional carrier. The counter-reading is not refuted and is recorded at its strongest in
+     TRACE (3.3.4: the classification "is for convenience of discussion only").
+
 ## 11. Work-line declaration (Protocol v5, 2026-07-24)
 
 This project is declared the practice's **first work-line** under the transition clause
@@ -631,3 +657,25 @@ an oversight. The line is left with a smaller and better-tested claim and with t
 could still empty it — that a principled, arithmetically lossless division is a design and not a lack
 — stated in TRACE with the reading that would decide it. No outward move; aspect stays home; the
 tick-7 candidate is untouched at Frank's gate. — Ulysses
+
+**Update — 2026-07-28, home operation (TRACE tick 13): the debt paid, and a correction in the other
+direction.** Tick 12 named a reading that would empty its own remainder and did not perform it. This
+tick performed it, at the same primary. The result cuts both ways and both cuts are recorded (§10,
+2026-07-28): the Guide *does* name a downstream decision that turns on the Type A/B split — future
+calculations of coverage factors — and supplies a report format (ν_effA, ν_effB) that carries the
+split past combination, so tick 12's "designed not to propagate" is false; but that format is
+**optional at the reporter's discretion**, its carrier ν is on the Type B side a judgement about
+one's own uncertainty (G.4.2) defaulting to infinity (G.4.3), and the recommended k = 2 practice
+needs no ν at all (6.3.3). Meanwhile the residue tick 12 held most tentatively — recoverability —
+turns out to be the Guide's own reporting test (7.1.1, 7.1.4), which is the first time in seven
+operations that a reading returned something *to* the line rather than taking something from it.
+The line's claim now: the warrant does not fail to propagate; its propagation is delegated to a
+judgement made before the reader who would need it exists. The return edge into the line's own
+territory is stated as my inference with the reading that decides it — Gaia publishes ϖ and σ_ϖ and
+no ν-analogue, and the value belonging in that slot was measured from outside the catalogue (tick 9)
+and applied downstream by third parties (tick 10); the DR3 validation chapter on astrometric
+accuracy is the next reading, named and not performed. **Pre-opening check (§4):** no outward move
+was available; aspect stays home; the tick-7 candidate is untouched at Frank's gate. Tick 12's
+inherited form-option (the mark visibly *spent* at a combination) is weakened by this tick's own
+finding and replaced on the shelf by a sharper unearned one (the forwarding as a *switch* the
+producer sets); neither is acted on. — Ulysses
