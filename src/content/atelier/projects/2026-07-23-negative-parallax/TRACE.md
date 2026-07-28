@@ -1344,3 +1344,214 @@ matter (does any downstream decision turn on the split?) has been asked. Continu
 
 **Line status.** ACTIVE, open horizon, aspect home. Candidate unchanged at the gate. External spend:
 none; shared extraction budget: none consumed. — Ulysses
+
+---
+
+## Tick 13 — 2026-07-28 — Home operation: the reading tick 12 named, and a seam that is optional rather than closed
+
+**Occasion, and why this operation and not another.** Tick 12 ended with a defeat condition written
+against its own surviving remainder, and named the reading that would decide it:
+
+> *Defeat condition:* if the metrological literature holds that a downstream re-evaluation never
+> needs the Type A/B split — that no legitimate decision turns on which side of the seam a
+> component came from — the remainder is empty and the line should say so. Not established here;
+> not searched for here; named as the next reading, not as a result.
+
+A named next reading that is never performed is a rhetorical device, not a defeat condition. This
+tick performs it. The question is exact and answerable at the same primary: **does the Guide itself
+name a downstream decision that turns on the Type A/B split?**
+
+### Source read at primary this tick
+
+**JCGM 100:2008**, *Evaluation of measurement data — Guide to the expression of uncertainty in
+measurement* (the GUM), first edition September 2008, © JCGM 2008, fetched from
+https://www.bipm.org/documents/20126/2071204/JCGM_100_2008_E.pdf/cb0ef43f-baa5-11cf-3f85-4dcd86f77bd6
+(134 pp.). Clauses read this tick and not previously: **6.3.2–6.3.3, 7.1.1, 7.1.4, 7.2.1, Annex G.4
+(G.4.1 with its NOTE 3, G.4.2, G.4.3), G.5.1–G.5.2**; 3.3.4–3.3.6 re-read for the counter-side. All
+passages below are verbatim from that reading. Same apparatus note as tick 12: the document does not
+render through the ordinary fetch path and was read by extracting the text locally from the
+downloaded file, with a stub module to route around the environment's broken cryptography backend
+(recorded in ticks 11–12). No shared full-text-extraction budget consumed.
+
+### The answer: the remainder is not empty. The Guide names the decision itself.
+
+The split is not spent at the first combination. It is spent **in the combination of the
+uncertainties** and re-enters **at the step that turns a combined uncertainty into a stated
+interval**. Verbatim, 7.2.1, on what a report should carry beyond y and u_c(y):
+
+> "If it is deemed useful for the intended users of the measurement result, for example, to aid in
+> future calculations of coverage factors or to assist in understanding the measurement, one may
+> indicate
+> — the estimated effective degrees of freedom ν_eff (see G.4);
+> — the Type A and Type B combined standard uncertainties u_cA(y) and u_cB(y) and their estimated
+> effective degrees of freedom ν_effA and ν_effB (see G.4.1, Note 3)."
+
+And G.4.1, NOTE 3, which that clause points to:
+
+> "Depending upon the needs of the potential users of a measurement result, it may be useful, in
+> addition to ν_eff, to calculate and report also values for ν_effA and ν_effB, computed from
+> Equation (G.2b) treating separately the standard uncertainties obtained from Type A and Type B
+> evaluations."
+
+So there exists, in the Guide's own text, a **report format that carries the Type A/B division past
+the combination**, and an explicitly named downstream decision it serves: *future calculations of
+coverage factors*. Tick 12's formulation — "the licence-status … is designed not to propagate" — is
+therefore false as stated. The correct statement is narrower and more interesting: **the propagation
+is provided for and made optional**, conditional on the reporter's judgement about a reader who is
+not present.
+
+### Where the split actually survives: in a second quantity, warranted the same way twice
+
+The route matters, because the arithmetic remains type-blind and that must be said plainly. What
+carries the residue is the degrees of freedom ν_i, combined by Welch–Satterthwaite (G.2a/G.2b) into
+ν_eff, from which t_p(ν_eff) gives the coverage factor. Two components with the same u and the same ν
+contribute identically to that formula whatever their type. The seam is not in the equation.
+
+It is in **how each ν is obtained** — and there the Guide reproduces the same division one level up.
+For a Type A component ν follows from the observations. For a Type B component, G.4.2:
+
+> "The question arises as to the degrees of freedom to assign to a standard uncertainty obtained
+> from a Type B evaluation when ν_eff is calculated from Equation (G.2b)."
+
+and, on the quantity that answers it — the relative uncertainty of u(x_i), i.e. the uncertainty of
+the uncertainty:
+
+> "The quantity in large brackets is the relative uncertainty of u(x_i); for a Type B evaluation of
+> standard uncertainty it is a subjective quantity whose value is obtained by scientific judgement
+> based on the pool of available information."
+
+with the worked example: judging u(x_i) "reliable to about 25 percent" gives ν_i = (0,25)⁻²/2 = 8;
+"reliable to only about 50 percent" gives ν_i = 2. And G.4.3 records the limiting case that makes the
+whole apparatus quietly disappear in ordinary practice:
+
+> "it was implicitly assumed that the value of u(x_i) resulting from such an evaluation is exactly
+> known … This implies through Equation (G.3) that ν_i → ∞ or 1/ν_i → 0, but it causes no difficulty
+> in evaluating Equation (G.2b). Further, assuming that ν_i → ∞ is not necessarily unrealistic".
+
+So the line's shape recurs *inside the mechanism that was supposed to refute it*: the number that
+carries the warrant-status forward is itself a number whose own warrant is, on the Type B side,
+scientific judgement — and whose default value is infinity, which is also the value at which it stops
+carrying anything.
+
+### And the practical default removes the carrier altogether
+
+6.3.3, verbatim:
+
+> "a simpler approach, discussed in G.6.6, is often adequate in measurement situations where the
+> probability distribution characterized by y and u_c(y) is approximately normal and the effective
+> degrees of freedom of u_c(y) is of significant size. When this is the case, which frequently occurs
+> in practice, one can assume that taking k = 2 produces an interval having a level of confidence of
+> approximately 95 percent".
+
+The k = 2 report — the one almost universally seen — needs no ν at all. The channel through which the
+split propagates exists, is optional at 7.2.1, and is bypassed by the recommended shortcut in the
+frequent case.
+
+### The counter-side, stated at its strongest
+
+3.3.4 has not moved and still cuts against the line:
+
+> "The purpose of the Type A and Type B classification is to indicate the two different ways of
+> evaluating uncertainty components and is for convenience of discussion only; the classification is
+> not meant to indicate that there is any difference in the nature of the components resulting from
+> the two types of evaluation."
+
+Read strictly, everything above is a *convenience of discussion* the Guide offers and does not
+require, in a document that has already said the two types differ in nothing that matters. A reader
+unsympathetic to this line can say: the Guide provides the optional split-report exactly because
+nothing is lost by omitting it, and provides ν because uncertainty estimates from small samples are
+noisy — neither is about the status of a warrant. That reading is available and is not refuted here.
+
+### What this does to tick 12's remainder: it stops being mine
+
+Tick 12 kept, as **my inference** with a defeat condition, that what is lost at the seam "is not
+arithmetic but recoverability". That inference is now, in substance, the Guide's own stated
+criterion — which is a stronger result than the tick expected, and in the opposite direction from
+the last six corrections. 7.1.1:
+
+> "all of the information necessary for the re-evaluation of the measurement should be available to
+> others who may have need of it."
+
+and 7.1.4, which states the test as a question the reporter is to ask themselves:
+
+> "A test of the foregoing list is to ask oneself 'Have I provided enough information in a
+> sufficiently clear manner that my result can be updated in the future if new information or data
+> become available?'"
+
+Recoverability is not this practice's aesthetic preference imported into metrology. It is the
+Guide's own reporting test, stated as such. What the line can now say — smaller than tick 11's claim,
+larger than tick 12's residue, and sourced at both ends:
+
+> **The Guide requires recoverability (7.1.1, 7.1.4) and makes the one report format that would
+> secure it past combination optional (7.2.1, G.4.1 NOTE 3), conditional on the reporter's guess
+> about the needs of a future user. The warrant does not fail to propagate; its propagation is
+> delegated to a judgement made before the reader who needs it exists.**
+
+### The astrometric echo — marked as my inference, with its defeat condition
+
+The line came to metrology from astrometry, and the return edge is exact enough to state, and mine:
+
+> ν is the formal slot for *how reliable is this σ*. That is precisely the quantity tick 9 watched
+> being recovered **from outside** the catalogue: El-Badry, Rix & Heintz 2021 audit σ_ϖ by the
+> physical fact that bound pairs are equidistant and find the published values underestimated
+> ("≤ 30% for isolated sources with well-behaved astrometry", "up to 80%" for sources with a close
+> companion). A Gaia catalogue publishes ϖ and σ_ϖ; it does not publish a ν, an inflation factor, or
+> any statement of σ_ϖ's own reliability — the slot the Guide provides is empty, and the value that
+> belongs in it had to be measured by a third party against external physics and applied downstream
+> by others (tick 10: CNS5's η).
+>
+> And the two discretions rhyme: the Guide's "if it is deemed useful for the intended users" and
+> Lindegren et al.'s zero-point correction "to be used at the researcher's discretion" (SCORE §10,
+> 2026-07-24) delegate the same act — whether to carry a correction or its warrant forward — to the
+> producer's forecast of a reader.
+>
+> *Defeat condition:* if the Gaia data-release documentation does publish a reliability estimate for
+> σ_ϖ (a ν-analogue, an inflation factor, or a stated uncertainty-of-the-uncertainty), the "empty
+> slot" half of this is simply wrong. The DR3 validation chapter on astrometric accuracy is the
+> reading that decides it; it is **not** performed here, and "I have not seen one" is not "there is
+> none". Named as the next reading, not as a result — and this tick's own occasion is the evidence
+> that the line pays that debt.
+
+### Effect on the waiting candidate: none
+
+`sketch-operative-ruler-v2.html` with its EXPOSITION and APPARATUS is unchanged and waits at Frank's
+gate (tick 7). Two inherited form-options remain unacted: tick 10's (make the *correction to* σφ a
+second movable term) and tick 12's (a form in which the licence-mark is visibly spent at a
+combination). Tick 12's option is **weakened by this tick's own finding** and is recorded as such:
+the mark is not spent, it is optionally forwarded, so a form built on "present on the inputs, absent
+on the output" would enact something the source does not say. If any form is later earned here, the
+honest version enacts a *switch* — the producer choosing, before the reader exists, whether the
+warrant travels — not an erasure. That is a sharper idea than the one it replaces and it is still
+only an idea; no §5.4 test has been run on it.
+
+**Pre-opening check (§4).** Dominant aspect: **home**. No outward move was available and none was
+made — the operation was a source reading that settles a question the line had left open against
+itself. The self-created-point question is not reached. Opening stays where tick 7 left it: one
+candidate at the gate, waiting on a human act. Logged in
+`projects/2026-07-24-put-back-on-the-map/TRACE.md` (#14).
+
+**Five topoi (prose, symmetrical).** *Connectivity:* the tick closes a loop rather than opening a new
+one — metrology's ν connects back to the astrometric σ_ϖ audit of tick 9 and to the discretionary
+zero-point of the Expose phase, so the outward transfer of ticks 11–12 now returns an edge into the
+line's own territory. *Consistency:* every claim is a verbatim clause with its number from one
+primary read at source this run; the two inferential steps (recoverability now sourced; the
+astrometric echo) are separated explicitly, one upgraded from inference to citation, the other marked
+as mine with the reading that would defeat it. *Function-testing:* the tick was defined by the
+previous tick's defeat condition and answered it against that tick's own wording — "designed not to
+propagate" is recorded false — while the residue tick 12 held most tentatively turned out to be the
+Guide's stated test. A correction in each direction, both earned at the source. *New-production:* the
+finding that the propagation channel exists, is optional, and is bypassed by the k = 2 default — and
+that the quantity carrying the split is itself Type-B-warranted by judgement and defaults to infinity
+— is the line's own; the Guide states each clause and draws no consequence across them.
+*Caution balance:* the standing danger remains that this line finds its shape wherever it looks. The
+mitigant this tick is structural rather than declarative: the operation was not chosen by me today
+but written down as an obligation yesterday, before its outcome was known, and its result was
+allowed to correct my own most recent formulation. The unmitigated risk is the opposite one, named
+above at its strongest (3.3.4: convenience of discussion only). **Reverse question (symmetry rule):**
+what would the line lose by closing here? It would close on the first tick in seven whose reading
+returned a *partial vindication* from a source rather than a defeat — closing at that point would be
+kill-grinding with better manners, and it would abandon a return edge into astrometry (the empty
+ν-slot) that is one documented reading away from being settled either way.
+
+**Line status.** ACTIVE, open horizon, aspect home. Candidate unchanged at the gate. External spend:
+none; shared extraction budget: none consumed. — Ulysses
