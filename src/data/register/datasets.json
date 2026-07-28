@@ -1,1 +1,1539 @@
-[]
+[
+ {
+  "id": "api-eia-gov",
+  "titel": "api.eia.gov",
+  "host": "api.eia.gov",
+  "adressen": [
+   "https://api.eia.gov/v2/petroleum/pri/spt/data/"
+  ],
+  "zugriff_url": "https://api.eia.gov/v2/petroleum/pri/spt/data/",
+  "geprueft": false,
+  "pruef_status": 403,
+  "pruef_vermerk": "Zugang erfordert Anmeldung oder Schlüssel (HTTP 403)",
+  "zugang_gesperrt": true,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own protokoll pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/protokoll/src/protokoll/adapters/oil.py"
+  ],
+  "benutzt_von": [
+   "protokoll"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "api-gdeltproject-org",
+  "titel": "api.gdeltproject.org",
+  "host": "api.gdeltproject.org",
+  "adressen": [
+   "https://api.gdeltproject.org/api/v2/doc/doc"
+  ],
+  "zugriff_url": "https://api.gdeltproject.org/api/v2/doc/doc",
+  "geprueft": false,
+  "pruef_status": null,
+  "pruef_vermerk": "nicht erreichbar: ConnectTimeout",
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own consensus pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/consensus/refresh.py"
+  ],
+  "benutzt_von": [
+   "consensus"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "api-tavily-com",
+  "titel": "api.tavily.com",
+  "host": "api.tavily.com",
+  "adressen": [
+   "https://api.tavily.com/extract"
+  ],
+  "zugriff_url": "https://api.tavily.com/extract",
+  "geprueft": false,
+  "pruef_status": 401,
+  "pruef_vermerk": "Zugang erfordert Anmeldung oder Schlüssel (HTTP 401)",
+  "zugang_gesperrt": true,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own atlas-scout pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/atlas-scout/src/atlas_scout/sources/starts.py"
+  ],
+  "benutzt_von": [
+   "atlas-scout"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "ars-electronica-art",
+  "titel": "S+T+ARTS Prize Winners – S+T+ARTS Prize",
+  "host": "ars.electronica.art",
+  "adressen": [
+   "https://ars.electronica.art/starts-prize/en/winners/",
+   "https://ars.electronica.art/starts-prize/en/winners/winners{jahr"
+  ],
+  "zugriff_url": "https://ars.electronica.art/starts-prize/en/winners/",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own atlas-scout pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/atlas-scout/src/atlas_scout/holdings.py",
+   "pipelines/atlas-scout/src/atlas_scout/sources/starts.py"
+  ],
+  "benutzt_von": [
+   "atlas-scout"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "artbase-rhizome-org",
+  "titel": "MediaWiki API help - Rhizome Artbase",
+  "host": "artbase.rhizome.org",
+  "adressen": [
+   "https://artbase.rhizome.org/api.php",
+   "https://artbase.rhizome.org/wiki"
+  ],
+  "zugriff_url": "https://artbase.rhizome.org/api.php",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own atlas-scout pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/atlas-scout/src/atlas_scout/sources/artbase.py"
+  ],
+  "benutzt_von": [
+   "atlas-scout"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "blog-gdeltproject-org",
+  "titel": "GDELT DOC 2.0 API Debuts! – The GDELT Project",
+  "host": "blog.gdeltproject.org",
+  "adressen": [
+   "https://blog.gdeltproject.org/gdelt-doc-2-0-api-debuts/"
+  ],
+  "zugriff_url": "https://blog.gdeltproject.org/gdelt-doc-2-0-api-debuts/",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own consensus pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/consensus/refresh.py"
+  ],
+  "benutzt_von": [
+   "consensus"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "celestrak-org",
+  "titel": "celestrak.org",
+  "host": "celestrak.org",
+  "adressen": [
+   "https://celestrak.org/NORAD/elements/gp.php?GROUP=${g"
+  ],
+  "zugriff_url": "https://celestrak.org/NORAD/elements/gp.php?GROUP=${g",
+  "geprueft": false,
+  "pruef_status": null,
+  "pruef_vermerk": "Adresse ist eine Vorlage mit Platzhalter, nicht abrufbar",
+  "zugang_gesperrt": false,
+  "nur_vorlage": true,
+  "relevanz": "Retrieved by this ecology's own scripts pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "scripts/fetch-ueberflug.ts"
+  ],
+  "benutzt_von": [
+   "scripts"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "climate-ec-europa-eu",
+  "titel": "2030 climate targets - Climate Action - European Commission",
+  "host": "climate.ec.europa.eu",
+  "adressen": [
+   "https://climate.ec.europa.eu/eu-action/climate-strategies-targets/2030-climate-targets_en",
+   "https://climate.ec.europa.eu/eu-action/climate-strategies-targets/2050-long-term-strategy_en"
+  ],
+  "zugriff_url": "https://climate.ec.europa.eu/eu-action/climate-strategies-targets/2030-climate-targets_en",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own redaction pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/redaction/src/redaction/watchlist.py"
+  ],
+  "benutzt_von": [
+   "redaction"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "climate-nasa-gov",
+  "titel": "Evidence - NASA Science",
+  "host": "climate.nasa.gov",
+  "adressen": [
+   "https://climate.nasa.gov/evidence/",
+   "https://climate.nasa.gov/vital-signs/carbon-dioxide/",
+   "https://climate.nasa.gov/vital-signs/global-temperature/"
+  ],
+  "zugriff_url": "https://climate.nasa.gov/evidence/",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own redaction pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/redaction/src/redaction/watchlist.py"
+  ],
+  "benutzt_von": [
+   "redaction"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "climatereanalyzer-org",
+  "titel": "climatereanalyzer.org",
+  "host": "climatereanalyzer.org",
+  "adressen": [
+   "https://climatereanalyzer.org/clim/sst_daily/json_2clim/oisst2.1_world2_sst_day.json"
+  ],
+  "zugriff_url": "https://climatereanalyzer.org/clim/sst_daily/json_2clim/oisst2.1_world2_sst_day.json",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own protokoll pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/protokoll/src/protokoll/adapters/sst.py"
+  ],
+  "benutzt_von": [
+   "protokoll"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "commission-europa-eu",
+  "titel": "commission.europa.eu",
+  "host": "commission.europa.eu",
+  "adressen": [
+   "https://commission.europa.eu/strategy-and-policy/priorities-2024-2029_en"
+  ],
+  "zugriff_url": "https://commission.europa.eu/strategy-and-policy/priorities-2024-2029_en",
+  "geprueft": false,
+  "pruef_status": 404,
+  "pruef_vermerk": "Identifier antwortet mit HTTP 404",
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own redaction pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/redaction/src/redaction/watchlist.py"
+  ],
+  "benutzt_von": [
+   "redaction"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "data-api-ecb-europa-eu",
+  "titel": "data-api.ecb.europa.eu",
+  "host": "data-api.ecb.europa.eu",
+  "adressen": [
+   "https://data-api.ecb.europa.eu/service/data/EST/B.EU000A2X2A25.WT"
+  ],
+  "zugriff_url": "https://data-api.ecb.europa.eu/service/data/EST/B.EU000A2X2A25.WT",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own protokoll pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/protokoll/src/protokoll/adapters/rates.py"
+  ],
+  "benutzt_von": [
+   "protokoll"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "data-ecb-europa-eu",
+  "titel": "Homepage | ECB Data Portal",
+  "host": "data.ecb.europa.eu",
+  "adressen": [
+   "https://data.ecb.europa.eu/"
+  ],
+  "zugriff_url": "https://data.ecb.europa.eu/",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own protokoll pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/protokoll/src/protokoll/adapters/rates.py"
+  ],
+  "benutzt_von": [
+   "protokoll"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "data-gdeltproject-org",
+  "titel": "data.gdeltproject.org",
+  "host": "data.gdeltproject.org",
+  "adressen": [
+   "http://data.gdeltproject.org/gdeltv2"
+  ],
+  "zugriff_url": "http://data.gdeltproject.org/gdeltv2",
+  "geprueft": false,
+  "pruef_status": 404,
+  "pruef_vermerk": "Identifier antwortet mit HTTP 404",
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own protokoll pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/protokoll/src/protokoll/adapters/conflict.py"
+  ],
+  "benutzt_von": [
+   "protokoll"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "data-giss-nasa-gov",
+  "titel": "data.giss.nasa.gov",
+  "host": "data.giss.nasa.gov",
+  "adressen": [
+   "https://data.giss.nasa.gov/gistemp/tabledata_v4/GLB.Ts+dSST.csv"
+  ],
+  "zugriff_url": "https://data.giss.nasa.gov/gistemp/tabledata_v4/GLB.Ts+dSST.csv",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own scripts pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "scripts/fetch-climate.ts"
+  ],
+  "benutzt_von": [
+   "scripts"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "datacenters-microsoft-com",
+  "titel": "datacenters.microsoft.com",
+  "host": "datacenters.microsoft.com",
+  "adressen": [
+   "https://datacenters.microsoft.com/sustainability/efficiency/"
+  ],
+  "zugriff_url": "https://datacenters.microsoft.com/sustainability/efficiency/",
+  "geprueft": false,
+  "pruef_status": 403,
+  "pruef_vermerk": "Zugang erfordert Anmeldung oder Schlüssel (HTTP 403)",
+  "zugang_gesperrt": true,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own protokoll pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/protokoll/src/protokoll/spielraum/sources.py"
+  ],
+  "benutzt_von": [
+   "protokoll"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "dataphys-org",
+  "titel": "List of Physical Visualizations and Related Artifacts",
+  "host": "dataphys.org",
+  "adressen": [
+   "https://dataphys.org/list/"
+  ],
+  "zugriff_url": "https://dataphys.org/list/",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own atlas-scout pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/atlas-scout/src/atlas_scout/sources/dataphys.py"
+  ],
+  "benutzt_von": [
+   "atlas-scout"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "earthquake-usgs-gov",
+  "titel": "earthquake.usgs.gov",
+  "host": "earthquake.usgs.gov",
+  "adressen": [
+   "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_day.geojson"
+  ],
+  "zugriff_url": "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_day.geojson",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own protokoll pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/protokoll/src/protokoll/adapters/quakes.py"
+  ],
+  "benutzt_von": [
+   "protokoll"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "easylist-to",
+  "titel": "easylist.to",
+  "host": "easylist.to",
+  "adressen": [
+   "https://easylist.to/easylist/easyprivacy.txt"
+  ],
+  "zugriff_url": "https://easylist.to/easylist/easyprivacy.txt",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own beifang pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/beifang/src/beifang/lists_fetch.py"
+  ],
+  "benutzt_von": [
+   "beifang"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "en-wikipedia-org",
+  "titel": "en.wikipedia.org",
+  "host": "en.wikipedia.org",
+  "adressen": [
+   "https://en.wikipedia.org/w/api.php"
+  ],
+  "zugriff_url": "https://en.wikipedia.org/w/api.php",
+  "geprueft": false,
+  "pruef_status": 403,
+  "pruef_vermerk": "Zugang erfordert Anmeldung oder Schlüssel (HTTP 403)",
+  "zugang_gesperrt": true,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own protokoll pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/protokoll/src/protokoll/parallaxe/register.py"
+  ],
+  "benutzt_von": [
+   "protokoll"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "firms-modaps-eosdis-nasa-gov",
+  "titel": "NASA | LANCE | FIRMS",
+  "host": "firms.modaps.eosdis.nasa.gov",
+  "adressen": [
+   "https://firms.modaps.eosdis.nasa.gov/",
+   "https://firms.modaps.eosdis.nasa.gov/api/area/csv"
+  ],
+  "zugriff_url": "https://firms.modaps.eosdis.nasa.gov/",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own protokoll pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/protokoll/src/protokoll/adapters/fires.py"
+  ],
+  "benutzt_von": [
+   "protokoll"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "fred-stlouisfed-org",
+  "titel": "fred.stlouisfed.org",
+  "host": "fred.stlouisfed.org",
+  "adressen": [
+   "https://fred.stlouisfed.org/graph/fredgraph.csv?id=PCU9241269241262",
+   "https://fred.stlouisfed.org/series/PCU9241269241262"
+  ],
+  "zugriff_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=PCU9241269241262",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own protokoll pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/protokoll/src/protokoll/praemie/bls.py"
+  ],
+  "benutzt_von": [
+   "protokoll"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "gateway-api-globalfishingwatch-org",
+  "titel": "gateway.api.globalfishingwatch.org",
+  "host": "gateway.api.globalfishingwatch.org",
+  "adressen": [
+   "https://gateway.api.globalfishingwatch.org/v3/events"
+  ],
+  "zugriff_url": "https://gateway.api.globalfishingwatch.org/v3/events",
+  "geprueft": false,
+  "pruef_status": 401,
+  "pruef_vermerk": "Zugang erfordert Anmeldung oder Schlüssel (HTTP 401)",
+  "zugang_gesperrt": true,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own ghost-fleet pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/ghost-fleet/src/ghost_fleet/gfw.py"
+  ],
+  "benutzt_von": [
+   "ghost-fleet"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "generativelanguage-googleapis-com",
+  "titel": "generativelanguage.googleapis.com",
+  "host": "generativelanguage.googleapis.com",
+  "adressen": [
+   "https://generativelanguage.googleapis.com/v1beta/models"
+  ],
+  "zugriff_url": "https://generativelanguage.googleapis.com/v1beta/models",
+  "geprueft": false,
+  "pruef_status": 404,
+  "pruef_vermerk": "Identifier antwortet mit HTTP 404",
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own irrtum and protokoll pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/irrtum/src/irrtum/critic.py",
+   "pipelines/irrtum/src/irrtum/researcher.py",
+   "pipelines/protokoll/src/protokoll/parallaxe/extract_llm.py"
+  ],
+  "benutzt_von": [
+   "irrtum",
+   "protokoll"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "globalfishingwatch-org",
+  "titel": "Our Apis - Explore and visualize ocean data | Global Fishing Watch",
+  "host": "globalfishingwatch.org",
+  "adressen": [
+   "https://globalfishingwatch.org/map/vessel/{id",
+   "https://globalfishingwatch.org/our-apis/"
+  ],
+  "zugriff_url": "https://globalfishingwatch.org/our-apis/",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own ghost-fleet pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/ghost-fleet/src/ghost_fleet/build.py"
+  ],
+  "benutzt_von": [
+   "ghost-fleet"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "gml-noaa-gov",
+  "titel": "gml.noaa.gov",
+  "host": "gml.noaa.gov",
+  "adressen": [
+   "https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_trend_gl.csv"
+  ],
+  "zugriff_url": "https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_trend_gl.csv",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own protokoll pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/protokoll/src/protokoll/adapters/co2.py"
+  ],
+  "benutzt_von": [
+   "protokoll"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "journals-sub-uni-hamburg-de",
+  "titel": "Science Tracking über Transformationsverträge und Wissenschaftsplattformen: Vom Beifang zum Hauptziel | kommunikation@gesellschaft",
+  "host": "journals.sub.uni-hamburg.de",
+  "adressen": [
+   "https://journals.sub.uni-hamburg.de/hup2/kommges/article/view/1643"
+  ],
+  "zugriff_url": "https://journals.sub.uni-hamburg.de/hup2/kommges/article/view/1643",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own beifang pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/beifang/src/beifang/panel.py"
+  ],
+  "benutzt_von": [
+   "beifang"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "noaadata-apps-nsidc-org",
+  "titel": "noaadata.apps.nsidc.org",
+  "host": "noaadata.apps.nsidc.org",
+  "adressen": [
+   "https://noaadata.apps.nsidc.org/NOAA/G02135/north/daily/data/N_seaice_extent_daily_v4.0.csv",
+   "https://noaadata.apps.nsidc.org/NOAA/G02135/south/daily/data/S_seaice_extent_daily_v4.0.csv"
+  ],
+  "zugriff_url": "https://noaadata.apps.nsidc.org/NOAA/G02135/north/daily/data/N_seaice_extent_daily_v4.0.csv",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own protokoll pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/protokoll/src/protokoll/adapters/seaice.py"
+  ],
+  "benutzt_von": [
+   "protokoll"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "planet4589-org",
+  "titel": "planet4589.org",
+  "host": "planet4589.org",
+  "adressen": [
+   "https://planet4589.org/space/gcat/tsv/derived/active.tsv"
+  ],
+  "zugriff_url": "https://planet4589.org/space/gcat/tsv/derived/active.tsv",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own scripts pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "scripts/fetch-ueberflug.ts"
+  ],
+  "benutzt_von": [
+   "scripts"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "population-un-org",
+  "titel": "World Population Prospects",
+  "host": "population.un.org",
+  "adressen": [
+   "https://population.un.org/wpp/"
+  ],
+  "zugriff_url": "https://population.un.org/wpp/",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own protokoll pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/protokoll/src/protokoll/adapters/population.py"
+  ],
+  "benutzt_von": [
+   "protokoll"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "query-wikidata-org",
+  "titel": "query.wikidata.org",
+  "host": "query.wikidata.org",
+  "adressen": [
+   "https://query.wikidata.org/sparql"
+  ],
+  "zugriff_url": "https://query.wikidata.org/sparql",
+  "geprueft": false,
+  "pruef_status": 403,
+  "pruef_vermerk": "Zugang erfordert Anmeldung oder Schlüssel (HTTP 403)",
+  "zugang_gesperrt": true,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own protokoll pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/protokoll/src/protokoll/halbwertszeit/wikidata.py"
+  ],
+  "benutzt_von": [
+   "protokoll"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "staticcdn-duckduckgo-com",
+  "titel": "staticcdn.duckduckgo.com",
+  "host": "staticcdn.duckduckgo.com",
+  "adressen": [
+   "https://staticcdn.duckduckgo.com/trackerblocking/v5/current/extension-tds.json"
+  ],
+  "zugriff_url": "https://staticcdn.duckduckgo.com/trackerblocking/v5/current/extension-tds.json",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own beifang pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/beifang/src/beifang/lists_fetch.py"
+  ],
+  "benutzt_von": [
+   "beifang"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "sustainability-aboutamazon-com",
+  "titel": "Home - Amazon Sustainability",
+  "host": "sustainability.aboutamazon.com",
+  "adressen": [
+   "https://sustainability.aboutamazon.com/"
+  ],
+  "zugriff_url": "https://sustainability.aboutamazon.com/",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own protokoll pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/protokoll/src/protokoll/spielraum/sources.py"
+  ],
+  "benutzt_von": [
+   "protokoll"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "sustainability-atmeta-com",
+  "titel": "Home - Meta Sustainability",
+  "host": "sustainability.atmeta.com",
+  "adressen": [
+   "https://sustainability.atmeta.com/"
+  ],
+  "zugriff_url": "https://sustainability.atmeta.com/",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own protokoll pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/protokoll/src/protokoll/spielraum/sources.py"
+  ],
+  "benutzt_von": [
+   "protokoll"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "sustainability-google",
+  "titel": "Klimafreundliche Innovationen & Technologie – Google Sustainability",
+  "host": "sustainability.google",
+  "adressen": [
+   "https://sustainability.google/reports/"
+  ],
+  "zugriff_url": "https://sustainability.google/reports/",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own protokoll pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/protokoll/src/protokoll/spielraum/sources.py"
+  ],
+  "benutzt_von": [
+   "protokoll"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "web-archive-org",
+  "titel": "Wayback Machine",
+  "host": "web.archive.org",
+  "adressen": [
+   "https://web.archive.org/",
+   "https://web.archive.org/cdx/search/cdx",
+   "https://web.archive.org/web/{timestamp"
+  ],
+  "zugriff_url": "https://web.archive.org/",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own redaction pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/redaction/src/redaction/build.py",
+   "pipelines/redaction/src/redaction/cdx.py"
+  ],
+  "benutzt_von": [
+   "redaction"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "wikimedia-org",
+  "titel": "wikimedia.org",
+  "host": "wikimedia.org",
+  "adressen": [
+   "https://wikimedia.org/api/rest_v1/",
+   "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article",
+   "https://wikimedia.org/api/rest_v1/metrics/pageviews/top/en.wikipedia.org/all-access"
+  ],
+  "zugriff_url": "https://wikimedia.org/api/rest_v1/",
+  "geprueft": false,
+  "pruef_status": 403,
+  "pruef_vermerk": "Zugang erfordert Anmeldung oder Schlüssel (HTTP 403)",
+  "zugang_gesperrt": true,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own protokoll pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/protokoll/src/protokoll/adapters/attention.py",
+   "pipelines/protokoll/src/protokoll/halbwertszeit/pageviews.py"
+  ],
+  "benutzt_von": [
+   "protokoll"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "www-bls-gov",
+  "titel": "CPS Home : U.S. Bureau of Labor Statistics",
+  "host": "www.bls.gov",
+  "adressen": [
+   "https://www.bls.gov/cps/",
+   "https://www.bls.gov/news.release/empsit.nr0.htm"
+  ],
+  "zugriff_url": "https://www.bls.gov/cps/",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own redaction pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/redaction/src/redaction/watchlist.py"
+  ],
+  "benutzt_von": [
+   "redaction"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "www-bundesregierung-de",
+  "titel": "www.bundesregierung.de",
+  "host": "www.bundesregierung.de",
+  "adressen": [
+   "https://www.bundesregierung.de/breg-de/schwerpunkte/klimaschutz"
+  ],
+  "zugriff_url": "https://www.bundesregierung.de/breg-de/schwerpunkte/klimaschutz",
+  "geprueft": false,
+  "pruef_status": 404,
+  "pruef_vermerk": "Identifier antwortet mit HTTP 404",
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own redaction pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/redaction/src/redaction/watchlist.py"
+  ],
+  "benutzt_von": [
+   "redaction"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "www-cdc-gov",
+  "titel": "Effects of Climate Change on Health | Climate and Health | CDC",
+  "host": "www.cdc.gov",
+  "adressen": [
+   "https://www.cdc.gov/climate-health/php/effects/index.html",
+   "https://www.cdc.gov/tobacco/data_statistics/fact_sheets/fast_facts/index.htm"
+  ],
+  "zugriff_url": "https://www.cdc.gov/climate-health/php/effects/index.html",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own redaction pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/redaction/src/redaction/watchlist.py"
+  ],
+  "benutzt_von": [
+   "redaction"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "www-census-gov",
+  "titel": "Poverty",
+  "host": "www.census.gov",
+  "adressen": [
+   "https://www.census.gov/topics/income-poverty/poverty.html"
+  ],
+  "zugriff_url": "https://www.census.gov/topics/income-poverty/poverty.html",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own redaction pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/redaction/src/redaction/watchlist.py"
+  ],
+  "benutzt_von": [
+   "redaction"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "www-climate-gov",
+  "titel": "Climate change: atmospheric carbon dioxide | NOAA Climate.gov",
+  "host": "www.climate.gov",
+  "adressen": [
+   "https://www.climate.gov/news-features/understanding-climate/climate-change-atmospheric-carbon-dioxide",
+   "https://www.climate.gov/news-features/understanding-climate/climate-change-global-temperature"
+  ],
+  "zugriff_url": "https://www.climate.gov/news-features/understanding-climate/climate-change-atmospheric-carbon-dioxide",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own redaction pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/redaction/src/redaction/watchlist.py"
+  ],
+  "benutzt_von": [
+   "redaction"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "www-eia-gov",
+  "titel": "www.eia.gov",
+  "host": "www.eia.gov",
+  "adressen": [
+   "https://www.eia.gov/opendata/"
+  ],
+  "zugriff_url": "https://www.eia.gov/opendata/",
+  "geprueft": false,
+  "pruef_status": 503,
+  "pruef_vermerk": "Identifier antwortet mit HTTP 503",
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own protokoll pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/protokoll/src/protokoll/adapters/oil.py"
+  ],
+  "benutzt_von": [
+   "protokoll"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "www-epa-gov",
+  "titel": "Climate Change | US EPA",
+  "host": "www.epa.gov",
+  "adressen": [
+   "https://www.epa.gov/climate-change",
+   "https://www.epa.gov/climateindicators",
+   "https://www.epa.gov/ghgemissions/overview-greenhouse-gases"
+  ],
+  "zugriff_url": "https://www.epa.gov/climate-change",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own redaction pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/redaction/src/redaction/watchlist.py"
+  ],
+  "benutzt_von": [
+   "redaction"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "www-fao-org",
+  "titel": "FAO Food Price Index | Food and Agriculture Organization of the United Nations",
+  "host": "www.fao.org",
+  "adressen": [
+   "https://www.fao.org/worldfoodsituation/foodpricesindex/en/"
+  ],
+  "zugriff_url": "https://www.fao.org/worldfoodsituation/foodpricesindex/en/",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own protokoll pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/protokoll/src/protokoll/adapters/food.py"
+  ],
+  "benutzt_von": [
+   "protokoll"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "www-fema-gov",
+  "titel": "www.fema.gov",
+  "host": "www.fema.gov",
+  "adressen": [
+   "https://www.fema.gov/about/openfema/api",
+   "https://www.fema.gov/api/open/v2/FimaNfipClaims?$top=1000"
+  ],
+  "zugriff_url": "https://www.fema.gov/about/openfema/api",
+  "geprueft": false,
+  "pruef_status": 403,
+  "pruef_vermerk": "Zugang erfordert Anmeldung oder Schlüssel (HTTP 403)",
+  "zugang_gesperrt": true,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own protokoll pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/protokoll/src/protokoll/praemie/claims.py"
+  ],
+  "benutzt_von": [
+   "protokoll"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "www-gdeltproject-org",
+  "titel": "The GDELT Project",
+  "host": "www.gdeltproject.org",
+  "adressen": [
+   "https://www.gdeltproject.org/"
+  ],
+  "zugriff_url": "https://www.gdeltproject.org/",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own protokoll pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/protokoll/src/protokoll/adapters/conflict.py"
+  ],
+  "benutzt_von": [
+   "protokoll"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "www-gov-uk",
+  "titel": "Net Zero Strategy: Build Back Greener - GOV.UK",
+  "host": "www.gov.uk",
+  "adressen": [
+   "https://www.gov.uk/government/publications/net-zero-strategy",
+   "https://www.gov.uk/guidance/climate-change-explained"
+  ],
+  "zugriff_url": "https://www.gov.uk/government/publications/net-zero-strategy",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own redaction pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/redaction/src/redaction/watchlist.py"
+  ],
+  "benutzt_von": [
+   "redaction"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "www-iea-org",
+  "titel": "Net Zero by 2050 – Analysis - IEA",
+  "host": "www.iea.org",
+  "adressen": [
+   "https://www.iea.org/reports/net-zero-by-2050"
+  ],
+  "zugriff_url": "https://www.iea.org/reports/net-zero-by-2050",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own redaction pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/redaction/src/redaction/watchlist.py"
+  ],
+  "benutzt_von": [
+   "redaction"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "www-insurance-ca-gov",
+  "titel": "Wildfire Response and Readiness",
+  "host": "www.insurance.ca.gov",
+  "adressen": [
+   "https://www.insurance.ca.gov/01-consumers/200-wrr/"
+  ],
+  "zugriff_url": "https://www.insurance.ca.gov/01-consumers/200-wrr/",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own protokoll pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/protokoll/src/protokoll/praemie/retreat.py"
+  ],
+  "benutzt_von": [
+   "protokoll"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "www-ipcc-ch",
+  "titel": "Climate Change 2021: The Physical Science Basis | Climate Change 2021: The Physical Science Basis",
+  "host": "www.ipcc.ch",
+  "adressen": [
+   "https://www.ipcc.ch/report/ar6/wg1/",
+   "https://www.ipcc.ch/sr15/"
+  ],
+  "zugriff_url": "https://www.ipcc.ch/report/ar6/wg1/",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own redaction pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/redaction/src/redaction/watchlist.py"
+  ],
+  "benutzt_von": [
+   "redaction"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "www-microsoft-com",
+  "titel": "2026 Environmental Sustainability Report | Microsoft",
+  "host": "www.microsoft.com",
+  "adressen": [
+   "https://www.microsoft.com/en-us/corporate-responsibility/sustainability/report"
+  ],
+  "zugriff_url": "https://www.microsoft.com/en-us/corporate-responsibility/sustainability/report",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own protokoll pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/protokoll/src/protokoll/spielraum/sources.py"
+  ],
+  "benutzt_von": [
+   "protokoll"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "www-ncei-noaa-gov",
+  "titel": "Billion-Dollar Weather and Climate Disasters | National Centers for Environmental Information (NCEI)",
+  "host": "www.ncei.noaa.gov",
+  "adressen": [
+   "https://www.ncei.noaa.gov/access/billions/",
+   "https://www.ncei.noaa.gov/access/billions/events-US-1980-2024.csv"
+  ],
+  "zugriff_url": "https://www.ncei.noaa.gov/access/billions/",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own protokoll pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/protokoll/src/protokoll/praemie/disasters.py"
+  ],
+  "benutzt_von": [
+   "protokoll"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "www-philadelphiafed-org",
+  "titel": "www.philadelphiafed.org",
+  "host": "www.philadelphiafed.org",
+  "adressen": [
+   "https://www.philadelphiafed.org/-/media/frbp/assets/surveys-and-data/real-time-data/data-files/xlsx/employmvmd.xlsx",
+   "https://www.philadelphiafed.org/surveys-and-data/real-time-data-research/real-time-data-set-for-macroeconomists"
+  ],
+  "zugriff_url": "https://www.philadelphiafed.org/-/media/frbp/assets/surveys-and-data/real-time-data/data-files/xlsx/employmvmd.xlsx",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own revision pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/revision/refresh.py"
+  ],
+  "benutzt_von": [
+   "revision"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "www-state-gov",
+  "titel": "Technical Difficulties",
+  "host": "www.state.gov",
+  "adressen": [
+   "https://www.state.gov/policy-issues/climate-and-environment/"
+  ],
+  "zugriff_url": "https://www.state.gov/policy-issues/climate-and-environment/",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own redaction pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/redaction/src/redaction/watchlist.py"
+  ],
+  "benutzt_von": [
+   "redaction"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "www-un-org",
+  "titel": "Net Zero Coalition | United Nations",
+  "host": "www.un.org",
+  "adressen": [
+   "https://www.un.org/en/climatechange/net-zero-coalition",
+   "https://www.un.org/en/climatechange/science/causes-effects-climate-change",
+   "https://www.un.org/en/global-issues/human-rights"
+  ],
+  "zugriff_url": "https://www.un.org/en/climatechange/net-zero-coalition",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own redaction pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/redaction/src/redaction/watchlist.py"
+  ],
+  "benutzt_von": [
+   "redaction"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "www-unhcr-org",
+  "titel": "www.unhcr.org",
+  "host": "www.unhcr.org",
+  "adressen": [
+   "https://www.unhcr.org/global-trends",
+   "https://www.unhcr.org/refugee-statistics/"
+  ],
+  "zugriff_url": "https://www.unhcr.org/global-trends",
+  "geprueft": false,
+  "pruef_status": 403,
+  "pruef_vermerk": "Zugang erfordert Anmeldung oder Schlüssel (HTTP 403)",
+  "zugang_gesperrt": true,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own protokoll and redaction pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/protokoll/src/protokoll/adapters/refugees.py",
+   "pipelines/redaction/src/redaction/watchlist.py"
+  ],
+  "benutzt_von": [
+   "protokoll",
+   "redaction"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "www-whitehouse-gov",
+  "titel": "The White House Priorities",
+  "host": "www.whitehouse.gov",
+  "adressen": [
+   "https://www.whitehouse.gov/priorities/"
+  ],
+  "zugriff_url": "https://www.whitehouse.gov/priorities/",
+  "geprueft": true,
+  "pruef_status": 200,
+  "pruef_vermerk": null,
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own redaction pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/redaction/src/redaction/watchlist.py"
+  ],
+  "benutzt_von": [
+   "redaction"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "www-who-int",
+  "titel": "www.who.int",
+  "host": "www.who.int",
+  "adressen": [
+   "https://www.who.int/news-room/fact-sheets/detail/ambient-(outdoor",
+   "https://www.who.int/news-room/fact-sheets/detail/climate-change-and-health",
+   "https://www.who.int/news-room/fact-sheets/detail/obesity-and-overweight",
+   "https://www.who.int/news-room/fact-sheets/detail/tobacco"
+  ],
+  "zugriff_url": "https://www.who.int/news-room/fact-sheets/detail/ambient-(outdoor",
+  "geprueft": false,
+  "pruef_status": 404,
+  "pruef_vermerk": "Identifier antwortet mit HTTP 404",
+  "zugang_gesperrt": false,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own redaction pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/redaction/src/redaction/watchlist.py"
+  ],
+  "benutzt_von": [
+   "redaction"
+  ],
+  "verify_status": "toVerify"
+ },
+ {
+  "id": "www-wikidata-org",
+  "titel": "www.wikidata.org",
+  "host": "www.wikidata.org",
+  "adressen": [
+   "https://www.wikidata.org/"
+  ],
+  "zugriff_url": "https://www.wikidata.org/",
+  "geprueft": false,
+  "pruef_status": 403,
+  "pruef_vermerk": "Zugang erfordert Anmeldung oder Schlüssel (HTTP 403)",
+  "zugang_gesperrt": true,
+  "nur_vorlage": false,
+  "relevanz": "Retrieved by this ecology's own protokoll pipeline on every run.",
+  "relevanz_herkunft": "gebrauch",
+  "weg": "praxis",
+  "aufnahmegrund": "benutzt",
+  "fundstellen": [
+   "pipelines/protokoll/src/protokoll/verluste.py"
+  ],
+  "benutzt_von": [
+   "protokoll"
+  ],
+  "verify_status": "toVerify"
+ }
+]
