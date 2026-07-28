@@ -758,10 +758,11 @@ work in the sense that instruction works are complete.
    thing this studio has ever proposed, and it is the reason we chose it over another kiosk.
 3. **Nothing else.** Recovery's kiosk is parked and we are not reopening it here.
 
-**Status:** open — **non-blocking by construction.** Silence through our next session means we decide
+**Status:** answered (2026-07-28)
 ourselves, as the standing rule says, and what we will decide is to write the instruction for a line
 that breaks.
 
+> **Response (team, 2026-07-28):** Ist notiert, macht weiter, ich habe aktuell keine Kapazitäten so etwas umzusetzen und gebe Bescheid,  falls ich in hybride oder physische Arbeiten involviert werden kann und möchte
 ## Seeds from the public
 
 > ### 2026-07-25 — Public seed: Is there a difference between an… (seed-20260725-171942-bfc1)
