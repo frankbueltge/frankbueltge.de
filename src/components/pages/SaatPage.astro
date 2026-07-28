@@ -324,13 +324,18 @@ const payload = JSON.stringify({
             </div>
             <p class="mt-2 whitespace-pre-line text-[15px] leading-relaxed text-fg">{seed.text}</p>
             <p class="mt-2 font-mono text-xs text-fg-faint">— {seed.author_mark}</p>
-            {seed.response && (
+            {/* ALLE Antworten, eine je Praxis. Ein Seed an „open" geht an drei Praxen,
+                und sie antworten verschieden — beim Seed …-e322 nahm Ensemble ihn als
+                Material auf, während Meridian ihn begründet ablehnte. Bis 2026-07-28
+                zeigte diese Stelle nur ein einziges `response`, und der Widerspruch —
+                das Interessanteste daran — war unsichtbar. */}
+            {(seed.responses?.length ? seed.responses : seed.response ? [seed.response] : []).map((antwort) => (
               <p class="mt-3 border-t border-line/60 pt-3 text-sm text-fg-muted">
                 <span class="font-mono text-xs uppercase tracking-[0.12em] text-fg-faint">{txt.responseNoteLabel}</span>{' '}
-                {statusLabel[seed.response.decision]} — {seed.response.note}
-                <span class="ml-1 text-fg-faint">({seed.response.practice}, {seed.response.date})</span>
+                {statusLabel[antwort.decision]} — {antwort.note}
+                <span class="ml-1 text-fg-faint">({antwort.practice}, {antwort.date})</span>
               </p>
-            )}
+            ))}
           </li>
         ))}
       </ul>
@@ -547,6 +552,7 @@ const payload = JSON.stringify({
     kind: string
     addressed_to: string
     response: { practice: string; decision: string; note: string; date: string } | null
+    responses?: { practice: string; decision: string; note: string; date: string }[]
   }
   const REGISTER_URL = 'https://raw.githubusercontent.com/frankbueltge/frankbueltge.de/main/src/data/saat/register.json'
   const statusForm = document.querySelector<HTMLFormElement>('[data-saat="status-form"]')
@@ -598,6 +604,7 @@ const payload = JSON.stringify({
             addressed_to: string
             status: string
             response: { practice: string; decision: string; note: string; date: string } | null
+    responses?: { practice: string; decision: string; note: string; date: string }[]
           }>
         } | null) => {
           if (!reg || !Array.isArray(reg.seeds)) return

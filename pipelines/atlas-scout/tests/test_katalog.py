@@ -188,3 +188,80 @@ def test_titel_auszeichnung_verhindert_keine_zusammenfuehrung():
     werk = {"title": "A classifier for spurious solutions in <i>Gaia</i> eDR3",
             "authorships": [], "concepts": []}
     assert _aus_openalex(werk)["titel"] == "A classifier for spurious solutions in Gaia eDR3"
+
+
+class TestUrteileUeberleben:
+    """Ein Katalog, der seine Beurteilung nächtlich vergisst, kann nur sammeln.
+
+    Bis 2026-07-28 schrieb der nächtliche Bau papers.json ungelesen über — der Lauf um
+    05:30 UTC hätte alle 27 Urteile gelöscht. Urteile folgen aus keiner Quelle und kommen
+    durch keinen Abruf zurück.
+    """
+
+    def test_urteil_ueberlebt_den_neubau(self):
+        from atlas_scout.katalog import bewahre_urteile
+
+        alt = [{"id": "x", "kennung": "10.1/a", "relevanz_herkunft": "urteil",
+                "relevanz": "Ein geschriebenes Urteil.",
+                "urteil": {"modell": "m", "am": "2026-07-28",
+                           "grundlage": "abstract", "sitzung": "s"},
+                "verify_status": "toVerify"}]
+        neu = bewahre_urteile([_eintrag(id="x", relevanz_herkunft="gebrauch",
+                                        relevanz="Cited by …")], alt)
+        assert neu[0].relevanz == "Ein geschriebenes Urteil."
+        assert neu[0].relevanz_herkunft == "urteil"
+        assert neu[0].urteil["modell"] == "m"
+
+    def test_praxis_satz_schlaegt_das_alte_urteil(self):
+        """Hat eine Praxis seit dem letzten Lauf selbst geschrieben, gewinnt sie."""
+        from atlas_scout.katalog import bewahre_urteile
+
+        alt = [{"id": "x", "kennung": "10.1/a", "relevanz_herkunft": "urteil",
+                "relevanz": "Maschinenurteil.", "urteil": {}, "verify_status": "toVerify"}]
+        neu = bewahre_urteile([_eintrag(id="x", relevanz_herkunft="praxis",
+                                        relevanz="Von der Praxis geschrieben.")], alt)
+        assert neu[0].relevanz_herkunft == "praxis"
+        assert neu[0].relevanz == "Von der Praxis geschrieben."
+
+    def test_abnahme_wird_immer_bewahrt(self):
+        """`verified` setzt nur ein Mensch oder eine Praxis — ein Neubau kann es nicht."""
+        from atlas_scout.katalog import bewahre_urteile
+
+        alt = [{"id": "x", "kennung": "10.1/a", "relevanz_herkunft": "praxis",
+                "verify_status": "verified"}]
+        neu = bewahre_urteile([_eintrag(id="x", verify_status="toVerify")], alt)
+        assert neu[0].verify_status == "verified"
+
+    def test_findet_den_eintrag_auch_wenn_die_id_sich_aendert(self):
+        """Die id wird aus Autor und Titel abgeleitet und wandert, wenn die Quelle ihre
+        Angaben korrigiert. Die Kennung ist der stabilere Schlüssel."""
+        from atlas_scout.katalog import bewahre_urteile
+
+        alt = [{"id": "alter-slug", "kennung": "10.1/a", "relevanz_herkunft": "urteil",
+                "relevanz": "Bleibt erhalten.", "urteil": {}, "verify_status": "toVerify"}]
+        neu = bewahre_urteile([_eintrag(id="neuer-slug", kennung="10.1/a",
+                                        relevanz_herkunft="gebrauch")], alt)
+        assert neu[0].relevanz == "Bleibt erhalten."
+
+    def test_neue_eintraege_bleiben_unberuehrt(self):
+        from atlas_scout.katalog import bewahre_urteile
+
+        neu = bewahre_urteile([_eintrag(id="ganz-neu")], [])
+        assert neu[0].relevanz_herkunft == "gebrauch"
+
+
+def test_als_json_schreibt_jedes_feld_des_datenmodells():
+    """Wächter gegen die Lücke vom 2026-07-28: `urteil` war dem Datenmodell hinzugefügt,
+    aber nie der JSON-Ausgabe — jeder Schreibvorgang ließ den Nachweis fallen. Ein
+    maschinell geschriebener Satz stand danach unattribuiert zwischen den Praxis-Sätzen.
+
+    Statt einzelne Felder zu prüfen, wird das Modell selbst gegen die Ausgabe gehalten:
+    Was künftig hinzukommt, muss hier erscheinen oder der Test schlägt an."""
+    import json as _json
+
+    from atlas_scout.katalog import Katalogeintrag, als_json
+
+    geschrieben = set(_json.loads(als_json([_eintrag()]))[0])
+    im_modell = set(Katalogeintrag.__dataclass_fields__)
+    fehlt = im_modell - geschrieben
+    assert not fehlt, f"Felder im Modell, aber nicht in der Ausgabe: {sorted(fehlt)}"

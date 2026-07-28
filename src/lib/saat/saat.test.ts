@@ -328,3 +328,113 @@ describe('parsePublicSeedResponses', () => {
     expect(parsePublicSeedResponses('# Nur eine Präambel\n\n## Andere Section\n\nText.\n')).toEqual([])
   })
 })
+
+describe('parsePublicSeedResponses — Antwort neben dem Zitat', () => {
+  /** Bis 2026-07-28 verlangte das Muster ein führendes „>". Die Praxen schreiben die
+   *  Antwort aber neben den zitierten Seed: Der Seed ist fremde Rede, die Antwort ist
+   *  ihre eigene Stimme. Ergebnis: Von Meridians Antworten wurde keine einzige
+   *  synchronisiert, und öffentliche Seeds standen auf „unbeantwortet", obwohl die
+   *  Praxis längst geantwortet hatte. */
+  const md = [
+    '## Seeds from the public',
+    '',
+    '> ### 2026-07-25 — Danger Dan (seed-20260725-231645-e322)',
+    '>',
+    '> Danger Dan - Keine Angst',
+    '>',
+    '> **Status:** answered',
+    '',
+    '**Response (Ensemble, 2026-07-25):** TAKEN — as material, and it arrived rightly.',
+  ].join('\n')
+
+  it('erkennt die Antwort auch ohne Blockzitat-Zeichen', () => {
+    const r = parsePublicSeedResponses(md)
+    expect(r).toHaveLength(1)
+    expect(r[0].id).toBe('seed-20260725-231645-e322')
+    expect(r[0].decision).toBe('taken')
+    expect(r[0].persona).toBe('Ensemble')
+  })
+
+  it('erkennt sie weiterhin MIT Blockzitat-Zeichen', () => {
+    const r = parsePublicSeedResponses(md.replace('\n**Response', '\n> **Response'))
+    expect(r).toHaveLength(1)
+    expect(r[0].decision).toBe('taken')
+  })
+
+  it('findet nichts ohne den Abschnitt „Seeds from the public"', () => {
+    expect(parsePublicSeedResponses(md.replace('## Seeds from the public', '## Anderes'))).toHaveLength(0)
+  })
+})
+
+describe('applyResponse — mehrere Praxen, verschiedene Antworten', () => {
+  /** Ein Seed an „open" geht an drei Praxen. Beim Seed …-e322 nahm Ensemble ihn als
+   *  Material auf, während Meridian ihn begründet ablehnte. Bis 2026-07-28 hielt das
+   *  Register nur EIN response-Feld: Die zuletzt synchronisierte Antwort überschrieb die
+   *  anderen, und der Widerspruch — der interessanteste Teil — verschwand. */
+  const leer = (): SaatRegister => ({
+    version: 1,
+    gate_stats: { blocked_total: 0, by_reason: {} },
+    seeds: [{
+      id: 'seed-20260725-231645-e322', kind: 'wort', text: 'x', author_mark: 'anonymous',
+      addressed_to: 'open', ts: '2026-07-25T23:16:45.784Z', status: 'offered',
+      claim_token_hash: 'a', gate: { model: 'm', verdict: 'pass' },
+      forwarded_to: [], response: null,
+    }],
+  })
+  const a = { practice: 'studio', decision: 'taken' as const, note: 'als Material.', date: '2026-07-25' }
+  const b = { practice: 'field-research', decision: 'declined' as const, note: 'kein messbarer Anspruch.', date: '2026-07-26' }
+
+  it('behält beide Antworten', () => {
+    let r = applyResponse(leer(), 'seed-20260725-231645-e322', a)
+    r = applyResponse(r, 'seed-20260725-231645-e322', b)
+    expect(r.seeds[0].responses).toHaveLength(2)
+    expect(r.seeds[0].responses?.map((x) => x.decision).sort()).toEqual(['declined', 'taken'])
+  })
+
+  it('setzt den Status auf die stärkste Entscheidung, nicht die letzte', () => {
+    let r = applyResponse(leer(), 'seed-20260725-231645-e322', a) // taken
+    r = applyResponse(r, 'seed-20260725-231645-e322', b) // declined, kommt später
+    expect(r.seeds[0].status).toBe('taken')
+    expect(r.seeds[0].response?.practice).toBe('studio')
+  })
+
+  it('aktualisiert dieselbe Praxis, statt zu häufen', () => {
+    let r = applyResponse(leer(), 'seed-20260725-231645-e322', a)
+    r = applyResponse(r, 'seed-20260725-231645-e322', { ...a, note: 'korrigiert.' })
+    expect(r.seeds[0].responses).toHaveLength(1)
+    expect(r.seeds[0].responses?.[0].note).toBe('korrigiert.')
+  })
+})
+
+describe('parsePublicSeedResponses — mehrzeilige Antworten', () => {
+  /** `(.*)$` fing nur die erste Zeile; auf /seed stand die Notiz mitten im Satz ab:
+   *  „declined — with thanks, and without any judgement of the". */
+  const md = [
+    '## Seeds from the public',
+    '',
+    '> ### seed (seed-20260725-231645-e322)',
+    '> **Status:** answered',
+    '',
+    '**Response (Meridian, 2026-07-26):** DECLINED — with thanks, and without any',
+    'judgement of the work you named. We can find no measurable question in a bare title.',
+    '',
+    'Ein Absatz danach, der nicht mehr zur Notiz gehört.',
+  ].join('\n')
+
+  it('nimmt die ganze Notiz bis zur Leerzeile', () => {
+    const [r] = parsePublicSeedResponses(md)
+    expect(r.note).toBe(
+      'with thanks, and without any judgement of the work you named. ' +
+        'We can find no measurable question in a bare title.',
+    )
+  })
+
+  it('nimmt den Absatz danach NICHT mit', () => {
+    expect(parsePublicSeedResponses(md)[0].note).not.toContain('Ein Absatz danach')
+  })
+
+  it('entfernt führende Zitatzeichen aus Folgezeilen', () => {
+    const zitiert = md.replace('judgement of the work', '> judgement of the work')
+    expect(parsePublicSeedResponses(zitiert)[0].note).not.toContain('>')
+  })
+})

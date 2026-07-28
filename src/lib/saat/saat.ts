@@ -38,7 +38,33 @@ export interface Seed {
   claim_token_hash: string // sha256-hex des Claim-Tokens
   gate: { model: string; verdict: 'pass' }
   forwarded_to: string[] // Engine-Repos, in die der Block schon geschrieben wurde
-  response: { practice: string; decision: 'taken' | 'adapted' | 'declined'; note: string; date: string; journal_ref?: string } | null
+  /** Zusammenfassung: die stärkste Entscheidung (taken > adapted > declined). Bleibt für
+   *  Bestandscode und für den Fall „nur eine Praxis hat geantwortet". */
+  response: SaatResponse | null
+  /** **Alle** Antworten, eine je Praxis. Ein Seed an `open` geht an drei Praxen, und die
+   *  antworten verschieden — beim Seed `…-e322` nahm Ensemble ihn als Material auf,
+   *  während Meridian ihn begründet ablehnte. Bis 2026-07-28 hielt das Register nur ein
+   *  einziges `response`-Feld: Die zuletzt synchronisierte Antwort überschrieb die
+   *  anderen, und der Widerspruch — der interessanteste Teil — verschwand. */
+  responses?: SaatResponse[]
+}
+
+export interface SaatResponse {
+  practice: string
+  decision: 'taken' | 'adapted' | 'declined'
+  note: string
+  date: string
+  journal_ref?: string
+}
+
+/** Rangfolge für die Zusammenfassung. Ein Seed, den EINE Praxis aufgenommen hat, gilt als
+ *  aufgenommen — die Ablehnungen der anderen verschwinden dadurch nicht, sie stehen in
+ *  `responses`. Die Alternative wäre ein Sammelstatus „answered" gewesen; der hätte die
+ *  häufigste Frage („wurde daraus etwas?") schlechter beantwortet. */
+const ENTSCHEIDUNGSRANG: Record<SaatResponse['decision'], number> = {
+  taken: 3,
+  adapted: 2,
+  declined: 1,
 }
 
 export interface SaatRegister {
@@ -198,11 +224,26 @@ export function addSeed(register: SaatRegister, seed: Seed): SaatRegister {
 
 /** Setzt die Praxis-Antwort und den Status; unbekannte id ⇒ Register unverändert (Aufrufer
  * entscheidet, ob das ein Fehler ist — diese Funktion selbst wirft nie). */
-export function applyResponse(register: SaatRegister, seedId: string, response: NonNullable<Seed['response']>): SaatRegister {
+export function applyResponse(register: SaatRegister, seedId: string, response: SaatResponse): SaatRegister {
   const idx = register.seeds.findIndex((s) => s.id === seedId)
   if (idx === -1) return register
   const seeds = register.seeds.slice()
-  seeds[idx] = { ...seeds[idx], status: response.decision, response }
+  const seed = seeds[idx]
+
+  // Je Praxis eine Antwort: eine erneute Synchronisation aktualisiert, statt zu häufen.
+  const bisher = seed.responses ?? (seed.response ? [seed.response] : [])
+  const responses = [
+    ...bisher.filter((r) => r.practice !== response.practice),
+    response,
+  ].sort((a, b) => a.practice.localeCompare(b.practice))
+
+  // Zusammenfassung und Status aus der stärksten Entscheidung — nie aus der zuletzt
+  // eingelaufenen. Sonst entschiede die Reihenfolge der Repos, was ein Seed „ist".
+  const staerkste = responses.reduce((a, b) =>
+    ENTSCHEIDUNGSRANG[b.decision] > ENTSCHEIDUNGSRANG[a.decision] ? b : a,
+  )
+
+  seeds[idx] = { ...seed, status: staerkste.decision, response: staerkste, responses }
   return { ...register, seeds }
 }
 
@@ -236,9 +277,37 @@ export function publicSeedBlock(opts: { id: string; kind: SaatKind; text: string
 }
 
 const SEED_ID_RE = /seed-\d{8}-\d{6}-[0-9a-f]{4}/
-/** Antwortzeile der Praktik: "> **Response (<persona>, <date>):** TAKEN|ADAPTED|DECLINED — <note>".
- * Case-insensitive fürs Decision-Wort, „—" oder „-" als Trenner toleriert (wie im Engine-Amendment §6 vorgegeben). */
-const RESPONSE_LINE_RE = /^>\s*\*\*Response\s*\(([^,]+),\s*([^)]+)\):\*\*\s*(TAKEN|ADAPTED|DECLINED)\s*[—-]\s*(.*)$/im
+/** Antwortzeile der Praktik: "**Response (<persona>, <date>):** TAKEN|ADAPTED|DECLINED — <note>".
+ * Case-insensitive fürs Decision-Wort, „—" oder „-" als Trenner toleriert (wie im Engine-Amendment §6 vorgegeben).
+ *
+ * **Das Blockzitat-Zeichen ist optional (Fix 2026-07-28).** Bis dahin verlangte das Muster
+ * ein führendes `>`, weil das Amendment die Antwort im Zitatblock zeigte. Die Praxen
+ * schreiben sie aber daneben — und zwar zu Recht: Der Seed ist fremde Rede und wird
+ * zitiert, die Antwort ist ihre eigene Stimme. Gemessen am 2026-07-28: Von Meridians
+ * Antworten wurde dadurch KEINE EINZIGE synchronisiert (0 von 3), bei Ensemble nur die
+ * Hälfte (2 von 4). Seeds standen im öffentlichen Register auf „unbeantwortet", während
+ * die Praxis längst geantwortet hatte.
+ *
+ * Der Zugriff ist bereits auf den Abschnitt „Seeds from the public" und auf die
+ * `> ### `-Blöcke eingegrenzt; ein optionales `>` weitet die Suche also nicht aus. */
+const RESPONSE_LINE_RE = /^>?\s*\*\*Response\s*\(([^,]+),\s*([^)]+)\):\*\*\s*(TAKEN|ADAPTED|DECLINED)\s*[—-]\s*([\s\S]*?)(?=\n\s*\n|\n>?\s*\*\*Response|(?![\s\S]))/im
+
+/** Das Ende der Notiz ist die nächste Leerzeile, die nächste Antwortzeile — oder das Ende
+ *  der Eingabe. Letzteres MUSS `(?![\s\S])` sein, nicht `$`: Mit dem `m`-Flag steht `$` für
+ *  das Zeilenende, und der Lazy-Quantor bricht dann schon nach der ersten Zeile ab. Genau
+ *  das war der Fehler, der auf /seed „…without any judgement of the" stehen ließ.
+ *
+ *  Zeilenumbrüche im Fließtext einer Antwort sind Satz-Layout, keine Absätze. Zusammen-
+ *  gezogen, damit die Notiz als ein Satz lesbar bleibt — und die führenden „> " fallen weg,
+ *  falls die Praxis ihre Antwort doch im Zitatblock geschrieben hat. */
+function fasseNotizZusammen(roh: string): string {
+  return roh
+    .split('\n')
+    .map((z) => z.replace(/^>\s?/, '').trim())
+    .join(' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+}
 
 /** Liest die H2-Section "Seeds from the public" aus einer REQUESTS.md und findet jeden
  * beantworteten Block (Seed-id im Titel + Response-Zeile) — der deterministische Gegenpart
@@ -268,7 +337,7 @@ export function parsePublicSeedResponses(
     results.push({
       id: idMatch[0],
       decision: decisionWord.toLowerCase() as 'taken' | 'adapted' | 'declined',
-      note: note.trim(),
+      note: fasseNotizZusammen(note),
       date: date.trim(),
       persona: persona.trim(),
     })
