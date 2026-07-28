@@ -70,6 +70,14 @@ const addresseeLabel: Record<SaatAddressee, string> = {
 
 const statusLabel: Record<string, string> = { offered: 'offered', taken: 'taken', adapted: 'adapted', declined: 'declined' }
 
+/** Kurzname je Praxis für die Antwortmarken. Die Schlüssel sind Repo-Namen — die stehen
+ *  so im Register, weil der Rückfluss sie aus dem Repo-Pfad nimmt, nicht aus der Persona. */
+const practiceShort: Record<string, string> = {
+  'field-research': 'Field',
+  studio: 'Studio',
+  ulysses: 'Atelier',
+}
+
 const gateReasonLabel: Record<GateReason, string> = {
   spam: 'spam/advertising',
   abuse: 'abuse/harassment',
@@ -144,6 +152,11 @@ const txt = {
     'for publication), or the token is wrong.',
   statusFetchError: 'The register could not be loaded just now. Please try again later.',
   responseNoteLabel: 'The practice’s reply:',
+  oneReply: 'read the reply',
+  manyReplies: 'read all {n} replies',
+  stillOpen: 'no reply yet',
+  stillOpenHint:
+    'This practice was asked and has not answered. A seed stays material until it is used or declined — silence here is not a refusal.',
   registerHeading: 'The register — every seed, open or answered',
   registerIntro: 'Newest first. Declines stand here just as visibly as acceptances — that is by design, not a flaw.',
   registerEmpty: 'No seed in the register yet.',
@@ -324,18 +337,69 @@ const payload = JSON.stringify({
             </div>
             <p class="mt-2 whitespace-pre-line text-[15px] leading-relaxed text-fg">{seed.text}</p>
             <p class="mt-2 font-mono text-xs text-fg-faint">— {seed.author_mark}</p>
-            {/* ALLE Antworten, eine je Praxis. Ein Seed an „open" geht an drei Praxen,
-                und sie antworten verschieden — beim Seed …-e322 nahm Ensemble ihn als
-                Material auf, während Meridian ihn begründet ablehnte. Bis 2026-07-28
-                zeigte diese Stelle nur ein einziges `response`, und der Widerspruch —
-                das Interessanteste daran — war unsichtbar. */}
-            {(seed.responses?.length ? seed.responses : seed.response ? [seed.response] : []).map((antwort) => (
-              <p class="mt-3 border-t border-line/60 pt-3 text-sm text-fg-muted">
-                <span class="font-mono text-xs uppercase tracking-[0.12em] text-fg-faint">{txt.responseNoteLabel}</span>{' '}
-                {statusLabel[antwort.decision]} — {antwort.note}
-                <span class="ml-1 text-fg-faint">({antwort.practice}, {antwort.date})</span>
-              </p>
-            ))}
+            {/* ALLE Antworten, eine je Praxis. Ein Seed an „open" geht an drei Praxen, und
+                sie antworten verschieden — beim Seed …-e322 nahm Ensemble ihn als Material
+                auf, während Meridian ihn begründet ablehnte. Bis 2026-07-28 zeigte diese
+                Stelle nur ein einziges `response`, und der Widerspruch — das Interessanteste
+                daran — war unsichtbar.
+
+                Die Zeile darunter beantwortet Franks Frage (28.07.), „ob die Praxen sofort
+                blocken oder sich eventuell weiter damit beschäftigen" — und zwar AUS DEN
+                DATEN: Wer gefragt wurde, steht in `forwarded_to`; wer geantwortet hat, in
+                `responses`. Die Differenz ist offen, und offen heißt: kann noch kommen.
+                Nichts davon wird aus dem Wortlaut einer Antwort erschlossen. */}
+            {(() => {
+              const antworten = seed.responses?.length
+                ? seed.responses
+                : seed.response
+                  ? [seed.response]
+                  : []
+              const beantwortet = new Set(antworten.map((a) => a.practice))
+              const offen = seed.forwarded_to.filter((p) => !beantwortet.has(p))
+              if (antworten.length === 0 && offen.length === 0) return null
+              return (
+                <div class="mt-3 border-t border-line/60 pt-3">
+                  {/* Übersicht: eine Marke je gefragter Praxis, immer sichtbar. */}
+                  <ul class="flex flex-wrap gap-x-2 gap-y-1">
+                    {antworten.map((a) => (
+                      <li class="rounded-full border border-line px-2 py-0.5 font-mono text-[11px] text-fg-muted">
+                        {practiceShort[a.practice] ?? a.practice}{' '}
+                        <span class="text-fg">{statusLabel[a.decision] ?? a.decision}</span>
+                      </li>
+                    ))}
+                    {offen.map((p) => (
+                      <li
+                        class="rounded-full border border-dashed border-line px-2 py-0.5 font-mono text-[11px] text-fg-faint"
+                        title={txt.stillOpenHint}
+                      >
+                        {practiceShort[p] ?? p} <span>{txt.stillOpen}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* Der Wortlaut erst auf Klick — die Antworten sind teils lang, und die
+                      Liste soll überfliegbar bleiben. */}
+                  {antworten.length > 0 && (
+                    <details class="group mt-2">
+                      <summary class="cursor-pointer font-mono text-[11px] uppercase tracking-[0.12em] text-fg-faint hover:text-fg">
+                        {antworten.length === 1 ? txt.oneReply : txt.manyReplies.replace('{n}', String(antworten.length))}
+                      </summary>
+                      <div class="mt-2 space-y-3">
+                        {antworten.map((a) => (
+                          <p class="text-sm leading-relaxed text-fg-muted">
+                            <span class="font-mono text-xs uppercase tracking-[0.12em] text-fg-faint">
+                              {practiceShort[a.practice] ?? a.practice} · {statusLabel[a.decision] ?? a.decision}
+                            </span>{' '}
+                            {a.note}
+                            <span class="ml-1 text-fg-faint">({a.date})</span>
+                          </p>
+                        ))}
+                      </div>
+                    </details>
+                  )}
+                </div>
+              )
+            })()}
           </li>
         ))}
       </ul>
@@ -398,6 +462,11 @@ const payload = JSON.stringify({
     statusNotFound: string
     statusFetchError: string
     responseNoteLabel: string
+    /** Kurznamen der Praxen für die Antwortmarken. */
+    practiceShort: Record<string, string>
+    oneReply: string
+    manyReplies: string
+    stillOpen: string
     registerEmpty: string
     copyLabel: string
     copiedLabel: string
@@ -553,6 +622,7 @@ const payload = JSON.stringify({
     addressed_to: string
     response: { practice: string; decision: string; note: string; date: string } | null
     responses?: { practice: string; decision: string; note: string; date: string }[]
+    forwarded_to?: string[]
   }
   const REGISTER_URL = 'https://raw.githubusercontent.com/frankbueltge/frankbueltge.de/main/src/data/saat/register.json'
   const statusForm = document.querySelector<HTMLFormElement>('[data-saat="status-form"]')
@@ -605,6 +675,7 @@ const payload = JSON.stringify({
             status: string
             response: { practice: string; decision: string; note: string; date: string } | null
     responses?: { practice: string; decision: string; note: string; date: string }[]
+    forwarded_to?: string[]
           }>
         } | null) => {
           if (!reg || !Array.isArray(reg.seeds)) return
@@ -615,8 +686,33 @@ const payload = JSON.stringify({
           }
           const items = seeds
             .map((s) => {
-              const resp = s.response
-                ? `<p class="mt-3 border-t border-line/60 pt-3 text-sm text-fg-muted"><span class="font-mono text-xs uppercase tracking-[0.12em] text-fg-faint">${esc(DATA.responseNoteLabel)}</span> ${esc(DATA.statusLabels[s.response.decision] ?? s.response.decision)} — ${esc(s.response.note)} <span class="ml-1 text-fg-faint">(${esc(s.response.practice)}, ${esc(s.response.date)})</span></p>`
+              // Spiegelt den serverseitigen Block oben: Marken je Praxis, Wortlaut im
+              // Akkordeon, und die noch nicht Beantwortenden gestrichelt daneben. Zwei
+              // Renderpfade für dieselbe Sache sind eine Dublette — sie stehen hier
+              // trotzdem getrennt, weil dieser Pfad frisch von raw.githubusercontent.com
+              // liest (Claim-Token-Abfrage) und keinen Astro-Build kennt. Wer den einen
+              // ändert, muss den anderen mitziehen.
+              const antworten = s.responses?.length ? s.responses : s.response ? [s.response] : []
+              const beantwortet = new Set(antworten.map((a) => a.practice))
+              const offen = (s.forwarded_to ?? []).filter((p) => !beantwortet.has(p))
+              const marke = (inhalt: string, gestrichelt: boolean) =>
+                `<li class="rounded-full border ${gestrichelt ? 'border-dashed border-line text-fg-faint' : 'border-line text-fg-muted'} px-2 py-0.5 font-mono text-[11px]">${inhalt}</li>`
+              const marken = antworten.length || offen.length
+                ? `<ul class="flex flex-wrap gap-x-2 gap-y-1">${
+                    antworten.map((a) => marke(`${esc(DATA.practiceShort[a.practice] ?? a.practice)} <span class="text-fg">${esc(DATA.statusLabels[a.decision] ?? a.decision)}</span>`, false)).join('')
+                  }${
+                    offen.map((p) => marke(`${esc(DATA.practiceShort[p] ?? p)} <span>${esc(DATA.stillOpen)}</span>`, true)).join('')
+                  }</ul>`
+                : ''
+              const wortlaut = antworten.length
+                ? `<details class="mt-2"><summary class="cursor-pointer font-mono text-[11px] uppercase tracking-[0.12em] text-fg-faint hover:text-fg">${
+                    esc(antworten.length === 1 ? DATA.oneReply : DATA.manyReplies.replace('{n}', String(antworten.length)))
+                  }</summary><div class="mt-2 space-y-3">${
+                    antworten.map((a) => `<p class="text-sm leading-relaxed text-fg-muted"><span class="font-mono text-xs uppercase tracking-[0.12em] text-fg-faint">${esc(DATA.practiceShort[a.practice] ?? a.practice)} · ${esc(DATA.statusLabels[a.decision] ?? a.decision)}</span> ${esc(a.note)} <span class="ml-1 text-fg-faint">(${esc(a.date)})</span></p>`).join('')
+                  }</div></details>`
+                : ''
+              const resp = marken || wortlaut
+                ? `<div class="mt-3 border-t border-line/60 pt-3">${marken}${wortlaut}</div>`
                 : ''
               return `<li class="p-4 sm:p-5"><div class="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[11px] uppercase tracking-[0.12em] text-fg-faint"><span>${esc(String(s.ts).slice(0, 10))}</span><span aria-hidden="true">·</span><span>${esc(DATA.kindLabels[s.kind] ?? s.kind)}</span><span aria-hidden="true">·</span><span>${esc(DATA.addresseeLabels[s.addressed_to] ?? s.addressed_to)}</span><span aria-hidden="true">·</span><span class="rounded-full border border-line px-2 py-0.5 normal-case tracking-normal text-fg-muted">${esc(DATA.statusLabels[s.status] ?? s.status)}</span></div><p class="mt-2 whitespace-pre-line text-[15px] leading-relaxed text-fg">${esc(s.text)}</p><p class="mt-2 font-mono text-xs text-fg-faint">— ${esc(s.author_mark)}</p>${resp}</li>`
             })
