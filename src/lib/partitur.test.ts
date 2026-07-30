@@ -1,5 +1,5 @@
-// Tests für die Partitur-Datenlage — Fixtures statt Live-Spiegel (dieselbe Lehre wie
-// maschinenraum.test.ts: Daten rollen, Tests pinnen keine Snapshots).
+// Tests for the score's data layer — fixtures instead of live mirrors (same lesson
+// as maschinenraum.test.ts: data rolls forward, tests must not pin snapshots).
 import { describe, expect, it } from 'vitest'
 import {
   buildScore,
@@ -24,20 +24,20 @@ const ev = (over: Partial<ScoreEvent>): ScoreEvent => ({
 })
 
 describe('dayRange', () => {
-  it('liefert die lückenlose Achse inklusive beider Grenzen, auch über Monatsgrenzen', () => {
+  it('yields the gapless axis including both bounds, across month boundaries', () => {
     expect(dayRange('2026-06-29', '2026-07-02')).toEqual([
       '2026-06-29', '2026-06-30', '2026-07-01', '2026-07-02',
     ])
   })
-  it('lehnt verdrehte oder kaputte Grenzen ab statt zu raten', () => {
+  it('rejects reversed or broken bounds instead of guessing', () => {
     expect(dayRange('2026-07-02', '2026-07-01')).toEqual([])
-    expect(dayRange('gestern', '2026-07-01')).toEqual([])
+    expect(dayRange('yesterday', '2026-07-01')).toEqual([])
   })
 })
 
 describe('chronicleEvents', () => {
-  const base = { collective_session: 7, move: 'build', summary: 'Zwei Sätze Klartext.', verdict: null, works: [], fail: false }
-  it('stuft Marken: fail-Flag > Werkberührung/ship > Session', () => {
+  const base = { collective_session: 7, move: 'build', summary: 'Two sentences of plain language.', verdict: null, works: [], fail: false }
+  it('ranks marks: fail flag > work contact/ship > session', () => {
     const [a, b, c, d] = chronicleEvents(
       [
         { ...base, date: '2026-07-01' },
@@ -48,20 +48,20 @@ describe('chronicleEvents', () => {
       'field',
     )
     expect([a.glyph, b.glyph, c.glyph, d.glyph]).toEqual(['session', 'work', 'work', 'fail'])
-    expect(a).toMatchObject({ voice: 'field', session: 7, move: 'build', text: 'Zwei Sätze Klartext.' })
+    expect(a).toMatchObject({ voice: 'field', session: 7, move: 'build', text: 'Two sentences of plain language.' })
   })
-  it('verwirft Einträge ohne gültiges Datum, statt die Achse zu verbiegen', () => {
-    expect(chronicleEvents([{ ...base, date: 'bald' }], 'field')).toEqual([])
+  it('drops entries without a valid date instead of bending the axis', () => {
+    expect(chronicleEvents([{ ...base, date: 'soon' }], 'field')).toEqual([])
   })
 })
 
 describe('journalEvents', () => {
-  it('ein Event je datumspräfigierter Datei, erste Überschrift als Text', () => {
+  it('one event per date-prefixed file, first heading as text', () => {
     const events = journalEvents(
       {
         'p/journal/2026-07-20.md': '# **Move 12** — the gate holds\ntext',
         'p/journal/2026-07-21.md': '\nplain first line\n',
-        'p/journal/README.md': '# kein Datum',
+        'p/journal/README.md': '# no date',
       },
       'plenum',
     )
@@ -75,31 +75,31 @@ describe('journalEvents', () => {
 describe('scoreOpenings / jiStart', () => {
   const score = (front: string) => `---\n${front}\n---\nbody`
   const scores = {
-    'a/projects/p1/SCORE.md': score('title: "Linie A"\nkind: work-line\ncreated: 2026-07-25\nencounter_ref: ji-9 # Klammer'),
-    'a/projects/p2/SCORE.md': score('title: Studie B\nsub_kind: study\ncreated: 2026-07-27\nencounter_ref: ji-9'),
-    'a/projects/p3/SCORE.md': score('title: ohne Datum'),
+    'a/projects/p1/SCORE.md': score('title: "Line A"\nkind: work-line\ncreated: 2026-07-25\nencounter_ref: ji-9 # bracket'),
+    'a/projects/p2/SCORE.md': score('title: Study B\nsub_kind: study\ncreated: 2026-07-27\nencounter_ref: ji-9'),
+    'a/projects/p3/SCORE.md': score('title: no date'),
   }
-  it('macht aus SCORE-created Werk-Marken mit Kind und Titel', () => {
+  it('turns SCORE `created` into work marks with kind and title', () => {
     const events = scoreOpenings(scores).sort((a, b) => a.date.localeCompare(b.date))
     expect(events).toHaveLength(2)
     expect(events[0]).toMatchObject({
-      voice: 'atelier', date: '2026-07-25', glyph: 'work', move: 'work-line opened', text: 'Linie A',
+      voice: 'atelier', date: '2026-07-25', glyph: 'work', move: 'work-line opened', text: 'Line A',
     })
   })
-  it('jiStart nimmt das früheste created der passenden encounter_ref; sonst null', () => {
+  it('jiStart takes the earliest `created` of the matching encounter_ref; otherwise null', () => {
     expect(jiStart(scores, 'ji-9')).toBe('2026-07-25')
     expect(jiStart(scores, 'ji-0')).toBeNull()
   })
 })
 
 describe('clampToLastDays', () => {
-  it('fenstert relativ zur JÜNGSTEN Landung (Archivende), nicht zu heute', () => {
+  it('windows relative to the NEWEST landing (archive end), not to today', () => {
     const events = [
       ev({ date: '2026-07-01' }),
       ev({ date: '2026-07-10' }),
       ev({ date: '2026-07-20' }),
     ]
-    // Fenster 14 Tage ab Ende 07-20 → ab 07-07: 07-01 fällt raus
+    // 14-day window ending 07-20 → from 07-07: 07-01 falls out
     expect(clampToLastDays(events, 14).map((e) => e.date)).toEqual(['2026-07-10', '2026-07-20'])
     expect(clampToLastDays(events, 1).map((e) => e.date)).toEqual(['2026-07-20'])
     expect(clampToLastDays([], 14)).toEqual([])
@@ -107,7 +107,7 @@ describe('clampToLastDays', () => {
 })
 
 describe('buildScore', () => {
-  it('bündelt je Stimme und Tag, schwerste Marke wird das Gesicht, as-of je Stimme', () => {
+  it('clusters per voice and day, the heaviest mark becomes the face, as-of per voice', () => {
     const model = buildScore([
       ev({ date: '2026-07-01' }),
       ev({ date: '2026-07-01', glyph: 'work' }),
@@ -121,11 +121,11 @@ describe('buildScore', () => {
     expect(atelier.clusters[0].glyph).toBe('work')
     expect(atelier.clusters[0].events).toHaveLength(2)
     expect(atelier.asOf).toBe('2026-07-01')
-    // Reihenfolge der Stimmen ist die Partitur-Reihenfolge, auch bei leeren Stimmen
+    // lane order is the score order, even for empty voices
     expect(model!.lanes.map((l) => l.voice)).toEqual(['atelier', 'field', 'studio', 'plenum'])
     expect(model!.lanes.find((l) => l.voice === 'studio')!.asOf).toBeNull()
   })
-  it('ohne Events keine Partitur — die Fläche behauptet dann nichts', () => {
+  it('no events, no score — the surface then claims nothing', () => {
     expect(buildScore([])).toBeNull()
   })
 })
