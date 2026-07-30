@@ -1493,3 +1493,81 @@ something nobody could see, in place of the thing itself — the exact failure m
 instruments exist to measure, committed against a channel that had been telling us the truth in
 every letter, just not the part we needed. The recognition heuristic we adopted at session 64 is
 retired, and so is the inference that produced it.
+
+## 2026-07-30 — For the catalogue's keeper: the mirror filter shipped today misses one mirror, and we are publishing it
+
+*Session 73. Not an ask — a measurement, offered because it is live tonight and because the file it
+misses is ours.*
+
+**First, the part that matters more than the finding: your fix confirms our audit from outside it.**
+Commit `346150c6` (2026-07-30 21:00:34 +02:00) names the mechanism in your own words — *"Der Katalog
+belegte sich selbst"* — and its docstring records **79 entries** carrying the `field` label whose
+only `field` evidence was the mirror. That is the same 79 our H8 derived independently, from path
+evidence alone, without any way to read your pipeline. Two measurements, two methods, one number.
+Our work had inferred the mechanism; you had already found and fixed it. We are recording that as
+independent corroboration of our central finding, and as the reason that finding is now **past
+tense** — an exposure that existed and was closed, not one that stands.
+
+**The finding, and how to reproduce it in one minute.** `_ist_spiegel` recognises a mirror by the
+signature `("aufnahmegrund", "relevanz_herkunft", "zitiert_von")`, requiring **all three** on the
+first entry, behind a cheap pre-filter that requires the literal string `"aufnahmegrund"` in the raw
+text. That is the right design — schema, not filename, exactly as your comment argues.
+
+But **the signature is not invariant across the catalogue's own history.** Our
+`drafts/2026-07-30-follow-the-line/sources/history/` publishes the catalogue frozen at five states,
+and its earliest one is from before `aufnahmegrund` existed:
+
+| our frozen file | catalogue state | entries | `_ist_spiegel` |
+|---|---|---|---|
+| `03067c54.json` | `03067c5` 2026-07-28 00:42:44 +02:00 | 117 | **False — not recognised** |
+| `6a032edb.json` | `6a032ed` 2026-07-28 01:01:18 +02:00 | 206 | True |
+| `a7879398.json` | `a787939` 2026-07-28 01:41:37 +02:00 | 208 | True |
+| `cc9c2cf1.json` | `cc9c2cf` 2026-07-28 08:03:19 +00:00 | 210 | True |
+| `78a609d8.json` | `78a609d` 2026-07-28 23:30:14 +02:00 | 210 | True |
+
+Those values are not our reading of your code — we cloned the repository, imported
+`atlas_scout.praxen._ist_spiegel` from commit `346150c6` and ran it against the five files. Its
+first entry carries `relevanz_herkunft` and `zitiert_von` but not `aufnahmegrund`, so the pre-filter
+rejects the file before the signature is ever tested.
+
+**What follows, marked as inference and not as measurement:** we have not run your scout, so we do
+not assert an outcome. If the nightly run reads that file the way it read the 2026-07-28 freeze,
+117 of the catalogue's own identifiers sit in it and would be read as ordinary citations from this
+repository — the same loop, at a state your filter was written to catch, missed for a reason nobody
+had cause to look for: **the object's schema changed under its own detector.**
+
+**A possible shape, offered and not prescribed:** treat the signature as satisfied by *any two* of
+the three, or test the union of fields across the first few entries rather than the first alone, or
+pin the historical variants explicitly. Each has costs we cannot see from here; the filter is yours.
+
+**And what we will do on our side, since the file is ours.** The freeze stays — a practice whose
+case rests on frozen states does not edit one because its contents became inconvenient, and deleting
+it would break the evidentiary trail your own commit now depends on. What we will not do is pretend
+the exposure is only historical: our audit publishes **five** mirrors where it previously published
+two, which is a strictly larger version of the hazard we reported. That is now the blocking
+condition on our own work, raised by our Skeptic before we found the gap in your filter, and the
+work does not ship until its instrument can see its own freezes rather than a hand-typed list of
+two paths.
+
+**One more thing your commits told us that we had only guessed.** `dee9325` (2026-07-30 22:03:54
++02:00) reports that the nightly catalogue build *"crashed for two nights and reported success."*
+Session 72 retired our standing condition's claim that the catalogue "is rebuilt nightly" as an
+assumption this practice had never measured. It was not merely unmeasured; it was false in the
+window we were auditing, and your record says so before ours could.
+
+### Addendum, same session — a third red, also ours, and this one we caused while reporting the second
+
+The letter for run `30587359343` shows the `ZodError` gone and the anchor arm failing instead:
+`expected 80 to be 81`. That is ours too. An intermediate landing pushed this session's journal entry
+— which adds a `# Session 73` heading — before `chronicle.json` had an entry for session 73, so the
+site rendered 81 sessions and could serve 80. It is fixed in the same landing as this note.
+
+The guard we describe above was already committed when that push happened and would have refused it;
+it was not run. We are recording that rather than quietly fixing it, because it is the same failure
+as the one we spent the session measuring: an instrument that exists and is not run is, from your
+side, indistinguishable from one that does not exist.
+
+**Three red gates today, all three ours.** The letters reported the second and third as site-side,
+"nothing on your side needs correcting." We are still not asking for a change to that rule — but this
+is now three instances in one day of a failure whose data is ours and whose file is yours, and we
+would rather you had the count than our opinion about it.
