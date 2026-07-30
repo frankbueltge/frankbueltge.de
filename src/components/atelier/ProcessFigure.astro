@@ -1,0 +1,346 @@
+---
+// src/components/atelier/ProcessFigure.astro — „Der Weg einer Frage": die Vogelperspektive
+// über die Forschungspraxis des Ateliers.
+//
+// Warum (Frank, 2026-07-30): „/atelier/projects hat ausführliche TRACE und SCORE, aber es
+// fehlt ein Diagramm, das den gesamten Prozess auf einen Blick verständlich macht — niemand
+// liest diese ellenlangen Texte." Die Akten bleiben die Tiefe; diese Figur ist der Einstieg.
+//
+// Was sie zeigt: Jede eröffnete Linie als Band auf der Zeitachse — vom Tag ihrer Eröffnung
+// bis zu ihrem letzten Zug — und danach ihr Weg in den Hafen, in dem sie geendet ist. Die
+// Höhe eines Hafens ist proportional zu seiner Anzahl; damit sieht man ohne eine einzige Zahl,
+// dass die meiste Arbeit als Studie endet und wie wenig durch das Tor geht.
+//
+// Alles ist Ableitung aus committeten Akten (src/lib/atelier/process.ts, unter Test) — keine
+// Erzählung, keine Schätzung. Was sich nicht zuordnen ließ, steht unter der Figur.
+import { getCollection } from 'astro:content'
+import { baueProzessbild, STATIONEN, type Ausgang } from '@/lib/atelier/process'
+import '@/styles/atelier-process.css'
+
+const all = await getCollection('atelier')
+
+// Projektakten: 'projects/<id>/<stück>' → ein Projekt mit seinen Aktenstücken.
+const proj = new Map<string, { dateien: string[]; data: Record<string, unknown> }>()
+for (const e of all) {
+  if (!e.id.startsWith('projects/')) continue
+  const [, id, stueck] = e.id.split('/')
+  if (!id || !stueck) continue
+  const eintrag = proj.get(id) ?? { dateien: [], data: {} }
+  eintrag.dateien.push(`${stueck.toUpperCase()}.md`)
+  if (stueck.toLowerCase() === 'score') eintrag.data = (e.data ?? {}) as Record<string, unknown>
+  proj.set(id, eintrag)
+}
+
+const journalIds = all.filter((e) => e.id.startsWith('journal/')).map((e) => e.id)
+const heute = new Date().toISOString().slice(0, 10)
+
+/** Die Collection hat ein loses Schema (content.config.ts: z.object({}).loose()), also
+ * parst der YAML-Leser `created: 2026-07-18` zu einem Date-OBJEKT, nicht zu einem String.
+ * String(date) gäbe "Sat Jul 18 2026 …" und damit NaN in jeder Datumsrechnung — der Build
+ * ist daran zuerst gescheitert. Hier wird beides auf YYYY-MM-DD normalisiert; was sich nicht
+ * als Datum lesen lässt, wird zu '' und fällt in der Ableitung sauber heraus. */
+function alsDatum(v: unknown): string {
+  if (v instanceof Date && !Number.isNaN(v.getTime())) return v.toISOString().slice(0, 10)
+  const s = String(v ?? '').trim()
+  if (/^\d{4}-\d{2}-\d{2}/.test(s)) return s.slice(0, 10)
+  const p = Date.parse(s)
+  return Number.isNaN(p) ? '' : new Date(p).toISOString().slice(0, 10)
+}
+
+const bild = baueProzessbild(
+  [...proj.entries()].map(([id, v]) => ({
+    id,
+    title: String(v.data.title ?? id),
+    status: String(v.data.status ?? ''),
+    disposition: String(v.data.disposition ?? ''),
+    created: alsDatum(v.data.created),
+    dateien: v.dateien,
+  })),
+  journalIds,
+  heute,
+)
+
+// ————————————————————————————————————————— Wortlaut ———————————————————————
+// Englisch wie die ganze Site (English-only seit 2026-07-16). Die Hafen-Namen sagen, was
+// geschah — nicht, wie es zu bewerten ist: „closed unfinished" statt „failed", weil das
+// Protokoll das Schließen ausdrücklich gleichrangig zum Weitermachen stellt.
+const HAFEN: Record<Ausgang, { label: string; farbe: string; erklaerung: string }> = {
+  PUBLISH: { label: 'published', farbe: 'var(--pr-publish)', erklaerung: 'through the gate — a work on the site' },
+  PUBLICATION_CANDIDATE: { label: 'at the gate', farbe: 'var(--pr-candidate)', erklaerung: 'proposed as a work; the publication decision is human' },
+  ARCHIVE_AS_STUDY: { label: 'kept as study', farbe: 'var(--pr-study)', erklaerung: 'not published, not discarded — it feeds later lines' },
+  KILL: { label: 'closed unfinished', farbe: 'var(--pr-kill)', erklaerung: 'ended on purpose; closing costs what continuing costs' },
+  OPEN: { label: 'in progress', farbe: 'var(--pr-open)', erklaerung: 'no verdict yet' },
+}
+
+// ————————————————————————————————————————— Geometrie ——————————————————————
+const linien = bild.linien
+const N = Math.max(linien.length, 1)
+const ZEILE = 30
+const OBEN = 56
+const W = 1180
+const H = OBEN + N * ZEILE + 34
+const LABEL_W = 186          // Titelspalte links
+const T_X0 = LABEL_W + 14    // Beginn der Zeitachse
+const T_X1 = 690             // Ende der Zeitachse
+const HAFEN_X = 812          // linke Kante der Häfen
+const HAFEN_W = 174
+
+const tms = (d: string) => Date.parse(`${d}T00:00:00Z`)
+const T0 = linien.length ? Math.min(...linien.map((l) => tms(l.created))) : tms(heute)
+const T1 = Math.max(tms(bild.stand), T0 + 86_400_000)
+const xOf = (d: string) => T_X0 + ((tms(d) - T0) / (T1 - T0)) * (T_X1 - T_X0)
+
+// Häfen: Höhe proportional zur Anzahl — die Form trägt die Aussage, nicht die Beschriftung.
+const gesamt = linien.length || 1
+const HOEHE = N * ZEILE - 6
+let lauf = OBEN
+const haefen = bild.haefen.map((h) => {
+  const hh = Math.max(24, (h.anzahl / gesamt) * HOEHE - 6)
+  const y = lauf
+  lauf += hh + 6
+  return { ...h, y, h: hh, mitte: y + hh / 2, ...HAFEN[h.ausgang] }
+})
+const hafenVon = new Map(haefen.map((h) => [h.ausgang, h]))
+
+// Ein Platz je Linie innerhalb ihres Hafens, damit die Bänder sich nicht überlagern.
+const platz = new Map<string, number>()
+for (const h of haefen) {
+  const drin = linien.filter((l) => l.ausgang === h.ausgang)
+  drin.forEach((l, i) => platz.set(l.id, h.y + (h.h / (drin.length + 1)) * (i + 1)))
+}
+
+const bahnen = linien.map((l, i) => {
+  const y = OBEN + i * ZEILE + ZEILE / 2
+  const x1 = xOf(l.created)
+  const x2 = Math.max(xOf(l.letzterZug ?? l.created), x1 + 7)
+  const zy = platz.get(l.id) ?? y
+  const hafen = hafenVon.get(l.ausgang)
+  const farbe = hafen?.farbe ?? 'var(--pr-open)'
+  // Der Schwanz vom Bandende in den Hafen: eine ruhige Kubik, kein Zickzack.
+  const cx = (x2 + HAFEN_X) / 2
+  const tail = `M ${x2.toFixed(1)} ${y} C ${cx.toFixed(1)} ${y}, ${cx.toFixed(1)} ${zy.toFixed(1)}, ${HAFEN_X} ${zy.toFixed(1)}`
+  const laenge = Math.round(x2 - x1 + (HAFEN_X - x2) * 1.15)
+  return {
+    ...l, y, x1, x2, zy, farbe, tail, laenge,
+    hafenLabel: hafen?.label ?? 'in progress',
+    striche: l.zugTage.map((d) => xOf(d)),
+  }
+})
+
+const kuerze = (s: string, n = 19) => (s.length > n ? `${s.slice(0, n - 1)}…` : s)
+
+// Achsenmarken (erster Tag, Mitte, Stand) — defensiv: ein einziges unlesbares Datum in einer Akte darf nicht den
+// ganzen Build umwerfen (genau das ist beim ersten Lauf passiert).
+const MONATE = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+const marken = [T0, (T0 + T1) / 2, T1]
+  .filter((ts) => Number.isFinite(ts))
+  .map((ts) => {
+    const d = new Date(ts).toISOString().slice(0, 10)
+    return { x: xOf(d), label: `${d.slice(8, 10)} ${MONATE[Number(d.slice(5, 7)) - 1]}` }
+  })
+const kandidat = linien.find((l) => l.ausgang === 'PUBLICATION_CANDIDATE')
+
+// Der Torbogen — nur zeichnen, wenn es beide Häfen gibt; sonst behauptete die Figur einen
+// Übergang, für den in den Akten nichts steht.
+const hPub = hafenVon.get('PUBLISH')
+const hKand = hafenVon.get('PUBLICATION_CANDIDATE')
+const TOR_X = HAFEN_X + HAFEN_W + 16
+const torBogen =
+  hPub && hKand
+    ? {
+        d: `M ${TOR_X} ${hKand.mitte} C ${TOR_X + 26} ${hKand.mitte}, ${TOR_X + 26} ${hPub.mitte}, ${TOR_X + 2} ${hPub.mitte + 4}`,
+        tx: TOR_X + 8,
+        ty: (hPub.mitte + hKand.mitte) / 2 - 2,
+      }
+    : null
+---
+
+<section class="at-proc" aria-labelledby="proc-title" data-proc>
+  <div class="at-proc-head">
+    <h2 class="at-proc-title" id="proc-title">The path of a question</h2>
+    <p class="at-proc-sub">
+      {linien.length} lines opened · {bild.haefen.find((h) => h.ausgang === 'PUBLISH')?.anzahl ?? 0} through the gate · as of {bild.stand}
+    </p>
+  </div>
+
+  <ul class="at-proc-legend" data-legend>
+    {haefen.map((h) => (
+      <li>
+        <button class="at-proc-lg" type="button" aria-pressed="false" data-filter={h.ausgang} title={h.erklaerung} style={`--lg-color:${h.farbe}`}>
+          <span class="dot" aria-hidden="true"></span>
+          <span>{h.label}</span>
+          <span class="n">{h.anzahl}</span>
+        </button>
+      </li>
+    ))}
+  </ul>
+
+  <figure class="at-proc-figure">
+    <div class="at-proc-scroll">
+      <svg
+        class="at-proc-svg"
+        viewBox={`-8 0 ${W + 8} ${H}`}
+        role="img"
+        aria-label={`Research lines of the atelier: ${linien.length} opened; each band runs from the day it was opened to its last move and then into the harbour where it ended. Counts per harbour: ${haefen.map((h) => `${h.label} ${h.anzahl}`).join(', ')}.`}
+      >
+        <defs>
+          <marker id="pr-arrow" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 1 L 7 4 L 0 7 z" fill="var(--color-fg-faint)" />
+          </marker>
+        </defs>
+        <g class="pr-axis">
+          <line x1={T_X0} y1={OBEN - 22} x2={T_X1} y2={OBEN - 22} />
+          {marken.map((m) => <text x={m.x} y={OBEN - 30} text-anchor="middle">{m.label}</text>)}
+        </g>
+
+        {/* Das Tor ist KEIN Zeitpunkt und keine Linie quer durch alles, sondern genau ein
+            Übergang: vom Kandidaten zum Werk. Gepunktet, weil ihn nur ein Mensch geht. */}
+        {torBogen && (
+          <g class="pr-gate">
+            <path d={torBogen.d} fill="none" marker-end="url(#pr-arrow)" />
+            <text x={torBogen.tx} y={torBogen.ty} text-anchor="start">THE GATE</text>
+            <text x={torBogen.tx} y={torBogen.ty + 13} text-anchor="start">a human decides</text>
+          </g>
+        )}
+
+        {haefen.map((h) => (
+          <g class="pr-harbour" data-harbour={h.ausgang}>
+            <title>{`${h.label} — ${h.erklaerung}`}</title>
+            <rect x={HAFEN_X} y={h.y} width={HAFEN_W} height={h.h} rx="9" fill={h.farbe} opacity="0.13" />
+            <rect x={HAFEN_X} y={h.y} width="3.5" height={h.h} rx="1.75" fill={h.farbe} />
+            <text class="h-count" x={HAFEN_X + 14} y={h.mitte - 2} fill={h.farbe}>{h.anzahl}</text>
+            <text class="h-label" x={HAFEN_X + 14} y={h.mitte + 13} fill="var(--color-fg-muted)">{h.label}</text>
+          </g>
+        ))}
+
+        {bahnen.map((b, i) => (
+          <g
+            class="pr-line"
+            tabindex="0"
+            role="button"
+            data-line={b.id}
+            data-out={b.ausgang}
+            data-title={b.title}
+            data-created={b.created}
+            data-days={String(b.tage)}
+            data-moves={String(b.zuege)}
+            data-active={b.aktiv ? '1' : ''}
+            data-harbour={b.hafenLabel}
+            data-color={b.farbe}
+            data-stations={STATIONEN.filter((s) => b.stationen[s]).join(',')}
+            aria-label={`${b.title} — opened ${b.created}, ${b.zuege} moves, ${b.hafenLabel}`}
+            style={`--len:${b.laenge};--delay:${(i * 55)}ms`}
+          >
+            <title>{`${b.title} — ${b.hafenLabel}`}</title>
+            <text class="pr-label" x="6" y={b.y + 4}>{kuerze(b.title)}</text>
+            <text class="pr-date" x={LABEL_W} y={b.y + 4} text-anchor="end">{b.created.slice(5)}</text>
+            <path class="pr-tail" d={b.tail} stroke={b.farbe} />
+            <line class:list={['pr-band', { 'is-open': b.ausgang === 'OPEN' }]} x1={b.x1} y1={b.y} x2={b.x2} y2={b.y} stroke={b.farbe} />
+            {b.striche.map((x) => <line class="pr-move" x1={x} y1={b.y - 3.4} x2={x} y2={b.y + 3.4} />)}
+            {b.aktiv && <circle cx={b.x2} cy={b.y} r="4.6" fill="none" stroke={b.farbe} stroke-width="1.4" opacity="0.9" />}
+            <rect class="pr-focus" x={0} y={b.y - 12} width={W} height={24} rx="6" fill="none" stroke="none" />
+            <path class="pr-hit" d={`M ${b.x1} ${b.y} L ${b.x2} ${b.y} ${b.tail.slice(1)}`} />
+          </g>
+        ))}
+      </svg>
+    </div>
+
+    <figcaption class="at-proc-detail" data-detail>
+      <p class="d-hint">
+        Hover or focus a band. Each band runs from the day its question was opened to its last
+        move; the ticks are the moves themselves. Harbour height is proportional to how many
+        lines ended there.
+      </p>
+    </figcaption>
+  </figure>
+
+  <details class="at-proc-table">
+    <summary>the same as a table</summary>
+    <table>
+      <thead>
+        <tr><th>line</th><th>opened</th><th>days</th><th>moves</th><th>records</th><th>outcome</th></tr>
+      </thead>
+      <tbody>
+        {linien.map((l) => (
+          <tr>
+            <td>{l.title}</td>
+            <td>{l.created}</td>
+            <td>{l.tage}</td>
+            <td>{l.zuege}</td>
+            <td>{STATIONEN.filter((s) => l.stationen[s]).join(' · ')}</td>
+            <td>{HAFEN[l.ausgang].label}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </details>
+
+  <p class="at-proc-prov">
+    Derived at build time from the committed project records (<code>SCORE</code> frontmatter for
+    the verdict, the present record files for the stations, journal filenames for the moves).
+    {bild.ohneLinie > 0 && ` ${bild.ohneLinie} journal entries in this period belong to no line — sessions, protocol changes, encounters; they are not counted as moves.`}
+    {kandidat && ` One line stands at the gate: “${kandidat.title}” — the publication decision is Frank's, by constitution.`}
+  </p>
+</section>
+
+<script>
+  // Interaktion: Band anfassen → hervorheben und die Tafel füllen. Filter in der Legende
+  // isoliert einen Ausgang. Alles ohne Bibliothek und ohne Zustand außerhalb des DOM.
+  const wurzel = document.querySelector<HTMLElement>('[data-proc]')
+  if (wurzel) {
+    const tafel = wurzel.querySelector<HTMLElement>('[data-detail]')!
+    const grund = tafel.innerHTML
+    const bahnen = [...wurzel.querySelectorAll<SVGGElement>('.pr-line')]
+    const knoepfe = [...wurzel.querySelectorAll<HTMLButtonElement>('[data-filter]')]
+    const STATIONEN = ['SCORE', 'TRACE', 'APPARATUS', 'EXPOSITION', 'DECISION']
+    let filter: string | null = null
+
+    const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c] as string)
+
+    function zeige(g: SVGGElement) {
+      const d = g.dataset
+      const erreicht = (d.stations ?? '').split(',').filter(Boolean)
+      const farbe = d.color ?? 'var(--color-line)'
+      tafel.style.setProperty('--d-color', farbe)
+      tafel.innerHTML =
+        `<p class="d-title">${esc(d.title ?? '')}</p>` +
+        `<p class="d-meta">opened <b>${esc(d.created ?? '')}</b> · <b>${esc(d.days ?? '0')}</b> days · ` +
+        `<b>${esc(d.moves ?? '0')}</b> moves · <b>${esc(d.harbour ?? '')}</b>${d.active ? ' · still running' : ''}</p>` +
+        `<ul class="d-stations">` +
+        STATIONEN.map((s) => `<li class="d-st"${erreicht.includes(s) ? ' data-reached' : ''}>${s}</li>`).join('') +
+        `</ul>` +
+        `<p class="d-meta"><a href="/atelier/projects#${esc(d.line ?? '')}">read the record →</a></p>`
+    }
+
+    function anwenden(aktiv: SVGGElement | null) {
+      const dimmen = Boolean(aktiv) || Boolean(filter)
+      wurzel!.toggleAttribute('data-dim', dimmen)
+      for (const g of bahnen) {
+        const an = aktiv ? g === aktiv : !filter || g.dataset.out === filter
+        g.toggleAttribute('data-on', an)
+      }
+      if (!aktiv) tafel.innerHTML = grund
+    }
+
+    for (const g of bahnen) {
+      g.addEventListener('mouseenter', () => { zeige(g); anwenden(g) })
+      g.addEventListener('focus', () => { zeige(g); anwenden(g) })
+      g.addEventListener('mouseleave', () => anwenden(null))
+      g.addEventListener('blur', () => anwenden(null))
+      g.addEventListener('keydown', (ev) => {
+        if (ev.key !== 'Enter' && ev.key !== ' ') return
+        ev.preventDefault()
+        window.location.href = `/atelier/projects#${g.dataset.line ?? ''}`
+      })
+    }
+
+    for (const b of knoepfe) {
+      b.addEventListener('click', () => {
+        const wert = b.dataset.filter ?? null
+        filter = filter === wert ? null : wert
+        for (const x of knoepfe) x.setAttribute('aria-pressed', String(x.dataset.filter === filter))
+        anwenden(null)
+      })
+    }
+  }
+</script>
