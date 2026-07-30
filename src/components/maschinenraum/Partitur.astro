@@ -1,12 +1,12 @@
 ---
-// Die Partitur — vier Stimmen der Ökologie auf einer Zeitachse (Franks Richtungswahl
-// 2026-07-30). Eigenes Projekt im Haus: feste dunkle Bühne mit eigener, validierter
-// Palette (dataviz-Sechs-Checks, Surface #131316 — PASS 2026-07-30), unabhängig vom
-// Site-Theme. Ehrlichkeitsregeln der Seite gelten unverändert: nur committete Spiegel,
-// die Achse endet am letzten GELANDETEN Tag, jede Stimme trägt ihr eigenes as-of.
-// Grundbild ist bauzeitliches SVG — ohne JavaScript vollständig lesbar (plus
-// Tabellenfassung); der Client-Layer legt nur Crosshair, Tooltip, Panel und Tastatur
-// darüber. Encounter-Bögen fehlen bewusst: das Register trägt (noch) keine Daten.
+// The score — four voices of the ecology on one time axis (Frank's direction call,
+// 2026-07-30). Its own project within the site: a fixed dark stage with its own
+// validated palette (dataviz six checks, surface #131316 — PASS 2026-07-30),
+// independent of the site theme. The page's honesty rules apply unchanged: committed
+// mirrors only, the axis ends on the last LANDED day, each voice carries its own
+// as-of. The base image is build-time SVG — fully readable without JavaScript (plus
+// a table rendition); the client layer only adds crosshair, tooltip, panel and
+// keyboard. Encounter arcs are deliberately absent: the register carries no dates yet.
 import type { ScoreModel, VoiceId } from '@/lib/partitur'
 
 interface Ji {
@@ -19,7 +19,7 @@ interface Ji {
 interface Props {
   model: ScoreModel
   ji?: Ji | null
-  /** Homepage-Teaser: kleinere Bühne, keine Tabelle/kein Panel — Klick führt zur Vollansicht */
+  /** homepage teaser: smaller stage, no table/no panel — clicking leads to the full view */
   compact?: boolean
 }
 
@@ -37,7 +37,7 @@ const GLYPH_LABEL: Record<string, string> = {
   fail: 'fail recorded',
 }
 
-// ── Layout (viewBox-Einheiten) ────────────────────────────────────────────────
+// ── Layout (viewBox units) ────────────────────────────────────────────────────
 const VB_W = 1080
 const X0 = 136
 const X1 = 1068
@@ -52,7 +52,8 @@ const xAt = (i: number): number => X0 + dayW * (i + 0.5)
 const dayIndex = new Map(model.days.map((d, i) => [d, i]))
 const laneY = (li: number): number => TOP + LANE_H * li + LANE_H / 2
 
-// Marken-Versätze im Tagesbündel: bis drei Landungen einzeln, darüber Gesicht + ×n
+// mark offsets within a day cluster: up to three landings drawn individually,
+// beyond that one face mark + ×n
 const OFFSETS: Record<number, number[]> = { 1: [0], 2: [-6.5, 6.5], 3: [-9, 0, 9] }
 
 interface MarkR {
@@ -86,14 +87,14 @@ const clustersR: ClusterR[] = model.lanes.flatMap((lane, li) =>
       marks,
       more: n > 3 ? n : 0,
       aria: `${VOICE_META[c.voice].label}, ${c.date}: ${n === 1 ? '1 landing' : `${n} landings`} — ${first.slice(0, 90)}`,
-      // Einzug-Reihenfolge fürs (rein clientseitige) Einblenden — die Site-CSP verwirft
-      // style-Attribute, daher setzt erst der JS-Layer die Verzögerung per CSSOM.
+      // entrance order for the (client-only) fade-in — the site CSP drops style
+      // attributes, so the JS layer sets the delay via CSSOM
       delay: Math.min(clusterIdx++ * 10, 700),
     }
   }),
 )
 
-// Achse: erster Tag, Montage, letzter Tag — Kollisionen mit den Rändern ausgespart
+// axis: first day, Mondays, last day — labels colliding with the edges are dropped
 const dow = (d: string): number => new Date(`${d}T00:00:00Z`).getUTCDay()
 const mondays = model.days.map((d, i) => ({ d, i })).filter(({ d }) => dow(d) === 1)
 const ticks = [
@@ -102,12 +103,12 @@ const ticks = [
   { d: model.days[nDays - 1], i: nDays - 1 },
 ]
 
-// Joint-Inquiry-Klammer: offene rechte Seite — die Untersuchung läuft
+// joint-inquiry bracket: open on the right — the inquiry is still running
 const jiIdx = ji?.start ? (dayIndex.get(ji.start) ?? (ji.start < model.start ? 0 : null)) : null
 const jiX = jiIdx === null || jiIdx === undefined ? null : X0 + dayW * jiIdx
 const jiRows = ji ? model.lanes.filter((l) => ji.voices.includes(l.voice)).length : 0
 
-// Client-Payload: volle Texte fürs Panel, Layout fürs Crosshair
+// client payload: full texts for the panel, layout for the crosshair
 const payload = {
   layout: { vbw: VB_W, x0: X0, dayW, top: TOP, laneH: LANE_H, days: model.days },
   voices: Object.fromEntries(
@@ -131,7 +132,7 @@ const payload = {
 }
 const payloadJson = JSON.stringify(payload).replace(/</g, '\\u003c')
 
-// Tabellenfassung — chronologisch, damit nichts nur per Hover erreichbar ist
+// table rendition — chronological, so nothing is reachable only by hovering
 const tableRows = model.lanes
   .flatMap((l) => l.clusters.flatMap((c) => c.events))
   .sort((a, b) => a.date.localeCompare(b.date) || a.voice.localeCompare(b.voice))
@@ -174,7 +175,7 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
         role="img"
         aria-label={`Score of the research ecology, ${model.start} to ${model.end}: ${tableRows.length} landed sessions across four practices. ${compact ? 'Full score and table on the Maschinenraum page.' : 'Details in the table below.'}`}
       >
-        {/* Wochenraster (Montage) — leise, hinter allem */}
+        {/* week grid (Mondays) — quiet, behind everything */}
         {mondays.map(({ i }) => (
           <line
             x1={X0 + dayW * i} x2={X0 + dayW * i}
@@ -183,7 +184,7 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
           />
         ))}
 
-        {/* Joint-Inquiry-Klammer: drei Stimmen, links geschlossen, rechts offen */}
+        {/* joint-inquiry bracket: three voices, closed on the left, open on the right */}
         {ji && jiX !== null && (
           <g>
             <rect x={jiX} y={TOP + 3} width={X1 - jiX} height={LANE_H * jiRows - 6} fill="var(--pt-wash)" />
@@ -194,7 +195,7 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
           </g>
         )}
 
-        {/* Stimmen: Grundlinie, Label, Zählung, as-of */}
+        {/* voices: baseline, label, count, as-of */}
         {model.lanes.map((lane, li) => (
           <g>
             <line x1={X0} x2={X1} y1={laneY(li)} y2={laneY(li)} stroke="var(--pt-hair)" stroke-width="1" />
@@ -207,7 +208,7 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
           </g>
         ))}
 
-        {/* Achse */}
+        {/* axis */}
         {ticks.map(({ d, i }) => (
           <g>
             <line
@@ -221,10 +222,10 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
           </g>
         ))}
 
-        {/* Crosshair (Client) */}
+        {/* crosshair (client) */}
         <line id="pt-cross" y1={TOP - 4} y2={TOP + LANE_H * model.lanes.length} stroke="var(--pt-hair)" stroke-width="1" aria-hidden="true" />
 
-        {/* Die Landungen */}
+        {/* the landings */}
         {clustersR.map((c) => (
           <g
             class="pt-hit"
@@ -243,19 +244,20 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
               fill="transparent"
             />
             <g class="pt-cluster">
-              {c.marks.map((m) => (
+              {c.marks.map((m, mi) => (
                 m.glyph === 'fail' ? (
-                  <g transform={`translate(${c.cx + m.dx} ${c.cy})`}>
+                  <g data-mi={c.more > 0 ? -1 : mi} transform={`translate(${c.cx + m.dx} ${c.cy})`}>
                     <circle r="7.5" fill="var(--pt-stage)" />
                     <path d="M -4 -4 L 4 4 M -4 4 L 4 -4" stroke="var(--pt-fail)" stroke-width="2.5" stroke-linecap="round" />
                   </g>
                 ) : m.glyph === 'work' ? (
                   <path
+                    data-mi={c.more > 0 ? -1 : mi}
                     d={`M ${c.cx + m.dx} ${c.cy - 6} L ${c.cx + m.dx + 6} ${c.cy} L ${c.cx + m.dx} ${c.cy + 6} L ${c.cx + m.dx - 6} ${c.cy} Z`}
                     fill="var(--c)" stroke="var(--pt-stage)" stroke-width="2"
                   />
                 ) : (
-                  <circle cx={c.cx + m.dx} cy={c.cy} r="4.5" fill="var(--c)" stroke="var(--pt-stage)" stroke-width="2" />
+                  <circle data-mi={c.more > 0 ? -1 : mi} cx={c.cx + m.dx} cy={c.cy} r="4.5" fill="var(--c)" stroke="var(--pt-stage)" stroke-width="2" />
                 )
               ))}
               {c.more > 0 && (
@@ -268,8 +270,8 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
     </div>
   </div>
 
-  {/* Tooltip lebt AUSSERHALB des Scroll-Containers — overflow-x clippt sonst die
-      Auskünfte am rechten Rand (Franks Live-Befund 2026-07-31); Position via CSSOM. */}
+  {/* The tooltip lives OUTSIDE the scroll container — overflow-x would otherwise clip
+      readouts near the right edge (Frank's live finding, 2026-07-31); positioned via CSSOM. */}
   <div id="pt-tip" class="pt-tip" hidden></div>
 
   {compact ? (
@@ -282,15 +284,15 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
     </p>
   ) : (
     <p id="pt-hint" class="px-5 pb-4 pt-2 text-[11px] text-[color:var(--pt-faint)] sm:px-6">
-      Hover a day for the whole column; click or focus a mark to read. From there, prev/next
-      (or ← →) steps landing by landing through the voice — dense days one session at a time.
-      The score is keyboard-readable and fully replicated in the table below.
+      Hover a mark for that landing, a dense ×n mark for its voice's day, the open lane for the
+      whole column. Click to read; from there, prev/next (or ← →) steps landing by landing
+      through the voice. The score is keyboard-readable and fully replicated in the table below.
     </p>
   )}
 
-  {/* Detail-Panel (nur Vollansicht): EIN Lesegerät pro Landung, nicht pro Tag —
-      prev/next (und ←/→) schreiten sessionweise durch die Stimme, auch INNERHALB
-      dichter Tage (Franks Befund 2026-07-31: „es gibt ja oft mehrere sessions pro tag"). */}
+  {/* Detail panel (full view only): ONE reader per landing, not per day — prev/next
+      (and ←/→) step session by session through the voice, including WITHIN dense
+      days (Frank's finding 2026-07-31: "there are often several sessions per day"). */}
   {!compact && (
     <div id="pt-panel" class="pt-panel" hidden>
       <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2">
@@ -307,7 +309,7 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
     </div>
   )}
 
-  {/* Tabellenfassung — nichts ist nur per Hover erreichbar (nur Vollansicht) */}
+  {/* table rendition — nothing is reachable only by hovering (full view only) */}
   {!compact && (
   <details class="border-t border-[color:var(--pt-hairc)] px-5 py-4 sm:px-6">
     <summary class="cursor-pointer font-mono text-[11px] uppercase tracking-[0.14em] text-[color:var(--pt-muted)]">the score as a table</summary>
@@ -343,12 +345,12 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
 
 <style>
   .pt-stage {
-    /* Feste Bühne — bewusst vom Site-Theme entkoppelt (eigenes Projekt im Haus).
-       Stimmenfarben = Hub-Identität (HubEntrance-Türen/score-map): Ulysses-Violett und
-       Ensemble-Orange exakt die Door-Token, Meridian-Blau eine dokumentierte Rampenstufe
-       dunkler (Stufe 500, gleiche Hue — Violett↔Blau brauchte Abstand), Plenum neu Aqua.
-       Validiert (dataviz-Sechs-Checks, Surface #131316, 2026-07-31): alle PASS,
-       schwächstes Nachbarpaar ΔE 9,4 CVD / 16,3 normal. */
+    /* Fixed stage — deliberately decoupled from the site theme (its own project in
+       the house). Voice colors = hub identity (HubEntrance doors / score-map):
+       Ulysses violet and Ensemble orange are exactly the door tokens, Meridian blue
+       is one documented ramp step darker (step 500, same hue — violet↔blue needed
+       separation), Plenum newly aqua. Validated (dataviz six checks, surface
+       #131316, 2026-07-31): all PASS, worst adjacent pair ΔE 9.4 CVD / 16.3 normal. */
     --pt-stage: #131316;
     --pt-panel2: #1b1b20;
     --pt-ink: #f4f4f5;
@@ -365,11 +367,12 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
     --pt-fail: #d03b3b;
     background: var(--pt-stage);
     color: var(--pt-ink);
-    /* Anker für das Tooltip, das außerhalb des clippenden Scroll-Containers lebt */
+    /* anchor for the tooltip, which lives outside the clipping scroll container */
     position: relative;
   }
-  /* Stimmenfarbe über data-voice statt style-Attribut — die Site-CSP (style-src mit
-     Hashes) verwirft Inline-Style-Attribute; Klassenregeln aus gebundeltem CSS nicht. */
+  /* Voice color via data-voice instead of a style attribute — the site CSP
+     (style-src with hashes) drops inline style attributes; class rules from
+     bundled CSS are unaffected. */
   [data-voice='atelier'] { --c: var(--pt-atelier); }
   [data-voice='field'] { --c: var(--pt-field); }
   [data-voice='studio'] { --c: var(--pt-studio); }
@@ -415,9 +418,9 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
   .pt-scroll,
   .pt-tablewrap {
     overflow-x: auto;
-    /* main ist ein Flex-Item (min-width:auto) — ohne inline-size-Containment würde
-       die Mindestbreite der Leinwand als min-content bis zur Seite durchschlagen
-       und auf Mobil die ganze Seite verbreitern statt hier zu scrollen. */
+    /* main is a flex item (min-width:auto) — without inline-size containment the
+       canvas min-width would propagate as min-content up to the page and widen
+       the whole page on mobile instead of scrolling here. */
     contain: inline-size;
   }
   .pt-scroll {
@@ -425,7 +428,7 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
   }
   .pt-canvas {
     position: relative;
-    /* Floor ohne JS; der Client-Layer setzt die exakte Breite aus data-min-width */
+    /* no-JS floor; the client layer sets the exact width from data-min-width */
     min-width: 760px;
   }
   #pt-cross {
@@ -461,15 +464,15 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
   .pt-hit:focus-visible .pt-ring {
     opacity: 0.85;
   }
-  /* die gerade im Panel gelesene Landung — der „Tonarm" auf der Partitur */
+  /* the landing currently read in the panel — the score's tonearm */
   .pt-hit.pt-active .pt-ring {
     opacity: 0.85;
   }
   .pt-hit:hover .pt-cluster {
     filter: brightness(1.2);
   }
-  /* Einzug nur als JS-Enhancement (.pt-anim wird vom Client-Layer gesetzt, die
-     Verzögerung per CSSOM) — ohne JS steht die Partitur sofort vollständig da. */
+  /* Entrance as a JS enhancement only (.pt-anim is added by the client layer, the
+     delay set via CSSOM) — without JS the score is fully visible immediately. */
   .pt-anim .pt-cluster {
     opacity: 0;
     transform: translateY(5px);
@@ -503,8 +506,8 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
     color: var(--pt-ink);
     box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
   }
-  /* Tooltip-/Panel-Innenleben entsteht zur Laufzeit (createElement) und trägt darum
-     keine Astro-Scope-Attribute — daher :global() unter dem server-gerenderten Wurzelknoten. */
+  /* Tooltip/panel internals are created at runtime (createElement) and therefore
+     carry no Astro scope attributes — hence :global() under the server-rendered root. */
   .pt-tip :global(.tip-date) {
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
     font-size: 9.5px;
@@ -591,9 +594,9 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
 </style>
 
 <script>
-  // Interaktions-Layer der Partitur: Crosshair + Tages-Tooltip (eine Auskunft, alle
-  // Stimmen), Klick/Enter → Detail-Panel mit vollem Wortlaut, Esc schließt. Alles
-  // unterhalb ist Zusatz — die statische Fassung (SVG + Tabelle) trägt allein.
+  // The score's interaction layer: crosshair + tooltips, click/Enter → detail panel
+  // with the full wording, Esc closes. Everything below is an enhancement — the
+  // static rendition (SVG + table) stands on its own.
   interface TipEvent {
     glyph: string
     session: number | null
@@ -614,7 +617,7 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
   const canvas = document.querySelector<HTMLElement>('#partitur .pt-canvas')
   const tip = document.getElementById('pt-tip')
   const cross = document.getElementById('pt-cross')
-  // Panel existiert nur in der Vollansicht; im Kompaktmodus führt der Klick zur Vollseite.
+  // The panel exists only in the full view; in compact mode a click leads to the full page.
   const panel = document.getElementById('pt-panel')
   const panelHead = document.getElementById('pt-panel-head')
   const panelList = document.getElementById('pt-panel-list')
@@ -627,9 +630,9 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
     const { vbw, x0, dayW, days } = data.layout
     const glyphWord: Record<string, string> = { session: 'session', work: 'work', fail: 'fail' }
 
-    // Die Site-CSP verwirft style-ATTRIBUTE — CSSOM-Zuweisungen wie diese sind erlaubt.
-    // Exakte Mindestbreite (abhängig von der Tagesanzahl) und Einzug-Verzögerungen
-    // kommen deshalb erst hier; ohne JS steht die Partitur sofort und vollständig.
+    // The site CSP drops style ATTRIBUTES — CSSOM assignments like these are allowed.
+    // The exact min-width (depends on the day count) and the entrance delays are
+    // therefore applied only here; without JS the score is complete right away.
     const minW = canvas.getAttribute('data-min-width')
     if (minW) canvas.style.minWidth = `${minW}px`
     for (const hit of svg.querySelectorAll<SVGGElement>('.pt-hit')) {
@@ -639,48 +642,41 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
 
     const scale = () => svg.getBoundingClientRect().width / vbw
 
-    // ── Tooltip: ein Tag, alle Stimmen — positioniert relativ zur BÜHNE (nicht zur
-    //    Leinwand), damit der Scroll-Container nichts clippt; am rechten Rand klappt
-    //    es nach links, am unteren nach oben. ─────────────────────────────────
-    const showTipForDay = (dayIdx: number, clientY: number) => {
-      const date = days[dayIdx]
-      const rows = data.order
-        .map((v) => ({ v, evs: data.clusters[`${v}|${date}`] }))
-        .filter((r): r is { v: string; evs: TipEvent[] } => Boolean(r.evs?.length))
-      if (rows.length === 0) {
-        tip.hidden = true
-        return false
-      }
-      tip.textContent = ''
+    // ── Tooltips — positioned relative to the STAGE (not the canvas) so the scroll
+    //    container never clips them; near the right edge they flip left, near the
+    //    bottom they flip up. Three tiers (Frank's finding 2026-07-31, mouseover was
+    //    day-wise only): a single mark → EXACTLY that landing; a ×n cluster → that
+    //    voice's landings; open lane → the whole day column. ────────────────────
+    const tipHeader = (label: string) => {
       const d = document.createElement('p')
       d.className = 'tip-date'
-      d.textContent = date
+      d.textContent = label
       tip.appendChild(d)
-      for (const { v, evs } of rows) {
-        for (const e of evs.slice(0, 3)) {
-          const row = document.createElement('div')
-          row.className = 'tip-row'
-          row.style.setProperty('--c', `var(--pt-${v})`)
-          const key = document.createElement('span')
-          key.className = 'tip-key'
-          const voice = document.createElement('span')
-          voice.className = 'tip-voice'
-          voice.textContent = v
-          const text = document.createElement('span')
-          text.textContent =
-            (e.glyph === 'fail' ? '✕ ' : e.glyph === 'work' ? '◆ ' : '') +
-            (e.text.length > 96 ? `${e.text.slice(0, 95)}…` : e.text)
-          row.append(key, voice, text)
-          tip.appendChild(row)
-        }
-        if (evs.length > 3) {
-          const more = document.createElement('p')
-          more.className = 'tip-voice'
-          more.style.marginTop = '3px'
-          more.textContent = `… ${evs.length - 3} more ${v} landings — click the mark`
-          tip.appendChild(more)
-        }
-      }
+    }
+    const tipRow = (v: string, e: TipEvent, max: number) => {
+      const row = document.createElement('div')
+      row.className = 'tip-row'
+      row.style.setProperty('--c', `var(--pt-${v})`)
+      const key = document.createElement('span')
+      key.className = 'tip-key'
+      const voice = document.createElement('span')
+      voice.className = 'tip-voice'
+      voice.textContent = v
+      const text = document.createElement('span')
+      text.textContent =
+        (e.glyph === 'fail' ? '✕ ' : e.glyph === 'work' ? '◆ ' : '') +
+        (e.text.length > max ? `${e.text.slice(0, max - 1)}…` : e.text)
+      row.append(key, voice, text)
+      tip.appendChild(row)
+    }
+    const tipNote = (text: string) => {
+      const more = document.createElement('p')
+      more.className = 'tip-voice'
+      more.style.marginTop = '3px'
+      more.textContent = text
+      tip.appendChild(more)
+    }
+    const placeTip = (dayIdx: number, clientY: number) => {
       tip.hidden = false
       const stageRect = stage.getBoundingClientRect()
       const svgRect = svg.getBoundingClientRect()
@@ -693,7 +689,49 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
       if (top + th > stage.clientHeight - 8) top = clientY - stageRect.top - th - 12
       tip.style.left = `${Math.max(8, left)}px`
       tip.style.top = `${Math.max(8, top)}px`
-      return true
+    }
+
+    /** open lane: the whole day column, all voices (capped per voice) */
+    const showDayTip = (dayIdx: number, clientY: number) => {
+      const date = days[dayIdx]
+      const rows = data.order
+        .map((v) => ({ v, evs: data.clusters[`${v}|${date}`] }))
+        .filter((r): r is { v: string; evs: TipEvent[] } => Boolean(r.evs?.length))
+      if (rows.length === 0) {
+        tip.hidden = true
+        return
+      }
+      tip.textContent = ''
+      tipHeader(date)
+      for (const { v, evs } of rows) {
+        for (const e of evs.slice(0, 3)) tipRow(v, e, 96)
+        if (evs.length > 3) tipNote(`… ${evs.length - 3} more ${v} landings — hover the mark`)
+      }
+      placeTip(dayIdx, clientY)
+    }
+
+    /** mark/cluster: mi ≥ 0 → exactly THAT landing; mi < 0 → all of the voice's landings that day */
+    const showVoiceTip = (key: string, mi: number, clientY: number) => {
+      const [v, date] = key.split('|')
+      const evs = data.clusters[key]
+      const dayIdx = days.indexOf(date)
+      if (!evs?.length || dayIdx < 0) {
+        tip.hidden = true
+        return
+      }
+      tip.textContent = ''
+      const single = mi >= 0 && mi < evs.length
+      tipHeader(single ? `${date} · ${v} · landing ${mi + 1} of ${evs.length}` : `${date} · ${v} · ${evs.length} landings`)
+      if (single) {
+        const e = evs[mi]
+        tipRow(v, e, 220)
+        const meta = [e.session === null ? null : `S${e.session}`, e.move, e.verdict].filter(Boolean).join(' · ')
+        if (meta) tipNote(meta)
+      } else {
+        for (const e of evs.slice(0, 5)) tipRow(v, e, 110)
+        if (evs.length > 5) tipNote(`… ${evs.length - 5} more — click, then step with next →`)
+      }
+      placeTip(dayIdx, clientY)
     }
 
     svg.addEventListener('pointermove', (ev) => {
@@ -709,17 +747,25 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
       cross.setAttribute('x1', String(snapped))
       cross.setAttribute('x2', String(snapped))
       cross.style.display = 'inline'
-      showTipForDay(idx, ev.clientY)
+      // A mark under the pointer? Then session-precise instead of day-wise.
+      const target = ev.target instanceof Element ? ev.target : null
+      const markEl = target?.closest('[data-mi]')
+      const hitEl = target?.closest('.pt-hit') as SVGGElement | null
+      if (markEl && hitEl?.dataset.key) {
+        showVoiceTip(hitEl.dataset.key, Number(markEl.getAttribute('data-mi')), ev.clientY)
+      } else {
+        showDayTip(idx, ev.clientY)
+      }
     })
     svg.addEventListener('pointerleave', () => {
       cross.style.display = 'none'
       tip.hidden = true
     })
 
-    // ── Detail-Panel (Vollansicht): sessionweises Lesen. Navigationsachse ist die
-    //    flache, chronologische Landungsliste JE STIMME — prev/next (und ←/→)
-    //    schreitet durch jede einzelne Landung, auch innerhalb dichter Tage
-    //    (Franks Befund 2026-07-31). Im Kompaktmodus führt der Klick zur Vollseite.
+    // ── Detail panel (full view): session-wise reading. The navigation axis is the
+    //    flat, chronological landing list PER VOICE — prev/next (and ←/→) step
+    //    through every single landing, including within dense days (Frank's finding
+    //    2026-07-31). In compact mode a click leads to the full page.
     const ptPrev = document.getElementById('pt-prev') as HTMLButtonElement | null
     const ptNext = document.getElementById('pt-next') as HTMLButtonElement | null
     const ptPos = document.getElementById('pt-pos')
@@ -777,7 +823,7 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
       }
       ptPrev!.disabled = pos <= s.start
       ptNext!.disabled = pos >= s.end - 1
-      // Tonarm: aktive Marke markieren, ins Bild holen, Crosshair auf den Tag stellen
+      // tonearm: highlight the active mark, bring it into view, park the crosshair on its day
       for (const g of hitByKey.values()) g.classList.remove('pt-active')
       const g = hitByKey.get(entry.key)
       if (g) {
@@ -842,10 +888,9 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
           activate(key)
         }
       })
-      // Tastatur bekommt dieselbe Auskunft wie der Zeiger (Tooltip am Fokusort)
+      // keyboard gets the same readout as the pointer — voice-scoped at the focus point
       hit.addEventListener('focus', () => {
-        const idx = days.indexOf(key.split('|')[1])
-        if (idx >= 0) showTipForDay(idx, hit.getBoundingClientRect().bottom)
+        showVoiceTip(key, -1, hit.getBoundingClientRect().bottom)
       })
       hit.addEventListener('blur', () => {
         tip.hidden = true

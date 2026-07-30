@@ -70,6 +70,12 @@ Parallaxe via Gemini-AI-Studio-Key (statt BigQuery/Vertex).
 
 ## Experimente — verbindliche Regeln
 
+- **EN-only gilt auch im Code (Frank, 2026-07-31):** Die gesamte research ecology ist
+  English-only — das schließt Code-Kommentare, Testnamen/-beschreibungen und
+  Commit-Messages in diesem Repo ein, nicht nur die Site-Oberflächen. Neue Beiträge
+  auf Englisch; deutsche Alt-Kommentare werden migriert, wenn die Datei ohnehin
+  angefasst wird (kein Massen-Umschreiben committeter Historie).
+
 - **Visualisierungen der Praxen dürfen eigene Bildsprache haben (Frank, 2026-07-30):**
   Die Mono-Skin gilt für die Site, aber **nicht als Zwang zur kargen Einlinien-Grafik**.
   Franks Wortlaut: „[Wortlaut privat;
