@@ -1,13 +1,13 @@
 // src/lib/partitur.ts
-// Datenlage der Partitur auf /maschinenraum: vier Stimmen (Praktiken), jede gelandete
-// Session eine Marke auf der gemeinsamen Zeitachse. Ausschließlich committete Spiegel —
-// dieselbe Ehrlichkeitsregel wie die Seite selbst: die Achse endet am letzten GELANDETEN
-// Tag, nie an „heute"; jede Stimme trägt ihr eigenes as-of. Pure Funktionen; die
-// Astro-Seite reicht Globs und Chroniken herein (wie in maschinenraum.ts).
+// Data layer for the score on /maschinenraum: four voices (practices), every landed
+// session a mark on the shared time axis. Committed mirrors only — the same honesty
+// rule as the page itself: the axis ends on the last LANDED day, never on "today";
+// each voice carries its own as-of. Pure functions; the Astro pages pass in their
+// globs and chronicles (as in maschinenraum.ts).
 
 export type VoiceId = 'atelier' | 'field' | 'studio' | 'plenum'
 
-/** Markentypus — Vorrang bei Tagesbündeln: fail > work > session. */
+/** mark type — precedence within day clusters: fail > work > session */
 export type Glyph = 'session' | 'work' | 'fail'
 
 export interface ScoreEvent {
@@ -15,35 +15,35 @@ export interface ScoreEvent {
   /** YYYY-MM-DD */
   date: string
   glyph: Glyph
-  /** Session-Nummer aus der Chronik; Journale tragen keine */
+  /** session number from the chronicle; journals carry none */
   session: number | null
   move: string | null
   verdict: string | null
-  /** die Klartext-Zeile: Chronik-Summary, erste Journalzeile oder Linien-Titel */
+  /** the plain-language line: chronicle summary, first journal line, or line title */
   text: string
 }
 
-/** Ein Tag einer Stimme — mehrere Landungen am selben Tag bleiben einzeln erhalten. */
+/** One day of one voice — multiple landings on the same day are kept individually. */
 export interface DayCluster {
   voice: VoiceId
   date: string
   events: ScoreEvent[]
-  /** das Gesicht des Bündels: schwerste Marke gewinnt (fail > work > session) */
+  /** the cluster's face: the heaviest mark wins (fail > work > session) */
   glyph: Glyph
 }
 
 export interface VoiceLane {
   voice: VoiceId
   clusters: DayCluster[]
-  /** Datum der letzten Landung dieser Stimme — das ehrliche as-of */
+  /** date of this voice's last landing — the honest as-of */
   asOf: string | null
-  /** Landungen gesamt (Events, nicht Tage) */
+  /** total landings (events, not days) */
   count: number
 }
 
 export interface ScoreModel {
   lanes: VoiceLane[]
-  /** lückenlose Tagesachse von erster bis letzter Landung (inklusive) */
+  /** gapless day axis from first to last landing (inclusive) */
   days: string[]
   start: string
   end: string
@@ -52,7 +52,7 @@ export interface ScoreModel {
 const VOICE_ORDER: VoiceId[] = ['atelier', 'field', 'studio', 'plenum']
 const GLYPH_RANK: Record<Glyph, number> = { fail: 2, work: 1, session: 0 }
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/
-/** Schutz gegen kaputte Datumswerte: mehr als ~1 Jahr Achse wäre ein Datenfehler. */
+/** guard against broken date values: more than ~a year of axis would be a data error */
 const MAX_DAYS = 400
 
 const stripMd = (s: string): string =>
@@ -62,7 +62,7 @@ const stripMd = (s: string): string =>
     .replace(/`/g, '')
     .trim()
 
-/** Lückenlose Tagesliste [start..end]; leere Liste bei ungültigen/verdrehten Grenzen. */
+/** Gapless day list [start..end]; empty list on invalid or reversed bounds. */
 export function dayRange(start: string, end: string): string[] {
   if (!DATE_RE.test(start) || !DATE_RE.test(end) || start > end) return []
   const out: string[] = []
@@ -75,7 +75,7 @@ export function dayRange(start: string, end: string): string[] {
   return out
 }
 
-/** Minimalform der gemergten Chronik-Einträge (field/studio loadChronicle()). */
+/** Minimal shape of the merged chronicle entries (field/studio loadChronicle()). */
 export interface ChronicleEventSource {
   date: string
   collective_session: number | null
@@ -86,7 +86,7 @@ export interface ChronicleEventSource {
   fail: boolean
 }
 
-/** Chronik → Events: fail-Flag schlägt Werkberührung schlägt gewöhnliche Session. */
+/** Chronicle → events: the fail flag beats work contact beats a plain session. */
 export function chronicleEvents(entries: ChronicleEventSource[], voice: VoiceId): ScoreEvent[] {
   return entries
     .filter((e) => DATE_RE.test(e.date))
@@ -105,8 +105,8 @@ export function chronicleEvents(entries: ChronicleEventSource[], voice: VoiceId)
     }))
 }
 
-/** journal/*.md-Glob (?raw) → ein Event je datumspräfigierter Datei; erste Überschrift
- *  oder erste nicht-leere Zeile als Text (wie latestJournal in maschinenraum.ts). */
+/** journal/*.md glob (?raw) → one event per date-prefixed file; first heading or
+ *  first non-empty line as text (mirrors latestJournal in maschinenraum.ts). */
 export function journalEvents(raw: Record<string, string>, voice: VoiceId): ScoreEvent[] {
   return Object.entries(raw)
     .map(([path, content]): ScoreEvent | null => {
@@ -133,7 +133,7 @@ export function journalEvents(raw: Record<string, string>, voice: VoiceId): Scor
 const fmField = (fm: string, k: string): string | undefined =>
   fm.match(new RegExp(`^${k}:\\s*"?([^"#\\n]+?)"?\\s*(#.*)?$`, 'm'))?.[1]?.trim() || undefined
 
-/** SCORE-Frontmatter der Atelier-Projekte → „Linie eröffnet"-Marken (glyph work). */
+/** SCORE frontmatter of the atelier projects → "line opened" marks (glyph work). */
 export function scoreOpenings(scoresRaw: Record<string, string>): ScoreEvent[] {
   const out: ScoreEvent[] = []
   for (const raw of Object.values(scoresRaw)) {
@@ -154,7 +154,7 @@ export function scoreOpenings(scoresRaw: Record<string, string>): ScoreEvent[] {
   return out
 }
 
-/** Startdatum einer Joint Inquiry: früheste SCORE-created mit passender encounter_ref. */
+/** Start date of a joint inquiry: earliest SCORE `created` with a matching encounter_ref. */
 export function jiStart(scoresRaw: Record<string, string>, id: string): string | null {
   let min: string | null = null
   for (const raw of Object.values(scoresRaw)) {
@@ -166,8 +166,9 @@ export function jiStart(scoresRaw: Record<string, string>, id: string): string |
   return min
 }
 
-/** Fenster für den Hub-Teaser: nur Events der letzten n Tage VOR der jüngsten Landung —
- *  relativ zum Archivende, nie zu „heute" (die Achse bleibt eine Aussage über Gelandetes). */
+/** Window for the hub teaser: only events within the last n days BEFORE the newest
+ *  landing — relative to the archive's end, never to "today" (the axis remains a
+ *  statement about what has landed). */
 export function clampToLastDays(events: ScoreEvent[], n: number): ScoreEvent[] {
   const valid = events.filter((e) => DATE_RE.test(e.date))
   const end = valid.map((e) => e.date).sort().at(-1)
@@ -178,7 +179,7 @@ export function clampToLastDays(events: ScoreEvent[], n: number): ScoreEvent[] {
   return valid.filter((e) => e.date >= start)
 }
 
-/** Events → Partitur: je Stimme Tagesbündel, gemeinsame Achse, ehrliche as-ofs. */
+/** Events → score: day clusters per voice, shared axis, honest as-ofs. */
 export function buildScore(events: ScoreEvent[]): ScoreModel | null {
   const valid = events.filter((e) => DATE_RE.test(e.date))
   if (valid.length === 0) return null

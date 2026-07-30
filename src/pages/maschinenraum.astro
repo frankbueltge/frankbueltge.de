@@ -27,8 +27,8 @@ const studioChronicle = loadStudioChronicle()
 const field = lastChronicle(fieldChronicle)
 const studio = lastChronicle(studioChronicle)
 
-// Die Partitur: alle Landungen aller vier Stimmen auf einer Achse — dieselben Spiegel,
-// die auch die Karten unten speisen; kein zweiter Datenweg.
+// The score: every landing of all four voices on one axis — the same mirrors that
+// feed the cards below; no second data path.
 const score = buildScore([
   ...journalEvents(atelierJournalsRaw, 'atelier'),
   ...scoreOpenings(scoresRaw),
@@ -52,8 +52,8 @@ const jiRows = (['atelier', 'field', 'studio'] as const).map((ns) => {
 })
 const nsLabel: Record<string, string> = { atelier: 'Atelier · Ulysses', field: 'Field · Meridian', studio: 'Studio · Ensemble' }
 
-// status ist historisch gewachsen: früher String/null, seit Ende Juli ein Objekt
-// {as_of, statusLine} — beide Formen ehrlich rendern statt "[object Object]".
+// `status` grew historically: formerly string/null, since late July an object
+// {as_of, statusLine} — render both shapes honestly instead of "[object Object]".
 interface RegisterEntry {
   encounter_id: string
   title: string
@@ -86,7 +86,7 @@ const kindLabel: Record<string, string> = { 'work-line': 'work-line', study: 'st
       of its own state.
     </p>
 
-    {/* ── Die Partitur: vier Stimmen, eine Zeitachse ─────────────────────── */}
+    {/* ── The score: four voices, one time axis ──────────────────────────── */}
     {score && <Partitur model={score} ji={{ ...jiBracket, voices: [...jiBracket.voices] }} />}
 
     {/* ── Die vier Praktiken ─────────────────────────────────────────────── */}

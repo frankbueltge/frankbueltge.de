@@ -30,9 +30,9 @@ import Partitur from '@/components/maschinenraum/Partitur.astro'
 import { loadChronicle as loadFieldChronicle } from '@/lib/field/chronicle'
 import { loadChronicle as loadStudioChronicle } from '@/lib/studio/chronicle'
 
-// Maschinenraum-Teaser (Franks Auftrag 2026-07-25, Partitur dazu 2026-07-31): the last
-// landed state je Praxis plus die Kompakt-Partitur der letzten 14 Tage — aus denselben
-// committeten Spiegeln wie /maschinenraum, kein zweiter Datenweg.
+// Maschinenraum teaser (Frank's brief 2026-07-25, score added 2026-07-31): the last
+// landed state per practice plus the compact score of the last 14 days — from the
+// same committed mirrors as /maschinenraum, no second data path.
 const mrAtelierJournalsRaw = import.meta.glob('/src/content/atelier/journal/*.md', { eager: true, query: '?raw', import: 'default' }) as Record<string, string>
 const mrPlenumJournalsRaw = import.meta.glob('/src/content/plenum/journal/*.md', { eager: true, query: '?raw', import: 'default' }) as Record<string, string>
 const mrScoresRaw = import.meta.glob('/src/content/atelier/projects/*/SCORE.md', { eager: true, query: '?raw', import: 'default' }) as Record<string, string>
@@ -225,8 +225,8 @@ const isDraft = NAMING.approval !== 'approved'
       <b class="text-fg">Maschinenraum</b> · the last landed state
       <a href="/maschinenraum" class="ml-2 normal-case tracking-normal text-fg-faint underline hover:text-fg">→ full view</a>
     </p>
-    {/* Die Partitur der letzten 14 Tage (Frank, 2026-07-31): der Rhythmus der Ökologie
-        direkt auf dem Hub; jede Marke klick- und hoverbar, Klick führt zur Vollansicht. */}
+    {/* The score of the last 14 days (Frank, 2026-07-31): the ecology's rhythm right
+        on the hub; every mark hoverable, clicking leads to the full view. */}
     {mrScore && <Partitur model={mrScore} ji={mrJi} compact />}
     <ul class="mt-6 divide-y divide-line/60 overflow-hidden rounded-[10px] border border-line bg-panel">
       {mrRows.map((r) => (
