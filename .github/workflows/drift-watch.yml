@@ -1,7 +1,9 @@
 # Drift-Wächter, Voll-Lauf (Aktualitäts-Regel, Frank 2026-07-25): die Website muss stets
 # den neuesten Stand der Entwicklung zeigen. Nächtlich NACH den Integrate-Läufen
 # (atelier 03:00/09:00/15:00/21:00 · field 03:30 · studio 04:00 UTC): prüft zusätzlich zum
-# statischen CI-Teil die Spiegel-Frische gegen die Engine-Repos. Ein roter Lauf heißt:
+# statischen CI-Teil die Spiegel-Frische gegen die Engine-Repos und die Frische des
+# MRR-Journals gegen meridian-runtime (die Runtime-Linie wird nicht gespiegelt, sondern
+# von Hand nachgetragen — src/data/meridian/runtime-log.json). Ein roter Lauf heißt:
 # die Site erzählt einen alten Stand — GitHub benachrichtigt, der Step-Summary sagt, was
 # genau abweicht und welcher Integrate-Workflow zu starten ist.
 name: Drift watch

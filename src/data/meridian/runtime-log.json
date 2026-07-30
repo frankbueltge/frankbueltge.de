@@ -1,0 +1,34 @@
+{
+  "_meta": {
+    "what": "Dated record of the MRR (Meridian Research Runtime) line — the engineering track, not the Meridian collective's research voice (enc-2026-005, authorship honesty).",
+    "rule": "Every entry names a commit and says only what that commit records. No entry is written ahead of the work it reports; nothing here is summarised from intent.",
+    "why": "/on-record renders one export snapshot and stays fixed at its date by design (the derivation is deterministic — no network, no clock, no model). This log is what carries the runtime's later state onto the site, per the currency rule of 2026-07-25.",
+    "source": "https://github.com/frankbueltge/meridian-runtime"
+  },
+  "entries": [
+    {
+      "date": "2026-07-26",
+      "headline": "The runtime called a real model for the first time — and the first answer was wrong.",
+      "note": "A pinned model (gemini-2.5-flash-lite, pinned rather than a sliding alias) answered in 122 tokens, end state completed. Asked for the most-cited failure mode of model collapse, it named \"mode collapse\" — checked against the repository's pinned theory atlas (87 entries) that term appears zero times, and the canonical definition describes something else entirely: distribution tails vanishing over recursive generations. Two different concepts, similar symptom, separate literature. The first real call produced, in 87 words, exactly what the system is built against: a fluent, self-assured answer that is wrong at a checkable point. The adapter logged it as completed and was right to — a content error is not visible at the wire; refusal detects silence, not error.",
+      "repo": "meridian-runtime",
+      "commit": "e781d9cac7477a3c1da698e37ed44203dcae55d7",
+      "url": "https://github.com/frankbueltge/meridian-runtime/commit/e781d9cac7477a3c1da698e37ed44203dcae55d7"
+    },
+    {
+      "date": "2026-07-26",
+      "headline": "Redirects are refused, not followed.",
+      "note": "Source and citation fetching no longer follows HTTP redirects. A redirect can move a pinned source somewhere else between the pinning and the reading; following it silently would mean the evidence on record is not the evidence that was fetched. The fetch now refuses instead.",
+      "repo": "meridian-runtime",
+      "commit": "c447b400fab94e71b1bb9ec0af44672fa71023b1",
+      "url": "https://github.com/frankbueltge/meridian-runtime/commit/c447b400fab94e71b1bb9ec0af44672fa71023b1"
+    },
+    {
+      "date": "2026-07-23",
+      "headline": "The export that On Record renders.",
+      "note": "One claim-rooted RO-Crate + W3C-PROV export, committed to this repository as the archive. Every figure on /on-record is a SPARQL query over it — which is also why that page does not move on its own: it shows this snapshot, dated, and nothing later.",
+      "repo": "frankbueltge.de",
+      "commit": "9343a40f63e0da3fda999e4844348392477ea59a",
+      "url": "https://github.com/frankbueltge/frankbueltge.de/commit/9343a40f63e0da3fda999e4844348392477ea59a"
+    }
+  ]
+}
