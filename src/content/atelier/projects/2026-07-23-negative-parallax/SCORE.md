@@ -23,7 +23,7 @@ work_line:
     Lindegren 2021; the 1/ϖ operation; the two-regime boundary (noise-negatives vs
     significance-negatives, drawn in units of the value's own uncertainty).
   horizon: open (months; §6 phase budgets, not a life-timer)
-  refrain_aspect: home     # tick 15 — the shelved second form tested and retired; a defect found in the line's own candidate and disclosed before the gate; the tick-7 candidate stands, unedited, waiting on Frank's gate
+  refrain_aspect: opening  # tick 16 — the repair built by a later session: v3 carries the border's own qualification and a second published limit; v2 preserved unedited; the candidate now proposes v3 and waits on Frank's gate
 disposition: PUBLICATION_CANDIDATE
 publication_approved_by:
 publication_approved_at:
@@ -797,3 +797,30 @@ gate rules (§2.4); the artefact left unedited as tick 6's tested state; a quali
 **not** built by the session that found the defect. **Pre-opening check (§4):** aspect home; the
 disclosure completes an opening already executed, it does not begin one; the v3 revision and any
 notification beyond the record are deferred by decision. — Ulysses
+
+**Update — 2026-07-30, opening operation (TRACE tick 16): the repair, built by a later session.**
+The first opening operation since tick 7, and the first time this line has acted on its own finding
+inside its own artefact. Tick 15 disclosed that the candidate labels the region past φ/σφ = −5 with
+a verdict its source hedges eleven words earlier, and deliberately did not build the repair —
+"a decision for a session that is not also the session that found the defect". This session built
+it. `sketch-operative-ruler-v3.html`: the hedge quoted verbatim on the axis in the register of the
+border it qualifies; a second published limit in the same unit drawn beside it (Rybizki's > 4.5σ),
+so that one border becomes visibly a choice among documents rather than a feature of nature; the
+region name quoted and attributed to its sentence and population instead of asserted; and — the one
+change that is not cosmetic — the precision slider stepped at 0.005 mas, because at v2's step size
+the band between the two published limits was **arithmetically unreachable** and a participant could
+cross from one authority's territory to the other's without ever standing where they disagree. Both
+passages re-verified at their primaries this run (Fabricius §3.2 — the locator refined from "§3";
+Rybizki's abstract), no extraction budget consumed. `sketch-operative-ruler-v2.html` is preserved
+byte-for-byte as the state that passed the caption-strip test and the state in which the fault was
+found; `EXPOSITION.md` and `APPARATUS.md` carry the revision, the declared juxtaposition (placing
+two differently-purposed limits on one axis is this practice's move, and the artefact says so), and
+the cost: **v2's result was that the category-change survived the removal of words, and v3 puts
+words back.** Whether a border qualified in writing still enacts anything or merely explains itself
+is the gate's judgement, and the gate now has both states. **Pre-opening check (§4):** aspect
+opening; the point is self-created — the operation was specified by the previous tick with its
+execution withheld from the session that specified it, so today's occasion is a debt named by the
+work rather than a schedule that fired. Notification beyond the record and any change of disposition
+are deferred by decision; disposition stays PUBLICATION_CANDIDATE, now proposing v3. Function-testing
+is the weak topos this tick and is recorded as weak: no test was run that could have failed, and the
+real §5.4 test of v3 is a reader who is not me. No PUBLICATION.json (human-only). — Ulysses

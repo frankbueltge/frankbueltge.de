@@ -7,26 +7,47 @@ what the trace did not log rather than inventing it (inviolable §2.1).
 
 ## The candidate artefact
 
-`sketch-operative-ruler-v2.html` — a single self-contained interactive HTML page.
-The measured parallax φ = −0.40 mas is locked and cannot be touched; the participant
-moves only the *claimed precision* σφ (and, separately, the −17 μas zero-point
-offset). The same number changes scientific category as φ/σφ crosses the cited −5
-boundary. No external resource is loaded, no data is downloaded, nothing is
-transmitted; it runs entirely client-side on values already read at their primaries
-and on record in `TRACE.md` (tick 2) and `FIGURE-NOTE.md`.
+`sketch-operative-ruler-v3.html` (since 2026-07-30) — a single self-contained
+interactive HTML page. The measured parallax φ = −0.40 mas is locked and cannot be
+touched; the participant moves only the *claimed precision* σφ (and, separately, the
+−17 μas zero-point offset). The same number changes scientific category as φ/σφ
+crosses limits the discipline published. No external resource is loaded, no data is
+downloaded, nothing is transmitted; it runs entirely client-side on values already
+read at their primaries and on record in `TRACE.md` (ticks 2, 8, 15, 16) and
+`FIGURE-NOTE.md`.
+
+**Superseded state, preserved unedited:** `sketch-operative-ruler-v2.html` — the
+state that passed the caption-strip test (TRACE tick 6) and the state in which the
+fault disclosed on 2026-07-30 was found. It is kept beside the candidate, not
+replaced, so that the fault and its repair are both inspectable. What v3 changes:
+the border's own author's qualification is quoted on the axis; a second published
+limit in the same unit (Rybizki's > 4.5σ) is drawn beside Fabricius' −5; the region
+name is quoted and attributed rather than asserted; and the precision slider steps
+finely enough (0.005 mas) that a value can rest between the two published limits, a
+zone v2's step size made unreachable. Full account: `EXPOSITION.md` (correction and
+revision entries) and `TRACE.md` ticks 15–16.
+
+**Declared arrangement.** The two limits serve different purposes in their sources
+(an illustrative selection limit; a training-set ground truth) and neither paper
+draws the other's line. Placing both on one axis is this practice's own
+juxtaposition, and the artefact states this in its own page note.
 
 ## Agents and roles
 
 | Agent | Role | Human oversight |
 |---|---|---|
 | Frank Bültge | direction; responsible human; publication decision | — |
-| The practice's scheduled model runtime | read the five primaries (Expose, tick 2); drew the consolidation figure (tick 4); built and revised the operative-ruler sketch (ticks 5–6); assembled this candidate (2026-07-25) | all records human-reviewable; auto-land paths only |
+| The practice's scheduled model runtime | read the five primaries (Expose, tick 2); drew the consolidation figure (tick 4); built and revised the operative-ruler sketch (ticks 5–6); assembled this candidate (2026-07-25); found and disclosed the border fault (tick 15, 2026-07-30); built the qualified v3 (tick 16, 2026-07-30) | all records human-reviewable; auto-land paths only |
 
 **Model version — disclosed to the limit of the record.** The candidate-assembly
 run (2026-07-25) ran on the runtime's Opus 4.8 model. The reading and sketch-building
 ticks (2026-07-23/24) were performed by the same scheduled dispatcher runtime; the
 project's own trace did not log a per-tick model version, and none is reconstructed
-here. Model identity is not conceptually relevant to any claim (SCORE §6): the
+here. The 2026-07-30 ticks (15, fault found; 16, v3 built) ran on the same scheduled
+dispatcher runtime under a later model generation; its version identifier is
+deliberately not written into this repository record, and this is marked as a
+withheld disclosure rather than a gap in the trace. No claim in this project depends
+on it (SCORE §6). Model identity is not conceptually relevant to any claim (SCORE §6): the
 operation is source-reading, judgement and a hand-built HTML mechanism, not
 generation whose provenance is the work's subject.
 
@@ -62,6 +83,26 @@ tick 2 / FIGURE-NOTE: φ/σφ = −5 boundary (Fabricius; Rybizki's > 4.5σ); 3.
 / 192.21M positive / ≈1.6% (Fabricius); −17 / −21 μas offset (Lindegren); the Luri
 quasar worked case (observed mean −10 μas → biased +0.8 mas on deletion). None is
 inferred, fabricated or rounded beyond its source's own wording.
+
+**Added to the artefact at v3 (2026-07-30), both re-verified at their primaries that
+run rather than carried on this record's word:**
+
+- Fabricius et al. 2021, §3.2, verbatim: *"We use the limit of five as an illustrative
+  example and not as a recommendation."* — the qualification the border's own author
+  attached to it, now quoted on the axis. (This record's earlier locator "§3" is
+  refined to §3.2; no claim depends on it.)
+- Rybizki et al. 2021, abstract, verbatim: *"We devise an extensive sample of manifestly
+  bad astrometric solutions, with parallax that is negative at > 4.5 sigma"* — the
+  second published limit, drawn beside the first.
+- Fabricius et al. 2021, §3.2, verbatim, carried in the page note because the paragraph
+  that reaches the "clearly spurious" verdict disqualifies the axis's own unit on the
+  way: *"Formal uncertainties can, however, be misleading. They are based on the
+  assumption that the source is undisturbed…"* The tension is left standing, unresolved.
+
+The one quantity in v3 that is neither read nor cited is the slider's step size
+(0.005 mas). It is an interface parameter, chosen because at v2's 0.01 mas step the
+band between the two published limits (σφ = 0.0800 to 0.0889 at the locked φ) contained
+no reachable value. Computed, not sourced, and recorded as such (TRACE tick 16 §2.4).
 
 ## Public credit line
 

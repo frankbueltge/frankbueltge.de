@@ -110,3 +110,57 @@ border something its source presents as an example, and the participant crossing
 of the difference.
 
 — Ulysses
+
+---
+
+## Revision — 2026-07-30: the candidate artefact is now `sketch-operative-ruler-v3.html`
+
+**What this is.** The correction entered above disclosed a fault and named a repair that its own
+session declined to build. The repair is built: `sketch-operative-ruler-v3.html`, made by a later
+session, on the reasoning that a session which finds a fault in its own work should not also be the
+one seen fixing it. The candidate this document proposes to the gate is now **v3**;
+`sketch-operative-ruler-v2.html` is preserved **unedited** beside it as the state that passed the
+caption-strip test (TRACE tick 6), so that both the fault and the repair are on the table.
+
+**What changed, and what did not.** The mechanism is unchanged: the measured parallax φ = −0.40 mas
+stays locked and untouchable, the participant moves only the claimed precision σφ (and the −17 μas
+zero-point offset), and the value's category is read from where the participant's own crossing
+brings it to rest. What changed is the border:
+
+1. The hedge travels with the number. Fabricius et al. 2021's own sentence — "We use the limit of
+   five as an illustrative example and not as a recommendation." — is quoted verbatim beneath the
+   axis, in the register of the border it qualifies, not in a footnote.
+2. A second published limit in the same unit is drawn beside it: Rybizki et al. 2021's training
+   definition of "manifestly bad astrometric solutions", "parallax that is negative at > 4.5 sigma".
+   One border is a fact of the map; two borders drawn by two documents are visibly a choice.
+3. The region name is quoted rather than asserted, and attributed to the sentence and the population
+   it belongs to (of the 3.04 million EDR3 sources with φ/σφ < −5, Fabricius et al. 2021, §3.2).
+4. The precision slider steps finely enough that a value can come to rest **between** the two
+   published limits. In v2's step size that zone was arithmetically unreachable: the participant
+   could cross from one authority's territory into the other's without ever standing on the ground
+   where they disagree.
+
+**Declared, because a repair must not import the fault it repairs.** The two limits serve different
+purposes in their sources — an illustrative selection limit; a training-set ground truth — and
+neither paper draws the other's line. **Placing both on one axis is this practice's own
+juxtaposition**, and the artefact says so in its own note rather than only here.
+
+**What the revision costs, stated plainly.** v2's result was that the category-change survived the
+*removal* of words. v3 puts words back. They are of a different kind — a cited qualification the
+border's own author wrote, not a verdict about the participant's value — but that is a distinction
+this practice has an interest in drawing. The honest description is that v3 exchanges a felt
+category-change at a clean border for a felt arbitrariness of the border. Whether that is a work or
+an explanation of one is the gate's judgement, not the builder's, and the gate now has both states
+with their records.
+
+**Unrefuted counter-reading, carried forward.** Fabricius' hedge attaches to the *number* five, in a
+sentence about `parallax_over_error > 5` as a selection habit, and the verdict on the resulting
+population is then stated without hedging. Under that reading v3 dramatises a contestedness that is
+confined to a threshold value nobody defends. What survives either way: the participant is told the
+difference and can weigh it, which is more than v2 offered under either reading.
+
+**Status.** Publication *candidate*, unchanged in kind. Nothing here is a publication act; no
+`PUBLICATION.json` is created or modified (Protocol §2.3, human-only). A waiting candidate blocks
+nothing.
+
+— Ulysses
