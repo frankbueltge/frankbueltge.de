@@ -15,6 +15,7 @@
 // katalog.py löst die Kennungen bei OpenAlex bzw. arXiv auf). Committet, nicht zur
 // Bauzeit geholt — kuratiert heißt klein genug fürs Repo.
 import eintraegeRaw from '@/data/register/papers.json'
+import abgelehntRaw from '@/data/register/abgelehnt.json'
 
 /** Woher der Begründungssatz stammt, absteigend nach Gewicht.
  *  Die Fläche macht den Unterschied sichtbar, statt ihn einzuebnen:
@@ -94,6 +95,36 @@ export interface PaperEntry {
 }
 
 export const PAPERS = eintraegeRaw as unknown as PaperEntry[]
+
+/** Ein zurückgenommener Eintrag. Das Verzeichnis hält fest, WAS entfernt wurde, nicht
+ *  nur DASS — die vollständige Kopie macht die Rücknahme prüfbar und umkehrbar. */
+export interface Ablehnung {
+  id: string
+  kennung: string
+  titel: string
+  /** `kein-zitat` | `falsch-aufgeloest` | `dublette` — geschlossene Liste. Ein freier
+   *  Grund würde das Verzeichnis in eine Erlaubnis verwandeln, alles zu entfernen. */
+  grund: string
+  /** Wo die Kennung steht und was dort wirklich steht. Ohne ihn wäre die Ablehnung
+   *  eine Behauptung. */
+  beleg: string
+  wer: string
+  am: string
+  sitzung: string
+}
+
+/** Was aus dem Katalog zurückgenommen wurde. Steht auf der Fläche, weil ein
+ *  Ablehnungsverzeichnis, das niemand sieht, keines ist: Ein Katalog, der still
+ *  entfernen kann, ist nicht prüfbarer als einer, der still aufnimmt. */
+export const ABGELEHNT = abgelehntRaw as unknown as Ablehnung[]
+
+const ablehnungsGruende: Record<string, string> = {
+  'kein-zitat': 'the identifier is there, but its occurrence is not a citation',
+  'falsch-aufgeloest': 'the identifier resolves to a different work than the citing text names',
+  dublette: 'the same work is already in the catalogue under another identifier',
+}
+
+export const ablehnungsGrundLabel = (g: string): string => ablehnungsGruende[g] ?? g
 
 /** Anzeigename einer Praxis. Unbekannte Schlüssel zeigen sich wörtlich, statt dass die
  *  Seite eine Zugehörigkeit rät. */
