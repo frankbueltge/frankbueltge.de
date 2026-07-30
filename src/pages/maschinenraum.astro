@@ -6,24 +6,42 @@
 // Engine-HEAD bewegt (≤ ~1 h nach jeder Landung). Hub-Grammatik (Tailwind-Tokens), nicht
 // Praxis-Grammatik — ADR 0010 bleibt unberührt.
 import Page from '@/layouts/Page.astro'
+import Partitur from '@/components/maschinenraum/Partitur.astro'
 import { loadChronicle as loadFieldChronicle } from '@/lib/field/chronicle'
 import { loadChronicle as loadStudioChronicle } from '@/lib/studio/chronicle'
 import { atelierState, jiStatus, lastChronicle, latestJournal, trimLine } from '@/lib/maschinenraum'
+import { buildScore, chronicleEvents, jiStart, journalEvents, scoreOpenings } from '@/lib/partitur'
 import register from '@/data/begegnungen/register.json'
 
 const JI = 'ji-2026-002'
 
-const atelierJournal = latestJournal(
-  import.meta.glob('/src/content/atelier/journal/*.md', { eager: true, query: '?raw', import: 'default' }) as Record<string, string>,
-)
-const atelier = atelierState(
-  import.meta.glob('/src/content/atelier/projects/*/SCORE.md', { eager: true, query: '?raw', import: 'default' }) as Record<string, string>,
-)
-const plenumJournal = latestJournal(
-  import.meta.glob('/src/content/plenum/journal/*.md', { eager: true, query: '?raw', import: 'default' }) as Record<string, string>,
-)
-const field = lastChronicle(loadFieldChronicle())
-const studio = lastChronicle(loadStudioChronicle())
+const atelierJournalsRaw = import.meta.glob('/src/content/atelier/journal/*.md', { eager: true, query: '?raw', import: 'default' }) as Record<string, string>
+const scoresRaw = import.meta.glob('/src/content/atelier/projects/*/SCORE.md', { eager: true, query: '?raw', import: 'default' }) as Record<string, string>
+const plenumJournalsRaw = import.meta.glob('/src/content/plenum/journal/*.md', { eager: true, query: '?raw', import: 'default' }) as Record<string, string>
+
+const atelierJournal = latestJournal(atelierJournalsRaw)
+const atelier = atelierState(scoresRaw)
+const plenumJournal = latestJournal(plenumJournalsRaw)
+const fieldChronicle = loadFieldChronicle()
+const studioChronicle = loadStudioChronicle()
+const field = lastChronicle(fieldChronicle)
+const studio = lastChronicle(studioChronicle)
+
+// Die Partitur: alle Landungen aller vier Stimmen auf einer Achse — dieselben Spiegel,
+// die auch die Karten unten speisen; kein zweiter Datenweg.
+const score = buildScore([
+  ...journalEvents(atelierJournalsRaw, 'atelier'),
+  ...scoreOpenings(scoresRaw),
+  ...chronicleEvents(fieldChronicle, 'field'),
+  ...chronicleEvents(studioChronicle, 'studio'),
+  ...journalEvents(plenumJournalsRaw, 'plenum'),
+])
+const jiBracket = {
+  id: JI,
+  label: 'Model Collapse',
+  start: jiStart(scoresRaw, JI),
+  voices: ['atelier', 'field', 'studio'] as const,
+}
 
 const requestsRaw = import.meta.glob('/src/content/{atelier,field,studio}/REQUESTS.md', {
   eager: true, query: '?raw', import: 'default',
@@ -34,7 +52,20 @@ const jiRows = (['atelier', 'field', 'studio'] as const).map((ns) => {
 })
 const nsLabel: Record<string, string> = { atelier: 'Atelier · Ulysses', field: 'Field · Meridian', studio: 'Studio · Ensemble' }
 
-interface RegisterEntry { encounter_id: string; title: string; status?: string | null }
+// status ist historisch gewachsen: früher String/null, seit Ende Juli ein Objekt
+// {as_of, statusLine} — beide Formen ehrlich rendern statt "[object Object]".
+interface RegisterEntry {
+  encounter_id: string
+  title: string
+  status?: string | { as_of?: string; statusLine?: string } | null
+}
+const statusBadge = (s: RegisterEntry['status']): string | null => {
+  if (!s) return null
+  if (typeof s === 'string') return s
+  const line = s.statusLine?.split('—')[0]?.trim()
+  if (!line) return null
+  return s.as_of ? `${line} · as of ${s.as_of.slice(5)}` : line
+}
 const encounters = (register as RegisterEntry[]).slice(0, 6)
 
 const kindLabel: Record<string, string> = { 'work-line': 'work-line', study: 'study', project: 'project' }
@@ -54,6 +85,9 @@ const kindLabel: Record<string, string> = { 'work-line': 'work-line', study: 'st
       repo's committed mirrors and never claims "running right now": each card carries the date
       of its own state.
     </p>
+
+    {/* ── Die Partitur: vier Stimmen, eine Zeitachse ─────────────────────── */}
+    {score && <Partitur model={score} ji={{ ...jiBracket, voices: [...jiBracket.voices] }} />}
 
     {/* ── Die vier Praktiken ─────────────────────────────────────────────── */}
     <section class="mt-12 grid gap-4 sm:grid-cols-2" aria-label="Practices">
@@ -134,7 +168,7 @@ const kindLabel: Record<string, string> = { 'work-line': 'work-line', study: 'st
           <li class="text-sm">
             <span class="font-mono text-[11px] text-fg-faint">{e.encounter_id}</span>
             <span class="ml-2">{trimLine(e.title, 110)}</span>
-            {e.status && <span class="ml-2 font-mono text-[10px] uppercase tracking-[0.08em] text-fg-muted">{e.status}</span>}
+            {statusBadge(e.status) && <span class="ml-2 font-mono text-[10px] uppercase tracking-[0.08em] text-fg-muted">{statusBadge(e.status)}</span>}
           </li>
         ))}
       </ul>
