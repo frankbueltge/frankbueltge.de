@@ -11,7 +11,7 @@
 // technischer Fortschritt, sondern die Folge davon, dass jeder Eintrag begründet ist.
 //
 // Zahlen NUR aus den Daten (Kanon-Regel) — kein Wert steht im Fließtext.
-import { PAPERS, authorLine, grundLabel, praxisLabel, pruefLabel } from '@/lib/papers'
+import { PAPERS, authorLine, grundLabel, praxisLabel, pruefLabel, urteilLabel } from '@/lib/papers'
 import { THEMEN_LABELS } from '@/config/themen'
 
 const total = PAPERS.length
@@ -228,7 +228,7 @@ const zugangFacette = [
                 p.relevanz_herkunft === 'praxis'
                   ? 'written by the practice, reproduced verbatim'
                   : p.relevanz_herkunft === 'urteil'
-                    ? `written by ${p.urteil?.modell ?? 'a model'} on ${p.urteil?.am ?? 'an unrecorded date'}, from the ${p.urteil?.grundlage ?? 'source'} — a proposal to the practice, not a substitute for its reading`
+                    ? `${urteilLabel(p.urteil)} — a proposal to the practice, not a substitute for its reading`
                     : 'record of use — nobody has written the reason yet'
               }
             </li>

@@ -28,7 +28,18 @@ nicht, worum es im Text geht (das ist die Zusammenfassung). Es behauptet nichts 
 Inhalte, die nicht in Titel, Abstract oder Fundstelle stehen. Wo die Grundlage zu dünn
 ist, wird **nicht** geurteilt: `gebrauch` bleibt stehen, und das ist ein Ergebnis.
 
-Eingabeform (Liste):
+**Die Datei trägt ihre Herkunft selbst (Format 2, seit 2026-07-30).** Vorher standen
+Modell und Sitzung nur in den CLI-Argumenten — wer eine fremde Urteilsdatei fand, musste
+die Herkunft raten oder erfinden. Genau das trat ein: Am 30.07. lagen 52 fertige Urteile
+im Repo, geschrieben von einer Sitzung, die niemand mehr zuordnen konnte. Sie bestanden
+alle Prüfungen und blieben trotzdem liegen, weil das Anwenden eine Behauptung gewesen
+wäre. Wer urteilt, hält jetzt fest, WER geurteilt hat — im selben Schriftstück.
+
+Eingabeform (Format 2):
+    {"modell": "claude-opus-5", "sitzung": "nachtsitzung-kataloge",
+     "urteile": [{"id": "…", "relevanz": "Ein Satz.", "grundlage": "abstract"}]}
+
+Eingabeform (Format 1, Bestand — Herkunft muss dann per CLI kommen):
     [{"id": "…", "relevanz": "Ein Satz.", "grundlage": "abstract"}]
 
     python -m atlas_scout.urteil urteile/2026-07-28.json --wurzel .
@@ -129,7 +140,23 @@ def main(argv: list[str] | None = None) -> int:
 
     ziel = args.wurzel / "src/data/register/papers.json"
     katalog = json.loads(ziel.read_text(encoding="utf-8"))
-    urteile = json.loads(args.datei.read_text(encoding="utf-8"))
+    roh = json.loads(args.datei.read_text(encoding="utf-8"))
+    # Format 2 trägt seine Herkunft selbst; sie schlägt die CLI-Argumente, damit ein
+    # späterer Anwender sie nicht überschreiben kann.
+    if isinstance(roh, dict):
+        urteile = roh.get("urteile") or []
+        modell = roh.get("modell") or args.modell
+        sitzung = roh.get("sitzung") or args.sitzung
+    else:
+        urteile = roh
+        modell, sitzung = args.modell, args.sitzung
+
+    if modell in {"unbekannt", "nicht festgehalten", ""}:
+        print(
+            "HINWEIS: Die Herkunft dieser Urteile ist nicht festgehalten. Sie werden "
+            "eingetragen und auf der Fläche ausdrücklich als nicht zugeordnet gezeigt — "
+            "nicht als Satz einer Praxis und nicht als Satz eines benannten Modells."
+        )
 
     beanstandet = pruefe_urteile(urteile, katalog)
     if beanstandet:
@@ -143,9 +170,7 @@ def main(argv: list[str] | None = None) -> int:
         print("Probe — nichts geschrieben.")
         return 0
 
-    katalog, n = wende_an(
-        katalog, urteile, modell=args.modell, am=args.am, sitzung=args.sitzung
-    )
+    katalog, n = wende_an(katalog, urteile, modell=modell, am=args.am, sitzung=sitzung)
     ziel.write_text(
         json.dumps(katalog, indent=1, ensure_ascii=False) + "\n", encoding="utf-8"
     )
