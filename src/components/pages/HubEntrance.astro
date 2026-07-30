@@ -25,19 +25,44 @@ import { buildPulseSvg, formatWeekRange, type PulseSnapshot } from '@/lib/pulse/
 import pulseData from '@/data/pulse/pulse.json'
 import { NAMING, DRAFT_LABEL } from '@/config/naming'
 import { lastChronicle, latestJournal, trimLine } from '@/lib/maschinenraum'
+import { buildScore, chronicleEvents, clampToLastDays, jiStart, journalEvents, scoreOpenings } from '@/lib/partitur'
+import Partitur from '@/components/maschinenraum/Partitur.astro'
 import { loadChronicle as loadFieldChronicle } from '@/lib/field/chronicle'
 import { loadChronicle as loadStudioChronicle } from '@/lib/studio/chronicle'
 
-// Maschinenraum-Teaser (Franks Auftrag 2026-07-25): the last landed state je Praxis,
-// eine Zeile, aus denselben committeten Spiegeln wie /maschinenraum.
-const mrAtelier = latestJournal(
-  import.meta.glob('/src/content/atelier/journal/*.md', { eager: true, query: '?raw', import: 'default' }) as Record<string, string>,
+// Maschinenraum-Teaser (Franks Auftrag 2026-07-25, Partitur dazu 2026-07-31): the last
+// landed state je Praxis plus die Kompakt-Partitur der letzten 14 Tage — aus denselben
+// committeten Spiegeln wie /maschinenraum, kein zweiter Datenweg.
+const mrAtelierJournalsRaw = import.meta.glob('/src/content/atelier/journal/*.md', { eager: true, query: '?raw', import: 'default' }) as Record<string, string>
+const mrPlenumJournalsRaw = import.meta.glob('/src/content/plenum/journal/*.md', { eager: true, query: '?raw', import: 'default' }) as Record<string, string>
+const mrScoresRaw = import.meta.glob('/src/content/atelier/projects/*/SCORE.md', { eager: true, query: '?raw', import: 'default' }) as Record<string, string>
+const mrFieldChronicle = loadFieldChronicle()
+const mrStudioChronicle = loadStudioChronicle()
+
+const mrAtelier = latestJournal(mrAtelierJournalsRaw)
+const mrPlenum = latestJournal(mrPlenumJournalsRaw)
+const mrField = lastChronicle(mrFieldChronicle)
+const mrStudio = lastChronicle(mrStudioChronicle)
+
+const MR_JI = 'ji-2026-002'
+const mrScore = buildScore(
+  clampToLastDays(
+    [
+      ...journalEvents(mrAtelierJournalsRaw, 'atelier'),
+      ...scoreOpenings(mrScoresRaw),
+      ...chronicleEvents(mrFieldChronicle, 'field'),
+      ...chronicleEvents(mrStudioChronicle, 'studio'),
+      ...journalEvents(mrPlenumJournalsRaw, 'plenum'),
+    ],
+    14,
+  ),
 )
-const mrPlenum = latestJournal(
-  import.meta.glob('/src/content/plenum/journal/*.md', { eager: true, query: '?raw', import: 'default' }) as Record<string, string>,
-)
-const mrField = lastChronicle(loadFieldChronicle())
-const mrStudio = lastChronicle(loadStudioChronicle())
+const mrJi = {
+  id: MR_JI,
+  label: 'Model Collapse',
+  start: jiStart(mrScoresRaw, MR_JI),
+  voices: ['atelier', 'field', 'studio'] as ('atelier' | 'field' | 'studio' | 'plenum')[],
+}
 const mrRows: { label: string; date?: string; line?: string }[] = [
   { label: 'Atelier · Ulysses', date: mrAtelier?.date, line: mrAtelier ? trimLine(mrAtelier.firstLine, 92) : undefined },
   { label: 'Field · Meridian', date: mrField?.date, line: mrField ? trimLine(`${mrField.move.toUpperCase()} — ${mrField.summary}`, 92) : undefined },
@@ -200,6 +225,9 @@ const isDraft = NAMING.approval !== 'approved'
       <b class="text-fg">Maschinenraum</b> · the last landed state
       <a href="/maschinenraum" class="ml-2 normal-case tracking-normal text-fg-faint underline hover:text-fg">→ full view</a>
     </p>
+    {/* Die Partitur der letzten 14 Tage (Frank, 2026-07-31): der Rhythmus der Ökologie
+        direkt auf dem Hub; jede Marke klick- und hoverbar, Klick führt zur Vollansicht. */}
+    {mrScore && <Partitur model={mrScore} ji={mrJi} compact />}
     <ul class="mt-6 divide-y divide-line/60 overflow-hidden rounded-[10px] border border-line bg-panel">
       {mrRows.map((r) => (
         <li class="flex flex-wrap items-baseline gap-x-3 gap-y-1 px-4 py-3 sm:px-6">

@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest'
 import {
   buildScore,
   chronicleEvents,
+  clampToLastDays,
   dayRange,
   jiStart,
   journalEvents,
@@ -88,6 +89,20 @@ describe('scoreOpenings / jiStart', () => {
   it('jiStart nimmt das früheste created der passenden encounter_ref; sonst null', () => {
     expect(jiStart(scores, 'ji-9')).toBe('2026-07-25')
     expect(jiStart(scores, 'ji-0')).toBeNull()
+  })
+})
+
+describe('clampToLastDays', () => {
+  it('fenstert relativ zur JÜNGSTEN Landung (Archivende), nicht zu heute', () => {
+    const events = [
+      ev({ date: '2026-07-01' }),
+      ev({ date: '2026-07-10' }),
+      ev({ date: '2026-07-20' }),
+    ]
+    // Fenster 14 Tage ab Ende 07-20 → ab 07-07: 07-01 fällt raus
+    expect(clampToLastDays(events, 14).map((e) => e.date)).toEqual(['2026-07-10', '2026-07-20'])
+    expect(clampToLastDays(events, 1).map((e) => e.date)).toEqual(['2026-07-20'])
+    expect(clampToLastDays([], 14)).toEqual([])
   })
 })
 

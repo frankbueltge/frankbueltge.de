@@ -166,6 +166,18 @@ export function jiStart(scoresRaw: Record<string, string>, id: string): string |
   return min
 }
 
+/** Fenster für den Hub-Teaser: nur Events der letzten n Tage VOR der jüngsten Landung —
+ *  relativ zum Archivende, nie zu „heute" (die Achse bleibt eine Aussage über Gelandetes). */
+export function clampToLastDays(events: ScoreEvent[], n: number): ScoreEvent[] {
+  const valid = events.filter((e) => DATE_RE.test(e.date))
+  const end = valid.map((e) => e.date).sort().at(-1)
+  if (!end || n < 1) return []
+  const d = new Date(`${end}T00:00:00Z`)
+  d.setUTCDate(d.getUTCDate() - (n - 1))
+  const start = d.toISOString().slice(0, 10)
+  return valid.filter((e) => e.date >= start)
+}
+
 /** Events → Partitur: je Stimme Tagesbündel, gemeinsame Achse, ehrliche as-ofs. */
 export function buildScore(events: ScoreEvent[]): ScoreModel | null {
   const valid = events.filter((e) => DATE_RE.test(e.date))
