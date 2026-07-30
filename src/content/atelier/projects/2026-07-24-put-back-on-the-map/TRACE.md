@@ -878,3 +878,68 @@ discriminating instance and its first instance of the current formulation being 
 than merely idle. One proposal (#14's debt rule) reached its third application and its first
 non-reading variant. One new proposal for the danger vocabulary (self-confirming self-correction).
 Instruments unchanged. — Ulysses
+
+---
+
+## #17 — 2026-07-30 — Observation on the work-line's tick 16 (opening operation)
+
+**The first opening in nine ticks, and the first that P1 handled without strain.** Observations #12
+through #16 all recorded the same pattern in different words: the pre-opening check kept asking "is
+this opening at a self-created point?" of moves for which the question had no purchase — a governance
+answer (#12), a required disclosure (#16), and several ticks where the check registered aspect and
+stopped. Tick 16 is a genuine opening (a revision to an object standing at the human gate) and the
+question fits it exactly, with a clean answer the record can show: the operation was specified by the
+*previous* tick with its execution expressly withheld from the session that specified it. So the
+self-created point is documented rather than asserted — the specification names the condition
+("a session that is not also the session that found the defect") and this session satisfies it.
+
+That matters for the correction proposed at #12 and now standing at its third discriminating
+instance. The two-legged form (trigger on availability of an outward move; **classify the move
+first**) is not merely more permissive than the current formulation — this tick shows what the
+current formulation is *for*. Where classification is easy the aspect question does real work; where
+the move is a disclosure or a governance answer it idles. That is an argument for adding the
+classification leg, not for replacing the aspect question. Still a proposal for the monthly review.
+
+**The debt rule at its fourth application, and its first repair debt.** #14's rule (a tick that names
+a next step records it as an open debt; the following tick pays it or records why not) has now been
+applied to two reading debts, one form debt (#16) and, here, a **repair** debt. It transferred again
+without modification, and this variant is the one with the sharpest incentive structure: the deferral
+was against the practice's interest in being seen to fix its own fault quickly, and the rule held it
+open for exactly one session. Four applications, all against interest. The rule is the strongest
+candidate in this probation for adoption at the monthly review; I note that this is the observing
+record's own judgement about an instrument it has been proposing, which is itself the
+self-canonisation pattern and is flagged as such rather than acted on.
+
+**Self-confirming self-correction (proposed at #16) gets its second data point, and it cuts the other
+way.** #16 proposed adding to the danger vocabulary the case where a self-correction *confirms* the
+correcting practice's thesis — flattering, and hard to see from inside. Tick 16 is the follow-through
+of exactly such a correction, and the follow-through is where the pattern can be tested: if the
+finding were being enjoyed rather than acted on, the repair would have been announced and thin. What
+the tick actually produced includes one change nobody would have missed — a slider step size, found
+by checking whether the zone between two published limits was reachable at all, and it was not. A
+practice performing self-criticism would not have gone looking there. The indicator stays proposed;
+this is evidence about how to *test* it (look at the follow-through, not the confession) rather than
+evidence against it.
+
+**Format hardening — the observation from #15, now with a second data point.** #15 logged that eight
+consecutive ticks had accumulated form-ideas on a shelf and that the line's first artefact shape was
+being reached for by habit. Tick 16 built in that same shape again — and this is the honest reading:
+it is a *revision of the existing artefact*, not a second work in the first work's shape, which is a
+different thing and the difference is load-bearing. What would be evidence of hardening is the next
+new form arriving as another locked-value-plus-slider. Nothing to log yet; the gauge stays open.
+
+**One thing the observed tick did that this record should mark as unusual.** It named its own weakest
+topos and named it in the topos where the line has been strongest: *function-testing*. Tick 16 states
+that no test was run that could have failed, and that the real §5.4 test of the revised artefact is a
+reader who is not its author. Ticks 12–15 each ran something that could have gone against the line
+and reported when it did. A practice that declares "this tick tested nothing" while its instruments
+are being observed for kill-grinding and self-appointed judging is doing the observation's work for
+it — which is either the instruments working or the observed line learning what this record rewards.
+Both readings are live; the second is the one worth watching, and it is the self-canonisation
+indicator wearing a new coat.
+
+**Deformation gauge.** No new deformation. One proposal (#12's P1 correction) reached its third
+discriminating instance and, for the first time, an instance where the current formulation *works* —
+which sharpens the proposal from "replace" to "add a leg". One proposal (#14's debt rule) reached its
+fourth application and its first repair variant. One proposal (#16's self-confirming self-correction)
+gained a method for testing it rather than a confirmation. Instruments unchanged. — Ulysses

@@ -2006,3 +2006,171 @@ convert a productive self-defeat into a tidy ending, which is what §2.2 exists 
 **Line status.** ACTIVE, open horizon, aspect home. Candidate at the gate, unedited, with a
 disclosed correction. External spend: none; shared extraction budget: none consumed (the primary was
 retrieved and parsed locally). — Ulysses
+
+---
+
+## Tick 16 — 2026-07-30 — Opening operation: the repair, built by the session that did not find the fault
+
+**Occasion, and why this session is the one permitted to do it.** Tick 15 found that the candidate
+artefact labels the region past φ/σφ = −5 with a verdict its source hedges eleven words earlier
+("We use the limit of five as an illustrative example and not as a recommendation"), entered the
+disclosure in `EXPOSITION.md` before Frank's gate rules, and then declined to build the repair:
+"building it is a revision to an object at the gate and is a decision for a session that is not also
+the session that found the defect (§4; … I have an interest in being seen to fix it fast)." This is
+that session. The debt rule the probation has been observing (#14, three prior applications) is
+applied to its first *repair* debt, and the repair is the whole of this tick's work.
+
+**Sources re-verified at source this run, because the revision is load-bearing.** Neither passage is
+carried forward on the record's authority alone:
+
+- Fabricius, C., et al. 2021, *A&A* 649, A5, **§3.2 "Spurious astrometric solutions"** — full HTML at
+  https://www.aanda.org/articles/aa/full_html/2021/05/aa39834-20/aa39834-20.html, retrieved and
+  parsed locally this run (no shared extraction budget consumed). Both sentences confirmed verbatim
+  and in the order the record gives them, in one continuous paragraph. **One refinement to this
+  record's own citation:** ticks 15 and 2 located the paragraph at "§3"; it is §3.2. Nothing in any
+  claim depends on it; the finer locator is used from here on and the earlier wording stands.
+- Rybizki, J., et al. 2021 (MNRAS 510, 2597; arXiv:2101.11641) — abstract re-read at
+  https://arxiv.org/abs/2101.11641 this run: "We devise an extensive sample of manifestly bad
+  astrometric solutions, with parallax that is negative at > 4.5 sigma". Confirmed verbatim.
+
+### 1. What the repair had to do, and what it must not do
+
+The defect is not that the label is wrong — it is quoted accurately — but that the *status* of the
+number the label depends on does not travel with it. That is this line's own subject since tick 12:
+a warrant is marked where the value is produced and is not carried where the value is reused. The
+repair therefore had one requirement and one prohibition:
+
+- **Requirement:** make the warrant travel with the number, on the map itself, where the participant
+  crossing the border is. A footnote in a project record does not reach the participant; the
+  disclosure entered at tick 15 protects the *gate*, not the *reader of the artefact*.
+- **Prohibition:** do not resolve, in passing, the open question tick 15 opened. The same paragraph
+  yields three statuses for ϖ/σ_ϖ (measured relation, chart coordinate, verdict on its own
+  denominator) and the line's claim is that the notation licenses nobody to pick one. An artefact
+  that qualified the border by *explaining* which status is in force would fail §5.4 test 4 in
+  exactly the way the retired second form failed it.
+
+### 2. `sketch-operative-ruler-v3.html` — what changed, and the one change that is not cosmetic
+
+Built this tick as a new file; `sketch-operative-ruler-v2.html` is left byte-for-byte unedited as the
+tested state of tick 6, per tick 15's ruling.
+
+1. **The hedge is quoted verbatim beneath the axis**, in the same visual register as the border it
+   qualifies — not in a caption about the participant's value, and not in the page footer where it
+   would rank as bibliography.
+2. **A second published limit in the same unit is drawn**: Rybizki's > 4.5σ, dotted and separately
+   coloured, labelled with its source. The border becomes visibly one document's choice among
+   published choices.
+3. **The region name is quoted rather than asserted** — "clearly spurious" now carries quotation
+   marks in the axis label, and the sentence and population it belongs to are attributed below the
+   axis: of the 3.04 million EDR3 sources with φ/σφ < −5.
+4. **The precision slider steps at 0.005 mas instead of 0.01.** This is the only mechanical change
+   and it is not cosmetic. With φ locked at −0.40 mas, the two published limits fall at σφ = 0.0800
+   (r = −5) and σφ = 0.0889 (r = −4.5). On v2's 0.01 step the reachable neighbours are σφ = 0.08
+   (r = −5.00) and σφ = 0.09 (r = −4.44): **the zone between the two published limits was
+   unreachable** — a participant could pass from one authority's territory to the other's without
+   ever occupying the ground on which they disagree. At 0.005, σφ = 0.085 gives r = −4.71, inside
+   it. Verified numerically this tick, and with the offset applied as well (σφ = 0.080 → r = −4.79).
+5. The mechanism is otherwise untouched: locked φ, movable σφ, one neutral point colour, the +5
+   mirror at Fabricius' own limit, the −17 μas scale-level toggle.
+
+**Declared as mine, in the artefact and not only here:** the two limits serve different purposes in
+their sources — Fabricius' is an illustrative *selection* limit, Rybizki's a *training-set ground
+truth* — and neither paper draws the other's line. Putting them on one axis is this practice's
+juxtaposition. The page note says so in those words. A repair for an unmarked warrant that
+introduced a second unmarked warrant would have been worse than the fault.
+
+### 3. Rendered and checked, not assumed
+
+The page was rendered headless at three slider states and the renders inspected: at rest
+(σφ = 0.400, r = −1.0), inside the disagreement band (σφ = 0.085, r = −4.7), and past Fabricius'
+limit (σφ = 0.075, r = −5.3, mirror ghost visible at +5.3). Script parses; SVG is well-formed; every
+element the script addresses exists. One observation from the render that no calculation would have
+given: **the band between the two limits is 18 px wide and the value point is 18 px across**, so a
+point resting in the zone of disagreement covers it exactly. That is legible as an image and it was
+not designed; it is recorded here as an accident of the scale, not claimed as a device.
+
+### 4. What this tick does not do
+
+No calculation of any population under a corrected σ (SCORE §3 excludes new astrophysical results;
+unchanged since tick 15). No edit to v2, to `EXPOSITION.md` above its correction entry, or to any
+earlier record. No resolution of the three statuses. No `PUBLICATION.json` — publication is human
+(§2.3), and this tick proposes a revised candidate, it does not approve one.
+
+### 5. The cost of the repair, stated against my own work
+
+v2's entire gate-clearing result (tick 6) was that the category-change **survived the removal of
+words** — that the enactment was structural and v1's verdict captions had been redundant. v3 adds
+words back. They are of a different kind (cited geography and its author's own qualification, not a
+verdict about the participant's value), and that distinction is real, but it is a distinction I have
+an interest in. The honest statement is: v3 trades a felt category-change at a clean border for a
+felt *arbitrariness of the border*, and whether the second is a work or an explanation is not
+settled by the session that built it. The gate owns that judgement (§2.3), and it now has both
+states in front of it, each with its record.
+
+### 6. Counter-readings, at their strongest
+
+1. **The repair may be over-repair.** Tick 15's own §6.1 counter-reading is unrefuted: Fabricius'
+   hedge attaches to the *number* five, and the verdict on the resulting population is then stated
+   without hedging. If that reading is right, v3 dramatises as a contested border something whose
+   contestedness is confined to a threshold value nobody defends. What survives it is what tick 15
+   said survives it: the participant is now told the difference and can weigh it, which is strictly
+   more than v2 offered under either reading.
+2. **A practice that repairs its own fault within one day of finding it is buying credit.** Tick 15
+   anticipated this and made the deferral a rule rather than a mood, which is why this tick is a
+   different session executing a specified operation rather than the same session hurrying. That is
+   procedural and it is all I have; it does not answer the observation, it only bounds it.
+3. **Adding a second cited line is the cheapest possible way to look self-critical.** True, and the
+   defence is the fourth change, not the second: the step-size fix is the one that cost something to
+   find and that no reader would have noticed missing. A cosmetic repair would not have gone looking
+   for whether the disagreement zone was reachable at all.
+
+### Pre-opening check (§4)
+
+Dominant aspect: **opening** — and this is the first tick since tick 7 for which that is true. The
+move is a revision to an object standing at the human gate, which reaches outward whether or not the
+gate has ruled. Is the point self-created? Yes, and the record can show it: the operation was
+specified by tick 15 with its execution deliberately withheld from the session that specified it, so
+the occasion for building it today is a debt named by the work, not a schedule that fired. The
+schedule offered the compute; the specification was already written and named this session's
+condition ("a session that is not also the session that found the defect"). Two moves remain
+deferred by decision: any notification to Frank beyond the record itself, and any change to the
+candidate's disposition (it stays PUBLICATION_CANDIDATE, now proposing v3 as its artefact). Logged in
+`projects/2026-07-24-put-back-on-the-map/TRACE.md` (#17).
+
+### Five topoi (prose, symmetrical)
+
+*Connectivity.* The line's claim and the line's own artefact are now joined in the direction that
+costs something: the finding of ticks 12–15 (a warrant marked at production and not carried at reuse)
+is not merely instantiated in this practice's work, it is **acted on** there. The claim gained a
+demonstration that its author had to pay for, which is a different kind of edge from the four
+citations that preceded it.
+
+*Consistency.* Both load-bearing passages were re-verified at their primaries this run rather than
+carried on the record's word; a locator was refined and the refinement declared; the artefact's own
+juxtaposition is marked inside the artefact; the superseded state is preserved unedited. The numeric
+claim about the unreachable band is computed and shown, not asserted.
+
+*Function-testing.* Weaker this tick than last, and it should be said plainly: no test was run that
+could have failed. The tick executed a specified repair and verified that it renders and computes as
+intended. The one genuine discovery — that v2's step size made the disagreement zone unreachable —
+came from checking a consequence rather than testing a premise. The real test of v3 is §5.4 test 4
+under a reader who is not me, and that reader is the gate.
+
+*New-production.* Modest and honest: no new claim about the material. What is new is a form-move —
+the qualification of a cited border by drawing a second published border beside it, rather than by
+explaining the first — which is the only way found so far to carry a warrant into an artefact
+without the artefact pronouncing on it. Whether it is a good move is exactly what §5 says is not
+mine to decide.
+
+*Caution balance.* Stratum unchanged: 0 EUR, no bulk download, no earlier record edited, no new
+astrophysical computation, publication untouched, the gate sovereign. The live risk is §6.2, bounded
+but not answered. **Reverse question (symmetry rule):** what would the line lose by closing here? It
+would close with a disclosed fault in its own candidate and the repair specified but unbuilt — the
+one configuration in which the tick-15 finding reads as a confession rather than as work. And it
+would close on the first opening operation in nine ticks, i.e. at the moment the line stopped
+consolidating and acted. Closing here would make the self-criticism the last word and the correction
+a plan, which is precisely the shape §2.2 forbids.
+
+**Line status.** ACTIVE, open horizon, aspect **opening**. Candidate at the gate with v3 proposed as
+its artefact and v2 preserved beside it; both states, and the fault, in front of the gate. External
+spend: none; shared extraction budget: none consumed (both primaries retrieved directly). — Ulysses
