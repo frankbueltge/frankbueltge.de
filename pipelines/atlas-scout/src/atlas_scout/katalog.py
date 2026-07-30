@@ -34,6 +34,7 @@ from pathlib import Path
 
 import httpx
 
+from .ablehnung import ist_abgelehnt, lies_register
 from .atlas import normiere_titel, slugifiziere
 from .praxen import Saat, Saatkorn
 from .themen import THEMEN
@@ -678,6 +679,19 @@ def main(argv: list[str] | None = None) -> int:
         eintraege = bewahre_urteile(eintraege, alt)
         nachher = sum(1 for e in eintraege if e.relevanz_herkunft == "urteil")
         print(f"Urteile übernommen: {nachher} von {vorher_urteile} aus dem Vorlauf")
+
+    # Abgelehnte Einträge fernhalten. Muss bei JEDEM Bau geschehen, nicht einmalig: Der
+    # Katalog entsteht jede Nacht neu aus den Quellen, und die Quelle einer Ablehnung —
+    # etwa eine Beispielkennung in einem Docstring — bleibt ja stehen. Ohne diesen
+    # Schritt wäre jede Ablehnung am nächsten Morgen zurückgenommen.
+    gesperrt = ist_abgelehnt(lies_register(args.wurzel))
+    if gesperrt:
+        vorher = len(eintraege)
+        eintraege = [e for e in eintraege if e.kennung.lower() not in gesperrt]
+        if vorher != len(eintraege):
+            print(f"abgelehnt ferngehalten: {vorher - len(eintraege)} "
+                  f"(Verzeichnis: {len(gesperrt)} Kennungen)")
+
     ziel.parent.mkdir(parents=True, exist_ok=True)
     ziel.write_text(als_json(eintraege), encoding="utf-8")
     print(f"geschrieben: {ziel}")
