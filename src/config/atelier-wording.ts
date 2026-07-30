@@ -139,7 +139,7 @@ export const ATELIER_NARRATIVE = {
     model: {
       heading: 'the model behind the practice',
       lede:
-        'Since 24 July 2026 the practice carries an explicit process model: read out of the whole of A Thousand Plateaus and published bilingually as the work “Kartographie statt Kopie / Cartography, not Tracing” — a map to be reworked by each project, not a template to be applied. Six postulates:',
+        'Since 24 July 2026 the practice carries an explicit process model: read out of the whole of A Thousand Plateaus and published bilingually as the work “Kartographie statt Kopie / Cartography, not Tracing” — a map to be reworked by each project, not a template to be applied. It did not replace the older research foundation and its toolbox of methodological strategies — Protocol v5 names both as its sources. Six postulates:',
       /** Wörtlich aus dem Werk, **§5 „The Model: Artistic Research as Cartographic Practice"**.
        * (Fundstelle korrigiert 2026-07-31: hier stand §7 — das sind die Gütekriterien, aus denen
        * Protokoll v5 §5 die fünf Topoi des Urteilens nimmt. Die Postulate stehen eine Ebene
