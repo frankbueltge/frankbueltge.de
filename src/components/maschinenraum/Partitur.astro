@@ -121,8 +121,8 @@ const bandPaths = model.lanes.map((lane, li) => {
     const n = byDay.get(d) ?? 0
     return n === 0 ? 0.7 : Math.min(2.2 + n * 1.15, AMP_MAX)
   })
-  const top: [number, number][] = amps.map((a, i) => [xAt(i), y - a])
-  const bottom: [number, number][] = amps.map((a, i) => [xAt(i), y + a]).reverse()
+  const top = amps.map((a, i): [number, number] => [xAt(i), y - a])
+  const bottom = amps.map((a, i): [number, number] => [xAt(i), y + a]).reverse()
   const first = top[0]
   const bottomStart = bottom[0]
   return {
