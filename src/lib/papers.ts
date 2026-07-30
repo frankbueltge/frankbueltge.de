@@ -114,6 +114,21 @@ const gruendeText: Record<Aufnahmegrund, string> = {
 }
 export const grundLabel = (g: Aufnahmegrund): string => gruendeText[g] ?? g
 
+/** Wenn ein Urteil geschrieben wurde, ohne dass jemand festhielt WER — dann sagt die
+ *  Fläche genau das. Ein nicht zugeordneter Satz ist etwas anderes als ein zugeordneter,
+ *  und beides ist etwas anderes als ein Satz aus einer Praxis. Der Fall trat am
+ *  2026-07-30 ein: 52 fertige Urteile lagen im Repo, geschrieben von einer Sitzung, die
+ *  niemand mehr benennen konnte. Seither trägt die Urteilsdatei ihre Herkunft selbst. */
+export const HERKUNFT_UNBEKANNT = new Set(['nicht festgehalten', 'unbekannt', ''])
+
+export const urteilLabel = (u: Urteil | null | undefined): string => {
+  if (!u) return 'written by a model — no record of which'
+  const wer = HERKUNFT_UNBEKANNT.has(u.modell)
+    ? 'a model whose identity was not recorded'
+    : u.modell
+  return `written by ${wer} on ${u.am}, from the ${u.grundlage}`
+}
+
 /** Klartext für den Prüfbefund. Ungeprüft heißt ungeprüft — nicht „nicht erreichbar". */
 export const pruefLabel = (e: Pick<PaperEntry, 'geprueft' | 'pruef_status'>): string =>
   e.geprueft ? `access confirmed (HTTP ${e.pruef_status})` : 'access not yet confirmed'
