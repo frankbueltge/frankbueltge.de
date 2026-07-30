@@ -11,6 +11,13 @@ name: Katalog-Scout nightly
 #   1. Praxis-Repos flach klonen (alle vier öffentlich) — nur so kommt der Runner an die
 #      Journale und Korpora, in denen zitiert wird. Die Site spiegelt davon nur einen Teil.
 #   2. Saatgut sammeln, Kennungen auflösen, src/data/register/papers.json schreiben.
+#   3. Die eigenen Pipelines lesen und ihre Datenquellen prüfen → datasets.json.
+#
+# **Beide Schritte bewahren bestehende Urteile.** Der Bau erzeugt den Katalog aus den
+# Quellen neu; ein Urteil folgt aber aus keiner Quelle und käme durch keinen Abruf
+# zurück. Bis 2026-07-28 schrieb der Bau ungelesen über — dieser Lauf hätte die 27
+# geschriebenen Urteile gelöscht. `bewahre_urteile()` trägt sie weiter, und eine Abnahme
+# („verified") überlebt immer: Die setzt nur ein Mensch oder eine Praxis.
 #
 # Schlüsselfrei: OpenAlex (polite pool via mailto) für DOIs, arXiv für Preprints.
 # Kein Modell-API-Aufruf — der Katalogbau ist deterministisch. Die Begründungssätze
@@ -68,16 +75,25 @@ jobs:
           done
           ls -1 ../praxen
 
-      - name: Katalog bauen
+      - name: Paper-Katalog bauen
         env:
           ATLAS_SCOUT_MAILTO: f.bueltge@gmail.com # OpenAlex „polite pool"
         run: |
-          # pipefail ist hier nicht kosmetisch: Die Läufe vom 29. und 30.07. meldeten
+          # pipefail ist hier nicht kosmetisch: Am 29. und 30.07. meldeten die Läufe
           # ERFOLG, während der Python-Aufruf mit NameError abstürzte — der Fehler ging
-          # in `tee`, `tee` gelang, der Schritt galt als grün. Zwei Tage lang lief der
+          # in `tee`, `tee` gelang, der Schritt galt als grün. Zwei Nächte lief der
           # Katalogbau ins Leere, ohne dass irgendwo etwas rot wurde.
           set -euo pipefail
-          python -m atlas_scout.katalog --repos ../praxen --wurzel . | tee lauf.log
+          python -m atlas_scout.katalog --repos ../praxen --wurzel . | tee -a lauf.log
+
+      - name: Dataset Register bauen
+        run: |
+          set -euo pipefail
+          # Liest die eigenen Pipelines und prüft die Datenquellen, die sie abrufen.
+          # Braucht keine Praxis-Klone und keinen Schlüssel — die Belege stehen im
+          # eigenen Repo. Der Lauf ist zugleich eine tägliche Erreichbarkeitsprüfung:
+          # Eine Quelle, die verstummt, ist ein Befund über ein laufendes Werk.
+          python -m atlas_scout.holdings --wurzel . | tee -a lauf.log
 
       - name: Zusammenfassung
         if: always()
@@ -98,12 +114,12 @@ jobs:
           set -euo pipefail
           git config user.name "Katalog-Scout"
           git config user.email "katalog-scout@frankbueltge.de"
-          git add src/data/register/papers.json
+          git add src/data/register/papers.json src/data/register/datasets.json
           if git diff --cached --quiet; then
             echo "Keine Änderung am Katalog."
             exit 0
           fi
-          git commit -m "katalog-scout: Paper-Katalog $(date -u +%F)"
+          git commit -m "katalog-scout: Kataloge $(date -u +%F)"
           # Gegen Push-Races mit den übrigen nächtlichen Läufen: rebasen + mehrfach versuchen.
           for i in 1 2 3 4 5; do
             if git pull --rebase --autostash origin main && git push origin HEAD:main; then
