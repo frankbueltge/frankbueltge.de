@@ -11,7 +11,7 @@
 // technischer Fortschritt, sondern die Folge davon, dass jeder Eintrag begründet ist.
 //
 // Zahlen NUR aus den Daten (Kanon-Regel) — kein Wert steht im Fließtext.
-import { PAPERS, authorLine, grundLabel, praxisLabel, pruefLabel, urteilLabel } from '@/lib/papers'
+import { ABGELEHNT, PAPERS, ablehnungsGrundLabel, authorLine, grundLabel, praxisLabel, pruefLabel, urteilLabel } from '@/lib/papers'
 import { THEMEN_LABELS } from '@/config/themen'
 
 const total = PAPERS.length
@@ -113,6 +113,38 @@ const zugangFacette = [
       </div>
     ))}
   </section>
+
+  {ABGELEHNT.length > 0 && (
+    <!-- Das Ablehnungsverzeichnis. Steht hier, weil ein Katalog, der still ENTFERNEN
+         kann, nicht prüfbarer ist als einer, der still aufnimmt — und weil ein
+         Verzeichnis, das niemand sieht, keines ist. -->
+    <section class="mb-10 rounded-lg border border-line bg-panel p-4">
+      <details>
+        <summary class="cursor-pointer font-mono text-[11px] uppercase tracking-wider text-fg-faint">
+          withdrawn from this catalogue: {ABGELEHNT.length}
+        </summary>
+        <p class="mt-3 text-sm leading-relaxed text-fg-muted">
+          An entry can be taken back — but only by name, with a stated ground and
+          evidence of what is actually at the cited place. An entry whose reason was
+          written by a practice can never be withdrawn: someone read that text.
+        </p>
+        <ul class="mt-4 space-y-4">
+          {ABGELEHNT.map((a) => (
+            <li class="border-l-2 border-line pl-3">
+              <div class="text-sm text-fg">{a.titel}</div>
+              <div class="mt-1 font-mono text-[10px] uppercase tracking-wider text-fg-faint">
+                {a.grund} — {ablehnungsGrundLabel(a.grund)}
+              </div>
+              <p class="mt-2 text-xs leading-relaxed text-fg-muted">{a.beleg}</p>
+              <div class="mt-1 font-mono text-[10px] text-fg-faint">
+                withdrawn by {a.wer} on {a.am}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </details>
+    </section>
+  )}
 
   <section data-papers>
     <!-- Filter. Rein clientseitig über data-Attribute; ohne JavaScript bleibt die

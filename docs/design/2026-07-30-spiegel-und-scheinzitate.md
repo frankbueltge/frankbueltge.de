@@ -75,12 +75,8 @@ kennt es jetzt. Gemessen: 137 Körner ohne, 135 mit — es fallen genau diese zw
 gewählt; hier hat niemand gewählt, der Scout hat sie aufgelesen. Ein nachgereichter
 Grund wäre genau die erfundene Begründung aus §4 der Übergabe.
 
-**Offen bleibt der eine Docstring-Fall.** Für ihn hilft keine Ortsregel — die Kennung
-steht in einem produktiven Skript, nicht in einer Testvorrichtung. Er braucht das, was
-dem Katalogbau ganz fehlt: **einen Weg, einen Eintrag benannt und begründet
-abzulehnen.** Das Ablehnungsregister des Scouts (`Verworfen`) greift nur vor der
-Aufnahme, nicht danach. Das ist die nächste Lücke, und sie ist grundsätzlicher als
-dieser eine Eintrag.
+**Der eine Docstring-Fall brauchte etwas Neues.** Für ihn hilft keine Ortsregel — die
+Kennung steht in einem produktiven Skript, nicht in einer Testvorrichtung. Siehe §7.
 
 ## 4. Eine Dublette, die keine ist
 
@@ -99,7 +95,14 @@ Zusammenführen würde genau die Diskrepanz löschen, die eine Praxis dokumentie
 
 ## 5. Urteilscharge 2
 
-`urteile/2026-07-30.json` — **52 Urteile**, Modell `claude-opus-5`, Sitzung `tag-02`.
+`urteile/2026-07-30.json` — **52 Urteile**, Modell `claude-opus-5`, Sitzung
+`spiegelfund-2026-07-30`.
+
+Die Datei lag zunächst unversioniert im Arbeitsbaum und war deshalb niemandem
+zuzuordnen; sie wurde zu Recht als „nicht festgehalten" gestempelt und später
+richtiggestellt. Der Fall ist lehrreich: 52 Einträge sagten „Herkunft unbekannt" über
+Sätze, deren Herkunft bekannt war — dieselbe Zweideutigkeit, die §6 der Urteilsroutine
+ausschließen soll, nur andersherum.
 
 Von 81 unbeurteilten Einträgen sind **26 nur mit Titel** vorhanden und bleiben nach der
 Doktrin von §5 der Urteilsroutine unbeurteilt; von den 55 beurteilbaren sind die drei
@@ -119,3 +122,38 @@ Praxis, die ihn nie gelesen hat.
 
 Das ist §10 noch einmal, von der anderen Seite: nicht „messen vor dem Schließen",
 sondern **die Prämisse prüfen, bevor man auf ihr aufbaut.**
+
+## 7. Das Ablehnungsverzeichnis (neu, 2026-07-30)
+
+Der Scout hatte ein Ablehnungswesen (`model.Verworfen`, Monatsbericht in `berichte/`),
+aber es greift **vor** der Aufnahme. Stand ein Eintrag erst im Katalog, gab es kein
+Mittel gegen ihn außer einer Ortsregel im Saatgut — und die trägt nicht immer.
+
+`atlas_scout/ablehnung.py` schließt das. Vier Entscheidungen tragen es:
+
+**Ein Verzeichnis, kein Löschen.** Der Katalog entsteht jede Nacht neu aus den Quellen;
+ein von Hand gelöschter Eintrag wäre am nächsten Morgen zurück, weil seine Ursache — die
+Beispielkennung im Docstring — ja stehen bleibt. `katalog.main()` hält die abgelehnten
+Kennungen bei **jedem** Bau fern.
+
+**Über die Kennung, nicht über die id.** Die id wird aus Autor und Titel abgeleitet und
+ändert sich, sobald die Quelle ihre Angaben korrigiert — dann käme der Eintrag unter
+neuer id zurück.
+
+**Geschlossene Gründe, Belegpflicht.** `kein-zitat` · `falsch-aufgeloest` · `dublette`,
+dazu ein Beleg, der sagt, WO die Kennung steht und WAS dort wirklich steht. Ein freier
+Grund würde das Verzeichnis in eine Erlaubnis verwandeln, alles zu entfernen, wofür sich
+eine Formulierung findet. Das Verzeichnis hält den **vollständigen Eintrag** fest: Man
+sieht, was entfernt wurde, nicht nur dass — die Rücknahme ist umkehrbar.
+
+**Die Schranke, die nie fällt: Ein Praxis-Satz kann nicht abgelehnt werden.** Hat eine
+Praxis geschrieben, warum ein Eintrag zählt, hat jemand den Text gelesen. Dieselbe Regel
+wie bei den Urteilen, nur schärfer: Dort würde ein Modellurteil den Satz überschreiben,
+hier würde eine Ablehnung ihn samt Eintrag tilgen. `pruefe_ablehnungen()` bricht ab.
+
+**Und es steht auf der Fläche.** `/papers` zeigt das Verzeichnis aufklappbar mit Grund
+und Beleg. Ein Katalog, der still entfernen kann, ist nicht prüfbarer als einer, der
+still aufnimmt — und ein Ablehnungsverzeichnis, das niemand sieht, ist keines.
+
+Erster Fall: `arXiv:2501.01234` („Impact of QCD sum rules … neutron stars"), Grund
+`kein-zitat`. Katalog 209 → 208.
