@@ -102,3 +102,50 @@ def test_provenienzmaterial_zaehlt_nicht_als_zitat(tmp_path: Path):
     assert "10.1215/2834703x-11700255" in kennungen, "echtes Zitat bleibt"
     assert "10.15468/dl.u9d3ap" not in kennungen, "Provenienzprotokoll fällt weg"
     assert "10.9999/gemessen-nicht-zitiert" not in kennungen, "Rohdaten fallen weg"
+
+
+def test_ein_abzug_des_eigenen_katalogs_zaehlt_nicht_als_zitat(tmp_path: Path):
+    """Ein Spiegel bezeugt nicht, dass jemand gegriffen hat — nur, dass der Katalog reiste.
+
+    Gemessen am 2026-07-30: Fields Provenienz-Audit hält den Paper-Katalog eingefroren,
+    um dessen Provenienzansprüche gegen das eigene Repo zu prüfen. Der Lauf las den Abzug
+    wie jede andere Datei — **79 Einträge trugen daraufhin das Etikett „von field
+    zitiert", deren einziger field-Beleg dieser Spiegel war.** Als Zitat gewertet wächst
+    die Zahl mit dem Katalog statt mit der Forschung.
+
+    Erkannt an der Schema-Signatur, nicht am Dateinamen: `.frozen` ist Fields Konvention,
+    die nächste Praxis spiegelt unter anderem Namen.
+    """
+    spiegel = json.dumps([{
+        "id": "x", "kennung": "10.5555/nur-im-spiegel", "titel": "T",
+        "aufnahmegrund": "zitiert", "relevanz_herkunft": "praxis",
+        "zitiert_von": ["atelier"], "fundstellen": ["ulysses/journal/2026-07-01.md"],
+    }])
+    _repo(tmp_path, "field-research", {
+        "journal/2026-07-01.md": "Gelesen: https://doi.org/10.1215/2834703X-11700255",
+        # Anderer Name als Fields `.frozen.json` — der Filter darf daran nicht hängen.
+        "drafts/audit/sources/katalog.pinned.json": spiegel,
+        # Ein echtes Literaturverzeichnis trägt keinen `aufnahmegrund` und bleibt.
+        "works/w/quellen.json": '[{"doi": "10.7551/mitpress/1234.001.0001", "note": "gelesen"}]',
+    })
+    saat = sammle(tmp_path, {"field": "field-research"})
+    kennungen = {k.kennung for k in saat.koerner}
+    assert "10.1215/2834703x-11700255" in kennungen, "echtes Zitat bleibt"
+    assert "10.7551/mitpress/1234.001.0001" in kennungen, "echtes Verzeichnis bleibt"
+    assert "10.5555/nur-im-spiegel" not in kennungen, "der Abzug des Katalogs fällt weg"
+
+
+def test_das_wort_aufnahmegrund_in_prosa_ist_kein_spiegel(tmp_path: Path):
+    """Geprüft wird der geparste Eintrag, nicht der Text.
+
+    Eine Praxis, die ÜBER den Katalog schreibt, zitiert dabei oft echte Quellen. Ein
+    Filter, der auf das blanke Wort anspringt, verschlänge genau die Notizen, in denen
+    am dichtesten über die Kataloge nachgedacht wird.
+    """
+    _repo(tmp_path, "field-research", {
+        "notes/katalog-kritik.md":
+            "Der `aufnahmegrund` ist eine Regel, die `relevanz_herkunft` ein Urteil — "
+            "vgl. https://doi.org/10.1215/2834703X-11700255",
+    })
+    saat = sammle(tmp_path, {"field": "field-research"})
+    assert {k.kennung for k in saat.koerner} == {"10.1215/2834703x-11700255"}

@@ -53,7 +53,11 @@ jobs:
 
       - name: Praxis-Repos holen
         run: |
-          set -eu
+          # pipefail ist hier nicht kosmetisch: Die Läufe vom 29. und 30.07. meldeten
+          # ERFOLG, während der Python-Aufruf mit NameError abstürzte — der Fehler ging
+          # in `tee`, `tee` gelang, der Schritt galt als grün. Zwei Tage lang lief der
+          # Katalogbau ins Leere, ohne dass irgendwo etwas rot wurde.
+          set -euo pipefail
           mkdir -p ../praxen
           for repo in ulysses field-research studio meridian-runtime; do
             # blob:none statt depth: die Commit-History wird gebraucht (Datum je Datei),
@@ -68,7 +72,11 @@ jobs:
         env:
           ATLAS_SCOUT_MAILTO: f.bueltge@gmail.com # OpenAlex „polite pool"
         run: |
-          set -eu
+          # pipefail ist hier nicht kosmetisch: Die Läufe vom 29. und 30.07. meldeten
+          # ERFOLG, während der Python-Aufruf mit NameError abstürzte — der Fehler ging
+          # in `tee`, `tee` gelang, der Schritt galt als grün. Zwei Tage lang lief der
+          # Katalogbau ins Leere, ohne dass irgendwo etwas rot wurde.
+          set -euo pipefail
           python -m atlas_scout.katalog --repos ../praxen --wurzel . | tee lauf.log
 
       - name: Zusammenfassung
@@ -83,7 +91,11 @@ jobs:
 
       - name: Committen
         run: |
-          set -eu
+          # pipefail ist hier nicht kosmetisch: Die Läufe vom 29. und 30.07. meldeten
+          # ERFOLG, während der Python-Aufruf mit NameError abstürzte — der Fehler ging
+          # in `tee`, `tee` gelang, der Schritt galt als grün. Zwei Tage lang lief der
+          # Katalogbau ins Leere, ohne dass irgendwo etwas rot wurde.
+          set -euo pipefail
           git config user.name "Katalog-Scout"
           git config user.email "katalog-scout@frankbueltge.de"
           git add src/data/register/papers.json

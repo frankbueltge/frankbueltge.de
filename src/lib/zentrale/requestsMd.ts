@@ -116,14 +116,27 @@ export function appendSeed(md: string, opts: { title: string; body: string; date
   return appendBlockToSection(md, heading, block)
 }
 
-/** Team-eigene Sections in den REQUESTS.md: Seeds, Team notes, Team responses — das sind
- * Franks/des Teams eigene Worte an die Kollektive, keine Anfragen AN Frank. Die Inbox
- * (und der Watchdog, der dasselbe Muster in Python spiegelt — requests-watchdog.yml)
- * überspringt sie: wer sich selbst in der eigenen Inbox liest, liest nur Rauschen. */
-export const TEAM_SECTION_RE = /^(seeds\b|team note\b|team responses\b)/i
+/** Sections der REQUESTS.md, die KEINE Anfrage an Frank sind — beide Gesprächsrichtungen:
+ *
+ *  - `Seeds`, `Team note`, `Team responses` — Franks/des Teams eigene Worte an die
+ *    Kollektive. Wer sich selbst in der eigenen Inbox liest, liest nur Rauschen.
+ *  - `Status (…)`, `Response (…)` — die Rückmeldung der PRAXIS auf genau diese Worte.
+ *    Ergänzt 2026-07-30: Bis dahin kannte der Filter nur die eine Richtung, und Ulysses'
+ *    Berichte über Franks Saaten landeten als „Request aus ulysses: Status (Ulysses, …)"
+ *    in der Inbox — drei Einträge, die wie unerledigte Hausaufgaben aussahen und in denen
+ *    nichts zu entscheiden war. Eine Antwort ist keine Frage.
+ *
+ * Absichtlich eng verankert: Nach `Status`/`Response` muss eine Klammer oder ein
+ * Gedankenstrich folgen. „Status: the gate has been red for three days" bleibt damit eine
+ * Anfrage — der Doppelpunkt ist nicht im Zeichensatz. Lieber eine Anfrage zu viel in der
+ * Inbox als eine echte Bitte, die stillschweigend verschwindet.
+ *
+ * Der Watchdog spiegelt dasselbe Muster in Python (requests-watchdog.yml) — beide Stellen
+ * müssen zusammen geändert werden. */
+export const NON_REQUEST_SECTION_RE = /^(seeds\b|team note\b|team responses\b|(status|response)\s*[(—–-])/i
 
-export function isTeamSection(heading: string): boolean {
-  return TEAM_SECTION_RE.test(heading.trim())
+export function isNonRequestSection(heading: string): boolean {
+  return NON_REQUEST_SECTION_RE.test(heading.trim())
 }
 
 /** Der Titel, unter dem eine offene Request als GitHub-Issue in der Inbox landet

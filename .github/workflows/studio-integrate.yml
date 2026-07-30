@@ -108,6 +108,23 @@ jobs:
             echo "no rejections (or no BOT_TOKEN) — nothing to feed back"
           fi
 
+      # Ein Alarm, der nie ausgeht, ist keine Meldung mehr, sondern Möblierung: Drei der vier
+      # roten Issues in Franks Inbox am 2026-07-30 meldeten Probleme, die längst behoben waren.
+      # Läuft dieser Workflow wieder grün, schließt er seinen eigenen Alarm — mit Vermerk, wann.
+      - name: Grüner Lauf schließt den eigenen roten Alarm
+        if: success()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PREFIX="Studio-Integrate red"
+          RUN_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          OFFEN=$(gh issue list --repo frankbueltge/frankbueltge.de --state open --limit 100 --json number,title \
+            | jq -r --arg p "$PREFIX" '[.[]|select(.title|startswith($p))][].number' || true)
+          for NR in $OFFEN; do
+            gh issue close "$NR" --repo frankbueltge/frankbueltge.de \
+              --comment "Wieder grün am $(date -u +%F' '%H:%MZ) — dieser Lauf ist durchgelaufen: ${RUN_URL}" || true
+          done
+
       - name: On failure — feedback to the engine's repo + issue to Frank
         if: failure()
         env:
@@ -115,12 +132,23 @@ jobs:
           BOT_TOKEN: ${{ secrets.STUDIO_BOT_TOKEN }}
         run: |
           DATE=$(date -u +%F)
-          LOG=$(tail -40 /tmp/validate.log 2>/dev/null || echo "see workflow run")
+          RUN_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          # The refusal letter (src/lib/gate/brief.ts) names the real error, whose files broke,
+          # and the run. It replaces `tail -40`, which for astro check quoted the warning
+          # trailer instead of the error — and quoted the literal "see workflow run" whenever
+          # the run died before validation. Third defect of this channel on the record
+          # (ulysses/REQUESTS.md 2026-07-14, 2026-07-16, 2026-07-30).
+          # If the builder itself is unavailable (npm ci failed ⇒ no tsx), the fallback still
+          # links the run and claims NOTHING about the practice's fault.
+          BRIEF=$(npx tsx scripts/gate/brief.ts --ns studio --log /tmp/validate.log --run-url "$RUN_URL" --date "$DATE" 2>/dev/null) || BRIEF=""
+          if [ -z "$BRIEF" ]; then
+            BRIEF=$(printf '# Build feedback %s\n\nThe run failed before your contribution could be validated, and the letter builder was itself unavailable (dependencies not installed). Your work was not judged — there is nothing on your side to correct.\n\nRun: %s\n' "$DATE" "$RUN_URL")
+          fi
           # Issue to Frank FIRST — always runs, even if the BOT_TOKEN block below fails.
           # Dedup (2026-07-25): a persistent red must not flood the Steuerzentrale inbox —
           # comment on the existing open issue instead of opening a new one each run.
           PREFIX="Studio-Integrate red"
-          BODY="The nightly studio build failed; no deploy. Log excerpt in the workflow run. Feedback was written to studio/studio-feedback/${DATE}.md."
+          BODY="The nightly studio build failed; no deploy. The letter with the actual error went to studio/studio-feedback/${DATE}.md. Run: ${RUN_URL}"
           # gh has no --arg (that is a jq flag, not a gh flag) — hence real jq behind the pipe.
           # `|| true`: this step IS the notifier; if the dedup lookup fails, the report must
           # still go out — a duplicate issue beats silence.
@@ -137,7 +165,7 @@ jobs:
             (
               git clone --depth 1 "https://x-access-token:${BOT_TOKEN}@github.com/frankbueltge/studio" /tmp/fb
               mkdir -p /tmp/fb/studio-feedback
-              printf '# Build feedback %s\n\nYour last contribution did not pass the gate (no deploy; the last good state stays live). Excerpt:\n\n```\n%s\n```\n\nFix the affected work in `works/<slug>/` and commit again.\n' "$DATE" "$LOG" > "/tmp/fb/studio-feedback/${DATE}.md"
+              printf '%s\n' "$BRIEF" > "/tmp/fb/studio-feedback/${DATE}.md"
               cd /tmp/fb && git config user.name "Studio-Integrate" && git config user.email "studio-integrate@frankbueltge.de"
               git add studio-feedback && git commit -m "feedback: build $DATE red" && git push
             ) || echo "feedback push skipped (non-fatal)"

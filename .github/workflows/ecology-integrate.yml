@@ -117,6 +117,23 @@ jobs:
             done
           fi
 
+      # Ein Alarm, der nie ausgeht, ist keine Meldung mehr, sondern Möblierung: Drei der vier
+      # roten Issues in Franks Inbox am 2026-07-30 meldeten Probleme, die längst behoben waren.
+      # Läuft dieser Workflow wieder grün, schließt er seinen eigenen Alarm — mit Vermerk, wann.
+      - name: Grüner Lauf schließt den eigenen roten Alarm
+        if: success()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PREFIX="Ecology-Integrate rot"
+          RUN_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          OFFEN=$(gh issue list --repo frankbueltge/frankbueltge.de --state open --limit 100 --json number,title \
+            | jq -r --arg p "$PREFIX" '[.[]|select(.title|startswith($p))][].number' || true)
+          for NR in $OFFEN; do
+            gh issue close "$NR" --repo frankbueltge/frankbueltge.de \
+              --comment "Wieder grün am $(date -u +%F' '%H:%MZ) — dieser Lauf ist durchgelaufen: ${RUN_URL}" || true
+          done
+
       - name: On failure — issue to Frank (ein rotes Gate darf nie still sein)
         if: failure()
         env:
