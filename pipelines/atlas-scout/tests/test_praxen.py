@@ -149,3 +149,23 @@ def test_das_wort_aufnahmegrund_in_prosa_ist_kein_spiegel(tmp_path: Path):
     })
     saat = sammle(tmp_path, {"field": "field-research"})
     assert {k.kennung for k in saat.koerner} == {"10.1215/2834703x-11700255"}
+
+
+def test_eine_pruefziel_liste_zaehlt_nicht_als_zitat(tmp_path: Path):
+    """`…-probe` ist bei field Konvention für „eine Messung an Zielen".
+
+    Gemessen am 2026-07-30: `notes/2026-07-16-half-life-archival-probe/urls.json` hält
+    513 Prüfziele einer Archiv-Halbwertszeit-Messung. Zwei davon standen als „von field
+    zitiert" im Katalog. Beide sind für Fields Gegenmessung inhaltlich einschlägig — und
+    genau das macht den Fehler heikel: `aufnahmegrund: zitiert` wäre dort eine Unwahrheit
+    über eine wahre Sache.
+    """
+    _repo(tmp_path, "field-research", {
+        "journal/2026-07-01.md": "Gelesen: https://doi.org/10.1215/2834703X-11700255",
+        "notes/2026-07-16-half-life-archival-probe/urls.json":
+            '[{"url": "https://doi.org/10.1186/s13031-024-00580-x", "stratum": "fa-self"}]',
+    })
+    saat = sammle(tmp_path, {"field": "field-research"})
+    kennungen = {k.kennung for k in saat.koerner}
+    assert "10.1215/2834703x-11700255" in kennungen, "echtes Zitat bleibt"
+    assert "10.1186/s13031-024-00580-x" not in kennungen, "das Prüfziel fällt weg"

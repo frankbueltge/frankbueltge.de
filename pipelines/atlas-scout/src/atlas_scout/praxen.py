@@ -107,8 +107,22 @@ def _ist_rohmaterial(relativ: Path) -> bool:
 
     Gemessen: ohne Filter 332 Körner, mit Filter 132. Die 200 stammen ausschließlich aus
     Provenienz-Material; kein einziges Korn verliert dadurch seine letzte Fundstelle.
+
+    **Nachgezogen 2026-07-30: `…-probe` gehört dazu.** Die Ordnerliste kannte Fields
+    Benennung nicht. `notes/2026-07-16-half-life-archival-probe/urls.json` hält **513
+    Prüfziele** einer Archiv-Halbwertszeit-Messung; zwei davon standen als „von field
+    zitiert" im Katalog — „Medical Lawfare" und „Nowhere and no one is safe". Beide sind
+    für Fields Gegenmessung inhaltlich einschlägig, und genau das macht den Fehler
+    heikel: Ein `aufnahmegrund: zitiert` wäre dort eine Unwahrheit über eine wahre Sache.
+    Gemessen: 137 Körner ohne, 135 mit — es fallen genau diese zwei, sonst nichts.
+
+    Das ist keine neue Regel aus zwei Fällen, sondern dieselbe Regel an einem Ort, den
+    sie nicht erkannte. `-probe` ist bei field Konvention für „eine Messung an Zielen".
     """
-    return bool(PROVENIENZ_ORDNER & {t.lower() for t in relativ.parts[:-1]})
+    teile = {t.lower() for t in relativ.parts[:-1]}
+    if PROVENIENZ_ORDNER & teile:
+        return True
+    return any(t.endswith("-probe") for t in teile)
 
 
 # Die Signaturfelder des eigenen Katalogs. Trägt ein Eintrag sie alle, ist die Datei
