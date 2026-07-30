@@ -42,8 +42,12 @@ jobs:
 
           CUTOFF = date.today() - timedelta(days=10)
           REPOS = ["ulysses", "field-research", "studio", "data-snack-plenum"]
-          # Spiegel von TEAM_SECTION_RE (src/lib/zentrale/requestsMd.ts): Team-eigene Sections.
-          TEAM_SECTION = re.compile(r"^(seeds\b|team note\b|team responses\b)", re.I)
+          # Spiegel von NON_REQUEST_SECTION_RE (src/lib/zentrale/requestsMd.ts): Sections, die
+          # keine Anfrage an Frank sind — BEIDE Gesprächsrichtungen. Seeds/Team note/Team
+          # responses sind Franks eigene Worte; Status (…)/Response (…) sind die Rückmeldung
+          # der Praxis darauf (ergänzt 2026-07-30, weil Ulysses' Statusberichte als
+          # unerledigte Anfragen in der Inbox standen). Beide Stellen zusammen ändern.
+          TEAM_SECTION = re.compile(r"^(seeds\b|team note\b|team responses\b|(status|response)\s*[(—–-])", re.I)
 
           def sh(args, inp=None):
               return subprocess.run(args, input=inp, capture_output=True, text=True)
