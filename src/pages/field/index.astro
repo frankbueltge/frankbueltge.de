@@ -12,6 +12,7 @@ import { currentScore } from '@/lib/begegnungen'
 import { buildControlSvg, plateSpan, type ControlMark } from '@/lib/field/strip'
 import { latestInstrument, orderInstruments, type InstrumentMeta } from '@/lib/field/latest'
 import { FIELD_NARRATIVE } from '@/config/field-wording'
+import runtimeLog from '@/data/meridian/runtime-log.json'
 
 const metas = import.meta.glob('/src/components/field/werke/*/meta.json', {
   eager: true, import: 'default',
@@ -207,6 +208,26 @@ const statusHtml =
         <a href="/e2e-automation">the field survey — end-to-end AI research automation →</a>
         <a href="https://github.com/frankbueltge/meridian-runtime" target="_blank" rel="noreferrer">meridian-runtime — the source ↗</a>
       </p>
+
+      {/* Das Journal der Runtime-Linie (2026-07-31): /on-record zeigt EINEN Export und
+          steht bei dessen Datum still — die Ableitung ist deterministisch, kein Nightly
+          kann sie erneuern. Was die Runtime danach getan hat, trägt diese Liste nach;
+          jeder Eintrag nennt seinen Commit (Aktualitäts-Regel 2026-07-25). */}
+      <ol class="fd-runtime-log">
+        {runtimeLog.entries.map((e) => (
+          <li>
+            <p class="fd-log-head">
+              <time datetime={e.date} class="fd-log-date">{e.date}</time>
+              <span class="fd-log-title">{e.headline}</span>
+            </p>
+            <p class="fd-log-note">{e.note}</p>
+            <p class="fd-log-src">
+              <a href={e.url} target="_blank" rel="noreferrer">{e.repo} · {e.commit.slice(0, 7)} ↗</a>
+            </p>
+          </li>
+        ))}
+      </ol>
+      <p class="fd-band-legend">{FIELD_NARRATIVE.runtime.logNote}</p>
     </section>
 
     {/* Öffentliche Saat: eine kontextuelle Zeile — ein Seed an genau diese Praxis (?to prefill). */}
@@ -250,5 +271,43 @@ const statusHtml =
     font-size: 0.78rem;
     text-decoration: underline;
     text-underline-offset: 4px;
+  }
+  .fd-runtime-log {
+    list-style: none;
+    margin: 1.1rem 0 0;
+    padding: 0;
+    max-width: 90ch;
+    border-top: 1px solid var(--color-line);
+  }
+  .fd-runtime-log > li {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--color-line);
+  }
+  .fd-log-head {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.2rem 0.7rem;
+    align-items: baseline;
+  }
+  .fd-log-date {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.72rem;
+    color: var(--color-fg-faint);
+    flex: none;
+  }
+  .fd-log-title { font-weight: 600; font-size: 0.92rem; }
+  .fd-log-note {
+    font-size: 0.82rem;
+    line-height: 1.6;
+    margin-top: 0.3rem;
+    color: var(--color-fg-muted, inherit);
+  }
+  .fd-log-src { margin-top: 0.35rem; }
+  .fd-log-src a {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.72rem;
+    color: var(--color-fg-faint);
+    text-decoration: underline;
+    text-underline-offset: 3px;
   }
 </style>
