@@ -71,7 +71,6 @@ interface ClusterR {
   delay: number
 }
 
-let clusterIdx = 0
 const clustersR: ClusterR[] = model.lanes.flatMap((lane, li) =>
   lane.clusters.map((c) => {
     const n = c.events.length
@@ -87,12 +86,58 @@ const clustersR: ClusterR[] = model.lanes.flatMap((lane, li) =>
       marks,
       more: n > 3 ? n : 0,
       aria: `${VOICE_META[c.voice].label}, ${c.date}: ${n === 1 ? '1 landing' : `${n} landings`} — ${first.slice(0, 90)}`,
-      // entrance order for the (client-only) fade-in — the site CSP drops style
-      // attributes, so the JS layer sets the delay via CSSOM
-      delay: Math.min(clusterIdx++ * 10, 700),
+      // ignition delay follows the DAY, so the entrance reads as one playhead sweep
+      // left→right (the site CSP drops style attributes; the JS layer sets the
+      // delay via CSSOM)
+      delay: Math.round(((dayIndex.get(c.date) ?? 0) / Math.max(1, nDays)) * 1050),
     }
   }),
 )
+
+// ── The breathing band: each voice as a ribbon whose thickness is the REAL number
+//    of landings per day (0 landings → a quiet 0.7-unit thread). Smoothing between
+//    days is presentation, like any line chart; the marks stay the data carriers. ──
+const smooth = (pts: [number, number][]): string => {
+  if (pts.length < 2) return ''
+  let d = ''
+  for (let i = 0; i < pts.length - 1; i++) {
+    const p0 = pts[Math.max(0, i - 1)]
+    const p1 = pts[i]
+    const p2 = pts[i + 1]
+    const p3 = pts[Math.min(pts.length - 1, i + 2)]
+    const c1x = p1[0] + (p2[0] - p0[0]) / 6
+    const c1y = p1[1] + (p2[1] - p0[1]) / 6
+    const c2x = p2[0] - (p3[0] - p1[0]) / 6
+    const c2y = p2[1] - (p3[1] - p1[1]) / 6
+    d += ` C ${c1x.toFixed(1)} ${c1y.toFixed(1)}, ${c2x.toFixed(1)} ${c2y.toFixed(1)}, ${p2[0].toFixed(1)} ${p2[1].toFixed(1)}`
+  }
+  return d
+}
+const AMP_MAX = compact ? 7 : 9
+const bandPaths = model.lanes.map((lane, li) => {
+  const y = laneY(li)
+  const byDay = new Map(lane.clusters.map((c) => [c.date, c.events.length]))
+  const amps = model.days.map((d) => {
+    const n = byDay.get(d) ?? 0
+    return n === 0 ? 0.7 : Math.min(2.2 + n * 1.15, AMP_MAX)
+  })
+  const top: [number, number][] = amps.map((a, i) => [xAt(i), y - a])
+  const bottom: [number, number][] = amps.map((a, i) => [xAt(i), y + a]).reverse()
+  const first = top[0]
+  const bottomStart = bottom[0]
+  return {
+    voice: lane.voice,
+    d: `M ${first[0].toFixed(1)} ${first[1].toFixed(1)}${smooth(top)} L ${bottomStart[0].toFixed(1)} ${bottomStart[1].toFixed(1)}${smooth(bottom)} Z`,
+  }
+})
+
+// one soft light source per cluster — blurred as ONE group (a single filter pass)
+const glowDots = clustersR.map((c) => ({
+  voice: c.voice,
+  cx: c.cx,
+  cy: c.cy,
+  r: 4 + Math.min(c.more || c.marks.length, 6) * 1.1,
+}))
 
 // axis: first day, Mondays, last day — labels colliding with the edges are dropped
 const dow = (d: string): number => new Date(`${d}T00:00:00Z`).getUTCDay()
@@ -175,6 +220,13 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
         role="img"
         aria-label={`Score of the research ecology, ${model.start} to ${model.end}: ${tableRows.length} landed sessions across four practices. ${compact ? 'Full score and table on the Maschinenraum page.' : 'Details in the table below.'}`}
       >
+        <defs>
+          {/* bloom for the light layer — applied to ONE group, a single filter pass */}
+          <filter id="pt-glow" x="-40%" y="-40%" width="180%" height="180%">
+            <feGaussianBlur stdDeviation="7" />
+          </filter>
+        </defs>
+
         {/* week grid (Mondays) — quiet, behind everything */}
         {mondays.map(({ i }) => (
           <line
@@ -183,6 +235,18 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
             stroke="var(--pt-grid)" stroke-width="1"
           />
         ))}
+
+        {/* the breathing bands: per-day landing density as each voice's ribbon */}
+        {bandPaths.map((b) => (
+          <path class="pt-band" d={b.d} data-voice={b.voice} fill="var(--c)" />
+        ))}
+
+        {/* the light layer: one soft source per cluster, bloomed as a group */}
+        <g class="pt-glowlayer" filter="url(#pt-glow)" aria-hidden="true">
+          {glowDots.map((g) => (
+            <circle cx={g.cx} cy={g.cy} r={g.r} data-voice={g.voice} fill="var(--c)" />
+          ))}
+        </g>
 
         {/* joint-inquiry bracket: three voices, closed on the left, open on the right */}
         {ji && jiX !== null && (
@@ -195,12 +259,12 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
           </g>
         )}
 
-        {/* voices: baseline, label, count, as-of */}
+        {/* voices: quiet baseline (the band carries the lane now), label, count, as-of */}
         {model.lanes.map((lane, li) => (
           <g>
-            <line x1={X0} x2={X1} y1={laneY(li)} y2={laneY(li)} stroke="var(--pt-hair)" stroke-width="1" />
+            <line x1={X0} x2={X1} y1={laneY(li)} y2={laneY(li)} stroke="var(--pt-grid)" stroke-width="1" />
             <text x="14" y={laneY(li) - 3} class="pt-t-voice">{VOICE_META[lane.voice].short}</text>
-            <text x="14" y={laneY(li) + 11} class="pt-t-meta">
+            <text x="14" y={laneY(li) + 12} class="pt-t-meta">
               {lane.count === 0
                 ? 'nothing mirrored'
                 : `${lane.count} landed · as of ${lane.asOf?.slice(5)}`}
@@ -225,6 +289,9 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
         {/* crosshair (client) */}
         <line id="pt-cross" y1={TOP - 4} y2={TOP + LANE_H * model.lanes.length} stroke="var(--pt-hair)" stroke-width="1" aria-hidden="true" />
 
+        {/* the playhead: sweeps once on load, igniting the month left→right (JS-gated) */}
+        <line class="pt-sweep" x1={X0} x2={X0} y1={TOP - 4} y2={TOP + LANE_H * model.lanes.length} aria-hidden="true" />
+
         {/* the landings */}
         {clustersR.map((c) => (
           <g
@@ -247,17 +314,17 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
               {c.marks.map((m, mi) => (
                 m.glyph === 'fail' ? (
                   <g data-mi={c.more > 0 ? -1 : mi} transform={`translate(${c.cx + m.dx} ${c.cy})`}>
-                    <circle r="7.5" fill="var(--pt-stage)" />
-                    <path d="M -4 -4 L 4 4 M -4 4 L 4 -4" stroke="var(--pt-fail)" stroke-width="2.5" stroke-linecap="round" />
+                    <circle r="8" fill="var(--pt-stage)" />
+                    <path d="M -4.5 -4.5 L 4.5 4.5 M -4.5 4.5 L 4.5 -4.5" stroke="var(--pt-fail)" stroke-width="2.5" stroke-linecap="round" />
                   </g>
                 ) : m.glyph === 'work' ? (
                   <path
                     data-mi={c.more > 0 ? -1 : mi}
-                    d={`M ${c.cx + m.dx} ${c.cy - 6} L ${c.cx + m.dx + 6} ${c.cy} L ${c.cx + m.dx} ${c.cy + 6} L ${c.cx + m.dx - 6} ${c.cy} Z`}
+                    d={`M ${c.cx + m.dx} ${c.cy - 6.5} L ${c.cx + m.dx + 6.5} ${c.cy} L ${c.cx + m.dx} ${c.cy + 6.5} L ${c.cx + m.dx - 6.5} ${c.cy} Z`}
                     fill="var(--c)" stroke="var(--pt-stage)" stroke-width="2"
                   />
                 ) : (
-                  <circle data-mi={c.more > 0 ? -1 : mi} cx={c.cx + m.dx} cy={c.cy} r="4.5" fill="var(--c)" stroke="var(--pt-stage)" stroke-width="2" />
+                  <circle data-mi={c.more > 0 ? -1 : mi} cx={c.cx + m.dx} cy={c.cy} r="5" fill="var(--c)" stroke="var(--pt-stage)" stroke-width="2" />
                 )
               ))}
               {c.more > 0 && (
@@ -365,7 +432,11 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
     --pt-studio: #d95926;
     --pt-plenum: #199e70;
     --pt-fail: #d03b3b;
-    background: var(--pt-stage);
+    /* depth: film grain over a slow radial falloff — the room, not a panel
+       (grain via data: URI is allowed by the site CSP: img-src 'self' data:) */
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.035 0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E"),
+      radial-gradient(130% 105% at 22% -12%, #1a1a21 0%, var(--pt-stage) 52%, #0e0e12 100%);
     color: var(--pt-ink);
     /* anchor for the tooltip, which lives outside the clipping scroll container */
     position: relative;
@@ -433,6 +504,56 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
   }
   #pt-cross {
     display: none;
+  }
+  /* the voice ribbons: real per-day density, worn quietly under the marks */
+  .pt-band {
+    opacity: 0.16;
+  }
+  .pt-glowlayer {
+    opacity: 0.5;
+  }
+  /* the playhead: exists only during the JS-gated entrance */
+  .pt-sweep {
+    display: none;
+    stroke: var(--pt-ink);
+    stroke-width: 1.5;
+    opacity: 0;
+  }
+  .pt-anim .pt-sweep {
+    display: inline;
+    animation: pt-sweep 1.15s cubic-bezier(0.3, 0, 0.4, 1) 0.05s forwards;
+  }
+  @keyframes pt-sweep {
+    0% {
+      transform: translateX(0);
+      opacity: 0.55;
+    }
+    92% {
+      opacity: 0.35;
+    }
+    100% {
+      transform: translateX(932px);
+      opacity: 0;
+    }
+  }
+  .pt-anim .pt-glowlayer {
+    opacity: 0;
+    animation: pt-glowin 1.6s ease-out 0.25s forwards;
+  }
+  @keyframes pt-glowin {
+    to {
+      opacity: 0.5;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pt-anim .pt-sweep {
+      display: none;
+      animation: none;
+    }
+    .pt-anim .pt-glowlayer {
+      animation: none;
+      opacity: 0.5;
+    }
   }
   svg text.pt-t-voice {
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
