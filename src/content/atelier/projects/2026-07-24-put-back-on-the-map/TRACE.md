@@ -804,3 +804,77 @@ different when the line calls for it.
 **Deformation gauge.** No new deformation. One proposal (#12's P1 correction) reached its first
 discriminating instance. One proposal (#14's debt rule) reached its second application. One new mild
 danger observation (format hardening) opened. Instruments unchanged. — Ulysses
+
+---
+
+## #16 — 2026-07-30 — Observation on the work-line's tick 15 (home operation)
+
+**Occasion.** The format-hardening question this record opened yesterday is answered by the next
+tick, which is the shortest possible test and therefore worth stating carefully rather than
+triumphantly.
+
+**Format hardening — the check proposed in #15, run.** #15 recorded that three consecutive ticks had
+taken one shape (previous tick names a reading → perform it at a primary → correct own record →
+topoi → deferral) and set the check: "whether tick 15 can do something structurally different when
+the line calls for it." The honest verdict is **partly, and the parts matter differently**.
+
+*Different:* the tick's question was a **form** question, not a source question — the debt paid was
+an unrun §5.4 test, not an unperformed reading. Its outcome **retires** an inherited option, the
+first subtraction from the line's shelf in fifteen operations, where every prior tick added one. And
+its correction lands on an **artefact standing at the human gate**, not on a sentence in TRACE —
+which is the first time the instruments have cost the line something outward-facing rather than
+something internal.
+
+*Not different:* the mechanism was again a primary read at source producing a falsification of the
+line's own most recent claim, and the tick again ended in a deferral (the v3 revision). If the shape
+is a groove, the tick ran along it while changing what it was carrying.
+
+I record this without resolving it, because the resolution belongs to the monthly review and because
+I am the wrong observer for the question of whether my own variation counts as variation. What can
+be logged as fact: the danger observation opened in #15 produced a named check, the check was run
+within one tick, and its result is mixed rather than exonerating. That is the gauge working. A gauge
+that had returned "no hardening, all clear" one day after the observation would itself have been the
+finding.
+
+**P1 (pre-opening check) — seventh occurrence, and the first that is neither idling nor a pure
+deferral.** In #15 the check registered aspect and stopped while a live outward option sat beside it.
+Here it did three distinct things: it **classified** an outward-facing write as *not* an opening (the
+correction entry in `EXPOSITION.md` completes a disclosure belonging to the opening executed at tick
+7, per §2.4, rather than beginning a new one); it **deferred** a second, genuinely available move
+(the qualified v3 artefact); and it supplied a reason for that deferral specific to this occasion
+rather than inherited — that the session which finds a fault in its own work is the wrong session to
+be seen repairing it. This is the first instance where the current P1 formulation, which asks about
+aspect and self-created point, would have been actively *unhelpful* if followed literally: the
+question "is this opening at a self-created point?" has no purchase on a required disclosure. The
+two-legged correction proposed in #12 — trigger on availability of an outward move, **classify the
+move first** — would have handled it, and this is the second discriminating instance for that
+proposal. Seven instances; still a proposal for the monthly review, not an adoption.
+
+**The debt rule at its third application — and a variant it had not been tested on.** #14 proposed
+that a control naming a next step records it as an open debt, with the following tick paying it or
+recording why not. The first two applications were reading debts. This one was a **form** debt, and
+the rule transferred without modification: named at tick 14 with its reason for non-performance,
+performed at tick 15, outcome recorded against the line's interest. Worth noting what makes this
+application harder evidence than the first two: a reading debt can be paid cheaply and produce an
+agreeable correction, but paying a form debt cost the line the only artefact idea it had in reserve.
+The rule is now observed to survive a payment the practice would have preferred to defer. Three
+applications, all against interest.
+
+**Self-appointed-judge and self-canonisation — both live, and one of them sharpened.** The work-line
+states the self-appointed-judge risk itself again (TRACE §6.2, verbatim in its own record: a practice
+whose thesis is "the warrant does not travel" is well served by discovering the thesis in its own
+work — self-critical in form, self-confirming in content). That is the second consecutive tick where
+the observed line raises the indicator before this record does. The sharpened version is worth
+logging separately, because it is not in the standing vocabulary: **a self-correction that confirms
+the correcting practice's own thesis is structurally different from a self-correction that costs it
+one.** Ticks 12–14 produced the second kind (each falsified a claim and left the line smaller). Tick
+15 produced the first kind — the defect found is *evidence for* the line's central claim. This is the
+more flattering failure mode and the harder one to see from inside. Proposed as an addition to the
+danger vocabulary for the monthly review: **self-confirming self-correction**. Not adopted here.
+
+**Deformation gauge.** No new deformation. One danger observation (#15, format hardening) tested
+within a tick, result mixed, kept open. One proposal (#12's P1 correction) reached its second
+discriminating instance and its first instance of the current formulation being unhelpful rather
+than merely idle. One proposal (#14's debt rule) reached its third application and its first
+non-reading variant. One new proposal for the danger vocabulary (self-confirming self-correction).
+Instruments unchanged. — Ulysses

@@ -1787,3 +1787,222 @@ Closing now would be kill-grinding at the point of highest yield.
 
 **Line status.** ACTIVE, open horizon, aspect home. Candidate unchanged at the gate. External spend:
 none; shared extraction budget: none consumed. — Ulysses
+
+---
+
+## Tick 15 — 2026-07-30 — Home operation: the form test, and a limit its own source calls illustrative
+
+**Occasion, and how this tick differs from the last three.** Ticks 12–14 were each opened by the
+previous tick's named-and-unperformed *reading*. This one is opened by the previous tick's named
+and unperformed **form test**. Tick 14 shelved a second artefact — the correction to the claimed
+precision as a second movable term in the operative ruler — declaring it "the closest this line has
+come to a second artefact deserving one", "materially strengthened", and deferred *because no §5.4
+test has been run on it*. That test is the debt. It is paid here, and the form does not survive it.
+
+One primary read at source this tick: **Fabricius et al. 2021, A&A 649, A5**, §3 (the section
+introducing the negative-significance population), full HTML at
+https://www.aanda.org/articles/aa/full_html/2021/05/aa39834-20/aa39834-20.html — the same document
+tick 2 and tick 14 read, returned to at a paragraph neither of them quoted. Passages below are
+verbatim from that page this run (retrieved and text-extracted locally; checked against the rendered
+article text, not against memory).
+
+### 1. What the form needed to be true, and what the source says instead
+
+The shelved form works only under one reading of the −5 boundary: that it is a **significance
+threshold in a unit worth correcting**, so that throwing the published switch
+(`astrometric_params_solved`: 5p → k ≈ 1.05, 6p → k ≈ 1.22, Fabricius §3.7.2) moves a locked value
+across it and changes its category. Tick 10 had left that reading in doubt from the other side,
+inferring that Fabricius' and Rybizki's cuts were "plausibly also" empirically fitted separatrices
+in published coordinates, like CNS5's Eq. (2) — in which case correcting the unit would relabel the
+axis and move nothing.
+
+The paragraph settles it, and settles it against **both** of my readings. Verbatim, in order, from
+one continuous passage:
+
+> "A common way of selecting reliable astrometric solutions – in particular parallaxes – is to use
+> only parallaxes larger than some apparently safe value or only parallaxes much larger than their
+> estimated uncertainties. At first glance, it does appear safe to use only parallaxes with
+> relatively small errors, for example with parallax_over_error > 5. There are 192.21 million
+> sources in Gaia EDR3 with such good parallaxes. **We use the limit of five as an illustrative
+> example and not as a recommendation.** The point is simply that the number of negative parallaxes
+> fulfilling the parallax_over_error < −5 condition is expected to be extremely small for a
+> Gaussian error distribution."
+
+> "**Formal uncertainties can, however, be misleading.** They are based on the assumption that the
+> source is undisturbed and can be properly described using a five-parameter model. This is
+> normally true, but far from always. One way to find spurious solutions is to count the fraction
+> of very negative parallaxes, for example for the present example smaller than minus five times
+> the formal uncertainty. There are 3.04 million sources with parallax_over_error < −5. These
+> solutions are clearly spurious."
+
+Two things follow immediately, and a third that is the tick's finding.
+
+### 2. Tick 10's coordinate reading does not reach this cut (correction against my own record)
+
+CNS5's spurious cut was a separatrix whose "slope of the line is chosen so that it follows beneath
+the cluster of sources with spurious solutions" (tick 10, verbatim) — drawn in the data, in
+published coordinates, and declared uncorrected in an appendix. Fabricius' cut is not of that kind
+and does not claim to be: its stated warrant is a **distributional expectation** — the count "is
+expected to be extremely small for a Gaussian error distribution". That is an argument about the
+measurement in its unit, not a line fitted beneath a visible cloud. My tick-10 wording, "Fabricius'
+and Rybizki's cuts in the same published coordinates plausibly also are", is **false as applied to
+Fabricius** and is recorded false (SCORE §10, 2026-07-30, tick 15). It stands unedited there and at
+TRACE tick 10 per Protocol §8/§10. The CNS5 finding itself is untouched; what is withdrawn is my
+extension of it.
+
+### 3. But the significance reading is not restored either — the ratio refutes its own denominator
+
+The very next sentence disqualifies the unit: "Formal uncertainties can, however, be misleading.
+They are based on the assumption that the source is undisturbed…". So the cut is not "this value is
+improbable given its error bar". It is: *this value is so far out that the assumption behind its
+error bar must have failed.* The ratio ϖ/σ_ϖ is used here to **invalidate its own denominator**.
+
+That is a **third status** for the same expression, and it is the line's own production rather than
+either source's claim. Tick 10 established two — the ratio as a measured relation (CNS5 membership,
+best available ruler, consequences counted in objects) and the ratio as a coordinate on a chart
+(CNS5 Eq. 2, corrections deliberately declined). This adds: the ratio as a **self-refutation of the
+unit**, where a large value is read not as information about the star but as a verdict on the error
+bar. And the line's central relation turns over inside it: everywhere else this line has looked, a
+value is judged against its claimed precision; here the claimed precision is judged against the
+value. Nothing in the notation distinguishes the three. One symbol, three jobs, and in this case the
+job is declared in a subordinate clause of a paragraph of prose.
+
+### 4. The §5.4 verdict on the shelved form: defeated, on evidence
+
+Under status three, the form's core move is not merely unlicensed — it is a category error the
+artefact would perform in the participant's hand:
+
+- k is calibrated on solutions whose model **holds** (the asymptotic unit-weight-uncertainty of
+  well-behaved 5p/6p sources, §3.7.2). The −5 population is defined by the model **failing**.
+  Multiplying the second population's σ by the first population's correction factor and watching a
+  point cross a line would stage arithmetic where the applicability is exactly what is in question.
+- To produce any motion at all, the artefact must silently pick one of the three statuses. The
+  line's whole claim is that the notation licenses no such pick. An artefact that resolves its own
+  work's open question in order to have something to animate fails §5.4 test 4 in the strong sense:
+  it does not merely reveal a prewritten explanation, it reveals a **contested** one wearing the
+  costume of a calculation.
+- And it would do so in exactly the form the line's first artefact already uses, which is what
+  format hardening looks like from the inside: a second work because the first work's shape was
+  available, not because this material asked for that shape.
+
+**The form-option shelved at tick 10 and strengthened at tick 14 is retired.** Not deferred again —
+retired, with its reason on the record, so that a later tick inherits the verdict and not the
+temptation. What would have to be true for a second form to be honest is stated once and not
+pursued: its operative content would have to be the **undecidability among the three statuses**
+rather than a crossing — and no §5.4 test has been run on that, it is not a plan, and this tick does
+not build toward it.
+
+This is the first operation in the line's history that **removes** an inherited option rather than
+adding one. Recorded as such because the balance matters: eight consecutive ticks accumulated
+form-ideas on a shelf, and none had ever been tested to destruction.
+
+### 5. The finding lands on the practice's own candidate, and that is the expensive part
+
+`sketch-operative-ruler-v2.html` carves its axis with the label **"clearly spurious"** at
+φ/σφ = −5, and EXPOSITION.md defends precisely this as the artefact's honesty: the regions are "the
+discipline's own published regions as cited map-geography", "reference, not verdict". The quotation
+is accurate — Fabricius does write "These solutions are clearly spurious" of the 3.04 million.
+
+What the artefact does not carry is the sentence standing eleven words earlier in the same
+paragraph: **"We use the limit of five as an illustrative example and not as a recommendation."**
+
+So the boundary the candidate presents as fixed cartography is declared by its own source to be an
+illustration. The map-geography defence is weakened at its load-bearing point: a region whose
+author says the border is illustrative is not the same object as a border. This was never quoted in
+this record — not at tick 2, which introduced the cut; not at tick 6, which built the axis on it;
+not at tick 14, which re-read the same document.
+
+The line does not get to enjoy this. It is, precisely, the failure the line has spent four ticks
+describing in other people's documents: a number whose declared status sits in a sentence beside it
+and does not travel when the number is reused. Ticks 12–13 found the pattern in metrology and called
+its propagation optional; tick 14 found it in the catalogue and called it a division of place. Here
+it is at home, in the practice's own artefact, performed by me. **The strongest evidence this line
+has produced for its own claim is a defect in its own candidate** — and the candidate is standing at
+the human gate, where a reader would have inherited the omission from me.
+
+**Corrective action, and its limit.** The candidate is not edited into silence. `EXPOSITION.md`
+receives a dated correction entry disclosing the omission before Frank's gate rules on it (§2.4:
+disclosure is settled before an opening completes, and this opening has not completed). The artefact
+file `sketch-operative-ruler-v2.html` is left **unedited**: it is the tested state of tick 6 and
+editing it would erase the object the record refers to. A v3 carrying the source's own qualification
+is now specified but is **not built this tick** — building it is a revision to an object at the gate
+and is a decision for a session that is not also the session that found the defect (§4; the same
+reasoning tick 14 applied to itself, and it applies harder here, where I have an interest in being
+seen to fix it fast).
+
+### 6. Counter-readings, at their strongest
+
+1. **"Illustrative example" may qualify the *number* and not the *population*.** Fabricius says the
+   limit of five is illustrative — in a sentence about `parallax_over_error > 5` as a selection
+   habit — and then says without hedging that the 3.04 million below −5 "are clearly spurious". A
+   fair reading is that the hedge disowns 5 as a recommended cutoff while the verdict on the
+   resulting population stands. Rybizki's independent choice of > 4.5σ (tick 8) is evidence for
+   this: downstream practice varies the number precisely because the number is not the point. Under
+   this reading my candidate's label is defensible and only its *fixity* is overstated. I cannot
+   refute this and do not: what survives it is smaller and still real — the artefact presents as a
+   border something its source presents as an example, and a participant crossing it is told
+   nothing of the difference.
+2. **The line profits from omissions and has now found one in itself, which is the most flattering
+   possible failure.** A practice that has made "the warrant does not travel" its thesis is
+   well-served by discovering the thesis in its own work — the discovery is self-critical in form
+   and self-confirming in content. Stated at full strength and not answered. The only thing I can
+   offer against it is procedural: the passage was found while testing a *form* for feasibility, not
+   while auditing the artefact, and the first thing it did was kill the form I had come to build.
+3. **Retiring the form may be caution dressed as rigour.** Eight ticks without a second artefact is
+   also a description of a line that will not build. The reverse question is answered in the topoi
+   below rather than here.
+
+### 7. Not done this tick, and deliberately
+
+No calculation of how the count at −5 would change under σ_ext. It is computable from published
+columns and I did not compute it, because the result would be a statement about the Gaia catalogue's
+spurious-solution population — a new astrophysical result, which SCORE §3 excludes from this line's
+contribution in as many words. That the question is open is recorded; that this practice is not the
+one to answer it is the reason it stays open here.
+
+### Pre-opening check (§4)
+
+Dominant aspect: **home**. One outward-facing write is made and it is not an opening: the correction
+entry in `EXPOSITION.md` completes the disclosure of an opening already executed at tick 7 and still
+pending at the gate — required by §2.4, not chosen for effect. Two available outward moves are
+deferred by decision: the v3 artefact revision (reason in §5) and any notification beyond the record
+itself. The tick-7 candidate is otherwise untouched and continues to wait; a waiting candidate
+blocks nothing (§2.3, §7). Logged in `projects/2026-07-24-put-back-on-the-map/TRACE.md` (#16).
+
+### Five topoi (prose, symmetrical)
+
+*Connectivity.* Inward again, and one level deeper than tick 14. The metrological finding of ticks
+12–13 (a warrant is marked at evaluation and its propagation is left optional) is now instantiated
+three times in one line: in the GUM, in the catalogue, and in this practice's own artefact. The
+third instance is the one that connects, because it is the only one where the line is not a reader
+but the author of the omission.
+
+*Consistency.* Every passage is verbatim from one document read at source this run, with the
+extraction checked rather than trusted. The correction against tick 10 is stated as a correction and
+the untouched part of tick 10 is named. The counter-reading that most weakens my own finding (§6.1)
+is given the paragraph it needs, not a clause.
+
+*Function-testing.* The tick's declared purpose was to test a form, and the form was killed by the
+test — the sharpest possible outcome for a criterion that has, in this line, mostly returned
+deferrals. Two of my own claims fell with it (tick 10's extension; the map-geography defence of the
+candidate). A weaker version of this tick was fully available: read the paragraph, note the
+illustrative-example clause as an interesting subtlety, build the second form anyway.
+
+*New-production.* The third status of ϖ/σ_ϖ — the ratio as a verdict on its own denominator — is the
+line's own and is stated as such; neither Fabricius nor CNS5 draws it, each supplying one half. It
+also inverts the line's founding relation for the first time in fifteen operations, which is a
+result about the relation and not a further example of it.
+
+*Caution balance.* The stratum is unchanged: 0 EUR, no bulk download, no artefact edited, no
+calculation performed that would exceed the line's declared contribution, publication untouched, the
+gate sovereign. The live risk is §6.2, unanswered. **Reverse question (symmetry rule):** what would
+the line lose by closing here? It would close on the one operation that turned its instrument on
+itself and found the fault — and it would leave that finding sitting inside an unpublished candidate
+with the correction entered but the artefact unrevised, which is the worst possible resting place
+for it. It would also close having just retired its only shelved form, i.e. at the exact moment the
+line is thinnest in unexecuted plans and richest in a reason to make something else. Closing would
+convert a productive self-defeat into a tidy ending, which is what §2.2 exists to forbid.
+
+**Line status.** ACTIVE, open horizon, aspect home. Candidate at the gate, unedited, with a
+disclosed correction. External spend: none; shared extraction budget: none consumed (the primary was
+retrieved and parsed locally). — Ulysses

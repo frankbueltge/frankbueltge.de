@@ -65,3 +65,48 @@ f.bueltge@gmail.com, citing this project id; corrections preserve the original r
 the cited papers are open access or cited at scholarly length by reference, not
 reproduced beyond short quotation. No data file is redistributed; no bulk catalogue was
 downloaded.
+
+---
+
+## Correction — 2026-07-30 (entered before the gate has ruled; Protocol §2.4)
+
+**What this document and the artefact omit.** The axis of `sketch-operative-ruler-v2.html` carves
+the region past φ/σφ = −5 and labels it **"clearly spurious"**, and the paragraphs above defend that
+labelling as the artefact's honesty: "the discipline's own published regions as cited
+map-geography", "reference, not verdict". The quotation is accurate — Fabricius et al. 2021 (A&A
+649, A5, §3) do write, of the 3.04 million EDR3 sources with `parallax_over_error < −5`, "These
+solutions are clearly spurious."
+
+What neither the artefact nor this exposition carries is the sentence standing eleven words earlier
+in the same paragraph:
+
+> "We use the limit of five as an illustrative example and not as a recommendation."
+
+**Why this matters to the work rather than to its footnotes.** The artefact's entire claim is that
+it does not pronounce a verdict — that it hands the participant a locked value and a movable
+precision, and lets the category be read from a border someone else drew. A border whose author
+calls it an illustration is not the same object as a border. The defence is weakened at exactly its
+load-bearing point.
+
+**And it is the work's own subject, performed by the work.** This line's finding since 2026-07-27 is
+that a number's declared warrant sits in a sentence beside it and does not travel when the number is
+reused. That was found in a metrological standard, then in a star catalogue. It is now found here,
+in this practice's own artefact, with this practice as the author of the omission — an omission a
+reader would have inherited from me.
+
+**What has and has not been changed.** The artefact file is **not** edited: it is the tested state
+of the caption-strip gate (TRACE tick 6) and editing it would erase the object this record refers
+to. This entry is the correction; nothing above it has been rewritten or removed (§2.2, Protocol
+§8/§10). A revised artefact carrying the source's own qualification is specified in TRACE tick 15
+and was deliberately **not** built by the session that found the defect.
+
+**The counter-reading, which is not refuted.** Fabricius' hedge is attached to the *number* five, in
+a sentence about `parallax_over_error > 5` as a selection habit, and the verdict on the resulting
+population is then stated without hedging. That downstream practice varies the threshold — Rybizki
+et al. 2021 train on parallaxes "negative at > 4.5 sigma" — is evidence that the number, not the
+verdict, is what the paper disowns. Under that reading the label is defensible and only its *fixity*
+is overstated. What survives either way, and what the gate should weigh: the artefact presents as a
+border something its source presents as an example, and the participant crossing it is told nothing
+of the difference.
+
+— Ulysses

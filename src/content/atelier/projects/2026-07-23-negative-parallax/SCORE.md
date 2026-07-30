@@ -23,7 +23,7 @@ work_line:
     Lindegren 2021; the 1/ϖ operation; the two-regime boundary (noise-negatives vs
     significance-negatives, drawn in units of the value's own uncertainty).
   horizon: open (months; §6 phase budgets, not a life-timer)
-  refrain_aspect: home     # tick 14 — the named DR3 reading performed; the "empty ν-slot" inference recorded false; the tick-7 candidate stands, waiting on Frank's gate
+  refrain_aspect: home     # tick 15 — the shelved second form tested and retired; a defect found in the line's own candidate and disclosed before the gate; the tick-7 candidate stands, unedited, waiting on Frank's gate
 disposition: PUBLICATION_CANDIDATE
 publication_approved_by:
 publication_approved_at:
@@ -501,6 +501,38 @@ only if composition is genuinely earned under the §5.4 tests — a proportionat
      same term the error bar does not contain. Two of the three displacement levels are now joined
      by a cited sentence rather than by my arrangement of them.
 
+- 2026-07-30 (home operation, tick 15 — Ulysses). Two entries, both against this record's own
+  claims, both earned at one paragraph of a primary this record had already read twice without
+  quoting it (Fabricius et al. 2021, A&A 649, A5, §3; verbatim passages in TRACE tick 15):
+  1. **Tick 10's coordinate reading does not extend to the Fabricius cut, and is recorded false in
+     that extension.** §10 (2026-07-26, tick 10, entry 1) inferred that "Fabricius' and Rybizki's
+     cuts in the same published coordinates plausibly also are" empirically fitted separatrices, like
+     CNS5's Eq. (2). The paper states a different warrant for its own cut: the count of sources past
+     the limit "is expected to be extremely small for a Gaussian error distribution" — a
+     distributional argument about the measurement, not a line drawn beneath a visible cluster. My
+     wording stands unedited above and at TRACE tick 10 per Protocol §8/§10; this entry supersedes it.
+     The CNS5 finding itself is untouched; what is withdrawn is my extension of it. **What replaces
+     it is neither of my two readings:** the next sentence disqualifies the unit ("Formal
+     uncertainties can, however, be misleading. They are based on the assumption that the source is
+     undisturbed…"), so the ratio is used here to invalidate its own denominator — a **third status**
+     of ϖ/σ_ϖ beside measured relation and chart coordinate, in which the claimed precision is judged
+     against the value rather than the value against the precision. Nothing in the notation
+     distinguishes the three.
+  2. **The line's own candidate carries the omission the line has spent four ticks describing in
+     other documents.** `sketch-operative-ruler-v2.html` labels the region past φ/σφ = −5 "clearly
+     spurious" and `EXPOSITION.md` defends the axis as "the discipline's own published regions as
+     cited map-geography" — "reference, not verdict". The quotation is accurate; what neither carries
+     is the sentence eleven words earlier in the same paragraph: "We use the limit of five as an
+     illustrative example and not as a recommendation." A border whose author calls it an
+     illustration is not a border, and the map-geography defence is weakened at exactly its
+     load-bearing point. Recorded against the candidate, not against the source. `EXPOSITION.md`
+     receives a dated correction entry so the omission is disclosed **before** Frank's gate rules
+     (§2.4); the artefact file is left unedited as the tested state of tick 6, and a qualified v3 is
+     specified but deliberately not built by the session that found the defect. The strongest
+     counter-reading — that the hedge disowns the *number* while the verdict on the *population*
+     stands, evidenced by Rybizki's independent choice of 4.5σ — is recorded at full strength in
+     TRACE §6.1 and is not refuted.
+
 ## 11. Work-line declaration (Protocol v5, 2026-07-24)
 
 This project is declared the practice's **first work-line** under the transition clause
@@ -743,3 +775,25 @@ second movable term) is now **materially strengthened** — Eq. (1) gives it a s
 `astrometric_params_solved` a discrete published switch — and is nonetheless **deferred by
 decision**: no §5.4 test has been run on it, and building it on the tick that found its material
 would open where the schedule presses, not at a point the work created. — Ulysses
+
+**Update — 2026-07-30, home operation (TRACE tick 15): the form tested, and the fault found at
+home.** The first tick in this line opened by an unperformed *form test* rather than an unperformed
+reading, and the first to **retire** an inherited option instead of adding one. Tick 14 shelved the
+second artefact — the correction to the claimed precision as a second movable term, with Fabricius
+Eq. (1) for structure and `astrometric_params_solved` for a published switch — expressly because no
+§5.4 test had been run on it. The test was run and the form does not survive it: the move works only
+if the −5 boundary is a significance threshold in a unit worth correcting, and the paragraph that
+introduces that boundary disqualifies the unit in its next sentence. k is calibrated on solutions
+whose model holds; the −5 population is defined by the model failing. To animate anything, the
+artefact would have to pick one of the three statuses the notation does not license anyone to pick —
+§5.4 test 4 failed in the strong sense (a *contested* explanation in the costume of a calculation),
+and in the shape the line's first artefact already uses. Retired, with the reason on record so a
+later tick inherits the verdict and not the temptation. **And the same paragraph found a fault in
+this line's own candidate:** the axis labels the region past −5 with a verdict its source hedges
+eleven words earlier as "an illustrative example and not as a recommendation" — the very failure of
+warrant-propagation the line has been documenting in other people's documents since tick 12, here
+performed by me, in an artefact standing at the human gate. Disclosed in `EXPOSITION.md` before the
+gate rules (§2.4); the artefact left unedited as tick 6's tested state; a qualified v3 specified and
+**not** built by the session that found the defect. **Pre-opening check (§4):** aspect home; the
+disclosure completes an opening already executed, it does not begin one; the v3 revision and any
+notification beyond the record are deferred by decision. — Ulysses
