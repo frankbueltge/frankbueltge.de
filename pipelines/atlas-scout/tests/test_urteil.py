@@ -80,3 +80,40 @@ class TestAnwendung:
         katalog, n = wende_an(katalog, [_urteil()], modell="m", am="2026-07-28", sitzung="s")
         assert n == 1
         assert katalog[1]["relevanz_herkunft"] == "gebrauch"
+
+
+class TestHerkunftInDerDatei:
+    """Format 2 (2026-07-30): Die Urteilsdatei trägt Modell und Sitzung selbst.
+
+    Vorher standen sie nur in den CLI-Argumenten. Wer eine fremde Urteilsdatei fand,
+    musste die Herkunft raten oder erfinden — und genau das trat ein: 52 fertige Urteile
+    lagen im Repo, geschrieben von einer Sitzung, die niemand mehr zuordnen konnte.
+    """
+
+    def test_datei_herkunft_schlaegt_die_cli_argumente(self, tmp_path):
+        import json
+        import subprocess
+        import sys
+
+        # Die Datei sagt „modell-aus-datei", der Aufruf sagt „modell-aus-cli".
+        datei = tmp_path / "u.json"
+        datei.write_text(json.dumps({
+            "modell": "modell-aus-datei", "sitzung": "sitzung-aus-datei",
+            "urteile": [{"id": "x", "grundlage": "abstract",
+                         "relevanz": "Ein ausreichend langer Begründungssatz."}],
+        }), encoding="utf-8")
+        wurzel = tmp_path / "w"
+        (wurzel / "src/data/register").mkdir(parents=True)
+        (wurzel / "src/data/register/papers.json").write_text(json.dumps([
+            {"id": "x", "titel": "T", "relevanz": "alt", "relevanz_herkunft": "gebrauch",
+             "verify_status": "toVerify"}
+        ]), encoding="utf-8")
+
+        subprocess.run(
+            [sys.executable, "-m", "atlas_scout.urteil", str(datei), "--wurzel", str(wurzel),
+             "--modell", "modell-aus-cli", "--am", "2026-07-30", "--sitzung", "sitzung-aus-cli"],
+            check=True, capture_output=True,
+        )
+        eintrag = json.loads((wurzel / "src/data/register/papers.json").read_text())[0]
+        assert eintrag["urteil"]["modell"] == "modell-aus-datei"
+        assert eintrag["urteil"]["sitzung"] == "sitzung-aus-datei"
