@@ -1555,3 +1555,235 @@ kill-grinding with better manners, and it would abandon a return edge into astro
 
 **Line status.** ACTIVE, open horizon, aspect home. Candidate unchanged at the gate. External spend:
 none; shared extraction budget: none consumed. — Ulysses
+
+---
+
+## Tick 14 — 2026-07-30 — Home operation: the slot is not empty, and the division is of place, not of notation
+
+**Occasion, and why this operation and not another.** Tick 13 closed by naming a reading and not
+performing it, and by stating, as my own inference, what that reading would decide:
+
+> Gaia publishes ϖ and σ_ϖ and no ν-analogue, and the value belonging in that slot was measured
+> from outside the catalogue (tick 9) and applied downstream by third parties (tick 10); the DR3
+> validation chapter on astrometric accuracy is the next reading, named and not performed.
+
+The line has now twice made a named-but-unperformed reading into the next tick's obligation
+(tick 12 → 13, tick 13 → 14). This tick performs it. The question is exact: **does the catalogue
+publish, beside ϖ and σ_ϖ, anything that records how the numerical value of σ_ϖ was warranted?**
+
+The answer is no in the form I expected it and yes in a form I did not. The inference is recorded
+false; what replaces it is narrower, better evidenced, and — for the first time — it closes a loop
+inside the line's own three-level territory rather than opening a fourth instance elsewhere.
+
+### Sources read at primary this tick
+
+1. **Gaia DR3 Documentation, release 1.3, §14.7.1 "Astrometry"** (Part IV, Ch. 14 Validation,
+   §14.7 Open and globular clusters) —
+   https://gea.esac.esa.int/archive/documentation/GDR3/Catalogue_consolidation/chap_cu9val/sec_cu9val_947/ssec_cu9val_947_astrometry.html
+   (page footer: "Generated on Sat Jul 15 11:29:14 2023 by LaTeXML").
+2. **Gaia DR3 Documentation, data model, `gaia_source`** —
+   https://gea.esac.esa.int/archive/documentation/GDR3/Gaia_archive/chap_datamodel/sec_dm_main_source_catalogue/ssec_dm_gaia_source.html
+3. **Fabricius, C., et al. 2021**, "Gaia Early Data Release 3: Catalogue validation," *A&A* **649**,
+   A5, §§3.7, 3.7.1, 3.7.2, 3.12 and the §6 summary list —
+   https://www.aanda.org/articles/aa/full_html/2021/05/aa39834-20/aa39834-20.html
+
+All passages below are verbatim from those pages, read at source this run. Apparatus note: the
+three documents render through the ordinary fetch path; the text was extracted locally from the
+downloaded HTML for accurate quotation. No shared full-text-extraction budget consumed; no external
+spend.
+
+### 1. The expectation is defeated: the catalogue publishes ν, and names it ν
+
+The data model defines it in as many words, in the entry for `astrometric_gof_al`:
+
+> "astrometric_gof_al = ( 9 ν / 2 ) ^ 1/2 [ ruwe^(2/3) + 2 / ( 9 ν ) − 1 ] where ruwe is the
+> renormalised unit weight error and **ν = astrometric_n_good_obs_al − N is the number of degrees
+> of freedom for a source update**. Here N = 5 for 2-parameter and 5-parameter solutions
+> (respectively astrometric_params_solved = 3 or 31) and 6 for 6-parameter solutions
+> (astrometric_params_solved = 95). Note that only 'good' (i.e. not strongly downweighted)
+> observations are included in ν."
+
+So the slot tick 13 called empty is not empty, and it is not thinly furnished either. Beside
+`parallax` and `parallax_error` ("Standard error σ_ϖ of the stellar parallax at the reference epoch
+ref_epoch") the row carries `astrometric_n_good_obs_al`, `astrometric_params_solved`,
+`astrometric_chi2_al`, `ruwe`, `astrometric_gof_al`, `astrometric_excess_noise` and its
+significance. ν is not stored as a column but is *constructible from published columns by a
+published formula* — which is more than the GUM asks and, on one axis, more than the GUM delivers:
+tick 13 recorded that on the Type B side ν is "a subjective quantity whose value is obtained by
+scientific judgement" (G.4.2) and defaults to infinity (G.4.3). Gaia's ν is countable and
+per-source. **Tick 13's inference is false as stated and is recorded false** (SCORE §10,
+2026-07-30). Its wording stands unedited there and above, per Protocol §8/§10.
+
+### 2. What replaces it: the apparatus is complete on one side of a seam and absent on the other
+
+Everything in that list is a record of the *fit* — observations against parameters, residuals
+against assumed noise. None of it records the second component, and the second component is
+named, quantified and published by the same collaboration in a different document. Fabricius §3.7,
+verbatim:
+
+> "As discussed by Lindegren et al. (2018a), it is useful to describe the true external parallax
+> uncertainty, σ_ext, as the quadratic sum of the formal catalogue uncertainty (parallax_error)
+> times a multiplicative factor (k) plus a systematic error (σ_s),
+> **σ_ext² = k² σ_i² + σ_s². (1)**"
+
+Neither k nor σ_s is a column. Their values are in the paper's figures and prose (§3.7.2):
+
+> "On the right side of the figure, the asymptotic uwu is mostly flat and it gives the
+> multiplicative factor: it is about **1.05 for 5p solutions** (improved from DR2), slightly more
+> for very faint stars, **1.22 for 6p solutions**, and larger for sources with non-zero excess
+> noise or those in the LMC."
+
+The sharp thing is not the absence. It is that **the catalogue publishes the selector for a
+correction it does not publish.** Which factor applies to a given row is decided by
+`astrometric_params_solved` — the same column that fixes N in ν. The row carries the switch
+position; the paper carries what the switch selects. A reader with the row alone cannot compute
+σ_ext and cannot tell that they cannot.
+
+This is the GUM architecture of ticks 12–13 instantiated once more, and the instantiation names the
+variable those ticks left implicit. In metrology the split is marked in the *report* and travels
+optionally (7.2.1). Here it is not marked at all in the notation, and the division is **of place**:
+everything Type A is in the row, everything Type B is in the prose, and the single symbol σ_ϖ
+carries only the first while nothing in it says so. Quantity and warrant do not merely detach at
+different rates (tick 12) — they are published in different documents by design, and only the
+quantity has an address a machine can resolve.
+
+### 3. The loop closes inside the line's own territory
+
+The validation chapter states the consequence in the line's own terms, using an external reference
+exactly as tick 9's audit did (there: bound pairs; here: cluster members that must share a parallax):
+
+> "We analyse the difference between Gaia DR3 parallaxes for single stars and the median parallax
+> of the cluster normalised to the Gaia DR3 nominal error. **The sigma of the distribution is larger
+> than 1 (∼1.2) i.e. the uncertainties are underestimated.** In particular, formal uncertainties
+> underestimate the errors mainly for stars brighter than G = 14. The distribution shows a bump at
+> G ∼ 13."
+
+And, decisively for this line, it names *which* missing component does it:
+
+> "When divided by the nominal uncertainty, these patterns are still present, with reduced
+> amplitude, implying that **nominal uncertainties on the parallax do not account for the zero
+> point variation**, i.e. nominal uncertainties are underestimated."
+
+That sentence joins two ends of the three-level displacement the line has carried since Expose. The
+**scale-level** residue — the zero-point offset, whose correction Lindegren et al. 2021 publish as
+discretionary, "to be used at the researcher's discretion" (SCORE §10, tick 2) — is missing from the
+**unit** of the level-one relation. The ruler this line has read three ways is short by exactly the
+term the discipline declined to institutionalise. Not two findings that rhyme: the same omission,
+seen once as a correction nobody is obliged to apply and once as a variance nobody's error bar
+contains.
+
+### 4. A third turn: the warrant indicators are themselves miscalibrated
+
+Fabricius §3.12, on solutions that look too good:
+
+> "in this region, because most of the sources suffer from crowding, most sources should have some
+> excess noise and not just a small fraction of them, as in other regions. Consequently, the
+> attitude excess noise may have absorbed this source excess noise, leading to **source solutions
+> that appear much better than they truly are in reality**. Consequently, the caveat is that the
+> ruwe of bright sources in large crowded areas, and thus their astrometric_gof_al too, may be much
+> smaller than they should be."
+
+Carried into the paper's own summary list (§6): "The quality indicators ruwe and astrometric_gof_al
+are **strongly underestimated** for bright sources in crowded areas."
+
+This is tick 8's structure recurring one level higher and now documented rather than projected. There,
+the instrument counted its invisible half by reflection under a postulate nothing inside it could
+check. Here, the columns that record *how well warranted* a value is are themselves displaced by a
+mechanism internal to the processing — one noise term absorbing another — and the displacement is
+visible only from outside, by comparison with a population that ought to agree. The line's relation
+holds at the meta-level: a warrant indicator is also a value against a claimed precision, and it can
+be wrong in the same way.
+
+### 5. The counter-reading, at its strongest
+
+Three objections, none refuted here.
+
+1. **`astrometric_excess_noise` is a partial in-row Type-B term, and it weakens §2 above.** The data
+   model: "It measures the disagreement, expressed as an angle, between the observations of a source
+   and the best-fitting standard astrometric model… The assumed observational noise in each
+   observation is quadratically increased by ϵ_i in order to statistically match the residuals."
+   And Fabricius §3.7: "the catalogue uncertainties incorporate part of the excess noise of the
+   solution when present." So an inflation for *model inadequacy* — not pure counting statistics —
+   does reach the row and does enter σ_ϖ. My claim survives only in the narrower form it is stated
+   in: what is absent from the row is the **calibration/systematic** component (k and σ_s), not
+   every non-counting term. Recorded as a real limitation of the finding, not as a caveat.
+2. **A division of place may be the right design, not a defect.** This is tick 12's objection,
+   unretired and here strengthened: a catalogue that shipped a per-source σ_s would be shipping a
+   number under revision (tick 10 documented third parties applying and declining these corrections
+   in the same paper), and freezing it into 1.8 billion rows is the worse error. The line does not
+   claim otherwise. What it claims is smaller: that the notation does not mark which of the two it
+   is carrying, and that the reader who most needs the mark is the one who has only the row.
+3. **The self-appointed-judge indicator is live.** Reading "the discipline's honest, well-documented
+   validation practice" as an *omission* is available to a practice that wants omissions. The
+   mitigant is again structural rather than declarative: the reading was set as an obligation by the
+   previous tick before its outcome was known, and its first result was to falsify my own most
+   recent claim.
+
+### 6. One thing read accurately and not flattened
+
+Within §14.7.1 two sentences point opposite ways and must not be merged. Of parallaxes: "formal
+uncertainties underestimate the errors mainly for stars brighter than G = 14." Of proper motions in
+the crowded field of M4: "the nominal uncertainties are correctly estimated only for bright stars"
+(the scaled dispersion "gets to 1.6–1.8 for faint stars with a high contamination level"). Different
+quantities, different failure mechanisms — zero-point variation in the first case, crowding
+contamination in the second. Not a contradiction; recorded here so a later reading of my record does
+not take it for one.
+
+### Pre-opening check (§4)
+
+Dominant aspect: **home**. No outward move was made. The operation was a source reading that
+answers, against the line's own wording, a question the previous tick wrote down as an obligation.
+The self-created-point question is not reached and is not forced; the tick-7 candidate is untouched
+and waits at Frank's gate, as it has since 2026-07-25 (§2.3 — a waiting candidate blocks nothing).
+
+One inherited form-option is **materially strengthened and still not acted on**. Tick 10 shelved the
+idea of making the *correction to* the claimed precision a second movable term in the operative
+ruler. Fabricius Eq. (1) now supplies its exact structure — two terms, k multiplicative and σ_s
+additive in quadrature — and `astrometric_params_solved` supplies a discrete, published switch
+(5p → ≈1.05, 6p → ≈1.22) that a participant could throw. That is the closest this line has come to a
+second form with real material under it. It is deferred, by decision: no §5.4 test has been run on
+it, the candidate at the gate is unrevised, and building a second artefact on the tick that found
+the material would be opening where the schedule presses, not at a point the work created. Recorded
+so a later tick inherits it with its evidence attached. Logged in
+`projects/2026-07-24-put-back-on-the-map/TRACE.md` (#15).
+
+### Five topoi (prose, symmetrical)
+
+*Connectivity.* The strongest of the line's operations on this criterion, and in the direction it
+most needed: inward. Ticks 11–13 tested the line's grammar outside astrometry and each time paid a
+term for the transfer. This tick brings the metrological reading back and finds the seam in the
+catalogue that started the line — and joins the scale-level residue of Expose to the unit of the
+level-one relation, which the line had held as three levels without a stated relation between the
+first and the third.
+
+*Consistency.* Every claim is a verbatim passage with its section and URL, from three documents read
+at source this run. The two components of Eq. (1) are kept distinct from the excess-noise term that
+does reach the row, and the objection that this distinction weakens my own claim is stated in §5.1
+rather than in a footnote. The one internal tension in the source is recorded as such (§6) instead
+of being resolved in my favour.
+
+*Function-testing.* The tick's question was fixed in advance by the previous tick, and it returned a
+falsification of my inference in its first paragraph. The expectation ("no ν-analogue") was not
+merely wrong at the edges: the catalogue publishes a per-source ν where metrology's is a judgement
+defaulting to infinity. A weaker practice would have kept the phrase and narrowed it quietly; the
+phrase is recorded false.
+
+*New-production.* The line's own, and it is a distinction rather than a restatement: the split
+between a value and the warrant of its uncertainty is realised here as a division of **location**
+(row vs. paper) with a **published selector and an unpublished selected value**. Neither source draws
+that consequence; each states its own half. That the quality indicators are themselves miscalibrated
+by an internal absorption of noise (§4) is Fabricius' finding, but its reading as the line's own
+relation at the meta-level is mine, and marked as mine.
+
+*Caution balance.* The stratum is unchanged — 0 EUR, no bulk download, no artefact revised, gates
+intact, publication untouched. The live risk is §5.2: that a well-founded design choice is being
+read as a lack because this line profits from lacks. It is stated at full strength above and is not
+answered. **Reverse question (symmetry rule):** what would the line lose by closing here? It would
+close on the operation that finally connected its own three levels to each other, and it would
+abandon a second form-option at the exact moment the material for it arrived — with the two numbers
+(k, σ_s) and the switch that selects between them now in hand. Two ticks ago the reverse question
+was answered by a return edge that was still a conjecture; this tick that edge is a citation.
+Closing now would be kill-grinding at the point of highest yield.
+
+**Line status.** ACTIVE, open horizon, aspect home. Candidate unchanged at the gate. External spend:
+none; shared extraction budget: none consumed. — Ulysses

@@ -755,3 +755,52 @@ for the monthly review, not an adoption.
 **Deformation gauge.** No new deformation. One earlier proposal (#13's) extended rather than
 corrected. One danger signal (#13's streak observation) met with a counter-instance rather than an
 argument. Instruments unchanged. — Ulysses
+
+---
+
+## #15 — 2026-07-30 — Observation on the work-line's tick 14 (home operation)
+
+**Occasion.** Second consecutive tick opened by the previous tick's named-and-unperformed reading;
+the debt was paid and its payment falsified the line's own most recent inference. Instruments
+observed in vivo: the pre-opening check (P1), the five topoi, the danger vocabulary.
+
+**P1 (pre-opening check) — idling, sixth occurrence, and this time with a live option beside it.**
+No outward move was made and the check again registered aspect (home) and stopped. But the tick did
+carry a genuine outward *option*: tick 10's shelved form-idea — the correction to the claimed
+precision as a second movable term in the operative ruler — was materially strengthened by this
+tick's reading (Fabricius Eq. 1 supplies its two-term structure; `astrometric_params_solved` supplies
+a discrete published switch). So the situation is no longer "no move available, nothing to check": a
+buildable option existed and was deferred by decision. That is the case the two-legged correction
+proposed in #12 was written for — *trigger on availability of an outward move; classify the move
+first* — and it is the first occurrence where the current P1 formulation and the proposed one would
+have produced visibly different work rather than the same shrug. Six instances now support the
+proposal; still a proposal for the monthly review, not an adoption.
+
+**The debt rule holds at its second application, and the second application is the informative
+one.** #14 proposed that a control naming a next reading should record it as an open debt, with the
+following tick paying it or recording why not. Paid once is a coincidence; paid twice, against the
+practice's own interest both times, is the beginning of evidence. Worth noting precisely what it
+cost: yesterday the debt overturned tick 12's formulation, today it overturned tick 13's. A rule
+whose two observed applications both produce self-falsification is doing something other than
+producing agreeable reports — which is exactly what #13's danger signal (a line that always
+self-corrects may have learned which report earns approval) would predict is *hard* to arrange
+deliberately. The counter-consideration stands: self-falsification is itself a report style, and a
+practice can learn to prefer it. Nothing here settles that; the monthly review holds the standing.
+
+**Self-appointed-judge indicator — live, and named by the line itself rather than by this record.**
+The work-line's own TRACE §5.3 states the risk (reading a well-documented validation practice as an
+omission is available to a practice that profits from omissions) and does not answer it. Logging
+that the indicator was raised by the observed line and not by the observer is the point: on the two
+previous occasions this record had to supply it.
+
+**Format-hardening — one instance, mild, worth watching.** Three consecutive work-line ticks have
+now taken the same shape: previous tick names a reading → this tick performs it at a primary →
+correction against own record → topoi → deferral. That is a good shape and it is also becoming *the*
+shape. The risk is not that the shape is wrong but that a tick which ought to do something else
+(build, revise the candidate, close) inherits it by default because the slot is warm. Recorded as a
+first observation, not a deformation; the check is whether tick 15 can do something structurally
+different when the line calls for it.
+
+**Deformation gauge.** No new deformation. One proposal (#12's P1 correction) reached its first
+discriminating instance. One proposal (#14's debt rule) reached its second application. One new mild
+danger observation (format hardening) opened. Instruments unchanged. — Ulysses
