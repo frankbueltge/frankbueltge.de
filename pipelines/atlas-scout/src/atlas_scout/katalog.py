@@ -574,6 +574,59 @@ def als_json(eintraege: list[Katalogeintrag]) -> str:
     ) + "\n"
 
 
+def bewahre_urteile(neu: list[Katalogeintrag], alt: list[dict]) -> list[Katalogeintrag]:
+    """Trägt Urteile und Abnahmen aus dem bestehenden Katalog in den neuen Bau.
+
+    **Warum das existieren muss.** `main()` baut den Katalog jede Nacht aus den Quellen
+    neu und schrieb ihn bis 2026-07-28 ungelesen über die alte Datei. Damit hätte der
+    Lauf um 05:30 UTC alle 27 geschriebenen Urteile gelöscht — Arbeit, die nicht aus einer
+    Quelle folgt und darum durch keinen Abruf zurückkommt. Ein Katalog, der seine eigene
+    Beurteilung nächtlich vergisst, kann nicht kuratiert werden; er kann nur sammeln.
+
+    Die Rangfolge bleibt dieselbe wie bei der Zusammenführung:
+
+      praxis  > urteil > gebrauch
+
+    Hat eine Praxis seit dem letzten Lauf eine Begründung geschrieben, gewinnt sie gegen
+    das Maschinenurteil — das ist der erwünschte Weg, und der neue Bau bringt sie mit.
+    Ist der neue Eintrag dagegen nur ein Gebrauchsbeleg und stand vorher ein Urteil da,
+    wird das Urteil samt Nachweis übernommen.
+
+    `verify_status: "verified"` wird immer bewahrt: Das setzt nur ein Mensch oder eine
+    Praxis, und ein Neubau kann es nicht erzeugen.
+    """
+    frueher = {e.get("id"): e for e in alt if e.get("id")}
+    # Zweiter Schlüssel: Die id wird aus Autor und Titel abgeleitet und ändert sich, wenn
+    # die Quelle ihre Angaben korrigiert. Die Kennung ist stabiler.
+    nach_kennung = {
+        (e.get("kennung") or "").lower(): e for e in alt if e.get("kennung")
+    }
+
+    bewahrt: list[Katalogeintrag] = []
+    for eintrag in neu:
+        vorher = frueher.get(eintrag.id) or nach_kennung.get(eintrag.kennung.lower())
+        if not vorher:
+            bewahrt.append(eintrag)
+            continue
+
+        aenderungen: dict = {}
+        # Ein Urteil überlebt, solange keine Praxis inzwischen selbst geschrieben hat.
+        if (
+            vorher.get("relevanz_herkunft") == "urteil"
+            and eintrag.relevanz_herkunft != "praxis"
+        ):
+            aenderungen["relevanz"] = vorher.get("relevanz", eintrag.relevanz)
+            aenderungen["relevanz_herkunft"] = "urteil"
+            aenderungen["urteil"] = vorher.get("urteil")
+        # Eine Abnahme kann ein Neubau nicht erzeugen — sie wird nur übernommen.
+        if vorher.get("verify_status") == "verified":
+            aenderungen["verify_status"] = "verified"
+
+        bewahrt.append(replace(eintrag, **aenderungen) if aenderungen else eintrag)
+
+    return bewahrt
+
+
 def main(argv: list[str] | None = None) -> int:
     import argparse
 
@@ -635,56 +688,3 @@ if __name__ == "__main__":
     import sys
 
     sys.exit(main())
-
-
-def bewahre_urteile(neu: list[Katalogeintrag], alt: list[dict]) -> list[Katalogeintrag]:
-    """Trägt Urteile und Abnahmen aus dem bestehenden Katalog in den neuen Bau.
-
-    **Warum das existieren muss.** `main()` baut den Katalog jede Nacht aus den Quellen
-    neu und schrieb ihn bis 2026-07-28 ungelesen über die alte Datei. Damit hätte der
-    Lauf um 05:30 UTC alle 27 geschriebenen Urteile gelöscht — Arbeit, die nicht aus einer
-    Quelle folgt und darum durch keinen Abruf zurückkommt. Ein Katalog, der seine eigene
-    Beurteilung nächtlich vergisst, kann nicht kuratiert werden; er kann nur sammeln.
-
-    Die Rangfolge bleibt dieselbe wie bei der Zusammenführung:
-
-      praxis  > urteil > gebrauch
-
-    Hat eine Praxis seit dem letzten Lauf eine Begründung geschrieben, gewinnt sie gegen
-    das Maschinenurteil — das ist der erwünschte Weg, und der neue Bau bringt sie mit.
-    Ist der neue Eintrag dagegen nur ein Gebrauchsbeleg und stand vorher ein Urteil da,
-    wird das Urteil samt Nachweis übernommen.
-
-    `verify_status: "verified"` wird immer bewahrt: Das setzt nur ein Mensch oder eine
-    Praxis, und ein Neubau kann es nicht erzeugen.
-    """
-    frueher = {e.get("id"): e for e in alt if e.get("id")}
-    # Zweiter Schlüssel: Die id wird aus Autor und Titel abgeleitet und ändert sich, wenn
-    # die Quelle ihre Angaben korrigiert. Die Kennung ist stabiler.
-    nach_kennung = {
-        (e.get("kennung") or "").lower(): e for e in alt if e.get("kennung")
-    }
-
-    bewahrt: list[Katalogeintrag] = []
-    for eintrag in neu:
-        vorher = frueher.get(eintrag.id) or nach_kennung.get(eintrag.kennung.lower())
-        if not vorher:
-            bewahrt.append(eintrag)
-            continue
-
-        aenderungen: dict = {}
-        # Ein Urteil überlebt, solange keine Praxis inzwischen selbst geschrieben hat.
-        if (
-            vorher.get("relevanz_herkunft") == "urteil"
-            and eintrag.relevanz_herkunft != "praxis"
-        ):
-            aenderungen["relevanz"] = vorher.get("relevanz", eintrag.relevanz)
-            aenderungen["relevanz_herkunft"] = "urteil"
-            aenderungen["urteil"] = vorher.get("urteil")
-        # Eine Abnahme kann ein Neubau nicht erzeugen — sie wird nur übernommen.
-        if vorher.get("verify_status") == "verified":
-            aenderungen["verify_status"] = "verified"
-
-        bewahrt.append(replace(eintrag, **aenderungen) if aenderungen else eintrag)
-
-    return bewahrt
