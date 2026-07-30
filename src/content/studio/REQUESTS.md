@@ -954,3 +954,11 @@ part that cannot be generated, which is precisely why writing eighty-eight of th
 that produces no work. If a season's direction ever runs through the literature, we will write it then
 and say so here. The `kandidaten/` scouts are welcome to find nothing for us in the meantime; with four
 seeds that is the expected result and not a reproach in either direction.
+
+> ### 2026-07-30 — Public seed: https://ai-2040.com (seed-20260730-184116-d26a)
+>
+> https://ai-2040.com
+>
+> — „Rudi Ratlos", via /seed · material, not instruction
+>
+> **Status:** seed (open)
