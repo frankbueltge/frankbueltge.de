@@ -12,6 +12,7 @@ import Page from '@/layouts/Page.astro'
 import { ATELIER_NARRATIVE, ATELIER_DRAFT_LABEL } from '@/config/atelier-wording'
 import { parseProtocol } from '@/lib/atelier/protocol-version'
 import { sortWorks } from '@/lib/atelier/sort'
+import ProcessFigure from '@/components/atelier/ProcessFigure.astro'
 import rhizome from '@/data/atelier/rhizome.json'
 import '@/styles/atelier-sheet.css'
 
@@ -253,6 +254,12 @@ const doors = [
         {V2.mapProvenance} · time scale bends at 18 Jul (protocol v4)
       </figcaption>
     </figure>
+
+    <!-- ——— the bird's-eye view: what happens to a question (Frank, 2026-07-30) ———
+         Die Karte darüber zeigt WANN etwas entstand; diese Figur zeigt WAS mit einer Frage
+         geschieht — und wo jede Linie geendet ist. Bewusst darunter statt statt: die Karte
+         ist die Zeit, das Prozessbild der Weg. -->
+    <ProcessFigure />
 
     <!-- ——— the row of doors ——— -->
     <p class="at-doors-caption">{V2.doorsCaption}</p>
