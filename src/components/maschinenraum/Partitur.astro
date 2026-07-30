@@ -629,6 +629,8 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
     const data: Payload = JSON.parse(dataEl.textContent)
     const { vbw, x0, dayW, days } = data.layout
     const glyphWord: Record<string, string> = { session: 'session', work: 'work', fail: 'fail' }
+    // must match the server-side OFFSETS table (mark spread within a day cluster)
+    const OFFSETS: Record<number, number[]> = { 1: [0], 2: [-6.5, 6.5], 3: [-9, 0, 9] }
 
     // The site CSP drops style ATTRIBUTES — CSSOM assignments like these are allowed.
     // The exact min-width (depends on the day count) and the entrance delays are
@@ -747,15 +749,33 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
       cross.setAttribute('x1', String(snapped))
       cross.setAttribute('x2', String(snapped))
       cross.style.display = 'inline'
-      // A mark under the pointer? Then session-precise instead of day-wise.
+      // Anywhere inside a cluster's hit band → session-precise via NEAREST mark.
+      // Nobody hits a 9px dot reliably (Frank's finding 2026-07-31): the pointer
+      // only has to be closest, never dead-center. Open lane → day column.
       const target = ev.target instanceof Element ? ev.target : null
-      const markEl = target?.closest('[data-mi]')
       const hitEl = target?.closest('.pt-hit') as SVGGElement | null
-      if (markEl && hitEl?.dataset.key) {
-        showVoiceTip(hitEl.dataset.key, Number(markEl.getAttribute('data-mi')), ev.clientY)
-      } else {
-        showDayTip(idx, ev.clientY)
+      const key = hitEl?.dataset.key
+      if (key) {
+        const evs = data.clusters[key]
+        if (evs?.length) {
+          let mi = -1
+          if (evs.length <= 3) {
+            const offsets = OFFSETS[evs.length] ?? [0]
+            const cx = Number(hitEl.dataset.x ?? 0)
+            let best = Infinity
+            offsets.forEach((dx, i) => {
+              const dist = Math.abs(xVb - (cx + dx))
+              if (dist < best) {
+                best = dist
+                mi = i
+              }
+            })
+          }
+          showVoiceTip(key, mi, ev.clientY)
+          return
+        }
       }
+      showDayTip(idx, ev.clientY)
     })
     svg.addEventListener('pointerleave', () => {
       cross.style.display = 'none'
