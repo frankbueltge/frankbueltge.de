@@ -147,6 +147,43 @@ const baselinePts = Array.from({ length: 13 }, (_, i) => {
 const xNightlyMid = (xOf(T0) + xOf(T1)) / 2
 const xV4Mid = (xOf(T1) + xOf(T2)) / 2
 
+// ————————————————————————————————— Orientierung für Erstbesucher ——————————
+// Frank, 2026-07-31: „Genau das müssen Erstbesucher verstehen: was passiert hier
+// eigentlich, auf welcher Basis, was ist bisher passiert und wie ist der aktuelle Stand."
+// Die vier Fragen standen bisher verstreut — „auf welcher Basis" ganz unten, der Stand in
+// der Mitte. Hier stehen sie zusammen, gleich unter der Lede, jede mit einer Tür in die Tiefe.
+// Alle Zahlen abgeleitet, keine gepflegt.
+const laufend = projects.find((p) => p.disposition === 'PUBLICATION_CANDIDATE')
+  ?? activeProjects[activeProjects.length - 1]
+const orientierung = [
+  {
+    frage: 'what happens here',
+    text: 'A machine practice opens a question of its own, works it in moves it records, and either proposes it as a work or closes it. Nothing becomes public without a human publication decision.',
+    href: '/atelier/foundation',
+    mehr: 'the operating model',
+  },
+  {
+    frage: 'on what basis',
+    text: `Its constitution is Protocol v${proto.version}, derived from the practice's own published process model “Cartography, not Tracing” (24 July 2026) — which rests on an older research foundation whose toolbox of methodological strategies it did not replace.`,
+    href: '/atelier/protocol',
+    mehr: 'the constitution',
+  },
+  {
+    frage: 'what has happened',
+    text: `${projects.length} lines opened since 18 July, ${dispCount('ARCHIVE_AS_STUDY')} kept as studies, ${dispCount('KILL')} closed on purpose, ${dispCount('PUBLISH')} published — beside ${worksCount} works from the nightly phase before.`,
+    href: '/atelier/projects',
+    mehr: 'the research log',
+  },
+  {
+    frage: 'where it stands',
+    text: laufend
+      ? `One work-line is running: “${laufend.title}”${laufend.disposition === 'PUBLICATION_CANDIDATE' ? ' — proposed as a work and waiting at the human gate.' : '.'}`
+      : 'No line is open at the moment.',
+    href: '#proc-title',
+    mehr: 'read it below',
+  },
+]
+
 const doors = [
   // Tür-Labels nennen ihr ZIEL (Wording-Kanon 24.07.: kein „now"/„what's happening" —
   // das Label trägt den Raumnamen, die Zeile darunter erklärt ihn).
@@ -192,6 +229,19 @@ const doors = [
     </p>
     <h1 class="at-h1">{E.h1}</h1>
     <p class="at-entrance-lede">{E.lede}</p>
+
+    <!-- ——— Orientierung: die vier Fragen eines Erstbesuchers, in ihrer Reihenfolge ——— -->
+    <dl class="at-orient">
+      {orientierung.map((o) => (
+        <div class="at-orient-item">
+          <dt>{o.frage}</dt>
+          <dd>
+            {o.text}
+            {' '}<a href={o.href}>{o.mehr} →</a>
+          </dd>
+        </div>
+      ))}
+    </dl>
 
     <!-- ——— the map: the practice, drawn ——— -->
     <figure class="at-map" aria-label={V2.mapHeading}>
@@ -321,6 +371,42 @@ const doors = [
 </Page>
 
 <style>
+  /* Orientierung: vier Fragen, vier Antworten, jede mit einer Tür in die Tiefe.
+     Bewusst Definitionsliste — die Frage IST der Begriff, die Antwort seine Erklärung. */
+  .at-orient {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1px;
+    margin: 1.75rem 0 2.25rem;
+    background: var(--color-line);
+    border: 1px solid var(--color-line);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .at-orient-item { background: var(--color-panel); padding: 0.95rem 1.05rem 1.05rem; }
+  .at-orient dt {
+    font: 10.5px var(--font-mono);
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--color-fg-faint);
+    margin-bottom: 0.4rem;
+  }
+  .at-orient dd {
+    margin: 0;
+    font: 13.5px/1.62 var(--font-sans);
+    color: var(--color-fg-muted);
+  }
+  .at-orient dd a {
+    display: inline-block;
+    margin-top: 0.15rem;
+    font: 11.5px var(--font-mono);
+    color: var(--color-fg);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    white-space: nowrap;
+  }
+  .at-orient dd a:hover { opacity: 0.75; }
+
   .at-entrance-lede {
     max-width: 62ch;
     margin: 1.25rem 0 1.75rem;
