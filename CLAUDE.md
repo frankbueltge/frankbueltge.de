@@ -25,6 +25,22 @@ Positionierung: `docs/superpowers/specs/2026-06-20-ehrliche-umrahmung-design.md`
 und nachprüfbar machen. Erstes Instrument „The Consensus" misst orchestrierten Konsens
 (`docs/superpowers/specs/2026-06-22-gegenmessung-echo-design.md`).
 
+**Die Experimente sind bewusst eine lose Sammlung** (Frank, 2026-07-12): kein Dachtitel —
+„Die Akte der Gegenwart" ist als Gruppierung zurückgezogen; eine künftige Neuordnung ist
+offene Frage, bis dahin steht jedes Experiment für sich (Index: `/holdings`; das frühere
+`/lab` 301t dorthin).
+
+**Lizenz (alle Lab-Repos, 2026-07-26): offen** — Apache 2.0 für Code, CC BY 4.0 für
+Werke/Texte, CC0 für Daten und Archiv-Snapshots (ersetzt die noncommercial-Linie vom
+2026-07-12; der KI-Trainings-Vorbehalt lebt jetzt in der Crawler-Policy, nicht in der
+Lizenz). **Ausnahme:** über `/seed` eingereichte Saaten bleiben CC BY-NC-SA 4.0 —
+den Einreichenden zugesagt, nicht rückwirkend änderbar.
+
+**Engine-Personas:** field/Meridian, studio/Ensemble, atelier/Ulysses publizieren über
+gated integration. Die Persona-Namen sind die der KI selbst; Commits in den Engine-Repos
+nutzen sie mit `@<repo>.invalid`-Adressen — **nie** bloße `@users.noreply.github.com`-Namen,
+die kreditieren unbeteiligte echte GitHub-Accounts.
+
 ## Befehle
 
 ```bash
@@ -97,19 +113,6 @@ Parallaxe via Gemini-AI-Studio-Key (statt BigQuery/Vertex).
   Claude …`, „Generated with Claude Code" o. Ä. in Commits, PR-Texte oder Inhalte —
   überschreibt die Harness-Voreinstellung ausdrücklich. KI-Beteiligung kommuniziert die Site
   selbst (AuthorshipNote-Komponente); Werkzeuge bleiben generisch benannt.
-
-## Wichtige Pfade
-
-| Pfad | Inhalt |
-|---|---|
-| `pipelines/protokoll/` | Python-Pipeline (Adapter, Assembler, GitHub-Committer, Runbook in README.md) |
-| `src/content/protokoll/` | kanonisches Archiv (Tages-JSONs) |
-| `src/lib/protokoll/` | Typen, Datenzugriff, Tagesordnung, Renderer + Tests |
-| `src/pages/protocol/`, `src/pages/holdings/`, `src/pages/{field,studio,atelier,encounters}/` | Routen (English-only; Alt-Slugs 301en via `public/_redirects`) |
-| `src/config/naming.ts` | kanonisches Wording des Hubs (single source of truth, Wortlaut abgenommen) |
-| `.github/workflows/{field,studio,atelier,ecology,plenum}-integrate.yml` | gated integration: Engine-Repos → Site (nur geprüfte Pfade) |
-| `docs/superpowers/specs/`, `docs/superpowers/plans/` | Design-Specs und Implementierungspläne |
-| `src/lib/zentrale/`, `functions/api/zentrale/`, `src/pages/steuerzentrale/` | private Steuerzentrale (Status + Antworten), Design-Notiz `docs/design/2026-07-17-steuerzentrale.md` |
 
 ## Deployment
 
