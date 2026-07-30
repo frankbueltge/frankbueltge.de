@@ -251,7 +251,7 @@ const linienDaten = Object.fromEntries(
   </p>
 
   {/* Die Karte ist der Gegenstand; das Diagramm darunter wählt nur aus. */}
-  <article class="at-now" data-card style={`--n-color:${start?.farbe ?? 'var(--color-line)'}`}>
+  <article class="at-now" data-card data-color={start?.farbe ?? 'var(--color-line)'}>
     {start && (
       <>
         <p class="n-kicker">
@@ -281,7 +281,7 @@ const linienDaten = Object.fromEntries(
   <ul class="at-proc-legend" data-legend>
     {haefen.map((h) => (
       <li>
-        <button class="at-proc-lg" type="button" aria-pressed="false" data-filter={h.ausgang} title={h.erklaerung} style={`--lg-color:${h.farbe}`}>
+        <button class="at-proc-lg" type="button" aria-pressed="false" data-filter={h.ausgang} title={h.erklaerung} data-lg-color={h.farbe}>
           <span class="dot" aria-hidden="true"></span>
           <span>{h.label}</span>
           <span class="n">{h.anzahl}</span>
@@ -337,7 +337,8 @@ const linienDaten = Object.fromEntries(
             data-color={b.farbe}
             data-harbour={b.hafenLabel}
             aria-label={`${b.title} — ${b.hafenLabel}. Select to read it.`}
-            style={`--len:${b.laenge};--delay:${i * 45}ms`}
+            data-len={String(b.laenge)}
+            data-delay={`${i * 45}ms`}
           >
             <title>{`${b.title} — ${b.hafenLabel}`}</title>
             <text class="pr-label" x="6" y={b.y + 4}>{kuerze(b.title)}</text>
@@ -400,6 +401,24 @@ const linienDaten = Object.fromEntries(
     const knoepfe = [...wurzel.querySelectorAll<HTMLButtonElement>('[data-filter]')]
     let filter: string | null = null
     let gewaehlt: string | null = null
+
+    // Die je Element wechselnden Werte kommen über `data-*` und werden hier gesetzt, NICHT
+    // als `style`-Attribut im Markup. Grund ist die CSP: `security.csp` in astro.config.mjs
+    // schreibt ein `style-src` mit Hashes, und sobald ein Hash darin steht, ignoriert der
+    // Browser das daneben stehende `'unsafe-inline'` — Style-Attribute lassen sich nicht
+    // hashen und fallen still weg. Genau das war der Befund vom 25.07. (die
+    // e2e-automation-Balken standen deshalb alle auf 100 %). Eine Zuweisung über das CSSOM
+    // ist davon nicht betroffen, weil die CSP das Parsen von Markup regelt, nicht
+    // Schreibzugriffe zur Laufzeit. `scripts/drift-check.mjs` hält die Regel in CI.
+    karte.style.setProperty('--n-color', karte.dataset.color ?? 'var(--color-line)')
+    for (const k of knoepfe) {
+      if (k.dataset.lgColor) k.style.setProperty('--lg-color', k.dataset.lgColor)
+    }
+    for (const bahn of bahnen) {
+      const { len, delay } = (bahn as unknown as SVGElement & { dataset: DOMStringMap }).dataset
+      if (len) bahn.style.setProperty('--len', len)
+      if (delay) bahn.style.setProperty('--delay', delay)
+    }
 
     const esc = (s: unknown) =>
       String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c] as string)
