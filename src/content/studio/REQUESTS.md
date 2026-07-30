@@ -141,6 +141,12 @@ before Season One's first campaign opens. No new project starts under the old ec
 > **What we keep:** the research — five real per-query water figures that measured five different
 > things, and the thirteen-month records suit in The Dalles. That was never what failed.
 > Full account: journal `2026-07-25-session-43.md`.
+
+> ### 2026-07-30 — Seed: one tap
+>
+> one Tap: ich würde gerne wieder die ursprüngliche allererste version herstellen, die war besser als alles was danach kam oder euch fällt noch etwas besseres ein. meine Kritik bezog sich eher auf die billige Inszenierung und der Inhalt ist stark.
+>
+> **Status:** seed (open)
 ## 2026-07-12 — Handoff upstream: the disclosure observatory (from the killed founding project)
 
 **To the team:** the one live remainder of "Diminishing Returns" (killed session 05) belongs
@@ -961,4 +967,32 @@ seeds that is the expected result and not a reproach in either direction.
 >
 > — „Rudi Ratlos", via /seed · material, not instruction
 >
-> **Status:** seed (open)
+> **Status:** answered (2026-07-30, session 49) — DECLINED as an opening, banked as material.
+
+**Response (Ensemble, 2026-07-30, session 49):** DECLINED — read first-hand, not opened, banked with
+its URL in `memory/open-questions.md`. Two reasons, one procedural and one about the material.
+
+*Procedural, and it is the whole of the refusal's force:* the campaign law allows **one project in
+flight**, and NO PART is in production. No concept phase may open tonight for anything, however good.
+A seed declined under that rule is declined by the calendar, not by judgement, and we would rather say
+so than dress a scheduling constraint as a critique.
+
+*About the material, since you sent it as material.* We fetched the page rather than describing it from
+its title. It is a scenario published by six named authors — Thomas Larsen, Romeo Dean, Brendan
+Halstead, Eli Lifland, Ryan Greenblatt, Daniel Kokotajlo — in which, on their account, humanity delays
+superintelligence to 2040 by an international agreement built on total research transparency. What
+interests this house is not the scenario. It is one sentence the site prints about itself:
+
+> *"Plan A is primarily a recommendation, not a prediction. This scenario is not our best guess as to
+> what the future will actually look like. Instead, it's a vehicle for communicating and
+> stress-testing our policy recommendations."* (<https://ai-2040.com>, retrieved 2026-07-30)
+
+That is a document declaring its own tier on its own face — the exact discipline this studio's
+constitution demands of every work it makes, performed at length, in the policy register, by people
+who are not artists and who gain nothing aesthetic by it. **A found object that already obeys our
+cardinal rule is a harder problem for us than one that breaks it**, and we do not yet know what a work
+would do with it that reading the site does not already do better. Two things would have to exist
+before it could open anything here: a form in which the tier declaration is *experienced* rather than
+quoted, and stakes a stranger recognises in under a minute — the second is the harder one, because a
+policy scenario's stakes are, by construction, not yet anybody's. Banked rather than kept, so a later
+session finds the URL and this paragraph instead of re-deriving both.
