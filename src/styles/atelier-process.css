@@ -91,7 +91,32 @@
 }
 .at-proc-lg .n { color: var(--color-fg); font-weight: 600; }
 
-.at-proc-figure { margin: 0; }
+.at-proc-figure { margin: 0; position: relative; }
+/* Bezugsrahmen des Tooltips ist die FIGUR, nicht der Scroll-Kasten: Der hat auf schmalen
+ * Schirmen overflow-x und würde den Tooltip abschneiden. */
+.at-proc-scroll { position: static; }
+
+/* Tooltip am Zeiger. Bewusst `pointer-events: none`: Er darf nie selbst ein Ziel werden —
+ * genau daran ist der erste Entwurf gescheitert, dessen anklickbarer Inhalt weglief,
+ * sobald man ihn ansteuerte. Anklickbares steht ausschließlich in der Tafel unten. */
+.at-proc-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 4;
+  pointer-events: none;
+  max-width: 30ch;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--color-line);
+  border-left: 3px solid var(--t-color, var(--color-line));
+  border-radius: 8px;
+  background: var(--color-panel);
+  box-shadow: 0 6px 22px rgb(0 0 0 / 0.28);
+  will-change: transform;
+}
+.at-proc-tip .t-title { display: block; font: 600 12.5px/1.35 var(--font-sans); color: var(--color-fg); }
+.at-proc-tip .t-meta { display: block; margin-top: 0.2rem; font: 11px/1.5 var(--font-mono); color: var(--color-fg-muted); }
+.at-proc-tip b { color: var(--color-fg); font-weight: 600; }
 .at-proc-svg {
   width: 100%;
   height: auto;
@@ -105,6 +130,9 @@
 .pr-band { fill: none; stroke-linecap: round; stroke-width: 5.5; transition: opacity 0.2s, stroke-width 0.2s; }
 .pr-tail { fill: none; stroke-width: 5.5; opacity: 0.55; transition: opacity 0.2s, stroke-width 0.2s; }
 .pr-line { cursor: pointer; outline: none; }
+/* Die ganze Zeile ist Trefferfläche — ein 5px-Band mit der Maus zu erwischen ist Arbeit,
+ * und Arbeit war hier nie gefragt. */
+.pr-line .pr-rowhit { cursor: pointer; }
 .pr-line .pr-hit { stroke: transparent; stroke-width: 22; fill: none; }
 .pr-line text.pr-label {
   font: 11.5px var(--font-mono);
@@ -121,6 +149,10 @@
 .pr-line:focus-visible text.pr-label { fill: var(--color-fg); }
 .pr-line:focus-visible .pr-focus { stroke: var(--color-fg); stroke-width: 1.2; stroke-dasharray: 3 3; fill: none; }
 
+/* Eingerastet: bleibt hervorgehoben, auch wenn die Maus längst woanders ist. */
+.pr-line[data-chosen] .pr-band { stroke-width: 7.5; }
+.pr-line[data-chosen] text.pr-label { fill: var(--color-fg); font-weight: 600; }
+
 /* Gedimmt, wenn eine andere Linie im Vordergrund steht oder ein Filter greift. */
 .at-proc[data-dim] .pr-line:not([data-on]) { opacity: 0.16; }
 .at-proc[data-dim] .pr-line:not([data-on]) .pr-band { stroke-width: 4; }
@@ -136,6 +168,7 @@
 
 /* — Detailtafel — */
 .at-proc-detail {
+  position: relative;
   margin-top: 0.75rem;
   min-height: 5.6rem;
   border: 1px solid var(--color-line);
@@ -145,6 +178,21 @@
   padding: 0.85rem 1rem;
   transition: border-color 0.2s;
 }
+.at-proc-detail .d-close {
+  position: absolute;
+  top: 0.45rem;
+  right: 0.55rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 1px solid var(--color-line);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--color-fg-faint);
+  font: 14px/1 var(--font-mono);
+  cursor: pointer;
+}
+.at-proc-detail .d-close:hover { color: var(--color-fg); border-color: var(--color-fg-faint); }
+.at-proc-detail .d-hint b { color: var(--color-fg); font-weight: 600; }
 .at-proc-detail .d-hint { font: 11.5px/1.6 var(--font-mono); color: var(--color-fg-faint); margin: 0; }
 .at-proc-detail .d-title { font: 600 0.98rem/1.3 var(--font-sans); color: var(--color-fg); margin: 0 0 0.2rem; }
 .at-proc-detail .d-meta { font: 11.5px/1.7 var(--font-mono); color: var(--color-fg-muted); margin: 0 0 0.5rem; }
