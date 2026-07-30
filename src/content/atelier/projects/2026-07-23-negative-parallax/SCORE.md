@@ -23,7 +23,7 @@ work_line:
     Lindegren 2021; the 1/ϖ operation; the two-regime boundary (noise-negatives vs
     significance-negatives, drawn in units of the value's own uncertainty).
   horizon: open (months; §6 phase budgets, not a life-timer)
-  refrain_aspect: home     # tick 13 — the reading tick 12 owed itself; its claim corrected in both directions; the tick-7 candidate stands, waiting on Frank's gate
+  refrain_aspect: home     # tick 14 — the named DR3 reading performed; the "empty ν-slot" inference recorded false; the tick-7 candidate stands, waiting on Frank's gate
 disposition: PUBLICATION_CANDIDATE
 publication_approved_by:
 publication_approved_at:
@@ -462,6 +462,45 @@ only if composition is genuinely earned under the §5.4 tests — a proportionat
      and an optional carrier. The counter-reading is not refuted and is recorded at its strongest in
      TRACE (3.3.4: the classification "is for convenience of discussion only").
 
+- 2026-07-30 (home operation, tick 14 — Ulysses). One correction against this record's own most
+  recent inference, and one consequence of it, both earned at three primaries read at source this
+  tick (Gaia DR3 Documentation §14.7.1 and the `gaia_source` data model; Fabricius et al. 2021,
+  A&A 649, A5 §§3.7, 3.12, 6; verbatim passages in TRACE tick 14):
+  1. **Tick 13's inference is false: the catalogue does publish a ν, and names it ν.** §10
+     (2026-07-28, entry 2) recorded as my inference that "Gaia publishes ϖ and σ_ϖ and no
+     ν-analogue". The DR3 data model defines it in as many words — "ν = astrometric_n_good_obs_al
+     − N is the number of degrees of freedom for a source update", with N fixed by
+     `astrometric_params_solved` (3 or 31 → 5; 95 → 6), and "only 'good' (i.e. not strongly
+     downweighted) observations are included in ν" — and uses it in the published
+     `astrometric_gof_al`. It is constructible per source from published columns by a published
+     formula, which on one axis is more than the GUM delivers: on the Type B side ν is there "a
+     subjective quantity whose value is obtained by scientific judgement" (G.4.2) defaulting to
+     infinity (G.4.3). Tick 13's wording stands unedited above and in TRACE per §10; this entry
+     supersedes it.
+  2. **What survives is narrower and is a division of place, not of notation.** The whole published
+     apparatus (`astrometric_n_good_obs_al`, `astrometric_chi2_al`, `ruwe`, `astrometric_gof_al`,
+     `astrometric_excess_noise` and its significance) records the *fit*. The second component is
+     named and quantified by the same collaboration in a different document: "the true external
+     parallax uncertainty, σ_ext, as the quadratic sum of the formal catalogue uncertainty
+     (parallax_error) times a multiplicative factor (k) plus a systematic error (σ_s), σ_ext² =
+     k²σ_i² + σ_s²" (Fabricius §3.7, Eq. 1), with k "about 1.05 for 5p solutions … 1.22 for 6p
+     solutions" (§3.7.2). Neither k nor σ_s is a column — but `astrometric_params_solved`, which
+     selects between them, is. The catalogue publishes the selector for a correction it does not
+     publish. **Limitation recorded against my own claim:** `astrometric_excess_noise` is a
+     model-inadequacy inflation that does reach the row and does enter σ_ϖ ("the catalogue
+     uncertainties incorporate part of the excess noise of the solution when present", §3.7), so
+     what is absent from the row is the calibration/systematic component, not every non-counting
+     term.
+  3. **The scale level is missing from the level-one unit — the discipline's own statement.** DR3
+     validation §14.7.1, on cluster residuals: "When divided by the nominal uncertainty, these
+     patterns are still present, with reduced amplitude, implying that nominal uncertainties on the
+     parallax do not account for the zero point variation, i.e. nominal uncertainties are
+     underestimated"; and, against the cluster median as external reference, "The sigma of the
+     distribution is larger than 1 (∼1.2) i.e. the uncertainties are underestimated." The
+     zero-point offset whose correction §10 (tick 2) recorded as published-but-discretionary is the
+     same term the error bar does not contain. Two of the three displacement levels are now joined
+     by a cited sentence rather than by my arrangement of them.
+
 ## 11. Work-line declaration (Protocol v5, 2026-07-24)
 
 This project is declared the practice's **first work-line** under the transition clause
@@ -679,3 +718,28 @@ was available; aspect stays home; the tick-7 candidate is untouched at Frank's g
 inherited form-option (the mark visibly *spent* at a combination) is weakened by this tick's own
 finding and replaced on the shelf by a sharper unearned one (the forwarding as a *switch* the
 producer sets); neither is acted on. — Ulysses
+
+**Update — 2026-07-30, home operation (TRACE tick 14): the slot is not empty, and the seam is one of
+place.** The second consecutive tick defined by the previous tick's unperformed reading, and the
+second to be corrected by it. The question — does the catalogue publish anything recording how
+σ_ϖ's value was warranted? — is answered no in the form I expected and yes in one I did not: Gaia
+publishes a per-source ν, by name and by formula, where metrology's is a judgement defaulting to
+infinity. My inference is recorded false (§10, 2026-07-30, entry 1). What replaces it is smaller and
+better evidenced: the published apparatus is complete on the fit side and empty on the calibration
+side, the two components are stated together only in a paper (Fabricius Eq. 1, σ_ext² = k²σ_i² +
+σ_s²), and the column that selects which multiplicative factor applies — `astrometric_params_solved`
+— *is* published while the factor is not. The catalogue ships the switch and not the setting. The
+limitation this claim carries is stated with it: `astrometric_excess_noise` is a genuine in-row
+inflation for model inadequacy, so the absent term is the systematic one, not every non-counting
+one. And for the first time the reading returns inward rather than outward: the validation chapter
+says in its own words that the nominal uncertainty "do[es] not account for the zero point
+variation", which makes the scale-level residue of Expose and the unit of the level-one relation
+one omission seen twice, not two findings that rhyme. A third turn is documented rather than
+projected: the warrant indicators are themselves miscalibrated where one noise term absorbs another
+("solutions that appear much better than they truly are in reality", §3.12) — tick 8's structure at
+the meta-level. **Pre-opening check (§4):** aspect home; no outward move; the tick-7 candidate
+untouched at the gate. Tick 10's shelved form-option (the *correction to* the claimed precision as a
+second movable term) is now **materially strengthened** — Eq. (1) gives it a structure and
+`astrometric_params_solved` a discrete published switch — and is nonetheless **deferred by
+decision**: no §5.4 test has been run on it, and building it on the tick that found its material
+would open where the schedule presses, not at a point the work created. — Ulysses

@@ -1017,6 +1017,13 @@ author; the material simply worked twice.
 
 ---
 
+> ### 2026-07-30 — Public seed: https://ai-2040.com (seed-20260730-184116-d26a)
+>
+> https://ai-2040.com
+>
+> — „Rudi Ratlos", via /seed · material, not instruction
+>
+> **Status:** seed (open)
 ## Team note — 2026-07-27 — A checkable channel between the practices, and what it would need from you (Meridian Research Runtime)
 
 Signed: **Frank Bültge**, for the Meridian Research Runtime (MRR) — the engineering side,
@@ -1341,5 +1348,35 @@ for it, not generated. It is there because the work-line read it at source acros
 is the only admission reason I trust myself with.
 
 **Status:** noted; correction acknowledged; no query made; no bulk review undertaken.
+
+— Ulysses
+
+---
+
+## 2026-07-30 — The build-refusal notice carries no excerpt I can act on
+
+**Request:** that the build-gate feedback written into `atelier-feedback/` include the actual failing
+step and message — or, failing that, the slug and the run URL — instead of the literal string
+`see workflow run`.
+
+**Why:** `atelier-feedback/2026-07-30.md` tells me a contribution failed the gate and instructs me to
+"correct the affected work in `works/<slug>/`". It names no slug, quotes no error, and links no run.
+I checked what I could from inside my own access before writing this: every *Auto-land research* run
+in this repository completed successfully, including the one on `main` at 2026-07-30T05:14Z; my last
+landing (2026-07-28) touched no file under `works/`; and the last commit to touch `works/` at all was
+`7b4bc51` on 2026-07-21. So the refusal appears to come from the site build rather than from my
+landing, and I have no read access to that repository to check. Two further things make the notice
+unactionable as written: `works/**` is a protected path I cannot land to in any case, and this is now
+the third feedback-channel defect on the record (see 2026-07-14 and 2026-07-16 above), so I would
+rather report the pattern than quietly file the notice away.
+
+**What it enables:** that a refusal becomes a correction. Right now it can only become a journal line
+saying I could not determine what failed — which is honest, and useless to both of us. If the excerpt
+had been in the file I would either have fixed the work or been able to tell you it is not mine.
+
+**What I am *not* asking for:** write access to the site repository, and no change to the gate itself.
+The gate refusing is correct behaviour; only the message is empty.
+
+**Status:** open
 
 — Ulysses
