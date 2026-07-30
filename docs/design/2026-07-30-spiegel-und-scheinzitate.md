@@ -60,16 +60,27 @@ Beim Nachsehen fielen drei Einträge auf, die aus anderen Gründen kein Zitat si
 | „Medical Lawfare" (`10.1080/0377919x.2024.2330366`) | `notes/2026-07-16-half-life-archival-probe/urls.json` | eines von **513 Prüfzielen** einer Archiv-Halbwertszeit-Messung |
 | „Nowhere and no one is safe" (`10.1186/s13031-024-00580-x`) | dieselbe Prüfziel-Liste | dasselbe |
 
-**Kein Filter dafür gebaut.** Aus n=1 und n=2 eine allgemeine Regel abzuleiten wäre der
-Fehler aus §10 der Übergabe — ein Schluss aus zu kleiner Stichprobe. Die drei sind
-benannt und bleiben unbeurteilt, bis entschieden ist, ob sie fallen oder als
-`kuratiert` neu begründet werden. Für die beiden Gaza-Paper ist das keine Nebensache:
-Sie sind für Fields Gegenmessung **inhaltlich einschlägig**, nur eben gemessen und nicht
-zitiert. Ein `aufnahmegrund: zitiert` wäre dort eine Unwahrheit über eine wahre Sache.
+Für die beiden Gaza-Paper ist das keine Nebensache: Sie sind für Fields Gegenmessung
+**inhaltlich einschlägig**, nur eben gemessen und nicht zitiert. Ein `aufnahmegrund:
+zitiert` wäre dort eine Unwahrheit über eine wahre Sache.
 
-Der Katalogbau hat bisher **keinen Weg, einen Eintrag benannt abzulehnen** — das
-Ablehnungsregister des Scouts (`Verworfen`) greift nur vor der Aufnahme, nicht danach.
-Das ist die nächste Lücke.
+**Entschieden (2026-07-30, abends): die beiden Prüfziele fallen.** Zuerst war die
+Überlegung, aus zwei Fällen keine Regel abzuleiten — das war zu vorsichtig gedacht. Es
+braucht keine neue Regel: `_ist_rohmaterial` sagt bereits „Kennungen als untersuchtes
+Objekt zählen nicht", es erkannte Fields Ordnernamen nur nicht. `-probe` ist dort
+Konvention für „eine Messung an Zielen" (zwei solche Ordner im Repo). Die Ordnerliste
+kennt es jetzt. Gemessen: 137 Körner ohne, 135 mit — es fallen genau diese zwei.
+
+**Als `kuratiert` neu zu begründen wäre falsch gewesen.** Kuratiert heißt, jemand hat
+gewählt; hier hat niemand gewählt, der Scout hat sie aufgelesen. Ein nachgereichter
+Grund wäre genau die erfundene Begründung aus §4 der Übergabe.
+
+**Offen bleibt der eine Docstring-Fall.** Für ihn hilft keine Ortsregel — die Kennung
+steht in einem produktiven Skript, nicht in einer Testvorrichtung. Er braucht das, was
+dem Katalogbau ganz fehlt: **einen Weg, einen Eintrag benannt und begründet
+abzulehnen.** Das Ablehnungsregister des Scouts (`Verworfen`) greift nur vor der
+Aufnahme, nicht danach. Das ist die nächste Lücke, und sie ist grundsätzlicher als
+dieser eine Eintrag.
 
 ## 4. Eine Dublette, die keine ist
 
