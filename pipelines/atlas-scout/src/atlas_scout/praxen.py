@@ -110,6 +110,54 @@ def _ist_rohmaterial(relativ: Path) -> bool:
     """
     return bool(PROVENIENZ_ORDNER & {t.lower() for t in relativ.parts[:-1]})
 
+
+# Die Signaturfelder des eigenen Katalogs. Trägt ein Eintrag sie alle, ist die Datei
+# kein Verzeichnis von Quellen, sondern eine Kopie DIESES Katalogs.
+KATALOG_SIGNATUR = ("aufnahmegrund", "relevanz_herkunft", "zitiert_von")
+
+
+def _ist_spiegel(relativ: Path, roh: str) -> bool:
+    """Ein Abzug des eigenen Katalogs zählt nicht als Zitat.
+
+    Der Fall (2026-07-30): Fields Provenienz-Audit `drafts/2026-07-28-follow-the-line/`
+    hält den Paper-Katalog eingefroren, um die Provenienzansprüche des Katalogs gegen das
+    eigene Repo zu prüfen — genau das, worum der Saat-Text gebeten hatte. Der nächtliche
+    Lauf las diesen Abzug aber wie jede andere Datei und fand darin sämtliche Kennungen
+    des Katalogs. Ergebnis: **79 Einträge trugen das Etikett „von field zitiert", deren
+    einziger field-Beleg dieser Spiegel war** — der Katalog belegte sich selbst.
+
+    Der Unterschied ist derselbe wie bei `_ist_rohmaterial`, eine Windung weiter: Dort
+    war die Kennung untersuchtes Material, hier ist die ganze DATEI der Katalog. Ein
+    Spiegel bezeugt nicht, dass jemand nach einem Text gegriffen hat, sondern nur, dass
+    der Katalog dorthin gereist ist. Als Zitat gewertet macht er jeden künftigen Eintrag
+    rückwirkend zu einem, den die spiegelnde Praxis „zitiert" — die Zahl wächst mit dem
+    Katalog statt mit der Forschung.
+
+    Erkannt wird er an der **eigenen Schema-Signatur**, nicht am Dateinamen: `.frozen`
+    ist Fields Konvention, und die nächste Praxis spiegelt unter anderem Namen. Ein
+    echtes Literaturverzeichnis kann der Filter nicht treffen — es trägt keinen
+    `aufnahmegrund`. Das Wort in Prosa ebenfalls nicht: geprüft wird der geparste
+    Eintrag, nicht der Text.
+
+    Gemessen an beiden Abzügen des Audits: `papers.frozen.json` (208 Einträge) und
+    `papers.seed-state.frozen.json` (206) werden erkannt; kein Eintrag verliert dadurch
+    seine letzte Fundstelle, weil keiner allein am Spiegel hing.
+    """
+    if relativ.suffix != ".json":
+        return False
+    # Billiger Vorfilter: erspart das Parsen jeder JSON-Datei in vier Repos.
+    if '"aufnahmegrund"' not in roh:
+        return False
+    try:
+        daten = json.loads(roh)
+    except (json.JSONDecodeError, RecursionError):
+        return False
+    if not isinstance(daten, list) or not daten:
+        return False
+    erster = daten[0]
+    return isinstance(erster, dict) and all(feld in erster for feld in KATALOG_SIGNATUR)
+
+
 # DOI: das Präfix ist normiert (10.x/…), der Suffix praktisch beliebig — deshalb bricht
 # das Muster an Zeichen ab, die in Prosa und JSON den Bezeichner beenden, nicht an einer
 # Zeichenklasse für „gültige DOI-Zeichen" (die gibt es nicht).
@@ -219,6 +267,9 @@ def _lies_repo(praxis: str, repo_name: str, wurzel: Path) -> tuple[dict, Ausfall
         try:
             roh = pfad.read_text(encoding="utf-8", errors="ignore")
         except OSError:
+            continue
+        # Erst nach dem Lesen prüfbar: Ein Spiegel ist am Inhalt erkennbar, nicht am Pfad.
+        if _ist_spiegel(relativ_pfad, roh):
             continue
 
         gefunden: set[tuple[str, str]] = set()

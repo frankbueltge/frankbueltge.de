@@ -1,6 +1,6 @@
 // src/lib/zentrale/requestsMd.test.ts
 import { describe, it, expect } from 'vitest'
-import { parseSections, findSection, answerRequest, appendSeed, appendBlockToSection, parseInboxIssueTitle, isTeamSection } from './requestsMd'
+import { parseSections, findSection, answerRequest, appendSeed, appendBlockToSection, parseInboxIssueTitle, isNonRequestSection } from './requestsMd'
 
 // Die Fixtures sind reale Ausschnitte aus den vier REQUESTS.md-Dateien (field, atelier, plenum),
 // stellenweise gekürzt (lange Seed-Fließtexte eingedampft), aber wörtlich übernommen inkl.
@@ -370,18 +370,34 @@ describe('parseInboxIssueTitle', () => {
   })
 })
 
-describe('isTeamSection', () => {
+describe('isNonRequestSection', () => {
   it('erkennt Team-eigene Sections (Seeds/Team note/Team responses)', () => {
-    expect(isTeamSection('Seeds from the team')).toBe(true)
-    expect(isTeamSection('Seeds from Frank')).toBe(true)
-    expect(isTeamSection('Team note — 2026-07-17 — a seed: the machine that reviews its own research')).toBe(true)
-    expect(isTeamSection('Team responses — 2026-06-29')).toBe(true)
+    expect(isNonRequestSection('Seeds from the team')).toBe(true)
+    expect(isNonRequestSection('Seeds from Frank')).toBe(true)
+    expect(isNonRequestSection('Team note — 2026-07-17 — a seed: the machine that reviews its own research')).toBe(true)
+    expect(isNonRequestSection('Team responses — 2026-06-29')).toBe(true)
+  })
+
+  it('erkennt auch die Gegenrichtung: Rückmeldungen der Praxis sind keine Anfragen', () => {
+    // Genau die drei Einträge, die am 2026-07-30 als „unerledigt“ in Franks Inbox standen.
+    expect(isNonRequestSection('Status (Ulysses, 2026-07-28) — the three-catalogue seed of 2026-07-28')).toBe(true)
+    expect(isNonRequestSection('Status (Ulysses, 2026-07-26) — the Dataset Register seed of 2026-07-26')).toBe(true)
+    expect(isNonRequestSection('Response (Ulysses, 2026-07-26) — to the team note of 2026-07-27')).toBe(true)
+    // Auch ohne Klammer, mit Gedankenstrich
+    expect(isNonRequestSection('Response — 2026-07-30 — to the seed of yesterday')).toBe(true)
   })
 
   it('lässt echte Anfragen der Kollektive durch', () => {
-    expect(isTeamSection('2026-07-16 — The playthrough: "No Way of Knowing" is premiere-ready')).toBe(false)
-    expect(isTeamSection('2026-07-06 — Delivered: the data-art field archive you asked for')).toBe(false)
+    expect(isNonRequestSection('2026-07-16 — The playthrough: "No Way of Knowing" is premiere-ready')).toBe(false)
+    expect(isNonRequestSection('2026-07-06 — Delivered: the data-art field archive you asked for')).toBe(false)
     // "Seed" mitten im Titel ist kein Team-Präfix
-    expect(isTeamSection('2026-07-18 — Seed: a title')).toBe(false)
+    expect(isNonRequestSection('2026-07-18 — Seed: a title')).toBe(false)
+  })
+
+  it('verschluckt keine echte Bitte, die zufällig mit Status/Response anfängt', () => {
+    // Der Doppelpunkt ist bewusst NICHT im Zeichensatz nach status/response.
+    expect(isNonRequestSection('Status: the build gate has been red for three days')).toBe(false)
+    expect(isNonRequestSection('2026-07-30 — Status of the feedback channel (third defect)')).toBe(false)
+    expect(isNonRequestSection('Response times of the gate are the problem')).toBe(false)
   })
 })
