@@ -12,6 +12,9 @@
 //      die e2e-automation-Balken standen deshalb alle auf 100 %).
 //   4. (nur mit DRIFT_NETWORK=1) Spiegel-Frische: gespiegelte Engine-Verfassungen gegen
 //      die Engine-Repos auf GitHub — Abweichung heißt, die Site erzählt einen alten Stand.
+//   5. (nur mit DRIFT_NETWORK=1) MRR-Journal-Frische: die Runtime-Linie wird nicht
+//      gespiegelt, sie wird von Hand nachgetragen (src/data/meridian/runtime-log.json) —
+//      also prüfen wir, ob meridian-runtime seit dem jüngsten Eintrag weitergearbeitet hat.
 //
 // Läuft statisch in CI bei jedem Push und komplett (mit Netz) im Nightly drift-watch.
 
@@ -125,6 +128,44 @@ if (process.env.DRIFT_NETWORK === '1') {
       }
     } catch (e) {
       findings.push(`${mirrorPath} — mirror check failed (${repo}): ${e.message}`)
+    }
+  }
+
+  // ——— 5. MRR-Journal-Frische ———————————————————————————————————————————————
+  // Die Runtime-Linie hat keinen Spiegel: /on-record zeigt EINEN committeten Export und
+  // steht bei dessen Datum still (die Ableitung ist deterministisch — kein Nightly kann
+  // sie erneuern). Was die Runtime danach tut, trägt runtime-log.json von Hand nach.
+  // Mechanisch prüfbar ist deshalb nur: hat das Repo seit dem jüngsten Eintrag
+  // weitergearbeitet? Die Karenz verhindert, dass jeder Zwischencommit sofort rot färbt.
+  const MRR_GRACE_DAYS = 7
+  const logPath = 'src/data/meridian/runtime-log.json'
+  const logFile = join(ROOT, logPath)
+  if (existsSync(logFile)) {
+    try {
+      const entries = JSON.parse(readFileSync(logFile, 'utf8')).entries ?? []
+      const newest = entries.map((e) => e.date).sort().at(-1)
+      const res = await fetch('https://github.com/frankbueltge/meridian-runtime/commits/main.atom')
+      if (!res.ok) {
+        findings.push(`${logPath} — freshness check could not fetch meridian-runtime feed (HTTP ${res.status})`)
+      } else if (!newest) {
+        findings.push(`${logPath} — no entries: the runtime line has no dated record on the site`)
+      } else {
+        const updated = /<updated>([^<]+)<\/updated>/.exec(await res.text())?.[1]
+        if (!updated) {
+          findings.push(`${logPath} — freshness check could not read a commit date from the meridian-runtime feed`)
+        } else {
+          const behindDays = Math.floor((Date.parse(updated) - Date.parse(`${newest}T23:59:59Z`)) / 86_400_000)
+          if (behindDays > MRR_GRACE_DAYS) {
+            findings.push(
+              `${logPath} — STALE: meridian-runtime last moved ${updated.slice(0, 10)}, ` +
+              `newest logged entry is ${newest} (${behindDays} days behind, grace ${MRR_GRACE_DAYS}) — ` +
+              `add the entry for what happened since, naming its commit`,
+            )
+          }
+        }
+      }
+    } catch (e) {
+      findings.push(`${logPath} — freshness check failed: ${e.message}`)
     }
   }
 }

@@ -1,0 +1,6 @@
+# Meridian view model — gepinnt, weil die Ableitung byte-identisch reproduzierbar sein
+# muss: der CI-Job (ci.yml, job "meridian") lässt refresh.py laufen und vergleicht das
+# Ergebnis mit den committeten Dateien. Ein ungepinntes rdflib könnte die Turtle-
+# Serialisierung ändern und den Job rot färben, ohne dass sich am Archiv etwas geändert hat.
+pyoxigraph==0.5.9
+rdflib==7.6.0

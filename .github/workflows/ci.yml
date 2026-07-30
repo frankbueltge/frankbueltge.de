@@ -65,6 +65,26 @@ jobs:
       - run: pip install -e ".[dev]"
       - run: pytest -q
 
+  # Meridian/MRR: KEIN Nightly — refresh.py ist deterministisch ("no network, no clock,
+  # no model") und leitet nur aus dem committeten Export ab; ein nächtlicher Lauf erzeugte
+  # ewig byte-identischen Output. Der reale Fehlerfall ist ein anderer: ein neuer Export
+  # wird committet, die abgeleiteten Dateien nicht nachgezogen — dann zeigt /on-record
+  # Zahlen, die nicht mehr zu ihrem eigenen Archiv passen. Genau das prüft dieser Job.
+  meridian:
+    name: Meridian view model (derivation matches the committed export)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r pipelines/meridian/requirements.txt
+      - run: python pipelines/meridian/refresh.py
+      - name: mrr-graph.ttl / parallax.json must be the export, re-derived
+        run: |
+          git diff --exit-code -- src/data/meridian/mrr-graph.ttl src/data/meridian/parallax.json \
+            || { echo "::error::Abgeleitete Meridian-Dateien weichen vom committeten Export ab — 'npm run meridian:refresh' laufen lassen und das Ergebnis mitcommitten."; exit 1; }
+
   beifang-tests:
     runs-on: ubuntu-latest
     defaults:
