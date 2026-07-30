@@ -1,0 +1,885 @@
+{
+  "generated_utc": "2026-07-27T04:16:28Z",
+  "upstream": {
+    "commit": "a7024008ec337118b2aeebb87065ded83ed23413",
+    "tag": "snapshot-2026-07-26",
+    "tag_sha": "8be62d8b86f2b5ce3690f44a983497adac7957d6"
+  },
+  "caveats": {
+    "corpus_age": "Every share in this report measures the register within its first hours, not a mature or stable corpus. The earliest harvest run closed at 2026-07-26T15:01:34Z; the pinned commit was authored at 2026-07-26T23:30:20Z, which is 8 hours 28 minutes later, and that interval — computed here from the run manifests and the pin, not typed — is the register's age at the state measured. Pinned at upstream commit a7024008ec337118b2aeebb87065ded83ed23413 and snapshot release tag snapshot-2026-07-26 (8be62d8b86f2b5ce3690f44a983497adac7957d6); no number in this work is read from the live upstream repository at build time. The report's own `generated_utc` field is NOT the measurement time: this script is deterministic over frozen inputs, so that field records only when the report was last recomputed, and it changes on every reproduction without any number changing.",
+    "channel_not_character": "This audit's subject is what a machine reader restricted to the register's machine-readable surfaces can and cannot see: a channel property. No finding in this report is a statement about the register's integrity, honesty, or design intent. Where the register's own records already document something correctly, that is reported on the same face as the gaps this audit finds — see A19 (the rejection register declares the withheld volume and its reason, machine-readably) and A20 (the declared count against the derivable one). A18 is NOT an example of that: it is the reversal, the one place the register's prose is wrong where its records are right, and it is cited under `reversal` for that reason. The mistaken citation of A18 here was found by the second gauntlet round and corrected before shipping.",
+    "reversal": "One finding runs the other way from the rest and must travel with them: A18 shows the register's own procedural prose states that all 53 HTTP-403 refusals came from a single host (GBIF), while the resolution ledger itself shows those 53 split across five hosts (48/2/1/1/1). There the machine-readable surface is right and the prose is wrong — the opposite direction from the rest of this audit. Quoting this work's other findings without A18 inverts the result: it would read as though the machine-readable surface is always the misled party, which A18 itself disproves.",
+    "reader_distinction": "Two readers exist with different exposure to the gaps this audit finds. A practice using the register's own offered query tool (werkzeug/frage_register.py) never meets the withheld source's records at all, because that tool excludes the withheld source's entries categorically, before it runs its own access/licence check — independent of any ledger or prose accuracy. A raw-file reader, reading provenance/register-records/ directly (as this audit itself does), does meet them: in the rejection register (A5, A19, A20), the resolution ledger (A9, A13-A17, A21), and the run manifests (A1-A3, A11-A12). Assertions about those files are claims about what a raw-file reader sees, not about what the query-tool reader would encounter.",
+    "no_entry_level_claim": "No entry-level claim is made anywhere in this audit. The register's entries themselves were never retrieved: at the pinned commit they are gitignored from the tree (bestand/, fundstellen/*.jsonl.gz), and every route this session had to the packaged release asset was refused (HTTP 403). Every share reported here comes from the register's own aggregate and record-level files — the snapshot manifest, the six run manifests, the rejection register, the outage register, the resolution ledger, and the decision journal — never from the entries.",
+    "withdrawn_claims": {
+      "No machine-readable field in the tree declares the withholding - false.": "The rejection register's own six-key aggregate line does declare it, with a count and a cited reason (A19). What survives is narrower: no machine-readable field states the unit of that declared count, so a records-only reader cannot tell whether the withheld volume is 9,991 or the derivable 10,056, or reconcile the 65-record gap between them, without the register's prose (A20).",
+      "The gap is irreducible, because a register cannot log what it may not store - false, and backwards.": "The register discharged the accounting by aggregating: it deleted the 9,991 identifier-bearing rejection lines and replaced them with one line that keeps the count and the reason and drops the identifiers (A19) - exactly the mechanism the withdrawn sentence called impossible."
+    },
+    "classification_choice": "A16's residue figure (2 rows, out of 456 non-ok rows) is sensitive to what a class is allowed to rest on. A16 admits only classes readable off a row or its siblings: a confirmed sibling under the same id, an HTTP 403, a transport-outage marker; two rows survive that. A21 keeps those three and adds a fourth by analogy -- 404 on the one host every 404 in the ledger sits on, checked before the earliest confirmation there, never re-checked -- under which the residue is 0. Both are reported; A21 does not replace A16, and A21 is tagged an inference while A16 is an observation. Correction, second gauntlet round: an earlier version of this field, and of the surrounding prose, described A16 as keying on the ledger's `quelle` (source-label) field. It does not; the coincidence between that label and the retried rows is a fact about this dataset, not a criterion in the code. The reviewer read the code and this practice had not.",
+    "out_of_band_probe": "One observation in this work is NOT an assertion and must not be read as one. On 2026-07-27, one day after the pinned state, the two never-confirmed rows of A21 were probed live with one HEAD and one GET each. The register's documented HEAD-404/GET-200 mechanism reproduced on both, and one of the two GET responses resolved to a page the host itself titles a deleted dataset version — so a fix that counts an HTTP 200 as a confirmed access route can confirm a resource the host says is gone. That probe observes live state at a later time, from this practice's runtime and not the register's, changes no number in this file, and is evidence about neither the pinned state nor the 400 rows it did not touch. Transcript: provenance/access-attempts.md."
+  },
+  "inputs": [
+    {
+      "path": "provenance/register-records/ablehnungen.jsonl",
+      "sha256": "4676937e28541197fe5526d839a2b9d6e0e920f9543bdd62ec77fe21a0cf1cab"
+    },
+    {
+      "path": "provenance/register-records/aufloesungen.jsonl",
+      "sha256": "0881b2eb41de4c581a9f204128710b696ca2ff373d102a332f33fa8e2c7e3939"
+    },
+    {
+      "path": "provenance/register-records/ausfaelle.jsonl",
+      "sha256": "dbd7e9bea39fe460f2655365f1a63c79a37ef53f0762cc784dafb2c2663c793b"
+    },
+    {
+      "path": "provenance/register-records/entscheidungen.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "provenance/register-records/manifeste/arcgis-20260726T164554Z.json",
+      "sha256": "cc217fe13ad5803b240d4c5913cc93c2f6a079acba16d4e343022dfc9eaab45f"
+    },
+    {
+      "path": "provenance/register-records/manifeste/arcgis-20260726T173351Z.json",
+      "sha256": "dd74a2f5b8c73d3aa8e86545da544a282833fb24322c15c058ab93dee3ef0576"
+    },
+    {
+      "path": "provenance/register-records/manifeste/datacite-20260726T150046Z.json",
+      "sha256": "163412d5cc6957081d457634b1c5a894cb5bd9d36c8092292b4ba48fc223f86c"
+    },
+    {
+      "path": "provenance/register-records/manifeste/huggingface-20260726T164558Z.json",
+      "sha256": "ee4b971cdafd2042f123e7cab32a9d0e10cd80bc0fd0c30d5b25ab0c0e2bccb4"
+    },
+    {
+      "path": "provenance/register-records/manifeste/kaggle-20260726T164544Z.json",
+      "sha256": "5bce23d3745fac1f008e03db3ce2c44cd4c70a7ab517991b13e1746c317fec4e"
+    },
+    {
+      "path": "provenance/register-records/manifeste/kaggle-20260726T173348Z.json",
+      "sha256": "5ee3aff602759c65489cb380716a3f792e38abba81c17826dbaced2b1d5893de"
+    },
+    {
+      "path": "provenance/register-records/snapshot-2026-07-26.manifest.json",
+      "sha256": "73770379b1b31d9195747a49cad35da1d9b8e72ce7454ad6d8bc4c7545369014"
+    }
+  ],
+  "assertions": [
+    {
+      "id": "A1",
+      "question": "What is the sum of `records` over the six committed harvest-run manifests?",
+      "computed": 29666,
+      "expected": 29666,
+      "verdict": "PASS",
+      "evidence": [
+        "provenance/register-records/manifeste/arcgis-20260726T164554Z.json",
+        "provenance/register-records/manifeste/arcgis-20260726T173351Z.json",
+        "provenance/register-records/manifeste/datacite-20260726T150046Z.json",
+        "provenance/register-records/manifeste/huggingface-20260726T164558Z.json",
+        "provenance/register-records/manifeste/kaggle-20260726T164544Z.json",
+        "provenance/register-records/manifeste/kaggle-20260726T173348Z.json"
+      ],
+      "kind": "observed",
+      "per_run": [
+        {
+          "lauf": "arcgis-20260726T164554Z",
+          "quelle": "arcgis",
+          "records": 300
+        },
+        {
+          "lauf": "arcgis-20260726T173351Z",
+          "quelle": "arcgis",
+          "records": 6000
+        },
+        {
+          "lauf": "datacite-20260726T150046Z",
+          "quelle": "datacite",
+          "records": 13010
+        },
+        {
+          "lauf": "huggingface-20260726T164558Z",
+          "quelle": "huggingface",
+          "records": 300
+        },
+        {
+          "lauf": "kaggle-20260726T164544Z",
+          "quelle": "kaggle",
+          "records": 60
+        },
+        {
+          "lauf": "kaggle-20260726T173348Z",
+          "quelle": "kaggle",
+          "records": 9996
+        }
+      ]
+    },
+    {
+      "id": "A2",
+      "question": "How many records did the withheld source contribute to the harvest, and what share of A1 is that?",
+      "computed": {
+        "withheld_records": 10056,
+        "share_of_total": 0.338974
+      },
+      "expected": {
+        "withheld_records": 10056,
+        "share_of_total": 0.338974
+      },
+      "verdict": "PASS",
+      "evidence": [
+        "provenance/register-records/manifeste/arcgis-20260726T164554Z.json",
+        "provenance/register-records/manifeste/arcgis-20260726T173351Z.json",
+        "provenance/register-records/manifeste/datacite-20260726T150046Z.json",
+        "provenance/register-records/manifeste/huggingface-20260726T164558Z.json",
+        "provenance/register-records/manifeste/kaggle-20260726T164544Z.json",
+        "provenance/register-records/manifeste/kaggle-20260726T173348Z.json"
+      ],
+      "kind": "observed"
+    },
+    {
+      "id": "A3",
+      "question": "Does the snapshot's `fundstellen` counter equal the harvest total minus the withheld source's records, exactly?",
+      "computed": 0,
+      "expected": 0,
+      "verdict": "PASS",
+      "evidence": [
+        "provenance/register-records/snapshot-2026-07-26.manifest.json",
+        "provenance/register-records/manifeste/arcgis-20260726T164554Z.json",
+        "provenance/register-records/manifeste/arcgis-20260726T173351Z.json",
+        "provenance/register-records/manifeste/datacite-20260726T150046Z.json",
+        "provenance/register-records/manifeste/huggingface-20260726T164558Z.json",
+        "provenance/register-records/manifeste/kaggle-20260726T164544Z.json",
+        "provenance/register-records/manifeste/kaggle-20260726T173348Z.json"
+      ],
+      "kind": "observed",
+      "fundstellen": 19610,
+      "harvest_total_a1": 29666,
+      "withheld_records_a2": 10056,
+      "non_withheld_total": 19610
+    },
+    {
+      "id": "A4",
+      "question": "How many lines does the rejection register carry in total, and how are they distributed by reason code (`grund`)?",
+      "computed": {
+        "total": 438,
+        "distribution": {
+          "konstruierte-url-ungeprueft": 300,
+          "keine-zugangs-url": 137,
+          "quelle-rechtlich-ungeklaert": 1
+        }
+      },
+      "expected": {
+        "total": 438,
+        "distribution": {
+          "konstruierte-url-ungeprueft": 300,
+          "keine-zugangs-url": 137,
+          "quelle-rechtlich-ungeklaert": 1
+        }
+      },
+      "verdict": "PASS",
+      "evidence": [
+        "provenance/register-records/ablehnungen.jsonl"
+      ],
+      "kind": "observed"
+    },
+    {
+      "id": "A5",
+      "question": "How many rejection-register lines name the withheld source, against how many records of that source were harvested (A2)?",
+      "computed": {
+        "rejection_lines": 1,
+        "harvested_records": 10056,
+        "ratio": "1 : 10056"
+      },
+      "expected": {
+        "rejection_lines": 1,
+        "harvested_records": 10056,
+        "ratio": "1 : 10056"
+      },
+      "verdict": "PASS",
+      "evidence": [
+        "provenance/register-records/ablehnungen.jsonl",
+        "provenance/register-records/manifeste/arcgis-20260726T164554Z.json",
+        "provenance/register-records/manifeste/arcgis-20260726T173351Z.json",
+        "provenance/register-records/manifeste/datacite-20260726T150046Z.json",
+        "provenance/register-records/manifeste/huggingface-20260726T164558Z.json",
+        "provenance/register-records/manifeste/kaggle-20260726T164544Z.json",
+        "provenance/register-records/manifeste/kaggle-20260726T173348Z.json"
+      ],
+      "kind": "observed",
+      "note": "This ratio must not be read as under-accounting, and a bare number invited exactly that reading until a hostile review caught it. The single line is deliberate and lawful: the source's terms, as the register reads them, forbid storing significant portions of its content, so 9,991 identifier-bearing lines were deleted and replaced by one aggregate line that keeps the count (see A19) and the reason and drops the identifiers. The register documents the intervention, its ground, and its own earlier wrong version of the entry. What the aggregation costs is the granularity needed to reconcile the two counts (see A20) — not the accounting itself."
+    },
+    {
+      "id": "A6",
+      "question": "What is the difference between the append-only rejection register's line count and the snapshot's own `abgelehnt_gesamt` counter?",
+      "computed": 21,
+      "expected": 21,
+      "verdict": "PASS",
+      "evidence": [
+        "provenance/register-records/ablehnungen.jsonl",
+        "provenance/register-records/snapshot-2026-07-26.manifest.json"
+      ],
+      "kind": "observed",
+      "ablehnungen_lines": 438,
+      "abgelehnt_gesamt": 417
+    },
+    {
+      "id": "A7",
+      "question": "Of the model-hosting source's records that appear in the rejection register, how many also have a confirmed (ok=true) resolved access route in the resolution ledger?",
+      "computed": {
+        "rejected_model_hosting_ids": 300,
+        "confirmed_model_hosting_ids": 20,
+        "intersection": 20,
+        "excess_remainder_after_intersection": 1
+      },
+      "expected": {
+        "rejected_model_hosting_ids": 300,
+        "confirmed_model_hosting_ids": 20,
+        "intersection": 20,
+        "excess_remainder_after_intersection": 1
+      },
+      "verdict": "PASS",
+      "evidence": [
+        "provenance/register-records/ablehnungen.jsonl",
+        "provenance/register-records/aufloesungen.jsonl"
+      ],
+      "kind": "observed",
+      "note": "The intersection (20) is directly observable from the two frozen files. The remainder (A6 excess 21 minus this intersection 20 = 1) is a separate, inference-labelled reading: it identifies the remainder with the single the withheld source's rejection line seen in A5. See A12 for the inference basis."
+    },
+    {
+      "id": "A8",
+      "question": "What share of all register entries (`eintraege`) have an attempted (`aufgeloest_versucht`) resp. confirmed (`aufgeloest_bestaetigt`) resolved access route?",
+      "computed": {
+        "eintraege": 17327,
+        "aufgeloest_versucht": 220,
+        "aufgeloest_bestaetigt": 164,
+        "share_versucht": 0.012697,
+        "share_bestaetigt": 0.009465
+      },
+      "expected": {
+        "eintraege": 17327,
+        "aufgeloest_versucht": 220,
+        "aufgeloest_bestaetigt": 164,
+        "share_versucht": 0.012697,
+        "share_bestaetigt": 0.009465
+      },
+      "verdict": "PASS",
+      "evidence": [
+        "provenance/register-records/snapshot-2026-07-26.manifest.json"
+      ],
+      "kind": "observed",
+      "caveat": "The intersection of `aufgeloest_bestaetigt` with an open licence is not computable from the committed tree (the 17,327 entries themselves are gitignored). 164 is therefore an upper bound on the subset that satisfies both of this practice's evidence conditions (retrievable AND openly licensed), not a measurement of that subset itself."
+    },
+    {
+      "id": "A9",
+      "question": "In the resolution ledger, how many rows are there, how many unique `id`s, how many `ok=true` rows, and what is the HTTP status distribution?",
+      "computed": {
+        "total_rows": 1070,
+        "unique_ids": 670,
+        "ok_true_rows": 614,
+        "status_distribution": {
+          "403": 53,
+          "200": 608,
+          "202": 6,
+          "null": 1,
+          "404": 402
+        }
+      },
+      "expected": {
+        "total_rows": 1070,
+        "unique_ids": 670,
+        "ok_true_rows": 614,
+        "status_distribution": {
+          "200": 608,
+          "404": 402,
+          "403": 53,
+          "202": 6,
+          "null": 1
+        }
+      },
+      "verdict": "PASS",
+      "evidence": [
+        "provenance/register-records/aufloesungen.jsonl"
+      ],
+      "kind": "observed"
+    },
+    {
+      "id": "A10",
+      "question": "Among resolution-ledger rows where `ok` is not true, what is the URL-host distribution and the associated status codes, and what share of all failures do the top two hosts account for?",
+      "computed": {
+        "failures_total": 456,
+        "www.kaggle.com": {
+          "count": 402,
+          "statuses": {
+            "404": 402
+          }
+        },
+        "www.gbif.org": {
+          "count": 48,
+          "statuses": {
+            "403": 48
+          }
+        },
+        "top_two_share": 0.986842
+      },
+      "expected": {
+        "failures_total": 456,
+        "www.kaggle.com": {
+          "count": 402,
+          "statuses": {
+            "404": 402
+          }
+        },
+        "www.gbif.org": {
+          "count": 48,
+          "statuses": {
+            "403": 48
+          }
+        },
+        "top_two_share": 0.986842
+      },
+      "verdict": "PASS",
+      "evidence": [
+        "provenance/register-records/aufloesungen.jsonl"
+      ],
+      "kind": "observed",
+      "top_two_hosts": [
+        "www.kaggle.com",
+        "www.gbif.org"
+      ],
+      "full_failure_host_distribution": {
+        "www.gbif.org": 48,
+        "www.osti.gov": 1,
+        "data.nhm.ac.uk": 1,
+        "www.kaggle.com": 402,
+        "www.researchgate.net": 1,
+        "www.openicpsr.org": 2,
+        "www.checklistbank.org": 1
+      },
+      "full_failure_host_status_breakdown": {
+        "www.gbif.org": {
+          "403": 48
+        },
+        "www.osti.gov": {
+          "null": 1
+        },
+        "data.nhm.ac.uk": {
+          "403": 1
+        },
+        "www.kaggle.com": {
+          "404": 402
+        },
+        "www.researchgate.net": {
+          "403": 1
+        },
+        "www.openicpsr.org": {
+          "403": 2
+        },
+        "www.checklistbank.org": {
+          "403": 1
+        }
+      },
+      "confirmed_host_distribution": {
+        "zenodo.org": 39,
+        "figshare.com": 6,
+        "www.osti.gov": 99,
+        "huggingface.co": 20,
+        "www.kaggle.com": 450
+      }
+    },
+    {
+      "id": "A11",
+      "question": "For each of the six harvest runs, how do `records` compare to `gesamt_gemeldet_im_fenster` (its own reported window total), and how many runs declare themselves incomplete (`vollstaendig`=false)?",
+      "computed": {
+        "incomplete_runs": 5,
+        "complete_runs": [
+          "datacite"
+        ]
+      },
+      "expected": {
+        "incomplete_runs": 5,
+        "complete_runs": [
+          "datacite"
+        ]
+      },
+      "verdict": "PASS",
+      "evidence": [
+        "provenance/register-records/manifeste/arcgis-20260726T164554Z.json",
+        "provenance/register-records/manifeste/arcgis-20260726T173351Z.json",
+        "provenance/register-records/manifeste/datacite-20260726T150046Z.json",
+        "provenance/register-records/manifeste/huggingface-20260726T164558Z.json",
+        "provenance/register-records/manifeste/kaggle-20260726T164544Z.json",
+        "provenance/register-records/manifeste/kaggle-20260726T173348Z.json"
+      ],
+      "kind": "observed",
+      "per_run": [
+        {
+          "lauf": "arcgis-20260726T164554Z",
+          "quelle": "arcgis",
+          "records": 300,
+          "gesamt_gemeldet_im_fenster": 33361,
+          "ratio_records_over_reported": 0.008993,
+          "vollstaendig": false,
+          "hinweis": "Seitenkappe erreicht, weitere Seiten möglich"
+        },
+        {
+          "lauf": "arcgis-20260726T173351Z",
+          "quelle": "arcgis",
+          "records": 6000,
+          "gesamt_gemeldet_im_fenster": 33643,
+          "ratio_records_over_reported": 0.178343,
+          "vollstaendig": false,
+          "hinweis": "Seitenkappe erreicht, weitere Seiten möglich"
+        },
+        {
+          "lauf": "datacite-20260726T150046Z",
+          "quelle": "datacite",
+          "records": 13010,
+          "gesamt_gemeldet_im_fenster": 13002,
+          "ratio_records_over_reported": 1.000615,
+          "vollstaendig": true,
+          "hinweis": null
+        },
+        {
+          "lauf": "huggingface-20260726T164558Z",
+          "quelle": "huggingface",
+          "records": 300,
+          "gesamt_gemeldet_im_fenster": null,
+          "ratio_records_over_reported": null,
+          "vollstaendig": false,
+          "hinweis": "Seitenkappe erreicht, weitere Seiten möglich (Cursor vorhanden)"
+        },
+        {
+          "lauf": "kaggle-20260726T164544Z",
+          "quelle": "kaggle",
+          "records": 60,
+          "gesamt_gemeldet_im_fenster": null,
+          "ratio_records_over_reported": null,
+          "vollstaendig": false,
+          "hinweis": "Seitenkappe erreicht, weitere Seiten möglich"
+        },
+        {
+          "lauf": "kaggle-20260726T173348Z",
+          "quelle": "kaggle",
+          "records": 9996,
+          "gesamt_gemeldet_im_fenster": null,
+          "ratio_records_over_reported": null,
+          "vollstaendig": false,
+          "hinweis": "Seitenkappe erreicht, weitere Seiten möglich"
+        }
+      ],
+      "note": "Three of the six run manifests (the model-hosting source's run, and both of the withheld source's runs) do not carry a `gesamt_gemeldet_im_fenster` field at all, so no ratio can be computed for them; this is reported as `null`, not zero."
+    },
+    {
+      "id": "A12",
+      "question": "Inference: were the withheld source's harvest files simply absent from the build's inputs (rather than present and individually rejected)? State the alternative reading and whether the counters rule it out.",
+      "computed": "ruled-out-by-counters",
+      "expected": "ruled-out-by-counters",
+      "verdict": "PASS",
+      "evidence": [
+        "provenance/register-records/snapshot-2026-07-26.manifest.json",
+        "provenance/register-records/ablehnungen.jsonl",
+        "provenance/register-records/manifeste/arcgis-20260726T164554Z.json",
+        "provenance/register-records/manifeste/arcgis-20260726T173351Z.json",
+        "provenance/register-records/manifeste/datacite-20260726T150046Z.json",
+        "provenance/register-records/manifeste/huggingface-20260726T164558Z.json",
+        "provenance/register-records/manifeste/kaggle-20260726T164544Z.json",
+        "provenance/register-records/manifeste/kaggle-20260726T173348Z.json"
+      ],
+      "kind": "inference",
+      "basis": "A3 shows fundstellen (19610) equals the harvest total of all sources except the withheld one, exactly, with zero difference. This is consistent with the withheld source's harvest files having been absent from the snapshot build's inputs entirely.",
+      "alternative_reading": "The files were present as inputs to the build, and the withheld source's 10056 records were rejected one by one during the build.",
+      "why_ruled_out": "A per-record rejection of 10056 records would require the snapshot's abgelehnt_gesamt counter to be at least 10056. It is 417 (A4/A6), which rules out the alternative reading.",
+      "abgelehnt_gesamt": 417,
+      "withheld_records": 10056,
+      "corroborating_observation": "The snapshot manifest's own `assets` array (a directly readable field, not an inference) lists the packaged run file for arcgis (both runs), DataCite, and the model-hosting source, but lists no file for either of the withheld source's two runs, although both of its run manifests declare their own `datei`/`sha256` for exactly such a file. the withheld source's run files listed among snapshot assets: 0 of 2.",
+      "run_file_present_in_snapshot_assets_by_source": {
+        "arcgis": true,
+        "datacite": true,
+        "huggingface": true,
+        "kaggle": false
+      }
+    },
+    {
+      "id": "A13",
+      "question": "In the resolution ledger, how many rows and how many unique ids does each source contribute, and what share of each does the withheld source account for?",
+      "computed": {
+        "rows_by_source": {
+          "datacite": 200,
+          "huggingface": 20,
+          "kaggle": 850
+        },
+        "unique_ids_by_source": {
+          "datacite": 200,
+          "huggingface": 20,
+          "kaggle": 450
+        },
+        "withheld_share_of_rows": 0.794393,
+        "withheld_share_of_unique_ids": 0.671642
+      },
+      "expected": {
+        "rows_by_source": {
+          "kaggle": 850,
+          "datacite": 200,
+          "huggingface": 20
+        },
+        "unique_ids_by_source": {
+          "kaggle": 450,
+          "datacite": 200,
+          "huggingface": 20
+        },
+        "withheld_share_of_rows": 0.794393,
+        "withheld_share_of_unique_ids": 0.671642
+      },
+      "verdict": "PASS",
+      "evidence": [
+        "provenance/register-records/aufloesungen.jsonl"
+      ],
+      "kind": "observed"
+    },
+    {
+      "id": "A14",
+      "question": "Reducing the resolution ledger to one row per id (last occurrence in file order wins, matching the upstream builder's own reduction), and restricting to the non-withheld sources (DataCite and the model-hosting source): how many ids are there, and how many have `ok` true? Do these equal the snapshot's `aufgeloest_versucht` and `aufgeloest_bestaetigt` counters?",
+      "computed": {
+        "non_withheld_ids": 220,
+        "non_withheld_ok": 164,
+        "withheld_last_wins_ok": 450
+      },
+      "expected": {
+        "non_withheld_ids": 220,
+        "non_withheld_ok": 164,
+        "withheld_last_wins_ok": 450
+      },
+      "verdict": "PASS",
+      "evidence": [
+        "provenance/register-records/aufloesungen.jsonl",
+        "provenance/register-records/snapshot-2026-07-26.manifest.json"
+      ],
+      "kind": "observed",
+      "note": "The non-withheld reduction reproduces the snapshot's own aufgeloest_versucht/aufgeloest_bestaetigt counters exactly. This makes A12's inference near-direct: under the identical last-wins reduction, 450 withheld-source ids hold a confirmed access route, and none of the 450 contributes to either published counter."
+    },
+    {
+      "id": "A15",
+      "question": "Which resolution-ledger ids appear more than once, from which source, what is the maximum repeat count, and, in chronological order by `datum`, what pattern of `(http_status, ok)` do the repeated ids show?",
+      "computed": {
+        "repeated_ids": 400,
+        "repeated_sources": [
+          "kaggle"
+        ],
+        "max_repeat_count": 2,
+        "forward_pattern_count": 400,
+        "reverse_pattern_count": 0,
+        "other_pattern_count": 0,
+        "ids_where_file_order_differs_from_datum_order": 0
+      },
+      "expected": {
+        "repeated_ids": 400,
+        "repeated_sources": [
+          "kaggle"
+        ],
+        "max_repeat_count": 2,
+        "forward_pattern_count": 400,
+        "reverse_pattern_count": 0,
+        "other_pattern_count": 0,
+        "ids_where_file_order_differs_from_datum_order": 0
+      },
+      "verdict": "PASS",
+      "evidence": [
+        "provenance/register-records/aufloesungen.jsonl"
+      ],
+      "kind": "observed",
+      "forward_pattern": "[(404, false), (200, true)]",
+      "note": "All 400 repeated ids belong to the withheld source and show the same pattern: an initial 404/false row later followed by a 200/true row, in file order and in chronological (datum) order alike."
+    },
+    {
+      "id": "A16",
+      "question": "Among the resolution-ledger rows where `ok` is not true, how many fall into each of four disjoint classes: (i) rows whose id has another row with `ok` true elsewhere in the ledger; (ii) of the rest, rows with HTTP status 403, and their hosts; (iii) rows carrying a transport-outage marker (`ausfall`, no `http_status`), and their host; (iv) the remaining residue, with its hosts, sources and statuses? Do the four classes sum to the total number of non-ok rows?",
+      "computed": {
+        "failures_total": 456,
+        "class_has_ok_sibling": 400,
+        "class_403": 53,
+        "class_403_hosts": {
+          "www.gbif.org": 48,
+          "data.nhm.ac.uk": 1,
+          "www.researchgate.net": 1,
+          "www.openicpsr.org": 2,
+          "www.checklistbank.org": 1
+        },
+        "class_outage": 1,
+        "class_outage_hosts": [
+          "www.osti.gov"
+        ],
+        "class_residue": 2,
+        "class_residue_hosts": [
+          "www.kaggle.com"
+        ],
+        "class_residue_sources": [
+          "datacite"
+        ],
+        "class_residue_statuses": [
+          404
+        ],
+        "classes_sum": 456,
+        "residue_share_of_failures": 0.004386,
+        "residue_share_of_all_rows": 0.001869
+      },
+      "expected": {
+        "failures_total": 456,
+        "class_has_ok_sibling": 400,
+        "class_403": 53,
+        "class_403_hosts": {
+          "www.gbif.org": 48,
+          "www.openicpsr.org": 2,
+          "data.nhm.ac.uk": 1,
+          "www.researchgate.net": 1,
+          "www.checklistbank.org": 1
+        },
+        "class_outage": 1,
+        "class_outage_hosts": [
+          "www.osti.gov"
+        ],
+        "class_residue": 2,
+        "class_residue_hosts": [
+          "www.kaggle.com"
+        ],
+        "class_residue_sources": [
+          "datacite"
+        ],
+        "class_residue_statuses": [
+          404
+        ],
+        "classes_sum": 456,
+        "residue_share_of_failures": 0.004386,
+        "residue_share_of_all_rows": 0.001869
+      },
+      "verdict": "PASS",
+      "evidence": [
+        "provenance/register-records/aufloesungen.jsonl"
+      ],
+      "kind": "observed",
+      "note": "The 56 rows never confirmed anywhere in the ledger (class_403 + class_outage = 54) equal the entry-level unconfirmed count implied by A14 (aufgeloest_versucht - aufgeloest_bestaetigt = 220 - 164 = 56). At this state the register's entire checked-but-not-confirmed column is 53 rows with HTTP status 403, 1 row with a transport outage, and 2 rows with HTTP status 404 reached through DataCite-registered DOIs. Every class here rests on a fact directly observable in the row or in a sibling row, which is why two rows remain; A21 reports the same column with one further class added by analogy (host, status and check time), under which the residue is 0."
+    },
+    {
+      "id": "A17",
+      "question": "How many resolution-ledger rows, distinct `quell_id` values and distinct `url` values does the withheld source still have, and does the ledger's own key set (the union of keys across all rows) include any descriptive metadata field (title, description, or similar)?",
+      "computed": {
+        "rows": 850,
+        "distinct_quell_id": 450,
+        "distinct_url": 450,
+        "ledger_key_union": [
+          "ausfall",
+          "datum",
+          "finale_url",
+          "http_status",
+          "id",
+          "ok",
+          "quell_id",
+          "quelle",
+          "url"
+        ],
+        "descriptive_fields_present": []
+      },
+      "expected": {
+        "rows": 850,
+        "distinct_quell_id": 450,
+        "distinct_url": 450,
+        "ledger_key_union": [
+          "ausfall",
+          "datum",
+          "finale_url",
+          "http_status",
+          "id",
+          "ok",
+          "quell_id",
+          "quelle",
+          "url"
+        ],
+        "descriptive_fields_present": []
+      },
+      "verdict": "PASS",
+      "evidence": [
+        "provenance/register-records/aufloesungen.jsonl"
+      ],
+      "kind": "observed",
+      "note": "The resolution ledger retains the withheld source's identifiers (`quell_id`) and URLs, but no descriptive content: the union of keys present anywhere in the ledger is exactly id, quelle, quell_id, url, datum, http_status, finale_url, ok, plus ausfall on the single outage row, and none of those is a title, description or similar field. The register's prose states that the withheld source's per-record identifiers were deleted from the rejection register and the origin (`fundstellen`) table. The resolution ledger is a third, separate file, not named among those two, and this is what remains present in it."
+    },
+    {
+      "id": "A18",
+      "question": "Among all resolution-ledger rows with `http_status == 403`, what is the distribution by URL host, how many distinct hosts appear, and what share of the 403s does the largest host account for?",
+      "computed": {
+        "count_403": 53,
+        "sources": [
+          "datacite"
+        ],
+        "host_distribution": {
+          "www.gbif.org": 48,
+          "data.nhm.ac.uk": 1,
+          "www.researchgate.net": 1,
+          "www.openicpsr.org": 2,
+          "www.checklistbank.org": 1
+        },
+        "distinct_hosts": 5,
+        "top_host": "www.gbif.org",
+        "top_host_share": 0.90566
+      },
+      "expected": {
+        "count_403": 53,
+        "sources": [
+          "datacite"
+        ],
+        "host_distribution": {
+          "www.gbif.org": 48,
+          "www.openicpsr.org": 2,
+          "data.nhm.ac.uk": 1,
+          "www.researchgate.net": 1,
+          "www.checklistbank.org": 1
+        },
+        "distinct_hosts": 5,
+        "top_host": "www.gbif.org",
+        "top_host_share": 0.90566
+      },
+      "verdict": "PASS",
+      "evidence": [
+        "provenance/register-records/aufloesungen.jsonl"
+      ],
+      "kind": "observed",
+      "note": "The register's own procedural note reports these 53 refusals as coming from a single host, verbatim: \"53 von 200 Zugriffswegen antworteten mit HTTP 403, alle vom selben Host (GBIF).\" (\"53 of 200 access routes answered with HTTP 403, all from the same host (GBIF).\") The resolution ledger shows five distinct hosts, not one: www.gbif.org (48), www.openicpsr.org (2), data.nhm.ac.uk (1), www.researchgate.net (1), www.checklistbank.org (1). The count of 53 is correct; the host clause is not. In this one instance the machine-readable surface is right and the prose is not."
+    },
+    {
+      "id": "A19",
+      "question": "Enumerated over its own key space, does the rejection register declare the withheld volume and a reason in machine-readable form?",
+      "computed": {
+        "key_shapes": {
+          "datum, grund, quell_id, quelle": 437,
+          "betroffene_eintraege, datum, grund, quell_id, quelle, vermerk": 1
+        },
+        "distinct_key_shapes": 2,
+        "rows_with_declared_volume": 1,
+        "declared_volume": 9991,
+        "declares_reason_text": true,
+        "vermerk_cites_a_document": true
+      },
+      "expected": {
+        "key_shapes": {
+          "datum, grund, quell_id, quelle": 437,
+          "betroffene_eintraege, datum, grund, quell_id, quelle, vermerk": 1
+        },
+        "distinct_key_shapes": 2,
+        "rows_with_declared_volume": 1,
+        "declared_volume": 9991,
+        "declares_reason_text": true,
+        "vermerk_cites_a_document": true
+      },
+      "verdict": "PASS",
+      "evidence": [
+        "provenance/register-records/ablehnungen.jsonl"
+      ],
+      "kind": "observed",
+      "note": "This assertion exists because the audit was wrong here. Its earlier claim that no machine-readable field declares the withholding is WITHDRAWN: 437 of 438 lines carry four keys and exactly one carries six, adding a volume and a free-text reason that cites where the documentation lives. A reader of this file alone learns that a source was withheld, why, and how many entries it affected."
+    },
+    {
+      "id": "A20",
+      "question": "How does the declared withheld volume compare with the volume derivable from the run manifests, and does any machine-readable field state the unit of either?",
+      "computed": {
+        "declared_volume": 9991,
+        "derivable_records": 10056,
+        "gap": 65,
+        "gap_share_of_derivable": 0.006464,
+        "unit_declaring_fields_present": []
+      },
+      "expected": {
+        "declared_volume": 9991,
+        "derivable_records": 10056,
+        "gap": 65,
+        "gap_share_of_derivable": 0.006464,
+        "unit_declaring_fields_present": []
+      },
+      "verdict": "PASS",
+      "evidence": [
+        "provenance/register-records/ablehnungen.jsonl",
+        "provenance/register-records/manifeste/arcgis-20260726T164554Z.json",
+        "provenance/register-records/manifeste/arcgis-20260726T173351Z.json",
+        "provenance/register-records/manifeste/datacite-20260726T150046Z.json",
+        "provenance/register-records/manifeste/huggingface-20260726T164558Z.json",
+        "provenance/register-records/manifeste/kaggle-20260726T164544Z.json",
+        "provenance/register-records/manifeste/kaggle-20260726T173348Z.json"
+      ],
+      "kind": "observed",
+      "note": "Both counts are correct in their own units and neither unit is stated in any machine-readable field. The register's prose gives both in one sentence — 9,991 rejection lines against 10,056 origin rows — which is the same entries-versus-origins distinction its snapshot counters use (17,327 against 19,610). Why the two differ by exactly 65 is NOT stated in any record or prose this work can reach, and this work does not know: an earlier version of this note said the 65 were duplicate identifiers across the two harvest runs, which was this practice's own inference, unlabelled and unverifiable from the frozen corpus, and it is WITHDRAWN (second gauntlet round, 2026-07-27). The reconciliation, not the fact of the withholding, is what a records-only reader cannot do -- and past the point where the register's prose stops, neither can this audit. This is the work's surviving central finding."
+    },
+    {
+      "id": "A21",
+      "question": "Re-deriving A16's residue with one further class, defined by URL host, HTTP status and check time rather than by a fact observable in the row: across the resolution ledger, how many rows carry HTTP status 404, on which hosts; how many of those have a later row under the same id with `ok` true (the documented retry); how many were never confirmed anywhere, with their `quelle` labels and `datum` values; what is the earliest `datum` among `ok=true` rows on that host, and does every never-confirmed 404 row predate it; and, under this host-and-mechanism reduction, what residue is left in the failure column after retried-and-confirmed, 403, transport-outage and documented-defect-host-404 rows are removed?",
+      "computed": {
+        "status_404_total": 402,
+        "status_404_host_distribution": {
+          "www.kaggle.com": 402
+        },
+        "retried_404_count": 400,
+        "never_confirmed_404_count": 2,
+        "never_confirmed_404_detail": [
+          {
+            "id": "dh-0e2d2216f3ba8ccf",
+            "quelle": "datacite",
+            "datum": "2026-07-26T15:04:59Z"
+          },
+          {
+            "id": "dh-b863d933a58432ce",
+            "quelle": "datacite",
+            "datum": "2026-07-26T15:04:54Z"
+          }
+        ],
+        "defect_host": "www.kaggle.com",
+        "earliest_ok_datum_on_defect_host": "2026-07-26T17:48:01Z",
+        "never_confirmed_404_all_predate_earliest_ok": true,
+        "failures_total": 456,
+        "class_retried_and_confirmed": 400,
+        "class_403": 53,
+        "class_outage": 1,
+        "class_defect_host_404_unretried": 2,
+        "residue_host_mechanism": 0,
+        "classes_sum": 456
+      },
+      "expected": {
+        "status_404_total": 402,
+        "status_404_host_distribution": {
+          "www.kaggle.com": 402
+        },
+        "retried_404_count": 400,
+        "never_confirmed_404_count": 2,
+        "never_confirmed_404_detail": [
+          {
+            "id": "dh-0e2d2216f3ba8ccf",
+            "quelle": "datacite",
+            "datum": "2026-07-26T15:04:59Z"
+          },
+          {
+            "id": "dh-b863d933a58432ce",
+            "quelle": "datacite",
+            "datum": "2026-07-26T15:04:54Z"
+          }
+        ],
+        "defect_host": "www.kaggle.com",
+        "earliest_ok_datum_on_defect_host": "2026-07-26T17:48:01Z",
+        "never_confirmed_404_all_predate_earliest_ok": true,
+        "failures_total": 456,
+        "class_retried_and_confirmed": 400,
+        "class_403": 53,
+        "class_outage": 1,
+        "class_defect_host_404_unretried": 2,
+        "residue_host_mechanism": 0,
+        "classes_sum": 456
+      },
+      "verdict": "PASS",
+      "evidence": [
+        "provenance/register-records/aufloesungen.jsonl"
+      ],
+      "kind": "inference",
+      "note": "(1) Under this host-and-mechanism reduction the residue is 0, where A16's observation-only reduction leaves 2: the same two rows A16 calls its residue (both carrying `quelle: datacite`, both HTTP 404 on the documented-defect host given above as `defect_host`, both checked at 2026-07-26T15:04:5*Z, see `never_confirmed_404_detail`) fall instead into class (iv) here, because they share host and status with the 400 rows the register's documented HEAD-404/GET-200 fix flipped to confirmed, and were simply never re-checked after it (the fix ran 17:42:45Z-17:55:21Z, on rows carrying the withheld source's own `quelle` label; these two rows arrived via DataCite-registered DOIs and were checked earlier, at 15:04:54Z/15:04:59Z, outside the batch the rollout was applied to). The 2-vs-0 gap is therefore a property of what a class is allowed to rest on -- a fact observable in the row (A16), or an analogy to rows that were observed (this assertion) -- and not a settled fact about the world. This assertion is tagged an inference for exactly that reason: the two rows were never retried, so folding them into the documented defect is a judgement, not a reading. (2) This assertion does not establish that either of the two rows' URLs (see `never_confirmed_404_detail` for their ledger ids) would resolve if requested today: no live request feeds this or any other assertion, and none could — this audit is offline and deterministic by construction, which is what makes its --check meaningful. A single out-of-band probe of those two URLs was made on 2026-07-27, one day after the pinned state; it is fenced off from every assertion and reported separately in provenance/access-attempts.md, SOURCES.md and the work's README. What this assertion establishes is only that both rows share host, HTTP status, and pre-fix timing with the 400 rows the register's own documented fix flipped from 404/false to 200/true. Timestamps are compared as plain strings throughout this assertion; every `datum` in the ledger is UTC, Z-suffixed, ISO-8601 (YYYY-MM-DDTHH:MM:SSZ), so lexical string comparison and chronological order agree. (3) Read this way, the alternative reduction strengthens the finding it sits under rather than weakening it: even more of the failure column collapses to the one documented method artefact, not less. A16 is left as originally computed and is not superseded by this assertion; both reductions of the same file are reported side by side."
+    }
+  ],
+  "verdict": {
+    "pass_count": 21,
+    "fail_count": 0,
+    "total": 21,
+    "all_pass": true
+  }
+}
