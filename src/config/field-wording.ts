@@ -81,6 +81,8 @@ export const FIELD_NARRATIVE = {
     heading: 'the research runtime — the second track',
     body:
       'Beside the collective runs an engineering line: the Meridian Research Runtime (MRR) — research orchestration that refuses to take an AI’s word for anything: explicit provenance, policy-gated execution, verifiable claims, dissent kept on the record. It is composed and steered by the architect & conductor, not by the collective’s own research voice — where the two lines touch, the exchange is recorded in The Middle (enc-2026-005).',
+    logNote:
+      'On Record renders one export and stays at its date on purpose: the derivation is deterministic — no network, no clock, no model — so the page can only move when a new export is committed. What the runtime did after that date is carried here instead, each entry naming the commit it reports.',
   },
 } as const
 
