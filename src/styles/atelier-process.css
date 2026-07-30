@@ -1,0 +1,196 @@
+/* src/styles/atelier-process.css — eigene Bildsprache für das Prozessbild des Ateliers.
+ *
+ * Frank, 2026-07-30: „[Wortlaut privat;
+ * redigiert]."
+ * Also: Farbe, Tiefe, Bewegung, Anfassbarkeit — aber weiter die Mono-Type der Site, damit
+ * die Figur zum Haus gehört und nicht wie ein Fremdkörper wirkt.
+ *
+ * Die vier Farben sind KEINE Statusfarben, sondern Identitäten: Ein abgebrochenes Vorhaben
+ * ist in dieser Praxis kein Fehlschlag (Protokoll: „closing costs what continuing costs").
+ * Beide Sätze sind gegen ihre jeweilige Fläche geprüft (dataviz-Validator, alle sechs
+ * Prüfungen bestanden): hell gegen #f7f8fa, dunkel gegen #141414 — eigene Stufen, keine
+ * automatische Umkehr. */
+
+.at-proc {
+  /* hell */
+  --pr-publish: #a8690c;
+  --pr-candidate: #c43a78;
+  --pr-study: #0e8a6e;
+  --pr-kill: #1f6fd0;
+  --pr-open: var(--color-fg-muted);
+  --pr-surface: var(--color-panel);
+  --pr-glow: 0 0 0 rgba(0, 0, 0, 0);
+  margin: 2.5rem 0 2.25rem;
+}
+
+:root[data-theme='dark'] .at-proc,
+:root:not([data-theme='light']) .at-proc {
+  --pr-publish: #c08420;
+  --pr-candidate: #d14a85;
+  --pr-study: #159e76;
+  --pr-kill: #4a79e4;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme='dark']) .at-proc {
+    --pr-publish: #a8690c;
+    --pr-candidate: #c43a78;
+    --pr-study: #0e8a6e;
+    --pr-kill: #1f6fd0;
+  }
+}
+
+.at-proc-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.75rem 1.25rem;
+  margin-bottom: 0.4rem;
+}
+.at-proc-title {
+  font: 600 1.05rem/1.2 var(--font-sans);
+  letter-spacing: 0.01em;
+  margin: 0;
+  color: var(--color-fg);
+}
+.at-proc-sub {
+  font: 11.5px/1.5 var(--font-mono);
+  color: var(--color-fg-faint);
+  margin: 0;
+}
+
+/* Legende = Filter. Ein Klick isoliert einen Ausgang, ein zweiter hebt ihn auf. */
+.at-proc-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.9rem 0 0.6rem;
+  padding: 0;
+  list-style: none;
+}
+.at-proc-lg {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.3rem 0.65rem 0.3rem 0.5rem;
+  border: 1px solid var(--color-line);
+  border-radius: 999px;
+  background: var(--pr-surface);
+  color: var(--color-fg-muted);
+  font: 11.5px var(--font-mono);
+  cursor: pointer;
+  transition: border-color 0.18s, color 0.18s, transform 0.18s, background 0.18s;
+}
+.at-proc-lg:hover { color: var(--color-fg); border-color: var(--color-fg-faint); transform: translateY(-1px); }
+.at-proc-lg[aria-pressed='true'] { color: var(--color-fg); border-color: currentColor; background: color-mix(in oklab, var(--lg-color) 12%, var(--pr-surface)); }
+.at-proc-lg .dot {
+  width: 9px; height: 9px; border-radius: 3px;
+  background: var(--lg-color);
+  box-shadow: 0 0 0 2px var(--pr-surface);
+  flex: none;
+}
+.at-proc-lg .n { color: var(--color-fg); font-weight: 600; }
+
+.at-proc-figure { margin: 0; }
+.at-proc-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: visible;
+  background: linear-gradient(180deg, color-mix(in oklab, var(--color-panel) 60%, transparent), transparent 70%);
+  border-radius: 14px;
+}
+
+/* — Bänder — */
+.pr-band { fill: none; stroke-linecap: round; stroke-width: 5.5; transition: opacity 0.2s, stroke-width 0.2s; }
+.pr-tail { fill: none; stroke-width: 5.5; opacity: 0.55; transition: opacity 0.2s, stroke-width 0.2s; }
+.pr-line { cursor: pointer; outline: none; }
+.pr-line .pr-hit { stroke: transparent; stroke-width: 22; fill: none; }
+.pr-line text.pr-label {
+  font: 11.5px var(--font-mono);
+  fill: var(--color-fg-muted);
+  transition: fill 0.2s;
+}
+.pr-line text.pr-date { font: 10.5px var(--font-mono); fill: var(--color-fg-faint); }
+/* Züge: ein Strich je Journaleintrag am Tag, an dem er geschrieben wurde. */
+.pr-move { stroke: var(--pr-surface); stroke-width: 1.6; opacity: 0.85; }
+
+.pr-line:hover .pr-band,
+.pr-line:focus-visible .pr-band { stroke-width: 7.5; }
+.pr-line:hover text.pr-label,
+.pr-line:focus-visible text.pr-label { fill: var(--color-fg); }
+.pr-line:focus-visible .pr-focus { stroke: var(--color-fg); stroke-width: 1.2; stroke-dasharray: 3 3; fill: none; }
+
+/* Gedimmt, wenn eine andere Linie im Vordergrund steht oder ein Filter greift. */
+.at-proc[data-dim] .pr-line:not([data-on]) { opacity: 0.16; }
+.at-proc[data-dim] .pr-line:not([data-on]) .pr-band { stroke-width: 4; }
+
+/* — Häfen — */
+.pr-harbour rect { transition: opacity 0.2s; }
+.pr-harbour text.h-label { font: 600 11.5px var(--font-mono); letter-spacing: 0.04em; }
+.pr-harbour text.h-count { font: 600 15px var(--font-mono); }
+.pr-gate line { stroke: var(--color-fg-faint); stroke-dasharray: 2 4; stroke-width: 1; }
+.pr-gate text { font: 10.5px var(--font-mono); fill: var(--color-fg-faint); letter-spacing: 0.08em; }
+.pr-axis text { font: 10.5px var(--font-mono); fill: var(--color-fg-faint); }
+.pr-axis line { stroke: var(--color-line); stroke-width: 1; }
+
+/* — Detailtafel — */
+.at-proc-detail {
+  margin-top: 0.75rem;
+  min-height: 5.6rem;
+  border: 1px solid var(--color-line);
+  border-left: 3px solid var(--d-color, var(--color-line));
+  border-radius: 10px;
+  background: var(--pr-surface);
+  padding: 0.85rem 1rem;
+  transition: border-color 0.2s;
+}
+.at-proc-detail .d-hint { font: 11.5px/1.6 var(--font-mono); color: var(--color-fg-faint); margin: 0; }
+.at-proc-detail .d-title { font: 600 0.98rem/1.3 var(--font-sans); color: var(--color-fg); margin: 0 0 0.2rem; }
+.at-proc-detail .d-meta { font: 11.5px/1.7 var(--font-mono); color: var(--color-fg-muted); margin: 0 0 0.5rem; }
+.at-proc-detail .d-meta b { color: var(--color-fg); font-weight: 600; }
+.at-proc-detail a { color: var(--color-fg); text-decoration: underline; text-underline-offset: 3px; }
+
+.d-stations { display: flex; flex-wrap: wrap; gap: 0.35rem; padding: 0; margin: 0 0 0.55rem; list-style: none; }
+.d-st {
+  font: 10.5px var(--font-mono);
+  letter-spacing: 0.06em;
+  padding: 0.2rem 0.5rem;
+  border-radius: 5px;
+  border: 1px solid var(--color-line);
+  color: var(--color-fg-faint);
+}
+.d-st[data-reached] { color: var(--color-fg); border-color: var(--d-color, var(--color-fg-faint)); background: color-mix(in oklab, var(--d-color, transparent) 10%, transparent); }
+
+/* — Tabelle (Barrierefreiheit + zum Nachrechnen) — */
+.at-proc-table { margin-top: 0.9rem; }
+.at-proc-table summary { font: 11.5px var(--font-mono); color: var(--color-fg-faint); cursor: pointer; }
+.at-proc-table summary:hover { color: var(--color-fg); }
+.at-proc-table table { width: 100%; border-collapse: collapse; margin-top: 0.6rem; font: 11.5px var(--font-mono); }
+.at-proc-table th, .at-proc-table td { text-align: left; padding: 0.35rem 0.6rem 0.35rem 0; border-bottom: 1px solid var(--color-line); color: var(--color-fg-muted); }
+.at-proc-table th { color: var(--color-fg-faint); font-weight: 600; }
+.at-proc-table td:first-child { color: var(--color-fg); }
+.at-proc-prov { font: 10.5px/1.6 var(--font-mono); color: var(--color-fg-faint); margin: 0.7rem 0 0; max-width: 70ch; }
+
+/* Einzeichnen beim Laden — Bewegung als Hinweis auf Richtung, nicht als Dekor. */
+@media (prefers-reduced-motion: no-preference) {
+  .at-proc-svg .pr-band:not(.is-open), .at-proc-svg .pr-tail {
+    stroke-dasharray: var(--len, 1200);
+    stroke-dashoffset: var(--len, 1200);
+    animation: pr-draw 0.9s cubic-bezier(0.25, 0.8, 0.3, 1) forwards;
+    animation-delay: var(--delay, 0s);
+  }
+  @keyframes pr-draw { to { stroke-dashoffset: 0; } }
+}
+
+/* „läuft noch": gestrichelt statt blass — ein Zustand, keine Abwertung. Steht bewusst NACH
+ * dem Einzeichen-Effekt: dessen stroke-dasharray würde die Strichelung sonst überschreiben,
+ * und die laufende Linie sähe aus wie jede andere. Deshalb nimmt die Animation oben die
+ * offenen Bänder auch aus. */
+.at-proc-svg .pr-band.is-open { stroke-dasharray: 7 4; }
+
+@media (max-width: 640px) {
+  .at-proc-svg { min-height: 320px; }
+  .at-proc-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .at-proc-scroll > svg { min-width: 640px; }
+}
