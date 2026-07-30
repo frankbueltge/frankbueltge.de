@@ -16,15 +16,22 @@ import stageData from '@/data/studio/stage.curated.json'
 import { numberWord } from '@/lib/atelier/sessions'
 
 const chronicle = loadChronicle()
-// newest premiere, not the first: the chronicle is oldest-first, so find() returned Native
-// Speaker (the earliest ship) — take the last ship entry instead.
-const ship = chronicle.filter((e) => e.move === 'ship').at(-1)
-if (!ship || !ship.works[0]) throw new Error('/studio: no premiered work in the chronicle mirror')
-const slug = ship.works[0]
-
 const metas = import.meta.glob('/src/content/studio/works/*/meta.json', {
   eager: true, import: 'default',
-}) as Record<string, { title?: string; date?: string }>
+}) as Record<string, { title?: string; date?: string; medium?: string }>
+
+// newest LIVE premiere, not just the newest ship: a premiere can be withdrawn after the
+// fact (One Tap, session 43, 2026-07-25 — the collective's own meta.json marks it
+// "WITHDRAWN … not a live premiere" after it was found to misrepresent real named sources).
+// The chronicle is oldest-first; walk from the newest ship backwards past any withdrawn one.
+const ship = [...chronicle].reverse().find((e) => {
+  if (e.move !== 'ship' || !e.works[0]) return false
+  const m = metas[`/src/content/studio/works/${e.works[0]}/meta.json`]
+  return !!m && !/^WITHDRAWN\b/i.test(m.medium ?? '')
+})
+if (!ship || !ship.works[0]) throw new Error('/studio: no live premiered work in the chronicle mirror')
+const slug = ship.works[0]
+
 const meta = metas[`/src/content/studio/works/${slug}/meta.json`]
 if (!meta?.title || !meta.date) throw new Error(`/studio: premiered work ${slug} has no committed meta`)
 
