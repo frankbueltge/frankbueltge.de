@@ -66,10 +66,15 @@ interface ClusterR {
   cx: number
   cy: number
   marks: MarkR[]
+  /** the time lens fans dense days out into their individual landings */
+  fans: MarkR[]
   more: number
   aria: string
   delay: number
 }
+
+// even spread for a fanned dense day — must match the client-side copy
+const fanOffsets = (n: number): number[] => Array.from({ length: n }, (_, i) => (i - (n - 1) / 2) * 11)
 
 const clustersR: ClusterR[] = model.lanes.flatMap((lane, li) =>
   lane.clusters.map((c) => {
@@ -77,6 +82,7 @@ const clustersR: ClusterR[] = model.lanes.flatMap((lane, li) =>
     const offsets = OFFSETS[Math.min(n, 3)] ?? [0]
     const marks: MarkR[] =
       n <= 3 ? c.events.map((e, mi) => ({ glyph: e.glyph, dx: offsets[mi] })) : [{ glyph: c.glyph, dx: 0 }]
+    const fans: MarkR[] = n > 3 ? c.events.map((e, mi) => ({ glyph: e.glyph, dx: fanOffsets(n)[mi] })) : []
     const first = c.events[0]?.text ?? ''
     return {
       key: `${c.voice}|${c.date}`,
@@ -84,6 +90,7 @@ const clustersR: ClusterR[] = model.lanes.flatMap((lane, li) =>
       cx: xAt(dayIndex.get(c.date) ?? 0),
       cy: laneY(li),
       marks,
+      fans,
       more: n > 3 ? n : 0,
       aria: `${VOICE_META[c.voice].label}, ${c.date}: ${n === 1 ? '1 landing' : `${n} landings`} — ${first.slice(0, 90)}`,
       // ignition delay follows the DAY, so the entrance reads as one playhead sweep
@@ -230,6 +237,7 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
         {/* week grid (Mondays) — quiet, behind everything */}
         {mondays.map(({ i }) => (
           <line
+            class="pt-grid-w"
             x1={X0 + dayW * i} x2={X0 + dayW * i}
             y1={TOP} y2={TOP + LANE_H * model.lanes.length}
             stroke="var(--pt-grid)" stroke-width="1"
@@ -313,23 +321,42 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
             <g class="pt-cluster">
               {c.marks.map((m, mi) => (
                 m.glyph === 'fail' ? (
-                  <g data-mi={c.more > 0 ? -1 : mi} transform={`translate(${c.cx + m.dx} ${c.cy})`}>
+                  <g class={c.more > 0 ? 'pt-face' : undefined} data-mi={c.more > 0 ? -1 : mi} transform={`translate(${c.cx + m.dx} ${c.cy})`}>
                     <circle r="8" fill="var(--pt-stage)" />
                     <path d="M -4.5 -4.5 L 4.5 4.5 M -4.5 4.5 L 4.5 -4.5" stroke="var(--pt-fail)" stroke-width="2.5" stroke-linecap="round" />
                   </g>
                 ) : m.glyph === 'work' ? (
                   <path
+                    class={c.more > 0 ? 'pt-face' : undefined}
                     data-mi={c.more > 0 ? -1 : mi}
                     d={`M ${c.cx + m.dx} ${c.cy - 6.5} L ${c.cx + m.dx + 6.5} ${c.cy} L ${c.cx + m.dx} ${c.cy + 6.5} L ${c.cx + m.dx - 6.5} ${c.cy} Z`}
                     fill="var(--c)" stroke="var(--pt-stage)" stroke-width="2"
                   />
                 ) : (
-                  <circle data-mi={c.more > 0 ? -1 : mi} cx={c.cx + m.dx} cy={c.cy} r="5" fill="var(--c)" stroke="var(--pt-stage)" stroke-width="2" />
+                  <circle class={c.more > 0 ? 'pt-face' : undefined} data-mi={c.more > 0 ? -1 : mi} cx={c.cx + m.dx} cy={c.cy} r="5" fill="var(--c)" stroke="var(--pt-stage)" stroke-width="2" />
                 )
               ))}
               {c.more > 0 && (
-                <text x={c.cx} y={c.cy - 12} text-anchor="middle" class="pt-t-meta">×{c.more}</text>
+                <text x={c.cx} y={c.cy - 12} text-anchor="middle" class="pt-t-meta pt-face">×{c.more}</text>
               )}
+              {/* the time lens fans a dense day out into its individual landings */}
+              {c.fans.map((m, mi) => (
+                m.glyph === 'fail' ? (
+                  <g class="pt-fan" data-mi={mi} transform={`translate(${c.cx + m.dx} ${c.cy})`}>
+                    <circle r="8" fill="var(--pt-stage)" />
+                    <path d="M -4.5 -4.5 L 4.5 4.5 M -4.5 4.5 L 4.5 -4.5" stroke="var(--pt-fail)" stroke-width="2.5" stroke-linecap="round" />
+                  </g>
+                ) : m.glyph === 'work' ? (
+                  <path
+                    class="pt-fan"
+                    data-mi={mi}
+                    d={`M ${c.cx + m.dx} ${c.cy - 6.5} L ${c.cx + m.dx + 6.5} ${c.cy} L ${c.cx + m.dx} ${c.cy + 6.5} L ${c.cx + m.dx - 6.5} ${c.cy} Z`}
+                    fill="var(--c)" stroke="var(--pt-stage)" stroke-width="2"
+                  />
+                ) : (
+                  <circle class="pt-fan" data-mi={mi} cx={c.cx + m.dx} cy={c.cy} r="5" fill="var(--c)" stroke="var(--pt-stage)" stroke-width="2" />
+                )
+              ))}
             </g>
           </g>
         ))}
@@ -351,9 +378,10 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
     </p>
   ) : (
     <p id="pt-hint" class="px-5 pb-4 pt-2 text-[11px] text-[color:var(--pt-faint)] sm:px-6">
-      Hover a mark for that landing, a dense ×n mark for its voice's day, the open lane for the
-      whole column. Click to read; from there, prev/next (or ← →) steps landing by landing
-      through the voice. The score is keyboard-readable and fully replicated in the table below.
+      The pointer is a time lens: the month stretches under it, and dense ×n days fan out into
+      their individual landings — hover any mark for exactly that one, the open lane for the
+      whole day column. Click to read; prev/next (or ← →) then steps landing by landing through
+      the voice. The score is keyboard-readable and fully replicated in the table below.
     </p>
   )}
 
@@ -508,9 +536,31 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
   /* the voice ribbons: real per-day density, worn quietly under the marks */
   .pt-band {
     opacity: 0.16;
+    transition: opacity 0.25s ease;
   }
   .pt-glowlayer {
     opacity: 0.5;
+    transition: opacity 0.25s ease;
+  }
+  /* the time lens: while it is engaged the static layers step back so the
+     shifted marks read cleanly; fans replace a dense day's face mark */
+  .pt-lens .pt-band {
+    opacity: 0.055;
+  }
+  .pt-lens .pt-glowlayer {
+    opacity: 0.22;
+  }
+  .pt-lens .pt-grid-w {
+    opacity: 0.4;
+  }
+  .pt-fan {
+    display: none;
+  }
+  .pt-hit.pt-expanded .pt-fan {
+    display: inline;
+  }
+  .pt-hit.pt-expanded .pt-face {
+    display: none;
   }
   /* the playhead: exists only during the JS-gated entrance */
   .pt-sweep {
@@ -576,6 +626,8 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
   .pt-hit {
     cursor: pointer;
     outline: none;
+    /* tiny easing so the lens feels fluid rather than snapping per event */
+    transition: transform 0.09s linear;
   }
   .pt-ring {
     stroke: var(--pt-ink);
@@ -752,6 +804,31 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
     const glyphWord: Record<string, string> = { session: 'session', work: 'work', fail: 'fail' }
     // must match the server-side OFFSETS table (mark spread within a day cluster)
     const OFFSETS: Record<number, number[]> = { 1: [0], 2: [-6.5, 6.5], 3: [-9, 0, 9] }
+    // must match the server-side fanOffsets (spread of a lens-expanded dense day)
+    const fanOffsets = (n: number): number[] => Array.from({ length: n }, (_, i) => (i - (n - 1) / 2) * 11)
+
+    // ── The time lens (full view only): a cartesian fisheye on the x axis. Under
+    //    the pointer the month stretches locally (≈3.6× at focus); dense days fan
+    //    out into their individual landings and become hoverable one by one.
+    //    fisheye(focus) === focus, so using the pointer as focus is stable. ─────
+    const LENS_R = 170
+    const LENS_D = 2.6
+    const lensOn = () => !compact && stage.classList.contains('pt-lens')
+    const fish = (x: number, focus: number): number => {
+      const dx = x - focus
+      const a = Math.abs(dx)
+      if (a >= LENS_R || a === 0) return x
+      const k = ((LENS_D + 1) * LENS_R * a) / (LENS_D * a + LENS_R)
+      return focus + Math.sign(dx) * k
+    }
+    const unfish = (xd: number, focus: number): number => {
+      const dk = xd - focus
+      const k = Math.abs(dk)
+      if (k >= LENS_R || k === 0) return xd
+      const a = (k * LENS_R) / ((LENS_D + 1) * LENS_R - LENS_D * k)
+      return focus + Math.sign(dk) * a
+    }
+    let lensFocus = 0
 
     // The site CSP drops style ATTRIBUTES — CSSOM assignments like these are allowed.
     // The exact min-width (depends on the day count) and the entrance delays are
@@ -803,7 +880,8 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
       tip.hidden = false
       const stageRect = stage.getBoundingClientRect()
       const svgRect = svg.getBoundingClientRect()
-      const anchorX = svgRect.left - stageRect.left + (x0 + dayW * (dayIdx + 0.5)) * scale()
+      const ax = x0 + dayW * (dayIdx + 0.5)
+      const anchorX = svgRect.left - stageRect.left + (lensOn() ? fish(ax, lensFocus) : ax) * scale()
       const tw = tip.offsetWidth
       const th = tip.offsetHeight
       let left = anchorX + 14
@@ -857,6 +935,28 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
       placeTip(dayIdx, clientY)
     }
 
+    const allHits = Array.from(svg.querySelectorAll<SVGGElement>('.pt-hit'))
+    const applyLens = (focus: number) => {
+      stage.classList.add('pt-lens')
+      lensFocus = focus
+      for (const h of allHits) {
+        const bx = Number(h.dataset.x ?? 0)
+        const t = fish(bx, focus) - bx
+        h.style.transform = t === 0 ? '' : `translateX(${t.toFixed(2)}px)`
+        h.dataset.t = t.toFixed(2)
+        const n = data.clusters[h.dataset.key ?? '']?.length ?? 0
+        if (n > 3) h.classList.toggle('pt-expanded', Math.abs(bx - focus) < 70)
+      }
+    }
+    const releaseLens = () => {
+      stage.classList.remove('pt-lens')
+      for (const h of allHits) {
+        h.style.transform = ''
+        h.dataset.t = '0'
+        h.classList.remove('pt-expanded')
+      }
+    }
+
     svg.addEventListener('pointermove', (ev) => {
       const rect = svg.getBoundingClientRect()
       const xVb = (ev.clientX - rect.left) / scale()
@@ -864,28 +964,39 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
       if (idx < 0 || idx >= days.length) {
         cross.style.display = 'none'
         tip.hidden = true
+        if (!compact) releaseLens()
         return
       }
+      // the pointer is the lens focus — fisheye(focus) === focus, so the day
+      // under the cursor stays put while its neighborhood stretches
+      if (!compact) applyLens(xVb)
       const snapped = x0 + dayW * (idx + 0.5)
-      cross.setAttribute('x1', String(snapped))
-      cross.setAttribute('x2', String(snapped))
+      const snappedR = lensOn() ? fish(snapped, lensFocus) : snapped
+      cross.setAttribute('x1', String(snappedR))
+      cross.setAttribute('x2', String(snappedR))
       cross.style.display = 'inline'
-      // Anywhere inside a cluster's hit band → session-precise via NEAREST mark.
-      // Nobody hits a 9px dot reliably (Frank's finding 2026-07-31): the pointer
-      // only has to be closest, never dead-center. Open lane → day column.
+      // Anywhere inside a cluster's hit band → session-precise via NEAREST mark
+      // (in the cluster's own, possibly lens-shifted frame). A lens-expanded
+      // dense day resolves per fanned mark; unexpanded ones keep the voice list.
       const target = ev.target instanceof Element ? ev.target : null
       const hitEl = target?.closest('.pt-hit') as SVGGElement | null
       const key = hitEl?.dataset.key
-      if (key) {
+      if (key && hitEl) {
         const evs = data.clusters[key]
         if (evs?.length) {
           let mi = -1
-          if (evs.length <= 3) {
-            const offsets = OFFSETS[evs.length] ?? [0]
+          const offsets =
+            evs.length <= 3
+              ? (OFFSETS[evs.length] ?? [0])
+              : hitEl.classList.contains('pt-expanded')
+                ? fanOffsets(evs.length)
+                : null
+          if (offsets) {
             const cx = Number(hitEl.dataset.x ?? 0)
+            const localX = xVb - Number(hitEl.dataset.t ?? 0)
             let best = Infinity
             offsets.forEach((dx, i) => {
-              const dist = Math.abs(xVb - (cx + dx))
+              const dist = Math.abs(localX - (cx + dx))
               if (dist < best) {
                 best = dist
                 mi = i
@@ -901,6 +1012,7 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
     svg.addEventListener('pointerleave', () => {
       cross.style.display = 'none'
       tip.hidden = true
+      if (!compact) releaseLens()
     })
 
     // ── Detail panel (full view): session-wise reading. The navigation axis is the
