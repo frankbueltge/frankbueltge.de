@@ -54,6 +54,20 @@ Parallaxe via Gemini-AI-Studio-Key (statt BigQuery/Vertex).
 
 ## Experimente — verbindliche Regeln
 
+- **Visualisierungen der Praxen dürfen eigene Bildsprache haben (Frank, 2026-07-30):**
+  Die Mono-Skin gilt für die Site, aber **nicht als Zwang zur kargen Einlinien-Grafik**.
+  Franks Wortlaut: „machs einfach interaktiv und chic, nicht immer dieses minimale
+  langweilige monochrome — das passt hier nicht mehr, weil es ein eigenes Projekt ist."
+  Für Atelier/Field/Studio also: Farbe, Tiefe, Interaktion (Hover/Fokus/Filter),
+  Detailtafel — solange die Figur aus committeten Daten abgeleitet und nachprüfbar ist.
+  Verbindlich bleibt das Handwerk: **Palette gegen die jeweilige Fläche validieren**
+  (dataviz-Skill, `scripts/validate_palette.js`, hell UND dunkel mit eigenen Stufen),
+  Legende + Tabellenansicht, `prefers-reduced-motion` achten, Herkunftszeile unter der
+  Figur. Referenz-Umsetzung: `src/components/atelier/ProcessFigure.astro` +
+  `src/styles/atelier-process.css` (Farben dort sind geprüft, nicht geraten).
+  **Statusfarben sind tabu, wo die Praxis nicht wertet** — ein abgebrochenes Vorhaben ist
+  bei Ulysses kein Fehlschlag („closing costs what continuing costs"), also bekommt es
+  eine Identitätsfarbe, kein Warnrot.
 - **Spec:** `docs/superpowers/specs/2026-06-11-werkgruppe-design.md` (Substanz-Kriterien
   in §2 sind das Gate für jedes neue Experiment; Methodenblatt-Pflicht in §3.5).
   Rahmung/Wortlaut: `2026-06-20-ehrliche-umrahmung-design.md` (kein Kunst-Anspruch).
