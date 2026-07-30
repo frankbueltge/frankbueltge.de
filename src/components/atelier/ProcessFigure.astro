@@ -1,25 +1,40 @@
 ---
-// src/components/atelier/ProcessFigure.astro — „Der Weg einer Frage": die Vogelperspektive
-// über die Forschungspraxis des Ateliers.
+// src/components/atelier/ProcessFigure.astro — „What the practice is working on":
+// Inhalt zuerst, Diagramm als Auswahl darunter.
 //
-// Warum (Frank, 2026-07-30): „/atelier/projects hat ausführliche TRACE und SCORE, aber es
-// fehlt ein Diagramm, das den gesamten Prozess auf einen Blick verständlich macht — niemand
-// liest diese ellenlangen Texte." Die Akten bleiben die Tiefe; diese Figur ist der Einstieg.
+// Die erste Fassung (30.07.) zeigte beim Auswählen einer Linie nur Telemetrie: Tage, Zugzahl,
+// Dateinamen. Franks Einwand traf: „Wenn ich ‚negative parallax' auswähle, erfahre ich nichts
+// über dieses Projekt und den Fortschritt oder aktuellen Stand und worum es dabei geht. Das
+// macht alles nicht übersichtlicher für jemanden, der die Website zum ersten Mal besucht,
+// sondern eher noch komplexer."
 //
-// Was sie zeigt: Jede eröffnete Linie als Band auf der Zeitachse — vom Tag ihrer Eröffnung
-// bis zu ihrem letzten Zug — und danach ihr Weg in den Hafen, in dem sie geendet ist. Die
-// Höhe eines Hafens ist proportional zu seiner Anzahl; damit sieht man ohne eine einzige Zahl,
-// dass die meiste Arbeit als Studie endet und wie wenig durch das Tor geht.
+// Daraus die Umkehrung: Nicht das Diagramm ist der Gegenstand, sondern die Arbeit. Oben eine
+// Karte mit dem, was die Praxis GERADE tut — voller Titel, worum es geht (wörtlich aus der
+// Akte), wo es steht, die letzten Züge mit ihren sprechenden Überschriften. Das Diagramm
+// darunter ist die Auswahl dafür: ein Klick tauscht die Karte.
 //
-// Alles ist Ableitung aus committeten Akten (src/lib/atelier/process.ts, unter Test) — keine
-// Erzählung, keine Schätzung. Was sich nicht zuordnen ließ, steht unter der Figur.
+// Alle Texte sind Zitat, keine Paraphrase (src/lib/atelier/lineText.ts, unter Test). Die
+// Praxis schreibt selbst gut genug; eine zweite Stimme darüber wäre eine Verfälschung.
 import { getCollection } from 'astro:content'
 import { baueProzessbild, STATIONEN, type Ausgang } from '@/lib/atelier/process'
+import { absicht, urteil, zugTitel } from '@/lib/atelier/lineText'
 import '@/styles/atelier-process.css'
 
 const all = await getCollection('atelier')
 
-// Projektakten: 'projects/<id>/<stück>' → ein Projekt mit seinen Aktenstücken.
+// Rohtexte der Akten — für die Prosa, die die Collection-Daten nicht hergeben.
+const scoreRaw = import.meta.glob('/src/content/atelier/projects/*/SCORE.md', {
+  eager: true, query: '?raw', import: 'default',
+}) as Record<string, string>
+const decisionRaw = import.meta.glob('/src/content/atelier/projects/*/DECISION.md', {
+  eager: true, query: '?raw', import: 'default',
+}) as Record<string, string>
+const journalRaw = import.meta.glob('/src/content/atelier/journal/*.md', {
+  eager: true, query: '?raw', import: 'default',
+}) as Record<string, string>
+
+const idAus = (pfad: string) => pfad.replace('/src/content/atelier/projects/', '').split('/')[0]
+
 const proj = new Map<string, { dateien: string[]; data: Record<string, unknown> }>()
 for (const e of all) {
   if (!e.id.startsWith('projects/')) continue
@@ -31,14 +46,11 @@ for (const e of all) {
   proj.set(id, eintrag)
 }
 
-const journalIds = all.filter((e) => e.id.startsWith('journal/')).map((e) => e.id)
+const journalIds = Object.keys(journalRaw).map((p) => p.replace('/src/content/atelier/', '').replace(/\.md$/, ''))
 const heute = new Date().toISOString().slice(0, 10)
 
-/** Die Collection hat ein loses Schema (content.config.ts: z.object({}).loose()), also
- * parst der YAML-Leser `created: 2026-07-18` zu einem Date-OBJEKT, nicht zu einem String.
- * String(date) gäbe "Sat Jul 18 2026 …" und damit NaN in jeder Datumsrechnung — der Build
- * ist daran zuerst gescheitert. Hier wird beides auf YYYY-MM-DD normalisiert; was sich nicht
- * als Datum lesen lässt, wird zu '' und fällt in der Ableitung sauber heraus. */
+/** Loses Collection-Schema ⇒ YAML parst `created:` zu einem Date-OBJEKT. String(date) gäbe
+ * „Sat Jul 18 2026 …" und NaN in jeder Datumsrechnung — daran ist der erste Build gescheitert. */
 function alsDatum(v: unknown): string {
   if (v instanceof Date && !Number.isNaN(v.getTime())) return v.toISOString().slice(0, 10)
   const s = String(v ?? '').trim()
@@ -60,10 +72,8 @@ const bild = baueProzessbild(
   heute,
 )
 
-// ————————————————————————————————————————— Wortlaut ———————————————————————
-// Englisch wie die ganze Site (English-only seit 2026-07-16). Die Hafen-Namen sagen, was
-// geschah — nicht, wie es zu bewerten ist: „closed unfinished" statt „failed", weil das
-// Protokoll das Schließen ausdrücklich gleichrangig zum Weitermachen stellt.
+// Die Hafen-Namen sagen, was geschah — nicht, wie es zu bewerten ist: „closed unfinished"
+// statt „failed", weil das Protokoll Schließen und Weitermachen gleichrangig stellt.
 const HAFEN: Record<Ausgang, { label: string; farbe: string; erklaerung: string }> = {
   PUBLISH: { label: 'published', farbe: 'var(--pr-publish)', erklaerung: 'through the gate — a work on the site' },
   PUBLICATION_CANDIDATE: { label: 'at the gate', farbe: 'var(--pr-candidate)', erklaerung: 'proposed as a work; the publication decision is human' },
@@ -72,17 +82,84 @@ const HAFEN: Record<Ausgang, { label: string; farbe: string; erklaerung: string 
   OPEN: { label: 'in progress', farbe: 'var(--pr-open)', erklaerung: 'no verdict yet' },
 }
 
+// ————————————————————————————————————————— Inhalt je Linie ————————————————
+const MONATE = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+const tag = (d: string) => (/^\d{4}-\d{2}-\d{2}$/.test(d) ? `${Number(d.slice(8, 10))} ${MONATE[Number(d.slice(5, 7)) - 1]}` : d)
+
+interface Inhalt {
+  id: string
+  titel: string
+  ausgang: Ausgang
+  hafen: string
+  farbe: string
+  eroeffnet: string
+  tage: number
+  aktiv: boolean
+  worumEsGeht: string | null
+  warumSoGeendet: string | null
+  zuege: Array<{ datum: string; titel: string }>
+  zugZahl: number
+}
+
+const inhalte: Inhalt[] = bild.linien.map((l) => {
+  const scorePfad = Object.keys(scoreRaw).find((p) => idAus(p) === l.id)
+  const decPfad = Object.keys(decisionRaw).find((p) => idAus(p) === l.id)
+  const wl = (proj.get(l.id)?.data.work_line ?? {}) as Record<string, unknown>
+  // Die Überschriften der Journaleinträge lesen sich wie das Inhaltsverzeichnis der
+  // Untersuchung — sie sind der bessere Fortschrittsanzeiger als jede Zahl.
+  const zuege = Object.entries(journalRaw)
+    .map(([pfad, roh]) => {
+      const datei = pfad.split('/').pop() ?? ''
+      const m = /^(\d{4}-\d{2}-\d{2})-(.+)\.md$/.exec(datei)
+      return m && m[2].startsWith(l.name) ? { datum: m[1], titel: zugTitel(roh, datei) } : null
+    })
+    .filter((z): z is { datum: string; titel: string } => z !== null)
+    .sort((a, b) => b.datum.localeCompare(a.datum))
+
+  return {
+    id: l.id,
+    titel: l.title,
+    ausgang: l.ausgang,
+    hafen: HAFEN[l.ausgang].label,
+    farbe: HAFEN[l.ausgang].farbe,
+    eroeffnet: l.created,
+    tage: l.tage,
+    aktiv: l.aktiv,
+    worumEsGeht: scorePfad ? absicht(scoreRaw[scorePfad], wl.work_intention) : null,
+    warumSoGeendet: decPfad ? urteil(decisionRaw[decPfad]) : null,
+    zuege: zuege.slice(0, 4),
+    zugZahl: l.zuege,
+  }
+})
+
+/** Die Kopfzeile der Karte. „0 days · 0 moves" wäre wahr und trotzdem irreführend — ein am
+ * selben Tag veröffentlichtes Werk hat nicht „nichts" getan, es hat nur keinen eigenen
+ * Journaltakt. Also: Nulldauer heißt „same day", und eine Nullzahl an Zügen wird gar nicht
+ * erst genannt. Dieselbe Regel steht unten im Skript — beide müssen zusammen geändert werden. */
+function kicker(i: { hafen: string; eroeffnet: string; tage: number; zugZahl: number; aktiv: boolean }): string {
+  const teile = [i.hafen, `opened ${tag(i.eroeffnet)}`, i.tage === 0 ? 'same day' : `${i.tage} day${i.tage === 1 ? '' : 's'}`]
+  if (i.zugZahl > 0) teile.push(`${i.zugZahl} move${i.zugZahl === 1 ? '' : 's'}`)
+  if (i.aktiv) teile.push('still running')
+  return teile.join(' · ')
+}
+
+// Startkarte: die Linie am Tor, sonst die jüngste laufende, sonst die jüngste überhaupt.
+const start =
+  inhalte.find((i) => i.ausgang === 'PUBLICATION_CANDIDATE') ??
+  [...inhalte].reverse().find((i) => i.aktiv) ??
+  inhalte[inhalte.length - 1]
+
 // ————————————————————————————————————————— Geometrie ——————————————————————
 const linien = bild.linien
 const N = Math.max(linien.length, 1)
-const ZEILE = 30
-const OBEN = 56
+const ZEILE = 27
+const OBEN = 50
 const W = 1180
-const H = OBEN + N * ZEILE + 34
-const LABEL_W = 186          // Titelspalte links
-const T_X0 = LABEL_W + 14    // Beginn der Zeitachse
-const T_X1 = 690             // Ende der Zeitachse
-const HAFEN_X = 812          // linke Kante der Häfen
+const H = OBEN + N * ZEILE + 30
+const LABEL_W = 186
+const T_X0 = LABEL_W + 14
+const T_X1 = 690
+const HAFEN_X = 812
 const HAFEN_W = 174
 
 const tms = (d: string) => Date.parse(`${d}T00:00:00Z`)
@@ -90,7 +167,6 @@ const T0 = linien.length ? Math.min(...linien.map((l) => tms(l.created))) : tms(
 const T1 = Math.max(tms(bild.stand), T0 + 86_400_000)
 const xOf = (d: string) => T_X0 + ((tms(d) - T0) / (T1 - T0)) * (T_X1 - T_X0)
 
-// Häfen: Höhe proportional zur Anzahl — die Form trägt die Aussage, nicht die Beschriftung.
 const gesamt = linien.length || 1
 const HOEHE = N * ZEILE - 6
 let lauf = OBEN
@@ -102,7 +178,6 @@ const haefen = bild.haefen.map((h) => {
 })
 const hafenVon = new Map(haefen.map((h) => [h.ausgang, h]))
 
-// Ein Platz je Linie innerhalb ihres Hafens, damit die Bänder sich nicht überlagern.
 const platz = new Map<string, number>()
 for (const h of haefen) {
   const drin = linien.filter((l) => l.ausgang === h.ausgang)
@@ -116,32 +191,24 @@ const bahnen = linien.map((l, i) => {
   const zy = platz.get(l.id) ?? y
   const hafen = hafenVon.get(l.ausgang)
   const farbe = hafen?.farbe ?? 'var(--pr-open)'
-  // Der Schwanz vom Bandende in den Hafen: eine ruhige Kubik, kein Zickzack.
   const cx = (x2 + HAFEN_X) / 2
   const tail = `M ${x2.toFixed(1)} ${y} C ${cx.toFixed(1)} ${y}, ${cx.toFixed(1)} ${zy.toFixed(1)}, ${HAFEN_X} ${zy.toFixed(1)}`
-  const laenge = Math.round(x2 - x1 + (HAFEN_X - x2) * 1.15)
   return {
-    ...l, y, x1, x2, zy, farbe, tail, laenge,
+    ...l, y, x1, x2, zy, farbe, tail,
+    laenge: Math.round(x2 - x1 + (HAFEN_X - x2) * 1.15),
     hafenLabel: hafen?.label ?? 'in progress',
     striche: l.zugTage.map((d) => xOf(d)),
   }
 })
 
 const kuerze = (s: string, n = 19) => (s.length > n ? `${s.slice(0, n - 1)}…` : s)
-
-// Achsenmarken (erster Tag, Mitte, Stand) — defensiv: ein einziges unlesbares Datum in einer Akte darf nicht den
-// ganzen Build umwerfen (genau das ist beim ersten Lauf passiert).
-const MONATE = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 const marken = [T0, (T0 + T1) / 2, T1]
   .filter((ts) => Number.isFinite(ts))
   .map((ts) => {
     const d = new Date(ts).toISOString().slice(0, 10)
-    return { x: xOf(d), label: `${d.slice(8, 10)} ${MONATE[Number(d.slice(5, 7)) - 1]}` }
+    return { x: xOf(d), label: tag(d) }
   })
-const kandidat = linien.find((l) => l.ausgang === 'PUBLICATION_CANDIDATE')
 
-// Der Torbogen — nur zeichnen, wenn es beide Häfen gibt; sonst behauptete die Figur einen
-// Übergang, für den in den Akten nichts steht.
 const hPub = hafenVon.get('PUBLISH')
 const hKand = hafenVon.get('PUBLICATION_CANDIDATE')
 const TOR_X = HAFEN_X + HAFEN_W + 16
@@ -153,15 +220,63 @@ const torBogen =
         ty: (hPub.mitte + hKand.mitte) / 2 - 2,
       }
     : null
+
+// Die Ausbeute in einem Satz — für alle, die gar kein Diagramm lesen wollen.
+const z = (a: Ausgang) => bild.haefen.find((h) => h.ausgang === a)?.anzahl ?? 0
+const ausbeute = [
+  `${linien.length} questions opened since ${tag(linien[0]?.created ?? heute)}`,
+  z('PUBLISH') > 0 ? `${z('PUBLISH')} became a work` : null,
+  z('PUBLICATION_CANDIDATE') > 0 ? `${z('PUBLICATION_CANDIDATE')} waits at the gate` : null,
+  z('ARCHIVE_AS_STUDY') > 0 ? `${z('ARCHIVE_AS_STUDY')} kept as studies` : null,
+  z('KILL') > 0 ? `${z('KILL')} closed on purpose` : null,
+].filter(Boolean).join(' · ')
+
+const linienDaten = Object.fromEntries(
+  inhalte.map((i) => [i.id, {
+    t: i.titel, o: i.hafen, e: tag(i.eroeffnet), d: i.tage, m: i.zugZahl, a: i.aktiv,
+    c: i.farbe, ab: i.worumEsGeht, v: i.warumSoGeendet,
+    z: i.zuege.map((zg) => [tag(zg.datum), zg.titel]),
+  }]),
+)
 ---
 
 <section class="at-proc" aria-labelledby="proc-title" data-proc>
   <div class="at-proc-head">
-    <h2 class="at-proc-title" id="proc-title">The path of a question</h2>
-    <p class="at-proc-sub">
-      {linien.length} lines opened · {bild.haefen.find((h) => h.ausgang === 'PUBLISH')?.anzahl ?? 0} through the gate · as of {bild.stand}
-    </p>
+    <h2 class="at-proc-title" id="proc-title">What the practice is working on</h2>
   </div>
+  <p class="at-proc-lead">
+    A line begins as a question, is worked in moves, and ends in one of four ways — as a work,
+    as a candidate waiting for a human decision, as a study kept for later, or closed on
+    purpose. Pick one below to read it.
+  </p>
+
+  {/* Die Karte ist der Gegenstand; das Diagramm darunter wählt nur aus. */}
+  <article class="at-now" data-card style={`--n-color:${start?.farbe ?? 'var(--color-line)'}`}>
+    {start && (
+      <>
+        <p class="n-kicker">
+          <span class="n-dot" aria-hidden="true"></span>
+          {kicker(start)}
+        </p>
+        <h3 class="n-title">{start.titel}</h3>
+        {start.worumEsGeht && <p class="n-about">{start.worumEsGeht}</p>}
+        {start.warumSoGeendet && <p class="n-verdict">{start.warumSoGeendet}</p>}
+        {start.zuege.length > 0 && (
+          <div class="n-moves">
+            <p class="n-moves-h">its last moves</p>
+            <ul>
+              {start.zuege.map((zg) => (
+                <li><span class="m-date">{tag(zg.datum)}</span> {zg.titel}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+        <p class="n-more"><a href={`/atelier/projects#${start.id}`}>read the full record →</a></p>
+      </>
+    )}
+  </article>
+
+  <p class="at-proc-yield">{ausbeute}</p>
 
   <ul class="at-proc-legend" data-legend>
     {haefen.map((h) => (
@@ -181,7 +296,7 @@ const torBogen =
         class="at-proc-svg"
         viewBox={`-8 0 ${W + 8} ${H}`}
         role="img"
-        aria-label={`Research lines of the atelier: ${linien.length} opened; each band runs from the day it was opened to its last move and then into the harbour where it ended. Counts per harbour: ${haefen.map((h) => `${h.label} ${h.anzahl}`).join(', ')}.`}
+        aria-label={`Every research line on a time axis: ${linien.length} opened; ${haefen.map((h) => `${h.label} ${h.anzahl}`).join(', ')}. Select a line to read it above.`}
       >
         <defs>
           <marker id="pr-arrow" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
@@ -193,8 +308,6 @@ const torBogen =
           {marken.map((m) => <text x={m.x} y={OBEN - 30} text-anchor="middle">{m.label}</text>)}
         </g>
 
-        {/* Das Tor ist KEIN Zeitpunkt und keine Linie quer durch alles, sondern genau ein
-            Übergang: vom Kandidaten zum Werk. Gepunktet, weil ihn nur ein Mensch geht. */}
         {torBogen && (
           <g class="pr-gate">
             <path d={torBogen.d} fill="none" marker-end="url(#pr-arrow)" />
@@ -221,44 +334,29 @@ const torBogen =
             data-line={b.id}
             data-out={b.ausgang}
             data-title={b.title}
-            data-created={b.created}
-            data-days={String(b.tage)}
-            data-moves={String(b.zuege)}
-            data-active={b.aktiv ? '1' : ''}
-            data-harbour={b.hafenLabel}
             data-color={b.farbe}
-            data-stations={STATIONEN.filter((s) => b.stationen[s]).join(',')}
-            aria-label={`${b.title} — opened ${b.created}, ${b.zuege} move${b.zuege === 1 ? '' : 's'}, ${b.hafenLabel}`}
-            style={`--len:${b.laenge};--delay:${(i * 55)}ms`}
+            data-harbour={b.hafenLabel}
+            aria-label={`${b.title} — ${b.hafenLabel}. Select to read it.`}
+            style={`--len:${b.laenge};--delay:${i * 45}ms`}
           >
             <title>{`${b.title} — ${b.hafenLabel}`}</title>
             <text class="pr-label" x="6" y={b.y + 4}>{kuerze(b.title)}</text>
             <text class="pr-date" x={LABEL_W} y={b.y + 4} text-anchor="end">{b.created.slice(5)}</text>
             <path class="pr-tail" d={b.tail} stroke={b.farbe} />
             <line class:list={['pr-band', { 'is-open': b.ausgang === 'OPEN' }]} x1={b.x1} y1={b.y} x2={b.x2} y2={b.y} stroke={b.farbe} />
-            {b.striche.map((x) => <line class="pr-move" x1={x} y1={b.y - 3.4} x2={x} y2={b.y + 3.4} />)}
-            {b.aktiv && <circle cx={b.x2} cy={b.y} r="4.6" fill="none" stroke={b.farbe} stroke-width="1.4" opacity="0.9" />}
-            <rect class="pr-focus" x={-8} y={b.y - 13} width={W} height={26} rx="6" fill="none" stroke="none" />
-            <rect class="pr-rowhit" x={-8} y={b.y - 13} width={HAFEN_X + 8} height={26} fill="transparent" />
-            <path class="pr-hit" d={`M ${b.x1} ${b.y} L ${b.x2} ${b.y} ${b.tail.slice(1)}`} />
+            {b.striche.map((x) => <line class="pr-move" x1={x} y1={b.y - 3.2} x2={x} y2={b.y + 3.2} />)}
+            {b.aktiv && <circle cx={b.x2} cy={b.y} r="4.4" fill="none" stroke={b.farbe} stroke-width="1.4" opacity="0.9" />}
+            <rect class="pr-focus" x={-8} y={b.y - 12} width={W} height={24} rx="6" fill="none" stroke="none" />
+            <rect class="pr-rowhit" x={-8} y={b.y - 12} width={HAFEN_X + 8} height={24} fill="transparent" />
           </g>
         ))}
       </svg>
     </div>
-
     <div class="at-proc-tip" data-tip hidden aria-hidden="true"></div>
-
-    <figcaption class="at-proc-detail" data-detail>
-      <p class="d-hint">
-        <b>Hover</b> a band to read it, <b>click</b> to keep it open. Each band runs from the day
-        its question was opened to its last move; the ticks are the moves themselves. Harbour
-        height is proportional to how many lines ended there.
-      </p>
-    </figcaption>
   </figure>
 
   <details class="at-proc-table">
-    <summary>the same as a table</summary>
+    <summary>every line as a table</summary>
     <table>
       <thead>
         <tr><th>line</th><th>opened</th><th>days</th><th>moves</th><th>records</th><th>outcome</th></tr>
@@ -279,50 +377,63 @@ const torBogen =
   </details>
 
   <p class="at-proc-prov">
-    Derived at build time from the committed project records (<code>SCORE</code> frontmatter for
-    the verdict, the present record files for the stations, journal filenames for the moves).
-    {bild.ohneLinie > 0 && ` ${bild.ohneLinie} journal entries in this period belong to no line — sessions, protocol changes, encounters; they are not counted as moves.`}
-    {kandidat && ` One line stands at the gate: “${kandidat.title}” — the publication decision is Frank's, by constitution.`}
+    Every sentence above is quoted from the practice's own records, not summarised: what a line
+    is about comes from its score, why it ended from its decision, its moves from the journal.
+    Derived at build time; {bild.ohneLinie} journal entries in this period belong to no line
+    (sessions, protocol changes, encounters) and are not counted as moves.
   </p>
+
+  <script type="application/json" data-lines set:html={JSON.stringify(linienDaten)}></script>
 </section>
 
 <script>
-  // Interaktion in zwei Stufen — der erste Entwurf hatte hier einen echten Bedienfehler
-  // (Frank, 2026-07-30): Die Detailtafel hing an `mouseleave`, also setzte sie sich zurück,
-  // sobald die Maus das Band verließ — und der Link darin war grundsätzlich unerreichbar.
-  // Ein Hover-Ziel darf nie interaktiven Inhalt tragen, den man nur durch Verlassen des
-  // Auslösers erreicht.
-  //
-  // Jetzt: HOVER zeigt einen Tooltip direkt am Zeiger (nichts zum Hinfahren, nichts zum
-  // Anklicken). KLICK rastet die Linie ein — die Tafel bleibt offen, bis man eine andere
-  // wählt, dieselbe noch einmal klickt oder Escape drückt. Erst dort stehen Link und Akte.
+  // Zwei Stufen: HOVER zeigt einen Tooltip am Zeiger (nichts zum Hinfahren, `pointer-events:
+  // none`), KLICK tauscht die Karte oben. Die erste Fassung hängte die Tafel an `mouseleave`
+  // — der Link darin war dadurch unerreichbar (Frank, 30.07.).
   const wurzel = document.querySelector<HTMLElement>('[data-proc]')
   if (wurzel) {
-    const tafel = wurzel.querySelector<HTMLElement>('[data-detail]')!
+    const karte = wurzel.querySelector<HTMLElement>('[data-card]')!
     const tip = wurzel.querySelector<HTMLElement>('[data-tip]')!
-    // Bezugsrahmen für die Tooltip-Position: die Figur (position: relative), NICHT der
-    // Scroll-Kasten — sonst rechnet man gegen ein Element, das gar nicht der
-    // Positionierungs-Vorfahr ist, und der Tooltip landet außerhalb des Bildes.
     const rahmen = wurzel.querySelector<HTMLElement>('.at-proc-figure')!
-    const grund = tafel.innerHTML
+    const daten = JSON.parse(wurzel.querySelector<HTMLElement>('[data-lines]')?.textContent ?? '{}') as Record<string, any>
     const bahnen = [...wurzel.querySelectorAll<SVGGElement>('.pr-line')]
     const knoepfe = [...wurzel.querySelectorAll<HTMLButtonElement>('[data-filter]')]
-    const STATIONEN = ['SCORE', 'TRACE', 'APPARATUS', 'EXPOSITION', 'DECISION']
-    let gewaehlt: SVGGElement | null = null
     let filter: string | null = null
+    let gewaehlt: string | null = null
 
-    const esc = (s: string) =>
-      s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c] as string)
+    const esc = (s: unknown) =>
+      String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c] as string)
 
-    const kopf = (d: DOMStringMap) =>
-      `opened <b>${esc(d.created ?? '')}</b> · <b>${esc(d.days ?? '0')}</b> day${d.days === '1' ? '' : 's'} · ` +
-      `<b>${esc(d.moves ?? '0')}</b> move${d.moves === '1' ? '' : 's'} · ` +
-      `<b>${esc(d.harbour ?? '')}</b>${d.active ? ' · still running' : ''}`
+    /** Spiegel der serverseitigen Regel: Nulldauer heißt „same day", Nullzüge werden nicht
+     * genannt — „0 moves" wäre wahr und trotzdem irreführend. */
+    function kicker(d: any): string {
+      const teile = [d.o, `opened ${d.e}`, d.d === 0 ? 'same day' : `${d.d} day${d.d === 1 ? '' : 's'}`]
+      if (d.m > 0) teile.push(`${d.m} move${d.m === 1 ? '' : 's'}`)
+      if (d.a) teile.push('still running')
+      return teile.join(' · ')
+    }
 
-    // — Tooltip: folgt dem Zeiger, trägt nur Text, verschwindet spurlos —
+    function zeigeKarte(id: string) {
+      const d = daten[id]
+      if (!d) return
+      karte.style.setProperty('--n-color', d.c)
+      karte.innerHTML =
+        `<p class="n-kicker"><span class="n-dot" aria-hidden="true"></span>${esc(kicker(d))}</p>` +
+        `<h3 class="n-title">${esc(d.t)}</h3>` +
+        (d.ab ? `<p class="n-about">${esc(d.ab)}</p>` : '') +
+        (d.v ? `<p class="n-verdict">${esc(d.v)}</p>` : '') +
+        (d.z.length
+          ? `<div class="n-moves"><p class="n-moves-h">its last moves</p><ul>` +
+            d.z.map((zg: [string, string]) => `<li><span class="m-date">${esc(zg[0])}</span> ${esc(zg[1])}</li>`).join('') +
+            `</ul></div>`
+          : '') +
+        `<p class="n-more"><a href="/atelier/projects#${esc(id)}">read the full record →</a></p>`
+      karte.animate?.([{ opacity: 0.4 }, { opacity: 1 }], { duration: 220, easing: 'ease-out' })
+    }
+
     function zeigeTip(g: SVGGElement, ev: MouseEvent) {
       const d = g.dataset
-      tip.innerHTML = `<b class="t-title">${esc(d.title ?? '')}</b><span class="t-meta">${kopf(d)}</span>`
+      tip.innerHTML = `<b class="t-title">${esc(d.title)}</b><span class="t-meta">${esc(d.harbour)} — click to read it</span>`
       tip.style.setProperty('--t-color', d.color ?? 'var(--color-line)')
       tip.hidden = false
       const r = rahmen.getBoundingClientRect()
@@ -331,57 +442,36 @@ const torBogen =
       const y = Math.max(ev.clientY - r.top - b.height - 14, 6)
       tip.style.transform = `translate(${x}px, ${y}px)`
     }
-    const versteckeTip = () => { tip.hidden = true }
 
-    // — Tafel: gehört ausschließlich der eingerasteten Linie —
-    function fuelleTafel(g: SVGGElement) {
-      const d = g.dataset
-      const erreicht = (d.stations ?? '').split(',').filter(Boolean)
-      tafel.style.setProperty('--d-color', d.color ?? 'var(--color-line)')
-      tafel.innerHTML =
-        `<button class="d-close" type="button" data-close aria-label="close">×</button>` +
-        `<p class="d-title">${esc(d.title ?? '')}</p>` +
-        `<p class="d-meta">${kopf(d)}</p>` +
-        `<ul class="d-stations">` +
-        STATIONEN.map((s) => `<li class="d-st"${erreicht.includes(s) ? ' data-reached' : ''}>${s}</li>`).join('') +
-        `</ul>` +
-        `<p class="d-meta"><a href="/atelier/projects#${esc(d.line ?? '')}">read the record →</a></p>`
-      tafel.querySelector('[data-close]')?.addEventListener('click', () => waehle(null))
-    }
-
-    /** Hervorhebung: die eingerastete Linie, sonst die überfahrene, sonst der Filter. */
     function male(vorschau: SVGGElement | null) {
-      const vorn = vorschau ?? gewaehlt
-      wurzel!.toggleAttribute('data-dim', Boolean(vorn) || Boolean(filter))
+      wurzel!.toggleAttribute('data-dim', Boolean(vorschau) || Boolean(filter))
       for (const g of bahnen) {
-        const an = vorn ? g === vorn : !filter || g.dataset.out === filter
+        const an = vorschau ? g === vorschau : !filter || g.dataset.out === filter
         g.toggleAttribute('data-on', an)
-        g.toggleAttribute('data-chosen', g === gewaehlt)
+        g.toggleAttribute('data-chosen', Boolean(gewaehlt) && g.dataset.line === gewaehlt)
       }
     }
 
-    function waehle(g: SVGGElement | null) {
-      gewaehlt = g
-      if (g) fuelleTafel(g)
-      else {
-        tafel.removeAttribute('style')
-        tafel.innerHTML = grund
-      }
+    function waehle(id: string) {
+      if (!daten[id]) return
+      gewaehlt = id
+      zeigeKarte(id)
       male(null)
+      karte.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
     }
 
     for (const g of bahnen) {
       g.addEventListener('mouseenter', (ev) => { zeigeTip(g, ev as MouseEvent); male(g) })
       g.addEventListener('mousemove', (ev) => zeigeTip(g, ev as MouseEvent))
-      g.addEventListener('mouseleave', () => { versteckeTip(); male(null) })
+      g.addEventListener('mouseleave', () => { tip.hidden = true; male(null) })
       g.addEventListener('focus', () => male(g))
       g.addEventListener('blur', () => male(null))
-      g.addEventListener('click', () => waehle(gewaehlt === g ? null : g))
+      g.addEventListener('click', () => waehle(g.dataset.line ?? ''))
       g.addEventListener('keydown', (ev) => {
         const k = (ev as KeyboardEvent).key
         if (k !== 'Enter' && k !== ' ') return
         ev.preventDefault()
-        waehle(gewaehlt === g ? null : g)
+        waehle(g.dataset.line ?? '')
       })
     }
 
@@ -390,12 +480,8 @@ const torBogen =
         const wert = b.dataset.filter ?? null
         filter = filter === wert ? null : wert
         for (const x of knoepfe) x.setAttribute('aria-pressed', String(x.dataset.filter === filter))
-        waehle(null)
+        male(null)
       })
     }
-
-    document.addEventListener('keydown', (ev) => {
-      if (ev.key === 'Escape' && gewaehlt) waehle(null)
-    })
   }
 </script>
