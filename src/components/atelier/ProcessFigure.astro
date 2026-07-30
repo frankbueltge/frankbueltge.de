@@ -176,7 +176,7 @@ const torBogen =
   </ul>
 
   <figure class="at-proc-figure">
-    <div class="at-proc-scroll">
+    <div class="at-proc-scroll" data-plot>
       <svg
         class="at-proc-svg"
         viewBox={`-8 0 ${W + 8} ${H}`}
@@ -228,7 +228,7 @@ const torBogen =
             data-harbour={b.hafenLabel}
             data-color={b.farbe}
             data-stations={STATIONEN.filter((s) => b.stationen[s]).join(',')}
-            aria-label={`${b.title} — opened ${b.created}, ${b.zuege} moves, ${b.hafenLabel}`}
+            aria-label={`${b.title} — opened ${b.created}, ${b.zuege} move${b.zuege === 1 ? '' : 's'}, ${b.hafenLabel}`}
             style={`--len:${b.laenge};--delay:${(i * 55)}ms`}
           >
             <title>{`${b.title} — ${b.hafenLabel}`}</title>
@@ -238,18 +238,21 @@ const torBogen =
             <line class:list={['pr-band', { 'is-open': b.ausgang === 'OPEN' }]} x1={b.x1} y1={b.y} x2={b.x2} y2={b.y} stroke={b.farbe} />
             {b.striche.map((x) => <line class="pr-move" x1={x} y1={b.y - 3.4} x2={x} y2={b.y + 3.4} />)}
             {b.aktiv && <circle cx={b.x2} cy={b.y} r="4.6" fill="none" stroke={b.farbe} stroke-width="1.4" opacity="0.9" />}
-            <rect class="pr-focus" x={0} y={b.y - 12} width={W} height={24} rx="6" fill="none" stroke="none" />
+            <rect class="pr-focus" x={-8} y={b.y - 13} width={W} height={26} rx="6" fill="none" stroke="none" />
+            <rect class="pr-rowhit" x={-8} y={b.y - 13} width={HAFEN_X + 8} height={26} fill="transparent" />
             <path class="pr-hit" d={`M ${b.x1} ${b.y} L ${b.x2} ${b.y} ${b.tail.slice(1)}`} />
           </g>
         ))}
       </svg>
     </div>
 
+    <div class="at-proc-tip" data-tip hidden aria-hidden="true"></div>
+
     <figcaption class="at-proc-detail" data-detail>
       <p class="d-hint">
-        Hover or focus a band. Each band runs from the day its question was opened to its last
-        move; the ticks are the moves themselves. Harbour height is proportional to how many
-        lines ended there.
+        <b>Hover</b> a band to read it, <b>click</b> to keep it open. Each band runs from the day
+        its question was opened to its last move; the ticks are the moves themselves. Harbour
+        height is proportional to how many lines ended there.
       </p>
     </figcaption>
   </figure>
@@ -284,53 +287,101 @@ const torBogen =
 </section>
 
 <script>
-  // Interaktion: Band anfassen → hervorheben und die Tafel füllen. Filter in der Legende
-  // isoliert einen Ausgang. Alles ohne Bibliothek und ohne Zustand außerhalb des DOM.
+  // Interaktion in zwei Stufen — der erste Entwurf hatte hier einen echten Bedienfehler
+  // (Frank, 2026-07-30): Die Detailtafel hing an `mouseleave`, also setzte sie sich zurück,
+  // sobald die Maus das Band verließ — und der Link darin war grundsätzlich unerreichbar.
+  // Ein Hover-Ziel darf nie interaktiven Inhalt tragen, den man nur durch Verlassen des
+  // Auslösers erreicht.
+  //
+  // Jetzt: HOVER zeigt einen Tooltip direkt am Zeiger (nichts zum Hinfahren, nichts zum
+  // Anklicken). KLICK rastet die Linie ein — die Tafel bleibt offen, bis man eine andere
+  // wählt, dieselbe noch einmal klickt oder Escape drückt. Erst dort stehen Link und Akte.
   const wurzel = document.querySelector<HTMLElement>('[data-proc]')
   if (wurzel) {
     const tafel = wurzel.querySelector<HTMLElement>('[data-detail]')!
+    const tip = wurzel.querySelector<HTMLElement>('[data-tip]')!
+    // Bezugsrahmen für die Tooltip-Position: die Figur (position: relative), NICHT der
+    // Scroll-Kasten — sonst rechnet man gegen ein Element, das gar nicht der
+    // Positionierungs-Vorfahr ist, und der Tooltip landet außerhalb des Bildes.
+    const rahmen = wurzel.querySelector<HTMLElement>('.at-proc-figure')!
     const grund = tafel.innerHTML
     const bahnen = [...wurzel.querySelectorAll<SVGGElement>('.pr-line')]
     const knoepfe = [...wurzel.querySelectorAll<HTMLButtonElement>('[data-filter]')]
     const STATIONEN = ['SCORE', 'TRACE', 'APPARATUS', 'EXPOSITION', 'DECISION']
+    let gewaehlt: SVGGElement | null = null
     let filter: string | null = null
 
-    const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c] as string)
+    const esc = (s: string) =>
+      s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c] as string)
 
-    function zeige(g: SVGGElement) {
+    const kopf = (d: DOMStringMap) =>
+      `opened <b>${esc(d.created ?? '')}</b> · <b>${esc(d.days ?? '0')}</b> day${d.days === '1' ? '' : 's'} · ` +
+      `<b>${esc(d.moves ?? '0')}</b> move${d.moves === '1' ? '' : 's'} · ` +
+      `<b>${esc(d.harbour ?? '')}</b>${d.active ? ' · still running' : ''}`
+
+    // — Tooltip: folgt dem Zeiger, trägt nur Text, verschwindet spurlos —
+    function zeigeTip(g: SVGGElement, ev: MouseEvent) {
+      const d = g.dataset
+      tip.innerHTML = `<b class="t-title">${esc(d.title ?? '')}</b><span class="t-meta">${kopf(d)}</span>`
+      tip.style.setProperty('--t-color', d.color ?? 'var(--color-line)')
+      tip.hidden = false
+      const r = rahmen.getBoundingClientRect()
+      const b = tip.getBoundingClientRect()
+      const x = Math.min(Math.max(ev.clientX - r.left + 16, 8), Math.max(8, r.width - b.width - 8))
+      const y = Math.max(ev.clientY - r.top - b.height - 14, 6)
+      tip.style.transform = `translate(${x}px, ${y}px)`
+    }
+    const versteckeTip = () => { tip.hidden = true }
+
+    // — Tafel: gehört ausschließlich der eingerasteten Linie —
+    function fuelleTafel(g: SVGGElement) {
       const d = g.dataset
       const erreicht = (d.stations ?? '').split(',').filter(Boolean)
-      const farbe = d.color ?? 'var(--color-line)'
-      tafel.style.setProperty('--d-color', farbe)
+      tafel.style.setProperty('--d-color', d.color ?? 'var(--color-line)')
       tafel.innerHTML =
+        `<button class="d-close" type="button" data-close aria-label="close">×</button>` +
         `<p class="d-title">${esc(d.title ?? '')}</p>` +
-        `<p class="d-meta">opened <b>${esc(d.created ?? '')}</b> · <b>${esc(d.days ?? '0')}</b> days · ` +
-        `<b>${esc(d.moves ?? '0')}</b> moves · <b>${esc(d.harbour ?? '')}</b>${d.active ? ' · still running' : ''}</p>` +
+        `<p class="d-meta">${kopf(d)}</p>` +
         `<ul class="d-stations">` +
         STATIONEN.map((s) => `<li class="d-st"${erreicht.includes(s) ? ' data-reached' : ''}>${s}</li>`).join('') +
         `</ul>` +
         `<p class="d-meta"><a href="/atelier/projects#${esc(d.line ?? '')}">read the record →</a></p>`
+      tafel.querySelector('[data-close]')?.addEventListener('click', () => waehle(null))
     }
 
-    function anwenden(aktiv: SVGGElement | null) {
-      const dimmen = Boolean(aktiv) || Boolean(filter)
-      wurzel!.toggleAttribute('data-dim', dimmen)
+    /** Hervorhebung: die eingerastete Linie, sonst die überfahrene, sonst der Filter. */
+    function male(vorschau: SVGGElement | null) {
+      const vorn = vorschau ?? gewaehlt
+      wurzel!.toggleAttribute('data-dim', Boolean(vorn) || Boolean(filter))
       for (const g of bahnen) {
-        const an = aktiv ? g === aktiv : !filter || g.dataset.out === filter
+        const an = vorn ? g === vorn : !filter || g.dataset.out === filter
         g.toggleAttribute('data-on', an)
+        g.toggleAttribute('data-chosen', g === gewaehlt)
       }
-      if (!aktiv) tafel.innerHTML = grund
+    }
+
+    function waehle(g: SVGGElement | null) {
+      gewaehlt = g
+      if (g) fuelleTafel(g)
+      else {
+        tafel.removeAttribute('style')
+        tafel.innerHTML = grund
+      }
+      male(null)
     }
 
     for (const g of bahnen) {
-      g.addEventListener('mouseenter', () => { zeige(g); anwenden(g) })
-      g.addEventListener('focus', () => { zeige(g); anwenden(g) })
-      g.addEventListener('mouseleave', () => anwenden(null))
-      g.addEventListener('blur', () => anwenden(null))
+      g.addEventListener('mouseenter', (ev) => { zeigeTip(g, ev as MouseEvent); male(g) })
+      g.addEventListener('mousemove', (ev) => zeigeTip(g, ev as MouseEvent))
+      g.addEventListener('mouseleave', () => { versteckeTip(); male(null) })
+      g.addEventListener('focus', () => male(g))
+      g.addEventListener('blur', () => male(null))
+      g.addEventListener('click', () => waehle(gewaehlt === g ? null : g))
       g.addEventListener('keydown', (ev) => {
-        if (ev.key !== 'Enter' && ev.key !== ' ') return
+        const k = (ev as KeyboardEvent).key
+        if (k !== 'Enter' && k !== ' ') return
         ev.preventDefault()
-        window.location.href = `/atelier/projects#${g.dataset.line ?? ''}`
+        waehle(gewaehlt === g ? null : g)
       })
     }
 
@@ -339,8 +390,12 @@ const torBogen =
         const wert = b.dataset.filter ?? null
         filter = filter === wert ? null : wert
         for (const x of knoepfe) x.setAttribute('aria-pressed', String(x.dataset.filter === filter))
-        anwenden(null)
+        waehle(null)
       })
     }
+
+    document.addEventListener('keydown', (ev) => {
+      if (ev.key === 'Escape' && gewaehlt) waehle(null)
+    })
   }
 </script>
