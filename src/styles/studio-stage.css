@@ -362,6 +362,404 @@
   margin-top: 3px;
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════════════════════
+   The season floor — "the floor keeps every mark" (src/lib/studio/season.ts + components/
+   studio/SeasonFloor.astro). The house's own drawing, deepened: the same black floor, curtain
+   line, hanging lamps and hard-edged light pools as the stage above it, now carrying a whole
+   season — every premiere lit, every strike taped, every return curving back into production,
+   and the one withdrawal as a struck spotlight whose pool stays on the floor, unlit.
+
+   PALETTE: studio-season
+   Recorded, with its validator verdict and the reason for its shape, in src/lib/dataviz/
+   palette.ts. TWO categorical identities (struck / returned by the eye) plus ONE hue whose
+   separation is carried by the MARK'S SHAPE rather than its colour: the lamp gold sits at
+   deutan ΔE 6.9 against the curtain crimson in light mode, inside the validator's 6–8 floor
+   band, so a lit position is a POOL and a strike is an X — two different marks, not two
+   colours of one mark — every pool is direct-labelled with its title, and the whole season is
+   repeated as a table. No warning red anywhere: withdrawing a work is a completed honest act.
+   ─────────────────────────────────────────────────────────────────────────────────────────── */
+:root[data-theme='dark'] .studio-surface {
+  --st-c-lit: #bd8b21;
+  --st-c-struck: #c2455a;
+  --st-c-returned: #9085e9;
+  /* ink for text standing INSIDE a lit pool — a lit thing reads dark, in both themes */
+  --st-spot-ink: #2e250f;
+}
+:root[data-theme='light'] .studio-surface {
+  --st-c-lit: #8a6a10;
+  --st-c-struck: #a83248;
+  --st-c-returned: #4a3aa7;
+  --st-spot-ink: #2e250f;
+}
+
+.studio-surface .st-season-floor { margin: 6px 0 26px; }
+.studio-surface .st-record-h,
+.studio-surface .st-sf-key {
+  font: 600 12px var(--st-font-record);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--st-ink-2);
+  margin: 14px 0 6px;
+}
+.studio-surface .st-record-h {
+  font-family: var(--st-font-display);
+  font-size: 26px;
+  letter-spacing: 0.03em;
+  text-transform: none;
+  color: var(--st-h1-ink);
+  margin: 4px 0 10px;
+}
+.studio-surface .st-sf-hint { margin: 4px 0 14px; }
+.studio-surface .st-sf-figure {
+  /* the readout is placed in THIS box's coordinates (dataviz/readout.ts house rule 1) */
+  position: relative;
+  margin: 0 0 4px;
+}
+.studio-surface svg.st-sf {
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: visible;
+}
+.studio-surface .st-sf-floor { fill: var(--st-page); stroke: var(--st-hairline); }
+.studio-surface .st-sf-curtain { stroke: var(--st-c-struck); stroke-width: 3; fill: none; }
+.studio-surface .st-sf-bar { stroke: var(--st-ink-2); stroke-width: 2; fill: none; opacity: 0.55; }
+.studio-surface .st-sf-headline {
+  font: 600 12px var(--st-font-record);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  fill: var(--st-ink-2);
+}
+.studio-surface .st-sf-prod { stroke: var(--st-ink-2); stroke-width: 1; stroke-dasharray: 6 6; fill: none; }
+.studio-surface .st-sf-prod-label,
+.studio-surface .st-sf-tick {
+  font: 11px var(--st-font-record);
+  letter-spacing: 0.16em;
+  fill: var(--st-ink-2);
+}
+.studio-surface .st-sf-axis { stroke: var(--st-hairline); stroke-width: 1; fill: none; }
+
+/* a lit position: lamp on the bar, two beam hairlines, a hard-edged pool — the follow spot,
+   never a glow (2026-07-16: the soft gradient was rejected and stays rejected) */
+.studio-surface .st-sf-lamp { fill: var(--st-c-lit); }
+.studio-surface .st-sf-beam { stroke: var(--st-c-lit); stroke-width: 1; fill: none; opacity: 0.5; }
+.studio-surface .st-sf-pool {
+  fill: var(--st-spot-pool);
+  stroke: var(--st-spot-ring);
+  stroke-width: 1.4;
+}
+.studio-surface .st-sf-tape { stroke: var(--st-ink-2); stroke-width: 1.6; fill: none; }
+.studio-surface .st-sf-title {
+  /* the Didone the surface has always declared and never used — the display face of the house */
+  font-family: var(--st-font-display);
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  fill: var(--st-spot-ink);
+}
+.studio-surface .st-sf-litmeta { font: 11px var(--st-font-record); fill: var(--st-ink-2); }
+
+/* a struck position: the taped X the floor keeps for good */
+.studio-surface .st-sf-x { stroke: var(--st-c-struck); stroke-width: 2.2; fill: none; }
+.studio-surface .st-sf-strike-n { font: 600 12px var(--st-font-record); fill: var(--st-ink); }
+.studio-surface .st-sf-strike-s { font: 11px var(--st-font-record); fill: var(--st-ink-2); }
+
+/* the struck spotlight: the light was taken away, the position was not. The pool goes unlit —
+   floor colour, a dashed edge — and the X is drawn THROUGH it. */
+.studio-surface .st-sf-pool.st-sf-withdrawn {
+  fill: var(--st-page);
+  stroke: var(--st-c-struck);
+  stroke-width: 1.4;
+  stroke-dasharray: 7 5;
+}
+.studio-surface .st-sf-lit:has(.st-sf-withdrawn) .st-sf-title { fill: var(--st-ink); }
+.studio-surface .st-sf-lit:has(.st-sf-withdrawn) .st-sf-beam { opacity: 0.18; stroke-dasharray: 4 6; }
+.studio-surface .st-sf-lit:has(.st-sf-withdrawn) .st-sf-lamp { fill: var(--st-ink-2); }
+.studio-surface .st-sf-x-through { stroke-width: 3; }
+
+/* a return: the eye sends the work back, and the arc goes upstage into production */
+.studio-surface .st-sf-arc {
+  stroke: var(--st-c-returned);
+  stroke-width: 2.2;
+  fill: none;
+  stroke-linecap: round;
+}
+.studio-surface .st-sf-arrow { stroke: var(--st-c-returned); stroke-width: 2.2; fill: none; }
+.studio-surface .st-sf-ord {
+  font: 600 12px var(--st-font-display);
+  letter-spacing: 0.08em;
+  fill: var(--st-c-returned);
+}
+.studio-surface .st-sf-note path { stroke: var(--st-ink-2); stroke-width: 1; fill: none; }
+.studio-surface .st-sf-note text { font: 11.5px var(--st-font-record); fill: var(--st-ink); }
+
+/* the hit target: invisible, on top of its own mark, and the reason a pointer aimed at a position
+   finds it instead of the floor behind it (a mark group's bounding-box centre is empty air) */
+.studio-surface .st-sf-hit { fill: transparent; stroke: none; pointer-events: all; }
+
+/* focus states: hover, keyboard focus, a scene's filter/dim, and the chosen mark. Nothing here
+   moves a mark — a filtered floor still keeps every mark, it only stops shouting about the
+   ones the scene is not talking about. */
+.studio-surface .st-sf-lit,
+.studio-surface .st-sf-strike,
+.studio-surface .st-sf-return { cursor: help; outline: none; transition: opacity 0.18s ease; }
+.studio-surface .st-sf-lit:not([data-on]),
+.studio-surface .st-sf-strike:not([data-on]),
+.studio-surface .st-sf-return:not([data-on]) { opacity: 0.16; }
+.studio-surface [data-dim] { opacity: 0.3; }
+.studio-surface .st-sf-strike:hover .st-sf-x,
+.studio-surface .st-sf-strike:focus-visible .st-sf-x,
+.studio-surface .st-sf-strike[data-sel] .st-sf-x { stroke-width: 3.4; }
+.studio-surface .st-sf-return:hover .st-sf-arc,
+.studio-surface .st-sf-return:focus-visible .st-sf-arc,
+.studio-surface .st-sf-return[data-sel] .st-sf-arc { stroke-width: 3.6; }
+.studio-surface .st-sf-lit:hover .st-sf-pool,
+.studio-surface .st-sf-lit:focus-visible .st-sf-pool,
+.studio-surface .st-sf-lit[data-sel] .st-sf-pool { stroke-width: 3; }
+.studio-surface .st-sf-lit:focus-visible .st-sf-tape,
+.studio-surface .st-sf-strike:focus-visible .st-sf-x,
+.studio-surface .st-sf-return:focus-visible .st-sf-arc { stroke: var(--st-ink); }
+.studio-surface [data-sel] .st-sf-strike-n,
+.studio-surface [data-sel] .st-sf-title { text-decoration: underline; text-underline-offset: 3px; }
+
+/* the lamps come up, then the arcs draw — a curtain-up gesture, once, ~1s in total */
+@media (prefers-reduced-motion: no-preference) {
+  .studio-surface .st-sf-enter .st-sf-pool { animation: st-sf-up 0.5s ease-out both; }
+  .studio-surface .st-sf-enter .st-sf-arc {
+    stroke-dasharray: 1400;
+    animation: st-sf-draw 0.9s 0.35s ease-out both;
+  }
+  @keyframes st-sf-up {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes st-sf-draw {
+    from { stroke-dashoffset: 1400; }
+    to { stroke-dashoffset: 0; }
+  }
+}
+
+/* the readout: the studio's own tooltip skin over the shared shell (dataviz/Readout.astro) */
+.studio-surface .dv-readout {
+  background: var(--st-badge-bg);
+  border: 1px solid var(--st-hairline);
+  border-left: 3px solid var(--st-c-lit);
+  padding: 8px 11px;
+  font: 12px var(--st-font-record);
+  line-height: 1.5;
+  color: var(--st-ink);
+}
+.studio-surface .dv-readout[data-state='struck'] { border-left-color: var(--st-c-struck); }
+.studio-surface .dv-readout[data-state='returned'] { border-left-color: var(--st-c-returned); }
+.studio-surface .dv-readout .r-head {
+  display: block;
+  font-weight: 600;
+  font-family: var(--st-font-display);
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  margin-bottom: 3px;
+}
+.studio-surface .dv-readout .r-src { display: block; color: var(--st-ink-2); margin-top: 4px; font-size: 11px; }
+
+/* the legend, as a filter (dataviz/LegendFilter.astro) */
+.studio-surface .dv-legend { gap: 6px 18px; margin: 10px 0 16px; }
+.studio-surface .dv-legend-btn {
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  padding: 4px 8px;
+  font: 12px var(--st-font-record);
+  letter-spacing: 0.04em;
+  color: var(--st-ink-2);
+  cursor: pointer;
+}
+.studio-surface .dv-legend-btn:hover { color: var(--st-ink); border-color: var(--st-hairline); }
+.studio-surface .dv-legend-btn[aria-pressed='true'] {
+  color: var(--st-ink);
+  border-color: var(--st-ink-2);
+  background: var(--st-badge-bg);
+}
+/* The swatch carries the mark's SHAPE, not only its hue — and here it has to. "struck" and
+   "withdrawn after premiere" are the same curtain crimson on purpose (a withdrawal is the house
+   striking its own light, not a different kind of event), so two identical squares in the legend
+   would say the opposite of what the floor draws. A lit position is a round pool, an unlit one is
+   the same pool with a dashed edge and no fill, a strike is a square-cornered X mark. This is the
+   same shape relief src/lib/dataviz/palette.ts records for the 6–8 CVD band, applied to the key. */
+.studio-surface .dv-legend-swatch { width: 12px; height: 12px; border-radius: 1px; }
+.studio-surface [data-dv-legend-key='premiered'] .dv-legend-swatch { border-radius: 50%; }
+.studio-surface [data-dv-legend-key='withdrawn'] .dv-legend-swatch {
+  border-radius: 50%;
+  background: none;
+  border: 1.5px dashed var(--st-c-struck);
+}
+.studio-surface [data-dv-legend-key='returned'] .dv-legend-swatch { height: 4px; border-radius: 2px; }
+.studio-surface .dv-legend-count { color: var(--st-ink-2); font-variant-numeric: tabular-nums; }
+
+/* the detail panel (dataviz/DetailPanel.astro) — the record, one mark at a time */
+.studio-surface .dv-panel {
+  border: 1px solid var(--st-hairline);
+  border-top: 2px solid var(--st-c-lit);
+  background: var(--st-badge-bg);
+  padding: 14px 16px 12px;
+  margin: 6px 0 20px;
+  max-width: 78ch;
+}
+.studio-surface .dv-panel[data-state='struck'] { border-top-color: var(--st-c-struck); }
+.studio-surface .dv-panel[data-state='returned'] { border-top-color: var(--st-c-returned); }
+.studio-surface .dv-panel-head {
+  font-family: var(--st-font-display);
+  font-size: 21px;
+  letter-spacing: 0.05em;
+  color: var(--st-ink);
+}
+.studio-surface .dv-panel-head .p-state {
+  display: block;
+  font: 11px var(--st-font-record);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--st-ink-2);
+  margin-bottom: 3px;
+}
+.studio-surface .dv-panel-body {
+  font: 14px var(--st-font-record);
+  line-height: 1.62;
+  color: var(--st-ink);
+  margin: 8px 0 4px;
+  /* A chronicle summary can run to a paragraph, and inside the tour's sticky column an unbounded
+     panel pushed the figure itself off the screen. The record stays WHOLE — it scrolls here, and
+     the table below carries every word of it too. */
+  max-height: 34vh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.studio-surface .dv-panel-body q { font-style: italic; }
+.studio-surface .dv-panel-foot,
+.studio-surface .dv-prov {
+  font: 11.5px var(--st-font-record);
+  line-height: 1.55;
+  color: var(--st-ink-2);
+  max-width: 92ch;
+}
+.studio-surface .dv-panel-nav { margin-top: 10px; }
+.studio-surface .dv-panel-nav button,
+.studio-surface .dv-tour-steps button {
+  background: none;
+  border: 1px solid var(--st-hairline);
+  border-radius: 2px;
+  padding: 3px 10px;
+  font: 11px var(--st-font-record);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--st-ink-2);
+  cursor: pointer;
+}
+.studio-surface .dv-panel-nav button:hover,
+.studio-surface .dv-tour-steps button:hover { color: var(--st-ink); border-color: var(--st-ink-2); }
+
+/* the table floor (dataviz/TableFallback.astro) */
+.studio-surface .dv-table-fallback { margin: 6px 0 22px; }
+.studio-surface .dv-table-fallback > summary {
+  cursor: pointer;
+  font: 12px var(--st-font-record);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--st-ink-2);
+  padding: 7px 0;
+  border-top: 1px solid var(--st-hairline);
+}
+.studio-surface .dv-table-fallback > summary:hover { color: var(--st-ink); }
+.studio-surface .dv-table { font: 12.5px var(--st-font-record); }
+.studio-surface .dv-table td:nth-child(4) { max-width: 62ch; font-style: italic; }
+
+/* the guided tour (dataviz/Tour.astro) — the figure stands still on the left, the season's own
+   account walks past it on the right */
+.studio-surface .dv-tour {
+  --dv-tour-gap: 2.6rem;
+  /* clears the site's own fixed header — at 1.5rem the figure's key line was cut in half by it */
+  --dv-tour-sticky-top: 5rem;
+  --dv-tour-scroll-margin: 30vh;
+  border-top: 1px solid var(--st-hairline);
+  padding-top: 18px;
+  margin: 8px 0 30px;
+  outline: none;
+}
+/* The stage gets the wider half. Tour.astro's own default is an even 1fr/1fr, which is right for a
+   tour whose figure is a small diagram; this one IS the drawing, and at half of 1440px its Didone
+   titles and taped names were shrinking to the edge of legible. */
+.studio-surface .dv-tour-body:has(.dv-tour-figure:not([hidden])) {
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+}
+.studio-surface .dv-tour-title {
+  font-family: var(--st-font-display);
+  font-size: clamp(24px, 3vw, 38px);
+  line-height: 1.14;
+  letter-spacing: 0.01em;
+  color: var(--st-h1-ink);
+  margin: 0 0 0.3em;
+  max-width: 40ch;
+}
+.studio-surface .dv-tour-standfirst {
+  font: 15px var(--st-font-record);
+  line-height: 1.6;
+  color: var(--st-ink-2);
+  max-width: 78ch;
+  margin: 0 0 12px;
+}
+.studio-surface .dv-scene { padding: 8vh 0; max-width: 62ch; }
+.studio-surface .dv-scene:first-child { padding-top: 2vh; }
+.studio-surface .dv-scene-kicker {
+  font: 11px var(--st-font-record);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--st-ink-2);
+  margin: 0 0 5px;
+}
+.studio-surface .dv-scene[aria-current='step'] .dv-scene-kicker { color: var(--st-c-lit); }
+.studio-surface .dv-scene-heading {
+  font-family: var(--st-font-display);
+  font-size: 25px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  color: var(--st-ink);
+  margin: 0 0 8px;
+}
+.studio-surface .dv-scene-lead {
+  font: 15px var(--st-font-record);
+  line-height: 1.66;
+  color: var(--st-ink);
+  margin: 0 0 12px;
+}
+.studio-surface .dv-scene-quote {
+  border-left: 2px solid var(--st-c-struck);
+  margin: 12px 0;
+  padding: 2px 0 2px 15px;
+}
+.studio-surface .dv-scene-quote p {
+  font: italic 15px var(--st-font-record);
+  line-height: 1.62;
+  color: var(--st-ink);
+  margin: 0;
+}
+.studio-surface .dv-scene-quote footer {
+  font: 11px var(--st-font-record);
+  color: var(--st-ink-2);
+  margin-top: 6px;
+}
+/* The no-JS floor: one still per scene, cropped from the same builder. Capped in height and
+   letterboxed by the SVG's own preserveAspectRatio, so a scene's image never grows into a full
+   screen of its own between two paragraphs. */
+.studio-surface .dv-scene-still svg { width: 100%; height: auto; max-height: 62vh; display: block; }
+.studio-surface .dv-scene-still { margin: 14px 0 0; }
+.studio-surface .dv-tour-steps { margin: 12px 0 4px; }
+.studio-surface .dv-tour-jump { font: 11px var(--st-font-record); }
+.studio-surface .dv-tour-jump a { color: var(--st-ink-2); text-decoration: none; }
+.studio-surface .dv-tour-jump a[aria-current='true'] { color: var(--st-ink); text-decoration: underline; }
+@media (max-width: 900px) {
+  .studio-surface .dv-tour-body:has(.dv-tour-figure:not([hidden])) { grid-template-columns: 1fr; }
+  .studio-surface .dv-scene { padding: 4vh 0; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .studio-surface * { transition: none !important; animation: none !important; }
 }
