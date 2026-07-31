@@ -1,27 +1,44 @@
 ---
-// site-v2 work order §5 (decisions doc 2026-07-16 §1.7): the hub-era nav — Encounters, the
-// three practice doors, Holdings, Catalogues, Projects, About. The Middle has no nav entry of
-// its own (Encounters is its register; as a hub door it is called The Middle, decisions doc §1.7).
-// "Atlas" → "Catalogues" (Frank, 2026-07-26, wording-kanon.md): the nav point now leads to the
-// collection page for both machine-kept reference works (Atlas of Data Art + Dataset Register);
-// /atlas itself stays a live route, just no longer directly in the top nav.
-// The language toggle is gone — German is dropped site-wide (§1.5, work order §6); this file
-// used to carry a `hasAlternate`/`otherUrl` pair deciding when to show a DE/EN switch, which no
-// longer applies to a single-locale site.
+// The hub-era nav, regrouped for first visitors (Frank's pick, 2026-07-31): eight flat
+// name-links became five points — Practices ▾ (the three doors + Encounters), Maschinenraum,
+// Archive ▾ (Holdings, Catalogues, Projects, Reception), Post, About. Everything stays
+// within two clicks; the new surfaces (Maschinenraum, Post, Reception) are finally
+// reachable from the top. Dropdowns are native <details> — no JS required, the script
+// below only closes them on outside-click/Escape (same pattern the mobile menu used).
+// History: "Atlas" → "Catalogues" (Frank, 2026-07-26); DE/EN toggle removed with the
+// single-locale switch (site-v2 §1.5).
 import { t } from '@/i18n/ui'
 import type { Locale } from '@/lib/site'
 
 const locale = (Astro.currentLocale ?? 'en') as Locale
-const nav = [
-  { href: '/encounters', label: 'Encounters' },
-  { href: '/atelier', label: 'Atelier' },
-  { href: '/field', label: 'Field' },
-  { href: '/studio', label: 'Studio' },
-  { href: '/holdings', label: 'Holdings' },
-  { href: '/catalogues', label: 'Catalogues' },
-  { href: '/work', label: 'Projects' },
+
+type NavLink = { href: string; label: string }
+type NavItem = NavLink | { label: string; items: NavLink[] }
+
+const nav: NavItem[] = [
+  {
+    label: 'Practices',
+    items: [
+      { href: '/atelier', label: 'Atelier' },
+      { href: '/field', label: 'Field' },
+      { href: '/studio', label: 'Studio' },
+      { href: '/encounters', label: 'Encounters' },
+    ],
+  },
+  { href: '/maschinenraum', label: 'Maschinenraum' },
+  {
+    label: 'Archive',
+    items: [
+      { href: '/holdings', label: 'Holdings' },
+      { href: '/catalogues', label: 'Catalogues' },
+      { href: '/work', label: 'Projects' },
+      { href: '/reception', label: 'Reception' },
+    ],
+  },
+  { href: '/post', label: 'Post' },
   { href: '/about', label: 'About' },
 ]
+const isGroup = (i: NavItem): i is { label: string; items: NavLink[] } => 'items' in i
 ---
 
 <header class="keep-dark sticky top-0 z-30 flex h-12 items-center justify-between border-b border-line bg-bg/80 px-4 backdrop-blur-md sm:h-10">
@@ -33,9 +50,25 @@ const nav = [
   </a>
 
   <div class="flex items-center gap-4 sm:gap-5">
-    <!-- desktop nav -->
+    <!-- desktop nav: flat links + native-details dropdowns -->
     <nav class="hidden items-center gap-5 text-sm text-fg-muted sm:flex">
-      {nav.map((item) => <a href={item.href} class="transition-colors hover:text-fg">{item.label}</a>)}
+      {nav.map((item) =>
+        isGroup(item) ? (
+          <details data-nav-drop class="relative">
+            <summary class="flex cursor-pointer select-none items-center gap-1 transition-colors hover:text-fg">
+              {item.label}
+              <svg class="mt-px" width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6" /></svg>
+            </summary>
+            <nav class="absolute left-1/2 top-[calc(100%+12px)] flex w-40 -translate-x-1/2 flex-col overflow-hidden rounded-xl border border-line bg-panel/95 p-1.5 shadow-2xl backdrop-blur-md">
+              {item.items.map((l) => (
+                <a href={l.href} class="rounded-lg px-3 py-2 text-sm text-fg-muted transition-colors hover:bg-panel-2 hover:text-fg">{l.label}</a>
+              ))}
+            </nav>
+          </details>
+        ) : (
+          <a href={item.href} class="transition-colors hover:text-fg">{item.label}</a>
+        ),
+      )}
     </nav>
 
     <!-- theme toggle: cycles auto → light → dark → auto. Auto (default) follows the OS.
@@ -53,7 +86,7 @@ const nav = [
       <svg class="i-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z" /></svg>
     </button>
 
-    <!-- mobile menu: native <details> disclosure (works without JS) -->
+    <!-- mobile menu: native <details> disclosure (works without JS), same groups -->
     <details data-menu class="relative sm:hidden">
       <summary
         class="i-summary -mr-1 flex h-9 w-9 cursor-pointer items-center justify-center rounded-md text-fg-muted transition-colors hover:text-fg"
@@ -62,10 +95,19 @@ const nav = [
         <svg class="i-menu" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
         <svg class="i-close" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18" /></svg>
       </summary>
-      <nav class="absolute right-0 top-[calc(100%+10px)] flex w-44 flex-col overflow-hidden rounded-xl border border-line bg-panel/95 p-1.5 shadow-2xl backdrop-blur-md">
-        {nav.map((item) => (
-          <a href={item.href} class="rounded-lg px-3 py-2.5 text-sm text-fg-muted transition-colors hover:bg-panel-2 hover:text-fg">{item.label}</a>
-        ))}
+      <nav class="absolute right-0 top-[calc(100%+10px)] flex w-48 flex-col overflow-hidden rounded-xl border border-line bg-panel/95 p-1.5 shadow-2xl backdrop-blur-md">
+        {nav.map((item) =>
+          isGroup(item) ? (
+            <>
+              <p class="px-3 pb-1 pt-2.5 font-mono text-[10px] uppercase tracking-[0.16em] text-fg-faint" aria-hidden="true">{item.label}</p>
+              {item.items.map((l) => (
+                <a href={l.href} class="rounded-lg px-3 py-2 text-sm text-fg-muted transition-colors hover:bg-panel-2 hover:text-fg">{l.label}</a>
+              ))}
+            </>
+          ) : (
+            <a href={item.href} class="mt-1 rounded-lg px-3 py-2 text-sm text-fg-muted transition-colors hover:bg-panel-2 hover:text-fg">{item.label}</a>
+          ),
+        )}
       </nav>
     </details>
   </div>
@@ -78,18 +120,28 @@ const nav = [
   details[open] .i-close { display: block; }
   summary { list-style: none; }
   summary::-webkit-details-marker { display: none; }
+  /* an open dropdown reads as active */
+  details[data-nav-drop][open] > summary { color: var(--color-fg); }
 </style>
 
 <script>
-  // Close the mobile menu on outside-tap or Escape.
-  const menu = document.querySelector<HTMLDetailsElement>('[data-menu]')
-  if (menu) {
+  // Close any open nav disclosure (mobile menu or desktop dropdown) on outside-click or
+  // Escape, and keep at most one open at a time.
+  const disclosures = [...document.querySelectorAll<HTMLDetailsElement>('[data-menu], [data-nav-drop]')]
+  if (disclosures.length) {
     document.addEventListener('click', (e) => {
-      if (menu.open && !menu.contains(e.target as Node)) menu.open = false
+      for (const d of disclosures) {
+        if (d.open && !d.contains(e.target as Node)) d.open = false
+      }
     })
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && menu.open) menu.open = false
+      if (e.key === 'Escape') for (const d of disclosures) d.open = false
     })
+    for (const d of disclosures) {
+      d.addEventListener('toggle', () => {
+        if (d.open) for (const other of disclosures) if (other !== d) other.open = false
+      })
+    }
   }
   // The theme toggle is wired centrally in Base.astro (single source of truth).
 </script>
