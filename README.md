@@ -88,7 +88,7 @@ npm run build      # static build → dist/
 
 Deployed to Cloudflare Pages via GitHub Actions on every push to `main`.
 
-## License — noncommercial
+## License
 
 **Code:** [Apache 2.0](./LICENSE.md) — use, modify and share, including commercially,
 with attribution. **Works, texts and images:**
