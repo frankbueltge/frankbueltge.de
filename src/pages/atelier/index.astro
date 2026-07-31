@@ -435,10 +435,14 @@ const doors = [
   .m-slab-link:hover .m-slab-curated, .m-slab-link:focus .m-slab-curated { fill: var(--at-red); opacity: 0.75; }
   .m-proj-line { fill: none; stroke: var(--at-graphite); stroke-width: 1.1; }
   .m-proj-active { stroke: var(--at-thread); stroke-dasharray: 4 3; }
-  .m-mark-kill { stroke: var(--at-ink-2); stroke-width: 1.2; fill: none; }
-  .m-mark-archive { fill: none; stroke: var(--at-ink-2); stroke-width: 1.1; }
-  .m-mark-publish { fill: var(--at-red); }
-  .m-publish-tie { stroke: var(--at-red); stroke-width: 0.9; stroke-dasharray: 1.5 2.5; }
+  /* Disposition marks wear the shared outcome identities (--at-out-*, atelier-sheet.css,
+   * PALETTE: atelier-outcomes) — the same outcome reads the same colour here and in the
+   * process figure below. Before this, PUBLISH wore the structural red (the one colour the
+   * practice reserves for swerves) and KILL wore plain ink. */
+  .m-mark-kill { stroke: var(--at-out-kill); stroke-width: 1.4; fill: none; }
+  .m-mark-archive { fill: none; stroke: var(--at-out-study); stroke-width: 1.2; }
+  .m-mark-publish { fill: var(--at-out-publish); }
+  .m-publish-tie { stroke: var(--at-out-publish); stroke-width: 0.9; stroke-dasharray: 1.5 2.5; }
   .at-map-legend, .at-map-prov {
     font-family: var(--at-font-record);
     font-size: 0.72rem;

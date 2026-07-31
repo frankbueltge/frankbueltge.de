@@ -14,7 +14,10 @@
 :root[data-theme='dark'] .score-map {
   --score-hairline: #2b333d;
   --score-ink-2: #aab4bf;
-  --score-c-meridian: #3987e5;
+  /* PALETTE: ecology-voices (src/lib/dataviz/palette.ts) — one quartet across score map,
+   * hub doors and Partitur. The conductor lane is a declared neutral outside the categorical
+   * set (direct-labeled; grayness is the meaning: the human hand, not a fourth practice). */
+  --score-c-meridian: #256abf;
   --score-c-ensemble: #d95926;
   --score-c-conductor: #77828d;
   --score-c-ulysses: #9085e9;
@@ -24,8 +27,9 @@
 :root[data-theme='light'] .score-map {
   --score-hairline: #cfd6de;
   --score-ink-2: #515b66;
+  /* PALETTE: ecology-voices — light steps, see block above. */
   --score-c-meridian: #2a78d6;
-  --score-c-ensemble: #c1481c;
+  --score-c-ensemble: #eb6834;
   --score-c-conductor: #6b7684;
   --score-c-ulysses: #4a3aa7;
   --score-badge-bg: #e7ebf0;
