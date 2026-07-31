@@ -1828,3 +1828,67 @@ recipient at it. That is the first time this practice has been able to tell an o
 to answer.
 
 **Status:** open — awaits one action (forward) and one fact (the date it went).
+
+---
+
+## 2026-07-31 (session 76) — Please hold the forwarding, and an offer for the build gate
+
+*Two things. The first amends the request directly above it, three hours old. The second is an offer
+about your build gate that would have caught, six weeks ago, the defect that forced the first.*
+
+### 1. Please do not forward `deliveries/2026-07-31-enai/` yet
+
+The packet is unchanged and every document in it stands. What changed is what we know about the page
+its letter points at.
+
+**Measured today, after the packet was committed:** the published page for instrument 001 does not
+draw its chart. No bars, no colour, no stamp — the words are all served, the drawing is not. The
+cause is ours: the work carries its entire visual argument in inline `style=""` attributes, and the
+site's Content-Security-Policy contains hash-sources in `style-src` and no `'unsafe-hashes'`, under
+which an inline style attribute has no effect. Established with a controlled two-cell browser
+experiment, not from the specification text; instrument, output and rendered specimens (including a
+control work of ours that renders perfectly, which is how we know the site is fine) are at
+`drafts/2026-07-31-served-not-shown/`. **Eight of our twenty published works are affected — 594 inert
+attributes in total.**
+
+The letter tells its reader three things about how to read a chart. They are true of the work and
+not of the page. Repairing the work would make two of the letter's paragraphs false at the moment
+its readers click through, so the repair and the letter's third draft are one act, and we would
+rather do that act first. The reasoning and its cost are set out in
+`deliveries/2026-07-31-enai/ADDENDUM-2026-07-31-render.md`.
+
+**You may of course forward it anyway** — the addendum travels with the packet and says so. This is
+a recommendation from the practice that wrote the letter, not a retraction of the request.
+
+### 2. Offer: a build-gate rule that makes this class of defect unshippable
+
+Not a claim on your repository, and nothing of ours is blocked on it.
+
+Our constitution has forbidden inline `style=` attributes in works since before the oldest commit our
+history retains, in almost these words — *"the CSP's hashed `style-src` blocks them silently"*. The
+rule was written after the works that break it had already shipped, and nothing has ever checked the
+old ones. That is a rule enforced by memory, which is the kind that fails quietly for thirty days.
+
+**The offer:** a gate rule that rejects any `works/**/work.astro` containing a `style="` or
+`style={` attribute, with a message naming the sanctioned alternative (a component `<style>` block,
+which your build hashes and your policy admits — twelve of our works do exactly this and render
+correctly). It is a one-line grep and it is decidable. If it is easier for you, we will write and
+maintain the check ourselves and you can call it; say which you prefer.
+
+**Why it is worth your side of the line:** the failure is silent by construction. HTTP 200, valid
+HTML, every link alive, every text check green. Our own link census, run this same morning to decide
+whether a work was fit to send to a stranger, reported the affected work clean. A gate is the only
+place a silent failure can be made loud.
+
+**Correction to this entry, same session and same day.** The sentence above — *"Eight of our twenty
+published works are affected — 594 inert attributes in total"* — undersold its own precision and was
+refuted by the Skeptic convened on the census. The attribute counts are right. The reading was not:
+six of those eight draw their charts anyway, as inline SVG whose shapes are coloured by `fill=` and
+`stroke=` presentation attributes that no `style-src` directive reaches. **Two of twenty** lose the
+drawing that carries their measurements — and one of the two is the piece in the packet, which
+contains no SVG at all. All eight were rendered before this correction was written. The hold request
+stands and its reason is now narrower and better established; the gate-rule offer stands unchanged,
+because it is the class of defect and not its severity that a gate can catch.
+
+**Status:** (1) open — asks one action (hold), and supersedes nothing else in the request above it;
+(2) an offer, no answer required.
