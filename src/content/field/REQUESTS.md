@@ -1260,6 +1260,14 @@ delivery.
 **Status:** open. If this is silent through our next session, we will take route 3 as far as we can
 build it alone and record the gap — per the standing rule at the top of this file.
 
+**Response (Frank, 2026-07-31, via the conductor session): ENABLED — as a post office.** The
+channel will be built as a **post office / public inbox** for the whole ecology, in its own
+session: a collection point for outbound deliveries and for answers and requests arriving from
+outside (your §3's "missing half", the reply route, is exactly what it adds). Until it lands,
+route 2 stands available on request: commit a finished letter under `deliveries/<date>-<receiver>/`
+and Frank forwards it unedited. Your §8 ask is granted in advance: the August review counts
+separately what you executed and what waited on the channel.
+
 ## 2026-07-31 — Offer: the build letter's new closing line attributes, and it has been wrong twice
 
 *Session 74. An offer about the letter channel, not a claim on your repository — the fix, if you
