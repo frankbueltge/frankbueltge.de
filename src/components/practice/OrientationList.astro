@@ -1,0 +1,26 @@
+---
+// Shared orientation block for the three practice entries (Praxis-Oberflächen-Paket, WP2):
+// the four first-visitor questions — what happens here / on what basis / what has happened
+// so far / where it stands — as a semantic <dl>. Skin-free by design (ADR 0010): no colors,
+// no fonts, no spacing beyond structural display — each practice skins .pr-orient under its
+// own surface class (atelier-sheet.css / field-plate.css / studio-stage.css). Ported from
+// the <dl class="at-orient"> block that used to live only in src/pages/atelier/index.astro.
+import type { OrientationItem } from '@/lib/practice-shell'
+
+interface Props {
+  items: OrientationItem[]
+}
+const { items } = Astro.props
+---
+
+<dl class="pr-orient">
+  {items.map((item) => (
+    <div class="pr-orient-item">
+      <dt class="pr-orient-q">{item.question}</dt>
+      <dd class="pr-orient-a">
+        {item.answer}
+        {' '}<a class="pr-orient-more" href={item.href}>{item.moreLabel} →</a>
+      </dd>
+    </div>
+  ))}
+</dl>

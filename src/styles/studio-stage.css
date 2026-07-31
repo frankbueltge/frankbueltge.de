@@ -213,6 +213,42 @@
   margin: 10px 0 26px;
 }
 
+/* Orientation block (OrientationList.astro, shared skeleton — WP2 practice-shell).
+   Restrained, no new colors: existing --st-* tokens only, in the studio's own list voice
+   (cf. .st-apparatus-list). */
+.studio-surface .pr-orient {
+  margin: 4px 0 26px;
+  border-top: 1px solid var(--st-hairline);
+  max-width: 78ch;
+}
+.studio-surface .pr-orient-item { border-bottom: 1px solid var(--st-hairline); padding: 13px 2px 15px; }
+.studio-surface .pr-orient-q {
+  font-family: var(--st-font-record);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--st-ink-2);
+  margin-bottom: 5px;
+}
+.studio-surface .pr-orient-a {
+  margin: 0;
+  font-family: var(--st-font-record);
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--st-ink);
+}
+.studio-surface .pr-orient-more {
+  display: inline-block;
+  margin-top: 4px;
+  font-family: var(--st-font-record);
+  font-size: 12px;
+  color: var(--st-lamp);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  white-space: nowrap;
+}
+.studio-surface .pr-orient-more:hover { opacity: 0.75; }
+
 /* Zimmer: Werke, Journal, Apparat */
 .studio-surface .st-work-card {
   border: 1px solid var(--st-hairline);

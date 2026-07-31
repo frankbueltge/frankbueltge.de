@@ -13,11 +13,7 @@
 // ADR 0010: das Atelier teilt keine visuelle Grammatik mit Partitur (Middle), Messprotokoll
 // (Field) oder Bühne (Studio) — auch dieses Wörterbuch ist bewusst ein eigenes.
 
-export interface RailItem {
-  label: string
-  href: string
-  hint: string
-}
+import type { RailItem, OrientationItem } from '@/lib/practice-shell'
 
 export const ATELIER_GRAMMAR = {
   approval: 'approved' as const, // Design-Session 2026-07-15, Chip „wording approved“
@@ -175,6 +171,50 @@ export const ATELIER_NARRATIVE = {
     cockpitArchiveNote: 'the atlas now lives in material',
     cockpitArchived:
       'Archived surface (ADR 0008): the cockpit is kept as a dated artefact, no longer the entrance.',
+  },
+  /** The four first-visitor questions (Frank, 2026-07-31: „was passiert hier eigentlich,
+   * auf welcher Basis, was ist bisher passiert und wie ist der aktuelle Stand“), moved here
+   * from the page's own `orientierung` const (WP2 — practice-shell) so OrientationList.astro
+   * can render it. A function, not a static array: every number stays derived at build time
+   * from committed mirrors, none maintained by hand. */
+  orientation(input: {
+    protocolVersion: string
+    projectsOpened: number
+    archivedAsStudy: number
+    killed: number
+    published: number
+    worksCount: number
+    running?: { title?: string; proposedAsWork: boolean }
+  }): OrientationItem[] {
+    return [
+      {
+        question: 'what happens here',
+        answer:
+          'A machine practice opens a question of its own, works it in moves it records, and either proposes it as a work or closes it. Nothing becomes public without a human publication decision.',
+        href: '/atelier/foundation',
+        moreLabel: 'the operating model',
+      },
+      {
+        question: 'on what basis',
+        answer: `Its constitution is Protocol v${input.protocolVersion}, derived from the practice's own published process model “Cartography, not Tracing” (24 July 2026) — which rests on an older research foundation whose toolbox of methodological strategies it did not replace.`,
+        href: '/atelier/protocol',
+        moreLabel: 'the constitution',
+      },
+      {
+        question: 'what has happened',
+        answer: `${input.projectsOpened} lines opened since 18 July, ${input.archivedAsStudy} kept as studies, ${input.killed} closed on purpose, ${input.published} published — beside ${input.worksCount} works from the nightly phase before.`,
+        href: '/atelier/projects',
+        moreLabel: 'the research log',
+      },
+      {
+        question: 'where it stands',
+        answer: input.running
+          ? `One work-line is running: “${input.running.title}”${input.running.proposedAsWork ? ' — proposed as a work and waiting at the human gate.' : '.'}`
+          : 'No line is open at the moment.',
+        href: '#proc-title',
+        moreLabel: 'read it below',
+      },
+    ]
   },
 } as const
 

@@ -101,6 +101,45 @@
   color: var(--at-ink);
 }
 .atelier-surface .at-status b { color: var(--at-ink); font-weight: 600; }
+
+/* Orientation block (OrientationList.astro, shared skeleton — WP2 practice-shell).
+   Ported byte-for-byte from the entry page's own former .at-orient rules: a visual no-op,
+   the component that renders it just moved. Bewusst Definitionsliste — die Frage IST der
+   Begriff, die Antwort seine Erklärung. */
+.atelier-surface .pr-orient {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1px;
+  margin: 1.75rem 0 2.25rem;
+  background: var(--color-line);
+  border: 1px solid var(--color-line);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.atelier-surface .pr-orient-item { background: var(--color-panel); padding: 0.95rem 1.05rem 1.05rem; }
+.atelier-surface .pr-orient-q {
+  font: 10.5px var(--font-mono);
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--color-fg-faint);
+  margin-bottom: 0.4rem;
+}
+.atelier-surface .pr-orient-a {
+  margin: 0;
+  font: 13.5px/1.62 var(--font-sans);
+  color: var(--color-fg-muted);
+}
+.atelier-surface .pr-orient-more {
+  display: inline-block;
+  margin-top: 0.15rem;
+  font: 11.5px var(--font-mono);
+  color: var(--color-fg);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  white-space: nowrap;
+}
+.atelier-surface .pr-orient-more:hover { opacity: 0.75; }
+
 .atelier-surface figure { margin: 26px 0 8px; }
 .atelier-surface svg#sheet,
 .atelier-surface svg#spine { width: 100%; height: auto; display: block; }
