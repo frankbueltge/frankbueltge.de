@@ -257,7 +257,24 @@ describe('buildInbox', () => {
       openedAt: '2026-07-15T00:00:00Z',
       ageDays: 2,
     })
-    expect(result[0].excerpt).toHaveLength(600)
+    // Eine 650 Zeichen lange Anfrage kommt VOLLSTÄNDIG an. Früher schnitt der Bau bei 600 ab,
+    // und weil der Rest nie gesendet wurde, konnte der „mehr“-Knopf im Dashboard nichts
+    // aufklappen (Frank, 2026-07-31: „passiert nix“).
+    expect(result[0].excerpt).toHaveLength(650)
+  })
+
+  it('eine wirklich lange Anfrage wird gedeckelt — die Grenze bleibt, sie liegt nur weit genug', () => {
+    const issues = [
+      {
+        number: 9,
+        title: 'Request aus field-research: 2026-07-31 — Request: lang',
+        html_url: 'https://x/9',
+        created_at: '2026-07-17T00:00:00Z',
+        body: 'z'.repeat(20000),
+      },
+    ]
+    const result = buildInbox(issues, '2026-07-17T00:00:00Z')
+    expect(result[0].excerpt).toHaveLength(12000)
   })
 
   it('fehlender Body → leerer Excerpt statt Crash', () => {
