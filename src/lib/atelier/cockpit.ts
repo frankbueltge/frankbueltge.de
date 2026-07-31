@@ -4,6 +4,8 @@
 // committete Daten — leere Felder bleiben leer (eine ehrliche Lücke schlägt jede
 // erfundene Zahl), und Layout-Positionen kommen aus einem Hash, nie aus Math.random.
 
+import { hash01 } from '@/lib/dataviz/geometry'
+
 export type AtlasStatus = 'seed' | 'read' | 'worked' | 'archived'
 
 export interface AtlasEntry {
@@ -166,14 +168,11 @@ export function cockpitStats(rhizome: Rhizome, vitals: VitalSigns, atlas: AtlasE
 /* ── Deterministisches Layout ───────────────────────────────────────────────
    FNV-1a über die ID → [0,1). Gleiche Daten ⇒ gleiches Bild, Build für Build. */
 
-export function hash01(s: string): number {
-  let h = 0x811c9dc5
-  for (let i = 0; i < s.length; i++) {
-    h ^= s.charCodeAt(i)
-    h = Math.imul(h, 0x01000193)
-  }
-  return (h >>> 0) / 0x100000000
-}
+// The jitter hash now lives in the shared dataviz layer (src/lib/dataviz/geometry.ts) because the
+// studio's season floor derives its own positions from the same FNV-1a function; re-exported here
+// unchanged so this module's own callers (CockpitPage.astro, cockpit.test.ts) are untouched and
+// starLayout's committed geometry stays byte-identical.
+export { hash01 } from '@/lib/dataviz/geometry'
 
 export interface Star {
   x: number
