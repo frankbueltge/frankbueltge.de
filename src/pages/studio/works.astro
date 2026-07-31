@@ -9,6 +9,7 @@ import { loadChronicle, entriesForWork } from '@/lib/studio/chronicle'
 import { STUDIO_NARRATIVE } from '@/config/studio-wording'
 import { teaserFor } from '@/lib/engines/teaser'
 import { receivedSlugs } from '@/lib/reception/register'
+import RespondCta from '@/components/post/RespondCta.astro'
 
 const received = receivedSlugs('studio')
 
@@ -43,6 +44,7 @@ const statusHtml = `<b>${works.length} work${works.length === 1 ? '' : 's'} prem
 >
   <Frame active="works" kicker={kicker} h1="What has premiered." statusHtml={statusHtml} back>
     <p class="st-room-intro">{STUDIO_NARRATIVE.rooms.works}</p>
+    <RespondCta variant="line" ns="studio" class="st-room-intro" />
 
     {works.length === 0 && (
       <p class="st-room-intro">
@@ -73,6 +75,7 @@ const statusHtml = `<b>${works.length} work${works.length === 1 ? '' : 's'} prem
         <div class="st-work-actions">
           <a class="st-work-enter" href={`/studio/werke-html/${slug}/`}>Enter the work <span aria-hidden="true">→</span></a>
           <a class="st-work-source" href={`${repo}/tree/main/works/${slug}`} target="_blank" rel="noreferrer">Source code ↗</a>
+          <RespondCta ns="studio" slug={slug} class="st-work-source" />
           {received.has(slug) && <a class="st-work-source" href={`/reception#studio-${slug}`}>Reception →</a>}
         </div>
       </article>

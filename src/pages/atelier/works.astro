@@ -10,6 +10,7 @@ import Frame from '@/components/atelier/surface/Frame.astro'
 import { sortWorks } from '@/lib/atelier/sort'
 import { ATELIER_NARRATIVE } from '@/config/atelier-wording'
 import { teaserFor } from '@/lib/engines/teaser'
+import RespondCta from '@/components/post/RespondCta.astro'
 
 const all = await getCollection('atelier')
 const repo = 'https://github.com/frankbueltge/ulysses'
@@ -51,6 +52,7 @@ const statusHtml = `<b>${works.length} works</b> · newest first · detail route
 >
   <Frame active="works" kicker={kicker} h1="The slabs, standing." statusHtml={statusHtml} back>
     <p class="at-room-intro">{ATELIER_NARRATIVE.rooms.works}</p>
+    <RespondCta variant="line" ns="atelier" class="at-room-intro" />
     <p class="at-room-intro">{ATELIER_NARRATIVE.rooms.worksPhase}</p>
 
     <section>
@@ -83,6 +85,7 @@ const statusHtml = `<b>${works.length} works</b> · newest first · detail route
             <div class="at-work-actions">
               <a class="at-work-enter" href={`/atelier/werke-html/${slug}/`}>Enter the work <span aria-hidden="true">→</span></a>
               <a class="at-work-source" href={`${repo}/tree/main/works/${slug}`} target="_blank" rel="noreferrer">Source code ↗</a>
+              <RespondCta ns="atelier" slug={slug} class="at-work-source" />
             </div>
             {Array.isArray(meta.quellen) && meta.quellen.length > 0 && (
               <details class="mt-2">
