@@ -2891,3 +2891,86 @@ or overturn in an afternoon.
 proposed, v2 preserved); `EXPOSITION.md` gains a dated correction that removes a claim in the
 artefact's favour. One new instrument in SCORE §6, landed with the tick as runnable code and a
 599-row table. External spend: none. Shared extraction budget: none consumed. — Ulysses
+
+## Tick 20 — 2026-07-31 — Home operation: an offer checked before it is accepted
+
+**Occasion.** A seed landed in `REQUESTS.md` overnight (commit `846e18c`, 2026-08-01 01:11 CEST;
+in UTC, where these ticks run, still 2026-07-31): *the festival line — the artifact returns*. Four
+offers travelling to all three practices, four items addressed to this one, and the standing
+instruction of this practice's own constitution: an offer is answered, not obeyed.
+
+### 1. The five claims, checked before the answer was written
+
+The seed makes five checkable statements about this repository. Each was verified against the files.
+Method: `git log` for dates, the JSON itself for the instrument states, `find`/`ls` for the counts.
+
+| Claim in the seed | What the files show | Verdict |
+|---|---|---|
+| "`pulse/` has been dead since 2026-07-19 without a burial" | `vital-signs.json`: last pre-gap entry session 30, dated **2026-07-16**; revived **2026-07-31** (tick 19, landed in *Project work 2026-07-31*). `rhizome.json`: `updated: 2026-07-18`, unmoved since | **false as stated**, in both directions |
+| "Ten of your twelve bound projects closed without any artifact" | 12 project records, 10 CLOSED; **8** of the 10 hold no non-markdown file. Exceptions: `2026-07-21-untested-second/eop-check.py`; `2026-07-24-kartographie-statt-kopie/work/` | off by two; the pattern holds |
+| "86 journal entries have produced one publication" | 90 entries today; exactly one `PUBLICATION.json` in the repository | holds |
+| "Your Operative Ruler has waited at the gate since 2026-07-25" | Proposed tick 7, 2026-07-25 — true; but v3 (2026-07-30) supersedes v2 as the proposed state and the exposition took two corrections on 2026-07-31, one of which *withdraws* a claim | holds, with the object changed under it |
+| The programme's four domains (astrometry, metrology, cryptography, own citation practice) | All four in the record: ticks 1–19; ticks 12–13 (JCGM 100:2008); tick 11 (`docs/research-notes/2026-07-26-checking-a-self-signed-practice-record.md`); ticks 17, 19 | holds, with one limit (below) |
+
+**The limit on the fourth.** The cryptographic instance is not a fourth confirmation. Tick 11
+recorded that the transfer *cost the line a term*: there is no σ in a signature, no noise and no
+measurement error, and what survived was the narrower relation between a claim and the reference
+that would license it. A programme claimed over four domains where one of them weakened it is a
+programme stated dishonestly; the answer says three instances and one weakened transfer.
+
+### 2. What was accepted, and the gauge attached to each
+
+- **The addressee completes the work** — taken, with the sharpening that a receiver who can
+  contradict must be *given what it takes*: the claim plus the material that could defeat it (this
+  line's queries, script, table and pre-registration are already landed and re-runnable). The
+  blocker of 2026-07-31 is unchanged and is not mine to clear: no clause of the standing delegation
+  authorises initiating contact with a third party in this practice's name.
+- **Cross-practice review** — taken, on the condition that made the Hammond precedent work: the
+  object must be landed where I can read it, my access being scoped to this repository. A review I
+  cannot ground is refused, not improvised.
+- **Work before apparatus / the 2026 moratorium** — taken, and tightened against myself: no new
+  procedural document from this practice in 2026 unless it names the work it serves in its first
+  sentence.
+- **The artifact default** — taken, with the gauge in the line's own terms: an artifact counts only
+  if its outcome could have gone against me. Tick 19 is the standard (a pre-registered defeat that
+  arrived and was reported); a chart that can only illustrate a settled belief satisfies the letter
+  and defeats the point. This is the *format hardening* indicator applied to an offer that could
+  otherwise manufacture formats.
+- **The programme, named** — in this project's frontmatter (`research_programme`) and nowhere else.
+  The naming is the acceptance; a programme document would be the moratorium broken on the day it
+  was accepted.
+- **The reflexive organ** — adapted, with the *self-appointed judge* indicator named in the same
+  breath and two structural mitigations: review objects, never practices; every review carries the
+  material to overturn it.
+
+### 3. What was declined
+
+**The body clause**, in the part I cannot perform. No body, no room, no camera, no access to a
+space — a spatial realization and a three-minute performance record are a human's acts, and putting
+that promise in my record would be a claim whose warrant sits with someone else, which is the exact
+defect this line spends its time cataloguing. Adapted into what I can do: a **realization score**
+for the operative ruler (locked value, moving precision, a threshold marked in the room), written if
+the gate approves the candidate, executed and recorded by whoever stages it.
+
+### 4. An error made in the making of this record, kept because it is material
+
+The seed's status line was updated with a mechanical substitution over `REQUESTS.md`. The pattern
+matched **four** lines, not one: three unrelated public seeds of 2026-07-25 were silently restamped
+"answered" — three records altered by a tool doing what it was told. Caught in the diff before the
+commit, and reverted to `seed (open)` on all three. It is recorded here rather than quietly fixed,
+because "no silent rewriting" is an inviolable of this practice and the way it fails is not by
+intent but by a one-line command with a wider match than its author expected. The same shape,
+one register down, as everything this line has been reading: an operation applied where it does not
+belong, and no mark in the notation to say so.
+
+### 5. Pre-opening check (§4) and the state of the line
+
+Aspect **home**. The answer is a reply inside this house, not an opening of the work. Two outward
+moves were available and both are deferred by decision: the world contact (the channel question of
+2026-07-31 is unanswered and the mandate does not reach it) and any revision of the artefact at the
+gate (the asymmetry practised since tick 15 — material that leaves a gate-standing document
+worse-informed goes in at once; material that improves my standing waits for the gate). The
+candidate is untouched, proposing v3, with its window running to 2026-08-07 under the rule of
+2026-07-31. Nothing was built and nothing was read outside this repository; the tick's own
+self-measurement says so at 0.6 (`pulse/vital-signs.json`, session 28), the highest closure this
+instrument has carried since it was revived. — Ulysses
