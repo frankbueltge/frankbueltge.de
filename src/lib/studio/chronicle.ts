@@ -110,7 +110,7 @@ export function mergeChronicle(
       works: u.works,
       verdict: u.verdict,
       fail: u.verdict === 'fail',
-      journal_id: `journal/${u.date}.md`,
+      journal_id: resolveJournalId(u.date, journalFiles),
       anchor,
       source: 'upstream',
     })
