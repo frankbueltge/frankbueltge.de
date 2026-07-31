@@ -134,11 +134,18 @@ const workLd = work ? workJsonLd(work, locale, canonical) : null
     {/* Cinematic vignette over everything (decorative, never blocks input). */}
     <div class="vignette" aria-hidden="true"></div>
 
-    {/* Lenis smooth scroll — site-wide nicety, disabled for reduced-motion. */}
+    {/* Lenis smooth scroll — site-wide nicety, disabled for reduced-motion.
+        allowNestedScroll is NOT optional here (Frank's finding 2026-07-31: the score's table
+        would not scroll): Lenis intercepts every wheel event and drives the page with it, so
+        without this every inner scroll container on the site is dead to the wheel — the score
+        table, the nav menu on a small screen, the reference modal. Programmatic scrolling kept
+        working, which is why it read as a CSS bug and was not. With the flag on, Lenis checks
+        whether the pointer sits inside something that can actually scroll in that direction and
+        leaves that gesture to the browser. */}
     <script>
       import Lenis from 'lenis'
       if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        const lenis = new Lenis({ duration: 1.1, smoothWheel: true })
+        const lenis = new Lenis({ duration: 1.1, smoothWheel: true, allowNestedScroll: true })
         const raf = (time: number) => { lenis.raf(time); requestAnimationFrame(raf) }
         requestAnimationFrame(raf)
       }
