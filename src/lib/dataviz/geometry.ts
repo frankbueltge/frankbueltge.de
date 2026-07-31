@@ -138,6 +138,125 @@ export function polyPath(points: readonly Point[], opts: PolyPathOptions = {}): 
   return d
 }
 
+// ---------------------------------------------------------------- hash01 + derived layouts
+//
+// The deterministic-placement trio behind every figure that must scatter marks without a grid and
+// without a clock: a string hash for the jitter, a sunflower spiral for the initial cloud, and a
+// fixed-iteration relaxation pass that pushes overlaps apart. Extracted from src/lib/atelier/
+// cockpit.ts's starLayout (which keeps its own domain wrapper and re-exports hash01 from here, so
+// its committed pixels and its tests are untouched) because the studio's season floor needs the
+// same three pieces in a different combination: a time axis for x, a hashed offset for y, and the
+// same collision pass over the result.
+//
+// The rule these exist to keep: NO Math.random, NO Date.now, no convergence loop with a tolerance
+// — identical data must render identical pixels, forever, because these figures are committed
+// build artifacts in a repo that treats git as the archive.
+
+/** FNV-1a over the string's char codes, mapped into [0,1). The jitter source for every derived
+ *  layout here: a mark's own identity decides where it sits, so the same season always draws
+ *  itself the same way and a diff of the built SVG shows real data changes only. */
+export function hash01(s: string): number {
+  let h = 0x811c9dc5
+  for (let i = 0; i < s.length; i++) {
+    h ^= s.charCodeAt(i)
+    h = Math.imul(h, 0x01000193)
+  }
+  return (h >>> 0) / 0x100000000
+}
+
+export interface LayoutNode {
+  /** stable identity — the ONLY jitter source (see hash01) */
+  key: string
+  x: number
+  y: number
+  /** the mark's own collision footprint */
+  r: number
+}
+
+export interface RelaxOptions {
+  /** extra clearance kept between two marks on top of their two radii */
+  gap: number
+  /** FIXED number of passes — a count, never "until it converges" (determinism) */
+  iterations?: number
+  /** inclusive bounds every node is clamped into after the passes (relaxation can push a node
+   *  past an edge; clamping last means a crowded cloud packs against the edge rather than
+   *  escaping the frame) */
+  bounds?: { minX: number; minY: number; maxX: number; maxY: number }
+}
+
+/**
+ * Pushes overlapping nodes apart in place-free fashion (returns new nodes, leaves the input
+ * untouched) — the same symmetric half-push over a fixed iteration count cockpit.ts's starLayout
+ * carries, generalized so a layout that derives its own initial positions (e.g. from a date axis)
+ * can reuse the collision pass without reusing the spiral.
+ */
+export function relaxOverlaps(nodes: readonly LayoutNode[], opts: RelaxOptions): LayoutNode[] {
+  const out = nodes.map((n) => ({ ...n }))
+  const iterations = opts.iterations ?? 24
+  for (let iter = 0; iter < iterations; iter++) {
+    for (let a = 0; a < out.length; a++) {
+      for (let b = a + 1; b < out.length; b++) {
+        const s = out[a]
+        const t = out[b]
+        const dx = t.x - s.x
+        const dy = t.y - s.y
+        const min = s.r + t.r + opts.gap
+        const d = Math.hypot(dx, dy) || 0.001
+        if (d < min) {
+          const push = (min - d) / 2
+          const ux = dx / d
+          const uy = dy / d
+          s.x -= ux * push
+          s.y -= uy * push
+          t.x += ux * push
+          t.y += uy * push
+        }
+      }
+    }
+  }
+  if (opts.bounds) {
+    const { minX, minY, maxX, maxY } = opts.bounds
+    for (const n of out) {
+      n.x = Math.min(maxX, Math.max(minX, n.x))
+      n.y = Math.min(maxY, Math.max(minY, n.y))
+    }
+  }
+  return out
+}
+
+export interface SpiralLayoutOptions extends RelaxOptions {
+  cx: number
+  cy: number
+  /** half-extent of the cloud along each axis BEFORE relaxation */
+  spreadX: number
+  spreadY: number
+}
+
+/**
+ * Places `items` on a sunflower spiral (golden angle) around a center, jittered by each item's own
+ * hash, then relaxes overlaps and clamps to bounds — the generic form of cockpit.ts's
+ * constellation layout. Unbounded in count by construction: a spiral has a next slot for every n,
+ * which is exactly why it replaces a hand-written position table (studio/stage.ts used to throw
+ * once an 11th struck position arrived).
+ */
+export function spiralLayout(
+  items: readonly { key: string; r: number }[],
+  opts: SpiralLayoutOptions,
+): LayoutNode[] {
+  const n = items.length
+  const seeded = items.map((item, i) => {
+    const angle = i * 2.399963 + hash01(item.key) * 0.9
+    const unit = Math.sqrt((i + 0.6) / Math.max(1, n)) * (0.82 + hash01(item.key + '#r') * 0.36)
+    return {
+      key: item.key,
+      r: item.r,
+      x: opts.cx + Math.cos(angle) * opts.spreadX * unit,
+      y: opts.cy + Math.sin(angle) * opts.spreadY * unit,
+    }
+  })
+  return relaxOverlaps(seeded, opts)
+}
+
 // ---------------------------------------------------------------- clampBox
 export interface ClampBoxInput {
   /** anchor point, in the container's own local coordinate space */
