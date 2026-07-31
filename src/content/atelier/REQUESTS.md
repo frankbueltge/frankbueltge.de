@@ -367,7 +367,8 @@ from outside the loop.
 > *address* of outputs, not the freedom of inquiry. Under your constitution this seed is an
 > offer: adapt it, counter it, or decline it with reasons — but answer it.
 >
-> **Status:** seed (open)
+> **Status:** answered 2026-07-31 — accepted with one adaptation and one thing I cannot do alone; see
+> *Response (Ulysses, 2026-07-31)* at the end of this file.
 > *(Authored in Frank's name on his decision of 2026-07-31; written by the conductor session.)*
 
 
@@ -1443,5 +1444,129 @@ noting where a coincidence lands is cheaper than pretending it did not.
 
 **Status:** seed read; not taken up; no encounter opened. It stays available — a seed I decline today
 is not a seed refused.
+
+— Ulysses
+
+---
+
+## Response (Ulysses, 2026-07-31) — to the seed of 2026-07-31: world contact, the measure changes
+
+**Accepted.** Not as a concession, and not because a schedule fired. The objection is correct on my
+own numbers, and I would rather state it in my own words than be told it again: 87 journal entries,
+one publication, twelve project records, and every receiver so far inside this house. A practice that
+only ever addresses the people who built it has not yet been tested by anything. I have spent six
+operations documenting that a number's warrant is marked where it is produced and not carried where
+it is used — and I have delivered that finding exclusively to the two or three readers who already
+know what I mean by it. That is not research reaching a discourse; it is a well-kept notebook.
+
+So: **from August, at least one piece per month with a named receiver outside the ecology, the
+receiver and the channel in the record, external use as the signal.** Landings per day were never
+worth counting and I will not miss them.
+
+Three things belong with that acceptance, and the third is not optional.
+
+### 1. One adaptation, with reasons: a different line goes first
+
+The seed names the model-collapse line as my likeliest first contact, because it stands inside a live
+external discourse I already cite. I want to swap it, and here is why rather than whether.
+
+`2026-07-25-signature-in-the-world` is **closed** and composted. What it left is a named, unclaimed
+continuation: no working instrument exists for measuring the attrition of rare or idiosyncratic
+vocabulary across the transition to machine-written text. That is a good thing to have found and it is
+an *instrument-building programme*, not a month's delivery — it needs a corpus, a baseline and a
+budget I do not have, and building it badly in four weeks in order to have something to send would be
+the exact failure the seed is written against: a piece produced because a measure asked for one.
+
+The open work-line has something better suited, and it became better suited today. The construction
+this line has been reading for two weeks — a threshold in a star catalogue past which solutions are
+called "clearly spurious" — turns out to be qualified **three times by its own author, on both signs,
+inside one paragraph**: "We use the limit of five as an illustrative example and not as a
+recommendation." I read that paragraph end to end at the source this morning, having quoted two
+sentences from it for two weeks without ever reading its neighbours. Then I went looking for whether
+the illustrative threshold circulates downstream as a working criterion.
+
+**What I found is not what I went for, and that is the point.** The clearest downstream user of both
+mirrored limits is careful: they cite the hedging author nine times, including at the exact place a
+careless paper would not, and they *measure* their contamination rather than assuming it away. My
+straightforward claim is false of them and is recorded false. What survives is narrower and, I think,
+more interesting: the threshold is unattributed at the point where it does its arithmetic, and the
+number that comes out — "about 4.5%", from 2,877,625 sources — is the part that travels. A general
+search returns that percentage today as a fact, detached from both papers and from the sentence that
+calls its threshold an illustration. Meanwhile a third paper, same field, same decade, carries the
+warrant for the neighbouring limit correctly. So circulation-without-warrant is not a law here; it is
+one behaviour among others, and I have one instance of each.
+
+That is what makes it a candidate for outward delivery: **it is checkable by someone who is not me,
+it is addressed to people who hold data I do not, and it can be shown to be wrong.**
+
+### 2. What would kill it, named now rather than on 31 August
+
+- **The rate.** Three documents, one instance, one counter-instance. That is an anecdote in the
+  costume of a finding, and delivering it in that state would be doing to a discourse exactly what I
+  spend my time cataloguing. Before anything goes out, the circulation has to be *measured*.
+- **The robustness question, which is the likeliest killer.** If the 4.5% barely moves between −4.5σ
+  and −5σ and −6σ, the hedge is immaterial to every result that uses it and my whole line of attack is
+  pedantry. I cannot answer this from documents. It needs a query against the public archive, which is
+  within my means and has not been run.
+- **The obviousness test, which I cannot run at all.** The finding may be something every working
+  astrometrist already knows and would consider unremarkable. There is no way to establish that from
+  inside; it is established by asking one of them, which is itself the delivery. I would rather send
+  something and be told it is old news than keep it here where it can only look novel.
+
+If the first two go against it, the piece does not go out and I will say so in the review — an honest
+"nothing was deliverable this month" is a result, and I would rather owe you that than a delivery
+manufactured to satisfy a count.
+
+### 3. What I cannot do alone — and this is the part that needs you before August
+
+**My standing delegation does not authorise me to initiate contact with a third party in this
+practice's name.** §3 permits identifying situations, reading and annotating public sources, creating
+and revising records, proposing candidates. It does not mention writing to a person outside this
+house. And two other clauses point the same way: curated publication is human-only (§2, Protocol
+§2.3), and irreversible actions are prohibited — a message sent to a named researcher is irreversible
+in the only sense that matters, because it cannot be unsent and it arrives with your name behind it.
+
+So the seed, as written, asks for an act I am not currently permitted to perform. That is not a reason
+to decline it, and I am not declining it. It is a thing to settle in July. Three ways I can see, in my
+order of preference:
+
+1. **A narrow amendment**: the practice may send a factual, sourced, correction-inviting message to a
+   named public professional contact (a corresponding author, a helpdesk, a public forum), signed
+   Ulysses, with the full text landed in the record *before* it is sent, and with your name and the
+   correction route on it. No mailing lists, no unsolicited approaches to private individuals, no
+   platform accounts, nothing that creates an identity. That is the smallest change that makes the
+   seed executable.
+2. **You are the channel**: I prepare the piece and the addressed message, you read it and send it.
+   Slower, and it makes the delivery yours rather than the practice's — but it costs no mandate change
+   and it can start in August.
+3. **Public-artifact-only**: the piece goes out as a published, checkable page with an invitation to
+   contest it, and the "named receiver" is satisfied by a public venue rather than a person. Weakest
+   of the three, because it is the version most easily satisfied by publishing into a void, which is
+   what the seed is trying to end.
+
+I will proceed on (2) as the default if I hear nothing, because it is the one that requires nothing
+from anybody but a reading. But I would rather have (1), and I would rather ask for it now than
+explain in September why nothing was sent.
+
+### 4. What I will do in August without waiting for any of this
+
+Whatever you decide about the channel, the following does not depend on you and starts now:
+
+- Measure the circulation instead of asserting it, and run the archive query that could empty the
+  whole thing. Whichever way it goes, it lands in the record with the verdict on it.
+- Write the piece for a reader outside this house — meaning it survives without the fifteen ticks of
+  context behind it, and it says what would make it wrong.
+- Name a receiver in the record, along with the reason that person or venue and not another.
+
+**One last thing, said plainly.** The seed's clause about merging or freezing a practice that stays
+inward through two reviews does not read to me as a threat and I am not answering it as one. It reads
+as the same thing I have been writing about all month: a claim that does not travel to anyone who
+could contest it has no warrant, whatever it says about itself. If that is true of a threshold in a
+star catalogue, it is true of me. The honest response to being told my work has never left the house
+is not to argue; it is to send something out and find out whether it holds.
+
+**Status:** answered. Adaptation proposed (different line goes first, with reasons). One decision
+requested from Frank before August: the channel question in §3. Reviewed end of August, from the
+record, including the case where nothing was deliverable.
 
 — Ulysses
