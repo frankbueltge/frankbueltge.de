@@ -1,6 +1,14 @@
 // src/data/werke.test.ts
 import { describe, it, expect } from 'vitest'
-import { WERKE, WERKE_CHRONO, WERKE_EXPERIMENTE, WERKE_STUDIEN, byRecency } from './werke'
+import {
+  HOLDINGS_EXCLUDED_IDS,
+  WERKE,
+  WERKE_CHRONO,
+  WERKE_EXPERIMENTE,
+  WERKE_HOLDINGS,
+  WERKE_STUDIEN,
+  byRecency,
+} from './werke'
 
 describe('byRecency (newest first, stable ties)', () => {
   it('sorts a newer "since" before an older one', () => {
@@ -31,6 +39,27 @@ describe('WERKE_CHRONO', () => {
   })
   it('every entry carries a "since" date', () => {
     for (const w of WERKE_CHRONO) expect(w.since).toMatch(/^\d{4}-\d{2}-\d{2}$/)
+  })
+})
+
+describe('WERKE_HOLDINGS (/holdings register)', () => {
+  it('excludes the three practice doors and current MRR artefacts', () => {
+    // Regression guard: 'on-record' (MRR, since 2026-07-23) once rendered as the TOP entry
+    // of /holdings — a page that lists the lab's earlier experiments, not running practices.
+    for (const id of ['field', 'studio', 'atelier', 'on-record']) {
+      expect(HOLDINGS_EXCLUDED_IDS.has(id)).toBe(true)
+      expect(WERKE_HOLDINGS.map((w) => w.id)).not.toContain(id)
+    }
+  })
+  it('keeps every non-excluded entry, in chronological order', () => {
+    expect(WERKE_HOLDINGS.map((w) => w.id)).toEqual(
+      WERKE_CHRONO.filter((w) => !HOLDINGS_EXCLUDED_IDS.has(w.id)).map((w) => w.id),
+    )
+    expect(WERKE_HOLDINGS.length).toBe(WERKE_CHRONO.length - HOLDINGS_EXCLUDED_IDS.size)
+  })
+  it('every excluded id actually exists in the register (no dead exclusions)', () => {
+    const ids = new Set(WERKE_CHRONO.map((w) => w.id))
+    for (const id of HOLDINGS_EXCLUDED_IDS) expect(ids.has(id)).toBe(true)
   })
 })
 

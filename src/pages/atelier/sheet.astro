@@ -12,6 +12,14 @@ import rhizomeData from '@/data/atelier/rhizome.json'
 import atlasData from '@/data/atelier/atlas.json'
 import { buildSheetSvg, edgeRegister, sheetStats, sheetTitle, type Rhizome } from '@/lib/atelier/sheet'
 import { ATELIER_GRAMMAR, ATELIER_NARRATIVE } from '@/config/atelier-wording'
+import { parseProtocol } from '@/lib/atelier/protocol-version'
+
+// Protocol version derived from the mirrored PROTOCOL.md (fail-loud, same pattern as
+// foundation.astro) — a hardcoded "v4" here outlived the v5 adoption by a week.
+const protoRaw = Object.values(import.meta.glob('/src/content/atelier/PROTOCOL.md', {
+  eager: true, query: '?raw', import: 'default',
+}) as Record<string, string>)[0] ?? ''
+const proto = parseProtocol(protoRaw)
 
 const rhizome = rhizomeData as unknown as Rhizome
 const stats = sheetStats(rhizome)
@@ -73,7 +81,7 @@ const statusHtml =
 
 <Page
   title="Atelier — the working sheet | Frank Bültge"
-  description="The Atelier's working sheet: the machine-participatory practice's own reading of its works and sources — threads in ink, swerves in red pencil, the doorway reserved. A practice working in bounded projects since Protocol v4."
+  description={`The Atelier's working sheet: the machine-participatory practice's own reading of its works and sources — threads in ink, swerves in red pencil, the doorway reserved. A practice working in work-lines under Protocol v${proto.version}.`}
 >
   <Frame
     active="this sheet"
