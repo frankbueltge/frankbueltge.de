@@ -240,6 +240,42 @@ describe('studio-season records what the figure actually draws', () => {
   })
 })
 
+describe('field-review adds ONE hue to a plate that already had two', () => {
+  const set = paletteById('field-review')!
+  const plate = readFileSync(new URL('src/styles/field-plate.css', `file://${ROOT}`), 'utf8')
+
+  it('keeps the surface package’s own stamp and caveat values unchanged', () => {
+    // The plate has worn these since the field surface package; this set RECORDS them, it does not
+    // re-step them. If a future re-step moves either one, this fails and the record must move too.
+    expect(set.slots[0]).toMatchObject({ light: '#6a3fb5', dark: '#7e5fd3' })
+    expect(set.slots[1]).toMatchObject({ light: '#9a6a08', dark: '#b3861d' })
+    for (const s of set.slots) {
+      expect(plate).toContain(s.light)
+      expect(plate).toContain(s.dark)
+    }
+  })
+
+  it('never paints a recommendation — both verifications wear one review hue', () => {
+    // The runtime keeps two disagreeing records standing (MRR-FR-077); the plate must not adjudicate
+    // by colour. So there is exactly ONE review hue per mode, and no status red anywhere.
+    const reviewSlots = set.slots.filter((s) => s.name.startsWith('review'))
+    expect(reviewSlots).toHaveLength(1)
+    for (const forbidden of ['#d32f2f', '#e5484d', '#dc2626', '#ff0000', '#1baf7a', '#0e8a6e']) {
+      expect(plate).not.toContain(forbidden)
+    }
+  })
+
+  it('ships the relief its light-mode contrast WARN names: direct labels AND a table', () => {
+    expect(set.warns).toHaveLength(1)
+    const figure = readFileSync(new URL('src/components/field/ClaimFigure.astro', `file://${ROOT}`), 'utf8')
+    // the direct labels are drawn by the builder, the table by the component
+    const builder = readFileSync(new URL('src/lib/field/claimladder.ts', `file://${ROOT}`), 'utf8')
+    expect(builder).toContain('fd-caliper-rec')
+    expect(builder).toContain('fd-caliper-conf')
+    expect(figure).toContain('TableFallback')
+  })
+})
+
 describe('ecology-voices is ONE quartet across its three surfaces', () => {
   const set = paletteById('ecology-voices')!
   const hub = readFileSync(new URL('src/components/pages/HubEntrance.astro', `file://${ROOT}`), 'utf8')
