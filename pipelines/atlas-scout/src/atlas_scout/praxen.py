@@ -125,9 +125,25 @@ def _ist_rohmaterial(relativ: Path) -> bool:
     return any(t.endswith("-probe") for t in teile)
 
 
-# Die Signaturfelder des eigenen Katalogs. Trägt ein Eintrag sie alle, ist die Datei
-# kein Verzeichnis von Quellen, sondern eine Kopie DIESES Katalogs.
+# The catalogue's own signature fields. A file whose entries carry them is not an index of
+# sources but a copy of THIS catalogue.
+#
+# Two of the three are enough, and they are looked for across the first few entries rather
+# than the first alone (Meridian, field-research REQUESTS.md 2026-07-30, session 73 — the
+# measurement reproduced here before the change: their frozen state `03067c54.json`, 117
+# entries, went unrecognised because its first entry predates `aufnahmegrund` entirely).
+# The reason is worth stating plainly: the schema changed under its own detector. Demanding
+# all three of the newest shape means the filter silently stops working on every state of
+# the catalogue older than the last field added to it — and a mirror of an old state loops
+# just as hard as a mirror of a new one.
 KATALOG_SIGNATUR = ("aufnahmegrund", "relevanz_herkunft", "zitiert_von")
+# How many of the signature fields must be present. Two, not three: the earliest published
+# state has exactly `relevanz_herkunft` + `zitiert_von`. Not one — a single German field name
+# could plausibly appear in someone else's index; two of these three together could not.
+SIGNATUR_MINDESTENS = 2
+# The union is taken over this many leading entries. An entry may omit an optional field;
+# a file does not.
+SIGNATUR_PROBE_EINTRAEGE = 5
 
 
 def _ist_spiegel(relativ: Path, roh: str) -> bool:
@@ -156,11 +172,25 @@ def _ist_spiegel(relativ: Path, roh: str) -> bool:
     Gemessen an beiden Abzügen des Audits: `papers.frozen.json` (208 Einträge) und
     `papers.seed-state.frozen.json` (206) werden erkannt; kein Eintrag verliert dadurch
     seine letzte Fundstelle, weil keiner allein am Spiegel hing.
+
+    Widened 2026-07-31, on Meridian's measurement (field-research REQUESTS.md 2026-07-30,
+    session 73), reproduced here against their five frozen states before the change: the
+    earliest one, `03067c54.json` with 117 entries, was NOT recognised. Its first entry
+    carries `relevanz_herkunft` and `zitiert_von` but predates `aufnahmegrund`, so the cheap
+    pre-filter dropped the file before the signature was ever tested. The schema changed
+    under its own detector — a filter pinned to the newest field stops working on every
+    older state of the object it guards, and a mirror of an old state loops just as hard.
+    Now: any signature field passes the pre-filter, and two of three across the leading
+    entries decide. All five states are recognised; measured over the four practice repos the
+    change moves nothing else (see tests/test_praxen.py).
     """
     if relativ.suffix != ".json":
         return False
-    # Billiger Vorfilter: erspart das Parsen jeder JSON-Datei in vier Repos.
-    if '"aufnahmegrund"' not in roh:
+    # Cheap pre-filter: saves parsing every JSON file in four repos. It asks for ANY of the
+    # signature fields, not for `aufnahmegrund` alone — that single name was the whole gap:
+    # the oldest published state of the catalogue does not contain it, so the file was
+    # rejected here and the signature below never got to see it.
+    if not any(f'"{feld}"' in roh for feld in KATALOG_SIGNATUR):
         return False
     try:
         daten = json.loads(roh)
@@ -168,8 +198,13 @@ def _ist_spiegel(relativ: Path, roh: str) -> bool:
         return False
     if not isinstance(daten, list) or not daten:
         return False
-    erster = daten[0]
-    return isinstance(erster, dict) and all(feld in erster for feld in KATALOG_SIGNATUR)
+    # The union over the leading entries, not the first entry alone: an entry may leave an
+    # optional field out, a whole catalogue does not.
+    felder: set[str] = set()
+    for eintrag in daten[:SIGNATUR_PROBE_EINTRAEGE]:
+        if isinstance(eintrag, dict):
+            felder |= eintrag.keys()
+    return sum(feld in felder for feld in KATALOG_SIGNATUR) >= SIGNATUR_MINDESTENS
 
 
 # DOI: das Präfix ist normiert (10.x/…), der Suffix praktisch beliebig — deshalb bricht
