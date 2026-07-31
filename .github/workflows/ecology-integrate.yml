@@ -140,8 +140,17 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           DATE=$(date -u +%F)
-          LOG=$(tail -40 /tmp/gate.log 2>/dev/null || echo "see workflow run")
-          BODY=$(printf 'Importer/Gate/Export fehlgeschlagen - kein Oekologie-Commit; der letzte gute Export bleibt live. Log-Auszug:\n\n```\n%s\n```\n\nTypische Ursache laut Arbeitsstrang 5.3: Engines haben neues Vokabular erfunden (das SOLLEN sie) - dann Pins/Schema bewusst erweitern, siehe research-ecology tests/contract/.' "$LOG")
+          RUN_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          # This report goes to Frank, not to a practice — so no letter and no attribution, only
+          # the error itself. It used to quote `tail -40`, which for astro check is the warning
+          # tally rather than the error: the very defect the practices reported four times
+          # (field-research REQUESTS.md 2026-07-25/07-30/07-31), pointed at the operator instead.
+          # Same extractor as the letters (src/lib/gate/brief.ts, under test there).
+          LOG=$(npx tsx scripts/gate/brief.ts --lines-only --log /tmp/gate.log 2>/dev/null) || LOG=""
+          if [ -z "${LOG//[[:space:]]/}" ]; then
+            LOG=$(printf 'No error line could be extracted from the log (or the extractor itself was unavailable). The full log is in the run: %s' "$RUN_URL")
+          fi
+          BODY=$(printf 'Importer/Gate/Export fehlgeschlagen - kein Oekologie-Commit; der letzte gute Export bleibt live. Lauf: %s\n\nFehlerzeilen, woertlich aus dem Validierungslog:\n\n```\n%s\n```\n\nTypische Ursache laut Arbeitsstrang 5.3: Engines haben neues Vokabular erfunden (das SOLLEN sie) - dann Pins/Schema bewusst erweitern, siehe research-ecology tests/contract/.' "$RUN_URL" "$LOG")
           # Dedup (2026-07-25): ein anhaltendes Rot darf die Steuerzentrale-Inbox nicht fluten —
           # bestehendes offenes Issue kommentieren statt jedes Mal ein neues anlegen.
           PREFIX="Ecology-Integrate rot"
