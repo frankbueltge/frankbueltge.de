@@ -4,11 +4,23 @@
    Grammatik — nichts hiervon teilt Partitur (score-map.css), Blatt (atelier-sheet.css)
    oder Bühne (studio-stage.css). Vollständig auf .field-surface gescopet, Tokens --fd-*.
 
-   Palette (validiert, field-aesthetik §3): Laborlicht (#f5f7f6, Stempel #6a3fb5, Kaveat
-   #9a6a08) und Nachtschicht (#12161a, #7e5fd3, #b3861d). Default hell — ein Labor arbeitet
-   bei Licht; Mechanik folgt der Site (auto→light→dark). */
+   Palette (field-aesthetik §3): Laborlicht (#f5f7f6) und Nachtschicht (#12161a). Default hell —
+   ein Labor arbeitet bei Licht; Mechanik folgt der Site (auto→light→dark).
+
+   PALETTE: field-review
+   The plate's three identity colours are RECORDED, with their validator verdict and the reason
+   for the third one, in src/lib/dataviz/palette.ts — palette.test.ts re-derives the distances and
+   scripts/drift-check.mjs (rule 7) enforces this marker. Violet is the record's own hand, ochre is
+   a standing obligation; the review magenta is the one hue this package adds, and it is
+   deliberately NOT a status pair — a "fail" and a "pass" verification wear the SAME colour and are
+   told apart by their direct labels, because the runtime keeps both records standing (MRR-FR-077)
+   rather than adjudicating between them. The legacy --fd-stamp / --fd-caveat aliases below keep
+   every rule written before this record working off ONE source of truth. */
 
 :root[data-theme='light'] .field-surface {
+  --fd-c-stamp: #6a3fb5;
+  --fd-c-caveat: #9a6a08;
+  --fd-c-review: #e87ba4;
   --fd-page: #e8ecea;
   --fd-surface: #f5f7f6;
   --fd-ink: #1c211f;
@@ -16,12 +28,16 @@
   --fd-hairline: #cdd8d1;
   --fd-grid: #dbe4de;
   --fd-grid-major: #c8d5cd;
-  --fd-stamp: #6a3fb5;
-  --fd-caveat: #9a6a08;
+  --fd-stamp: var(--fd-c-stamp);
+  --fd-caveat: var(--fd-c-caveat);
   --fd-badge-bg: #e9eeeb;
   --fd-h1-ink: #141816;
 }
+/* PALETTE: field-review — see the record above; the dark steps are their own, never a flip. */
 :root[data-theme='dark'] .field-surface {
+  --fd-c-stamp: #7e5fd3;
+  --fd-c-caveat: #b3861d;
+  --fd-c-review: #d55181;
   --fd-page: #0c0f12;
   --fd-surface: #12161a;
   --fd-ink: #e4ebe6;
@@ -29,8 +45,8 @@
   --fd-hairline: #303c45;
   --fd-grid: #1d2530;
   --fd-grid-major: #28323e;
-  --fd-stamp: #7e5fd3;
-  --fd-caveat: #b3861d;
+  --fd-stamp: var(--fd-c-stamp);
+  --fd-caveat: var(--fd-c-caveat);
   --fd-badge-bg: #1a2026;
   --fd-h1-ink: #eef2ef;
 }
@@ -46,6 +62,11 @@
   color: var(--fd-ink);
   border: 1px solid var(--fd-hairline);
   font-family: var(--fd-font-ui);
+  /* Every figure on this surface is a RECORD: dates in a column, counts in a legend, confidences
+     under two calipers, seventeen anchors in a row. Proportional numerals made those columns
+     wobble by a pixel or two per digit — on a lab plate that reads as a measurement error.
+     Declared once at the root so SVG <text> inherits it too, not only the tables. */
+  font-variant-numeric: tabular-nums;
 }
 @media (max-width: 640px) {
   .field-surface { padding: 1.5rem 1rem 2.5rem; }
@@ -329,6 +350,412 @@
   font: 12px var(--fd-font-record);
   color: var(--fd-ink-2);
   margin-top: 3px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════════════════
+   The claim plate — "The claim under review" (src/lib/field/claimladder.ts +
+   components/field/ClaimFigure.astro). The same millimetre paper, hairlines and stamps as the
+   Kontrollblatt above it, carrying a different object: one claim of the collective's, the
+   runtime's ceiling ladder beside it, two calipers closing in from opposite sides, the findings
+   they filed as ticks, and the evidence under all of it.
+
+   Colours: the three recorded --fd-c-* identities only (PALETTE: field-review, see the record at
+   the top of this file). Hairlines run 0.9–1.1px; nothing glows and nothing has a gradient — a
+   lab plate is drawn with a pen.
+   ─────────────────────────────────────────────────────────────────────────────────────────── */
+
+.field-surface .fd-claim-section { margin: 26px 0 30px; }
+.field-surface .fd-claim-h {
+  font-family: var(--fd-font-ui);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 500;
+  font-size: clamp(21px, 2.4vw, 30px);
+  color: var(--fd-h1-ink);
+  margin: 0 0 6px;
+}
+.field-surface .fd-claim-figure {
+  /* the readout is placed in THIS box's coordinates (dataviz/readout.ts house rule 1) — the
+     scrolling box below is a CHILD, so a readout near the right edge still clamps to what the
+     visitor can see rather than to the plate's full drawn width */
+  position: relative;
+  margin: 10px 0 4px;
+}
+.field-surface .fd-claim-scroll { overflow-x: auto; }
+.field-surface svg.fd-claim {
+  width: 100%;
+  /* the plate is 1240 units wide and its record type is 10–14px: below this the numbers stop being
+     readable, so the plate scrolls rather than shrinking into decoration (same rule as .fd-band) */
+  min-width: 940px;
+  height: auto;
+  display: block;
+  overflow: hidden;
+}
+
+/* the ladder: two stiles, seven rungs, and the band of language the ruling permits */
+.field-surface .fd-hair { stroke: var(--fd-hairline); stroke-width: 0.9; fill: none; }
+.field-surface .fd-stile { stroke: var(--fd-ink-2); stroke-width: 1.1; fill: none; opacity: 0.5; }
+.field-surface .fd-rung-bar { stroke: var(--fd-ink-2); stroke-width: 1; fill: none; }
+.field-surface .fd-rung-lab {
+  font: 11px var(--fd-font-record);
+  letter-spacing: 0.04em;
+  fill: var(--fd-ink-2);
+}
+.field-surface .fd-rung-ruled .fd-rung-bar { stroke: var(--fd-c-stamp); stroke-width: 2.4; }
+.field-surface .fd-rung-ruled .fd-rung-lab { fill: var(--fd-c-stamp); font-weight: 600; }
+/* refused language: the ochre of an obligation, and a broken rung — the shape says "you may not
+   stand here" even where the hue is lost (forced-colors, print, a deuteranope) */
+.field-surface .fd-rung-refused .fd-rung-bar { stroke: var(--fd-c-caveat); stroke-dasharray: 3 4; }
+.field-surface .fd-rung-refused .fd-rung-lab { fill: var(--fd-c-caveat); }
+
+/* the envelope band (src/lib/field/strip.ts envelopeBand): ink at 6 %, never a colour fill, so a
+   forced-colors backplate cannot turn it into a solid block — and a dashed edge that survives it */
+.field-surface .env-wash { fill: var(--fd-ink); opacity: 0.06; }
+.field-surface .env-edge { stroke: var(--fd-ink-2); stroke-width: 1; stroke-dasharray: 4 4; fill: none; }
+.field-surface .env-lab {
+  font: 10px var(--fd-font-record);
+  letter-spacing: 0.18em;
+  fill: var(--fd-ink-2);
+}
+
+/* the claim, stamped on the rung the ruling gave it */
+.field-surface .fd-leader { stroke: var(--fd-ink-2); stroke-width: 0.9; stroke-dasharray: 2 3; fill: none; opacity: 0.7; }
+.field-surface .fd-claim-plate { fill: var(--fd-badge-bg); stroke: var(--fd-c-stamp); stroke-width: 1.6; }
+.field-surface .fd-claim-status {
+  font: 600 11px var(--fd-font-record);
+  letter-spacing: 0.24em;
+  fill: var(--fd-c-stamp);
+}
+.field-surface .fd-claim-name {
+  font-family: var(--fd-font-ui);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  fill: var(--fd-ink);
+}
+.field-surface .fd-claim-tally { font: 11px var(--fd-font-record); fill: var(--fd-ink-2); }
+
+/* the two calipers. Both wear ONE review hue on purpose: the runtime keeps two disagreeing
+   records standing rather than adjudicating (MRR-FR-077), so the plate must not say which one is
+   right. What tells them apart is their direct labels and the point they close on — solid for the
+   failing verdict, broken for the passing one. */
+.field-surface .fd-caliper-beam { stroke: var(--fd-c-review); stroke-width: 2.2; fill: none; }
+.field-surface .fd-caliper-jaw { stroke: var(--fd-c-review); stroke-width: 1.6; fill: none; }
+.field-surface .fd-caliper-point { stroke: var(--fd-c-review); stroke-width: 2.6; fill: none; }
+.field-surface .fd-caliper-pass .fd-caliper-point { stroke-dasharray: 3 3; }
+.field-surface .fd-caliper-rec {
+  font: 600 12px var(--fd-font-record);
+  letter-spacing: 0.2em;
+  fill: var(--fd-c-review);
+}
+.field-surface .fd-caliper-conf { font: 11px var(--fd-font-record); fill: var(--fd-ink-2); }
+
+/* the findings: a tick per finding, its LENGTH the severity and its weight with it */
+.field-surface .fd-finding-tick { stroke: var(--fd-c-review); stroke-width: 2.2; fill: none; }
+.field-surface .fd-finding-minor .fd-finding-tick { stroke-width: 1.2; stroke-dasharray: 3 3; }
+
+/* the evidence anchors: primary in the record's own violet, secondary in plain ink */
+.field-surface .fd-anchor { stroke: var(--fd-ink-2); stroke-width: 1.1; fill: none; }
+.field-surface .fd-anchor-primary .fd-anchor { stroke: var(--fd-c-stamp); stroke-width: 1.8; }
+
+/* margin notes and scene call-outs — the lab hand in the margin, on its own underline */
+.field-surface .fd-margin text {
+  font: 10px var(--fd-font-record);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  fill: var(--fd-ink-2);
+}
+.field-surface .fd-margin path { stroke: var(--fd-hairline); stroke-width: 0.9; fill: none; }
+.field-surface .fd-note path { stroke: var(--fd-ink-2); stroke-width: 1; fill: none; }
+.field-surface .fd-note text { font: 11px var(--fd-font-record); fill: var(--fd-ink); }
+
+/* the hit target: invisible, on top of its own mark — a 1px hairline is not something to aim at */
+.field-surface .fd-hit { fill: transparent; stroke: none; pointer-events: all; }
+
+/* Focus states, shared by BOTH keyed field figures — the claim plate and the tour's Kontrollblatt —
+   and by the live figure and its build-time stills alike. Scoped to the surface rather than to a
+   per-figure wrapper class on purpose: the tour engine renders each scene's still into its own
+   <figure class="dv-scene-still">, out of reach of any wrapper this practice could add. Nothing
+   here moves a mark: a filtered plate keeps every mark, it only stops shouting about the rest. */
+.field-surface [data-key] { outline: none; transition: opacity 0.18s ease; }
+.field-surface [data-key][tabindex] { cursor: help; }
+.field-surface [data-key]:not([data-on]) { opacity: 0.13; }
+.field-surface [data-dim] { opacity: 0.32; }
+.field-surface [data-key]:focus-visible { outline: 1px dashed var(--fd-ink); outline-offset: 2px; }
+.field-surface [data-key]:hover .fd-rung-bar,
+.field-surface [data-sel] .fd-rung-bar { stroke-width: 3; }
+.field-surface [data-key]:hover .fd-finding-tick,
+.field-surface [data-sel] .fd-finding-tick { stroke-width: 3.4; stroke-dasharray: none; }
+.field-surface [data-key]:hover .fd-caliper-beam,
+.field-surface [data-sel] .fd-caliper-beam { stroke-width: 3.6; }
+.field-surface [data-key]:hover .fd-claim-plate,
+.field-surface [data-sel] .fd-claim-plate { stroke-width: 2.8; }
+.field-surface [data-key]:hover .fd-anchor,
+.field-surface [data-sel] .fd-anchor { stroke-width: 2.4; }
+/* the Kontrollblatt's own glyphs, when a scene singles one out */
+.field-surface [data-sel] .instr,
+.field-surface [data-sel] .flag { stroke: var(--fd-ink); stroke-width: 1.4; }
+.field-surface [data-sel] .stamp,
+.field-surface [data-sel] .splice { stroke-width: 2.8; }
+
+/* the gauntlet plate the guided tour drives (components/field/tours/GauntletTour.astro) */
+.field-surface .fd-gauntlet-plate { position: relative; }
+.field-surface .fd-gauntlet-scroll { overflow-x: auto; }
+/* the plate crops its viewBox to its own marks (strip.ts `fitToMarks`), so it needs no minimum
+   width to stay legible — at a half column it renders LARGER than nominal, not smaller */
+.field-surface .fd-gauntlet-plate svg { width: 100%; height: auto; max-height: 62vh; display: block; }
+
+/* ═══════════════════════════════════════════════════════════════════════════════════════════
+   The shared behaviour primitives (components/dataviz/*), in the field's own voice. The
+   primitives ship structure only (ADR 0010); everything below is this practice's skin over them.
+   ─────────────────────────────────────────────────────────────────────────────────────────── */
+
+.field-surface .dv-readout {
+  background: var(--fd-badge-bg);
+  border: 1px solid var(--fd-hairline);
+  border-left: 3px solid var(--fd-c-stamp);
+  padding: 8px 11px;
+  font: 12px var(--fd-font-record);
+  line-height: 1.5;
+  color: var(--fd-ink);
+}
+.field-surface .dv-readout[data-family='review'] { border-left-color: var(--fd-c-review); }
+.field-surface .dv-readout[data-family='ruling'] { border-left-color: var(--fd-c-caveat); }
+.field-surface .dv-readout[data-family='evidence'] { border-left-color: var(--fd-ink-2); }
+.field-surface .dv-readout .r-head {
+  display: block;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  margin-bottom: 3px;
+}
+.field-surface .dv-readout .r-body { display: block; margin-top: 4px; }
+.field-surface .dv-readout .r-src {
+  display: block;
+  color: var(--fd-ink-2);
+  margin-top: 5px;
+  font-size: 11px;
+  overflow-wrap: anywhere;
+}
+
+.field-surface .dv-legend { gap: 5px 14px; margin: 8px 0 12px; }
+.field-surface .dv-legend-btn {
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  padding: 3px 8px;
+  font: 12px var(--fd-font-record);
+  letter-spacing: 0.04em;
+  color: var(--fd-ink-2);
+  cursor: pointer;
+}
+.field-surface .dv-legend-btn:hover { color: var(--fd-ink); border-color: var(--fd-hairline); }
+.field-surface .dv-legend-btn[aria-pressed='true'] {
+  color: var(--fd-ink);
+  border-color: var(--fd-ink-2);
+  background: var(--fd-badge-bg);
+}
+/* the swatch carries the mark's own SHAPE as well as its hue: the ruling is a broken rung, the
+   claim a filled stamp, the review a caliper beam, the evidence a thin anchor tick */
+.field-surface .dv-legend-swatch { width: 12px; height: 12px; }
+.field-surface [data-dv-legend-key='ruling'] .dv-legend-swatch {
+  height: 0;
+  background: none;
+  border-top: 2px dashed var(--fd-c-caveat);
+}
+.field-surface [data-dv-legend-key='review'] .dv-legend-swatch { width: 3px; height: 14px; }
+.field-surface [data-dv-legend-key='evidence'] .dv-legend-swatch { width: 2px; height: 14px; }
+.field-surface .dv-legend-count { color: var(--fd-ink-2); }
+
+.field-surface .dv-panel {
+  border: 1px solid var(--fd-hairline);
+  border-top: 2px solid var(--fd-c-review);
+  background: var(--fd-badge-bg);
+  padding: 13px 15px 11px;
+  margin: 8px 0 18px;
+  max-width: 82ch;
+}
+.field-surface .dv-panel-head {
+  font-family: var(--fd-font-ui);
+  font-size: 17px;
+  letter-spacing: 0.03em;
+  color: var(--fd-ink);
+}
+.field-surface .dv-panel-head .p-sev {
+  display: block;
+  font: 11px var(--fd-font-record);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--fd-c-review);
+  margin-bottom: 3px;
+}
+.field-surface .dv-panel-body {
+  font: 13px var(--fd-font-record);
+  line-height: 1.62;
+  color: var(--fd-ink);
+  margin: 8px 0 4px;
+  /* a verifier's ground runs to a paragraph and quotes two institutions; inside a column it must
+     scroll rather than push everything below it off the plate. The record stays WHOLE — the table
+     under the figure carries every word of it too. */
+  max-height: 34vh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.field-surface .dv-panel-body q { font-style: italic; }
+.field-surface .dv-panel-foot,
+.field-surface .dv-prov {
+  font: 11.5px var(--fd-font-record);
+  line-height: 1.55;
+  color: var(--fd-ink-2);
+  max-width: 96ch;
+  /* repo paths and urns offer a browser no break opportunity of their own */
+  overflow-wrap: anywhere;
+}
+.field-surface .dv-panel-nav { margin-top: 9px; }
+.field-surface .dv-panel-nav button,
+.field-surface .dv-tour-steps button {
+  background: none;
+  border: 1px solid var(--fd-hairline);
+  border-radius: 2px;
+  padding: 3px 10px;
+  font: 11px var(--fd-font-record);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fd-ink-2);
+  cursor: pointer;
+}
+.field-surface .dv-panel-nav button:hover,
+.field-surface .dv-tour-steps button:hover { color: var(--fd-ink); border-color: var(--fd-ink-2); }
+
+.field-surface .dv-table-fallback { margin: 6px 0 20px; }
+.field-surface .dv-table-fallback > summary {
+  cursor: pointer;
+  font: 12px var(--fd-font-record);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fd-ink-2);
+  padding: 7px 0;
+  border-top: 1px solid var(--fd-hairline);
+}
+.field-surface .dv-table-fallback > summary:hover { color: var(--fd-ink); }
+.field-surface .dv-table { font: 12.5px var(--fd-font-record); }
+.field-surface .dv-table th,
+.field-surface .dv-table td { border-top: 1px solid var(--fd-hairline); padding: 7px 14px 7px 0; vertical-align: top; }
+.field-surface .dv-table th { text-align: left; font-weight: 600; color: var(--fd-ink-2); letter-spacing: 0.06em; }
+.field-surface .dv-table td:nth-child(2) { max-width: 64ch; font-style: italic; }
+.field-surface .dv-table td:last-child { color: var(--fd-ink-2); overflow-wrap: anywhere; }
+
+/* ═══════════════════════════════════════════════════════════════════════════════════════════
+   The guided tour (components/dataviz/Tour.astro): the plate stands still on the left, the
+   collective's own account of the week walks past it on the right.
+   ─────────────────────────────────────────────────────────────────────────────────────────── */
+
+.field-surface .dv-tour {
+  --dv-tour-gap: 2.4rem;
+  /* clears the site's own fixed header */
+  --dv-tour-sticky-top: 5rem;
+  --dv-tour-scroll-margin: 30vh;
+  border-top: 1px solid var(--fd-hairline);
+  padding-top: 18px;
+  margin: 10px 0 30px;
+  outline: none;
+  scroll-margin-top: 3rem;
+}
+/* The extra `.dv-tour` in these three selectors is load-bearing, not decoration: Tour.astro's own
+   scoped rule for this element has specificity (0,4,0), and a practice skin written as
+   `.field-surface .dv-tour-body:has(…)` merely TIES with it — which the engine's own stylesheet
+   then wins on source order. At 390px that left the tour in two 142px columns. Naming the section
+   as well as the body takes the skin to (0,5,0), where it belongs. */
+.field-surface .dv-tour .dv-tour-body:has(.dv-tour-figure:not([hidden])) {
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+}
+/* A grid track's default `min-width: auto` refuses to shrink below its content's min-content
+   width — and this tour's content is a record plate. At 390px that pushed the whole page 238px
+   wider than the viewport even though the plate sits in its own scroll box. Every track and every
+   column here is therefore explicitly allowed to shrink; the plate scrolls inside its own box
+   instead of dragging the document sideways. */
+.field-surface .dv-tour .dv-tour-body { grid-template-columns: minmax(0, 1fr); }
+.field-surface .dv-tour-figure,
+.field-surface .dv-tour-scenes,
+.field-surface .dv-scene { min-width: 0; }
+.field-surface .dv-tour-title {
+  font-family: var(--fd-font-ui);
+  text-transform: uppercase;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  font-size: clamp(24px, 3vw, 40px);
+  line-height: 1.1;
+  color: var(--fd-h1-ink);
+  margin: 0 0 0.3em;
+  max-width: 24ch;
+}
+.field-surface .dv-tour-standfirst {
+  font: 14px var(--fd-font-record);
+  line-height: 1.62;
+  color: var(--fd-ink-2);
+  max-width: 84ch;
+  margin: 0 0 12px;
+}
+.field-surface .dv-scene { padding: 8vh 0; max-width: 64ch; }
+.field-surface .dv-scene:first-child { padding-top: 2vh; }
+.field-surface .dv-scene-kicker {
+  font: 11px var(--fd-font-record);
+  letter-spacing: 0.2em;
+  color: var(--fd-ink-2);
+  margin: 0 0 5px;
+}
+.field-surface .dv-scene[aria-current='step'] .dv-scene-kicker { color: var(--fd-c-stamp); }
+.field-surface .dv-scene-heading {
+  font-family: var(--fd-font-ui);
+  font-size: 23px;
+  font-weight: 600;
+  line-height: 1.22;
+  letter-spacing: 0.02em;
+  color: var(--fd-ink);
+  margin: 0 0 8px;
+}
+.field-surface .dv-scene-lead {
+  font-family: var(--fd-font-ui);
+  font-size: 15px;
+  line-height: 1.64;
+  color: var(--fd-ink);
+  margin: 0 0 12px;
+}
+.field-surface .dv-scene-quote {
+  border-left: 2px solid var(--fd-c-stamp);
+  margin: 12px 0;
+  padding: 2px 0 2px 14px;
+}
+.field-surface .dv-scene-quote p {
+  font: 13.5px var(--fd-font-record);
+  line-height: 1.62;
+  color: var(--fd-ink);
+  margin: 0;
+  /* The last scene quotes a verification by its full urn — fifty characters a browser is given no
+     break opportunity in. The urn stays complete and unabbreviated (it is what makes the quote
+     checkable); it just wraps now, instead of pushing the page sideways at 390px. */
+  overflow-wrap: anywhere;
+}
+.field-surface .dv-scene-quote footer {
+  font: 11px var(--fd-font-record);
+  color: var(--fd-ink-2);
+  margin-top: 6px;
+  /* every citation here is a repo path, and a path offers no break opportunity of its own */
+  overflow-wrap: anywhere;
+}
+.field-surface .dv-scene-still { margin: 14px 0 0; overflow-x: auto; }
+.field-surface .dv-scene-still svg { width: 100%; min-width: 420px; height: auto; max-height: 58vh; display: block; }
+.field-surface .dv-tour-steps { margin: 12px 0 4px; }
+.field-surface .dv-tour-jump { font: 11px var(--fd-font-record); }
+.field-surface .dv-tour-jump a { color: var(--fd-ink-2); text-decoration: none; }
+.field-surface .dv-tour-jump a[aria-current='true'] { color: var(--fd-ink); text-decoration: underline; }
+@media (max-width: 900px) {
+  /* one column: the plate stops being a sticky companion and becomes a figure the reader scrolls
+     past, which is the only honest layout once neither column can hold a legible record */
+  .field-surface .dv-tour .dv-tour-body:has(.dv-tour-figure:not([hidden])) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .field-surface .dv-tour-figure { position: static; max-height: none; }
+  .field-surface .dv-scene { padding: 4vh 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {

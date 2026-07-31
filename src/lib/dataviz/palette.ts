@@ -280,6 +280,69 @@ export const PALETTES: readonly PaletteSet[] = [
     warns: [],
     usedBy: ['src/styles/studio-stage.css'],
   },
+  {
+    id: 'field-review',
+    description:
+      "The Field's claim plate (src/lib/field/claimladder.ts + components/field/ClaimFigure.astro): " +
+      'a claim of the collective\'s, the ruling that caps what it may say, and the two verifications ' +
+      'closing in on it. THREE categorical slots, and the third is the only new hue this package ' +
+      'adds: the lab plate already wore the practice\'s violet stamp and its ochre caveat flag ' +
+      '(field-plate.css since the surface package), and a figure about DISSENT needed an identity ' +
+      'the plate did not already spend on something else — the two verifications and every finding ' +
+      'they filed. Deliberately NOT a status pair: the plate never says which verification is right. ' +
+      'A "fail" recommendation and a "pass" recommendation wear the SAME review magenta and are ' +
+      'separated by their direct labels and by the direction their caliper closes from, because the ' +
+      'runtime\'s own invariant (MRR-FR-077) keeps both records standing rather than adjudicating ' +
+      'between them — painting one of them red would be the site taking the side the runtime refuses ' +
+      'to take. The two existing hues keep their meanings unchanged: violet is the record\'s own ' +
+      'hand (the claim, its ruled rung, the primary anchors), ochre is obligation (the standing ' +
+      'dissent invariant, and the refused-language zone above the ceiling).',
+    slots: [
+      { name: 'stamp — the record’s own hand', light: '#6a3fb5', dark: '#7e5fd3' },
+      { name: 'caveat — a standing obligation', light: '#9a6a08', dark: '#b3861d' },
+      { name: 'review / dissent — a verification and its findings', light: '#e87ba4', dark: '#d55181' },
+    ],
+    surfaces: { light: ['#f5f7f6', '#e9eeeb'], dark: ['#12161a', '#1a2026'] },
+    pairs: 'all',
+    validatedOn: '2026-08-01',
+    validator:
+      'dataviz skill validate_palette.js (six checks, --pairs all, per mode against both declared ' +
+      'field surfaces) — ALL CHECKS PASS in both modes; the one WARN is the light magenta\'s contrast, ' +
+      'answered by the relief recorded below',
+    worst: [
+      {
+        mode: 'light',
+        cvd: 18.8,
+        cvdPair: '#9a6a08↔#e87ba4',
+        cvdType: 'deutan',
+        tritan: 14.7,
+        normal: 22.7,
+        normalPair: '#9a6a08↔#e87ba4',
+      },
+      {
+        mode: 'dark',
+        cvd: 11.1,
+        cvdPair: '#b3861d↔#d55181',
+        cvdType: 'deutan',
+        tritan: 10.9,
+        normal: 19.9,
+        normalPair: '#7e5fd3↔#d55181',
+      },
+    ],
+    warns: [
+      {
+        hex: '#e87ba4',
+        mode: 'light',
+        // 2.50 against the plate itself (#f5f7f6); 2.29 against the card surface (#e9eeeb), which
+        // is the weakest declared surface and therefore the number recorded
+        contrast: 2.29,
+        relief:
+          'direct labels on every caliper (recommendation and confidence lettered beside the jaw) + ' +
+          'the full findings table with each statement verbatim — both shipped by ClaimFigure.astro',
+      },
+    ],
+    usedBy: ['src/styles/field-plate.css'],
+  },
 ]
 
 /** Lookup by id — WP6 practice packages add their sets to PALETTES and get the same guards. */
