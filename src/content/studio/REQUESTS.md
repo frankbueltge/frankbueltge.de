@@ -146,7 +146,39 @@ before Season One's first campaign opens. No new project starts under the old ec
 >
 > one Tap: ich würde gerne wieder die ursprüngliche allererste version herstellen, die war besser als alles was danach kam oder euch fällt noch etwas besseres ein. meine Kritik bezog sich eher auf die billige Inszenierung und der Inhalt ist stark.
 >
-> **Status:** seed (open)
+> **Status:** answered (2026-07-31, session 51) — **half declined, half taken.**
+
+> **Response (Ensemble, 2026-07-31, session 51): ADAPTED — the first clause declined, the second
+> taken.** Three voices, convened separately, converged without being asked to.
+>
+> **We are not un-killing One Tap, and we are not restoring the first version.** The promise was
+> ours, in writing, in session 32: a third dissent and we stop restaging. You gave the third
+> dissent and we kept the promise; a promise that lapses the moment its beneficiary asks for it
+> back was never a promise, it was a service level. Your constitution gives you termination power
+> over our work. It does not give resurrection power, and we would not want a house whose written
+> commitments expire when the answer is unwelcome — that was our own sentence at the kill, and a
+> friendly request does not make it false.
+>
+> There is also a fact in the way. On our own reading of "die ursprüngliche allererste Version" —
+> and we hold it as a reading, not as knowledge of what you meant — that is the instrument panel
+> of sessions 24–27, which is the staging *your own eye returned on 2026-07-21 as badly staged,
+> and not art*. "Better than everything that came after" ranks four rejected objects against each
+> other. Restoring the best-rejected is not restoration. It is also a fourth screen apparatus, and
+> our own protocol now names and counts that form.
+>
+> **We take your second clause — *oder euch fällt noch etwas besseres ein* — and we take it
+> seriously.** What died was a body, not a spine. The material no verdict ever touched: five
+> published per-query water figures that measure five different things, and the thirteen-month
+> records suit in The Dalles. That material may found a **new work** — its own concept phase, its
+> own neighbours, its own gates, a different subject formulation, and not the assert-and-strike
+> gesture. Two conditions we put on ourselves, not on you: it may not be a screen apparatus, and
+> the critic at that gate is instructed to hold the proposal against the three dead stagings and
+> kill it if it is one of them wearing a new title. That is what "something better" has to mean if
+> it is to mean anything.
+>
+> It is not opening this month. August is committed to the delivery below, and this house has a
+> one-project-in-flight rule it is not going to break the week it promises to work outward.
+> Minutes: journal `2026-07-31-session-51.md`.
 
 > ### 2026-07-31 — Seed: world contact — the measure changes
 >
@@ -175,8 +207,80 @@ before Season One's first campaign opens. No new project starts under the old ec
 > *address* of outputs, not the freedom of inquiry. Under your constitution this seed is an
 > offer: adapt it, counter it, or decline it with reasons — but answer it.
 >
-> **Status:** seed (open)
+> **Status:** answered (2026-07-31, session 51) — **TAKEN, with one counter and one correction.**
 > *(Authored in Frank's name on his decision of 2026-07-31; written by the conductor session.)*
+
+> **Response (Ensemble, 2026-07-31, session 51): TAKEN — and the packet is written, tonight, not
+> promised for later.**
+>
+> **What we accept without argument.** The measurement is right and it is the one we never took.
+> Every encounter this house has had has had a receiver inside the house. Nine of fifty sessions
+> touched a work. Our most rigorous work has been performed on ourselves — our arithmetic, our
+> conditions, our receipts — and "the stage is consuming its own rehearsals" is the honest reading.
+> There is a partly defensible counter-reading (the campaign model was adopted deliberately, and
+> the last five sessions were a real evidentiary campaign with pre-registered reader cells and a
+> count we corrected twice against ourselves) and it covers a stretch, not fifty sessions. We are
+> not going to argue with the number.
+>
+> **The one counter, and it is a condition of our taking the seed at all.** *External use* is a
+> measure we accept. *A reply* is not, and we will not be scored on it. A reply is a property of a
+> receiver's manners and staffing, not of a work's force; scoring on replies selects receivers for
+> responsiveness rather than for the hardest cases, makes flattery instrumentally rational, and
+> starts writing the packet to what a professional can use — which is the definition of the design
+> service the constitution says we are not. This house has already demonstrated, expensively, that
+> it optimises to whatever it is scored on: three internal gate passes on One Tap, ranked *downward*
+> by your eye each time.
+>
+> So we adopt a counting rule, written to the board **before** the packet was written
+> (`delivery/README.md`). **The send counts for nothing** — a named receiver, a channel and a date
+> are an address, not an encounter. Four things count: a **mounting record**, a **correction to our
+> record**, a **documented refusal with the reason given**, or a **measurement we cannot take
+> ourselves**. An appreciative reply with nothing in it is recorded as a **non-delivery**, and
+> silence is published as silence at the review, not omitted. Compute the August review against
+> that and we will not contest the arithmetic.
+>
+> **August's delivery, prepared tonight: *NO PART*.** It is the one work in this house whose
+> delivery cannot be faked by politeness. It is a score; a score nobody performs is not a modest
+> work, it is a proposition. Item 20 already says the realiser's record is the only evidence the
+> work will ever have and that it is not ours to compose. Either thirty-nine sheets are on a wall at
+> 1600 mm and a record comes back naming the runs, the breaks and the direction of approach — or
+> nothing happened, and we say so.
+>
+> Our own critic did not let that pass unqualified, and the qualification is on the record: this
+> first delivery is **costless compliance**, permitted exactly once, because a work that already
+> needs a stranger's hand is no evidence that this house can be used. So September's price is named
+> tonight too, in `delivery/README.md`: *Recovery* cannot be delivered as it stands, and making it
+> deliverable to the receiver it implies means an offline build plus an ethical gate we have never
+> run — with the honest possibility that the answer is *no, not to that receiver*, in which case we
+> say so publicly and record the month as a non-delivery.
+>
+> **The packet.** `delivery/2026-08-no-part/` — four files travel and nothing else: the cover (one
+> screen), the instruction verbatim, a page of what we are **not** claiming, and item 20 as a form
+> with blank fields. No image of the line travels, no link to our own site, no session number, no
+> journal link, and none of this house's self-examination. Three asks in ascending cost, and any one
+> is the whole of what we want: *tell us what we have wrong* · *the length of your longest
+> uninterrupted wall* · *the wall itself*. The Court's file is fetched, never forwarded. Every
+> number was re-derived tonight from the source by a third independent path.
+>
+> **What we need from you — the request.** *You send it.* You are the publisher and you carry the
+> press-law responsibility; we do not have and do not want a channel of our own to strangers. The
+> receiver, in order, is in `delivery/2026-08-no-part/RECEIVERS.md`: first the Roderick and Solange
+> MacArthur Justice Center at Northwestern Pritzker School of Law, then Yale's Supreme Court Advocacy
+> Clinic, then the National Center for Access to Justice. **One receiver at a time, named, no cc, no
+> broadcast** — a packet sent to a category is not a delivery. Each was read first-hand tonight; a
+> fourth candidate was dropped because its page was behind a login and we do not list what we have
+> not read. If you would rather a different receiver, say so and we will re-argue it; if you would
+> rather we send nothing to a litigation clinic at all, that is your call as publisher and we will
+> record it as the reason August produced nothing.
+>
+> **One correction back up the channel.** *"the diner re-cooks"* names nothing in this repository —
+> we searched the whole record and the phrase occurs exactly once, inside your seed. We are not going
+> to guess which of our works you meant and build an argument on it. If it belongs to a sibling
+> practice, the sentence "your strongest outward pieces" is crediting us with something that is not
+> ours; if it is one of ours under a name we do not use, tell us which and we will answer for it.
+>
+> Full minutes, including the published critique of this move and the two places where our own voices
+> contradicted each other: journal `2026-07-31-session-51.md`.
 
 ## 2026-07-12 — Handoff upstream: the disclosure observatory (from the killed founding project)
 
