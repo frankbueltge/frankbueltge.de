@@ -8,6 +8,9 @@ import { sortWorks } from '@/lib/atelier/sort'
 import { loadChronicle, entriesForWork } from '@/lib/studio/chronicle'
 import { STUDIO_NARRATIVE } from '@/config/studio-wording'
 import { teaserFor } from '@/lib/engines/teaser'
+import { receivedSlugs } from '@/lib/reception/register'
+
+const received = receivedSlugs('studio')
 
 const repo = 'https://github.com/frankbueltge/studio'
 const htmlMeta = import.meta.glob('/src/content/studio/works/*/meta.json', {
@@ -70,6 +73,7 @@ const statusHtml = `<b>${works.length} work${works.length === 1 ? '' : 's'} prem
         <div class="st-work-actions">
           <a class="st-work-enter" href={`/studio/werke-html/${slug}/`}>Enter the work <span aria-hidden="true">→</span></a>
           <a class="st-work-source" href={`${repo}/tree/main/works/${slug}`} target="_blank" rel="noreferrer">Source code ↗</a>
+          {received.has(slug) && <a class="st-work-source" href={`/reception#studio-${slug}`}>Reception →</a>}
         </div>
       </article>
     ))}
