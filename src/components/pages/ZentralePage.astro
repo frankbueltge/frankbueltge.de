@@ -90,6 +90,13 @@
       <div data-zx="pending-seeds" class="flex flex-col gap-4"></div>
     </section>
 
+    {/* Briefkasten: letters from outside (post office /post) — private queue, read here,
+        forwarded by Frank's hand; dismissing deletes from KV (letters were never public). */}
+    <section aria-labelledby="zx-letters-h" class="mt-10">
+      <h2 id="zx-letters-h" class="mb-4 font-mono text-xs uppercase tracking-[0.22em] text-fg-faint">Briefkasten — Post von außen</h2>
+      <div data-zx="letters" class="flex flex-col gap-4"></div>
+    </section>
+
     <section aria-labelledby="zx-seed-h" class="mb-12">
       <h2 id="zx-seed-h" class="mb-4 font-mono text-xs uppercase tracking-[0.22em] text-fg-faint">Saat</h2>
       <form data-zx="seed-form" class="flex flex-col gap-3 rounded-xl border border-line bg-panel p-4">
@@ -910,6 +917,76 @@
     return card
   }
 
+  // ── Briefkasten: letters from the post office queue (GET/DELETE /api/post) ──
+  const lettersEl = document.querySelector<HTMLElement>('[data-zx="letters"]')
+  interface ZxLetter {
+    id: string
+    to: string
+    fromMark: string
+    contact: string
+    regarding: string
+    text: string
+    received_at: string
+  }
+  function renderLetterCard(l: ZxLetter): HTMLElement {
+    const card = el('div', { class: 'rounded-[10px] border border-line bg-panel p-4' })
+    const head = el('p', { class: 'font-mono text-[11px] uppercase tracking-[0.14em] text-fg-muted' })
+    head.textContent = `an ${l.to} · von ${l.fromMark}${l.regarding ? ` · betr. ${l.regarding}` : ''}`
+    const meta = el('p', { class: 'mt-1 font-mono text-[11px] text-fg-faint' })
+    meta.textContent = `${l.id} · ${fmtRel(l.received_at)}${l.contact ? ` · Kontakt: ${l.contact}` : ' · kein Kontakt hinterlassen'}`
+    const body = el('p', { class: 'mt-3 whitespace-pre-wrap text-sm leading-relaxed text-fg' })
+    body.textContent = l.text
+    const row = el('div', { class: 'mt-3 flex items-center gap-3' })
+    const btn = el('button', { type: 'button', class: 'rounded border border-line px-2.5 py-1 font-mono text-[11px] uppercase tracking-[0.1em] text-fg-muted hover:text-fg' }, 'erledigt')
+    const hint = el('span', { class: 'text-xs text-fg-faint' }, '')
+    let armed = false
+    btn.addEventListener('click', () => {
+      if (!armed) {
+        armed = true
+        btn.textContent = 'löschen bestätigen'
+        hint.textContent = 'Entfernt den Brief endgültig aus der Warteschlange.'
+        return
+      }
+      void (async () => {
+        try {
+          const res = await fetch(`/api/post?id=${encodeURIComponent(l.id)}`, {
+            method: 'DELETE',
+            headers: { 'X-Zentrale-Auth': token ?? '' },
+          })
+          if (res.ok) card.remove()
+          else hint.textContent = 'Löschen fehlgeschlagen.'
+        } catch {
+          hint.textContent = 'Netzwerkfehler beim Löschen.'
+        }
+      })()
+    })
+    row.append(btn, hint)
+    card.append(head, meta, body, row)
+    return card
+  }
+  async function fetchLetters(): Promise<void> {
+    if (!lettersEl || !token) return
+    try {
+      const res = await fetch('/api/post', { headers: { 'X-Zentrale-Auth': token } })
+      lettersEl.replaceChildren()
+      if (!res.ok) {
+        lettersEl.append(el('p', { class: 'text-sm text-amber-500' }, 'Konnte den Briefkasten nicht laden.'))
+        return
+      }
+      const body = (await res.json()) as { ok?: boolean; letters?: ZxLetter[] }
+      const list = body.ok && Array.isArray(body.letters) ? body.letters : []
+      if (list.length === 0) {
+        lettersEl.append(el('p', { class: 'text-sm text-fg-muted' }, 'Keine Briefe in der Warteschlange.'))
+      } else {
+        for (const l of [...list].sort((a, b) => b.received_at.localeCompare(a.received_at))) {
+          lettersEl.append(renderLetterCard(l))
+        }
+      }
+    } catch {
+      lettersEl.replaceChildren(el('p', { class: 'text-sm text-amber-500' }, 'Netzwerkfehler beim Laden des Briefkastens.'))
+    }
+  }
+
   async function fetchPendingSeeds(): Promise<void> {
     if (!pendingSeedsEl || !token) return
     try {
@@ -1049,6 +1126,7 @@
       }
       renderDashboard(body)
       void fetchPendingSeeds() // eigener Endpunkt (KV), lädt parallel nach dem Dashboard-Status
+      void fetchLetters() // Briefkasten (post office KV-Queue), ebenfalls parallel
     } catch {
       showNotConnected('Netzwerkfehler — bitte später erneut versuchen.')
     } finally {
