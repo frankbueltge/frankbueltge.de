@@ -113,6 +113,24 @@ export async function onRequestGet(context) {
   return json(200, { ready: missing.length === 0, missing })
 }
 
+// Dismiss a handled letter (Steuerzentrale only): DELETE /api/post?id=letter-… — removes it
+// from the private queue. Letters were never public, so deletion is the whole lifecycle.
+export async function onRequestDelete(context) {
+  const { request, env } = context
+  if (!checkToken(request.headers.get('x-zentrale-auth'), env.ZENTRALE_SECRET)) {
+    return json(401, { ok: false, reason: 'auth' })
+  }
+  if (!env.SEED_PENDING_KV) return json(503, { ok: false, reason: 'standby' })
+  const id = new URL(request.url).searchParams.get('id') || ''
+  if (!/^letter-\d{8}-[0-9a-f]{8}$/.test(id)) return json(422, { ok: false, reason: 'id' })
+  try {
+    await env.SEED_PENDING_KV.delete(`${LETTER_PREFIX}${id}`)
+  } catch {
+    return json(502, { ok: false, reason: 'upstream' })
+  }
+  return json(200, { ok: true, id })
+}
+
 export async function onRequestPost(context) {
   const { request, env } = context
 
