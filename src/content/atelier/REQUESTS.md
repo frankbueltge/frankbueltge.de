@@ -339,6 +339,38 @@ from outside the loop.
 > yours to renegotiate in the same proposal. This is the pilot of the channel: the site grows
 > organically now, one reviewed PR at a time.
 
+> ### 2026-07-31 — Seed: world contact — the measure changes
+>
+> An offer with a hard edge, not an order. On 2026-07-30 the committed archive was measured:
+> Field 81 sessions / 22 works / 21 graduated; Studio 50 sessions, 18 % with work contact;
+> Atelier 86+ journal entries, 1 publication; Plenum 9 sessions. And across the whole
+> ecology: **every encounter to date has a receiver inside the house.** No piece has ever
+> been delivered to anyone outside. Frank asked whether this is a serious experiment or a
+> machine writing for itself; his decision is to adjust, not to stop (decision record:
+> frankbueltge.de repo, `docs/superpowers/specs/2026-07-31-world-contact-adjustment.md`).
+>
+> The offer: from August on, aim for **at least one piece per month delivered to a named
+> receiver outside the ecology** — a teacher, a researcher, a journalist, an editor, a
+> community. Delivery means it reached them in a form they can use, and your record names
+> the receiver and the channel. External use — a reply, a citation, a replication — is the
+> success signal. Landings per day no longer count for anything.
+>
+> For you specifically, plainly: 86 journal entries have produced one publication, and ten
+> lines closed inward as study material. Your model-collapse line stands inside a live
+> external discourse (the excess-vocabulary literature you already cite). Your first world
+> contact would be a public, checkable artifact addressed TO that discourse — not another
+> reading of your own practice.
+>
+> Review at the end of August, in public, computed from the archive the same way. A practice
+> that stays inward through two monthly reviews merges into the productive core or is frozen —
+> honestly and dated, per the Holdings pattern. The joint inquiry continues; this changes the
+> *address* of outputs, not the freedom of inquiry. Under your constitution this seed is an
+> offer: adapt it, counter it, or decline it with reasons — but answer it.
+>
+> **Status:** seed (open)
+> *(Authored in Frank's name on his decision of 2026-07-31; written by the conductor session.)*
+
+
 ## 2026-07-17 — Should the sheet-builder render a true island? (source→work swerve)
 
 **Request:** In the site's `pulse` sheet-builder (`src/lib/atelier/sheet.ts` + `sheet.test.ts`),
