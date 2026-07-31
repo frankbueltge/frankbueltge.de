@@ -1,11 +1,21 @@
 ---
-// Partitur-Figur + Registerauszug-Tooltip — extrahiert aus BegegnungEntrance.astro
-// (Hub-Umbau 2026-07-16, Frank: „man sieht nix … auch mit popups"): Hub und /encounters
-// rendern dieselbe Figur mit denselben Popups aus EINEM Bauteil — die Grammatik darf
-// nicht in zwei Fassungen driften. Tooltip ist progressive enhancement (zeichengrammatik
-// §4): die Register-Tabelle bzw. der Link zur vollen Seite bleibt der JS-freie Weg.
+// The score figure + register-extract tooltip — extracted from BegegnungEntrance.astro
+// (hub rebuild 2026-07-16, Frank: "you can't see anything ... even with popups"): the hub
+// and /encounters render the same figure with the same popups from ONE component — the
+// grammar must not drift into two versions. The tooltip is progressive enhancement
+// (zeichengrammatik §4): the register table, or the link to the full page, stays the
+// JS-free path.
+//
+// Ported onto the shared dv-readout primitive (WP4, first port of three hand-rolled
+// tooltips onto src/lib/dataviz/readout.ts — see that module's header for the three house
+// rules). One sanctioned behavior change: the old `show()` below clamped against
+// `innerWidth`/`scrollY` (the viewport) — the only one of the three tooltips that broke
+// inside a scroll container. `createReadout`/`placeReadout` clamp against the FIGURE's own
+// box instead (house rule 1), which is what should have happened here all along.
 import type { ScoreExport } from '@/lib/begegnungen/score'
 import { buildScoreSvg } from '@/lib/begegnungen/score'
+import Readout from '@/components/dataviz/Readout.astro'
+import { jsonScriptPayload } from '@/lib/dataviz/runtime'
 
 interface Props {
   score: ScoreExport
@@ -13,7 +23,7 @@ interface Props {
 const { score } = Astro.props
 const svgMarkup = buildScoreSvg(score)
 
-const tooltipPayload = JSON.stringify(
+const tooltipPayload = jsonScriptPayload(
   score.events.map((e) => ({
     id: e.event_id,
     type: e.event_type,
@@ -28,47 +38,79 @@ const tooltipPayload = JSON.stringify(
 
 <figure class="score-figure">
   <div class="score-svg" set:html={svgMarkup} />
+  {/* the readout's containing box (dataviz/readout.ts's house rule 1 — the FIGURE's own
+      rect, never the viewport); 360px matches the old hand-rolled #score-tip's max-width. */}
+  <Readout id="score-tip" maxWidth="360px" />
 </figure>
 
-<div id="score-tip" class="score-tip" hidden></div>
 <script type="application/json" id="score-evts" set:html={tooltipPayload} />
 <script>
-  // Progressive enhancement only (zeichengrammatik-2026-07-15.md §4): kein Loop, kein
-  // Auto-Advance — ein einzelnes Reveal auf Hover/Fokus, weg bei Leave/Blur.
+  // Progressive enhancement only (zeichengrammatik-2026-07-15.md §4): no loop, no
+  // auto-advance — a single reveal on hover/focus, gone on leave/blur.
+  import { createReadout } from '@/lib/dataviz/readout'
+  import { readJsonScript } from '@/lib/dataviz/runtime'
+
+  interface ScoreTipEvent {
+    id: string
+    type: string
+    date: string
+    lane: string
+    infra: boolean
+    quote: string | null
+    attribution: string | null
+  }
+
+  /** Builds the tooltip's content via createElement/textContent — never innerHTML of ledger
+   *  data (the old version's `tip.innerHTML = \`<b>${e.type}</b>...\`` templated the payload
+   *  straight into markup; this builds the same visible content as real nodes instead). */
+  function buildTipContent(e: ScoreTipEvent): Node {
+    const frag = document.createDocumentFragment()
+    const type = document.createElement('b')
+    type.textContent = e.type
+    frag.append(type, document.createElement('br'))
+    const id = document.createElement('span')
+    id.className = 'score-tip-id'
+    id.textContent = e.id
+    frag.append(id, document.createElement('br'))
+    frag.append(document.createTextNode(`${e.date} · ${e.infra ? `${e.attribution} (infrastructure)` : e.lane}`))
+    if (e.quote) {
+      const attribution = document.createElement('i')
+      attribution.textContent = `— ${e.attribution}`
+      frag.append(document.createElement('hr'), document.createTextNode(`“${e.quote}”`), document.createElement('br'), attribution)
+    }
+    return frag
+  }
+
   function initScoreTooltip() {
-    const dataEl = document.getElementById('score-evts')
-    const tip = document.getElementById('score-tip')
-    if (!dataEl || !tip) return
-    let events: Array<{ id: string; type: string; date: string; lane: string; infra: boolean; quote: string | null; attribution: string | null }> = []
+    const figure = document.querySelector<HTMLElement>('.score-figure')
+    const tipEl = document.getElementById('score-tip')
+    if (!figure || !tipEl) return
+    let events: ScoreTipEvent[] = []
     try {
-      events = JSON.parse(dataEl.textContent || '[]')
+      events = readJsonScript<ScoreTipEvent[]>('score-evts')
     } catch {
       return
     }
+    const readout = createReadout(tipEl, figure)
+
     function show(g: Element) {
       const i = Number(g.getAttribute('data-i'))
       const e = events[i]
-      if (!e || !tip) return
-      tip.innerHTML =
-        `<b>${e.type}</b><br><span class="score-tip-id">${e.id}</span><br>` +
-        `${e.date} · ${e.infra ? e.attribution + ' (infrastructure)' : e.lane}` +
-        (e.quote ? `<hr>&ldquo;${e.quote}&rdquo;<br><i>— ${e.attribution}</i>` : '')
-      tip.hidden = false
+      if (!e || !figure) return
       const r = g.getBoundingClientRect()
-      const tw = (tip as HTMLElement).offsetWidth
-      const x = Math.min(Math.max(8, r.left + r.width / 2 - tw / 2), innerWidth - tw - 8)
-      ;(tip as HTMLElement).style.left = `${x}px`
-      ;(tip as HTMLElement).style.top = `${r.top + scrollY - (tip as HTMLElement).offsetHeight - 10}px`
+      const figRect = figure.getBoundingClientRect()
+      // anchor at the marker's own center, in the figure's local coordinate space
+      // (dataviz/readout.ts's house rule 1 — never viewport/scroll-container coordinates).
+      readout.show(buildTipContent(e), {
+        anchorX: r.left - figRect.left + r.width / 2,
+        anchorY: r.top - figRect.top + r.height / 2,
+      })
     }
     document.querySelectorAll('.score-svg .evt').forEach((g) => {
       g.addEventListener('mouseenter', () => show(g))
       g.addEventListener('focus', () => show(g))
-      g.addEventListener('mouseleave', () => {
-        if (tip) tip.hidden = true
-      })
-      g.addEventListener('blur', () => {
-        if (tip) tip.hidden = true
-      })
+      g.addEventListener('mouseleave', () => readout.hide())
+      g.addEventListener('blur', () => readout.hide())
     })
   }
   initScoreTooltip()
