@@ -135,6 +135,26 @@ describe.each(PALETTES.map((p) => [p.id, p] as const))('palette set %s', (_id, s
     }
   })
 
+  it('a shape-carried hue is really in the 6–8 band — never a way past the CVD gate', () => {
+    // The ONLY legitimate reason to record a hue outside `slots`: it collapses against a slot
+    // under simulated CVD, and the figure separates the two by MARK SHAPE instead. So each
+    // shapeCarried hue must actually measure below the validator's clean-pass threshold of 8
+    // against at least one categorical slot in at least one mode. A hue that separates fine has
+    // no business here — it belongs in `slots`, where the maths applies to it.
+    for (const carried of set.shapeCarried ?? []) {
+      expect(carried.light).toMatch(HEX)
+      expect(carried.dark).toMatch(HEX)
+      expect(carried.note.length).toBeGreaterThan(40)
+      const collapses = (['light', 'dark'] as const).some((mode) =>
+        set.slots.some((s) => worstPairs([carried[mode], s[mode]]).cvd < 8),
+      )
+      expect(
+        collapses,
+        `shapeCarried "${carried.name}" separates cleanly from every slot — record it as a slot`,
+      ).toBe(true)
+    }
+  })
+
   it('carries its PALETTE marker in every file that claims it', () => {
     for (const rel of set.usedBy) {
       const text = readFileSync(new URL(rel, `file://${ROOT}`), 'utf8')
@@ -184,6 +204,39 @@ describe('atelier-outcomes replaces the failing quartet', () => {
 
   it('the old failing quartet really fails — the reason this set exists', () => {
     expect(worstPairs(['#a8690c', '#c43a78', '#0e8a6e', '#1f6fd0']).cvd).toBeLessThan(2)
+  })
+})
+
+describe('studio-season records what the figure actually draws', () => {
+  const set = paletteById('studio-season')!
+  const stage = readFileSync(new URL('src/styles/studio-stage.css', `file://${ROOT}`), 'utf8')
+
+  it('the lamp gold is on the floor, but never as a categorical slot', () => {
+    const gold = set.shapeCarried!.find((c) => c.name.includes('lit'))!
+    expect(stage).toContain(gold.light)
+    expect(stage).toContain(gold.dark)
+    expect(set.slots.map((s) => s.light)).not.toContain(gold.light)
+    expect(set.slots.map((s) => s.dark)).not.toContain(gold.dark)
+  })
+
+  it('the exact pair that forced the split still measures 6.9 / 12.5 — the reason on the record', () => {
+    // If a future re-step ever lifts this pair clear of 8, the honest move is to promote the gold
+    // into `slots` and drop the shapeCarried entry; this assertion is what makes that visible
+    // instead of leaving a stale justification standing in the description.
+    expect(worstPairs(['#8a6a10', '#a83248']).cvd).toBeCloseTo(6.85, 1)
+    expect(worstPairs(['#bd8b21', '#c2455a']).cvd).toBeCloseTo(12.54, 1)
+  })
+
+  it('ships the shape relief it claims: a pool, a taped X, and an X through an unlit pool', () => {
+    for (const mark of ['.st-sf-pool', '.st-sf-x', '.st-sf-withdrawn']) expect(stage).toContain(mark)
+  })
+
+  it('wears no warning red — a withdrawal is a completed act, not an error state', () => {
+    // The house crimson IS the curtain colour and is recorded as such; what must never appear is
+    // a separate error/danger hue smuggled in beside it.
+    for (const forbidden of ['#d32f2f', '#e5484d', '#dc2626', '#ff0000', 'red;']) {
+      expect(stage).not.toContain(forbidden)
+    }
   })
 })
 
