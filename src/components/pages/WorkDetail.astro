@@ -8,6 +8,17 @@ interface Props { slug: string }
 const { slug } = Astro.props
 const locale = (Astro.currentLocale ?? 'en') as Locale
 const p = getProject(slug)!
+// Projects that live on THIS site (the ecology at "/", the Atlas at "/atlas") kept getting the
+// external treatment — a new tab and a "/ ↗" label that reads like a broken URL. An internal
+// destination now opens in place and names its own address, in the same shape as an external
+// one: "frankbueltge.de/atlas →" beside "data-snack.com ↗".
+const isExternal = !!p.url?.startsWith('http')
+const host = SITE.url.replace('https://', '')
+const visitLabel = !p.url
+  ? ''
+  : isExternal
+    ? `${p.url.replace('https://', '')} ↗`
+    : `${host}${p.url === '/' ? '' : p.url} →`
 ---
 
 <main id="main" class="mx-auto w-full max-w-3xl flex-1 px-6 py-16 sm:py-24">
@@ -22,7 +33,12 @@ const p = getProject(slug)!
 
   <div class="mt-8 flex flex-wrap gap-3 text-sm">
     {p.url ? (
-      <a href={p.url} target="_blank" rel="noreferrer" class="rounded-full bg-accent px-5 py-2.5 font-medium text-white transition-colors hover:bg-accent-soft">{p.url.replace('https://', '')} ↗</a>
+      <a
+        href={p.url}
+        target={isExternal ? '_blank' : undefined}
+        rel={isExternal ? 'noreferrer' : undefined}
+        class="rounded-full bg-accent px-5 py-2.5 font-medium text-white transition-colors hover:bg-accent-soft"
+      >{visitLabel}</a>
     ) : (
       <span class="rounded-full border border-line px-5 py-2.5 font-mono text-xs text-fg-faint">{t(locale, 'work.internal')}</span>
     )}

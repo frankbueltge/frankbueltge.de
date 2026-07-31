@@ -6,8 +6,10 @@ export const OG_PAGES: Record<string, { title: string; description: string }> = 
     title: 'Frank Bültge',
     description: 'Data Engineering & Analytics — a federated research ecology and a public field of experiments with data and AI',
   },
+  // Key = route segment, so it stays "holdings" (the URL did not change) while the visible
+  // title went back to "Experiments" (Frank, 2026-07-31).
   holdings: {
-    title: 'Holdings',
+    title: 'Experiments',
     description: "The lab's earlier experiments — The Protocol, Parallaxe, The Policy — offered as material, under conditions",
   },
   about: {
