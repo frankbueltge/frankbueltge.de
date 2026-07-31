@@ -11,6 +11,7 @@ import Page from '@/layouts/Page.astro'
 import BegegnungEntrance from '@/components/pages/BegegnungEntrance.astro'
 import { currentEntrance } from '@/lib/begegnungen'
 import register from '@/data/begegnungen/register.json'
+import jointInquiries from '@/data/begegnungen/joint-inquiries.json'
 
 const entrance = currentEntrance
 interface RegisterEntry {
@@ -37,6 +38,40 @@ interface RegisterEntry {
   }
 }
 const entries = register as RegisterEntry[]
+
+// --- Joint inquiries: the register of shared questions. Derived by
+// scripts/ecology/sync-joint-inquiries.mjs from the contact zone's own fixture files
+// (inquiry.json, commitments/, positions/) — nothing retyped, nothing interpreted. An
+// inquiry appears here only once at least one Local Commitment is transcribed; a parked
+// proposal whose invitations never went out stays internal. Practice labels reuse LANES.
+interface JiParticipant {
+  practice_id: string
+  commitment_status: string
+  issued_at: string | null
+  local_question: string
+  local_status: string | null
+  local_status_note: string | null
+  headline_claim: string | null
+  output_title: string | null
+  output_url: string | null
+  source_uri: string | null
+}
+interface JointInquiry {
+  inquiry_id: string
+  slug: string | null
+  title: string
+  status: string
+  public_summary: string | null
+  initiated_by: string | null
+  coordination_profile: string | null
+  created_at: string | null
+  updated_at: string | null
+  record_url: string
+  source_commit: string | null
+  participants: JiParticipant[]
+}
+const inquiries = jointInquiries as JointInquiry[]
+const practiceLabel = (id: string) => LANES.find((l) => l.id === normId(id))?.label ?? id
 
 // --- Die Historien-Karte: eine EINZIGE überschaubare Karte der ganzen Vielheit (Frank,
 // 2026-07-22, Deleuze "macht Karten!") — Chronologie UND Relation in einem Bild statt N
@@ -175,6 +210,76 @@ const historyMapSvg =
       ))}
     </ol>
   </section>
+
+  {inquiries.length > 0 && (
+    <section class="mx-auto w-full max-w-4xl px-6 pb-20" aria-labelledby="ji-heading" id="joint-inquiries">
+      <h2 id="ji-heading" class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">
+        Joint inquiries — the register of shared questions
+      </h2>
+      <p class="mt-3 max-w-2xl text-sm text-fg-muted">
+        A joint inquiry is a bounded constellation: the same question posed to the practices
+        in parallel, each answering under its own protocol and evidentiary standards — the
+        disagreement between their answers is preserved, never resolved into one verdict.
+        Everything below is read from the contact zone's committed record, in the practices'
+        own words.
+      </p>
+
+      {inquiries.map((ji) => (
+        <article class="mt-8 border-t border-line/60 pt-6">
+          <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+            <h3 class="text-base text-fg">{ji.title}</h3>
+            <span class="ji-chip">{ji.status.toLowerCase()}</span>
+            <span class="font-mono text-xs text-fg-faint">{ji.inquiry_id}</span>
+          </div>
+          {ji.public_summary && (
+            <p class="mt-3 max-w-2xl text-sm text-fg-muted">{ji.public_summary}</p>
+          )}
+          <ul class="mt-5 grid gap-4 sm:grid-cols-3">
+            {ji.participants.map((p) => (
+              <li class="border border-line/60 p-4">
+                <p class="font-mono text-xs uppercase tracking-[0.14em] text-fg-muted">
+                  {practiceLabel(p.practice_id)}
+                </p>
+                <p class="mt-2 font-mono text-xs text-fg-faint">
+                  {p.issued_at ? `committed ${p.issued_at}` : 'committed'}
+                  {p.local_status ? ` · ${p.local_status.toLowerCase().replace(/_/g, ' ')}` : ''}
+                </p>
+                <details class="mt-3">
+                  <summary class="cursor-pointer font-mono text-xs text-fg-muted hover:text-fg">
+                    their question
+                  </summary>
+                  <p class="mt-2 text-sm text-fg-muted">{p.local_question}</p>
+                </details>
+                {p.headline_claim && (
+                  <details class="mt-2">
+                    <summary class="cursor-pointer font-mono text-xs text-fg-muted hover:text-fg">
+                      their answer, first claim
+                    </summary>
+                    <p class="mt-2 text-sm text-fg-muted">{p.headline_claim}</p>
+                  </details>
+                )}
+                {p.output_url && (
+                  <p class="mt-3 font-mono text-xs">
+                    <a href={p.output_url} target="_blank" rel="noreferrer" class="underline hover:text-fg">
+                      {p.output_title ?? 'the record'} ↗
+                    </a>
+                  </p>
+                )}
+              </li>
+            ))}
+          </ul>
+          <p class="mt-4 font-mono text-xs text-fg-faint">
+            derived from the contact zone's fixture
+            {ji.source_commit ? ` @ ${ji.source_commit.slice(0, 7)}` : ''} ·{' '}
+            <a href={ji.record_url} target="_blank" rel="noreferrer" class="underline hover:text-fg">
+              full record ↗
+            </a>
+            {ji.coordination_profile ? ` · profile: ${ji.coordination_profile}` : ''}
+          </p>
+        </article>
+      ))}
+    </section>
+  )}
 </Page>
 
 <style is:global>
@@ -207,4 +312,12 @@ const historyMapSvg =
   .hm-legend-n.st-done { border-color: #3a9d78; }
   .hm-legend-n.st-held { border-color: #c0872a; }
   .hm-legend-n.st-seed { border-color: #7a6ad0; }
+
+  /* Joint-inquiry status chip: procedural state, not a verdict — deliberately neutral
+     (no status colours where the register does not judge). */
+  .ji-chip {
+    border: 1px solid var(--color-line); padding: 0.1rem 0.5rem; border-radius: 999px;
+    font: 11px var(--font-mono, ui-monospace, monospace); letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--color-fg-muted);
+  }
 </style>
