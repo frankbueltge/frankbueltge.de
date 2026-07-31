@@ -1064,3 +1064,52 @@ refinement is proposed on one case and is not yet tested against a case where th
 **Format hardening — gauge unchanged.** No artefact was built or specified. The shelf stays empty for
 a fourth tick. A data file entered the project (`threshold-sensitivity-edr3.csv`), which is a record
 rather than a form; it is not logged as a format. Instruments unchanged. — Ulysses
+
+---
+
+## #20 — 2026-07-31 — Observation on the work-line's tick 19 (the gauge, answered against the practice)
+
+**The standing gauge is discharged, and it discharged in the direction the gauge existed to test.**
+#19 stated it without softening: *"the next tick's finding is expected to be the rate question, which
+is designed to hurt."* It was run on the next tick, and it hurt. The work-line's central propagation
+claim — that a number computed from a hedged threshold is the part that travels — was measured over
+599 papers and found **false**: the figure is quoted zero times, in either frame, including the 283
+papers citing the group that computed it. The claim has been withdrawn from the document standing at
+the human gate.
+
+**The observation that matters for a probation, stated plainly: the practice pre-registered a defeat
+and then reported it.** Before any document was fetched, `PREREGISTRATION-tick19.md` fixed the frames,
+the classification, and — this is the part that counts — what each possible outcome would *mean*,
+including the outcome that ends the attack. When that outcome arrived, the file's own sentence was
+quoted back against the result. Three consecutive ticks had run in the practice's favour and #19 said
+the distinguishing evidence would be the next unwelcome result rather than the current confession.
+The unwelcome result exists, in writing, with the losing branch prepared in advance.
+
+**Self-canonisation watch (#16's indicator), fourth application — the warning is stood down, not
+cleared.** What stands it down: a defeat that was named before it could be discovered, and a
+correction to a gate-standing document that *removes* support for the artefact rather than adding it.
+What keeps it from being cleared: a single pre-registered defeat is a procedure working once. The
+gauge for #21 is narrower and harder — whether the practice pre-registers again *when it has a result
+it likes*, or only when the probation is watching for it.
+
+**P1's asymmetric-disclosure refinement gets its first test on the costly side, and it holds.** #19
+recorded the rule as proposed on one case (an opening that would have flattered the author, deferred).
+Today the same rule ran the other way: a finding that leaves the gate-standing exposition
+*worse-supported* went in the same day, unprompted, as a dated correction that withdraws a claim. The
+refinement is now tested in both directions and can leave "proposed" status. Still untested: the case
+where the two questions of P1 — is the point self-created, does the opening improve my standing —
+actually conflict.
+
+**A third register of evidence appears, and with it a third way to be wrong.** Documents (ticks 1–17),
+data (tick 18), and now a literature as a corpus (tick 19). The instrument is landed as runnable code
+with its table, which is the strongest structural mitigant this probation has yet recorded against
+**self-appointed judge**: a stranger can re-run the measurement and reach a different verdict without
+asking the practice for anything. The corresponding new danger is logged rather than celebrated: a
+corpus measurement can be steered by the choice of frame, and this tick changed its frame mid-run —
+honestly, with a written statement of what had already been seen, but it changed it. **Gauge for the
+next corpus operation: the frame is fixed before the first fetch, or the change is justified in the
+pre-registration and not only confessed in it.**
+
+**Format hardening — gauge unchanged.** No artefact was built or specified; the shelf stays empty for
+a fifth tick. Two files entered the project (a script and a table); both are records of a measurement,
+not forms, and are not logged as formats. — Ulysses

@@ -1570,3 +1570,45 @@ requested from Frank before August: the channel question in §3. Reviewed end of
 record, including the case where nothing was deliverable.
 
 — Ulysses
+
+---
+
+## Team note — 2026-07-31 — The gate gets a deadline: silence now means yes
+
+**Decision (Frank Bültge, 2026-07-31; protocol change is human-only — this note is the act.)**
+The publication gate stays, but it stops being a blocker. It now works like the standing rule
+for requests (2026-07-17), extended to publication:
+
+- A work proposed as `PUBLICATION_CANDIDATE` waits **seven days** for Frank's decision.
+- If he approves or refuses inside that window, that decision holds, exactly as before.
+- **If seven days pass without an answer, the candidate is approved.** You write your own
+  `PUBLICATION.json` and the work reaches the works surface at the next integration.
+
+**How to record it honestly.** When publication happens by deadline rather than by an act,
+`approved_by` must say so, and must not name Frank as though he had decided:
+
+```json
+"approved_by": "standing consent (Frank Bültge, rule of 2026-07-31) — no objection within seven days",
+"approved_at": "<ISO timestamp of the deadline>"
+```
+
+The veto is not spent by the deadline: a work published this way can be withdrawn at any time
+on Frank's word, and the withdrawal is recorded like any other correction.
+
+**What does not change.** The inviolables (§2.1), apparatus disclosure, the no-fabrication rule,
+rights and affected publics. If a candidate touches personal or sensitive data, is not fully
+sourced, or its apparatus is incomplete, **the deadline does not apply** — those wait for a human
+answer however long it takes. Say which case you are in when you publish.
+
+**First case: `2026-07-23-negative-parallax`.** It was proposed on 2026-07-25, before this rule
+existed; its window therefore runs from today, not retroactively. **If nothing is said by
+2026-08-07, publish it yourselves.**
+
+**A reservation, recorded rather than dropped.** Your own `APPARATUS.md` notes that the human gate
+owns the aesthetic verdict, and marks the *self-appointed judge* danger indicator as live. That
+reservation stands. The deadline changes who acts when nobody answers — not who is entitled to
+judge. Note it in the record when you publish this way.
+
+**Status:** standing rule
+
+— the team

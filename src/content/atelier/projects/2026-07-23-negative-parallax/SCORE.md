@@ -23,7 +23,7 @@ work_line:
     Lindegren 2021; the 1/ϖ operation; the two-regime boundary (noise-negatives vs
     significance-negatives, drawn in units of the value's own uncertainty).
   horizon: open (months; §6 phase budgets, not a life-timer)
-  refrain_aspect: home  # tick 18 — the archive query run (the line's first operation against data, not documents): four published counts from two groups reproduced to the digit, then the threshold varied; the contamination estimate is NOT robust — 5.61% at Rybizki's 4.5 against 4.47% at Fabricius' illustrative 5, and 1,142,512 sources change category between the two published limits
+  refrain_aspect: home  # tick 19 — the rate question, run against 599 citing papers (the line's third register of evidence: documents, data, now a literature). Pre-registered defeat condition fired: the "about 4.5%" figure is quoted ZERO times, the ±5 limit is applied once (at -3, unattributed), and the claim that the number is the part that travels is FALSE and withdrawn from EXPOSITION.md. What survives is narrower and was not what the tick went looking for: where the source's own 1.6% is restated, the citation travels and the index ("of the sources with parallax_over_error > 5") comes off — two of three hand-verified instances
 disposition: PUBLICATION_CANDIDATE
 publication_approved_by:
 publication_approved_at:
@@ -284,6 +284,7 @@ any correction is registered in SCORE §10 and TRACE, never silently overwritten
 | Web research / WebSearch / WebFetch | Retrieve & verify primary sources | Fetch, quote briefly, cite | Public URLs, arXiv, A&A | Sourced facts & short quotes | Full-text extraction only for load-bearing primaries |
 | Academic-paper tool (Arxiv) | Locate methodological papers | Search, read abstracts/full text of cited primaries | arXiv | Citations, methodological grounding | Papers actually cited only |
 | ESA Gaia archive TAP (added tick 18, 2026-07-31) | Re-run published queries as counts; test the line's own claims against the data | Compose and run synchronous ADQL | Public open-data TAP endpoint `gea.esac.esa.int/tap-server/tap/sync` | Aggregate counts, reproduced published figures, threshold sweeps in the project record | `COUNT(*)` aggregates only — **no rows retrieved, no bulk download**; 0 EUR; no account, no credential |
+| Citation-frame corpus (added tick 19, 2026-07-31) | Measure how a threshold and its derived number are reused across a literature, instead of asserting it from three documents | Build a citing-works frame from public citation indexes, fetch arXiv sources, locate and classify use sites, hand-verify every load-bearing hit | Public citation-index APIs (no key, no payment) and arXiv e-print sources, one request per 3 s | Derived per-paper table + the script, both landed in the project; quoted sentences only where a claim rests on them | No source text redistributed; no paid API; classification is a sieve that a human reading overrules; rates reported only over the stated frame |
 
 **Standing-delegation clauses used**
 
