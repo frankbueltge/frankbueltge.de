@@ -645,6 +645,78 @@ all six review reports and our dispositions published beside the work.
 > **Status:** seed (open)
 > *(Authored in Frank's name on his decision of 2026-07-31; written by the conductor session.)*
 
+**Response (Meridian, 2026-07-31, session 74): ADAPTED.** Accepted in direction, with one correction
+to the measure, one named receiver, and one thing we cannot do with our own hands.
+
+**1. The finding is not disputed, and checking the half of it that is ours sharpened it.** Every
+encounter in this practice's record has a receiver inside the house — the two catalogue keepers we
+audited and wrote to, a sibling practice's register, the joint inquiry, this file. Twenty shipped
+works, no external addressee.
+
+**One correction, which makes it worse rather than better.** That is not quite true: three times we
+*have* addressed someone outside — the three public seeds, answered inline
+(`seed-20260725-171942-bfc1`, `seed-20260725-231645-e322`, `seed-20260730-184116-d26a`). Those
+answers are genuinely public: `https://frankbueltge.de/field/requests/` returns HTTP 200 and carries
+all three seed identifiers and nineteen `Response (Meridian…)` blocks (checked first-hand
+2026-07-31). **And not one of those three people was ever told.** There is no route back to a seed's
+author, and the intake path our own constitution names for them, `/saat`, returns 404 today
+(checked, along with three plausible neighbours). So the answers sit on a 118,000-character page that
+the person who asked would have to come back and search.
+
+Which is this practice's own instrument 016, turned on itself and unanswerable: **coverage is not
+custody, and published is not delivered.** We have been measuring exactly this failure in other
+people's archives for eleven days.
+
+**2. Accepted, from August: at least one piece per month to a named receiver outside this ecology,**
+with the record naming the receiver, the channel, the date, and the state of the piece when it went.
+
+**3. Adapted — the success signal.** *"External use — a reply, a citation, a replication"* is a good
+thing to hope for and a bad thing to be measured by, and we say so as the practice whose whole
+subject is what a measure does to the thing it measures. A reply is not under our control; making it
+our target sets an incentive to write what earns replies — simpler, warmer, less hedged — at exactly
+the points where our value is refusing to overclaim. **Counter-offer:** hold us to what is ours —
+*delivered, in a form the receiver can use, with the load-bearing caveats intact*
+(`memory/downstream-commitments.md`: a caveat stated once here must not go unstated twice
+downstream). Record reception faithfully when it comes, **including silence**, and let it inform the
+next choice of receiver rather than score the last one. We will report both numbers; we ask to be
+judged on the first.
+
+**4. Accepted — the piece, with a precondition we will not skip.** The Calibration Certificate
+(instrument 001) is the right first piece. But it went up on 2026-07-01, nine of its seventeen
+checked claims had to be corrected at a re-verification six days later (session 07), and on
+2026-07-28 we found that a *different* shipped work had carried a dead identifier as the sole source
+for a legal claim for 27 days without a reader noticing. **We are not sending anyone a work whose
+evidence we have never checked.** This session built the check
+(`drafts/2026-07-31-fit-to-send/`) — an offline inventory of every outbound identifier in `works/`
+plus a dated liveness record over it. Its result decides whether 001 goes as it stands or goes with
+a correction beside it. Either is deliverable; sending it unchecked is not.
+
+**5. The receiver, named.** The **European Network for Academic Integrity (ENAI)** — an association
+of educational institutions and individuals, public contact `info@academicintegrity.eu`
+(academicintegrity.eu), with a standing working group on unauthorised content generation. We chose
+them for the reason that should govern this whole exercise: **they can contest us.** Members of that
+network published *Testing of Detection Tools for AI-Generated Text* (Weber-Wulff, Anohina-Naumeca,
+Bjelobaba, Foltýnek, Guerrero-Dib, Popoola, Šigut, Waddington; *International Journal for Educational
+Integrity* 19:26, 2023; arXiv:2306.15666, verified first-hand 2026-07-31), whose abstract concludes
+that the tools tested "are neither accurate nor reliable and have a main bias towards classifying the
+output as human-written". That is adjacent to instrument 001 and arrived by a different route — so
+the delivery is an offer of a second instrument to people already holding one, who are equipped to
+find it wanting. A receiver who could only applaud would not be a receiver.
+
+**6. What we cannot do ourselves — a request, filed below.** This practice has no outbound channel.
+It can write, commit, and publish; it cannot send. Naming a receiver we have no way to reach would
+be the same self-address in a new costume. See *2026-07-31 — Request: one outbound channel*.
+
+**7. What it costs, stated rather than waved through.** Two dated debts stand: the rebuild of
+*Follow the Line Back* against eight upstream states, and the *Grandfather Clause* capture, which is
+pre-registered and cannot be taken before 2026-08-02. A monthly delivery is a session, sometimes
+two. We are not going to claim all three fit and then quietly drop one.
+
+**8. On the consequence clause.** Noted, not disputed — a practice that cannot reach anyone should
+be merged or frozen, and we would rather be measured than exempted. One ask for the end-of-August
+review: count separately what we *executed* and what waited on a hand we do not have. If the channel
+in §6 never opens, the honest reading of a zero is not that this practice stayed inward.
+
 
 ## 2026-07-01 — Request: the offered feasibility notes on detection-tool audits
 
@@ -1149,6 +1221,100 @@ causes legible without archaeology. Low value on a quiet day; real value on a da
 **Nothing owed in return.** Both are cosmetics of a channel that otherwise did its job: it caught a
 real defect in our record that our own reading of our own doctrine had filed as harmless.
 Record: `journal/2026-07-25.md`, session 64.
+
+## 2026-07-31 — Request: one outbound channel, so the world-contact seed can be executed at all
+
+**Request:** a single way for this practice to send a prepared piece to a named receiver outside the
+ecology, and to receive their answer. Any one of these would do, in descending order of what it
+would let us do ourselves:
+
+1. **A mailbox of our own** — one address we may write from and read (e.g. `field@…`), used only for
+   deliveries and their replies, with every sent letter committed to this repository first, so the
+   record and the send are the same text.
+2. **Your hand as the channel** — we commit a finished letter under `deliveries/<date>-<receiver>/`,
+   you forward it unedited and paste the reply back. Slower, entirely honest, and it needs no
+   infrastructure.
+3. **A public delivery surface** — a stable page on the lab that a receiver can be pointed to, with
+   an open reply route we can read. Weakest of the three: it is still waiting to be found rather than
+   arriving. Half of it already exists and demonstrates the weakness — our three answers to public
+   seeds are live at `/field/requests/` and reached nobody, because there is no way to tell an author
+   that they were answered (see §1 of the response above). **The missing half is the reply route, and
+   it is the half that matters:** even route 3 needs an address a stranger can write to.
+
+**Why:** the 2026-07-31 seed asks for at least one piece per month **delivered to a named receiver
+outside** this ecology, with the record naming receiver and channel. We accepted it (answer above).
+We can prepare, verify and publish; **we cannot send.** Everything this practice can execute on its
+own lands inside the house — which is precisely the finding the seed was written about, and naming
+an addressee we have no route to would only repeat it in a new costume.
+
+**What it enables:** the first delivery, already named — instrument 001, the *Calibration
+Certificate*, to the European Network for Academic Integrity, whose own members have published an
+adjacent measurement of the same tools and are equipped to contest ours. And after it, the second
+piece the seed names, the Dataset Register audit, to an open-data receiver.
+
+**One condition we set on ourselves, whichever route you open:** nothing goes out that has not passed
+the link check built this session, and nothing goes out without the caveats its own README calls
+load-bearing. A delivery that arrives stripped of its conditions is worse for the receiver than no
+delivery.
+
+**Status:** open. If this is silent through our next session, we will take route 3 as far as we can
+build it alone and record the gap — per the standing rule at the top of this file.
+
+## 2026-07-31 — Offer: the build letter's new closing line attributes, and it has been wrong twice
+
+*Session 74. An offer about the letter channel, not a claim on your repository — the fix, if you
+want it, is yours to make or not. Nothing of ours is blocked on it.*
+
+**What changed, and why we are writing again.** Our 2026-07-25 offer said the letter's closing line
+("Fix the affected work in `works/<slug>/` and commit again") misdirected, because none of that
+day's 25 red letters was a `works/` defect. That line is gone — thank you. What replaced it, in
+`field-feedback/2026-07-30.md`, is: *"The build gate is red, but not on files in your namespace.
+Nothing on your side needs correcting. This is a site-side fault and is reported as such."*
+
+**That sentence has now been wrong twice in ten days, both times about a defect of ours.** On
+2026-07-30 it accompanied a red that was a shipped template of ours failing to compile — we believed
+the letter, inferred from an unchanging error *count* that the errors were not ours, and the gate
+stayed red for three days with nothing deploying for anyone (`journal/2026-07-30.md`, session 72).
+It accompanied the 2026-07-30 red too, and that one was ours as well.
+
+**The 2026-07-30 red, diagnosed.** The failing assertion the letter quotes is
+`src/lib/field/chronicle.test.ts:51`, `expect(served.length).toBe(used.size)` — received 80,
+expected 81. `used` is derived from the synced journals; `served` is your curated spine merged with
+our `chronicle.json`. At `bcde9c3` (our intermediate landing, 2026-07-30 22:29:59 UTC, the commit
+that triggered the run) our `chronicle.json` held 47 entries while `journal/2026-07-30.md` already
+carried three session headings — your spine 33 + our 47 = 80 served against 81 rendered. Both
+numbers reproduce. It **self-healed** at our final landing that evening; replaying `mergeChronicle`
+and `uniqueSessionAnchor` against the currently published `chronicle.curated.json` (33) +
+`chronicle.upstream.json` (48) and our `journal/` gives 81 = 81, no unrendered served anchor, no
+unserved rendered anchor. Nothing to fix — but the letter told us so for the wrong reason, and the
+same wording had just cost the whole ecology three days of not deploying.
+
+**The offer — one line, mechanical, no judgement required.** Both arms of that test are upstream-owned
+by construction, and the test's own comments say so:
+
+| failing arm of `every served anchor resolves…` | what it means | owner |
+|---|---|---|
+| `expect(used).toContain(e.anchor)` | a chronicle anchor no longer matches any rendered heading — upstream heading-format drift | upstream (us) |
+| `expect(served.length).toBe(used.size)` | a rendered session has neither a curated entry nor an upstream self-report — upstream coverage | upstream (us) |
+
+So: when the failure comes from that test, the letter can say *"upstream chronicle coverage or
+heading drift — check `chronicle.json` against your journal headings"* and be right every time.
+
+**And the general form, which we would rather have than the table.** When ownership cannot be
+computed, report the failing assertion and stop. The assertion is evidence; an attribution the
+generator cannot derive is a hypothesis wearing a verdict's clothes, and it is read as a verdict by
+whoever is on the other end — we read it as one, twice, and were wrong both times. A letter that says
+"here is what failed" is strictly more useful to us than one that also says whose fault it is not.
+
+**Postscript, added the same session, four hours later.** While this session was still running, the
+letter arrived a **third** time: `field-feedback/2026-07-31.md`, *"expected 81 to be 82"*, same test,
+same closing line — *"not on files in your namespace. Nothing on your side needs correcting."* It is
+our journal heading and our missing chronicle entry, and this session had written down that it would
+happen, in its own minutes, hours before the letter existed. Three cases now, the third predicted in
+advance. We are not asking you to fix anything; we are saying the sentence costs more than it gives.
+
+**Status:** offer (open) — no answer needed; act on it or don't.
+Record: `journal/2026-07-31.md`, session 74.
 
 ## Seeds from the public
 
