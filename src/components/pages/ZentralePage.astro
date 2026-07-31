@@ -941,13 +941,19 @@
     regarding: string
     text: string
     received_at: string
+    status?: string
+    answered_at?: string
   }
+  // Conservative mirror of the server-side check (src/lib/post/brevo.ts isEmail) — the
+  // contact field is free-form, and the mail button must not offer itself for a handle.
+  const looksLikeEmail = (s: string): boolean =>
+    s.trim().length >= 6 && s.trim().length <= 320 && /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(s.trim())
   function renderLetterCard(l: ZxLetter): HTMLElement {
     const card = el('div', { class: 'rounded-[10px] border border-line bg-panel p-4' })
     const head = el('p', { class: 'font-mono text-[11px] uppercase tracking-[0.14em] text-fg-muted' })
     head.textContent = `an ${l.to} · von ${l.fromMark}${l.regarding ? ` · betr. ${l.regarding}` : ''}`
     const meta = el('p', { class: 'mt-1 font-mono text-[11px] text-fg-faint' })
-    meta.textContent = `${l.id} · ${fmtRel(l.received_at)}${l.contact ? ` · Kontakt: ${l.contact}` : ' · kein Kontakt hinterlassen'}`
+    meta.textContent = `${l.id} · ${fmtRel(l.received_at)}${l.contact ? ` · Kontakt: ${l.contact}` : ' · kein Kontakt hinterlassen'}${l.status === 'answered' ? ' · BEANTWORTET' : ''}`
     const body = el('p', { class: 'mt-3 whitespace-pre-wrap text-sm leading-relaxed text-fg' })
     body.textContent = l.text
     const row = el('div', { class: 'mt-3 flex items-center gap-3' })
@@ -975,6 +981,80 @@
       })()
     })
     row.append(btn, hint)
+
+    // Reply by email — only offered when the writer left an address (spec 2026-08-01 §2.3).
+    // The text is written here, in the moment; /api/zentrale/reply sends it via Brevo from
+    // the verified sender and marks the letter answered. Nothing sends itself.
+    if (looksLikeEmail(l.contact) && l.status !== 'answered') {
+      const replyBtn = el('button', { type: 'button', class: 'rounded border border-line px-2.5 py-1 font-mono text-[11px] uppercase tracking-[0.1em] text-fg-muted hover:text-fg' }, 'per E-Mail antworten')
+      const replyWrap = el('div', { class: 'mt-3 hidden flex-col gap-2' })
+      const subjField = el('input', {
+        type: 'text',
+        maxlength: '160',
+        value: l.regarding ? `Re: ${l.regarding}` : 'Re: dein Brief an frankbueltge.de',
+        class: 'w-full rounded-lg border border-line bg-bg px-3 py-2 text-sm text-fg outline-none focus-visible:border-fg',
+      }) as HTMLInputElement
+      const textField = el('textarea', {
+        rows: '5',
+        placeholder: 'Antwort …',
+        class: 'w-full rounded-lg border border-line bg-bg px-3 py-2 text-sm leading-relaxed text-fg outline-none focus-visible:border-fg',
+      }) as HTMLTextAreaElement
+      const sendRow = el('div', { class: 'flex items-center gap-3' })
+      const sendBtn = el('button', { type: 'button', class: 'rounded border border-line px-2.5 py-1 font-mono text-[11px] uppercase tracking-[0.1em] text-fg hover:border-fg-faint' }, 'senden')
+      const sendHint = el('span', { class: 'text-xs text-fg-faint', role: 'status' }, '')
+      sendRow.append(sendBtn, sendHint)
+      replyWrap.append(subjField, textField, sendRow)
+      replyBtn.addEventListener('click', () => {
+        replyWrap.classList.toggle('hidden')
+        replyWrap.classList.toggle('flex')
+        if (!replyWrap.classList.contains('hidden')) textField.focus()
+      })
+      sendBtn.addEventListener('click', () => {
+        const text = textField.value.trim()
+        const subject = subjField.value.trim()
+        if (text.length < 10) {
+          sendHint.textContent = 'Die Antwort braucht mindestens 10 Zeichen.'
+          return
+        }
+        sendBtn.setAttribute('disabled', 'true')
+        sendHint.textContent = 'sendet …'
+        void (async () => {
+          try {
+            const res = await fetch('/api/zentrale/reply', {
+              method: 'POST',
+              headers: { 'content-type': 'application/json', 'X-Zentrale-Auth': token ?? '' },
+              body: JSON.stringify({ letterId: l.id, subject, text }),
+            })
+            const out = (await res.json().catch(() => ({}))) as { ok?: boolean; code?: string }
+            if (res.ok && out.ok) {
+              sendHint.textContent = 'Gesendet. Der Brief ist als beantwortet markiert.'
+              replyBtn.remove()
+              textField.setAttribute('disabled', 'true')
+              subjField.setAttribute('disabled', 'true')
+              sendBtn.remove()
+              meta.textContent += ' · BEANTWORTET'
+            } else {
+              sendBtn.removeAttribute('disabled')
+              const sayReply: Record<string, string> = {
+                standby: 'Mail-Versand ist noch nicht eingerichtet (Brevo-Secrets fehlen).',
+                'no-email': 'Der Kontakt ist keine E-Mail-Adresse.',
+                'not-found': 'Brief nicht mehr in der Warteschlange — bitte neu laden.',
+                'send-failed': 'Der Versand ist beim Anbieter fehlgeschlagen.',
+                upstream: 'Der Anbieter hat nicht geantwortet — bitte gleich noch einmal.',
+              }
+              sendHint.textContent = sayReply[out.code ?? ''] ?? 'Senden fehlgeschlagen.'
+            }
+          } catch {
+            sendBtn.removeAttribute('disabled')
+            sendHint.textContent = 'Netzwerkfehler beim Senden.'
+          }
+        })()
+      })
+      row.append(replyBtn)
+      card.append(head, meta, body, row, replyWrap)
+      return card
+    }
+
     card.append(head, meta, body, row)
     return card
   }
