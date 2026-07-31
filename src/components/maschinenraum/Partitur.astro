@@ -189,7 +189,14 @@ const tableRows = model.lanes
   .flatMap((l) => l.clusters.flatMap((c) => c.events))
   .sort((a, b) => a.date.localeCompare(b.date) || a.voice.localeCompare(b.voice))
 
-const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
+// A FIXED floor, not one that grows with the day count (Frank, 2026-07-31: "you have to scroll
+// horizontally at the top"). The old floor demanded 26 CSS px per day, so the score outgrew the
+// page after roughly a month and pushed the NEWEST landings — the point of this page — off the
+// right edge, where they had to be hunted for. The figure is a viewBox that scales, and density
+// is already answered by the ×n clusters and the time lens that fans them out; that is what the
+// lens is for. So the score now fits its column at any day count, and the floor only keeps it
+// from collapsing on a phone — where the table below is the honest rendition anyway.
+const minWidth = 720
 ---
 
 <section
@@ -408,25 +415,29 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
   {!compact && (
   <details class="border-t border-[color:var(--pt-hairc)] px-5 py-4 sm:px-6">
     <summary class="cursor-pointer font-mono text-[11px] uppercase tracking-[0.14em] text-[color:var(--pt-muted)]">the score as a table</summary>
-    <div class="pt-tablewrap mt-3 max-h-96 overflow-y-auto">
+    {/* The window is 60vh, the header stays put, and the line column is clamped to three
+        lines: unclamped, a single landing could be 940 px tall — taller than the window
+        itself — so 242 rows made 39 000 px of prose that no one could navigate. The full
+        line is one click away in the score's panel, and stays in the title attribute. */}
+    <div class="pt-tablewrap mt-3 max-h-[60vh] overflow-y-auto">
       <table class="w-full text-left text-xs">
         <thead>
           <tr class="font-mono text-[10px] uppercase tracking-[0.1em] text-[color:var(--pt-faint)]">
-            <th class="py-1 pr-4 font-normal">date</th>
-            <th class="py-1 pr-4 font-normal">voice</th>
-            <th class="py-1 pr-4 font-normal">mark</th>
-            <th class="py-1 pr-4 font-normal">move · verdict</th>
-            <th class="py-1 font-normal">line</th>
+            <th class="pt-th pr-4">date</th>
+            <th class="pt-th pr-4">voice</th>
+            <th class="pt-th pr-4">mark</th>
+            <th class="pt-th pr-4">move · verdict</th>
+            <th class="pt-th">line</th>
           </tr>
         </thead>
         <tbody>
           {tableRows.map((e) => (
             <tr class="border-t border-[color:var(--pt-hairc)] align-top text-[color:var(--pt-muted)]">
-              <td class="py-1.5 pr-4 font-mono text-[11px] tabular-nums">{e.date}</td>
+              <td class="py-1.5 pr-4 font-mono text-[11px] tabular-nums whitespace-nowrap">{e.date}</td>
               <td class="py-1.5 pr-4 font-mono text-[11px]">{e.voice}</td>
-              <td class="py-1.5 pr-4">{GLYPH_LABEL[e.glyph]}</td>
+              <td class="py-1.5 pr-4 whitespace-nowrap">{GLYPH_LABEL[e.glyph]}</td>
               <td class="py-1.5 pr-4 font-mono text-[11px]">{[e.move, e.verdict].filter(Boolean).join(' · ') || '—'}</td>
-              <td class="py-1.5 text-[color:var(--pt-ink)]">{e.text}</td>
+              <td class="py-1.5 text-[color:var(--pt-ink)]"><span class="pt-line" title={e.text}>{e.text}</span></td>
             </tr>
           ))}
         </tbody>
@@ -524,6 +535,24 @@ const minWidth = Math.max(720, Math.round(nDays * 26 + 200))
   }
   .pt-scroll {
     padding: 8px 4px 0;
+  }
+  /* table rendition: the header rides along, the line stays three lines tall */
+  .pt-th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    padding: 6px 0;
+    font-weight: 400;
+    /* the stage is a gradient, so a flat header strip reads as intended rather than
+       as a patch that almost matches */
+    background: var(--pt-panel2);
+  }
+  .pt-line {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
   .pt-canvas {
     position: relative;
