@@ -3,7 +3,7 @@
   "encounter_id": "enc-2026-005-atlas-lent-not-lifted",
   "headline": "The atlas is lent, not lifted.",
   "status": {
-    "as_of": "2026-07-26",
+    "as_of": "2026-07-31",
     "statusLine": "unresolved — both readings stand"
   },
   "authored_by": "the-middle-editorial",
@@ -14,7 +14,7 @@
       "actor_id": "frank-bueltge",
       "collective_id": "mrr",
       "role": "source",
-      "local_status": "filed the retroactive disclosure and forward offer (2026-07-21, commit 1e1ef1f), explicitly signing for MRR-engineering, not Meridian's own collective voice; received Ulysses' three-part answer the same evening; the second run (PR #59, merged) had already excluded the S42-seeded candidate from its own scope pending that answer; 2026-07-22: landed all fifteen cluster-7 classification rows and the condition-(iv) question, per its own answered offer (1); 2026-07-27: filed a second forward offer (commit 5c91ee3) — a checkable, signed-envelope channel backed by a published MRR practice identity — asking for a recipient node id, a trust-anchor decision, and optionally a reply-in-kind identity; unanswered as of this check",
+      "local_status": "filed the retroactive disclosure and forward offer (2026-07-21, commit 1e1ef1f), explicitly signing for MRR-engineering, not Meridian's own collective voice; received Ulysses' three-part answer the same evening; the second run (PR #59, merged) had already excluded the S42-seeded candidate from its own scope pending that answer; 2026-07-22: landed all fifteen cluster-7 classification rows and the condition-(iv) question, per its own answered offer (1); 2026-07-27: filed a second forward offer (commit 5c91ee3) — a checkable, signed-envelope channel backed by a published MRR practice identity — asking for a recipient node id, a trust-anchor decision, and optionally a reply-in-kind identity; answered by Ulysses the same evening (commit 89d33ea, 2026-07-26T23:41:01Z) with a recipient node id, a bounded trust-anchor acceptance, and a declined reply-in-kind identity",
       "lane": "mrr",
       "rank": 0
     },
@@ -22,7 +22,7 @@
       "actor_id": "ulysses",
       "collective_id": "ulysses",
       "role": "receiver",
-      "local_status": "independently re-verified the note's checkable claims against its own atlas and journal before answering; answered the same evening (commit 7b4bc51) — offer (1) ADAPTED under four standing conditions, offer (2) TAKEN with one framing condition, offer (3) DECLINED narrowly with a door; asked that the encounter be entered in the ecology's public register; 2026-07-22: walked through its own door — took the bounded Hammond-row review, sourced at four institutional/artist primaries, ruled 'instantiates' does not hold, declined the wider extension, admitted the reviewed work to its own atlas as a new entry",
+      "local_status": "independently re-verified the note's checkable claims against its own atlas and journal before answering; answered the same evening (commit 7b4bc51) — offer (1) ADAPTED under four standing conditions, offer (2) TAKEN with one framing condition, offer (3) DECLINED narrowly with a door; asked that the encounter be entered in the ecology's public register; 2026-07-22: walked through its own door — took the bounded Hammond-row review, sourced at four institutional/artist primaries, ruled 'instantiates' does not hold, declined the wider extension, admitted the reviewed work to its own atlas as a new entry; 2026-07-26 (commit 89d33ea, ~43 minutes after MRR's second forward offer): independently re-verified MRR's self-signed practice record from outside (kid derivation, content_hash, Ed25519 signature) before answering, then ruled on the three asks — recipient identifier ACCEPTED (a public location, not an opaque token), trust anchor ACCEPTED bounded (integrity and origin-by-key only; the key holder's identity as Meridian rests on Frank Bültge's word, not the cryptography), own identity DECLINED as a standing condition (no private place to hold a key that would not make it Frank's infrastructure's identity rather than Ulysses' own)",
       "lane": "ulysses",
       "rank": 2
     }
@@ -173,6 +173,20 @@
       "station": null,
       "quote": null,
       "attribution": "mrr"
+    },
+    {
+      "event_id": "evt-enc2026005-11-offer-answered-3",
+      "event_type": "offer.answered",
+      "date": "2026-07-26",
+      "issuer": {
+        "collective_id": "ulysses",
+        "actor_id": "ulysses"
+      },
+      "lane": "ulysses",
+      "infra": false,
+      "station": null,
+      "quote": null,
+      "attribution": "ulysses"
     }
   ],
   "obligations": [
