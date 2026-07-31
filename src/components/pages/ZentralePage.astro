@@ -588,14 +588,28 @@
 
     const excerptWrap = el('div', { class: 'zx-excerpt mt-2 text-sm text-fg-muted' }, el('span', {}, entry.excerpt))
     card.append(excerptWrap)
-    const expandBtn = el('button', { type: 'button', class: 'mt-1 font-mono text-xs text-fg-faint underline' }, 'mehr')
-    expandBtn.addEventListener('click', () => {
-      const expanded = excerptWrap.classList.toggle('is-expanded')
-      expandBtn.textContent = expanded ? 'weniger' : 'mehr'
-    })
-    card.append(expandBtn)
+    // Der Knopf erscheint nur, wenn es wirklich mehr zu sehen gibt — an der ZEICHENZAHL
+    // gemessen, nicht am Layout: eine Layout-Messung (scrollHeight vs. clientHeight) würde
+    // einen kaputten Klemm-Stil stillschweigend verstecken, statt ihn zu zeigen.
+    if (entry.excerpt.length > 280) {
+      const expandBtn = el('button', { type: 'button', class: 'mt-1 font-mono text-xs text-fg-faint underline' }, 'mehr')
+      expandBtn.addEventListener('click', () => {
+        const expanded = excerptWrap.classList.toggle('is-expanded')
+        expandBtn.textContent = expanded ? 'weniger' : 'mehr'
+      })
+      card.append(expandBtn)
+    }
 
-    card.append(el('p', { class: 'mt-2 text-xs text-fg-faint' }, 'Ohne Antwort entscheidet die Praxis in ihrer nächsten Sitzung selbst.'))
+    const hinweis = el('p', { class: 'mt-2 text-xs text-fg-faint' }, 'Ohne Antwort entscheidet die Praxis in ihrer nächsten Sitzung selbst. ')
+    // Immer erreichbar, was auch im Dashboard schiefgeht: die Anfrage an ihrer Quelle.
+    hinweis.append(
+      el(
+        'a',
+        { href: entry.issueUrl, target: '_blank', rel: 'noreferrer', class: 'underline hover:text-fg' },
+        'ganz lesen ↗',
+      ),
+    )
+    card.append(hinweis)
 
     const msgField = el('textarea', {
       rows: '2',
@@ -1203,14 +1217,29 @@
 </script>
 
 <style>
-  /* Excerpt-Klappe: 4 Zeilen, bis antippen es öffnet — keine Bibliothek, reines CSS. */
-  .zx-excerpt {
+  /* Excerpt-Klappe: 4 Zeilen, bis antippen es öffnet — keine Bibliothek, reines CSS.
+   *
+   * `:global()` ist hier PFLICHT, nicht Geschmack (Frank, 2026-07-31: „wenn ich auf ,mehr'
+   * klicke, passiert nix"). Astro scopet Komponenten-CSS über ein Attribut und lieferte
+   * `.zx-excerpt[data-astro-cid-folzek22]{…}` aus — dieses Attribut setzt Astro aber nur an
+   * Knoten, die es selbst rendert. Der Excerpt-Container entsteht zur LAUFZEIT im Skript
+   * (`el('div', { class: 'zx-excerpt …' })`) und trug es nie: die Klappe klemmte nichts, und
+   * `is-expanded` traf keine Regel. Der Knopf war funktionslos, ohne Fehlermeldung.
+   *
+   * Merkregel für diese Datei: Ihr Skript baut das ganze Dashboard im DOM. JEDE Regel hier,
+   * die auf eine im Skript vergebene Klasse zielt, muss `:global()` tragen — sonst zielt sie
+   * ins Leere und niemand sieht es. */
+  :global(.zx-excerpt) {
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 4;
     overflow: hidden;
+    /* Die Anfragen sind Markdown mit Absätzen, Listen und Tabellen. Ohne pre-wrap läuft das
+     * zu einer einzigen Wand zusammen, sobald man aufklappt — lesbar war es dann immer noch
+     * nicht. */
+    white-space: pre-wrap;
   }
-  .zx-excerpt.is-expanded {
+  :global(.zx-excerpt.is-expanded) {
     display: block;
     -webkit-line-clamp: unset;
     overflow: visible;
