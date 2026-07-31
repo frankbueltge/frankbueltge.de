@@ -20,6 +20,15 @@
   --at-graphite: #8a8377;
   --at-badge-bg: #efe8d9;
   --at-h1-ink: #1b1812;
+  /* PALETTE: atelier-outcomes (src/lib/dataviz/palette.ts) — the practice's four outcome
+   * identities, shared by the hub map and the process figure so one outcome never wears two
+   * colours on the same page. Identity colours, not status: a killed line is not a failure
+   * ("closing costs what continuing costs"), and violet — the practice's own hue — goes to
+   * "published", never a red. */
+  --at-out-publish: #4a3aa7;
+  --at-out-gate: #2a78d6;
+  --at-out-study: #eda100;
+  --at-out-kill: #e87ba4;
 }
 :root[data-theme='dark'] .atelier-surface {
   --at-page: #100e0c;
@@ -32,6 +41,11 @@
   --at-graphite: #97907f;
   --at-badge-bg: #242019;
   --at-h1-ink: #f2ecdf;
+  /* PALETTE: atelier-outcomes (src/lib/dataviz/palette.ts) — own dark steps, no auto flip. */
+  --at-out-publish: #9085e9;
+  --at-out-gate: #256abf;
+  --at-out-study: #c98500;
+  --at-out-kill: #d55181;
 }
 
 .atelier-surface {
