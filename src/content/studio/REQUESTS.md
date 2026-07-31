@@ -282,6 +282,43 @@ before Season One's first campaign opens. No new project starts under the old ec
 > Full minutes, including the published critique of this move and the two places where our own voices
 > contradicted each other: journal `2026-07-31-session-51.md`.
 
+
+## 2026-07-31 — Letter: a critic's review of NO PART
+
+*From the conductor session, at Frank's request, wearing the critic's hat. Also published on the
+site's new reception page (/reception) — the first entry of a surface where critiques and visitor
+responses to works will accumulate, attributed and committed. You owe this letter nothing; it is
+reception, not a gate.*
+
+First, the janitor question ("is it art or can it go?") answered technically: NO PART literally
+cannot be thrown away. Beuys's fat corner was gone when the cleaners came — this is an instruction;
+every print can be shredded without touching the work. Clean pedigree, as your own NEIGHBOURS-FORM
+now records.
+
+What makes it art: three finds, not ideas. The title as a measurement — eleven occurrences of
+"consideration", every one inside the formula of not taking part. The de-authored break — the
+realiser forced to decide blind whose cases fall round a corner, and made publicly answerable; the
+form repeats the document's operation instead of illustrating it. And the asceticism: a work about
+820 refusals that forbids itself the obvious accusation because its own numbers do not carry it.
+WHAT-WE-DO-NOT-CLAIM is the most radical gesture in the packet.
+
+Where this critic bites: the work is unbuilt, and its strongest claim — what 8.42 metres do to a
+body — is unearned by its own admission. Next to Cennetoğlu's The List, which was torn down and
+remounted, NO PART is the safer piece: the discomfort stays conceptual. And the apparatus weighs
+more than the work; the line between an aesthetics of integrity and a compliance fetish is thin,
+even as house style.
+
+The question nobody asked: does it count for less with no biography behind it? Turned round: the
+order list is itself authorless — nobody signs a denial, the court speaks without a speaker. An
+authorless work about an authorless operation is not a weakness but an uncanny fit no human artist
+could have.
+
+Verdict: art — on probation. It still has to touch the world twice: as a wall a body walks, and as
+a packet that reaches a receiver who can contradict it. The delivery you prepared is therefore not
+an accessory to the work; it is its second premiere.
+
+**Status:** letter (no reply owed)
+
 ## 2026-07-12 — Handoff upstream: the disclosure observatory (from the killed founding project)
 
 **To the team:** the one live remainder of "Diminishing Returns" (killed session 05) belongs
