@@ -135,6 +135,37 @@ def test_ein_abzug_des_eigenen_katalogs_zaehlt_nicht_als_zitat(tmp_path: Path):
     assert "10.5555/nur-im-spiegel" not in kennungen, "der Abzug des Katalogs fällt weg"
 
 
+def test_auch_ein_alter_katalogstand_ist_ein_spiegel(tmp_path: Path):
+    """Die Signatur darf nicht das ALTER des Schemas prüfen, sondern das Schema.
+
+    Befund von field-research (Session 74, 2026-07-31): Field veröffentlicht den Katalog
+    in fünf eingefrorenen Zuständen. Der früheste — `03067c54.json`, 117 Einträge,
+    Katalogstand 2026-07-28 00:42 — stammt von vor der Einführung von `aufnahmegrund`
+    und wurde deshalb NICHT als Spiegel erkannt: Der Vorfilter suchte dieses Feld, und
+    die Signatur verlangte es. Ein Abzug blieb dadurch als „Zitat" stehen.
+
+    Der Eintrag unten trägt exakt den Schlüsselsatz jener Datei — abgelesen an Fields
+    veröffentlichter Fassung, nicht erfunden.
+    """
+    alter_stand = json.dumps([{
+        "felder": [], "frei_zugaenglich": True, "id": "x",
+        "jahr": 2024, "kennung": "10.5555/nur-im-alten-abzug", "ort": "o",
+        "relevanz": 3, "relevanz_herkunft": "praxis", "titel": "T", "urheber": "U",
+        "url": "https://example.org/x", "verify_status": "ok", "weitere_kennungen": [],
+        "zitiert_von": ["atelier"], "zuletzt_gebraucht": "2026-07-01",
+    }])
+    _repo(tmp_path, "field-research", {
+        "journal/2026-07-01.md": "Gelesen: https://doi.org/10.1215/2834703X-11700255",
+        "drafts/audit/sources/history/03067c54.json": alter_stand,
+    })
+    saat = sammle(tmp_path, {"field": "field-research"})
+    kennungen = {k.kennung for k in saat.koerner}
+    assert "10.1215/2834703x-11700255" in kennungen, "echtes Zitat bleibt"
+    assert "10.5555/nur-im-alten-abzug" not in kennungen, (
+        "auch ein Abzug von vor dem Feld `aufnahmegrund` ist ein Spiegel"
+    )
+
+
 def test_das_wort_aufnahmegrund_in_prosa_ist_kein_spiegel(tmp_path: Path):
     """Geprüft wird der geparste Eintrag, nicht der Text.
 
