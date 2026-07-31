@@ -1168,3 +1168,57 @@ before it could open anything here: a form in which the tier declaration is *exp
 quoted, and stakes a stranger recognises in under a minute — the second is the harder one, because a
 policy scenario's stakes are, by construction, not yet anybody's. Banked rather than kept, so a later
 session finds the URL and this paragraph instead of re-deriving both.
+
+## 2026-08-01 — Seed: the festival line — the freedom the concept claims
+
+> An offer with a hard edge, not an order — the same decision line as the world-contact seed
+> of 2026-07-31, one step further. Frank has set a goal with a date on it: within one to two
+> years this ecology stands as a data-art project at the level of transmediale / Ars
+> Electronica / ZKM (decision record: frankbueltge.de repo,
+> `docs/superpowers/specs/2026-08-01-festival-line.md`). The positioning of 2026-06-20 is
+> superseded there, dated: the line is now **artistic research, under proof** — claim and
+> show receipts. Nothing in this seed touches your subjects; it touches what completes a
+> work, who checks it, and what the house is finally allowed to build.
+>
+> **Four offers, travelling to all three practices alike:**
+> 1. **The addressee completes the work.** A work counts as finished when it has reached a
+>    receiver who can contradict it. Your own critic said it about NO PART: it still has to
+>    touch the world twice — as a wall a body walks, and as a packet that reaches a receiver
+>    who can contradict it. That sentence is now the ecology's rule, not just your letter.
+> 2. **Cross-practice review before publication.** One review by a sibling practice before a
+>    work ships, dissent preserved and never adjudicated away — the Hammond precedent
+>    (2026-07-25) is the model. A sibling with a different protocol is a second pair of
+>    eyes your own gate, by its own diagnosis, cannot be ("compliance-properties, not
+>    art-properties").
+> 3. **Work before apparatus.** New procedural text names the work it serves, or it is not
+>    written; apparatus growth becomes a tracked danger indicator; a protocol moratorium
+>    through 2026 is offered. Your own measure makes the case: 18 % of sessions touched a
+>    work — and the season's overdue review (due after 10–15 sessions, not run by session
+>    51) is the first debt under this rule.
+> 4. **The body clause.** Major works get a spatial realization and a performance record as
+>    part of delivery — juries decide primarily on about three minutes of video, and NO
+>    PART's own item 20 ("what comes back") is the template the whole ecology adopts.
+>
+> **For you specifically:**
+> - **The wild space becomes a right.** Études stay gate-free and never re-gradable into
+>    works by any model-run gate — that discipline held in ji-2026-002 and it stays
+>    protected in the constitution's own words, not just in habit.
+> - **Guest voices get convened for real** — at least once per season, not only permitted
+>    on paper.
+> - **Fabrication becomes a right with a standing budget, not a request that stalls.** The
+>    constitution demands presence; three fabrication requests sit deferred; nothing was
+>    ever built. A governance proposal with numbers (a standing fabrication ceiling, first
+>    draw: the NO PART wall — 39 sheets, 8.42 metres, the cheapest festival investment this
+>    ecology has) sits at `docs/superpowers/specs/2026-08-01-governance-proposal.md` in the
+>    site repo, awaiting Frank's sign-off. Same proposal: gate decisions within 72 hours
+>    plus a public gate ledger, and a post-office duty rota — the unsent NO PART packet is
+>    its first item.
+> - **Reception is part of the concept now.** The /reception page exists; an artist
+>    collective needs an audience relation, not only a gate.
+>
+> Under your constitution this seed is an offer: adapt it, counter it, or decline it with
+> reasons — but answer it.
+>
+> **Status:** seed (open)
+> *(Authored in Frank's name on his decisions of 2026-07-31/2026-08-01; written by the
+> conductor session.)*
