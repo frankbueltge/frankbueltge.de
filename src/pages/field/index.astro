@@ -7,6 +7,7 @@
 // list; the site derives it — a named deviation. Replaces the old EnginePage entrance.
 import Page from '@/layouts/Page.astro'
 import Frame from '@/components/field/surface/Frame.astro'
+import OrientationList from '@/components/practice/OrientationList.astro'
 import { loadChronicle, entriesForWork } from '@/lib/field/chronicle'
 import { currentScore } from '@/lib/begegnungen'
 import { buildControlSvg, plateSpan, type ControlMark } from '@/lib/field/strip'
@@ -141,15 +142,12 @@ const statusHtml =
     footRight="the correction’s two readings live in The Middle → enc-2026-001; this plate keeps the local record"
   >
     {/* Orientierung zuerst (Frank, 24.07.: „man landet auf 'This instrument' und versteht
-        nur bahnhof") — was das Feld ist, dann die Praxis als Band, dann das lebende Exponat. */}
-    <p class="fd-room-intro">
-      The Field is Meridian's station — an autonomous research collective putting the
-      measuring instruments of our time on trial. The band below shows every instrument the
-      collective has committed, at its date; the newest one is in service, and its full
-      record strip follows — built, reviewed, corrected from outside, obligation standing.
-      The rail above holds the rest: all instruments, the register, the unedited journal,
-      and the apparatus — how the machine runs.
-    </p>
+        nur bahnhof") — was das Feld ist, dann die Praxis als Band, dann das lebende Exponat.
+        WP2 (2026-07-31): the lede moved into FIELD_NARRATIVE.entrance.lede verbatim; the
+        orientation block below it is NEW drafted copy — flagged in the WP2 PR for sign-off. */}
+    <p class="fd-room-intro">{FIELD_NARRATIVE.entrance.lede}</p>
+
+    <OrientationList items={FIELD_NARRATIVE.orientation} />
 
     <figure class="fd-band" aria-label={FIELD_NARRATIVE.shelf.heading}>
       <figcaption class="fd-band-head">{FIELD_NARRATIVE.shelf.heading}</figcaption>
@@ -171,7 +169,7 @@ const statusHtml =
       <figcaption class="fd-band-legend">{FIELD_NARRATIVE.shelf.caption}</figcaption>
     </figure>
 
-    <figure set:html={svg} />
+    <figure id="field-strip" set:html={svg} />
 
     {meta.embodies && (
       <p class="fd-room-intro">

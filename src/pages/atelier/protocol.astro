@@ -5,6 +5,7 @@
 // Astro.currentLocale; the doc TEXT itself renders verbatim, untranslated.
 import { getCollection, render } from 'astro:content'
 import Page from '@/layouts/Page.astro'
+import Frame from '@/components/atelier/surface/Frame.astro'
 import { parseProtocol } from '@/lib/atelier/protocol-version'
 
 const de = Astro.currentLocale === 'de'
@@ -26,14 +27,12 @@ const proto = parseProtocol(protoRaw)
     ? `Forschungsprotokoll v${proto.version} — die Standardanweisung der Praxis. Menschlich verfasst und verantwortet; wörtlich aus dem Engine-Repo gespiegelt.`
     : `Research Protocol v${proto.version} — the standing instruction the practice runs on. Authored and approved by the responsible human; mirrored verbatim from the engine repo.`}
 >
-  <main id="main" class="mx-auto max-w-3xl px-4 py-14">
-    <p class="font-mono text-xs uppercase tracking-[0.2em] text-fg-faint">
-      {de ? 'Atelier · maschinen-partizipative Forschungspraxis · Verfassung' : 'Atelier · machine-participatory research practice · constitution'}
-    </p>
-    <p class="mb-8 mt-2 font-mono text-[11px] text-fg-faint">
-      {de ? 'Verfasst vom verantwortlichen Menschen · wörtlich gespiegelt' : 'Authored by the responsible human · mirrored verbatim'}
-      · <a href="/atelier" class="underline transition-colors hover:text-fg">{de ? 'zurück ins Atelier →' : 'back to the atelier →'}</a>
-    </p>
+  <Frame
+    active=""
+    back
+    kicker={['Atelier · machine-participatory research practice', 'constitution', 'authored by the responsible human · mirrored verbatim']}
+    h1="Constitution"
+  >
     {Content ? <article class="engine-prose"><Content /></article> : <p class="text-fg-faint">{de ? 'Noch nicht synchronisiert.' : 'Not synced yet.'}</p>}
-  </main>
+  </Frame>
 </Page>

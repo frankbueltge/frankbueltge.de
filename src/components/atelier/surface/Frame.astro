@@ -4,20 +4,10 @@
 // Atelier room renders inside this frame; the visual grammar lives in atelier-sheet.css,
 // scoped to .atelier-surface (ADR 0010 — no shared grammar with the other practices).
 import { ATELIER_GRAMMAR, ATELIER_NARRATIVE, ATELIER_DRAFT_LABEL } from '@/config/atelier-wording'
+import type { PracticeFrameProps } from '@/lib/practice-shell'
 import '@/styles/atelier-sheet.css'
 
-interface Props {
-  /** rail label that is "here" ('' = none) */
-  active: string
-  kicker: string[]
-  h1: string
-  /** rendered as-is (may carry <b>…</b>) */
-  statusHtml?: string
-  footLeft?: string
-  footRight?: string
-  /** show the "← back to the sheet" line above the headline (all rooms except the sheet) */
-  back?: boolean
-}
+type Props = PracticeFrameProps
 const { active, kicker, h1, statusHtml, footLeft, footRight, back = false } = Astro.props
 const isDraft = ATELIER_NARRATIVE.approval !== 'approved'
 ---

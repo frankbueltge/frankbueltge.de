@@ -360,6 +360,26 @@ body {
 .engine-prose th, .engine-prose td { border: 1px solid color-mix(in srgb, currentColor 20%, transparent); padding: 0.35em 0.55em; text-align: left; vertical-align: top; }
 .engine-prose th { font-weight: 600; }
 
+/* Practice surfaces style their own generic `table` (ADR 0010 grammar rules — atelier-sheet.css,
+   field-plate.css, studio-stage.css). WP2 (practice-shell) began routing engine-prose pages
+   (foundation/protocol/requests) through the practice Frame, which nests engine-prose inside
+   .<practice>-surface — and `.atelier-surface table` ties `.engine-prose table` on specificity
+   (one class + one type each), so the winner would otherwise depend on stylesheet import order.
+   Pin engine-prose's own look so it never depends on that order. */
+.atelier-surface .engine-prose table,
+.field-surface .engine-prose table,
+.studio-surface .engine-prose table {
+  width: 100%; border-collapse: collapse; font-size: 0.82em; margin: 0.9em 0; display: block; overflow-x: auto;
+}
+.atelier-surface .engine-prose th, .atelier-surface .engine-prose td,
+.field-surface .engine-prose th, .field-surface .engine-prose td,
+.studio-surface .engine-prose th, .studio-surface .engine-prose td {
+  border: 1px solid color-mix(in srgb, currentColor 20%, transparent); padding: 0.35em 0.55em; text-align: left; vertical-align: top;
+}
+.atelier-surface .engine-prose th,
+.field-surface .engine-prose th,
+.studio-surface .engine-prose th { font-weight: 600; }
+
 /* Engine journal — session cards + restrained deliberation highlighting */
 .engine-session > summary { list-style: none; }
 .engine-session > summary::-webkit-details-marker { display: none; }
