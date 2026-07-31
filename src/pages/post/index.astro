@@ -130,6 +130,16 @@ const PRACTICES = ['ecology', 'atelier', 'field', 'studio', 'plenum']
     regarding: 'The regarding line does not fit (3–120 characters).',
   }
   if (form && status) {
+    // Work pages link here with ?to=<practice>&regarding=<slug> — prefill both so a
+    // response to a specific work starts addressed (Frank, 2026-07-31: one open
+    // channel per work).
+    const params = new URLSearchParams(location.search)
+    const qTo = params.get('to')
+    const qReg = params.get('regarding')
+    const toSel = form.querySelector<HTMLSelectElement>('[name="to"]')
+    const regInp = form.querySelector<HTMLInputElement>('[name="regarding"]')
+    if (toSel && qTo && [...toSel.options].some((o) => o.value === qTo)) toSel.value = qTo
+    if (regInp && qReg) regInp.value = qReg.slice(0, 120)
     form.addEventListener('submit', async (ev) => {
       ev.preventDefault()
       status.textContent = 'posting…'
