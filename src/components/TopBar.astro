@@ -1,44 +1,83 @@
 ---
-// The hub-era nav, regrouped for first visitors (Frank's pick, 2026-07-31): eight flat
-// name-links became five points — Practices ▾ (the three doors + Encounters), Maschinenraum,
-// Archive ▾ (Holdings, Catalogues, Projects, Reception), Post, About. Everything stays
-// within two clicks; the new surfaces (Maschinenraum, Post, Reception) are finally
-// reachable from the top. Dropdowns are native <details> — no JS required, the script
-// below only closes them on outside-click/Escape (same pattern the mobile menu used).
+// The nav follows what the hub already says (Frank, 2026-07-31): the research ecology is ONE
+// project among others — alongside data-snack.com and datavism.org — not the identity of this
+// site. So the bar carries four points:
+//   Research Ecology ▾  everything that belongs to the ecology, in named sections
+//   Projects ▾          the main projects, read from src/data/projects.ts (ecology included)
+//   Experiments         the lab's earlier pieces (route /holdings keeps its URL)
+//   About
+// Before this, "Practices" sat at the top as if the ecology were the whole house, while
+// "Projects" was buried under "Archive" — the opposite of the hub's own framing
+// (naming.ts: "currently conducting" · "THE OTHER HOUSES — main projects in their own right").
+// "Holdings" → "Experiments" (Frank, 2026-07-31): plain word over house vocabulary.
+// Practice names and project entries are DERIVED, not retyped — a rename in naming.ts or
+// projects.ts moves the nav with it.
+// Dropdowns are native <details>: they work without JS; the script below only closes them on
+// outside-click/Escape and keeps at most one open.
 // History: "Atlas" → "Catalogues" (Frank, 2026-07-26); DE/EN toggle removed with the
 // single-locale switch (site-v2 §1.5).
 import { t } from '@/i18n/ui'
 import type { Locale } from '@/lib/site'
+import { NAMING } from '@/config/naming'
+import { getProjects } from '@/data/projects'
 
 const locale = (Astro.currentLocale ?? 'en') as Locale
 
 type NavLink = { href: string; label: string }
-type NavItem = NavLink | { label: string; items: NavLink[] }
+type NavSection = { label: string; items: NavLink[] }
+type NavGroup = { label: string; sections: NavSection[]; foot?: NavLink }
+type NavItem = NavLink | NavGroup
+
+// The four doors, named by the hub itself — The Atelier / The Field / The Studio / The Middle.
+const doors: NavLink[] = NAMING.doors.items.map((d) => ({ href: d.href, label: d.name }))
+// Every project gets its card page; the external site is one click further, on that page.
+const projects: NavLink[] = getProjects().map((p) => ({ href: `/work/${p.slug}`, label: p.name }))
 
 const nav: NavItem[] = [
   {
-    label: 'Practices',
-    items: [
-      { href: '/atelier', label: 'Atelier' },
-      { href: '/field', label: 'Field' },
-      { href: '/studio', label: 'Studio' },
-      { href: '/encounters', label: 'Encounters' },
+    label: 'Research Ecology',
+    sections: [
+      { label: 'Practices', items: doors },
+      {
+        label: 'The apparatus',
+        items: [
+          { href: '/maschinenraum', label: 'Maschinenraum' },
+          { href: '/apparatus', label: 'How it works' },
+        ],
+      },
+      {
+        label: 'Records',
+        items: [
+          { href: '/catalogues', label: 'Catalogues' },
+          { href: '/reception', label: 'Reception' },
+        ],
+      },
+      {
+        label: 'Talk back',
+        items: [
+          { href: '/post', label: 'Post office' },
+          { href: '/seed', label: 'Offer a seed' },
+        ],
+      },
     ],
+    foot: { href: '/', label: 'the whole ecology →' },
   },
-  { href: '/maschinenraum', label: 'Maschinenraum' },
   {
-    label: 'Archive',
-    items: [
-      { href: '/holdings', label: 'Holdings' },
-      { href: '/catalogues', label: 'Catalogues' },
-      { href: '/work', label: 'Projects' },
-      { href: '/reception', label: 'Reception' },
-    ],
+    label: 'Projects',
+    sections: [{ label: 'Main projects', items: projects }],
+    foot: { href: '/work', label: 'all projects →' },
   },
-  { href: '/post', label: 'Post' },
+  { href: '/holdings', label: 'Experiments' },
   { href: '/about', label: 'About' },
 ]
-const isGroup = (i: NavItem): i is { label: string; items: NavLink[] } => 'items' in i
+
+const isGroup = (i: NavItem): i is NavGroup => 'sections' in i
+// A group with several sections gets two columns so the panel stays a readable shape; the
+// width is clamped so it can never push past a narrow viewport.
+const panelClass = (g: NavGroup) =>
+  g.sections.length > 1
+    ? 'w-[26rem] max-w-[calc(100vw-2rem)] grid-cols-2'
+    : 'w-52 max-w-[calc(100vw-2rem)] grid-cols-1'
 ---
 
 <header class="keep-dark sticky top-0 z-30 flex h-12 items-center justify-between border-b border-line bg-bg/80 px-4 backdrop-blur-md sm:h-10">
@@ -50,7 +89,7 @@ const isGroup = (i: NavItem): i is { label: string; items: NavLink[] } => 'items
   </a>
 
   <div class="flex items-center gap-4 sm:gap-5">
-    <!-- desktop nav: flat links + native-details dropdowns -->
+    <!-- desktop nav: flat links + native-details dropdowns with named sections -->
     <nav class="hidden items-center gap-5 text-sm text-fg-muted sm:flex">
       {nav.map((item) =>
         isGroup(item) ? (
@@ -59,11 +98,24 @@ const isGroup = (i: NavItem): i is { label: string; items: NavLink[] } => 'items
               {item.label}
               <svg class="mt-px" width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6" /></svg>
             </summary>
-            <nav class="absolute left-1/2 top-[calc(100%+12px)] flex w-40 -translate-x-1/2 flex-col overflow-hidden rounded-xl border border-line bg-panel/95 p-1.5 shadow-2xl backdrop-blur-md">
-              {item.items.map((l) => (
-                <a href={l.href} class="rounded-lg px-3 py-2 text-sm text-fg-muted transition-colors hover:bg-panel-2 hover:text-fg">{l.label}</a>
+            <div class={`absolute left-1/2 top-[calc(100%+12px)] grid -translate-x-1/2 gap-x-2 gap-y-3 overflow-hidden rounded-xl border border-line bg-panel p-3 shadow-2xl backdrop-blur-md ${panelClass(item)}`}>
+              {item.sections.map((s) => (
+                <section>
+                  <p class="px-2 pb-1 font-mono text-[10px] uppercase tracking-[0.16em] text-fg-faint">{s.label}</p>
+                  <nav class="flex flex-col">
+                    {s.items.map((l) => (
+                      <a href={l.href} class="rounded-lg px-2 py-1.5 text-sm text-fg-muted transition-colors hover:bg-panel-2 hover:text-fg">{l.label}</a>
+                    ))}
+                  </nav>
+                </section>
               ))}
-            </nav>
+              {item.foot && (
+                <a
+                  href={item.foot.href}
+                  class="col-span-full mt-1 border-t border-line/60 px-2 pt-2.5 font-mono text-[11px] text-fg-faint transition-colors hover:text-fg"
+                >{item.foot.label}</a>
+              )}
+            </div>
           </details>
         ) : (
           <a href={item.href} class="transition-colors hover:text-fg">{item.label}</a>
@@ -86,7 +138,8 @@ const isGroup = (i: NavItem): i is { label: string; items: NavLink[] } => 'items
       <svg class="i-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z" /></svg>
     </button>
 
-    <!-- mobile menu: native <details> disclosure (works without JS), same groups -->
+    <!-- mobile menu: native <details> disclosure (works without JS), same groups and sections.
+         The panel scrolls on its own so a long ecology list can never run off a short screen. -->
     <details data-menu class="relative sm:hidden">
       <summary
         class="i-summary -mr-1 flex h-9 w-9 cursor-pointer items-center justify-center rounded-md text-fg-muted transition-colors hover:text-fg"
@@ -95,17 +148,25 @@ const isGroup = (i: NavItem): i is { label: string; items: NavLink[] } => 'items
         <svg class="i-menu" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
         <svg class="i-close" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18" /></svg>
       </summary>
-      <nav class="absolute right-0 top-[calc(100%+10px)] flex w-48 flex-col overflow-hidden rounded-xl border border-line bg-panel/95 p-1.5 shadow-2xl backdrop-blur-md">
+      <nav class="absolute right-0 top-[calc(100%+10px)] flex max-h-[calc(100vh-5rem)] w-56 flex-col overflow-y-auto rounded-xl border border-line bg-panel p-1.5 shadow-2xl backdrop-blur-md">
         {nav.map((item) =>
           isGroup(item) ? (
             <>
-              <p class="px-3 pb-1 pt-2.5 font-mono text-[10px] uppercase tracking-[0.16em] text-fg-faint" aria-hidden="true">{item.label}</p>
-              {item.items.map((l) => (
-                <a href={l.href} class="rounded-lg px-3 py-2 text-sm text-fg-muted transition-colors hover:bg-panel-2 hover:text-fg">{l.label}</a>
+              <p class="border-b border-line/60 px-3 pb-1.5 pt-3 text-sm font-semibold text-fg">{item.label}</p>
+              {item.sections.map((s) => (
+                <>
+                  <p class="px-3 pb-0.5 pt-2 font-mono text-[10px] uppercase tracking-[0.16em] text-fg-faint">{s.label}</p>
+                  {s.items.map((l) => (
+                    <a href={l.href} class="rounded-lg px-3 py-1.5 text-sm text-fg-muted transition-colors hover:bg-panel-2 hover:text-fg">{l.label}</a>
+                  ))}
+                </>
               ))}
+              {item.foot && (
+                <a href={item.foot.href} class="rounded-lg px-3 py-1.5 font-mono text-[11px] text-fg-faint transition-colors hover:bg-panel-2 hover:text-fg">{item.foot.label}</a>
+              )}
             </>
           ) : (
-            <a href={item.href} class="mt-1 rounded-lg px-3 py-2 text-sm text-fg-muted transition-colors hover:bg-panel-2 hover:text-fg">{item.label}</a>
+            <a href={item.href} class="mt-2 rounded-lg px-3 py-2 text-sm font-semibold text-fg transition-colors hover:bg-panel-2">{item.label}</a>
           ),
         )}
       </nav>

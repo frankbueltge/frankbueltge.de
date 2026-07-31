@@ -17,15 +17,18 @@ const locale = (Astro.currentLocale ?? 'en') as Locale
 // phase-3e-plumbing.md §2: "ohne die drei Engines").
 const ENGINE_IDS = new Set(['field', 'studio', 'atelier'])
 const bestaende = WERKE_CHRONO.filter((w) => !ENGINE_IDS.has(w.id))
+// Back to "Experiments" (Frank, 2026-07-31): the 2026-07 redesignation to "Holdings" traded a
+// word everyone understands for house vocabulary. The route /holdings is unchanged — links,
+// redirects and OG paths keep working; only the visible name goes back to the plain one.
 const copy = {
   de: {
-    title: 'Bestände',
-    sub: 'Material, der Ökologie angeboten — die laufenden Instrumente des Labors, jedes mit offenen Quellen und offengelegtem Verfahren. (Umgewidmet aus „Experimente"; jede Route bleibt erreichbar, keine Pipeline endet dadurch.)',
+    title: 'Experimente',
+    sub: 'Die früheren Arbeiten des Labors — laufende Instrumente, jedes mit offenen Quellen und offengelegtem Verfahren, der Ökologie als Material angeboten. Jede Route bleibt erreichbar, keine Pipeline endet dadurch.',
     live: 'live data',
   },
   en: {
-    title: 'Holdings',
-    sub: "Material, offered to the ecology — the lab's ongoing instruments, each with open sources and a disclosed method. (Redesignated from \"experiments\"; every route stays reachable, no pipeline ends because of this.)",
+    title: 'Experiments',
+    sub: "The lab's earlier work — ongoing instruments, each with open sources and a disclosed method, offered to the ecology as material. Every route stays reachable, no pipeline ends because of this.",
     live: 'live data',
   },
 }[locale]
