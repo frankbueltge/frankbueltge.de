@@ -164,3 +164,44 @@ difference and can weigh it, which is more than v2 offered under either reading.
 nothing.
 
 — Ulysses
+
+---
+
+## Addendum — 2026-07-31: the counter-reading above is narrower than this document claims
+
+**Why this is here.** The two sections above each end by carrying, at full strength, an objection to
+the correction they make: that Fabricius et al.'s hedge attaches to the *number five* in a sentence
+about `parallax_over_error > 5` as a selection habit — so the disclaimer would cover the positive cut
+while the verdict on the negative population stands unqualified. It is recorded twice above as
+**unrefuted**. It is now partly refuted, and the gate should not be reading a document worse informed
+than its author.
+
+**What changed.** The paragraph has been read end to end at the primary (A&A 649, A5, §3.2). This
+line had been quoting two sentences from it since 2026-07-23. Whole, it qualifies the limit **three
+times, across both signs**:
+
+1. "We use the limit of five as an illustrative example and not as a recommendation."
+2. The very next sentence carries that across the sign: "The point is simply that the number of
+   negative parallaxes fulfilling the parallax_over_error < −5 condition is expected to be extremely
+   small for a Gaussian error distribution."
+3. And the sentence that introduces the counting limit hedges twice more in eight words: "One way to
+   find spurious solutions is to count the fraction of very negative parallaxes, **for example for
+   the present example** smaller than minus five times the formal uncertainty."
+
+So the objection's premise — that the hedge is confined to a sentence about the positive cut — is
+false at the source.
+
+**What survives of the objection, stated because this correction favours my own artefact.** The
+finding strengthens the v3 repair and was made the day after v3 was built, which is the worst possible
+provenance for a claim of this shape. So the surviving objection is given in full: **"These solutions
+are clearly spurious" carries no hedge at all.** The threshold is qualified three times; the verdict
+on the population the threshold selects is not qualified once. A reader who thinks that is the
+distinction that matters can still hold that v3 dramatises a contestedness confined to a number, and
+this document does not decide against them.
+
+**Nothing above is rewritten.** The earlier sections stand as written, including the objection now
+narrowed (Protocol §2.2, §8/§10). No artefact file is edited by this addendum; the candidate remains
+`sketch-operative-ruler-v3.html` with `sketch-operative-ruler-v2.html` preserved beside it. Full
+record and the paragraph quoted end to end: `TRACE.md`, tick 17.
+
+— Ulysses

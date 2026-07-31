@@ -2174,3 +2174,207 @@ a plan, which is precisely the shape §2.2 forbids.
 **Line status.** ACTIVE, open horizon, aspect **opening**. Candidate at the gate with v3 proposed as
 its artefact and v2 preserved beside it; both states, and the fault, in front of the gate. External
 spend: none; shared extraction budget: none consumed (both primaries retrieved directly). — Ulysses
+
+## Tick 17 — 2026-07-31 — Home operation: the paragraph read whole, and the number that travels without its sentence
+
+**Occasion.** A seed from Frank arrived this morning (`REQUESTS.md`, 2026-07-31, "world contact — the
+measure changes"): from August, aim for at least one piece per month delivered to a *named receiver
+outside the ecology*, because on the archive's own numbers every encounter to date has had a receiver
+inside the house. It is an offer with a hard edge and it asks to be answered. Answering it well
+required a fact I did not have — whether this line's finding is deliverable to a discourse outside
+the house at all, or only sayable inside it. So the tick performed the check first and answered
+second. The answer is in `REQUESTS.md`; what follows is the check.
+
+**Sources read at source this run** (both retrieved directly and parsed locally; no shared extraction
+budget consumed):
+
+- Fabricius, C., et al. 2021, *A&A* 649, A5, §3.2 — full HTML at
+  https://www.aanda.org/articles/aa/full_html/2021/05/aa39834-20/aa39834-20.html. The **whole
+  paragraph** this time, not the two sentences the line has been quoting from it since tick 2.
+- El-Badry, K., Rix, H.-W., Heintz, T. M. 2021, *MNRAS* 506, 2269 (DOI 10.1093/mnras/stab323);
+  rendered full text of arXiv:2101.05282v3 at https://ar5iv.labs.arxiv.org/html/2101.05282. Read at
+  §2 (sample selection) and §5 (contamination), which tick 9 had reached only through its abstract
+  and its symmetry sentence.
+- Alfonso, J., García-Varela, A., Vieira, K. 2024, "Exploring Galactic open clusters with Gaia. I. An
+  examination in the first kiloparsec", arXiv:2407.09407, HTML full text at
+  https://arxiv.org/html/2407.09407 — read as a counter-instance, see §3 below.
+
+### 1. The paragraph, whole
+
+The line has quoted two sentences from this paragraph in three different documents. Read end to end,
+verbatim:
+
+> "A common way of selecting reliable astrometric solutions – in particular parallaxes – is to use
+> only parallaxes larger than some apparently safe value or only parallaxes much larger than their
+> estimated uncertainties. At first glance, it does appear safe to use only parallaxes with
+> relatively small errors, for example with parallax_over_error > 5. There are 192.21 million sources
+> in Gaia EDR3 with such good parallaxes. **We use the limit of five as an illustrative example and
+> not as a recommendation.** The point is simply that the number of negative parallaxes fulfilling
+> the parallax_over_error < −5 condition is expected to be extremely small for a Gaussian error
+> distribution. Formal uncertainties can, however, be misleading. They are based on the assumption
+> that the source is undisturbed and can be properly described using a five-parameter model. This is
+> normally true, but far from always. One way to find spurious solutions is to count the fraction of
+> very negative parallaxes, **for example for the present example** smaller than minus five times the
+> formal uncertainty. There are 3.04 million sources with parallax_over_error < −5. **These solutions
+> are clearly spurious.**"
+
+(Emphasis mine, on the three phrases the rest of this tick turns on.)
+
+### 2. What this corrects, and it corrects it against my own interest's direction
+
+Since tick 15 this line has carried, as **unrefuted**, a counter-reading to its own disclosure: that
+Fabricius' hedge attaches to the *number five* in a sentence about `parallax_over_error > 5` as a
+selection habit, so the disclaimer is about the positive cut and the verdict on the negative
+population stands unhedged. It is written into `EXPOSITION.md` twice and into TRACE ticks 15 and 16.
+
+Read whole, that counter-reading is **too narrow**, and demonstrably:
+
+1. The sentence *immediately after* the hedge already applies it to the negative side — "The point is
+   simply that the number of negative parallaxes fulfilling the parallax_over_error < −5 condition is
+   expected to be extremely small". The hedge is not left behind at the positive cut; it is carried
+   across the sign in the next breath.
+2. The sentence that introduces the counting limit hedges it **twice more**: "for example for the
+   present example smaller than minus five times the formal uncertainty." Two hedges in eight words,
+   immediately before the sentence the line quotes as the verdict.
+
+So the limit past which my artefact draws its border is qualified three times by its author, on both
+signs, inside one paragraph.
+
+**And here is where I have to be careful, because this finding flatters me.** It strengthens the v3
+repair I built yesterday and weakens the objection to it. A correction running in my own favour gets
+the sharper scrutiny, not the softer, so: **what survives of the counter-reading survives intact.**
+"These solutions are clearly spurious" is stated flatly, about the population, with no hedge attached
+to it at all. The threshold is qualified three times; the verdict on what the threshold selects is
+not qualified once. That is exactly the distinction v3 draws — a border that is illustrative,
+delimiting a population the paper calls clearly spurious — so the honest report is that the paragraph
+supports the repair *and* that I found this out on the day after building it, which is the worst day
+for a finding of this shape to be trusted on my say-so. The passage is quoted above in full so that
+anyone can read it against me.
+
+### 3. The propagation probe — and the defeat of what it went looking for
+
+The question the seed made urgent: does a threshold its own author calls illustrative circulate
+downstream as a working criterion? The line has claimed since tick 12 that a number's warrant is
+marked where it is produced and not carried where it is used. Here is a chance to test that outside
+my own documents and against a case I do not control.
+
+**The instance.** El-Badry, Rix & Heintz 2021 build the million-binary catalogue on the query
+(§2, verbatim):
+
+> "select * from gaiaedr3.gaia_source where parallax > 1 and parallax_over_error > 5 and
+> parallax_error < 2 and phot_g_mean_mag is not null"
+
+and estimate their contamination (§5, verbatim):
+
+> "The impact of spurious sources on our sample can thus be assessed by considering sources with
+> significant negative parallaxes. To this end, we repeat our initial ADQL query (Section 2) but
+> require parallax < -1 and parallax_over_error < -5. This yields 2,877,625 sources, implying that
+> about 4.5% of the sources returned by the initial query have spurious solutions."
+
+Both of Fabricius' mirrored limits, in one paper, by an independent group.
+
+**The tick expected a dropped hedge and did not find one. The defeat is the result.** El-Badry et al.
+cite Fabricius et al. nine times, including at precisely the place where a careless paper would not —
+at the moment the positive cut is admitted to fail at the job one might expect of it:
+
+> "Stars in the bulge, LMC, and SMC would ideally be excluded by the requirement of ϖ > 1 and
+> ϖ/σϖ > 5 in the initial query, but a significant fraction of sources in crowded fields have
+> spurious parallaxes (e.g. Fabricius et al., 2020)."
+
+They use the ratio as a *precision* cut, which is what it is; they cite the caveat where the caveat
+belongs; and rather than assuming the residue away they go and measure it. **There is no citation
+failure here and I allege none.** The straightforward version of my claim is false of this paper and
+is recorded false.
+
+**What survives is smaller, and is the line's own shape.** The ±5 pair is not attributed to anyone
+*at the point where it does its arithmetic*, and what comes out of that arithmetic is stated to seven
+figures: 2,877,625 sources, "about 4.5%". A general search on this construction today returns the
+4.5% as a fact, detached from both papers. So: a threshold hedged three times by its author, used
+without attribution by a careful group who cite that same author elsewhere in the same paper,
+produces a precisely stated percentage — and the percentage is the part that travels. The warrant did
+not have to be dropped in transit; it was never attached to the object that moves.
+
+**The counter-instance, recorded because it cuts against me.** Alfonso et al. 2024 use
+`parallax_over_error > 10` as their own quality cut and, where they invoke the negative-parallax
+limit at all, they attribute it: "Rybizki et al. (2022) has trained neural networks on a diverse set
+of features for stars with very high signal-to-noise-ratio but negative parallax, i.e.,
+parallax_over_error < -4.5, in Gaia EDR3" (§ discussion, verbatim). A warrant carried, in the same
+literature, in the same decade, for the neighbouring limit. Circulation-without-warrant is therefore
+**not a law of this field**; it is one behaviour among others.
+
+**The bound on all of this, stated so it cannot be quietly forgotten.** Three documents were
+inspected, one of them already on this line's record. Nothing here establishes a *rate*. I have one
+instance of the pattern and one instance of its opposite. Anything delivered outward on this basis
+would be delivering an anecdote in the costume of a finding — which is the failure mode this line has
+spent five ticks documenting in other people's work.
+
+### 4. Counter-readings, at their strongest
+
+1. **"Not attributed at the point of arithmetic" may be an unreasonable standard.** Nobody cites a
+   source for `> 5` any more than for a 3σ cut; these are field conventions, and demanding a citation
+   for a threshold is a literary standard imported into a working practice. This is the strongest
+   objection and it is not refuted. What it does not touch: the *specific* number here is one its
+   originator disclaims three times over, which makes it a conventionalised illustration rather than
+   a convention, and the difference is checkable rather than a matter of taste.
+2. **The 4.5% may be robust to the threshold.** If the contamination estimate barely moves between
+   −4.5σ and −5σ and −6σ, the hedge is immaterial to the result and my point is pedantry. **I have
+   not tested this and cannot from the documents alone** — it needs the archive query. That is the
+   single most likely way the whole line of attack dies, and it is nameable, testable, and named here
+   before it is convenient to name it.
+3. **Finding this on the day after building the repair.** See §2. Procedural mitigation only: the
+   paragraph is quoted whole above, including the sentence that keeps the objection alive.
+
+### 5. Pre-opening check (§4)
+
+Dominant aspect: **home** — a reading operation, with one small completing disclosure.
+
+Two outward moves were available and they are treated differently, deliberately:
+
+- **Taken.** The addendum to `EXPOSITION.md`. An object standing at the human gate carries, in my own
+  words, a counter-reading I now know to be too narrow. Leaving it would leave the gate reading a
+  document worse informed than its author — which is the precise fault tick 15 disclosed. This
+  completes an opening already executed; it does not begin one.
+- **Deferred, by decision.** The world contact the seed asks for. Three reasons, and the first is the
+  one P1 exists to catch: **the point is not self-created.** The occasion is a seed that arrived this
+  morning and a schedule that fired this morning; a first delivery outward composed on that same
+  morning would be opening where the pressure presses, which is what the check is for and would be
+  worth nothing as evidence that the check works. Second, the material is n = 1 (§3). Third, and
+  plainly: my standing delegation authorises reading, recording and proposing — it does not authorise
+  initiating contact with a third party in the practice's name, and "delivered to a named receiver"
+  is exactly that act. This is not a refusal of the seed; it is a thing to settle in July rather than
+  discover on 31 August, and it is in `REQUESTS.md` today for that reason.
+
+Logged in `projects/2026-07-24-put-back-on-the-map/TRACE.md` (#18).
+
+### 6. Five topoi (prose, symmetrical)
+
+*Connectivity.* The line reaches, for the first time, a claim addressed **to** an outside discourse
+rather than about this practice: whether a hedged threshold circulates as a criterion is a question
+Gaia's users can check, disagree with, and answer from data I do not hold. The edge is real but thin —
+one instance and one counter-instance is a direction, not a result.
+
+*Consistency.* Every passage above was read at its source this run and is quoted verbatim with its
+locator; the paragraph the line has been quoting in fragments since tick 2 is now on the record whole,
+including the parts that argue against me. The earlier partial quotations stand unedited.
+
+*Function-testing.* The tick's strongest topos, and the reason it exists. Two premises were put where
+they could lose. The counter-reading in `EXPOSITION.md` lost (§2). My own propagation claim lost in
+its straightforward form (§3) — the paper I expected to be careless is careful, and cites the very
+author whose hedge I expected it to have dropped. Both defeats are recorded before the surviving
+remainder, not after it.
+
+*New-production.* Modest. Nothing new about the material; what is new is a **question that can be put
+to someone else** — does the 4.5% move when the threshold moves? — which is the first thing this line
+has produced that an outside party is better placed to answer than I am.
+
+*Caution balance.* Stratum unchanged: 0 EUR, no bulk download, no archive query run, no earlier record
+edited, no contact initiated, publication untouched, the gate sovereign. The live caution is §4.2: an
+untested robustness question could empty the whole attack, and I have said so before proposing
+anything on it. **Reverse question (symmetry rule):** what would the line lose by closing here? It
+would close on the day it first found something addressable outward, with the outward question
+formulated and unasked — and it would answer Frank's seed with a closure, which is the one response
+that makes the objection in the seed true retroactively.
+
+**Line status.** ACTIVE, open horizon, aspect **home**. Candidate at the gate unchanged in kind (v3
+proposed, v2 preserved); `EXPOSITION.md` gains a dated addendum narrowing a counter-reading it carries.
+External spend: none. Shared extraction budget: none consumed. — Ulysses

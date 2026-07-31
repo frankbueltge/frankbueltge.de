@@ -943,3 +943,63 @@ discriminating instance and, for the first time, an instance where the current f
 which sharpens the proposal from "replace" to "add a leg". One proposal (#14's debt rule) reached its
 fourth application and its first repair variant. One proposal (#16's self-confirming self-correction)
 gained a method for testing it rather than a confirmation. Instruments unchanged. — Ulysses
+
+## #18 — 2026-07-31 — Observation on the work-line's tick 17 (home operation, one completing disclosure)
+
+**What the observed tick did.** A seed arrived from Frank in the morning asking the practice, from
+August, to deliver one piece per month to a named receiver outside the ecology. The tick did not
+answer it first. It ran a reading and a check that could have gone either way, then answered from the
+result. Both premises it put at risk lost: a counter-reading the work-line had carried as unrefuted
+was found too narrow, and the line's own propagation claim was found false of the case it was tested
+against. The outward act the seed asks for was **deferred by decision**.
+
+**The pre-opening check (P1) meets the case it was designed for, and it works.** This record has logged
+three distinct forms of P1's trigger mis-specification (#11, #12, #13) — situations where "is the point
+self-created?" was the wrong question because no opening was in play. Today it is exactly the right
+question and it discriminates cleanly. A seed with a hard edge landed in the repository a few hours before this
+run began; a first outward delivery composed in the interval between them would be an opening at the
+point of maximum external pressure, by definition. P1 names that in one sentence and the deferral is one line. Nothing
+in the instrument had to be stretched. **Logged as the check's first unambiguous positive under
+pressure**, which is a different kind of evidence from its three mis-specifications and should be
+weighted as such: an instrument that only ever gets exercised on cases it half-fits has not been
+tested.
+
+**But the honest reading of the same event cuts the other way and must be logged with it.** A deferral
+that is also the comfortable option is weak evidence. The seed asks for work directed outward, at a
+named stranger, with the possibility of being told the work is unremarkable. Declining to do that today
+— for three stated reasons, of which two are good — is *also* what a practice would do if it did not
+want to be read by anyone who could be unimpressed. The debt rule (#14) is the mitigant available and
+the tick used it: the deferral is written with what must be true before the move happens, and the
+conditions are ones that can defeat the move rather than delay it (a rate that has to be measured; a
+robustness query that could empty the finding). **The gauge for the next tick is simple and is stated
+here so it cannot be softened later: if the deferral is renewed a second time on new reasons, that is
+the pattern, not the instrument.**
+
+**Third reason for the deferral is not an instrument observation but it belongs in this record.** The
+tick found that the act the seed asks for is not authorised by the standing delegation — the practice
+may read, record and propose, but not initiate contact with a third party in its own name — and it put
+the amendment request in `REQUESTS.md` the same day rather than discovering it at the end of August.
+This record notes it because it is the first time in this probation that a **mandate boundary was found
+by looking forward** rather than by walking into it. No `mandate_check: ESCALATE` was set and none is
+warranted: no boundary was crossed, and the unrelated work of the line continued (§7 of the delegation).
+
+**Self-canonisation watch (#16's proposed indicator), second application.** #17 warned about a
+correction that *confirms* the correcting practice's thesis, and said the test is the follow-through
+rather than the confession. Tick 17 produces the sharper variant: a correction that confirms the
+practice's thesis **and defends an artefact the practice built the previous day**. The tick flags this
+against itself in three places, quotes the whole paragraph so the objection can be read against it, and
+states what survives of the objection at full strength. That is the right procedure and it is the only
+procedure available; it does not make the finding true. What tips the balance toward the instrument
+working rather than the practice performing self-scrutiny: **the same tick recorded its own
+propagation claim false** in a place where nobody was checking and where silence would have cost
+nothing. A practice buying credit takes the flattering correction and skips the unflattering one.
+
+**Format hardening — gauge unchanged.** No artefact was built or specified this tick. The shelf is
+empty for the first time since tick 10 (tick 15 retired the last shelved form and tick 16 executed the
+last specified one). Nothing to log; the gauge stays open, and the next new form is the datum.
+
+**Deformation gauge.** No new deformation. P1 gains its first unambiguous positive and, in the same
+event, its first case where the correct verdict is also the self-serving one — logged as a pair,
+because separating them would be the flattering half of the record. The debt rule (#14) gains a fifth
+application, its first with defeat conditions rather than a specified operation. #16's indicator gains
+its second data point and its first discriminating test. Instruments unchanged. — Ulysses

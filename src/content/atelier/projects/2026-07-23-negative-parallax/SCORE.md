@@ -23,7 +23,7 @@ work_line:
     Lindegren 2021; the 1/ϖ operation; the two-regime boundary (noise-negatives vs
     significance-negatives, drawn in units of the value's own uncertainty).
   horizon: open (months; §6 phase budgets, not a life-timer)
-  refrain_aspect: opening  # tick 16 — the repair built by a later session: v3 carries the border's own qualification and a second published limit; v2 preserved unedited; the candidate now proposes v3 and waits on Frank's gate
+  refrain_aspect: home  # tick 17 — the Fabricius paragraph read whole (the hedge covers both signs, three times); the propagation claim defeated in its straightforward form and left as one instance against one counter-instance; the world contact Frank's seed asks for deferred by decision, with the mandate gap named in REQUESTS.md
 disposition: PUBLICATION_CANDIDATE
 publication_approved_by:
 publication_approved_at:
@@ -533,6 +533,43 @@ only if composition is genuinely earned under the §5.4 tests — a proportionat
      stands, evidenced by Rybizki's independent choice of 4.5σ — is recorded at full strength in
      TRACE §6.1 and is not refuted.
 
+- 2026-07-31 (home operation, tick 17 — Ulysses). Two entries, both against this record's own claims,
+  both earned by reading whole a paragraph this line had quoted in fragments since tick 2 (Fabricius
+  et al. 2021, A&A 649, A5, §3.2, read at source this run; the paragraph is quoted end to end in
+  TRACE tick 17):
+  1. **The counter-reading this record has carried as unrefuted since tick 15 is too narrow.** Ticks
+     15 and 16 and `EXPOSITION.md` all record, at full strength, the objection that Fabricius' hedge
+     attaches to the *number five* "in a sentence about `parallax_over_error > 5` as a selection
+     habit", i.e. that the disclaimer covers the positive cut and the verdict on the negative
+     population stands. The paragraph read whole defeats that in two places: the sentence
+     *immediately after* the hedge already applies it across the sign ("the number of negative
+     parallaxes fulfilling the parallax_over_error < −5 condition"), and the sentence introducing the
+     counting limit hedges twice more in eight words ("for example for the present example smaller
+     than minus five times the formal uncertainty"). The threshold is qualified three times, on both
+     signs, inside one paragraph. My earlier wording stands unedited above, in TRACE and in
+     `EXPOSITION.md` per Protocol §8/§10; this entry supersedes it, and `EXPOSITION.md` receives a
+     dated addendum so the object at the gate is not left worse informed than its author.
+     **Flagged against myself:** this correction strengthens the v3 repair built the day before and
+     therefore runs in my favour; what survives of the objection survives intact and is stated with
+     it — "These solutions are clearly spurious" carries no hedge at all, so the threshold is
+     qualified three times and the verdict on the population it selects is not qualified once.
+  2. **The line's propagation claim is defeated in its straightforward form.** The claim carried
+     since tick 12 — that a number's warrant is marked where it is produced and not carried where it
+     is used — was put to a case outside this practice's own documents and lost there. El-Badry, Rix
+     & Heintz 2021 (MNRAS 506, 2269; arXiv:2101.05282v3, §§2 and 5, read at source this run) use both
+     mirrored limits — `parallax > 1 and parallax_over_error > 5` for sample selection, `parallax < -1
+     and parallax_over_error < -5` for the contamination estimate ("This yields 2,877,625 sources,
+     implying that about 4.5% of the sources returned by the initial query have spurious solutions")
+     — and cite Fabricius et al. nine times, including at exactly the point where the positive cut is
+     admitted to fail at the job one might expect of it. There is no citation failure and none is
+     alleged. What survives is narrower: the ±5 pair is unattributed *at the point where it does its
+     arithmetic*, and the seven-figure number it produces is the part that travels. A second
+     document read this run cuts the other way and is recorded with it — Alfonso, García-Varela &
+     Vieira 2024 (arXiv:2407.09407) attribute the neighbouring limit correctly to Rybizki et al.
+     Sample: three documents, one instance, one counter-instance. **No rate is established**, and the
+     robustness question that could empty the whole attack (does the 4.5% move when the threshold
+     moves?) is named in TRACE §4.2 and not tested — it needs an archive query this line has not run.
+
 ## 11. Work-line declaration (Protocol v5, 2026-07-24)
 
 This project is declared the practice's **first work-line** under the transition clause
@@ -824,3 +861,27 @@ work rather than a schedule that fired. Notification beyond the record and any c
 are deferred by decision; disposition stays PUBLICATION_CANDIDATE, now proposing v3. Function-testing
 is the weak topos this tick and is recorded as weak: no test was run that could have failed, and the
 real §5.4 test of v3 is a reader who is not me. No PUBLICATION.json (human-only). — Ulysses
+
+**Update — 2026-07-31, home operation (TRACE tick 17): the paragraph read whole, and a claim tested
+outside my own documents.** Occasioned by Frank's seed of this morning (`REQUESTS.md`, "world contact
+— the measure changes"), which asks, from August, for at least one piece per month delivered to a
+named receiver *outside* the ecology. Answering it required a fact the line did not have — whether its
+finding is deliverable to an outside discourse at all — so the tick ran the check first and answered
+second. Two things lost. **First**, the paragraph this line has quoted in fragments since tick 2 was
+read end to end, and the counter-reading the record has carried as unrefuted since tick 15 is too
+narrow: the hedge is carried across the sign in the very next sentence and repeated twice more at the
+counting limit (§10, 2026-07-31, entry 1). That correction runs in my own favour, one day after
+building the artefact it strengthens, so what survives of the objection is stated with it and
+`EXPOSITION.md` carries both. **Second**, the line's own propagation claim was put to a case it does
+not control and lost in its straightforward form: the paper expected to have dropped a hedge cites its
+author nine times, uses the ratio for what it is, and measures the residue instead of assuming it away
+(§10, entry 2). What survives is smaller — the mirrored ±5 is unattributed at the point of its
+arithmetic and the seven-figure number it yields is the part that circulates — and it stands at one
+instance against one counter-instance, with the robustness test that could empty it named and not run.
+**Pre-opening check (§4):** aspect home. The small outward move was taken (the addendum to a document
+at the gate, completing an opening already executed); the large one — the world contact itself — is
+**deferred by decision** for three reasons, of which the first is the one P1 exists to catch: a seed
+arrived this morning and a schedule fired this morning, and a first delivery composed on that same
+morning would open where the pressure presses. The other two are that the material is n = 1, and that
+initiating contact with a third party in the practice's name is not an act the standing delegation
+authorises — named in `REQUESTS.md` today rather than discovered on 31 August. — Ulysses
