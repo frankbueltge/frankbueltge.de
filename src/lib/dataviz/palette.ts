@@ -54,11 +54,29 @@ export interface PaletteWarn {
   relief: string
 }
 
+export interface ShapeCarriedSlot {
+  /** an identity whose distinction is carried by the MARK'S SHAPE, not by its hue — recorded
+   *  here, deliberately OUTSIDE the categorical set, because its hue sits in the validator's
+   *  6–8 CVD floor band against another slot. Distinct from DeclaredNeutral: that one wears
+   *  neutral ink on purpose (grayness IS the meaning); this one is fully chromatic and simply
+   *  does not carry its identity by colour alone. */
+  name: string
+  light: string
+  dark: string
+  /** the shape that carries the meaning, the measured band that made this necessary, and where
+   *  the relief is shipped — a claim this file's test re-derives rather than takes on trust */
+  note: string
+}
+
 export interface PaletteSet {
   id: string
   description: string
   slots: PaletteSlot[]
   neutrals?: DeclaredNeutral[]
+  /** hues that ship on the figure but are NOT categorical slots because shape, not colour,
+   *  separates them (see ShapeCarriedSlot) — excluded from the categorical distance maths on
+   *  purpose, and never a way to smuggle a failing hue into a passing record */
+  shapeCarried?: ShapeCarriedSlot[]
   /** chart surfaces the set was validated against, per mode */
   surfaces: { light: string[]; dark: string[] }
   pairs: 'all' | 'adjacent'
@@ -187,6 +205,80 @@ export const PALETTES: readonly PaletteSet[] = [
       'src/styles/score-map.css',
       'src/components/maschinenraum/Partitur.astro',
     ],
+  },
+  {
+    id: 'studio-season',
+    description:
+      "The Studio's season floor (SeasonFloor.astro): what the house did to each work, on one " +
+      'stage floor. TWO categorical slots plus ONE shape-carried hue, and the split is the whole ' +
+      'point of this record. Measured against the stage floor, the studio\'s lamp gold and its ' +
+      'curtain crimson separate for normal vision (ΔE 16.4 light / 19.0 dark) but collapse for a ' +
+      'deuteranope in LIGHT mode: ΔE 6.9, inside the validator\'s 6–8 floor band, which is legal ' +
+      'ONLY with secondary encoding. On this figure the secondary encoding is not an add-on but ' +
+      'the drawing itself — a lit position is a hard-edged POOL, a strike is a taped X, a ' +
+      'withdrawal is an X drawn THROUGH an unlit pool — so the gold is recorded as a ' +
+      'shapeCarried hue rather than counted as a third categorical slot, and the categorical ' +
+      'maths runs over the pair that really does carry identity by colour alone: crimson (struck) ' +
+      'against the violet (returned by the eye) the ecology already gives the atelier for its own ' +
+      'published works. Recording it the other way round — three slots — would have put a 6.9 ' +
+      "pair through an assertion that hard-fails below 8, and the honest options were to weaken " +
+      'the test or to describe the figure as it is actually drawn. NOTE on the numbers: the ' +
+      "validator's own printed light CVD for the crimson↔violet pair is 17.1, palette.test.ts " +
+      're-derives 18.2, because the validator clamps the Machado-simulated channels back into ' +
+      'gamut and the test does not — the two agree to 0.01 on every less saturated pair in this ' +
+      'file, and both sit far above the floor of 8, so the verdict is unaffected. The values ' +
+      'recorded below are the TEST\'s, since the test is the tripwire. No warning red anywhere: a ' +
+      'withdrawal is a completed honest act, so it wears the house\'s own curtain colour, not an ' +
+      'error state.',
+    slots: [
+      { name: 'struck — a taped X on the floor', light: '#a83248', dark: '#c2455a' },
+      { name: 'returned by the eye', light: '#4a3aa7', dark: '#9085e9' },
+    ],
+    shapeCarried: [
+      {
+        name: 'lit / premiered — a hard-edged pool',
+        light: '#8a6a10',
+        dark: '#bd8b21',
+        note:
+          'the lamp gold; deutan ΔE 6.9 against the curtain crimson in light mode (12.5 in dark), ' +
+          'i.e. inside the 6–8 floor band. Relief, shipped on every figure that uses this set: a ' +
+          'lit position is a filled hard-edged pool and a struck one is a taped X (different ' +
+          'marks, not two colours of one mark), every pool is direct-labelled with the work title ' +
+          'in Didone capitals, and the whole season is repeated as a table with the verbatim ' +
+          'reason and its source.',
+      },
+    ],
+    surfaces: { light: ['#f3efe9', '#e9e4dc'], dark: ['#141110', '#0e0c0b'] },
+    pairs: 'all',
+    validatedOn: '2026-07-31',
+    validator:
+      'dataviz skill validate_palette.js (six checks, --pairs all, per mode against the stage ' +
+      'floor) — categorical pair ALL CHECKS PASS; the three-hue run reports the 6.9 deutan WARN ' +
+      'that this record answers with shapeCarried above',
+    worst: [
+      {
+        mode: 'light',
+        cvd: 18.2,
+        cvdPair: '#a83248↔#4a3aa7',
+        cvdType: 'protan',
+        tritan: 26.2,
+        normal: 23.7,
+        normalPair: '#a83248↔#4a3aa7',
+      },
+      {
+        mode: 'dark',
+        cvd: 20.6,
+        cvdPair: '#c2455a↔#9085e9',
+        cvdType: 'deutan',
+        tritan: 25.4,
+        normal: 23.3,
+        normalPair: '#c2455a↔#9085e9',
+      },
+    ],
+    // No contrast WARN to record: every hue in this set, categorical and shape-carried alike,
+    // clears 3:1 against BOTH declared surfaces of its mode (weakest: #c2455a on #141110 at 3.84).
+    warns: [],
+    usedBy: ['src/styles/studio-stage.css'],
   },
 ]
 
