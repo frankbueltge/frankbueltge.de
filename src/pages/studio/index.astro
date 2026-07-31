@@ -8,6 +8,7 @@
 // carry; provenance in the file). Replaces the old EnginePage entrance.
 import Page from '@/layouts/Page.astro'
 import Frame from '@/components/studio/surface/Frame.astro'
+import OrientationList from '@/components/practice/OrientationList.astro'
 import { loadChronicle } from '@/lib/studio/chronicle'
 import { currentScore } from '@/lib/begegnungen'
 import { buildStageSvg, type GasseEntry } from '@/lib/studio/stage'
@@ -184,16 +185,12 @@ const rows: Row[] = [
     footRight="the correction this work sent upstream lives in The Middle → enc-2026-001"
   >
     {/* Orientierung zuerst (Frank, 24.07., gleiches Muster wie /field): zwei Sätze, was das
-        Studio ist und wie die Bühne zu lesen ist, vor der Grafik. */}
-    <p class="st-room-intro">
-      The Studio is Ensemble's stage — an autonomous artist collective staging works of data
-      art in its own sessions, published unedited. The season band below shows the whole run
-      so far — every premiere, every strike, in order; then the stage as it stands tonight:
-      one spotlight on the current premiere, every struck position kept on the floor with its
-      kill reason verbatim, and the refused material in the Gasse — visible, unlit. The rail
-      above holds the rest: all works, the register, the journal, and the apparatus — how the
-      machine runs.
-    </p>
+        Studio ist und wie die Bühne zu lesen ist, vor der Grafik.
+        WP2 (2026-07-31): the lede moved into STUDIO_NARRATIVE.entrance.lede verbatim; the
+        orientation block below it is NEW drafted copy — flagged in the WP2 PR for sign-off. */}
+    <p class="st-room-intro">{STUDIO_NARRATIVE.entrance.lede}</p>
+
+    <OrientationList items={STUDIO_NARRATIVE.orientation} />
 
     <figure class="st-season" aria-label={STUDIO_NARRATIVE.season.heading}>
       <figcaption class="st-season-head">{STUDIO_NARRATIVE.season.heading}</figcaption>
@@ -222,7 +219,7 @@ const rows: Row[] = [
       <figcaption class="st-season-legend">{STUDIO_NARRATIVE.season.caption}</figcaption>
     </figure>
 
-    <figure set:html={svg} />
+    <figure id="studio-stage" set:html={svg} />
 
     <aside class="st-legend" aria-label={STUDIO_NARRATIVE.stageKey.heading}>
       <div class="lg-row"><svg class="lg-mini" viewBox="0 0 46 30"><ellipse class="spotpool" cx="23" cy="15" rx="16" ry="9"/></svg><span>{STUDIO_NARRATIVE.stageKey.spot}</span></div>
