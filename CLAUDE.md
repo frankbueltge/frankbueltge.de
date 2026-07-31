@@ -86,7 +86,13 @@ Parallaxe via Gemini-AI-Studio-Key (statt BigQuery/Vertex).
   (dataviz-Skill, `scripts/validate_palette.js`, hell UND dunkel mit eigenen Stufen),
   Legende + Tabellenansicht, `prefers-reduced-motion` achten, Herkunftszeile unter der
   Figur. Referenz-Umsetzung: `src/components/atelier/ProcessFigure.astro` +
-  `src/styles/atelier-process.css` (Farben dort sind geprüft, nicht geraten).
+  `src/styles/atelier-process.css`. **Validierung ist seit 2026-07-31 Testpflicht, kein
+  Kommentar:** jedes gelieferte Set steht als Datensatz in `src/lib/dataviz/palette.ts`
+  (Validator-Verdikt, datiert, WARNs mit benanntem Relief); `palette.test.ts` rechnet die
+  Distanzen nach und `scripts/drift-check.mjs` (Regeln 6/7) erzwingt die
+  `PALETTE:`-Marker. Anlass: Die ursprüngliche ProcessFigure-Palette behauptete im
+  CSS-Kommentar „alle sechs Prüfungen bestanden", fiel aber real durch den CVD-Check
+  (grün↔magenta deutan ΔE 1,3) — Kommentare driften, Tests nicht.
   **Statusfarben sind tabu, wo die Praxis nicht wertet** — ein abgebrochenes Vorhaben ist
   bei Ulysses kein Fehlschlag („closing costs what continuing costs"), also bekommt es
   eine Identitätsfarbe, kein Warnrot.

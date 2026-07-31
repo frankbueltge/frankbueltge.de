@@ -304,19 +304,24 @@ const isDraft = NAMING.approval !== 'approved'
   }
   /* Praxisfarben-Haarlinie (decisions doc 2026-07-16 §1.3): the same deliberate, gated
      exception to the site's grayscale "Mono-Skin fest" that the score map already carries
-     (src/styles/score-map.css) — the four practice identities read the same colour on the hub
-     as they do on the encounter map, just given their own tokens here rather than reaching into
-     .score-map's scope (the doors grid sits outside it). */
+     (src/styles/score-map.css) — the practice identities read the same colour on the hub
+     as they do on the encounter map AND on the Partitur below (one ecology quartet, not
+     three near-misses of it).
+     PALETTE: ecology-voices (src/lib/dataviz/palette.ts). The Middle's door stays a declared
+     NEUTRAL, outside the categorical set: "no resident — kept by the conductor" — grayness is
+     the meaning. It is direct-labeled by the card itself; the categorical checks cover the
+     three practice hues (the old light set FAILED the validator with the gray counted as a
+     fourth slot: chroma 0.025, normal-vision ΔE 13.8 vs blue). */
   :root[data-theme='dark'] .doors {
     --hub-c-ulysses: #9085e9;
-    --hub-c-meridian: #3987e5;
+    --hub-c-meridian: #256abf;
     --hub-c-ensemble: #d95926;
     --hub-c-conductor: #77828d;
   }
   :root[data-theme='light'] .doors {
     --hub-c-ulysses: #4a3aa7;
     --hub-c-meridian: #2a78d6;
-    --hub-c-ensemble: #c1481c;
+    --hub-c-ensemble: #eb6834;
     --hub-c-conductor: #6b7684;
   }
   .door::before {

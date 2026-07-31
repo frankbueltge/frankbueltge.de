@@ -5,39 +5,30 @@
  * Also: Farbe, Tiefe, Bewegung, Anfassbarkeit — aber weiter die Mono-Type der Site, damit
  * die Figur zum Haus gehört und nicht wie ein Fremdkörper wirkt.
  *
- * Die vier Farben sind KEINE Statusfarben, sondern Identitäten: Ein abgebrochenes Vorhaben
- * ist in dieser Praxis kein Fehlschlag (Protokoll: „closing costs what continuing costs").
- * Beide Sätze sind gegen ihre jeweilige Fläche geprüft (dataviz-Validator, alle sechs
- * Prüfungen bestanden): hell gegen #f7f8fa, dunkel gegen #141414 — eigene Stufen, keine
- * automatische Umkehr. */
+ * The four colours are IDENTITIES, not status: a closed line is not a failure in this
+ * practice ("closing costs what continuing costs"), so "published" wears the practice's
+ * own violet and nothing wears a warning red.
+ *
+ * PALETTE: atelier-outcomes (src/lib/dataviz/palette.ts) — the values live once in
+ * atelier-sheet.css as --at-out-* and are only referenced here. Validated 2026-07-31 with
+ * the dataviz validator, --pairs all, against BOTH papers per mode (light #f6f1e7 and
+ * #f7f8fa · dark #1b1815 and #141414): PASS. Light-mode WARNs (yellow ~1.9:1, magenta
+ * ~2.4:1 vs surface) are relieved by the direct row labels and the table view this figure
+ * ships. The previous quartet (#a8690c/#c43a78/#0e8a6e/#1f6fd0) FAILED CVD separation —
+ * green↔magenta deutan ΔE 1.3 — despite a comment here claiming otherwise; palette.test.ts
+ * now guards the claim instead of a comment. */
 
 .at-proc {
-  /* hell */
-  --pr-publish: #a8690c;
-  --pr-candidate: #c43a78;
-  --pr-study: #0e8a6e;
-  --pr-kill: #1f6fd0;
+  --pr-publish: var(--at-out-publish);
+  --pr-candidate: var(--at-out-gate);
+  --pr-study: var(--at-out-study);
+  --pr-kill: var(--at-out-kill);
   --pr-open: var(--color-fg-muted);
-  --pr-surface: var(--color-panel);
+  /* The figure sits on the atelier's paper (.atelier-surface), not the site panel — legend
+   * chips and cards must lie on the paper they were validated against. */
+  --pr-surface: var(--at-surface);
   --pr-glow: 0 0 0 rgba(0, 0, 0, 0);
   margin: 2.5rem 0 2.25rem;
-}
-
-:root[data-theme='dark'] .at-proc,
-:root:not([data-theme='light']) .at-proc {
-  --pr-publish: #c08420;
-  --pr-candidate: #d14a85;
-  --pr-study: #159e76;
-  --pr-kill: #4a79e4;
-}
-
-@media (prefers-color-scheme: light) {
-  :root:not([data-theme='dark']) .at-proc {
-    --pr-publish: #a8690c;
-    --pr-candidate: #c43a78;
-    --pr-study: #0e8a6e;
-    --pr-kill: #1f6fd0;
-  }
 }
 
 .at-proc-head {
