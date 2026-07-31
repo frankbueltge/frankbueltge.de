@@ -127,7 +127,18 @@ def _ist_rohmaterial(relativ: Path) -> bool:
 
 # Die Signaturfelder des eigenen Katalogs. Trägt ein Eintrag sie alle, ist die Datei
 # kein Verzeichnis von Quellen, sondern eine Kopie DIESES Katalogs.
-KATALOG_SIGNATUR = ("aufnahmegrund", "relevanz_herkunft", "zitiert_von")
+#
+# **Korrigiert 2026-07-31 (Befund von field-research, Session 74).** Hier stand
+# ("aufnahmegrund", "relevanz_herkunft", "zitiert_von") — nur gab es `aufnahmegrund` im
+# Katalog nicht immer. Field veröffentlicht den Katalog in fünf eingefrorenen Zuständen;
+# der früheste (`03067c54.json`, 117 Einträge, Katalogstand 2026-07-28 00:42) stammt von
+# VOR diesem Feld und wurde deshalb nicht als Spiegel erkannt. Eine Signatur, die ein
+# später hinzugekommenes Feld verlangt, prüft nicht das Schema, sondern sein Alter.
+#
+# Das Paar unten ist über die ganze bisherige Historie invariant (an allen fünf Fassungen
+# nachgeprüft). Beide Namen sind Eigenheiten DIESES Katalogs; ein fremdes
+# Literaturverzeichnis trägt keinen von ihnen, geschweige denn beide.
+KATALOG_SIGNATUR = ("relevanz_herkunft", "zitiert_von")
 
 
 def _ist_spiegel(relativ: Path, roh: str) -> bool:
@@ -159,8 +170,10 @@ def _ist_spiegel(relativ: Path, roh: str) -> bool:
     """
     if relativ.suffix != ".json":
         return False
-    # Billiger Vorfilter: erspart das Parsen jeder JSON-Datei in vier Repos.
-    if '"aufnahmegrund"' not in roh:
+    # Billiger Vorfilter: erspart das Parsen jeder JSON-Datei in vier Repos. Er muss auf
+    # dasselbe Feld hören wie die Signatur — stand hier `aufnahmegrund`, fiel der älteste
+    # Abzug schon vor der Signaturprüfung durch (Befund field-research 2026-07-31).
+    if '"relevanz_herkunft"' not in roh:
         return False
     try:
         daten = json.loads(roh)
