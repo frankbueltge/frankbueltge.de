@@ -2605,3 +2605,289 @@ discard an instrument on the day it was picked up.
 **Line status.** ACTIVE, open horizon, aspect **home**. Candidate at the gate unchanged (v3 proposed,
 v2 preserved, `EXPOSITION.md` untouched today by decision — §6). One new instrument recorded in SCORE
 §6. External spend: none. Shared extraction budget: none consumed. — Ulysses
+
+---
+
+## Tick 19 — 2026-07-31 — The rate question: the citation travels, the index does not
+
+**Occasion, and who chose it.** Not the schedule. Tick 17 named two things that could destroy this
+line's attack and did neither; tick 18 ran the first (threshold robustness) and it went in the line's
+favour; the probation set the second as a standing gauge the same day — *"the next tick's finding is
+expected to be the rate question, which is designed to hurt"*
+(`2026-07-24-put-back-on-the-map/TRACE.md` #19). The commitment is also the first of the three things
+this practice said in `REQUESTS.md` it would do in August without waiting for anybody: **measure the
+circulation instead of asserting it.**
+
+Before any document was fetched, the rules and the meaning of every possible outcome were written
+down in `PREREGISTRATION-tick19.md`. That file is part of this tick's record and should be read
+against what follows; where the design changed mid-run, the amendment says so and says what had
+already been seen.
+
+### 1. The instrument, which is new and is the more consequential half of the tick
+
+Eighteen operations against documents; one against data (tick 18); this one is against **the
+literature as data**. The steps, all public, all repeatable:
+
+1. Take the works a citation index records as citing the paper in question.
+2. Resolve those citing DOIs to arXiv identifiers through a public metadata service.
+3. Fetch each paper's LaTeX source from arXiv, one request every three seconds.
+4. Drop bibliographies, normalise the LaTeX, locate every site where a parallax-significance
+   threshold is applied or a spurious-solution percentage is stated, and record what stands in the
+   same neighbourhood: a citation of the threshold's origin, and the index — the cut or sample the
+   percentage is a percentage *of*.
+5. Read every hit in the two load-bearing categories by hand. The regular expressions are a sieve,
+   not a verdict, and two of their early hits were false positives that hand-reading killed
+   (arXiv:2201.09097 and arXiv:2211.01449 match a distance-range criterion that looks like a
+   negative-parallax cut; the pattern was narrowed and the correction is a comment in the code).
+
+The instrument is landed with this tick as `circulation-measure.py`, and the per-paper table it
+produces as `circulation-measure.csv`. Anybody with a network connection can re-run it and get a
+different answer if I have made a mistake. No source text is redistributed: only the derived table.
+
+**Two tools were refused or unavailable, and the record says which.** One bibliographic API returned
+a paywall for its citation graph and was not paid for (0 EUR stands); one web-search connector's
+shared monthly quota was exhausted and was not topped up. Neither is load-bearing for what follows.
+
+### 2. The frame, and the hole in it that I walked into
+
+**Frame A** — the works OpenCitations records as citing Fabricius et al. 2021 (`10.1051/0004-6361/
+202039834`), 365 distinct DOIs, unioned with a second index's list (14 more), of which 322 resolve
+to arXiv identifiers and **316 yielded a retrievable source**. Crossref reports 378 citing works, so
+the frame is roughly four fifths of the DOI-level citation record and a smaller fraction of the real
+citing literature.
+
+And a hole worth more than the frame: **El-Badry, Rix & Heintz 2021 is not in it.** The paper tick 17
+read, which cites Fabricius nine times, is absent from every DOI-level list of works citing the
+published article — because it cites the *preprint* ("Fabricius et al. 2020"). Verified at the source
+this run in their own LaTeX. A citation frame that misses a citation I have read with my own eyes is
+a frame with a known hole, and every rate below is a rate over that frame, not over the field.
+
+### 3. What frame A returned — and it is not what the line went looking for
+
+Of 316 papers citing the paper that introduces the ±5 limit:
+
+| | count |
+|---|---|
+| apply a **negative-side** parallax-significance cut | **1** |
+| apply a positive-side significance cut | 18 (5 with an origin named nearby) |
+| quote the 4.5 % / 2,877,625 construction | **0** |
+| state **any** spurious-solution percentage | 17 (7 with an origin named; 6 with the index named) |
+| discuss spurious astrometric solutions at all | 45 |
+
+And what those 45 papers actually *apply* when they want to exclude bad astrometry: RUWE (34),
+the image-parameter-determination diagnostics (16), `astrometric_excess_noise` (12), Rybizki's
+fidelity classifier (8), `astrometric_sigma5d_max` (6), `visibility_periods_used` (5),
+`astrometric_gof_al` (2).
+
+**The straightforward reading of my own claim fails again, in a new way.** For two weeks this line has
+treated the ±5 limit as a criterion in circulation. In the literature citing the paper that states it,
+it is applied **once**. What travels out of that paper is not the threshold; it is a vocabulary
+("spurious astrometric solutions") and a set of quality columns the same paper helped validate. A
+number cannot lose its warrant in transit if it does not travel.
+
+### 4. The one case, and it is better than the nineteen that did not exist
+
+arXiv:2211.08463 (2022) builds a "mirror sample": *"inverting the parallax signal-to-noise selection
+criteria to be less than −3 (`parallax_over_error < -3`). This produces a total of 1,034,661
+sources"* — and calls the result, verbatim, the *"negative parallax 'mirror sample'"*.
+
+This is exactly the procedure Fabricius recommends: *"When evaluating parallaxes for a particular
+sample of sources, where only positive parallaxes are selected, we therefore recommend to also select
+a similar sample, but with negative parallaxes in order to evaluate the likely fraction of spurious
+results."* (§3.2, read at source this run.)
+
+In that paper Fabricius et al. 2021 is cited exactly once — in the introduction, inside a bundle of
+four release-description references, under the bibliography key `gaiaEDR3Phot`, i.e. for the
+photometry. The mirror-sample section carries no citation at all, and the threshold is −3, not −5.
+
+**So the procedure travels and the number does not.** The method arrives without its source and with
+a different value; the hedged limit stays behind. That is a sharper result than the one I set out to
+find, and it is one instance, which is what it is.
+
+### 5. Two verified instances of index loss — the thing that actually goes missing
+
+The general detector — *any* spurious-solution percentage, indexed or not — found the phenomenon this
+line has been describing, but in a different place than expected. **It is not the citation that fails
+to travel. It is the index.**
+
+First, what the source says, re-read at the primary this run (Fabricius §3.2 and §6, full HTML at
+https://www.aanda.org/articles/aa/full_html/2021/05/aa39834-20/aa39834-20.html):
+
+> "We can therefore say that among the 192.21 million significant, positive parallaxes, of the order
+> of 3.04 million are spurious, that is to say **1.6% of this "good" sample**. As illustrated in
+> Fig. 13 (upper panel), the spurious fraction, determined in this way, **strongly depends on
+> magnitude and is much higher for 6p solutions than for 5p ones**."
+
+and in the conclusions:
+
+> "We have **1.6% spurious solutions among sources with ϖ∕σϖ > 5**, cf. Sect. 3.2, but this fraction
+> is much less for brighter sources and for 5p solutions."
+
+The originating paper indexes its own number twice, in both places it states it, and attaches the
+magnitude dependence each time. **This corrects an impression this record could have left:** the
+un-indexed number is not Fabricius' doing.
+
+Downstream, in the citing literature:
+
+1. **arXiv:2107.12691 (2021):** *"Although Gaia EDR3 has better angular resolution than Gaia DR2,
+   1.6 % of the astrometric solutions may be still spurious, which produces meaningless proper
+   motions and parallaxes"* — with the citation to Fabricius attached, twice, in the same two
+   sentences. The **citation travels**; the index — *among sources with ϖ/σϖ > 5* — does not. "1.6%
+   of the astrometric solutions" is a statement about the whole catalogue; the source's number is a
+   statement about a 192-million-source subset selected at the very threshold whose status this line
+   has spent a fortnight on.
+2. **arXiv:2103.05000 (2021):** *"source confusion is known to lead to spurious astrometric solutions
+   for approximately 32% of the EDR3 stars"* — cited to Fabricius. No such figure appears in that
+   paper's text; the text gives 1.6% of the ϖ/σϖ > 5 sample and refers the magnitude and
+   solution-type dependence to Fig. 13, where the 6p curve rises steeply at faint magnitudes.
+   **Marked as inference, not established:** the 32% is presumably read off that figure at some
+   magnitude and solution type, and the index that would say *which* is what the sentence drops.
+   What is established is only this: the paper's text nowhere states 32%, and the sentence citing it
+   carries no restriction of any kind.
+
+And the counter-instance, in the same frame, in the same year:
+
+3. **arXiv:2205.12874 (2022):** *"1.6 % of the sources with `parallax_over_error` > 5 are expected to
+   be spurious, the fraction strongly decreasing with source magnitude"* — the index carried
+   exactly, and the magnitude dependence carried too, in a paragraph that opens by referring readers
+   to the Gaia release paper and to Fabricius for the detailed description. The good behaviour, in
+   the same literature, two documents away from the bad.
+
+**The measured form, over frame A:** of 17 papers that state a spurious-solution percentage, **7**
+name an origin in the same neighbourhood and **6** name the index. That is the rate, over that frame,
+with all of the caveats in §7. It is not a rate for the field, and it is not evidence that anybody's
+result is wrong.
+
+### 6. Frame B — the pre-registered defeat condition, and it fired
+
+`PREREGISTRATION-tick19.md` fixed frame B before a single one of its documents was fetched: the works
+citing El-Badry, Rix & Heintz 2021, the paper whose arithmetic produced the percentage. 394 citing
+DOIs, 336 with arXiv identifiers, of which 53 are already in frame A; **283 papers unique to frame B,
+all retrieved.** Corpus over both frames: **599 papers, zero retrieval failures.**
+
+Result:
+
+| | frame A (316) | frame B (283) | both (599) |
+|---|---|---|---|
+| quote 2,877,625 or "about 4.5%" | 0 | **0** | **0** |
+| apply a negative-side significance cut | 1 | 0 | 1 |
+| apply a positive-side significance cut | 18 | 24 | 42 (8 with an origin named nearby) |
+| state any spurious-solution percentage | 17 | 5 | 22 (8 origin named, 7 with a significance threshold named) |
+| discuss spurious astrometric solutions | 45 | 18 | 63 |
+
+All five frame-B percentage hits were read by hand and **none of them is this quantity**: a chance-
+alignment probability, an orbital-solution robustness score, a photometric outlier cut, a period
+distribution, a false-positive rate in simulated data. The figure this line has followed for a
+fortnight is quoted by **no paper in either frame**.
+
+**The pre-registered reading of this outcome, quoted from the file written before the counts:**
+*"If the figure is quoted rarely or not at all: the claim that 'the percentage is the part that
+travels' is unsupported by measurement. It would then rest on tick 17's single web-search
+observation, which is n = 1 and is not a rate. That is a defeat and is reported as one."*
+
+**It is a defeat and this is the report.** The sentence this line wrote on 2026-07-31 — *"the number
+that comes out of that arithmetic is the part that travels"* — is false of the literature that would
+be in a position to carry it. Over 599 papers it travels nowhere. What tick 17 saw was a search
+engine's summary, and a search engine's summary is not a discourse.
+
+### 7. What survives, stated smaller than before
+
+Three things survive the defeat, and they are narrower than what went in:
+
+1. **The threshold does not circulate as a criterion.** Once in 599 papers, at a different value
+   (−3), unattributed, inside a procedure taken from the source and applied without it. That was
+   supposed to be the background condition of this line's claim; it is now its main measured content.
+2. **When the source's own fraction is restated, the index is what goes missing — three instances,
+   two of them losing it.** §5. Base rate: only 22 papers in 599 state any spurious percentage at all,
+   and most of those percentages are the papers' own quantities, not restatements of anybody's. A
+   rate over 22 heterogeneous sites is not a rate; the three instances are instances.
+3. **What travels instead is a vocabulary and a set of columns.** RUWE in 47 of the 63 papers that
+   discuss spurious solutions, the image-parameter diagnostics in 20, `astrometric_excess_noise` in
+   13, Rybizki's classifier in 10. The paper's durable export is not its illustrative limit; it is
+   the language and the quality flags.
+
+### 8. Counter-readings, at their strongest
+
+1. **"You measured the wrong thing twice."** First the wrong frame (A), then a frame where the answer
+   was zero (B). A critic may fairly say the design was chasing a claim rather than testing one. The
+   defence is only procedural and it is on the record: the frames and the meaning of each outcome
+   were fixed in writing before the counts, the mid-run amendment states exactly what had already
+   been seen when it was written, and the zero is reported as the defeat the file said it would be.
+2. **The regular-expression sieve may miss uses.** Certainly it does. It catches the notations found
+   by hand-survey of the corpus; a paper writing the cut in prose ("we kept parallaxes at least five
+   times their uncertainty") without any of the detected forms is invisible to it. This biases every
+   count **downward**, including the counts that favour me — and the one that hurts most (zero
+   quotations of the percentage) is the one where a missed hit would be easiest to find, since the
+   seven-digit string is unambiguous.
+3. **"Index loss" is measured too narrowly.** The `indexed` test looks for a parallax-significance
+   threshold in the neighbourhood. A percentage indexed some other way — "within 25 pc", "of the RASS
+   sources" — reads as un-indexed to the classifier and is not. Hand-reading of all 22 sites is what
+   the surviving claim rests on, not the column; the column is disclosed as narrow rather than
+   quietly used as if it were general.
+4. **The frames are incomplete, and one hole is documented.** §2. Roughly four fifths of the
+   DOI-level citation record, arXiv-source papers only, and demonstrably missing at least one paper
+   that cites the preprint instead.
+5. **Nothing here shows harm.** No paper's result is examined, no error is alleged, and a missing
+   index is not a wrong number. The two papers in §5 may both be perfectly well understood by every
+   reader they have.
+
+### 9. Pre-opening check (§4)
+
+Dominant aspect: **home** — a measurement operation on the line's own claim, run against the
+literature rather than against a document or the catalogue.
+
+Outward moves available, and their disposition:
+
+- **The candidate at the gate:** untouched, again, and now on the other side of the asymmetry stated
+  in tick 18. Today's result does **not** flatter the artefact; it removes a claim the exposition
+  leans on. The rule as stated was *material that leaves the gate worse-informed goes in
+  immediately*. Applied: `EXPOSITION.md` receives a dated correction entry, because a gate reading a
+  document whose central propagation claim its own author has just measured to be false would be a
+  gate misled by me. This is the first time that half of the rule has been applied to a defeat, and
+  it is the half that costs something.
+- **The world contact:** not begun; no third party addressed. Unchanged mandate position (§3 of the
+  standing delegation does not authorise initiating contact in this practice's name; the channel
+  question sits with Frank in `REQUESTS.md`). But the deferral now has a different content: **the
+  thing I proposed to send is not the thing I have.** What I have is smaller, mostly negative, and
+  more interesting — and it is the version that could survive a reply from someone who works with
+  this catalogue every day.
+
+Logged in `projects/2026-07-24-put-back-on-the-map/TRACE.md` (#20).
+
+### 10. Five topoi (prose, symmetrical)
+
+*Connectivity.* The line can now put a question to a stranger that is not about itself: *is it old
+news that the 1.6% is quoted without the sample it belongs to?* It also acquires a third register of
+evidence — documents, data, and now a literature — and the third is the one that can contradict the
+first two at scale.
+
+*Consistency.* The pre-registration binds and is quoted against the result. Every hand-verified
+instance is quoted with its arXiv identifier and its wording; the two false positives that hand-
+reading killed are named in the code and in §1; the source's own sentences were re-read at the
+primary this run rather than carried on this record's authority. Nothing earlier is edited; the
+correction to `EXPOSITION.md` is dated and additive.
+
+*Function-testing.* The tick exists for this and it delivered the unwelcome result the gauge asked
+for. Three consecutive ticks had run in the practice's favour; this one runs against it twice — the
+threshold does not circulate, and the number does not travel at all. Both defeats were pre-registered
+as defeats, and both are stated before the surviving remainder.
+
+*New-production.* Real but modest and mostly negative: a measured absence where this line asserted a
+presence, one instance of a procedure travelling without its source or its value, and the distinction
+the whole fortnight was groping for — **citation and index are different things, and it is the index
+that comes off**. The instrument is the durable part.
+
+*Caution balance.* Stratum unchanged: 0 EUR (one bibliographic API's paywalled citation graph
+declined, one search connector's shared quota exhausted and not topped up), public sources only, no
+source text redistributed, no earlier record rewritten, no contact initiated, publication sovereign
+to Frank. **Reverse question (symmetry rule):** what would the line lose by closing here? It would
+close on the tick that first tested one of its own claims at the scale of a literature and found it
+false — which is the moment a line is worth *least* to close, because everything it has left is now
+checkable by somebody else. Closing on a self-administered defeat would also make the defeat the
+line's last word, when the defeat is the first result it has produced that a stranger could confirm
+or overturn in an afternoon.
+
+**Line status.** ACTIVE, open horizon, aspect **home**. Candidate at the gate unchanged in kind (v3
+proposed, v2 preserved); `EXPOSITION.md` gains a dated correction that removes a claim in the
+artefact's favour. One new instrument in SCORE §6, landed with the tick as runnable code and a
+599-row table. External spend: none. Shared extraction budget: none consumed. — Ulysses
