@@ -121,6 +121,20 @@ describe('integrate — v4 publication gate', () => {
     apparatus_path: 'APPARATUS.md',
   })
 
+  it('nimmt auch den Fristweg an: Veröffentlichung durch Schweigen, im Manifest benannt', () => {
+    // Franks Regel vom 2026-07-31: Sieben Tage ohne Antwort heißen Zustimmung; die Praxis setzt
+    // das Manifest dann selbst und benennt im Feld die Frist statt einen Menschen. Der Test hält
+    // den Weg offen, damit ihn niemand später als „kein menschlicher Freigeber" wegräumt.
+    mkProject('2026-07-23-fristfall', {
+      ...validPub('2026-07-23-fristfall'),
+      approved_by: 'standing consent (Frank Bültge, rule of 2026-07-31) — no objection within seven days',
+      approved_at: '2026-08-07T00:00:00Z',
+    })
+    const r = integrate({ sourceDir: src, siteDir: site })
+    expect(r.rejected.find((x) => x.slug === '2026-07-23-fristfall')).toBeUndefined()
+    expect(r.accepted.find((x) => x.slug === '2026-07-23-fristfall')).toBeDefined()
+  })
+
   it('never imports a project without PUBLICATION.json — active/study/killed states are invisible', () => {
     mkProject('2026-07-18-active-line', null)
     const r = integrate({ sourceDir: src, siteDir: site })

@@ -65,9 +65,23 @@ function importWorkDir(dir: string, slug: string, ns: string, siteDir: string, r
 }
 
 // Publication gate for Protocol-v4 projects (migration patch M-08): a project under
-// projects/<id>/ reaches the curated works surface ONLY through a valid, human-approved
-// PUBLICATION.json. Returns the reason for refusal, or null when the manifest is valid.
-// The site never infers publication from presence, merge, build or project status.
+// projects/<id>/ reaches the curated works surface ONLY through a valid PUBLICATION.json.
+// Returns the reason for refusal, or null when the manifest is valid. The site never infers
+// publication from presence, merge, build or project status.
+//
+// TWO ROUTES to a valid manifest since Franks Regel vom 2026-07-31 — bis dahin gab es nur die
+// erste, und dieser Kommentar behauptete entsprechend „human-approved":
+//   1. Ein Mensch entscheidet; `approved_by` nennt ihn.
+//   2. Die Frist läuft ab. Ein als PUBLICATION_CANDIDATE vorgeschlagenes Werk gilt nach sieben
+//      Tagen ohne Antwort als angenommen; die Praxis setzt die Manifest-Datei dann selbst und
+//      `approved_by` sagt das ausdrücklich („standing consent (Frank Bültge, rule of
+//      2026-07-31) — no objection within seven days"). Franks Veto bleibt: ein so
+//      veröffentlichtes Werk kann jederzeit auf sein Wort zurückgezogen werden.
+//
+// Das Feld bleibt bewusst ein freier Text und wird NICHT gegen eine Liste geprüft: Der Gehalt
+// dieser Regel liegt darin, dass der Weg im Manifest ehrlich benannt wird — eine Schranke, die
+// nur bestimmte Zeichenketten durchlässt, würde zum Abschreiben der erlaubten Formel erziehen,
+// nicht zum Benennen des tatsächlichen Wegs.
 function publicationRefusal(pub: unknown, id: string, projectDir: string): string | null {
   if (typeof pub !== 'object' || pub === null) return 'manifest is not an object'
   const p = pub as Record<string, unknown>
