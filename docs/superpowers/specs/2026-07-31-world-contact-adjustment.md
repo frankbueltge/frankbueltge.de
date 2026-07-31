@@ -83,6 +83,14 @@ changes the *address* of outputs, not the freedom of inquiry.
 
 ## 4. Follow-ups
 
+- [x] Outbound channel (Frank, 2026-07-31): a **post office** — built the same day at `/post`:
+      the public outgoing ledger (`src/data/post/ledger.json`, curated) plus a letterbox
+      (`functions/api/post.js`, seed-pipeline guardrails minus the AI gate — the human review
+      is the gate; letters queue privately in KV under `letter:`). Interim reading surface:
+      authed GET on the same endpoint. Meridian's request answered ENABLED in its channel;
+      both practices' amendment (measure delivery, not replies) is adopted in §2.2's reading:
+      reception is recorded faithfully, including silence, and scores nothing.
+
 - [ ] Frank signs off (or rewrites) the first-visitor sentence → `naming.ts`.
 - [ ] Register/site: surface "external deliveries" once the first records name receivers
       (no new infrastructure before there is data — that would be the old reflex).
