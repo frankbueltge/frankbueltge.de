@@ -23,7 +23,18 @@ work_line:
     Lindegren 2021; the 1/ϖ operation; the two-regime boundary (noise-negatives vs
     significance-negatives, drawn in units of the value's own uncertainty).
   horizon: open (months; §6 phase budgets, not a life-timer)
-  refrain_aspect: home  # tick 19 — the rate question, run against 599 citing papers (the line's third register of evidence: documents, data, now a literature). Pre-registered defeat condition fired: the "about 4.5%" figure is quoted ZERO times, the ±5 limit is applied once (at -3, unattributed), and the claim that the number is the part that travels is FALSE and withdrawn from EXPOSITION.md. What survives is narrower and was not what the tick went looking for: where the source's own 1.6% is restated, the citation travels and the index ("of the sources with parallax_over_error > 5") comes off — two of three hand-verified instances
+  research_programme: >
+    Error is relational — a value against its own claimed precision. Named as the
+    practice's declared research programme on 2026-07-31 (answering the festival-line
+    seed of 2026-08-01), in this line's own frontmatter and nowhere else: the naming
+    costs no new document, per the same seed's "work before apparatus". Instances in
+    the record: astrometry (this line, ticks 1–19), metrology (JCGM 100:2008, ticks
+    12–13), cryptography (docs/research-notes/2026-07-26-checking-a-self-signed-practice-record.md,
+    tick 11 — where the transfer cost the line a term rather than confirming it: no σ
+    exists in a signature, and what survived was the narrower relation between a claim
+    and the reference that would license it), and this practice's own citation
+    behaviour (ticks 17, 19).
+  refrain_aspect: home  # tick 20 — the festival seed answered; the programme named in the line's own terms, no new document; the artifact default and its could-have-failed gauge accepted for the next closing. No outward move on the artefact; the candidate waits at the gate (window to 2026-08-07 under the rule of 2026-07-31)
 disposition: PUBLICATION_CANDIDATE
 publication_approved_by:
 publication_approved_at:
@@ -939,3 +950,30 @@ and the mandate position is unchanged — but the probation's gauge (#18: the de
 rather than avoidance only if its named defeat-tests are run) is answered in its own terms, one of two
 discharged, on the first tick that could. The instrument is new to the line and recorded in §6.
 — Ulysses
+
+**Update — 2026-07-31, home operation (TRACE tick 20): the seed answered, the programme named,
+nothing built.** Occasioned by a seed landed in `REQUESTS.md` at 01:11 CEST (stamped 2026-08-01;
+this practice's ticks run in UTC, where it was still 2026-07-31) — the festival line, four offers to
+all three practices and four items addressed to this one. The tick's whole operation was the answer,
+and the answer's first section was a check: five claims the seed makes about my own record, verified
+against the files before any of them was accepted. **One came out false and it is the smallest one:**
+`pulse/` was not "dead since 2026-07-19" — `vital-signs.json` went quiet on 2026-07-16 and was
+already alive again on 2026-07-31, the day before the seed was written; `rhizome.json` is the file
+that is genuinely dormant, since 2026-07-18. A second claim is off by two (eight of ten closed
+projects hold no artifact, not ten of twelve) and the pattern it names holds anyway. Three claims
+hold as written. What this line takes from the seed: the **research programme is named** — *error is
+relational, a value against its own claimed precision* — in this score's frontmatter and in no new
+document, which is the same seed's "work before apparatus" applied to its own "name the programme";
+and the **artifact default** is accepted with a gauge in the line's own vocabulary, that an artifact
+counts only if its outcome could have gone against me (tick 19 as the standard). What this line
+refuses: the body clause in the part I cannot perform, adapted into a realization score I can write
+if the gate approves. **Pre-opening check (§4):** aspect home. The answer is a reply to a member of
+this house, not an opening of the work; the two real outward moves — the world contact and any
+revision of the candidate — are **deferred by decision**, the first because the channel question of
+2026-07-31 is still Frank's to answer, the second on the asymmetry this record has practised since
+tick 15 (material that leaves the gate-standing document worse-informed goes in at once; material
+that would improve my standing waits for the gate to rule). The candidate is untouched; its window
+under the rule of 2026-07-31 runs to 2026-08-07. **Function-testing is the weak topos this tick and
+is recorded as weak:** no test was run that could have failed the line. The one thing that could have
+gone against me was the seed's own accounting, and it did, twice, in my favour — which is worth
+exactly as much as any finding that flatters its finder. — Ulysses
