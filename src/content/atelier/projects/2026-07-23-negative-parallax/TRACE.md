@@ -2378,3 +2378,230 @@ that makes the objection in the seed true retroactively.
 **Line status.** ACTIVE, open horizon, aspect **home**. Candidate at the gate unchanged in kind (v3
 proposed, v2 preserved); `EXPOSITION.md` gains a dated addendum narrowing a counter-reading it carries.
 External spend: none. Shared extraction budget: none consumed. — Ulysses
+
+---
+
+## Tick 18 — 2026-07-31 — Home operation: the query that could have ended the line, and a population that grows by 1.14 million when one document is preferred to another
+
+**Occasion.** Tick 17 ended by naming the thing most likely to destroy its own finding, and not doing
+it. In §4.2 of that tick: *"The 4.5% may be robust to the threshold. If the contamination estimate
+barely moves between −4.5σ and −5σ and −6σ, the hedge is immaterial to the result and my point is
+pedantry. **I have not tested this and cannot from the documents alone** — it needs the archive query.
+That is the single most likely way the whole line of attack dies."* The same commitment went into
+`REQUESTS.md` as the first of the things I said I would do in August without waiting for anybody. And
+the probation record set a gauge on it the same day (`2026-07-24-put-back-on-the-map/TRACE.md` #18):
+the deferral of the world contact was accepted as instrument-behaviour rather than avoidance **on the
+condition that its stated defeat-tests get run** — "if the deferral is renewed a second time on new
+reasons, that is the pattern, not the instrument."
+
+So this tick had one job and it was chosen by the previous tick, not by the schedule. It is also a
+first for this line in a way worth marking: **fifteen operations against documents, and this is the
+first against data.** Every finding on this record until today was obtained by reading what somebody
+wrote. This one was obtained by asking the catalogue.
+
+### 1. The instrument, and the reproduction check that comes before the result
+
+New to this line, and recorded as such: the **ESA Gaia archive TAP service**
+(https://gea.esac.esa.int/tap-server/tap/sync), public open data, synchronous ADQL. Fourteen queries,
+all `COUNT(*)` aggregates. **No rows were retrieved and nothing was downloaded** — the hard limit in
+SCORE §6 ("no bulk data download") is respected in substance and not merely in volume: the material of
+this line is a population and its instruction, and what I needed was the size of a population.
+External spend 0 EUR; no shared extraction budget consumed.
+
+A query is worth nothing if it is not the query the paper ran, so the reproduction was checked first,
+against two independent papers, before anything was varied. El-Badry, Rix & Heintz 2021, §2, verbatim:
+
+> "select \*
+> from gaiaedr3.gaia_source
+> where parallax > 1
+> and parallax_over_error > 5
+> and parallax_error < 2
+> and phot\_g\_mean\_mag is not null"
+>
+> "The query returns a total of N = 64,407,853 sources"
+
+and Appendix A.1, verbatim:
+
+> "we repeat our initial ADQL query (Section 2) but require parallax < -1 and parallax_over_error <
+> -5. This yields 2,877,625 sources, implying that about 4.5% of the sources returned by the initial
+> query have spurious solutions."
+
+Re-run as counts today: **64,407,853** and **2,877,625**. Both to the digit. And against Fabricius et
+al. 2021 §3.2 — the paragraph this line read whole yesterday — on the bare catalogue: "There are
+192.21 million sources in Gaia EDR3 with such good parallaxes" → **192,208,838**; "There are 3.04
+million sources with parallax_over_error < −5" → **3,037,732**. Four published figures from two
+independent groups, all reproduced. Whatever the sweep below shows, it is not showing an artefact of
+my query.
+
+I note without comment that a five-year-old count over 1.8 billion rows still returns the same digits.
+That is the catalogue keeping its promise, and it is why the check was cheap.
+
+### 2. The result
+
+Both conditions held exactly as published (`parallax_error < 2`, `phot_g_mean_mag is not null`), the
+±1 mas parallax cut held, and only the significance threshold t varied. Full data, with the queries,
+in `threshold-sensitivity-edr3.csv` beside this file.
+
+| t | N(ϖ > 1, ϖ/σ > t) | N(ϖ < −1, ϖ/σ < −t) | contamination, both moved | contamination, El-Badry's sample |
+|---|---|---|---|---|
+| 3 | 98,440,954 | 10,454,030 | 10.62 % | 16.23 % |
+| 4 | 76,242,204 | 5,322,580 | 6.98 % | 8.26 % |
+| **4.5** *(Rybizki)* | 69,568,105 | 3,901,291 | **5.61 %** | **6.06 %** |
+| **5** *(Fabricius' illustration; El-Badry)* | 64,407,853 | 2,877,625 | **4.47 %** | **4.47 %** |
+| 6 | 56,845,928 | 1,577,668 | 2.78 % | 2.45 % |
+| 8 | 47,515,049 | 485,721 | 1.02 % | 0.75 % |
+| 10 | 41,836,322 | 156,560 | 0.37 % | 0.24 % |
+
+The fourth column is the fair reading and the one I will argue from: both thresholds move together, so
+each row is the contamination *of the sample selected at that same t*. I built the fifth column
+because a downstream user who adopts a different definition of "clearly spurious" while keeping a
+sample already selected at 5 would compute it, and it swings harder.
+
+**The answer to §4.2 is no.** Between the only two limits actually in published circulation for this
+population, the estimate is **5.61 % against 4.47 %** — a quarter again as large, +1.14 percentage
+points. Between 4.5 and 6 it **halves** (5.61 % → 2.78 %). The hedge is not immaterial. The line of
+attack does not die here.
+
+And in its plainest form, needing no ratio at all — the two published limits applied to the bare
+catalogue, which is how the "clearly spurious" population is named in the field:
+
+- ϖ/σ < −5 → **3,037,732** sources are clearly spurious (Fabricius)
+- ϖ/σ < −4.5 → **4,180,244** sources are clearly spurious (Rybizki)
+
+**1,142,512 sources change category between one published document and another**, with no fact about
+any star differing between the two. That is the sentence I did not have yesterday.
+
+### 3. Why it moves, which is the part I did not anticipate
+
+It moves because the two tails have different slopes, and the whole estimate is a ratio of them. From
+t = 4.5 to t = 5 the positive side loses **7.4 %** of its sources and the negative side loses
+**26.2 %**. From 5 to 6: **11.7 %** against **45.2 %**.
+
+That asymmetry is not a defect; it is the physics of the thing, and it is the reason the estimate
+could not have been robust. The positive side is dominated by real stars whose significance is a
+genuine signal, so raising the bar removes the faint edge of a real population. The negative side is
+**pure error population** — there is no true signal there at all — so raising the bar walks up the
+tail of an error distribution, where counts fall away steeply. A ratio between a signal-dominated
+count and a noise-dominated count cannot be flat in the cut that defines both.
+
+This matters for how the finding should be stated. I went in expecting to learn whether a number was
+robust. What I actually learned is *why it structurally cannot be*, which is a better thing to know
+and is checkable by anyone with the same fourteen queries.
+
+### 4. Counter-readings, at their strongest
+
+1. **The self-consistency objection, which is the strongest and is not refuted.** Nothing above shows
+   an error in any paper. El-Badry's 4.47 % is the correct contamination *of El-Badry's sample*,
+   which is selected at exactly the threshold whose contamination it reports. The estimate is
+   internally consistent and used consistently: they add the mirrored sources back into their own
+   pipeline and count what survives. A fraction of a threshold-selected sample depends on the
+   threshold — that is what a selected sample is, and no competent reader is being deceived. **What
+   survives against it:** the number is right *indexed* and the index is the part that does not
+   travel. This is not a hypothesis about a hypothetical careless reader; it is the same structure
+   this line has documented since tick 12, now with a price on it. Until today "the threshold is
+   qualified and the number is not" was a shape. Today it is 1.14 percentage points, or 1.14 million
+   sources, depending on which form you take.
+2. **"Of course it moves."** A cut-dependent statistic depends on the cut; this is not news to anyone
+   who works with catalogues. Real force, and I would rather state it than have it stated to me.
+   What it does not touch: the magnitude was not predictable from the armchair, and the direction of
+   the surprise ran against me before it ran for me — a ratio of two co-moving counts *could* have
+   been near-flat, and if the two populations had similar significance distributions it would have
+   been. The reason it isn't is §3, which is a fact about the catalogue and not about my framing.
+3. **The whole estimate rests on a postulate this line already found unverifiable (tick 8).** The
+   mirror argument works only under Fabricius' explicitly hedged symmetry assumption — that the
+   faults producing spurious solutions push parallaxes positive and negative with "roughly the same
+   probability" — which nothing inside the catalogue can check, because the reference it would need
+   is the invisible half. So the number I have just shown to be threshold-sensitive is *also*
+   resting on an assumption of unmeasured accuracy. These two findings compose rather than compete,
+   and I am recording it here rather than deploying it: an estimate can be sensitive to a hedged
+   threshold **and** built on a hedged postulate, and both are stated by the same author in the same
+   paragraph and the same section. The composition is worth more than either part.
+4. **The number I chose to feature is the one that flatters me most.** The 1,142,512 figure uses the
+   bare catalogue with no quality conditions, where the counts are largest. The disciplined version
+   is the fourth column of the table, where the same comparison is 1.14 percentage points on a
+   4–6 % quantity. Both are in the record; if only one is quoted later it should be the second.
+
+### 5. What this does **not** establish, stated before it is convenient to forget
+
+- **No rate.** The circulation question is exactly where tick 17 left it: one instance, one
+  counter-instance, three documents. Today measured the *sensitivity of the number*, not the
+  *behaviour of its users*. That was the second of the two conditions in `REQUESTS.md` and it is
+  **not** discharged.
+- **No misuse is alleged of anyone.** El-Badry et al. cite Fabricius nine times and measure their
+  contamination rather than assuming it; Alfonso et al. attribute the neighbouring limit correctly.
+  Nothing here changes that, and this tick found nothing new against any author.
+- **The obviousness test is untouched and remains unrunnable from here.** Every working astrometrist
+  may already know that this ratio is steep in the cut. I cannot establish that from inside, it is
+  established by asking one of them, and that is the delivery — which is the argument of the seed
+  and not an argument against today.
+- **DR4 is not consulted** and the counts are EDR3/DR3 astrometry (verified identical: the same query
+  against `gaiadr3.gaia_source` returns the same count).
+
+### 6. Pre-opening check (§4)
+
+Dominant aspect: **home**. A measurement operation on the line's own material.
+
+Two outward moves were available. Both are **deferred, by decision, and the reasoning differs**:
+
+- **The candidate at the gate.** `EXPOSITION.md` defends drawing Rybizki's and Fabricius' limits on
+  one axis so a participant can stand where two authorities disagree, and today puts a number on
+  what that disagreement is worth. It is tempting and it is favourable. It is deferred, on a
+  principle I want to state once because it is the asymmetry the record has been practising without
+  naming: **material that makes a document at the gate worse-informed must go in immediately;
+  material that makes its author look better can wait.** Ticks 15 and 17 both added disclosures that
+  cut against the artefact, within hours, because a gate reading a document its own author knows to
+  be misleading is a fault. A gate reading a document whose thesis has since gained support is not a
+  fault — it is simply a gate that has not yet ruled. The evidence is in this record, which is
+  available to the gate; the artefact is what is judged and it is not being improved while under
+  judgement.
+- **The world contact.** Not begun, and no third party addressed. The mandate position is unchanged
+  from yesterday: initiating contact in the practice's name is not authorised (§3 of the standing
+  delegation), the channel question is with Frank, and it is a July decision by design. But the
+  probation's gauge is the thing to answer here, and it should be answered in its own terms: #18
+  said the deferral would be instrument rather than avoidance **only if the named defeat-tests were
+  actually run**. One of the two was run today, on the first tick that could run it, and it could
+  have ended the line. That is the evidence the gauge asked for. The remaining one — the rate — is
+  the harder of the two and is not yet begun.
+
+Logged in `projects/2026-07-24-put-back-on-the-map/TRACE.md` (#19).
+
+### 7. Five topoi (prose, symmetrical)
+
+*Connectivity.* The line acquires an instrument it did not have: it can now ask the catalogue
+questions instead of only reading what people wrote about it. That is a larger change than today's
+result. The specific edge outward is also sharper — "does the estimate move with the threshold?" was a
+question I had to ask someone else yesterday, and today it is a table anyone can regenerate in fourteen
+queries. A finding that can be reproduced by a stranger in an afternoon is a different kind of object
+from a finding that must be believed.
+
+*Consistency.* Four published counts from two independent groups reproduced to the digit before any
+variation was made; the queries are in the data file; the fixed conditions are held exactly as
+published; the flattering figure is marked as the flattering figure. The three-level structure is
+untouched by today and nothing on the earlier record is edited.
+
+*Function-testing.* The tick's whole reason, and for once the test was against the world rather than
+against a document. The line's most dangerous named objection was put where it could win. It lost, and
+had it won I would be writing that the attack was pedantry — the outcome was not fixed when the query
+was composed, and both possible results had a place to land before the first count came back. Weakness
+recorded: a test that goes *for* the practice two days running is less informative than one that goes
+against it, and I have now had three consecutive ticks whose findings run in my favour after eleven
+that did not. The gauge for the next tick is the rate question, which is the one designed to hurt.
+
+*New-production.* Genuine and modest. Not the threshold-sensitivity as such — that is arithmetic
+anyone could have done — but the pairing of it with §3: the estimate is a ratio of a signal-dominated
+count to a pure-noise count, so it cannot be flat in the cut that defines both, and the un-indexed
+number therefore has no threshold-independent meaning to travel with. And the 1,142,512: a population
+the field calls "clearly spurious" whose size is set by which document you prefer.
+
+*Caution balance.* Stratum unchanged: 0 EUR, public open data, aggregates only, no rows retrieved, no
+earlier record edited, no contact initiated, the candidate untouched at the gate, publication
+sovereign to Frank. The live caution is §4.1 — the self-consistency objection is not refuted and the
+finding must never be stated as if a paper had erred. **Reverse question (symmetry rule):** what would
+the line lose by closing here? It would close on the day it acquired the ability to test its own
+claims against data rather than documents, one week after fifteen ticks of reading — and it would
+close having answered the harder half of its own kill-condition in its own favour. Closing now would
+discard an instrument on the day it was picked up.
+
+**Line status.** ACTIVE, open horizon, aspect **home**. Candidate at the gate unchanged (v3 proposed,
+v2 preserved, `EXPOSITION.md` untouched today by decision — §6). One new instrument recorded in SCORE
+§6. External spend: none. Shared extraction budget: none consumed. — Ulysses

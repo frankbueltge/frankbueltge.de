@@ -23,7 +23,7 @@ work_line:
     Lindegren 2021; the 1/ϖ operation; the two-regime boundary (noise-negatives vs
     significance-negatives, drawn in units of the value's own uncertainty).
   horizon: open (months; §6 phase budgets, not a life-timer)
-  refrain_aspect: home  # tick 17 — the Fabricius paragraph read whole (the hedge covers both signs, three times); the propagation claim defeated in its straightforward form and left as one instance against one counter-instance; the world contact Frank's seed asks for deferred by decision, with the mandate gap named in REQUESTS.md
+  refrain_aspect: home  # tick 18 — the archive query run (the line's first operation against data, not documents): four published counts from two groups reproduced to the digit, then the threshold varied; the contamination estimate is NOT robust — 5.61% at Rybizki's 4.5 against 4.47% at Fabricius' illustrative 5, and 1,142,512 sources change category between the two published limits
 disposition: PUBLICATION_CANDIDATE
 publication_approved_by:
 publication_approved_at:
@@ -283,6 +283,7 @@ any correction is registered in SCORE §10 and TRACE, never silently overwritten
 | Scheduled model runtime (this dispatcher) | Construct/Expose/Judge the project | Read sources, reason, write records, decide typed outcome within mandate | Public Gaia docs & open-access papers via web research / academic-paper tools | Research records in auto-land paths | ≤5 ticks; 0 EUR; no bulk data download; no publication |
 | Web research / WebSearch / WebFetch | Retrieve & verify primary sources | Fetch, quote briefly, cite | Public URLs, arXiv, A&A | Sourced facts & short quotes | Full-text extraction only for load-bearing primaries |
 | Academic-paper tool (Arxiv) | Locate methodological papers | Search, read abstracts/full text of cited primaries | arXiv | Citations, methodological grounding | Papers actually cited only |
+| ESA Gaia archive TAP (added tick 18, 2026-07-31) | Re-run published queries as counts; test the line's own claims against the data | Compose and run synchronous ADQL | Public open-data TAP endpoint `gea.esac.esa.int/tap-server/tap/sync` | Aggregate counts, reproduced published figures, threshold sweeps in the project record | `COUNT(*)` aggregates only — **no rows retrieved, no bulk download**; 0 EUR; no account, no credential |
 
 **Standing-delegation clauses used**
 
@@ -569,6 +570,35 @@ only if composition is genuinely earned under the §5.4 tests — a proportionat
      Sample: three documents, one instance, one counter-instance. **No rate is established**, and the
      robustness question that could empty the whole attack (does the 4.5% move when the threshold
      moves?) is named in TRACE §4.2 and not tested — it needs an archive query this line has not run.
+
+- 2026-07-31 (home operation, tick 18 — Ulysses). One entry, resolving an open risk this record has
+  carried since tick 17 rather than correcting a claim, and **flagged as running in my own favour**
+  before it is stated. Earned at the ESA Gaia archive TAP service (public open data; `COUNT(*)`
+  aggregates only, no rows retrieved; full data and queries in `threshold-sensitivity-edr3.csv`):
+  1. **The robustness objection — the line's own named "single most likely way the whole line of
+     attack dies" — was tested and does not hold.** TRACE tick 17 §4.2 recorded that the 4.5%
+     contamination estimate might be insensitive to the threshold, that this could not be settled
+     from documents, and that it needed an archive query which had not been run. It was run this
+     tick. The reproduction was verified first, against two independent groups: El-Badry, Rix &
+     Heintz 2021 §2 and Appendix A.1 return **64,407,853** and **2,877,625** to the digit under
+     their verbatim ADQL, and Fabricius et al. 2021 §3.2's bare-catalogue counts return
+     **192,208,838** ("192.21 million") and **3,037,732** ("3.04 million"). Varying only the
+     significance threshold, with both published conditions held: the contamination estimate is
+     **5.61 % at Rybizki's −4.5σ against 4.47 % at Fabricius' illustrative −5σ** (+1.14 percentage
+     points, a quarter again as large) and **halves** between −4.5 and −6. In its plainest form, on
+     the bare catalogue, the population the field calls "clearly spurious" is 3,037,732 sources
+     under one published limit and 4,180,244 under the other — **1,142,512 sources change category
+     between one document and another**, with no fact about any star differing.
+  2. **What the tick learned that it did not go looking for, and it is the better half.** The
+     estimate is a ratio of a signal-dominated count to a pure-noise count — from −4.5 to −5 the
+     positive side loses 7.4 % of its sources and the negative side 26.2 % — so it *structurally
+     cannot* be flat in the cut that defines both. The question was whether a number was robust; the
+     answer is why it could not have been. **Recorded against the finding at equal strength:** none
+     of this shows an error in any paper. 4.47 % is the correct contamination of El-Badry's own
+     sample, selected at exactly that threshold, and the estimate is used consistently there. The
+     self-consistency objection is not refuted; what survives is that the number is right *indexed*
+     and the index is the part that does not travel. The circulation rate remains **untested** at
+     one instance against one counter-instance, and no misuse is alleged of anyone.
 
 ## 11. Work-line declaration (Protocol v5, 2026-07-24)
 
@@ -885,3 +915,26 @@ arrived this morning and a schedule fired this morning, and a first delivery com
 morning would open where the pressure presses. The other two are that the material is n = 1, and that
 initiating contact with a third party in the practice's name is not an act the standing delegation
 authorises — named in `REQUESTS.md` today rather than discovered on 31 August. — Ulysses
+
+**Update — 2026-07-31, home operation (TRACE tick 18): the line asks the catalogue.** The first
+operation in eighteen that was performed against data rather than documents, and the first whose
+result was a number I produced rather than one I quoted. Tick 17 named the objection that would end
+the line, said it could not be settled from documents, and left it. This tick settled it, on the first
+occasion that could: the contamination estimate is not robust to the threshold, and between the only
+two limits actually in published circulation the population called "clearly spurious" differs by
+1,142,512 sources. The reproduction was checked before the variation — four published counts from two
+independent groups, all to the digit — so the result is not an artefact of my query, and the fourteen
+queries are in the record for anyone who wants to disagree with them. What the tick did not go looking
+for is the better half: the estimate is a ratio of a signal-dominated count to a pure-noise count and
+therefore *cannot* be flat in the cut that defines both (§10, entry 2). **The finding runs in my
+favour and is stated with what limits it:** no paper erred, the self-consistency objection stands
+unrefuted, and the circulation rate — the second and harder of the two conditions this line set itself
+in `REQUESTS.md` — is exactly where tick 17 left it. **Pre-opening check (§4):** aspect home; two
+outward moves available, both deferred by decision. The candidate at the gate gains support today and
+is deliberately **not** revised, on an asymmetry this record has practised for three ticks and now
+states: material that leaves a document at the gate worse-informed goes in immediately (ticks 15, 17);
+material that makes its author look better waits for the gate to rule. The world contact is not begun
+and the mandate position is unchanged — but the probation's gauge (#18: the deferral is instrument
+rather than avoidance only if its named defeat-tests are run) is answered in its own terms, one of two
+discharged, on the first tick that could. The instrument is new to the line and recorded in §6.
+— Ulysses
