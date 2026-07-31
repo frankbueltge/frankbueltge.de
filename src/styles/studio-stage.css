@@ -419,7 +419,11 @@
   width: 100%;
   height: auto;
   display: block;
-  overflow: visible;
+  /* hidden, not visible: a scene's still narrows the viewBox to a window around one mark, and with
+     overflow visible the rest of the floor kept painting outside that window — the crop meant
+     nothing and the figure bled past its own column. The readout is an HTML sibling of the SVG, not
+     a child, so it is unaffected. */
+  overflow: hidden;
 }
 .studio-surface .st-sf-floor { fill: var(--st-page); stroke: var(--st-hairline); }
 .studio-surface .st-sf-curtain { stroke: var(--st-c-struck); stroke-width: 3; fill: none; }
@@ -639,6 +643,8 @@
   line-height: 1.55;
   color: var(--st-ink-2);
   max-width: 92ch;
+  /* the provenance line and the panel's source line are repo paths too — same reason as above */
+  overflow-wrap: anywhere;
 }
 .studio-surface .dv-panel-nav { margin-top: 10px; }
 .studio-surface .dv-panel-nav button,
@@ -745,6 +751,11 @@
   font: 11px var(--st-font-record);
   color: var(--st-ink-2);
   margin-top: 6px;
+  /* Every citation here is a repo path, and a path offers a browser no break opportunity of its
+     own: at 390px the `src/content/studio/works/…/meta.json` cites pushed the whole page 100px
+     wider than the viewport. The paths stay complete and unabbreviated — they are the point of the
+     citation — they just wrap now. */
+  overflow-wrap: anywhere;
 }
 /* The no-JS floor: one still per scene, cropped from the same builder. Capped in height and
    letterboxed by the SVG's own preserveAspectRatio, so a scene's image never grows into a full
