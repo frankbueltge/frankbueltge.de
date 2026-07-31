@@ -14,29 +14,13 @@
 //  · calibration marks ‖ (PROTOCOL.md git dates) are not drawn — honest margin note;
 //  · the top journal-anchor row (hand-picked in the mockup) is not drawn.
 
-function escapeXml(value: string): string {
-  return value
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#x27;')
-}
+import { dayRange as geometryDayRange, escapeXml } from '@/lib/dataviz/geometry'
 
-/** Inclusive ISO day range — pure date arithmetic, no clock. */
+/** Inclusive ISO day range — pure date arithmetic, no clock. One-line wrapper around
+ *  dataviz/geometry.ts's consolidated dayRange, keeping this module's historical contract
+ *  (assumes well-formed dates, throws only on a reversed range) byte-identical. */
 export function dayRange(first: string, last: string): string[] {
-  const start = Date.UTC(
-    Number(first.slice(0, 4)),
-    Number(first.slice(5, 7)) - 1,
-    Number(first.slice(8, 10)),
-  )
-  const end = Date.UTC(Number(last.slice(0, 4)), Number(last.slice(5, 7)) - 1, Number(last.slice(8, 10)))
-  if (end < start) throw new Error(`dayRange: ${last} lies before ${first}`)
-  const days: string[] = []
-  for (let t = start; t <= end; t += 86_400_000) {
-    days.push(new Date(t).toISOString().slice(0, 10))
-  }
-  return days
+  return geometryDayRange(first, last, { onInvalid: 'throw' })
 }
 
 // ---------------------------------------------------------------- ported geometry
