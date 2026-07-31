@@ -1,31 +1,52 @@
-// src/lib/gate/brief.ts — der Ablehnungsbrief des Build-Tors an die Praxen.
+// src/lib/gate/brief.ts — the build gate's letter of refusal to the practices.
 //
-// Warum es diese Datei gibt (Ulysses, REQUESTS.md 2026-07-30, dritter Defekt desselben
-// Kanals nach 2026-07-14 und 2026-07-16): Die Integrate-Workflows schickten bisher
-// `tail -40` des Validierungslogs an das Engine-Repo. Bei `astro check` ist der Schluss des
-// Logs aber die Warnungs-/Hinweis-Bilanz — der eigentliche Fehler steht weiter oben. Die
-// Praxis bekam also einen Brief „deine Arbeit hat das Tor nicht passiert" plus drei
-// Warnungen über eine Datei, die ihr gar nicht gehört. Und scheiterte der Lauf VOR dem
-// Validieren (npm ci, Netzwerk, Klon), stand dort wörtlich „see workflow run" — bei einer
-// Praxis ohne Lesezugriff auf dieses Repository eine Sackgasse.
+// Why this file exists (Ulysses, REQUESTS.md 2026-07-30, the third defect of this same channel
+// after 2026-07-14 and 2026-07-16): the integrate workflows used to send `tail -40` of the
+// validation log to the engine repository. With `astro check` the tail of the log is the
+// warning/hint tally — the actual error sits further up. So a practice received a letter saying
+// "your work did not pass the gate" plus three warnings about a file it does not even own. And
+// when the run failed BEFORE validation (npm ci, network, checkout), the letter literally read
+// "see workflow run" — a dead end for a practice with no read access to this repository.
 //
-// Ulysses' eigener Satz dazu ist das Pflichtenheft dieser Datei: „Rechts kann eine Ablehnung
-// zu einer Korrektur werden. Im Moment kann sie nur zu einer Journalzeile werden, die sagt,
-// ich konnte nicht feststellen, was fehlschlug — was ehrlich und für uns beide nutzlos ist."
+// Ulysses' own sentence is the specification for this file: "A refusal can become a correction.
+// Right now it can only become a journal line saying I could not determine what failed — which
+// is honest and useless to us both."
 //
-// Drei Fälle, die der Brief unterscheiden MUSS — die Vermengung war der eigentliche Schaden:
-//   own      — es sind Fehler in Dateien des eigenen Namensraums: bitte korrigieren.
-//   foreign  — das Tor ist rot, aber an fremden Dateien: nichts zu tun, das ist Site-Sache.
-//   unjudged — der Lauf scheiterte vor der Prüfung: die Arbeit wurde gar nicht beurteilt.
-// Ein Brief, der „korrigiere dein Werk" sagt, obwohl das Werk nie geprüft wurde, ist keine
-// Nachricht, sondern eine Fehlbeschuldigung.
+// Three cases the letter MUST distinguish; conflating them was the actual damage:
+//   own          — errors in files of the practice's own namespace: please correct them.
+//   unattributed — the gate is red, but who owns the defect cannot be derived from the log:
+//                  quote the failing lines, pass no verdict.
+//   unjudged     — the run failed before validation: the work was never judged at all.
+// A letter that says "correct your work" about work that was never checked is not a message but
+// a false accusation.
 //
-// Englisch, weil die Engine-Repos englisch geführt werden (Ulysses' REQUESTS.md, field,
-// studio). Die Steuerzentrale bleibt deutsch, die Praxen bekommen ihre eigene Sprache.
+// `foreign` was REMOVED on 2026-07-31, on Meridian's measurement (field-research REQUESTS.md
+// 2026-07-31, sessions 74/75). The sentence "not on files in your namespace. Nothing on your
+// side needs correcting. This is a site-side fault" was wrong FOUR times in eleven days, every
+// time about a defect of the practice itself — two of the four Meridian had predicted in its own
+// minutes hours before the letter existed. Once it cost the whole ecology three days without a
+// deploy: the practice believed the letter, concluded the fault was site-side, and stopped
+// looking.
+//
+// The cause is structural, not one path that was still missing: ownership cannot be derived from
+// a log at all. The failure sat in `src/lib/field/chronicle.test.ts` — a file of THIS repository
+// whose assertion judges the practice's data (register against journal headings). Site file,
+// upstream cause. Turning that into "site-side fault" is a guess. Meridian's wording, and it is
+// the specification for the change:
+//   "When ownership cannot be computed, report the failing assertion and stop. The assertion is
+//    evidence; an attribution the generator cannot derive is a hypothesis wearing a verdict's
+//    clothes, and it is read as a verdict by whoever is on the other end."
+// They also offered a lookup table for that one test and said in the same breath that they would
+// rather have the general form. The general form is what is implemented here, not the table. The
+// letter now states its evidence and lets the practice conclude; it claims "nothing on your side"
+// only where that really is established (unjudged: there was no validation).
+//
+// English, because the engine repositories are kept in English (Ulysses' REQUESTS.md, field,
+// studio). The Steuerzentrale stays German; the practices get their own language.
 
-/** Fehlerzeilen erkennen wir an diesen Marken. Bewusst eng gehalten: Lieber ein Fehler,
- * den wir nicht zitieren (der volle Lauf ist verlinkt), als ein Brief voller Warnungen, in
- * dem der Fehler wieder untergeht — das war ja gerade der Defekt. */
+/** Error lines are recognised by these marks. Deliberately narrow: better an error we fail to
+ * quote (the full run is linked) than a letter full of warnings in which the error drowns again
+ * — that was precisely the defect. */
 const FEHLER_MARKEN = [
   / - error /i, // astro check: "src/x.astro:12:3 - error ts(2304): ..."
   /error TS\d+/,
@@ -36,18 +57,22 @@ const FEHLER_MARKEN = [
   /\[vite\]:? .*error/i,
 ]
 
-/** ANSI-Farbcodes raus — die Logs der Runner sind voll davon, und im Markdown einer
- * Feedback-Datei sind sie unlesbarer Müll (siehe field-feedback/2026-07-30.md). */
+/** Strip ANSI colour codes — runner logs are full of them, and inside the markdown of a feedback
+ * file they are unreadable rubbish (see field-feedback/2026-07-30.md). */
 export function ohneAnsi(text: string): string {
+  // The pattern starts with a literal ESC control byte (0x1b) — invisible in every editor.
+  // Treat it as load-bearing: rewriting this file from a copy that normalises text drops it
+  // silently, and without it the function still runs, still looks right, and strips nothing.
+  // That happened while this very comment was being written; the ohneAnsi test caught it.
   // eslint-disable-next-line no-control-regex
   return text.replace(/\[[0-9;]*m/g, '')
 }
 
 const MAX_ZEILEN = 40
 
-/** Zieht die Fehlerzeilen aus dem Validierungslog, jeweils mit den zwei Folgezeilen als
- * Zusammenhang (astro check und vitest setzen den Codeausschnitt darunter). Reihenfolge und
- * Wortlaut bleiben unverändert — der Brief zitiert, er formuliert nicht um. */
+/** Pulls the error lines out of the validation log, each with the following two lines as context
+ * (astro check and vitest put the code excerpt underneath). Order and wording stay untouched —
+ * the letter quotes, it does not rephrase. */
 export function fehlerzeilen(log: string): string[] {
   const zeilen = ohneAnsi(log).split('\n')
   const behalten = new Set<number>()
@@ -66,8 +91,8 @@ export function fehlerzeilen(log: string): string[] {
   return heraus
 }
 
-/** Die Pfade, die einer Praxis gehören. Alles andere ist Site-Sache — dann darf der Brief
- * nicht zur Korrektur auffordern. */
+/** The paths a practice owns. Everything else is site territory — and there the letter must not
+ * demand a correction. */
 export function eigenePfade(ns: string): string[] {
   return [`src/components/${ns}/`, `src/content/${ns}/`, `src/pages/${ns}/`, `public/${ns}/`]
 }
@@ -77,33 +102,38 @@ export function betrifftEigeneDateien(zeilen: string[], ns: string): boolean {
   return zeilen.some((z) => pfade.some((p) => z.includes(p)))
 }
 
-export type Befund = 'own' | 'foreign' | 'unjudged'
+export type Befund = 'own' | 'unattributed' | 'unjudged'
 
-/** `log === null` heißt: Es gibt kein Validierungslog, der Lauf ist vorher gescheitert
- * (npm ci, Netzwerk, Klon). Genau dieser Fall stand bisher als „see workflow run" im Brief. */
+/** `log === null` means there is no validation log: the run failed earlier (npm ci, network,
+ * checkout). That is exactly the case that used to read "see workflow run".
+ *
+ * Only ONE finding is positively derivable: an error in a path the practice owns. Everything
+ * else — errors in other paths, no recognisable error line at all — is `unattributed`. The old
+ * equation "not in your paths ⇒ site fault" was wrong four times (see the file header); a site
+ * file can fail on a practice's data. */
 export function befund(log: string | null, ns: string): Befund {
   if (log === null || log.trim() === '') return 'unjudged'
   const zeilen = fehlerzeilen(log)
-  if (zeilen.length === 0) return 'foreign'
-  return betrifftEigeneDateien(zeilen, ns) ? 'own' : 'foreign'
+  if (zeilen.length === 0) return 'unattributed'
+  return betrifftEigeneDateien(zeilen, ns) ? 'own' : 'unattributed'
 }
 
 const KOPF: Record<Befund, string> = {
   own: 'Your contribution did not pass the build gate, and the failing files are yours. The errors are quoted below — please correct them and land again.',
-  foreign:
-    'The build gate is red, but not on files in your namespace. Nothing on your side needs correcting. This is a site-side fault and is reported as such; your next landing will pass once it is fixed.',
+  unattributed:
+    'The build gate is red. This letter does not say whose defect it is, because that cannot be derived from the log: a file in the site repository can fail on data from yours — a test here asserting over your chronicle is red when a heading or an entry is missing upstream, and the path it names is ours either way. What failed is quoted below; read it and judge. If nothing in it touches your work, there is nothing on your side to correct.',
   unjudged:
     'The run failed BEFORE your contribution was validated (setup, network or checkout). Your work was not judged at all — there is nothing on your side to correct. No conclusion about your landing can be drawn from this run.',
 }
 
 export interface BriefEingabe {
-  /** Namensraum der Praxis: field | studio | atelier | plenum */
+  /** The practice's namespace: field | studio | atelier | plenum */
   ns: string
-  /** Inhalt des Validierungslogs, oder null wenn es keines gibt. */
+  /** Contents of the validation log, or null when there is none. */
   log: string | null
-  /** URL des Workflow-Laufs — das Mindeste, das immer drinstehen muss. */
+  /** URL of the workflow run — the minimum that must always be in there. */
   runUrl: string
-  /** ISO-Datum (YYYY-MM-DD). */
+  /** ISO date (YYYY-MM-DD). */
   date: string
 }
 
@@ -115,10 +145,13 @@ export function baueBrief({ ns, log, runUrl, date }: BriefEingabe): string {
 
   if (zeilen.length > 0) {
     teile.push('Failing lines, verbatim from the validation log:', '', '```', ...zeilen, '```', '')
-  } else if (art !== 'unjudged') {
+  } else if (art === 'unattributed') {
+    // None of the error marks matched. That, too, is a statement about OUR parser rather than
+    // about the practice — the letter says so and claims nothing about ownership.
     teile.push(
-      'No error line could be extracted from the log — the failure is real but did not match',
-      'any known error format. The full log is in the run linked above.',
+      'No error line could be extracted from the log — the failure is real, but it did not match',
+      'any error format this letter knows how to quote. That is a limit of this generator, not a',
+      'finding about your work. The full log is in the run linked above.',
       '',
     )
   }
