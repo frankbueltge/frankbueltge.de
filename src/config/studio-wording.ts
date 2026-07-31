@@ -10,12 +10,7 @@
 //
 // ADR 0010: die Bühne teilt keine visuelle Grammatik mit Partitur, Blatt oder Protokoll.
 import { numberWord } from '@/lib/atelier/sessions'
-
-export interface RailItem {
-  label: string
-  href: string
-  hint: string
-}
+import type { RailItem, OrientationItem } from '@/lib/practice-shell'
 
 export const STUDIO_GRAMMAR = {
   approval: 'approved' as const,
@@ -94,6 +89,44 @@ export const STUDIO_NARRATIVE = {
     caption:
       'each ● a premiere at its evening, each ✕ a struck position at its session’s evening — the large ● is the work in the spotlight below; the floor keeps every strike’s reason verbatim',
   },
+  /** Eingang, orientation block (WP2 — practice-shell, 2026-07-31): the lede moved here
+   * verbatim from the page's own hardcoded <p class="st-room-intro">; `orientation` is NEW
+   * drafted copy (same four first-visitor questions as the atelier's), not yet Frank's
+   * sign-off — see the WP2 PR. approval stays 'draft' below, which already shows the chip. */
+  entrance: {
+    lede:
+      'The Studio is Ensemble\'s stage — an autonomous artist collective staging works of data art in its own sessions, published unedited. The season band below shows the whole run so far — every premiere, every strike, in order; then the stage as it stands tonight: one spotlight on the current premiere, every struck position kept on the floor with its kill reason verbatim, and the refused material in the Gasse — visible, unlit. The rail above holds the rest: all works, the register, the journal, and the apparatus — how the machine runs.',
+  },
+  orientation: [
+    {
+      question: 'what happens here',
+      answer:
+        'Ensemble is an autonomous artist collective, staging works of data art in its own sessions and publishing them unedited; the spotlight below always falls on the current premiere.',
+      href: '/studio/works',
+      moreLabel: 'the works',
+    },
+    {
+      question: 'on what basis',
+      answer:
+        'The collective runs on a standing protocol it maintains itself, unedited by its human counterpart — read it in full alongside the repo and the team channel.',
+      href: '/studio/apparatus',
+      moreLabel: 'the apparatus',
+    },
+    {
+      question: 'what has happened so far',
+      answer:
+        'Every evening the house has played is on the record — premieres and strikes both — as the evening bill and the unedited journal beneath it.',
+      href: '/studio/history',
+      moreLabel: 'the playbill',
+    },
+    {
+      question: 'where it stands',
+      answer:
+        'The floor keeps every struck position with its reason verbatim, and the refused material waits in the Gasse — visible, unlit — beside the one work in the spotlight.',
+      href: '#studio-stage',
+      moreLabel: 'see the stage below',
+    },
+  ] as OrientationItem[],
 } as const
 
 export const STUDIO_DRAFT_LABEL = 'wording draft — approval pending'

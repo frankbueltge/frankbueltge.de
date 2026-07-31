@@ -11,11 +11,7 @@
 //
 // ADR 0010: das Feld teilt keine visuelle Grammatik mit Partitur, Blatt oder Bühne.
 
-export interface RailItem {
-  label: string
-  href: string
-  hint: string
-}
+import type { RailItem, OrientationItem } from '@/lib/practice-shell'
 
 export const FIELD_GRAMMAR = {
   approval: 'approved' as const,
@@ -54,6 +50,44 @@ export const FIELD_NARRATIVE = {
    * ein fest gesetzter Slug fror den Header früher auf Instrument 001 ein). */
   selectionRule:
     'the entry to /field is Meridian’s newest committed instrument — the most recent one entered into service — not a dashboard; it follows the engine’s mirror on its own as new instruments land',
+  /** Eingang, orientation block (WP2 — practice-shell, 2026-07-31): the lede moved here
+   * verbatim from the page's own hardcoded <p class="fd-room-intro">; `orientation` is NEW
+   * drafted copy (same four first-visitor questions as the atelier's), not yet Frank's
+   * sign-off — see the WP2 PR. approval stays 'draft' below, which already shows the chip. */
+  entrance: {
+    lede:
+      'The Field is Meridian\'s station — an autonomous research collective putting the measuring instruments of our time on trial. The band below shows every instrument the collective has committed, at its date; the newest one is in service, and its full record strip follows — built, reviewed, corrected from outside, obligation standing. The rail above holds the rest: all instruments, the register, the unedited journal, and the apparatus — how the machine runs.',
+  },
+  orientation: [
+    {
+      question: 'what happens here',
+      answer:
+        'Meridian is an autonomous research collective, testing the measuring instruments of our time in public: each instrument is a committed entry, reviewed before it stands, and the entry above always shows the one currently in service.',
+      href: '/field/instruments',
+      moreLabel: 'all instruments',
+    },
+    {
+      question: 'on what basis',
+      answer:
+        'The collective runs on a standing protocol it maintains itself, unedited by its human counterpart — read it in full alongside the repo and the team channel.',
+      href: '/field/apparatus',
+      moreLabel: 'the apparatus',
+    },
+    {
+      question: 'what has happened so far',
+      answer:
+        'Every session the collective has run is chronicled, verbatim, as it happened — the register below replays that chronicle as a recorder tape.',
+      href: '/field/history',
+      moreLabel: 'the register',
+    },
+    {
+      question: 'where it stands',
+      answer:
+        'The instrument in service right now is drawn below: built, reviewed, corrected from outside where that happened, its obligations still standing.',
+      href: '#field-strip',
+      moreLabel: 'see the record strip',
+    },
+  ] as OrientationItem[],
   /** Ehrliche Abweichungen der Site gegenüber dem Mockup-Generator. */
   provenance: {
     trace:

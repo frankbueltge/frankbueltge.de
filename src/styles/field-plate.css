@@ -183,6 +183,42 @@
   margin: 14px 0 28px;
 }
 
+/* Orientation block (OrientationList.astro, shared skeleton — WP2 practice-shell).
+   Restrained, no new colors: existing --fd-* tokens only, in the field's own list voice
+   (cf. .fd-apparatus-list). */
+.field-surface .pr-orient {
+  margin: 4px 0 26px;
+  border-top: 1px solid var(--fd-hairline);
+  max-width: 78ch;
+}
+.field-surface .pr-orient-item { border-bottom: 1px solid var(--fd-hairline); padding: 13px 2px 15px; }
+.field-surface .pr-orient-q {
+  font-family: var(--fd-font-record);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fd-ink-2);
+  margin-bottom: 5px;
+}
+.field-surface .pr-orient-a {
+  margin: 0;
+  font-family: var(--fd-font-ui);
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--fd-ink);
+}
+.field-surface .pr-orient-more {
+  display: inline-block;
+  margin-top: 4px;
+  font-family: var(--fd-font-record);
+  font-size: 12px;
+  color: var(--fd-stamp);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  white-space: nowrap;
+}
+.field-surface .pr-orient-more:hover { opacity: 0.75; }
+
 /* Zimmer: Instrumente, Journal, Apparat */
 .field-surface .fd-instr-card {
   border: 1px solid var(--fd-hairline);
