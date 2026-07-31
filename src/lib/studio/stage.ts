@@ -8,32 +8,7 @@
 // Pure and deterministic (contract as score.ts / pulse/render.ts): same inputs ⇒
 // byte-identical output. No randomness, no clock reads.
 
-function escapeXml(value: string): string {
-  return value
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#x27;')
-}
-
-/** Deterministic greedy word-wrap (same construction as score.ts's wrapLines). */
-function wrapLines(text: string, maxChars: number): string[] {
-  const words = text.split(' ')
-  const lines: string[] = []
-  let current = ''
-  for (const word of words) {
-    const candidate = current ? `${current} ${word}` : word
-    if (candidate.length > maxChars && current) {
-      lines.push(current)
-      current = word
-    } else {
-      current = candidate
-    }
-  }
-  if (current) lines.push(current)
-  return lines
-}
+import { escapeXml, wrapLines } from '@/lib/dataviz/geometry'
 
 export interface StageKill {
   name: string
