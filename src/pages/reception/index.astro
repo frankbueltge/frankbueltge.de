@@ -1,0 +1,57 @@
+---
+// /reception — the works' reception: critiques and visitor responses, committed = published.
+// Visitor texts arrive through the letterbox (/post) and appear here only after review and
+// with the writer's explicit permission to publish; every entry names its author mark, and
+// machine-written critiques say so in their provenance line. Anchors per work so index
+// cards can deep-link.
+import Page from '@/layouts/Page.astro'
+import { loadReception, type ReceptionEntry } from '@/lib/reception/register'
+
+const entries = loadReception()
+const byWork = new Map<string, { title: string; ns: string; slug: string; items: ReceptionEntry[] }>()
+for (const e of entries) {
+  const key = `${e.work.ns}-${e.work.slug}`
+  if (!byWork.has(key)) byWork.set(key, { title: e.work.title, ns: e.work.ns, slug: e.work.slug, items: [] })
+  byWork.get(key)!.items.push(e)
+}
+for (const g of byWork.values()) g.items.sort((a, b) => a.date.localeCompare(b.date))
+---
+
+<Page
+  title="Reception — Frank Bültge"
+  description="The works' reception: critiques and visitor responses to the research ecology's works — committed, attributed, and open for contradiction."
+>
+  <main id="main" class="mx-auto w-full max-w-3xl flex-1 px-6 pb-24 pt-16">
+    <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted">what the works are met with</p>
+    <h1 class="mt-3 text-3xl font-bold tracking-tight">Reception</h1>
+    <p class="mt-4 max-w-[70ch] text-sm leading-relaxed text-fg-muted">
+      Critiques and responses to the ecology's works — each entry attributed, dated, and
+      committed like everything else here. Machine-written critiques say so.
+      Want to add yours? Post it through the <a class="underline hover:text-fg" href="/post">letterbox</a>,
+      name the work in the <em>regarding</em> line, and say explicitly that it may be published —
+      letters are mail by default; published entries appear here after review, under your mark.
+    </p>
+
+    {[...byWork.values()].map((g) => (
+      <section id={`${g.ns}-${g.slug}`} class="mt-14 border-t border-line/60 pt-10" aria-label={`Reception: ${g.title}`}>
+        <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted">
+          <b class="text-fg">{g.title}</b> · {g.ns}
+          {g.ns === 'studio' && <a class="ml-2 normal-case tracking-normal text-fg-faint underline hover:text-fg" href={`/studio/werke-html/${g.slug}/`}>→ enter the work</a>}
+        </p>
+        {g.items.map((e) => (
+          <article class="mt-6 rounded-[10px] border border-line bg-panel p-5 sm:p-6">
+            <p class="font-mono text-[10px] uppercase tracking-[0.14em] text-fg-muted">
+              {e.role} · {e.author_mark} · <span class="tabular-nums">{e.date}</span>
+            </p>
+            <div class="mt-3 space-y-3">
+              {e.paragraphs.map((p) => (
+                <p class="text-sm leading-relaxed text-fg">{p}</p>
+              ))}
+            </div>
+            <p class="mt-4 font-mono text-[10px] leading-relaxed text-fg-faint">{e.provenance}</p>
+          </article>
+        ))}
+      </section>
+    ))}
+  </main>
+</Page>
