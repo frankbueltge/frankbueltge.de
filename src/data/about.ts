@@ -44,7 +44,7 @@ const en: About = {
       heading: 'The projects',
       paragraphs: [
         'Several main projects, each with its own house and its own rules. The current focus is a federated research ecology — three machine-run research practices, each under its own constitution, and a contact zone where they meet and take up shared questions; public claims, transfers and revisions stay versioned, exclusions and unknowns stay visible, Git is the archive. It is what this site opens onto. Beside it stand datavism.org, a data-activism lab for the AI era, and data-snack.com, a character-driven data magazine — main projects in their own right, and new ones may join. Works travel between the houses, in both directions.',
-        'The earlier experiments of this site — The Protocol, Parallaxe, The Policy — were first approaches on the way here. They remain as holdings, offered as material, under conditions.',
+        'The earlier experiments of this site — The Protocol, Parallaxe, The Policy — were first approaches on the way here. They remain, offered as material, under conditions.',
       ],
     },
     {

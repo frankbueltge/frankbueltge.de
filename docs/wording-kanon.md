@@ -1,6 +1,6 @@
 # Wording-Kanon — frankbueltge.de & Ökologie
 
-**Stand: 2026-07-24, spät.** Dieses Dokument ist die maßgebliche aktuelle Sprachregelung.
+**Stand: 2026-07-31.** Dieses Dokument ist die maßgebliche aktuelle Sprachregelung.
 Bei Widerspruch gilt: das jüngste Wort von Frank > dieses Dokument > `src/config/naming.ts`
 (Hub-Wortlaute) > alles andere. **Engine-READMEs, alte Configs und Design-Mockups sind KEINE
 Quelle für aktuelles Wording** — sie hinken der Praxis nach (Lehre vom 24.07.: „Error as
@@ -64,6 +64,32 @@ und **Dataset Register** (`/datasets`, neu). Kanonische Wortlaute in `naming.ts`
 - Zahlen (Einträge, Werke) stehen **nie** in den Beschreibungstexten — sie veralten
   nächtlich und werden ausschließlich aus den Daten gerendert.
 
+## Die Ökologie ist EIN Projekt, nicht die Site (Frank, 31.07.)
+
+Die research ecology steht **gleichrangig neben data-snack.com und datavism.org** — ein
+Hauptprojekt unter mehreren, nicht die Identität dieser Site. Der Hub sagte das längst
+(„currently conducting", „THE OTHER HOUSES — main projects in their own right"), die
+Navigation sagte das Gegenteil.
+
+- **Top-Nav (vier Punkte):** `Research Ecology ▾` · `Projects ▾` · `Experiments` · `About`.
+- Alles, was zur Ökologie gehört, liegt **in ihrem** Menü, in benannten Abschnitten:
+  *Practices* (die vier Türen) · *The apparatus* (Maschinenraum, How it works) ·
+  *Records* (Catalogues, Reception) · *Talk back* (Post office, Offer a seed).
+- **Die Ökologie steht im Projektregister** (`src/data/projects.ts`, Slug `research-ecology`)
+  — vorher fehlte dort ausgerechnet das Projekt, das auf dieser Domain wohnt.
+- Türnamen und Projektliste werden im Menü **abgeleitet**, nicht abgetippt (`naming.ts`,
+  `projects.ts`) — eine Umbenennung dort zieht die Navigation mit.
+- Zurückgezogen: „Practices" als oberster Nav-Punkt (las sich, als sei die Ökologie das
+  ganze Haus) und „Archive ▾" als Sammelpunkt, unter dem *Projects* lag.
+
+## „Experiments" statt „Holdings" (Frank, 31.07.)
+
+Die früheren Arbeiten des Labors heißen wieder **„Experiments"** (dt. „Experimente") —
+Klartext vor Haus-Vokabular; die Umwidmung zu „Holdings"/„Bestände" (Juli 2026) ist damit
+zurückgenommen. **Die Route bleibt `/holdings`** (Links, Redirects, OG-Pfade unverändert) —
+nur der sichtbare Name ändert sich. Bleibt gültig: es gibt **keinen Dachtitel** für die
+Sammlung (12.07.), jedes Experiment steht für sich.
+
 ## Schwarze Liste (zurückgezogen — nie als aktuell verwenden)
 
 | Phrase | Status |
@@ -75,6 +101,8 @@ und **Dataset Register** (`/datasets`, neu). Kanonische Wortlaute in `naming.ts`
 | „Data & AI Engineer" | verworfen 24.07. |
 | „data artist" / „Datenkünstler" | nie |
 | „the whole lab" / `/lab` | Route und Begriff ersetzt durch `/holdings` (Sammelseite) |
+| „Holdings" / „Bestände" als Seitenname | zurückgenommen 31.07. — die Fläche heißt wieder **Experiments**; die Route `/holdings` bleibt |
+| „Practices" als oberster Nav-Punkt | ersetzt 31.07. durch `Research Ecology ▾` — die Ökologie ist ein Projekt, nicht die Site |
 | „Dataset Hub" als Site-Fläche | „hub" ist die Startseite; die Fläche heißt **Dataset Register** (26.07.) |
 | „locally constituted" / „wherever the apparatus permits" | entnebelt 24.07. (Hero-Untertitel) |
 | „cinematic" (datavism) | gestrichen 16.07. |
