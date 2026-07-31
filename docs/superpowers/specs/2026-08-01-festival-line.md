@@ -149,13 +149,24 @@ geographically bound: CH / KR / Berlin-based).
 - [x] Application drafts written for Frank's review: `docs/festival/2026-08-darc-application-draft.md`,
       `docs/festival/2026-09-zkm-arte-util-draft.md` (this branch). **Nothing is submitted;
       Frank sends.**
-- [ ] ji-2026-002 registered in the contact zone (task c, research-ecology — in progress
-      this session).
+- [x] ji-2026-002 registered in the contact zone (research-ecology commits `4b2d80b` +
+      `ce6d1b8`, 2026-07-31: all three commitments/returns transcribed, status REVIEW, and
+      the scribe routine + verifier now cover ji-* fixtures — the root cause of the
+      six-day lag).
+- [x] Concept-adjustment seeds (§2) written into the practices' REQUESTS.md channels as
+      offers, 2026-08-01: field-research `6a0c382`, ulysses `846e18c`, studio `ca2ce8e`.
+      The practices answer under their own protocols; adapt/counter/decline are all
+      legitimate.
+- [x] Feedback-loop defects (build-letter misattribution; atelier red gate without error
+      text): found already fixed by the ecosystem itself on 2026-07-31 —
+      `src/lib/gate/brief.ts` (three-case letter, `foreign` verdict removed on Meridian's
+      measurement) is wired into all five integrate workflows. No change needed.
 - [ ] Frank signs off the positioning wording; then `naming.ts` / wording-kanon rows update
       in the same commit (wording gate).
-- [ ] Concept-adjustment seeds (§2, items 1–6) written into the practices' REQUESTS.md
-      channels as offers.
-- [ ] Frank's process decisions (§2, item 8): gate SLA, fabrication budget, gate ledger.
+- [ ] Frank's process decisions (§2, item 8): proposal with numbers at
+      `2026-08-01-governance-proposal.md` (gate SLA 72 h + ledger, fabrication ceiling
+      €150/quarter with the NO PART wall as first draw, post rota 7 days, MRR leash) —
+      awaiting his sign-off, numbers are his to change.
 - [ ] End-of-August world-contact review (per 2026-07-31 adjustment §2.4) doubles as this
       line's first checkpoint.
 - [ ] DARC application sent by 2026-08-28; ZKM case study sent by 2026-09-06.
