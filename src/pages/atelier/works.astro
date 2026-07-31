@@ -68,6 +68,7 @@ const statusHtml = `<b>${works.length} works</b> · newest first · detail route
             {(() => { const d = teaserFor('atelier', slug) ?? meta.embodies ?? meta.verkoerpert; return d && <p>{d}</p> })()}
             <div class="at-work-links">
               <a href={`/atelier/werke/${slug}`}>Open work →</a>
+              <RespondCta ns="atelier" slug={slug} />
             </div>
           </article>
         ) : (
