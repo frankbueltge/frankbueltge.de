@@ -19,7 +19,11 @@ Protocol v4, während die Praxis auf v5 lief.) Daneben die früheren Experimente
 als **Holdings** (`/holdings`): The Protocol, Parallaxe, The Policy, die
 Gegenmessung-Instrumente — erste Annäherungen, praxisbasiert. Das gestaltete Arbeiten lebt
 in den Projekten (datavism.org, data-snack.com).
-Positionierung: `docs/superpowers/specs/2026-06-20-ehrliche-umrahmung-design.md`.
+Positionierung: `docs/superpowers/specs/2026-08-01-festival-line.md` — „artistic research,
+under proof": Anspruch mit Beweispflicht statt Anspruchs-Verzicht; löst die „ehrliche
+Umrahmung" vom 2026-06-20 **datiert ab** (deren Ehrlichkeits-Kern — keine unverdienten
+Behauptungen — bleibt bindend). Ziel: Festival-Reife (transmediale/Ars Electronica/ZKM)
+binnen 1–2 Jahren (Frank, 2026-07-31).
 
 **Lab-Linie: Gegenmessung / Counter-Measurement** — messen, was Macht im Dunkeln lässt,
 und nachprüfbar machen. Erstes Instrument „The Consensus" misst orchestrierten Konsens
@@ -92,7 +96,9 @@ Parallaxe via Gemini-AI-Studio-Key (statt BigQuery/Vertex).
   eine Identitätsfarbe, kein Warnrot.
 - **Spec:** `docs/superpowers/specs/2026-06-11-werkgruppe-design.md` (Substanz-Kriterien
   in §2 sind das Gate für jedes neue Experiment; Methodenblatt-Pflicht in §3.5).
-  Rahmung/Wortlaut: `2026-06-20-ehrliche-umrahmung-design.md` (kein Kunst-Anspruch).
+  Rahmung/Wortlaut: `2026-08-01-festival-line.md` („artistic research, under proof");
+  die frühere Kein-Kunst-Anspruch-Rahmung (`2026-06-20-ehrliche-umrahmung-design.md`)
+  ist datiert abgelöst, nur noch historisch.
 - **KI/ML sind Material und Methode — inkl. symbolischer/neuro-symbolischer KI.**
   Das Lab experimentiert mit Daten UND KI (Frank, 2026-06-22; das frühere lab-weite
   „kein LLM"-Dogma ist aufgehoben). Einzige Bedingung ist **Nachprüfbarkeit:** jeder
