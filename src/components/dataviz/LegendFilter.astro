@@ -1,0 +1,107 @@
+---
+// src/components/dataviz/LegendFilter.astro — the shared legend-as-filter (WP3, "shared
+// dataviz primitives"). Behavior + structure only (ADR 0010) — a later port WP retires
+// ProcessFigure.astro's own legend (its render ~281-291, its click handler ~497-504) in favor of
+// this shell plus src/lib/dataviz/filter.ts.
+//
+// The one deliberate, spec-required exception to "no appearance CSS": each item MAY carry a
+// `swatch` — a color VALUE the CONSUMER (a practice's own figure) supplies, not a color this
+// component decides. It reaches the DOM as a data attribute (never a style="" attribute, which
+// this site's CSP silently drops) and is applied to a `--dv-swatch` custom property by this
+// component's own script via element.style.setProperty (see runtime.ts's setVars) — so this
+// file itself still contains zero hex literals; it only ever wires a value through.
+export interface LegendItem {
+  key: string
+  label: string
+  count?: number
+  /** plain-language explanation, shown as a native title tooltip */
+  hint?: string
+  /** a CSS color VALUE from the consumer (e.g. a CSS custom property reference such as
+   *  "var(--pr-publish)") — never a literal this component hardcodes */
+  swatch?: string
+}
+export interface Props {
+  items: LegendItem[]
+  mode: 'single' | 'multi'
+  /** id of the heading/label this legend belongs to */
+  labelledby: string
+}
+const { items, mode, labelledby } = Astro.props
+---
+
+<ul class="dv-legend" data-dv-legend data-mode={mode} aria-labelledby={labelledby} role="list">
+  {
+    items.map((item) => (
+      <li class="dv-legend-item">
+        <button
+          type="button"
+          class="dv-legend-btn"
+          data-dv-legend-key={item.key}
+          data-dv-swatch={item.swatch}
+          aria-pressed="false"
+          title={item.hint}
+        >
+          <span class="dv-legend-swatch" data-dv-swatch-dot aria-hidden="true" />
+          <span class="dv-legend-label">{item.label}</span>
+          {item.count !== undefined && <span class="dv-legend-count">{item.count}</span>}
+        </button>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .dv-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .dv-legend-item {
+    display: contents;
+  }
+  .dv-legend-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .dv-legend-swatch {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    /* the swatch VALUE is consumer-supplied (see this file's header comment); the fallback
+       (currentColor) is a keyword, not a hardcoded color */
+    background: var(--dv-swatch, currentColor);
+  }
+</style>
+
+<script>
+  import { toggle } from '@/lib/dataviz/filter'
+  import { setVars } from '@/lib/dataviz/runtime'
+
+  for (const legend of document.querySelectorAll<HTMLElement>('[data-dv-legend]')) {
+    const mode: 'single' | 'multi' = legend.dataset.mode === 'multi' ? 'multi' : 'single'
+    const buttons = [...legend.querySelectorAll<HTMLButtonElement>('[data-dv-legend-key]')]
+
+    for (const b of buttons) {
+      const swatch = b.dataset.dvSwatch
+      if (swatch) setVars(b, { '--dv-swatch': swatch })
+    }
+
+    let current: string[] = []
+    const applyPressed = () => {
+      for (const b of buttons) b.setAttribute('aria-pressed', String(current.includes(b.dataset.dvLegendKey ?? '')))
+    }
+
+    for (const b of buttons) {
+      b.addEventListener('click', () => {
+        const key = b.dataset.dvLegendKey ?? ''
+        current = toggle(current, key, mode)
+        applyPressed()
+        legend.dispatchEvent(new CustomEvent('dv:filter', { detail: { keys: current }, bubbles: true }))
+      })
+    }
+  }
+</script>

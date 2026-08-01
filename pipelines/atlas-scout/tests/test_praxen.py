@@ -135,6 +135,43 @@ def test_ein_abzug_des_eigenen_katalogs_zaehlt_nicht_als_zitat(tmp_path: Path):
     assert "10.5555/nur-im-spiegel" not in kennungen, "der Abzug des Katalogs fällt weg"
 
 
+def test_ein_alter_katalogstand_ohne_aufnahmegrund_ist_auch_ein_spiegel(tmp_path: Path):
+    """Das Schema änderte sich unter seinem eigenen Detektor.
+
+    Meridians Messung (field-research REQUESTS.md 2026-07-30, Session 73), vor der Änderung
+    hier an ihren fünf eingefrorenen Zuständen reproduziert: `03067c54.json` mit **117
+    Einträgen** wurde NICHT erkannt. Sein erster Eintrag trägt `relevanz_herkunft` und
+    `zitiert_von`, aber `aufnahmegrund` gab es damals noch nicht — der billige Vorfilter
+    verwarf die Datei, bevor die Signatur sie je sah.
+
+    Ein Filter, der am jüngsten Feld hängt, hört auf jedem älteren Stand des Objekts auf zu
+    greifen, das er bewacht. Und ein Spiegel eines alten Stands schließt den Kreis genauso
+    fest wie einer des neuen: 117 Kennungen des Katalogs lägen als „von field zitiert" im
+    Katalog.
+
+    Gegengeprüft über alle vier Praxis-Repos (336 JSON-Dateien): genau diese eine Datei
+    kippt, sonst nichts — kein echtes Verzeichnis wird mitgerissen.
+    """
+    alter_stand = json.dumps([{
+        "id": "x", "kennung": "10.5555/nur-im-alten-spiegel", "titel": "T",
+        # Kein `aufnahmegrund` — dieses Feld existierte in diesem Stand noch nicht.
+        "relevanz_herkunft": "praxis", "zitiert_von": ["atelier"],
+        "fundstellen": ["ulysses/journal/2026-07-01.md"],
+    }])
+    _repo(tmp_path, "field-research", {
+        "journal/2026-07-01.md": "Gelesen: https://doi.org/10.1215/2834703X-11700255",
+        "drafts/audit/sources/history/03067c54.json": alter_stand,
+        # Zwei der drei Signaturfelder sind die Schwelle; EINES darf nicht genügen, sonst
+        # fiele ein fremdes Verzeichnis mit ähnlicher Spalte mit.
+        "works/w/quellen.json": '[{"doi": "10.7551/mitpress/1234.001.0001", "zitiert_von": "uns"}]',
+    })
+    saat = sammle(tmp_path, {"field": "field-research"})
+    kennungen = {k.kennung for k in saat.koerner}
+    assert "10.1215/2834703x-11700255" in kennungen, "echtes Zitat bleibt"
+    assert "10.7551/mitpress/1234.001.0001" in kennungen, "ein Signaturfeld allein ist kein Spiegel"
+    assert "10.5555/nur-im-alten-spiegel" not in kennungen, "auch der alte Stand ist ein Spiegel"
+
+
 def test_das_wort_aufnahmegrund_in_prosa_ist_kein_spiegel(tmp_path: Path):
     """Geprüft wird der geparste Eintrag, nicht der Text.
 

@@ -11,6 +11,8 @@
 // data, not hand-placed per specific week number the way the one-off mockup did — see
 // `computeAnnotations` below.
 
+import { escapeXml } from '@/lib/dataviz/geometry'
+
 export interface PulseWeek {
   iso_year: number
   iso_week: number
@@ -45,15 +47,6 @@ const PEAK_H = 96
 const PAD_X = 46
 const PAD_TOP = 130
 const NOTE_W = 190
-
-function escapeXml(value: string): string {
-  return value
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#x27;')
-}
 
 /** Declared smoothing: moving average, window 3, two passes — ported verbatim from
  * hub_pulse_viz.py's `smooth()`. Boundaries clamp to the edge value (no wraparound). */

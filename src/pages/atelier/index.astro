@@ -6,19 +6,30 @@
 // die Türreihe (ATP 508: „The plane is like a row of doors"), ein Modell-Band mit den
 // sechs Postulaten wörtlich aus dem Werk. Alles zur Bauzeit aus committeten Spiegeln
 // gezeichnet (meta.json · SCORE-Frontmatter · PROTOCOL.md), kein Client-JS.
-// Stufe-0-Prinzip bleibt: verständliche Haustür, keine Rail — die Rail gehört den Zimmern.
 // Wortlaute: ATELIER_NARRATIVE.entrance (Stufe 0) + entranceV2 (draft bis Franks Merge).
+// WP2 (practice-shell, 2026-07-31): adopts the atelier's own Frame — this was the only
+// practice hub still hand-rolling kicker/h1/footer chrome instead of the shared skeleton.
+// Consequence: the entry now shows the standing rail too (Frame always renders it; active=""
+// just means no item is marked "here"), matching field's and studio's own entry pages and
+// every other atelier room. The old Stufe-0 "no rail on the entry" principle is retired by
+// this change — a chrome/navigation change, not a content change (flagged in the WP2 PR).
 import Page from '@/layouts/Page.astro'
-import { ATELIER_NARRATIVE, ATELIER_DRAFT_LABEL } from '@/config/atelier-wording'
+import Frame from '@/components/atelier/surface/Frame.astro'
+import OrientationList from '@/components/practice/OrientationList.astro'
+import { ATELIER_NARRATIVE } from '@/config/atelier-wording'
 import { parseProtocol } from '@/lib/atelier/protocol-version'
 import { sortWorks } from '@/lib/atelier/sort'
-import ProcessFigure from '@/components/atelier/ProcessFigure.astro'
+import KilledOnThePivot from '@/components/atelier/tours/KilledOnThePivot.astro'
+import { loadPassageModel } from '@/lib/atelier/passage-data'
 import rhizome from '@/data/atelier/rhizome.json'
 import '@/styles/atelier-sheet.css'
 
 const E = ATELIER_NARRATIVE.entrance
 const V2 = ATELIER_NARRATIVE.entranceV2
-const isDraft = ATELIER_NARRATIVE.approval !== 'approved'
+
+// The Passage — the practice's own sheet, assembled once and handed to the tour that drives it
+// (src/lib/atelier/passage-data.ts; the figure and its per-scene stills share this one model).
+const passage = await loadPassageModel()
 
 // ————————————————————————————————— data: committed mirrors, read-only —————
 // Works — both sources, newest first (same globs the works room uses).
@@ -152,37 +163,22 @@ const xV4Mid = (xOf(T1) + xOf(T2)) / 2
 // eigentlich, auf welcher Basis, was ist bisher passiert und wie ist der aktuelle Stand."
 // Die vier Fragen standen bisher verstreut — „auf welcher Basis" ganz unten, der Stand in
 // der Mitte. Hier stehen sie zusammen, gleich unter der Lede, jede mit einer Tür in die Tiefe.
-// Alle Zahlen abgeleitet, keine gepflegt.
+// Alle Zahlen abgeleitet, keine gepflegt. WP2: the wording itself now lives in
+// ATELIER_NARRATIVE.orientation (a function, since these numbers are derived, not static) —
+// this page only supplies the computed inputs and renders the result via OrientationList.
 const laufend = projects.find((p) => p.disposition === 'PUBLICATION_CANDIDATE')
   ?? activeProjects[activeProjects.length - 1]
-const orientierung = [
-  {
-    frage: 'what happens here',
-    text: 'A machine practice opens a question of its own, works it in moves it records, and either proposes it as a work or closes it. Nothing becomes public without a human publication decision.',
-    href: '/atelier/foundation',
-    mehr: 'the operating model',
-  },
-  {
-    frage: 'on what basis',
-    text: `Its constitution is Protocol v${proto.version}, derived from the practice's own published process model “Cartography, not Tracing” (24 July 2026) — which rests on an older research foundation whose toolbox of methodological strategies it did not replace.`,
-    href: '/atelier/protocol',
-    mehr: 'the constitution',
-  },
-  {
-    frage: 'what has happened',
-    text: `${projects.length} lines opened since 18 July, ${dispCount('ARCHIVE_AS_STUDY')} kept as studies, ${dispCount('KILL')} closed on purpose, ${dispCount('PUBLISH')} published — beside ${worksCount} works from the nightly phase before.`,
-    href: '/atelier/projects',
-    mehr: 'the research log',
-  },
-  {
-    frage: 'where it stands',
-    text: laufend
-      ? `One work-line is running: “${laufend.title}”${laufend.disposition === 'PUBLICATION_CANDIDATE' ? ' — proposed as a work and waiting at the human gate.' : '.'}`
-      : 'No line is open at the moment.',
-    href: '#proc-title',
-    mehr: 'read it below',
-  },
-]
+const orientation = ATELIER_NARRATIVE.orientation({
+  protocolVersion: proto.version,
+  projectsOpened: projects.length,
+  archivedAsStudy: dispCount('ARCHIVE_AS_STUDY'),
+  killed: dispCount('KILL'),
+  published: dispCount('PUBLISH'),
+  worksCount,
+  running: laufend
+    ? { title: laufend.title, proposedAsWork: laufend.disposition === 'PUBLICATION_CANDIDATE' }
+    : undefined,
+})
 
 const doors = [
   // Tür-Labels nennen ihr ZIEL (Wording-Kanon 24.07.: kein „now"/„what's happening" —
@@ -221,27 +217,19 @@ const doors = [
   title="Atelier · Ulysses — machine-participatory artistic research | Frank Bültge"
   description={E.lede}
 >
-  <main id="main" class="atelier-surface">
-    <p class="at-kicker">
-      <span>{E.kicker}</span>
-      <span>ulysses</span>
-      {isDraft && <span class="at-chip" title={ATELIER_DRAFT_LABEL}>wording draft</span>}
-    </p>
-    <h1 class="at-h1">{E.h1}</h1>
+  <Frame active="" kicker={[E.kicker, 'ulysses']} h1={E.h1} footLeft={ATELIER_NARRATIVE.framingFoot}>
     <p class="at-entrance-lede">{E.lede}</p>
 
     <!-- ——— Orientierung: die vier Fragen eines Erstbesuchers, in ihrer Reihenfolge ——— -->
-    <dl class="at-orient">
-      {orientierung.map((o) => (
-        <div class="at-orient-item">
-          <dt>{o.frage}</dt>
-          <dd>
-            {o.text}
-            {' '}<a href={o.href}>{o.mehr} →</a>
-          </dd>
-        </div>
-      ))}
-    </dl>
+    <OrientationList items={orientation} />
+
+    <!-- ——— the tour: how a question ends here, told by one line that ended ———
+         The storytelling entry (WP6a). It leads because a first-time visitor needs a WAY IN
+         before a survey: the six scenes walk one killed line from the kill condition its own
+         score wrote in advance to the two ticks its ledger closed at, and the sheet beside them
+         follows. The account is quoted, never summarised — src/lib/tour/verify.ts fails the
+         build if a scene's quote drifts from the file it names by a single byte. -->
+    <KilledOnThePivot model={passage} />
 
     <!-- ——— the map: the practice, drawn ——— -->
     <figure class="at-map" aria-label={V2.mapHeading}>
@@ -305,12 +293,6 @@ const doors = [
       </figcaption>
     </figure>
 
-    <!-- ——— the bird's-eye view: what happens to a question (Frank, 2026-07-30) ———
-         Die Karte darüber zeigt WANN etwas entstand; diese Figur zeigt WAS mit einer Frage
-         geschieht — und wo jede Linie geendet ist. Bewusst darunter statt statt: die Karte
-         ist die Zeit, das Prozessbild der Weg. -->
-    <ProcessFigure />
-
     <!-- ——— the row of doors ——— -->
     <p class="at-doors-caption">{V2.doorsCaption}</p>
     <nav class="at-doors" aria-label="Doors into the atelier">
@@ -363,49 +345,12 @@ const doors = [
     <p class="at-quiet">
       <a href="/seed?to=ulysses">Offer this practice a seed →</a>
     </p>
-
-    <footer class="at-foot">
-      <span>{ATELIER_NARRATIVE.framingFoot}</span>
-    </footer>
-  </main>
+  </Frame>
 </Page>
 
 <style>
-  /* Orientierung: vier Fragen, vier Antworten, jede mit einer Tür in die Tiefe.
-     Bewusst Definitionsliste — die Frage IST der Begriff, die Antwort seine Erklärung. */
-  .at-orient {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 1px;
-    margin: 1.75rem 0 2.25rem;
-    background: var(--color-line);
-    border: 1px solid var(--color-line);
-    border-radius: 12px;
-    overflow: hidden;
-  }
-  .at-orient-item { background: var(--color-panel); padding: 0.95rem 1.05rem 1.05rem; }
-  .at-orient dt {
-    font: 10.5px var(--font-mono);
-    letter-spacing: 0.13em;
-    text-transform: uppercase;
-    color: var(--color-fg-faint);
-    margin-bottom: 0.4rem;
-  }
-  .at-orient dd {
-    margin: 0;
-    font: 13.5px/1.62 var(--font-sans);
-    color: var(--color-fg-muted);
-  }
-  .at-orient dd a {
-    display: inline-block;
-    margin-top: 0.15rem;
-    font: 11.5px var(--font-mono);
-    color: var(--color-fg);
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    white-space: nowrap;
-  }
-  .at-orient dd a:hover { opacity: 0.75; }
+  /* Orientierung (.pr-orient) skin now lives in atelier-sheet.css, scoped to
+     .atelier-surface — OrientationList.astro itself is skin-free (ADR 0010). */
 
   .at-entrance-lede {
     max-width: 62ch;
@@ -435,10 +380,14 @@ const doors = [
   .m-slab-link:hover .m-slab-curated, .m-slab-link:focus .m-slab-curated { fill: var(--at-red); opacity: 0.75; }
   .m-proj-line { fill: none; stroke: var(--at-graphite); stroke-width: 1.1; }
   .m-proj-active { stroke: var(--at-thread); stroke-dasharray: 4 3; }
-  .m-mark-kill { stroke: var(--at-ink-2); stroke-width: 1.2; fill: none; }
-  .m-mark-archive { fill: none; stroke: var(--at-ink-2); stroke-width: 1.1; }
-  .m-mark-publish { fill: var(--at-red); }
-  .m-publish-tie { stroke: var(--at-red); stroke-width: 0.9; stroke-dasharray: 1.5 2.5; }
+  /* Disposition marks wear the shared outcome identities (--at-out-*, atelier-sheet.css,
+   * PALETTE: atelier-outcomes) — the same outcome reads the same colour here and in the
+   * process figure below. Before this, PUBLISH wore the structural red (the one colour the
+   * practice reserves for swerves) and KILL wore plain ink. */
+  .m-mark-kill { stroke: var(--at-out-kill); stroke-width: 1.4; fill: none; }
+  .m-mark-archive { fill: none; stroke: var(--at-out-study); stroke-width: 1.2; }
+  .m-mark-publish { fill: var(--at-out-publish); }
+  .m-publish-tie { stroke: var(--at-out-publish); stroke-width: 0.9; stroke-dasharray: 1.5 2.5; }
   .at-map-legend, .at-map-prov {
     font-family: var(--at-font-record);
     font-size: 0.72rem;

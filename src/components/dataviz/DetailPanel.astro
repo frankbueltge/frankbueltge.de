@@ -1,0 +1,96 @@
+---
+// src/components/dataviz/DetailPanel.astro — the shared click-to-lock detail panel with
+// prev/next stepping (WP3, "shared dataviz primitives"). Behavior + structure only (ADR 0010) —
+// no color, no font; a later port WP retires maschinenraum/Partitur.astro's `#pt-panel` (and its
+// renderPanel/step/activate trio) in favor of this shell plus src/lib/dataviz/stepper.ts.
+//
+// This shell owns NO position state itself beyond the `data-dv-pos` attribute it reflects back
+// in its emitted events — the actual segment bounds (which landing is first/last in its voice,
+// etc.) live in the consumer's own data, via stepper.ts's buildSegments/step/positionLabel. The
+// consumer:
+//   1. sets `data-dv-pos` to the current position and fills the head/body/foot slots' content
+//      (createElement/textContent — never innerHTML of data) whenever it opens or moves the
+//      panel, then clears `hidden`;
+//   2. listens for `dv:step` on the panel root, calls stepper.ts's `step()` with its own
+//      Segmented<T> to get the clamped next position, and re-renders if it actually changed;
+//   3. listens for `dv:close` to clear its own "currently open" state and set `hidden` back.
+//
+// The critical fix baked in: opening/closing this panel (toggling its `hidden` attribute) is
+// observed here and wired into stepper.ts's module-level keydown registry — so with several
+// DetailPanel instances on one page, only the one that is actually open (not `hidden`) ever
+// responds to Escape/ArrowLeft/ArrowRight. See stepper.ts's own header comment for the bug this
+// replaces (maschinenraum/Partitur.astro binds one keydown listener PER INSTANCE today).
+export interface Props {
+  id?: string
+  /** aria-label for the prev/next/close buttons' surrounding group, if any grouping is needed */
+  labelledby?: string
+  /**
+   * Renders the panel already OPEN, with whatever the consumer server-rendered into its slots
+   * (WP6a). The default stays closed — a panel that opens on a click is what most figures want.
+   * A figure whose panel is its PRIMARY content, not a detail of a mark, needs the other default:
+   * the atelier's passage figure puts the line's own record in this panel and the drawing below it
+   * as the selector, so a visitor without JS must still find the record — an empty box above an
+   * SVG would be the no-JS floor falling through.
+   *
+   * Consequence worth knowing before using it: this shell registers for the arrow keys whenever it
+   * is not `hidden` (see the script below and stepper.ts's registry), so an initially-open panel
+   * owns ←/→ from page load — including over a components/dataviz/Tour.astro on the same page,
+   * which yields to an open panel by design. Its close button hands the keys back.
+   */
+  open?: boolean
+  /** the position the panel opens AT — only meaningful together with `open` */
+  pos?: number
+}
+const { id, labelledby, open = false, pos = 0 } = Astro.props
+---
+
+<div class="dv-panel" data-dv-panel id={id} data-dv-pos={String(pos)} aria-labelledby={labelledby} hidden={!open}>
+  <div class="dv-panel-head"><slot name="head" /></div>
+  <div class="dv-panel-body"><slot name="body" /></div>
+  <div class="dv-panel-nav">
+    <button type="button" data-dv-prev aria-label="Previous">prev</button>
+    <button type="button" data-dv-next aria-label="Next">next</button>
+    <button type="button" data-dv-close aria-label="Close details">close</button>
+  </div>
+  <div class="dv-panel-foot"><slot name="foot" /></div>
+</div>
+
+<style>
+  .dv-panel-nav {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+</style>
+
+<script>
+  import { activatePanel, deactivatePanel, ensurePanelKeydownListener, type PanelKeyHandlers } from '@/lib/dataviz/stepper'
+
+  ensurePanelKeydownListener()
+
+  for (const panel of document.querySelectorAll<HTMLElement>('[data-dv-panel]')) {
+    const prev = panel.querySelector<HTMLButtonElement>('[data-dv-prev]')
+    const next = panel.querySelector<HTMLButtonElement>('[data-dv-next]')
+    const close = panel.querySelector<HTMLButtonElement>('[data-dv-close]')
+
+    const pos = () => Number(panel.dataset.dvPos ?? '0')
+    const emitStep = (delta: number) =>
+      panel.dispatchEvent(new CustomEvent('dv:step', { detail: { pos: pos() + delta }, bubbles: true }))
+    const emitClose = () => panel.dispatchEvent(new CustomEvent('dv:close', { bubbles: true }))
+
+    prev?.addEventListener('click', () => emitStep(-1))
+    next?.addEventListener('click', () => emitStep(1))
+    close?.addEventListener('click', emitClose)
+
+    const handlers: PanelKeyHandlers = { onPrev: () => emitStep(-1), onNext: () => emitStep(1), onClose: emitClose }
+
+    // The panel arbitrates its own keyboard registration off its own `hidden` attribute — the
+    // consumer only ever needs to toggle `hidden`, never call an activation API directly.
+    const syncActive = () => {
+      if (panel.hidden) deactivatePanel(handlers)
+      else activatePanel(handlers)
+    }
+    new MutationObserver(syncActive).observe(panel, { attributes: true, attributeFilter: ['hidden'] })
+    syncActive()
+  }
+</script>
