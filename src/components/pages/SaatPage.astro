@@ -260,7 +260,9 @@ const payload = JSON.stringify({
       <div>
         <label for="saat-addressee" class="block font-mono text-xs uppercase tracking-[0.14em] text-fg-faint">{txt.addresseeLabel}</label>
         <select id="saat-addressee" name="addressedTo" required data-saat="addressee" class="mt-2 w-full rounded-[8px] border border-line bg-panel-2 px-3 py-2.5 text-sm">
-          {SAAT_ADDRESSEES.map((a) => <option value={a}>{addresseeLabel[a]}</option>)}
+          {/* "open" is the default — a seed belongs to the research, not to one practice; the
+              ?to=/?an= prefills below still override it for contextual links from a practice page. */}
+          {SAAT_ADDRESSEES.map((a) => <option value={a} selected={a === 'open'}>{addresseeLabel[a]}</option>)}
         </select>
       </div>
 
