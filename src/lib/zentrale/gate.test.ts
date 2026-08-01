@@ -53,12 +53,12 @@ describe('buildPostLane', () => {
     { id: 'd', practice: 'studio', piece: 'already out', receiver: 'x', receiver_channel: 'y', status: 'sent', as_of: '2026-07-30', record_url: 'https://example.test/d' },
   ]
 
-  it('drops sent items, runs the rota clock only on prepared ones, sorts by urgency', () => {
+  it('drops sent items, counts open days only for prepared letters, longest-lying first', () => {
     const lane = buildPostLane(ledger, '2026-08-04T12:00:00Z')
     expect(lane.map((i) => i.id)).toEqual(['a', 'b', 'c'])
-    expect(lane[0].daysLeft).toBe(3) // prepared 31.07., 7-day rota
-    expect(lane[1].daysLeft).toBe(4)
-    expect(lane[2].daysLeft).toBeNull() // in-preparation: the practice holds it, not Frank
+    expect(lane[0].daysOpen).toBe(4) // lies open since 31.07. — a fact, not a countdown
+    expect(lane[1].daysOpen).toBe(3)
+    expect(lane[2].daysOpen).toBeNull() // in-preparation: still with the practice
   })
 
   it('extracts a mailto address when the channel carries one', () => {

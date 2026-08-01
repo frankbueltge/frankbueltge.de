@@ -92,11 +92,13 @@
       <div data-zx="gate" class="flex flex-col gap-4"></div>
     </section>
 
-    {/* Post-Spur (v2 P2, Governance §3): Franks 7-Tage-Weiterleitungsversprechen als
-        Countdown über dem committeten Post-Ledger. Lesend — der Versand selbst passiert
-        draußen, das "gesendet"-Werden ist ein Ledger-Commit. */}
+    {/* Post-Spur (v2 P2, revidiert 2026-08-01 abends — poste restante, Franks Konzept):
+        der Ausgang ist Teil des Werks, kein Aufgabenstapel. Briefe liegen adressiert und
+        vollständig offen; Zustellung ist optional und darf von jedem übernommen werden —
+        im besten Fall holt der Empfänger seine Post selbst ab. Gezeigt wird Liegedauer
+        als Fakt, nie als Frist; nichts wird archiviert. */}
     <section aria-labelledby="zx-post-h" class="mb-12">
-      <h2 id="zx-post-h" class="mb-4 font-mono text-xs uppercase tracking-[0.22em] text-fg-faint">Post — deine Weiterleitungen</h2>
+      <h2 id="zx-post-h" class="mb-4 font-mono text-xs uppercase tracking-[0.22em] text-fg-faint">Post — offener Ausgang an die Welt</h2>
       <div data-zx="post" class="flex flex-col gap-4"></div>
     </section>
 
@@ -257,7 +259,7 @@
     email: string | null
     status: string
     asOf: string
-    daysLeft: number | null
+    daysOpen: number | null
     recordUrl: string
     note: string
   }
@@ -725,14 +727,14 @@
     return card
   }
 
-  /** Post-Karte (v2 P2): lesend — Empfänger, Kanal, Countdown der 7-Tage-Zusage. */
+  /** Post-Karte (poste restante): lesend — Empfänger, Kanal, Liegedauer als Fakt.
+   * Kein Countdown, kein Warnbernstein: ein lange liegender Brief ist Teil der Geste,
+   * kein Versäumnis. Direktzustellung bleibt als Option verlinkt. */
   function renderPostCard(item: ZxPostItem): HTMLElement {
     const card = el('article', { class: 'rounded-xl border border-line bg-panel p-4' })
     const meta = el('p', { class: 'font-mono text-xs uppercase tracking-[0.12em] text-fg-faint' }, `${item.practice} · ${item.status}`)
-    if (item.daysLeft !== null) {
-      const urgent = item.daysLeft <= 2
-      const label = item.daysLeft < 0 ? `Zusage überschritten (${-item.daysLeft} Tg.) — datierte Verzögerungsnotiz fällig` : `noch ${item.daysLeft} Tg. deiner 7-Tage-Zusage`
-      meta.append(el('span', { class: urgent ? BADGE_URGENT : BADGE }, label))
+    if (item.daysOpen !== null) {
+      meta.append(el('span', { class: BADGE }, item.daysOpen === 0 ? 'heute offen gelegt' : `liegt offen zur Abholung · ${item.daysOpen} Tg.`))
     } else {
       meta.append(el('span', { class: BADGE }, 'liegt noch bei der Praxis'))
     }
@@ -742,7 +744,7 @@
     if (item.note) card.append(el('p', { class: 'mt-1 text-xs text-fg-faint' }, item.note))
     const links = el('p', { class: 'mt-2 font-mono text-xs' })
     if (item.email) {
-      links.append(el('a', { href: `mailto:${item.email}`, class: 'underline hover:text-fg' }, `E-Mail an ${item.email}`))
+      links.append(el('a', { href: `mailto:${item.email}`, class: 'underline hover:text-fg' }, `direkt zustellen (optional): ${item.email}`))
       links.append(' · ')
     }
     links.append(el('a', { href: item.recordUrl, target: '_blank', rel: 'noreferrer', class: 'underline hover:text-fg' }, 'das Paket ↗'))

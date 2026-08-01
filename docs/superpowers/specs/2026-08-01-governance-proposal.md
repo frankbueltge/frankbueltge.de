@@ -51,6 +51,26 @@ proposals; only the shape is argued for.
   016 to Forensic Architecture and the Internet Archive (the two parties who can
   contradict it).
 
+### §3 — REVISED the same evening: poste restante (Frank, 2026-08-01)
+
+Frank, verbatim: "es ist der postausgang an die welt und ich muss nicht unbedingt etwas
+direkt zustellen, denn es ist quasi schon zugestellt, also an die welt :) jeder leser
+könnte diese aufgabe oder verantwortung übernehmen, das ist teil des werks und eine
+starke botschaft. im besten fall werden die empfänger irgendwie aufmerksam auf ihre post
+und holen sie selber ab"
+
+- **The 7-day forwarding promise is withdrawn.** The outgoing ledger is not a task queue
+  but part of the work: poste restante — letters addressed, complete and publicly
+  collectible; nothing is ever archived away; direct delivery is optional and may be
+  performed by anyone, reader-as-courier included.
+- **What stays binding:** the record's honesty. Collection, reply or enduring silence are
+  recorded faithfully and score nothing. The tension with the Field's instrument 016
+  ("coverage is not custody — published is not delivered") stays on the record as named,
+  welcome dissent — the gesture inverts the finding deliberately, it does not deny it.
+- **Named exception:** submissions to external calls (DARC, ZKM) are forms with
+  deadlines, not letters to the world — nobody can collect an application. Unsent by the
+  deadline, they lapse; lapsing is a legitimate outcome and is recorded, dated.
+
 ## 4. The MRR leash
 
 - MRR's own review (meridian-runtime,
@@ -64,7 +84,7 @@ proposals; only the shape is argued for.
 
 - [x] §1 gate SLA + ledger — **yes** (Frank, 2026-08-01)
 - [x] §2 fabrication ceiling €150/quarter — **yes** (Frank, 2026-08-01)
-- [x] §3 post rota 7 days — **yes** (Frank, 2026-08-01)
+- [x] §3 post rota 7 days — **yes** (Frank, 2026-08-01 morning); **revised the same evening to poste restante — see the §3 revision block** (the 7-day duty is withdrawn)
 - [x] §4 MRR leash — **yes** (Frank, 2026-08-01)
 
 One honest caveat, kept for the record: a 72-hour SLA is a promise a single human makes
