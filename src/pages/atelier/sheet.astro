@@ -61,7 +61,8 @@ const svg = buildSheetSvg(rhizome, {
       const atlasId = id.replace(/^atlas:/, '')
       return atlasIds.has(atlasId) ? `/atelier/material#${atlasId}` : null
     },
-    session: (n) => `/atelier/journal#s${n}`,
+    // Etappe 2: one page per session — the sheet's session marks open the page itself.
+    session: (n) => `/atelier/journal/s${n}/`,
     thread: (id) => `/atelier/sheets#${id}`,
   },
 })

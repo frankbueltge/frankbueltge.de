@@ -14,7 +14,12 @@ export interface JournalLatest {
   firstLine: string
 }
 
-const stripMd = (s: string): string =>
+/** Defuses the markdown of ONE line: leading ATX marker, bold/italic asterisks, backticks.
+ *  Exported (2026-08-01) so the requests reader builds its excerpts on the same flattening
+ *  the machine room already uses for journal first lines — deliberately conservative: it
+ *  leaves `_` alone (identifiers like `BOT_TOKEN` are common in these files) and does not
+ *  touch link syntax, which callers that need it strip on top (see requestsMd.plainLine). */
+export const stripMd = (s: string): string =>
   s
     .replace(/^#+\s*/, '')
     .replace(/\*\*?/g, '')
