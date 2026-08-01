@@ -83,6 +83,12 @@ jobs:
             }
           '
 
+      - name: Sync joint-inquiry register (fixtures ji-* → src/data/begegnungen)
+        # Same derivation discipline as the encounter register: read the contact zone's own
+        # machine-readable fixture files, retype nothing. The commit step below already
+        # watches src/data/begegnungen, so this snapshot rides the same regeneration path.
+        run: node scripts/ecology/sync-joint-inquiries.mjs --ecology /tmp/ecology
+
       - name: Commit (regeneration) or PR (new meaning)
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

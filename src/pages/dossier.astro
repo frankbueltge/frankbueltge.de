@@ -1,0 +1,123 @@
+---
+// /dossier — the curator-facing entry, commissioned by the festival line
+// (docs/superpowers/specs/2026-08-01-festival-line.md §5.6). An external reader currently
+// needs the hub, the apparatus and two practice doors to understand the grammar; this page
+// is the ten-minute version. Approved hub wordings are imported from naming.ts (derive,
+// don't retype); the page's own new sentences live in dossier-wording.ts under
+// approval: 'draft' — while draft, the page is noindex, shows the draft chip, and is NOT
+// linked from the navigation (the nav entry comes with the wording sign-off).
+import Page from '@/layouts/Page.astro'
+import { NAMING, DRAFT_LABEL } from '@/config/naming'
+import { DOSSIER } from '@/config/dossier-wording'
+
+const draft = DOSSIER.approval === 'draft'
+const s = DOSSIER.sections
+---
+<Page
+  title={DOSSIER.metaTitle}
+  description={DOSSIER.metaDescription}
+  noindex={draft}
+>
+  <section class="mx-auto w-full max-w-3xl px-6 pb-4 pt-14">
+    <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted">
+      {DOSSIER.kicker}
+      {draft && <span class="ds-chip ml-3">{DRAFT_LABEL}</span>}
+    </p>
+    <h1 class="mt-4 text-2xl text-fg">{NAMING.title}</h1>
+    <p class="mt-4 max-w-2xl text-sm text-fg-muted">{NAMING.sub}</p>
+    <p class="mt-3 max-w-2xl text-sm text-fg-muted">{DOSSIER.lede}</p>
+    <p class="mt-5 max-w-2xl border-l-2 border-line pl-4 text-sm text-fg">
+      {DOSSIER.thesis}
+    </p>
+    <p class="mt-3 font-mono text-xs text-fg-faint">{NAMING.conductorLine}</p>
+  </section>
+
+  <section class="mx-auto w-full max-w-3xl px-6 py-8" aria-labelledby="ds-practices">
+    <h2 id="ds-practices" class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">
+      {s.practices.heading}
+    </h2>
+    <p class="mt-3 max-w-2xl text-sm text-fg-muted">{s.practices.lead}</p>
+    <ul class="mt-5 space-y-4">
+      {NAMING.doors.items.map((d) => (
+        <li class="border-t border-line/60 pt-4">
+          <p class="text-sm text-fg">
+            <a href={d.href} class="underline hover:text-fg">{d.name}</a>
+          </p>
+          <p class="mt-1 max-w-2xl text-sm text-fg-muted">{d.description}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="mx-auto w-full max-w-3xl px-6 py-8" aria-labelledby="ds-proof">
+    <h2 id="ds-proof" class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">
+      {s.proof.heading}
+    </h2>
+    <p class="mt-3 max-w-2xl text-sm text-fg-muted">{s.proof.lead}</p>
+    <ul class="mt-5 grid gap-4 sm:grid-cols-2">
+      {s.proof.items.map((it) => (
+        <li class="border border-line/60 p-4">
+          <p class="font-mono text-xs uppercase tracking-[0.14em] text-fg-muted">{it.label}</p>
+          <p class="mt-2 text-sm text-fg-muted">{it.text}</p>
+        </li>
+      ))}
+    </ul>
+    <p class="mt-4 font-mono text-xs text-fg-faint">
+      the receipts:{' '}
+      {DOSSIER.repos.map((r, i) => (
+        <>
+          {i > 0 && ' · '}
+          <a href={r.href} target="_blank" rel="noreferrer" class="underline hover:text-fg">{r.label} ↗</a>
+        </>
+      ))}
+    </p>
+    <p class="mt-2 font-mono text-xs text-fg-faint">{NAMING.footer.licenseLine}</p>
+  </section>
+
+  <section class="mx-auto w-full max-w-3xl px-6 py-8" aria-labelledby="ds-records">
+    <h2 id="ds-records" class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">
+      {s.records.heading}
+    </h2>
+    <p class="mt-3 max-w-2xl text-sm text-fg-muted">{s.records.lead}</p>
+    <ul class="mt-5 space-y-4">
+      {s.records.items.map((w) => (
+        <li class="border-t border-line/60 pt-4">
+          <p class="text-sm text-fg">
+            <a href={w.href} class="underline hover:text-fg">{w.title}</a>
+          </p>
+          <p class="mt-1 max-w-2xl text-sm text-fg-muted">{w.note}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="mx-auto w-full max-w-3xl px-6 py-8" aria-labelledby="ds-authorship">
+    <h2 id="ds-authorship" class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">
+      {s.authorship.heading}
+    </h2>
+    <p class="mt-3 max-w-2xl text-sm text-fg-muted">{s.authorship.lead}</p>
+  </section>
+
+  <section class="mx-auto w-full max-w-3xl px-6 pb-20 pt-8" aria-labelledby="ds-contact">
+    <h2 id="ds-contact" class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">
+      {s.contact.heading}
+    </h2>
+    <p class="mt-3 max-w-2xl text-sm text-fg-muted">{s.contact.lead}</p>
+    <p class="mt-4 font-mono text-xs">
+      {s.contact.items.map((it, i) => (
+        <>
+          {i > 0 && ' · '}
+          <a href={it.href} class="underline hover:text-fg">{it.label} →</a>
+        </>
+      ))}
+    </p>
+  </section>
+</Page>
+
+<style>
+  .ds-chip {
+    border: 1px solid var(--color-line); padding: 0.1rem 0.5rem; border-radius: 999px;
+    font: 10px var(--font-mono, ui-monospace, monospace); letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--color-fg-muted);
+  }
+</style>
