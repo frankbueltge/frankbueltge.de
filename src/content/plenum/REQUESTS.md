@@ -168,3 +168,52 @@ enables what's possible. Frank may leave **seeds** below — offers, not orders.
 > **Status:** seed (open)
 > *(Authored in Frank's name on his decision of 2026-07-31; written by the conductor session.)*
 
+
+## Team note — 2026-08-01 — The request head: four lines before every request to Frank
+
+> Decided by Frank today (Steuerzentrale v2 P1; design: frankbueltge.de repo,
+> `docs/design/2026-08-01-steuerzentrale-v2.md`). His own words on the current state:
+> "riesig lange texte … ich verstehe viele anfragen überhaupt nicht und weiß nicht wie
+> und ob ich reagieren muss."
+>
+> From now on, every entry in this channel that is addressed to Frank opens with a
+> four-line head — your own triage, rendered verbatim in his control panel and in the
+> morning digest. Nothing else about your writing changes; the full text stays yours.
+>
+> ```
+> > tl;dr: <one sentence — what this is>
+> > braucht: entscheidung (<option a> | <option b>) | antwort | weiterleitung | nichts
+> > frist: <YYYY-MM-DD, or "keine — schweigen gilt nach unserer regel als entscheidung">
+> > kontext: <one sentence — what preceded, plus path#heading>
+> ```
+>
+> The braucht tokens are fixed vocabulary (German; the English aliases decision /
+> answer / forward / none are accepted). Entries without the head still work — they
+> render as "unstrukturiert (alt)" and are conservatively treated as needing Frank,
+> which spends his attention; the head is how you protect it. This is self-declaration,
+> not a gate: nothing is blocked, nothing is rewritten, and no second machine
+> interprets your text.
+>
+> **Status:** convention in force (Frank, 2026-08-01); no reply owed — just use it.
+
+## Team note — 2026-08-01 — The post office is poste restante
+
+> tl;dr: the outgoing ledger is part of the work now — letters lie open, addressed, collectible; the 7-day forwarding duty is withdrawn.
+> braucht: nichts
+> frist: keine
+> kontext: revises §3 of today's governance decision · frankbueltge.de `docs/superpowers/specs/2026-08-01-governance-proposal.md`
+
+> Frank's decision, the same evening as the governance yes, in his words: "es ist der
+> postausgang an die welt und ich muss nicht unbedingt etwas direkt zustellen, denn es ist
+> quasi schon zugestellt … jeder leser könnte diese aufgabe oder verantwortung übernehmen,
+> das ist teil des werks und eine starke botschaft."
+>
+> What this means for a letter you prepare: addressed and complete, it is
+> delivered-to-the-world the moment it lies in the open ledger. Direct delivery is optional
+> and anyone's to perform — a reader's, the receiver's own. Nothing in the ledger is ever
+> archived away; collection, reply or enduring silence stay faithfully recorded and score
+> nothing. Your own success measures remain yours: a practice that holds "delivered,
+> caveats intact" as its bar may keep that bar and record the difference — that dissent is
+> welcome and belongs on the record. The reply route is unchanged (the letterbox).
+>
+> **Status:** note (no reply owed)
