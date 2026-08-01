@@ -1,0 +1,130 @@
+---
+// src/components/hub/Triptych.astro — three doors, three vocabularies (WP7, 2026-08-01).
+//
+// Directly under the entrance's four doors: one card per practice, each holding a small
+// build-time still of that practice's OWN figure. What ties the three together is the frame —
+// identical border, identical caption slot, identical provenance line, and a hairline at the top
+// in that voice's ecology hue, the same one its door wears above and its Partitur lane below.
+// What stays different is everything inside the window: the drawing, the paper, the marks, the
+// type. That difference is the point of the arrangement, and it is not decoration — the practices
+// really do draw differently (ADR 0010: no shared visual grammar), and the entrance should say so
+// before a visitor has clicked anything.
+//
+// Three rules this component keeps, each of them a thing that would otherwise rot:
+//
+//   · it draws NOTHING. Every picture comes from the room's own builder in `still` mode, chosen
+//     by src/lib/hub/triptych.ts — so a card can never drift from the room behind it, because
+//     there is no second generator to drift. The stills carry no tab stops and no click targets;
+//     the card's own link is what a visitor takes hold of.
+//   · it writes NOTHING. Every visitor-facing string comes from NAMING.triptych
+//     (src/config/naming.ts) — the entrance's one approval-gated dictionary.
+//   · the fragments are LIVING: each is the newest thing its practice has on the record, so the
+//     cards move with the nightlies instead of freezing the day they were built.
+//
+// The practices' own stylesheets are imported here and are what actually paints the three
+// windows. They are scoped by their own files to .atelier-surface / .field-surface /
+// .studio-surface, so nothing they carry can reach the rest of the entrance; hub-triptych.css
+// undoes the little each of them assumes about being a whole page.
+import { NAMING } from '@/config/naming'
+import {
+  ATELIER_THUMB_PROVENANCE,
+  FIELD_THUMB_PROVENANCE,
+  passageThumbSvg,
+  plateThumbSvg,
+  provenanceLine,
+  seasonThumbSvg,
+} from '@/lib/hub/triptych'
+import { ATELIER_NARRATIVE } from '@/config/atelier-wording'
+import { loadPassageModel } from '@/lib/atelier/passage-data'
+import { loadChronicle as loadFieldChronicle } from '@/lib/field/chronicle'
+import { loadChronicle as loadStudioChronicle } from '@/lib/studio/chronicle'
+import { GAUNTLET_INSTRUMENTS, gauntletPlate, type GauntletChronicleEntry } from '@/lib/tour/field-gauntlet'
+import { buildSeasonModel, type SeasonKill, type SeasonWorkMeta } from '@/lib/studio/season'
+import type { InstrumentMeta } from '@/lib/field/latest'
+import parallax from '@/data/meridian/parallax.json'
+import stageData from '@/data/studio/stage.curated.json'
+import '@/styles/hub-triptych.css'
+import '@/styles/atelier-sheet.css'
+import '@/styles/atelier-process.css'
+import '@/styles/field-plate.css'
+import '@/styles/studio-stage.css'
+
+const w = NAMING.triptych
+
+// ——— the atelier: the passage sheet, assembled exactly as /atelier assembles it ——————
+const passage = await loadPassageModel()
+
+// ——— the field: the same plate the gauntlet tour drives, cut to its last marked days ————
+const fieldMetas = import.meta.glob('/src/components/field/werke/*/meta.json', {
+  eager: true, import: 'default',
+}) as Record<string, InstrumentMeta>
+const metaOf = (slug: string): InstrumentMeta | undefined =>
+  fieldMetas[`/src/components/field/werke/${slug}/meta.json`]
+const i018 = metaOf(GAUNTLET_INSTRUMENTS.i018)
+const i019 = metaOf(GAUNTLET_INSTRUMENTS.i019)
+if (!i018?.title || !i018.date || !i019?.title || !i019.date) {
+  throw new Error('hub triptych: the field fragment needs both gauntlet instruments in the committed mirror')
+}
+const plate = gauntletPlate({
+  chronicle: loadFieldChronicle() as GauntletChronicleEntry[],
+  instrument018: { title: i018.title, date: i018.date },
+  instrument019: { title: i019.title, date: i019.date },
+  parallax,
+})
+
+// ——— the studio: the season floor, from the same three sources /studio reads ——————————
+const studioMetas = import.meta.glob('/src/content/studio/works/*/meta.json', {
+  eager: true, import: 'default',
+}) as Record<string, SeasonWorkMeta>
+const season = buildSeasonModel({
+  chronicle: loadStudioChronicle(),
+  metas: Object.fromEntries(Object.entries(studioMetas).map(([path, m]) => [path.split('/').at(-2) ?? path, m])),
+  kills: stageData.kills as SeasonKill[],
+})
+
+// The accessible name of each still is the card's own caption: the picture and the sentence beside
+// it say the same thing, so a screen reader is not handed a second, differently worded figure.
+const byId = Object.fromEntries(w.cards.map((c) => [c.id, c]))
+const thumb: Record<string, string> = {
+  ulysses: passageThumbSvg(passage, {
+    label: byId.ulysses.caption,
+    gapLine: ATELIER_NARRATIVE.passage.gapLine,
+  }),
+  meridian: plateThumbSvg(plate, { label: byId.meridian.caption, svgId: 'hub-thumb-field' }),
+  ensemble: seasonThumbSvg(season, { label: byId.ensemble.caption }),
+}
+const provenance: Record<string, string> = {
+  ulysses: provenanceLine(w.provenancePrefix, ATELIER_THUMB_PROVENANCE),
+  meridian: provenanceLine(w.provenancePrefix, FIELD_THUMB_PROVENANCE),
+  ensemble: provenanceLine(w.provenancePrefix, season.provenance),
+}
+const SURFACE: Record<string, string> = {
+  ulysses: 'atelier-surface',
+  meridian: 'field-surface',
+  ensemble: 'studio-surface',
+}
+---
+
+<div class="hub-voices">
+  <p class="mt-9 font-mono text-xs uppercase tracking-[0.22em] text-fg-muted">
+    <b class="text-fg">{w.kicker}</b> · {w.kickerSub}
+  </p>
+  <p class="mt-4 max-w-[72ch] font-mono text-xs leading-relaxed text-fg-faint">{w.note}</p>
+
+  <div class="hub-tri">
+    {w.cards.map((card) => (
+      <article class="hub-tri-card" data-voice={card.id}>
+        <div class:list={['hub-thumb', SURFACE[card.id]]}>
+          <div class="hub-thumb-svg" set:html={thumb[card.id]} />
+        </div>
+        <div class="hub-tri-body">
+          <p class="hub-tri-practice">{card.practice}</p>
+          <h3 class="hub-tri-title">{card.title}</h3>
+          <p class="hub-tri-caption">{card.caption}</p>
+          <p class="hub-tri-prov">{provenance[card.id]}</p>
+          <a class="hub-tri-cta" href={card.href}>{card.cta}</a>
+        </div>
+      </article>
+    ))}
+  </div>
+</div>
