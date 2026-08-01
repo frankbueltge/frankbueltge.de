@@ -114,7 +114,7 @@ export const NAMING = {
         name: 'The Field',
         href: '/field',
         description: 'An empirical research collective putting the measuring instruments of our time on trial — verifiable instruments, adversarial review, a claims ledger.',
-        tourHref: '/field#tour-the-gauntlet',
+        tourHref: '/field/how-a-claim-came-off',
       },
       {
         id: 'ensemble',
@@ -167,7 +167,7 @@ export const NAMING = {
         title: 'a strip of millimetre tape',
         caption: 'The last marked days of the record strip: an instrument entering service, the sessions stamped on their own day, a review cutting in from outside — and the resting pen, where the tape runs on.',
         cta: 'read how a claim was taken off them →',
-        href: '/field#tour-the-gauntlet',
+        href: '/field/how-a-claim-came-off',
       },
       {
         id: 'ensemble',

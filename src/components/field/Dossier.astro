@@ -1,0 +1,426 @@
+---
+// src/components/field/Dossier.astro — the Field entrance's centre: one instrument, read.
+//
+// WHAT IT IS AND WHY IT IS SHAPED LIKE THIS. The entrance used to be a single instrument's
+// record strip with a guided tour on top of it: a visitor who wanted any other instrument got a
+// link off the page, and the tour drove its figure through its own week no matter which
+// instrument the page was nominally about. This component is the other arrangement — the same
+// dossier for every instrument, and the selection switches the WHOLE dossier rather than a card
+// inside it. The protagonist is the ROLE ("the instrument in service"), never a hand-set actor:
+// which instrument holds the role is derived in src/lib/field/dossier.ts from position in the
+// committed order, the same derivation latest.ts already makes for the header.
+//
+// THE FIGURE IS THE PRACTICE'S OWN. Each dossier carries the Kontrollblatt — buildControlSvg,
+// the field's approved record grammar (field-aesthetik §4) — for ITS instrument, with the
+// plate's whole record repeating as a table underneath. That is deliberately not one strip above
+// the dossier: a strip that stayed on instrument 020 while the page showed instrument 007 would
+// be the exact failure this rebuild exists to end.
+//
+// NO-JS FLOOR, and why it is stacking rather than one page per instrument. Every dossier is
+// server-rendered, in full, in the order the selector lists them — so without JavaScript the
+// page is a readable stack of records with the one in service first, and the selector is a list
+// of in-page links that work as links. With JavaScript the selector becomes a tab list and shows
+// one dossier at a time. Per-instrument PAGES already exist (/field/werke/*, linked from every
+// dossier); an ENTRANCE that answers "what is this practice measuring right now" with a link to
+// somewhere else has not answered it.
+//
+// DEEP LINKS. Each dossier's section id is `instrument-<slug>`, so /field#instrument-2026-07-25-
+// no-signal-to-extend opens that instrument with or without scripts: without, the browser scrolls
+// to it; with, the script selects it. The selector and the shelf band above both write that same
+// hash, so any instrument a visitor is reading can be sent to someone else.
+//
+// House rules this file is built around: no `is:inline` script (the CSP hashes bundled module
+// scripts), no `style=""` (silently dropped — dynamic styling goes through dataviz/runtime's
+// setVars, and nothing here needs any), every visitor-facing string from
+// src/config/field-wording.ts, and every quotation printed beside the committed path it came from.
+import TableFallback from '@/components/dataviz/TableFallback.astro'
+import ClaimFigure from '@/components/field/ClaimFigure.astro'
+import { FIELD_GRAMMAR, FIELD_NARRATIVE } from '@/config/field-wording'
+import type { ClaimModel } from '@/lib/field/claimladder'
+import type { FieldDossier, PlateMark } from '@/lib/field/dossier'
+import { buildControlSvg, type ControlMark } from '@/lib/field/strip'
+import '@/styles/field-dossier.css'
+
+export interface Props {
+  /** every instrument's dossier, the one in service first — src/lib/field/dossier.ts */
+  dossiers: FieldDossier[]
+  /** the contested-claim plate, rendered inside the dossier the record ties it to */
+  claim?: ClaimModel
+  /** where the relocated guided tour lives, linked from the instruments it walks */
+  tourHref?: string
+}
+
+const { dossiers, claim, tourHref } = Astro.props
+const w = FIELD_NARRATIVE.dossier
+const p = w.plate
+const first = dossiers[0]
+
+const inService = dossiers.filter((d) => d.inService)
+const earlier = dossiers.filter((d) => !d.inService)
+
+/** The stand as the page says it: the record's own review word where it uses one, else the
+ *  state's own label. Never a grade — `stands` and `verdictWords` both say what happened. */
+const standLabel = (d: FieldDossier): string =>
+  (d.stand.verdictWord && d.stand.key === 'reviewed'
+    ? w.verdictWords[d.stand.verdictWord]
+    : undefined) ?? w.stands[d.stand.key].label
+
+/** The mark's own words on the plate: the page's label for what KIND of mark it is, then the
+ *  record's own text for it — so a hover title is never a sentence this site wrote. */
+const markLabel = (m: PlateMark): string => {
+  const lead =
+    m.role === 'built'
+      ? p.builtLabel
+      : m.role === 'contract'
+        ? p.contractLabel
+        : m.role === 'correction-issued'
+          ? p.correctionLabel
+          : null
+  return lead ? `${lead} — ${m.text}` : m.text
+}
+
+const toControlMark = (m: PlateMark): ControlMark => ({
+  key: m.key,
+  date: m.date,
+  kind: m.kind,
+  letter: m.letter,
+  label: markLabel(m),
+})
+
+/** One instrument's plate, built at build time from its own marks. The pen label says which of
+ *  the two states the tape is in — resting on the instrument in service, or standing behind an
+ *  instrument the register has moved past. */
+const plateFor = (d: FieldDossier): string =>
+  buildControlSvg({
+    days: d.days,
+    marks: d.marks.map(toControlMark),
+    obligation: d.obligation
+      ? { fromDate: d.obligation.fromDate, label: d.obligation.labels.join(' · ') }
+      : undefined,
+    penLabel: d.inService ? p.penLabel : p.penLabelPast,
+    spliceLabel: p.spliceLabel,
+    svgId: `plate-${d.slug}`,
+    label: `${d.title} — ${d.marks.length} marks; the same record follows as a table.`,
+    // Cropped to the drawn tape. The full 1440-unit box leaves dead paper to the right of the
+    // pen on any plate shorter than a fortnight, and the shortest here is a week (every plate
+    // runs to the record's shared horizon — see recordHorizon in lib/field/dossier.ts, which is
+    // also what stops a one-day record from cropping to a nearly square box, as it did in the
+    // first build of this page). The remaining aspect range is handled by a height cap in
+    // field-dossier.css, not by a second geometry.
+    fitToMarks: true,
+  })
+
+const PLATE_COLUMNS = [
+  { key: 'date', label: p.columns.date, nowrap: true },
+  { key: 'mark', label: p.columns.mark },
+  { key: 'source', label: p.columns.source },
+]
+
+const plateRows = (d: FieldDossier) =>
+  d.marks.map((m) => ({ date: m.date, mark: markLabel(m), source: m.source }))
+
+const sessionLabel = (session: number | null): string =>
+  session === null ? w.moveLabels.preConstitution : `${w.moveLabels.session} ${session}`
+
+// The dossier list is server-rendered whole; `dossiers` is small and every panel is static, so
+// there is no bound to state — unlike the atelier's, whose traces run to hundreds of moves.
+---
+
+<section class="fd-dsr-wrap" aria-labelledby="dossier-heading" id="dossier">
+  <h2 class="fd-dsr-h2" id="dossier-heading">{w.heading}</h2>
+  <p class="fd-dsr-lead">{w.lead}</p>
+
+  {/* The selector. Server-rendered as plain links to the sections below, which is exactly what
+      they are without JavaScript; the script upgrades them to a tab list. */}
+  <nav class="fd-dsr-pick" data-fdsr-pick aria-label={w.pickLabel}>
+    <p class="fd-dsr-pick-h">{w.pickLabel}</p>
+    {[
+      { label: w.groups.service, items: inService },
+      { label: w.groups.earlier, items: earlier },
+    ].filter((g) => g.items.length > 0).map((group) => (
+      <div class="fd-dsr-group">
+        <p class="fd-dsr-group-h">{group.label} <span>{group.items.length}</span></p>
+        <ul>
+          {group.items.map((d) => (
+            <li>
+              <a
+                href={`#instrument-${d.slug}`}
+                class="fd-dsr-tab"
+                data-fdsr-tab={d.slug}
+                aria-current={d.slug === first?.slug ? 'true' : undefined}
+              >
+                <span class="t-no">{d.no}</span>
+                <span class="t-name">{d.title}</span>
+                <span class="t-stand">{d.date} · {standLabel(d)}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </nav>
+
+  {dossiers.map((d) => (
+    <article
+      class="fd-dsr"
+      id={`instrument-${d.slug}`}
+      data-fdsr-panel={d.slug}
+      aria-labelledby={`instrument-${d.slug}-title`}
+    >
+      <header class="fd-dsr-head" data-stand={d.stand.key}>
+        <p class="d-stand">
+          <b>{standLabel(d)}</b>
+          <span class="d-hint">{w.stands[d.stand.key].hint}</span>
+        </p>
+        <h3 class="d-title" id={`instrument-${d.slug}-title`}>
+          <span class="d-no">instrument {d.no}</span>
+          {d.title}
+        </h3>
+        <p class="d-meta">
+          {d.date} · {d.moves.length} {d.moves.length === 1 ? 'session' : 'sessions'} in the register
+          {d.stand.from && <> · last named {d.stand.from.date}</>}
+          {' · '}<a href={d.href}>{w.openInstrument}</a>
+        </p>
+        {d.stand.verdictText && <p class="d-verdict">{d.stand.verdictText}</p>}
+      </header>
+
+      {/* — what it measures: the work's own words, verbatim — */}
+      <div class="d-block">
+        <p class="d-h">{w.fields.measures}</p>
+        {d.measures ? (
+          <>
+            <p class="d-measures">{d.measures.text}</p>
+            <p class="d-src">{d.measures.source}</p>
+          </>
+        ) : (
+          <p class="d-gap">{w.gaps.measures}</p>
+        )}
+      </div>
+
+      {/* — the verdict it locked into its own record — */}
+      <div class="d-block">
+        <p class="d-h">{w.fields.locked}{d.locked.length > 0 && <span class="d-count">{d.locked.length}</span>}</p>
+        {d.locked.length > 0 ? (
+          <ul class="d-locked">
+            {d.locked.map((l) => (
+              <li>
+                <b class="l-label">{l.label}</b>
+                <p class="l-sentence">{l.sentence}</p>
+                <p class="d-src">{l.source}</p>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p class="d-gap">{w.gaps.locked}</p>
+        )}
+      </div>
+
+      {/* — the record plate: the practice's signature view, of THIS instrument — */}
+      <div class="d-block">
+        <p class="d-h">{w.fields.plate}</p>
+        <figure class="fd-dsr-plate" set:html={plateFor(d)} />
+        <p class="d-platenote">{p.note} · {FIELD_GRAMMAR.dataEdge}</p>
+        <p class="d-platenote">{d.days[0]} → {d.days[d.days.length - 1]} · {p.horizonNote}</p>
+        <TableFallback
+          summary={p.tableSummary}
+          caption={p.tableCaption}
+          columns={PLATE_COLUMNS}
+          rows={plateRows(d)}
+          provenance={`${p.provenancePrefix} ${[...new Set(d.marks.map((m) => m.source))].join(' · ')}`}
+        />
+      </div>
+
+      {/* — the register, on this instrument: every entry that names it, verbatim — */}
+      <div class="d-block">
+        <p class="d-h">{w.fields.moves}{d.moves.length > 0 && <span class="d-count">{d.moves.length}</span>}</p>
+        {d.moves.length > 0 ? (
+          <ol class="d-movelist">
+            {d.moves.map((m) => (
+              <li class="d-move">
+                <p class="m-head">
+                  <time datetime={m.date}>{m.date}</time>
+                  <span class="m-session">{sessionLabel(m.session)}</span>
+                </p>
+                <p class="m-move">{w.moveLabels.move}: {m.move}</p>
+                {m.verdict && <p class="m-verdict">{w.moveLabels.verdict}: {m.verdict}</p>}
+                <p class="m-summary">{m.summary}</p>
+                <p class="m-foot">
+                  <span class="d-src">{m.source}</span>
+                  <a href={`/field/journal/${m.anchor}/`}>{w.moveLabels.readSession}</a>
+                </p>
+              </li>
+            ))}
+          </ol>
+        ) : (
+          <p class="d-gap">{w.gaps.moves}</p>
+        )}
+      </div>
+
+      {/* — what an encounter left standing here, where one names this instrument — */}
+      {d.ledger && (
+        <div class="d-block d-ledger">
+          <p class="d-h">{w.fields.ledger}</p>
+          <p class="g-headline">{d.ledger.headline}</p>
+          <p class="g-status">
+            {d.ledger.encounterId} · {w.ledgerLabels.status}: {d.ledger.statusLine} · as of {d.ledger.asOf}
+          </p>
+          <p class="d-sub">{w.ledgerLabels.events}</p>
+          <ul class="g-events">
+            {d.ledger.events.map((e) => (
+              <li>
+                <p class="g-line">
+                  <time datetime={e.date}>{e.date}</time>
+                  <span class="g-type">{e.type}</span>
+                  <span>{e.lane}</span>
+                </p>
+                {e.quote && <p class="g-quote">“{e.quote}”</p>}
+                {e.attribution && <p class="g-line">{e.attribution}</p>}
+              </li>
+            ))}
+          </ul>
+          {d.ledger.obligations.length > 0 && (
+            <>
+              <p class="d-sub">{w.ledgerLabels.obligations}</p>
+              <ul class="g-obligations">
+                {d.ledger.obligations.map((o) => (
+                  <li>
+                    <p class="g-line"><span class="g-label">{o.label}</span><span>{o.status}</span></p>
+                    {o.clause && <p class="g-quote">{o.clause}</p>}
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
+          <p class="d-platenote">{w.ledgerLabels.note}</p>
+          <p class="d-src">{d.ledger.source}</p>
+          <p class="d-doors"><a href={d.ledger.href}>{w.ledgerLabels.middle}</a></p>
+        </div>
+      )}
+
+      {/* — the claim this instrument's review left contested, where the record ties one here.
+           The figure is ClaimFigure.astro unchanged: its own attribution line under it keeps the
+           collective's claim and the runtime's ruling apart, and that line is not softened by
+           standing inside a dossier. — */}
+      {d.hasClaim && claim && <ClaimFigure model={claim} heading={FIELD_NARRATIVE.claim.heading} />}
+
+      {/* — the guided tour, where it walks this instrument — */}
+      {d.inTour && tourHref && (
+        <p class="d-tour"><a href={tourHref}>{w.tour.link}</a></p>
+      )}
+
+      {/* — what its record consists of — */}
+      <div class="d-block">
+        <p class="d-h">{w.fields.record}</p>
+        <ul class="d-files">
+          {d.sources.map((s) => (
+            <li><b>{s.label}</b> — {s.path}</li>
+          ))}
+        </ul>
+        <p class="d-doors">
+          <a href={d.href}>{w.openInstrument}</a>
+          <a href={`/field/instruments#${d.slug}`}>{w.recordLink}</a>
+        </p>
+      </div>
+    </article>
+  ))}
+
+  <p class="fd-dsr-prov">{w.provenance}</p>
+</section>
+
+<script>
+  // Upgrades the server-rendered stack into a tab list. Everything it does is additive: without
+  // this script the page is every instrument's record under working anchor links, which is the
+  // floor, not a degraded mode.
+  for (const root of document.querySelectorAll<HTMLElement>('[data-fdsr-pick]')) {
+    const section = root.closest('section')
+    if (!section) continue
+    const tabs = [...root.querySelectorAll<HTMLAnchorElement>('[data-fdsr-tab]')]
+    const panels = new Map(
+      [...section.querySelectorAll<HTMLElement>('[data-fdsr-panel]')].map((el) => [
+        el.dataset.fdsrPanel ?? '',
+        el,
+      ]),
+    )
+    if (tabs.length === 0 || panels.size === 0) continue
+
+    // Roles are set HERE and not in the markup: without this script these are links to sections,
+    // and calling a link a tab in the accessibility tree when nothing tabs would be a lie told to
+    // exactly the visitors who can least afford one.
+    root.setAttribute('role', 'tablist')
+    for (const tab of tabs) {
+      tab.setAttribute('role', 'tab')
+      tab.removeAttribute('aria-current')
+    }
+    for (const [id, panel] of panels) {
+      panel.setAttribute('role', 'tabpanel')
+      panel.setAttribute('tabindex', '0')
+      const tab = tabs.find((t) => t.dataset.fdsrTab === id)
+      if (tab) {
+        if (!tab.id) tab.id = `fdsr-tab-${id}`
+        panel.setAttribute('aria-labelledby', tab.id)
+      }
+    }
+
+    let current = ''
+    const select = (id: string, focusPanel = false) => {
+      if (!panels.has(id) || id === current) return
+      current = id
+      for (const [key, panel] of panels) {
+        const on = key === id
+        panel.hidden = !on
+        panel.setAttribute('aria-hidden', on ? 'false' : 'true')
+      }
+      for (const tab of tabs) {
+        const on = tab.dataset.fdsrTab === id
+        tab.setAttribute('aria-selected', on ? 'true' : 'false')
+        // Roving tabindex: one stop for the whole selector, arrows move inside it.
+        tab.tabIndex = on ? 0 : -1
+      }
+      if (focusPanel) panels.get(id)?.focus()
+    }
+
+    const fromHash = () => {
+      const id = location.hash.replace(/^#instrument-/, '')
+      return panels.has(id) ? id : ''
+    }
+
+    select(fromHash() || tabs[0].dataset.fdsrTab || '')
+
+    for (const [i, tab] of tabs.entries()) {
+      tab.addEventListener('click', (ev) => {
+        ev.preventDefault()
+        const id = tab.dataset.fdsrTab ?? ''
+        select(id)
+        // Written, not navigated: replaceState keeps the link sendable without adding a history
+        // entry per click and without the jump a real hash change would cause.
+        history.replaceState(null, '', `#instrument-${id}`)
+      })
+      tab.addEventListener('keydown', (ev) => {
+        const delta =
+          ev.key === 'ArrowRight' || ev.key === 'ArrowDown'
+            ? 1
+            : ev.key === 'ArrowLeft' || ev.key === 'ArrowUp'
+              ? -1
+              : ev.key === 'Home'
+                ? -i
+                : ev.key === 'End'
+                  ? tabs.length - 1 - i
+                  : 0
+        if (delta === 0) return
+        ev.preventDefault()
+        const next = tabs[(i + delta + tabs.length) % tabs.length]
+        next.focus()
+        const id = next.dataset.fdsrTab ?? ''
+        select(id)
+        history.replaceState(null, '', `#instrument-${id}`)
+      })
+    }
+
+    // A hash arriving from outside — a pasted deep link, the back button, or a click on the shelf
+    // band above, whose ticks are anchors into exactly these panels — selects its instrument.
+    window.addEventListener('hashchange', () => {
+      const id = fromHash()
+      if (id) select(id, true)
+    })
+  }
+</script>
