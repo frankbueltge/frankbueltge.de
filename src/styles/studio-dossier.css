@@ -1,0 +1,594 @@
+/* Studio — the house dossier (2026-08-01). The entrance's centre: one body of the house, read.
+   Scoped to .studio-surface like every other studio skin (ADR 0010 — the stage shares no visual
+   grammar with the Partitur, the sheet or the measurement record); tokens are the surface's own
+   --st-*.
+
+   THE STUDIO'S OWN LANGUAGE, not the atelier's. The atelier's dossier is a paper document on a
+   drawing board. This one is a call sheet pinned up backstage: stage black (or Probenlicht in the
+   light theme) under everything, hard-edged light where a thing is lit — never a glow, the soft
+   gradient was rejected on 2026-07-16 and stays rejected — blocking tape at the corners of the
+   position that is currently on, and the house's Didone display capitals on every title. Nothing
+   here rounds a corner and nothing here fades.
+
+   READABILITY IS THE BRIEF, the same floor the atelier's dossier set: NOTHING a visitor reads is
+   below 11px, and the two things carrying the house's actual words — what a work is, and what the
+   eye said to it — are set at 15px on a 1.65 measure, which is body copy. The small type that
+   remains is labels and repo paths, and it stops at 11px.
+
+   PALETTE: studio-season
+   NO NEW COLOUR IS DEFINED IN THIS FILE. Every identity hue here is the season floor's own,
+   already recorded and validated in src/lib/dataviz/palette.ts and already declared as
+   --st-c-lit / --st-c-struck / --st-c-returned in studio-stage.css — so a state reads the same
+   colour on the floor, in the selector and in the dossier, and the figure and the document can
+   never disagree about what a mark means. A WITHDRAWAL wears the curtain crimson because that is
+   the house's own curtain colour and withdrawing a work is a completed honest act, not an error
+   state; there is no warning red anywhere in this file. */
+
+/* ————————————————————————————————————————————————— the section —————————————— */
+
+.studio-surface .st-dsr-wrap {
+  margin: 26px 0 40px;
+  padding-top: 10px;
+  border-top: 2px solid var(--st-curtain);
+}
+
+.studio-surface .st-dsr-h2 {
+  margin: 14px 0 8px;
+  font-family: var(--st-font-display);
+  font-size: clamp(28px, 1.4rem + 2vw, 46px);
+  line-height: 1.08;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--st-h1-ink);
+}
+
+.studio-surface .st-dsr-lead {
+  max-width: 70ch;
+  margin: 0 0 22px;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--st-ink);
+}
+
+.studio-surface .st-dsr-floor { margin: 0 0 26px; }
+
+/* ————————————————————————————————————————————————— the call sheet ——————————— */
+
+.studio-surface .st-dsr-pick {
+  margin: 0 0 26px;
+  padding: 14px 16px 16px;
+  border: 1px solid var(--st-hairline);
+  background: var(--st-badge-bg);
+}
+
+.studio-surface .st-dsr-pick-h,
+.studio-surface .st-dsr-group-h {
+  margin: 0 0 8px;
+  font: 11px/1.4 var(--st-font-record);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--st-ink-2);
+}
+
+.studio-surface .st-dsr-group + .st-dsr-group { margin-top: 16px; }
+.studio-surface .st-dsr-group-h span {
+  margin-left: 0.4em;
+  padding: 0.05em 0.45em;
+  border: 1px solid var(--st-hairline);
+  background: var(--st-surface);
+  letter-spacing: 0;
+}
+
+.studio-surface .st-dsr-pick ul {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+@media (min-width: 700px) {
+  .studio-surface .st-dsr-pick ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 1100px) {
+  .studio-surface .st-dsr-pick ul { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+/* A name on the call sheet. The mark left of it is the same mark the floor draws: a filled pool
+   for a lit position, a hollow one for a struck spotlight, a crimson X for a struck position —
+   different SHAPES, not two colours of one shape, which is the relief the recorded palette
+   requires for the lamp gold. */
+.studio-surface .st-dsr-tab {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas: 'mark name' '. meta';
+  align-items: baseline;
+  gap: 2px 10px;
+  height: 100%;
+  padding: 9px 11px;
+  border: 1px solid var(--st-hairline);
+  background: var(--st-surface);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 120ms ease, background-color 120ms ease;
+}
+.studio-surface .st-dsr-tab:hover,
+.studio-surface .st-dsr-tab:focus-visible {
+  border-color: var(--st-ink-2);
+  background: var(--st-badge-bg);
+}
+.studio-surface .st-dsr-tab[aria-selected='true'],
+.studio-surface .st-dsr-tab[aria-current='true'] {
+  border-color: var(--st-ink);
+  box-shadow: inset 0 0 0 1px var(--st-ink);
+}
+
+.studio-surface .st-dsr-tab .t-mark {
+  grid-area: mark;
+  width: 13px;
+  height: 9px;
+  transform: translateY(-1px);
+}
+.studio-surface .st-dsr-tab[data-state='premiered'] .t-mark {
+  background: var(--st-spot-pool);
+  border: 1px solid var(--st-spot-ring);
+}
+.studio-surface .st-dsr-tab[data-state='withdrawn'] .t-mark {
+  background: transparent;
+  border: 1px dashed var(--st-c-struck);
+}
+/* the taped X, drawn with two rules rather than a glyph — the floor's own mark */
+.studio-surface .st-dsr-tab[data-state='struck'] .t-mark {
+  background:
+    linear-gradient(to bottom right, transparent 43%, var(--st-c-struck) 43%, var(--st-c-struck) 57%, transparent 57%),
+    linear-gradient(to bottom left, transparent 43%, var(--st-c-struck) 43%, var(--st-c-struck) 57%, transparent 57%);
+}
+
+.studio-surface .st-dsr-tab .t-name {
+  grid-area: name;
+  font-family: var(--st-font-display);
+  font-size: 15px;
+  line-height: 1.3;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--st-ink);
+}
+.studio-surface .st-dsr-tab .t-meta {
+  grid-area: meta;
+  font: 11px/1.45 var(--st-font-record);
+  letter-spacing: 0.04em;
+  color: var(--st-ink-2);
+}
+
+/* the one lit position on the sheet gets the lamp's own gold hairline over it */
+.studio-surface .st-dsr-tab[data-spot] { border-top: 2px solid var(--st-c-lit); }
+
+/* ————————————————————————————————————————————————— one dossier —————————————— */
+
+.studio-surface .st-dsr {
+  position: relative;
+  margin: 0 0 30px;
+  padding: 20px 22px 22px;
+  border: 1px solid var(--st-hairline);
+  background: var(--st-page);
+  scroll-margin-top: 20px;
+}
+.studio-surface .st-dsr:focus { outline: none; }
+.studio-surface .st-dsr:focus-visible {
+  outline: 2px solid var(--st-c-lit);
+  outline-offset: 4px;
+}
+@media (max-width: 560px) {
+  .studio-surface .st-dsr { padding: 14px 14px 16px; }
+}
+
+/* Blocking tape: the corners of the position, taped on the floor. Only the premiered states get
+   it — a struck position never had blocking. Drawn with the surface's own second ink, exactly as
+   the floor draws .st-sf-tape, and hidden from assistive tech: it is stage furniture. */
+.studio-surface .st-dsr[data-state='premiered']::before,
+.studio-surface .st-dsr[data-state='premiered']::after,
+.studio-surface .st-dsr[data-state='withdrawn']::before,
+.studio-surface .st-dsr[data-state='withdrawn']::after {
+  content: '';
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  pointer-events: none;
+}
+.studio-surface .st-dsr[data-state='premiered']::before,
+.studio-surface .st-dsr[data-state='withdrawn']::before {
+  top: 6px;
+  left: 6px;
+  border-top: 2px solid var(--st-ink-2);
+  border-left: 2px solid var(--st-ink-2);
+}
+.studio-surface .st-dsr[data-state='premiered']::after,
+.studio-surface .st-dsr[data-state='withdrawn']::after {
+  bottom: 6px;
+  right: 6px;
+  border-bottom: 2px solid var(--st-ink-2);
+  border-right: 2px solid var(--st-ink-2);
+}
+
+/* Without JavaScript every dossier is visible and they need air between them. With it, one is
+   visible at a time. */
+.studio-surface .st-dsr + .st-dsr { margin-top: 30px; }
+.studio-surface .st-dsr[role='tabpanel'] + .st-dsr[role='tabpanel'] { margin-top: 0; }
+
+.studio-surface .st-dsr-head {
+  margin: 0 0 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--st-hairline);
+}
+
+.studio-surface .d-state {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 10px;
+  margin: 0 0 8px;
+  font: 11.5px/1.5 var(--st-font-record);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.studio-surface .d-state .d-mark {
+  width: 15px;
+  height: 10px;
+  transform: translateY(1px);
+}
+.studio-surface .st-dsr[data-state='premiered'] .d-mark {
+  background: var(--st-spot-pool);
+  border: 1px solid var(--st-spot-ring);
+}
+.studio-surface .st-dsr[data-state='withdrawn'] .d-mark {
+  background: transparent;
+  border: 1px dashed var(--st-c-struck);
+}
+.studio-surface .st-dsr[data-state='struck'] .d-mark {
+  background:
+    linear-gradient(to bottom right, transparent 43%, var(--st-c-struck) 43%, var(--st-c-struck) 57%, transparent 57%),
+    linear-gradient(to bottom left, transparent 43%, var(--st-c-struck) 43%, var(--st-c-struck) 57%, transparent 57%);
+}
+.studio-surface .d-state b { font-weight: 700; color: var(--st-ink); }
+.studio-surface .d-state .d-hint {
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--st-ink-2);
+}
+
+/* The title in the house's display face, set as the floor sets it: Didone capitals, wide. The one
+   lit position stands IN the light — a hard-edged pool behind the name, never a gradient. */
+.studio-surface .d-title {
+  display: inline-block;
+  margin: 0 0 8px;
+  max-width: 26ch;
+  padding: 2px 0;
+  font-family: var(--st-font-display);
+  font-size: clamp(26px, 1.2rem + 2vw, 42px);
+  line-height: 1.1;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--st-h1-ink);
+}
+.studio-surface .st-dsr[data-state='premiered'] .d-title {
+  padding: 4px 16px;
+  background: var(--st-spot-pool);
+  border: 1px solid var(--st-spot-ring);
+  color: var(--st-spot-ink);
+}
+.studio-surface .st-dsr[data-state='withdrawn'] .d-title {
+  padding: 4px 16px;
+  border: 1px dashed var(--st-c-struck);
+  color: var(--st-ink);
+}
+
+.studio-surface .d-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 16px;
+  margin: 0;
+  font: 11.5px/1.6 var(--st-font-record);
+  letter-spacing: 0.06em;
+  color: var(--st-ink-2);
+}
+
+.studio-surface .d-enter { margin: 10px 0 0; }
+.studio-surface .d-enter a {
+  display: inline-block;
+  padding: 6px 14px;
+  border: 1px solid var(--st-c-lit);
+  font: 600 12px/1.4 var(--st-font-record);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--st-ink);
+}
+.studio-surface .d-enter a:hover,
+.studio-surface .d-enter a:focus-visible {
+  background: var(--st-c-lit);
+  color: var(--st-page);
+}
+
+/* ————————————————————————————————————————————————— the panels ——————————————— */
+
+.studio-surface .st-dsr .d-block { margin: 0 0 22px; }
+
+.studio-surface .st-dsr .d-h {
+  margin: 0 0 8px;
+  font: 11px/1.4 var(--st-font-record);
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+  color: var(--st-ink-2);
+}
+.studio-surface .st-dsr .d-h .d-count {
+  margin-left: 0.4em;
+  padding: 0.05em 0.45em;
+  border: 1px solid var(--st-hairline);
+  letter-spacing: 0;
+}
+
+/* A quotation the record was struck or withdrawn on — the loudest thing in those two dossiers. */
+.studio-surface .st-dsr .d-quote {
+  margin: 0;
+  padding: 0 0 0 16px;
+  max-width: 62ch;
+  border-left: 3px solid var(--st-c-struck);
+  font-family: var(--st-font-display);
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--st-ink);
+}
+.studio-surface .st-dsr .d-kill,
+.studio-surface .st-dsr .d-withdrawal {
+  padding: 14px 16px;
+  border: 1px solid var(--st-hairline);
+  background: var(--st-badge-bg);
+}
+
+/* Every quotation names the file it came from. 11px is this file's floor and it is a path, not
+   prose — but it wraps rather than truncating, because a path a reader cannot finish reading is
+   not a citation. */
+.studio-surface .st-dsr .d-src {
+  margin: 8px 0 0;
+  font: 11px/1.5 var(--st-font-record);
+  color: var(--st-ink-2);
+  opacity: 0.85;
+  overflow-wrap: anywhere;
+}
+
+/* An honest gap: a statement ABOUT the record, so it wears italic and the second ink — never the
+   same voice as a quotation FROM it. */
+.studio-surface .st-dsr .d-gap {
+  margin: 0;
+  max-width: 62ch;
+  font: italic 13px/1.65 var(--st-font-record);
+  color: var(--st-ink-2);
+}
+
+.studio-surface .st-dsr .d-fieldtext {
+  margin: 0;
+  max-width: 66ch;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--st-ink);
+}
+
+/* What the work IS, in its own words — body copy, because this is the thing the page exists for. */
+.studio-surface .st-dsr .d-body {
+  margin: 0;
+  max-width: 68ch;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--st-ink);
+}
+
+.studio-surface .st-dsr .d-tierlist {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 12px;
+}
+.studio-surface .st-dsr .d-tierlist li {
+  padding: 10px 14px;
+  border-left: 3px solid var(--st-c-lit);
+  background: var(--st-badge-bg);
+}
+.studio-surface .st-dsr .d-tiertext {
+  margin: 0;
+  max-width: 68ch;
+  font: 13.5px/1.65 var(--st-font-record);
+  color: var(--st-ink);
+}
+.studio-surface .st-dsr .d-tierlist .d-src { margin-top: 6px; }
+
+/* ————————————————————————————————————————————————— the eye's verdicts ——————— */
+
+.studio-surface .st-dsr .d-returnlist {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 14px;
+}
+.studio-surface .st-dsr .d-returnlist li {
+  padding: 14px 16px;
+  border: 1px solid var(--st-hairline);
+  border-left: 3px solid var(--st-c-returned);
+  background: var(--st-surface);
+}
+.studio-surface .st-dsr .r-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+  margin: 0 0 8px;
+  font: 11px/1.5 var(--st-font-record);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--st-ink-2);
+}
+.studio-surface .st-dsr .r-ord {
+  font-family: var(--st-font-display);
+  font-size: 17px;
+  letter-spacing: 0.14em;
+  color: var(--st-c-returned);
+}
+.studio-surface .st-dsr .r-head time { font-weight: 700; color: var(--st-ink); }
+.studio-surface .st-dsr .r-session {
+  padding: 0.05em 0.45em;
+  border: 1px solid var(--st-hairline);
+}
+/* the eye's own words — the one voice the gate does not contain, so it is set as speech */
+.studio-surface .st-dsr .r-quote {
+  margin: 0 0 8px;
+  max-width: 58ch;
+  font-family: var(--st-font-display);
+  font-size: 19px;
+  line-height: 1.45;
+  color: var(--st-ink);
+}
+.studio-surface .st-dsr .r-quote::before { content: '“'; }
+.studio-surface .st-dsr .r-quote::after { content: '”'; }
+.studio-surface .st-dsr .r-text {
+  margin: 0;
+  max-width: 68ch;
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--st-ink);
+}
+.studio-surface .st-dsr .r-foot,
+.studio-surface .st-dsr .e-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 18px;
+  margin: 10px 0 0;
+}
+.studio-surface .st-dsr .r-foot .d-src,
+.studio-surface .st-dsr .e-foot .d-src { margin: 0; }
+.studio-surface .st-dsr .r-foot a,
+.studio-surface .st-dsr .e-foot a {
+  font: 11.5px/1.5 var(--st-font-record);
+  color: var(--st-ink);
+  text-decoration: underline;
+  white-space: nowrap;
+}
+.studio-surface .st-dsr .r-foot a:hover,
+.studio-surface .st-dsr .e-foot a:hover { color: var(--st-c-lit); }
+
+/* ————————————————————————————————————————————————— what happened ———————————— */
+
+.studio-surface .st-dsr .d-events {
+  margin: 0;
+  padding: 0 0 0 18px;
+  list-style: none;
+  border-left: 1px solid var(--st-hairline);
+  display: grid;
+  gap: 16px;
+}
+.studio-surface .st-dsr .d-event { position: relative; }
+.studio-surface .st-dsr .d-event::before {
+  content: '';
+  position: absolute;
+  left: -21px;
+  top: 6px;
+  width: 7px;
+  height: 7px;
+  background: var(--st-ink-2);
+}
+.studio-surface .st-dsr .d-event[data-kind='premiere']::before { background: var(--st-c-lit); }
+.studio-surface .st-dsr .d-event[data-kind='return']::before { background: var(--st-c-returned); }
+.studio-surface .st-dsr .d-event[data-kind='strike']::before,
+.studio-surface .st-dsr .d-event[data-kind='withdrawal']::before { background: var(--st-c-struck); }
+
+.studio-surface .st-dsr .e-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+  margin: 0 0 6px;
+  font: 11px/1.5 var(--st-font-record);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--st-ink-2);
+}
+.studio-surface .st-dsr .e-head time { font-weight: 700; color: var(--st-ink); }
+.studio-surface .st-dsr .e-session,
+.studio-surface .st-dsr .e-kind {
+  padding: 0.05em 0.45em;
+  border: 1px solid var(--st-hairline);
+  letter-spacing: 0.05em;
+}
+.studio-surface .st-dsr .e-text {
+  margin: 0;
+  max-width: 74ch;
+  font: 13.5px/1.7 var(--st-font-record);
+  color: var(--st-ink);
+}
+
+.studio-surface .st-dsr .d-note {
+  margin: 14px 0 0;
+  max-width: 74ch;
+  font: italic 11.5px/1.6 var(--st-font-record);
+  color: var(--st-ink-2);
+}
+
+/* ————————————————————————————————————————————————— story & record ——————————— */
+
+.studio-surface .st-dsr .d-story {
+  margin: 0 0 22px;
+  padding: 12px 16px;
+  border: 1px solid var(--st-c-returned);
+  background: var(--st-badge-bg);
+}
+.studio-surface .st-dsr .d-story a {
+  font: 600 14px/1.5 var(--st-font-record);
+  color: var(--st-ink);
+  text-decoration: underline;
+}
+.studio-surface .st-dsr .d-story a:hover { color: var(--st-c-returned); }
+
+.studio-surface .st-dsr .d-files {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 5px;
+}
+.studio-surface .st-dsr .d-files li {
+  font: 11.5px/1.6 var(--st-font-record);
+  color: var(--st-ink-2);
+}
+.studio-surface .st-dsr .d-files code {
+  display: inline-block;
+  min-width: 27em;
+  font: inherit;
+  font-weight: 700;
+  color: var(--st-ink);
+  overflow-wrap: anywhere;
+}
+
+.studio-surface .st-dsr-prov {
+  margin: 20px 0 0;
+  max-width: 86ch;
+  font: 11.5px/1.65 var(--st-font-record);
+  color: var(--st-ink-2);
+  opacity: 0.9;
+}
+
+/* ————————————————————————————————————————————————— small screens ———————————— */
+
+@media (max-width: 560px) {
+  .studio-surface .st-dsr .d-quote { font-size: 16px; padding-left: 12px; }
+  .studio-surface .st-dsr .r-quote { font-size: 17px; }
+  .studio-surface .st-dsr .d-title { letter-spacing: 0.03em; }
+  .studio-surface .st-dsr[data-state='premiered'] .d-title,
+  .studio-surface .st-dsr[data-state='withdrawn'] .d-title { padding: 4px 10px; }
+  .studio-surface .st-dsr .d-files code { min-width: 0; display: block; }
+  .studio-surface .st-dsr .d-kill,
+  .studio-surface .st-dsr .d-withdrawal,
+  .studio-surface .st-dsr .d-returnlist li { padding: 11px 12px; }
+}

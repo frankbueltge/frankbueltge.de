@@ -48,7 +48,7 @@ describe('NAMING.doors tour links', () => {
   const TOUR_TARGETS: Record<string, string> = {
     ulysses: '/atelier/how-a-line-ends',
     meridian: '/field/how-a-claim-came-off',
-    ensemble: '/studio#tour-three-returns',
+    ensemble: '/studio/how-a-premiere-returned',
   }
 
   it('gives every practice door its tour, and The Middle none', () => {
@@ -59,6 +59,8 @@ describe('NAMING.doors tour links', () => {
   })
 
   it('points each tour link behind its own door (an anchor on the hub, or a room under it)', () => {
+    // All three tours live in their own rooms since the dossier rebuilds — the anchor form
+    // stays legal for any future tour that starts life on its practice's entrance.
     for (const door of NAMING.doors.items) {
       if (!door.tourHref) continue
       const behindOwnDoor =
