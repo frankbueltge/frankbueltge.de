@@ -140,6 +140,7 @@ const legendLabelId = `${id}-legend-label`
   import { createReadout } from '@/lib/dataviz/readout'
   import { isOn } from '@/lib/dataviz/filter'
   import { buildSegments, positionLabel, step } from '@/lib/dataviz/stepper'
+  import { ensureFigureReadyListener } from '@/lib/tour/engine'
   import type { FocusState } from '@/lib/tour/types'
 
   const SVG_NS = 'http://www.w3.org/2000/svg'
@@ -356,6 +357,17 @@ const legendLabelId = `${id}-legend-label`
     }
 
     paint()
+    // The handshake, with the one guarantee the bare dispatch does not give. src/lib/tour/engine.ts
+    // documents both registration orders as safe, and they are — but ONLY once something is
+    // listening: `dv:figure-ready` is an ordinary event, so a figure whose bundle executes before
+    // any Tour's dispatches into an empty room and is never registered at all. Calling
+    // ensureFigureReadyListener() here installs the shared (idempotent, one-per-page) listener
+    // BEFORE this floor announces itself, so the registry is populated whichever bundle runs
+    // first. This figure still knows nothing about any tour — it only makes sure the registry the
+    // contract is built on exists. (Observed, not theorised: /studio emits this component's
+    // module ahead of Tour.astro's, so every scene of the One Tap tour stepped its own prose
+    // while the floor below it stood still — no filter, no spotlight, no re-aimed crop.)
+    ensureFigureReadyListener()
     window.dispatchEvent(
       new CustomEvent('dv:figure-ready', { detail: { id: svgHost.id, apply } }),
     )
