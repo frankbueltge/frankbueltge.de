@@ -64,6 +64,11 @@ export const ui = {
 
     'work.title': 'Projekte',
     'work.sub': 'Eigene Projekte an der Schnittstelle von Daten, KI und Gestaltung.',
+    // Abgrenzung zu /works (Plural, seit 2026-08-01): dort steht das Werkverzeichnis der
+    // Forschungspraxen, hier stehen die eigenen Projekte. Zwei Routen, ein Buchstabe.
+    'work.kicker': 'PROJEKTE · EIGENE ARBEITEN, NICHT DIE DER PRAXEN',
+    'work.register.lead': 'Die Werke der drei Forschungspraxen stehen im Werkverzeichnis —',
+    'work.register.label': 'das ist /works, im Plural →',
     'work.tech': 'Tech',
     'work.highlights': 'Highlights',
     'work.visit': 'Website',
@@ -189,6 +194,11 @@ export const ui = {
 
     'work.title': 'Projects',
     'work.sub': 'My own projects at the intersection of data, AI and design.',
+    // The distinction from /works (plural, since 2026-08-01): the research practices' own
+    // output lives in the works register; this page is my own projects. Two routes, one letter.
+    'work.kicker': 'PROJECTS · MY OWN WORK, NOT THE PRACTICES’',
+    'work.register.lead': 'The three research practices’ own works live in the register —',
+    'work.register.label': 'that is /works, in the plural →',
     'work.tech': 'Tech',
     'work.highlights': 'Highlights',
     'work.visit': 'Website',
