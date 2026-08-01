@@ -344,6 +344,14 @@ export const BAND_MAX = 306
  * too small to read — and the ledger gutter, which is running text, is the first thing to become
  * illegible. A scene therefore re-aims the live viewBox at the band it is talking about, which is
  * also the only way the gutter stays at its designed size instead of being scaled down.
+ *
+ * The two margins below are the drawing's OWN measures rather than round numbers, changed
+ * 2026-08-01 when the figure started clipping to its viewBox for real (atelier-process.css) and the
+ * old ones turned out to land mid-glyph: 40 above the line cut the top line of a neighbour's ledger
+ * sentence in half, and 16 below the harbour reached ten units INTO the next harbour's box, whose
+ * count then showed as a sliced numeral. A measured drawing is cropped on a rule, not through a row:
+ * ROW * 1.5 from a line's centre lands exactly on the hairline between two rows (a row's centre sits
+ * at ROW/2), and the harbour margin is the same 6 units buildPassageModel leaves between harbours.
  */
 export function passageViewBox(model: PassageModel, cropTo?: string): string {
   if (!cropTo) return `-8 0 ${W + 8} ${model.height}`
@@ -352,8 +360,13 @@ export function passageViewBox(model: PassageModel, cropTo?: string): string {
   // The band must contain the line AND the harbour it lands in — a crop that shows a tail curving
   // out of frame drops the one thing the drawing is about, which is where a question ends up.
   const harbour = model.harbours.find((h) => h.outcome === line.outcome)
-  const top = Math.min(line.y - 40, harbour ? harbour.y - 16 : line.y - 40)
-  const bottom = Math.max(line.y + 40, harbour ? harbour.y + harbour.height + 16 : line.y + 40)
+  const reach = ROW * 1.5
+  const gap = 6
+  const top = Math.min(line.y - reach, harbour ? harbour.y - gap : line.y - reach)
+  const bottom = Math.max(
+    line.y + reach,
+    harbour ? harbour.y + harbour.height + gap : line.y + reach,
+  )
   const h = Math.min(model.height, Math.max(BAND_HEIGHT, Math.min(BAND_MAX, bottom - top)))
   const y = Math.max(0, Math.min((top + bottom) / 2 - h / 2, model.height - h))
   return `-8 ${round(y)} ${W + 8} ${round(h)}`
