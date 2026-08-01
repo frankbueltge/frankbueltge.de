@@ -1,7 +1,12 @@
 ---
+// /contact — a real form since 2026-08-01 (spec 2026-08-01-rueckweg-email-design.md D5).
+// The form posts into the SAME private letter queue as the post office's letterbox
+// (functions/api/post.js, to: "frank") — one intake, one review surface, one privacy
+// statement. The mailto link stays for people who prefer their own mail client.
 import { t } from '@/i18n/ui'
 import { SITE, type Locale } from '@/lib/site'
 const locale = (Astro.currentLocale ?? 'en') as Locale
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY as string | undefined
 ---
 
 <main id="main" class="mx-auto w-full max-w-2xl flex-1 px-6 py-20 sm:py-28">
@@ -13,4 +18,87 @@ const locale = (Astro.currentLocale ?? 'en') as Locale
     <a href={SITE.social.linkedin} target="_blank" rel="noreferrer" class="rounded-full border border-line px-6 py-3.5 text-sm font-semibold text-fg transition hover:-translate-y-0.5 hover:border-fg">LinkedIn ↗</a>
     <a href={SITE.social.github} target="_blank" rel="noreferrer" class="rounded-full border border-line px-6 py-3.5 text-sm font-semibold text-fg transition hover:-translate-y-0.5 hover:border-fg">GitHub ↗</a>
   </div>
+
+  <section class="mt-16 border-t border-line/60 pt-10" aria-label="Contact form">
+    <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted"><b class="text-fg">Or right here</b> · no mail client needed</p>
+    <p class="mt-3 max-w-[60ch] text-sm leading-relaxed text-fg-muted">
+      This lands in a private queue read by me — nothing is published, nothing is fed to a
+      model. Leave an email if you want an answer; without one your message is read all the
+      same, it just can't be replied to.
+    </p>
+    <form id="contact-form" class="mt-6 space-y-4" novalidate>
+      <div class="grid gap-4 sm:grid-cols-2">
+        <label class="block text-xs text-fg-muted">
+          <span class="font-mono uppercase tracking-[0.12em]">from</span>
+          <input name="fromMark" required maxlength="80" placeholder="your name" class="mt-1.5 w-full rounded-[8px] border border-line bg-panel px-3 py-2 text-sm text-fg" />
+        </label>
+        <label class="block text-xs text-fg-muted">
+          <span class="font-mono uppercase tracking-[0.12em]">email <span class="normal-case text-fg-faint">(optional, for a reply)</span></span>
+          <input name="contact" maxlength="200" type="email" placeholder="you@example.org" class="mt-1.5 w-full rounded-[8px] border border-line bg-panel px-3 py-2 text-sm text-fg" />
+        </label>
+      </div>
+      <label class="block text-xs text-fg-muted">
+        <span class="font-mono uppercase tracking-[0.12em]">message</span>
+        <textarea name="text" required minlength="10" maxlength="4000" rows="6" class="mt-1.5 w-full rounded-[8px] border border-line bg-panel px-3 py-2 text-sm leading-relaxed text-fg"></textarea>
+      </label>
+      {/* honeypot — invisible to people, filled by bots */}
+      <input name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="hidden" />
+      {turnstileSiteKey && <div class="cf-turnstile" data-sitekey={turnstileSiteKey} data-theme="auto"></div>}
+      <div class="flex items-center gap-4">
+        <button type="submit" class="rounded-[8px] border border-line bg-panel px-4 py-2 font-mono text-xs uppercase tracking-[0.12em] text-fg transition-colors hover:border-fg-faint">send</button>
+        <p id="contact-status" class="text-xs text-fg-muted" aria-live="polite"></p>
+      </div>
+    </form>
+  </section>
 </main>
+
+{turnstileSiteKey && <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
+
+<script>
+  // Same wire as the post office letterbox (functions/api/post.js), addressed to "frank" —
+  // a personal message, never forwarded to a practice.
+  const form = document.getElementById('contact-form') as HTMLFormElement | null
+  const status = document.getElementById('contact-status')
+  const SAY: Record<string, string> = {
+    'rate-limit': 'Too many messages from here just now — please try again in a few minutes.',
+    'daily-cap': 'Today’s queue is full — please come back tomorrow, or use the email link above.',
+    'open-cap': 'The queue is full — please use the email link above.',
+    turnstile: 'The bot check failed. Please reload the page and try again.',
+    standby: 'The form is not fully wired up yet — please use the email link above.',
+    'from-mark': 'Please leave a name (2–80 characters).',
+    text: 'The message needs between 10 and 4000 characters.',
+    contact: 'The email line does not fit (3–200 characters).',
+  }
+  if (form && status) {
+    form.addEventListener('submit', async (ev) => {
+      ev.preventDefault()
+      status.textContent = 'sending…'
+      const data = new FormData(form)
+      const turnstileToken = data.get('cf-turnstile-response') ?? ''
+      try {
+        const res = await fetch('/api/post', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({
+            to: 'frank',
+            fromMark: data.get('fromMark'),
+            contact: data.get('contact') || '',
+            regarding: 'contact form',
+            text: data.get('text'),
+            website: data.get('website') || '',
+            turnstileToken,
+          }),
+        })
+        const out = await res.json().catch(() => ({}))
+        if (res.ok && out.ok) {
+          form.reset()
+          status.textContent = 'Sent — it lands directly with me. Thanks.'
+        } else {
+          status.textContent = SAY[out.reason] ?? 'That did not go through — please try the email link above.'
+        }
+      } catch {
+        status.textContent = 'Network hiccup — please try again.'
+      }
+    })
+  }
+</script>

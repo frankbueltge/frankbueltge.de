@@ -6,8 +6,11 @@ import {
   chronicleEvents,
   clampToLastDays,
   dayRange,
+  fanOffsets,
   jiStart,
   journalEvents,
+  MARK_OFFSETS,
+  nearestMarkOffset,
   scoreOpenings,
   type ScoreEvent,
 } from './partitur'
@@ -103,6 +106,53 @@ describe('clampToLastDays', () => {
     expect(clampToLastDays(events, 14).map((e) => e.date)).toEqual(['2026-07-10', '2026-07-20'])
     expect(clampToLastDays(events, 1).map((e) => e.date)).toEqual(['2026-07-20'])
     expect(clampToLastDays([], 14)).toEqual([])
+  })
+})
+
+describe('MARK_OFFSETS / fanOffsets', () => {
+  it('spreads up to three same-day landings symmetrically around the day center', () => {
+    expect(MARK_OFFSETS[1]).toEqual([0])
+    expect(MARK_OFFSETS[2]).toEqual([-6.5, 6.5])
+    expect(MARK_OFFSETS[3]).toEqual([-9, 0, 9])
+  })
+  it('fans a dense (n > 3) day evenly, centered on 0', () => {
+    expect(fanOffsets(4)).toEqual([-16.5, -5.5, 5.5, 16.5])
+    expect(fanOffsets(1)).toEqual([0])
+  })
+})
+
+describe('nearestMarkOffset', () => {
+  // the hover fix (Frank, 2026-07-31): "nobody hits a 9px dot reliably" — anywhere inside a
+  // cluster's hit band resolves to the CLOSEST mark by pointer distance, not always the first.
+  const offsets = MARK_OFFSETS[3] // [-9, 0, 9]
+
+  it('resolves the nearest mark for a pointer exactly on a mark', () => {
+    expect(nearestMarkOffset(offsets, -9)).toBe(0)
+    expect(nearestMarkOffset(offsets, 0)).toBe(1)
+    expect(nearestMarkOffset(offsets, 9)).toBe(2)
+  })
+
+  it('resolves the nearest mark for a pointer BETWEEN two marks', () => {
+    // -4 is 5 from -9 but only 4 from 0 — the middle mark wins
+    expect(nearestMarkOffset(offsets, -4)).toBe(1)
+    // 4.4 is nearer to 0 (4.4) than to 9 (4.6)
+    expect(nearestMarkOffset(offsets, 4.4)).toBe(1)
+    // 4.6 flips to the mark at 9 (4.4 away) over 0 (4.6 away)
+    expect(nearestMarkOffset(offsets, 4.6)).toBe(2)
+  })
+
+  it('resolves a pointer past either edge to that edge mark', () => {
+    expect(nearestMarkOffset(offsets, -100)).toBe(0)
+    expect(nearestMarkOffset(offsets, 100)).toBe(2)
+  })
+
+  it('an exact tie goes to the earlier offset (deterministic, not unspecified)', () => {
+    // 4.5 is equidistant between 0 (index 1) and 9 (index 2)
+    expect(nearestMarkOffset(offsets, 4.5)).toBe(1)
+  })
+
+  it('a single-mark cluster always resolves to it', () => {
+    expect(nearestMarkOffset(MARK_OFFSETS[1], 37)).toBe(0)
   })
 })
 

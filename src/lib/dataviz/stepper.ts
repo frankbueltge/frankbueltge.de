@@ -107,6 +107,16 @@ export function deactivatePanel(handlers: PanelKeyHandlers): void {
   if (activePanel === handlers) activePanel = null
 }
 
+/** Whether ANY DetailPanel currently owns keyboard arbitration — consulted by other
+ *  dataviz-adjacent keyboard handlers that must yield to an open panel rather than double-
+ *  handling the same keypress (e.g. components/dataviz/Tour.astro's own ←/→ binding: a tour and
+ *  an open DetailPanel both wanting the arrow keys is exactly the "several instances" hazard this
+ *  module's own registry above was built to prevent between panels, generalized to one more
+ *  caller rather than solved again with a second, parallel keydown listener). */
+export function isPanelActive(): boolean {
+  return activePanel !== null
+}
+
 /** Only for tests: resets the module-level registry between cases. */
 export function resetPanelRegistry(): void {
   activePanel = null
