@@ -1,0 +1,494 @@
+/* Atelier — the project dossier (2026-08-01). The entrance's centre: one research line, read.
+   Scoped to .atelier-surface like every other atelier skin (ADR 0010 — no shared grammar with
+   the other practices); tokens are the sheet's own --at-*.
+
+   READABILITY IS THE BRIEF. Frank could not read the previous version's ledger gutter, and he
+   was right not to be able to: it was a running sentence at about 5px. So there is a floor in
+   this file — NOTHING a visitor reads is set below 11px, and the two things that carry the
+   practice's actual words (the question, and each move's own paragraph) are set at 15px and
+   14.5px on a 1.65 measure, which is body copy, not caption copy. The small type that remains
+   is labels and paths, and it stops at 11px.
+
+   COLOUR. One set, and it is not new: the recorded outcome identities (PALETTE:
+   atelier-outcomes, src/lib/dataviz/palette.ts) already defined as --at-out-* in
+   atelier-sheet.css and already used by the map and the process figure. They appear here only
+   on the stand marker, so a line's standing reads the same colour in the dossier, in the
+   selector and on the archive sheet below. A running line takes the neutral graphite: "still
+   going" is not an outcome and must not be coloured like one. */
+
+/* ————————————————————————————————————————————————— the section ————————————— */
+
+.atelier-surface .at-dsr-wrap {
+  margin: 0 0 3rem;
+  padding-top: 0.5rem;
+  border-top: 2px solid var(--at-ink);
+}
+
+.atelier-surface .at-dsr-h2 {
+  margin: 0.9rem 0 0.5rem;
+  font-family: var(--at-font-display);
+  font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.1rem);
+  line-height: 1.15;
+  font-weight: 600;
+  color: var(--at-h1-ink);
+}
+
+.atelier-surface .at-dsr-lead {
+  max-width: 68ch;
+  margin: 0 0 1.5rem;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--at-ink);
+}
+
+/* ————————————————————————————————————————————————— the selector ———————————— */
+
+.atelier-surface .at-dsr-pick {
+  margin: 0 0 1.75rem;
+  padding: 0.9rem 1rem 1rem;
+  border: 1px solid var(--at-hairline);
+  background: var(--at-badge-bg);
+}
+
+.atelier-surface .at-dsr-pick-h,
+.atelier-surface .at-dsr-group-h {
+  margin: 0 0 0.55rem;
+  font: 11px/1.4 var(--at-font-record);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--at-ink-2);
+}
+
+.atelier-surface .at-dsr-group + .at-dsr-group { margin-top: 1rem; }
+.atelier-surface .at-dsr-group-h span {
+  margin-left: 0.35em;
+  padding: 0.05em 0.4em;
+  border: 1px solid var(--at-hairline);
+  background: var(--at-surface);
+  letter-spacing: 0;
+}
+
+.atelier-surface .at-dsr-pick ul {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+@media (min-width: 700px) {
+  .atelier-surface .at-dsr-pick ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 1100px) {
+  .atelier-surface .at-dsr-pick ul { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+.atelier-surface .at-dsr-tab {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas: 'dot name' '. stand';
+  align-items: baseline;
+  gap: 0.1rem 0.5rem;
+  height: 100%;
+  padding: 0.5rem 0.65rem;
+  border: 1px solid var(--at-hairline);
+  background: var(--at-surface);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 120ms ease, background-color 120ms ease;
+}
+.atelier-surface .at-dsr-tab:hover,
+.atelier-surface .at-dsr-tab:focus-visible { border-color: var(--at-thread); }
+.atelier-surface .at-dsr-tab[aria-selected='true'],
+.atelier-surface .at-dsr-tab[aria-current='true'] {
+  border-color: var(--at-ink);
+  box-shadow: inset 0 0 0 1px var(--at-ink);
+}
+
+.atelier-surface .at-dsr-tab .t-dot {
+  grid-area: dot;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--dsr-out, var(--at-graphite));
+  transform: translateY(-1px);
+}
+.atelier-surface .at-dsr-tab .t-name {
+  grid-area: name;
+  font-size: 0.86rem;
+  line-height: 1.35;
+  font-weight: 600;
+}
+.atelier-surface .at-dsr-tab .t-stand {
+  grid-area: stand;
+  font: 11px/1.4 var(--at-font-record);
+  color: var(--at-ink-2);
+}
+
+/* The four recorded identities, plus the neutral for a line that has not ended.
+   PALETTE: atelier-outcomes (src/lib/dataviz/palette.ts) — referenced, never redefined. */
+.atelier-surface [data-out='PUBLISH'] { --dsr-out: var(--at-out-publish); }
+.atelier-surface [data-out='PUBLICATION_CANDIDATE'] { --dsr-out: var(--at-out-gate); }
+.atelier-surface [data-out='ARCHIVE_AS_STUDY'] { --dsr-out: var(--at-out-study); }
+.atelier-surface [data-out='KILL'] { --dsr-out: var(--at-out-kill); }
+.atelier-surface [data-out='RUNNING'] { --dsr-out: var(--at-graphite); }
+
+/* ————————————————————————————————————————————————— one dossier ————————————— */
+
+.atelier-surface .at-dsr {
+  margin: 0 0 2rem;
+  scroll-margin-top: 1.5rem;
+}
+.atelier-surface .at-dsr:focus { outline: none; }
+.atelier-surface .at-dsr:focus-visible {
+  outline: 2px solid var(--at-thread);
+  outline-offset: 6px;
+}
+/* Without JavaScript every dossier is visible and they need a rule between them. With it, one
+   is visible at a time and the rule would hang under a single record. */
+.atelier-surface .at-dsr + .at-dsr {
+  padding-top: 2rem;
+  border-top: 1px dashed var(--at-hairline);
+}
+.atelier-surface .at-dsr[role='tabpanel'] + .at-dsr[role='tabpanel'] {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.atelier-surface .at-dsr-head { margin: 0 0 1.25rem; }
+
+.atelier-surface .d-stand {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.2rem 0.55rem;
+  margin: 0 0 0.4rem;
+  font: 11.5px/1.5 var(--at-font-record);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.atelier-surface .d-stand .d-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--dsr-out, var(--at-graphite));
+  transform: translateY(1px);
+}
+.atelier-surface .d-stand b { font-weight: 700; color: var(--at-ink); }
+.atelier-surface .d-stand .d-hint {
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--at-ink-2);
+}
+
+/* A line's title is a sentence, and these titles are long by design ("Negative parallax — the
+   impossible distance the catalogue is instructed to keep"). It gets a real measure rather than
+   a narrow column: three cramped lines beside empty paper reads as an accident. */
+.atelier-surface .d-title {
+  margin: 0 0 0.4rem;
+  max-width: 44ch;
+  font-family: var(--at-font-display);
+  font-size: clamp(1.25rem, 1rem + 1.1vw, 1.7rem);
+  line-height: 1.2;
+  font-weight: 600;
+  color: var(--at-h1-ink);
+}
+
+/* Inline emphasis the record made, rendered rather than printed as syntax
+   (src/lib/atelier/dossier.ts renderInline). Code spans get the record's own mono. */
+.atelier-surface .at-dsr code {
+  font-family: var(--at-font-record);
+  font-size: 0.92em;
+  padding: 0 0.15em;
+  background: var(--at-badge-bg);
+  overflow-wrap: anywhere;
+}
+.atelier-surface .at-dsr .d-quote code,
+.atelier-surface .at-dsr .m-text code { background: transparent; }
+
+.atelier-surface .d-meta {
+  margin: 0;
+  font: 11.5px/1.5 var(--at-font-record);
+  color: var(--at-ink-2);
+}
+
+/* ————————————————————————————————————————————————— the panels —————————————— */
+
+.atelier-surface .d-block { margin: 0 0 1.4rem; }
+
+.atelier-surface .d-h {
+  margin: 0 0 0.5rem;
+  font: 11px/1.4 var(--at-font-record);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--at-ink-2);
+}
+.atelier-surface .d-h .d-count {
+  margin-left: 0.35em;
+  padding: 0.05em 0.4em;
+  border: 1px solid var(--at-hairline);
+  letter-spacing: 0;
+}
+
+/* The question is the loudest thing in a dossier, because it is what the line IS. */
+.atelier-surface .d-quote {
+  margin: 0;
+  padding: 0 0 0 1rem;
+  border-left: 3px solid var(--at-thread);
+  max-width: 62ch;
+  font-family: var(--at-font-display);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--at-ink);
+}
+
+/* Every quotation names the file it came from. 11px is this file's floor and it is a path,
+   not prose — but it wraps rather than truncating, because a path a reader cannot finish
+   reading is not a citation. */
+.atelier-surface .d-src {
+  margin: 0.4rem 0 0;
+  font: 11px/1.5 var(--at-font-record);
+  color: var(--at-ink-2);
+  opacity: 0.8;
+  overflow-wrap: anywhere;
+}
+
+/* An honest gap: a statement ABOUT the record, so it wears italic and the second ink — never
+   the same voice as a quotation FROM it. */
+.atelier-surface .d-gap {
+  margin: 0;
+  font: italic 13px/1.6 var(--at-font-record);
+  color: var(--at-ink-2);
+  max-width: 62ch;
+}
+
+.atelier-surface .d-fields {
+  display: grid;
+  gap: 1rem;
+}
+@media (min-width: 860px) {
+  .atelier-surface .d-fields { grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr)); }
+}
+.atelier-surface .d-fieldtext {
+  margin: 0;
+  max-width: 56ch;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--at-ink);
+}
+
+/* What closing it cost — the sentence that used to live in a 5px gutter. */
+.atelier-surface .d-ledger {
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--at-hairline);
+  background: var(--at-badge-bg);
+}
+.atelier-surface .d-ledgertext {
+  margin: 0;
+  max-width: 74ch;
+  font: 13px/1.7 var(--at-font-record);
+  color: var(--at-ink);
+}
+
+/* ————————————————————————————————————————————————— the moves ——————————————— */
+
+.atelier-surface .d-movelist {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.9rem;
+}
+
+.atelier-surface .d-move {
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--at-hairline);
+  background: var(--at-surface);
+}
+/* A journal entry is the practice writing ABOUT its move for a reader; a trace entry is the
+   move itself. The record before the retelling, and the difference marked rather than merged. */
+.atelier-surface .d-move[data-from='journal'] {
+  border-left: 3px solid var(--at-graphite);
+  background: var(--at-badge-bg);
+}
+.atelier-surface .d-move[data-from='trace'] { border-left: 3px solid var(--at-ink); }
+
+.atelier-surface .m-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.6rem;
+  margin: 0 0 0.35rem;
+  font: 11px/1.5 var(--at-font-record);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--at-ink-2);
+}
+.atelier-surface .m-head time { font-weight: 700; color: var(--at-ink); }
+.atelier-surface .m-kind,
+.atelier-surface .m-no {
+  padding: 0.05em 0.45em;
+  border: 1px solid var(--at-hairline);
+  letter-spacing: 0.04em;
+}
+
+.atelier-surface .m-title {
+  margin: 0 0 0.45rem;
+  max-width: 60ch;
+  font-family: var(--at-font-display);
+  font-size: 1rem;
+  line-height: 1.35;
+  font-weight: 600;
+  color: var(--at-ink);
+}
+
+/* The practice's own paragraph. Body copy — this is the thing the page exists to show. */
+.atelier-surface .m-text {
+  margin: 0;
+  max-width: 68ch;
+  font-size: 0.905rem;
+  line-height: 1.65;
+  color: var(--at-ink);
+}
+
+.atelier-surface .m-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.3rem 1rem;
+  margin: 0.5rem 0 0;
+}
+.atelier-surface .m-foot .d-src { margin: 0; }
+.atelier-surface .m-foot a {
+  font: 11.5px/1.5 var(--at-font-record);
+  color: var(--at-ink);
+  text-decoration: underline;
+  white-space: nowrap;
+}
+.atelier-surface .m-foot a:hover { color: var(--at-thread); }
+
+.atelier-surface .d-note {
+  margin: 0.7rem 0 0;
+  font: 11.5px/1.55 var(--at-font-record);
+  color: var(--at-ink-2);
+}
+
+/* ————————————————————————————————————————————————— the timeline ———————————— */
+
+.atelier-surface .d-ticklist {
+  margin: 0;
+  padding: 0 0 0 1rem;
+  list-style: none;
+  border-left: 1px solid var(--at-hairline);
+  display: grid;
+  gap: 0.7rem;
+}
+.atelier-surface .d-ticklist li { position: relative; }
+.atelier-surface .d-ticklist li::before {
+  content: '';
+  position: absolute;
+  left: calc(-1rem - 3.5px);
+  top: 0.42em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--at-graphite);
+}
+
+.atelier-surface .k-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 0.5rem;
+  margin: 0 0 0.15rem;
+  font: 11px/1.5 var(--at-font-record);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--at-ink-2);
+}
+.atelier-surface .k-head time { font-weight: 700; color: var(--at-ink); min-width: 5em; }
+.atelier-surface .k-kind {
+  padding: 0.05em 0.45em;
+  border: 1px solid var(--at-hairline);
+}
+.atelier-surface .k-no { opacity: 0.8; }
+
+.atelier-surface .k-title {
+  margin: 0;
+  max-width: 76ch;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--at-ink);
+}
+.atelier-surface .k-budget {
+  margin: 0.2rem 0 0;
+  max-width: 76ch;
+  font: 11.5px/1.6 var(--at-font-record);
+  color: var(--at-ink-2);
+}
+.atelier-surface .k-budget span {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.75;
+  margin-right: 0.4em;
+}
+
+/* ————————————————————————————————————————————————— story & record —————————— */
+
+.atelier-surface .d-story {
+  margin: 0 0 1.4rem;
+  padding: 0.7rem 1rem;
+  border: 1px solid var(--at-thread);
+  background: var(--at-badge-bg);
+}
+.atelier-surface .d-story a {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--at-ink);
+  text-decoration: underline;
+}
+.atelier-surface .d-story a:hover { color: var(--at-thread); }
+
+.atelier-surface .d-files {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.3rem;
+}
+.atelier-surface .d-files li {
+  font: 11.5px/1.6 var(--at-font-record);
+  color: var(--at-ink-2);
+}
+.atelier-surface .d-files code {
+  display: inline-block;
+  min-width: 12em;
+  font: inherit;
+  font-weight: 700;
+  color: var(--at-ink);
+}
+
+.atelier-surface .d-more { margin: 0.7rem 0 0; }
+.atelier-surface .d-more a {
+  font: 12px/1.5 var(--at-font-record);
+  color: var(--at-ink);
+  text-decoration: underline;
+}
+.atelier-surface .d-more a:hover { color: var(--at-thread); }
+
+.atelier-surface .at-dsr-prov {
+  margin: 1.5rem 0 0;
+  max-width: 82ch;
+  font: 11.5px/1.6 var(--at-font-record);
+  color: var(--at-ink-2);
+  opacity: 0.85;
+}
+
+/* ————————————————————————————————————————————————— small screens ——————————— */
+
+@media (max-width: 520px) {
+  .atelier-surface .d-quote { font-size: 1rem; padding-left: 0.75rem; }
+  .atelier-surface .d-move,
+  .atelier-surface .d-ledger { padding: 0.7rem 0.8rem; }
+  .atelier-surface .d-files code { min-width: 0; display: block; }
+}
