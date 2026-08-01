@@ -97,7 +97,16 @@
   width: 100%;
   height: auto;
   display: block;
-  overflow: visible;
+  /* CLIPS TO ITS OWN viewBox — the SVG default, restored 2026-08-01. It used to be `visible`,
+     which meant a re-aimed viewBox was not a crop at all: every row OUTSIDE the band went on
+     painting past the box, over the card above and the account below, until some ancestor that
+     happened to hide its overflow sliced it mid-row. That is what the owner saw as "you cannot
+     see everything" — half-rows at both edges of the pinned board, and, at 900px, each scene's
+     still painting the whole twelve-row sheet into a box the height of its band, the surplus cut
+     off by the still's own scroll box. Nothing on this sheet is drawn outside the WHOLE-sheet
+     viewBox, so the resting figure is unaffected; only the cropped states change, and they now
+     contain exactly what they show. */
+  overflow: hidden;
   /* the paper's own tone, a shade deeper than the sheet it lies on — a drawing board */
   background: linear-gradient(180deg, color-mix(in oklab, var(--at-badge-bg) 82%, transparent), transparent 76%);
   border-radius: 10px;
@@ -473,11 +482,30 @@
 .atelier-surface .dv-tour-body:has(.dv-tour-figure:not([hidden])) {
   grid-template-columns: minmax(0, 1fr);
 }
+/* THE BOARD BUDGETS ITSELF (rewritten 2026-08-01, Frank: "the visualisation is not tall enough —
+   you cannot see everything").
+   What went wrong is worth stating, because the shape of the fix follows from it: the board's
+   height was capped at 46vh while the DRAWING inside it was capped, independently, at 30vh. The
+   two numbers knew nothing about each other and nothing about the chrome between them — the key
+   line, the legend, the card with its stepper and its foot came to some 250px, so at 1440×900 the
+   board's content wanted 467px inside a 414px box and the bottom 54px of the sheet were simply
+   cut off by `overflow: hidden` (109px on a 780px-tall window: two whole rows, unreachable — the
+   box does not scroll, by design). The drawing was BOTH clipped and shrunk.
+   Now the board is a column and the sheet takes what is left after the chrome, measured rather
+   than guessed, with the SVG's own preserveAspectRatio="xMidYMid meet" fitting the drawing into
+   whatever that turns out to be. Consequence to keep in mind when editing: the drawing can only
+   ever get SMALLER here, never clipped — which is the right failure mode for a figure whose
+   record also stands, whole, in the table below. */
 .atelier-surface .dv-tour-figure:not([hidden]) {
-  /* Deliberately under half the viewport. Tour.astro activates a scene when its box crosses the
-     middle of the screen; a board taller than that would be pinned over the very scene it is
-     illustrating, and the drawing would run one step ahead of the words. */
-  max-height: 46vh;
+  display: flex;
+  flex-direction: column;
+  /* The bottom EDGE is the invariant, not the height: Tour.astro activates a scene when its box
+     crosses the middle of the viewport, so a board reaching past that line is pinned over the very
+     scene it illustrates and the drawing runs one step ahead of the words. Written as the geometry
+     it actually is — half the viewport, minus wherever the board starts — instead of a 46vh that
+     happened to land near it. */
+  max-height: calc(50vh - var(--dv-tour-sticky-top));
+  /* the last-resort net only: with the column below, nothing should reach it */
   overflow: hidden;
   background: var(--at-surface);
   border-bottom: 1px solid var(--at-hairline);
@@ -486,17 +514,52 @@
   padding: 0.5rem 0 0.5rem;
   z-index: 2;
 }
-.atelier-surface .dv-tour-figure .at-proc { margin-top: 0; }
+/* The closing scene shows the WHOLE sheet — every row, not the eight a band holds — and it is the
+   LAST scene, so there is no next one for the drawing to run ahead of and the board may reach past
+   the middle line here. Without this the whole sheet had to fit the band's budget and rendered at
+   0.53 scale: row labels at six pixels, a picture of a sheet rather than a sheet. */
+.atelier-surface .dv-tour-figure:not([hidden]):has(.at-proc-svg[data-view='whole']) {
+  max-height: calc(64vh - var(--dv-tour-sticky-top));
+}
+/* Two rows of chrome, side by side with the card, instead of stacked above it: the key line and
+   the legend used to cost the drawing a further 56px of height while sitting in a column of empty
+   paper. Same DOM, same order for a screen reader (grid areas move boxes, not markup) — the
+   drawing simply gets those pixels back. */
+.atelier-surface .dv-tour-figure .at-proc {
+  /* all four sides: the figure's own 2rem BOTTOM margin used to sit inside the board's budget and
+     cost the drawing 32px of height for nothing — only margin-top was being reset */
+  margin: 0;
+  flex: 1 1 auto;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(11rem, 21rem);
+  grid-template-rows: auto auto minmax(0, 1fr);
+  grid-template-areas:
+    'card key'
+    'card legend'
+    'sheet sheet';
+  column-gap: 1.4rem;
+}
 /* On the board, a scene shows the BAND around the line it is talking about (the figure re-aims its
    own viewBox — see ProcessFigure's apply), which is what keeps the ledger gutter at its designed
-   size. The closing scene lifts both the filter and the crop; there the whole sheet is the point,
-   so it is allowed to scale down — the gutter is not what that beat is about. */
-.atelier-surface .dv-tour-figure .at-proc-svg { max-height: 30vh; }
-.atelier-surface .dv-tour-figure .at-proc-svg[data-view='whole'] { max-height: 26vh; }
+   size. The closing scene lifts both the filter and the crop. */
+.atelier-surface .dv-tour-figure .at-proc-figure {
+  grid-area: sheet;
+  margin: 0.4rem 0 0;
+  min-height: 0;
+}
+.atelier-surface .dv-tour-figure .at-proc-scroll,
+.atelier-surface .dv-tour-figure .at-proc-scroll > div { height: 100%; }
+/* height, not max-height: the sheet is given the row the grid left for it, and fits itself into it */
+.atelier-surface .dv-tour-figure .at-proc-svg { height: 100%; max-height: none; }
 /* The card keeps its head, its position and its stepper on the board; its long prose does not,
    because the scenes running underneath ARE that prose, and a pinned column that repeats the
    paragraph beside it pushes the drawing off its own board. Outside a tour the card is whole. */
-.atelier-surface .dv-tour-figure .dv-panel { padding: 0.7rem 0.9rem 0.75rem; margin-bottom: 0.35rem; }
+.atelier-surface .dv-tour-figure .dv-panel {
+  grid-area: card;
+  padding: 0.7rem 0.9rem 0.75rem;
+  margin-bottom: 0;
+}
 .atelier-surface .dv-tour-figure .dv-panel .n-about,
 .atelier-surface .dv-tour-figure .dv-panel .n-verdict,
 .atelier-surface .dv-tour-figure .dv-panel .n-ledger,
@@ -504,9 +567,9 @@
 .atelier-surface .dv-tour-figure .dv-panel .n-title { font-size: 1.05rem; }
 .atelier-surface .dv-tour-figure .dv-panel-body { margin: 0; }
 .atelier-surface .dv-tour-figure .dv-panel-nav { margin-top: 0.45rem; }
-.atelier-surface .dv-tour-figure .at-proc-key { margin-top: 0; }
+.atelier-surface .dv-tour-figure .at-proc-key { grid-area: key; margin: 0 0 0.35rem; }
+.atelier-surface .dv-tour-figure .dv-legend { grid-area: legend; align-content: start; margin: 0; }
 .atelier-surface .dv-tour-figure .at-proc-hint { display: none; }
-.atelier-surface .dv-tour-figure .at-proc-figure { margin-top: 0.5rem; }
 .atelier-surface .dv-tour-title {
   font-family: var(--at-font-display);
   font-size: clamp(24px, 3vw, 38px);
@@ -582,7 +645,10 @@
    uses, here because it is simply the better one at this width. The stills keep their full width
    and scroll sideways rather than shrinking the ledger gutter out of legibility. */
 @media (max-width: 900px) {
-  .atelier-surface .dv-tour-figure { display: none; }
+  /* `:not([hidden])` here only to MATCH the selector the board's own display is set on above —
+     without it this rule is one class less specific and the board reappears at 390px, drawing at
+     0.5 scale, which is exactly the state this media query exists to prevent. */
+  .atelier-surface .dv-tour-figure:not([hidden]) { display: none; }
   /* The stills are un-hidden by the composition's own script, not from here: Tailwind v4's
      preflight ships `[hidden] { display: none !important }` inside a CASCADE LAYER, and a layered
      !important declaration outranks an unlayered one no matter how specific — so CSS cannot
