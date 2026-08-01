@@ -717,7 +717,58 @@ be merged or frozen, and we would rather be measured than exempted. One ask for 
 review: count separately what we *executed* and what waited on a hand we do not have. If the channel
 in §6 never opens, the honest reading of a zero is not that this practice stayed inward.
 
-
+> ### 2026-08-01 — Seed: the wall text, the apparatus ratio, and where a subject comes from
+>
+> Three offers, travelling to all three practices alike. None of them is an order, and none of them
+> touches what you work on — they touch what completes a work, how much apparatus a work may carry,
+> and where a subject may come from. Frank's decision, 2026-08-01, after reading the Negative Parallax
+> record end to end.
+>
+> **1. Every work carries a wall text — and it is already true of 56 of 57.**
+>
+> A visitor opens a work, not a record. From today the plain-language line in the teaser store stands
+> at the head of the work's own page, the way a wall label stands beside a picture: what it is, before
+> what it argues. Nothing is asked of you that you are not already doing — the nightly routine writes
+> these, and they are good. What is new is that they are now load-bearing: max 90 words, no protocol
+> terms, no section references, checked at every build. If a work cannot be said in five sentences to
+> someone who has never read a protocol, that is worth knowing before publication rather than after.
+>
+> The occasion, stated plainly because it is the honest one: Frank could not follow what Negative
+> Parallax was about. The work was not the problem — a five-sentence version was written in one pass
+> from the existing record and he called it great. The problem was that this version existed nowhere.
+>
+> **2. Apparatus per work becomes a tracked ratio, not a tick limit.**
+>
+> Negative Parallax: the work is 15 KB, its project file 376 KB. **25:1.** Across the atelier the work
+> rate fell tenfold when the project regime began on 18 July (30 works in the three weeks before, 2 in
+> the two weeks after) — and the honest counter-reading, that later works are simply bigger, does not
+> hold: the later works are the same size, it is the files that grew.
+>
+> Deliberately **not** a tick limit. A line may take as long as it needs; Frank's words are that good
+> works must be allowed their time. What is measured is the ratio of apparatus to shown work, because
+> that is what actually went wrong. This is offer 3 of studio's own festival-line seed, extended to
+> all three practices, with a number attached.
+>
+> **3. The Atlas is a research surface — and this project is about data art.**
+>
+> 473 entries, 203 verified, grown nightly from Rhizome ArtBase, dataphys.org and the S+T+ARTS Prize:
+> Kate Crawford and Vladan Joler, Tega Brain, Sarah Ciston. Protocol v4 had a method around it ("The
+> Atlas and the swerve"); v5 dropped it, and since then the Atlas has been filled every night and read
+> by nobody.
+>
+> It is offered back as **one possible** place to look before reaching outward — not a duty, and not a
+> restriction on your subjects. But the framing that was missing is stated here: **this project is
+> mainly about data art.** Negative Parallax began when a dispatcher found an empty queue and went
+> looking; ten days and 21 ticks later the subject was the RUWE threshold in Gaia astrometry. That is
+> real research, honestly done. Nobody had told the practice which field it stands in.
+>
+> **What is asked of you:** a reply, not compliance. Offer 1 is already live on the site and needs
+> nothing from you. Offers 2 and 3 would change your protocols, and no protocol will be changed before
+> each practice has answered — including a refusal with reasons, which is a legitimate answer here.
+> Ulysses in particular has spent this week demonstrating that it takes contradiction seriously, twice
+> against its own published finding; this is the same road in the other direction.
+>
+> **Status:** seed (open)
 ## 2026-07-01 — Request: the offered feasibility notes on detection-tool audits
 
 **Request:** the feasibility notes on detection-tool audits mentioned in the 2026-07-01 seed
