@@ -1,6 +1,6 @@
 // src/lib/post/brevo.test.ts
 import { describe, it, expect } from 'vitest'
-import { isEmail, brevoMissing, brevoDoiRequest, brevoReplyRequest, brevoId, NEED } from './brevo'
+import { isEmail, brevoMissing, brevoDoiRequest, brevoReplyRequest, brevoId, hookAuthorized, subscriberFromHook, NEED } from './brevo'
 
 describe('isEmail', () => {
   it('accepts ordinary addresses', () => {
@@ -96,6 +96,34 @@ describe('brevoReplyRequest', () => {
 
   it('replyTo goes to the sender — a further answer lands in a human mailbox, not a loop', () => {
     expect(JSON.parse(req.init.body).replyTo).toEqual({ email: 'hello@frankbueltge.de' })
+  })
+})
+
+describe('hookAuthorized', () => {
+  const SECRET = 'a-long-random-shared-secret'
+
+  it('accepts the right ?k=, refuses a wrong or absent one', () => {
+    expect(hookAuthorized(`https://frankbueltge.de/api/brevo-hook?k=${SECRET}`, SECRET)).toBe(true)
+    expect(hookAuthorized('https://frankbueltge.de/api/brevo-hook?k=wrong', SECRET)).toBe(false)
+    expect(hookAuthorized('https://frankbueltge.de/api/brevo-hook', SECRET)).toBe(false)
+  })
+
+  it('an unset or short secret fails closed — never an open webhook', () => {
+    expect(hookAuthorized('https://x/api/brevo-hook?k=', '')).toBe(false)
+    expect(hookAuthorized('https://x/api/brevo-hook?k=short', 'short')).toBe(false)
+    expect(hookAuthorized('https://x/api/brevo-hook?k=undefined', undefined)).toBe(false)
+  })
+})
+
+describe('subscriberFromHook', () => {
+  it('reads email and list ids in both of Brevo’s casings', () => {
+    expect(subscriberFromHook({ email: 'a@example.org', list_id: [3] })).toEqual({ email: 'a@example.org', listIds: [3] })
+    expect(subscriberFromHook({ email: 'a@example.org', listId: 3 })).toEqual({ email: 'a@example.org', listIds: [3] })
+  })
+
+  it('an unreadable payload degrades to nulls instead of throwing — a subscription is still a subscription', () => {
+    expect(subscriberFromHook('not json-shaped')).toEqual({ email: null, listIds: [] })
+    expect(subscriberFromHook({ email: 42, list_id: 'three' })).toEqual({ email: null, listIds: [] })
   })
 })
 

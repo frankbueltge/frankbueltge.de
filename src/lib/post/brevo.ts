@@ -107,3 +107,38 @@ export function brevoId(v: unknown): number | null {
   const n = Number(v.trim())
   return Number.isSafeInteger(n) && n > 0 ? n : null
 }
+
+// ── Operator notifications (Frank, 2026-08-01: "ich würde gerne auch eine email bekommen
+//    wenn sich jemand für den newsletter anmeldet") ─────────────────────────────────────
+//
+// Two rails share these helpers: the Brevo marketing webhook (a confirmed subscription) and
+// the letterbox (a new letter in the queue). Both send TO the operator — they are duty
+// notifications to the person who must act, not outbound mail to anyone outside, so the
+// "nothing sends itself" rule is untouched.
+
+/** The webhook URL carries a shared secret as ?k= — Brevo does not sign its webhooks, so the
+ * secret in the URL is the whole authentication. Constant-time comparison is deliberately not
+ * attempted here: the secret is long and random, and a timing oracle over a CDN hop is not a
+ * realistic adversary for a subscriber-count notification. */
+export function hookAuthorized(requestUrl: string, secret: unknown): boolean {
+  if (typeof secret !== 'string' || secret.trim().length < 16) return false
+  try {
+    return new URL(requestUrl).searchParams.get('k') === secret
+  } catch {
+    return false
+  }
+}
+
+/** Liberal read of a Brevo marketing-webhook payload. Brevo's wire format has drifted between
+ * camelCase and snake_case over the years, so both are accepted; anything unreadable comes
+ * back null and the caller still notifies — a subscription with an unparsable payload is
+ * still a subscription. */
+export function subscriberFromHook(body: unknown): { email: string | null; listIds: number[] } {
+  if (typeof body !== 'object' || body === null) return { email: null, listIds: [] }
+  const b = body as Record<string, unknown>
+  const email = isEmail(b.email) ? (b.email as string).trim() : null
+  const rawIds = b.list_id ?? b.listId ?? b.list_ids ?? b.listIds
+  const arr = Array.isArray(rawIds) ? rawIds : rawIds !== undefined ? [rawIds] : []
+  const listIds = arr.filter((x): x is number => typeof x === 'number' && Number.isSafeInteger(x))
+  return { email, listIds }
+}
