@@ -6,6 +6,7 @@
 // ehrliche Lücke im Dashboard schlägt einen Crash oder eine erfundene Zahl.
 
 import { parseInboxIssueTitle, isNonRequestSection } from './requestsMd'
+import { fallbackSummary, parseRequestHead } from './requestHead'
 
 export interface WorkflowRun {
   name: string
@@ -260,6 +261,18 @@ export interface InboxEntry {
   openedAt: string
   ageDays: number
   excerpt: string
+  /** Triage (Steuerzentrale v2 P1): the sender's own four-line head, parsed — or the
+   * fallback. `summary` is the tl;dr when structured, else the first sentences (the UI
+   * marks the fallback "unstrukturiert (alt)"). `needsAction` is conservative: an
+   * unstructured request counts as possibly needing Frank. */
+  structured: boolean
+  summary: string
+  braucht: string | null
+  brauchtOptionen: string[]
+  frist: string | null
+  fristDate: string | null
+  kontext: string | null
+  needsAction: boolean
 }
 
 // Raised from 600 on 2026-07-31 (Frank: "clicking 'mehr' to read the whole message does
@@ -282,6 +295,8 @@ export function buildInbox(issues: InboxIssue[], nowIso: string): InboxEntry[] {
     // Team-eigene Sections (Seeds/Team note/Team responses) sind keine Anfragen an Frank —
     // auch wenn der Watchdog sie (früher) zu Issues gemacht hat, gehören sie nicht in die Inbox.
     if (isNonRequestSection(parsed.heading)) continue
+    const body = issue.body ?? ''
+    const head = parseRequestHead(body)
     out.push({
       repo: parsed.repo,
       heading: parsed.heading,
@@ -289,7 +304,15 @@ export function buildInbox(issues: InboxIssue[], nowIso: string): InboxEntry[] {
       issueUrl: issue.html_url,
       openedAt: issue.created_at,
       ageDays: ageDays(issue.created_at, nowIso),
-      excerpt: (issue.body ?? '').slice(0, EXCERPT_LEN),
+      excerpt: body.slice(0, EXCERPT_LEN),
+      structured: head.structured,
+      summary: head.structured && head.tlDr ? head.tlDr : fallbackSummary(body),
+      braucht: head.structured ? head.braucht : null,
+      brauchtOptionen: head.optionen,
+      frist: head.frist,
+      fristDate: head.fristDate,
+      kontext: head.kontext,
+      needsAction: head.structured ? head.braucht !== 'nichts' : true,
     })
   }
   return out
