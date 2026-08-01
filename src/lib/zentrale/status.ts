@@ -262,7 +262,13 @@ export interface InboxEntry {
   excerpt: string
 }
 
-const EXCERPT_LEN = 600
+// Raised from 600 on 2026-07-31 (Frank: "clicking 'mehr' to read the whole message does
+// nothing"). 600 characters is roughly the first two paragraphs of a request — the "mehr"
+// toggle in the Steuerzentrale could never have shown more than that, because the rest was
+// never sent. The requests from the practices run to several thousand characters and are
+// argued end to end; a decision cannot be made from the opening. Four open issues at a few
+// kB each is nothing against a payload that already carries runs, commits and queues.
+const EXCERPT_LEN = 12000
 
 /** Baut die Inbox aus den offenen Issues, die der Bot pro Request-Section anlegt
  * (Titel "Request aus {repo}: {heading}", siehe requestsMd.parseInboxIssueTitle). Issues mit

@@ -11,7 +11,9 @@
       "nnes_fpr": null,
       "confidence_independent": "high",
       "confidence_note": "Real-world FPR 18%: Ibrahim et al., Scientific Reports 2023 — real student submissions across 32 university courses (FPR 18%, FNR 32%; a paraphrasing attack raises FNR to 95%). CORRECTED 2026-07-03 (session 07): previously 15% via a commercial aggregator chain; the aggregator's own figure is 18% and traces to this peer-reviewed study, now cited directly. NNES bar removed 2026-07-03: the 61% previously shown here is Liang et al.'s SEVEN-DETECTOR AVERAGE (61.22%), not a GPTZero-specific rate; per-detector rates were not individually retrievable. The average now appears, correctly framed, in the measurement-sources list below.",
-      "key_finding": "Under adversarial editing, mean accuracy across the detectors tested falls from 39.5% to 22.2% — a 17.4-point drop, not a 17.4% floor (Perkins et al., 2024). PeerJ 2025 (Pratama): flags 25% of non-native-authored AI-assisted texts as 100% AI vs ~11% for native authors."
+      "key_finding": "Under adversarial editing, mean accuracy across the detectors tested falls from 39.5% to 22.14% — a 17.4-point drop, not a 17.4% floor (Perkins et al., 2024). PeerJ 2025 (Pratama): flags 25% of non-native-authored AI-assisted texts as 100% AI vs ~11% for native authors (Table 6).",
+      "spec_source": "gptzero_spec",
+      "spec_flag": "COMPOSITE SPEC — the 0.24% and the 99% come from two different vendor documents; the one carrying 0.24% pairs it with 99.3%. See SPECIFICATION SOURCES below."
     },
     {
       "id": "turnitin",
@@ -22,7 +24,10 @@
       "nnes_fpr": null,
       "confidence_independent": "high",
       "confidence_note": "Sentence-level FPR ~4%: Turnitin's own admission (document-level claim: <1% for documents with 20%+ AI writing) — note this bar is a sentence-level figure beside document-level bars for other tools. CORRECTED 2026-07-03 (session 07): previously displayed 5, contradicting its own cited source. NNES bar removed 2026-07-03: no retrievable peer-reviewed study supports a Turnitin-specific NNES rate — the foundational cross-detector study (Liang et al.) excluded Turnitin, and Turnitin's own research reports no statistically significant ELL bias at 300+ words (short documents show a larger FPR gap; vendor research). An unattributed 'real-world accuracy 85–90%' line was also removed as unsourced. ACU: 25% of ~6,000 referrals dismissed (ABC News, Oct 2025).",
-      "key_finding": "Australian Catholic University: ~6,000 academic misconduct allegations in 2024 (~90% AI-related), ~25% dismissed, Turnitin AI detection abandoned March 2025. Turnitin's own blog: below a 20% detected-AI share 'there is a higher incidence of false positives'."
+      "key_finding": "Australian Catholic University: ~6,000 academic misconduct allegations in 2024 (~90% AI-related), ~25% dismissed, Turnitin AI detection abandoned March 2025. Turnitin's own blog: below a 20% detected-AI share 'there is a higher incidence of false positives'.",
+      "spec_source": "turnitin_spec",
+      "claim_accuracy_status": "UNSOURCED (flagged 2026-08-01, session 77). The 98 in claim_accuracy carries no identifier anywhere in this work and is not drawn on the face. Re-checked first-hand 2026-08-01: the two vendor blog posts this work cites contain no '98' at all; two further vendor pages served JavaScript shells with no article body; the vendor's guides host returned HTTP 403. A search index attributes to the vendor's Chief Product Officer the sentence 'we only flag something when we are 98 percent sure it is written by AI' — a confidence threshold, not an accuracy rate — but no vendor page carrying it could be opened. The figure is retained here, unasserted and marked, rather than silently deleted.",
+      "spec_flag": "UNIT MISMATCH — this spec is document-level and the measured bar beside it is the vendor's sentence-level figure. Not like-for-like."
     },
     {
       "id": "zerogpt",
@@ -32,7 +37,7 @@
       "independent_fpr": 16.67,
       "nnes_fpr": null,
       "confidence_independent": "high",
-      "confidence_note": "FPR 16.67%: Pratama 2025, PeerJ Computer Science, Table 4 (established-ground-truth scenario). CORRECTED 2026-07-03 (session 07): previously 28%, attributed to a benchmark that could not be retrieved in the named lab's published material. Detection accuracy: Perkins et al. 2024 (46.1%, baseline, non-adversarial), Weber-Wulff et al. Dec 2023 (59%). Both peer-reviewed.",
+      "confidence_note": "FPR 16.67%: Pratama 2025, PeerJ Computer Science, Table 4 (established-ground-truth scenario). CORRECTED 2026-07-03 (session 07): previously 28%, attributed to a benchmark that could not be retrieved in the named lab's published material. Detection accuracy: Perkins et al. 2024 (46.1%, baseline, non-adversarial, Table 7; the same paper's Table 8 reports 31.3% for non-manipulated output averaged differently), Weber-Wulff et al. Dec 2023 (59% — the binary approach, Table 7; the same paper also reports 74% binary-inclusive, Table 8, and 67% semi-binary, Table 9). Both peer-reviewed. CITATIONS COMPLETED 2026-08-01 (session 77): the tables and approaches were not named until then, which let one of three published computations look more settled than the paper makes it.",
       "key_finding": "PeerJ CS 2025 (Pratama): ZeroGPT 64.35% overall accuracy at 16.67% FPR; DetectGPT, despite a claimed 99% accuracy, achieved 54.63% — 'virtually no better than random guessing' (the paper's verdict, applying to DetectGPT alone; an earlier version of this line wrongly extended it to ZeroGPT and dressed a paraphrase as a quotation)."
     },
     {
@@ -44,7 +49,8 @@
       "nnes_fpr": null,
       "confidence_independent": "high",
       "confidence_note": "Vendor claim: 'under 3% false positive rate' for the Turbo model, 99% accuracy (originality.ai's own pages). Independent FPR 0.25%: RAID benchmark (Dugan et al., ACL 2024), Table 4, naive threshold 0.5 on RAID's clean human corpus (range 0.07-0.47% across thresholds). CORRECTED 2026-07-03 (session 06): this row previously displayed claim 0.2% / measured 37% ('a 185x gap') — neither figure is in the RAID paper or vendor marketing. See the correction note below and memory/discarded.md in the research archive.",
-      "key_finding": "The FPR spec holds on RAID's clean human corpus (0.07-0.47% at naive thresholds) — this tool's calibration gap is elsewhere: accuracy at 5% FPR collapses under distribution shift, to 8.5% on Python code and 55.8% overall on RAID's unseen extra domains, against 99% claimed accuracy (RAID Tables 4 and 7)."
+      "key_finding": "The FPR spec holds on RAID's clean human corpus (0.07-0.47% at naive thresholds) — this tool's calibration gap is elsewhere: accuracy at 5% FPR collapses under distribution shift, to 8.5% on Python code and 55.8% overall on RAID's unseen extra domains, against 99% claimed accuracy (RAID Tables 4 and 7).",
+      "spec_flag": "SUPERSEDED SPEC — \"under 3%\" is the vendor's retired Turbo 3.0.1 (Oct 2024); its current published rates are 0.5–2.4%. Known-wrong and published knowingly, pending a re-run. See SPECIFICATION SOURCES below."
     }
   ],
   "benchmark_sources": [
@@ -67,7 +73,8 @@
       "name": "Pratama (2025)",
       "venue": "PeerJ Computer Science (peer-reviewed)",
       "url": "https://doi.org/10.7717/peerj-cs.2953",
-      "finding": "GPTZero flags 25% of non-native-authored AI-assisted abstracts as 100% AI vs 11.11% for native authors (over-detection rate, Table 4); ZeroGPT: 64.35% accuracy, 16.67% FPR; DetectGPT: 54.63% accuracy — 'virtually no better than random guessing'"
+      "finding": "GPTZero flags 25.00% of non-native-authored AI-assisted abstracts as 100% AI vs 11.11% for native authors (over-detection rate, Table 6 — corrected 2026-08-01 from 'Table 4'); ZeroGPT: 64.35% accuracy, 16.67% FPR (Table 4); DetectGPT: 54.63% accuracy — 'virtually no better than random guessing'",
+      "access_note": "The DOI route returns HTTP 403 behind an interstitial challenge to automated clients; the open-access full text is readable at the Europe PMC mirror https://europepmc.org/articles/PMC12453642, which is where it was read (2026-07-31)."
     },
     {
       "id": "stowe2025",
@@ -82,6 +89,76 @@
       "venue": "ArXiv cs.CL/cs.LG preprint",
       "url": "https://arxiv.org/abs/2502.04528",
       "finding": "Fixed detection threshold causes systematic group disparities; shorter texts and 'neurotic' writing styles disproportionately flagged"
+    },
+    {
+      "id": "ibrahim2023",
+      "name": "Ibrahim et al. (2023)",
+      "venue": "Scientific Reports 13:12187 (peer-reviewed)",
+      "url": "https://doi.org/10.1038/s41598-023-38964-3",
+      "finding": "Source of GPTZero's 18% measured bar. Real student submissions across 32 university courses: 'GPTZero has a higher false positive rate (18%), but a lower false-negative rate (32%)'; a paraphrasing attack raises that false-negative rate from 32% to 95%. An author correction exists (doi:10.1038/s41598-023-43998-8) and touches no figure",
+      "added": "2026-08-01 — cited in this work since 2026-07-03 with no identifier"
+    },
+    {
+      "id": "perkins2024",
+      "name": "Perkins et al. (2024)",
+      "venue": "Int. J. Educational Technology in Higher Education (peer-reviewed)",
+      "url": "https://doi.org/10.1186/s41239-024-00487-w",
+      "finding": "Source of ZeroGPT's 46.1% baseline accuracy (Table 7) and of the adversarial figures: mean accuracy across the detectors tested falls from 39.5% to 22.14%, a 17.4-point drop",
+      "added": "2026-08-01 — cited in this work since 2026-07-01 with no identifier"
+    },
+    {
+      "id": "weberwulff2023",
+      "name": "Weber-Wulff et al. (2023)",
+      "venue": "Int. J. for Educational Integrity 19:26 (peer-reviewed, CC BY 4.0)",
+      "url": "https://doi.org/10.1007/s40979-023-00146-z",
+      "finding": "Source of ZeroGPT's 59% detection accuracy — the binary approach, Table 7. The same paper reports 74% (binary inclusive, Table 8) and 67% (semi-binary, Table 9) for the same tool; this work quotes the strictest of the three and, until 2026-08-01, said so nowhere. Preprint: arXiv:2306.15666",
+      "added": "2026-08-01 — cited in this work since 2026-07-01 with no identifier"
+    },
+    {
+      "id": "turnitin_vendor",
+      "name": "Turnitin (vendor pages)",
+      "venue": "Vendor publication — not an independent measurement",
+      "url": "https://www.turnitin.com/blog/understanding-the-false-positive-rate-for-sentences-of-our-ai-writing-detection-capability",
+      "finding": "Source of Turnitin's 4% bar, read verbatim 2026-08-01: 'Our document false positive rate — incorrectly identifying fully human-written text as AI-generated within a document — is less than 1% for documents with 20% or more AI writing. Our sentence-level false positive rate is around 4%.' The below-20% qualification is on a second vendor page: 'in cases where we detect less than 20% of AI writing in a document, there is a higher incidence of false positives' (https://www.turnitin.com/blog/ai-writing-detection-update-from-turnitins-chief-product-officer)",
+      "added": "2026-08-01 — cited in this work since 2026-07-03 as 'Turnitin's own admission', with no identifier"
+    }
+  ],
+  "specification_sources": [
+    {
+      "id": "gptzero_spec",
+      "tool": "GPTZero",
+      "claim_shown": "99% accuracy · 0.24% FPR",
+      "url": "https://gptzero.me/news/gptzero-vs-copyleaks-vs-originality/",
+      "verbatim": "GPTZero came out as the leader, with 99.3% overall accuracy and a false positive rate of just 0.24%.",
+      "caveat": "COMPOSITE, disclosed 2026-08-01. The 0.24% comes from a vendor-authored comparative benchmark ('we tested 3,000 samples'), where its paired accuracy figure is 99.3%, not 99%. The 99% is the vendor's homepage headline (https://gptzero.me/, verbatim: 'GPTZero is the most accurate AI detector, with a 99% accuracy rate when spotting AI-generated text vs. human writing'). No single vendor source states 99% and 0.24% together. The vendor's own technology page gives a lower figure for the harder task: 'GPTZero outperforms competitors at detecting mixed documents … with 96.5% accuracy. Our false positive rate is under 1%' (https://gptzero.me/technology). Retained at the reference date and disclosed rather than restated.",
+      "read": "2026-08-01, HTTP 200 on each; the homepage confirmed identical in the archived capture http://web.archive.org/web/20260702095038/https://gptzero.me/"
+    },
+    {
+      "id": "originality_spec",
+      "tool": "Originality.ai Turbo",
+      "claim_shown": "99% accuracy · under 3% FPR",
+      "url": "https://originality.ai/blog/ai-accuracy",
+      "verbatim": "3.0.1 Turbo — October 2024: 99%+ accuracy in detecting AI content (under 3% false positive rate)",
+      "caveat": "SUPERSEDED SPEC, disclosed 2026-08-01. The 'under 3%' is a changelog entry for Turbo 3.0.1 of October 2024 — a model version the same page states has since been superseded. The vendor's current per-model figures on that page are Lite 1.0.2 → 0.5%, Turbo 3.0.2 → 1.5%, Academic 0.0.5 → under 1%, Multilingual 2.0.0 → 2.4%. The archived capture of 2026-06-17 (http://web.archive.org/web/20260617144720/https://originality.ai/blog/ai-accuracy) shows the superseding figures were already published two weeks before this work shipped. WHY THE BAR WAS NOT SIMPLY UPDATED, stated on its real grounds after a Skeptic struck down the first version of this paragraph: this is NOT a reference-date defence, and the earlier wording that called it one was wrong — a reference-date defence means 'this was the best figure known at the time', and the evidence in this same entry shows the better figure was on the same vendor page two weeks earlier. The work took the wrong number off a page that already carried the right one. It is retained on the bar for one reason only: changing a specification changes what the comparison measured, and a comparison is re-run, not edited. The re-run is owed and is on the workboard as its own move. Until it happens this bar is a known-wrong specification, published knowingly, with the correct current figures printed beside it. The direction of the error is stated so it can be weighed rather than taken on trust: a laxer claimed FPR makes the specification EASIER to satisfy, and this work's finding for this tool is that the FPR spec HOLDS on a clean corpus (0.07–0.47%). It would hold against 1.5% too. The finding does not turn on the error; the citation did.",
+      "read": "2026-08-01, HTTP 200"
+    },
+    {
+      "id": "turnitin_spec",
+      "tool": "Turnitin",
+      "claim_shown": "1.0% FPR (document level)",
+      "url": "https://www.turnitin.com/blog/understanding-the-false-positive-rate-for-sentences-of-our-ai-writing-detection-capability",
+      "verbatim": "Our document false positive rate … is less than 1% for documents with 20% or more AI writing.",
+      "caveat": "The separate claim_accuracy value of 98 held in this file is UNSOURCED — see claim_accuracy_status on the Turnitin row. It is not drawn on the face.",
+      "read": "2026-08-01, HTTP 200"
+    },
+    {
+      "id": "zerogpt_spec",
+      "tool": "ZeroGPT",
+      "claim_shown": "n/d",
+      "url": null,
+      "verbatim": null,
+      "caveat": "No vendor specification is shown for this tool, and none is claimed. The spec bar is a hairline marked 'n/d'.",
+      "read": null
     }
   ],
   "harm_cases": [
@@ -105,9 +182,12 @@
       "allegations": null,
       "dismissed_pct": null,
       "detector": "GPTZero",
-      "outcome": "An EMBA student, a French national: 1-year suspension, failing grade. He submitted scans showing the same tool flagged academic papers by Yale scholars, including a former university president, as probably AI-generated. Federal lawsuit pending (D. Conn. 3:25-cv-00159). Injunction denied May 2025.",
-      "source": "Rignol v. Yale (pending) — Yale Daily News; Poets&Quants (2025-05)",
-      "source_url": "https://yaledailynews.com/articles/som-student-sues-yale-alleges-wrongful-suspension-over-ai-use"
+      "outcome": "An EMBA student, a French national: 1-year suspension, failing grade. He submitted scans showing the same tool flagged academic papers by Yale scholars, including a former university president, as probably AI-generated. Preliminary injunction denied 2025-05-05. UPDATED 2026-08-01: the federal case is still pending (D. Conn. 3:25-cv-00159); a third amended complaint was filed 2026-06-12, and on 2026-07-24 the court terminated the defendants' motion to dismiss for failing to request a pre-filing conference, setting a letter-motion schedule into August 2026.",
+      "source": "Rignol v. Yale University, No. 3:25-cv-00159 (D. Conn.) — federal docket and the order denying the injunction; Yale Daily News (unreadable, see access_note)",
+      "source_url": "https://www.courtlistener.com/docket/69607031/rignol-v-yale-university/",
+      "source_url_secondary": "https://storage.courtlistener.com/recap/gov.uscourts.ctd.163407/gov.uscourts.ctd.163407.89.0.pdf",
+      "access_note": "WHAT THE COURT RECORD SUPPORTS AND WHAT IT DOES NOT (stated 2026-08-01 on a Skeptic’s condition; narrowed the same day when the Verifier caught this note overclaiming in the other direction). SUPPORTED, verbatim in the order denying the injunction: the EMBA enrolment; that Rignol is “a French national authorized to live and work in the United States on an investor visa”; and the penalty — “SOM penalized Rignol by issuing him an F in the course and suspending him from classes for one year”. NOT SUPPORTED by any document this practice can read: that the same tool flagged academic papers by Yale scholars, including a former university president. The order contains no occurrence of “president”, and its single use of “scans” refers to scans of Rignol’s own exam. That sentence rests on the student-newspaper article alone. An earlier version of this note also listed the suspension and the failing grade as uncorroborated; that was wrong, it was caught by an independent check the same day, and it is corrected here rather than quietly. The student-newspaper article this row cited from 2026-07-01 until 2026-08-01 (https://yaledailynews.com/articles/som-student-sues-yale-alleges-wrongful-suspension-over-ai-use) could not be opened by any route on 2026-07-31: HTTP 429 behind a bot checkpoint to one client, HTTP 403 to another, and the Internet Archive holds NO capture of it at any date (availability and CDX APIs both empty). It is not shown to be dead; it is unreadable, and no archived copy exists to fall back on. The row now rests on the court record instead: docket entry 89 of 2025-05-05, 'ORDER denying 16 Motion for TRO and Preliminary Injunction … Signed by Judge Sarah F. Russell', and the 26-page memorandum itself, read first-hand: 'Because I conclude that Rignol has failed to make the threshold showing of irreparable harm, I deny Rignol's motion for a preliminary injunction.' Note that the judge who denied the injunction is not the judge now assigned — the case was reassigned to Judge Vernon D. Oliver on 2026-04-09. The docket does not establish, and this row does not assert, anything about the merits.",
+      "caveat": "CAVEAT (2026-08-01): per the court's own account of the record in the order denying the preliminary injunction, the deciding body did not rely on detector output. The order states that the Honor Committee, in concluding that Rignol used AI, relied on his refusal to produce the requested document and on the “strong similarities between [Rignol]’s response and the ChatGPT response to one of the Sourcing and Managing Funds exam questions”, and that “Choi says that the Honor Committee did not rely on the ChatGPTZero scans produced by Rouwenhorst” (Choi Aff. ¶¶ 32–34, as recounted at docket 89, 2025-05-05). This row therefore documents a case in which a detector figured in the accusation, not a consequence the record attributes to the detector — the same distinction this register has carried on the Minnesota row since 2026-07-12, and which nobody had applied here until an independent check forced the order open. It is the defendants’ account as summarised by the court at the preliminary-injunction stage, not a final adjudication of the facts."
     },
     {
       "id": "minnesota",

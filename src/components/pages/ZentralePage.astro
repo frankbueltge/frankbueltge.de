@@ -588,14 +588,28 @@
 
     const excerptWrap = el('div', { class: 'zx-excerpt mt-2 text-sm text-fg-muted' }, el('span', {}, entry.excerpt))
     card.append(excerptWrap)
-    const expandBtn = el('button', { type: 'button', class: 'mt-1 font-mono text-xs text-fg-faint underline' }, 'mehr')
-    expandBtn.addEventListener('click', () => {
-      const expanded = excerptWrap.classList.toggle('is-expanded')
-      expandBtn.textContent = expanded ? 'weniger' : 'mehr'
-    })
-    card.append(expandBtn)
+    // Der Knopf erscheint nur, wenn es wirklich mehr zu sehen gibt — an der ZEICHENZAHL
+    // gemessen, nicht am Layout: eine Layout-Messung (scrollHeight vs. clientHeight) würde
+    // einen kaputten Klemm-Stil stillschweigend verstecken, statt ihn zu zeigen.
+    if (entry.excerpt.length > 280) {
+      const expandBtn = el('button', { type: 'button', class: 'mt-1 font-mono text-xs text-fg-faint underline' }, 'mehr')
+      expandBtn.addEventListener('click', () => {
+        const expanded = excerptWrap.classList.toggle('is-expanded')
+        expandBtn.textContent = expanded ? 'weniger' : 'mehr'
+      })
+      card.append(expandBtn)
+    }
 
-    card.append(el('p', { class: 'mt-2 text-xs text-fg-faint' }, 'Ohne Antwort entscheidet die Praxis in ihrer nächsten Sitzung selbst.'))
+    const hinweis = el('p', { class: 'mt-2 text-xs text-fg-faint' }, 'Ohne Antwort entscheidet die Praxis in ihrer nächsten Sitzung selbst. ')
+    // Immer erreichbar, was auch im Dashboard schiefgeht: die Anfrage an ihrer Quelle.
+    hinweis.append(
+      el(
+        'a',
+        { href: entry.issueUrl, target: '_blank', rel: 'noreferrer', class: 'underline hover:text-fg' },
+        'ganz lesen ↗',
+      ),
+    )
+    card.append(hinweis)
 
     const msgField = el('textarea', {
       rows: '2',
@@ -927,13 +941,19 @@
     regarding: string
     text: string
     received_at: string
+    status?: string
+    answered_at?: string
   }
+  // Conservative mirror of the server-side check (src/lib/post/brevo.ts isEmail) — the
+  // contact field is free-form, and the mail button must not offer itself for a handle.
+  const looksLikeEmail = (s: string): boolean =>
+    s.trim().length >= 6 && s.trim().length <= 320 && /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(s.trim())
   function renderLetterCard(l: ZxLetter): HTMLElement {
     const card = el('div', { class: 'rounded-[10px] border border-line bg-panel p-4' })
     const head = el('p', { class: 'font-mono text-[11px] uppercase tracking-[0.14em] text-fg-muted' })
     head.textContent = `an ${l.to} · von ${l.fromMark}${l.regarding ? ` · betr. ${l.regarding}` : ''}`
     const meta = el('p', { class: 'mt-1 font-mono text-[11px] text-fg-faint' })
-    meta.textContent = `${l.id} · ${fmtRel(l.received_at)}${l.contact ? ` · Kontakt: ${l.contact}` : ' · kein Kontakt hinterlassen'}`
+    meta.textContent = `${l.id} · ${fmtRel(l.received_at)}${l.contact ? ` · Kontakt: ${l.contact}` : ' · kein Kontakt hinterlassen'}${l.status === 'answered' ? ' · BEANTWORTET' : ''}`
     const body = el('p', { class: 'mt-3 whitespace-pre-wrap text-sm leading-relaxed text-fg' })
     body.textContent = l.text
     const row = el('div', { class: 'mt-3 flex items-center gap-3' })
@@ -961,6 +981,80 @@
       })()
     })
     row.append(btn, hint)
+
+    // Reply by email — only offered when the writer left an address (spec 2026-08-01 §2.3).
+    // The text is written here, in the moment; /api/zentrale/reply sends it via Brevo from
+    // the verified sender and marks the letter answered. Nothing sends itself.
+    if (looksLikeEmail(l.contact) && l.status !== 'answered') {
+      const replyBtn = el('button', { type: 'button', class: 'rounded border border-line px-2.5 py-1 font-mono text-[11px] uppercase tracking-[0.1em] text-fg-muted hover:text-fg' }, 'per E-Mail antworten')
+      const replyWrap = el('div', { class: 'mt-3 hidden flex-col gap-2' })
+      const subjField = el('input', {
+        type: 'text',
+        maxlength: '160',
+        value: l.regarding ? `Re: ${l.regarding}` : 'Re: dein Brief an frankbueltge.de',
+        class: 'w-full rounded-lg border border-line bg-bg px-3 py-2 text-sm text-fg outline-none focus-visible:border-fg',
+      }) as HTMLInputElement
+      const textField = el('textarea', {
+        rows: '5',
+        placeholder: 'Antwort …',
+        class: 'w-full rounded-lg border border-line bg-bg px-3 py-2 text-sm leading-relaxed text-fg outline-none focus-visible:border-fg',
+      }) as HTMLTextAreaElement
+      const sendRow = el('div', { class: 'flex items-center gap-3' })
+      const sendBtn = el('button', { type: 'button', class: 'rounded border border-line px-2.5 py-1 font-mono text-[11px] uppercase tracking-[0.1em] text-fg hover:border-fg-faint' }, 'senden')
+      const sendHint = el('span', { class: 'text-xs text-fg-faint', role: 'status' }, '')
+      sendRow.append(sendBtn, sendHint)
+      replyWrap.append(subjField, textField, sendRow)
+      replyBtn.addEventListener('click', () => {
+        replyWrap.classList.toggle('hidden')
+        replyWrap.classList.toggle('flex')
+        if (!replyWrap.classList.contains('hidden')) textField.focus()
+      })
+      sendBtn.addEventListener('click', () => {
+        const text = textField.value.trim()
+        const subject = subjField.value.trim()
+        if (text.length < 10) {
+          sendHint.textContent = 'Die Antwort braucht mindestens 10 Zeichen.'
+          return
+        }
+        sendBtn.setAttribute('disabled', 'true')
+        sendHint.textContent = 'sendet …'
+        void (async () => {
+          try {
+            const res = await fetch('/api/zentrale/reply', {
+              method: 'POST',
+              headers: { 'content-type': 'application/json', 'X-Zentrale-Auth': token ?? '' },
+              body: JSON.stringify({ letterId: l.id, subject, text }),
+            })
+            const out = (await res.json().catch(() => ({}))) as { ok?: boolean; code?: string }
+            if (res.ok && out.ok) {
+              sendHint.textContent = 'Gesendet. Der Brief ist als beantwortet markiert.'
+              replyBtn.remove()
+              textField.setAttribute('disabled', 'true')
+              subjField.setAttribute('disabled', 'true')
+              sendBtn.remove()
+              meta.textContent += ' · BEANTWORTET'
+            } else {
+              sendBtn.removeAttribute('disabled')
+              const sayReply: Record<string, string> = {
+                standby: 'Mail-Versand ist noch nicht eingerichtet (Brevo-Secrets fehlen).',
+                'no-email': 'Der Kontakt ist keine E-Mail-Adresse.',
+                'not-found': 'Brief nicht mehr in der Warteschlange — bitte neu laden.',
+                'send-failed': 'Der Versand ist beim Anbieter fehlgeschlagen.',
+                upstream: 'Der Anbieter hat nicht geantwortet — bitte gleich noch einmal.',
+              }
+              sendHint.textContent = sayReply[out.code ?? ''] ?? 'Senden fehlgeschlagen.'
+            }
+          } catch {
+            sendBtn.removeAttribute('disabled')
+            sendHint.textContent = 'Netzwerkfehler beim Senden.'
+          }
+        })()
+      })
+      row.append(replyBtn)
+      card.append(head, meta, body, row, replyWrap)
+      return card
+    }
+
     card.append(head, meta, body, row)
     return card
   }
@@ -1203,14 +1297,29 @@
 </script>
 
 <style>
-  /* Excerpt-Klappe: 4 Zeilen, bis antippen es öffnet — keine Bibliothek, reines CSS. */
-  .zx-excerpt {
+  /* Excerpt-Klappe: 4 Zeilen, bis antippen es öffnet — keine Bibliothek, reines CSS.
+   *
+   * `:global()` ist hier PFLICHT, nicht Geschmack (Frank, 2026-07-31: „wenn ich auf ,mehr'
+   * klicke, passiert nix"). Astro scopet Komponenten-CSS über ein Attribut und lieferte
+   * `.zx-excerpt[data-astro-cid-folzek22]{…}` aus — dieses Attribut setzt Astro aber nur an
+   * Knoten, die es selbst rendert. Der Excerpt-Container entsteht zur LAUFZEIT im Skript
+   * (`el('div', { class: 'zx-excerpt …' })`) und trug es nie: die Klappe klemmte nichts, und
+   * `is-expanded` traf keine Regel. Der Knopf war funktionslos, ohne Fehlermeldung.
+   *
+   * Merkregel für diese Datei: Ihr Skript baut das ganze Dashboard im DOM. JEDE Regel hier,
+   * die auf eine im Skript vergebene Klasse zielt, muss `:global()` tragen — sonst zielt sie
+   * ins Leere und niemand sieht es. */
+  :global(.zx-excerpt) {
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 4;
     overflow: hidden;
+    /* Die Anfragen sind Markdown mit Absätzen, Listen und Tabellen. Ohne pre-wrap läuft das
+     * zu einer einzigen Wand zusammen, sobald man aufklappt — lesbar war es dann immer noch
+     * nicht. */
+    white-space: pre-wrap;
   }
-  .zx-excerpt.is-expanded {
+  :global(.zx-excerpt.is-expanded) {
     display: block;
     -webkit-line-clamp: unset;
     overflow: visible;
