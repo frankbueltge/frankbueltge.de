@@ -76,3 +76,25 @@ standby — visible, not forgotten (same contract as /api/seed and /api/post).
   delivered to the Steuerzentrale for editing — sent by a human, per D3.
 - **Reception notification:** same rail — a visitor whose response is published in Reception
   learns about it, if they left a contact.
+
+## Addendum 2026-08-01 (same day, after arming)
+
+Delivered and armed on 2026-08-01: Brevo account live, sender `hello@frankbueltge.de`
+verified, list 3 + DOI template 1 (converted via `tag: "optin"` — the Forms wizard is NOT
+the only way, the tag field is the internal DOI marker), five secrets on the Pages project,
+`/api/subscribe` ready, first confirmed subscriber on the list. One trap on the record: the
+DOI placeholder is `{{ doubleoptin }}`; the legacy `[DOUBLEOPTIN]` syntax is accepted
+silently and produces a dead link in the confirmation mail.
+
+**Operator notifications (Frank's ask, same day):** two duty mails to the operator, both
+via the same transactional rail, both German (Steuerzentrale territory):
+
+- a confirmed digest subscription → Brevo marketing webhook (`listAddition`, registered via
+  API) → `POST /api/brevo-hook?k=<BREVO_WEBHOOK_SECRET>` → mail to `BREVO_NOTIFY_TO`.
+  Brevo does not sign webhooks; the URL secret is the authentication.
+- a new letter in the queue (letterbox or /contact) → best-effort mail after the KV write,
+  sender mark + regarding line only, never the text or the contact. Bounded by DAILY_CAP.
+
+New env: `BREVO_NOTIFY_TO`, `BREVO_WEBHOOK_SECRET`. Prominence pass in the same change:
+digest block moved to the top of /post, teaser on the hub, Digest in the footer, Contact in
+the top nav after About.

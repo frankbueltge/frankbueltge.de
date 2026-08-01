@@ -69,6 +69,9 @@ const nav: NavItem[] = [
   },
   { href: '/holdings', label: 'Experiments' },
   { href: '/about', label: 'About' },
+  // Contact after About (Frank, 2026-08-01) — since the page carries a real form that lands
+  // in the letter queue, it earns its own door instead of hiding behind the footer.
+  { href: '/contact', label: 'Contact' },
 ]
 
 const isGroup = (i: NavItem): i is NavGroup => 'sections' in i

@@ -20,6 +20,7 @@
 // GET with the Steuerzentrale bearer lists the queue so Frank can read letters today,
 // before a review surface exists.
 import { checkToken } from '../../src/lib/zentrale/auth'
+import { brevoReplyRequest, brevoMissing, NEED } from '../../src/lib/post/brevo'
 
 const MAX_BODY_BYTES = 8192
 const LETTER_PREFIX = 'letter:'
@@ -202,6 +203,27 @@ export async function onRequestPost(context) {
     )
   } catch {
     return json(502, { ok: false, reason: 'upstream' })
+  }
+
+  // Operator notification, best effort (Frank, 2026-08-01): a letter in a queue nobody knows
+  // about is a letter unanswered. Deliberately AFTER the KV write and never blocking the 200 —
+  // the letter is safe either way, and a mail failure must not read as "your letter was lost".
+  // Sender mark and regarding line only, never the text or the contact: the queue holds the
+  // letter, the mail only rings the bell. Volume is bounded by DAILY_CAP.
+  if (brevoMissing(env, NEED.reply).length === 0 && env.BREVO_NOTIFY_TO) {
+    const req = brevoReplyRequest({
+      apiKey: env.BREVO_API_KEY,
+      senderEmail: env.BREVO_SENDER_EMAIL,
+      senderName: env.BREVO_SENDER_NAME || undefined,
+      to: env.BREVO_NOTIFY_TO,
+      subject: `Neuer Brief im Briefkasten — an ${to}`,
+      text: `Von: ${fromMark}${regarding ? `\nBetrifft: ${regarding}` : ''}\nKontakt hinterlassen: ${contact ? 'ja' : 'nein'}\n\nLesen und beantworten in der Steuerzentrale:\nhttps://frankbueltge.de/steuerzentrale/`,
+    })
+    try {
+      await fetch(req.url, req.init)
+    } catch {
+      /* the letter is already safe in the queue — the bell failing is not an error the writer should see */
+    }
   }
 
   return json(200, { ok: true, id, status: 'pending_review' })
