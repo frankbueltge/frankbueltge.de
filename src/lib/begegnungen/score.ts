@@ -10,6 +10,8 @@
 // research-ecology's own packages/projections uses to duck-type packages/protocol's
 // `LensDefinition` instead of importing it (see that file's own comment).
 
+import { escapeXml, wrapLines } from '@/lib/dataviz/geometry'
+
 export interface ScoreEventIssuer {
   collective_id: string | null
   actor_id: string
@@ -110,34 +112,6 @@ function eventPositions(count: number): number[] {
 /** Greedy word-wrap budget for the divergence terminal's inline quotes (matches the design
  * session's own line lengths, ~44 chars — docs/design/variants-2026-07-15/a-observatorium.html). */
 const DIVERGENCE_QUOTE_WRAP = 44
-
-function escapeXml(value: string): string {
-  return value
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#x27;')
-}
-
-/** Deterministic greedy word-wrap — no hand-picked per-quote line breaks (those would be typing
- * the design session's own text back in); any quote of any length wraps the same way every time. */
-function wrapLines(text: string, maxChars: number): string[] {
-  const words = text.split(' ')
-  const lines: string[] = []
-  let current = ''
-  for (const word of words) {
-    const candidate = current ? `${current} ${word}` : word
-    if (candidate.length > maxChars && current) {
-      lines.push(current)
-      current = word
-    } else {
-      current = candidate
-    }
-  }
-  if (current) lines.push(current)
-  return lines
-}
 
 function quotedTspans(x: number, text: string): string {
   const lines = wrapLines(text, DIVERGENCE_QUOTE_WRAP)

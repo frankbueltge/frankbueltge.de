@@ -14,29 +14,13 @@
 //  · calibration marks ‖ (PROTOCOL.md git dates) are not drawn — honest margin note;
 //  · the top journal-anchor row (hand-picked in the mockup) is not drawn.
 
-function escapeXml(value: string): string {
-  return value
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#x27;')
-}
+import { dayRange as geometryDayRange, escapeXml } from '@/lib/dataviz/geometry'
 
-/** Inclusive ISO day range — pure date arithmetic, no clock. */
+/** Inclusive ISO day range — pure date arithmetic, no clock. One-line wrapper around
+ *  dataviz/geometry.ts's consolidated dayRange, keeping this module's historical contract
+ *  (assumes well-formed dates, throws only on a reversed range) byte-identical. */
 export function dayRange(first: string, last: string): string[] {
-  const start = Date.UTC(
-    Number(first.slice(0, 4)),
-    Number(first.slice(5, 7)) - 1,
-    Number(first.slice(8, 10)),
-  )
-  const end = Date.UTC(Number(last.slice(0, 4)), Number(last.slice(5, 7)) - 1, Number(last.slice(8, 10)))
-  if (end < start) throw new Error(`dayRange: ${last} lies before ${first}`)
-  const days: string[] = []
-  for (let t = start; t <= end; t += 86_400_000) {
-    days.push(new Date(t).toISOString().slice(0, 10))
-  }
-  return days
+  return geometryDayRange(first, last, { onInvalid: 'throw' })
 }
 
 // ---------------------------------------------------------------- ported geometry
@@ -52,7 +36,13 @@ const TRACE_K = 26 // sessions/day → amplitude (√-scaled); the mockup used 9
 
 const MONTHS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
 
-function grid(x0: number, x1: number, y0: number, y1: number): string {
+/**
+ * The millimetre paper every field figure is drawn on: a 15.2px pitch with every fifth line
+ * major. Exported (it was private until the claim figure needed it) so a second field figure
+ * draws on the SAME paper instead of a second, drifting copy of this loop — the output is
+ * byte-identical to the private version it replaces, which is what keeps strip.test.ts green.
+ */
+export function mmGrid(x0: number, x1: number, y0: number, y1: number): string {
   const out: string[] = []
   let i = 0
   for (let x = x0; x <= x1; x += 15.2, i++) {
@@ -64,6 +54,8 @@ function grid(x0: number, x1: number, y0: number, y1: number): string {
   }
   return out.join('')
 }
+
+const grid = mmGrid
 
 export interface StripDay {
   date: string
@@ -225,6 +217,122 @@ export function buildStripSvg(input: StripInput): string {
   return s.join('\n')
 }
 
+// ---------------------------------------------------------------- envelope band
+//
+// The field's way of drawing an ADMISSIBLE REGION: everything inside the band is ordinary,
+// everything outside it is the thing worth reporting. The idiom comes from the collective's own
+// margin battery — instrument 018 fitted a pre-registered ordinary-drift envelope and reported
+// NO SIGNAL BEYOND ORDINARY DRIFT when every metric landed inside it.
+//
+// Two rules make the drawing survive contexts a colour fill would not:
+//   · the wash is INK at 6 %, never a colour fill — under forced-colors a background fill is
+//     replaced wholesale, so the band would either vanish or become a solid block;
+//   · the edges are a 1px DASHED stroke, which forced-colors keeps as a stroke — so even with
+//     the wash gone the region still has a readable boundary.
+
+export interface EnvelopeBandInput {
+  x0: number
+  x1: number
+  /** the band's upper edge in SVG user units (smaller y — SVG counts downward) */
+  yTop: number
+  /** the band's lower edge (must be below yTop) */
+  yBottom: number
+  /** margin note lettered at the band's left edge; omitted draws no label */
+  label?: string
+  /** 'inside' letters the label just under the upper edge, 'above' letters it over the band */
+  labelAt?: 'inside' | 'above'
+}
+
+/**
+ * Builds one envelope band: a 6 % ink wash between two horizontal edges, both edges drawn as 1px
+ * dashed hairlines, plus an optional margin label. Pure — same input, byte-identical output.
+ * Refuses a degenerate or inverted band rather than drawing a zero-height rectangle nobody can
+ * see: an envelope with no width is a derivation error upstream, not a drawing to be rendered.
+ */
+export function envelopeBand(input: EnvelopeBandInput): string {
+  const { x0, x1, yTop, yBottom } = input
+  if (x1 <= x0) throw new Error(`envelopeBand: x1 (${x1}) must lie right of x0 (${x0})`)
+  if (yBottom <= yTop) throw new Error(`envelopeBand: yBottom (${yBottom}) must lie below yTop (${yTop})`)
+  const s: string[] = ['<g class="env-band">']
+  s.push(`<rect class="env-wash" x="${x0}" y="${yTop}" width="${x1 - x0}" height="${yBottom - yTop}"/>`)
+  s.push(`<path class="env-edge" d="M${x0} ${yTop} H${x1} M${x0} ${yBottom} H${x1}"/>`)
+  if (input.label) {
+    const y = input.labelAt === 'above' ? yTop - 8 : yTop + 15
+    s.push(`<text class="env-lab" x="${x0 + 8}" y="${y}">${escapeXml(input.label)}</text>`)
+  }
+  s.push('</g>')
+  return s.join('')
+}
+
+// ---------------------------------------------------------------- the decision ladder
+//
+// The Meridian Research Runtime caps what a claim may SAY at a machine-enforceable
+// `claim_ceiling`, issued by a MethodRuling and refused above by the Claim Service. The seven
+// rungs below are that vocabulary, in the runtime spec's own order (strongest first), copied from
+// the committed spec — docs/meridian-research-runtime-spec-v0.2.0/
+// MERIDIAN_RESEARCH_RUNTIME_SPEC_v0.2.0.md § 5.1 "Claim-language ceiling" — and checked against
+// that file by strip.test.ts, so the ladder can never quietly become a ladder this site invented.
+//
+// Attribution, and it is load-bearing (wording canon, enc-2026-005): the ruling and the ceiling
+// belong to the RUNTIME — the architect's engineering line — not to the Meridian collective's
+// research voice. A claim on a rung is the collective's; the rung it is held to is the runtime's.
+
+export const CLAIM_CEILINGS = [
+  'causal_bounded',
+  'causal_local',
+  'associational_adjusted',
+  'associational_unadjusted',
+  'descriptive',
+  'mechanism_hypothesis',
+  'insufficient_evidence',
+] as const
+
+export type ClaimCeiling = (typeof CLAIM_CEILINGS)[number]
+
+export interface LadderRung {
+  ceiling: string
+  /** 0 = the strongest rung (top of the ladder) */
+  index: number
+  /** y of this rung's hairline */
+  y: number
+  /** true where the ruling permits this language — the ruled rung and everything weaker */
+  permitted: boolean
+  /** the one rung the ruling actually issued */
+  ruled: boolean
+}
+
+export interface LadderOptions {
+  /** y of the strongest rung */
+  top: number
+  /** vertical pitch between rungs */
+  step: number
+}
+
+/**
+ * Lays out the decision ladder for one issued ceiling: every rung of the runtime's vocabulary,
+ * top-down from strongest, with the ruled rung marked and everything at or below it flagged
+ * permitted. Pure geometry — no drawing, no colour; the figure that uses this decides how a
+ * permitted rung differs from a refused one.
+ *
+ * Fails loud on a ceiling outside the vocabulary rather than defaulting it onto a rung: an
+ * unrecognised ceiling silently drawn as "permitted at the bottom" would be a fabricated ruling.
+ */
+export function ladderRungs(ruledCeiling: string, opts: LadderOptions): LadderRung[] {
+  const ruledIndex = CLAIM_CEILINGS.indexOf(ruledCeiling as ClaimCeiling)
+  if (ruledIndex === -1) {
+    throw new Error(
+      `ladderRungs: "${ruledCeiling}" is not one of the runtime's claim ceilings (${CLAIM_CEILINGS.join(', ')})`,
+    )
+  }
+  return CLAIM_CEILINGS.map((ceiling, index) => ({
+    ceiling,
+    index,
+    y: opts.top + index * opts.step,
+    permitted: index >= ruledIndex,
+    ruled: index === ruledIndex,
+  }))
+}
+
 // ---------------------------------------------------------------- Kontrollblatt (entry)
 
 export type ControlMarkKind = 'instr' | 'flag' | 'splicein' | 'stamp'
@@ -235,6 +343,20 @@ export interface ControlMark {
   kind: ControlMarkKind
   /** stamp letter (move initial); only for kind 'stamp' */
   letter?: string
+  /** stable identity a guided tour focuses this mark by; absent leaves the mark unkeyed and
+   *  therefore undrivable — every historical caller stays byte-identical */
+  key?: string
+}
+
+/** What a tour scene wants the plate to look like — the plate's own reading of FocusState
+ *  (src/lib/tour/types.ts). Absent means the resting plate: every mark at full strength. */
+export interface ControlFocus {
+  /** mark KINDS drawn at full strength; empty or absent means all of them */
+  filter?: string[]
+  /** mark keys drawn de-emphasized without being removed from the plate */
+  dim?: string[]
+  /** the one mark key drawn as chosen */
+  select?: string
 }
 
 export interface ControlInput {
@@ -242,6 +364,36 @@ export interface ControlInput {
   marks: ControlMark[]
   obligation?: { fromDate: string; label: string }
   penLabel: string
+  focus?: ControlFocus
+  /** a build-time still carries no focus hooks: no tabindex, nothing to tab into behind a
+   *  scene's prose (the live figure beside it is the interactive one) */
+  still?: boolean
+  /** the SVG element's own id — defaults to the historical "plate". A tour renders one still per
+   *  scene from this same builder, so without distinct ids a page would carry seven elements all
+   *  called "plate". */
+  svgId?: string
+  /** accessible name; the default names the mark count, as it always has */
+  label?: string
+  /** the margin word over a splice. The default says "from outside" because the entry plate's one
+   *  splice really is a correction arriving from another practice; a plate whose splice is an
+   *  internal review cut must say so instead of borrowing that claim. */
+  spliceLabel?: string
+  /**
+   * Crops the viewBox to the drawn marks instead of keeping the full 1440-unit plate width. The
+   * historical default is the full width, because the entry plate's tape is meant to read as a
+   * tape that runs on past the pen — but a FIVE-DAY plate drawn at full width uses barely a third
+   * of its own box, and inside a guided tour's half-width column that put the whole week into
+   * about 260 pixels. Opt-in, so /field and /field/history render byte-identically.
+   */
+  fitToMarks?: boolean
+  /**
+   * The x offsets same-day marks fan out by. The historical default fans RIGHTWARD from the day's
+   * tick ([-14, 30, 74, 118] — the mockup's hand offsets), which is fine while a day carries two
+   * or three marks; a day carrying FOUR pushed the last of them past the resting pen itself, so a
+   * plate whose busiest day is full can supply a centred spread instead. Opt-in: /field and
+   * /field/history keep the hand offsets, byte for byte.
+   */
+  dayOffsets?: number[]
 }
 
 /**
@@ -276,18 +428,45 @@ export function buildControlSvg(input: ControlInput): string {
   const y = 370
 
   const s: string[] = []
+  // the right margin of a fitted box is not the pen but the pen's LABEL, which is lettered to its
+  // right and would otherwise be cropped mid-word
+  const viewBox = input.fitToMarks ? `220 210 ${penX + 150 - 220} 330` : `0 210 ${W} 330`
   s.push(
-    `<svg id="plate" viewBox="0 210 ${W} 330" role="img" aria-label="Instrument record strip: ` +
-      `${input.marks.length} marks on the wall-clock line; the record follows as a table.">`,
+    `<svg id="${escapeXml(input.svgId ?? 'plate')}" viewBox="${viewBox}" role="img" aria-label="${escapeXml(
+      input.label ??
+        `Instrument record strip: ${input.marks.length} marks on the wall-clock line; the record follows as a table.`,
+    )}">`,
   )
   s.push(grid(250, penX + 30, 240, 500))
   s.push(`<polyline class="trace" points="250,${y} ${penX - 16},${y}"/>`)
 
   // marks, with deterministic same-day offsets (ported from the mockup's hand offsets)
   const seen = new Map<string, number>()
-  const dayOffsets = [-14, 30, 74, 118]
+  const dayOffsets = input.dayOffsets ?? [-14, 30, 74, 118]
   const labelledDays = new Set<string>()
   let stampRow = new Map<string, number>()
+
+  // The per-mark group attributes. A plate with no keys and no focus emits exactly what it always
+  // did (`<g class="evt2" tabindex="0">`) — the focus vocabulary only appears once a caller opts
+  // in by keying its marks, so /field, /field/history and their tests are untouched.
+  const f = input.focus
+  const attrs = (m: ControlMark): string => {
+    const parts = ['class="evt2"']
+    if (m.key !== undefined) {
+      parts.push(`data-key="${escapeXml(m.key)}"`)
+      if (!f?.filter?.length || f.filter.includes(m.kind)) parts.push('data-on=""')
+      if (f?.dim?.includes(m.key)) parts.push('data-dim=""')
+      if (f?.select === m.key) parts.push('data-sel=""')
+    }
+    if (!input.still) {
+      parts.push('tabindex="0"')
+      // A keyed mark is a live control (readout on focus, panel on Enter via the tour
+      // wiring) — announce it as one. Unkeyed plates keep their historical emission.
+      if (m.key !== undefined) parts.push('role="button"')
+    }
+    return parts.join(' ')
+  }
+
   for (const m of input.marks) {
     const perDay = input.marks.filter((x) => x.date === m.date).length
     const k = seen.get(m.date) ?? 0
@@ -295,23 +474,25 @@ export function buildControlSvg(input: ControlInput): string {
     const x = dx(m.date) + (perDay > 1 ? dayOffsets[k % dayOffsets.length] : 0)
     if (m.kind === 'instr') {
       s.push(
-        `<g class="evt2" tabindex="0"><path class="instr" d="M${x - 6} ${y - 4} l6 -11 l6 11 Z"/><title>${escapeXml(m.date)} — ${escapeXml(m.label)}</title></g>`,
+        `<g ${attrs(m)}><path class="instr" d="M${x - 6} ${y - 4} l6 -11 l6 11 Z"/><title>${escapeXml(m.date)} — ${escapeXml(m.label)}</title></g>`,
       )
     } else if (m.kind === 'flag') {
       s.push(
-        `<g class="evt2" tabindex="0"><path class="flag-pole" d="M${x} ${y - 52} V${y - 4}"/><path class="flag" d="M${x} ${y - 52} l16 5 l-16 5 Z"/><title>${escapeXml(m.date)} — ${escapeXml(m.label)}</title></g>`,
+        `<g ${attrs(m)}><path class="flag-pole" d="M${x} ${y - 52} V${y - 4}"/><path class="flag" d="M${x} ${y - 52} l16 5 l-16 5 Z"/><title>${escapeXml(m.date)} — ${escapeXml(m.label)}</title></g>`,
       )
     } else if (m.kind === 'splicein') {
       s.push(
-        `<g class="evt2" tabindex="0"><path class="splice" d="M${x} ${y - 70} C ${x - 10} ${y - 46}, ${x - 4} ${y - 22}, ${x} ${y - 6}"/><path class="instr" d="M${x - 5} ${y - 12} l5 9 l5 -9 Z"/><title>${escapeXml(m.date)} — ${escapeXml(m.label)}</title></g>`,
+        `<g ${attrs(m)}><path class="splice" d="M${x} ${y - 70} C ${x - 10} ${y - 46}, ${x - 4} ${y - 22}, ${x} ${y - 6}"/><path class="instr" d="M${x - 5} ${y - 12} l5 9 l5 -9 Z"/><title>${escapeXml(m.date)} — ${escapeXml(m.label)}</title></g>`,
       )
-      s.push(`<text class="t-n" x="${x - 6}" y="${y - 78}" text-anchor="end">from outside ↓</text>`)
+      s.push(
+        `<text class="t-n" x="${x - 6}" y="${y - 78}" text-anchor="end">${escapeXml(input.spliceLabel ?? 'from outside ↓')}</text>`,
+      )
     } else {
       const row = stampRow.get(m.date) ?? 0
       stampRow.set(m.date, row + 1)
       const sy = y - 26 - row * 30
       s.push(
-        `<g class="evt2" tabindex="0"><circle class="stamp" cx="${x}" cy="${sy}" r="9"/>` +
+        `<g ${attrs(m)}><circle class="stamp" cx="${x}" cy="${sy}" r="9"/>` +
           `<text class="stamp-t" x="${x}" y="${(sy + 3.4).toFixed(1)}" text-anchor="middle">${escapeXml(m.letter ?? 'S')}</text>` +
           `<title>${escapeXml(m.date)} — ${escapeXml(m.label)}</title></g>`,
       )
