@@ -336,6 +336,13 @@
   color: var(--at-ink);
   max-width: 68ch;
 }
+/* AN 11px FLOOR ON EVERY HTML STRING IN THIS FILE (2026-08-01). Frank, on the entrance: "in
+   mini type nobody can read". The offender he named was the SVG ledger gutter and that is gone
+   from the entrance's figure entirely, but the same objection applies to the labels, buttons,
+   citations and provenance lines around it, which sat at 10 and 10.5px. They are all 11px now.
+   The remaining 10px values in this file are SVG `font:` declarations — those are USER UNITS in
+   a scaled viewBox, not screen pixels, and the sheet's own measures (GUTTER_CHARS in
+   src/lib/atelier/passage.ts is derived from the gutter's 10px advance) are calibrated to them. */
 .atelier-surface .dv-panel .n-verdict {
   margin: 0 0 0.7rem;
   padding-left: 0.9rem;
@@ -354,7 +361,7 @@
 }
 .atelier-surface .dv-panel .n-ledger-h {
   margin: 0 0 0.3rem;
-  font: 10px var(--at-font-record);
+  font: 11px var(--at-font-record);
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--at-ink-2);
@@ -367,7 +374,7 @@
 .atelier-surface .dv-panel .n-ledger[data-gap] .n-ledger-t { font-style: italic; color: var(--at-ink-2); }
 .atelier-surface .dv-panel .n-ledger-src {
   margin: 0.3rem 0 0;
-  font: 10.5px var(--at-font-record);
+  font: 11px var(--at-font-record);
   color: var(--at-ink-2);
   opacity: 0.75;
   overflow-wrap: anywhere;
@@ -377,7 +384,7 @@
 .atelier-surface .dv-panel .n-moves { margin: 0.8rem 0 0; }
 .atelier-surface .dv-panel .n-moves-h {
   margin: 0 0 0.3rem;
-  font: 10px var(--at-font-record);
+  font: 11px var(--at-font-record);
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--at-ink-2);
@@ -417,7 +424,7 @@
   border: 1px solid var(--at-hairline);
   border-radius: 2px;
   padding: 3px 10px;
-  font: 10.5px var(--at-font-record);
+  font: 11px var(--at-font-record);
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--at-ink-2);
@@ -452,7 +459,7 @@
 /* the closing-cost column carries whole sentences — give it room and let it wrap */
 .atelier-surface .dv-table td:last-child { max-width: 56ch; }
 .atelier-surface .dv-prov {
-  font: 10.5px/1.6 var(--at-font-record);
+  font: 11px/1.6 var(--at-font-record);
   color: var(--at-ink-2);
   opacity: 0.85;
   max-width: 96ch;
@@ -588,7 +595,7 @@
 .atelier-surface .dv-scene { padding: 7vh 0; max-width: 66ch; }
 .atelier-surface .dv-scene:first-child { padding-top: 3vh; }
 .atelier-surface .dv-scene-kicker {
-  font: 10.5px var(--at-font-record);
+  font: 11px var(--at-font-record);
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--at-ink-2);
@@ -622,7 +629,7 @@
   margin: 0;
 }
 .atelier-surface .dv-scene-quote footer {
-  font: 10.5px var(--at-font-record);
+  font: 11px var(--at-font-record);
   color: var(--at-ink-2);
   margin-top: 6px;
   /* every citation here is a repo path, and a path offers a browser no break opportunity of its
@@ -633,7 +640,7 @@
 .atelier-surface .dv-scene-still { margin: 14px 0 0; }
 .atelier-surface .dv-scene-still svg { width: 100%; height: auto; max-height: 44vh; display: block; }
 .atelier-surface .dv-tour-steps { margin: 12px 0 4px; }
-.atelier-surface .dv-tour-jump { font: 10.5px var(--at-font-record); }
+.atelier-surface .dv-tour-jump { font: 11px var(--at-font-record); }
 .atelier-surface .dv-tour-jump a { color: var(--at-ink-2); text-decoration: none; }
 .atelier-surface .dv-tour-jump a[aria-current='true'] { color: var(--at-ink); text-decoration: underline; }
 
