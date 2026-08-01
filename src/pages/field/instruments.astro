@@ -24,15 +24,10 @@ const works = sortWorks(
 )
 
 const chronicle = loadChronicle()
-const VERDICT_LABEL: Record<string, string> = {
-  graduated: 'passed review',
-  pass: 're-verified',
-  conditions: 'passed with conditions',
-  fail: 'blocked by review',
-  discarded: 'discarded',
-  deferred: 'in progress',
-  rework: 'in rework',
-}
+// The chronicle's review vocabulary in plain language — ONE copy, shared with the entrance's
+// dossier (FIELD_NARRATIVE.dossier.verdictWords). It was declared here as well until 2026-08-01,
+// which is how a badge and a dossier start wording the same verdict two different ways.
+const VERDICT_LABEL = FIELD_NARRATIVE.dossier.verdictWords
 const withBadges = works.map((w) => {
   const hist = entriesForWork(chronicle, w.slug)
   const latest = hist[hist.length - 1]

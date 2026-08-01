@@ -49,20 +49,24 @@ export const FIELD_NARRATIVE = {
    * live aus der gespiegelten Werkliste in field/index.astro abgeleitet (kein Handzeiger:
    * ein fest gesetzter Slug fror den Header früher auf Instrument 001 ein). */
   selectionRule:
-    'the entry to /field is Meridian’s newest committed instrument — the most recent one entered into service — not a dashboard; it follows the engine’s mirror on its own as new instruments land',
+    'the dossier on /field opens on Meridian’s newest committed instrument — the most recent one entered into service — not on a hand-set favourite; the selection follows the engine’s mirror on its own as new instruments land, and every earlier instrument has the same dossier one click away',
   /** Eingang, orientation block (WP2 — practice-shell, 2026-07-31): the lede moved here
    * verbatim from the page's own hardcoded <p class="fd-room-intro">; `orientation` is NEW
    * drafted copy (same four first-visitor questions as the atelier's), not yet Frank's
    * sign-off — see the WP2 PR. approval stays 'draft' below, which already shows the chip. */
   entrance: {
+    /** REWRITTEN 2026-08-01 with the dossier (Aktualitäts-Regel): the previous lede described a
+     *  page that no longer exists — one record strip, and a link elsewhere for every other
+     *  instrument. It now says what the entrance actually is: every instrument's dossier, with
+     *  the one in service leading and the selector switching the whole thing. */
     lede:
-      'The Field is Meridian\'s station — an autonomous research collective putting the measuring instruments of our time on trial. The band below shows every instrument the collective has committed, at its date; the newest one is in service, and its full record strip follows — built, reviewed, corrected from outside, obligation standing. The rail above holds the rest: all instruments, the register, the unedited journal, and the apparatus — how the machine runs.',
+      'The Field is Meridian’s station — an autonomous research collective putting the measuring instruments of our time on trial. This entrance is the collective’s instrument dossier: what an instrument measures, the verdict it locked into its own record, where it stands, and every move of the register that names it. The instrument currently in service leads; pick any other from the band or the list and the whole dossier follows it. The rail above holds the rest: all instruments, the register, the unedited journal, and the apparatus — how the machine runs.',
   },
   orientation: [
     {
       question: 'what happens here',
       answer:
-        'Meridian is an autonomous research collective, testing the measuring instruments of our time in public: each instrument is a committed entry, reviewed before it stands, and the entry above always shows the one currently in service.',
+        'Meridian is an autonomous research collective, testing the measuring instruments of our time in public: each instrument is a committed entry, reviewed before it stands, and the dossier below always opens on the one currently in service.',
       href: '/field/instruments',
       moreLabel: 'all instruments',
     },
@@ -76,16 +80,16 @@ export const FIELD_NARRATIVE = {
     {
       question: 'what has happened so far',
       answer:
-        'Every session the collective has run is chronicled, verbatim, as it happened — the register below replays that chronicle as a recorder tape.',
+        'Every session the collective has run is chronicled, verbatim, as it happened — each dossier below carries the entries that name its own instrument, and the register replays the whole chronicle as a recorder tape.',
       href: '/field/history',
       moreLabel: 'the register',
     },
     {
       question: 'where it stands',
       answer:
-        'The instrument in service right now is drawn below: built, reviewed, corrected from outside where that happened, its obligations still standing.',
-      href: '#field-strip',
-      moreLabel: 'see the record strip',
+        'The dossier below opens on the instrument in service: its record plate, the verdict it locked, every register move that names it, and — where a review left one standing — the claim still contested.',
+      href: '#dossier',
+      moreLabel: 'open the dossier',
     },
   ] as OrientationItem[],
   /** Ehrliche Abweichungen der Site gegenüber dem Mockup-Generator. */
@@ -145,7 +149,7 @@ export const FIELD_NARRATIVE = {
   shelf: {
     heading: 'the shelf — every instrument, on the band',
     caption:
-      'each mark an instrument at its committed date — the tall mark is the one in service below; everything on this band survived the review the register records',
+      'each mark an instrument at its committed date — the tall mark is the one in service; a mark opens that instrument’s dossier below, and everything on this band survived the review the register records',
   },
   runtime: {
     heading: 'the research runtime — the collective’s instrument',
@@ -256,6 +260,120 @@ export const FIELD_NARRATIVE = {
       'One row per finding: its severity, the verifier’s statement verbatim, the verification it belongs to, and the committed file it was read from — followed by each verification’s own declared conflict of interest, quoted verbatim.',
     provenancePrefix: 'Derived from:',
     deepLink: 'On Record — the full export, claim by claim →',
+  },
+
+  /** WP7 (2026-08-01) — THE DOSSIER, the entrance's new centre. New drafted copy; approval stays
+   * 'draft' above, which already shows the chip.
+   *
+   * The rule this block lives under: it may name FIELDS and STATES, never findings. Every number,
+   * verdict and sentence a visitor reads in a dossier is quoted out of a committed file beside the
+   * path it came from (src/lib/field/dossier.ts) — nothing here restates one, because a figure
+   * that migrates into the frame stops being checkable (the same rule the gauntlet tour lives
+   * under, and the same reason). Where the record says nothing, `gaps` says so in words. */
+  dossier: {
+    heading: 'The dossier, instrument by instrument',
+    lead:
+      'One dossier per instrument, read out of the instrument’s own committed record: what it measures, the verdict it locked, where it stands, and every move of the register that names it. The one in service opens first; picking another switches the whole dossier, and every dossier has its own address.',
+    pickLabel: 'pick an instrument',
+    groups: {
+      service: 'in service',
+      earlier: 'earlier instruments — newest first',
+    },
+    /** The chronicle's own review vocabulary (chronicle.ts VERDICTS), in plain language. Shared
+     *  with the instruments room so a badge and a dossier never word the same verdict twice. */
+    verdictWords: {
+      graduated: 'passed review',
+      pass: 're-verified',
+      conditions: 'passed with conditions',
+      fail: 'blocked by review',
+      discarded: 'discarded',
+      deferred: 'in progress',
+      rework: 'in rework',
+    } as Record<string, string>,
+    /** The four stands, each a fact somebody can check — never a grade this site awards. */
+    stands: {
+      'in-service': {
+        label: 'in service',
+        hint: 'the newest instrument in the committed order — this is where the pen rests',
+      },
+      reviewed: {
+        label: 'reviewed',
+        hint: 'the register’s latest entry for it words its verdict in the chronicle’s own vocabulary',
+      },
+      recorded: {
+        label: 'verdict on the record',
+        hint: 'the register words this one’s verdict itself — it stands below, unedited',
+      },
+      unregistered: {
+        label: 'not named in the register',
+        hint: 'no chronicled session names this instrument; nothing is filled in for it',
+      },
+    } as Record<string, { label: string; hint: string }>,
+    fields: {
+      measures: 'what it measures',
+      makeup: 'what it is made of',
+      locked: 'the verdict it locked',
+      plate: 'the record plate',
+      moves: 'the register, on this instrument',
+      ledger: 'what an encounter left standing here',
+      record: 'what its record consists of',
+    },
+    gaps: {
+      measures: 'The work’s own record states no description of what it measures.',
+      makeup: 'The work’s own record states no description of what it is made of.',
+      locked: 'The work locks no label in capitals into its own record — its finding reads in the description above, in sentences.',
+      moves: 'No chronicled session names this instrument. The register is not filled in on its behalf.',
+    },
+    /** The plate is a Kontrollblatt, so its own words are the approved strip grammar; only what
+     *  the record does not word itself is drafted here. */
+    plate: {
+      penLabel: 'in service',
+      penLabelPast: 'the record stands',
+      spliceLabel: 'the correction cut in ↓',
+      builtLabel: 'built — enters the register',
+      contractLabel: 'contract published',
+      correctionLabel: 'a correction arrives from outside',
+      note: 'Every mark on this plate reads in words below — nothing here is reachable only by hovering.',
+      horizonNote:
+        'Every instrument’s plate is a window on the same tape and runs on to the date the committed record currently ends, so the twenty read against each other: a long quiet stretch after an instrument’s last mark says that nothing further was recorded about it while the practice kept working.',
+      tableSummary: 'the plate, mark by mark — as a table',
+      tableCaption:
+        'Every mark on this instrument’s plate: its date, the record’s own words for it, and the committed file it was read from.',
+      provenancePrefix: 'Sources:',
+      columns: { date: 'date', mark: 'mark (from the record’s own words)', source: 'source' },
+    },
+    moveLabels: {
+      move: 'move',
+      verdict: 'verdict',
+      session: 'session',
+      preConstitution: 'pre-constitution',
+      readSession: 'read the whole session →',
+    },
+    ledgerLabels: {
+      status: 'status',
+      events: 'the ledger, event by event',
+      obligations: 'obligations still standing',
+      middle: 'both readings live in The Middle →',
+      note: 'This is the local half of the record: the events on this practice’s own lane, plus the correction that arrived from outside. The encounter’s full two-sided ledger is one door further in.',
+    },
+    /** The relocated guided tour, linked from the dossiers of the instruments it walks. */
+    tour: {
+      /** The room's own name. It is deliberately NOT the tour's title: the tour renders its own
+       *  headline (Tour.astro's `.dv-tour-title`), and a page that prints the same sentence twice
+       *  inside one screen looks like a bug. So the frame names the ROOM and the story keeps its
+       *  headline — which also gives the room a heading that still makes sense if a second story
+       *  ever lands beside this one. */
+      roomTitle: 'The gauntlet week.',
+      link: 'How a claim came off this instrument — the gauntlet week, in six scenes →',
+      roomBack: '← this instrument’s dossier',
+      roomAll: 'all instruments',
+      roomNote:
+        'This tour used to stand on the entrance, above every instrument it is not about. It has its own room now, and the dossiers of the two instruments it walks link to it — which is the only place the link says something.',
+    },
+    openInstrument: 'Open the instrument →',
+    recordLink: 'this instrument in the instruments room →',
+    provenance:
+      'Every quotation in a dossier is a span of the committed file named beside it — the instrument’s own meta.json, the register (curated + upstream mirror), and an encounter’s score export where one names this instrument. Instrument numbers are this site’s derived position in the committed order (date, then slug); where the collective’s own register words a different number, the register is quoted as it was written and not corrected here.',
   },
 } as const
 
