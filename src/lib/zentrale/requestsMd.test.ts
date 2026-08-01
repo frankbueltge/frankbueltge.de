@@ -1,6 +1,6 @@
 // src/lib/zentrale/requestsMd.test.ts
 import { describe, it, expect } from 'vitest'
-import { parseSections, findSection, answerRequest, appendSeed, appendBlockToSection, parseInboxIssueTitle, isNonRequestSection } from './requestsMd'
+import { parseSections, findSection, answerRequest, appendSeed, appendBlockToSection, appendGateDecision, parseInboxIssueTitle, isNonRequestSection } from './requestsMd'
 
 // Die Fixtures sind reale Ausschnitte aus den vier REQUESTS.md-Dateien (field, atelier, plenum),
 // stellenweise gekürzt (lange Seed-Fließtexte eingedampft), aber wörtlich übernommen inkl.
@@ -399,5 +399,32 @@ describe('isNonRequestSection', () => {
     expect(isNonRequestSection('Status: the build gate has been red for three days')).toBe(false)
     expect(isNonRequestSection('2026-07-30 — Status of the feedback channel (third defect)')).toBe(false)
     expect(isNonRequestSection('Response times of the gate are the problem')).toBe(false)
+  })
+})
+
+describe('appendGateDecision', () => {
+  it('appends a dated GO section at the end of the file', () => {
+    const res = appendGateDecision('# REQUESTS\n\nolder text\n', {
+      project: '2026-07-23-negative-parallax',
+      decision: 'GO',
+      date: '2026-08-01',
+    })
+    if (!res.ok) throw new Error('expected ok')
+    expect(res.md).toContain('## Gate decision — 2026-08-01 — 2026-07-23-negative-parallax')
+    expect(res.md).toContain('GO — publish.')
+    expect(res.md.indexOf('older text')).toBeLessThan(res.md.indexOf('Gate decision'))
+  })
+
+  it('refuses HOLD without a reason and includes the reason when given', () => {
+    const noReason = appendGateDecision('x', { project: 'p', decision: 'HOLD', date: '2026-08-01' })
+    expect(noReason.ok).toBe(false)
+    const withReason = appendGateDecision('x', {
+      project: 'p',
+      decision: 'HOLD',
+      reason: 'the exposition withdrew a claim — I want the next tick first',
+      date: '2026-08-01',
+    })
+    if (!withReason.ok) throw new Error('expected ok')
+    expect(withReason.md).toContain('Held, because: the exposition withdrew a claim')
   })
 })
