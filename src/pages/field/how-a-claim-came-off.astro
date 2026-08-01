@@ -1,0 +1,117 @@
+---
+// /field/how-a-claim-came-off — the guided story of the gauntlet week.
+//
+// WHY THIS PAGE EXISTS (2026-08-01). This tour used to be the third thing on /field, above every
+// instrument it is not about. It is good work and none of it changed: same six scenes, same
+// byte-exact quotes, same build-time verification (src/lib/tour/verify.ts fails the build if a
+// scene's quote drifts from the file it names by one byte). What changed is where it stands.
+//
+// The entrance now leads with the instrument in service and switches the whole dossier when the
+// selection changes — and a tour bolted above that would have kept telling ONE instrument's story
+// over whichever instrument the visitor had actually chosen, which is the same fight the atelier
+// ended by giving its own tour a room (/atelier/how-a-line-ends, 2026-08-01). So this story has a
+// room, and the two instruments it walks link to it from their own dossiers — the only place the
+// link says something.
+//
+// The claim plate travels WITH the tour rather than being left behind, because the tour's last
+// scene ends by selecting the plate's claim mark and saying "the plate below opens that claim
+// up". It also stands in the dossier of the instrument whose review left that claim contested;
+// two pages, one figure component, no duplicated derivation.
+//
+// A tour is a slow read; a room is the honest container for one.
+import Page from '@/layouts/Page.astro'
+import Frame from '@/components/field/surface/Frame.astro'
+import GauntletTour from '@/components/field/tours/GauntletTour.astro'
+import ClaimFigure from '@/components/field/ClaimFigure.astro'
+import { loadChronicle } from '@/lib/field/chronicle'
+import { GAUNTLET_INSTRUMENTS, gauntletPlate } from '@/lib/tour/field-gauntlet'
+import { buildClaimModel, type ExportObject, type ParallaxExport } from '@/lib/field/claimladder'
+import { FIELD_NARRATIVE } from '@/config/field-wording'
+import type { InstrumentMeta } from '@/lib/field/latest'
+import parallax from '@/data/meridian/parallax.json'
+
+const metas = import.meta.glob('/src/components/field/werke/*/meta.json', {
+  eager: true, import: 'default',
+}) as Record<string, InstrumentMeta>
+const metaBySlug = new Map(
+  Object.entries(metas).map(([p, m]) => [
+    p.replace('/src/components/field/werke/', '').replace('/meta.json', ''),
+    m,
+  ]),
+)
+
+const i018 = metaBySlug.get(GAUNTLET_INSTRUMENTS.i018)
+const i019 = metaBySlug.get(GAUNTLET_INSTRUMENTS.i019)
+if (!i018?.title || !i018.date || !i019?.title || !i019.date) {
+  throw new Error('/field/how-a-claim-came-off: the tour needs both of its instruments in the mirror')
+}
+
+const gauntlet = gauntletPlate({
+  chronicle: loadChronicle(),
+  instrument018: { title: i018.title, date: i018.date },
+  instrument019: { title: i019.title, date: i019.date },
+  parallax,
+})
+
+const exportObjects: Record<string, ExportObject> = Object.fromEntries(
+  Object.entries(
+    import.meta.glob('/src/data/meridian/export/objects/*.json', {
+      eager: true, import: 'default',
+    }) as Record<string, ExportObject>,
+  ).map(([path, body]) => [path.split('/').at(-1) ?? path, body]),
+)
+const claimModel = buildClaimModel({
+  parallax: parallax as unknown as ParallaxExport,
+  objects: exportObjects,
+})
+
+const w = FIELD_NARRATIVE.dossier.tour
+const tour = FIELD_NARRATIVE.tour
+const walks = [GAUNTLET_INSTRUMENTS.i018, GAUNTLET_INSTRUMENTS.i019]
+---
+
+<Page
+  title={`${tour.title} · Field · Meridian | Frank Bültge`}
+  description={tour.standfirst}
+>
+  <Frame
+    active=""
+    kicker={['Field · the gauntlet week', 'field-research', 'six scenes, every quote byte-exact']}
+    h1={w.roomTitle}
+    footLeft={FIELD_NARRATIVE.provenance.strip}
+    footRight="the correction’s two readings live in The Middle → enc-2026-001; this plate keeps the local record"
+    back
+  >
+    <p class="fd-room-intro">{w.roomNote}</p>
+
+    <GauntletTour plate={gauntlet} />
+
+    {/* And what the review leaves standing: one claim of the collective's, held contested by the
+        runtime's own record. The attribution line under the figure keeps the two lines apart. */}
+    <ClaimFigure model={claimModel} heading={FIELD_NARRATIVE.claim.heading} />
+
+    <p class="fd-tour-back">
+      {walks.map((slug) => (
+        <a href={`/field#instrument-${slug}`}>{w.roomBack} — {metaBySlug.get(slug)?.title ?? slug}</a>
+      ))}
+      <a href="/field/instruments">{w.roomAll} →</a>
+    </p>
+  </Frame>
+</Page>
+
+<style>
+  .fd-tour-back {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin: 2rem 0 2.5rem;
+  }
+  .fd-tour-back a {
+    font-family: var(--fd-font-record, ui-monospace, monospace);
+    font-size: 12.5px;
+    color: var(--fd-ink-2, inherit);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+  .fd-tour-back a:hover { color: var(--fd-ink, inherit); }
+</style>

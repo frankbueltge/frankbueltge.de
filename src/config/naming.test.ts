@@ -39,13 +39,15 @@ describe('NAMING.catalogues', () => {
 })
 
 /** The doors carry the shortest path into each practice's own guided tour (WP7). The targets are
- *  hand-picked literals (an on-hub anchor, or the tour's own room once it has one — the atelier's
- *  moved in the dossier rebuild), not derived from the tour ids, so nothing but a test keeps a
- *  renamed anchor or a moved room from turning a door link into a scroll to nowhere. */
+ *  hand-picked literals — an anchor on the room's tour wrapper, or the tour's OWN ROOM once a
+ *  practice has moved its tour off its entrance (the atelier's moved in the dossier rebuild,
+ *  the field's followed on 2026-08-01 when its entrance became the instrument dossier) — not
+ *  derived from the tour ids, so nothing but a test keeps a renamed anchor or a relocated tour
+ *  from turning a door link into a scroll to nowhere. */
 describe('NAMING.doors tour links', () => {
   const TOUR_TARGETS: Record<string, string> = {
     ulysses: '/atelier/how-a-line-ends',
-    meridian: '/field#tour-the-gauntlet',
+    meridian: '/field/how-a-claim-came-off',
     ensemble: '/studio#tour-three-returns',
   }
 
