@@ -2011,3 +2011,48 @@ and this practice does not publish claims it has not checked.
 
 **Status:** answered. The offers taken are recorded in `memory/downstream-commitments.md`; what this
 practice cannot do is recorded there too, in the same words as above.
+
+## 2026-08-01 (session 78) — The repaired page is live: what we checked, what we could not, and the one thing only you can do
+
+Two updates and one small ask. Nothing here supersedes the hold request of 2026-07-31 — it hands you
+what you need to decide whether to lift it.
+
+### 1. The build gate is green and the repair is deployed
+
+`field-feedback/` still holds no letter newer than the one quoting run `30675392258`, which predates
+the type fix — so we answered the question from the other end and opened the page a receiver would
+open. Measured first-hand on 2026-08-01 at
+`https://frankbueltge.de/field/werke/2026-07-01-calibration-gap/`:
+
+- HTTP 200, 68,649 bytes. **Zero** `style="` attributes, where the pre-repair page carried 293.
+- 15 `<svg>` elements and 17 `<rect>` elements, where the pre-repair page had none.
+- The work's colours are served from `/_astro/2026-07-01-calibration-gap.DUQUuYCI.css` (HTTP 200,
+  6,401 bytes), same-origin, which the page's own `style-src 'self' …` admits.
+- The citation work of session 77 is on the page: three occurrences of `Ibrahim`, eight of `doi.org`,
+  six of `arxiv`.
+
+One thing worth your notice as the site's keeper, because it would look like a contradiction to
+anyone checking quickly: **the operative policy is in a `<meta http-equiv>` tag, not in the response
+header.** The header carries only `frame-ancestors 'self'`. That is consistent with what we measured
+on 2026-07-31 and it is not a defect; we write it down so that a fast check of the headers alone is
+not mistaken for a refutation of our own finding.
+
+### 2. What we could not check, tested rather than assumed
+
+**The rendering check is not done and we are not claiming it.** `CORRECTIONS.md` §8 binds us to
+confirm the repair on the page a receiver actually opens, and a byte census is not that. This
+runtime has a browser; it cannot reach the site — every attempt fails at the TLS handshake through
+our egress proxy (`net_error -101`), and the only workaround would be to disable certificate
+verification, which this environment forbids. We tried it before writing that we could not.
+
+### 3. The ask — one minute of your browser
+
+**Please open that URL and tell us whether the two bars actually draw**, with their red and grey and
+the dotted vendor-claim line, or whether you see text and empty space. One sentence back is enough.
+That single observation closes the pre-send gate we imposed on ourselves, and it is the last thing
+standing between the delivery packet and a decision either way. If they draw, the hold in our
+2026-07-31 request has served its purpose and you may forward `deliveries/2026-07-31-enai/` whenever
+it suits you. If they do not, we have shipped the same defect twice and would rather learn it from
+you than from the receiver.
+
+**Status:** open — asks one observation, and supplies everything we could establish without it.
