@@ -10,6 +10,11 @@
 //   3. CSP-Regel: keine Inline-style-Attribute in Templates/SVG-Buildern — die Site-CSP
 //      führt Style-Hashes, Inline-Styles werden vom Browser verworfen (Befund 25.07.:
 //      die e2e-automation-Balken standen deshalb alle auf 100 %).
+//   3b. Dieselbe CSP-Regel über den Werk-Spiegel — dort gilt die Voice-Ausnahme nicht,
+//      denn ob ein Style-Attribut die Policy überlebt, ist eine Tatsache über die Seite und
+//      keine Meinung über das Werk (angeboten von field-research, Issue #254). Die bereits
+//      betroffenen Werke stehen datiert mit Zählstand in Quarantäne: Neues und Wachstum
+//      sind harte Befunde, Repariertes verlangt seine Streichung aus der Liste.
 //   4. (nur mit DRIFT_NETWORK=1) Spiegel-Frische: gespiegelte Engine-Verfassungen gegen
 //      die Engine-Repos auf GitHub — Abweichung heißt, die Site erzählt einen alten Stand.
 //   5. (nur mit DRIFT_NETWORK=1) MRR-Journal-Frische: die Runtime-Linie wird nicht
@@ -104,6 +109,77 @@ for (const f of voiceFiles) {
       findings.push(`${rel}:${i + 1} — inline style attribute (CSP drops it silently; use compiled classes or SVG attributes)`)
     }
   })
+}
+
+// ——— 3b. CSP rule, extended over the mirrored works —————————————————————————
+// Offered by field-research on 2026-07-31 (site issue #254) and adopted here. Rule 3 skips
+// the werk mirror because a work is the engine's signed artefact — that reason is about
+// VOICE, and it does not carry over to the CSP: whether a style attribute survives the
+// policy is a fact about the page, not an opinion about the work. The practice's own
+// constitution has forbidden inline `style=` in works since before its oldest commit, and
+// nothing ever checked the works written before the rule — "a rule enforced by memory,
+// which is the kind that fails quietly for thirty days" (their words).
+//
+// What the count is NOT: proof of an invisible figure. field-research corrected its own
+// finding the same day — six of the eight affected works draw their charts anyway, because
+// their shapes carry fill=/stroke= presentation attributes, which no style-src directive
+// reaches; two of twenty actually lose the drawing. The gate is still right, for the reason
+// they gave when they let the offer stand: it is the CLASS of defect a gate can catch, not
+// its severity. So this rule counts inert attributes, and says nothing about what is visible.
+//
+// It cannot hard-fail the whole mirror today: 286 attributes across 7 works are already
+// live, the fix belongs in the engine repo (this mirror is wiped and re-copied on every
+// integrate run), and a red gate here would block every nightly sync and every deploy.
+// So the known-affected are quarantined WITH THEIR COUNTS, dated — anything new fails, any
+// regression fails, and a repaired work fails until it is struck from the list, so the list
+// cannot quietly rot into an allowlist. The tally prints on every run: visible debt, never
+// a silent cap.
+const WERK_INLINE_STYLE_QUARANTINE = {
+  // Measured 2026-08-01. Shrinking is free; growing is a finding; reaching 0 means: delete the line.
+  'src/components/field/werke/2026-07-01-the-edition/index.astro': 95,
+  'src/components/field/werke/2026-07-01-plausibility-engine/index.astro': 54,
+  'src/components/field/werke/2026-07-01-score-horizon/index.astro': 34,
+  'src/components/field/werke/2026-07-01-digit-mirror/index.astro': 33,
+  'src/components/field/werke/2026-07-01-naive-detector/index.astro': 32,
+  'src/components/field/werke/2026-07-01-provenance-horizon/index.astro': 32,
+  'src/components/field/werke/2026-07-01-fairness-trap/index.astro': 6,
+}
+const werkInlineTally = []
+for (const f of walk(join(ROOT, 'src/components'), ['.astro'])) {
+  const rel = relative(ROOT, f)
+  if (!/\/werke\//.test(rel)) continue
+  let count = 0
+  for (const line of readFileSync(f, 'utf8').split('\n')) {
+    const trimmed = line.trim()
+    if (trimmed.startsWith('//') || trimmed.startsWith('*')) continue
+    const hits = line.match(/style=["{]/g)
+    if (hits) count += hits.length
+  }
+  const allowed = WERK_INLINE_STYLE_QUARANTINE[rel]
+  if (allowed === undefined) {
+    if (count > 0) {
+      findings.push(
+        `${rel} — ${count} inline style attribute(s) in a mirrored work (the CSP carries style hashes and no 'unsafe-hashes', so the browser drops them and whatever they carry has no effect; use a component <style> block, which the build hashes)`,
+      )
+    }
+  } else if (count > allowed) {
+    findings.push(
+      `${rel} — inline style attributes grew from ${allowed} (quarantined 2026-08-01) to ${count}; the repair moves one way only`,
+    )
+  } else if (count === 0) {
+    findings.push(`${rel} — repaired, no inline styles left: strike it from WERK_INLINE_STYLE_QUARANTINE so the list stays honest`)
+  } else {
+    werkInlineTally.push(`${rel}: ${count}/${allowed}`)
+  }
+}
+if (werkInlineTally.length) {
+  const total = werkInlineTally.reduce((s, l) => s + Number(l.split(': ')[1].split('/')[0]), 0)
+  console.log(
+    `drift-check: ${total} inert inline style attribute(s) still quarantined in ${werkInlineTally.length} mirrored work(s) — ` +
+      `the attributes have no effect on the page; whether a figure still draws depends on its fill=/stroke= ` +
+      `attributes, so this is the defect class, not a count of invisible charts. The fix belongs in the engine repo:\n  ` +
+      werkInlineTally.join('\n  '),
+  )
 }
 
 // ——— 6. Dataviz primitives carry no appearance (ADR 0010 guard) ———————————————
