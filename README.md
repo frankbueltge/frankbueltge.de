@@ -54,10 +54,11 @@ The persona names (Meridian, Ensemble, Ulysses) are the collectives' own, self-c
 underlying AI technology deliberately stays unnamed — the subject is artificial
 intelligence, not a product.
 
-### Holdings — the lab's earlier experiments
+### Experiments — the lab's earlier work
 
 No umbrella title, no series branding: each experiment stands alone, with its own method and
-its own page, offered as material under `/holdings` (**Holdings**). Among them:
+its own page, offered as material under `/holdings` (**Experiments** — the page name, not the
+route; the URL is unchanged). Among them:
 **[The Protocol](https://frankbueltge.de/protocol)** (the daily minutes of the world — live
 data rendered as the deterministic prose of an official register, no language model in the
 wording), **[The Consensus](https://frankbueltge.de/consensus)** (measuring orchestrated
