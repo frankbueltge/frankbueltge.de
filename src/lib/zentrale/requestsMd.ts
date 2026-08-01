@@ -147,3 +147,24 @@ export function parseInboxIssueTitle(title: string): { repo: string; heading: st
   if (!m) return null
   return { repo: m[1], heading: m[2] }
 }
+
+/** Gate-Entscheidung (Governance §1, 2026-08-01): GO/HALTEN als datierte Section ans Ende
+ * der REQUESTS.md der Praxis — die Autorisierung selbst; den mechanischen Publikationsakt
+ * (PUBLICATION.json nach Kartographie-Präzedenz) vollzieht die nächste Session. HALTEN ohne
+ * Begründung gibt es nicht: die Regel heißt "decide, or write a dated 'held, because …'". */
+export function appendGateDecision(
+  md: string,
+  opts: { project: string; decision: 'GO' | 'HOLD'; reason?: string; date: string },
+): { ok: true; md: string } | { ok: false; reason: string } {
+  if (opts.decision === 'HOLD' && !(opts.reason ?? '').trim()) {
+    return { ok: false, reason: 'hold-needs-reason' }
+  }
+  const verdict =
+    opts.decision === 'GO'
+      ? `**GO — publish.** (Frank, via Steuerzentrale, under the 72 h gate rule of 2026-08-01.)${
+          (opts.reason ?? '').trim() ? `\n${opts.reason!.trim()}` : ''
+        }\nThis section is the authorisation record; the next session executes the publication\nact (PUBLICATION.json per the kartographie precedent, work state as proposed at the gate).`
+      : `**HELD.** (Frank, via Steuerzentrale, under the 72 h gate rule of 2026-08-01.)\nHeld, because: ${opts.reason!.trim()}\nThe candidate stays at the gate — dated, not silent.`
+  const block = `## Gate decision — ${opts.date} — ${opts.project}\n\n${verdict}\n`
+  return { ok: true, md: `${md.trimEnd()}\n\n${block}` }
+}

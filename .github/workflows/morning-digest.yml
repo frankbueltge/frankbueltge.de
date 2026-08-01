@@ -73,6 +73,11 @@ jobs:
             --search '"Request aus" in:title' --json number,title \
             --jq '[.[] | "- #\(.number) \(.title[0:110])"] | join("\n")')
           [ -n "$REQ" ] && BODY+="$REQ"$'\n' || BODY+="- nichts offen"$'\n'
+          # v2 P3: kopflose Anfragen sichtbar zählen — die Konvention (Vier-Zeilen-Kopf,
+          # 2026-08-01) steht in den Kanälen der Praxen; der Digest erinnert nur.
+          HEADLESS=$(printf '%s' "$REQ" | grep -c 'unstrukturiert' || true)
+          # || true: unter set -e darf "keine kopflosen Anfragen" den Digest nicht abbrechen.
+          { [ "${HEADLESS:-0}" -gt 0 ] && BODY+="*($HEADLESS Anfrage(n) ohne Vier-Zeilen-Kopf — Konvention seit 2026-08-01 in Kraft.)*"$'\n'; } || true
           BODY+=$'\n'"*Antworten: einfach als Kommentar auf dem jeweiligen Issue — die Praxis liest ihn in ihrer nächsten Session. Issue schließen = gelesen/erledigt.*"$'\n'
 
           # Vortages-Digests schließen, neues eröffnen

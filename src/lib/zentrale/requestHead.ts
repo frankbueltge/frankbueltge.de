@@ -109,7 +109,11 @@ export function parseRequestHead(body: string): RequestHead {
 /** Fallback for headless (old-style) requests: the first sentences of the body, markdown
  * lightly stripped. Marked "unstrukturiert (alt)" by the UI — never passed off as a tl;dr. */
 export function fallbackSummary(body: string, sentences = 2, maxLen = 240): string {
+  // Hard input cap BEFORE the sentence regex: two sentences never need more than the first
+  // few thousand characters, and the sentence pattern backtracks quadratically on huge
+  // punctuation-free bodies (found by the inbox cap test — 12k-char requests are real).
   const text = body
+    .slice(0, 4000)
     .split('\n')
     .map((l) => clean(l))
     .filter((l) => l && !/^#/.test(l))
