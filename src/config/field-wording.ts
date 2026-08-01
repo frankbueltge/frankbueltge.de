@@ -103,18 +103,23 @@ export const FIELD_NARRATIVE = {
     apparatus: 'How the machine runs — repo, protocol, team channel, nightly machinery, in one room.',
   },
   /** Eingang v2 (2026-07-25, Franks Go): die Band-Übersicht über dem aktuellen Instrument
-   * („man landet auf einem Instrument, nicht auf der Praxis") und der Runtime-Block mit der
-   * Attribution nach enc-2026-005 (authorship honesty: MRR ist die Engineering-Linie, nicht
-   * die Stimme des Kollektivs). */
+   * („man landet auf einem Instrument, nicht auf der Praxis") und der Runtime-Block.
+   *
+   * ZUORDNUNG GEÄNDERT 2026-08-01 (Frank, wörtlich: „es ist nicht die Stimme sondern ein
+   * Werkzeug was sie nutzen können wann immer es Sinn macht"): MRR ist Meridians WERKZEUG.
+   * Die frühere Fassung — MRR sei die Engineering-Linie des Architekten und „not the
+   * collective's own research voice" — ist zurückgezogen. Was von enc-2026-005 BLEIBT: die
+   * Urheberschaft des einzelnen Laufs wird benannt. Wer einen Lauf gefahren hat, steht
+   * weiter dabei; das Werkzeug gehört trotzdem der Praxis. Siehe docs/wording-kanon.md. */
   shelf: {
     heading: 'the shelf — every instrument, on the band',
     caption:
       'each mark an instrument at its committed date — the tall mark is the one in service below; everything on this band survived the review the register records',
   },
   runtime: {
-    heading: 'the research runtime — the second track',
+    heading: 'the research runtime — the collective’s instrument',
     body:
-      'Beside the collective runs an engineering line: the Meridian Research Runtime (MRR) — research orchestration that refuses to take an AI’s word for anything: explicit provenance, policy-gated execution, verifiable claims, dissent kept on the record. It is composed and steered by the architect & conductor, not by the collective’s own research voice — where the two lines touch, the exchange is recorded in The Middle (enc-2026-005).',
+      'The collective has a machine of its own: the Meridian Research Runtime (MRR) — research orchestration that refuses to take an AI’s word for anything: explicit provenance, policy-gated execution, verifiable claims, dissent kept on the record. It is Meridian’s tool, used when it serves the question, not a voice that speaks for Meridian: a run establishes what the evidence carries, and it becomes the collective’s own statement only where the collective takes it up. Who drove a given run is always named — the runs behind On Record were driven by the architect’s engineering line — and where the two touch, the exchange is recorded in The Middle (enc-2026-005).',
     logNote:
       'On Record renders one export and stays at its date on purpose: the derivation is deterministic — no network, no clock, no model — so the page can only move when a new export is committed. What the runtime did after that date is carried here instead, each entry naming the commit it reports.',
   },
@@ -157,7 +162,7 @@ export const FIELD_NARRATIVE = {
       dissent: {
         kicker: 'AND WHAT STAYS',
         heading: 'The disagreement is kept, not settled',
-        lead: 'On the engineering line’s side of the house the same habit is a machine invariant: two reviewers who disagree stay two records, never one averaged verdict. The plate below opens that claim up.',
+        lead: 'In the collective’s own runtime the same habit stops being a habit and becomes a machine invariant: two reviewers who disagree stay two records, never one averaged verdict — not a judgement anyone made here, a rule the tool enforces. The plate below opens that claim up.',
       },
     },
     /** the tour figure's own marks and margin words — the plate is a Kontrollblatt, so it speaks
@@ -183,17 +188,20 @@ export const FIELD_NARRATIVE = {
 
   /** WP6b (2026-08-01) — the claim figure's FRAME. New drafted copy.
    *
-   * ATTRIBUTION, verbatim from the wording canon and not to be softened: the CLAIM is the
-   * Meridian collective's; the ruling that caps it, the two verifications and the whole
-   * machine-readable record are the Meridian Research Runtime's — the ARCHITECT'S ENGINEERING
-   * LINE, not the collective's research voice (enc-2026-005). /on-record belongs to the same
-   * line. No line in this block may credit the collective with the runtime's machinery. */
+   * ATTRIBUTION, from the wording canon, REVISED 2026-08-01 and still not to be softened:
+   * the CLAIM is the Meridian collective's; the ruling that caps it, the two verifications
+   * and the whole machine-readable record are the RUNTIME's — Meridian's own instrument.
+   * What must stay separable is the claim from the machinery that reviewed it: a ruling is
+   * not an opinion of the collective, it is what the tool permits. And the RUN behind this
+   * export was driven by the architect's engineering line, which is named, not hidden.
+   * What is no longer said, because Frank withdrew it on 2026-08-01: that the runtime is
+   * "not the collective's research voice" as a matter of OWNERSHIP. The tool is theirs. */
   claim: {
     heading: 'The claim under review',
     lede:
       'One claim of the collective’s, held contested — and the review machinery that holds it there, drawn on one plate.',
     attribution:
-      'The claim is the collective’s. The ruling that caps what it may say, the two verifications closing in on it, and this whole machine-readable record are the Meridian Research Runtime’s — the architect’s engineering line, not the collective’s research voice; where the two lines touch, the exchange is recorded in The Middle (enc-2026-005).',
+      'The claim is the collective’s. The ruling that caps what it may say, the two verifications closing in on it, and this whole machine-readable record are the Meridian Research Runtime’s — the collective’s own instrument, which caps the claim by rule rather than by opinion. This particular run was driven by the architect’s engineering line, and where the two touch, the exchange is recorded in The Middle (enc-2026-005).',
     keyLabel: 'the plate, in four families — click a key to isolate one',
     hint:
       'Hover or tab any mark for its record; enter opens the detail panel and the arrow keys walk the findings, severest first. Nothing here is reachable only by hovering: every mark carries its own native tooltip, and the whole record repeats as a table below.',

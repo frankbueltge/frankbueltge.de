@@ -3,14 +3,17 @@
 // millimetre paper, hairlines, stamps, a caveat flag, margin notes — nothing shared with the
 // atelier's sheet or the studio's stage).
 //
-// WHOSE VOICE IS WHOSE, and it is load-bearing (docs/wording-kanon.md, enc-2026-005):
+// WHAT IS WHOSE, load-bearing, REVISED 2026-08-01 (docs/wording-kanon.md):
 //   · the CLAIM is the Meridian collective's — an interpretive classification it proposed;
 //   · the LADDER, the RULING that caps what the claim may say, the two VERIFICATIONS and this
-//     whole machine-readable record are the Meridian Research Runtime's — the architect's
-//     ENGINEERING LINE, never the collective's research voice.
-// The figure draws the second reviewing the first. Nothing in this module may attribute the
-// runtime's ruling to the collective, and /on-record (the full export) belongs to the same
-// engineering line.
+//     whole machine-readable record are the Meridian Research Runtime's — the collective's OWN
+//     INSTRUMENT, which caps the claim by rule rather than by opinion.
+// The figure draws the instrument reviewing its owner's claim, and that is the point: a
+// practice that can be capped by its own tool has built something worth having. Nothing in
+// this module may present the runtime's ruling as an opinion the collective held — the ruling
+// is what the machine permitted. The RUN behind /on-record was driven by the architect's
+// engineering line, which the page names; that is authorship of a run, not ownership of the
+// tool. Frank withdrew the ownership claim on 2026-08-01.
 //
 // Pure and deterministic, the contract every generator in this repo carries: same inputs ⇒
 // byte-identical SVG. No clock, no randomness, no network — every number below is read out of a

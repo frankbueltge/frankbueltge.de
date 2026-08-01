@@ -126,11 +126,12 @@ const bandTicks = [...byDay.entries()].flatMap(([d, group]) =>
 )
 
 // ——— WP6b (2026-08-01): the gauntlet tour and the claim plate ————————————————————————
-// Two figures, two records, and the attribution between them is the point (wording canon,
-// enc-2026-005): the TOUR walks the COLLECTIVE's own week — its journal, its two instruments, its
-// gauntlet; the CLAIM PLATE draws the RUNTIME's review of one of the collective's claims, and the
-// runtime is the architect's engineering line, not the collective's research voice. The runtime's
-// own room stays where it was, further down the page (/field/apparatus carries the rest).
+// Two figures, two records, and what separates them is the point (wording canon, revised
+// 2026-08-01): the TOUR walks the COLLECTIVE deliberating — its journal, its two instruments, its
+// gauntlet; the CLAIM PLATE draws its own RUNTIME reviewing one of its claims by rule. Both belong
+// to Meridian — the runtime is its tool, not the architect's separate line — and the pairing says
+// the thing worth saying about the practice: it built something that can cap what it may claim.
+// The runtime's own room stays where it was, further down the page (/field/apparatus carries the rest).
 const exportObjects: Record<string, ExportObject> = Object.fromEntries(
   Object.entries(
     import.meta.glob('/src/data/meridian/export/objects/*.json', {
@@ -239,8 +240,9 @@ const statusHtml =
       </div>
     </section>
 
-    {/* Die zweite Spur (2026-07-25): die Runtime-Linie, klar attribuiert — nicht die Stimme
-        des Kollektivs (enc-2026-005 authorship honesty). Löst zugleich die Verwaisung von
+    {/* Die Runtime (2026-07-25, Zuordnung geändert 2026-08-01): Meridians eigenes Werkzeug,
+        nicht die Engineering-Linie des Architekten. Was von enc-2026-005 bleibt: wer einen
+        einzelnen Lauf gefahren hat, wird benannt. Löst zugleich die Verwaisung von
         /on-record und /e2e-automation. */}
     <section class="fd-record fd-runtime">
       <h2>{FIELD_NARRATIVE.runtime.heading}</h2>

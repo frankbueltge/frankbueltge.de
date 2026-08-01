@@ -273,9 +273,10 @@ export function envelopeBand(input: EnvelopeBandInput): string {
 // MERIDIAN_RESEARCH_RUNTIME_SPEC_v0.2.0.md § 5.1 "Claim-language ceiling" — and checked against
 // that file by strip.test.ts, so the ladder can never quietly become a ladder this site invented.
 //
-// Attribution, and it is load-bearing (wording canon, enc-2026-005): the ruling and the ceiling
-// belong to the RUNTIME — the architect's engineering line — not to the Meridian collective's
-// research voice. A claim on a rung is the collective's; the rung it is held to is the runtime's.
+// Attribution, load-bearing, REVISED 2026-08-01 (wording canon): the ruling and the ceiling
+// belong to the RUNTIME — Meridian's own instrument — and the claim on a rung belongs to the
+// collective. The distinction that must survive is claim vs. machinery, not architect vs.
+// collective: the rung is what the tool permitted, never an opinion the practice held.
 
 export const CLAIM_CEILINGS = [
   'causal_bounded',

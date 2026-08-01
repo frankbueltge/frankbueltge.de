@@ -3,10 +3,11 @@
 // CUT, never paraphrased — so if this file ever fails, the fix is to find the real sentence or to
 // drop the scene, not to soften the assertion.
 //
-// The tour crosses a line the wording canon draws (docs/wording-kanon.md, enc-2026-005): five
-// scenes are the Meridian COLLECTIVE's record, the sixth is the Meridian Research Runtime — the
-// architect's ENGINEERING LINE. The last describe block below is that rule as a test: the runtime's
-// sources may only be quoted where the tour has said whose voice it is quoting.
+// The tour crosses a line the wording canon draws, REVISED 2026-08-01 (docs/wording-kanon.md):
+// five scenes are the Meridian collective DELIBERATING — journal, instruments, gauntlet — and the
+// sixth is a rule its own runtime enforces. Both are Meridian's; the runtime is its tool, not the
+// architect's separate line. The last describe block is that rule as a test, and it also asserts
+// the withdrawn ownership wording stays gone.
 import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
@@ -16,6 +17,7 @@ import meta019 from '@/components/field/werke/2026-07-26-unable-to-ring-its-own-
 import parallax from '@/data/meridian/parallax.json'
 import { buildControlSvg } from '@/lib/field/strip'
 import { verifyTourQuotes } from './verify'
+import { FIELD_NARRATIVE } from '@/config/field-wording'
 import {
   GAUNTLET_FIGURE,
   GAUNTLET_MARKS,
@@ -161,7 +163,18 @@ describe('the plate is derived from the record, not typed out', () => {
   })
 })
 
-describe('the collective and the engineering line stay apart', () => {
+describe('deliberation and machine rule stay apart', () => {
+  // REVISED 2026-08-01 with the wording canon. The old rule here was ownership:
+  // the runtime belonged to the architect's engineering line and therefore had
+  // to be held away from the collective. Frank withdrew that — the runtime is
+  // Meridian's own tool.
+  //
+  // The rule that SURVIVES is the one that was doing the real work: a machine
+  // invariant is not a judgement the practice made. Scenes one to five quote
+  // the collective deliberating; the last quotes a rule its tool enforces. Both
+  // are Meridian's, and conflating them would credit reasoning where there was
+  // a constraint — which flatters the practice exactly where it should not be
+  // flattered.
   const COLLECTIVE = [
     'src/data/field/chronicle.upstream.json',
     'src/components/field/werke/2026-07-25-no-signal-to-extend/meta.json',
@@ -176,9 +189,30 @@ describe('the collective and the engineering line stay apart', () => {
     }
   })
 
-  it('the runtime is quoted only in the scene that names it as the engineering line', () => {
+  it('the runtime is quoted only in the scene that marks it as a machine rule', () => {
     const last = gauntletTour.scenes[gauntletTour.scenes.length - 1]
     expect(last.quotes.every((q) => !COLLECTIVE.includes(q.source))).toBe(true)
-    expect(`${last.heading} ${last.lead ?? ''}`).toContain('engineering line')
+    expect(`${last.heading} ${last.lead ?? ''}`).toContain('machine invariant')
+  })
+
+  it('no surface still claims the runtime is not the collective’s', () => {
+    // The withdrawn wording, asserted absent so it cannot creep back in from an
+    // old draft or a copied comment.
+    const rendered = [
+      FIELD_NARRATIVE.runtime.heading,
+      FIELD_NARRATIVE.runtime.body,
+      FIELD_NARRATIVE.claim.attribution,
+      ...gauntletTour.scenes.map((s) => `${s.heading} ${s.lead ?? ''}`),
+    ].join(' ')
+    expect(rendered).not.toContain('not by the collective')
+    expect(rendered).not.toContain('not the collective’s research voice')
+    expect(rendered).not.toContain('research voice')
+  })
+
+  it('the runtime block calls the runtime the collective’s own tool', () => {
+    expect(FIELD_NARRATIVE.runtime.body).toContain('Meridian’s tool')
+    // …and still names who drove the runs behind On Record, because authorship
+    // of a run is a fact about the run, not a claim about the tool.
+    expect(FIELD_NARRATIVE.runtime.body).toContain('engineering line')
   })
 })
