@@ -221,6 +221,23 @@ const RENAMED_WORK_SLUGS: Array<[string, string]> = [
   ['/werke/protokoll', '/werke/protocol'],
 ]
 
+// The in-app /werke index redirect (an Astro.redirect, not a _redirects rule) must point at
+// the real target: it used to send visitors to the retired /lab route and only resolved via a
+// second 301 in public/_redirects — invisible in prod, wrong in `astro dev`, which does not
+// process _redirects.
+describe('the in-app /werke index redirect', () => {
+  const PAGE_PATH = fileURLToPath(new URL('../pages/werke/index.astro', import.meta.url))
+  const pageSource = readFileSync(PAGE_PATH, 'utf8')
+
+  it('targets /holdings directly', () => {
+    expect(pageSource).toContain("'/holdings'")
+  })
+
+  it('no longer names the retired /lab route as its target', () => {
+    expect(pageSource).not.toMatch(/redirect\([^)]*'\/lab'/)
+  })
+})
+
 describe('renamed German work slugs 301 to their English canonicals', () => {
   const rules = parseRedirects(raw)
 

@@ -10,13 +10,13 @@
 // a-observatorium.html), keine eigene Zeichengrammatik, kein Dekor.
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import type { Locale } from '@/lib/site'
-import { WERKE_CHRONO, werkTitle } from '@/data/werke'
+import { WERKE_HOLDINGS, werkTitle } from '@/data/werke'
 
 const locale = (Astro.currentLocale ?? 'en') as Locale
-// Die drei Engines (field/studio/atelier) stehen unter /praktiken, nicht hier (work order
-// phase-3e-plumbing.md §2: "ohne die drei Engines").
-const ENGINE_IDS = new Set(['field', 'studio', 'atelier'])
-const bestaende = WERKE_CHRONO.filter((w) => !ENGINE_IDS.has(w.id))
+// The exclusion set lives with the register itself (werke.ts HOLDINGS_EXCLUDED_IDS): the
+// three practice doors AND current MRR artefacts. A local filter here once let 'on-record'
+// leak in as the top entry of a page that lists the lab's earlier experiments.
+const bestaende = WERKE_HOLDINGS
 // Back to "Experiments" (Frank, 2026-07-31): the 2026-07 redesignation to "Holdings" traded a
 // word everyone understands for house vocabulary. The route /holdings is unchanged — links,
 // redirects and OG paths keep working; only the visible name goes back to the plain one.

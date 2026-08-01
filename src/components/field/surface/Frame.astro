@@ -3,17 +3,10 @@
 // only standing navigation, field-aesthetik §4), headline, status, content slot, footer.
 // Visual grammar in field-plate.css, scoped to .field-surface (ADR 0010).
 import { FIELD_GRAMMAR, FIELD_NARRATIVE, FIELD_DRAFT_LABEL } from '@/config/field-wording'
+import type { PracticeFrameProps } from '@/lib/practice-shell'
 import '@/styles/field-plate.css'
 
-interface Props {
-  active: string
-  kicker: string[]
-  h1: string
-  statusHtml?: string
-  footLeft?: string
-  footRight?: string
-  back?: boolean
-}
+type Props = PracticeFrameProps
 const { active, kicker, h1, statusHtml, footLeft, footRight, back = false } = Astro.props
 const isDraft = FIELD_NARRATIVE.approval !== 'approved'
 ---

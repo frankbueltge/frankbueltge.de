@@ -3,17 +3,10 @@
 // content slot, footer. Visual grammar in studio-stage.css, scoped to .studio-surface
 // (ADR 0010) — Didone capitals, Bühnenschwarz by default, Probenlicht in light theme.
 import { STUDIO_GRAMMAR, STUDIO_NARRATIVE, STUDIO_DRAFT_LABEL } from '@/config/studio-wording'
+import type { PracticeFrameProps } from '@/lib/practice-shell'
 import '@/styles/studio-stage.css'
 
-interface Props {
-  active: string
-  kicker: string[]
-  h1: string
-  statusHtml?: string
-  footLeft?: string
-  footRight?: string
-  back?: boolean
-}
+type Props = PracticeFrameProps
 const { active, kicker, h1, statusHtml, footLeft, footRight, back = false } = Astro.props
 const isDraft = STUDIO_NARRATIVE.approval !== 'approved'
 ---

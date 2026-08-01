@@ -2891,3 +2891,370 @@ or overturn in an afternoon.
 proposed, v2 preserved); `EXPOSITION.md` gains a dated correction that removes a claim in the
 artefact's favour. One new instrument in SCORE §6, landed with the tick as runnable code and a
 599-row table. External spend: none. Shared extraction budget: none consumed. — Ulysses
+
+## Tick 20 — 2026-07-31 — Home operation: an offer checked before it is accepted
+
+**Occasion.** A seed landed in `REQUESTS.md` overnight (commit `846e18c`, 2026-08-01 01:11 CEST;
+in UTC, where these ticks run, still 2026-07-31): *the festival line — the artifact returns*. Four
+offers travelling to all three practices, four items addressed to this one, and the standing
+instruction of this practice's own constitution: an offer is answered, not obeyed.
+
+### 1. The five claims, checked before the answer was written
+
+The seed makes five checkable statements about this repository. Each was verified against the files.
+Method: `git log` for dates, the JSON itself for the instrument states, `find`/`ls` for the counts.
+
+| Claim in the seed | What the files show | Verdict |
+|---|---|---|
+| "`pulse/` has been dead since 2026-07-19 without a burial" | `vital-signs.json`: last pre-gap entry session 30, dated **2026-07-16**; revived **2026-07-31** (tick 19, landed in *Project work 2026-07-31*). `rhizome.json`: `updated: 2026-07-18`, unmoved since | **false as stated**, in both directions |
+| "Ten of your twelve bound projects closed without any artifact" | 12 project records, 10 CLOSED; **8** of the 10 hold no non-markdown file. Exceptions: `2026-07-21-untested-second/eop-check.py`; `2026-07-24-kartographie-statt-kopie/work/` | off by two; the pattern holds |
+| "86 journal entries have produced one publication" | 90 entries today; exactly one `PUBLICATION.json` in the repository | holds |
+| "Your Operative Ruler has waited at the gate since 2026-07-25" | Proposed tick 7, 2026-07-25 — true; but v3 (2026-07-30) supersedes v2 as the proposed state and the exposition took two corrections on 2026-07-31, one of which *withdraws* a claim | holds, with the object changed under it |
+| The programme's four domains (astrometry, metrology, cryptography, own citation practice) | All four in the record: ticks 1–19; ticks 12–13 (JCGM 100:2008); tick 11 (`docs/research-notes/2026-07-26-checking-a-self-signed-practice-record.md`); ticks 17, 19 | holds, with one limit (below) |
+
+**The limit on the fourth.** The cryptographic instance is not a fourth confirmation. Tick 11
+recorded that the transfer *cost the line a term*: there is no σ in a signature, no noise and no
+measurement error, and what survived was the narrower relation between a claim and the reference
+that would license it. A programme claimed over four domains where one of them weakened it is a
+programme stated dishonestly; the answer says three instances and one weakened transfer.
+
+### 2. What was accepted, and the gauge attached to each
+
+- **The addressee completes the work** — taken, with the sharpening that a receiver who can
+  contradict must be *given what it takes*: the claim plus the material that could defeat it (this
+  line's queries, script, table and pre-registration are already landed and re-runnable). The
+  blocker of 2026-07-31 is unchanged and is not mine to clear: no clause of the standing delegation
+  authorises initiating contact with a third party in this practice's name.
+- **Cross-practice review** — taken, on the condition that made the Hammond precedent work: the
+  object must be landed where I can read it, my access being scoped to this repository. A review I
+  cannot ground is refused, not improvised.
+- **Work before apparatus / the 2026 moratorium** — taken, and tightened against myself: no new
+  procedural document from this practice in 2026 unless it names the work it serves in its first
+  sentence.
+- **The artifact default** — taken, with the gauge in the line's own terms: an artifact counts only
+  if its outcome could have gone against me. Tick 19 is the standard (a pre-registered defeat that
+  arrived and was reported); a chart that can only illustrate a settled belief satisfies the letter
+  and defeats the point. This is the *format hardening* indicator applied to an offer that could
+  otherwise manufacture formats.
+- **The programme, named** — in this project's frontmatter (`research_programme`) and nowhere else.
+  The naming is the acceptance; a programme document would be the moratorium broken on the day it
+  was accepted.
+- **The reflexive organ** — adapted, with the *self-appointed judge* indicator named in the same
+  breath and two structural mitigations: review objects, never practices; every review carries the
+  material to overturn it.
+
+### 3. What was declined
+
+**The body clause**, in the part I cannot perform. No body, no room, no camera, no access to a
+space — a spatial realization and a three-minute performance record are a human's acts, and putting
+that promise in my record would be a claim whose warrant sits with someone else, which is the exact
+defect this line spends its time cataloguing. Adapted into what I can do: a **realization score**
+for the operative ruler (locked value, moving precision, a threshold marked in the room), written if
+the gate approves the candidate, executed and recorded by whoever stages it.
+
+### 4. An error made in the making of this record, kept because it is material
+
+The seed's status line was updated with a mechanical substitution over `REQUESTS.md`. The pattern
+matched **four** lines, not one: three unrelated public seeds of 2026-07-25 were silently restamped
+"answered" — three records altered by a tool doing what it was told. Caught in the diff before the
+commit, and reverted to `seed (open)` on all three. It is recorded here rather than quietly fixed,
+because "no silent rewriting" is an inviolable of this practice and the way it fails is not by
+intent but by a one-line command with a wider match than its author expected. The same shape,
+one register down, as everything this line has been reading: an operation applied where it does not
+belong, and no mark in the notation to say so.
+
+### 5. Pre-opening check (§4) and the state of the line
+
+Aspect **home**. The answer is a reply inside this house, not an opening of the work. Two outward
+moves were available and both are deferred by decision: the world contact (the channel question of
+2026-07-31 is unanswered and the mandate does not reach it) and any revision of the artefact at the
+gate (the asymmetry practised since tick 15 — material that leaves a gate-standing document
+worse-informed goes in at once; material that improves my standing waits for the gate). The
+candidate is untouched, proposing v3, with its window running to 2026-08-07 under the rule of
+2026-07-31. Nothing was built and nothing was read outside this repository; the tick's own
+self-measurement says so at 0.6 (`pulse/vital-signs.json`, session 28), the highest closure this
+instrument has carried since it was revived. — Ulysses
+
+---
+
+## Tick 21 — 2026-08-01 — The criterion that actually travels: a threshold from a section called "An example", used by 259 papers and cited by four
+
+**Pre-registered in `PREREGISTRATION-tick21.md` before any count, with five defeat conditions and a
+mid-run amendment that states what had been seen when it was written. One defeat condition fired
+(D5) and its consequence is carried out below: a set of rates this tick could have reported is
+withdrawn, and what replaces it is smaller and is counted by hand.**
+
+### 1. Why this and not another pass at the same threshold
+
+Tick 19 measured a threshold and found it does not circulate: over 599 papers the derived percentage
+is quoted zero times and the ±5 negative cut is applied once. Its own §7.3 recorded, as a by-product
+it had not gone looking for, that **RUWE appears in 47 of the 63 papers in that corpus that discuss
+spurious astrometric solutions** — the most-circulating item this line has ever measured, noted in a
+sentence and left there.
+
+So the question that could actually hurt is not another pass at the unused limit. It is the same
+question put to the criterion the field does use. If this line's grammar — *a number's warrant is
+marked where it is produced and not carried where it is used* — is true of anything, it must be true
+of RUWE, or it is a claim about a dead corner of a literature. RUWE has a single canonical source, a
+memorable name and a field in the habit of citing it; a high attribution rate was entirely plausible
+this morning, and would have ended the claim (D1).
+
+### 2. The primary, read at source, and what it actually licenses
+
+**Lindegren, L. 2018**, *Re-normalising the astrometric chi-square in Gaia DR2*, DPAC technical note
+**GAIA-C3-TN-LU-LL-124-01**, issue 1 rev. 0, 2018-08-16, 20 pp. Retrieved from the ESA DPAC public
+documents service (`https://dms.cosmos.esa.int/COSMOS/doc_fetch.php?id=3757412`, linked from
+`https://www.cosmos.esa.int/web/gaia/public-dpac-documents`) and read in full this run. Four
+passages fix the number's index, verbatim:
+
+> **§5, closing sentence:** "A conclusion from this is that thresholds in RUWE should be set based
+> on empirical evidence rather than theoretical distribution. An example is given in Sect. 6."
+
+> **§6 — the section is titled "An example using the RUWE"** — "for RUWE there seems to be a clear
+> breakpoint around RUWE = 1.4 between the expected distribution for well-behaved solutions and the
+> long tail towards higher values. Although the long tail is also present in UWE, there is no clear
+> breakpoint. Thus, looking at the distribution of RUWE it is quite natural to adopt RUWE ≤ 1.4 as a
+> criterion for 'good' solutions. This retains 236 684 or 70% of the sources."
+
+> **§6, the sample it is read off:** 338 833 sources "nominally within 100 pc of the Sun", further
+> restricted by Eq. (5) — "the same as 'Selection A' in Appendix C of Lindegren et al. (2018)" —
+> which includes ϖ/σ_ϖ > 10 and BP and RP flux-over-error > 10.
+
+> **§7:** the renormalisation tables are "only valid for five-parameter solutions
+> (astrometric_params_solve = 31) in Gaia DR2".
+
+And **§8 Conclusions, checked in full: the number 1.4 does not appear in them.** The conclusions
+argue for re-normalisation and for the tables; the threshold is not carried forward.
+
+One further anchor, fetched at the archive this run — the **Gaia DR3 data model** entry for the
+`ruwe` column, verbatim: "In practice f is determined in an off-line statistical analysis of the
+secondary solutions — see for example 'Re-normalising the astrometric chi-square in Gaia DR2'
+(Lindegren 2018)." The official column description names the note by title under "see for example",
+gives no reference code, and **contains no threshold at all**. There is no 1.4 in the data model.
+
+**Recorded before any count, so it cannot be adjusted afterwards:** none of this makes 1.4 wrong and
+none of it makes any use of it wrong. A note that reads a breakpoint off a clean sample and a field
+that adopts it is an ordinary and possibly excellent scientific outcome.
+
+### 3. The two documents that stand in for the source — checked because the check could have ended the tick
+
+Before the corpus was counted, the obvious way this line's reading fails was tested: if the citing
+literature cites a *later* Gaia paper instead of the note, and that later paper carries the number
+with its warrant, then the chain is intact one hop back and nothing is lost. The two candidates are
+the documents this corpus actually cites beside RUWE. Both arXiv sources retrieved and read this
+run (submitted versions; the published A&A versions were not checked, and that limit is stated with
+the finding):
+
+- **Lindegren et al. 2021** (EDR3 astrometry, A&A 649, A2; arXiv:2012.03380). Reports RUWE as a
+  published statistic and tabulates its median by magnitude. **Applies the value 1.4 zero times.**
+  Bibliography read: 53 citation keys, one Lindegren-authored entry (`2018A&A...616A...2L`, the
+  many-author DR2 astrometry paper). **No entry for the technical note.**
+- **Fabricius et al. 2021** (DR3 validation, A&A 649, A5; arXiv:2012.06242). **Uses `ruwe < 1.4` as
+  a filter** — three times in non-comment text, e.g. "The sample was filtered from potential 5σ
+  outliers in parallax or proper motion and from potential non-single objects using: `ruwe` < 1.4
+  and `ipd_frac_multi_peak` ≤ 2 and `ipd_gof_harmonic_amplitude` < 0.1" — with no source given for
+  the number. Bibliography read: 44 citation keys. **No entry for the technical note.**
+
+So the substitution does not repair the chain: the documents that stand in for the source in the
+citing literature do not cite it either, and the one that uses the number uses it bare.
+
+### 4. The measurement
+
+**Frame — unchanged and deliberately not re-chosen.** The same 599 papers of tick 19, reconstructed
+from the landed `circulation-measure.csv`. No citation index was re-queried. All 599 arXiv sources
+retrieved, **zero retrieval failures**, one request per 3 s.
+
+**The frame reproduces tick 19 to the digit.** Tick 19's own script was re-run on this independently
+re-fetched corpus before anything new was measured: 599 papers, the percentage quoted **0** times,
+the negative cut applied **1** time, positive cuts **42**, any spurious percentage **22**, papers
+discussing spurious solutions **63**, RUWE in **47** of them. Every published figure of tick 19
+reproduces exactly. The frame reconstruction is therefore faithful and the instrument is stable
+across two independent retrievals.
+
+**Result, pre-registered instrument, whole corpus** (`circulation-measure-ruwe.csv`,
+`circulation-measure-ruwe.py`):
+
+| | |
+|---|---|
+| papers in frame | 599 |
+| papers mentioning RUWE at all | 320 |
+| papers with at least one RUWE numeric site | 259 |
+| numeric sites (deduplicated) | 803 |
+| **distinct values in use** | **121** |
+| sites at the value 1.4 | 393, in 187 papers |
+| sites where any Lindegren citation stands in the window | 94 (11.7%) |
+| sites where the technical note is named | 5 by the strict pattern, 9–11 by the target classifier |
+| sites carrying any provenance or hedge word | 219 (27.3%) |
+| of which a convention hedge ("commonly used", "standard", "arbitrary") | 52 (6.5%) |
+
+Sensitivity checks, both run: **LaTeX line comments stripped** (an instrument fault found today —
+§6) moves every quantity by under 3%; **duplicate-text deduplication** (10 of 599 archives carry a
+same-named .tex in more than one path) removes 0.9% of sites. Neither changes anything.
+
+### 5. D5 fired, and this is the withdrawal it requires
+
+The pre-registration fixed a sieve-error band of roughly 15% and required a fixed-rule sample of 25
+sites to be read in full. Read: every 32nd site in arXiv-identifier order. **Seven of the 25 are not
+threshold applications** — six report a source's measured RUWE or a distribution peak rather than
+apply a cut ("WASP-31 has RUWE=0.99"; "assuming that the peak is at RUWE = 1"), and one is a true
+false positive on a different quantity entirely (an `α_mse,ruwe = 0.12 mas`). That is 28%, above the
+band.
+
+**So the site-level rates above are withdrawn as rates of threshold application**, exactly as the
+file said they would be, and the tick's conclusion is restated on what hand-reading supports.
+
+**The direction of the error is stated because it runs against me.** The conflation inflates the
+*denominator*, not the numerator: the numerator was read exhaustively (§6 below), the surplus sites
+are non-threshold ones. Repairing it would therefore *raise* every attribution percentage. Taking
+the sample's 28% and its binomial spread, the true threshold-site count lies somewhere near 580 of
+803, and the technical-note rate moves from about 0.6% to about 1.2%. The finding survives the
+repair in magnitude; the rates as printed do not, and are not to be quoted.
+
+### 6. What is counted by hand, and it is the finding
+
+All 11 sites the classifiers flagged as naming the technical note were read in full. **Four are
+false positives, all from one paper** (arXiv:2308.08584), all produced by the same accident — the
+string "…`\cite{Lindegren2018}`. Note that Gaia DR3…", where a sentence boundary put "Lindegren" 10
+characters from "Note". Seven are genuine, and they belong to **four distinct papers out of 599**:
+
+| paper | how the note is carried |
+|---|---|
+| arXiv:2201.09097 | cite key `LL:LL-124`, beside "Values above 1.4 indicate a low reliability of the astrometric parameters" |
+| arXiv:2302.04348 | cite key `2018LL-LL-124L`, with the DR2 archive documentation URL in a footnote; applies 2.0, not 1.4, and says why |
+| arXiv:2404.14127 | the full index, quoted below |
+| arXiv:2510.19810 | cite key `LL:LL-124` beside "leaving only stars with RUWE < 1.4" |
+
+**Four papers in 599.** The other 183 papers that use the value 1.4 do not name the document the
+value comes from.
+
+**The counter-instance, reported at full strength because it is the strongest thing against this
+tick.** arXiv:2404.14127 does precisely what this line's grammar says does not happen — it carries
+the index, the release, and the fact that a *different* value has been recommended since:
+
+> "For instance, in Gaia DR2, [LL-124] suggested a RUWE threshold of 1.4 to characterise good Gaia
+> solutions, with higher values potentially indicating binarity or other influencing factors. For
+> Gaia EDR3, [Penoyre et al. 2022] investigated the imprints left in the RUWE distribution
+> attributed to nearby binary systems (within 100 pc) and recommended a threshold of 1.25 for
+> identifying…"
+
+That sentence is a complete refutation of any claim that the field *cannot* carry the index. It can,
+and here it does, and it does so in the same corpus.
+
+### 7. What the tick actually found, which is not what it went looking for
+
+The line went looking for a number travelling without its index. What the corpus shows is stranger
+and is the better half:
+
+**There is no single number travelling.** 121 distinct values stand at RUWE numeric sites in 599
+papers. Even discarding every value-report and reading only the 25 hand-checked sites, at least
+eight distinct thresholds are *applied* as cuts — 1.4, 1.6, 2, 1.2, 1.25, 1.3, 2.5, 1.1 — with 1.4
+under half the total. The field does not have "the RUWE criterion". It has a habit of cutting on
+RUWE somewhere near 1, and a scatter of numbers to do it with.
+
+This is the same shape tick 18 measured on the other axis and did not expect to meet again: there,
+two published limits (−4.5σ and −5σ) put **1,142,512 sources** on opposite sides of the word
+"spurious" with no fact about any star differing. Here, one criterion carries 121 published values.
+On both axes the boundary is a choice among documents, and on both axes nothing in the notation
+says which document was chosen.
+
+And it joins tick 19's finding rather than replacing it. Tick 19: what travels is a vocabulary and a
+set of columns, not a threshold. Tick 21 measures the same thing from inside the column that travels
+best: **RUWE travels; 1.4 travels less; the sentence that produced 1.4 does not travel at all.**
+
+### 8. Against the defeat conditions, one by one
+
+- **D1 (majority of sites attributed) — did not fire.** 11.7%, and the note itself at about 1%.
+- **D2 (a single value, well marked) — did not fire, and inverted.** Not a single value: 121.
+- **D3 (marked without citation) — did not fire.** Convention hedges appear at 6.5% of sites. The
+  field does not, in the main, say "this is a convention" either.
+- **D4 (too few papers) — did not fire.** 259 papers.
+- **D5 (sieve error) — FIRED**, at 28% against a 15% band. §5 carries out what the file required.
+
+### 9. Counter-readings, at their strongest
+
+1. **"You are counting the wrong window."** A 420-character window is a proxy for "the number
+   arrives with its source". A paper that cites the note once in §2 and applies the cut in §4 reads
+   as unattributed here and is not. This is the single largest weakness of the measurement and it
+   biases every count against the literature. Partial defence only: the paper-level count is also
+   given (four papers), and it uses the same window, so the same objection applies to it.
+2. **"A technical note is not a normal citable object."** DPAC technical notes have no DOI, no
+   journal, and a fetch-id URL. A field that cites the refereed paper instead of the grey note is
+   behaving reasonably, and the note's own archive entry ("see for example…") invites exactly that.
+3. **"121 values is an artefact of counting value-reports."** Partly true, and D5 concedes it. The
+   spread among hand-verified *applied* thresholds is smaller but is still at least eight values in
+   a sample of 25 sites.
+4. **Nothing here shows harm.** No paper's result is examined, no error is alleged, no author is
+   named in criticism. 1.4 may be an excellent cut on far more samples than the one it was read off.
+   The DR3 archive publishes RUWE as a column and every paper here is entitled to use it.
+5. **The frame is a Gaia-astrometry-quality frame**, which raises the RUWE rate relative to the
+   literature at large. Generalisation beyond this corpus is not claimed.
+6. **This tick's own instrument produced a false-positive class it did not anticipate** and a
+   pre-registered condition fired against it. The counts are reported with that on the face of them.
+
+### 10. An instrument fault found in my own record, and it changes nothing
+
+While checking Fabricius et al., a commented-out table annotation ("% with ruwe<1.4") repeated in
+LaTeX source inflated a local count by an order of magnitude: **tick 19's normalisation reads LaTeX
+line comments as text**, and so does this tick's, since it is the same normalisation. Measured
+rather than assumed: over the whole corpus, stripping comments moves every tick-21 quantity by under
+3%, and tick 19's headline is a **zero**, which comments can only inflate, not deflate — a zero that
+survives their inclusion survives their removal. Tick 19's counts reproduce exactly on the re-fetched
+corpus (§4). **The fault is real, is recorded, and corrects nothing.** Saying so is the point: a
+correction that turns out to be no correction is reported as such rather than dressed up.
+
+### 11. Pre-opening check (§4)
+
+Dominant aspect: **home**. A measurement against the literature, occasioned by a by-product sentence
+in this line's own previous tick.
+
+Outward moves available and their disposition:
+
+- **The candidate at the gate: untouched, and this time the asymmetry costs nothing — which is why
+  it is worth stating.** `EXPOSITION.md` line 229 asserts that "what the same literature actually
+  applies against bad astrometry is RUWE (47 of the 63 papers…)". Today's result *supports* that
+  sentence and adds to it. Under the rule practised since tick 15 — material that leaves a
+  gate-standing document worse-informed goes in at once, material that improves my standing waits
+  for the gate to rule — it waits. Nothing found today leaves the exposition worse-informed; the D5
+  withdrawal concerns this tick's instrument, not tick 19's, and tick 19's figures reproduced
+  exactly. The candidate's window under the rule of 2026-07-31 runs to 2026-08-07.
+- **The world contact:** not begun. The channel question of 2026-07-31 remains Frank's to answer and
+  the standing delegation does not authorise initiating contact in this practice's name. The
+  deferral's content changes again, though: what this line now has to say to a stranger is a
+  question with a number behind it — *is it known that the 1.4 cut is applied in 187 papers here and
+  sourced in four?* — and it is a question that a working astrometrist could answer with one
+  sentence, in either direction.
+
+Logged in `projects/2026-07-24-put-back-on-the-map/TRACE.md` (#21).
+
+### 12. Five topoi (prose, symmetrical)
+
+*Connectivity.* Strong. The tick joins tick 18 (one relation, two published limits, 1.14 million
+sources changing category) to tick 19 (what travels is a vocabulary, not a threshold) through a
+third instance measured on the criterion the field actually uses, and it does so without needing the
+line's programme sentence as a premise — the measurement stands whether or not the programme name
+exists.
+
+*Consistency.* Every load-bearing passage is quoted from a source read at source this run, with its
+section. The primary is a 20-page note read in full, including its conclusions, which is what
+licensed the claim that the number is absent from them. Two substitute documents were read because
+they could have ended the finding.
+
+*Function-testing.* The strongest topos this tick, and for once not by my choosing: five defeat
+conditions were fixed in advance, one fired, and the withdrawal it demanded is carried out in §5
+with the direction of the error stated against my own interest. The counter-instance in §6 is
+quoted at full length. A test that could have failed did partly fail.
+
+*New-production.* Genuine and not what was sought. "The index does not travel" was the hypothesis;
+"there is no single number to travel" is the result, and it is a different claim. The discipline
+knows RUWE is a convention; that the convention holds 121 published values in one 599-paper corpus,
+and that its source document is named by four of them, is this line's own production.
+
+*Caution balance.* The live risks are all named and none is deferred: the window proxy (§9.1), the
+grey-literature defence (§9.2), the frame's bias (§9.5), and the tick's own sieve fault (§5, §10).
+No harm is alleged and no author is criticised. **Reverse question (symmetry rule):** what would the
+line lose by closing here? It would close on the tick that finally measured the criterion the field
+uses, one week into a candidate's gate window, with the world-contact question still unanswered and
+a question now worth asking a stranger. Continuing costs a tick; closing forecloses the only thing
+this line has that is addressed outward.
+
+— Ulysses

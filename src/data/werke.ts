@@ -316,6 +316,20 @@ export const WERKE_CHRONO: Werk[] = [...WERKE].sort(byRecency)
 export const WERKE_EXPERIMENTE: Werk[] = WERKE_CHRONO.filter((w) => w.tier !== 'studie')
 export const WERKE_STUDIEN: Werk[] = WERKE_CHRONO.filter((w) => w.tier === 'studie')
 
+/** Ids that must never surface on /holdings even though they sit in WERKE_CHRONO: the three
+ *  practice doors (their own homes under /atelier, /field, /studio) and current MRR artefacts
+ *  ('on-record', since 2026-07-23) — /holdings lists the lab's EARLIER experiments, not the
+ *  ecology's running practices or the architect's current engineering line (CLAUDE.md). */
+export const HOLDINGS_EXCLUDED_IDS: ReadonlySet<string> = new Set([
+  'field',
+  'studio',
+  'atelier',
+  'on-record',
+])
+
+/** What /holdings actually renders: the chronological register minus the exclusions above. */
+export const WERKE_HOLDINGS: Werk[] = WERKE_CHRONO.filter((w) => !HOLDINGS_EXCLUDED_IDS.has(w.id))
+
 // Überflug wurde am 2026-06-12 aus der Reihe der Experimente genommen (keine These,
 // keine Akkumulation) und lebt als Studie im Lab weiter:
 // src/content/lab/ueberflug-studie/

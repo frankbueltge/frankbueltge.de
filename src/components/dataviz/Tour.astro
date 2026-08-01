@@ -1,0 +1,339 @@
+---
+// src/components/dataviz/Tour.astro — the guided-tour engine (WP5): server-renders a Tour
+// (src/lib/tour/types.ts) as a plain, complete article; with JS, drives ONE sticky figure through
+// each scene's focus state as the visitor scrolls (or steps, under reduced motion / a coarse
+// pointer on a short viewport). Behavior + structure only (ADR 0010) — zero color, zero font; a
+// practice's own stylesheet skins `.dv-tour` later, exactly like components/dataviz/{DetailPanel,
+// LegendFilter,Readout,TableFallback}.astro before it. No live tour ships in this WP — this file
+// is the shell + contract, proven by src/lib/tour/engine.ts's and verify.ts's own tests plus
+// `astro check` + `npm run build` (no Astro-render unit tests exist in this repo; see those
+// components' own history for why).
+//
+// The progressive-enhancement ladder:
+//   1. No JS: every scene's build-time still (see `renderStill` below) is visible, in document
+//      order, alongside its quotes — a complete, readable article on its own.
+//   2. JS, fine pointer, no reduced motion: stills hide, ONE live figure (the consumer's own,
+//      passed via the "figure" slot) becomes sticky and is driven by an IntersectionObserver as
+//      the visitor scrolls past each scene.
+//   3. JS, but reduced motion OR a coarse pointer on a short viewport: the IntersectionObserver is
+//      never attached; a `<nav class="dv-tour-steps">` of real prev/next buttons + a jump list
+//      takes over instead — the same live figure, but it only ever changes on an explicit click.
+//
+// A live figure OPTS IN — it does not need to import anything from this module or know this
+// component exists — by dispatching `window.dispatchEvent(new CustomEvent('dv:figure-ready', {
+// detail: { id, apply(focus) } }))` once it is ready to be driven. src/lib/tour/engine.ts documents
+// the registry (and the registration-order race) this rests on; the two-line fix for "the figure
+// registers late" lives in this file's own script below, not in that shared module, because it is
+// specific to THIS tour needing to push its currently active scene the moment its own figure
+// shows up (the shared registry only guarantees FUTURE scene activations find it).
+//
+// One deliberate deviation from this WP's own DOM sketch: each scene's FocusState is served as a
+// `<script type="application/json" id="dv-focus-<scene id>">` payload (runtime.ts's
+// jsonScriptPayload / readJsonScript — already used by ProcessFigure.astro, maschinenraum/
+// Partitur.astro and begegnungen/ScoreFigure.astro) rather than a raw `data-focus="…json…"`
+// attribute: FocusState nests arrays and objects (`annotate`, `filter`), which is exactly the
+// shape runtime.ts's established payload pattern exists for, and it is what lets
+// src/lib/tour/types.test.ts exercise the real round trip this WP's own verification section asks
+// for. The DOM contract is otherwise exactly as specified: `data-dv-scene`, `aria-current="step"`,
+// `#scene-<id>` deep-link ids.
+import type { Scene, Tour } from '@/lib/tour/types'
+import { jsonScriptPayload } from '@/lib/dataviz/runtime'
+
+export interface Props {
+  tour: Tour
+  /**
+   * Renders one scene's build-time-only static still (typically an SVG string) for the no-JS
+   * floor — called once per scene, at build time, server-side only. Mirrors this repo's existing
+   * `<figure set:html={svg}>` convention (src/pages/atelier/sheet.astro and its siblings) rather
+   * than a per-scene named slot: every still-builder already in this codebase returns a markup
+   * STRING, not JSX, so a single function prop keeps the contract to the one shape this repo
+   * already uses everywhere else it needs a build-time figure. Omitting it for a scene renders an
+   * empty (but present) `<figure data-dv-still>` — a real tour is expected to always supply one
+   * ("every scene must be able to carry its own static image so the no-JS page is complete" is a
+   * content obligation on whoever assembles a real tour, not something this engine can enforce).
+   */
+  renderStill?: (scene: Scene) => string
+}
+
+const { tour, renderStill } = Astro.props
+
+// The tour drives exactly one figure (this WP's own framing: "drives ONE sticky figure"); every
+// scene's `focus.figure` is expected to name that same figure. The root's own data-dv-figure
+// mirrors scene 0's — the figure this tour targets before any scene has activated.
+const primaryFigureId = tour.scenes[0]?.focus.figure ?? ''
+---
+
+<section class="dv-tour" data-dv-tour data-dv-figure={primaryFigureId} tabindex="0" aria-roledescription="guided tour" aria-label={tour.title}>
+  <header class="dv-tour-head">
+    <h2 class="dv-tour-title">{tour.title}</h2>
+    <p class="dv-tour-standfirst">{tour.standfirst}</p>
+    {/* Screen-reader-only progress announcement ("3 of 5") — sighted users read scene progress
+        from position on the page plus aria-current="step" once a practice's skin styles it; a
+        skin MAY promote this to a visible counter later by overriding .dv-visually-hidden. */}
+    <p class="dv-tour-live dv-visually-hidden" data-dv-tour-live aria-live="polite" role="status" hidden></p>
+  </header>
+
+  <div class="dv-tour-body" data-dv-tour-body>
+    <div class="dv-tour-figure" data-dv-tour-figure hidden>
+      <slot name="figure" />
+    </div>
+
+    <ol class="dv-tour-scenes" data-dv-tour-scenes>
+      {
+        tour.scenes.map((scene) => (
+          <li id={`scene-${scene.id}`} class="dv-scene" data-dv-scene={scene.id}>
+            <script type="application/json" id={`dv-focus-${scene.id}`} set:html={jsonScriptPayload(scene.focus)} />
+            <p class="dv-scene-kicker">{scene.kicker}</p>
+            <h3 class="dv-scene-heading">{scene.heading}</h3>
+            {scene.lead && <p class="dv-scene-lead">{scene.lead}</p>}
+            {scene.quotes.map((quote) => (
+              <blockquote class="dv-scene-quote" cite={quote.source}>
+                <p>{quote.text}</p>
+                <footer>
+                  <cite>{quote.source}</cite>
+                  {quote.locator ? `, ${quote.locator}` : ''}
+                </footer>
+              </blockquote>
+            ))}
+            <figure class="dv-scene-still" data-dv-still set:html={renderStill ? renderStill(scene) : ''} />
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+
+  <nav class="dv-tour-steps" data-dv-tour-steps aria-label="Scene steps" hidden>
+    <button type="button" data-dv-tour-prev aria-label="Previous scene">prev</button>
+    <ol class="dv-tour-jump" data-dv-tour-jump>
+      {
+        tour.scenes.map((scene) => (
+          <li>
+            <a href={`#scene-${scene.id}`} data-dv-tour-jump-link={scene.id}>
+              {scene.heading}
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+    <button type="button" data-dv-tour-next aria-label="Next scene">next</button>
+  </nav>
+
+  <p class="dv-prov">Sources: {tour.provenance.join(', ')}</p>
+</section>
+
+<style>
+  .dv-tour-body {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+  /* Two columns ONLY once a live figure is actually visible (JS revealed it) — the no-JS floor
+     stays a single, ordinary reading column with no stray empty gutter; `:has()` is already used
+     elsewhere in this codebase's CSS (src/styles/global.css), not a novel technique here. */
+  .dv-tour-body:has(.dv-tour-figure:not([hidden])) {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+    gap: var(--dv-tour-gap, 0);
+  }
+  .dv-tour-figure {
+    position: sticky;
+    top: var(--dv-tour-sticky-top, 0);
+    max-height: var(--dv-tour-sticky-max-h, 100vh);
+  }
+  .dv-tour-figure[hidden] {
+    display: none;
+  }
+  .dv-tour-scenes {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .dv-scene {
+    /* keeps a deep-linked or keyboard-focused scene from landing flush against a sticky ancestor */
+    scroll-margin-top: var(--dv-tour-scroll-margin, 1em);
+  }
+  .dv-tour-steps {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+  .dv-tour-steps[hidden] {
+    display: none;
+  }
+  .dv-tour-jump {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  /* standard visually-hidden technique (same rules as components/dataviz/TableFallback.astro's
+     .dv-visually-hidden) — kept local rather than shared, matching that file's own precedent. */
+  .dv-visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>
+
+<script>
+  import type { FocusState } from '@/lib/tour/types'
+  import { reducedMotion, readJsonScript } from '@/lib/dataviz/runtime'
+  import { isPanelActive } from '@/lib/dataviz/stepper'
+  import {
+    ensureFigureReadyListener,
+    getFigure,
+    interactionMode,
+    nextScene,
+    sceneFromEntries,
+    type FigureHandle,
+  } from '@/lib/tour/engine'
+
+  // One listener total for the whole page, no matter how many Tour instances exist below —
+  // populates the shared figure registry every 'dv:figure-ready' dispatch feeds (see engine.ts's
+  // own header comment for the registration-order race this closes).
+  ensureFigureReadyListener()
+
+  for (const root of document.querySelectorAll<HTMLElement>('[data-dv-tour]')) {
+    const figureWrap = root.querySelector<HTMLElement>('[data-dv-tour-figure]')
+    const scenesList = root.querySelector<HTMLOListElement>('[data-dv-tour-scenes]')
+    const stepsNav = root.querySelector<HTMLElement>('[data-dv-tour-steps]')
+    const live = root.querySelector<HTMLElement>('[data-dv-tour-live]')
+    if (!figureWrap || !scenesList) continue
+
+    const scenes = [...scenesList.querySelectorAll<HTMLLIElement>('[data-dv-scene]')]
+    if (scenes.length === 0) continue
+
+    const figureId = root.dataset.dvFigure ?? ''
+    let activeIndex = -1
+
+    const focusFor = (sceneEl: HTMLElement): FocusState | null => {
+      const sceneId = sceneEl.dataset.dvScene
+      if (!sceneId) return null
+      try {
+        return readJsonScript<FocusState>(`dv-focus-${sceneId}`)
+      } catch {
+        return null
+      }
+    }
+
+    const applyFocusToFigure = (focus: FocusState | null): void => {
+      if (!focus) return
+      // Re-checked every call, not cached — a figure that registers late still gets every scene
+      // activation FROM THEN ON (the ordinary half of engine.ts's race fix).
+      getFigure(focus.figure || figureId)?.apply(focus)
+    }
+
+    const setActive = (index: number, opts: { scrollIntoView?: boolean } = {}): void => {
+      const clamped = Math.max(0, Math.min(index, scenes.length - 1))
+      if (clamped === activeIndex) return
+      scenes[activeIndex]?.removeAttribute('aria-current')
+      activeIndex = clamped
+      const el = scenes[activeIndex]
+      el.setAttribute('aria-current', 'step')
+      if (live) live.textContent = `${activeIndex + 1} of ${scenes.length}`
+      applyFocusToFigure(focusFor(el))
+      if (opts.scrollIntoView) el.scrollIntoView({ block: 'center' })
+      for (const link of stepsNav?.querySelectorAll<HTMLAnchorElement>('[data-dv-tour-jump-link]') ?? []) {
+        const current = link.dataset.dvTourJumpLink === el.dataset.dvScene
+        if (current) link.setAttribute('aria-current', 'true')
+        else link.removeAttribute('aria-current')
+      }
+    }
+
+    // With JS: the stills are no longer the experience — hide them, reveal the live figure.
+    figureWrap.hidden = false
+    if (live) live.hidden = false
+    for (const el of scenes) {
+      const still = el.querySelector<HTMLElement>('[data-dv-still]')
+      if (still) still.hidden = true
+    }
+
+    // The race fix's other half: a figure that was ALREADY ready before this script ran (its own
+    // script sits earlier in the document) is found here; one that registers only AFTER this
+    // point is caught by the direct listener just below — either way the currently active scene's
+    // focus reaches it, not just future ones.
+    const pushCurrentFocusTo = (handle: FigureHandle): void => {
+      const el = scenes[activeIndex]
+      if (!el) return
+      const focus = focusFor(el)
+      if (focus) handle.apply(focus)
+    }
+    const already = getFigure(figureId)
+    if (already) pushCurrentFocusTo(already)
+    window.addEventListener('dv:figure-ready', ((ev: CustomEvent<FigureHandle>) => {
+      if (ev.detail?.id === figureId) pushCurrentFocusTo(ev.detail)
+    }) as EventListener)
+
+    const mode = interactionMode({
+      reduced: reducedMotion(),
+      coarse: matchMedia('(pointer: coarse)').matches,
+      viewportH: window.innerHeight,
+    })
+    root.dataset.dvTourMode = mode
+
+    if (mode === 'steps') {
+      if (stepsNav) stepsNav.hidden = false
+      stepsNav
+        ?.querySelector<HTMLButtonElement>('[data-dv-tour-prev]')
+        ?.addEventListener('click', () => setActive(nextScene(activeIndex, -1, scenes.length), { scrollIntoView: true }))
+      stepsNav
+        ?.querySelector<HTMLButtonElement>('[data-dv-tour-next]')
+        ?.addEventListener('click', () => setActive(nextScene(activeIndex, 1, scenes.length), { scrollIntoView: true }))
+      for (const link of stepsNav?.querySelectorAll<HTMLAnchorElement>('[data-dv-tour-jump-link]') ?? []) {
+        link.addEventListener('click', (ev) => {
+          ev.preventDefault()
+          const idx = scenes.findIndex((el) => el.dataset.dvScene === link.dataset.dvTourJumpLink)
+          if (idx !== -1) setActive(idx, { scrollIntoView: true })
+        })
+      }
+      setActive(0)
+    } else {
+      const io = new IntersectionObserver(
+        (entries) => {
+          const winner = sceneFromEntries(
+            entries.map((e) => ({
+              id: (e.target as HTMLElement).dataset.dvScene ?? '',
+              isIntersecting: e.isIntersecting,
+              top: e.boundingClientRect.top,
+            })),
+          )
+          if (winner === null) return
+          const idx = scenes.findIndex((el) => el.dataset.dvScene === winner)
+          if (idx !== -1) setActive(idx)
+        },
+        { rootMargin: '-45% 0px -45% 0px', threshold: 0 },
+      )
+      for (const el of scenes) io.observe(el)
+      setActive(0)
+    }
+
+    // ←/→ on the tour root: keydown bubbles from wherever focus currently sits, so this only ever
+    // fires while focus is inside `root` (its own :focus-within condition, for free, from native
+    // bubbling — no separate focus tracking needed) — and yields entirely to an open DetailPanel
+    // (isPanelActive(), from stepper.ts) rather than double-handling the same keypress: the panel
+    // owns the arrow keys while it is open, this tour only when none is.
+    root.addEventListener('keydown', (ev) => {
+      if (isPanelActive()) return
+      if (ev.key === 'ArrowLeft') {
+        ev.preventDefault()
+        setActive(nextScene(activeIndex, -1, scenes.length), { scrollIntoView: true })
+      } else if (ev.key === 'ArrowRight') {
+        ev.preventDefault()
+        setActive(nextScene(activeIndex, 1, scenes.length), { scrollIntoView: true })
+      }
+    })
+
+    // Deep link: a #scene-<id> hash matching one of THIS tour's own scenes activates it on load.
+    if (location.hash) {
+      const idx = scenes.findIndex((el) => `#${el.id}` === location.hash)
+      if (idx !== -1) setActive(idx, { scrollIntoView: true })
+    }
+  }
+</script>
