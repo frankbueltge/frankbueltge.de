@@ -45,7 +45,7 @@ describe('NAMING.doors tour links', () => {
   const TOUR_ANCHORS: Record<string, string> = {
     ulysses: '/atelier#tour-killed-on-the-pivot',
     meridian: '/field#tour-the-gauntlet',
-    ensemble: '/studio#tour-three-returns',
+    ensemble: '/studio/how-a-premiere-returned',
   }
 
   it('gives every practice door its tour, and The Middle none', () => {
@@ -55,10 +55,14 @@ describe('NAMING.doors tour links', () => {
     expect(NAMING.doors.items.find((d) => d.id === 'conductor')?.tourHref).toBeUndefined()
   })
 
-  it('points each tour link at the room behind its own door', () => {
+  it('points each tour link behind its own door (an anchor on the hub, or a room under it)', () => {
+    // The studio's tour moved to its own room (/studio/how-a-premiere-returned) when the
+    // entrance became the work dossier — a tour target may be a room path, not only an anchor.
     for (const door of NAMING.doors.items) {
       if (!door.tourHref) continue
-      expect(door.tourHref.startsWith(`${door.href}#`), `door ${door.id}`).toBe(true)
+      const behindOwnDoor =
+        door.tourHref.startsWith(`${door.href}#`) || door.tourHref.startsWith(`${door.href}/`)
+      expect(behindOwnDoor, `door ${door.id}`).toBe(true)
     }
   })
 })
