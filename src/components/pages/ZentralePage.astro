@@ -75,8 +75,17 @@
       <div data-zx="night" class="flex flex-col gap-4"></div>
     </section>
 
+    {/* Triage (v2 P1, docs/design/2026-08-01-steuerzentrale-v2.md): oben NUR, was Frank
+        wirklich braucht — sortiert nach Frist; der Leerzustand ist ein Feature. Darunter
+        der Rest (zur Kenntnis). Die Selbstauskunft der Absender (Vier-Zeilen-Kopf) steuert
+        die Einordnung; kopflose Alt-Anfragen zählen konservativ als "braucht dich". */}
+    <section aria-labelledby="zx-needed-h" class="mb-12">
+      <h2 id="zx-needed-h" class="mb-4 font-mono text-xs uppercase tracking-[0.22em] text-fg-faint">Heute nötig</h2>
+      <div data-zx="needed" class="flex flex-col gap-4"></div>
+    </section>
+
     <section aria-labelledby="zx-inbox-h" class="mb-12">
-      <h2 id="zx-inbox-h" class="mb-4 font-mono text-xs uppercase tracking-[0.22em] text-fg-faint">Inbox</h2>
+      <h2 id="zx-inbox-h" class="mb-4 font-mono text-xs uppercase tracking-[0.22em] text-fg-faint">Zur Kenntnis</h2>
       <div data-zx="inbox" class="flex flex-col gap-4"></div>
     </section>
 
@@ -204,6 +213,14 @@
     openedAt: string
     ageDays: number
     excerpt: string
+    structured: boolean
+    summary: string
+    braucht: string | null
+    brauchtOptionen: string[]
+    frist: string | null
+    fristDate: string | null
+    kontext: string | null
+    needsAction: boolean
   }
 
   interface ZxSitePr {
@@ -378,6 +395,7 @@
   const errorsEl = document.querySelector<HTMLElement>('[data-zx="errors"]')
   const nightEl = document.querySelector<HTMLElement>('[data-zx="night"]')
   const inboxEl = document.querySelector<HTMLElement>('[data-zx="inbox"]')
+  const neededEl = document.querySelector<HTMLElement>('[data-zx="needed"]')
   const sitePrsEl = document.querySelector<HTMLElement>('[data-zx="siteprs"]')
   const pendingSeedsEl = document.querySelector<HTMLElement>('[data-zx="pending-seeds"]')
   const seedForm = document.querySelector<HTMLFormElement>('[data-zx="seed-form"]')
@@ -580,11 +598,42 @@
   }
 
   // ── Rendering: Inbox ────────────────────────────────────────────────────
+  /** Frist-Anzeige mit Countdown. Getragen von der Selbstauskunft (fristDate aus dem
+   * Vier-Zeilen-Kopf); eine Frist ohne Datum wird als Text gezeigt, nie geraten. */
+  function fmtFrist(entry: ZxInboxEntry): { label: string; urgent: boolean } | null {
+    if (entry.fristDate) {
+      const days = Math.floor((Date.parse(entry.fristDate) - Date.now()) / 86_400_000)
+      const rel = days < 0 ? `überfällig (${-days} Tg.)` : days === 0 ? 'heute' : `in ${days} Tg.`
+      return { label: `Frist ${entry.fristDate} · ${rel}`, urgent: days <= 2 }
+    }
+    if (entry.frist) {
+      const t = entry.frist.length > 42 ? `${entry.frist.slice(0, 41)}…` : entry.frist
+      return { label: `Frist: ${t}`, urgent: false }
+    }
+    return null
+  }
+
+  const BADGE = 'ml-2 rounded-full border border-line px-2 py-0.5 text-[10px] normal-case tracking-normal text-fg-muted'
+  const BADGE_URGENT = 'ml-2 rounded-full border border-amber-500 px-2 py-0.5 text-[10px] normal-case tracking-normal text-amber-500'
+
   function renderInboxCard(entry: ZxInboxEntry): HTMLElement {
     const card = el('article', { class: 'rounded-xl border border-line bg-panel p-4' })
     const repoLabel = REPO_LABELS[entry.repo] ?? entry.repo
-    card.append(el('p', { class: 'font-mono text-xs uppercase tracking-[0.12em] text-fg-faint' }, `${repoLabel} · ${fmtAgeDays(entry.ageDays)}`))
-    card.append(el('p', { class: 'mt-1 font-semibold text-fg' }, entry.heading))
+
+    // Triage-Kopfzeile (v2 P1): die Selbstauskunft des Absenders als Badges. Kopflose
+    // Alt-Anfragen tragen den ehrlichen Marker statt einer erfundenen Einordnung.
+    const meta = el('p', { class: 'font-mono text-xs uppercase tracking-[0.12em] text-fg-faint' }, `${repoLabel} · ${fmtAgeDays(entry.ageDays)}`)
+    if (entry.structured && entry.braucht) meta.append(el('span', { class: BADGE }, `braucht: ${entry.braucht}`))
+    if (!entry.structured) meta.append(el('span', { class: BADGE }, 'unstrukturiert (alt)'))
+    const frist = fmtFrist(entry)
+    if (frist) meta.append(el('span', { class: frist.urgent ? BADGE_URGENT : BADGE }, frist.label))
+    card.append(meta)
+
+    // Die eine Zeile zuerst: das tl;dr des Absenders (bzw. der Satz-Fallback); die
+    // REQUESTS-Überschrift bleibt als Unterzeile, der Volltext einen Aufklapper entfernt.
+    card.append(el('p', { class: 'mt-1 font-semibold text-fg' }, entry.summary || entry.heading))
+    card.append(el('p', { class: 'mt-0.5 font-mono text-xs text-fg-faint' }, entry.heading))
+    if (entry.kontext) card.append(el('p', { class: 'mt-1 text-xs text-fg-muted' }, `Kontext: ${entry.kontext}`))
 
     const excerptWrap = el('div', { class: 'zx-excerpt mt-2 text-sm text-fg-muted' }, el('span', {}, entry.excerpt))
     card.append(excerptWrap)
@@ -1151,12 +1200,29 @@
       for (const c of body.collectives) nightEl.append(renderCollective(c))
     }
 
+    // Triage-Split (v2 P1): oben, was dich braucht (Frist zuerst, dann Alter); darunter,
+    // was nur zur Kenntnis geht. Der Leerzustand oben ist das Ziel des ganzen Umbaus.
+    const needed = body.inbox.filter((e) => e.needsAction)
+    const rest = body.inbox.filter((e) => !e.needsAction)
+    needed.sort((a, b) => {
+      const fa = a.fristDate ?? '9999-12-31'
+      const fb = b.fristDate ?? '9999-12-31'
+      return fa < fb ? -1 : fa > fb ? 1 : b.ageDays - a.ageDays
+    })
+    if (neededEl) {
+      neededEl.replaceChildren()
+      if (needed.length === 0) {
+        neededEl.append(el('p', { class: 'text-base text-fg' }, 'Nichts braucht dich heute.'))
+      } else {
+        for (const entry of needed) neededEl.append(renderInboxCard(entry))
+      }
+    }
     if (inboxEl) {
       inboxEl.replaceChildren()
-      if (body.inbox.length === 0) {
-        inboxEl.append(el('p', { class: 'text-sm text-fg-muted' }, 'Nichts wartet auf dich.'))
+      if (rest.length === 0) {
+        inboxEl.append(el('p', { class: 'text-sm text-fg-muted' }, 'Nichts Neues zur Kenntnis.'))
       } else {
-        for (const entry of body.inbox) inboxEl.append(renderInboxCard(entry))
+        for (const entry of rest) inboxEl.append(renderInboxCard(entry))
       }
     }
 
