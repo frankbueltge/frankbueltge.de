@@ -20,7 +20,7 @@
 // (Schreibzugriff Contents + Issues). Kein Token wird je geloggt oder in eine Fehlermeldung
 // eingebettet — Upstream-Fehler tragen nur den HTTP-Status, nie den Response-Body (der könnte
 // im Prinzip Token-Fragmente aus einer Diagnosemeldung enthalten).
-import { answerRequest, appendSeed } from '../../../src/lib/zentrale/requestsMd'
+import { answerRequest, appendSeed, appendGateDecision } from '../../../src/lib/zentrale/requestsMd'
 import { checkToken } from '../../../src/lib/zentrale/auth'
 
 const API_BASE = 'https://api.github.com'
@@ -28,7 +28,7 @@ const SITE_REPO = 'frankbueltge/frankbueltge.de'
 const UA = 'frankbueltge.de steuerzentrale'
 
 const COLLECTIVE_REPOS = ['field-research', 'studio', 'ulysses', 'data-snack-plenum']
-const ACTIONS = ['answer', 'acknowledge', 'seed']
+const ACTIONS = ['answer', 'acknowledge', 'seed', 'gate']
 const DECISIONS = ['enabled', 'declined', 'note']
 
 const MAX_TITLE_LEN = 200
@@ -201,6 +201,28 @@ function validateBody(body) {
     return { ok: true }
   }
 
+  if (body.action === 'gate') {
+    // Gate-Entscheidung (Governance §1): projekt-slug eng validiert (gleiche Zeichenmenge
+    // wie die Werk-Slugs der Integrate-Pipeline), HOLD verlangt eine Begründung — die Regel
+    // heißt "decide, or write a dated 'held, because …'", nicht "halten und schweigen".
+    if (typeof body.project !== 'string' || !/^[a-z0-9-]+$/.test(body.project)) {
+      return { ok: false, detail: 'project ungültig' }
+    }
+    if (body.decision !== 'GO' && body.decision !== 'HOLD') {
+      return { ok: false, detail: 'decision muss GO oder HOLD sein' }
+    }
+    if (body.reason !== undefined && typeof body.reason !== 'string') {
+      return { ok: false, detail: 'reason muss ein String sein' }
+    }
+    if ((body.reason ?? '').length > MAX_MESSAGE_LEN) {
+      return { ok: false, detail: 'reason zu lang' }
+    }
+    if (body.decision === 'HOLD' && (body.reason ?? '').trim() === '') {
+      return { ok: false, detail: 'HOLD braucht eine Begründung' }
+    }
+    return { ok: true }
+  }
+
   // seed
   if (typeof body.title !== 'string' || body.title.trim() === '') {
     return { ok: false, detail: 'title fehlt' }
@@ -312,6 +334,27 @@ async function handleSeed(token, body) {
   return json(200, { ok: true, commit })
 }
 
+async function handleGate(token, body) {
+  const { repo, project, decision } = body
+  const reason = typeof body.reason === 'string' ? body.reason : ''
+  const date = todayUtc()
+  const commitMessage = `gate: ${decision} — ${truncate(project, 60)} (steuerzentrale, ${date})`
+
+  let result
+  try {
+    result = await commitEdit(token, repo, (md) => appendGateDecision(md, { project, decision, reason, date }), commitMessage)
+  } catch {
+    return json(502, { ok: false, code: 'upstream' })
+  }
+  if (!result.ok) {
+    if (result.reason === 'hold-needs-reason') return json(422, { ok: false, code: 'validation', detail: 'HOLD braucht eine Begründung' })
+    return json(409, { ok: false, code: 'conflict' })
+  }
+
+  const commit = { sha: result.put?.commit?.sha ?? null, htmlUrl: result.put?.content?.html_url ?? null }
+  return json(200, { ok: true, commit })
+}
+
 export async function onRequestPost(context) {
   const { request, env } = context
 
@@ -334,5 +377,6 @@ export async function onRequestPost(context) {
 
   if (body.action === 'answer') return handleAnswer(token, body)
   if (body.action === 'acknowledge') return handleAcknowledge(token, body)
+  if (body.action === 'gate') return handleGate(token, body)
   return handleSeed(token, body)
 }

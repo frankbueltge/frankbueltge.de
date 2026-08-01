@@ -32,6 +32,11 @@ import {
 } from '../../../src/lib/zentrale/status'
 import { enginePrs } from '../../../src/lib/zentrale/sitePrs'
 import { checkToken } from '../../../src/lib/zentrale/auth'
+import { isPublicationCandidate, buildGateCandidate } from '../../../src/lib/zentrale/gate'
+import { buildPostLane } from '../../../src/lib/zentrale/post'
+// Der Post-Ausgang ist committete Site-Data — zur Build-Zeit gebundelt ist genau richtig,
+// denn der Ledger ändert sich ohnehin nur per Deploy (kuratierte Datei, kein Live-Zustand).
+import postLedger from '../../../src/data/post/ledger.json'
 
 const API_BASE = 'https://api.github.com'
 const SITE_REPO = 'frankbueltge/frankbueltge.de'
@@ -132,6 +137,35 @@ async function journalSignal(token, repo) {
   }
 }
 
+// Gate-Kandidaten (v2 P2, Governance §1): Projekte, deren SCORE.md-Frontmatter
+// PUBLICATION_CANDIDATE sagt und deren Verzeichnis KEIN PUBLICATION.json trägt — das
+// Manifest IST die Publikation (integrate.ts leitet sie aus nichts anderem ab). Wirft nie;
+// pro Refresh ~1 Listing + 1 Call je Projektverzeichnis (3-Minuten-Cache fängt das ab).
+// Die SLA-Uhr läuft ehrlich als Proxy: letzter Commit an der SCORE.md, so beschriftet.
+async function gateCandidates(token, repo, nowIso) {
+  try {
+    const listing = await ghGet(token, `/repos/frankbueltge/${repo}/contents/projects`)
+    if (!Array.isArray(listing)) return []
+    const out = []
+    for (const d of listing.filter((e) => e.type === 'dir' && !e.name.startsWith('_'))) {
+      const files = await ghGet(token, `/repos/frankbueltge/${repo}/contents/projects/${d.name}`).catch(() => null)
+      if (!Array.isArray(files)) continue
+      const names = files.map((f) => f.name)
+      if (names.includes('PUBLICATION.json')) continue
+      const score = files.find((f) => f.name === 'SCORE.md')
+      if (!score || !score.download_url) continue
+      const scoreMd = await rawText(score.download_url)
+      if (!isPublicationCandidate(names, scoreMd)) continue
+      const commits = await ghGet(token, `/repos/frankbueltge/${repo}/commits?path=projects/${d.name}/SCORE.md&per_page=1`).catch(() => null)
+      const changedAt = Array.isArray(commits) && commits[0]?.commit?.committer?.date ? commits[0].commit.committer.date : null
+      out.push(buildGateCandidate(repo, d.name, scoreMd, changedAt, nowIso))
+    }
+    return out
+  } catch {
+    return []
+  }
+}
+
 // Matcht Workflow-Namen wie "Field integrate" oder "Field-Integrate" case-insensitiv gegen
 // den Kollektiv-Präfix — die Actions-Workflow-Namen im Repo trennen Präfix und "integrate"
 // mit einem Leerzeichen, die Kollektiv-Config selbst mit einem Bindestrich; beides zulassen.
@@ -158,6 +192,9 @@ async function buildPayload(token) {
     { name: 'chronicle:studio', run: () => rawJson('frankbueltge/studio', 'chronicle.json') },
     { name: 'vitalSigns:ulysses', run: () => rawJson('frankbueltge/ulysses', 'pulse/vital-signs.json') },
     { name: 'journal:ulysses', run: () => journalSignal(token, 'ulysses') },
+    // Nur das Atelier kennt heute den Kandidaten-Mechanismus (Protokoll v5 + human gate);
+    // weitere Praxen kommen hier dazu, sobald ihre Verfassungen einen Kandidaten-Status tragen.
+    { name: 'gate:ulysses', run: () => gateCandidates(token, 'ulysses', nowIso) },
   ]
 
   const settled = await Promise.allSettled(tasks.map((t) => t.run()))
@@ -228,6 +265,8 @@ async function buildPayload(token) {
     collectives,
     runs: runsSummary,
     inbox,
+    gate: results['gate:ulysses'] ?? [],
+    post: buildPostLane(postLedger, nowIso),
     // null = Teilfetch ausgefallen (steht dann in errors); [] = ehrlich leer.
     sitePrs: results.sitePrs ? enginePrs(results.sitePrs) : null,
   }
