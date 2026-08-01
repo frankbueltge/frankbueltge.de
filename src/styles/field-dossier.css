@@ -1,0 +1,539 @@
+/* Field — the instrument dossier (2026-08-01). The entrance's centre: one instrument, read.
+   Scoped to .field-surface like every other field skin (ADR 0010 — the field shares no visual
+   grammar with the sheet, the score map or the stage); tokens are the plate's own --fd-*.
+
+   THE FIELD SPEAKS ITS OWN LANGUAGE, and this file is deliberately NOT a recolour of the
+   atelier's dossier. What makes it a lab plate rather than a sheet of paper: a millimetre grid
+   behind the selector and under each dossier's head, square corners and hairlines everywhere,
+   Futura/Century Gothic for the instrument names in the practice's own uppercase headline
+   register, the mono record face for everything that is a reading (dates, verdict words, paths,
+   counts), tabular numerals inherited from .field-surface so a column of dates cannot wobble,
+   and NO glow, no shadow, no gradient — a plate is printed, not lit.
+
+   COLOUR. No new hue is introduced here. The three identity colours are the RECORDED field-review
+   set, already tokenised as --fd-c-stamp / --fd-c-caveat / --fd-c-review in field-plate.css and
+   validated there (PALETTE: field-review — src/lib/dataviz/palette.ts, palette.test.ts re-derives
+   the distances). Their meanings carry over unchanged, which is the whole reason for reusing
+   them: violet is the record's own hand (the instrument in service, the plate's own stamps),
+   ochre is a standing obligation (an encounter's clause still in force), magenta is review and
+   dissent (a claim still contested). A stand that is merely EARLIER gets no colour at all — being
+   older is not an outcome and must not be lit like one.
+
+   READABILITY IS A FLOOR, not an aspiration: nothing a visitor reads is set below 11px, and the
+   two things that carry the record's actual words — what an instrument measures, and each
+   register entry's own summary — are body copy at 15px on a 1.65 measure. The small type that
+   remains is labels, dates and paths, and it stops at 11px. */
+
+/* ————————————————————————————————————————————————— the section ————————————— */
+
+.field-surface .fd-dsr-wrap {
+  margin: 30px 0 34px;
+  padding-top: 14px;
+  border-top: 2px solid var(--fd-ink);
+}
+
+.field-surface .fd-dsr-h2 {
+  font-family: var(--fd-font-ui);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 500;
+  font-size: clamp(22px, 2.6vw, 34px);
+  line-height: 1.1;
+  color: var(--fd-h1-ink);
+  margin: 0 0 10px;
+}
+
+.field-surface .fd-dsr-lead {
+  max-width: 78ch;
+  margin: 0 0 20px;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--fd-ink);
+}
+
+/* ————————————————————————————————————————————————— the selector ———————————— */
+
+/* The one place the millimetre paper comes forward instead of staying behind an SVG: the
+   selector is the instrument drawer, and a drawer in this practice sits on graph paper. */
+.field-surface .fd-dsr-pick {
+  margin: 0 0 26px;
+  padding: 13px 15px 15px;
+  border: 1px solid var(--fd-hairline);
+  background-color: var(--fd-badge-bg);
+  background-image:
+    linear-gradient(to right, var(--fd-grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--fd-grid) 1px, transparent 1px);
+  background-size: 15.2px 15.2px;
+}
+
+.field-surface .fd-dsr-pick-h,
+.field-surface .fd-dsr-group-h {
+  margin: 0 0 8px;
+  font: 11px/1.4 var(--fd-font-record);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fd-ink-2);
+}
+.field-surface .fd-dsr-group + .fd-dsr-group { margin-top: 16px; }
+.field-surface .fd-dsr-group-h span {
+  margin-left: 0.4em;
+  padding: 1px 6px;
+  border: 1px solid var(--fd-hairline);
+  background: var(--fd-surface);
+  letter-spacing: 0;
+}
+
+.field-surface .fd-dsr-pick ul {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 7px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+@media (min-width: 700px) {
+  .field-surface .fd-dsr-pick ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 1080px) {
+  .field-surface .fd-dsr-pick ul { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+/* One tab is a specimen label: the instrument's number in the record face, its name in the
+   practice's own display face, its stand underneath. */
+.field-surface .fd-dsr-tab {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-areas: 'no name' '. stand';
+  align-items: baseline;
+  gap: 2px 9px;
+  height: 100%;
+  padding: 9px 11px 10px;
+  border: 1px solid var(--fd-hairline);
+  border-left: 3px solid var(--fd-hairline);
+  background: var(--fd-surface);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 120ms ease, background-color 120ms ease;
+}
+.field-surface .fd-dsr-tab:hover,
+.field-surface .fd-dsr-tab:focus-visible { border-color: var(--fd-ink-2); }
+.field-surface .fd-dsr-tab:focus-visible { outline: 2px solid var(--fd-stamp); outline-offset: 2px; }
+.field-surface .fd-dsr-tab[aria-selected='true'],
+.field-surface .fd-dsr-tab[aria-current='true'] {
+  border-color: var(--fd-ink);
+  border-left-color: var(--fd-c-stamp);
+  background: var(--fd-badge-bg);
+}
+.field-surface .fd-dsr-tab .t-no {
+  grid-area: no;
+  font: 600 12px/1.3 var(--fd-font-record);
+  letter-spacing: 0.08em;
+  color: var(--fd-ink-2);
+}
+.field-surface .fd-dsr-tab[aria-selected='true'] .t-no,
+.field-surface .fd-dsr-tab[aria-current='true'] .t-no { color: var(--fd-c-stamp); }
+.field-surface .fd-dsr-tab .t-name {
+  grid-area: name;
+  font-family: var(--fd-font-ui);
+  font-size: 14.5px;
+  line-height: 1.3;
+  color: var(--fd-ink);
+}
+.field-surface .fd-dsr-tab .t-stand {
+  grid-area: stand;
+  font: 11px/1.45 var(--fd-font-record);
+  color: var(--fd-ink-2);
+}
+
+/* ————————————————————————————————————————————————— one dossier ————————————— */
+
+.field-surface .fd-dsr {
+  margin: 0 0 26px;
+  scroll-margin-top: 18px;
+}
+.field-surface .fd-dsr:focus { outline: none; }
+.field-surface .fd-dsr:focus-visible { outline: 2px solid var(--fd-stamp); outline-offset: 6px; }
+
+/* Without JavaScript every dossier is visible and they need a rule between them. With it, one is
+   visible at a time and the rule would hang under a single record. */
+.field-surface .fd-dsr + .fd-dsr {
+  padding-top: 26px;
+  border-top: 1px dashed var(--fd-hairline);
+}
+.field-surface .fd-dsr[role='tabpanel'] + .fd-dsr[role='tabpanel'] {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.field-surface .fd-dsr-head {
+  margin: 0 0 18px;
+  padding: 12px 14px 13px;
+  border: 1px solid var(--fd-hairline);
+  border-left: 3px solid var(--fd-ink-2);
+  background: var(--fd-badge-bg);
+}
+.field-surface .fd-dsr-head[data-stand='in-service'] { border-left-color: var(--fd-c-stamp); }
+
+.field-surface .fd-dsr .d-stand {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 3px 10px;
+  margin: 0 0 6px;
+  font: 11.5px/1.5 var(--fd-font-record);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.field-surface .fd-dsr .d-stand b { font-weight: 600; color: var(--fd-ink); }
+.field-surface .fd-dsr-head[data-stand='in-service'] .d-stand b { color: var(--fd-c-stamp); }
+.field-surface .fd-dsr .d-stand .d-hint {
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--fd-ink-2);
+}
+
+.field-surface .fd-dsr .d-title {
+  margin: 0 0 6px;
+  max-width: 34ch;
+  font-family: var(--fd-font-ui);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 500;
+  font-size: clamp(20px, 2.4vw, 30px);
+  line-height: 1.1;
+  color: var(--fd-h1-ink);
+}
+.field-surface .fd-dsr .d-title .d-no {
+  display: block;
+  font: 600 12px/1.4 var(--fd-font-record);
+  letter-spacing: 0.14em;
+  color: var(--fd-ink-2);
+  text-transform: none;
+}
+
+.field-surface .fd-dsr .d-meta {
+  margin: 0;
+  font: 11.5px/1.6 var(--fd-font-record);
+  color: var(--fd-ink-2);
+}
+.field-surface .fd-dsr .d-meta a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+.field-surface .fd-dsr .d-meta a:hover { color: var(--fd-ink); }
+
+/* The register's own verdict, verbatim, where it words one itself. */
+.field-surface .fd-dsr .d-verdict {
+  margin: 8px 0 0;
+  padding-left: 11px;
+  border-left: 2px solid var(--fd-ink-2);
+  max-width: 84ch;
+  font: 12.5px/1.65 var(--fd-font-record);
+  color: var(--fd-ink);
+}
+
+/* ————————————————————————————————————————————————— the blocks —————————————— */
+
+.field-surface .fd-dsr .d-block { margin: 0 0 22px; }
+
+.field-surface .fd-dsr .d-h {
+  margin: 0 0 8px;
+  font: 11px/1.4 var(--fd-font-record);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--fd-ink-2);
+}
+.field-surface .fd-dsr .d-h .d-count {
+  margin-left: 0.4em;
+  padding: 1px 6px;
+  border: 1px solid var(--fd-hairline);
+  letter-spacing: 0;
+}
+
+/* What an instrument measures is the loudest thing in its dossier, because it is what the
+   instrument IS. Body copy, not caption copy. */
+.field-surface .fd-dsr .d-measures {
+  margin: 0;
+  max-width: 84ch;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--fd-ink);
+}
+.field-surface .fd-dsr .d-makeup {
+  margin: 0;
+  max-width: 84ch;
+  font: 12.5px/1.65 var(--fd-font-record);
+  color: var(--fd-ink-2);
+}
+
+/* Every quotation names the file it came from. 11px is this file's floor and it is a path, not
+   prose — but it wraps rather than truncating: a path a reader cannot finish is not a citation. */
+.field-surface .fd-dsr .d-src {
+  margin: 7px 0 0;
+  font: 11px/1.5 var(--fd-font-record);
+  color: var(--fd-ink-2);
+  opacity: 0.85;
+  overflow-wrap: anywhere;
+}
+
+/* An honest gap is a statement ABOUT the record, so it wears italic and the second ink — never
+   the same voice as a quotation FROM it. */
+.field-surface .fd-dsr .d-gap {
+  margin: 0;
+  max-width: 78ch;
+  font: italic 12.5px/1.65 var(--fd-font-record);
+  color: var(--fd-ink-2);
+}
+
+/* ————————————————————————————————————————————————— locked verdicts ————————— */
+
+.field-surface .fd-dsr .d-locked {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+.field-surface .fd-dsr .d-locked li {
+  padding: 10px 12px;
+  border: 1px solid var(--fd-hairline);
+  border-left: 3px solid var(--fd-c-stamp);
+  background: var(--fd-surface);
+}
+.field-surface .fd-dsr .d-locked .l-label {
+  display: block;
+  margin: 0 0 5px;
+  font: 600 13px/1.35 var(--fd-font-record);
+  letter-spacing: 0.06em;
+  color: var(--fd-c-stamp);
+  overflow-wrap: anywhere;
+}
+.field-surface .fd-dsr .d-locked .l-sentence {
+  margin: 0;
+  max-width: 84ch;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--fd-ink);
+}
+
+/* ————————————————————————————————————————————————— the record plate ———————— */
+
+.field-surface .fd-dsr-plate { overflow-x: auto; }
+/* The plates are cropped to their own tape, so their aspect ranges from about 2:1 (a week of
+   record) to about 4:1 (the whole month). The cap keeps the short ones from standing up like a
+   portrait — a plate whose height rivals its width stops reading as a strip chart. A capped plate
+   letterboxes inside its own box rather than stretching; nothing is cropped. */
+.field-surface .fd-dsr-plate svg {
+  width: 100%;
+  min-width: 560px;
+  height: auto;
+  max-height: 380px;
+  display: block;
+}
+.field-surface .fd-dsr .d-platenote {
+  margin: 6px 0 0;
+  font: 11.5px/1.6 var(--fd-font-record);
+  color: var(--fd-ink-2);
+  max-width: 90ch;
+}
+
+/* ————————————————————————————————————————————————— the register ———————————— */
+
+.field-surface .fd-dsr .d-movelist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+.field-surface .fd-dsr .d-move {
+  padding: 12px 14px;
+  border: 1px solid var(--fd-hairline);
+  border-left: 3px solid var(--fd-stamp);
+  background: var(--fd-surface);
+}
+.field-surface .fd-dsr .m-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 10px;
+  margin: 0 0 6px;
+  font: 11px/1.5 var(--fd-font-record);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fd-ink-2);
+}
+.field-surface .fd-dsr .m-head time { font-weight: 600; color: var(--fd-ink); }
+.field-surface .fd-dsr .m-session {
+  padding: 1px 6px;
+  border: 1px solid var(--fd-hairline);
+  letter-spacing: 0.04em;
+}
+.field-surface .fd-dsr .m-move {
+  margin: 0 0 7px;
+  max-width: 84ch;
+  font: 600 13px/1.5 var(--fd-font-record);
+  color: var(--fd-ink);
+}
+.field-surface .fd-dsr .m-verdict {
+  margin: 0 0 8px;
+  padding-left: 11px;
+  border-left: 2px solid var(--fd-c-review);
+  max-width: 84ch;
+  font: 12.5px/1.65 var(--fd-font-record);
+  color: var(--fd-ink);
+}
+/* The register's own summary — the thing this page exists to show. Body copy. */
+.field-surface .fd-dsr .m-summary {
+  margin: 0;
+  max-width: 84ch;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--fd-ink);
+}
+.field-surface .fd-dsr .m-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 18px;
+  margin: 9px 0 0;
+}
+.field-surface .fd-dsr .m-foot .d-src { margin: 0; }
+.field-surface .fd-dsr .m-foot a {
+  font: 11.5px/1.5 var(--fd-font-record);
+  color: var(--fd-ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  white-space: nowrap;
+}
+.field-surface .fd-dsr .m-foot a:hover { color: var(--fd-stamp); }
+
+/* ————————————————————————————————————————————————— the encounter ledger ———— */
+
+.field-surface .fd-dsr .d-ledger {
+  padding: 13px 15px 15px;
+  border: 1px solid var(--fd-hairline);
+  border-left: 3px solid var(--fd-c-caveat);
+  background: var(--fd-badge-bg);
+}
+.field-surface .fd-dsr .d-ledger .g-headline {
+  margin: 0 0 5px;
+  max-width: 70ch;
+  font-family: var(--fd-font-ui);
+  font-size: 16px;
+  line-height: 1.3;
+  color: var(--fd-ink);
+}
+.field-surface .fd-dsr .d-ledger .g-status {
+  margin: 0 0 12px;
+  font: 11.5px/1.6 var(--fd-font-record);
+  color: var(--fd-ink-2);
+}
+.field-surface .fd-dsr .d-sub {
+  margin: 14px 0 7px;
+  font: 11px/1.4 var(--fd-font-record);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fd-ink-2);
+}
+.field-surface .fd-dsr .g-events,
+.field-surface .fd-dsr .g-obligations {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 9px;
+}
+.field-surface .fd-dsr .g-events li,
+.field-surface .fd-dsr .g-obligations li {
+  padding-top: 8px;
+  border-top: 1px solid var(--fd-hairline);
+}
+.field-surface .fd-dsr .g-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 3px 10px;
+  margin: 0 0 4px;
+  font: 11.5px/1.5 var(--fd-font-record);
+  color: var(--fd-ink-2);
+}
+.field-surface .fd-dsr .g-line time,
+.field-surface .fd-dsr .g-line .g-type { font-weight: 600; color: var(--fd-ink); }
+.field-surface .fd-dsr .g-quote {
+  margin: 0;
+  max-width: 84ch;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--fd-ink);
+}
+.field-surface .fd-dsr .g-obligations .g-label {
+  font: 600 12px/1.5 var(--fd-font-record);
+  letter-spacing: 0.05em;
+  color: var(--fd-c-caveat);
+}
+.field-surface .fd-dsr .d-ledger .d-src { opacity: 1; }
+
+/* ————————————————————————————————————————————————— tour, record, doors ————— */
+
+.field-surface .fd-dsr .d-tour {
+  margin: 0 0 22px;
+  padding: 11px 14px;
+  border: 1px solid var(--fd-c-stamp);
+  background: var(--fd-badge-bg);
+}
+.field-surface .fd-dsr .d-tour a {
+  font-family: var(--fd-font-ui);
+  font-size: 14.5px;
+  color: var(--fd-ink);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.field-surface .fd-dsr .d-tour a:hover { color: var(--fd-stamp); }
+
+.field-surface .fd-dsr .d-files {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+}
+.field-surface .fd-dsr .d-files li {
+  font: 11.5px/1.6 var(--fd-font-record);
+  color: var(--fd-ink-2);
+  overflow-wrap: anywhere;
+}
+.field-surface .fd-dsr .d-files b { font-weight: 600; color: var(--fd-ink); }
+
+.field-surface .fd-dsr .d-doors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 22px;
+  margin: 12px 0 0;
+}
+.field-surface .fd-dsr .d-doors a {
+  font: 12px/1.5 var(--fd-font-record);
+  color: var(--fd-ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.field-surface .fd-dsr .d-doors a:hover { color: var(--fd-stamp); }
+
+.field-surface .fd-dsr-prov {
+  margin: 20px 0 0;
+  max-width: 96ch;
+  font: 11.5px/1.7 var(--fd-font-record);
+  color: var(--fd-ink-2);
+}
+
+/* ————————————————————————————————————————————————— small screens ——————————— */
+
+@media (max-width: 560px) {
+  .field-surface .fd-dsr-head,
+  .field-surface .fd-dsr .d-move,
+  .field-surface .fd-dsr .d-ledger { padding-left: 11px; padding-right: 11px; }
+  .field-surface .fd-dsr-plate svg { min-width: 460px; }
+}
+
+/* The plate redraws nothing on hover and the selector only swaps attributes, so there is no
+   motion to suppress — the transitions above are the only ones, and they go. */
+@media (prefers-reduced-motion: reduce) {
+  .field-surface .fd-dsr-tab { transition: none; }
+}

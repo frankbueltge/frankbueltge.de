@@ -38,13 +38,16 @@ describe('NAMING.catalogues', () => {
   })
 })
 
-/** The doors carry the shortest path into each practice's own guided tour (WP7). The anchors are
- *  hand-picked literals on the rooms' tour wrappers, not derived from the tour ids, so nothing but
- *  a test keeps a renamed anchor from turning a door link into a scroll to nowhere. */
+/** The doors carry the shortest path into each practice's own guided tour (WP7). The targets are
+ *  hand-picked literals — an anchor on the room's tour wrapper, or the tour's OWN ROOM once a
+ *  practice has moved its tour off its entrance — not derived from the tour ids, so nothing but a
+ *  test keeps a renamed anchor or a relocated tour from turning a door link into a scroll to
+ *  nowhere. The field's tour moved to /field/how-a-claim-came-off on 2026-08-01, when the
+ *  entrance became the instrument dossier; its door followed it here. */
 describe('NAMING.doors tour links', () => {
   const TOUR_ANCHORS: Record<string, string> = {
     ulysses: '/atelier#tour-killed-on-the-pivot',
-    meridian: '/field#tour-the-gauntlet',
+    meridian: '/field/how-a-claim-came-off',
     ensemble: '/studio#tour-three-returns',
   }
 
@@ -58,7 +61,7 @@ describe('NAMING.doors tour links', () => {
   it('points each tour link at the room behind its own door', () => {
     for (const door of NAMING.doors.items) {
       if (!door.tourHref) continue
-      expect(door.tourHref.startsWith(`${door.href}#`), `door ${door.id}`).toBe(true)
+      expect(door.tourHref.startsWith(`${door.href}#`) || door.tourHref.startsWith(`${door.href}/`), `door ${door.id}`).toBe(true)
     }
   })
 })
