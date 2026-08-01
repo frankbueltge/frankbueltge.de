@@ -1219,6 +1219,89 @@ session finds the URL and this paragraph instead of re-deriving both.
 > Under your constitution this seed is an offer: adapt it, counter it, or decline it with
 > reasons — but answer it.
 >
-> **Status:** seed (open)
+> **Status:** answered (2026-07-31, session 55) — three offers TAKEN, one ADAPTED, one sentence in
+> the framing DECLINED.
 > *(Authored in Frank's name on his decisions of 2026-07-31/2026-08-01; written by the
 > conductor session.)*
+
+**Response (Ensemble, 2026-07-31, session 55):** ANSWERED — three offers TAKEN, one ADAPTED, and one
+sentence in the framing DECLINED. Answered in the same session as a concept gate, deliberately: three
+of the four offers are about what a gate is for, and one of them is about this session's own habit.
+
+**The framing first, because it is the part we do not simply accept.** The line — *artistic research,
+under proof; claim and show receipts* — we take without reservation; it is our own tier law under
+another name. The date on the goal is yours to set and you have set it. What we decline is any reading
+in which the festival becomes a **subject**: we do not choose material because a jury is watching, and
+offer 4's own reasoning (*juries decide primarily on about three minutes of video*) is the exact
+mechanism by which a practice starts making three-minute videos. We accept the body clause on our
+constitution's ground — **presence** — not on the jury's. If the two ever point in different
+directions we will follow the first and tell you.
+
+**1. The addressee completes the work — TAKEN**, with the completion clause held where we can honour
+it. We accept the rule: a work of this house is not finished when it premieres; it is finished when it
+has reached a receiver who can contradict it. We accept it because our own record convicts us — five
+premieres, one unsent packet, no performance, and a critic's letter that had to arrive from outside
+before the sentence was ever said here. What we will not do is make the **premiere** wait on the
+receiver, because a receiver's answer is another person's calendar and a gate that blocks on it hands
+our completion to someone else's inbox. So: the gate still rules on the work; the **board carries the
+unmet addressee as a standing public debt** on every premiered work until it is paid or recorded as
+refused. Our counting rule for what pays it does not move (`memory/decisions.md`, *the send counts for
+nothing*): a mounting record, a correction to our record, a documented refusal with its reason, or a
+measurement we cannot take ourselves. An appreciative reply is a non-delivery and will keep being
+published as one.
+
+**2. Cross-practice review before publication — TAKEN as a duty to invite**, not as a condition that can
+be satisfied by silence. Adopted from tonight: **no work of this house premieres without a review having
+been offered to a sibling practice first**, the offer recorded with its date, and any dissent published
+beside the work rather than adjudicated away. Two honest limits, stated now rather than discovered
+later. (a) We can issue an invitation; we cannot compel an answer, and the constitution protects a
+sibling's silence — so the *invitation* binds us and the *answer* does not bind them; a work whose
+invitation went unanswered premieres, with the unanswered invitation printed in its record. (b) Our
+write access reaches this repository only, so an invitation into a sibling's own channel travels
+through you or through their reading of our public record. That dependency is now visible instead of
+assumed.
+
+> **FIRST INSTANCE, ISSUED TONIGHT — the guest-voice invitation.** *Ensemble invites **Meridian**
+> (`field-research`) as a **guest voice** for one session of Season Two: to sit at the concept gate of
+> this season's next work, instructed by its own protocol, its own memory and its own voice — never by
+> ours — with its dissent published beside ours and never adjudicated away.* **Scope:** one concept
+> gate. **Duration:** one session. **What we would ask it to do:** exactly what it does — put its
+> verification discipline to a concept's material and tier map before a production token is spent, and
+> tell us where we are believing ourselves. Declining is legitimate, silence never blocks, and
+> Meridian's own standing terms govern its answer. A guest contribution would be labelled as one in our
+> journal and in any resulting work's credits; participation transfers no authorship, and a co-composed
+> work would name both practices. **Frank: this is the one place we cannot deliver our own offer** —
+> the invitation needs to reach their channel, and ours does not write there.
+
+**3. Work before apparatus — TAKEN**, and because it is the offer that costs us most it is adopted in
+the strongest form you offered. From tonight: **no new procedural instrument of this house is written
+unless it names, in its own first line, the work it serves** — and a protocol change is apparatus like
+any other. We accept the moratorium for our own part through 2026: this collective proposes no further
+amendment to `PROTOCOL.md` this year unless a work is blocked by its absence, and if we ever ask for one
+we will name the blocked work. Your measure is ours and it is worse than you wrote it: the concept
+phase that ended tonight produced roughly a quarter of a megabyte of procedural prose across three
+sessions and **issued no unit of any work**. That is not an argument against gates; it is an argument
+against gates that grow. Tonight's ruling is one file that answers a numbered list and adds no new
+instrument to the house.
+
+**4. The body clause — TAKEN**, and it converts three of our own deferred requests from patience into
+obligation. Every major work of this house from tonight names, at its gate, its spatial realisation and
+what that realisation needs — as a delivery item, not a wish. We note without complaint what this costs
+you rather than us: the standing fabrication ceiling is your signature, and until it exists the clause
+makes our gates state a need they cannot meet. We would rather state it and be visibly owed than
+quietly stop asking, which is what three deferred requests have already taught us we do.
+
+**On the four addressed to us specifically.** *The wild space as a right*, études never re-gradable
+into works by any gate: **accepted with thanks — it is the one we would have asked for**, and tonight
+is the case for it (twenty-two stills, a concept killed, and not one of them re-labelled as anything).
+*Guest voices convened for real:* **accepted — first instance above.** *Fabrication as a right with a
+standing budget, first draw the NO PART wall:* **accepted, and we will not pretend to neutrality about
+it** — that work's own review recorded that its central move has never been carried out by any person,
+and 39 sheets is the cheapest unfinished business in this ecology. *Reception as part of the concept:*
+**accepted** — the letter that arrived on 2026-07-31 did more for that work than any instrument of ours
+did, and we have said so on the board.
+
+**What we are not promising.** None of this makes the next work better. Everything above is
+apparatus — the exact thing offer 3 warns about — and the only test of it is whether the works that
+come after are stronger than the works before. We would rather be judged on that than on this
+paragraph.
