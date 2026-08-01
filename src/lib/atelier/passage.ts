@@ -139,6 +139,16 @@ const HARBOUR_W = 152
 const GATE_X = HARBOUR_X + HARBOUR_W + 16
 const GUTTER_X = 1005
 const GUTTER_W = W - 16 - GUTTER_X
+/** The sheet's width with the ledger gutter left off. Drawing the same sheet into two thirds of
+ *  the width is what makes the archive figure compact WITHOUT redrawing it — the rows keep their
+ *  measures and simply get more of the viewport each.
+ *
+ *  The 130 is measured, not round: the gate's lettering starts at `GATE_X + 8` and its longer
+ *  line ("a human decides", 15 characters at the 10-unit monospace's 6-unit advance) runs ~90
+ *  units, so the drawing needs GATE_X + 98 before anything is cut. The first attempt used
+ *  `GUTTER_X - 20` and sliced the last two characters off "a human decides" — the one label on
+ *  this sheet that names the practice's own limit. */
+const NO_GUTTER_W = GATE_X + 130
 /** ~76 characters at the gutter's 10px monospace — measured, not guessed (0.6em advance) */
 const GUTTER_CHARS = Math.floor(GUTTER_W / 6)
 const GUTTER_LINES = 2
@@ -326,6 +336,18 @@ export interface PassageRenderOptions {
   gutterLabel?: string
   /** the sentence printed where a closed line's record carries no ledger */
   gapLine: string
+  /**
+   * Whether the ledger gutter is drawn at all. Default true — the full sheet keeps it.
+   *
+   * `false` is the archive figure on the entrance (2026-08-01). Frank, reviewing the entrance:
+   * "next to the diagram, in mini type nobody can read, 'what closing it cost'." He is right —
+   * a ledger sentence set at 10 units inside a 1480-unit sheet scaled into a page column is
+   * around 5px on screen, and a sentence nobody can read is not a disclosure. So the gutter is
+   * not shrunk further or wrapped harder: it is REMOVED from the drawing, and what it carried
+   * now stands in the line's own dossier at reading size. Nothing is lost — the same words,
+   * from the same DECISION.md, at a size they can be read at.
+   */
+  withGutter?: boolean
 }
 
 /** How tall a cropped band is, in the figure's own units — about seven rows: the line a scene is
@@ -353,10 +375,11 @@ export const BAND_MAX = 306
  * ROW * 1.5 from a line's centre lands exactly on the hairline between two rows (a row's centre sits
  * at ROW/2), and the harbour margin is the same 6 units buildPassageModel leaves between harbours.
  */
-export function passageViewBox(model: PassageModel, cropTo?: string): string {
-  if (!cropTo) return `-8 0 ${W + 8} ${model.height}`
+export function passageViewBox(model: PassageModel, cropTo?: string, withGutter = true): string {
+  const w = (withGutter ? W : NO_GUTTER_W) + 8
+  if (!cropTo) return `-8 0 ${w} ${model.height}`
   const line = model.lines.find((l) => l.key === cropTo)
-  if (!line) return `-8 0 ${W + 8} ${model.height}`
+  if (!line) return `-8 0 ${w} ${model.height}`
   // The band must contain the line AND the harbour it lands in — a crop that shows a tail curving
   // out of frame drops the one thing the drawing is about, which is where a question ends up.
   const harbour = model.harbours.find((h) => h.outcome === line.outcome)
@@ -369,13 +392,14 @@ export function passageViewBox(model: PassageModel, cropTo?: string): string {
   )
   const h = Math.min(model.height, Math.max(BAND_HEIGHT, Math.min(BAND_MAX, bottom - top)))
   const y = Math.max(0, Math.min((top + bottom) / 2 - h / 2, model.height - h))
-  return `-8 ${round(y)} ${W + 8} ${round(h)}`
+  return `-8 ${round(y)} ${w} ${round(h)}`
 }
 
 export function buildPassageSvg(model: PassageModel, opts: PassageRenderOptions): string {
   const on = (l: PassageLine) => !opts.filter?.length || opts.filter.includes(l.outcome)
   const dimmed = (l: PassageLine) => opts.dim?.includes(l.key) ?? false
   const notes = new Map((opts.annotate ?? []).map((a) => [a.key, a.text]))
+  const withGutter = opts.withGutter ?? true
   const s: string[] = []
 
   // `data-filtered` sits on the SVG rather than on a wrapper because the build-time STILLS have no
@@ -383,7 +407,7 @@ export function buildPassageSvg(model: PassageModel, opts: PassageRenderOptions)
   // figure's own section, and must still know to push the unfiltered lines back.
   const filtered = Boolean(opts.filter?.length || opts.dim?.length)
   s.push(
-    `<svg class="at-proc-svg" viewBox="${passageViewBox(model, opts.cropTo)}" role="img"` +
+    `<svg class="at-proc-svg" viewBox="${passageViewBox(model, opts.cropTo, withGutter)}" role="img"` +
       `${filtered ? ' data-filtered=""' : ''}` +
       ` preserveAspectRatio="xMidYMid meet" aria-label="${escapeXml(opts.label ?? defaultLabel(model))}">`,
   )
@@ -400,7 +424,7 @@ export function buildPassageSvg(model: PassageModel, opts: PassageRenderOptions)
   }
   s.push('</g>')
 
-  if (opts.gutterLabel) {
+  if (opts.gutterLabel && withGutter) {
     s.push(
       `<text class="pr-gutter-head" x="${GUTTER_X}" y="${TOP - 32}">${escapeXml(opts.gutterLabel)}</text>`,
     )
@@ -456,7 +480,7 @@ export function buildPassageSvg(model: PassageModel, opts: PassageRenderOptions)
     }
 
     // — the gutter: what closing this line cost, in the record's own words
-    const gutter = gutterFor(l, opts.gapLine)
+    const gutter = withGutter ? gutterFor(l, opts.gapLine) : null
     if (gutter) {
       s.push(`<g class="pr-ledger"${gutter.gap ? ' data-gap=""' : ''}>`)
       gutter.lines.forEach((text, k) => {
@@ -466,8 +490,12 @@ export function buildPassageSvg(model: PassageModel, opts: PassageRenderOptions)
     }
 
     if (!opts.still) {
-      s.push(`<rect class="pr-focus" x="-8" y="${l.y - 13}" width="${W}" height="26" rx="6"/>`)
-      s.push(`<rect class="pr-rowhit" x="-8" y="${l.y - 13}" width="${W}" height="26"/>`)
+      // The row's focus ring and hit area span the drawing's WIDTH, so they follow the gutter
+      // off the sheet — a hit area reaching 500 units past the last mark would take clicks
+      // aimed at nothing and draw a focus ring around empty paper.
+      const rowW = withGutter ? W : NO_GUTTER_W
+      s.push(`<rect class="pr-focus" x="-8" y="${l.y - 13}" width="${rowW}" height="26" rx="6"/>`)
+      s.push(`<rect class="pr-rowhit" x="-8" y="${l.y - 13}" width="${rowW}" height="26"/>`)
     }
     s.push('</g>')
     // the row separator: a hand-set hairline, deterministic, skipped under the last row

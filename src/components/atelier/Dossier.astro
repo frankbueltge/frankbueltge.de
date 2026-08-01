@@ -1,0 +1,358 @@
+---
+// src/components/atelier/Dossier.astro — the entrance's centre: one research line, read.
+//
+// WHY IT IS A DOCUMENT AND NOT A FIGURE. Frank, on the version this replaces: "the whole
+// visualization tool makes no sense this way … maybe this visualization just isn't suited, and
+// then we shouldn't cling to it." He is right for this content. What a visitor wants from a
+// running research line is not its shape on a time axis — it is the question, the standing, and
+// what the practice did this week, in the practice's own sentences. So this component draws
+// nothing. Its only colour is the four recorded outcome identities on the stand marker
+// (PALETTE: atelier-outcomes), which the sheet below already uses for the same four states.
+//
+// NO-JS FLOOR, and why it is stacking rather than one page per line. Every dossier is
+// server-rendered, in full, in the same order the selector lists them — so without JavaScript
+// the page is a readable stack of twelve records with the running one first, and the selector is
+// twelve in-page links that work as links. With JavaScript the selector becomes a tab list and
+// shows one dossier at a time. Per-line PAGES were the alternative and were rejected: /atelier
+// is the entrance, and an entrance that answers "what is this practice working on" with a link
+// to somewhere else has not answered it. The whole record already has its room (/atelier/projects).
+//
+// DEEP LINKS. Each dossier's section id is `line-<project id>`, so /atelier#line-2026-07-23-
+// negative-parallax opens that line with or without scripts: without, the browser scrolls to it;
+// with, the script selects it. The selector writes the same hash on click, so any line a visitor
+// is reading can be sent to someone else.
+//
+// House rules this file is built around: no `is:inline` script (the CSP hashes bundled module
+// scripts), no `style=""` (silently dropped — dynamic styling goes through dataviz/runtime's
+// setVars), and every visitor-facing string from src/config/atelier-wording.ts.
+import { ATELIER_NARRATIVE } from '@/config/atelier-wording'
+import { dayLabel } from '@/lib/atelier/passage'
+import { renderInline, type Dossier, type MoveKind } from '@/lib/atelier/dossier'
+import '@/styles/atelier-dossier.css'
+
+export interface Props {
+  /** every line's dossier, running first — src/lib/atelier/dossier-data.ts */
+  dossiers: Dossier[]
+  /** where the relocated guided story lives, linked from the line it is about */
+  storyHref?: string
+}
+
+const { dossiers, storyHref } = Astro.props
+const w = ATELIER_NARRATIVE.dossier
+const harbours = ATELIER_NARRATIVE.passage.harbours
+
+/** The stand's label and hint, reusing the harbour wording the site already approved — a stand
+ *  says what happened and never how to judge it ("closed unfinished", never "failed"). RUNNING
+ *  borrows the OPEN harbour, which is the same state under the same name.
+ *
+ *  The outcome identity a stand WEARS is set in CSS off `data-out` (atelier-dossier.css), from
+ *  the recorded quartet --at-out-* — never as an inline style, which this site's CSP drops. */
+const standWording = (d: Dossier) =>
+  d.stand === 'RUNNING' ? harbours.OPEN : harbours[d.stand]
+
+/** The record's own vocabulary for a move, spelled out for a reader who has not read the
+ *  protocol. Every one of these is the protocol's own term, not a new name for it. `move` is
+ *  the fallback for a heading that names no operation — and it is NOT printed as a chip
+ *  (see below), because "move" beside "tick 21" tells a reader nothing the row does not
+ *  already say, and printing it would imply the record classified something it did not. */
+const KIND_LABEL: Record<MoveKind, string> = {
+  initiation: 'initiation',
+  declaration: 'work-line declaration',
+  expose: 'expose',
+  verify: 'verify',
+  judge: 'judge',
+  home: 'home operation',
+  opening: 'opening operation',
+  compost: 'composted in',
+  correction: 'correction',
+  observation: 'observation',
+  move: 'move',
+}
+
+const running = dossiers.filter((d) => d.status.trim().toUpperCase() === 'ACTIVE')
+const closed = dossiers.filter((d) => d.status.trim().toUpperCase() !== 'ACTIVE')
+const first = dossiers[0]
+
+/** A short label for the selector: the line's own title up to its first dash, which is how
+ *  these titles are written (a name, then the elaboration). Never a rewrite. */
+const shortLabel = (d: Dossier) => d.title.split(/\s+[—–]\s+/)[0]
+---
+
+<section class="at-dsr-wrap" aria-labelledby="dossier-heading" id="dossier">
+  <h2 class="at-dsr-h2" id="dossier-heading">{w.heading}</h2>
+  <p class="at-dsr-lead">{w.lead}</p>
+
+  {/* The selector. Server-rendered as plain links to the sections below, which is exactly what
+      they are without JavaScript; the script upgrades them to a tab list. */}
+  <nav class="at-dsr-pick" data-dsr-pick aria-label={w.pickLabel}>
+    <p class="at-dsr-pick-h">{w.pickLabel}</p>
+    {[
+      { label: w.groups.running, items: running },
+      { label: w.groups.closed, items: closed },
+    ].filter((g) => g.items.length > 0).map((group) => (
+      <div class="at-dsr-group">
+        <p class="at-dsr-group-h">{group.label} <span>{group.items.length}</span></p>
+        <ul>
+          {group.items.map((d) => (
+            <li>
+              <a
+                href={`#line-${d.id}`}
+                class="at-dsr-tab"
+                data-dsr-tab={d.id}
+                data-out={d.stand}
+                aria-current={d.id === first?.id ? 'true' : undefined}
+              >
+                <span class="t-dot" aria-hidden="true"></span>
+                <span class="t-name">{shortLabel(d)}</span>
+                <span class="t-stand">{standWording(d).label}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </nav>
+
+  {dossiers.map((d) => (
+    <article
+      class="at-dsr"
+      id={`line-${d.id}`}
+      data-dsr-panel={d.id}
+      aria-labelledby={`line-${d.id}-title`}
+    >
+      <header class="at-dsr-head">
+        <p class="d-stand" data-out={d.stand}>
+          <span class="d-dot" aria-hidden="true"></span>
+          <b>{standWording(d).label}</b>
+          <span class="d-hint">{standWording(d).hint}</span>
+        </p>
+        <h3 class="d-title" id={`line-${d.id}-title`} set:html={renderInline(d.title)} />
+        <p class="d-meta">
+          {w.metaLine({
+            opened: dayLabel(d.created),
+            moves: d.tickCount,
+            last: dayLabel(d.lastMove),
+            kind: d.kind,
+          })}
+        </p>
+      </header>
+
+      {/* — the question — */}
+      <div class="d-block d-question">
+        <p class="d-h">{w.fields.question}</p>
+        {d.question ? (
+          <>
+            <blockquote class="d-quote" set:html={renderInline(d.question.text)} />
+            <p class="d-src">{d.question.source} · {d.question.label}</p>
+          </>
+        ) : (
+          <p class="d-gap">{w.gaps.question}</p>
+        )}
+      </div>
+
+      {/* — what the record adds where a line is a declared work-line — */}
+      {(d.intention || d.territory || d.programme) && (
+        <div class="d-block d-fields">
+          {([
+            [w.fields.intention, d.intention],
+            [w.fields.territory, d.territory],
+            [w.fields.programme, d.programme],
+          ] as const).filter(([, v]) => v).map(([label, v]) => (
+            <div class="d-field">
+              <p class="d-h">{label}</p>
+              <p class="d-fieldtext" set:html={renderInline(v!.text)} />
+              <p class="d-src">{v!.source} · {v!.label}</p>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* — what closing it cost: at reading size, where a visitor can read it — */}
+      {(d.ledger || d.stand !== 'RUNNING') && (
+        <div class="d-block d-ledger" data-gap={d.ledger ? undefined : ''}>
+          <p class="d-h">{w.fields.ledger}</p>
+          {d.ledger ? (
+            <>
+              <p class="d-ledgertext" set:html={renderInline(d.ledger.full)} />
+              <p class="d-src">{d.ledger.source}</p>
+            </>
+          ) : (
+            <p class="d-gap">
+              {d.stand === 'PUBLICATION_CANDIDATE' ? w.gaps.running : w.gaps.ledger}
+            </p>
+          )}
+        </div>
+      )}
+
+      {/* — the latest moves, verbatim — */}
+      <div class="d-block d-moves">
+        <p class="d-h">{w.fields.moves}</p>
+        {d.moves.length > 0 ? (
+          <>
+            <ol class="d-movelist">
+              {d.moves.map((m) => (
+                <li class="d-move" data-from={m.from}>
+                  <p class="m-head">
+                    <time datetime={m.date}>{dayLabel(m.date)}</time>
+                    {m.kind && m.kind !== 'move' && <span class="m-kind">{KIND_LABEL[m.kind]}</span>}
+                    {m.number !== null && <span class="m-no">tick {m.number}</span>}
+                  </p>
+                  <p class="m-title" set:html={renderInline(m.title)} />
+                  {m.text ? (
+                    <p class="m-text" set:html={renderInline(m.text)} />
+                  ) : (
+                    <p class="d-gap">{w.gaps.lead}</p>
+                  )}
+                  <p class="m-foot">
+                    <span class="d-src">{m.source}</span>
+                    {m.href && <a href={m.href}>{w.journalLink}</a>}
+                  </p>
+                </li>
+              ))}
+            </ol>
+            <p class="d-note">{w.movesNote(d.moves.length, d.tickCount + d.journalCount)}</p>
+          </>
+        ) : (
+          <p class="d-gap">{w.gaps.moves}</p>
+        )}
+      </div>
+
+      {/* — every move, in order: what each did and what it consumed — */}
+      {d.ticks.length > 0 && (
+        <div class="d-block d-ticks">
+          <p class="d-h">{w.fields.ticks} <span class="d-count">{d.ticks.length}</span></p>
+          <ol class="d-ticklist">
+            {d.ticks.map((t) => (
+              <li>
+                <p class="k-head">
+                  <time datetime={t.date}>{dayLabel(t.date)}</time>
+                  {t.kind !== 'move' && <span class="k-kind">{KIND_LABEL[t.kind]}</span>}
+                  {t.number !== null && <span class="k-no">{t.number}</span>}
+                </p>
+                <p class="k-title" set:html={renderInline(t.title)} />
+                {t.budget && (
+                  <p class="k-budget"><span>{w.budgetLabel}</span> <Fragment set:html={renderInline(t.budget)} /></p>
+                )}
+              </li>
+            ))}
+          </ol>
+        </div>
+      )}
+
+      {/* — the story of this line, where one exists (the relocated guided tour) — */}
+      {storyHref && d.id === w.storyOf && (
+        <p class="d-story"><a href={storyHref}>{w.storyLine}</a></p>
+      )}
+
+      {/* — what the record consists of — */}
+      <div class="d-block d-record">
+        <p class="d-h">{w.fields.record}</p>
+        <ul class="d-files">
+          {d.sources.map((s) => (
+            <li><code>{s.label}</code> <span>{s.note}</span></li>
+          ))}
+        </ul>
+        <p class="d-more"><a href={`/atelier/projects#${d.id}`}>{w.recordLink}</a></p>
+      </div>
+    </article>
+  ))}
+
+  <p class="at-dsr-prov">{w.provenance}</p>
+</section>
+
+<script>
+  // Upgrades the server-rendered stack into a tab list. Everything it does is additive: without
+  // this script the page is twelve records under twelve working anchor links, which is the
+  // floor, not a degraded mode.
+  for (const root of document.querySelectorAll<HTMLElement>('[data-dsr-pick]')) {
+    const section = root.closest('section')
+    if (!section) continue
+    const tabs = [...root.querySelectorAll<HTMLAnchorElement>('[data-dsr-tab]')]
+    const panels = new Map(
+      [...section.querySelectorAll<HTMLElement>('[data-dsr-panel]')].map((p) => [
+        p.dataset.dsrPanel ?? '',
+        p,
+      ]),
+    )
+    if (tabs.length === 0 || panels.size === 0) continue
+
+    // Roles are set HERE and not in the markup: without this script these are links to
+    // sections, and calling a link a tab in the accessibility tree when nothing tabs would be
+    // a lie told to exactly the visitors who can least afford one.
+    root.setAttribute('role', 'tablist')
+    for (const tab of tabs) {
+      tab.setAttribute('role', 'tab')
+      tab.removeAttribute('aria-current')
+    }
+    for (const [id, panel] of panels) {
+      panel.setAttribute('role', 'tabpanel')
+      panel.setAttribute('tabindex', '0')
+      const tab = tabs.find((t) => t.dataset.dsrTab === id)
+      if (tab) {
+        if (!tab.id) tab.id = `dsr-tab-${id}`
+        panel.setAttribute('aria-labelledby', tab.id)
+      }
+    }
+
+    let current = ''
+    const select = (id: string, focusPanel = false) => {
+      if (!panels.has(id) || id === current) return
+      current = id
+      for (const [key, panel] of panels) {
+        const on = key === id
+        panel.hidden = !on
+        panel.setAttribute('aria-hidden', on ? 'false' : 'true')
+      }
+      for (const tab of tabs) {
+        const on = tab.dataset.dsrTab === id
+        tab.setAttribute('aria-selected', on ? 'true' : 'false')
+        // Roving tabindex: one stop for the whole selector, arrows move inside it.
+        tab.tabIndex = on ? 0 : -1
+      }
+      if (focusPanel) panels.get(id)?.focus()
+    }
+
+    const fromHash = () => {
+      const id = location.hash.replace(/^#line-/, '')
+      return panels.has(id) ? id : ''
+    }
+
+    select(fromHash() || tabs[0].dataset.dsrTab || '')
+
+    for (const [i, tab] of tabs.entries()) {
+      tab.addEventListener('click', (ev) => {
+        ev.preventDefault()
+        const id = tab.dataset.dsrTab ?? ''
+        select(id)
+        // Written, not navigated: replaceState keeps the link sendable without adding a history
+        // entry per click and without the jump a real hash change would cause.
+        history.replaceState(null, '', `#line-${id}`)
+      })
+      tab.addEventListener('keydown', (ev) => {
+        const delta =
+          ev.key === 'ArrowRight' || ev.key === 'ArrowDown'
+            ? 1
+            : ev.key === 'ArrowLeft' || ev.key === 'ArrowUp'
+              ? -1
+              : ev.key === 'Home'
+                ? -i
+                : ev.key === 'End'
+                  ? tabs.length - 1 - i
+                  : 0
+        if (delta === 0) return
+        ev.preventDefault()
+        const next = tabs[(i + delta + tabs.length) % tabs.length]
+        next.focus()
+        const id = next.dataset.dsrTab ?? ''
+        select(id)
+        history.replaceState(null, '', `#line-${id}`)
+      })
+    }
+
+    // A hash arriving from outside (a pasted deep link, a back button) selects its line.
+    window.addEventListener('hashchange', () => {
+      const id = fromHash()
+      if (id) select(id, true)
+    })
+  }
+</script>
