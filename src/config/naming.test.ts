@@ -40,28 +40,30 @@ describe('NAMING.catalogues', () => {
 
 /** The doors carry the shortest path into each practice's own guided tour (WP7). The targets are
  *  hand-picked literals — an anchor on the room's tour wrapper, or the tour's OWN ROOM once a
- *  practice has moved its tour off its entrance — not derived from the tour ids, so nothing but a
- *  test keeps a renamed anchor or a relocated tour from turning a door link into a scroll to
- *  nowhere. The field's tour moved to /field/how-a-claim-came-off on 2026-08-01, when the
- *  entrance became the instrument dossier; its door followed it here. */
+ *  practice has moved its tour off its entrance (the atelier's moved in the dossier rebuild,
+ *  the field's followed on 2026-08-01 when its entrance became the instrument dossier) — not
+ *  derived from the tour ids, so nothing but a test keeps a renamed anchor or a relocated tour
+ *  from turning a door link into a scroll to nowhere. */
 describe('NAMING.doors tour links', () => {
-  const TOUR_ANCHORS: Record<string, string> = {
-    ulysses: '/atelier#tour-killed-on-the-pivot',
+  const TOUR_TARGETS: Record<string, string> = {
+    ulysses: '/atelier/how-a-line-ends',
     meridian: '/field/how-a-claim-came-off',
     ensemble: '/studio#tour-three-returns',
   }
 
   it('gives every practice door its tour, and The Middle none', () => {
     for (const door of NAMING.doors.items) {
-      expect(door.tourHref, `door ${door.id}`).toBe(TOUR_ANCHORS[door.id])
+      expect(door.tourHref, `door ${door.id}`).toBe(TOUR_TARGETS[door.id])
     }
     expect(NAMING.doors.items.find((d) => d.id === 'conductor')?.tourHref).toBeUndefined()
   })
 
-  it('points each tour link at the room behind its own door', () => {
+  it('points each tour link behind its own door (an anchor on the hub, or a room under it)', () => {
     for (const door of NAMING.doors.items) {
       if (!door.tourHref) continue
-      expect(door.tourHref.startsWith(`${door.href}#`) || door.tourHref.startsWith(`${door.href}/`), `door ${door.id}`).toBe(true)
+      const behindOwnDoor =
+        door.tourHref.startsWith(`${door.href}#`) || door.tourHref.startsWith(`${door.href}/`)
+      expect(behindOwnDoor, `door ${door.id}`).toBe(true)
     }
   })
 })

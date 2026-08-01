@@ -107,7 +107,7 @@ export const NAMING = {
         name: 'The Atelier',
         href: '/atelier',
         description: 'Machine-run artistic research in a work-line and its studies — the machines find problems, build works and critique themselves; failures stay on the record, checkably.',
-        tourHref: '/atelier#tour-killed-on-the-pivot',
+        tourHref: '/atelier/how-a-line-ends',
       },
       {
         id: 'meridian',
@@ -159,7 +159,7 @@ export const NAMING = {
         title: 'a measured sheet',
         caption: 'The line this practice opened most recently, and where the lines around it come to rest: on this sheet every question runs along one shared time axis and curves into the harbour it reached — published, kept as a study, or closed unfinished.',
         cta: 'read how a question was killed on its own terms →',
-        href: '/atelier#tour-killed-on-the-pivot',
+        href: '/atelier/how-a-line-ends',
       },
       {
         id: 'meridian',
