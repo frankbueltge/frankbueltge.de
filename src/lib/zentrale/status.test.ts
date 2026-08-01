@@ -263,7 +263,10 @@ describe('buildInbox', () => {
     expect(result[0].excerpt).toHaveLength(650)
   })
 
-  it('eine wirklich lange Anfrage wird gedeckelt — die Grenze bleibt, sie liegt nur weit genug', () => {
+  // 15s instead of the 5s default: the 20k-char regex pass is fast in isolation (~3.6s)
+  // but occasionally exceeds 5s under full-suite parallel load — and a flaky timeout here
+  // blocks the practices' nightly publishing gates, which run this suite 4x/day.
+  it('eine wirklich lange Anfrage wird gedeckelt — die Grenze bleibt, sie liegt nur weit genug', { timeout: 15_000 }, () => {
     const issues = [
       {
         number: 9,
