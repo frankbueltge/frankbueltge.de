@@ -13,11 +13,7 @@
 // ADR 0010: das Atelier teilt keine visuelle Grammatik mit Partitur (Middle), Messprotokoll
 // (Field) oder Bühne (Studio) — auch dieses Wörterbuch ist bewusst ein eigenes.
 
-export interface RailItem {
-  label: string
-  href: string
-  hint: string
-}
+import type { RailItem, OrientationItem } from '@/lib/practice-shell'
 
 export const ATELIER_GRAMMAR = {
   approval: 'approved' as const, // Design-Session 2026-07-15, Chip „wording approved“
@@ -159,6 +155,156 @@ export const ATELIER_NARRATIVE = {
       foundationLink: 'the ground it stands on →',
     },
   },
+  /** The Passage (WP6a, 2026-08-01) — the atelier's signature figure: what happens to a question
+   * here, and what closing one costs. Every string a visitor reads on that figure lives HERE;
+   * its SUBSTANCE never does. The line prose is quoted from the records by
+   * src/lib/atelier/lineText.ts, and the closing ledger beside each closed line is quoted from
+   * that line's own DECISION.md by src/lib/atelier/ledger.ts — this block only frames them.
+   *
+   * The harbour labels and hints below are MOVED VERBATIM out of ProcessFigure.astro's own
+   * `HAFEN` table (2026-07-30, already on the site); not one word is new. They say what happened,
+   * never how to judge it — "closed unfinished", never "failed" — because the protocol ranks
+   * closing and continuing equally ("closing costs what continuing costs"). */
+  passage: {
+    heading: 'What the practice is working on',
+    lead:
+      'A line begins as a question, is worked in moves, and ends in one of four ways — as a work, ' +
+      'as a candidate waiting for a human decision, as a study kept for later, or closed on ' +
+      'purpose. Pick one below to read it; beside each closed line stands what closing it cost, ' +
+      'in the practice’s own words.',
+    harbours: {
+      PUBLISH: { label: 'published', hint: 'through the gate — a work on the site' },
+      PUBLICATION_CANDIDATE: {
+        label: 'at the gate',
+        hint: 'proposed as a work; the publication decision is human',
+      },
+      ARCHIVE_AS_STUDY: {
+        label: 'kept as study',
+        hint: 'not published, not discarded — it feeds later lines',
+      },
+      KILL: { label: 'closed unfinished', hint: 'ended on purpose; closing costs what continuing costs' },
+      OPEN: { label: 'in progress', hint: 'no verdict yet' },
+    },
+    legendLabel: 'what the sheet is showing — click a line to read it, or filter here',
+    hint:
+      'Hover or tab to a line for a glance; click it to hold its record open above and step ' +
+      'through every line with ← and →.',
+    gutterLabel: 'WHAT CLOSING IT COST',
+    gateLabel: ['THE GATE', 'a human decides'] as [string, string],
+    /** The honest gap. Printed where a line is CLOSED and its record states no closing cost — an
+     * invented zero would be a lie in the archive. A line that is still running gets nothing at
+     * all: it has not closed, so it has no closing cost to be missing. */
+    gapLine: 'the record carries no closing ledger for this line',
+    openLine: 'still running — not closed, so nothing closed to account for',
+    cardMovesHeading: 'its last moves',
+    cardMore: 'read the full record →',
+    panelLedgerHeading: 'what closing it cost',
+    tableSummary: 'every line as a table — with what closing it cost, verbatim',
+    tableCaption:
+      'Every research line in the order it was opened: when it opened, how long it ran, how many ' +
+      'moves it took, which parts of its record exist, where it ended, and the closing ledger from ' +
+      'its own decision, verbatim.',
+    provenancePrefix: 'Derived at build time from:',
+    provenance: [
+      'src/content/atelier/projects/*/SCORE.md — what a line is about, and when it opened',
+      'src/content/atelier/projects/*/DECISION.md — why it ended, and what closing it cost',
+      'src/content/atelier/journal/*.md — its moves, dated by the entry that recorded them',
+    ],
+    /** The card's own first line. A function, not a template, because it carries one honesty rule
+     * that used to live twice (once server-side, once in the client script, with a comment warning
+     * that both had to be changed together): a line that opened and ended on the same day did not
+     * do "0 days · 0 moves" of work — it had no journal beat of its own. So zero duration reads
+     * "same day", and a zero move count is not stated at all. One implementation now; the figure
+     * computes this at build time and the client only ever re-prints it. */
+    kickerLine(input: {
+      harbour: string
+      opened: string
+      days: number
+      moves: number
+      active: boolean
+    }): string {
+      const parts = [
+        input.harbour,
+        `opened ${input.opened}`,
+        input.days === 0 ? 'same day' : `${input.days} day${input.days === 1 ? '' : 's'}`,
+      ]
+      if (input.moves > 0) parts.push(`${input.moves} move${input.moves === 1 ? '' : 's'}`)
+      if (input.active) parts.push('still running')
+      return parts.join(' · ')
+    },
+    /** "4 of 12 in the passage" — the stepper's own position line. */
+    positionLine(at: number, of: number): string {
+      return `${at} of ${of} in the passage`
+    },
+    /** The one thing on this figure that is NOT to scale, said out loud. */
+    scaleNote:
+      'the time axis is one linear scale for every line; the harbour column is not — a harbour’s ' +
+      'height is its share of the lines',
+  },
+  /** The guided tour of the retraction-signature line (WP6a, 2026-08-01). ONLY the frame is here.
+   * Every QUOTE the tour makes a claim with lives in src/lib/tour/atelier-pivot.ts beside the
+   * repo-relative path it was taken from, and src/lib/tour/verify.ts fails the build if one of
+   * them is not a byte-exact substring of that file. So: no number and no claim in the copy
+   * below — the substance is quoted, always. */
+  tour: {
+    title: 'Killed on the pivot fact — and the ledger closes at two ticks',
+    standfirst:
+      'A question that wrote down, in advance, the single finding that would end it — and then ' +
+      'found that finding inside its own instrument. Scroll: the sheet below follows the record.',
+    scenes: {
+      condition: {
+        kicker: 'scene one · the kill condition',
+        heading: 'The question was written with its own ending in it',
+        lead:
+          'Before any evidence was gathered, the score named the one finding that would close the ' +
+          'line, and named where to look for it first.',
+      },
+      method: {
+        kicker: 'scene two · the method fires',
+        heading: 'Re-read the primary at the raw register',
+        lead:
+          'What settled it was not a better argument. It was reading the machine record itself ' +
+          'instead of a tool’s summary of it.',
+      },
+      clauseA: {
+        kicker: 'scene three · clause (a)',
+        heading: 'The signature the project was built on was never there',
+        lead:
+          'The pivot fact came from the practice’s own reading apparatus, not from the world it ' +
+          'claimed to describe.',
+      },
+      clauseB: {
+        kicker: 'scene four · clause (b)',
+        heading: 'And the missing slot was not missing',
+        lead:
+          'The other half of the kill condition fell on its own evidence: the open register names ' +
+          'the responsible party by role. Let it speak.',
+      },
+      cost: {
+        kicker: 'scene five · what it delivered, and what it cost',
+        heading: 'The error was in the instrument, and the spend stayed small',
+        lead:
+          'Nothing here is a failure mark. Closing costs what continuing costs — and the record ' +
+          'says exactly what this closing cost.',
+      },
+      scope: {
+        kicker: 'scene six · the discipline of scope',
+        heading: 'One live tension, recorded and left',
+        lead:
+          'A finding this line could have chased was written down and not pursued. With that the ' +
+          'filter lifts, and every harbour reads at once again.',
+      },
+    },
+    /** the call-outs each scene letters onto the sheet, at the line it names */
+    notes: {
+      condition: 'the kill condition, written first',
+      method: 'the raw re-read',
+      clauseA: 'clause (a) falls',
+      clauseB: 'clause (b) falls',
+      cost: 'closed here',
+      scope: 'recorded and left',
+    },
+  },
   rooms: {
     sheets: 'All sheets, one per thread — each a reading the practice has drawn across its works.',
     journal: 'The nightly protocol archive (28 June – 18 July 2026) as a session register — one line per page.',
@@ -175,6 +321,52 @@ export const ATELIER_NARRATIVE = {
     cockpitArchiveNote: 'the atlas now lives in material',
     cockpitArchived:
       'Archived surface (ADR 0008): the cockpit is kept as a dated artefact, no longer the entrance.',
+  },
+  /** The four first-visitor questions (Frank, 2026-07-31: „was passiert hier eigentlich,
+   * auf welcher Basis, was ist bisher passiert und wie ist der aktuelle Stand“), moved here
+   * from the page's own `orientierung` const (WP2 — practice-shell) so OrientationList.astro
+   * can render it. A function, not a static array: every number stays derived at build time
+   * from committed mirrors, none maintained by hand. */
+  orientation(input: {
+    protocolVersion: string
+    projectsOpened: number
+    archivedAsStudy: number
+    killed: number
+    published: number
+    worksCount: number
+    running?: { title?: string; proposedAsWork: boolean }
+  }): OrientationItem[] {
+    return [
+      {
+        question: 'what happens here',
+        answer:
+          'A machine practice opens a question of its own, works it in moves it records, and either proposes it as a work or closes it. Nothing becomes public without a human publication decision.',
+        href: '/atelier/foundation',
+        moreLabel: 'the operating model',
+      },
+      {
+        question: 'on what basis',
+        answer: `Its constitution is Protocol v${input.protocolVersion}, derived from the practice's own published process model “Cartography, not Tracing” (24 July 2026) — which rests on an older research foundation whose toolbox of methodological strategies it did not replace.`,
+        href: '/atelier/protocol',
+        moreLabel: 'the constitution',
+      },
+      {
+        question: 'what has happened',
+        answer: `${input.projectsOpened} lines opened since 18 July, ${input.archivedAsStudy} kept as studies, ${input.killed} closed on purpose, ${input.published} published — beside ${input.worksCount} works from the nightly phase before.`,
+        href: '/atelier/projects',
+        moreLabel: 'the research log',
+      },
+      {
+        question: 'where it stands',
+        answer: input.running
+          ? `One work-line is running: “${input.running.title}”${input.running.proposedAsWork ? ' — proposed as a work and waiting at the human gate.' : '.'}`
+          : 'No line is open at the moment.',
+        // WP6a: the process figure lost its own heading id when it became the tour's pinned sheet;
+        // the anchor now points at the tour that drives it, which is where "read it below" leads.
+        href: '#tour-killed-on-the-pivot',
+        moreLabel: 'read it below',
+      },
+    ]
   },
 } as const
 
