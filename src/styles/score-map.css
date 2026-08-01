@@ -80,7 +80,10 @@
 }
 .score-status b { color: var(--color-fg); font-weight: 600; }
 
-.score-figure { margin: 26px 0 8px; }
+/* position: relative (WP4 port) — the containing block dataviz/readout.ts's createReadout
+   places the readout within (its house rule 1: clamp to the FIGURE's own box, never the
+   viewport or a scroll container). */
+.score-figure { margin: 26px 0 8px; position: relative; }
 .score-svg svg#score { width: 100%; height: auto; display: block; }
 
 /* ---- grammar strokes ----
@@ -210,18 +213,18 @@
 .score-all-link { margin-top: 1.5rem; }
 .score-all-link a { font-size: 0.875rem; color: var(--color-fg-muted); text-decoration: underline; }
 
-.score-tip {
-  position: absolute;
-  max-width: 360px;
+/* WP4 port: #score-tip is now dataviz/Readout.astro's shared `.dv-readout` shell —
+   structure (position/clamping/pointer-events/z-index) lives there, only the score's own
+   skin (background/border/type/shadow) stays here, scoped to .score-map so the same
+   `.dv-readout` class used by other practices' figures never picks these colors up. */
+.score-map .dv-readout {
   background: var(--score-tip-bg);
   color: var(--color-fg);
   border: 1px solid var(--score-hairline);
   padding: 10px 12px;
   font: 12.5px var(--font-mono);
   line-height: 1.45;
-  pointer-events: none;
   box-shadow: 0 6px 24px rgb(0 0 0 / 0.25);
-  z-index: 40;
 }
-.score-tip hr { border: none; border-top: 1px solid var(--score-hairline); margin: 6px 0; }
-.score-tip-id { opacity: 0.7; }
+.score-map .dv-readout hr { border: none; border-top: 1px solid var(--score-hairline); margin: 6px 0; }
+.score-map .dv-readout .score-tip-id { opacity: 0.7; }
