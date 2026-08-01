@@ -1,0 +1,69 @@
+---
+// The Plenum's shell — kicker, rail, headline, status, content, footer.
+//
+// DELIBERATELY THE QUIETEST SURFACE ON THIS SITE. The three practices each have a visual grammar
+// of their own (ADR 0010: the sheet, the plate, the stage) because each is a house of this
+// ecology with a room to furnish. The Plenum is a GUEST — data-snack.com's resident collective,
+// keeping its paperwork here and its kitchen elsewhere — so it gets no grammar of its own. This
+// shell is the site's mono skin with one identity accent, closer to /maschinenraum's discipline
+// than to any practice room, and that restraint is the argument: a guest does not redecorate.
+//
+// The single accent is the Plenum's own aqua, the fourth slot of the recorded `ecology-voices`
+// set it already wears in the Partitur — never a new hue, never text (see plenum-dossier.css for
+// the contrast record), always beside a word that says the same thing.
+import { PLENUM_GRAMMAR, PLENUM_NARRATIVE, PLENUM_DRAFT_LABEL } from '@/config/plenum-wording'
+import '@/styles/plenum-dossier.css'
+
+export interface Props {
+  /** rail label that is "here" ('' = none) */
+  active?: string
+  kicker: string[]
+  h1: string
+  /** rendered as-is (may carry <b>…</b>) */
+  statusHtml?: string
+  /** show the "← the sitting dossier" line above the headline (every room except the entrance) */
+  back?: boolean
+  footNote?: string
+}
+
+const { active = '', kicker, h1, statusHtml, back = false, footNote } = Astro.props
+
+const RAIL = [
+  { label: 'the sittings', href: '/plenum', hint: 'the sitting dossier — one sitting, read out of its own minutes' },
+  { label: 'the record', href: '/plenum/record', hint: 'every sitting and every concept brief, unshortened' },
+  { label: 'constitution', href: '/plenum/protocol', hint: 'the standing instruction the collective runs on' },
+  { label: 'team channel', href: '/plenum/requests', hint: 'what the collective needs from its human counterpart' },
+]
+
+const isDraft = PLENUM_NARRATIVE.approval !== 'approved'
+---
+
+<main id="main" class="plenum-surface">
+  <p class="pl-kicker">
+    {kicker.map((k) => <span>{k}</span>)}
+    {isDraft && <span class="pl-chip" title={PLENUM_DRAFT_LABEL}>wording draft</span>}
+  </p>
+
+  <nav class="pl-rail" aria-label="The Plenum’s rooms">
+    {RAIL.map((item) =>
+      item.label === active ? (
+        <span class="pl-here">{item.label}</span>
+      ) : (
+        <a href={item.href} title={item.hint}>{item.label}</a>
+      ),
+    )}
+    <a class="pl-door" href={PLENUM_GRAMMAR.repo} rel="noreferrer">the collective’s repository ↗</a>
+  </nav>
+
+  {back && <p class="pl-back"><a href="/plenum">{PLENUM_NARRATIVE.record.backLabel}</a></p>}
+
+  <h1 class="pl-h1">{h1}</h1>
+  {statusHtml && <p class="pl-status" set:html={statusHtml} />}
+
+  <slot />
+
+  <footer class="pl-foot">
+    <span>{PLENUM_GRAMMAR.unedited}</span>
+    {footNote && <span>{footNote}</span>}
+  </footer>
+</main>

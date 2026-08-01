@@ -1,0 +1,615 @@
+/* Plenum — the sitting dossier and the guest room around it (2026-08-02).
+   Scoped entirely to .plenum-surface; nothing here touches the site skin.
+
+   THE DESIGN ARGUMENT IS RESTRAINT. The three practices each speak their own visual language
+   (ADR 0010 — atelier-sheet.css, field-plate.css, studio-stage.css), because each is a house of
+   this ecology. The Plenum is a GUEST: data-snack.com's resident collective, keeping its minutes
+   here and its kitchen elsewhere. So this file introduces no grammar of its own — it is the
+   site's mono skin (--color-* tokens, the shared sans and mono faces, square hairlines) with ONE
+   identity accent, and it stays deliberately closer to /maschinenraum's discipline than to any
+   practice room. A guest does not redecorate the house it is staying in.
+
+   COLOUR — one hue, and it is not new. The accent is the Plenum's own aqua, the FOURTH SLOT of
+   the recorded `ecology-voices` set (src/lib/dataviz/palette.ts, validated 2026-07-31, all six
+   checks pass per mode/surface). It is the same hue the Plenum already wears on the Partitur and
+   the score map, so the guest voice is the same colour everywhere on this site.
+
+   THE RECORDED WARN AND ITS RELIEF. That set carries one WARN: #1baf7a on the light surface
+   reaches 2.65:1, which is below text contrast. The relief recorded with it is "direct labels on
+   doors/lanes + table renditions" — so on this surface the aqua is NEVER TEXT and never the sole
+   carrier of a state. It appears only as
+     · a 2px rule down the left edge of the current sitting's panel and the selected tab,
+     · a small square marker beside the word "newest sitting",
+     · the left rule of the house-boundary block,
+   and in every one of those places a word says the same thing right next to it. Remove the
+   colour entirely and the page loses nothing but decoration — which is the test the relief has
+   to pass.
+
+   READABILITY IS A FLOOR: nothing a visitor reads is set below 11px, and everything that carries
+   the collective's own words — the cast list, the agenda, the outcomes, the goods-inward
+   inspection — is body copy at 15px on a 1.65 measure. */
+
+/* ————————————————————————————————————————————————— the surface ————————————— */
+
+.plenum-surface {
+  --pl-line: var(--color-line);
+  --pl-ink: var(--color-fg);
+  --pl-ink-2: var(--color-fg-muted);
+  --pl-ink-3: var(--color-fg-faint);
+  --pl-panel: var(--color-panel);
+  --pl-panel-2: var(--color-panel-2);
+  /* PALETTE: ecology-voices (src/lib/dataviz/palette.ts) — the Plenum's own slot, dark step.
+     Never text on this surface; see the WARN/relief record at the head of this file. */
+  --pl-c-plenum: #199e70;
+
+  max-width: 62rem;
+  margin: 0 auto;
+  padding: 3.5rem 1.25rem 6rem;
+  font-family: var(--font-sans);
+  color: var(--pl-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+:root[data-theme='light'] .plenum-surface {
+  /* PALETTE: ecology-voices — light step, its own value, never a flip of the dark one. */
+  --pl-c-plenum: #1baf7a;
+}
+
+@media (min-width: 640px) {
+  .plenum-surface { padding-left: 2rem; padding-right: 2rem; }
+}
+
+/* ————————————————————————————————————————————————— the head ———————————————— */
+
+.plenum-surface .pl-kicker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--pl-ink-3);
+  margin: 0;
+}
+
+.plenum-surface .pl-chip {
+  border: 1px solid var(--pl-line);
+  padding: 0 0.4em;
+  letter-spacing: 0.08em;
+  color: var(--pl-ink-2);
+}
+
+.plenum-surface .pl-rail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.1rem;
+  margin: 1rem 0 0;
+  padding: 0.55rem 0;
+  border-top: 1px solid var(--pl-line);
+  border-bottom: 1px solid var(--pl-line);
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.plenum-surface .pl-rail a { color: var(--pl-ink-2); text-decoration: none; }
+.plenum-surface .pl-rail a:hover,
+.plenum-surface .pl-rail a:focus-visible { color: var(--pl-ink); text-decoration: underline; }
+.plenum-surface .pl-here { color: var(--pl-ink); font-weight: 600; }
+.plenum-surface .pl-door { margin-left: auto; color: var(--pl-ink-3); }
+
+.plenum-surface .pl-back {
+  margin: 0.9rem 0 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+.plenum-surface .pl-back a { color: var(--pl-ink-2); }
+
+.plenum-surface .pl-h1 {
+  margin: 1.4rem 0 0;
+  font-size: clamp(1.7rem, 4vw, 2.6rem);
+  line-height: 1.12;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.plenum-surface .pl-status {
+  margin: 0.6rem 0 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--pl-ink-2);
+}
+.plenum-surface .pl-status b { color: var(--pl-ink); font-weight: 600; }
+
+.plenum-surface .pl-lede {
+  margin: 1.25rem 0 0;
+  max-width: 74ch;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--pl-ink-2);
+}
+
+.plenum-surface .pl-foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.5rem;
+  margin-top: 3.5rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--pl-line);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--pl-ink-3);
+}
+
+/* ————————————————————————————————————————————————— orientation ————————————— */
+/* The four first-visitor questions, in the shared OrientationList structure (skin-free by
+   design — each surface skins .pr-orient itself). Here: a plain two-column list, no rules,
+   no colour. */
+
+.plenum-surface .pr-orient {
+  margin: 2rem 0 0;
+  display: grid;
+  gap: 0.9rem;
+}
+@media (min-width: 720px) {
+  .plenum-surface .pr-orient { grid-template-columns: 1fr 1fr; gap: 1.1rem 2rem; }
+}
+.plenum-surface .pr-orient-item {
+  border-top: 1px solid var(--pl-line);
+  padding-top: 0.7rem;
+}
+.plenum-surface .pr-orient-q {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--pl-ink-3);
+  margin: 0 0 0.35rem;
+}
+.plenum-surface .pr-orient-a {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--pl-ink-2);
+}
+.plenum-surface .pr-orient-more { color: var(--pl-ink); white-space: nowrap; }
+
+/* ————————————————————————————————————————————————— the house boundary —————— */
+/* The honest form of "the work of this collective is not on this page". It is a block, not a
+   footnote, because the claim it prevents — that this site holds the Plenum's output — is the
+   one a visitor would otherwise make on their own. */
+
+.plenum-surface .pl-house {
+  margin: 2.5rem 0 0;
+  padding: 1.1rem 1.2rem 1.2rem;
+  background: var(--pl-panel);
+  border: 1px solid var(--pl-line);
+  border-left: 2px solid var(--pl-c-plenum);
+}
+
+.plenum-surface .pl-house-h {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.plenum-surface .pl-house-body {
+  margin: 0.6rem 0 0;
+  max-width: 74ch;
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--pl-ink-2);
+}
+
+.plenum-surface .pl-house-door {
+  margin: 1rem 0 0;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--pl-line);
+}
+.plenum-surface .pl-house-door a {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--pl-ink);
+}
+.plenum-surface .pl-house-desc {
+  margin: 0.35rem 0 0;
+  max-width: 70ch;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--pl-ink-3);
+}
+
+.plenum-surface .pl-house-lane {
+  margin: 0.9rem 0 0;
+  max-width: 74ch;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--pl-ink-3);
+}
+.plenum-surface .pl-house-lane a { color: var(--pl-ink-2); }
+
+/* ————————————————————————————————————————————————— the dossier ————————————— */
+
+.plenum-surface .pl-dsr-wrap {
+  margin: 3rem 0 0;
+  padding-top: 1rem;
+  border-top: 2px solid var(--pl-ink);
+}
+
+.plenum-surface .pl-dsr-h2 {
+  margin: 0 0 0.5rem;
+  font-size: clamp(1.35rem, 2.6vw, 1.9rem);
+  line-height: 1.15;
+  font-weight: 700;
+}
+
+.plenum-surface .pl-dsr-lead {
+  margin: 0 0 1.4rem;
+  max-width: 76ch;
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--pl-ink-2);
+}
+
+/* ——— the selector: server-rendered as links, upgraded to a tab list ——— */
+
+.plenum-surface .pl-dsr-pick {
+  margin: 0 0 1.8rem;
+  border: 1px solid var(--pl-line);
+  background: var(--pl-panel);
+  padding: 0.85rem 0.9rem 0.95rem;
+}
+
+.plenum-surface .pl-dsr-pick-h {
+  margin: 0 0 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--pl-ink-3);
+}
+
+.plenum-surface .pl-dsr-group + .pl-dsr-group { margin-top: 0.85rem; }
+
+.plenum-surface .pl-dsr-group-h {
+  margin: 0 0 0.45rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--pl-ink-2);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.plenum-surface .pl-dsr-group-h span { color: var(--pl-ink-3); }
+
+/* The marker beside "the newest sitting". A square, not a dot, and it never travels alone —
+   the group heading it sits in says the same thing in words. */
+.plenum-surface .pl-dsr-group-h .pl-mark {
+  width: 8px;
+  height: 8px;
+  background: var(--pl-c-plenum);
+  flex: none;
+}
+
+.plenum-surface .pl-dsr-group ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 2px;
+}
+@media (min-width: 640px) {
+  .plenum-surface .pl-dsr-group ul { grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); }
+}
+
+.plenum-surface .pl-dsr-tab {
+  display: block;
+  padding: 0.4rem 0.55rem;
+  border: 1px solid transparent;
+  border-left: 2px solid var(--pl-line);
+  background: var(--pl-panel-2);
+  text-decoration: none;
+  color: var(--pl-ink-2);
+}
+.plenum-surface .pl-dsr-tab:hover,
+.plenum-surface .pl-dsr-tab:focus-visible {
+  border-color: var(--pl-line);
+  border-left-color: var(--pl-ink-2);
+  color: var(--pl-ink);
+}
+.plenum-surface .pl-dsr-tab[aria-selected='true'],
+.plenum-surface .pl-dsr-tab[aria-current='true'] {
+  border-color: var(--pl-line);
+  border-left-color: var(--pl-c-plenum);
+  color: var(--pl-ink);
+}
+.plenum-surface .pl-dsr-tab .t-no {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--pl-ink-3);
+}
+.plenum-surface .pl-dsr-tab[aria-selected='true'] .t-no,
+.plenum-surface .pl-dsr-tab[aria-current='true'] .t-no { color: var(--pl-ink-2); }
+.plenum-surface .pl-dsr-tab .t-name {
+  display: block;
+  font-size: 13px;
+  line-height: 1.4;
+  margin-top: 1px;
+}
+
+/* ——— one sitting ——— */
+
+.plenum-surface .pl-dsr {
+  border: 1px solid var(--pl-line);
+  border-left: 2px solid var(--pl-line);
+  background: var(--pl-panel);
+  padding: 1.1rem 1.2rem 1.3rem;
+  margin: 0 0 1.1rem;
+  scroll-margin-top: 1.5rem;
+}
+.plenum-surface .pl-dsr[data-current='true'] { border-left-color: var(--pl-c-plenum); }
+.plenum-surface .pl-dsr:focus-visible { outline: 2px solid var(--pl-ink); outline-offset: 2px; }
+
+.plenum-surface .pl-dsr-head { border-bottom: 1px solid var(--pl-line); padding-bottom: 0.8rem; }
+
+.plenum-surface .d-state {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--pl-ink-2);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 0.8rem;
+  align-items: center;
+}
+.plenum-surface .d-state .d-hint { text-transform: none; letter-spacing: 0.02em; color: var(--pl-ink-3); }
+
+.plenum-surface .d-title {
+  margin: 0.5rem 0 0;
+  font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+  line-height: 1.3;
+  font-weight: 700;
+}
+.plenum-surface .d-title .d-no {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--pl-ink-3);
+  margin-bottom: 0.2rem;
+}
+
+.plenum-surface .d-meta {
+  margin: 0.5rem 0 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--pl-ink-3);
+}
+.plenum-surface .d-meta a { color: var(--pl-ink-2); }
+
+.plenum-surface .d-block { margin-top: 1.1rem; }
+
+.plenum-surface .d-h {
+  margin: 0 0 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--pl-ink-3);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+.plenum-surface .d-h .d-count {
+  border: 1px solid var(--pl-line);
+  padding: 0 0.35em;
+  letter-spacing: 0.04em;
+  color: var(--pl-ink-2);
+}
+
+/* The collective's own words. Body copy, never small print.
+   The minutes are markdown, so a quotation is rendered through the site's shared `engine-prose`
+   rules (numbered agendas, bulleted verdicts, backticked paths, the overflow discipline for long
+   URLs and code fences that page already learned) — reused, not re-declared. Only the outer
+   margins are pinned here, so a block sits flush inside its dossier field. */
+.plenum-surface .d-quote {
+  margin: 0;
+  max-width: 76ch;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--pl-ink);
+}
+.plenum-surface .d-quote > :first-child { margin-top: 0; }
+.plenum-surface .d-quote > :last-child { margin-bottom: 0; }
+.plenum-surface .d-quote h2,
+.plenum-surface .d-quote h3 { font-size: 1rem; }
+
+.plenum-surface .d-quote-label {
+  margin: 0 0 0.25rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--pl-ink-2);
+}
+
+.plenum-surface .d-src {
+  margin: 0.3rem 0 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--pl-ink-3);
+  overflow-wrap: anywhere;
+}
+
+.plenum-surface .d-gap {
+  margin: 0;
+  max-width: 74ch;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--pl-ink-3);
+}
+
+.plenum-surface .d-note {
+  margin: 0.55rem 0 0;
+  max-width: 76ch;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--pl-ink-3);
+}
+
+.plenum-surface .d-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.9rem; }
+.plenum-surface .d-list > li {
+  border-top: 1px solid var(--pl-line);
+  padding-top: 0.6rem;
+}
+
+.plenum-surface .d-names {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.5rem;
+}
+.plenum-surface .d-names li {
+  border: 1px solid var(--pl-line);
+  padding: 0.05rem 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--pl-ink-2);
+}
+
+/* The full shape of the sitting: every heading it wrote, with what it costs to read. */
+.plenum-surface .d-contents {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1px;
+}
+.plenum-surface .d-contents li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  background: var(--pl-panel-2);
+  padding: 0.28rem 0.5rem;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--pl-ink-2);
+}
+.plenum-surface .d-contents .c-words {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--pl-ink-3);
+  white-space: nowrap;
+}
+
+.plenum-surface .d-doors {
+  margin: 1.1rem 0 0;
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--pl-line);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.2rem;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+.plenum-surface .d-doors a { color: var(--pl-ink); }
+
+.plenum-surface .pl-dsr-prov {
+  margin: 1.4rem 0 0;
+  max-width: 78ch;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.65;
+  color: var(--pl-ink-3);
+}
+
+/* ————————————————————————————————————————————————— the team channel ———————— */
+/* Etappe 2 shape, in this surface's own quiet skin: open asks first and in full count, the
+   complete document one door further in. */
+
+.plenum-surface .pl-req-h {
+  margin: 2.2rem 0 0.6rem;
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--pl-line);
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.plenum-surface .pl-req-note {
+  margin: 0 0 1rem;
+  max-width: 76ch;
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--pl-ink-2);
+}
+
+.plenum-surface .pl-req-standing {
+  border: 1px solid var(--pl-line);
+  border-left: 2px solid var(--pl-c-plenum);
+  background: var(--pl-panel);
+  padding: 0.9rem 1.1rem;
+  margin: 0 0 1.4rem;
+}
+
+.plenum-surface .pl-req-card {
+  border: 1px solid var(--pl-line);
+  background: var(--pl-panel);
+  padding: 0.85rem 1rem 0.95rem;
+  margin: 0 0 0.7rem;
+}
+.plenum-surface .pl-req-card h3 {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.4;
+  font-weight: 700;
+}
+.plenum-surface .pl-req-card h3 a { color: var(--pl-ink); text-decoration: none; }
+.plenum-surface .pl-req-card h3 a:hover { text-decoration: underline; }
+
+.plenum-surface .pl-req-meta {
+  margin: 0.35rem 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.9rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--pl-ink-3);
+}
+.plenum-surface .pl-req-status { color: var(--pl-ink-2); }
+.plenum-surface .pl-req-more { color: var(--pl-ink); }
+
+.plenum-surface .pl-req-lead {
+  margin: 0.5rem 0 0;
+  max-width: 76ch;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--pl-ink-2);
+}
+
+.plenum-surface .pl-req-archive {
+  margin: 1.8rem 0 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+.plenum-surface .pl-req-archive a { color: var(--pl-ink); }
+
+/* ————————————————————————————————————————————————— reduced motion —————————— */
+/* Nothing on this surface animates, so there is nothing to switch off — the declaration stands
+   as the record that it was considered, not as a no-op waiting for someone to add a transition
+   underneath it. */
+@media (prefers-reduced-motion: reduce) {
+  .plenum-surface * { transition: none !important; animation: none !important; }
+}
