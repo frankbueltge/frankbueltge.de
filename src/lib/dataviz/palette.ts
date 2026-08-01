@@ -208,6 +208,12 @@ export const PALETTES: readonly PaletteSet[] = [
       'src/styles/hub-triptych.css',
       'src/styles/score-map.css',
       'src/components/maschinenraum/Partitur.astro',
+      // The works register (/works, 2026-08-01) gives each row the hairline of the practice that
+      // made the work. Three slots only — the Plenum is not in that register and The Middle is
+      // the declared neutral — and the hue never carries meaning alone: every row states its
+      // practice by name in the column beside the rule, so the light-mode contrast WARN below
+      // cannot reach it (nothing on that page is TEXT in these hues).
+      'src/components/pages/WorksRegister.astro',
     ],
   },
   {

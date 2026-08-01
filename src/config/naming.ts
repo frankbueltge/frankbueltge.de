@@ -230,15 +230,23 @@ export const NAMING = {
    * unter /atelier/material, das das Inventar EINER Praxis ist und dort bleibt).
    * „Hub" ist hier bewusst NICHT verwendet — der Begriff bezeichnet in dieser Codebasis
    * die Startseite der Ökologie; das Repo darf `dataset-hub` heißen, die Fläche nicht.
-   * Zahlen stehen NICHT in diesen Texten (Kanon: Zahlen nur aus Daten rendern). */
+   * Zahlen stehen NICHT in diesen Texten (Kanon: Zahlen nur aus Daten rendern).
+   * 2026-08-01: Der vierte Eintrag (Works Register, /works) bricht die ursprüngliche
+   * Abgrenzung „verzeichnet, was es in der WELT gibt" bewusst auf — er verzeichnet, was
+   * DIESE Ökologie hervorgebracht hat. Er steht hier und nicht unter /holdings, weil er
+   * dasselbe Versprechen einlöst wie die anderen drei: maschinell gepflegt, jede Zeile
+   * auf ihre Quelldatei zurückführbar, gewachsen ohne Handarbeit. /holdings bleibt die
+   * lose Sammlung der FRÜHEREN Experimente des Labors — ein anderer Bestand. */
   catalogues: {
     kicker: 'CATALOGUES',
     title: 'what exists, catalogued by machine',
     /* „Two" → „Three" am 2026-07-27: Der Paper-Katalog ist als dritter dazugekommen
      * (Frank: „datasets für das register und einen weiteren katalog für die sammlung
      * von papers"). Die Zahl steht ausnahmsweise im Text, weil sie den Satzbau trägt —
-     * sie wandert in die Prüfung von naming.test.ts, damit sie nicht still veraltet. */
-    sub: 'Three reference works that grow on their own: they record what is out there, cite where each entry came from, and state what is missing rather than filling the gap.',
+     * sie wandert in die Prüfung von naming.test.ts, damit sie nicht still veraltet.
+     * „Three" → „Four" am 2026-08-01 (Works Register); zugleich musste der Nebensatz
+     * ehrlich werden: drei verzeichnen die Welt, einer die eigene Hervorbringung. */
+    sub: 'Four reference works that grow on their own: three record what is out there and one records what this research has itself brought forth — each cites where an entry came from and states what is missing rather than filling the gap.',
     items: [
       {
         name: 'Atlas of Data Art',
@@ -266,7 +274,63 @@ export const NAMING = {
         href: '/papers',
         description: 'What the three research practices actually read. Each entry is here because a practice reached for it in its own work, and carries the record of that use: who cites it, when it was last picked up, and — where someone wrote one down — why it matters.',
       },
+      {
+        /* Neu am 2026-08-01 (Frank: „es fehlt noch eine seite, welche alle werke listet,
+         * welche die ökologie je hervorgebracht hat"). Die Praxen führen je ihren eigenen
+         * Raum — Werke, Instrumente, Premieren —, aber nirgends stand der Gesamtbestand.
+         * Das Register liest genau dieselben meta.json-Dateien wie die Räume; es ist eine
+         * Ansicht, keine zweite Wahrheit. Nicht zu verwechseln mit /work (Singular): das
+         * sind die eigenen Projekte, nicht die Hervorbringungen der Praxen. */
+        name: 'Works Register',
+        href: '/works',
+        description: 'Every work the three research practices have brought forth, on one page: dated, named by its practice, and linked to the work itself. Withdrawn works stay listed and carry their own withdrawal in the practice’s own words — the record keeps every mark.',
+      },
     ],
+  },
+
+  /** /works — das ökologieweite Werkverzeichnis (Frank, 2026-08-01). Wortlaut hier, damit
+   * die Seite selbst nur noch rendert; Zahlen stehen ausnahmslos NICHT in diesen Texten,
+   * sie werden aus src/lib/engines/register.ts gezählt (Kanon-Regel).
+   * Ton: Registerfassung, nicht Praxisraum — die Räume der Praxen bleiben die Orte, an
+   * denen ein Werk in seiner eigenen Sprache steht; das hier ist der Nachweis, dass es
+   * vollständig ist. Die Praxis-Substantive („works", „instruments", „premieres") sind
+   * die der Praxen selbst und werden hier NICHT vereinheitlicht: Meridians Arbeiten heißen
+   * in ihrem eigenen Raum Instrumente, also heißen sie hier auch so. */
+  worksRegister: {
+    kicker: 'WORKS REGISTER',
+    kickerSub: 'EVERY WORK, EVERY PRACTICE, ONE PAGE',
+    /** browser tab / OG title — the catalogue's own name, so nav, card and tab agree */
+    pageTitle: 'Works Register',
+    metaDescription:
+      'Every work the ecology’s three research practices have brought forth, on one dated page — the atelier’s works, the field’s instruments, the studio’s premieres. Withdrawn works stay listed and marked.',
+    title: 'everything the practices have brought forth',
+    intro:
+      'The three research practices each keep their own room, in their own vocabulary. This page is the complete list across all three: one line per work, newest first, each linked to the work itself.',
+    honesty:
+      'Nothing is left out to make the record look better: a withdrawn work stays on this list and carries its withdrawal in the practice’s own words, dated. Every line is read from the work’s own committed metadata — a work missing here would be a work missing from the archive.',
+    /** the distinction a visitor arriving from the nav needs first */
+    notThis: {
+      lead: 'Looking for the conductor’s own projects instead?',
+      label: 'that is /work, in the singular →',
+      href: '/work',
+    },
+    /** one entry per practice, in the doors' own order — the noun each practice uses for its
+     *  own output, and the room where that work is at home */
+    practices: [
+      { ns: 'atelier' as const, name: 'The Atelier', noun: 'works', roomLabel: 'the atelier’s works', roomHref: '/atelier/works' },
+      { ns: 'field' as const, name: 'The Field', noun: 'instruments', roomLabel: 'the field’s instruments', roomHref: '/field/instruments' },
+      { ns: 'studio' as const, name: 'The Studio', noun: 'premieres', roomLabel: 'the studio’s premieres', roomHref: '/studio/works' },
+    ],
+    roomsLead: 'Each practice keeps its own room, where a work stands in its house’s own language:',
+    withdrawnLabel: 'withdrawn',
+    entranceNote: {
+      lead: 'The newest of these also stand on the entrance, under LATEST —',
+      label: 'the ecology’s front door →',
+      href: '/#latest',
+    },
+    provenanceLead: 'Read at build time from the works’ own committed metadata:',
+    provenanceTail:
+      'Dates, titles and descriptions are the practices’ own; the withdrawal state is the /^WITHDRAWN/ marker a practice writes into its work’s own medium line. This page adds no judgement of its own. The Plenum (data-snack) is a house of its own and keeps its texts elsewhere — it is not counted here.',
   },
 
   /** The caption under the hero pulse. The wrapping phrasing is the design session's — the

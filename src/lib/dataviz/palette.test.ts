@@ -276,7 +276,7 @@ describe('field-review adds ONE hue to a plate that already had two', () => {
   })
 })
 
-describe('ecology-voices is ONE quartet across its three surfaces', () => {
+describe('ecology-voices is ONE quartet across its four surfaces', () => {
   const set = paletteById('ecology-voices')!
   // The entrance's own declaration moved out of HubEntrance.astro's scoped <style> and into this
   // stylesheet on 2026-08-01 (WP7): the triptych cards need the same four hues as the doors, and
@@ -285,6 +285,8 @@ describe('ecology-voices is ONE quartet across its three surfaces', () => {
   const hub = readFileSync(new URL('src/styles/hub-triptych.css', `file://${ROOT}`), 'utf8')
   const score = readFileSync(new URL('src/styles/score-map.css', `file://${ROOT}`), 'utf8')
   const partitur = readFileSync(new URL('src/components/maschinenraum/Partitur.astro', `file://${ROOT}`), 'utf8')
+  // The fourth surface (2026-08-01): the works register's per-row practice hairline.
+  const register = readFileSync(new URL('src/components/pages/WorksRegister.astro', `file://${ROOT}`), 'utf8')
 
   it('hub doors and score map carry identical practice-trio values in both modes', () => {
     for (const s of set.slots.slice(0, 3)) {
@@ -297,6 +299,24 @@ describe('ecology-voices is ONE quartet across its three surfaces', () => {
 
   it('the Partitur (always-dark stage) carries all four dark values', () => {
     for (const s of set.slots) expect(partitur).toContain(s.dark)
+  })
+
+  it('the works register carries the same practice trio, and only that trio', () => {
+    for (const s of set.slots.slice(0, 3)) {
+      expect(register).toContain(s.light)
+      expect(register).toContain(s.dark)
+    }
+    // A register of the three practices lists neither the Plenum nor The Middle, so neither
+    // may own a rule on it — a hue with no identity behind it is a claim the page cannot keep.
+    for (const stray of ['#1baf7a', '#199e70', '#6b7684', '#77828d']) {
+      expect(register, `stray identity hue ${stray}`).not.toContain(stray)
+    }
+  })
+
+  it('never paints the register a warning colour — a withdrawal is not an error state', () => {
+    for (const red of ['#d32f2f', '#e5484d', '#dc2626', '#ff0000', '#d03b3b', '#a83248']) {
+      expect(register, `status red ${red}`).not.toContain(red)
+    }
   })
 
   it('the near-miss hexes are gone (one blue, one orange — not three of each)', () => {
