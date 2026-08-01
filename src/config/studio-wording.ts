@@ -24,7 +24,10 @@ export const STUDIO_GRAMMAR = {
   rail: [
     { label: 'this stage', href: '/studio', hint: 'what is public now' },
     { label: 'works', href: '/studio/works', hint: 'premiered works — existing URLs stay' },
-    { label: 'playbill', href: '/studio/history', hint: 'the chronicle as an evening bill + the journal' },
+    { label: 'playbill', href: '/studio/history', hint: 'the chronicle as an evening bill' },
+    // New rail door 2026-08-01 (Etappe 2): the journal was embedded at the foot of the
+    // playbill and had no address of its own — the sibling practices both carry this door.
+    { label: 'journal', href: '/studio/journal', hint: 'the unedited record — one page per session' },
     { label: 'apparatus', href: '/studio/apparatus', hint: 'repo, constitution, team channel, nightly runs' },
   ] as RailItem[],
   door: { label: '→ the middle', href: '/encounters', hint: 'enc-2026-001 — the correction this house sent upstream' },
@@ -78,8 +81,43 @@ export const STUDIO_NARRATIVE = {
   },
   rooms: {
     works: 'What has premiered — everything here passed the full gate, the hostile critique published either way.',
-    playbill: 'One bill per evening; below it, the unedited journal of the house.',
+    /** Revised 2026-08-01 (Etappe 2): the journal left the bill and became its own room —
+     *  the bill is the bill again, and the record has an address of its own. */
+    playbill: 'One bill per evening, and the chronicle in full beneath it. The house’s unedited journal is its own room now.',
+    journal: 'The unedited journal of the house — one entry per session, as the ensemble wrote it.',
     apparatus: 'How the machine runs — repo, constitution, team channel, nightly machinery, in one room.',
+  },
+  /** The journal room (new 2026-08-01, Etappe 2): until now the studio had no /studio/journal
+   *  at all — the whole record was embedded at the foot of the playbill, which is why that one
+   *  page had grown into the longest wall of text in the ecology. */
+  journalRoom: {
+    indexNote:
+      'Every session of the house, newest evening first — each line its own address. The bill stays the bill; the record reads here.',
+    pageNote: 'One session of the house’s journal, mirrored verbatim from the ensemble’s own repo.',
+    backToIndex: '← the journal',
+    prevLabel: 'earlier session',
+    nextLabel: 'later session',
+    fromPlaybill: 'The unedited journal of the house — every session, one page each →',
+  },
+  /** The team channel after Etappe 2 (2026-08-01): open asks first and in full count, the
+   *  complete document one door further in (/studio/requests/archive, verbatim). */
+  requestsRoom: {
+    intro:
+      'What this house needs from its human team member, and what came back. Open items stand first — all of them, never a selection. The complete channel is in the archive, unedited.',
+    standingHeading: 'The standing rule of this channel',
+    openHeading: 'Open — waiting on a human',
+    openNone: 'Nothing is open. Every request in this channel has an answer on the record.',
+    openNote: 'Every open item, oldest ask first. An unanswered request is never a blocker — the house decides for itself and puts the decision on the bill.',
+    answeredHeading: 'Recently answered',
+    answeredNote: 'The five most recent exchanges that are closed — each in full in the archive.',
+    seedsHeading: 'The other direction — seeds',
+    seedsNote: 'Offers left here for the house, from the team and from the public. Treated as offers, not orders.',
+    archiveLink: 'The whole channel, unedited →',
+    archiveHeadline: 'The team channel, complete',
+    archiveNote:
+      'The document as the house keeps it, verbatim and unshortened — every request, offer and answer in the order it was written.',
+    backToRoom: '← what is open',
+    fullTextLabel: 'read it in full',
   },
   /** Eingang v2 (2026-07-25, Franks Go, Muster /field): die Spielzeit über der Bühne —
    * der Bogen der Praxis in Bühnen-Grammatik (Premieren als Lichtpunkte, Strikes als

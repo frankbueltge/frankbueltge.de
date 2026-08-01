@@ -758,6 +758,78 @@
   .field-surface .dv-scene { padding: 4vh 0; }
 }
 
+/* ——— Etappe 2: the day index links out, it does not fold out ————————————————————
+   The row keeps the tape geometry of the old <summary> — same rhythm, one destination. */
+.field-surface .fd-reg-row {
+  border-top: 1px solid var(--fd-hairline);
+  display: flex;
+  gap: 1.2em;
+  align-items: baseline;
+  padding: 11px 2px;
+  font-family: var(--fd-font-record);
+  font-size: 13px;
+  color: var(--fd-ink-2);
+  text-decoration: none;
+}
+.field-surface .fd-reg-row .fd-day-date { color: var(--fd-stamp); font-weight: 600; }
+.field-surface .fd-reg-row .fd-day-title { font-family: var(--fd-font-ui); font-size: 14.5px; color: var(--fd-ink); }
+.field-surface .fd-reg-row:hover .fd-day-title { text-decoration: underline; }
+.field-surface .fd-reg-row .fd-reg-move { margin-left: auto; white-space: nowrap; }
+.field-surface .fd-reg-row:focus-visible { outline: 2px solid var(--fd-stamp); outline-offset: 2px; }
+
+.field-surface .fd-page-nav {
+  display: flex;
+  gap: 1.6em;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--fd-hairline);
+  margin-top: 22px;
+  padding-top: 11px;
+  font: 12px var(--fd-font-record);
+  color: var(--fd-ink-2);
+}
+.field-surface .fd-page-nav a { color: var(--fd-ink-2); text-decoration: none; }
+.field-surface .fd-page-nav a:hover { color: var(--fd-ink); text-decoration: underline; }
+.field-surface .fd-page-nav .fd-nav-next { margin-left: auto; }
+
+/* ——— Etappe 2: the team channel shows what is open ——————————————————————————— */
+.field-surface .fd-req-card {
+  border-top: 1px solid var(--fd-hairline);
+  padding: 14px 2px;
+  max-width: 80ch;
+}
+.field-surface .fd-req-card h3 { font: 600 15px/1.35 var(--fd-font-ui); color: var(--fd-ink); margin: 0; }
+.field-surface .fd-req-card h3 a { color: inherit; text-decoration: none; }
+.field-surface .fd-req-card h3 a:hover { text-decoration: underline; }
+.field-surface .fd-req-meta {
+  display: flex;
+  gap: 1em;
+  flex-wrap: wrap;
+  font: 12px var(--fd-font-record);
+  color: var(--fd-ink-2);
+  margin: 5px 0 0;
+}
+.field-surface .fd-req-meta .fd-req-status { color: var(--fd-stamp); font-weight: 600; }
+.field-surface .fd-req-card p.fd-req-lead {
+  font-family: var(--fd-font-ui);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--fd-ink);
+  margin: 7px 0 0;
+}
+.field-surface .fd-req-card .fd-req-more { font: 12px var(--fd-font-record); color: var(--fd-ink-2); text-decoration: underline; }
+.field-surface .fd-req-h {
+  font: 600 13px/1.3 var(--fd-font-record);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fd-ink);
+  margin: 30px 0 2px;
+}
+.field-surface .fd-req-note { font: 12.5px/1.6 var(--fd-font-ui); color: var(--fd-ink-2); max-width: 76ch; margin: 0 0 6px; }
+/* the standing rule reads at the same measure as the cards beside it, not the full plate */
+.field-surface .fd-req-standing { max-width: 80ch; font-size: 14.5px; }
+.field-surface .fd-req-archive { margin-top: 26px; font: 13px var(--fd-font-record); }
+.field-surface .fd-req-archive a { color: var(--fd-ink); text-decoration: underline; }
+
 @media (prefers-reduced-motion: reduce) {
   .field-surface * { transition: none !important; animation: none !important; }
 }

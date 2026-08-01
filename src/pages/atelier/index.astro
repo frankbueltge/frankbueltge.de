@@ -22,7 +22,13 @@ import { sortWorks } from '@/lib/atelier/sort'
 import KilledOnThePivot from '@/components/atelier/tours/KilledOnThePivot.astro'
 import { loadPassageModel } from '@/lib/atelier/passage-data'
 import rhizome from '@/data/atelier/rhizome.json'
+import { sessionRegister } from '@/lib/atelier/sessions'
 import '@/styles/atelier-sheet.css'
+
+// The nightly register's span, derived instead of typed: both places below said "S1–S44"
+// while the committed register counted 43 pages (Aktualitätsregel — a hardcoded count is a
+// claim the site cannot keep). One glob, one number, two call sites.
+const nightlySpan = `S1–S${sessionRegister(Object.keys(import.meta.glob('/src/content/atelier/journal/*.md')).map((p) => p.replace('/src/content/atelier/', ''))).length}`
 
 const E = ATELIER_NARRATIVE.entrance
 const V2 = ATELIER_NARRATIVE.entranceV2
@@ -243,7 +249,7 @@ const doors = [
           {/* phase brackets */}
           <line x1={xOf(T0)} y1={Y0 + 52} x2={xOf(T1) - 4} y2={Y0 + 52} class="m-phase" />
           <text x={xNightlyMid} y={Y0 + 66} class="m-caption" text-anchor="middle">
-            nightly register S1–S44 · 28 Jun – 18 Jul 2026
+            nightly register {nightlySpan} · 28 Jun – 18 Jul 2026
           </text>
           <line x1={xOf(T1) + 4} y1={Y0 + 52} x2={W - padR + 20} y2={Y0 + 52} class="m-phase" />
           <text x={xV4Mid} y={Y0 + 66} class="m-caption" text-anchor="middle">
@@ -336,7 +342,7 @@ const doors = [
     </p>
     <p class="at-quiet">
       archive — the closed phases:
-      <a href="/atelier/journal">nightly journal, S1–S44</a> ·
+      <a href="/atelier/journal">nightly journal, {nightlySpan}</a> ·
       <a href="/atelier/history">the spine</a> ·
       <a href="/atelier/sheets">the sheets</a>
       <span>— nightly sessions 28 Jun – 18 Jul · bounded projects (v4) 18–24 Jul, preserved in the research log</span>

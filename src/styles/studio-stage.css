@@ -784,6 +784,78 @@
   .studio-surface .dv-scene { padding: 4vh 0; }
 }
 
+/* ——— Etappe 2: the journal left the bill and became its own room ————————————————
+   The row keeps the bill's geometry of the old <summary> — same rhythm, its own address. */
+.studio-surface .st-reg-row {
+  border-top: 1px solid var(--st-hairline);
+  display: flex;
+  gap: 1.2em;
+  align-items: baseline;
+  padding: 11px 2px;
+  font-family: var(--st-font-record);
+  font-size: 13px;
+  color: var(--st-ink-2);
+  text-decoration: none;
+}
+.studio-surface .st-reg-row .st-day-anchor { color: var(--st-lamp); font-weight: 600; }
+.studio-surface .st-reg-row .st-day-title { font-family: var(--st-font-record); font-size: 16px; color: var(--st-ink); }
+.studio-surface .st-reg-row:hover .st-day-title { text-decoration: underline; }
+.studio-surface .st-reg-row .st-reg-move { margin-left: auto; white-space: nowrap; }
+.studio-surface .st-reg-row:focus-visible { outline: 2px solid var(--st-lamp); outline-offset: 2px; }
+
+.studio-surface .st-page-nav {
+  display: flex;
+  gap: 1.6em;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--st-hairline);
+  margin-top: 22px;
+  padding-top: 11px;
+  font: 12px var(--st-font-record);
+  color: var(--st-ink-2);
+}
+.studio-surface .st-page-nav a { color: var(--st-ink-2); text-decoration: none; }
+.studio-surface .st-page-nav a:hover { color: var(--st-ink); text-decoration: underline; }
+.studio-surface .st-page-nav .st-nav-next { margin-left: auto; }
+
+/* ——— Etappe 2: the team channel shows what is open ——————————————————————————— */
+.studio-surface .st-req-card {
+  border-top: 1px solid var(--st-hairline);
+  padding: 14px 2px;
+  max-width: 78ch;
+}
+.studio-surface .st-req-card h3 { font: 600 16px/1.35 var(--st-font-record); color: var(--st-ink); margin: 0; }
+.studio-surface .st-req-card h3 a { color: inherit; text-decoration: none; }
+.studio-surface .st-req-card h3 a:hover { text-decoration: underline; }
+.studio-surface .st-req-meta {
+  display: flex;
+  gap: 1em;
+  flex-wrap: wrap;
+  font: 12px var(--st-font-record);
+  color: var(--st-ink-2);
+  margin: 5px 0 0;
+}
+.studio-surface .st-req-meta .st-req-status { color: var(--st-lamp); font-weight: 600; }
+.studio-surface .st-req-card p.st-req-lead {
+  font-family: var(--st-font-record);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--st-ink);
+  margin: 7px 0 0;
+}
+.studio-surface .st-req-card .st-req-more { font: 12px var(--st-font-record); color: var(--st-ink-2); text-decoration: underline; }
+.studio-surface .st-req-h {
+  font: 600 13px/1.3 var(--st-font-record);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--st-ink);
+  margin: 30px 0 2px;
+}
+.studio-surface .st-req-note { font: 12.5px/1.6 var(--st-font-record); color: var(--st-ink-2); max-width: 74ch; margin: 0 0 6px; }
+/* the standing rule reads at the same measure as the cards beside it, not the full stage */
+.studio-surface .st-req-standing { max-width: 78ch; font-size: 15px; }
+.studio-surface .st-req-archive { margin-top: 26px; font: 13px var(--st-font-record); }
+.studio-surface .st-req-archive a { color: var(--st-ink); text-decoration: underline; }
+
 @media (prefers-reduced-motion: reduce) {
   .studio-surface * { transition: none !important; animation: none !important; }
 }

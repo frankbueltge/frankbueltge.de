@@ -1,0 +1,63 @@
+---
+// /field/journal/<anchor> — ONE session of the record (Etappe 2, 2026-08-01). The anchor is
+// the DOM id the day index has always carried (cs-42, pre-2026-07-01-3, 2026-07-05-1), so
+// every chronicle entry, instrument badge and published deep link resolves unchanged.
+import { getCollection } from 'astro:content'
+import Page from '@/layouts/Page.astro'
+import Frame from '@/components/field/surface/Frame.astro'
+import { buildDayIndex, type DaySession } from '@/lib/engines/journal'
+import { FIELD_NARRATIVE } from '@/config/field-wording'
+
+export async function getStaticPaths() {
+  const all = await getCollection('field')
+  const repo = 'https://github.com/frankbueltge/field-research'
+  const rootDocs = new Set(all.filter((e) => !e.id.includes('/')).map((e) => e.id))
+  // ONCE for the whole practice — the anchor walk is order-dependent and must not be redone
+  // per route (see buildDayIndex).
+  const { daysAsc, sessionsAsc } = buildDayIndex(all, { repo, docs: rootDocs })
+  const dayOf = new Map(daysAsc.flatMap((d) => d.sessions.map((s) => [s.anchor, d.date] as const)))
+
+  return sessionsAsc.map((session, i) => ({
+    params: { anchor: session.anchor },
+    props: {
+      session,
+      day: dayOf.get(session.anchor) ?? '',
+      prev: sessionsAsc[i - 1] ?? null,
+      next: sessionsAsc[i + 1] ?? null,
+      total: sessionsAsc.length,
+      position: i + 1,
+    },
+  }))
+}
+
+const { session, day, prev, next, total, position } = Astro.props as {
+  session: DaySession
+  day: string
+  prev: DaySession | null
+  next: DaySession | null
+  total: number
+  position: number
+}
+const room = FIELD_NARRATIVE.journalRoom
+const title = session.heading || day
+const kicker = ['Field · journal', 'field-research', `${session.anchor} · ${day}`]
+const statusHtml =
+  `<b>${session.anchor}</b> · ${day} · session ${position} of ${total}` +
+  (session.move ? ` · ${session.move}` : '') +
+  ` · <a href="/field/journal" class="underline">the day index →</a>`
+---
+
+<Page
+  title={`Field — ${title} | Frank Bültge`}
+  description={`${day} — one session of the Field collective's research journal, published unedited.`}
+>
+  <Frame active="journal" kicker={kicker} h1={title} statusHtml={statusHtml} back>
+    <p class="fd-req-note">{room.pageNote}{session.voices ? ` Convened: ${session.voices}.` : ''}</p>
+    <div class="fd-prose" set:html={session.html} />
+    <nav class="fd-page-nav" aria-label="Journal sessions">
+      {prev && <a class="fd-nav-prev" href={`/field/journal/${prev.anchor}/`}>← {room.prevLabel}: {prev.anchor}</a>}
+      <a href="/field/journal">{room.backToIndex}</a>
+      {next && <a class="fd-nav-next" href={`/field/journal/${next.anchor}/`}>{room.nextLabel}: {next.anchor} →</a>}
+    </nav>
+  </Frame>
+</Page>

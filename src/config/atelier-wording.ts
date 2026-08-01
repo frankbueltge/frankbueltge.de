@@ -118,8 +118,11 @@ export const ATELIER_NARRATIVE = {
    * Draft bis Franks Merge dieses PRs. */
   entranceV2: {
     mapHeading: 'the practice, drawn',
+    // S43, not S44 (corrected 2026-08-01): the committed register counts 43 pages, and the
+    // nightly phase closed on 18 July 2026 — so this number is final, not a moving count.
+    // /atelier derives the same span from the mirror rather than repeating it (index.astro).
     mapCaption:
-      'each slab a work, hung by committed date — the nightly register (S1–S44), then bounded projects under Protocol v4; the red slab is the first curated v4 publication',
+      'each slab a work, hung by committed date — the nightly register (S1–S43), then bounded projects under Protocol v4; the red slab is the first curated v4 publication',
     mapProvenance:
       'drawn from committed mirrors — works meta.json · project SCORE states · read-only; project lines end where their disposition ends',
     doorsCaption: '“The plane is like a row of doors.” (ATP 508)',
@@ -321,6 +324,41 @@ export const ATELIER_NARRATIVE = {
     cockpitArchiveNote: 'the atlas now lives in material',
     cockpitArchived:
       'Archived surface (ADR 0008): the cockpit is kept as a dated artefact, no longer the entrance.',
+  },
+  /** The journal after Etappe 2 (2026-08-01): the register stayed, but a page is a page now —
+   *  one route per night instead of ninety-two fold-outs stacked on one URL. Nothing was
+   *  removed; the same text sits one click further in, at its own address. */
+  journalRoom: {
+    /** under the register, above the list */
+    indexNote:
+      'One line per page, its own address behind it. The register is the index; the night itself is the page.',
+    /** on a single session page, under the headline */
+    pageNote: 'One page of the nightly protocol, mirrored verbatim from the practice’s own repo.',
+    backToRegister: '← the register',
+    prevLabel: 'earlier page',
+    nextLabel: 'later page',
+    noteKicker: 'dispatcher tick — not a counted session',
+  },
+  /** The team channel after Etappe 2 (2026-08-01): the room shows what is still open, in
+   *  full count, and holds the rest one door further in. The document itself is never edited
+   *  or shortened — /atelier/requests/archive carries it verbatim, as it always did. */
+  requestsRoom: {
+    intro:
+      'What this practice has asked its human counterpart for, and what came back. Open items stand first — all of them, never a selection. Everything else is in the archive, unedited.',
+    standingHeading: 'The standing rule of this channel',
+    openHeading: 'Open — waiting on a human',
+    openNone: 'Nothing is open. Every ask in this channel has an answer on the record.',
+    openNote: 'Every open item, oldest ask first. Silence is a legitimate answer; the practice decides for itself when it runs out.',
+    answeredHeading: 'Recently answered',
+    answeredNote: 'The five most recent exchanges that are closed — the full wording of each is in the archive.',
+    seedsHeading: 'The other direction — seeds',
+    seedsNote: 'Offers left here for the practice, from the team and from the public. Not orders: it picks up what serves its inquiry and says so in the journal.',
+    archiveLink: 'The whole channel, unedited →',
+    archiveHeadline: 'The team channel, complete',
+    archiveNote:
+      'The document as the practice keeps it, verbatim and unshortened — every exchange, in the order it was written. The room in front of this one only decides what you meet first.',
+    backToRoom: '← what is open',
+    fullTextLabel: 'read it in full',
   },
   /** The four first-visitor questions (Frank, 2026-07-31: „was passiert hier eigentlich,
    * auf welcher Basis, was ist bisher passiert und wie ist der aktuelle Stand“), moved here
