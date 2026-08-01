@@ -106,6 +106,54 @@ for (const f of voiceFiles) {
   })
 }
 
+// ——— 6. Dataviz primitives carry no appearance (ADR 0010 guard) ———————————————
+// src/{components,lib}/dataviz/ is the shared behaviour+structure layer under the practice
+// figures. A hex literal there would be a shared visual grammar through the back door — the
+// one thing ADR 0010 forbids. Colours live in the practice stylesheets and are RECORDED in
+// src/lib/dataviz/palette.ts (whose test re-derives the validator maths, so it and its test
+// are the two sanctioned homes for hex values).
+const DATAVIZ_HEX_EXEMPT = /\/palette(\.test)?\.ts$/
+for (const f of [
+  ...walk(join(ROOT, 'src/components/dataviz'), ['.astro', '.ts']),
+  ...walk(join(ROOT, 'src/lib/dataviz'), ['.ts']),
+]) {
+  const rel = relative(ROOT, f)
+  if (DATAVIZ_HEX_EXEMPT.test(rel)) continue
+  const lines = readFileSync(f, 'utf8').split('\n')
+  lines.forEach((line, i) => {
+    if (/#[0-9a-fA-F]{3,8}\b/.test(line)) {
+      findings.push(`${rel}:${i + 1} — hex literal in the dataviz layer (appearance belongs to the practice skins; record sets in palette.ts)`)
+    }
+  })
+}
+
+// ——— 7. Identity-colour blocks name their palette record ————————————————————
+// Every categorical identity token (--*-c-* / --*-out-*) that carries a hex must sit under a
+// "PALETTE: <set-id>" marker whose id exists in src/lib/dataviz/palette.ts — so a colour can
+// never ship "validated" by assertion alone (the 2026-07-31 finding: a CSS comment claimed
+// all six checks passed while the quartet failed CVD at deutan ΔE 1.3).
+const paletteSource = existsSync(join(ROOT, 'src/lib/dataviz/palette.ts'))
+  ? readFileSync(join(ROOT, 'src/lib/dataviz/palette.ts'), 'utf8')
+  : ''
+const knownSetIds = new Set([...paletteSource.matchAll(/id: '([a-z0-9-]+)'/g)].map((m) => m[1]))
+const IDENTITY_TOKEN = /--[\w-]*(?:-c-|-out-)[\w-]*:\s*#[0-9a-fA-F]{3,8}/
+const MARKER_WINDOW = 30
+for (const f of [...walk(join(ROOT, 'src/styles'), ['.css']), ...voiceFiles.filter((p) => p.endsWith('.astro'))]) {
+  const rel = relative(ROOT, f)
+  if (isWerkMirror(rel)) continue
+  const lines = readFileSync(f, 'utf8').split('\n')
+  lines.forEach((line, i) => {
+    if (!IDENTITY_TOKEN.test(line)) return
+    const windowText = lines.slice(Math.max(0, i - MARKER_WINDOW), i).join('\n')
+    const marker = /PALETTE: ([a-z0-9-]+)/.exec(windowText)
+    if (!marker) {
+      findings.push(`${rel}:${i + 1} — identity colour without a "PALETTE: <set-id>" marker in the ${MARKER_WINDOW} lines above`)
+    } else if (!knownSetIds.has(marker[1])) {
+      findings.push(`${rel}:${i + 1} — PALETTE marker names "${marker[1]}", which is not a set id in src/lib/dataviz/palette.ts`)
+    }
+  })
+}
+
 // ——— 4. Spiegel-Frische (Netz, nur im Nightly) ———————————————————————————————
 if (process.env.DRIFT_NETWORK === '1') {
   const MIRRORS = [

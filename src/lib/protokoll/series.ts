@@ -1,6 +1,7 @@
 /** Aggregation des Protokoll-Archivs zu Zeitreihen je Tagesordnungspunkt — rein, getestet.
  *  Kein astro:content-Zugriff hier: Tage werden hereingereicht (Datenzugriff bleibt in data.ts). */
 import type { Locale } from '@/lib/site'
+import { bandScale, polyPath } from '@/lib/dataviz/geometry'
 import { AGENDA } from './agenda'
 import type { ProtokollDay, ProtokollEntry } from './types'
 
@@ -44,25 +45,27 @@ export const LINE_W = 180
 export const LINE_H = 36
 
 /** Lineare Sparkline (kein Schmuck, keine Glättung): newest rechts, min unten, max oben.
- *  Weniger als zwei Punkte ergeben keinen Pfad. */
+ *  Weniger als zwei Punkte ergeben keinen Pfad. One-line wrapper around dataviz/geometry.ts's
+ *  polyPath + bandScale (see geometry.test.ts for the numeric-equivalence proof). */
 export function linePath(values: number[], width = LINE_W, height = LINE_H): string {
   if (values.length < 2) return ''
   const min = Math.min(...values)
   const max = Math.max(...values)
-  const span = max - min || 1
-  const n = values.length
-  const pts = values.map((v, i) => {
-    const x = (i / (n - 1)) * width
-    const y = height - ((v - min) / span) * (height - 2) - 1
-    return `${x.toFixed(1)},${y.toFixed(1)}`
-  })
-  return `M${pts.join(' L')}`
+  const xScale = bandScale([0, values.length - 1], [0, width])
+  const yScale = bandScale([min, max], [height - 1, 1])
+  return polyPath(values.map((v, i) => ({ x: xScale(i), y: yScale(v) })))
 }
 
 /** Wie linePath, aber zur Grundlinie geschlossen — für eine zarte Flächenfüllung unter der
  *  echten Kurve (Magnitude sichtbar, kein Schmuck). Leer bei weniger als zwei Punkten. */
 export function areaPath(values: number[], width = LINE_W, height = LINE_H): string {
-  const line = linePath(values, width, height)
-  if (!line) return ''
-  return `${line} L${width.toFixed(1)},${height.toFixed(1)} L0.0,${height.toFixed(1)} Z`
+  if (values.length < 2) return ''
+  const min = Math.min(...values)
+  const max = Math.max(...values)
+  const xScale = bandScale([0, values.length - 1], [0, width])
+  const yScale = bandScale([min, max], [height - 1, 1])
+  return polyPath(
+    values.map((v, i) => ({ x: xScale(i), y: yScale(v) })),
+    { closeToBaseline: height },
+  )
 }

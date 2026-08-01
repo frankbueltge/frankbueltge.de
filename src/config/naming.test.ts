@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+import { numberWord } from '@/lib/atelier/sessions'
 import { NAMING } from './naming'
 
 /** Kanon-Regel: Zahlen werden aus Daten gerendert, nie in Beschreibungstexte geschrieben.
@@ -33,6 +34,67 @@ describe('NAMING.catalogues', () => {
     // Zahlen gehören in die Daten, nicht in den Wortlaut — sie veralten dort still.
     for (const item of NAMING.catalogues.items) {
       expect(item.description, `Ziffer in „${item.name}"`).not.toMatch(/\d/)
+    }
+  })
+})
+
+/** The doors carry the shortest path into each practice's own guided tour (WP7). The anchors are
+ *  hand-picked literals on the rooms' tour wrappers, not derived from the tour ids, so nothing but
+ *  a test keeps a renamed anchor from turning a door link into a scroll to nowhere. */
+describe('NAMING.doors tour links', () => {
+  const TOUR_ANCHORS: Record<string, string> = {
+    ulysses: '/atelier#tour-killed-on-the-pivot',
+    meridian: '/field#tour-the-gauntlet',
+    ensemble: '/studio#tour-three-returns',
+  }
+
+  it('gives every practice door its tour, and The Middle none', () => {
+    for (const door of NAMING.doors.items) {
+      expect(door.tourHref, `door ${door.id}`).toBe(TOUR_ANCHORS[door.id])
+    }
+    expect(NAMING.doors.items.find((d) => d.id === 'conductor')?.tourHref).toBeUndefined()
+  })
+
+  it('points each tour link at the room behind its own door', () => {
+    for (const door of NAMING.doors.items) {
+      if (!door.tourHref) continue
+      expect(door.tourHref.startsWith(`${door.href}#`), `door ${door.id}`).toBe(true)
+    }
+  })
+})
+
+/** The triptych: three cards, one per practice, each pointing at that practice's tour. The copy
+ *  rules it has to keep are the ones that go stale silently if nobody checks them. */
+describe('NAMING.triptych', () => {
+  const cards = NAMING.triptych.cards
+
+  it('carries one card per practice door, in the doors\' own order', () => {
+    const practiceDoors = NAMING.doors.items.filter((d) => d.tourHref)
+    expect(cards.map((c) => c.id)).toEqual(practiceDoors.map((d) => d.id))
+  })
+
+  it('sends each card to the same tour its door does', () => {
+    for (const card of cards) {
+      const door = NAMING.doors.items.find((d) => d.id === card.id)
+      expect(card.href, `card ${card.id}`).toBe(door?.tourHref)
+    }
+  })
+
+  it('names as many vocabularies in the kicker as there are cards', () => {
+    // Same guard as the catalogues line above, same reason: the number carries the sentence, so
+    // it must be counted rather than remembered.
+    const word = numberWord(cards.length).toUpperCase()
+    expect(NAMING.triptych.kicker).toBe(`${word} DOORS, ${word} VOCABULARIES`)
+  })
+
+  it('writes captions as rules, not as instances — the fragments move with the record', () => {
+    for (const card of cards) {
+      // no digits and no ISO dates: a caption that named today's line, day or work would be
+      // untrue by the next nightly, and nothing on the page would say so
+      expect(card.caption, `caption ${card.id}`).not.toMatch(/\d/)
+      expect(card.cta, `cta ${card.id}`).not.toMatch(/\d/)
+      expect(card.caption.length, `caption ${card.id}`).toBeGreaterThan(80)
+      expect(card.cta.endsWith('→'), `cta ${card.id}`).toBe(true)
     }
   })
 })

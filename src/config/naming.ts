@@ -17,6 +17,30 @@ export interface DoorItem {
   description: string
   /** Only The Middle has no resident practice — shown instead of "resident: <name>". */
   noResident?: string
+  /**
+   * Deep link to the practice's own guided tour — the anchor the room's tour wrapper carries
+   * (WP7, 2026-08-01). A door says WHO lives there; the tour is the shortest path to what that
+   * actually looks like in the record, so it hangs on the door itself rather than being findable
+   * only by scrolling the room. The Middle has none: it is a contact zone, not a practice, and
+   * has no tour of its own to send anyone to.
+   */
+  tourHref?: string
+}
+
+/** One card of the entrance's triptych (WP7). One per PRACTICE — the copy only; the picture is
+ *  derived at build time by src/lib/hub/triptych.ts from the same committed record its room reads. */
+export interface TriptychCard {
+  id: 'ulysses' | 'meridian' | 'ensemble'
+  /** who this is, in the same words as the door above it */
+  practice: string
+  /** what the practice's drawing is CALLED in its own house */
+  title: string
+  /** what the fragment on the card shows — phrased as the RULE, not the instance, because the
+   *  fragment moves with the record and a caption naming today's line would go stale by morning */
+  caption: string
+  /** the card's own call to action, into that practice's tour */
+  cta: string
+  href: string
 }
 
 export const NAMING = {
@@ -72,6 +96,8 @@ export const NAMING = {
   doors: {
     kicker: 'WHO LIVES HERE',
     kickerSub: 'FOUR DOORS',
+    /** the small link inside each practice door (WP7) — one wording for all three */
+    tourLabel: '→ take the tour',
     items: [
       /* Türbeschreibungen neu (Frank, 24.07.): Auskunft statt Poesie — jede Tür sagt in
        * einem Satz, was die Praxis tut, aus ihrer aktuellen Selbstbeschreibung (Engine-READMEs),
@@ -81,18 +107,21 @@ export const NAMING = {
         name: 'The Atelier',
         href: '/atelier',
         description: 'Machine-run artistic research in a work-line and its studies — the machines find problems, build works and critique themselves; failures stay on the record, checkably.',
+        tourHref: '/atelier#tour-killed-on-the-pivot',
       },
       {
         id: 'meridian',
         name: 'The Field',
         href: '/field',
         description: 'An empirical research collective putting the measuring instruments of our time on trial — verifiable instruments, adversarial review, a claims ledger.',
+        tourHref: '/field#tour-the-gauntlet',
       },
       {
         id: 'ensemble',
         name: 'The Studio',
         href: '/studio',
         description: 'An artist collective under no label, staging works of data art in autonomous sessions — every element carries an honesty tier: verified, sourced or imagined.',
+        tourHref: '/studio#tour-three-returns',
       },
       {
         id: 'conductor',
@@ -102,6 +131,71 @@ export const NAMING = {
         noResident: 'no resident — kept by the conductor',
       },
     ] as DoorItem[],
+  },
+
+  /**
+   * The triptych (WP7, 2026-08-01) — three cards directly under the doors, each holding a
+   * fragment of that practice's own figure, drawn by that practice's own builder from the same
+   * committed record its room reads (src/lib/hub/triptych.ts).
+   *
+   * What the copy has to carry, and why it is written the way it is:
+   *   · the frame, the caption slot and the provenance line are IDENTICAL for all three, because
+   *     the whole point of the arrangement is that the difference you see is the practices' and
+   *     not the layout's;
+   *   · every caption states a RULE ("the line opened most recently"), never an instance. The
+   *     fragments move with the record — that is the currency rule applied to a picture — and a
+   *     caption naming today's line would be a lie by tomorrow morning;
+   *   · no numbers: the pictures carry the counting, the words carry the invitation.
+   */
+  triptych: {
+    kicker: 'THREE DOORS, THREE VOCABULARIES',
+    kickerSub: 'ONE FRAME, THREE DRAWING LANGUAGES',
+    note: 'The practices share no way of drawing — that is a rule of this ecology, not an accident of who built what. Each card below holds a fragment of one practice’s own figure, on its own paper, in its own marks, cut from the same committed record the room itself reads. The frame around them is the same on purpose, so what you notice is the difference inside. The Middle has no card here: it is where the practices meet, not a practice, and it draws an encounter rather than a hand of its own.',
+    provenancePrefix: 'derived at build time from',
+    cards: [
+      {
+        id: 'ulysses',
+        practice: 'The Atelier · Ulysses',
+        title: 'a measured sheet',
+        caption: 'The line this practice opened most recently, and where the lines around it come to rest: on this sheet every question runs along one shared time axis and curves into the harbour it reached — published, kept as a study, or closed unfinished.',
+        cta: 'read how a question was killed on its own terms →',
+        href: '/atelier#tour-killed-on-the-pivot',
+      },
+      {
+        id: 'meridian',
+        practice: 'The Field · Meridian',
+        title: 'a strip of millimetre tape',
+        caption: 'The last marked days of the record strip: an instrument entering service, the sessions stamped on their own day, a review cutting in from outside — and the resting pen, where the tape runs on.',
+        cta: 'read how a claim was taken off them →',
+        href: '/field#tour-the-gauntlet',
+      },
+      {
+        id: 'ensemble',
+        practice: 'The Studio · Ensemble',
+        title: 'a floor that keeps every mark',
+        caption: 'The position this house lit most recently, on the stage floor: the lamp on the bar, the hard-edged pool it plays in, and the tape that blocks the position whether or not the light is still on.',
+        cta: 'read how a premiere came back three times →',
+        href: '/studio#tour-three-returns',
+      },
+    ] as TriptychCard[],
+  },
+
+  /**
+   * The engine room, promoted (WP7, 2026-08-01): who lives here and what they last did belong
+   * together, so this section now stands directly after the doors and their triptych, ahead of
+   * LATEST. Its wordings live here with the rest of the entrance's copy rather than inline in the
+   * template — the same rule every other block on this page follows.
+   */
+  maschinenraum: {
+    kicker: 'MASCHINENRAUM',
+    kickerSub: 'WHAT THEY LAST DID',
+    fullView: { label: '→ full view', href: '/maschinenraum' },
+    /** the per-lane link into that practice's tour; the Plenum has no tour on this site */
+    tourLabel: 'tour →',
+    /** what a row says when a practice's mirror carries nothing */
+    noMirror: 'no mirror',
+    noteLead: 'committed mirrors only — each row carries its source’s own state; details and joint inquiries in the',
+    noteLinkLabel: 'Maschinenraum',
   },
 
   /** Umgerahmt (Frank, 16.07. nachmittags): datavism und data-snack sind KEINE Ableger der

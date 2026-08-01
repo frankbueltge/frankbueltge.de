@@ -1,0 +1,77 @@
+---
+// src/components/studio/tours/ThreeReturns.astro — the Studio's guided tour of One Tap, composed:
+// the WP5 tour engine (components/dataviz/Tour.astro) driving the WP6c season floor
+// (components/studio/SeasonFloor.astro), with the scene sequence and its verbatim quotes coming
+// from src/lib/tour/studio-one-tap.ts.
+//
+// The progressive-enhancement ladder, in this composition's own terms:
+//
+//   1. NO JS — the tour's figure column stays `hidden`, and each scene shows its own build-time
+//      still: a cropped, filtered render of the SAME builder the live figure uses, so a still can
+//      never drift from the figure it stands in for. Under the scenes, the season's full record as
+//      a table with every reason verbatim and its source. Complete, and readable straight through.
+//   2. WITH JS — the stills hide, ONE season floor becomes sticky beside the scenes and is driven
+//      scene by scene (filter / select / dim / annotate). The last scene lifts the filter, so a
+//      visitor who read to the end is left looking at the whole season, interactive.
+//
+// The record (table + provenance) is rendered HERE rather than by SeasonFloor, because the tour's
+// figure column is hidden without JS and the data floor must never be the thing that disappears.
+import Tour from '@/components/dataviz/Tour.astro'
+import TableFallback from '@/components/dataviz/TableFallback.astro'
+import SeasonFloor from '@/components/studio/SeasonFloor.astro'
+import { oneTapTour, ONE_TAP_FIGURE } from '@/lib/tour/studio-one-tap'
+import { buildSeasonFloorSvg, seasonRows, SEASON_COLUMNS, type SeasonModel } from '@/lib/studio/season'
+import type { Scene } from '@/lib/tour/types'
+import { STUDIO_NARRATIVE } from '@/config/studio-wording'
+
+export interface Props {
+  model: SeasonModel
+}
+
+const { model } = Astro.props
+const w = STUDIO_NARRATIVE.seasonFloor
+
+/**
+ * One scene's build-time still, rendered from the same season builder with that scene's own focus
+ * applied. `focus.filter === null` is the tour's "lift the filter" signal, and it doubles as the
+ * signal to render UNCROPPED: the closing scene is about the whole season, so its still shows the
+ * whole floor while every earlier one crops to the mark it is talking about.
+ */
+const renderStill = (scene: Scene): string => {
+  const liftsFilter = scene.focus.filter === null
+  return buildSeasonFloorSvg(model, {
+    filter: scene.focus.filter ?? undefined,
+    dim: scene.focus.dim,
+    select: scene.focus.select,
+    annotate: scene.focus.annotate,
+    cropTo: liftsFilter ? undefined : scene.focus.select,
+    still: true,
+    label: `${scene.heading} — ${w.altText}`,
+    headline: w.curtainLine,
+    productionLabel: w.productionLabel,
+  })
+}
+
+const rows = seasonRows(model)
+const provenance = `${w.provenancePrefix} ${model.provenance.join(' · ')}`
+---
+
+<div id="tour-three-returns" class="st-tour-wrap">
+  <Tour tour={oneTapTour} renderStill={renderStill}>
+    <SeasonFloor slot="figure" model={model} id={ONE_TAP_FIGURE} withRecord={false} />
+  </Tour>
+
+  <TableFallback
+    summary={w.tableSummary}
+    caption={w.tableCaption}
+    columns={SEASON_COLUMNS}
+    rows={rows}
+    provenance={provenance}
+  />
+</div>
+
+<style>
+  .st-tour-wrap {
+    scroll-margin-top: 3rem;
+  }
+</style>

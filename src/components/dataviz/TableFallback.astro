@@ -1,0 +1,92 @@
+---
+// src/components/dataviz/TableFallback.astro — the no-JS / data-honesty floor under every
+// figure (WP3, "shared dataviz primitives"): every practice figure that gets ported onto these
+// primitives keeps its existing "…as a table" <details> (ProcessFigure.astro's
+// `.at-proc-table`, maschinenraum/Partitur.astro's score-as-a-table, begegnungen/ScoreFigure's
+// register table) — nothing is ever reachable ONLY by hovering or clicking an SVG mark. Behavior
+// + structure only (ADR 0010) — no color, no font; a practice's stylesheet decides how its own
+// table reads.
+export interface TableColumn {
+  key: string
+  label: string
+  align?: 'left' | 'right' | 'center'
+  nowrap?: boolean
+}
+export interface Props {
+  /** the <summary> text — what the collapsed <details> reads before opening */
+  summary: string
+  open?: boolean
+  columns: TableColumn[]
+  rows: Record<string, string | number>[]
+  /** visually-hidden <caption> — read by assistive tech, never shown */
+  caption: string
+  /** rendered as a <p class="dv-prov"> after the table, if given */
+  provenance?: string
+}
+const { summary, open = false, columns, rows, caption, provenance } = Astro.props
+---
+
+<details class="dv-table-fallback" open={open}>
+  <summary>{summary}</summary>
+  <div class="dv-table-wrap">
+    <table class="dv-table">
+      <caption class="dv-visually-hidden">{caption}</caption>
+      <thead>
+        <tr>
+          {
+            columns.map((c) => (
+              <th scope="col" data-align={c.align} data-nowrap={c.nowrap ? '' : undefined}>
+                {c.label}
+              </th>
+            ))
+          }
+        </tr>
+      </thead>
+      <tbody>
+        {
+          rows.map((row) => (
+            <tr>
+              {columns.map((c) => (
+                <td data-align={c.align} data-nowrap={c.nowrap ? '' : undefined}>
+                  {row[c.key]}
+                </td>
+              ))}
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+  {provenance && <p class="dv-prov">{provenance}</p>}
+</details>
+
+<style>
+  .dv-table-wrap {
+    overflow-x: auto;
+  }
+  .dv-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .dv-table [data-align='right'] {
+    text-align: right;
+  }
+  .dv-table [data-align='center'] {
+    text-align: center;
+  }
+  .dv-table [data-nowrap] {
+    white-space: nowrap;
+  }
+  /* standard visually-hidden technique — position/sizing only, nothing typographic */
+  .dv-visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>
