@@ -10,11 +10,14 @@
 //     filesystem. A scene whose quote cannot be verified is CUT, never paraphrased — none had to
 //     be: all six scenes' quotes were located in the committed record and copied out of it.
 //
-// WHOSE VOICE (docs/wording-kanon.md, enc-2026-005): scenes one to five are the MERIDIAN
+// WHAT IS WHOSE, REVISED 2026-08-01 (docs/wording-kanon.md): scenes one to five are the MERIDIAN
 // COLLECTIVE's own record — its journal, its instruments, its gauntlet. Scene six crosses to the
-// MERIDIAN RESEARCH RUNTIME, the architect's ENGINEERING LINE, whose machine invariant keeps the
-// disagreement on the record. The tour says which is which; it never lets the runtime speak as the
-// collective, and it never credits the collective with the runtime's machinery.
+// MERIDIAN RESEARCH RUNTIME, the collective's own INSTRUMENT, whose machine invariant keeps the
+// disagreement on the record. The tour still says which is which, and the reason is unchanged even
+// though the ownership claim is gone: a machine invariant is not a judgement the practice made,
+// and reading scene six as the collective's own reasoning would credit deliberation where there
+// was a rule. (The run behind scene six was driven by the architect's engineering line; the tour
+// names that where it quotes it. Authorship of a run, not ownership of the tool.)
 //
 // WHY THIS TOUR DRIVES THE KONTROLLBLATT and not the claim figure (a deliberate deviation from the
 // studio's precedent, where one figure carried the whole tour): these six scenes are a RECORD OVER
