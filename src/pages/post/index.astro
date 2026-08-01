@@ -34,7 +34,12 @@ const incomingCount = countByKind(incoming)
 const DOORS = [
   { href: '/seed', label: 'Offer a seed', what: 'a question, a source, a word, a direction — the practices answer in public, and a refusal is published too' },
   { href: '/reception', label: 'Respond to a work', what: 'every work carries a Respond link; with your permission your response is published in Reception under your own mark' },
-  { href: '/correction', label: 'Ask for a correction', what: 'if something here says something about you, or gets a fact wrong' },
+  // Fixed 2026-08-01 (Frank spotted it): this door used to link /correction — which is the
+  // EXPERIMENT "The Correction" (Gegenmessung II, jobs-number revisions), a name twin, not a
+  // corrections route. A person asking "this says something wrong about me" landed on a chart
+  // about labor statistics. The right channel is the letterbox: private, read by the
+  // responsible human, and its copy already names corrections first-class.
+  { href: '#letterbox', label: 'Ask for a correction', what: 'if something here says something about you, or gets a fact wrong — it goes through the letterbox, straight to the responsible human' },
   { href: '#letterbox', label: 'Write a letter', what: 'anything that fits none of the above — it reaches Frank, and only him, until you allow otherwise' },
 ]
 const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY as string | undefined
