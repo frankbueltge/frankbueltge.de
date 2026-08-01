@@ -201,7 +201,11 @@ export const PALETTES: readonly PaletteSet[] = [
       },
     ],
     usedBy: [
-      'src/components/pages/HubEntrance.astro',
+      // The hub's own declaration moved out of HubEntrance.astro's scoped <style> on 2026-08-01
+      // (WP7): the triptych is a component of its own, Astro's scoped styles do not reach a child
+      // component, and the alternative was two copies of this quartet on one page. Both the doors
+      // grid and the triptych cards now inherit it from .hub-voices in this one stylesheet.
+      'src/styles/hub-triptych.css',
       'src/styles/score-map.css',
       'src/components/maschinenraum/Partitur.astro',
     ],
