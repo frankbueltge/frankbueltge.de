@@ -12,6 +12,7 @@ import {
   MARK_OFFSETS,
   nearestMarkOffset,
   scoreOpenings,
+  VOICE_META,
   type ScoreEvent,
 } from './partitur'
 
@@ -177,5 +178,35 @@ describe('buildScore', () => {
   })
   it('no events, no score — the surface then claims nothing', () => {
     expect(buildScore([])).toBeNull()
+  })
+})
+
+/** Every lane label on the score is a link into that voice's own house (2026-08-02). The score is
+ *  the one surface where all four voices sound at equal weight, and for the Plenum — a guest with
+ *  no door on the hub — its lane is the only place on the entrance where it appears at all. So a
+ *  lane without a house would strand a voice, and the compact score has no detail panel to fall
+ *  back on. */
+describe('VOICE_META', () => {
+  it('gives every voice on the axis a room to open', () => {
+    const model = buildScore([
+      ev({ date: '2026-07-01' }),
+      ev({ voice: 'field', date: '2026-07-01' }),
+      ev({ voice: 'studio', date: '2026-07-01' }),
+      ev({ voice: 'plenum', date: '2026-07-01' }),
+    ])
+    for (const lane of model!.lanes) {
+      const meta = VOICE_META[lane.voice]
+      expect(meta, `voice ${lane.voice}`).toBeDefined()
+      expect(meta.href.startsWith('/'), `voice ${lane.voice}`).toBe(true)
+      expect(meta.short.length, `voice ${lane.voice}`).toBeGreaterThan(0)
+    }
+  })
+
+  it('sends the guest voice to its own room, not into a practice of this house', () => {
+    // The Plenum is data-snack.com's resident collective; /plenum is the record it keeps here.
+    expect(VOICE_META.plenum.href).toBe('/plenum')
+    expect(VOICE_META.plenum.label).toContain('data-snack')
+    const practiceRooms = (['atelier', 'field', 'studio'] as const).map((v) => VOICE_META[v].href)
+    expect(practiceRooms).not.toContain(VOICE_META.plenum.href)
   })
 })

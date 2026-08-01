@@ -8,7 +8,7 @@
 // a table rendition); the client layer only adds crosshair, tooltip, panel and
 // keyboard. Encounter arcs are deliberately absent: the register carries no dates yet.
 import type { ScoreModel, VoiceId } from '@/lib/partitur'
-import { MARK_OFFSETS, fanOffsets } from '@/lib/partitur'
+import { MARK_OFFSETS, VOICE_META, fanOffsets } from '@/lib/partitur'
 import Readout from '@/components/dataviz/Readout.astro'
 import DetailPanel from '@/components/dataviz/DetailPanel.astro'
 import TableFallback, { type TableColumn } from '@/components/dataviz/TableFallback.astro'
@@ -30,12 +30,6 @@ interface Props {
 
 const { model, ji = null, compact = false } = Astro.props
 
-const VOICE_META: Record<VoiceId, { label: string; short: string; href: string }> = {
-  atelier: { label: 'Atelier · Ulysses', short: 'atelier', href: '/atelier/journal' },
-  field: { label: 'Field · Meridian', short: 'field', href: '/field' },
-  studio: { label: 'Studio · Ensemble', short: 'studio', href: '/studio' },
-  plenum: { label: 'Plenum · data-snack', short: 'plenum', href: '/plenum' },
-}
 const GLYPH_LABEL: Record<string, string> = {
   session: 'session landed',
   work: 'work landed',
@@ -295,11 +289,20 @@ const minWidth = 720
           </g>
         )}
 
-        {/* voices: quiet baseline (the band carries the lane now), label, count, as-of */}
+        {/* voices: quiet baseline (the band carries the lane now), label, count, as-of.
+            The label is the lane's way into its own house (2026-08-02) — an SVG anchor around the
+            existing text, in the label gutter left of the axis, so it never sits over a mark and
+            the hit areas below stay untouched. It carries no colour of its own: an underline on
+            hover and a focus ring are enough on this stage, and the voice colours are already
+            spoken for by the marks. This is the ONE way the compact score on the entrance leads
+            anywhere per voice (it has no detail panel), and it is where the Plenum — a guest with
+            no door on the hub — gets its link to /plenum. */}
         {model.lanes.map((lane, li) => (
           <g>
             <line x1={X0} x2={X1} y1={laneY(li)} y2={laneY(li)} stroke="var(--pt-grid)" stroke-width="1" />
-            <text x="14" y={laneY(li) - 3} class="pt-t-voice">{VOICE_META[lane.voice].short}</text>
+            <a class="pt-voice-link" href={VOICE_META[lane.voice].href} aria-label={`${VOICE_META[lane.voice].label} — open this voice’s own room`}>
+              <text x="14" y={laneY(li) - 3} class="pt-t-voice">{VOICE_META[lane.voice].short}</text>
+            </a>
             <text x="14" y={laneY(li) + 12} class="pt-t-meta">
               {lane.count === 0
                 ? 'nothing mirrored'
@@ -708,6 +711,20 @@ const minWidth = 720
     letter-spacing: 0.14em;
     text-transform: uppercase;
     fill: var(--pt-ink);
+  }
+  /* the lane label as a link: quiet until asked, and never a second colour on the stage */
+  .pt-voice-link {
+    cursor: pointer;
+    outline: none;
+  }
+  .pt-voice-link:hover text.pt-t-voice,
+  .pt-voice-link:focus-visible text.pt-t-voice {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .pt-voice-link:focus-visible text.pt-t-voice {
+    outline: 2px solid var(--pt-muted);
+    outline-offset: 3px;
   }
   svg text.pt-t-meta {
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;

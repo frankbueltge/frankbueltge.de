@@ -52,6 +52,24 @@ export interface ScoreModel {
 }
 
 const VOICE_ORDER: VoiceId[] = ['atelier', 'field', 'studio', 'plenum']
+
+/**
+ * Who each lane is, and the room it leads into. Moved out of the score component on 2026-08-02,
+ * when the lane labels themselves became links: an href that decides where a reader lands is data,
+ * and data in this repo is testable (partitur.test.ts checks every voice has a house).
+ *
+ * `href` is the voice's OWN room, not a guided tour — the score's detail panel has always opened
+ * these ("open the log →"), and one voice must not lead two different ways from one figure.
+ * The Plenum's room is /plenum: it is a guest here (data-snack.com's resident collective), it has
+ * no door on the hub, and its lane is the one place on the entrance where its voice sounds — so
+ * the lane is where it gets linked.
+ */
+export const VOICE_META: Record<VoiceId, { label: string; short: string; href: string }> = {
+  atelier: { label: 'Atelier · Ulysses', short: 'atelier', href: '/atelier/journal' },
+  field: { label: 'Field · Meridian', short: 'field', href: '/field' },
+  studio: { label: 'Studio · Ensemble', short: 'studio', href: '/studio' },
+  plenum: { label: 'Plenum · data-snack', short: 'plenum', href: '/plenum' },
+}
 const GLYPH_RANK: Record<Glyph, number> = { fail: 2, work: 1, session: 0 }
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/
 
