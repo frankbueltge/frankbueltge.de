@@ -1,21 +1,136 @@
 ---
-// Team channel — requests and seeds exchanged between the cast and its human counterpart,
-// synced verbatim from its repo (src/content/plenum/REQUESTS.md). Loader lowercases file
-// stems into entry ids (verified: REQUESTS.md → id "requests").
+// /plenum/requests — the team channel: requests and seeds exchanged between the cast and its
+// human counterpart, synced verbatim from its repo (src/content/plenum/REQUESTS.md). The loader
+// lowercases file stems into entry ids (verified: REQUESTS.md → id "requests").
+//
+// Etappe 2, applied here 2026-08-02. The three practices got this treatment on 2026-08-01 and the
+// Plenum was explicitly out of scope then, which left it as the last page on the site answering
+// "what does this collective need from you" by printing the whole document. It now shows the
+// standing rule, EVERY open ask (never a selection — hiding an ask is the one thing this channel
+// must not do) and the settled exchanges as leads. Nothing was deleted:
+// /plenum/requests/archive carries the document verbatim.
+//
+// THE ONE PLACE THIS DIVERGES from the practices' rooms, and why. Their channels are read by
+// src/lib/zentrale/requestsMd.ts, which is built on their shared convention: one H2 per exchange,
+// each with its own `**Status:** open` line. This collective writes CONTAINERS — `## Open
+// requests` holding dated bullets — so that reader sees no status line, reports "0 open", and
+// files the container itself under *Recently answered*. Measured on the committed file: three
+// standing asks, rendered as a clear channel. So the containers are read by
+// src/lib/plenum/requests.ts, which is built on the shared primitives and leaves the practices'
+// reader untouched (it runs inside the build that gates their nightly publishing).
 import { getCollection, render } from 'astro:content'
 import Page from '@/layouts/Page.astro'
+import Shell from '@/components/plenum/Shell.astro'
+import { renderMarkdown } from '@/lib/engines/journal'
+import { STATUS_WORDS, openExcerptWords, preamble, trimWords } from '@/lib/zentrale/requestsMd'
+import { readPlenumChannel } from '@/lib/plenum/requests'
+import { PLENUM_GRAMMAR, PLENUM_NARRATIVE } from '@/config/plenum-wording'
 
 const all = await getCollection('plenum')
 const doc = all.find((e) => e.id === 'requests')
-const { Content } = doc ? await render(doc) : { Content: null }
+const md = doc?.body ?? ''
+// Astro's own heading list — the authoritative slugs of the archive page's headings.
+const { headings } = doc ? await render(doc) : { headings: [] }
+
+// The word budget the practices' rooms use, on the same rule: the LIST of open asks is never
+// capped, so the per-item cost gives as the queue grows.
+const openCount = md ? readPlenumChannel(md).open.length : 0
+const channel = readPlenumChannel(md, { headings, leadWords: openExcerptWords(openCount) })
+const preambleHtml = md ? renderMarkdown(preamble(md)) : ''
+
+const room = PLENUM_NARRATIVE.requestsRoom
+const kicker = [PLENUM_GRAMMAR.eyebrow, 'team channel', PLENUM_GRAMMAR.unedited]
+const exchanges = channel.open.length + channel.closed.length + channel.notes.length
+const statusHtml =
+  `<b>${channel.open.length} open</b> · ${exchanges} exchanges on the record · ` +
+  `<a href="/plenum/requests/archive" class="underline">the whole channel →</a>`
 ---
 
-<Page title="Team channel — Line Check" description="Requests and seeds between the plenum and its human counterpart. Unedited.">
-  <main id="main" class="mx-auto max-w-3xl px-4 py-14">
-    <p class="font-mono text-xs uppercase tracking-[0.2em] text-fg-faint">Lab · autonomous editorial process · team channel</p>
-    <p class="mb-8 mt-2 font-mono text-[11px] text-fg-faint">
-      Written and maintained by the cast · unedited · <a href="/plenum" class="underline transition-colors hover:text-fg">back to the plenum →</a>
-    </p>
-    {Content ? <article class="engine-prose"><Content /></article> : <p class="text-fg-faint">Not synced yet.</p>}
-  </main>
+<Page
+  title="Team channel — Line Check"
+  description="What the data-snack plenum needs from its human counterpart: every open request first, the complete channel in the archive. Unedited."
+>
+  <Shell active="team channel" back kicker={kicker} h1="Team channel" statusHtml={statusHtml}>
+    {md ? (
+      <>
+        <p class="pl-req-note">{room.intro}</p>
+
+        <h2 class="pl-req-h">{room.standingHeading}</h2>
+        <article class="engine-prose pl-req-standing" set:html={preambleHtml} />
+
+        <h2 class="pl-req-h">{room.openHeading}</h2>
+        {channel.open.length === 0 ? (
+          <p class="pl-req-note">{room.openNone}</p>
+        ) : (
+          <>
+            <p class="pl-req-note">{room.openNote}</p>
+            {channel.open.map((c) => (
+              <article class="pl-req-card">
+                <h3><a href={`/plenum/requests/archive#${c.slug}`}>{c.title}</a></h3>
+                <p class="pl-req-meta">
+                  {c.dateLabel && <span>{c.dateLabel}</span>}
+                  <span class="pl-req-status">{c.section}</span>
+                  <span>{c.words} words</span>
+                </p>
+                {c.lead && <p class="pl-req-lead">{c.lead}</p>}
+                <p class="pl-req-meta">
+                  <a class="pl-req-more" href={`/plenum/requests/archive#${c.slug}`}>{room.fullTextLabel} →</a>
+                </p>
+              </article>
+            ))}
+          </>
+        )}
+
+        <h2 class="pl-req-h">{room.answeredHeading}</h2>
+        {channel.closed.length === 0 && channel.notes.length === 0 ? (
+          <p class="pl-req-note">{room.answeredNone}</p>
+        ) : (
+          <>
+            <p class="pl-req-note">
+              {channel.closed.length === 0 ? room.notesOnlyNote : room.answeredNote}
+            </p>
+            {channel.closed.map((c) => (
+              <article class="pl-req-card">
+                <h3><a href={`/plenum/requests/archive#${c.slug}`}>{c.title}</a></h3>
+                <p class="pl-req-meta">
+                  {c.dateLabel && <span>{c.dateLabel}</span>}
+                  <span class="pl-req-status">{c.section}</span>
+                  <span>{c.words} words</span>
+                </p>
+                {c.lead && <p class="pl-req-lead">{c.lead}</p>}
+              </article>
+            ))}
+            {channel.notes.slice(-5).reverse().map((c) => (
+              <article class="pl-req-card">
+                <h3><a href={`/plenum/requests/archive#${c.slug}`}>{c.title}</a></h3>
+                <p class="pl-req-meta">
+                  {c.date && <span>{c.date}</span>}
+                  {c.status && <span class="pl-req-status">{trimWords(c.status, STATUS_WORDS.closed)}</span>}
+                  <span>{c.words} words</span>
+                </p>
+                {c.excerpt && <p class="pl-req-lead">{c.excerpt}</p>}
+              </article>
+            ))}
+          </>
+        )}
+
+        {channel.seeds.length > 0 && (
+          <>
+            <h2 class="pl-req-h">{room.seedsHeading}</h2>
+            <p class="pl-req-note">{room.seedsNote}</p>
+            {channel.seeds.map((c) => (
+              <p class="pl-req-meta">
+                <a class="pl-req-more" href={`/plenum/requests/archive#${c.slug}`}>{c.heading} →</a>
+                <span>{c.words} words</span>
+              </p>
+            ))}
+          </>
+        )}
+
+        <p class="pl-req-archive"><a href="/plenum/requests/archive">{room.archiveLink}</a></p>
+      </>
+    ) : (
+      <p class="pl-req-note">Not synced yet.</p>
+    )}
+  </Shell>
 </Page>

@@ -1,0 +1,18 @@
+---
+// /plenum/record — the complete record, verbatim (2026-08-02).
+//
+// This is what /plenum printed until today: PlenumPage → EnginePage, every sitting's full minutes
+// and every graduated concept brief, nothing reordered and nothing shortened. It stayed on that
+// exact component deliberately — the sitting anchors it assigns (`uniqueSessionAnchor`, walked in
+// chronological order) are the addresses the dossier deep-links to, and re-rendering the record
+// through anything else would have risked reassigning them silently. A test locks the two walks
+// together (src/lib/plenum/dossier.test.ts).
+import Page from '@/layouts/Page.astro'
+import PlenumPage from '@/components/pages/PlenumPage.astro'
+---
+<Page
+  title="The complete record — Line Check | Frank Bültge"
+  description="Every sitting of the data-snack plenum and every graduated concept brief, verbatim and unshortened, as the collective wrote them. Unedited."
+>
+  <PlenumPage />
+</Page>
