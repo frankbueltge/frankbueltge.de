@@ -485,6 +485,85 @@
   margin-top: 3px;
 }
 
+/* ——— Etappe 2: the register is an index, the page is a page ————————————————————
+   The row keeps the geometry of the old <summary> exactly (the register must not look
+   re-drawn just because it stopped folding out) — it is a link now, not a disclosure. */
+.atelier-surface .at-reg-row {
+  border-top: 1px solid var(--at-hairline);
+  display: flex;
+  gap: 1.2em;
+  align-items: baseline;
+  padding: 11px 2px;
+  font-family: var(--at-font-record);
+  font-size: 13px;
+  color: var(--at-ink-2);
+  text-decoration: none;
+}
+.atelier-surface .at-reg-row .at-sess-no { color: var(--at-red); font-weight: 600; min-width: 3.2em; }
+.atelier-surface .at-reg-row .at-sess-title {
+  font-family: var(--at-font-record);
+  font-style: italic;
+  font-size: 15px;
+  color: var(--at-ink);
+}
+.atelier-surface .at-reg-row:hover .at-sess-title { text-decoration: underline; }
+.atelier-surface .at-reg-row .at-sess-date { margin-left: auto; white-space: nowrap; }
+.atelier-surface .at-reg-row:focus-visible { outline: 2px solid var(--at-red); outline-offset: 2px; }
+
+/* one page of the journal: the prose, with the two neighbours above and below it */
+.atelier-surface .at-page-nav {
+  display: flex;
+  gap: 1.6em;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--at-hairline);
+  margin-top: 22px;
+  padding-top: 11px;
+  font: 12px var(--at-font-record);
+  color: var(--at-ink-2);
+}
+.atelier-surface .at-page-nav a { color: var(--at-ink-2); text-decoration: none; }
+.atelier-surface .at-page-nav a:hover { color: var(--at-ink); text-decoration: underline; }
+.atelier-surface .at-page-nav .at-nav-next { margin-left: auto; }
+
+/* ——— Etappe 2: the team channel shows what is open ——————————————————————————— */
+.atelier-surface .at-req-card {
+  border-top: 1px solid var(--at-hairline);
+  padding: 14px 2px;
+  max-width: 78ch;
+}
+.atelier-surface .at-req-card h3 { font: italic 600 15.5px/1.35 var(--at-font-record); color: var(--at-ink); margin: 0; }
+.atelier-surface .at-req-card h3 a { color: inherit; text-decoration: none; }
+.atelier-surface .at-req-card h3 a:hover { text-decoration: underline; }
+.atelier-surface .at-req-meta {
+  display: flex;
+  gap: 1em;
+  flex-wrap: wrap;
+  font: 12px var(--at-font-record);
+  color: var(--at-ink-2);
+  margin: 5px 0 0;
+}
+.atelier-surface .at-req-meta .at-req-status { color: var(--at-red); }
+.atelier-surface .at-req-card p.at-req-lead {
+  font-family: var(--at-font-record);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--at-ink);
+  margin: 7px 0 0;
+}
+.atelier-surface .at-req-card .at-req-more { font: 12px var(--at-font-record); color: var(--at-thread); text-decoration: underline; }
+.atelier-surface .at-req-h {
+  font: 600 13px/1.3 var(--at-font-record);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--at-ink);
+  margin: 30px 0 2px;
+}
+.atelier-surface .at-req-note { font: 12.5px/1.6 var(--at-font-record); color: var(--at-ink-2); max-width: 74ch; margin: 0 0 6px; }
+/* the standing rule reads at the same measure as the cards beside it, not the full sheet */
+.atelier-surface .at-req-standing { max-width: 78ch; font-size: 14.5px; }
+.atelier-surface .at-req-archive { margin-top: 26px; font: 13px var(--at-font-record); }
+.atelier-surface .at-req-archive a { color: var(--at-thread); text-decoration: underline; }
+
 @media (prefers-reduced-motion: reduce) {
   .atelier-surface * { transition: none !important; animation: none !important; }
 }

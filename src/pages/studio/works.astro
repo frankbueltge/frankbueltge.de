@@ -67,7 +67,8 @@ const statusHtml = `<b>${works.length} work${works.length === 1 ? '' : 's'} prem
             {meta.title ?? slug}
             {meta.date && <span class="st-work-date">{meta.date}</span>}
           </h3>
-          {badge && <a class="st-work-badge" href={`/studio/history#${badge.anchor}`}>{badge.label} — on the record →</a>}
+          {/* Etappe 2: the record moved off the playbill into its own room — one page per session. */}
+          {badge && <a class="st-work-badge" href={`/studio/journal/${badge.anchor}/`}>{badge.label} — on the record →</a>}
         </div>
         {/* Teaser bevorzugt (Frank, 25.07.); ohne Teaser weiter der lange embodies-Text. */}
         {(() => { const d = teaserFor('studio', slug) ?? meta.embodies ?? meta.verkoerpert; return d && <p>{d}</p> })()}

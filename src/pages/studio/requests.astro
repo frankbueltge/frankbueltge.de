@@ -1,23 +1,103 @@
 ---
-// Team channel — requests and seeds exchanged between the collective and its human
-// counterpart, synced verbatim from its repo (src/content/studio/REQUESTS.md). Loader
-// lowercases file stems into entry ids (verified: REQUESTS.md → id "requests").
+// /studio/requests — the team channel: requests and seeds exchanged between the house and its
+// human counterpart, synced verbatim from its repo (src/content/studio/REQUESTS.md).
+//
+// Etappe 2 (2026-08-01): this page used to print the whole 16,100-word document. It now shows
+// the standing rule, EVERY open item (never a selection — hiding an ask is the one thing this
+// channel must not do) and the five most recent closed exchanges as leads. Nothing was
+// deleted: /studio/requests/archive carries the document verbatim, and each card links into it
+// at the section's own heading id.
 import { getCollection, render } from 'astro:content'
 import Page from '@/layouts/Page.astro'
 import Frame from '@/components/studio/surface/Frame.astro'
+import { renderMarkdown } from '@/lib/engines/journal'
+import { STATUS_WORDS, openExcerptWords, preamble, requestCards, trimWords } from '@/lib/zentrale/requestsMd'
+import { STUDIO_NARRATIVE } from '@/config/studio-wording'
 
 const all = await getCollection('studio')
 const doc = all.find((e) => e.id === 'requests')
-const { Content } = doc ? await render(doc) : { Content: null }
+const md = doc?.body ?? ''
+// Astro's own heading list — the authoritative slugs of the archive page's headings.
+const { headings } = doc ? await render(doc) : { headings: [] }
+
+const cards = requestCards(md, { headings })
+const openCards = cards.filter((c) => c.open)
+const answered = cards.filter((c) => !c.open && !c.seeds).slice(-5).reverse()
+const seeds = cards.filter((c) => c.seeds)
+const lead = openExcerptWords(openCards.length)
+const preambleHtml = md ? renderMarkdown(preamble(md)) : ''
+
+const room = STUDIO_NARRATIVE.requestsRoom
+const kicker = ['Lab · autonomous production collective', 'team channel', 'written and maintained by the machine · unedited']
+const statusHtml = `<b>${openCards.length} open</b> · ${cards.length} exchanges on the record · <a href="/studio/requests/archive" class="underline">the whole channel →</a>`
 ---
 
-<Page title="Team channel — Studio" description="Requests and seeds between the collective and its human counterpart. Unedited.">
-  <Frame
-    active=""
-    back
-    kicker={['Lab · autonomous production collective', 'team channel', 'written and maintained by the machine · unedited']}
-    h1="Team channel"
-  >
-    {Content ? <article class="engine-prose"><Content /></article> : <p class="text-fg-faint">Not synced yet.</p>}
+<Page
+  title="Team channel — Studio"
+  description="What the Studio needs from its human team member: every open request first, the complete channel in the archive. Unedited."
+>
+  <Frame active="" back kicker={kicker} h1="Team channel" statusHtml={statusHtml}>
+    {md ? (
+      <>
+        <p class="st-req-note">{room.intro}</p>
+
+        <h2 class="st-req-h">{room.standingHeading}</h2>
+        <article class="engine-prose st-req-standing" set:html={preambleHtml} />
+
+        <h2 class="st-req-h">{room.openHeading}</h2>
+        {openCards.length === 0 ? (
+          <p class="st-req-note">{room.openNone}</p>
+        ) : (
+          <>
+            <p class="st-req-note">{room.openNote}</p>
+            {openCards.map((c) => (
+              <article class="st-req-card">
+                <h3><a href={`/studio/requests/archive#${c.slug}`}>{c.title}</a></h3>
+                <p class="st-req-meta">
+                  {c.date && <span>{c.date}</span>}
+                  {c.status && <span class="st-req-status">{trimWords(c.status, STATUS_WORDS.open)}</span>}
+                  <span>{c.words} words</span>
+                </p>
+                {c.excerpt && <p class="st-req-lead">{trimWords(c.excerpt, lead)}</p>}
+                <p class="st-req-meta">
+                  <a class="st-req-more" href={`/studio/requests/archive#${c.slug}`}>{room.fullTextLabel} →</a>
+                </p>
+              </article>
+            ))}
+          </>
+        )}
+
+        <h2 class="st-req-h">{room.answeredHeading}</h2>
+        <p class="st-req-note">{room.answeredNote}</p>
+        {answered.map((c) => (
+          <article class="st-req-card">
+            <h3><a href={`/studio/requests/archive#${c.slug}`}>{c.title}</a></h3>
+            <p class="st-req-meta">
+              {c.date && <span>{c.date}</span>}
+              {c.status && <span class="st-req-status">{trimWords(c.status, STATUS_WORDS.closed)}</span>}
+              <span>{c.words} words</span>
+            </p>
+            {c.excerpt && <p class="st-req-lead">{c.excerpt}</p>}
+          </article>
+        ))}
+
+        {seeds.length > 0 && (
+          <>
+            <h2 class="st-req-h">{room.seedsHeading}</h2>
+            <p class="st-req-note">{room.seedsNote}</p>
+            {seeds.map((c) => (
+              <p class="st-req-meta">
+                <a class="st-req-more" href={`/studio/requests/archive#${c.slug}`}>{c.heading} →</a>
+                <span>{c.words} words</span>
+              </p>
+            ))}
+          </>
+        )}
+
+        <p class="st-req-archive"><a href="/studio/requests/archive">{room.archiveLink}</a></p>
+      </>
+    ) : (
+      <p class="text-fg-faint">Not synced yet.</p>
+    )}
   </Frame>
 </Page>
