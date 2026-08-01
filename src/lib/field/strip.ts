@@ -458,7 +458,12 @@ export function buildControlSvg(input: ControlInput): string {
       if (f?.dim?.includes(m.key)) parts.push('data-dim=""')
       if (f?.select === m.key) parts.push('data-sel=""')
     }
-    if (!input.still) parts.push('tabindex="0"')
+    if (!input.still) {
+      parts.push('tabindex="0"')
+      // A keyed mark is a live control (readout on focus, panel on Enter via the tour
+      // wiring) — announce it as one. Unkeyed plates keep their historical emission.
+      if (m.key !== undefined) parts.push('role="button"')
+    }
     return parts.join(' ')
   }
 
