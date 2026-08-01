@@ -66,14 +66,20 @@ const workLd = work ? workJsonLd(work, locale, canonical) : null
 ---
 
 <!doctype html>
-<html lang={locale} data-skin="mono">
+{/* data-theme carries a build-time default so the promise "never absent" also holds
+    WITHOUT JavaScript: the practice surfaces define their tokens only under
+    [data-theme='light'|'dark'], and an unstamped page rendered their SVGs black-on-black
+    (WP8 finding, 2026-08-01). The anti-FOUC script below still resolves the real theme
+    before first paint and overrides this default. */}
+<html lang={locale} data-skin="mono" data-theme="dark">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
     <meta name="theme-color" content="#0a0a0a" />
     <script is:inline>
       // Anti-FOUC + auto theme. Resolve the theme BEFORE first paint and stamp it
-      // EXPLICITLY on <html> (data-theme is always 'light' or 'dark', never absent) so
+      // EXPLICITLY on <html> (data-theme is always 'light' or 'dark' — the static markup
+      // ships a dark default for the no-JS case, this script replaces it pre-paint) so
       // component styles that key off [data-theme='dark'] / [data-theme='light'] stay in
       // lockstep with the real page. That lockstep is what prevents dark-grey-on-black
       // works (e.g. transparent, theme-adaptive pieces like The Closing Loop).

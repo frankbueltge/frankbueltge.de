@@ -7,6 +7,7 @@
 // with the engine repo under docs/foundation/; this page projects, it does not re-author.
 import { getCollection, render } from 'astro:content'
 import Page from '@/layouts/Page.astro'
+import Frame from '@/components/atelier/surface/Frame.astro'
 import { parseProtocol } from '@/lib/atelier/protocol-version'
 
 const all = await getCollection('atelier')
@@ -48,17 +49,13 @@ const frankDecides = [
   title="Atelier — foundation | Frank Bültge"
   description={`What happens in the Atelier and on what ground: the work-line and its studies under a standing human delegation, the status legend, the division of authority, and the ground behind Protocol v${proto.version}.`}
 >
-  <main id="main" class="mx-auto max-w-3xl px-4 py-14">
-    <p class="font-mono text-xs uppercase tracking-[0.2em] text-fg-faint">
-      Atelier · machine-participatory research practice · foundation
-    </p>
-    <p class="mb-8 mt-2 font-mono text-[11px] text-fg-faint">
-      Protocol v{proto.version}{proto.adopted ? ` · ${proto.adopted}` : ''} · <a href="/atelier" class="underline transition-colors hover:text-fg">back to the atelier →</a>
-    </p>
-
+  <Frame
+    active=""
+    back
+    kicker={['Atelier · machine-participatory research practice', 'foundation', `Protocol v${proto.version}${proto.adopted ? ` · ${proto.adopted}` : ''}`]}
+    h1="What happens here, and on what ground"
+  >
     <article class="engine-prose">
-      <h1>What happens here, and on what ground</h1>
-
       <p>
         <strong>Ulysses / Atelier is a situated artistic research practice, developed
         through documented human–machine operations.</strong> Models and tools hold
@@ -128,5 +125,5 @@ const frankDecides = [
       </p>
       {Content ? <Content /> : <p class="text-fg-faint">Not synced yet.</p>}
     </article>
-  </main>
+  </Frame>
 </Page>

@@ -3,9 +3,19 @@ import data from './data.json'
 
 const CAP = data.fpr_scale_cap
 
-function barWidth(val: number | null): string {
-  if (val === null || val === 0) return '0.15%'
-  return `${Math.min((val / CAP) * 100, 100).toFixed(2)}%`
+// Bar geometry in SVG user units. The previous version computed
+// min(value/CAP*100, 100) as a CSS percentage of a flex-track's rendered
+// width, with null/zero drawn as a hairline at 0.15% of that width. TRACK
+// below is the track's length in SVG user units, so the same formula,
+// scaled to user units instead of percent, reproduces the same proportions
+// -- this time as real rect geometry rather than an inline attribute the
+// site's policy would drop.
+const TRACK = 300 // bar length in SVG user units; equals BAR_VIEWBOX_W
+const HAIRLINE = TRACK * 0.0015
+
+function barLen(val: number | null): number {
+  if (val === null || val === 0) return HAIRLINE
+  return Math.min((val / CAP) * TRACK, TRACK)
 }
 
 function fmt(val: number | null, suffix = '%'): string {
@@ -15,146 +25,251 @@ function fmt(val: number | null, suffix = '%'): string {
 const tools = data.tools
 const cases = data.harm_cases
 const sources = data.benchmark_sources
+const specs = data.specification_sources
+
+// Identifiers are rendered on the face from 2026-08-01. Until that date this work held eight
+// identifiers in data.json and printed none of them: a reader on the published page could not
+// follow a single source. Measured first-hand on the served page, 2026-07-31 — zero occurrences
+// of doi.org, arxiv.org, aclanthology, or any cited news host. (The count read 'ten' until an
+// independent Verifier enumerated the pre-repair file and found eight; corrected 2026-08-01.)
+// The parameter admits `undefined` as well as `null`: `source_url_secondary` exists on
+// only one harm-register row, so the array's inferred element type makes it optional and
+// the narrower signature failed the site's type check (build feedback 2026-08-01,
+// index.astro:208 — the first compile error this repair caused, and it was ours).
+function shortUrl(url: string | null | undefined): string {
+  if (!url) return ''
+  return url.replace(/^https?:\/\//, '').replace(/\/$/, '')
+}
+
+// Per-tool row layout. Mechanism verified in drafts/2026-07-31-served-not-shown/: a
+// component style block (hashed by the site build, admitted by the policy) plus SVG
+// presentation attributes (fill=, width=, x=, y=) survive the site's style-src; an inline
+// styling attribute does not.
+//
+// The row LABEL and the row VALUE are HTML, not SVG text, and that is deliberate. SVG text
+// is scaled by the viewBox-to-viewport factor exactly as the bars are, so inside a fluid
+// chart it shrinks with the container even though its CSS font-size never changes: a
+// Skeptic measured 19px at a 900px container and 10px at ~405px. The first fix attempted
+// here was a max-width media query raising the user-unit size; it could not be verified,
+// because this runtime's headless browser clamps its layout viewport at 500px and the
+// query never fires (tested, not assumed). So the dependency was removed instead of
+// patched: only the two rects live in the SVG, where scaling is what you want, and every
+// character on the row is HTML at a constant size at any width.
+const ROW_PITCH = 7
+const BAR_VIEWBOX_W = 300
+
+type Tool = (typeof tools)[number]
+
+function toolChart(tool: Tool) {
+  const rows = [
+    { label: 'spec', value: tool.claim_fpr, barClass: 'cc-chart-bar--spec', valClass: 'cc-val--spec' },
+    { label: 'measured', value: tool.independent_fpr, barClass: 'cc-chart-bar--meas', valClass: 'cc-val--meas' },
+  ]
+  if (tool.nnes_fpr !== null) {
+    rows.push({ label: 'NNES*', value: tool.nnes_fpr, barClass: 'cc-chart-bar--nnes', valClass: 'cc-val--nnes' })
+  }
+  return rows.map(r => ({
+    label: r.label,
+    barClass: r.barClass,
+    valClass: r.valClass,
+    width: barLen(r.value),
+    formatted: fmt(r.value),
+  }))
+}
+
+// Every figure on a row is also spoken as ordinary text, so the bars carry no meaning a
+// reader without them would lose. The group label states the comparison once.
+function toolAria(tool: Tool): string {
+  return `${tool.name}: vendor specification ${fmt(tool.claim_fpr)}, independent measurement `
+    + `${fmt(tool.independent_fpr)}`
+    + (tool.nnes_fpr !== null ? `, NNES ${fmt(tool.nnes_fpr)}` : '')
+    + `, false positive rate, scale 0 to ${CAP} percent`
+}
 ---
 
-<div class="font-mono text-sm leading-relaxed" style="background: #0d0d0d; color: #d4d4d4; padding: 2rem; max-width: 860px; margin: 0 auto;">
+<div class="cc">
 
   <!-- Header -->
-  <div style="position: relative; border-bottom: 1px solid #3f3f3f; padding-bottom: 1.25rem; margin-bottom: 1.75rem;">
-    <div style="font-size: 0.65rem; letter-spacing: 0.18em; color: #6b6b6b; margin-bottom: 0.4rem;">
+  <div class="cc-header">
+    <div class="cc-eyebrow">
       THE MEASURING FIELD / MERIDIAN / INSTRUMENT 001
     </div>
-    <h1 style="font-size: 1.05rem; font-weight: 700; letter-spacing: 0.12em; color: #e8e8e8;">
+    <h1 class="cc-title">
       CALIBRATION CERTIFICATE
     </h1>
-    <p style="color: #8a8a8a; font-size: 0.75rem; margin-top: 0.3rem;">
+    <p class="cc-subtitle">
       AI Text Detection — Independent Audit Against Vendor Specifications
     </p>
-    <p style="color: #5a5a5a; font-size: 0.68rem; margin-top: 0.15rem;">
+    <p class="cc-refdate">
       Reference date: {data.generated} · Scale: 0–{data.fpr_scale_cap}% FPR
     </p>
 
     <!-- Stamp -->
-    <div style="position: absolute; top: 0.5rem; right: 0; border: 3px solid #c0392b; color: #c0392b; font-size: 0.85rem; font-weight: 900; letter-spacing: 0.2em; padding: 0.2rem 0.6rem; transform: rotate(-11deg); opacity: 0.85;">
+    <div class="cc-stamp">
       OUT OF SPEC
     </div>
   </div>
 
   <!-- FPR Matrix -->
-  <div style="margin-bottom: 2rem;">
-    <div style="font-size: 0.6rem; letter-spacing: 0.16em; color: #6b6b6b; margin-bottom: 1rem; border-bottom: 1px solid #2a2a2a; padding-bottom: 0.4rem;">
+  <div class="cc-matrix">
+    <div class="cc-matrix-title">
       FALSE POSITIVE RATE — CLAIM vs. INDEPENDENT MEASUREMENT
     </div>
 
-    <div style="font-size: 0.6rem; color: #5a5a5a; margin-bottom: 0.8rem; display: flex; gap: 1.5rem;">
+    <div class="cc-legend">
       <span>
-        <span style="display: inline-block; width: 10px; height: 8px; background: #555; margin-right: 4px; vertical-align: middle;"></span>
+        <span class="cc-swatch cc-swatch--spec"></span>
         vendor specification
       </span>
       <span>
-        <span style="display: inline-block; width: 10px; height: 8px; background: #c0392b; margin-right: 4px; vertical-align: middle;"></span>
+        <span class="cc-swatch cc-swatch--meas"></span>
         independent (general)
       </span>
     </div>
 
-    {tools.map(tool => (
-      <div style="margin-bottom: 1.6rem;">
-        <div style="display: flex; justify-content: space-between; margin-bottom: 0.45rem;">
-          <span style="font-weight: 700; color: #e8e8e8; font-size: 0.8rem;">{tool.name}</span>
-          <span style="font-size: 0.6rem; color: #6b6b6b;">
-            spec: {fmt(tool.claim_fpr)} · measured: {fmt(tool.independent_fpr)}
-          </span>
-        </div>
-
-        <!-- Vendor claim -->
-        <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.22rem;">
-          <span style="width: 5.5rem; text-align: right; font-size: 0.6rem; color: #5a5a5a; flex-shrink: 0;">spec</span>
-          <div style="flex: 1; background: #1e1e1e; height: 7px; position: relative;">
-            <div style={`position: absolute; top: 0; left: 0; height: 100%; background: #555; width: ${barWidth(tool.claim_fpr)};`}></div>
+    {tools.map(tool => {
+      const chart = toolChart(tool)
+      return (
+        <div class="cc-tool">
+          <div class="cc-tool-head">
+            <span class="cc-tool-name">{tool.name}</span>
+            <span class="cc-tool-stats">
+              spec: {fmt(tool.claim_fpr)} · measured: {fmt(tool.independent_fpr)}
+            </span>
           </div>
-          <span style="width: 3.5rem; font-size: 0.6rem; color: #7a7a7a;">{fmt(tool.claim_fpr)}</span>
-        </div>
 
-        <!-- Independent general -->
-        <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.22rem;">
-          <span style="width: 5.5rem; text-align: right; font-size: 0.6rem; color: #5a5a5a; flex-shrink: 0;">measured</span>
-          <div style="flex: 1; background: #1e1e1e; height: 7px; position: relative;">
-            <div style={`position: absolute; top: 0; left: 0; height: 100%; background: #c0392b; width: ${barWidth(tool.independent_fpr)};`}></div>
+          <div class="cc-rows" role="group" aria-label={toolAria(tool)}>
+            {chart.map(r => (
+              <div class="cc-row">
+                <span class="cc-row-lbl">{r.label}</span>
+                <svg class="cc-row-bar" viewBox={`0 0 ${BAR_VIEWBOX_W} ${ROW_PITCH}`}
+                     preserveAspectRatio="none" aria-hidden="true" focusable="false">
+                  <rect x="0" y="0" width={BAR_VIEWBOX_W} height={ROW_PITCH} class="cc-chart-track" />
+                  <rect x="0" y="0" width={r.width} height={ROW_PITCH} class:list={['cc-chart-bar', r.barClass]} />
+                </svg>
+                <span class:list={['cc-row-val', r.valClass]}>{r.formatted}</span>
+              </div>
+            ))}
           </div>
-          <span style="width: 3.5rem; font-size: 0.6rem; color: #c0392b;">{fmt(tool.independent_fpr)}</span>
-        </div>
 
-        <!-- NNES -->
-        {tool.nnes_fpr !== null && (
-          <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.22rem;">
-            <span style="width: 5.5rem; text-align: right; font-size: 0.6rem; color: #5a5a5a; flex-shrink: 0;">NNES*</span>
-            <div style="flex: 1; background: #1e1e1e; height: 7px; position: relative;">
-              <div style={`position: absolute; top: 0; left: 0; height: 100%; background: #7b1d1d; width: ${barWidth(tool.nnes_fpr)};`}></div>
-            </div>
-            <span style="width: 3.5rem; font-size: 0.6rem; color: #9b2020;">{fmt(tool.nnes_fpr)}</span>
+          {'spec_flag' in tool && (
+            <div class="cc-specflag">{tool.spec_flag}</div>
+          )}
+
+          <div class="cc-finding">
+            {tool.key_finding}
           </div>
-        )}
 
-        <!-- Key finding -->
-        <div style="font-size: 0.62rem; color: #5a5a5a; margin-top: 0.35rem; padding-left: 6.5rem; line-height: 1.5;">
-          {tool.key_finding}
+          <details class="cc-method">
+            <summary class="cc-method-tag">method, sources and what was corrected on this row</summary>
+            <div class="cc-method-body">{tool.confidence_note}</div>
+            {'claim_accuracy_status' in tool && (
+              <div class="cc-method-body">{tool.claim_accuracy_status}</div>
+            )}
+          </details>
         </div>
-      </div>
-    ))}
+      )
+    })}
 
-    <div style="font-size: 0.6rem; color: #4a4a4a; margin-top: 0.4rem; border-top: 1px solid #1e1e1e; padding-top: 0.5rem;">
+    <div class="cc-matrix-footnote">
       NNES = Non-Native English Speakers. No per-tool NNES false-positive rate survived the
       2026-07-03 re-verification; the cross-detector NNES evidence (61.22% seven-detector average,
       Liang et al., Cell Patterns 2023) is in the measurement sources below.
-      Confidence ratings vary — see data.json for per-tool methodology notes.
+      Confidence ratings vary; each tool's methodology note is printed under its own chart above.
     </div>
   </div>
 
   <!-- Harm Register -->
-  <div style="margin-bottom: 2rem; border-top: 1px solid #2a2a2a; padding-top: 1.25rem;">
-    <div style="font-size: 0.6rem; letter-spacing: 0.16em; color: #6b6b6b; margin-bottom: 1rem;">
+  <div class="cc-harm">
+    <div class="cc-harm-title">
       FIELD OBSERVATIONS — DOCUMENTED HARM REGISTER
     </div>
 
     {cases.map(c => (
-      <div style="margin-bottom: 1.2rem; border-left: 2px solid #3f1010; padding-left: 0.75rem;">
-        <div style="font-weight: 700; color: #d4d4d4; font-size: 0.78rem;">
+      <div class="cc-case">
+        <div class="cc-case-head">
           {c.institution} · {c.year}
         </div>
-        <div style="font-size: 0.65rem; color: #c0392b; margin-top: 0.1rem;">
+        <div class="cc-case-sub">
           {c.scale === 'institutional' && c.allegations !== null
             ? `${c.allegations.toLocaleString()} allegations${c.dismissed_pct !== null ? ` · ${c.dismissed_pct}% dismissed` : ''}`
             : c.detector}
         </div>
-        <div style="font-size: 0.65rem; color: #8a8a8a; margin-top: 0.3rem; line-height: 1.5;">
+        <div class="cc-case-outcome">
           {c.outcome}
         </div>
         {'caveat' in c && (
-          <div style="font-size: 0.62rem; color: #8a6d3b; margin-top: 0.35rem; line-height: 1.5; border-left: 2px solid #8a6d3b; padding-left: 0.5rem;">
+          <div class="cc-case-caveat">
             {c.caveat}
           </div>
         )}
-        <div style="font-size: 0.6rem; color: #4a4a4a; margin-top: 0.2rem;">
+        <div class="cc-case-source">
           {c.source}
         </div>
+        <div class="cc-case-source">
+          <a class="cc-link" href={c.source_url}>{shortUrl(c.source_url)}</a>
+          {'source_url_secondary' in c && (
+            <span> · <a class="cc-link" href={c.source_url_secondary}>{shortUrl(c.source_url_secondary)}</a></span>
+          )}
+        </div>
+        {'access_note' in c && (
+          <div class="cc-case-access">
+            {c.access_note}
+          </div>
+        )}
+      </div>
+    ))}
+  </div>
+
+  <!-- Specification sources -->
+  <div class="cc-sources">
+    <div class="cc-sources-title">
+      SPECIFICATION SOURCES — WHERE THE CLAIM BARS COME FROM
+    </div>
+
+    <div class="cc-spec-lede">
+      Supplied 2026-08-01. From 2026-07-01 to that date the specification side of this certificate —
+      the bars the measurements are compared against — carried no source of any kind. A calibration
+      certificate whose specification half is unsourced is half an instrument, and this practice
+      found that against itself rather than being told.
+    </div>
+
+    {specs.map(sp => (
+      <div class="cc-spec">
+        <div class="cc-spec-head">
+          <span class="cc-spec-tool">{sp.tool}</span>
+          <span class="cc-spec-claim">{sp.claim_shown}</span>
+        </div>
+        {sp.verbatim && (
+          <div class="cc-spec-quote">&ldquo;{sp.verbatim}&rdquo;</div>
+        )}
+        {sp.url && (
+          <div class="cc-spec-url"><a class="cc-link" href={sp.url}>{shortUrl(sp.url)}</a></div>
+        )}
+        <div class="cc-spec-caveat">{sp.caveat}</div>
       </div>
     ))}
   </div>
 
   <!-- Sources -->
-  <div style="border-top: 1px solid #2a2a2a; padding-top: 1.25rem;">
-    <div style="font-size: 0.6rem; letter-spacing: 0.16em; color: #6b6b6b; margin-bottom: 0.8rem;">
+  <div class="cc-sources">
+    <div class="cc-sources-title">
       MEASUREMENT SOURCES
     </div>
 
     {sources.map(s => (
-      <div style="margin-bottom: 0.55rem; font-size: 0.62rem; display: flex; gap: 0.6rem;">
-        <span style="color: #7a7a7a; flex-shrink: 0; min-width: 12rem;">{s.name}</span>
-        <span style="color: #5a5a5a;">{s.finding}</span>
+      <div class="cc-source-row">
+        <span class="cc-source-name">{s.name}</span>
+        <span class="cc-source-finding">
+          {s.finding}
+          {s.url && (
+            <span> · <a class="cc-link" href={s.url}>{shortUrl(s.url)}</a></span>
+          )}
+        </span>
       </div>
     ))}
 
-    <div style="margin-top: 1rem; font-size: 0.6rem; color: #8a6d3b; border-top: 1px solid #1e1e1e; padding-top: 0.6rem;">
+    <div class="cc-correction">
       CORRECTION (2026-07-03): the Originality.ai row previously displayed a vendor claim of 0.2% FPR
       against an independent measurement of 37% FPR ("a 185x gap"). Neither figure is retrievable in the
       cited RAID paper or in vendor marketing; the row now shows what the sources actually state — the
@@ -167,7 +282,7 @@ const sources = data.benchmark_sources
       research archive (memory/discarded.md, session 06).
     </div>
 
-    <div style="margin-top: 0.6rem; font-size: 0.6rem; color: #8a6d3b;">
+    <div class="cc-note">
       RE-VERIFICATION COMPLETED (2026-07-03, session 07): every remaining pre-constitution figure was
       re-checked against live primary sources. Changes: GPTZero's measured bar corrected 15% → 18% and
       re-pinned to its actual primary source (Ibrahim et al., Scientific Reports 2023 — the previously
@@ -187,7 +302,7 @@ const sources = data.benchmark_sources
       three harm cases. Discards ledgered in memory/discarded.md (session 07).
     </div>
 
-    <div style="margin-top: 0.6rem; font-size: 0.6rem; color: #8a6d3b;">
+    <div class="cc-note">
       REVISION (2026-07-12, session 33): two changes to the harm register, on a binding team steer and a
       downstream correction report (the lab's production wing, via REQUESTS.md). First, the register no
       longer carries personal names of the individuals in its own voice — the two individual cases now read
@@ -201,7 +316,20 @@ const sources = data.benchmark_sources
       on the revised state per the standing rule; record in journal/2026-07-12.md, session 33.
     </div>
 
-    <div style="margin-top: 1rem; font-size: 0.6rem; color: #3a3a3a; border-top: 1px solid #1e1e1e; padding-top: 0.6rem;">
+    <div class="cc-note">
+      REPAIR (2026-08-01, session 77): this work was checked against itself before being offered to a
+      reader outside this practice, and failed that check in seven ways — the published page did not
+      draw its chart at all under the site's security policy; it printed none of the source
+      identifiers it held; and the specification side of a calibration certificate was unsourced,
+      which on sourcing turned out to include one composite claim and one specification the vendor
+      had already retired. All seven are set out, with what each check does and does not establish,
+      in CORRECTIONS.md in this work's directory — a dated register, not an edit:
+      github.com/frankbueltge/field-research/blob/main/works/2026-07-01-calibration-gap/CORRECTIONS.md
+      No measurement changed. The deliberation, including the hostile review that struck down the
+      first version of this repair, is in journal/2026-07-31.md, session 77.
+    </div>
+
+    <div class="cc-footer-note">
       This certificate is itself a measurement instrument — it documents the gap between specification
       and performance in tools now deployed to judge the authenticity of human writing.
       Method and data are open: frankbueltge.de/field / github.com/frankbueltge/field-research
@@ -209,3 +337,376 @@ const sources = data.benchmark_sources
   </div>
 
 </div>
+
+<style>
+  .cc {
+    font-family: ui-monospace, "DejaVu Sans Mono", "SFMono-Regular", Menlo, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.875rem;
+    line-height: 1.625;
+    background: #0d0d0d;
+    color: #d4d4d4;
+    padding: 2rem;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .cc-header {
+    position: relative;
+    border-bottom: 1px solid #3f3f3f;
+    padding-bottom: 1.25rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .cc-eyebrow {
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    color: #6b6b6b;
+    margin-bottom: 0.4rem;
+  }
+
+  .cc-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: #e8e8e8;
+  }
+
+  .cc-subtitle {
+    color: #8a8a8a;
+    font-size: 0.75rem;
+    margin-top: 0.3rem;
+  }
+
+  .cc-refdate {
+    color: #5a5a5a;
+    font-size: 0.68rem;
+    margin-top: 0.15rem;
+  }
+
+  .cc-stamp {
+    position: absolute;
+    top: 0.5rem;
+    right: 0;
+    border: 3px solid #c0392b;
+    color: #c0392b;
+    font-size: 0.85rem;
+    font-weight: 900;
+    letter-spacing: 0.2em;
+    padding: 0.2rem 0.6rem;
+    transform: rotate(-11deg);
+    opacity: 0.85;
+  }
+
+  .cc-matrix {
+    margin-bottom: 2rem;
+  }
+
+  .cc-matrix-title {
+    font-size: 0.6rem;
+    letter-spacing: 0.16em;
+    color: #6b6b6b;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #2a2a2a;
+    padding-bottom: 0.4rem;
+  }
+
+  .cc-legend {
+    font-size: 0.6rem;
+    color: #5a5a5a;
+    margin-bottom: 0.8rem;
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .cc-swatch {
+    display: inline-block;
+    width: 10px;
+    height: 8px;
+    margin-right: 4px;
+    vertical-align: middle;
+  }
+  .cc-swatch--spec { background: #555; }
+  .cc-swatch--meas { background: #c0392b; }
+
+  .cc-tool {
+    margin-bottom: 1.6rem;
+  }
+
+  .cc-tool-head {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.45rem;
+  }
+
+  .cc-tool-name {
+    font-weight: 700;
+    color: #e8e8e8;
+    font-size: 0.8rem;
+  }
+
+  .cc-tool-stats {
+    font-size: 0.6rem;
+    color: #6b6b6b;
+  }
+
+  .cc-rows {
+    margin: 0.15rem 0;
+  }
+
+  .cc-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.22rem;
+  }
+
+  .cc-row-lbl {
+    width: 5.5rem;
+    flex-shrink: 0;
+    text-align: right;
+    font-size: 0.6rem;
+    color: #5a5a5a;
+  }
+
+  .cc-row-bar {
+    flex: 1;
+    min-width: 0;
+    height: 7px;
+    display: block;
+  }
+
+  .cc-row-val {
+    width: 3.5rem;
+    flex-shrink: 0;
+    font-size: 0.6rem;
+  }
+
+  .cc-chart-track { fill: #1e1e1e; }
+  .cc-chart-bar--spec { fill: #555; }
+  .cc-chart-bar--meas { fill: #c0392b; }
+  .cc-chart-bar--nnes { fill: #7b1d1d; }
+  .cc-val--spec { color: #7a7a7a; }
+  .cc-val--meas { color: #c0392b; }
+  .cc-val--nnes { color: #9b2020; }
+
+  .cc-finding {
+    font-size: 0.62rem;
+    color: #5a5a5a;
+    margin-top: 0.35rem;
+    padding-left: 6.5rem;
+    line-height: 1.5;
+  }
+
+  .cc-matrix-footnote {
+    font-size: 0.6rem;
+    color: #4a4a4a;
+    margin-top: 0.4rem;
+    border-top: 1px solid #1e1e1e;
+    padding-top: 0.5rem;
+  }
+
+  .cc-harm {
+    margin-bottom: 2rem;
+    border-top: 1px solid #2a2a2a;
+    padding-top: 1.25rem;
+  }
+
+  .cc-harm-title {
+    font-size: 0.6rem;
+    letter-spacing: 0.16em;
+    color: #6b6b6b;
+    margin-bottom: 1rem;
+  }
+
+  .cc-case {
+    margin-bottom: 1.2rem;
+    border-left: 2px solid #3f1010;
+    padding-left: 0.75rem;
+  }
+
+  .cc-case-head {
+    font-weight: 700;
+    color: #d4d4d4;
+    font-size: 0.78rem;
+  }
+
+  .cc-case-sub {
+    font-size: 0.65rem;
+    color: #c0392b;
+    margin-top: 0.1rem;
+  }
+
+  .cc-case-outcome {
+    font-size: 0.65rem;
+    color: #8a8a8a;
+    margin-top: 0.3rem;
+    line-height: 1.5;
+  }
+
+  .cc-case-caveat {
+    font-size: 0.62rem;
+    color: #8a6d3b;
+    margin-top: 0.35rem;
+    line-height: 1.5;
+    border-left: 2px solid #8a6d3b;
+    padding-left: 0.5rem;
+  }
+
+  .cc-case-source {
+    font-size: 0.6rem;
+    color: #4a4a4a;
+    margin-top: 0.2rem;
+  }
+
+  .cc-sources {
+    border-top: 1px solid #2a2a2a;
+    padding-top: 1.25rem;
+  }
+
+  .cc-specflag {
+    font-size: 0.6rem;
+    color: #8a6d3b;
+    line-height: 1.5;
+    margin-top: 0.3rem;
+    padding-left: 0.5rem;
+    border-left: 2px solid #8a6d3b;
+  }
+
+  .cc-method {
+    font-size: 0.58rem;
+    color: #4f4f4f;
+    line-height: 1.5;
+    margin-top: 0.35rem;
+    padding-left: 6.5rem;
+  }
+
+  .cc-method-tag {
+    color: #6b6b6b;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+  }
+
+  .cc-method-body {
+    margin-top: 0.3rem;
+    padding-left: 0.5rem;
+    border-left: 1px solid #2a2a2a;
+  }
+
+  .cc-case-access {
+    font-size: 0.6rem;
+    color: #6b6b6b;
+    margin-top: 0.3rem;
+    line-height: 1.5;
+  }
+
+  .cc-link {
+    color: #7f9aa8;
+    text-decoration: underline;
+    word-break: break-all;
+  }
+
+  .cc-spec-lede {
+    font-size: 0.62rem;
+    color: #8a6d3b;
+    line-height: 1.55;
+    margin-bottom: 1rem;
+  }
+
+  .cc-spec {
+    margin-bottom: 1rem;
+    border-left: 2px solid #2f2f2f;
+    padding-left: 0.75rem;
+  }
+
+  .cc-spec-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.6rem;
+  }
+
+  .cc-spec-tool {
+    font-weight: 700;
+    color: #d4d4d4;
+    font-size: 0.72rem;
+  }
+
+  .cc-spec-claim {
+    font-size: 0.6rem;
+    color: #7a7a7a;
+  }
+
+  .cc-spec-quote {
+    font-size: 0.62rem;
+    color: #8a8a8a;
+    margin-top: 0.25rem;
+    line-height: 1.5;
+  }
+
+  .cc-spec-url {
+    font-size: 0.6rem;
+    margin-top: 0.2rem;
+  }
+
+  .cc-spec-caveat {
+    font-size: 0.6rem;
+    color: #5a5a5a;
+    margin-top: 0.25rem;
+    line-height: 1.5;
+  }
+
+  .cc-sources-title {
+    font-size: 0.6rem;
+    letter-spacing: 0.16em;
+    color: #6b6b6b;
+    margin-bottom: 0.8rem;
+  }
+
+  .cc-source-row {
+    margin-bottom: 0.55rem;
+    font-size: 0.62rem;
+    display: flex;
+    gap: 0.6rem;
+  }
+
+  .cc-source-name {
+    color: #7a7a7a;
+    flex-shrink: 0;
+    min-width: 12rem;
+  }
+
+  .cc-source-finding {
+    color: #5a5a5a;
+  }
+
+  .cc-correction {
+    margin-top: 1rem;
+    font-size: 0.6rem;
+    color: #8a6d3b;
+    border-top: 1px solid #1e1e1e;
+    padding-top: 0.6rem;
+  }
+
+  .cc-note {
+    margin-top: 0.6rem;
+    font-size: 0.6rem;
+    color: #8a6d3b;
+  }
+
+  .cc-footer-note {
+    margin-top: 1rem;
+    font-size: 0.6rem;
+    color: #3a3a3a;
+    border-top: 1px solid #1e1e1e;
+    padding-top: 0.6rem;
+  }
+
+  @media (max-width: 480px) {
+    .cc { padding: 1.25rem 1rem; }
+    .cc-row-lbl { width: 4.25rem; }
+    .cc-method { padding-left: 0; }
+    .cc-finding { padding-left: 0; }
+    .cc-tool-head { flex-direction: column; align-items: flex-start; gap: 0.15rem; }
+    .cc-source-row { flex-direction: column; gap: 0.15rem; }
+    .cc-source-name { min-width: 0; }
+  }
+</style>
