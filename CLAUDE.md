@@ -41,6 +41,13 @@ gated integration. Die Persona-Namen sind die der KI selbst; Commits in den Engi
 nutzen sie mit `@<repo>.invalid`-Adressen — **nie** bloße `@users.noreply.github.com`-Namen,
 die kreditieren unbeteiligte echte GitHub-Accounts.
 
+**Qualität vor Token-Ökonomie in diesem Umbau (Frank, 2026-08-01):** Für das laufende
+Restrukturierungs-Programm dieser Site gilt ausdrücklich Qualität vor Sparsamkeit — Design-
+und Bau-Subagenten laufen auf den stärksten Modellen, nicht auf dem billigsten, das die
+Aufgabe gerade noch schafft. Die Modell-/Token-Ökonomie-Präferenz auf Workspace-Ebene
+(`../CLAUDE.md`: „Routinearbeit auf Sonnet") ist für dieses Projekt außer Kraft; sie gilt
+weiter für die anderen Projekte des Workspace.
+
 ## Befehle
 
 ```bash
