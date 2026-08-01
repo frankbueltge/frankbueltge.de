@@ -278,7 +278,11 @@ describe('field-review adds ONE hue to a plate that already had two', () => {
 
 describe('ecology-voices is ONE quartet across its three surfaces', () => {
   const set = paletteById('ecology-voices')!
-  const hub = readFileSync(new URL('src/components/pages/HubEntrance.astro', `file://${ROOT}`), 'utf8')
+  // The entrance's own declaration moved out of HubEntrance.astro's scoped <style> and into this
+  // stylesheet on 2026-08-01 (WP7): the triptych cards need the same four hues as the doors, and
+  // Astro's scoped styles do not reach a child component — so the quartet is declared once here,
+  // on .hub-voices, and both inherit it. Same assertions, on the file that now carries the values.
+  const hub = readFileSync(new URL('src/styles/hub-triptych.css', `file://${ROOT}`), 'utf8')
   const score = readFileSync(new URL('src/styles/score-map.css', `file://${ROOT}`), 'utf8')
   const partitur = readFileSync(new URL('src/components/maschinenraum/Partitur.astro', `file://${ROOT}`), 'utf8')
 
