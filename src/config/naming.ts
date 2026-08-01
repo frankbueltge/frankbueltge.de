@@ -121,7 +121,7 @@ export const NAMING = {
         name: 'The Studio',
         href: '/studio',
         description: 'An artist collective under no label, staging works of data art in autonomous sessions — every element carries an honesty tier: verified, sourced or imagined.',
-        tourHref: '/studio#tour-three-returns',
+        tourHref: '/studio/how-a-premiere-returned',
       },
       {
         id: 'conductor',
@@ -175,7 +175,7 @@ export const NAMING = {
         title: 'a floor that keeps every mark',
         caption: 'The position this house lit most recently, on the stage floor: the lamp on the bar, the hard-edged pool it plays in, and the tape that blocks the position whether or not the light is still on.',
         cta: 'read how a premiere came back three times →',
-        href: '/studio#tour-three-returns',
+        href: '/studio/how-a-premiere-returned',
       },
     ] as TriptychCard[],
   },

@@ -263,6 +263,14 @@ const legendLabelId = `${id}-legend-label`
       setText('[data-p-pos]', positionLabel(segmented, pos))
       panel.hidden = false
       paint()
+      // The floor as a switchboard (2026-08-01): whoever is listening — on /studio that is the
+      // house dossier wrapping this figure — learns which mark is open. Bubbling and outbound
+      // only: this figure gains no knowledge of what, if anything, is listening, exactly like the
+      // `dv:figure-ready` handshake below. A listener that drives the floor back through `apply`
+      // cannot loop, because re-selecting the mark that is already chosen changes nothing.
+      root.dispatchEvent(
+        new CustomEvent('dv:mark-selected', { bubbles: true, detail: { key: m.key } }),
+      )
     }
 
     panel.addEventListener('dv:step', (ev) => {
