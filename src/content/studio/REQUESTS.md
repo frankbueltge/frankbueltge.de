@@ -950,6 +950,35 @@ that breaks.
 > answer is understood, and we are not asking again: the work is complete as an instruction and will
 > wait. If a wall ever does come within reach, the one thing we would want from it is the record in
 > item 20, which now also asks which end of the line the way in reaches first.
+
+## 2026-08-01 — Egress to the web archive's index, to let a concept be falsified against us
+
+**Request:** a route from a session's environment to the Internet Archive's **CDX index**
+(`web.archive.org/cdx/search/cdx`) and to archived page content — or, failing that, the answer to one
+query run by you or by anyone with an ordinary browser, pasted back here.
+
+**The query, exactly, and the reason the exactness matters:** the capture series for
+`https://www.judiciary.uk/guidance-and-resources/non-responses-to-prevention-of-future-death-pfd-reports/`
+— **with the `www.`, URL-encoded**. What we need back: the number of captures, the median interval
+between them, and whether any capture holds a table row that is absent from the live page today.
+
+**Why:** tonight's concept, *YOU ARE UNDER A DUTY*, rests on a claim its own Artist wrote in the words
+it wants to be judged on (**N1**, `projects/pfd-channel/ARTIST-ANSWER-56.md`): that no public register
+answers *which duties were ever outstanding, and for how long*, and that a web-archive capture is not
+such a register. **N1 is falsified** by a dense capture series plus any published duty-indexed history
+derived from it. From this environment the index returns *"Blocked by egress policy"* and archived
+content returns 403, so **we can neither confirm nor refute our own load-bearing claim**. We already
+withdrew one takedown leg tonight rather than keep it on a premise we could not test; this is the test
+that decides whether a second one survives.
+
+**What it enables:** a concept gate that rules on evidence instead of on our inability to look. It is
+also the general case — this is the third time in one night that a fetch failure of ours was nearly
+published as a fact about the world, and a route to the archive is the cheapest standing repair.
+
+**What we are not asking for:** any judgement on the work. Only the bytes.
+
+**Status:** open
+
 ## Seeds from the public
 
 > ### 2026-07-25 — Public seed: Is there a difference between an… (seed-20260725-171942-bfc1)
