@@ -14,6 +14,11 @@ import { buildControlSvg, plateSpan, type ControlMark } from '@/lib/field/strip'
 import { latestInstrument, orderInstruments, type InstrumentMeta } from '@/lib/field/latest'
 import { FIELD_NARRATIVE } from '@/config/field-wording'
 import runtimeLog from '@/data/meridian/runtime-log.json'
+import GauntletTour from '@/components/field/tours/GauntletTour.astro'
+import ClaimFigure from '@/components/field/ClaimFigure.astro'
+import { GAUNTLET_INSTRUMENTS, gauntletPlate } from '@/lib/tour/field-gauntlet'
+import { buildClaimModel, type ExportObject, type ParallaxExport } from '@/lib/field/claimladder'
+import parallax from '@/data/meridian/parallax.json'
 
 const metas = import.meta.glob('/src/components/field/werke/*/meta.json', {
   eager: true, import: 'default',
@@ -120,6 +125,36 @@ const bandTicks = [...byDay.entries()].flatMap(([d, group]) =>
   })),
 )
 
+// ——— WP6b (2026-08-01): the gauntlet tour and the claim plate ————————————————————————
+// Two figures, two records, and the attribution between them is the point (wording canon,
+// enc-2026-005): the TOUR walks the COLLECTIVE's own week — its journal, its two instruments, its
+// gauntlet; the CLAIM PLATE draws the RUNTIME's review of one of the collective's claims, and the
+// runtime is the architect's engineering line, not the collective's research voice. The runtime's
+// own room stays where it was, further down the page (/field/apparatus carries the rest).
+const exportObjects: Record<string, ExportObject> = Object.fromEntries(
+  Object.entries(
+    import.meta.glob('/src/data/meridian/export/objects/*.json', {
+      eager: true, import: 'default',
+    }) as Record<string, ExportObject>,
+  ).map(([path, body]) => [path.split('/').at(-1) ?? path, body]),
+)
+const claimModel = buildClaimModel({
+  parallax: parallax as unknown as ParallaxExport,
+  objects: exportObjects,
+})
+
+const i018 = metaBySlug.get(GAUNTLET_INSTRUMENTS.i018)
+const i019 = metaBySlug.get(GAUNTLET_INSTRUMENTS.i019)
+if (!i018?.title || !i018.date || !i019?.title || !i019.date) {
+  throw new Error('/field: the gauntlet tour needs both of its instruments in the committed mirror')
+}
+const gauntlet = gauntletPlate({
+  chronicle,
+  instrument018: { title: i018.title, date: i018.date },
+  instrument019: { title: i019.title, date: i019.date },
+  parallax,
+})
+
 const kicker = ['Field · instrument record', `works/${slug}`, `${meta.date} → ${endDate}`]
 // One clear line, not a run-on: the instrument's live status. The selection rationale
 // (FIELD_NARRATIVE.selectionRule) moved out of the header — it is meta, not what the page is about.
@@ -169,6 +204,15 @@ const statusHtml =
       <figcaption class="fd-band-legend">{FIELD_NARRATIVE.shelf.caption}</figcaption>
     </figure>
 
+    {/* How a claim gets tested here — the collective's own gauntlet week, in six scenes, every
+        quoted line byte-exact from the committed file under it (WP6b, 2026-08-01). */}
+    <GauntletTour plate={gauntlet} />
+
+    {/* And what the review leaves standing: one claim of the collective's, held contested by the
+        runtime's own record. The attribution line under the figure keeps the two lines apart. */}
+    <ClaimFigure model={claimModel} heading={FIELD_NARRATIVE.claim.heading} />
+
+    <h2 class="fd-claim-h">{`Instrument ${instrumentNo} — the record strip`}</h2>
     <figure id="field-strip" set:html={svg} />
 
     {meta.embodies && (

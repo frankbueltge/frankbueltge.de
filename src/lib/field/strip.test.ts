@@ -1,9 +1,24 @@
 // Determinism + honesty guard for the Field's Messprotokoll generators. Guards the
 // approved grammar formulas (resting pen), the honest quiet-day rule (the flat line is
 // drawn, never dropped), and the pure day-range arithmetic (no clock).
+import { readFileSync } from 'node:fs'
+import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
 import { FIELD_GRAMMAR } from '@/config/field-wording'
-import { buildControlSvg, buildStripSvg, dayRange, plateSpan, type ControlInput, type StripInput } from './strip'
+import {
+  CLAIM_CEILINGS,
+  buildControlSvg,
+  buildStripSvg,
+  dayRange,
+  envelopeBand,
+  ladderRungs,
+  mmGrid,
+  plateSpan,
+  type ControlInput,
+  type StripInput,
+} from './strip'
+
+const ROOT = fileURLToPath(new URL('../../..', import.meta.url))
 
 describe('approved field grammar (static formulas, test-protected)', () => {
   it('keeps the data-edge formula verbatim', () => {
@@ -153,6 +168,116 @@ describe('buildControlSvg', () => {
     expect(() => buildControlSvg({ days: [], marks: [], penLabel: 'in service' })).toThrow(
       /need at least one day/,
     )
+  })
+})
+
+describe('the plate carries focus state only once a caller keys its marks', () => {
+  it('renders unkeyed marks exactly as it always did — no data attributes, tabindex kept', () => {
+    const svg = buildControlSvg(controlInput)
+    expect(svg).toContain('<g class="evt2" tabindex="0">')
+    expect(svg).not.toContain('data-key=')
+    expect(svg).not.toContain('data-on=')
+  })
+
+  it('keys, filters, dims and selects a keyed plate', () => {
+    const keyed: ControlInput = {
+      ...controlInput,
+      marks: controlInput.marks.map((m, i) => ({ ...m, key: `m${i}` })),
+      focus: { filter: ['instr'], dim: ['m1'], select: 'm2' },
+    }
+    const svg = buildControlSvg(keyed)
+    expect(svg).toContain('data-key="m0" data-on=""')
+    // m1 is a flag, so the instr-only filter leaves it off — and it is dimmed on top
+    expect(svg).toContain('data-key="m1" data-dim=""')
+    expect(svg).toContain('data-key="m2" data-sel=""')
+    expect(svg.match(/data-on=""/g) ?? []).toHaveLength(1)
+  })
+
+  it('a still has no tab stops — the live figure beside it owns the keyboard', () => {
+    const still = buildControlSvg({ ...controlInput, still: true, svgId: 'still-1' })
+    expect(still).not.toContain('tabindex')
+    expect(still).toContain('id="still-1"')
+  })
+
+  it('crops the viewBox to its marks only when asked — the entry plate is untouched', () => {
+    expect(buildControlSvg(controlInput)).toContain('viewBox="0 210 1440 330"')
+    const fitted = buildControlSvg({ ...controlInput, fitToMarks: true })
+    expect(fitted).toContain('viewBox="220 210 568 330"')
+  })
+
+  it('is still pure with focus applied', () => {
+    const keyed: ControlInput = { ...controlInput, marks: controlInput.marks.map((m, i) => ({ ...m, key: `m${i}` })), focus: { select: 'm0' } }
+    expect(buildControlSvg(keyed)).toBe(buildControlSvg(structuredClone(keyed)))
+  })
+})
+
+describe('envelopeBand — an admissible region, drawn so it survives forced-colors', () => {
+  it('washes the band in INK, never a colour fill, and keeps a dashed edge on both sides', () => {
+    const band = envelopeBand({ x0: 10, x1: 210, yTop: 40, yBottom: 120, label: 'ordinary drift' })
+    expect(band).toContain('class="env-wash"')
+    expect(band).toContain('class="env-edge" d="M10 40 H210 M10 120 H210"')
+    expect(band).toContain('ordinary drift')
+    // the wash is a plain rect whose opacity lives in the stylesheet — no fill attribute here
+    expect(band).not.toMatch(/fill="/)
+  })
+
+  it('letters the label above the band when asked', () => {
+    expect(envelopeBand({ x0: 0, x1: 10, yTop: 40, yBottom: 60, label: 'x', labelAt: 'above' })).toContain('y="32"')
+    expect(envelopeBand({ x0: 0, x1: 10, yTop: 40, yBottom: 60, label: 'x' })).toContain('y="55"')
+  })
+
+  it('refuses a degenerate or inverted band rather than drawing nothing visible', () => {
+    expect(() => envelopeBand({ x0: 10, x1: 10, yTop: 0, yBottom: 10 })).toThrow(/must lie right of/)
+    expect(() => envelopeBand({ x0: 0, x1: 10, yTop: 100, yBottom: 40 })).toThrow(/must lie below/)
+  })
+
+  it('is pure', () => {
+    const input = { x0: 0, x1: 100, yTop: 10, yBottom: 50, label: 'a' }
+    expect(envelopeBand(input)).toBe(envelopeBand({ ...input }))
+  })
+})
+
+describe('ladderRungs — the runtime’s claim-language ceiling, not a ladder this site invented', () => {
+  it('carries the seven ceilings of the committed runtime spec, in its own order', () => {
+    // The vocabulary is copied from the spec, so the test reads the spec: if the runtime ever
+    // re-orders or renames a ceiling, this fails instead of the site quietly drawing a stale ladder.
+    const spec = readFileSync(
+      `${ROOT}docs/meridian-research-runtime-spec-v0.2.0/MERIDIAN_RESEARCH_RUNTIME_SPEC_v0.2.0.md`,
+      'utf8',
+    )
+    expect(spec).toContain('### 5.1 Claim-language ceiling')
+    expect(spec).toContain(CLAIM_CEILINGS.join('\n'))
+  })
+
+  it('marks the ruled rung and everything weaker as permitted', () => {
+    const rungs = ladderRungs('associational_unadjusted', { top: 100, step: 40 })
+    expect(rungs).toHaveLength(7)
+    expect(rungs.filter((r) => r.ruled).map((r) => r.ceiling)).toEqual(['associational_unadjusted'])
+    expect(rungs.filter((r) => r.permitted).map((r) => r.ceiling)).toEqual([
+      'associational_unadjusted',
+      'descriptive',
+      'mechanism_hypothesis',
+      'insufficient_evidence',
+    ])
+    expect(rungs.map((r) => r.y)).toEqual([100, 140, 180, 220, 260, 300, 340])
+  })
+
+  it('the weakest ceiling permits only itself; the strongest permits the whole ladder', () => {
+    const weakest = ladderRungs('insufficient_evidence', { top: 0, step: 10 })
+    expect(weakest.filter((r) => r.permitted).map((r) => r.ceiling)).toEqual(['insufficient_evidence'])
+    expect(ladderRungs('causal_bounded', { top: 0, step: 10 }).every((r) => r.permitted)).toBe(true)
+  })
+
+  it('refuses a ceiling outside the vocabulary instead of inventing a rung for it', () => {
+    expect(() => ladderRungs('probably_fine', { top: 0, step: 10 })).toThrow(/not one of the runtime/)
+  })
+})
+
+describe('mmGrid', () => {
+  it('draws the millimetre paper with every fifth line major', () => {
+    const g = mmGrid(0, 30.4, 0, 30.4)
+    expect(g.match(/class="gridline"/g) ?? []).toHaveLength(4)
+    expect(g.match(/class="gridmajor"/g) ?? []).toHaveLength(2)
   })
 })
 
