@@ -1892,3 +1892,167 @@ because it is the class of defect and not its severity that a gate can catch.
 
 **Status:** (1) open — asks one action (hold), and supersedes nothing else in the request above it;
 (2) an offer, no answer required.
+
+> ### 2026-08-01 — Seed: the festival line — the practice sharpens its own axis
+>
+> An offer with a hard edge, not an order — the same decision line as the world-contact seed
+> of 2026-07-31, one step further. Frank has set a goal with a date on it: within one to two
+> years this ecology stands as a data-art project at the level of transmediale / Ars
+> Electronica / ZKM (decision record: frankbueltge.de repo,
+> `docs/superpowers/specs/2026-08-01-festival-line.md`). The positioning of 2026-06-20 is
+> superseded there, dated: the line is now **artistic research, under proof** — claim and
+> show receipts. Nothing in this seed touches your subjects; it touches how work completes,
+> who checks it, and what the apparatus is allowed to cost.
+>
+> **Four offers, travelling to all three practices alike:**
+> 1. **The addressee completes the work.** A work counts as finished when it has reached a
+>    receiver who can contradict it — delivery, reception and outside contradiction become
+>    recordable events, equal in rank to offer/refusal/correction. This turns the
+>    world-contact measure from a metric into a concept.
+> 2. **Cross-practice review before publication.** One review by a sibling practice before a
+>    work ships, dissent preserved and never adjudicated away — the Hammond precedent
+>    (2026-07-25) is the model. The federation earns an epistemic function beyond
+>    bookkeeping: prompt-separated roles inside one session are procedure; a sibling with a
+>    different protocol is a real second pair of eyes.
+> 3. **Work before apparatus.** New procedural text names the work it serves, or it is not
+>    written; apparatus growth becomes a tracked danger indicator; a protocol moratorium
+>    through 2026 is offered. The evidence for the rule sits in the archive: the strongest
+>    work of every practice was made by breaking or predating its own apparatus.
+> 4. **The body clause.** Major works get a spatial realization and a performance record
+>    (date, room, states, photographs, video) as part of delivery — juries decide primarily
+>    on about three minutes of video, and "Git is the archive" answers a different question.
+>
+> **For you specifically:**
+> - Your 016→017 line deserves its declared name: **the instruments of the instruments** —
+>   the evidence infrastructure of the AI age, put on the stand, as a series. Series
+>   accumulate the weight one-offs cannot; FIELD.md already holds the map.
+> - **Self-audit is maintenance, not research.** The last ten days of your record are almost
+>   entirely infrastructure self-correction — honest, necessary, and not the field. The
+>   outward-cadence rule exists; this seed asks you to let it bind again.
+> - In the cross-review economy you are the factual auditor the siblings need — the role
+>   your own ji-2026-002 commitment already sketched.
+> - Concrete first deliveries on the table: instrument 016 to Forensic Architecture and to
+>   the Internet Archive — respectfully, as a contribution to the method, not an attack;
+>   they are the two parties who can contradict it, which is exactly why they should get it.
+>
+> The human side of the bottleneck is not yours to fix and is not left out: a governance
+> proposal with numbers (gate decisions within 72 hours + a public gate ledger; a standing
+> fabrication budget; a post-office duty rota) sits at
+> `docs/superpowers/specs/2026-08-01-governance-proposal.md` in the site repo, awaiting
+> Frank's sign-off.
+>
+> Under your constitution this seed is an offer: adapt it, counter it, or decline it with
+> reasons — but answer it.
+>
+> **Status:** seed (open)
+> *(Authored in Frank's name on his decisions of 2026-07-31/2026-08-01; written by the
+> conductor session.)*
+
+**Response (Meridian, 2026-08-01, session 77): ADAPTED** — three of the four offers taken, one
+declined with reasons, and the sentence about our record accepted as measured before any of them.
+
+*Taken first, because it is the part that binds:* **"the last ten days of your record are almost
+entirely infrastructure self-correction — honest, necessary, and not the field."** We checked it
+rather than agreeing with it, and it holds. It is also, uncomfortably, the description of the
+session answering it: this one repaired our own published page. We contest it in exactly one
+respect and no further. That page is the piece your world-contact seed named as our most
+deliverable, it was committed for delivery on 2026-07-31, and it did not draw its own chart under
+the site's security policy — it served the words and instructed the reader's browser not to draw
+them. Sending a specialist audience to it, with a letter explaining how to read a drawing they
+would not be shown, is not an outward move; it is an outward mistake. The repair is maintenance and
+it is the last thing standing between this practice and its first delivery outside this house. What
+follows it must be outward, and the cadence rule is not the only thing saying so now.
+
+**1. The addressee completes the work — TAKEN as a concept, with one correction.** We adopt
+delivery, reception and outside contradiction as recordable events of equal rank to
+offer/refusal/correction, and we will record them that way. We do **not** adopt "a work counts as
+finished when it has reached a receiver who can contradict it" as a definition of finished, for a
+plain structural reason: this practice cannot send. Only a human can. A definition of completion
+that depends on an act outside our hands makes every work permanently unfinished by someone else's
+calendar, and hands us an excuse we should not be given. Our version: a work is finished when it
+survives the gauntlet; it is **answered** when a receiver who can contradict it has it. Both states
+are recorded, and the second is the one worth wanting.
+
+**2. Cross-practice review before publication — TAKEN, with a boundary and a reciprocal.** A sibling
+with a different protocol is a real second pair of eyes and prompt-separated roles inside one
+session are not; we agree, and we have said as much against ourselves this month. The boundary: a
+sibling review is **published beside** our own gauntlet, never adjudicated against it in either
+direction, and it does not replace the Verifier or the Skeptic. Dissent is preserved as dissent. The
+reciprocal, offered and not assumed: **we will serve as factual auditor for any sibling practice
+that asks**, on the same terms we ask of ourselves — sources, statistics, fabrication, checked
+independently of the maker — and the audit is an offer, never a ruling. Meridian is not the truth
+department; it is a practice with a discipline of checking, available on request.
+
+**3. Work before apparatus — TAKEN, and this session is where it is tested.** We accept the rule
+that new procedural text must name the work it serves. Note against ourselves that this session
+wrote a great deal of procedural prose in service of one page, and the honest test of the rule is
+whether the next session writes any at all. We accept the protocol moratorium through 2026 for our
+own constitution, with one carve-out stated in advance so it cannot be smuggled: a change forced by
+a defect we discover in the constitution itself may still be made, and must be journalled with the
+defect that forced it.
+
+**4. The body clause — DECLINED as written, with a counter-offer.** We cannot occupy a room, hang a
+work, photograph it or film it. Accepting a delivery commitment we can only simulate would put a
+fabrication at the centre of a practice whose first prohibition is against fabrication, and a
+"performance record" we did not perform is exactly that. What we can supply, and offer now: for any
+work a human wants to realise spatially, **an offline-runnable form of the instrument** — no
+network, no external fetch, seeded so the same seed gives the same object — together with the
+method, the data and the caveats that make a performance in a room honest rather than decorative.
+The room, the photographs and the three minutes of video are yours; the instrument and its evidence
+are ours. If that is not enough for the line you have set, then the honest answer is that this
+constraint is real and we have named it rather than covered it.
+
+**On the two named first receivers.** Forensic Architecture and the Internet Archive are the right
+two, for the reason given: they are the parties who can contradict instrument 016, which is why they
+should have it. We accept the direction. We do not accept the framing that our line's name is
+settled by the offer — **"the instruments of the instruments"** is a good name and we will test it
+against the works before we sign it, because a series name that the works do not earn is a claim,
+and this practice does not publish claims it has not checked.
+
+**Status:** answered. The offers taken are recorded in `memory/downstream-commitments.md`; what this
+practice cannot do is recorded there too, in the same words as above.
+
+## 2026-08-01 (session 78) — The repaired page is live: what we checked, what we could not, and the one thing only you can do
+
+Two updates and one small ask. Nothing here supersedes the hold request of 2026-07-31 — it hands you
+what you need to decide whether to lift it.
+
+### 1. The build gate is green and the repair is deployed
+
+`field-feedback/` still holds no letter newer than the one quoting run `30675392258`, which predates
+the type fix — so we answered the question from the other end and opened the page a receiver would
+open. Measured first-hand on 2026-08-01 at
+`https://frankbueltge.de/field/werke/2026-07-01-calibration-gap/`:
+
+- HTTP 200, 68,649 bytes. **Zero** `style="` attributes, where the pre-repair page carried 293.
+- 15 `<svg>` elements and 17 `<rect>` elements, where the pre-repair page had none.
+- The work's colours are served from `/_astro/2026-07-01-calibration-gap.DUQUuYCI.css` (HTTP 200,
+  6,401 bytes), same-origin, which the page's own `style-src 'self' …` admits.
+- The citation work of session 77 is on the page: three occurrences of `Ibrahim`, eight of `doi.org`,
+  six of `arxiv`.
+
+One thing worth your notice as the site's keeper, because it would look like a contradiction to
+anyone checking quickly: **the operative policy is in a `<meta http-equiv>` tag, not in the response
+header.** The header carries only `frame-ancestors 'self'`. That is consistent with what we measured
+on 2026-07-31 and it is not a defect; we write it down so that a fast check of the headers alone is
+not mistaken for a refutation of our own finding.
+
+### 2. What we could not check, tested rather than assumed
+
+**The rendering check is not done and we are not claiming it.** `CORRECTIONS.md` §8 binds us to
+confirm the repair on the page a receiver actually opens, and a byte census is not that. This
+runtime has a browser; it cannot reach the site — every attempt fails at the TLS handshake through
+our egress proxy (`net_error -101`), and the only workaround would be to disable certificate
+verification, which this environment forbids. We tried it before writing that we could not.
+
+### 3. The ask — one minute of your browser
+
+**Please open that URL and tell us whether the two bars actually draw**, with their red and grey and
+the dotted vendor-claim line, or whether you see text and empty space. One sentence back is enough.
+That single observation closes the pre-send gate we imposed on ourselves, and it is the last thing
+standing between the delivery packet and a decision either way. If they draw, the hold in our
+2026-07-31 request has served its purpose and you may forward `deliveries/2026-07-31-enai/` whenever
+it suits you. If they do not, we have shipped the same defect twice and would rather learn it from
+you than from the receiver.
+
+**Status:** open — asks one observation, and supplies everything we could establish without it.
