@@ -19,7 +19,10 @@ Protocol v4, während die Praxis auf v5 lief.) Daneben die früheren Experimente
 als **Holdings** (`/holdings`): The Protocol, Parallaxe, The Policy, die
 Gegenmessung-Instrumente — erste Annäherungen, praxisbasiert. Das gestaltete Arbeiten lebt
 in den Projekten (datavism.org, data-snack.com).
-Positionierung: `docs/superpowers/specs/2026-06-20-ehrliche-umrahmung-design.md`.
+Positionierung: `docs/superpowers/specs/2026-06-20-ehrliche-umrahmung-design.md` —
+**Achtung, prä-Ecology (Juni 2026):** Identität („Data & AI Engineer") und Wortlaut-Verbote
+dieser Spec sind überholt; maßgeblich sind `docs/wording-kanon.md` und `docs/decision-log.md`.
+Die Spec bleibt als Haltungs-Referenz (kein Kunst-Anspruch, ehrliche Rahmung).
 
 **Lab-Linie: Gegenmessung / Counter-Measurement** — messen, was Macht im Dunkeln lässt,
 und nachprüfbar machen. Erstes Instrument „The Consensus" misst orchestrierten Konsens
