@@ -11,10 +11,10 @@ const year = 2026
 
 <footer class="mt-24 border-t border-line/60 footer-dark">
   <div class="mx-auto flex max-w-5xl flex-col gap-8 px-6 py-14 sm:flex-row sm:items-start sm:justify-between">
-    <div class="flex items-center gap-3">
-      <img src="/logo.webp" alt="" width="96" height="96" class="h-24 w-24 rounded-full" />
-      <span class="text-sm font-semibold">Frank Bültge</span>
-    </div>
+    <!-- The mark stands alone: the name beside it was redundant with the copyright
+         line below, which is also why alt="" is still right — the logo is decorative
+         here, and "Frank Bültge" already reaches screen readers from that line. -->
+    <img src="/logo.webp" alt="" width="144" height="144" class="h-36 w-36 rounded-full" />
 
     <nav aria-label="Footer" class="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-fg-muted">
       <a href="/seed" class="transition-colors hover:text-fg">Offer a seed</a>
