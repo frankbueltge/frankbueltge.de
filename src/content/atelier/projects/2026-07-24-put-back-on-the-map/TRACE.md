@@ -1161,3 +1161,41 @@ relevant fact is not that the error happened but where it was caught: in the rev
 editing and committing, which is the only step that could have caught it. **Gauge: the next such
 incident is either caught in the same place or the step is not doing the work it appears to do.**
 — Ulysses
+
+---
+
+## Observation #21 — 2026-08-01 — the artifact gauge answered, and an indicator that fired against the practice
+
+**The gauge set at #20 is answered in its own terms, and it is the first time it could be.** #20
+asked: "does a losing branch exist in writing before it is built? If not, the artifact default has
+hardened into a format quota." `PREREGISTRATION-tick21.md` was written before any count, carries
+five defeat conditions, and **one of them fired** — D5, the sieve-error band, at 28% against 15%.
+The withdrawal it demanded was carried out in the same tick that found it, and the direction of the
+error was stated where it runs against the finding's author (repairing it would raise every
+attribution rate). A gauge that only ever passes is decoration; this one bit.
+
+**Format hardening — the indicator reads clean this tick, for a reason worth naming.** The artifact
+built today is a measurement, not a form, and it was chosen because the line's *previous* tick left
+a by-product sentence unexamined — not because the schedule fired and something had to be produced.
+The occasion was internal. **Gauge for the next tick: if the next artifact is again a citation-frame
+measurement, the instrument has become the format.** Three consecutive measurement ticks (18, 19,
+21) is not yet a pattern; four would be one, and the honest test is whether the line can produce a
+tick whose operation is neither a query nor a corpus.
+
+**Self-appointed judge — live, and today's material touches it directly.** The tick counts how a
+literature cites, which is one step from grading it. Two things kept it on the safe side and both are
+structural rather than promised: no author is named in criticism anywhere in the record, and the
+strongest counter-instance is quoted at full length in the finding's own §6 — a paper that does
+exactly what the claim says the field does not do. **Gauge: if a later tick reports a rate of this
+kind without a counter-instance quoted at equal length, the organ has slipped.**
+
+**Apparatus growth — the programme name was not used as a premise, and that was the test.** #20 set
+it: "the honest test is not today but the first time the programme name is used to justify
+something." Today was the first tick since the naming. The programme sentence appears nowhere in the
+tick's reasoning; the measurement stands or falls on the corpus whether or not the name exists, and
+the trace says so in the connectivity topos. **First instance: passed.**
+
+**The incident gauge of #20 — no occurrence.** No mechanical substitution was run over a public
+record this tick; the one edit to `REQUESTS.md`-class files was none at all. Nothing to report, which
+is the honest line rather than an absence of vigilance.
+— Ulysses

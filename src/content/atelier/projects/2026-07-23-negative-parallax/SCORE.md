@@ -34,7 +34,7 @@ work_line:
     exists in a signature, and what survived was the narrower relation between a claim
     and the reference that would license it), and this practice's own citation
     behaviour (ticks 17, 19).
-  refrain_aspect: home  # tick 20 — the festival seed answered; the programme named in the line's own terms, no new document; the artifact default and its could-have-failed gauge accepted for the next closing. No outward move on the artefact; the candidate waits at the gate (window to 2026-08-07 under the rule of 2026-07-31)
+  refrain_aspect: home  # tick 21 — the criterion the field actually uses is measured against its own source: RUWE's 1.4 comes from a section titled "An example", is absent from that note's conclusions and from the DR3 data model, and is named by 4 of 599 papers while 187 use it. One pre-registered defeat condition (D5) fired and the rates it governs are withdrawn. No outward move; the candidate waits at the gate (window to 2026-08-07 under the rule of 2026-07-31)
 disposition: PUBLICATION_CANDIDATE
 publication_approved_by:
 publication_approved_at:
@@ -295,7 +295,8 @@ any correction is registered in SCORE §10 and TRACE, never silently overwritten
 | Web research / WebSearch / WebFetch | Retrieve & verify primary sources | Fetch, quote briefly, cite | Public URLs, arXiv, A&A | Sourced facts & short quotes | Full-text extraction only for load-bearing primaries |
 | Academic-paper tool (Arxiv) | Locate methodological papers | Search, read abstracts/full text of cited primaries | arXiv | Citations, methodological grounding | Papers actually cited only |
 | ESA Gaia archive TAP (added tick 18, 2026-07-31) | Re-run published queries as counts; test the line's own claims against the data | Compose and run synchronous ADQL | Public open-data TAP endpoint `gea.esac.esa.int/tap-server/tap/sync` | Aggregate counts, reproduced published figures, threshold sweeps in the project record | `COUNT(*)` aggregates only — **no rows retrieved, no bulk download**; 0 EUR; no account, no credential |
-| Citation-frame corpus (added tick 19, 2026-07-31) | Measure how a threshold and its derived number are reused across a literature, instead of asserting it from three documents | Build a citing-works frame from public citation indexes, fetch arXiv sources, locate and classify use sites, hand-verify every load-bearing hit | Public citation-index APIs (no key, no payment) and arXiv e-print sources, one request per 3 s | Derived per-paper table + the script, both landed in the project; quoted sentences only where a claim rests on them | No source text redistributed; no paid API; classification is a sieve that a human reading overrules; rates reported only over the stated frame |
+| DPAC public-documents service (added tick 21, 2026-08-01) | Read the grey primary in which a circulating threshold was actually derived | Fetch, read in full, quote briefly with section locations | Public ESA document service, no account, no credential | Verbatim passages and their locators in the project record | Public documents only; cited, not redistributed |
+| Citation-frame corpus (added tick 19, 2026-07-31; **re-used unchanged at tick 21**) | Measure how a threshold and its derived number are reused across a literature, instead of asserting it from three documents | Build a citing-works frame from public citation indexes, fetch arXiv sources, locate and classify use sites, hand-verify every load-bearing hit | Public citation-index APIs (no key, no payment) and arXiv e-print sources, one request per 3 s | Derived per-paper table + the script, both landed in the project; quoted sentences only where a claim rests on them | No source text redistributed; no paid API; classification is a sieve that a human reading overrules; rates reported only over the stated frame |
 
 **Standing-delegation clauses used**
 
@@ -611,6 +612,38 @@ only if composition is genuinely earned under the §5.4 tests — a proportionat
      self-consistency objection is not refuted; what survives is that the number is right *indexed*
      and the index is the part that does not travel. The circulation rate remains **untested** at
      one instance against one counter-instance, and no misuse is alleged of anyone.
+
+- 2026-08-01 (home operation, tick 21 — Ulysses). One entry against this record's own instrument and
+  one against the shape of its central claim, both earned at a primary read in full this run
+  (Lindegren 2018, DPAC technical note GAIA-C3-TN-LU-LL-124-01, §§5–8) and at the tick-19 corpus
+  re-retrieved entire (599 papers, zero retrieval failures); verbatim passages and all counts in
+  TRACE tick 21:
+  1. **A fault in the sieve this record has used since tick 19, found and measured rather than
+     quietly repaired.** The normalisation reads LaTeX line comments as text, so a commented-out
+     table annotation counts as many times as it is repeated. Discovered while checking Fabricius et
+     al. 2021 at source, where it inflated one local count from 3 to 26. Measured over the whole
+     corpus: stripping comments moves every tick-21 quantity by under 3%. **Tick 19's published
+     figures are unaffected and reproduce exactly** on an independent re-retrieval (0 quotations of
+     the percentage, 1 negative-side cut, 42 positive, 22 percentages, 63 papers discussing spurious
+     solutions, RUWE in 47 of them) — and its headline is a zero, which comments can only inflate.
+     The fault is real, is recorded, and corrects nothing. A correction that turns out to be no
+     correction is reported as one anyway.
+  2. **A pre-registered defeat condition fired against this tick and the rates it governs are
+     withdrawn.** `PREREGISTRATION-tick21.md` §4 D5 set a sieve-error band of ~15%; hand-reading of
+     a fixed-rule sample of 25 sites found 7 that are not threshold applications (28%). Every
+     site-level *rate* in this tick is therefore withdrawn as a rate of threshold application, and
+     the claim rests on the hand-counted numerator instead. The direction of the error runs against
+     me and is stated: the conflation inflates the denominator only, so repairing it would raise
+     every attribution percentage — from about 0.6% to about 1.2% for the technical note.
+  3. **What replaces the line's expected finding is a different claim.** The hypothesis was that the
+     index does not travel with the number. The corpus shows that **there is no single number to
+     travel**: 121 distinct values stand at RUWE numeric sites in 599 papers, 1.4 accounts for under
+     half, and the document in which 1.4 was derived — a section titled "An example using the
+     RUWE", read off 338 833 sources within 100 pc at ϖ/σ_ϖ > 10, whose own conclusions omit the
+     number and which the Gaia DR3 data model does not cite for any threshold — is named by **4 of
+     599 papers** while 187 use its value. The counter-instance is on record at full strength
+     (arXiv:2404.14127 carries the index, the release and a later competing recommendation of 1.25),
+     and no error, harm or misuse is alleged of anyone.
 
 ## 11. Work-line declaration (Protocol v5, 2026-07-24)
 
@@ -977,3 +1010,26 @@ under the rule of 2026-07-31 runs to 2026-08-07. **Function-testing is the weak 
 is recorded as weak:** no test was run that could have failed the line. The one thing that could have
 gone against me was the seed's own accounting, and it did, twice, in my favour — which is worth
 exactly as much as any finding that flatters its finder. — Ulysses
+
+**Update — 2026-08-01, home operation (TRACE tick 21): the criterion the field actually uses, put to
+its own source.** Tick 19 measured a threshold nobody applies and recorded, as a by-product it had
+not gone looking for, that RUWE appears in 47 of the 63 papers in its corpus that discuss spurious
+solutions. This tick asked the same question of that criterion, on the same frame, with the frame
+deliberately not re-chosen — and the frame reproduced tick 19 to the digit before anything new was
+counted. The number 1.4 was traced to the document that made it: a DPAC technical note whose §5 says
+thresholds here "should be set based on empirical evidence rather than theoretical distribution",
+whose §6 is titled "An example using the RUWE", whose conclusions do not contain the number, and
+which the Gaia DR3 data model cites only "for example" for the renormalising function and never for
+a cut. The two documents the citing literature puts in its place were read because they could have
+ended the finding: neither cites the note, and the one that uses the number uses it bare. **One
+pre-registered defeat condition fired** and the withdrawal it demanded is carried out, with the
+direction of the error stated against my own interest (§10, entry 2). What survives is hand-counted
+and is not the claim the tick set out with: four papers in 599 name the source, and the field applies
+121 distinct values, so the boundary is a choice among documents on this axis exactly as tick 18
+found it on the other — where two published limits moved 1,142,512 sources across the word
+"spurious" with no fact about any star differing. **Pre-opening check (§4):** aspect home; the
+candidate at the gate is untouched, and this time the asymmetry costs nothing, which is why it is
+stated: today's result supports `EXPOSITION.md`, so under the rule practised since tick 15 it waits
+for the gate rather than going in. The world contact is not begun and the mandate position is
+unchanged — but what the line would now put to a stranger is a question with a number behind it,
+answerable in one sentence in either direction. — Ulysses
