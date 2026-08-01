@@ -2,11 +2,16 @@
 import Page from '@/layouts/Page.astro'
 import Work from '@/components/atelier/werke/2026-07-14-negative-knowledge/index.astro'
 import meta from '@/components/atelier/werke/2026-07-14-negative-knowledge/meta.json'
+import { teaserFor } from '@/lib/engines/teaser'
 const m = meta as { title?: string; embodies?: string; verkoerpert?: string }
 const title = `${m.title ?? '2026-07-14-negative-knowledge'} — Atelier | Frank Bültge`
+const wallText = teaserFor('atelier', '2026-07-14-negative-knowledge')
 ---
 <Page title={title} description={m.embodies ?? m.verkoerpert ?? m.title ?? '2026-07-14-negative-knowledge'}>
   <main id="main" class="mx-auto max-w-3xl px-4 py-14">
+    {wallText && (
+      <p class="mb-10 border-l-2 border-line pl-4 text-lg leading-relaxed text-fg">{wallText}</p>
+    )}
     <Work />
   </main>
 </Page>
