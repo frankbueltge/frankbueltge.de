@@ -9,8 +9,16 @@ const projects = getProjects()
 ---
 
 <main id="main" class="mx-auto w-full max-w-5xl flex-1 px-6 py-16 sm:py-24">
+  {/* The kicker names what this page is NOT (2026-08-01): /works, one letter away, is the
+      research practices' complete works register. Two neighbouring routes that both mean
+      "work" need to say which is which where a visitor lands, not in a redirect table. */}
+  <p class="mb-2 font-mono text-xs uppercase tracking-widest text-fg-faint">{t(locale, 'work.kicker')}</p>
   <h1 class="text-[clamp(34px,6vw,64px)] font-bold tracking-[-0.03em]">{t(locale, 'work.title')}</h1>
   <p class="mt-4 max-w-2xl text-fg-muted">{t(locale, 'work.sub')}</p>
+  <p class="mt-4 font-mono text-xs text-fg-faint">
+    {t(locale, 'work.register.lead')}{' '}
+    <a href={getRelativeLocaleUrl(locale, '/works')} class="underline decoration-line underline-offset-4 transition-colors hover:text-fg">{t(locale, 'work.register.label')}</a>
+  </p>
 
   <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
     {projects.map((p) => (

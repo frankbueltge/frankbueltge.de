@@ -134,3 +134,27 @@ schreibt dorthin; Umbenennung auf `/works` ist ein späteres Paket), `/{ns}/prot
 
 Test: `src/lib/redirects.test.ts` („practice-surfaces routes are covered“) prüft die beiden
 neuen Regeln und dass keine Wildcard die Praxis-Eingänge selbst verschluckt.
+
+## Nachtrag 2026-08-01 — Etappe 2 (Textwände): NULL neue Redirect-Zeilen
+
+Die Journale und Team-Kanäle wurden aufgeteilt (eine Seite je Session, Archiv je Kanal).
+**`public/_redirects` bleibt unangetastet** — und zwar aus zwei unabhängigen Gründen:
+
+1. **Kein Pfad ist umgezogen.** Alle bisherigen Adressen antworten weiter unter derselben
+   URL: `/atelier/journal`, `/field/journal`, `/studio/history`, `/{ns}/requests`. Sie zeigen
+   nur weniger auf einmal und verlinken den Rest. Was dazukommt, sind NEUE Routen:
+   `/{ns}/requests/archive`, `/atelier/journal/{anker}` (92), `/field/journal/{anker}` (86),
+   `/studio/journal` + `/studio/journal/{anker}` (56).
+2. **Fragmente kann ein Redirect nicht sehen.** Die publizierten Deeplinks sind Fragmente
+   (`/field/journal#cs-42`, `/atelier/journal#s37`, `/studio/history#cs-42`), und ein `#…`
+   erreicht Cloudflare nie — der Browser schickt es nicht mit. Eine `_redirects`-Regel könnte
+   sie also grundsätzlich nicht matchen, egal wie sie formuliert wäre. Der Umweg ist deshalb
+   ein Client-Script auf genau den drei Seiten, auf die diese Links zeigen
+   (`legacyJournalHashTarget()` + eine Prüfung gegen die tatsächlich gelieferten Anker im DOM,
+   damit nie auf einen geratenen 404 gesprungen wird). Best-effort, JS nötig — ohne JS
+   scrollt das Fragment weiter zu seiner Registerzeile, also kein Rückschritt gegenüber heute.
+
+**Der Anker IST das Pfadsegment** (`#cs-42` → `/field/journal/cs-42/`): Die
+Anker-Konvention (`cs-N`, `pre-<tag>-N`, `<tag>-<i>`, `s<n>`, `note-<slug>`) ist URL-sicher
+und wird wörtlich übernommen. Damit braucht es keine Mapping-Tabelle, die driften könnte —
+und die Chronik-Anker (`/{ns}/chronicle.json`) bleiben ohne Änderung gültig.

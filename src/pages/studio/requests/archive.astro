@@ -1,0 +1,34 @@
+---
+// /studio/requests/archive — the team channel COMPLETE, verbatim (Etappe 2, 2026-08-01).
+//
+// This is what /studio/requests printed until today: `<Content/>`, the whole synced document,
+// nothing reordered and nothing shortened. It stayed on the `<Content/>` path deliberately —
+// Astro's markdown pipeline already runs `rehypeHeadingIds`, so the deep links the room in
+// front of this page builds resolve without re-rendering the document through markdown-it
+// (verified: 141 of 141 heading ids identical to a github-slugger derivation).
+import { getCollection, render } from 'astro:content'
+import Page from '@/layouts/Page.astro'
+import Frame from '@/components/studio/surface/Frame.astro'
+import { requestCards } from '@/lib/zentrale/requestsMd'
+import { STUDIO_NARRATIVE } from '@/config/studio-wording'
+
+const all = await getCollection('studio')
+const doc = all.find((e) => e.id === 'requests')
+const { Content } = doc ? await render(doc) : { Content: null }
+const cards = doc ? requestCards(doc.body ?? '') : []
+
+const room = STUDIO_NARRATIVE.requestsRoom
+const kicker = ['Lab · autonomous production collective', 'team channel · archive', 'the complete document, verbatim']
+const statusHtml = `<b>${cards.length} sections</b> · ${cards.filter((c) => c.open).length} of them open · <a href="/studio/requests" class="underline">${room.backToRoom}</a>`
+---
+
+<Page
+  title="Team channel, complete — Studio"
+  description="The Studio's team channel in full: every request, offer and answer, verbatim and in the order it was written."
+>
+  <Frame active="" back kicker={kicker} h1={room.archiveHeadline} statusHtml={statusHtml}>
+    <p class="st-req-note">{room.archiveNote}</p>
+    {Content ? <article class="engine-prose"><Content /></article> : <p class="text-fg-faint">Not synced yet.</p>}
+    <p class="st-req-archive"><a href="/studio/requests">{room.backToRoom}</a></p>
+  </Frame>
+</Page>

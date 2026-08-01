@@ -4,6 +4,12 @@
 // (H2 = Section, Blockquote-Konvention für verschachtelte Antworten). Wird sowohl von Astro
 // (Lesen fürs Dashboard) als auch von einer Pages Function (Schreiben bei "beantworten") genutzt
 // — daher nur Web-APIs, kein fs.
+// Relative imports only, never the `@/…` alias: a Pages Function bundles this file
+// (functions/api/zentrale/antwort.js) and its esbuild pass does not read tsconfig paths.
+// `github-slugger` is a plain-ESM, dependency-free package (String + one regex, no Node
+// builtins), so riding along in that Worker bundle costs ~12 kB and breaks nothing.
+import GithubSlugger from 'github-slugger'
+import { stripMd } from '../maschinenraum'
 
 export type RequestSection = { heading: string; body: string; status: string | null }
 
@@ -168,3 +174,224 @@ export function appendGateDecision(
   const block = `## Gate decision — ${opts.date} — ${opts.project}\n\n${verdict}\n`
   return { ok: true, md: `${md.trimEnd()}\n\n${block}` }
 }
+
+// ——————————————————————————————————————————————————————————————————————————————————————
+// Reading side for the PUBLIC requests rooms (/atelier|field|studio/requests, Etappe 2).
+// Everything below is additive — the write path above (answerRequest, appendSeed,
+// appendBlockToSection) keeps its signatures, because a Pages Function depends on them.
+//
+// Hard constraint: these functions run inside the build that gates the three practices'
+// own nightly publishing (four integrate runs a day). They must therefore NEVER throw on
+// content they did not expect — a malformed heading, a missing status line, a section with
+// no body at all all resolve to a null/empty value, never to an exception. Every regex here
+// is anchored and linear; none of them can backtrack catastrophically on a long line.
+// ——————————————————————————————————————————————————————————————————————————————————————
+
+/**
+ * Does this status value say the item is still open?
+ *
+ * Proven against every real status string in all four REQUESTS.md files (2026-08-01: 27
+ * atelier, 31 field, 25 studio, 1 plenum status lines) — the practices phrase openness in
+ * at least eleven ways, and all of them contain the bare word:
+ *   `open` · `seed (open)` · `open (item 1 is yours alone; item 2 is informational)` ·
+ *   `offer (open) — no answer needed; act on it or don't.` ·
+ *   `open — an offer; silence, deferral or decline are all legitimate answers.` ·
+ *   `open. If this is silent through our next session, we will take route 3 …` ·
+ *   `open — awaits one action (forward) and one fact (the date it went).` ·
+ *   `(1) open — asks one action (hold), and supersedes nothing else …` ·
+ *   `open — asks one observation, and supplies everything we could establish without it.` ·
+ *   `open (a seed — answer in the journal either way)` · `open — you can now co-shape …`
+ * while no closed status does (`answered`, `resolved`, `enabled`, `declined`, `delivered`,
+ * `noted`, `letter (no reply owed)`, `standing rule`, `closed by events`, `premiered`,
+ * `partially enabled`, `accepted and worked`, `seed read; not taken up` …).
+ *
+ * `\b` matters: it keeps `reopened` and `opening` out. A section with NO status line is not
+ * open — the practices always write the status of a live ask.
+ */
+export function isOpenStatus(status: string | null | undefined): boolean {
+  return typeof status === 'string' && /\bopen\b/i.test(status)
+}
+
+/** A `Seeds …` container — one H2 holding many dated seed blocks, each with its own nested
+ *  status. Its section-level status is whichever nested one comes first, so "open" there says
+ *  nothing about the container: it must not be listed as an open ask. Narrower on purpose than
+ *  isNonRequestSection (which also covers Team notes — those DO carry a real own status). */
+export function isSeedsSection(heading: string): boolean {
+  return /^Seeds\b/i.test(heading.trim())
+}
+
+/** Everything before the first H2: the standing rule and the how-to the practice wrote for
+ *  itself. Belongs to nobody, can be answered by nobody — and is the one piece of the
+ *  document a first-time visitor has to read. Returned as raw markdown, without the
+ *  document's own H1 title (the page already carries a headline; two would be one too many
+ *  for a screen reader walking the outline). */
+export function preamble(md: string): string {
+  const first = locateSections(md)[0]
+  return md
+    .slice(0, first ? first.start : md.length)
+    .replace(/^\s*#\s+[^\n]*\n?/, '')
+    .replace(/\s+$/, '')
+    .replace(/^\s+/, '')
+}
+
+/** The ISO date a section heading leads with, if any — `2026-07-31 — …`,
+ *  `2026-07-31 (session 76) — …`, `Team note — 2026-07-25 — …`. Null for `Seeds from the
+ *  team` and anything else that names no date. */
+export function headingDate(heading: string): string | null {
+  return /(\d{4}-\d{2}-\d{2})/.exec(heading)?.[1] ?? null
+}
+
+/** The heading without its leading date/label scaffolding — what a card shows as its title.
+ *  Falls back to the full heading whenever the shape is unfamiliar. */
+export function headingTitle(heading: string): string {
+  const t = heading.trim()
+  const cut = /^(?:Team note|Team responses|Response|Status)?\s*(?:\([^)]*\))?\s*(?:—|–|-)?\s*\d{4}-\d{2}-\d{2}(?:\s*\([^)]*\))?\s*(?:—|–|:)\s*(.+)$/.exec(t)
+  return (cut?.[1] ?? t).trim()
+}
+
+/** github-slugger — the very package Astro's own rehypeHeadingIds uses, so a slug derived
+ *  here is byte-identical to the `id` Astro puts on the heading in the rendered archive.
+ *  Verified 2026-08-01 against the built pages: 141/141 heading ids matched across the three
+ *  REQUESTS.md files. Only the DEDUPLICATION differs (a slugger instance is per document, and
+ *  this one sees a single heading), which is why callers pass Astro's own `headings` list to
+ *  requestCards when they have it — see `slugFor` below. */
+export function slugifyHeading(heading: string): string {
+  return new GithubSlugger().slug(stripMd(heading.replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')))
+}
+
+/** One rendered heading as Astro's `render()` hands it back. */
+export interface RenderedHeading { depth: number; slug: string; text: string }
+
+/** Flattens one markdown line to plain text: blockquote markers, list bullets, links and
+ *  the emphasis/backtick noise stripMd already knows. */
+function plainLine(line: string): string {
+  return stripMd(
+    line
+      .replace(/^(?:\s*>)+\s*/, '')
+      .replace(/^\s*[-*+]\s+/, '')
+      .replace(/^\s*\d+\.\s+/, '')
+      .replace(/!\[([^\]]*)\]\([^)]*\)/g, '$1')
+      .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1'),
+  )
+}
+
+/** Trims to at most `max` words, marking the cut. */
+export function trimWords(text: string, max: number): string {
+  const words = text.split(/\s+/).filter(Boolean)
+  if (words.length <= max) return words.join(' ')
+  return words.slice(0, max).join(' ') + ' …'
+}
+
+/** Words of a section body — the number the page prints so a visitor knows what the
+ *  "read it in full" link costs them. */
+export function countWords(text: string): number {
+  return text.split(/\s+/).filter(Boolean).length
+}
+
+/** The lead of a section, flattened to `max` words: the first prose of the body, skipping
+ *  what carries no meaning out of context (status lines, sub-headings, rules, table rows,
+ *  fenced code). Never throws; an empty body yields an empty string. */
+export function excerpt(body: string, max: number): string {
+  const parts: string[] = []
+  let inFence = false
+  let words = 0
+  for (const raw of body.split('\n')) {
+    const bare = raw.replace(/^(?:\s*>)+\s*/, '')
+    if (/^(```|~~~)/.test(bare)) {
+      inFence = !inFence
+      continue
+    }
+    if (inFence) continue
+    if (!bare.trim()) continue
+    if (/^#{1,6}\s/.test(bare)) continue
+    if (/^\*\*Status:\*\*/.test(bare)) continue
+    if (/^(\|| {0,3}([-*_])\s*(\2\s*){2,}$)/.test(bare)) continue
+    const text = plainLine(raw)
+    if (!text) continue
+    parts.push(text)
+    words += countWords(text)
+    if (words >= max) break
+  }
+  return trimWords(parts.join(' '), max)
+}
+
+/** One section of a REQUESTS.md, prepared for a card on the public requests room. */
+export interface RequestCard {
+  /** the H2 verbatim — the key the write path and the inbox issue titles use */
+  heading: string
+  /** the heading without its date scaffolding, for display */
+  title: string
+  date: string | null
+  status: string | null
+  open: boolean
+  /** a `Seeds …` container rather than a single exchange */
+  seeds: boolean
+  /** an ask TO the human (false for Frank's own notes and the practice's answers) */
+  request: boolean
+  /** fragment on /…/requests/archive — '' when the heading yields no slug */
+  slug: string
+  excerpt: string
+  words: number
+}
+
+export interface RequestCardOptions {
+  /** words of body lead per card (default 40) */
+  excerptWords?: number
+  /** Astro's rendered heading list (`const { headings } = await render(doc)`) — the
+   *  authoritative slugs, including the `-1` suffixes a duplicate heading would get. */
+  headings?: readonly RenderedHeading[]
+}
+
+/** Matches one H2 against Astro's rendered headings by flattened text, so the fragment the
+ *  card links to is the id the archive page actually renders. Falls back to slugifyHeading;
+ *  a wrong fragment then simply lands at the top of the archive, never on a 404. */
+function slugFor(heading: string, headings: readonly RenderedHeading[] | undefined): string {
+  const own = slugifyHeading(heading)
+  if (!headings?.length) return own
+  const wanted = plainLine(heading).toLowerCase()
+  const hit = headings.find((h) => h.depth === 2 && plainLine(h.text).toLowerCase() === wanted)
+  return hit?.slug ?? own
+}
+
+/**
+ * Every H2 of a REQUESTS.md as a card. Document order is preserved: the practices append,
+ * so the tail of the file is the most recent business (the requests room shows the last five
+ * answered items by taking the tail of this list, not by trusting a date in the heading —
+ * an answer carries its own date in the status line, not in the title it answers).
+ */
+export function requestCards(md: string, opts: RequestCardOptions = {}): RequestCard[] {
+  const max = opts.excerptWords ?? 40
+  return parseSections(md).map((s) => ({
+    heading: s.heading,
+    title: headingTitle(s.heading),
+    date: headingDate(s.heading),
+    status: s.status,
+    open: isOpenStatus(s.status) && !isSeedsSection(s.heading),
+    seeds: isSeedsSection(s.heading),
+    request: !isNonRequestSection(s.heading),
+    slug: slugFor(s.heading, opts.headings),
+    excerpt: excerpt(s.body, max),
+    words: countWords(s.body),
+  }))
+}
+
+/**
+ * Words of body lead each open card may spend. The requests room never caps the LIST of open
+ * items — hiding an ask behind a "show more" is the wall this page exists to tear down — so
+ * the per-item cost has to give instead as the queue grows. One shared budget, divided:
+ * nine open items get 36 words each, twenty get 16, and the page's total stays bounded.
+ *
+ * Why bounded at all: the page's word count is asserted by requestsMd.test.ts, and that test
+ * runs in the build that gates the practices' nightly publishing. A growing backlog must
+ * make the page denser, not make the practices unable to publish.
+ */
+export function openExcerptWords(openCount: number): number {
+  const BUDGET = 270
+  const per = Math.floor(BUDGET / Math.max(1, openCount))
+  return Math.max(12, Math.min(40, per))
+}
+
+/** Words of status prose a card prints. An open item's status often carries the CONDITION
+ *  ("open — awaits one action (forward) and one fact"), which a visitor needs; a closed one
+ *  only needs its verdict word ("answered", "enabled", "declined"). */
+export const STATUS_WORDS = { open: 10, closed: 5 } as const
