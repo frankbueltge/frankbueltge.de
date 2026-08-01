@@ -103,42 +103,72 @@
 .atelier-surface .at-status b { color: var(--at-ink); font-weight: 600; }
 
 /* Orientation block (OrientationList.astro, shared skeleton — WP2 practice-shell).
-   Ported byte-for-byte from the entry page's own former .at-orient rules: a visual no-op,
-   the component that renders it just moved. Bewusst Definitionsliste — die Frage IST der
-   Begriff, die Antwort seine Erklärung. */
+   A definition list on purpose — the question IS the term, the answer its explanation.
+
+   Frank, 2026-08-01: "the overview at the top, the four tiles, does not visually match the
+   rest of the page." It did not, and the reason was mechanical rather than a matter of taste:
+   this was the last block on any atelier surface still wearing the SITE skin's tokens —
+   --color-panel (#f7f8fa, a cool near-white) on the warm paper (#f6f1e7), --color-line
+   (#d6d7dc) instead of the practice's warm hairline (#ddd4c2), a 12px radius where every
+   other rule on this sheet is square, and --font-sans (Space Grotesk) for four answers that
+   are read directly under a monospaced lede. Four rounded grey cards, in a voice this page
+   speaks nowhere else.
+
+   So the block is re-set in the practice's own hand, as a HAND-SET REGISTER: four entries on
+   the paper itself, bracketed by hairlines top and bottom and divided by them — the idiom of
+   the sheet's own legend (.at-legend) and of the Blattrand. The 1px gaps ARE the rules: the
+   container's hairline shows through them, and each entry lies on --at-surface, so the ground
+   under the register is the same paper as the page. No new colour enters; every value is an
+   --at-* token this file already defines. The question wears the register's label type (the
+   same 600 11px/0.16em record hand as .at-legend h3), the answer the record type of the lede
+   above it, and the door into the depth the practice's thread — as field's wears --fd-stamp
+   and studio's --st-lamp (same skeleton, each practice its own voice; ADR 0010). */
 .atelier-surface .pr-orient {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
   gap: 1px;
-  margin: 1.75rem 0 2.25rem;
-  background: var(--color-line);
-  border: 1px solid var(--color-line);
-  border-radius: 12px;
-  overflow: hidden;
+  margin: 1.5rem 0 2.25rem;
+  /* shows through the gaps only — the entries below cover everything else */
+  background: var(--at-hairline);
+  border-top: 1px solid var(--at-hairline);
+  border-bottom: 1px solid var(--at-hairline);
 }
-.atelier-surface .pr-orient-item { background: var(--color-panel); padding: 0.95rem 1.05rem 1.05rem; }
+.atelier-surface .pr-orient-item {
+  background: var(--at-surface);
+  padding: 1rem 1.15rem 1.1rem;
+}
 .atelier-surface .pr-orient-q {
-  font: 10.5px var(--font-mono);
-  letter-spacing: 0.13em;
+  font: 600 11px var(--at-font-record);
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--color-fg-faint);
-  margin-bottom: 0.4rem;
+  color: var(--at-ink-2);
+  margin-bottom: 0.55rem;
+}
+/* the leader line a hand-set label hangs off — decorative, empty content, announced by nothing */
+.atelier-surface .pr-orient-q::before {
+  content: '';
+  display: inline-block;
+  width: 14px;
+  height: 1px;
+  margin-right: 0.6em;
+  vertical-align: 0.28em;
+  background: var(--at-graphite);
 }
 .atelier-surface .pr-orient-a {
   margin: 0;
-  font: 13.5px/1.62 var(--font-sans);
-  color: var(--color-fg-muted);
+  font: 13.5px/1.66 var(--at-font-record);
+  color: var(--at-ink);
 }
 .atelier-surface .pr-orient-more {
   display: inline-block;
-  margin-top: 0.15rem;
-  font: 11.5px var(--font-mono);
-  color: var(--color-fg);
+  margin-top: 0.3rem;
+  font: 12px var(--at-font-record);
+  color: var(--at-thread);
   text-decoration: underline;
   text-underline-offset: 3px;
   white-space: nowrap;
 }
-.atelier-surface .pr-orient-more:hover { opacity: 0.75; }
+.atelier-surface .pr-orient-more:hover { color: var(--at-ink); }
 
 .atelier-surface figure { margin: 26px 0 8px; }
 .atelier-surface svg#sheet,
