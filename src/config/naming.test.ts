@@ -38,26 +38,29 @@ describe('NAMING.catalogues', () => {
   })
 })
 
-/** The doors carry the shortest path into each practice's own guided tour (WP7). The anchors are
- *  hand-picked literals on the rooms' tour wrappers, not derived from the tour ids, so nothing but
- *  a test keeps a renamed anchor from turning a door link into a scroll to nowhere. */
+/** The doors carry the shortest path into each practice's own guided tour (WP7). The targets are
+ *  hand-picked literals — an anchor on the room's tour wrapper, or the tour's OWN ROOM once a
+ *  practice has moved its tour off its entrance (the atelier's moved in the dossier rebuild,
+ *  the field's followed on 2026-08-01 when its entrance became the instrument dossier) — not
+ *  derived from the tour ids, so nothing but a test keeps a renamed anchor or a relocated tour
+ *  from turning a door link into a scroll to nowhere. */
 describe('NAMING.doors tour links', () => {
-  const TOUR_ANCHORS: Record<string, string> = {
-    ulysses: '/atelier#tour-killed-on-the-pivot',
-    meridian: '/field#tour-the-gauntlet',
+  const TOUR_TARGETS: Record<string, string> = {
+    ulysses: '/atelier/how-a-line-ends',
+    meridian: '/field/how-a-claim-came-off',
     ensemble: '/studio/how-a-premiere-returned',
   }
 
   it('gives every practice door its tour, and The Middle none', () => {
     for (const door of NAMING.doors.items) {
-      expect(door.tourHref, `door ${door.id}`).toBe(TOUR_ANCHORS[door.id])
+      expect(door.tourHref, `door ${door.id}`).toBe(TOUR_TARGETS[door.id])
     }
     expect(NAMING.doors.items.find((d) => d.id === 'conductor')?.tourHref).toBeUndefined()
   })
 
   it('points each tour link behind its own door (an anchor on the hub, or a room under it)', () => {
-    // The studio's tour moved to its own room (/studio/how-a-premiere-returned) when the
-    // entrance became the work dossier — a tour target may be a room path, not only an anchor.
+    // All three tours live in their own rooms since the dossier rebuilds — the anchor form
+    // stays legal for any future tour that starts life on its practice's entrance.
     for (const door of NAMING.doors.items) {
       if (!door.tourHref) continue
       const behindOwnDoor =
