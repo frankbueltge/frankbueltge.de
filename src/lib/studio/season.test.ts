@@ -188,6 +188,23 @@ describe('the SVG the floor renders', () => {
     expect(cropped).toContain('viewBox="')
   })
 
+  it('the crop window is opt-in — the tour\'s own crop stays byte-identical', () => {
+    // The hub's triptych needs a tighter window than a tour scene does (WP7). It says so with
+    // `cropBox`; a caller that does not is drawn exactly as it was before that option existed.
+    const tour = buildSeasonFloorSvg(model, { cropTo: 'withdrawn:2026-07-23-one-tap', still: true })
+    expect(buildSeasonFloorSvg(model, { cropTo: 'withdrawn:2026-07-23-one-tap', still: true })).toBe(tour)
+    const thumb = buildSeasonFloorSvg(model, {
+      cropTo: 'withdrawn:2026-07-23-one-tap',
+      cropBox: { width: 520, height: 360 },
+      still: true,
+    })
+    expect(thumb).toContain('viewBox="')
+    expect(thumb).not.toBe(tour)
+    // …and it is a WINDOW, not a scale change: the marks keep the coordinates they were laid out at
+    const pool = /<ellipse class="st-sf-pool[^"]*" cx="([\d.-]+)"/.exec(thumb)![1]
+    expect(tour).toContain(`cx="${pool}"`)
+  })
+
   it('a still carries no interaction hooks (the tour\'s build-time image)', () => {
     const still = buildSeasonFloorSvg(model, { still: true })
     expect(still).not.toContain('tabindex')
