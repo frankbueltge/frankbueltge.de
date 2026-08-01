@@ -1,0 +1,35 @@
+---
+// /plenum/requests/archive — the team channel COMPLETE, verbatim (Etappe 2 for the Plenum,
+// 2026-08-02).
+//
+// This is what /plenum/requests printed until today: `<Content/>`, the whole synced document,
+// nothing reordered and nothing shortened. It stays on the `<Content/>` path for the same reason
+// the three practices' archives do — Astro's markdown pipeline already runs `rehypeHeadingIds`,
+// and its slugs match the github-slugger derivation the cards link with, so the GFM tables and
+// nested blockquotes keep rendering exactly as they have at zero parity risk.
+import { getCollection, render } from 'astro:content'
+import Page from '@/layouts/Page.astro'
+import Shell from '@/components/plenum/Shell.astro'
+import { requestCards } from '@/lib/zentrale/requestsMd'
+import { PLENUM_GRAMMAR, PLENUM_NARRATIVE } from '@/config/plenum-wording'
+
+const all = await getCollection('plenum')
+const doc = all.find((e) => e.id === 'requests')
+const { Content } = doc ? await render(doc) : { Content: null }
+const cards = doc ? requestCards(doc.body ?? '') : []
+
+const room = PLENUM_NARRATIVE.requestsRoom
+const kicker = [PLENUM_GRAMMAR.eyebrow, 'team channel · archive', 'the complete document, verbatim']
+const statusHtml = `<b>${cards.length} sections</b> · ${cards.filter((c) => c.open).length} of them open · <a href="/plenum/requests" class="underline">${room.backToRoom}</a>`
+---
+
+<Page
+  title="Team channel, complete — Line Check"
+  description="The data-snack plenum's team channel in full: every request, offer and answer, verbatim and in the order it was written."
+>
+  <Shell active="team channel" back kicker={kicker} h1={room.archiveHeadline} statusHtml={statusHtml}>
+    <p class="pl-req-note">{room.archiveNote}</p>
+    {Content ? <article class="engine-prose"><Content /></article> : <p class="pl-req-note">Not synced yet.</p>}
+    <p class="pl-req-archive"><a href="/plenum/requests">{room.backToRoom}</a></p>
+  </Shell>
+</Page>
