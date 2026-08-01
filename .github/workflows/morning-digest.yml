@@ -53,9 +53,23 @@ jobs:
             --jq "[.[] | select(.conclusion == \"failure\" and .createdAt > \"$SINCE\") | \"- \(.workflowName) (\(.createdAt[11:16]) UTC)\"] | unique | join(\"\n\")")
           [ -n "$RED" ] && BODY+="$RED"$'\n' || BODY+="- keine 🎉"$'\n'
 
-          # 3) Offene Requests an Frank
+          # 3) Offene Requests an Frank — mit der Selbstauskunft der Absender (Vier-Zeilen-
+          # Kopf, Steuerzentrale v2 P1): tl;dr + braucht statt roher Überschrift, wo der
+          # Kopf existiert; kopflose Alt-Anfragen erscheinen wie bisher, ehrlich markiert.
+          # Fällt die Extraktion je auf die Nase, greift das alte einfache Format (|| unten).
           BODY+=$'\n'"### Wartet auf dich (unbeantwortet entscheidet die Praxis in ihrer nächsten Session selbst)"$'\n'
           REQ=$(gh issue list --repo frankbueltge/frankbueltge.de --state open \
+            --search '"Request aus" in:title' --json number,title,body \
+            --jq '[ .[] | . as $i
+              | ((.body // "") | split("\n")) as $orig
+              | ($orig | map(ascii_downcase)) as $low
+              | ([range(0; $low|length) | select($low[.] | contains("tl;dr:"))] | .[0]) as $ti
+              | ([range(0; $low|length) | select(($low[.] | contains("braucht:")) or ($low[.] | contains("needs:")))] | .[0]) as $bi
+              | (if $ti != null then ($orig[$ti] | split(":")[1:] | join(":") | gsub("\\*"; "") | ltrimstr(" ")) else null end) as $tldr
+              | (if $bi != null then ($low[$bi] | split(":")[1] // "" | gsub("\\*"; "") | ltrimstr(" ") | split(" ")[0]) else null end) as $braucht
+              | if $tldr != null then "- #\($i.number) **[\($braucht // "?")]** \($tldr[0:140])"
+                else "- #\($i.number) \($i.title[0:110]) *(unstrukturiert)*" end ] | join("\n")') \
+          || REQ=$(gh issue list --repo frankbueltge/frankbueltge.de --state open \
             --search '"Request aus" in:title' --json number,title \
             --jq '[.[] | "- #\(.number) \(.title[0:110])"] | join("\n")')
           [ -n "$REQ" ] && BODY+="$REQ"$'\n' || BODY+="- nichts offen"$'\n'
