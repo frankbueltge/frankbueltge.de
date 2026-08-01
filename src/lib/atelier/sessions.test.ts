@@ -9,7 +9,7 @@
 import { describe, expect, it } from 'vitest'
 import { readdirSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
-import { isSessionId, journalNotes, numberWord, sessionRegister, spineHeadline } from './sessions'
+import { buildSessionEntries, isSessionId, journalNotes, numberWord, sessionRegister, spineHeadline } from './sessions'
 
 const JOURNAL_DIR = fileURLToPath(new URL('../../content/atelier/journal', import.meta.url))
 const realIds = readdirSync(JOURNAL_DIR)
@@ -63,6 +63,62 @@ describe('sessionRegister', () => {
   it('accepts both filename dialects (sitzung-N and session-N)', () => {
     const reg = sessionRegister(['journal/2026-07-14.md', 'journal/2026-07-14-session-27.md', 'journal/2026-07-13-sitzung-25.md'])
     expect(reg.map((p) => p.explicit)).toEqual([25, null, 27])
+  })
+})
+
+// Etappe 2 (2026-08-01): each page of the journal has its own route, so the register needs a
+// flat, ordered list whose slug IS the DOM anchor the register always carried.
+describe('buildSessionEntries', () => {
+  const files = [
+    { id: 'journal/2026-06-28', body: '# Session 01 — the first night\nalpha' },
+    { id: 'journal/2026-06-28-sitzung-2', body: '# Session 02 — later that night\nbeta' },
+    { id: 'journal/2026-07-18-first-v4-tick', body: '# First v4 tick\ngamma' },
+    { id: 'journal/2026-07-19-null-island-expose', body: 'no heading at all' },
+    { id: 'REQUESTS', body: 'not a journal file' },
+  ]
+
+  it('numbers the sessions, names the notes, and puts the register before the notes', () => {
+    const entries = buildSessionEntries(files)
+    expect(entries.map((e) => e.slug)).toEqual([
+      's1',
+      's2',
+      'note-first-v4-tick',
+      'note-null-island-expose',
+    ])
+    expect(entries.map((e) => e.kind)).toEqual(['session', 'session', 'note', 'note'])
+    expect(entries.map((e) => e.n)).toEqual([1, 2, null, null])
+  })
+
+  it('takes the H1 as the heading and strips it from the text', () => {
+    const [first] = buildSessionEntries(files)
+    expect(first.heading).toBe('Session 01 — the first night')
+    expect(first.text.trim()).toBe('alpha')
+  })
+
+  it('falls back to the date when a file carries no H1', () => {
+    const note = buildSessionEntries(files).find((e) => e.slug === 'note-null-island-expose')!
+    expect(note.heading).toBe('2026-07-19')
+    expect(note.text).toBe('no heading at all')
+  })
+
+  it('gives the list clean edges for prev/next: first has no prev, last has no next', () => {
+    const entries = buildSessionEntries(files)
+    expect(entries[-1]).toBeUndefined()
+    expect(entries[entries.length]).toBeUndefined()
+    expect(entries[0].slug).toBe('s1')
+    expect(entries[entries.length - 1].slug).toBe('note-null-island-expose')
+  })
+
+  it('never throws on a missing body or an empty mirror (the nightly integrate must not break)', () => {
+    expect(() => buildSessionEntries([{ id: 'journal/2026-08-01' }])).not.toThrow()
+    expect(buildSessionEntries([{ id: 'journal/2026-08-01' }])[0].text).toBe('')
+    expect(buildSessionEntries([])).toEqual([])
+  })
+
+  it('covers every real committed journal file exactly once, with a unique slug', () => {
+    const entries = buildSessionEntries(realIds.map((id) => ({ id, body: '' })))
+    expect(entries).toHaveLength(realIds.length)
+    expect(new Set(entries.map((e) => e.slug)).size).toBe(realIds.length)
   })
 })
 

@@ -19,8 +19,19 @@ describe('approved studio grammar (static formulas, test-protected)', () => {
     expect(STUDIO_GRAMMAR.gasseLabel).toBe('DIE GASSE · OFFSTAGE — VISIBLE, UNLIT')
   })
 
-  it('keeps the stage rail exactly as designed', () => {
-    expect(STUDIO_GRAMMAR.rail.map((r) => r.label)).toEqual(['this stage', 'works', 'playbill', 'apparatus'])
+  // The design session's four doors, plus 'journal' (added 2026-08-01, Etappe 2). The journal
+  // room is new: the house's unedited record used to hang at the foot of the playbill with no
+  // address of its own, which is exactly why that page had become the longest wall of text in
+  // the ecology. Both sibling practices carry this door; the studio now does too. Structural
+  // addition, not a rewording — the four approved labels are unchanged and still in order.
+  it('keeps the stage rail exactly as designed, plus the journal door', () => {
+    expect(STUDIO_GRAMMAR.rail.map((r) => r.label)).toEqual([
+      'this stage',
+      'works',
+      'playbill',
+      'journal',
+      'apparatus',
+    ])
     expect(STUDIO_GRAMMAR.door.label).toBe('→ the middle')
   })
 

@@ -61,7 +61,8 @@ const statusHtml = `<b>${works.length} instruments</b> · newest first · detail
         <p class="fd-instr-meta">{meta.date}{meta.medium && ` · ${meta.medium}`}</p>
         {/* Teaser bevorzugt (Frank, 25.07.); ohne Teaser weiter der lange embodies-Text. */}
         {(() => { const d = teaserFor('field', slug) ?? meta.embodies; return d && <p>{d}</p> })()}
-        {badge && <a class="fd-badge" href={`/field/journal#${badge.anchor}`}>{badge.label}</a>}
+        {/* Etappe 2: every session has its own page — the badge lands on the session, not on an index. */}
+        {badge && <a class="fd-badge" href={`/field/journal/${badge.anchor}/`}>{badge.label}</a>}
         <p class="fd-instr-meta"><RespondCta ns="field" slug={slug} /></p>
       </article>
     ))}

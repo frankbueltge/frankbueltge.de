@@ -65,7 +65,7 @@ const statusHtml = `<b>${threads.length} sheets</b> · one per thread, youngest 
       <article class="at-shelf-row" id={t.id}>
         <h3>{t.label}</h3>
         <p class="at-shelf-meta">
-          {t.session !== null && <>born <a href={`/atelier/journal#s${t.session}`} class="underline">S{t.session}</a> · </>}
+          {t.session !== null && <>born <a href={`/atelier/journal/s${t.session}/`} class="underline">S{t.session}</a> · </>}
           {t.sources.length} source{t.sources.length === 1 ? '' : 's'} · {t.works.length} work{t.works.length === 1 ? '' : 's'}
         </p>
         {t.sources.length > 0 && (

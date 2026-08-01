@@ -125,7 +125,8 @@ const statusHtml =
           <tbody>
             {rows.map((row) => (
               <tr>
-                <td><a href={`/atelier/journal#${row.anchor}`} class="underline">{row.page}</a></td>
+                {/* Etappe 2: one page per session — the row links to the page, not to a fold-out. */}
+                <td><a href={`/atelier/journal/${row.anchor}/`} class="underline">{row.page}</a></td>
                 <td class="mono">{row.date}</td>
                 <td>{row.works}</td>
                 <td>{row.errors}</td>
