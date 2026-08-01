@@ -375,6 +375,15 @@ export interface SeasonRenderOptions {
   /** crops the viewBox around one mark — how a tour scene gets its own build-time still from this
    *  same builder rather than a second, drifting generator */
   cropTo?: string
+  /**
+   * The size of the window `cropTo` opens, in the figure's own units. The default window is sized
+   * for a tour scene standing beside a reading column (1040 wide, the whole stage below the lamp
+   * bar); a THUMBNAIL cropped that wide renders the house's Didone titles at about five pixels,
+   * which is a picture of a stage rather than a stage anyone can read. A caller that needs a
+   * tighter window says so here and the crop centres on the mark in both axes, clamped to the
+   * floor. Opt-in: absent keeps the tour's crop byte-identical.
+   */
+  cropBox?: { width: number; height: number }
   /** a still carries no focus/hover hooks: no tabindex, no per-mark data keys to bind to */
   still?: boolean
   /** accessible name for the figure */
@@ -392,7 +401,7 @@ export function buildSeasonFloorSvg(model: SeasonModel, opts: SeasonRenderOption
   const dimmed = (m: SeasonMark) => opts.dim?.includes(m.key) ?? false
   const annotations = new Map((opts.annotate ?? []).map((a) => [a.key, a.text]))
 
-  const view = cropView(model, opts.cropTo)
+  const view = cropView(model, opts.cropTo, opts.cropBox)
   const s: string[] = []
   s.push(
     `<svg class="st-sf" viewBox="${view}" role="img" preserveAspectRatio="xMidYMid meet"` +
@@ -596,10 +605,19 @@ function defaultLabel(model: SeasonModel): string {
  *  of the stage — curtain line, lamp bar and production band all in frame — so the still still
  *  reads as a stage rather than a detail of one. Landscape on purpose: the first version cropped to
  *  760 × 684, nearly square, and the stills rendered a full reading column tall. */
-function cropView(model: SeasonModel, cropTo?: string): string {
+function cropView(model: SeasonModel, cropTo?: string, box?: { width: number; height: number }): string {
   if (!cropTo) return `0 0 ${W} ${H}`
   const m = model.marks.find((k) => k.key === cropTo)
   if (!m) return `0 0 ${W} ${H}`
+  if (box) {
+    // A named window: centred on the mark in both axes and clamped to the figure, so a window
+    // larger than the stage simply becomes the stage rather than a viewBox reaching past it.
+    const cw = Math.min(box.width, W)
+    const ch = Math.min(box.height, H)
+    const bx = Math.min(Math.max(m.x - cw / 2, 0), W - cw)
+    const by = Math.min(Math.max(m.y - ch / 2, 0), H - ch)
+    return `${round(bx)} ${round(by)} ${round(cw)} ${round(ch)}`
+  }
   const cw = 1040
   const x0 = Math.min(Math.max(m.x - cw / 2, 0), W - cw)
   return `${round(x0)} 104 ${cw} ${H - 104}`
