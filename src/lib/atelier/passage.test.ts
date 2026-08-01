@@ -194,6 +194,36 @@ describe('the SVG carries structure, never appearance', () => {
     expect(still).toContain(GAP)
   })
 
+  it('leaves the ledger gutter off on request, and narrows the sheet to match', () => {
+    // The ARCHIVE placement on /atelier (2026-08-01). Frank could not read a ledger sentence set
+    // at ~5px beside a scaled-down sheet, so the entrance's figure drops the column entirely and
+    // those sentences stand in each line's dossier instead. Dropping the text without narrowing
+    // the viewBox would only have left 480 units of empty paper.
+    const bare = buildPassageSvg(model, {
+      gapLine: GAP,
+      gateLabel: ['THE GATE', 'a human decides'],
+      gutterLabel: 'what closing it cost',
+      withGutter: false,
+    })
+    expect(bare).not.toContain('pr-ledger')
+    expect(bare).not.toContain('pr-gutter-head')
+    expect(bare).not.toContain(GAP)
+    expect(bare).not.toContain('Budget closed at 2 of ≤ 4 ticks, 0 EUR.')
+
+    const width = (s: string) => Number(/viewBox="[-\d.]+ [-\d.]+ ([\d.]+)/.exec(s)![1])
+    expect(width(bare)).toBeLessThan(width(svg))
+
+    // The gate's lettering must still fit — the one label naming the practice's own limit.
+    // Its longer line runs ~90 units from `x`, and cutting it was a real bug on the first pass.
+    const gateX = Number(/<g class="pr-gate">[\s\S]*?<text x="([\d.]+)"/.exec(bare)![1])
+    expect(gateX + 90).toBeLessThan(width(bare))
+
+    // Everything the sheet is FOR is untouched: every line, its harbour and its marks.
+    expect(bare).toContain('data-key="2026-07-20-beta"')
+    expect(bare.match(/<g class="pr-line"/g)?.length).toBe(svg.match(/<g class="pr-line"/g)?.length)
+    expect(bare).toContain('a human decides')
+  })
+
   it('crops a still to a band around the line a scene is talking about', () => {
     // a sheet taller than the crop window, so the crop has something to leave out
     const tall = buildPassageModel(

@@ -78,15 +78,34 @@ export interface Props {
    * colour alone, with or without JS.
    */
   withRecord?: boolean
+  /**
+   * Whether the sheet draws its ledger gutter. `false` is the ARCHIVE placement on /atelier
+   * (2026-08-01): the entrance demoted this figure to "what became of earlier lines", and the
+   * gutter — a running sentence at ~5px once the 1480-unit sheet is scaled into a page column —
+   * went with it. Frank: "next to the diagram, in mini type nobody can read, 'what closing it
+   * cost'." The same sentences now stand in each closed line's dossier at reading size. The
+   * figure keeps the gutter wherever it is the page's own subject (the guided story).
+   */
+  withGutter?: boolean
+  /** the paragraph under the heading; omitted uses the figure's own standing lead */
+  lead?: string
 }
 
-const { model, id = 'atelier-passage', heading, withRecord = true } = Astro.props
+const {
+  model,
+  id = 'atelier-passage',
+  heading,
+  withRecord = true,
+  withGutter = true,
+  lead,
+} = Astro.props
 const w = ATELIER_NARRATIVE.passage
 
 const svg = buildPassageSvg(model, {
   gapLine: w.gapLine,
   gateLabel: w.gateLabel,
   gutterLabel: w.gutterLabel,
+  withGutter,
 })
 
 // ————————————————————————————————— the card, the legend, the payload ——————
@@ -125,7 +144,7 @@ const payload = model.lines.map((l, i) => ({
   pos: w.positionLine(i + 1, model.lines.length),
   /** the viewBox a tour scene re-aims the live sheet at — the band around this line. Precomputed
    *  here because the crop maths belongs to the pure builder, not to a client script. */
-  band: passageViewBox(model, l.key),
+  band: passageViewBox(model, l.key, withGutter),
 }))
 
 // The opening card: the line at the gate, else the newest running one, else the newest overall.
@@ -149,13 +168,17 @@ const titleId = `${id}-title`
 const legendLabelId = `${id}-legend-label`
 ---
 
-<section class="at-proc" data-proc aria-labelledby={heading ? titleId : undefined}>
+<section
+  class:list={['at-proc', !withGutter && 'at-proc-compact']}
+  data-proc
+  aria-labelledby={heading ? titleId : undefined}
+>
   {heading && (
     <div class="at-proc-head">
       <h2 class="at-proc-title" id={titleId}>{heading}</h2>
     </div>
   )}
-  {heading && <p class="at-proc-lead">{w.lead}</p>}
+  {heading && <p class="at-proc-lead">{lead ?? w.lead}</p>}
 
   <p class="at-proc-key" id={legendLabelId}>{w.legendLabel}</p>
   <LegendFilter items={legendItems} mode="multi" labelledby={legendLabelId} />

@@ -244,6 +244,96 @@ export const ATELIER_NARRATIVE = {
       'the time axis is one linear scale for every line; the harbour column is not — a harbour’s ' +
       'height is its share of the lines',
   },
+  /**
+   * The dossier (2026-08-01) — the entrance's new centre, and the reason the rest of this page
+   * moved. Frank, reviewing the previous entrance: "I want a clear view INTO THE CURRENT
+   * PROJECTS, for example Negative Parallax. And when I select it, simply nothing happens —
+   * only the heading shows at the top, everything else stays stuck on 'scene one'."
+   *
+   * What that diagnosed: the entrance was built as a RETROSPECTIVE — four outcome harbours and
+   * a guided story about one line that had already ended — while the practice runs a line that
+   * moves most days. Two interaction modes fought over one surface (the tour drove the figure;
+   * the visitor's own selection lost), and the one panel that did carry the present tense was
+   * set at a size he could not read.
+   *
+   * So this block frames a DOCUMENT, not a chart. Every panel it labels is filled by
+   * src/lib/atelier/dossier.ts with spans of committed files, each printed beside the path it
+   * came from. No sentence here describes a line; the lines describe themselves.
+   */
+  dossier: {
+    heading: 'What the practice is working on',
+    lead:
+      'Each line below is one research question, held open or closed on the record. Pick one and ' +
+      'everything under it becomes that line’s dossier: the question in its own words, where it ' +
+      'stands today, what it did last — quoted, never summarised — and every move it has made.',
+    pickLabel: 'the practice’s lines — pick one',
+    groups: {
+      running: 'open now',
+      closed: 'closed — the record stays',
+    },
+    fields: {
+      question: 'the question it is working',
+      stand: 'where it stands',
+      intention: 'what the work is meant to hold',
+      territory: 'the material it works in',
+      programme: 'the research programme it belongs to',
+      moves: 'the latest moves, in the practice’s own words',
+      ticks: 'every move, in order',
+      ledger: 'what closing it cost',
+      record: 'the record this is read from',
+    },
+    /** Printed where a record states nothing under a heading. Never a zero, never a dash: an
+     *  archive whose claim is that it can be checked has to say when it is silent. */
+    gaps: {
+      question: 'this record states no research question — it is an infrastructure fixture',
+      moves: 'the record carries no dated moves for this line',
+      lead: 'the record states no summary for this move',
+      ledger: 'the record carries no closing ledger for this line',
+      running: 'still running — not closed, so nothing closed to account for',
+    },
+    /** The one line under the moves panel that says what the visitor is looking at, so a bound
+     *  on page weight never passes for the whole of a record. */
+    movesNote(shown: number, total: number): string {
+      return total > shown
+        ? `the ${shown} most recent of ${total} moves — the rest are below, and in full in the trace`
+        : 'every move this line has made'
+    },
+    /** "opened 23 Jul · 22 moves on its trace · last moved 1 Aug" — derived, never typed.
+     *
+     *  "on its trace" is not padding. The archive sheet further down this page counts a line's
+     *  moves as its JOURNAL beats and would say 15 for the same line; the dossier counts the
+     *  entries in its TRACE and says 22. Both are right and they measure different records, so
+     *  each number names the record it came from rather than leaving a reader to find two
+     *  different move counts for one line on one page and trust neither. */
+    metaLine(input: { opened: string; moves: number; last: string; kind: string | null }): string {
+      const parts = [`opened ${input.opened}`]
+      if (input.moves > 0) parts.push(`${input.moves} move${input.moves === 1 ? '' : 's'} on its trace`)
+      if (input.last !== input.opened) parts.push(`last moved ${input.last}`)
+      if (input.kind) parts.push(input.kind)
+      return parts.join(' · ')
+    },
+    budgetLabel: 'what it consumed',
+    journalLink: 'read the whole entry →',
+    recordLink: 'the line’s full record →',
+    /** The relocated guided story. It used to be the first thing on this page; it is now
+     *  reachable from the dossier of the line it is actually about. */
+    storyLine: 'read how this line ended, in six scenes →',
+    storyOf: '2026-07-20-retraction-signature',
+    provenance:
+      'Every quotation on this page is a span of a committed file in the atelier’s own record, ' +
+      'printed with the path it was read from. Nothing here is written for the site.',
+  },
+  /** The Passage, in its ARCHIVE placement (2026-08-01). The figure is unchanged; what changed
+   *  is that it no longer opens the entrance and no longer carries the ledger gutter — see
+   *  ProcessFigure's `withGutter` prop for why. */
+  archive: {
+    heading: 'What became of the earlier lines',
+    lead:
+      'Twelve questions have been opened here. This sheet draws each one on real time, from the ' +
+      'day it opened to the day it ended, and where it ended: through the gate as a work, waiting ' +
+      'at the gate, kept as a study, or closed on purpose. Pick a line to read its record.',
+    storyLink: 'One of them ended on a fact inside its own instrument — read it in six scenes →',
+  },
   /** The guided tour of the retraction-signature line (WP6a, 2026-08-01). ONLY the frame is here.
    * Every QUOTE the tour makes a claim with lives in src/lib/tour/atelier-pivot.ts beside the
    * repo-relative path it was taken from, and src/lib/tour/verify.ts fails the build if one of

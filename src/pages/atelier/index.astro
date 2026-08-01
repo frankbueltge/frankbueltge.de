@@ -19,7 +19,9 @@ import OrientationList from '@/components/practice/OrientationList.astro'
 import { ATELIER_NARRATIVE } from '@/config/atelier-wording'
 import { parseProtocol } from '@/lib/atelier/protocol-version'
 import { sortWorks } from '@/lib/atelier/sort'
-import KilledOnThePivot from '@/components/atelier/tours/KilledOnThePivot.astro'
+import Dossier from '@/components/atelier/Dossier.astro'
+import ProcessFigure from '@/components/atelier/ProcessFigure.astro'
+import { loadDossiers } from '@/lib/atelier/dossier-data'
 import { loadPassageModel } from '@/lib/atelier/passage-data'
 import rhizome from '@/data/atelier/rhizome.json'
 import { sessionRegister } from '@/lib/atelier/sessions'
@@ -33,9 +35,16 @@ const nightlySpan = `S1–S${sessionRegister(Object.keys(import.meta.glob('/src/
 const E = ATELIER_NARRATIVE.entrance
 const V2 = ATELIER_NARRATIVE.entranceV2
 
-// The Passage — the practice's own sheet, assembled once and handed to the tour that drives it
-// (src/lib/atelier/passage-data.ts; the figure and its per-scene stills share this one model).
+// The dossiers — the entrance's centre since 2026-08-01 (see components/atelier/Dossier.astro
+// for the why). Running lines first, each read out of its own committed record.
+const dossiers = loadDossiers()
+
+// The Passage — the practice's own sheet, now the ARCHIVE figure below the dossier
+// (src/lib/atelier/passage-data.ts; the figure and the relocated tour's per-scene stills share
+// this one model, which is why it is still assembled here as well as on the story's own page).
 const passage = await loadPassageModel()
+
+const STORY_HREF = '/atelier/how-a-line-ends'
 
 // ————————————————————————————————— data: committed mirrors, read-only —————
 // Works — both sources, newest first (same globs the works room uses).
@@ -229,13 +238,36 @@ const doors = [
     <!-- ——— Orientierung: die vier Fragen eines Erstbesuchers, in ihrer Reihenfolge ——— -->
     <OrientationList items={orientation} />
 
-    <!-- ——— the tour: how a question ends here, told by one line that ended ———
-         The storytelling entry (WP6a). It leads because a first-time visitor needs a WAY IN
-         before a survey: the six scenes walk one killed line from the kill condition its own
-         score wrote in advance to the two ticks its ledger closed at, and the sheet beside them
-         follows. The account is quoted, never summarised — src/lib/tour/verify.ts fails the
-         build if a scene's quote drifts from the file it names by a single byte. -->
-    <KilledOnThePivot model={passage} />
+    <!-- ——— THE DOSSIER: what the practice is working on, right now ———
+         The entrance's centre since 2026-08-01. It stands here — directly after the four
+         orientation questions and before every retrospective — because that is the order the
+         page has to read in: what is this practice → WHAT IS IT WORKING ON NOW → what became
+         of the earlier lines → which rooms are there. Everything in it is quoted from the
+         line's own committed record, beside the path it was read from.
+
+         What used to stand in this slot was the guided tour of a line that ended a fortnight
+         ago. It now has its own room (/atelier/how-a-line-ends), reachable from the dossier of
+         the line it is about — see components/atelier/Dossier.astro for the whole diagnosis. -->
+    <Dossier dossiers={dossiers} storyHref={STORY_HREF} />
+
+    <!-- ——— the archive: what became of the earlier lines ———
+         The Passage, demoted (2026-08-01). It was the page's headline figure and is now its
+         archive: small, calm, still fully interactive, and standing AFTER the running work
+         rather than in front of it. Two things changed with the move and nothing else did:
+         it lost the ledger gutter (`withGutter={false}` — a running sentence at ~5px is not a
+         disclosure, and those same sentences now stand in each closed line's dossier above at
+         reading size), and the guided story it used to carry moved to its own room. -->
+    <section class="at-archive">
+      <ProcessFigure
+        model={passage}
+        heading={ATELIER_NARRATIVE.archive.heading}
+        lead={ATELIER_NARRATIVE.archive.lead}
+        withGutter={false}
+      />
+      <p class="at-archive-story">
+        <a href={STORY_HREF}>{ATELIER_NARRATIVE.archive.storyLink}</a>
+      </p>
+    </section>
 
     <!-- ——— the map: the practice, drawn ——— -->
     <figure class="at-map" aria-label={V2.mapHeading}>
@@ -364,6 +396,19 @@ const doors = [
     font-size: 0.95rem;
     line-height: 1.65;
   }
+
+  /* ——— the archive: the Passage, demoted below the running work ——— */
+  .at-archive {
+    margin: 0 0 2.5rem;
+    padding-top: 0.5rem;
+    border-top: 2px solid var(--at-ink);
+  }
+  .at-archive-story {
+    margin: 0.25rem 0 0;
+    font-size: 0.85rem;
+  }
+  .at-archive-story a { color: inherit; text-decoration: underline; }
+  .at-archive-story a:hover { color: var(--at-thread); }
 
   /* ——— the map ——— */
   .at-map { margin: 0 0 2.25rem; }
