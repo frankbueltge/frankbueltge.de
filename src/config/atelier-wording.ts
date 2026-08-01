@@ -489,9 +489,9 @@ export const ATELIER_NARRATIVE = {
         answer: input.running
           ? `One work-line is running: “${input.running.title}”${input.running.proposedAsWork ? ' — proposed as a work and waiting at the human gate.' : '.'}`
           : 'No line is open at the moment.',
-        // WP6a: the process figure lost its own heading id when it became the tour's pinned sheet;
-        // the anchor now points at the tour that drives it, which is where "read it below" leads.
-        href: '#tour-killed-on-the-pivot',
+        // The dossier is where "read it below" leads since the entrance rebuild — the tour
+        // moved to its own room (/atelier/how-a-line-ends) and its old anchor died with it.
+        href: '#dossier',
         moreLabel: 'read it below',
       },
     ]
