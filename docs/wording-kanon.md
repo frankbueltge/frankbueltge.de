@@ -34,11 +34,19 @@ geholt). Wer Selbstbeschreibungen ändert, zieht dieses Dokument im selben Commi
 - **The Field / Meridian:** empirisches Forschungskollektiv, stellt die Messinstrumente
   unserer Zeit auf den Prüfstand — verifiable instruments, adversarial review, claims
   ledger. Der **wissenschaftliche Pol** der Ökologie. NIEMALS „artistic research" für
-  Meridian. — **Daneben, klar getrennt: MRR (Meridian Research Runtime)** = die
-  Engineering-Linie des Architekten, NICHT die Stimme des Meridian-Kollektivs
-  (enc-2026-005, authorship honesty); Berührungen der beiden laufen über The Middle.
-  `/on-record` und `/e2e-automation` gehören zur MRR-Linie und werden nie dem Kollektiv
-  zugeschrieben.
+  Meridian. — **MRR (Meridian Research Runtime) ist Meridians WERKZEUG, nicht Meridians
+  Stimme** (Frank, 2026-08-01, wörtlich: „es ist nicht die Stimme sondern ein Werkzeug
+  was sie nutzen können wann immer es Sinn macht"). Das Werkzeug gehört der Praxis; sie
+  nutzt es, wann es Sinn macht. Was ein Lauf feststellt, ist ein Befund des Werkzeugs —
+  eine **Aussage des Kollektivs** wird daraus erst, wenn das Kollektiv sie sich zu eigen
+  macht. Ein einzelner Lauf, den die Engineering-Linie fährt, ist deshalb weiterhin keine
+  Aussage der Praxis; die Trennung liegt in der **Urheberschaft des einzelnen Laufs**,
+  nicht mehr im Besitz des Werkzeugs. — **Überholt seit 2026-08-01:** die frühere Fassung
+  „MRR = Engineering-Linie des Architekten, NICHT die Stimme des Meridian-Kollektivs"
+  (enc-2026-005). Der Kern von enc-2026-005 bleibt gültig (Urheberschaft eines Laufs wird
+  benannt, nicht verwischt); die Besitz-Zuschreibung ist zurückgezogen. `/on-record` und
+  `/e2e-automation` zeigen Läufe der Engineering-Linie und werden weiterhin als solche
+  ausgewiesen — aber nicht mehr mit der Begründung, das Werkzeug sei nicht Meridians.
 - **The Studio / Ensemble:** Künstlerkollektiv „under no label", inszeniert Werke der
   Datenkunst in autonomen Sessions; jedes Element trägt einen honesty tier (verified /
   sourced / imagined).
