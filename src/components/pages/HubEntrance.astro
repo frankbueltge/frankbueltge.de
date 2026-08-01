@@ -27,6 +27,7 @@ import { NAMING, DRAFT_LABEL } from '@/config/naming'
 import { lastChronicle, latestJournal, trimLine } from '@/lib/maschinenraum'
 import { buildScore, chronicleEvents, clampToLastDays, jiStart, journalEvents, scoreOpenings } from '@/lib/partitur'
 import Partitur from '@/components/maschinenraum/Partitur.astro'
+import Triptych from '@/components/hub/Triptych.astro'
 import { loadChronicle as loadFieldChronicle } from '@/lib/field/chronicle'
 import { loadChronicle as loadStudioChronicle } from '@/lib/studio/chronicle'
 
@@ -63,10 +64,15 @@ const mrJi = {
   start: jiStart(mrScoresRaw, MR_JI),
   voices: ['atelier', 'field', 'studio'] as ('atelier' | 'field' | 'studio' | 'plenum')[],
 }
-const mrRows: { label: string; date?: string; line?: string }[] = [
-  { label: 'Atelier · Ulysses', date: mrAtelier?.date, line: mrAtelier ? trimLine(mrAtelier.firstLine, 92) : undefined },
-  { label: 'Field · Meridian', date: mrField?.date, line: mrField ? trimLine(`${mrField.move.toUpperCase()} — ${mrField.summary}`, 92) : undefined },
-  { label: 'Studio · Ensemble', date: mrStudio?.date, line: mrStudio ? trimLine(`${mrStudio.move.toUpperCase()} — ${mrStudio.summary}`, 92) : undefined },
+// Each voice lane also carries the way INTO that practice — the same tour anchor its door and its
+// triptych card point at (WP7). One tour per practice, taken from the doors themselves so a
+// renamed anchor is a one-line edit in the dictionary and not a hunt through three files. The
+// Plenum lane gets none: data-snack is a house of its own and keeps no tour on this site.
+const tourByVoice = new Map(NAMING.doors.items.map((d) => [d.id, d.tourHref]))
+const mrRows: { label: string; date?: string; line?: string; tourHref?: string }[] = [
+  { label: 'Atelier · Ulysses', date: mrAtelier?.date, line: mrAtelier ? trimLine(mrAtelier.firstLine, 92) : undefined, tourHref: tourByVoice.get('ulysses') },
+  { label: 'Field · Meridian', date: mrField?.date, line: mrField ? trimLine(`${mrField.move.toUpperCase()} — ${mrField.summary}`, 92) : undefined, tourHref: tourByVoice.get('meridian') },
+  { label: 'Studio · Ensemble', date: mrStudio?.date, line: mrStudio ? trimLine(`${mrStudio.move.toUpperCase()} — ${mrStudio.summary}`, 92) : undefined, tourHref: tourByVoice.get('ensemble') },
   { label: 'Plenum · data-snack', date: mrPlenum?.date, line: mrPlenum ? trimLine(mrPlenum.firstLine, 92) : undefined },
 ]
 
@@ -176,22 +182,67 @@ const isDraft = NAMING.approval !== 'approved'
     <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted">
       <b class="text-fg">{NAMING.doors.kicker}</b> · {NAMING.doors.kickerSub}
     </p>
-    <div class="doors mt-7 grid gap-3.5 sm:grid-cols-2 lg:grid-cols-4">
+    {/* A door is a block link; its tour link is a link INSIDE it, so the two are siblings rather
+        than nested anchors (which no browser resolves the way the markup reads). The door's own
+        surface stays clickable around them. */}
+    <div class="doors hub-voices mt-7 grid gap-3.5 sm:grid-cols-2 lg:grid-cols-4">
       {doors.map((d) => (
-        <a href={d.href} class:list={['door', `door-${d.id}`, 'block rounded-[10px] border border-line bg-panel p-5 pt-5 transition-colors hover:border-fg-faint']}>
-          <h3 class="text-[19px] font-semibold tracking-[-0.01em]">{d.name}</h3>
+        <div class:list={['door', `door-${d.id}`, 'relative rounded-[10px] border border-line bg-panel p-5 pt-5 transition-colors hover:border-fg-faint']}>
+          <h3 class="text-[19px] font-semibold tracking-[-0.01em]">
+            <a href={d.href} class="door-link">{d.name}</a>
+          </h3>
           <p class="mt-2 min-h-[4.2em] text-sm text-fg-muted">{d.description}</p>
           <span class="mt-3 block font-mono text-[11px] text-fg-faint">{d.meta}</span>
-        </a>
+          {d.tourHref && (
+            <a href={d.tourHref} class="door-tour relative z-10 mt-2 inline-block font-mono text-[11px] text-fg-muted underline decoration-line underline-offset-4 transition-colors hover:text-fg">
+              {NAMING.doors.tourLabel}
+            </a>
+          )}
+        </div>
       ))}
     </div>
 
+    {/* Three doors, three vocabularies (WP7): a fragment of each practice's own figure, in its own
+        drawing language, under an identical frame. An invitation, not a third dashboard. */}
+    <Triptych />
+
     {/* Public seed (Design-Spec 2026-07-20-oeffentliche-saat-design.md §5): eine dezente Zeile,
         keine eigene Karte — English route /seed (Slug-Rename 2026-07-20, s. Addendum D10). */}
-    <p class="mt-4 font-mono text-xs text-fg-faint">
+    <p class="mt-9 font-mono text-xs text-fg-faint">
       Offer this research a seed →
       <a href="/seed" class="underline decoration-line underline-offset-4 transition-colors hover:text-fg">/seed</a>
     </p>
+  </section>
+
+  {/* Promoted directly behind the doors and their triptych (WP7, 2026-08-01; decision log):
+      WHO lives here and WHAT THEY LAST DID are one thought, and LATEST — the works — reads
+      better once a visitor knows whose hands made them. */}
+  <section class="mt-20 border-t border-line/60 pt-16" id="maschinenraum">
+    <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted">
+      <b class="text-fg">{NAMING.maschinenraum.kicker}</b> · {NAMING.maschinenraum.kickerSub}
+      <a href={NAMING.maschinenraum.fullView.href} class="ml-2 normal-case tracking-normal text-fg-faint underline hover:text-fg">{NAMING.maschinenraum.fullView.label}</a>
+    </p>
+    {/* The score of the last 14 days (Frank, 2026-07-31): the ecology's rhythm right
+        on the hub; every mark hoverable, clicking leads to the full view. */}
+    {mrScore && <Partitur model={mrScore} ji={mrJi} compact />}
+    <ul class="mt-6 divide-y divide-line/60 overflow-hidden rounded-[10px] border border-line bg-panel">
+      {mrRows.map((r) => (
+        <li class="flex flex-wrap items-baseline gap-x-3 gap-y-1 px-4 py-3 sm:px-6">
+          {/* nowrap + the same width LATEST gives its dates: at 5.5em an ISO day broke over two
+              lines, which was hard to see while the row ended in prose and obvious once it ended
+              in a link. */}
+          <span class="w-[6.5em] shrink-0 whitespace-nowrap font-mono text-[11px] tabular-nums text-fg-faint">{r.date ?? '—'}</span>
+          <span class="w-[11em] shrink-0 font-mono text-[10px] uppercase tracking-[0.14em] text-fg-muted">{r.label}</span>
+          <span class="text-sm text-fg-muted">{r.line ?? NAMING.maschinenraum.noMirror}</span>
+          {r.tourHref && (
+            <a href={r.tourHref} class="ml-auto shrink-0 font-mono text-[10px] uppercase tracking-[0.14em] text-fg-faint underline decoration-line underline-offset-4 transition-colors hover:text-fg">
+              {NAMING.maschinenraum.tourLabel}
+            </a>
+          )}
+        </li>
+      ))}
+    </ul>
+    <p class="mt-3 font-mono text-[11px] text-fg-faint">{NAMING.maschinenraum.noteLead} <a href={NAMING.maschinenraum.fullView.href} class="underline hover:text-fg">{NAMING.maschinenraum.noteLinkLabel}</a></p>
   </section>
 
   <section class="mt-20 border-t border-line/60 pt-16" id="latest">
@@ -218,26 +269,6 @@ const isDraft = NAMING.approval !== 'approved'
         </li>
       ))}
     </ul>
-  </section>
-
-  <section class="mt-20 border-t border-line/60 pt-16" id="maschinenraum">
-    <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted">
-      <b class="text-fg">Maschinenraum</b> · the last landed state
-      <a href="/maschinenraum" class="ml-2 normal-case tracking-normal text-fg-faint underline hover:text-fg">→ full view</a>
-    </p>
-    {/* The score of the last 14 days (Frank, 2026-07-31): the ecology's rhythm right
-        on the hub; every mark hoverable, clicking leads to the full view. */}
-    {mrScore && <Partitur model={mrScore} ji={mrJi} compact />}
-    <ul class="mt-6 divide-y divide-line/60 overflow-hidden rounded-[10px] border border-line bg-panel">
-      {mrRows.map((r) => (
-        <li class="flex flex-wrap items-baseline gap-x-3 gap-y-1 px-4 py-3 sm:px-6">
-          <span class="w-[5.5em] shrink-0 font-mono text-[11px] tabular-nums text-fg-faint">{r.date ?? '—'}</span>
-          <span class="w-[11em] shrink-0 font-mono text-[10px] uppercase tracking-[0.14em] text-fg-muted">{r.label}</span>
-          <span class="text-sm text-fg-muted">{r.line ?? 'no mirror'}</span>
-        </li>
-      ))}
-    </ul>
-    <p class="mt-3 font-mono text-[11px] text-fg-faint">committed mirrors only — each row carries its source's own state; details and joint inquiries in the <a href="/maschinenraum" class="underline hover:text-fg">Maschinenraum</a></p>
   </section>
 
   <section class="mt-20 border-t border-line/60 pt-16" id="travel">
@@ -304,21 +335,16 @@ const isDraft = NAMING.approval !== 'approved'
   }
   /* Praxisfarben-Haarlinie (decisions doc 2026-07-16 §1.3): the same deliberate, gated
      exception to the site's grayscale "Mono-Skin fest" that the score map already carries
-     (src/styles/score-map.css) — the four practice identities read the same colour on the hub
-     as they do on the encounter map, just given their own tokens here rather than reaching into
-     .score-map's scope (the doors grid sits outside it). */
-  :root[data-theme='dark'] .doors {
-    --hub-c-ulysses: #9085e9;
-    --hub-c-meridian: #3987e5;
-    --hub-c-ensemble: #d95926;
-    --hub-c-conductor: #77828d;
-  }
-  :root[data-theme='light'] .doors {
-    --hub-c-ulysses: #4a3aa7;
-    --hub-c-meridian: #2a78d6;
-    --hub-c-ensemble: #c1481c;
-    --hub-c-conductor: #6b7684;
-  }
+     (src/styles/score-map.css) — the practice identities read the same colour on the hub
+     as they do on the encounter map AND on the Partitur below (one ecology quartet, not
+     three near-misses of it).
+     The four hexes THEMSELVES moved out on 2026-08-01 (WP7) to src/styles/hub-triptych.css,
+     where they are declared once on .hub-voices — the doors grid and the triptych both carry
+     that class and inherit from it. Astro's scoped styles do not reach a child component's
+     markup, so leaving them here would have meant a second copy of the quartet in the triptych's
+     own stylesheet, and a colour that exists twice is a colour that will disagree with itself.
+     The rules below only REFERENCE the tokens; the palette record (and its drift marker) lives
+     with the declaration. */
   .door::before {
     content: '';
     display: block;
@@ -330,4 +356,18 @@ const isDraft = NAMING.approval !== 'approved'
   .door-meridian::before { background: var(--hub-c-meridian); }
   .door-ensemble::before { background: var(--hub-c-ensemble); }
   .door-conductor::before { background: var(--hub-c-conductor); }
+
+  /* The door stays one big click target even though it now holds TWO links (WP7): the name's
+     anchor stretches over the whole card, and the tour link is lifted above it. Nested anchors
+     would have been the shorter markup and are not a thing any browser resolves as written. */
+  .door-link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 10px;
+  }
+  .door-link:focus-visible::after {
+    outline: 2px solid var(--color-fg-faint);
+    outline-offset: 2px;
+  }
 </style>

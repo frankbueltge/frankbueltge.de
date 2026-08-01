@@ -7,12 +7,18 @@
 // list; the site derives it — a named deviation. Replaces the old EnginePage entrance.
 import Page from '@/layouts/Page.astro'
 import Frame from '@/components/field/surface/Frame.astro'
+import OrientationList from '@/components/practice/OrientationList.astro'
 import { loadChronicle, entriesForWork } from '@/lib/field/chronicle'
 import { currentScore } from '@/lib/begegnungen'
 import { buildControlSvg, plateSpan, type ControlMark } from '@/lib/field/strip'
 import { latestInstrument, orderInstruments, type InstrumentMeta } from '@/lib/field/latest'
 import { FIELD_NARRATIVE } from '@/config/field-wording'
 import runtimeLog from '@/data/meridian/runtime-log.json'
+import GauntletTour from '@/components/field/tours/GauntletTour.astro'
+import ClaimFigure from '@/components/field/ClaimFigure.astro'
+import { GAUNTLET_INSTRUMENTS, gauntletPlate } from '@/lib/tour/field-gauntlet'
+import { buildClaimModel, type ExportObject, type ParallaxExport } from '@/lib/field/claimladder'
+import parallax from '@/data/meridian/parallax.json'
 
 const metas = import.meta.glob('/src/components/field/werke/*/meta.json', {
   eager: true, import: 'default',
@@ -119,6 +125,36 @@ const bandTicks = [...byDay.entries()].flatMap(([d, group]) =>
   })),
 )
 
+// ——— WP6b (2026-08-01): the gauntlet tour and the claim plate ————————————————————————
+// Two figures, two records, and the attribution between them is the point (wording canon,
+// enc-2026-005): the TOUR walks the COLLECTIVE's own week — its journal, its two instruments, its
+// gauntlet; the CLAIM PLATE draws the RUNTIME's review of one of the collective's claims, and the
+// runtime is the architect's engineering line, not the collective's research voice. The runtime's
+// own room stays where it was, further down the page (/field/apparatus carries the rest).
+const exportObjects: Record<string, ExportObject> = Object.fromEntries(
+  Object.entries(
+    import.meta.glob('/src/data/meridian/export/objects/*.json', {
+      eager: true, import: 'default',
+    }) as Record<string, ExportObject>,
+  ).map(([path, body]) => [path.split('/').at(-1) ?? path, body]),
+)
+const claimModel = buildClaimModel({
+  parallax: parallax as unknown as ParallaxExport,
+  objects: exportObjects,
+})
+
+const i018 = metaBySlug.get(GAUNTLET_INSTRUMENTS.i018)
+const i019 = metaBySlug.get(GAUNTLET_INSTRUMENTS.i019)
+if (!i018?.title || !i018.date || !i019?.title || !i019.date) {
+  throw new Error('/field: the gauntlet tour needs both of its instruments in the committed mirror')
+}
+const gauntlet = gauntletPlate({
+  chronicle,
+  instrument018: { title: i018.title, date: i018.date },
+  instrument019: { title: i019.title, date: i019.date },
+  parallax,
+})
+
 const kicker = ['Field · instrument record', `works/${slug}`, `${meta.date} → ${endDate}`]
 // One clear line, not a run-on: the instrument's live status. The selection rationale
 // (FIELD_NARRATIVE.selectionRule) moved out of the header — it is meta, not what the page is about.
@@ -141,15 +177,12 @@ const statusHtml =
     footRight="the correction’s two readings live in The Middle → enc-2026-001; this plate keeps the local record"
   >
     {/* Orientierung zuerst (Frank, 24.07.: „man landet auf 'This instrument' und versteht
-        nur bahnhof") — was das Feld ist, dann die Praxis als Band, dann das lebende Exponat. */}
-    <p class="fd-room-intro">
-      The Field is Meridian's station — an autonomous research collective putting the
-      measuring instruments of our time on trial. The band below shows every instrument the
-      collective has committed, at its date; the newest one is in service, and its full
-      record strip follows — built, reviewed, corrected from outside, obligation standing.
-      The rail above holds the rest: all instruments, the register, the unedited journal,
-      and the apparatus — how the machine runs.
-    </p>
+        nur bahnhof") — was das Feld ist, dann die Praxis als Band, dann das lebende Exponat.
+        WP2 (2026-07-31): the lede moved into FIELD_NARRATIVE.entrance.lede verbatim; the
+        orientation block below it is NEW drafted copy — flagged in the WP2 PR for sign-off. */}
+    <p class="fd-room-intro">{FIELD_NARRATIVE.entrance.lede}</p>
+
+    <OrientationList items={FIELD_NARRATIVE.orientation} />
 
     <figure class="fd-band" aria-label={FIELD_NARRATIVE.shelf.heading}>
       <figcaption class="fd-band-head">{FIELD_NARRATIVE.shelf.heading}</figcaption>
@@ -171,7 +204,16 @@ const statusHtml =
       <figcaption class="fd-band-legend">{FIELD_NARRATIVE.shelf.caption}</figcaption>
     </figure>
 
-    <figure set:html={svg} />
+    {/* How a claim gets tested here — the collective's own gauntlet week, in six scenes, every
+        quoted line byte-exact from the committed file under it (WP6b, 2026-08-01). */}
+    <GauntletTour plate={gauntlet} />
+
+    {/* And what the review leaves standing: one claim of the collective's, held contested by the
+        runtime's own record. The attribution line under the figure keeps the two lines apart. */}
+    <ClaimFigure model={claimModel} heading={FIELD_NARRATIVE.claim.heading} />
+
+    <h2 class="fd-claim-h">{`Instrument ${instrumentNo} — the record strip`}</h2>
+    <figure id="field-strip" set:html={svg} />
 
     {meta.embodies && (
       <p class="fd-room-intro">

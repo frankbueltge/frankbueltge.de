@@ -8,7 +8,7 @@
 // Pure and deterministic (contract as score.ts / pulse/render.ts): same inputs ⇒
 // byte-identical output. No randomness, no clock reads.
 
-import { escapeXml, wrapLines } from '@/lib/dataviz/geometry'
+import { escapeXml, relaxOverlaps, spiralLayout, wrapLines } from '@/lib/dataviz/geometry'
 
 export interface StageKill {
   name: string
@@ -45,25 +45,90 @@ export interface StageInput {
 }
 
 // ---------------------------------------------------------------- ported geometry
-// (floor 150,226 → 1230,642; curtain on top; spot at 610/400 r 300×170; the seven X
-// positions verbatim from the mockup, extended by three more deterministic slots).
+// (floor 150,226 → 1230,642; curtain on top; spot at 610/400 r 300×170.)
 const CX = 610
 const CY = 400
-const X_POSITIONS: ReadonlyArray<readonly [number, number]> = [
-  [255, 300], [1105, 296], [240, 536], [415, 600], [830, 608], [1040, 568], [1150, 468],
-  [560, 592], [255, 420], [960, 300],
-]
+const FLOOR = { minX: 150, minY: 226, maxX: 1230, maxY: 642 } as const
+
+// The struck positions used to be a table of ten hand-placed coordinates lifted from the design
+// mockup, and buildStageSvg THREW once an eleventh strike arrived — a build failure scheduled for
+// whenever the house next killed a work, with the refusal reasoned as "the season index is a
+// different generator". That generator now exists (src/lib/studio/season.ts), and this floor no
+// longer needs a hand-written slot list to keep the discipline the refusal protected: the marks
+// still land in a taped, non-overlapping arrangement, but derived — dataviz/geometry.ts's
+// spiralLayout (FNV-1a hash of the name → sunflower spiral → fixed-iteration relaxation, no
+// Math.random, no clock) placed around the spot and clamped inside the floor polygon. Same seven
+// kills, same pixels on every build; an eighth, or a twentieth, simply gets a slot.
+//
+// The cloud is centred BELOW and around the spot (the spot's own text block occupies the middle of
+// the floor) with the spot's footprint standing in as one extra collision body, so no X is ever
+// taped across the lit pool.
+const SPOT_RX = 300
+const SPOT_RY = 170
+// Footprint of one taped mark: the X glyph is 18×18, the rest of the radius is its two label
+// lines. Both shrink as the floor fills — a busier floor tapes its marks closer together, which is
+// what a real floor does — anchored so that TODAY's seven kills keep exactly the footprint they
+// were laid out with (34/26 at n = 7).
+const killFootprint = (n: number) => ({
+  r: Math.max(16, Math.min(34, 34 * Math.sqrt(7 / Math.max(1, n)))),
+  gap: Math.max(8, Math.min(26, 26 * Math.sqrt(7 / Math.max(1, n)))),
+})
+
+/** Deterministic final pass: nothing is ever taped ACROSS the lit pool — the one thing the spot
+ *  must keep to itself. A mark the relaxation or the clamp left inside the spot's ellipse is
+ *  pushed out along that ellipse's own radial direction; where that would leave the floor it goes
+ *  out sideways instead, which always exists because the floor is far wider than the pool. */
+function ejectFromSpot(nodes: { x: number; y: number; r: number }[]): void {
+  for (const n of nodes) {
+    const rx = SPOT_RX + n.r
+    const ry = SPOT_RY + n.r
+    const ux = (n.x - CX) / rx
+    const uy = (n.y - CY) / ry
+    const d = Math.hypot(ux, uy)
+    if (d >= 1) continue
+    let x = d > 0.001 ? CX + (ux / d) * rx : CX + rx
+    let y = d > 0.001 ? CY + (uy / d) * ry : CY
+    const outside =
+      x < FLOOR.minX + n.r || x > FLOOR.maxX - n.r || y < FLOOR.minY + n.r || y > FLOOR.maxY - n.r
+    if (outside) {
+      x = n.x <= CX ? CX - rx : CX + rx
+      y = Math.min(FLOOR.maxY - n.r, Math.max(FLOOR.minY + n.r, n.y))
+    }
+    n.x = x
+    n.y = y
+  }
+}
+
+function killPositions(kills: readonly StageKill[]): { x: number; y: number }[] {
+  const { r, gap } = killFootprint(kills.length)
+  // Label room, not decoration: a name letters 16px to one side of its X, so the cloud is clamped
+  // well inside the floor's own edges.
+  const bounds = {
+    minX: FLOOR.minX + 96,
+    minY: FLOOR.minY + 62,
+    maxX: FLOOR.maxX - 96,
+    maxY: FLOOR.maxY - 24,
+  }
+  // The pool is NOT modelled as a collision body: a circle big enough to cover an ellipse 600
+  // wide and 340 tall would forbid most of a floor only 330 tall inside its label bounds, and
+  // every mark would end up pinned against a wall. Instead the relaxation handles mark-vs-mark
+  // only, and ejectFromSpot enforces the pool exactly — so the strikes settle into a ring around
+  // the light rather than a queue along the edges.
+  let nodes = spiralLayout(
+    kills.map((k) => ({ key: `${k.name}|${k.session}`, r })),
+    { cx: CX, cy: CY, spreadX: 500, spreadY: 250, gap, iterations: 24, bounds },
+  )
+  ejectFromSpot(nodes)
+  // Ejection can push two marks onto the same arc; one more fixed relaxation settles that, and a
+  // second ejection keeps the pool's own guarantee absolute.
+  nodes = relaxOverlaps(nodes, { gap, iterations: 12, bounds })
+  ejectFromSpot(nodes)
+  return nodes.map((n) => ({ x: Math.round(n.x), y: Math.round(n.y) }))
+}
 
 /** Builds the stage SVG, mirroring studio_viz.py's stage_svg() structure. */
 export function buildStageSvg(input: StageInput): string {
-  if (input.kills.length > X_POSITIONS.length) {
-    throw new Error(
-      `buildStageSvg: ${input.kills.length} struck positions exceed the floor's ${X_POSITIONS.length} ` +
-        `taped slots — the season index (grammar §7, studio flavour) is a different, not-yet-built ` +
-        `generator, not a silent re-layout of this one.`,
-    )
-  }
-
+  const killAt = killPositions(input.kills)
   const s: string[] = []
   s.push(
     `<svg id="stage" viewBox="0 200 1440 470" role="img" aria-label="The stage: one spotlight on ` +
@@ -112,7 +177,7 @@ export function buildStageSvg(input: StageInput): string {
   // Marks near the right edge letter LEFTWARD so no name crosses into the Gasse
   // (a readability generalization of the mockup's hand-placed labels).
   input.kills.forEach((kill, i) => {
-    const [x, y] = X_POSITIONS[i]
+    const { x, y } = killAt[i]
     const left = x > 1000
     const lx = left ? x - 16 : x + 16
     const anchor = left ? ' text-anchor="end"' : ''

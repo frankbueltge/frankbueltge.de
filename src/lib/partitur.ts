@@ -173,6 +173,43 @@ export function clampToLastDays(events: ScoreEvent[], n: number): ScoreEvent[] {
   return valid.filter((e) => e.date >= start)
 }
 
+// ── Mark-cluster layout ──────────────────────────────────────────────────────
+// Shared between the server-side SVG layout (Partitur.astro's frontmatter) and the client's
+// hover/nearest-mark resolution (its inline script) — until this port these existed as two
+// hand-kept-in-sync copies, one per side.
+
+/** Within-day mark offsets for a cluster of ≤3 landings: up to three are drawn individually,
+ *  spread evenly around the day's x position; a denser cluster collapses to one face mark + ×n
+ *  instead (see `fanOffsets` for that dense case's lens-expanded, per-landing form). */
+export const MARK_OFFSETS: Record<number, number[]> = { 1: [0], 2: [-6.5, 6.5], 3: [-9, 0, 9] }
+
+/** Even spread for a fanned-out dense day (the time lens's expanded view, n > 3 landings),
+ *  centered on 0 — the dense-cluster counterpart to `MARK_OFFSETS`. */
+export function fanOffsets(n: number): number[] {
+  return Array.from({ length: n }, (_, i) => (i - (n - 1) / 2) * 11)
+}
+
+/**
+ * Resolves which mark within a cluster's offsets sits nearest a given pointer position, in the
+ * cluster's own local x frame (`localDx` = pointer x minus the cluster's own center) — the
+ * tooltip fix (Frank, 2026-07-31): "nobody hits a 9px dot reliably", so hovering ANYWHERE within
+ * a cluster's hit band resolves to the CLOSEST mark by pointer distance, never just the first.
+ * On an exact tie the earlier offset wins (strict `<`, not `<=`) — a deterministic, if arbitrary,
+ * tiebreak rather than an unspecified one.
+ */
+export function nearestMarkOffset(offsets: readonly number[], localDx: number): number {
+  let best = Infinity
+  let mi = 0
+  offsets.forEach((dx, i) => {
+    const dist = Math.abs(localDx - dx)
+    if (dist < best) {
+      best = dist
+      mi = i
+    }
+  })
+  return mi
+}
+
 /** Events → score: day clusters per voice, shared axis, honest as-ofs. */
 export function buildScore(events: ScoreEvent[]): ScoreModel | null {
   const valid = events.filter((e) => DATE_RE.test(e.date))

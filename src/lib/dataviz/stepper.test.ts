@@ -5,6 +5,7 @@ import {
   deactivatePanel,
   dispatchPanelKey,
   ensurePanelKeydownListener,
+  isPanelActive,
   positionLabel,
   resetPanelKeydownBinding,
   resetPanelRegistry,
@@ -181,6 +182,24 @@ describe('panel keydown registry', () => {
     activatePanel(a)
     dispatchPanelKey(fakeEvent('Tab'))
     expect(a.calls).toEqual([])
+  })
+})
+
+describe('isPanelActive', () => {
+  beforeEach(() => {
+    resetPanelRegistry()
+  })
+
+  it('is false when no panel is active', () => {
+    expect(isPanelActive()).toBe(false)
+  })
+
+  it('is true once a panel activates, false again once it deactivates', () => {
+    const a = fakeHandlers()
+    activatePanel(a)
+    expect(isPanelActive()).toBe(true)
+    deactivatePanel(a)
+    expect(isPanelActive()).toBe(false)
   })
 })
 

@@ -24,11 +24,27 @@ export interface Props {
   id?: string
   /** aria-label for the prev/next/close buttons' surrounding group, if any grouping is needed */
   labelledby?: string
+  /**
+   * Renders the panel already OPEN, with whatever the consumer server-rendered into its slots
+   * (WP6a). The default stays closed — a panel that opens on a click is what most figures want.
+   * A figure whose panel is its PRIMARY content, not a detail of a mark, needs the other default:
+   * the atelier's passage figure puts the line's own record in this panel and the drawing below it
+   * as the selector, so a visitor without JS must still find the record — an empty box above an
+   * SVG would be the no-JS floor falling through.
+   *
+   * Consequence worth knowing before using it: this shell registers for the arrow keys whenever it
+   * is not `hidden` (see the script below and stepper.ts's registry), so an initially-open panel
+   * owns ←/→ from page load — including over a components/dataviz/Tour.astro on the same page,
+   * which yields to an open panel by design. Its close button hands the keys back.
+   */
+  open?: boolean
+  /** the position the panel opens AT — only meaningful together with `open` */
+  pos?: number
 }
-const { id, labelledby } = Astro.props
+const { id, labelledby, open = false, pos = 0 } = Astro.props
 ---
 
-<div class="dv-panel" data-dv-panel id={id} data-dv-pos="0" aria-labelledby={labelledby} hidden>
+<div class="dv-panel" data-dv-panel id={id} data-dv-pos={String(pos)} aria-labelledby={labelledby} hidden={!open}>
   <div class="dv-panel-head"><slot name="head" /></div>
   <div class="dv-panel-body"><slot name="body" /></div>
   <div class="dv-panel-nav">
