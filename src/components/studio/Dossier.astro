@@ -1,0 +1,420 @@
+---
+// src/components/studio/Dossier.astro — the entrance's centre: one body of the house, read.
+//
+// WHY IT IS A DOCUMENT AND WHY THE FIGURE STAYS. The atelier's dossier draws nothing, because a
+// research line's shape on a time axis is not what a visitor wants from it. This house is
+// different: it already HAS a figure that is the record — the season floor, where every premiere
+// is a lit pool, every strike a taped X and every return a violet arc. So the floor is not
+// replaced here; it is promoted. It stops being an illustration under a heading and becomes the
+// switchboard: clicking a mark opens that body's dossier, and choosing a name below aims the floor
+// back at its mark. One selection, two surfaces, and neither can show a different season from the
+// other because both are keyed by src/lib/studio/dossier.ts's derived mark index.
+//
+// NO-JS FLOOR, and why it is stacking rather than one page per body. Every dossier is
+// server-rendered, in full, in the order the selector lists them — so without JavaScript the page
+// is a readable stack of twelve records with the work in the spotlight first, the floor is a
+// static SVG with a native <title> on every mark, and the selector is twelve in-page links that
+// work as links. With JavaScript the selector becomes a tab list showing one at a time. Per-body
+// PAGES were the alternative and were rejected for the same reason the atelier rejected them:
+// /studio is the stage, and a stage that answers "what is on tonight" with a link somewhere else
+// has not answered it.
+//
+// DEEP LINKS. Each dossier's section id is `work-<id>`, so /studio#work-2026-07-23-one-tap opens
+// that body with or without scripts: without, the browser scrolls to it; with, the script selects
+// it and aims the floor at its mark. The selector writes the same hash, so any body a visitor is
+// reading can be sent to someone else.
+//
+// House rules this file is built around: no `is:inline` script (the CSP hashes bundled module
+// scripts), no `style=""` (silently dropped — dynamic styling goes through dataviz/runtime's
+// setVars, and this component needs none), and every visitor-facing string from
+// src/config/studio-wording.ts.
+import { STUDIO_NARRATIVE } from '@/config/studio-wording'
+import { jsonScriptPayload } from '@/lib/dataviz/runtime'
+import type { DossierEvent, StudioDossier } from '@/lib/studio/dossier'
+import '@/styles/studio-dossier.css'
+
+export interface Props {
+  /** every body's dossier, the current premiere first — src/lib/studio/dossier-data.ts */
+  dossiers: StudioDossier[]
+  /** DOM id of the season floor this dossier drives, and is driven by */
+  floorId: string
+  /** dossier id → floor mark key, and floor mark key → dossier id (derived, never hand-kept) */
+  index: { byDossier: Record<string, string>; byMark: Record<string, string> }
+}
+
+const { dossiers, floorId, index } = Astro.props
+const w = STUDIO_NARRATIVE.dossier
+
+const first = dossiers[0]
+
+/** The four groups the selector reads in. The spotlight is its own group of one, because that is
+ *  the whole claim of this page: there is a current protagonist, and the record says which. */
+const groups = [
+  { label: w.groups.spotlight, items: dossiers.filter((d) => d.spotlight) },
+  { label: w.groups.premiered, items: dossiers.filter((d) => !d.spotlight && d.state === 'premiered') },
+  { label: w.groups.withdrawn, items: dossiers.filter((d) => d.state === 'withdrawn') },
+  { label: w.groups.struck, items: dossiers.filter((d) => d.state === 'struck') },
+].filter((g) => g.items.length > 0)
+
+/** An event's own label: the record's move word for a session, the ordinal for a return, the
+ *  state for everything else. Never a judgement — "returned by the human eye" is what happened. */
+const eventLabel = (e: DossierEvent): string =>
+  e.kind === 'return'
+    ? `${w.kinds.return} · ${w.returnLabel(e.ordinalRoman ?? '')}`
+    : e.kind === 'session'
+      ? `${w.kinds.session} · ${e.move}`
+      : w.kinds[e.kind]
+
+const dateLine = (d: StudioDossier): string =>
+  d.dateKnown ? d.date : `${d.date} (${w.dateUnknown})`
+
+---
+
+<section class="st-dsr-wrap" aria-labelledby="dossier-heading" id="dossier" data-st-dsr data-floor={floorId}>
+  <h2 class="st-dsr-h2" id="dossier-heading">{w.heading}</h2>
+  <p class="st-dsr-lead">{w.lead}</p>
+
+  {/* The switchboard. Rendered by the page so the figure keeps its own component, its own record
+      table and its own tour handshake — this section only supplies the frame it stands in. */}
+  <div class="st-dsr-floor">
+    <slot name="floor" />
+  </div>
+
+  {/* The selector. Server-rendered as plain links to the sections below, which is exactly what
+      they are without JavaScript; the script upgrades them to a tab list. */}
+  <nav class="st-dsr-pick" data-dsr-pick aria-label={w.pickLabel}>
+    <p class="st-dsr-pick-h">{w.pickLabel}</p>
+    {groups.map((group) => (
+      <div class="st-dsr-group">
+        <p class="st-dsr-group-h">{group.label} <span>{group.items.length}</span></p>
+        <ul>
+          {group.items.map((d) => (
+            <li>
+              <a
+                href={`#work-${d.id}`}
+                class="st-dsr-tab"
+                data-dsr-tab={d.id}
+                data-state={d.state}
+                data-spot={d.spotlight ? '' : undefined}
+                aria-current={d.id === first?.id ? 'true' : undefined}
+              >
+                <span class="t-mark" aria-hidden="true"></span>
+                <span class="t-name">{d.title}</span>
+                <span class="t-meta">{d.session ? `${d.session} · ` : ''}{d.date}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </nav>
+
+  {dossiers.map((d) => (
+    <article
+      class="st-dsr"
+      id={`work-${d.id}`}
+      data-dsr-panel={d.id}
+      data-state={d.state}
+      aria-labelledby={`work-${d.id}-title`}
+    >
+      <header class="st-dsr-head">
+        <p class="d-state">
+          <span class="d-mark" aria-hidden="true"></span>
+          <b>{w.states[d.state].label}</b>
+          <span class="d-hint">{w.states[d.state].hint}</span>
+        </p>
+        <h3 class="d-title" id={`work-${d.id}-title`}>{d.title}</h3>
+        <p class="d-meta">
+          <span>{dateLine(d)}</span>
+          {d.session && <span>{d.session}</span>}
+          {d.author && <span>{d.author}</span>}
+        </p>
+        {d.stageHref && (
+          <p class="d-enter"><a href={d.stageHref}>{w.stageLink}</a></p>
+        )}
+      </header>
+
+      {/* — why it was struck: the kill reason, verbatim, first — it is the whole record — */}
+      {d.killReason && (
+        <div class="d-block d-kill">
+          <p class="d-h">{w.fields.kill}</p>
+          <blockquote class="d-quote">{d.killReason.text}</blockquote>
+          <p class="d-src">{d.killReason.source} · {d.killReason.label}</p>
+        </div>
+      )}
+
+      {/* — the withdrawal: the house's own sentence, in the curtain colour, never a warning — */}
+      {d.withdrawal && (
+        <div class="d-block d-withdrawal">
+          <p class="d-h">{w.fields.withdrawal}</p>
+          <blockquote class="d-quote">{d.withdrawal.note.text}</blockquote>
+          <p class="d-src">{d.withdrawal.note.source} · {d.withdrawal.note.label}</p>
+        </div>
+      )}
+
+      {/* — the form — */}
+      {d.form && (
+        <div class="d-block">
+          <p class="d-h">{w.fields.form}</p>
+          <p class="d-fieldtext">{d.form.text}</p>
+          <p class="d-src">{d.form.source} · {d.form.label}</p>
+        </div>
+      )}
+
+      {/* — what it is, in its own words. Unbounded on purpose: this is the one place on the site
+           where a work says what it is, and trimming the record to fit a layout is the failure
+           this house killed a premiere for. — */}
+      <div class="d-block d-what">
+        <p class="d-h">{w.fields.what}</p>
+        {d.description ? (
+          <>
+            <p class="d-body">{d.description.text}</p>
+            <p class="d-src">{d.description.source} · {d.description.label}</p>
+          </>
+        ) : (
+          <p class="d-gap">{w.gaps.description}</p>
+        )}
+      </div>
+
+      {/* — what it stands on: the house's own tier vocabulary, where the work declares it — */}
+      {d.state !== 'struck' && (
+        <div class="d-block d-tiers">
+          <p class="d-h">{w.fields.tiers}</p>
+          {d.tiers.length > 0 ? (
+            <ul class="d-tierlist">
+              {d.tiers.map((t) => (
+                <li>
+                  <p class="d-tiertext">{t.text}</p>
+                  <p class="d-src">{t.source} · {t.label}</p>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p class="d-gap">{w.gaps.tiers}</p>
+          )}
+        </div>
+      )}
+
+      {/* — the eye's verdicts, verbatim. The one voice the gate does not contain. — */}
+      {d.returns.length > 0 && (
+        <div class="d-block d-returns">
+          <p class="d-h">{w.fields.returns} <span class="d-count">{d.returns.length}</span></p>
+          <ol class="d-returnlist">
+            {d.returns.map((r) => (
+              <li>
+                <p class="r-head">
+                  <span class="r-ord">{r.ordinalRoman}</span>
+                  <time datetime={r.date}>{r.date}</time>
+                  {r.session && <span class="r-session">{r.session}</span>}
+                </p>
+                {r.quote && <blockquote class="r-quote">{r.quote}</blockquote>}
+                <p class="r-text">{r.text}</p>
+                <p class="r-foot">
+                  <span class="d-src">{r.source} · {w.by[r.by]}</span>
+                  {r.href && <a href={r.href}>{w.journalLink}</a>}
+                </p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      )}
+
+      {/* — the story of this body, where one exists (the relocated guided tour) — */}
+      {d.id === w.storyOf && (
+        <p class="d-story"><a href={w.storyHref}>{w.storyLine}</a></p>
+      )}
+
+      {/* — what happened to it: every attributed move, oldest first, each naming its own rule — */}
+      <div class="d-block d-history">
+        <p class="d-h">{w.fields.history} <span class="d-count">{d.events.length}</span></p>
+        {d.events.length > 0 ? (
+          <ol class="d-events">
+            {d.events.map((e) => (
+              <li class="d-event" data-kind={e.kind}>
+                <p class="e-head">
+                  <time datetime={e.date}>{e.date}</time>
+                  {e.session && <span class="e-session">{e.session}</span>}
+                  <span class="e-kind">{eventLabel(e)}</span>
+                </p>
+                <p class="e-text">{e.text}</p>
+                <p class="e-foot">
+                  <span class="d-src">{e.source} · {w.by[e.by]}</span>
+                  {e.href && <a href={e.href}>{w.journalLink}</a>}
+                </p>
+              </li>
+            ))}
+          </ol>
+        ) : (
+          <p class="d-gap">{w.gaps.history}</p>
+        )}
+        {d.state !== 'struck' && <p class="d-note">{w.gaps.build}</p>}
+      </div>
+
+      {/* — what the record consists of — */}
+      <div class="d-block d-record">
+        <p class="d-h">{w.fields.record}</p>
+        <ul class="d-files">
+          {d.sources.map((s) => (
+            <li><code>{s.path}</code> <span>{s.note}</span></li>
+          ))}
+        </ul>
+      </div>
+    </article>
+  ))}
+
+  <p class="st-dsr-prov">{w.provenance}</p>
+
+  <script type="application/json" data-dsr-index set:html={jsonScriptPayload(index)} />
+</section>
+
+<script>
+  // Two upgrades, both additive. Without this script the page is twelve records under twelve
+  // working anchor links beside a static floor whose every mark carries a native <title> — that is
+  // the floor, not a degraded mode.
+  //
+  //   1. the selector becomes a tab list showing one dossier at a time;
+  //   2. the season floor and the dossier select each other.
+  //
+  // The second is why this file imports the tour engine's figure registry: components/studio/
+  // SeasonFloor.astro announces itself with `dv:figure-ready` and hands over an `apply(focus)`
+  // callback, and it emits `dv:mark-selected` when a visitor opens a mark. This component knows
+  // the floor only through those two events — no import in either direction.
+  import { ensureFigureReadyListener, getFigure } from '@/lib/tour/engine'
+
+  interface MarkIndex {
+    byDossier: Record<string, string>
+    byMark: Record<string, string>
+  }
+
+  ensureFigureReadyListener()
+
+  for (const root of document.querySelectorAll<HTMLElement>('[data-st-dsr]')) {
+    const pick = root.querySelector<HTMLElement>('[data-dsr-pick]')
+    const indexEl = root.querySelector<HTMLElement>('[data-dsr-index]')
+    if (!pick || !indexEl) continue
+
+    const tabs = [...pick.querySelectorAll<HTMLAnchorElement>('[data-dsr-tab]')]
+    const panels = new Map(
+      [...root.querySelectorAll<HTMLElement>('[data-dsr-panel]')].map((p) => [p.dataset.dsrPanel ?? '', p]),
+    )
+    if (tabs.length === 0 || panels.size === 0) continue
+
+    let index: MarkIndex
+    try {
+      index = JSON.parse(indexEl.textContent ?? '{}') as MarkIndex
+    } catch {
+      continue // no index, no enhancement: the stack and its anchors still work
+    }
+    const floorId = root.dataset.floor ?? ''
+
+    // Roles are set HERE and not in the markup: without this script these are links to sections,
+    // and calling a link a tab in the accessibility tree when nothing tabs would be a lie told to
+    // exactly the visitors who can least afford one.
+    pick.setAttribute('role', 'tablist')
+    for (const tab of tabs) {
+      tab.setAttribute('role', 'tab')
+      tab.removeAttribute('aria-current')
+    }
+    for (const [id, panel] of panels) {
+      panel.setAttribute('role', 'tabpanel')
+      panel.setAttribute('tabindex', '0')
+      const tab = tabs.find((t) => t.dataset.dsrTab === id)
+      if (tab) {
+        if (!tab.id) tab.id = `dsr-tab-${id}`
+        panel.setAttribute('aria-labelledby', tab.id)
+      }
+    }
+
+    let current = ''
+
+    /** Aims the floor at this body's own mark. Silently does nothing until the floor has
+     *  registered — a dossier that works and a figure that has not booted yet is the right order
+     *  of failure, and the floor pushes its own selection back the moment it does boot. */
+    const aimFloor = (id: string) => {
+      const key = index.byDossier[id]
+      if (!key || !floorId) return
+      // The same FocusState a tour scene hands a figure — `figure` names the target, and every
+      // other field is left undefined so aiming the floor never disturbs a filter the visitor set.
+      getFigure(floorId)?.apply({ figure: floorId, select: key })
+    }
+
+    const select = (id: string, opts: { focusPanel?: boolean; driveFloor?: boolean } = {}) => {
+      if (!panels.has(id) || id === current) return
+      current = id
+      for (const [key, panel] of panels) {
+        const on = key === id
+        panel.hidden = !on
+        panel.setAttribute('aria-hidden', on ? 'false' : 'true')
+      }
+      for (const tab of tabs) {
+        const on = tab.dataset.dsrTab === id
+        tab.setAttribute('aria-selected', on ? 'true' : 'false')
+        // Roving tabindex: one stop for the whole selector, arrows move inside it.
+        tab.tabIndex = on ? 0 : -1
+      }
+      if (opts.driveFloor !== false) aimFloor(id)
+      if (opts.focusPanel) panels.get(id)?.focus()
+    }
+
+    const fromHash = () => {
+      const id = location.hash.replace(/^#work-/, '')
+      return panels.has(id) ? id : ''
+    }
+
+    // Arriving WITHOUT a hash, the floor stays showing the whole season — nothing was asked for, so
+    // nothing is singled out. Arriving WITH one, the floor is aimed: a deep link is a request to be
+    // shown a particular body, and a figure that ignored it would be the second surface disagreeing
+    // with the first, which is the whole thing this pairing exists to prevent.
+    const deepLinked = fromHash()
+    select(deepLinked || tabs[0].dataset.dsrTab || '', { driveFloor: Boolean(deepLinked) })
+
+    for (const [i, tab] of tabs.entries()) {
+      tab.addEventListener('click', (ev) => {
+        ev.preventDefault()
+        const id = tab.dataset.dsrTab ?? ''
+        select(id)
+        // Written, not navigated: replaceState keeps the link sendable without adding a history
+        // entry per click and without the jump a real hash change would cause.
+        history.replaceState(null, '', `#work-${id}`)
+      })
+      tab.addEventListener('keydown', (ev) => {
+        const delta =
+          ev.key === 'ArrowRight' || ev.key === 'ArrowDown'
+            ? 1
+            : ev.key === 'ArrowLeft' || ev.key === 'ArrowUp'
+              ? -1
+              : ev.key === 'Home'
+                ? -i
+                : ev.key === 'End'
+                  ? tabs.length - 1 - i
+                  : 0
+        if (delta === 0) return
+        ev.preventDefault()
+        const next = tabs[(i + delta + tabs.length) % tabs.length]
+        next.focus()
+        const id = next.dataset.dsrTab ?? ''
+        select(id)
+        history.replaceState(null, '', `#work-${id}`)
+      })
+    }
+
+    // ——— the floor drives the dossier ————————————————————————————————————————————
+    // `driveFloor: false` is the re-entrancy guard: this selection CAME from the floor, so aiming
+    // the floor back at it would be an echo. (`select` also early-returns on an unchanged id, so
+    // the loop would terminate anyway — but a round trip per click is still a round trip.)
+    root.addEventListener('dv:mark-selected', (ev) => {
+      const key = (ev as CustomEvent<{ key: string }>).detail?.key ?? ''
+      const id = index.byMark[key]
+      if (!id) return
+      select(id, { driveFloor: false })
+      history.replaceState(null, '', `#work-${id}`)
+    })
+
+    // A hash arriving from outside (a pasted deep link, a back button) selects its body — and this
+    // one DOES aim the floor, because a deep link is a request to be shown the thing.
+    window.addEventListener('hashchange', () => {
+      const id = fromHash()
+      if (id) select(id, { focusPanel: true })
+    })
+  }
+</script>

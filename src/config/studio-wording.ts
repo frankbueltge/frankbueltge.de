@@ -220,6 +220,92 @@ export const STUDIO_NARRATIVE = {
       cost: 'the pool stays, unlit',
     },
   },
+  /**
+   * The house dossier (2026-08-01) — the entrance's centre. Only the FRAME lives here: headings,
+   * labels, the words for a gap. Every quotation the dossier makes a claim with is read verbatim
+   * out of the committed record by src/lib/studio/dossier.ts and printed beside the path it came
+   * from. NEW drafted copy, approval pending like the rest of NARRATIVE (the page shows the chip).
+   */
+  dossier: {
+    heading: 'The work in the spotlight',
+    lead:
+      'Every body this house has made, read out of its own record: what it is in its own words, what the human eye said to it, and what became of it. The floor is the switchboard — pick a mark up there or a name below, and the whole dossier changes with it.',
+    floorHeading: 'The season — every mark, and the one the dossier is open at',
+    pickLabel: 'The cast — every body of the house',
+    groups: {
+      spotlight: 'in the spotlight tonight',
+      premiered: 'premiered, still standing',
+      withdrawn: 'withdrawn after premiere',
+      struck: 'struck at concept',
+    },
+    /** what each state IS — never how to judge it. A withdrawal is a completed honest act. */
+    states: {
+      premiered: {
+        label: 'premiered',
+        hint: 'through the full gate, on the stage, its hostile critique published beside it',
+      },
+      withdrawn: {
+        label: 'withdrawn after premiere',
+        hint: 'the light was taken away by the house itself; the position stays on the floor',
+      },
+      struck: {
+        label: 'struck at concept',
+        hint: 'killed before a production token was spent — the floor keeps the mark and the reason',
+      },
+    },
+    fields: {
+      form: 'the form',
+      what: 'what it is, in its own words',
+      tiers: 'what it stands on',
+      returns: 'the eye’s verdicts, verbatim',
+      kill: 'why it was struck',
+      withdrawal: 'the withdrawal',
+      history: 'what happened to it',
+      record: 'what the record consists of',
+    },
+    gaps: {
+      description:
+        'The record carries no description of this position — it was struck at concept, before anything was built. The reason above is the whole of what was written.',
+      tiers:
+        'This work’s own record declares no tier line. The house marks SOURCED, VERIFIED and IMAGINED on the works that carry them; where it does not, nothing is supplied here.',
+      history: 'The record attaches no session to this body by name.',
+      build:
+        'The sessions that built this work before its premiere carry no work name in the chronicle’s own field, so this dossier does not claim them. They are in the journal, one page per session.',
+    },
+    /** how each entry got attached to this body — printed, so a reader can check the attribution */
+    by: {
+      declared: 'the chronicle’s own works field names it',
+      'return-pattern': 'the chronicle states the return in its own sentence',
+      'kill list': 'the curated kill list, quoted from the session commit',
+      'the evening': 'the evening it was struck — the whole session, not only this position',
+    },
+    kinds: {
+      premiere: 'premiere',
+      return: 'returned by the human eye',
+      session: 'on the record',
+      withdrawal: 'withdrawn',
+      strike: 'struck',
+      evening: 'the evening',
+    },
+    returnLabel(roman: string): string {
+      return `return ${roman}`
+    },
+    dateUnknown: 'evening not in the mirror',
+    stageLink: 'Enter the work →',
+    journalLink: 'the session in full',
+    /** the one body the relocated tour is about, and the line that links to it */
+    storyOf: '2026-07-23-one-tap',
+    storyHref: '/studio/how-a-premiere-returned',
+    storyLine: 'The three returns, scene by scene — how this premiere came off the stage →',
+    /** The room's own name on the marquee. Deliberately NOT the tour's title: the tour renders its
+     *  own heading immediately below (components/dataviz/Tour.astro), and passing the same sentence
+     *  as the frame's h1 prints it twice in two faces. The room is named, the story is titled. */
+    storyRoomH1: 'How a premiere came off the stage.',
+    backToDossier: '← this work’s dossier',
+    provenance:
+      'Every quotation on this page is a span of a committed file, printed beside the path it was read from: the works’ own meta.json, the chronicle mirror, and the curated kill list. Two rules attach a session to a body and nothing else does — the chronicle’s own works field, and the sentence in which it states that the human eye returned a work. An entry neither rule reaches is left out rather than filed under the nearest name.',
+  },
+
   /** Eingang, orientation block (WP2 — practice-shell, 2026-07-31): the lede moved here
    * verbatim from the page's own hardcoded <p class="st-room-intro">; `orientation` is NEW
    * drafted copy (same four first-visitor questions as the atelier's), not yet Frank's
@@ -230,8 +316,12 @@ export const STUDIO_NARRATIVE = {
     // season band it pointed at was replaced by the season floor, which also draws the returns. A
     // sentence describing a figure the page no longer has is exactly the drift the currency rule
     // forbids; the rest of the lede is untouched.
+    // 2026-08-01 (the dossier): one clause was ADDED, nothing rewritten. The floor is no longer an
+    // illustration standing on its own — every mark on it now opens that body's dossier, and a lede
+    // that did not say so would leave a visitor guessing why the page changes under them. The rest
+    // of the sentence, and the stage it points at, are untouched.
     lede:
-      'The Studio is Ensemble\'s stage — an autonomous artist collective staging works of data art in its own sessions, published unedited. The season floor below shows the whole run so far — every premiere, every strike, every return, in order; then the stage as it stands tonight: one spotlight on the current premiere, every struck position kept on the floor with its kill reason verbatim, and the refused material in the Gasse — visible, unlit. The rail above holds the rest: all works, the register, the journal, and the apparatus — how the machine runs.',
+      'The Studio is Ensemble\'s stage — an autonomous artist collective staging works of data art in its own sessions, published unedited. The season floor below shows the whole run so far — every premiere, every strike, every return, in order — and every mark on it opens that body\'s dossier: what it is in its own words, and what the human eye said to it; then the stage as it stands tonight: one spotlight on the current premiere, every struck position kept on the floor with its kill reason verbatim, and the refused material in the Gasse — visible, unlit. The rail above holds the rest: all works, the register, the journal, and the apparatus — how the machine runs.',
   },
   orientation: [
     {
