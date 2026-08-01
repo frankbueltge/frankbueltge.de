@@ -182,6 +182,86 @@ if (werkInlineTally.length) {
   )
 }
 
+// ——— 8. Every work carries a wall text, and it stays plain ————————————————————
+// Frank, 2026-08-01: "genau solche Texte machen die Arbeit fassbar … und erzeugen Staunen
+// statt Stirnrunzeln." Visitors open works, not records. The teaser store already held a
+// plain-language line for 56 of 57 works; what was missing was that it appeared on the work's
+// own page (now in wrapper.ts) and that nothing kept it plain or kept it from being forgotten.
+//
+// Two checks, both cheap:
+//   (a) Coverage — a work without a wall text is a finding, but only after the nightly teaser
+//       routine has had its chance. A work integrated tonight has no teaser until the routine
+//       runs, so a grace window keeps the nightly chain green instead of failing the site for
+//       a job that has not run yet. Past the window it is a real omission and says so.
+//   (b) Plainness — the wall text is the one text written for a stranger. Protocol vocabulary
+//       in it defeats its entire purpose, and a 400-word "teaser" is the apparatus returning
+//       through the front door. Measured, not trusted.
+const WALL_TEXT_GRACE_DAYS = 3
+const WALL_TEXT_MAX_WORDS = 90
+// Terms that exist ONLY inside the practices. Kept deliberately narrow: the first draft of this
+// list also held `tick`, `disposition`, `inviolable` and `swerve`, and immediately flagged a
+// perfectly plain sentence — "her actual sentences swerve from the 'obvious' next word". Those
+// are ordinary English. A guard that fires on good writing teaches people to route around it,
+// so only protocol artefacts that cannot occur in a visitor-facing sentence are listed, plus
+// the section sign, which is the surest tell that the record leaked into the label.
+const APPARATUS_WORDS = [
+  'PUBLICATION_CANDIDATE', 'ARCHIVE_AS_STUDY', 'medium-necessity', 'work-line', 'topoi',
+  'substantival', 'territorialise', 'PUBLICATION\\.json',
+]
+const SECTION_REF = /§\s*\d/
+const teaserPath = join(ROOT, 'src/data/teasers.json')
+if (existsSync(teaserPath)) {
+  const teasers = JSON.parse(readFileSync(teaserPath, 'utf8')).teasers ?? {}
+  const workDirs = [
+    ['atelier', 'src/content/atelier/works'],
+    ['atelier', 'src/components/atelier/werke'],
+    ['field', 'src/components/field/werke'],
+    ['studio', 'src/content/studio/works'],
+  ]
+  const today = new Date()
+  let covered = 0
+  let waiting = 0
+  for (const [ns, dir] of workDirs) {
+    const abs = join(ROOT, dir)
+    if (!existsSync(abs)) continue
+    for (const slug of readdirSync(abs)) {
+      if (!/^\d{4}-\d{2}-\d{2}/.test(slug)) continue
+      if (!statSync(join(abs, slug)).isDirectory()) continue
+      const key = `${ns}/${slug}`
+      const text = teasers[key]
+      if (!text) {
+        // The slug's own date is the work's date — no file mtime, which the mirror resets.
+        const ageDays = (today - new Date(slug.slice(0, 10))) / 86_400_000
+        if (ageDays > WALL_TEXT_GRACE_DAYS) {
+          findings.push(
+            `${key} — published work without a wall text (${Math.floor(ageDays)} days old, grace ${WALL_TEXT_GRACE_DAYS}); a visitor opens the work and meets it cold`,
+          )
+        } else {
+          waiting++
+        }
+        continue
+      }
+      covered++
+      const words = text.trim().split(/\s+/).length
+      if (words > WALL_TEXT_MAX_WORDS) {
+        findings.push(`${key} — wall text is ${words} words (max ${WALL_TEXT_MAX_WORDS}); it is a wall label, not an exposition`)
+      }
+      for (const w of APPARATUS_WORDS) {
+        if (new RegExp(`\\b${w}\\b`, 'i').test(text)) {
+          findings.push(`${key} — wall text carries the apparatus term "${w.replace('\\\\', '')}"; this is the one text written for a stranger`)
+        }
+      }
+      if (SECTION_REF.test(text)) {
+        findings.push(`${key} — wall text cites a protocol section (§); the label points at the work, never at the rulebook`)
+      }
+    }
+  }
+  console.log(
+    `drift-check: ${covered} work(s) carry a wall text` +
+      (waiting ? `, ${waiting} still inside the ${WALL_TEXT_GRACE_DAYS}-day grace window for the nightly teaser routine` : ''),
+  )
+}
+
 // ——— 6. Dataviz primitives carry no appearance (ADR 0010 guard) ———————————————
 // src/{components,lib}/dataviz/ is the shared behaviour+structure layer under the practice
 // figures. A hex literal there would be a shared visual grammar through the back door — the
