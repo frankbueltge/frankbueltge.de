@@ -82,6 +82,59 @@ export function journalNotes(ids: readonly string[]): JournalNote[] {
     .sort((a, b) => (a.date === b.date ? a.id.localeCompare(b.id) : a.date.localeCompare(b.date)))
 }
 
+/** One page of the atelier journal, ready for its own route. */
+export interface JournalEntry {
+  /** counted session of the register, or an unnumbered dispatcher tick */
+  kind: 'session' | 'note'
+  /** URL segment AND the DOM id the register has always carried: `s12` / `note-null-island-judge`.
+   *  The legacy deep links therefore need no mapping table — the anchor IS the segment. */
+  slug: string
+  /** register number for a session, null for a note */
+  n: number | null
+  date: string
+  id: string
+  /** the file's own H1, or the date when the file carries none */
+  heading: string
+  /** the body with the H1 line removed — what the page renders */
+  text: string
+}
+
+/**
+ * The journal as a flat, ordered list of pages: the counted register S1…SN first (oldest to
+ * newest), then the unnumbered notes (oldest to newest). That is exactly the order
+ * /atelier/journal has always shown its two strands in, and it makes prev/next on a session
+ * page a pure index step — a reader paging past the last numbered night arrives at the first
+ * dispatcher tick, which is also where the practice went chronologically.
+ *
+ * Pure: the caller hands in the mirrored files (`getCollection('atelier')` entries), this
+ * derives everything from the ids and bodies. Files whose body is missing yield an empty
+ * text rather than throwing — the nightly integrate must never break on a half-synced file.
+ */
+export function buildSessionEntries(
+  files: readonly { id: string; body?: string | undefined }[],
+): JournalEntry[] {
+  const bodyById = new Map(files.map((f) => [f.id, f.body ?? '']))
+  const ids = files.map((f) => f.id).filter((id) => id.startsWith('journal/'))
+
+  const page = (kind: JournalEntry['kind'], slug: string, n: number | null, date: string, id: string) => {
+    const body = bodyById.get(id) ?? ''
+    return {
+      kind,
+      slug,
+      n,
+      date,
+      id,
+      heading: body.match(/^\s*# ([^\n]+)/)?.[1]?.trim() ?? date,
+      text: body.replace(/^\s*# [^\n]*\n?/, ''),
+    }
+  }
+
+  return [
+    ...sessionRegister(ids).map((p) => page('session', `s${p.n}`, p.n, p.date, p.id)),
+    ...journalNotes(ids).map((note) => page('note', `note-${note.slug}`, null, note.date, note.id)),
+  ]
+}
+
 /** Small deterministic number-to-words (1–99) for the spine's headline formula
  * („Twenty-eight nights; the next page is not written.“ — atelier_history_viz.py). */
 export function numberWord(n: number): string {

@@ -1,0 +1,62 @@
+---
+// /studio/journal/<anchor> — ONE session of the house's record (Etappe 2, 2026-08-01). The
+// anchor is the DOM id the playbill carried (cs-42 …), so every chronicle entry and every
+// work badge that pointed at `/studio/history#cs-42` resolves to the same session here.
+import { getCollection } from 'astro:content'
+import Page from '@/layouts/Page.astro'
+import Frame from '@/components/studio/surface/Frame.astro'
+import { buildDayIndex, type DaySession } from '@/lib/engines/journal'
+import { STUDIO_NARRATIVE } from '@/config/studio-wording'
+
+export async function getStaticPaths() {
+  const all = await getCollection('studio')
+  const repo = 'https://github.com/frankbueltge/studio'
+  const rootDocs = new Set(all.filter((e) => !e.id.includes('/')).map((e) => e.id))
+  // ONCE for the whole practice — the anchor walk is order-dependent (see buildDayIndex).
+  const { daysAsc, sessionsAsc } = buildDayIndex(all, { repo, docs: rootDocs })
+  const dayOf = new Map(daysAsc.flatMap((d) => d.sessions.map((s) => [s.anchor, d.date] as const)))
+
+  return sessionsAsc.map((session, i) => ({
+    params: { anchor: session.anchor },
+    props: {
+      session,
+      day: dayOf.get(session.anchor) ?? '',
+      prev: sessionsAsc[i - 1] ?? null,
+      next: sessionsAsc[i + 1] ?? null,
+      total: sessionsAsc.length,
+      position: i + 1,
+    },
+  }))
+}
+
+const { session, day, prev, next, total, position } = Astro.props as {
+  session: DaySession
+  day: string
+  prev: DaySession | null
+  next: DaySession | null
+  total: number
+  position: number
+}
+const room = STUDIO_NARRATIVE.journalRoom
+const title = session.heading || day
+const kicker = ['Studio · the journal of the house', 'studio (Ensemble)', `${session.anchor} · ${day}`]
+const statusHtml =
+  `<b>${session.anchor}</b> · ${day} · session ${position} of ${total}` +
+  (session.move ? ` · ${session.move}` : '') +
+  ` · <a href="/studio/journal" class="underline">the journal →</a>`
+---
+
+<Page
+  title={`Studio — ${title} | Frank Bültge`}
+  description={`${day} — one session of the Studio's journal, mirrored verbatim from the ensemble's own repo.`}
+>
+  <Frame active="journal" kicker={kicker} h1={title} statusHtml={statusHtml} back>
+    <p class="st-room-intro">{room.pageNote}{session.voices ? ` Convened: ${session.voices}.` : ''}</p>
+    <div class="st-prose" set:html={session.html} />
+    <nav class="st-page-nav" aria-label="Journal sessions">
+      {prev && <a class="st-nav-prev" href={`/studio/journal/${prev.anchor}/`}>← {room.prevLabel}: {prev.anchor}</a>}
+      <a href="/studio/journal">{room.backToIndex}</a>
+      {next && <a class="st-nav-next" href={`/studio/journal/${next.anchor}/`}>{room.nextLabel}: {next.anchor} →</a>}
+    </nav>
+  </Frame>
+</Page>

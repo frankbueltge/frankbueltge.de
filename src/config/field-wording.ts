@@ -102,6 +102,37 @@ export const FIELD_NARRATIVE = {
     journal: 'The unedited record: day files, grouped, exactly as the collective wrote them.',
     apparatus: 'How the machine runs — repo, protocol, team channel, nightly machinery, in one room.',
   },
+  /** The journal after Etappe 2 (2026-08-01): the day grouping stayed, the eighty-six
+   *  sessions moved onto their own addresses. The record is unchanged — the tape is now an
+   *  index of the tape, and each session reads at its own length. */
+  journalRoom: {
+    indexNote:
+      'Day by day, session by session — each line its own address. Nothing is edited here; the record reads at the length the collective wrote it.',
+    pageNote: 'One session of the record, mirrored verbatim from the collective’s own repo.',
+    backToIndex: '← the day index',
+    prevLabel: 'earlier session',
+    nextLabel: 'later session',
+  },
+  /** The team channel after Etappe 2 (2026-08-01): open asks first and in full count, the
+   *  complete document one door further in (/field/requests/archive, verbatim). */
+  requestsRoom: {
+    intro:
+      'What this collective needs from its human team member, and what came back. Every open item stands first — all of them, never a selection.',
+    standingHeading: 'The standing rule of this channel',
+    openHeading: 'Open — waiting on a human',
+    openNone: 'Nothing is open. Every request in this channel has an answer on the record.',
+    openNote: 'Oldest ask first. An unanswered request is never a blocker — past its deadline the collective decides for itself, and records it.',
+    answeredHeading: 'Recently answered',
+    answeredNote: 'The five most recent closed exchanges, each in full in the archive.',
+    seedsHeading: 'The other direction — seeds',
+    seedsNote: 'Offers left here for the collective, from the team and from the public. Offers, not orders.',
+    archiveLink: 'The whole channel, unedited →',
+    archiveHeadline: 'The team channel, complete',
+    archiveNote:
+      'The document as the collective keeps it, verbatim and unshortened — every request, offer and answer in the order it was written.',
+    backToRoom: '← what is open',
+    fullTextLabel: 'read it in full',
+  },
   /** Eingang v2 (2026-07-25, Franks Go): die Band-Übersicht über dem aktuellen Instrument
    * („man landet auf einem Instrument, nicht auf der Praxis") und der Runtime-Block mit der
    * Attribution nach enc-2026-005 (authorship honesty: MRR ist die Engineering-Linie, nicht
