@@ -374,7 +374,11 @@ const legendLabelId = `${id}-legend-label`
     })
 
     // ——— paint: filter, dim and selection are ATTRIBUTES; no mark ever moves ————————
-    function paint() {
+    // An arrow const, like every other function in this block, and for a reason beyond house
+    // style: a hoisted `function` declaration is created before the null guard above runs, so
+    // TypeScript refuses to carry that guard's narrowing into it and `svg` reads as possibly
+    // null on the last line here. Nothing is called before this point, so the binding is safe.
+    const paint = () => {
       for (const g of groups) {
         const key = g.dataset.key ?? ''
         const l = byKey.get(key)
