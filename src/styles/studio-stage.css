@@ -691,8 +691,16 @@
 }
 /* The stage gets the wider half. Tour.astro's own default is an even 1fr/1fr, which is right for a
    tour whose figure is a small diagram; this one IS the drawing, and at half of 1440px its Didone
-   titles and taped names were shrinking to the edge of legible. */
-.studio-surface .dv-tour-body:has(.dv-tour-figure:not([hidden])) {
+   titles and taped names were shrinking to the edge of legible.
+
+   The extra `.dv-tour` in this selector (and in the narrow-screen one at the foot of this file) is
+   load-bearing, not decoration: Tour.astro's own scoped rule for this element has specificity
+   (0,4,0), and a skin written as `.studio-surface .dv-tour-body:has(…)` merely TIES with it —
+   which the engine's own stylesheet then wins on source order. The 1.25fr split above happened to
+   look close enough to the engine's 1fr/1fr to hide that at desk width; at 390px it did not hide
+   at all, and the stage was drawn into a 141px column beside a 141px column of prose. Naming the
+   section as well as the body takes the skin to (0,5,0), where it belongs. */
+.studio-surface .dv-tour .dv-tour-body:has(.dv-tour-figure:not([hidden])) {
   grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
 }
 .studio-surface .dv-tour-title {
@@ -767,7 +775,12 @@
 .studio-surface .dv-tour-jump a { color: var(--st-ink-2); text-decoration: none; }
 .studio-surface .dv-tour-jump a[aria-current='true'] { color: var(--st-ink); text-decoration: underline; }
 @media (max-width: 900px) {
-  .studio-surface .dv-tour-body:has(.dv-tour-figure:not([hidden])) { grid-template-columns: 1fr; }
+  /* one column: the stage stops being a sticky companion and becomes a figure the reader scrolls
+     past — the only honest layout once neither column can hold a legible drawing */
+  .studio-surface .dv-tour .dv-tour-body:has(.dv-tour-figure:not([hidden])) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .studio-surface .dv-tour-figure { position: static; max-height: none; }
   .studio-surface .dv-scene { padding: 4vh 0; }
 }
 
