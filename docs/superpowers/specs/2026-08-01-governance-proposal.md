@@ -1,6 +1,8 @@
-# Governance proposal — the human joins the apparatus (2026-08-01)
+# Governance — the human joins the apparatus (2026-08-01)
 
-**Status: PROPOSAL — Frank decides.** Drafted by the conductor session on Frank's
+**Status: DECIDED — Frank, 2026-08-01, verbatim: "alle 4 governance kästchen ja". All four
+sections below are in force as proposed; the numbers stand until Frank changes them.**
+Drafted by the conductor session on Frank's
 festival-line commission (`2026-08-01-festival-line.md`, §2 item 8). The ecology measures
 everything except its human: gate decisions have no deadline and no ledger, fabrication
 requests stall as "deferred, not declined", prepared letters sit unsent. Each of these is
@@ -60,12 +62,38 @@ proposals; only the shape is argued for.
 
 ## 5. Sign-off
 
-- [ ] §1 gate SLA + ledger — yes / adjusted / no
-- [ ] §2 fabrication ceiling €150/quarter — yes / other number / no
-- [ ] §3 post rota 7 days — yes / adjusted / no
-- [ ] §4 MRR leash — yes / adjusted / no
+- [x] §1 gate SLA + ledger — **yes** (Frank, 2026-08-01)
+- [x] §2 fabrication ceiling €150/quarter — **yes** (Frank, 2026-08-01)
+- [x] §3 post rota 7 days — **yes** (Frank, 2026-08-01)
+- [x] §4 MRR leash — **yes** (Frank, 2026-08-01)
 
-One honest caveat: a 72-hour SLA is a promise a single human makes about their evenings.
-If the number is wrong, say the right one — a kept 7-day promise beats a broken 3-day one,
-and the practices' standing rule (silence past the practice's own next session reads as a
-decision) stays the backstop either way.
+One honest caveat, kept for the record: a 72-hour SLA is a promise a single human makes
+about their evenings. If the number turns out wrong, the right move is to change it here,
+dated — a kept 7-day promise beats a broken 3-day one, and the practices' standing rule
+(silence past the practice's own next session reads as a decision) stays the backstop.
+
+## 6. The gate ledger — first rows
+
+Kept here until the Steuerzentrale rework (design:
+`docs/design/2026-08-01-steuerzentrale-v2.md`) gives it its operational home; append-only,
+most recent first.
+
+| In | Candidate | Practice | Decision | Out | Waited |
+|---|---|---|---|---|---|
+| 2026-07-25 | Negative Parallax — The Operative Ruler (v3 since 2026-07-30, two dated corrections 2026-07-31) | ulysses | **GO — published with its correction record** (Frank: "operative ruler v3 go") | 2026-08-01 | 7 days — pre-SLA; the 72 h rule counts from today |
+
+Executed the same day: `projects/2026-07-23-negative-parallax/PUBLICATION.json` +
+`work/` (v3 as `index.html`, meta), committed by the practice persona per the
+kartographie precedent ("Frank Bültge's authorisation"), ulysses commit `5bf4516`. The
+site's nightly atelier-integrate imports it — the second publication in the Atelier's
+history.
+
+## 7. Consequences now in force
+
+- **§3 answers Ulysses' blocker** (seed response, 2026-07-31): the practice cannot
+  initiate third-party contact under its standing delegation — interim path stands
+  (practice prepares piece + addressed message, Frank forwards within 7 days); the narrow
+  delegation amendment Ulysses would prefer remains a separate, practice-side question.
+- **§2 unblocks the NO PART wall** — first draw against the ceiling, print cost ~€40–90.
+- **§4 binds MRR** from today: maintenance and honest archiving free, construction only on
+  a named practice need.
