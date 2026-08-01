@@ -27,6 +27,22 @@ export interface DoorItem {
   tourHref?: string
 }
 
+/** One card of "the other houses" — an independent main project, not an offshoot of the ecology.
+ *  Typed rather than inferred (same reason as DoorItem) because only ONE of them carries a
+ *  resident line: a `as const` tuple would make that field unreachable on the others. */
+export interface TravelItem {
+  name: string
+  href: string
+  description: string
+  /**
+   * The quiet second line a house gets when a collective of ITS OWN keeps a record on THIS site
+   * (2026-08-02). Exactly one house has one today — data-snack.com, whose resident collective (the
+   * Plenum) sits weekly and mirrors its minutes here. The line is a link out of the card and into
+   * that record; the card itself keeps pointing at the house.
+   */
+  resident?: { lead: string; label: string; href: string }
+}
+
 /** One card of the entrance's triptych (WP7). One per PRACTICE — the copy only; the picture is
  *  derived at build time by src/lib/hub/triptych.ts from the same committed record its room reads. */
 export interface TriptychCard {
@@ -131,6 +147,23 @@ export const NAMING = {
         noResident: 'no resident — kept by the conductor',
       },
     ] as DoorItem[],
+
+    /**
+     * The guest voice, named where the residents are named (2026-08-02). The Plenum is
+     * data-snack.com's resident collective; it holds a lane on the ecology's score and keeps its
+     * sitting minutes in this repo, but it is NOT a practice of this house and deliberately gets
+     * no door — the four doors stay four. So it gets one quiet line under the grid instead, in the
+     * same subordinate idiom as the seed line further down.
+     *
+     * The wording states a RULE, not an instance ("a lane on the score", never "the fourth lane"):
+     * an ordinal would be a lie the day a voice joins or leaves, and nothing on the page would say
+     * so — the same reason the triptych's captions are written the way they are.
+     */
+    guest: {
+      lead: 'Also on the record: the Plenum, the resident collective of data-snack.com — a guest voice with a lane on the score below and no door of its own →',
+      label: '/plenum',
+      href: '/plenum',
+    },
   },
 
   /**
@@ -190,8 +223,16 @@ export const NAMING = {
     kicker: 'MASCHINENRAUM',
     kickerSub: 'WHAT THEY LAST DID',
     fullView: { label: '→ full view', href: '/maschinenraum' },
-    /** the per-lane link into that practice's tour; the Plenum has no tour on this site */
+    /** the per-lane link into that practice's tour — the three practices only */
     tourLabel: 'tour →',
+    /**
+     * The guest row's own way in (2026-08-02). The Plenum keeps no tour here, because it keeps no
+     * practice here — what it keeps is minutes, so its row says so and leads to them. A row that
+     * carried "tour →" would promise a walk through a practice of this house and deliver the
+     * paperwork of another one's collective.
+     */
+    guestLabel: 'sittings →',
+    guestHref: '/plenum',
     /** what a row says when a practice's mirror carries nothing */
     noMirror: 'no mirror',
     noteLead: 'committed mirrors only — each row carries its source’s own state; details and joint inquiries in the',
@@ -216,8 +257,18 @@ export const NAMING = {
         name: 'data-snack.com',
         href: 'https://data-snack.com',
         description: 'A character-driven data magazine (a cyber-diner with a cast of its own). A main project in its own right.',
+        /* The cast of that magazine sits weekly as the Plenum, and mirrors its minutes into this
+         * repo — so the house that a visitor is being sent to is also the house whose paperwork
+         * they can read here without leaving. The line says minutes, not work: the snacks are
+         * cooked and published over there (src/config/plenum-wording.ts, house boundary), and
+         * /works states the same boundary from the register's side. */
+        resident: {
+          lead: 'Its resident collective, the Plenum, keeps the minutes of its sittings on this site →',
+          label: '/plenum',
+          href: '/plenum',
+        },
       },
-    ],
+    ] as TravelItem[],
   },
 
   /* `rest` („ALSO ON THIS SITE") entfernt (Frank, 25.07.): Apparatus hängt am Hero,

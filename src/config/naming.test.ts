@@ -70,6 +70,64 @@ describe('NAMING.doors tour links', () => {
   })
 })
 
+/** The guest voice (2026-08-02). The Plenum is data-snack.com's resident collective, not a
+ *  practice of this house: it gets linked wherever its voice already sounds, and nowhere else.
+ *  Every rule below is one somebody could break with a well-meant edit — a fifth door, an ordinal
+ *  that goes stale, a "tour" label on a house that keeps no tour here. */
+describe('the Plenum as a guest voice', () => {
+  const GUEST_ROOM = '/plenum'
+
+  it('gets no door: the four doors stay the practices and The Middle', () => {
+    expect(NAMING.doors.items).toHaveLength(4)
+    for (const door of NAMING.doors.items) {
+      expect(door.href, `door ${door.id}`).not.toBe(GUEST_ROOM)
+    }
+  })
+
+  it('names itself under the doors, and links into its own room', () => {
+    const { guest } = NAMING.doors
+    expect(guest.href).toBe(GUEST_ROOM)
+    expect(guest.label).toBe(GUEST_ROOM)
+    expect(guest.lead).toContain('Plenum')
+    // the house it belongs to is named, so the line cannot be read as a fifth practice
+    expect(guest.lead).toContain('data-snack.com')
+  })
+
+  it('states a rule, not an instance — no ordinal that a fifth voice would falsify', () => {
+    // Same guard as the triptych's captions, same reason: the score's lanes move with the record,
+    // and a line saying "the fourth lane" would be untrue the day a voice joins or leaves.
+    expect(NAMING.doors.guest.lead).not.toMatch(/\d/)
+    expect(NAMING.doors.guest.lead).not.toMatch(/\b(fourth|fifth)\b/i)
+    expect(NAMING.doors.guest.lead.endsWith('→')).toBe(true)
+  })
+
+  it('gets a way in from its Maschinenraum row — but never the practices\' tour label', () => {
+    expect(NAMING.maschinenraum.guestHref).toBe(GUEST_ROOM)
+    expect(NAMING.maschinenraum.guestLabel).not.toBe(NAMING.maschinenraum.tourLabel)
+    expect(NAMING.maschinenraum.guestLabel.endsWith('→')).toBe(true)
+  })
+
+  it('is reached from its own house’s card, and only from that one', () => {
+    const withResident = NAMING.travel.items.filter((it) => it.resident)
+    expect(withResident.map((it) => it.name)).toEqual(['data-snack.com'])
+    const resident = withResident[0]!.resident!
+    expect(resident.href).toBe(GUEST_ROOM)
+    expect(resident.label).toBe(GUEST_ROOM)
+    expect(resident.lead).toContain('Plenum')
+    expect(resident.lead.endsWith('→')).toBe(true)
+    expect(resident.lead).not.toMatch(/\d/)
+  })
+
+  it('promises minutes on this site, never the work — the snacks are cooked in their own house', () => {
+    // The works register states the same boundary from its side ("keeps its texts elsewhere — it
+    // is not counted here"). A travel line offering the collective's WORK here would contradict a
+    // sentence that already stands on /works, and only one of the two would ever get corrected.
+    const lead = NAMING.travel.items.find((it) => it.resident)!.resident!.lead
+    expect(lead).toMatch(/minutes/)
+    expect(NAMING.worksRegister.provenanceTail).toContain('Plenum')
+  })
+})
+
 /** The triptych: three cards, one per practice, each pointing at that practice's tour. The copy
  *  rules it has to keep are the ones that go stale silently if nobody checks them. */
 describe('NAMING.triptych', () => {
