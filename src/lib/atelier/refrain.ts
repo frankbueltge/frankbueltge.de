@@ -247,17 +247,17 @@ export interface RefrainModel {
 // Geometry constants — a measured sheet, not a chart. The x axis is EVENT-ORDERED: one step
 // per event, plus a bounded widening where days passed in silence. Same-day clusters read
 // dense, silence reads as a hole — the irregular cadence is the data (spec §3).
-const LABEL_W = 132
+const LABEL_W = 150
 const X0 = LABEL_W + 26
-const STEP = 34
+const STEP = 42
 /** extra width per silent day, capped — a three-week hole must be visible, not dominant */
-const GAP_UNIT = 9
+const GAP_UNIT = 10
 const GAP_MAX_DAYS = 4
-const TOP = 46
-const STAVE_GAP = 46
-const MOTIF_GAP = 38
-const BOTTOM = 54
-const R_PAD = 30
+const TOP = 50
+const STAVE_GAP = 56
+const MOTIF_GAP = 44
+const BOTTOM = 60
+const R_PAD = 34
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 export function dayLabel(d: string): string {
@@ -284,7 +284,7 @@ export function buildRefrainModel(source: RefrainSource): RefrainModel {
   const gaps: { x: number; days: number }[] = []
   const axis: { x: number; label: string; row: 0 | 1 }[] = []
   /** a date label needs about this much room before the next one may share its row */
-  const LABEL_ROOM = 44
+  const LABEL_ROOM = 50
   let x = X0
   let prevDate: string | null = null
   events.forEach((event) => {
@@ -357,7 +357,7 @@ export function buildRefrainSvg(model: RefrainModel, opts: RefrainRenderOptions)
   const voiceOn = (v: Voice) => !opts.filter?.length || opts.filter.includes(v)
   const s: string[] = []
   s.push(
-    `<svg class="at-rf-svg" viewBox="${refrainViewBox(model)}" role="img"` +
+    `<svg class="at-rf-svg" viewBox="${refrainViewBox(model)}" width="${model.width}" height="${model.height}" role="img"` +
       ` preserveAspectRatio="xMidYMid meet" aria-label="${escapeXml(opts.label ?? defaultLabel(model, opts))}">`,
   )
 
@@ -367,12 +367,12 @@ export function buildRefrainSvg(model: RefrainModel, opts: RefrainRenderOptions)
     const on = voiceOn(stave.voice)
     s.push(`<g class="rf-voice" data-voice="${stave.voice}"${on ? ' data-on=""' : ''}>`)
     s.push(`<line class="rf-stave" x1="${X0 - 14}" y1="${stave.y}" x2="${model.width - R_PAD + 12}" y2="${stave.y}"/>`)
-    s.push(`<line class="rf-chip" x1="6" y1="${stave.y}" x2="22" y2="${stave.y}"/>`)
-    s.push(`<text class="rf-voice-label" x="28" y="${stave.y + 3.5}">${escapeXml(opts.voiceLabels[stave.voice])}</text>`)
+    s.push(`<line class="rf-chip" x1="6" y1="${stave.y}" x2="26" y2="${stave.y}"/>`)
+    s.push(`<text class="rf-voice-label" x="32" y="${stave.y + 3.5}">${escapeXml(opts.voiceLabels[stave.voice])}</text>`)
     s.push('</g>')
   }
   if (model.motifRowY !== null && opts.motifLabel) {
-    s.push(`<text class="rf-motif-label" x="28" y="${model.motifRowY + 3.5}">${escapeXml(opts.motifLabel)}</text>`)
+    s.push(`<text class="rf-motif-label" x="32" y="${model.motifRowY + 3.5}">${escapeXml(opts.motifLabel)}</text>`)
   }
 
   // — marked silence: a caesura across the stave block, its length lettered. The hole carries.
@@ -391,7 +391,7 @@ export function buildRefrainSvg(model: RefrainModel, opts: RefrainRenderOptions)
   s.push('<g class="rf-axis">')
   for (const a of model.axis) {
     s.push(
-      `<text x="${a.x}" y="${model.height - 34 + a.row * 11}" text-anchor="middle">${escapeXml(a.label)}</text>`,
+      `<text x="${a.x}" y="${model.height - 40 + a.row * 13}" text-anchor="middle">${escapeXml(a.label)}</text>`,
     )
   }
   s.push('</g>')
@@ -413,15 +413,15 @@ export function buildRefrainSvg(model: RefrainModel, opts: RefrainRenderOptions)
       const cls = e.aspect === null ? 'rf-unread' : dominant ? 'rf-note' : 'rf-note-min'
       s.push(
         `<circle class="${cls}" data-voice="${stave.voice}"${voiceOn(stave.voice) ? ' data-von=""' : ''}` +
-          ` cx="${col.x}" cy="${stave.y}" r="${e.aspect === null ? 3.2 : dominant ? 5.2 : 2.4}"/>`,
+          ` cx="${col.x}" cy="${stave.y}" r="${e.aspect === null ? 4 : dominant ? 6.4 : 3}"/>`,
       )
     }
     const openingStave = model.staves[2]
     if (e.opening) {
-      s.push(`<circle class="rf-opening-event" data-voice="opening" cx="${col.x}" cy="${openingStave.y}" r="8.4"/>`)
+      s.push(`<circle class="rf-opening-event" data-voice="opening" cx="${col.x}" cy="${openingStave.y}" r="10"/>`)
     }
     if (e.deferral) {
-      s.push(`<path class="rf-rest" data-voice="opening" d="${REST_PATH}" transform="translate(${col.x + 9} ${openingStave.y})"/>`)
+      s.push(`<path class="rf-rest" data-voice="opening" d="${REST_PATH}" transform="translate(${col.x + 11} ${openingStave.y}) scale(1.25)"/>`)
     }
     if (e.kind === 'compost') {
       const t = model.staves[0]
@@ -429,12 +429,12 @@ export function buildRefrainSvg(model: RefrainModel, opts: RefrainRenderOptions)
     }
     if (model.motifRowY !== null && e.motifs.length) {
       s.push(
-        `<path class="rf-motif" d="M ${col.x} ${model.motifRowY - 4} l 4 4 l -4 4 l -4 -4 z">` +
+        `<path class="rf-motif" d="M ${col.x} ${model.motifRowY - 5} l 5 5 l -5 5 l -5 -5 z">` +
           `<title>${escapeXml(e.motifs.join(' · '))}</title></path>`,
       )
     }
     if (e.kind === 'tick') {
-      s.push(`<text class="rf-n" x="${col.x}" y="${model.height - 10}" text-anchor="middle">${e.n}</text>`)
+      s.push(`<text class="rf-n" x="${col.x}" y="${model.height - 12}" text-anchor="middle">${e.n}</text>`)
     }
     if (!opts.still) {
       s.push(`<rect class="rf-focus" x="${col.x - STEP / 2 + 3}" y="${TOP - 22}" width="${STEP - 6}" height="${(model.motifRowY ?? TOP + 2 * STAVE_GAP) - TOP + 40}" rx="5"/>`)
