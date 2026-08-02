@@ -6,7 +6,7 @@
 // The coverage numbers below are deliberately exact. If a new line lands with a ledger, this test
 // fails and someone looks at the figure — which is the point: the alternative is a figure that
 // quietly starts printing "the record carries no closing ledger" over records that have one.
-import { readdirSync, readFileSync } from 'node:fs'
+import { existsSync, readdirSync, readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
 import { firstSentence, lineIdFromPath, readClosingLedger, readLedgerIndex, unwrap } from './ledger'
@@ -133,9 +133,23 @@ describe('the real records — the ledger says what the practice wrote, or it sa
   const index = readLedgerIndex(files)
 
   it('finds the records that exist and does not invent one for the line that has none', () => {
-    // 11 of 12 lines have a DECISION.md; put-back-on-the-map is still ACTIVE and has none.
-    expect(Object.keys(files)).toHaveLength(11)
-    expect(files['/src/content/atelier/projects/2026-07-24-put-back-on-the-map/DECISION.md']).toBeUndefined()
+    // Structural, not a fixed total. A line closing upstream is the practice working, not
+    // drift — but a hard "11" here failed the integrate gate for six consecutive runs on
+    // 2026-08-01, once negative-parallax and sixty-cases-blind landed their decisions, and
+    // a gate that blocks publication on normal growth stops being read. What must hold is
+    // FIDELITY: the helper sees exactly the DECISION.md files on disk and invents none for
+    // the lines that carry none (today that is put-back-on-the-map, still ACTIVE).
+    // The ledger-COVERAGE assertions below stay exact on purpose — those guard what the
+    // figure prints, which is the tripwire this file's header is actually about.
+    const key = (dir: string) => `/src/content/atelier/projects/${dir}/DECISION.md`
+    const lines = readdirSync(PROJECTS, { withFileTypes: true })
+      .filter((e) => e.isDirectory())
+      .map((e) => e.name)
+    const onDisk = lines.filter((d) => existsSync(`${PROJECTS}/${d}/DECISION.md`))
+    expect(Object.keys(files).sort()).toEqual(onDisk.map(key).sort())
+    for (const d of lines.filter((d) => !onDisk.includes(d))) {
+      expect(files[key(d)], `${d} has no DECISION.md and must stay absent`).toBeUndefined()
+    }
   })
 
   it('reads a closing ledger from exactly the seven records that carry one', () => {
