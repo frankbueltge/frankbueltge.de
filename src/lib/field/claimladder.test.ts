@@ -23,7 +23,7 @@ import {
 } from './claimladder'
 
 const ROOT = fileURLToPath(new URL('../../..', import.meta.url))
-const OBJECT_DIR = `${ROOT}src/data/meridian/export/objects`
+const OBJECT_DIR = `${ROOT}src/data/meridian/export/k1t04_real_run_v2/objects`
 
 const objects: Record<string, ExportObject> = Object.fromEntries(
   readdirSync(OBJECT_DIR)
@@ -144,7 +144,7 @@ describe('the table floor carries what the figure cannot', () => {
   })
 
   it('names an evidence path on every row', () => {
-    for (const r of rows) expect(r.evidence).toMatch(/^src\/data\/meridian\/export\/objects\//)
+    for (const r of rows) expect(r.evidence).toMatch(/^src\/data\/meridian\/export\/k1t04_real_run_v2\/objects\//)
   })
 
   it('declares columns the rows actually fill', () => {
