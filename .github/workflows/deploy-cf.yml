@@ -9,6 +9,14 @@ name: Deploy to Cloudflare Pages
 # BENÖTIGT ein Repository-Secret (Settings → Secrets and variables → Actions):
 #   CF — Cloudflare-API-Token mit „Cloudflare Pages: Edit"
 # (Die Account-ID ist nicht geheim und steht direkt unten.)
+#
+# THIS workflow is the only deployer that works. Cloudflare additionally watches the
+# repository through a dashboard-side git integration and fails on every commit — the
+# permanently red `Workers Builds: frankbueltge-de` check. Do NOT try to make that build
+# green by adding a wrangler config: two deployers on one production target, and the
+# Cloudflare-side one would ship without PUBLIC_TURNSTILE_SITE_KEY (see the build step
+# below), putting /seed into permanent standby. Diagnosis and the one-click fix:
+# docs/design/2026-08-03-two-deployers-one-project.md
 
 on:
   push:
