@@ -306,7 +306,19 @@ describe('the record plate', () => {
   })
 
   it('never draws a plate too narrow to read — the crop-to-marks version drew square ones', () => {
-    for (const d of real) expect(d.days.length).toBeGreaterThan(1)
+    // The guard is against an EMPTY plate and against the crop-to-marks square.
+    // A one-day plate is not that: strip.ts declares it legitimate in as many
+    // words ("a work shipped today yields the legitimate one-day span") and
+    // buildControlSvg degenerates cleanly into it (step 0, every mark at X0).
+    // This assertion read `> 1` until 2026-08-03, which was true of the record
+    // only because no instrument had yet shipped ON the horizon date — a fact
+    // about the corpus, asserted as if it were a property of the drawing.
+    const horizon = recordHorizon(realInput())
+    for (const d of real) {
+      expect(d.days.length).toBeGreaterThanOrEqual(1)
+      // Anything that shipped before the record ends still has to span.
+      if (d.days[0] < horizon) expect(d.days.length).toBeGreaterThan(1)
+    }
   })
 })
 
@@ -314,7 +326,7 @@ describe('the record plate', () => {
 
 describe('the dossiers, against the committed record', () => {
   it('builds one dossier per committed instrument', () => {
-    expect(real).toHaveLength(20)
+    expect(real).toHaveLength(21)
   })
 
   it('numbers instruments by their position in the committed order', () => {
@@ -324,7 +336,7 @@ describe('the dossiers, against the committed record', () => {
   })
 
   it('leads with the instrument in service — the newest in the committed order', () => {
-    expect(real[0].slug).toBe('2026-07-26-unable-to-ring-its-own-bell')
+    expect(real[0].slug).toBe('2026-08-03-where-the-reader-declines')
     expect(real[0].inService).toBe(true)
     expect(real.filter((d) => d.inService)).toHaveLength(1)
   })
