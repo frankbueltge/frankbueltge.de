@@ -55,7 +55,7 @@ const gauntlet = gauntletPlate({
 
 const exportObjects: Record<string, ExportObject> = Object.fromEntries(
   Object.entries(
-    import.meta.glob('/src/data/meridian/export/objects/*.json', {
+    import.meta.glob('/src/data/meridian/export/k1t04_real_run_v2/objects/*.json', {
       eager: true, import: 'default',
     }) as Record<string, ExportObject>,
   ).map(([path, body]) => [path.split('/').at(-1) ?? path, body]),

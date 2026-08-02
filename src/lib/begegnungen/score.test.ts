@@ -45,9 +45,14 @@ describe('buildScoreSvg', () => {
   })
 
   it('keeps the ported seven-event layout verbatim (count 7 returns the hand-placed slots)', () => {
-    // score.json is the 7-event enc-2026-001 fixture; its graticule must still be drawn at the
-    // ported x-positions, so generalising the geometry did not silently move the mockup.
-    const svg = buildScoreSvg(score)
+    // The claim under test is about the COUNT, not about this encounter: at seven events the
+    // graticule must still sit on the ported x-positions, so generalising the geometry did not
+    // silently move the mockup. The seven-event ledger is therefore constructed here rather
+    // than assumed of the fixture — enc-2026-001's ledger is append-only and has since grown
+    // past seven, and a test that reads a live total as a constant breaks on the record's own
+    // honest growth instead of on a regression.
+    const sevenEvents: ScoreExport = { ...score, events: score.events.slice(0, 7) }
+    const svg = buildScoreSvg(sevenEvents)
     for (const x of [340, 470, 600, 730, 860, 970, 1060]) {
       expect(svg).toContain(`<path class="grat" d="M${x} `)
     }
