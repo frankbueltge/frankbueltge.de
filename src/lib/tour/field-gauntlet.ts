@@ -44,8 +44,8 @@ export const GAUNTLET_INSTRUMENTS = {
 const META_018 = `src/components/field/werke/${GAUNTLET_INSTRUMENTS.i018}/meta.json`
 const META_019 = `src/components/field/werke/${GAUNTLET_INSTRUMENTS.i019}/meta.json`
 const PARALLAX = 'src/data/meridian/parallax.json'
-const V_FAIL = 'src/data/meridian/export/objects/urn_mrr_verification_01KY4RMN5CACRH52BEKZ54RXYH.json'
-const V_PASS = 'src/data/meridian/export/objects/urn_mrr_verification_01KY4PZ13XBPPWVNB3H30MD02K.json'
+const V_FAIL = 'src/data/meridian/export/k1t04_real_run_v2/objects/urn_mrr_verification_01KY4RMN5CACRH52BEKZ54RXYH.json'
+const V_PASS = 'src/data/meridian/export/k1t04_real_run_v2/objects/urn_mrr_verification_01KY4PZ13XBPPWVNB3H30MD02K.json'
 const SPEC = 'docs/meridian-research-runtime-spec-v0.2.0/MERIDIAN_RESEARCH_RUNTIME_SPEC_v0.2.0.md'
 
 /** the figure id this tour drives — the DOM id GauntletTour.astro registers its plate under */
