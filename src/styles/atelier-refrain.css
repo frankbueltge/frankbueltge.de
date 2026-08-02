@@ -83,8 +83,11 @@
   padding: 0.5rem 0.25rem;
 }
 .at-rf-svg {
+  /* natural size — the builder writes width/height attributes, so one SVG unit is one CSS
+   * pixel and the type never shrinks below its set size; a narrow viewport scrolls the
+   * .at-rf-scroll box instead (Frank, 2026-08-02: the first cut scaled down and was
+   * unreadable). */
   display: block;
-  min-width: 640px;
 }
 
 /* staves and their labels */
@@ -93,7 +96,7 @@
   stroke-width: 1;
 }
 .at-rf-svg .rf-chip {
-  stroke-width: 3.5;
+  stroke-width: 4;
   stroke-linecap: round;
 }
 .rf-voice[data-voice='territory'] .rf-chip { stroke: var(--rf-c-territory); }
@@ -102,7 +105,7 @@
 .at-rf-svg .rf-voice-label,
 .at-rf-svg .rf-motif-label {
   font-family: var(--at-font-record);
-  font-size: 10px;
+  font-size: 13px;
   fill: var(--at-ink-2);
 }
 
@@ -157,7 +160,7 @@
 }
 .at-rf-svg .rf-gap text {
   font-family: var(--at-font-record);
-  font-size: 9px;
+  font-size: 10.5px;
   fill: var(--at-graphite);
 }
 
@@ -165,7 +168,7 @@
 .at-rf-svg .rf-axis text,
 .at-rf-svg .rf-n {
   font-family: var(--at-font-record);
-  font-size: 9.5px;
+  font-size: 11px;
   fill: var(--at-graphite);
 }
 
