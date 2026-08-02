@@ -1,8 +1,14 @@
 ---
-// The score figure + register-extract tooltip — extracted from BegegnungEntrance.astro
-// (hub rebuild 2026-07-16, Frank: "you can't see anything ... even with popups"): the hub
-// and /encounters render the same figure with the same popups from ONE component — the
-// grammar must not drift into two versions. The tooltip is progressive enhancement
+// The score figure + register-extract tooltip — extracted from the old page-level entrance
+// (hub rebuild 2026-07-16, Frank: "you can't see anything ... even with popups") so that one
+// component owned the grammar and it could not drift into two versions.
+//
+// 2026-08-02: it draws ONE encounter's ledger at event level, which is why the crossing-dossier
+// rebuild did not make it the archive figure of five — it is nested inside that figure instead
+// (src/pages/encounters/index.astro), collapsed, as the finest-grained drawing the record has.
+// ONE INSTANCE PER PAGE: `initScoreTooltip` binds `document.querySelector('.score-figure')`, so a
+// second figure on the same page would render without its readout. Rendering two is not a
+// styling decision, it is a bug — the page keeps exactly one. The tooltip is progressive enhancement
 // (zeichengrammatik §4): the register table, or the link to the full page, stays the
 // JS-free path.
 //

@@ -9,7 +9,7 @@
 // approval trail). A later rename or approval is then a one-line edit to this file, never a
 // migration — "names are found, not invented" (decisions doc §1.1). Pages that render this
 // copy show a small draft marker when approval !== 'approved' (pattern: the score map's own
-// "wording approved" chip, src/components/pages/BegegnungEntrance.astro).
+// "wording approved" chip, the archive figure on /encounters).
 export interface DoorItem {
   id: 'ulysses' | 'meridian' | 'ensemble' | 'conductor'
   name: string
