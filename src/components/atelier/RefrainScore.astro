@@ -1,0 +1,269 @@
+---
+// src/components/atelier/RefrainScore.astro — the refrain score: the running work-line's
+// temporality as a three-voice score (spec: docs/superpowers/specs/2026-08-02-refrain-partitur.md;
+// geometry and parsing: src/lib/atelier/refrain.ts).
+//
+// The figure's thesis is the published model's postulate 4: territory, home and opening
+// COEXIST at every move — dominance shifts, no voice ever falls silent. The one forbidden
+// reading is the phase sequence, and the builder makes it structurally impossible (all three
+// staves at every column; refrain.test.ts asserts it).
+//
+// Composition follows ProcessFigure.astro (content first, the drawing selects): the card on
+// top carries the record's OWN sentences — the aspect reading verbatim, the deferral verbatim
+// with its source — and a click on a column swaps it. Quotes never paraphrase.
+//
+// House rules, all load-bearing:
+//   · `.at-rf-figure` is position:relative — the Readout lives in the figure's own coordinate
+//     space (dataviz/readout.ts house rule 1);
+//   · no `is:inline` script, no dynamic style="" (CSP hashes bundled module scripts and drops
+//     style attributes) — the voice filter is a data-voices attribute the stylesheet reads;
+//   · nothing is reachable only by hovering an SVG mark: every mark carries a native <title>,
+//     and the whole score repeats as a table with every quote verbatim;
+//   · visitor-facing copy comes from src/config/atelier-wording.ts, never from this file.
+import DetailPanel from '@/components/dataviz/DetailPanel.astro'
+import LegendFilter from '@/components/dataviz/LegendFilter.astro'
+import Readout from '@/components/dataviz/Readout.astro'
+import TableFallback from '@/components/dataviz/TableFallback.astro'
+import { jsonScriptPayload } from '@/lib/dataviz/runtime'
+import {
+  buildRefrainSvg,
+  dayLabel,
+  REFRAIN_COLUMNS,
+  refrainRows,
+  VOICES,
+  type RefrainModel,
+} from '@/lib/atelier/refrain'
+import { ATELIER_NARRATIVE } from '@/config/atelier-wording'
+import '@/styles/atelier-refrain.css'
+
+export interface Props {
+  model: RefrainModel
+  /** DOM id — unique per instance when several work-lines carry a score */
+  id?: string
+  /** the figure's own heading; omitted renders none */
+  heading?: string
+}
+
+const { model, id = 'atelier-refrain', heading } = Astro.props
+const w = ATELIER_NARRATIVE.refrain
+
+const svg = buildRefrainSvg(model, {
+  voiceLabels: w.voices,
+  motifLabel: w.motifLabel,
+  unreadLine: w.unreadLine,
+})
+
+const SWATCH: Record<(typeof VOICES)[number], string> = {
+  territory: 'var(--rf-c-territory)',
+  home: 'var(--rf-c-home)',
+  opening: 'var(--rf-c-opening)',
+}
+// No counts on the legend: "territory 0" would read as an absent voice, when the claim is
+// the opposite — the voice sounds at every tick and simply has not yet dominated one. The
+// table carries the numbers.
+const legendItems = VOICES.map((voice) => ({
+  key: voice,
+  label: w.voices[voice],
+  hint: w.voiceHints[voice],
+  swatch: SWATCH[voice],
+}))
+
+const payload = model.columns.map((c, i) => {
+  const e = c.event
+  return {
+    key: c.key,
+    kicker: w.kickerLine({
+      date: dayLabel(e.date),
+      what: e.kind === 'tick' ? `tick ${e.n}` : w.compostLine,
+      operation: e.kind === 'compost' ? '' : e.operation,
+    }),
+    title: e.title,
+    aspect: e.aspect,
+    aspectQuote: e.aspectQuote,
+    deferral: e.deferral,
+    motifs: e.motifs,
+    source: `TRACE.md — ${e.kind === 'tick' ? `tick ${e.n}` : 'compost in'}, ${e.date}`,
+    href: `/atelier/projects#line-${model.line.id}`,
+    pos: w.positionLine(i + 1, model.columns.length),
+  }
+})
+
+// The opening card: the newest move — the score is about the line's present tense.
+const startIndex = Math.max(0, payload.length - 1)
+const start = payload[startIndex]
+
+const rows = refrainRows(model, w)
+const provenance = `${w.provenancePrefix} ${w.provenance.join(' · ')} — ${w.scaleNote}.`
+
+const titleId = `${id}-title`
+const legendLabelId = `${id}-legend-label`
+---
+
+<section class="at-rf" data-rf data-rf-unread={w.unreadLine} aria-labelledby={heading ? titleId : undefined}>
+  {heading && <h2 class="at-rf-title" id={titleId}>{heading}</h2>}
+  {heading && <p class="at-rf-lead">{w.lead}</p>}
+
+  <p class="at-rf-key" id={legendLabelId}>{w.legendLabel}</p>
+  <LegendFilter items={legendItems} mode="multi" labelledby={legendLabelId} />
+
+  <DetailPanel id={`${id}-panel`} open pos={startIndex}>
+    <Fragment slot="head">
+      <p class="rf-kicker" data-rf-kicker>{start?.kicker}</p>
+      <h3 class="rf-card-title" data-rf-title>{start?.title}</h3>
+    </Fragment>
+    <Fragment slot="body">
+      {/* The aspect block is ALWAYS visible: a move whose record states no reading shows the
+          honest-gap line — hiding it would make the gap look like a rendering choice. */}
+      <p class="rf-quote-h" data-rf-aspect-h>{w.panelAspectHeading}</p>
+      <p class:list={['rf-quote', !start?.aspectQuote && 'rf-gap-line']} data-rf-aspect>
+        {start?.aspectQuote ?? w.unreadLine}
+      </p>
+      <p class="rf-quote-h" data-rf-deferral-h hidden={!start?.deferral}>{w.panelDeferralHeading}</p>
+      <p class="rf-quote" data-rf-deferral hidden={!start?.deferral}>{start?.deferral}</p>
+      <p class="rf-quote-h" data-rf-motifs-h hidden={!start?.motifs.length}>{w.panelMotifsHeading}</p>
+      <p class="rf-quote" data-rf-motifs hidden={!start?.motifs.length}>{start?.motifs.join(' · ')}</p>
+      <p class="rf-src" data-rf-src>{start?.source}</p>
+    </Fragment>
+    <Fragment slot="foot">
+      <a class="rf-more" data-rf-more href={start?.href}>{w.cardMore}</a>
+      <span class="rf-pos" data-rf-pos>{start?.pos}</span>
+    </Fragment>
+  </DetailPanel>
+
+  <figure class="at-rf-figure" data-rf-figure>
+    <div class="at-rf-scroll">
+      <div id={id} data-rf-svg set:html={svg} />
+    </div>
+    <Readout id={`${id}-readout`} maxWidth="36ch" />
+  </figure>
+
+  <p class="dv-prov at-rf-hint">{w.hint}</p>
+
+  <TableFallback
+    summary={w.tableSummary}
+    caption={w.tableCaption}
+    columns={REFRAIN_COLUMNS}
+    rows={rows}
+    provenance={provenance}
+  />
+
+  <script type="application/json" data-rf-payload set:html={jsonScriptPayload(payload)} />
+</section>
+
+<script>
+  import { createReadout } from '@/lib/dataviz/readout'
+
+  interface Move {
+    key: string
+    kicker: string
+    title: string
+    aspect: string | null
+    aspectQuote: string | null
+    deferral: string | null
+    motifs: string[]
+    source: string
+    href: string
+    pos: string
+  }
+
+  for (const section of document.querySelectorAll<HTMLElement>('[data-rf]')) {
+    const payloadEl = section.querySelector<HTMLScriptElement>('[data-rf-payload]')
+    const svgHost = section.querySelector<HTMLElement>('[data-rf-svg]')
+    const svg = svgHost?.querySelector<SVGSVGElement>('svg')
+    const figure = section.querySelector<HTMLElement>('[data-rf-figure]')
+    const readoutEl = section.querySelector<HTMLElement>('.dv-readout')
+    const panel = section.querySelector<HTMLElement>('.dv-panel')
+    if (!payloadEl || !svg || !figure || !panel) continue
+    const moves: Move[] = JSON.parse(payloadEl.textContent ?? '[]')
+
+    // — the card: server-rendered once, re-printed from the payload on selection
+    const set = (sel: string, text: string | null, headSel?: string) => {
+      const el = panel.querySelector<HTMLElement>(sel)
+      if (!el) return
+      el.hidden = text === null
+      if (text !== null) el.textContent = text
+      if (headSel) {
+        const head = panel.querySelector<HTMLElement>(headSel)
+        if (head) head.hidden = text === null
+      }
+    }
+    const unread = section.getAttribute('data-rf-unread') ?? ''
+    let pos = Number(panel.getAttribute('data-dv-pos') ?? '0') || 0
+    const show = (next: number) => {
+      const move = moves[next]
+      if (!move) return
+      pos = next
+      panel.setAttribute('data-dv-pos', String(pos))
+      set('[data-rf-kicker]', move.kicker)
+      set('[data-rf-title]', move.title)
+      // the aspect block never hides: an unread move shows the honest-gap line
+      set('[data-rf-aspect]', move.aspectQuote ?? unread)
+      panel.querySelector('[data-rf-aspect]')?.classList.toggle('rf-gap-line', !move.aspectQuote)
+      set('[data-rf-deferral]', move.deferral, '[data-rf-deferral-h]')
+      set('[data-rf-motifs]', move.motifs.length ? move.motifs.join(' · ') : null, '[data-rf-motifs-h]')
+      set('[data-rf-src]', move.source)
+      set('[data-rf-pos]', move.pos)
+      const more = panel.querySelector<HTMLAnchorElement>('[data-rf-more]')
+      if (more) more.href = move.href
+      for (const col of svg.querySelectorAll<SVGGElement>('.rf-col')) {
+        if (col.getAttribute('data-key') === move.key) col.setAttribute('data-sel', '')
+        else col.removeAttribute('data-sel')
+      }
+    }
+
+    // — the columns select; Enter/Space too (role="button")
+    svg.addEventListener('click', (ev) => {
+      const col = (ev.target as Element).closest<SVGGElement>('.rf-col')
+      if (!col) return
+      const i = moves.findIndex((m) => m.key === col.getAttribute('data-key'))
+      if (i !== -1) show(i)
+    })
+    svg.addEventListener('keydown', (ev) => {
+      if (ev.key !== 'Enter' && ev.key !== ' ') return
+      const col = (ev.target as Element).closest<SVGGElement>('.rf-col')
+      if (!col) return
+      ev.preventDefault()
+      const i = moves.findIndex((m) => m.key === col.getAttribute('data-key'))
+      if (i !== -1) show(i)
+    })
+
+    // — the panel's own stepper (dv:step bubbles from DetailPanel's prev/next)
+    panel.addEventListener('dv:step', (ev) => {
+      const next = (ev as CustomEvent<{ pos: number }>).detail.pos
+      if (next >= 0 && next < moves.length) show(next)
+    })
+
+    // — the voice filter: a data-voices token list on the SVG root; the stylesheet dims.
+    //   Dimming, never removal — all three voices stay on the sheet (coexistence is the claim).
+    section.addEventListener('dv:filter', (ev) => {
+      const keys = (ev as CustomEvent<{ keys: string[] }>).detail.keys
+      if (keys.length === 0) svg.removeAttribute('data-voices')
+      else svg.setAttribute('data-voices', keys.join(' '))
+    })
+
+    // — the readout: a glance on hover/focus, from each column's own <title>
+    if (readoutEl) {
+      const readout = createReadout(readoutEl, figure)
+      const glance = (col: SVGGElement) => {
+        const title = col.querySelector('title')?.textContent ?? ''
+        if (!title) return
+        const rect = col.getBoundingClientRect()
+        const figRect = figure.getBoundingClientRect()
+        readout.show(document.createTextNode(title), {
+          anchorX: rect.left - figRect.left + rect.width / 2,
+          anchorY: rect.top - figRect.top,
+        })
+      }
+      svg.addEventListener('pointerover', (ev) => {
+        const col = (ev.target as Element).closest<SVGGElement>('.rf-col')
+        if (col) glance(col)
+      })
+      svg.addEventListener('pointerout', () => readout.hide())
+      svg.addEventListener('focusin', (ev) => {
+        const col = (ev.target as Element).closest<SVGGElement>('.rf-col')
+        if (col) glance(col)
+      })
+      svg.addEventListener('focusout', () => readout.hide())
+    }
+  }
+</script>
