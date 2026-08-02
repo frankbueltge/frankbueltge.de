@@ -147,3 +147,20 @@ Runbook: `pipelines/protokoll/README.md`. Pipelines = **GitHub-Actions-Workflows
 AI-Studio-Free-Tier), `CF` (Cloudflare). Site: statisch (dist/) auf Cloudflare Pages via
 `deploy-cf.yml`; Rebuild-Trigger ist der `workflow_run` nach jedem Nightly (Push mit
 eingebautem GITHUB_TOKEN löst `on: push` nicht aus).
+
+**Bekannt rot:** Der Check `Workers Builds: frankbueltge-de` fällt auf JEDEM PR — eine
+zweite, dashboard-seitige Cloudflare-Anbindung, die dasselbe Projekt nochmal bauen will
+und es nicht kann. Blockiert nichts (`main` hat keinen Branch-Schutz). **Nicht durch eine
+wrangler-Config „grün machen"** — Diagnose und der Ein-Klick-Fix:
+`docs/design/2026-08-03-two-deployers-one-project.md`.
+
+**Merge-Vollmacht (Frank, 2026-08-03, stehend, nur dieses Repo):** Frank hat das Mergen
+nach `main` dauerhaft delegiert — „[Wortlaut privat]
+[redigiert]". PRs werden also selbst gemergt, sobald die Checks stehen
+(der bekannt rote Workers Build zählt nicht dagegen); da ein Merge auf `main` hier
+automatisch nach Produktion deployt, schließt die Vollmacht den Deploy ein. Das setzt die
+Workspace-Regel „nie ohne ausdrückliches Go mergen" (`../CLAUDE.md`) für dieses Repo
+außer Kraft; in den anderen Projekten gilt sie weiter. **Nicht mitdelegiert ist alles,
+was das Haus verlässt:** Mails an reale Empfänger, Einreichungen, Bewerbungen. Das Post
+Office bleibt bei „nothing sends itself" — gesendet wird auf Franks Knopf, nie auf einen
+grünen Check.
