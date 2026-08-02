@@ -401,8 +401,16 @@ describe('the dossiers, against the committed record', () => {
 
   it('draws the contract, the correction from outside and the correction applied on that plate', () => {
     const d = bySlug('2026-07-01-calibration-gap')
-    expect(d.marks.filter((m) => m.role === 'contract')).toHaveLength(1)
-    expect(d.marks.filter((m) => m.role === 'correction-issued')).toHaveLength(1)
+    // Named by date, not counted: enc-2026-001's ledger is append-only, and the source has
+    // since re-published and reframed its standing conditions (2026-08-01), so three contract
+    // marks now sit on this plate where one did. All three belong there. What the plate must
+    // still show is the founding contract that opens the obligation span, and the correction
+    // that came from outside — a pinned total would report the record's own honest growth as
+    // a regression.
+    expect(d.marks.filter((m) => m.role === 'contract').map((m) => m.date)).toContain('2026-07-11')
+    expect(d.marks.filter((m) => m.role === 'correction-issued').map((m) => m.date)).toContain(
+      '2026-07-12',
+    )
     expect(d.obligation?.fromDate).toBe('2026-07-11')
     expect(d.obligation?.labels.length).toBeGreaterThan(0)
   })
