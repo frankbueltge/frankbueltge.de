@@ -25,7 +25,11 @@ describe('buildCrossingsMap against the committed register', () => {
   })
 
   it('numbers each mark by the register’s own ordinal, in register order', () => {
-    expect(map.marks.map((m) => m.n)).toEqual(['001', '002', '003', '004', '005'])
+    // Derived from the register itself, not a pinned list — a sixth encounter is the contact
+    // zone working, not drift (the pinned '001'…'005' turned the deploy red on 2026-08-02
+    // when enc-2026-006 landed). The ordinal is the register id's own numeral.
+    const expected = registerJson.map((e) => e.encounter_id.match(/^enc-\d{4}-(\d{3})/)![1])
+    expect(map.marks.map((m) => m.n)).toEqual(expected)
   })
 
   it('draws a lane only for a voice a recorded encounter actually names', () => {
