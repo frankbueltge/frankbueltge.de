@@ -1,0 +1,70 @@
+{
+  "map_id": "map-enc-2026-003-school-replicates-ensemble-transformation-v1",
+  "version": 1,
+  "encounter_id": "enc-2026-003-school-replicates",
+  "lens": {
+    "lens_id": "ensemble-transformation-v1",
+    "version": 1
+  },
+  "event_watermark": "2026-07-27T08:49:11Z",
+  "included": {
+    "events": [],
+    "objects": [],
+    "assertions": [],
+    "obligations": []
+  },
+  "projection": {
+    "source_column": [],
+    "derivative_column": [],
+    "transformation_band": [],
+    "tier_legend": [
+      "VERIFIED",
+      "DISCLOSED RECONSTRUCTION",
+      "IMAGINED"
+    ],
+    "obligations": []
+  },
+  "exclusions": [
+    {
+      "kind": "participant not included",
+      "excluded_author_collective_id": "meridian",
+      "reason": "Meridian's counter-framing (assert-enc2026001-meridian-live-framing) is excluded here — the source's response is visible in the compare view, not here."
+    },
+    {
+      "kind": "editorial scope",
+      "reason": "Events 01/03/05 (the standing contract's publication and Meridian's own correction chain) are excluded — this lens groups by material tier, not the full time-ordered chain; see provenance-v1."
+    },
+    {
+      "kind": "editorial scope",
+      "reason": "Not selected by this lens's own scope.",
+      "excluded_assertion_ids": [
+        "A1"
+      ],
+      "synthesized": true
+    },
+    {
+      "kind": "editorial scope",
+      "reason": "Not selected by this lens's own scope, or outside the event watermark.",
+      "excluded_event_ids": [
+        "evt-enc2026003-01-contract-published",
+        "evt-enc2026003-02-offer-accepted",
+        "evt-enc2026003-03-pipeline-implemented",
+        "evt-enc2026003-04-works-synced",
+        "evt-enc2026003-08-editorial-encounter-assembled",
+        "evt-enc2026003-05-admission",
+        "evt-enc2026003-06-additional-work-synced",
+        "evt-enc2026003-07-additional-work-synced-2",
+        "evt-enc2026003-09-reuse-surface-regression",
+        "evt-enc2026003-08-additional-work-synced-3",
+        "evt-enc2026003-10-additional-work-synced-4",
+        "evt-enc2026003-11-additional-work-synced-5",
+        "evt-enc2026003-12-additional-work-synced-6"
+      ],
+      "synthesized": true
+    }
+  ],
+  "render_failures": [],
+  "accessible_summary": "Object transformation (Ensemble) (ensemble-transformation-v1@1), rendered by object-transformation, is one lens on \"The school replicates: Meridian's instruments become operations on datavism.org\": meridian (source) — \"conditions stand as offer; works ship through the gauntlet\"; datavism (receiver) — \"pipeline live (ADR 003); translation kept manual; admitted 2026-07-17; 20 works synced as of 2026-07-27\"; frank (conductor) — \"seeded the relation; admitted the practice 2026-07-17; not an authoring party to either side's assertions\". No events are selected by this lens. No shared resolution exists across this encounter; participant-specific statuses stay distinct rather than being flattened into one. What this lens excludes: Meridian's counter-framing (assert-enc2026001-meridian-live-framing) is excluded here — the source's response is visible in the compare view, not here. Events 01/03/05 (the standing contract's publication and Meridian's own correction chain) are excluded — this lens groups by material tier, not the full time-ordered chain; see provenance-v1. Not selected by this lens's own scope. Not selected by this lens's own scope, or outside the event watermark. Generated against event watermark 2026-07-27T08:49:11Z.",
+  "renderer_version": "@research-ecology/projections@0.1.0",
+  "content_hash": "sha256:df9fafdf5e281d9cbf4aa4c4316e4f9aefc41e5f962055fce3552828db9139f4"
+}
