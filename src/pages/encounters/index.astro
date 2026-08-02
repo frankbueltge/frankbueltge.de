@@ -34,7 +34,7 @@ import ScoreFigure from '@/components/begegnungen/ScoreFigure.astro'
 import ScoreKey from '@/components/begegnungen/ScoreKey.astro'
 import { getCollection } from 'astro:content'
 import { MIDDLE } from '@/config/middle-wording'
-import { buildCrossings, VOICES, type LedgerInput } from '@/lib/begegnungen/crossings'
+import { buildCrossings, leadingClause, VOICES, type LedgerInput } from '@/lib/begegnungen/crossings'
 import { buildCrossingsMap } from '@/lib/begegnungen/crossings-map'
 import {
   buildContactStream,
@@ -127,7 +127,7 @@ const orientation = MIDDLE.orientation({
   encounters: encounters.length,
   open: openCount,
   streamRows: stream.length,
-  lead: lead ? { title: lead.title, kind: lead.kind, status: lead.status?.text.split('—')[0]?.trim() ?? null } : undefined,
+  lead: lead ? { title: lead.title, kind: lead.kind, status: leadingClause(lead.status?.text) } : undefined,
 })
 
 // ————————————————————————————————— the archive figure —————————————————————
