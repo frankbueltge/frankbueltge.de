@@ -9,7 +9,7 @@
 import Page from '@/layouts/Page.astro'
 import Frame from '@/components/field/surface/Frame.astro'
 import { loadChronicle } from '@/lib/field/chronicle'
-import { currentScore } from '@/lib/begegnungen'
+import { ledgerOf } from '@/lib/begegnungen'
 import { buildStripSvg, dayRange } from '@/lib/field/strip'
 import { FIELD_GRAMMAR, FIELD_NARRATIVE } from '@/config/field-wording'
 
@@ -47,7 +47,10 @@ const instruments = Object.entries(instrumentsByDate)
   .sort(([a], [b]) => a.localeCompare(b))
   .map(([date, count]) => ({ date, count }))
 
-const score = currentScore
+// Pinned to the encounter this page's copy is actually about (it quotes enc-2026-001
+// verbatim) — "current" moved on when newer encounters gained exported ledgers
+// (2026-08-02), and a page about one encounter must never silently render another.
+const score = ledgerOf('enc-2026-001')
 const contract = score.events.find((e) => e.event_type === 'contract.published')
 const obligation = score.obligations.find((o) => o.id.includes('caveat-preservation'))
 

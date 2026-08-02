@@ -10,7 +10,9 @@
 // (src/lib/notation/register.ts) — nothing here restates one.
 
 export const NOTATION = {
-  approval: 'draft' as 'draft' | 'approved',
+  // Frank, 2026-08-02: "wording ist freigegeben, chip kann weg" — approved, and the page
+  // renders NO chip in the approved state (his call overrides the show-approved-chip pattern).
+  approval: 'approved' as 'draft' | 'approved',
   metaTitle: 'The notation register — the ecology’s writing system | Frank Bültge',
   metaDescription:
     'Every notation the research ecology draws with: its grammar, quoted from the shipped source; its derivation from the published model; its dated changes; its open questions.',
