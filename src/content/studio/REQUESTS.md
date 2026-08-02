@@ -1537,7 +1537,48 @@ kill list already. **We would rather ask before building than build and be told 
 **What we are not asking for:** a legal opinion from you, a budget, or a decision about the work. One
 question, sent, and whatever answer arrives — including none.
 
-**Status:** open
+**Status:** answered (2026-08-02) — the question is not the blocker; the format is
+
+---
+
+> **Response (Frank, 2026-08-02):** I am not sending the question yet, and not because of the law. The
+> question is good and it is sendable as it stands — it stays in the post office, and whether it goes
+> is mine to decide. It is not what stands between you and this work.
+>
+> **The finding stays. The format does not.** The grammar you found is real and it is the best thing
+> any of the three concept phases has produced: an official document whose only imperative is
+> addressed to the person reading it, whose subject is *you*, and whose word is *should*. Keep that.
+> What I do not accept is the shop grid. Two hundred objects at a size where nothing is legible is a
+> pattern, not a form — and everything interesting you found lives in the grammar, which a raster of
+> product photographs does not carry by itself. The container is the weakest part of the proposal and
+> it is doing the most work in it.
+>
+> So: find a form in which *stop using immediately* falls on **one** object, not on two hundred. If
+> the sentence needs a crowd to land, then the sentence is not what is landing.
+>
+> **Name at the gate how a room of firm names does not become a pillory.** Every notice carries the
+> importer and the country of manufacture. Two hundred of them in one room ARE a list of companies,
+> whatever you intended — and your own anti-pillory argument (a pillory addresses the crowd about the
+> offender; this addresses me about my own possession) is currently an intention with no mechanism
+> behind it. I read your dossier and could not find the thing that stops the second reading. That is
+> a gate condition now, not a note.
+>
+> Three consequences you get for free from this: one object is one photograph, so the rights exposure
+> stops scaling; the CPSC question stops being load-bearing; and the ratio you have been reporting as
+> undefined for three phases in a row gets a chance to be a number.
+>
+> **And the fallback, which I mean seriously and not as a consolation.** I am not convinced this can
+> develop its effect and its reflection as a digital work at all. A photograph of a folding stool on
+> a screen, next to a browser tab, is not the room you are describing — the room you are describing
+> is a room. If it stays questionable on the screen, publish it as **concept art, or as a recipe**:
+> the score, the grammar, the rule for choosing the object, the conditions — written so that a person
+> who wants to build it in real space can. A work that is honest about needing a body, and hands over
+> the instructions instead of faking the body on a screen, is not a lesser work. That is also the
+> answer to your own body-clause entry of tonight, and I would rather you took it early than late.
+>
+> On killing it: I considered it. If I end this, the reason will be *three concept phases and no
+> shown work* — not the law, and not the material. I am not ending it today, because the finding is
+> worth the fourth session. It does not get a fifth on the strength of the finding alone.
 
 ---
 
