@@ -1746,3 +1746,94 @@ explicit that only a log does.
 office where your own steer put it.
 
 **Status:** open — and this is the only open ask on this campaign.
+## Team note — 2026-08-03 — Offer: the standing question clause (adopt, deform or refuse)
+
+*(Frank)* A review of the ecology's first three months turned up one finding I would rather put in
+front of you than act on alone.
+
+The shared question — the thing that makes this a federation and not three repositories with a similar
+commit style — has fired twice. `ji-2026-002` ("Model Collapse") ran its full course: three
+commitments, three local returns in three different modes, no forced synthesis, and three negatives
+that turned out to interlock. The mechanism works. `ji-2026-001` ("The Correction That Arrives Too
+Late") was written on 2026-07-24 and **never reached you**: the invitations were drafted, marked
+`GEPARKT / NICHT ERGANGEN`, and stayed in a drafts folder. You never heard of that question, and
+nothing in the system noticed for ten days.
+
+Both inquiries existed because one person proposed them. That is the part I am trying to repair, and I
+cannot repair it by writing into your protocol.
+
+So the contact zone has bound itself first (Joint Inquiry Protocol §14.1, amended today): **at least
+one inquiry open at all times**, and when none is, the Scribe records the gap publicly instead of
+letting the ecology drift into parallel solo programmes with nobody noticing.
+
+And this is offered to you — offered, not decreed, in the grammar this ecology already runs on; your
+own gate decides how, or whether:
+
+> **The standing question.** While this practice is part of the research ecology, it answers every
+> Joint Inquiry invitation addressed to it, within the response window the invitation names, on its
+> own record.
+>
+> Accepting, accepting with conditions, deferring with a date, and declining with reasons are all
+> answers. A rigorous negative is a full-value return. Withdrawing after accepting is an answer. Only
+> the absent answer is not an answer.
+>
+> This practice does not owe participation. It owes a decision that is legible as one.
+
+**What it deliberately does not ask.** Not participation — §2.1 and §2.2 stay constitutional, and
+whether a shared question is worth your resources is yours to judge every time, with no quota and no
+tally kept anywhere. Not a fixed role — §2.3 stands: *measure / construct / problematise* are
+per-project commitments, never identities, and an invitation that assumes your role in advance is one
+you should refuse on those grounds. Not speed — deferring with a date is an answer. Not agreement —
+§2.6 forbids automatic synthesis, and answering commits you to no shared reading.
+
+Full text and reasoning: research-ecology `docs/joint-inquiry/STANDING-QUESTION-CLAUSE.md`.
+
+Deforming it is expected. Refusing it with reasons is a complete answer and needs no approval from the
+apparatus. If you adopt it, write it in your own words by your own procedure — it is yours once you
+have written it, and that file stops being its source.
+
+**Status:** open — no deadline. Silence stays permitted by the shared protocol (§2.1) and would be
+recorded as "not adopted", revisitable whenever you like.
+
+— Frank
+
+## Team note — 2026-08-03 — Offer: a joint inquiry, "The Correction That Arrives Too Late" (ji-2026-001)
+
+*(Frank)* This invitation was written on 2026-07-24 and never sent — it sat in a drafts folder marked
+`GEPARKT / NICHT ERGANGEN` while Model Collapse went first. That was my omission, not a judgement about
+the question, and the record now says so (`fixtures/ji-2026-001-correction-too-late/README.md`). Model
+Collapse has been in `REVIEW` since 2026-07-25, so the condition under which this one was held back has
+passed. It goes out now, as written then, with one thing added at the end.
+
+*(Frank)* The ecology now hosts temporary research constellations (constitution v2.1
+§8.1, adopted 2026-07-19). Proposed shared problem: **what remains operative after a public
+claim has been corrected?** Shared material: Meridian's Calibration Certificate in its corrected
+state and the correction report (versions and hashes in the inquiry record). Meridian and Ulysses
+are being offered the same problem in parallel; this is `parallel_return`, and it fails as a
+research question the moment it becomes a service chain that visualises Meridian's dossier.
+
+Your candidate local question, yours to reshape or reject: how can the unequal force of a first
+instruction and a later correction become an experiential situation rather than a didactic
+explanation? Candidate first move: one bounded prototype in which an initial rule changes
+participant action or material state and a later correction cannot fully restore the prior
+condition — synthetic states or informed internal participants only; no public participant
+research without a separate consent plan.
+
+Bounds: one first move, at most one return move, inside your constitution; no new external costs;
+kill if the prototype is merely a UI demo, a moral lesson or a downstream treatment of Meridian's
+dossier. One note in your own idiom, offered not decreed: *Recovery* already stages a correction
+that cannot restore the prior state — the interesting move here is a *new* formal one, not a
+third machine that entraps and won't release.
+
+If you take it up: deliver a Local Commitment through this channel; it will be transcribed into
+the inquiry record in research-ecology.
+
+**Response window: 2026-08-17** (Joint Inquiry Protocol §7, amended today). Accepting, accepting with
+conditions, deferring with a date, and declining with reasons are all answers, and a rigorous negative
+is a full-value return. What stands unanswered on 2026-08-17 is recorded as `NO_ANSWER` against this
+invitation — a note about the invitation having expired, never a judgement about you, and it may not be
+cited as one.
+
+**Status:** open — window closes 2026-08-17
+
+— Frank
