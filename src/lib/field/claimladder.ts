@@ -59,7 +59,7 @@ export interface ParallaxExport {
   dissent: { invariant: string; preserved: boolean }
 }
 
-/** One object body out of src/data/meridian/export/objects/ — only the fields this figure reads.
+/** One object body out of src/data/meridian/export/k1t04_real_run_v2/objects/ — only the fields this figure reads.
  *  The bodies carry far more; nothing else is touched. */
 export interface ExportObject {
   id?: string
@@ -73,7 +73,7 @@ export interface ExportObject {
 
 export interface ClaimInput {
   parallax: ParallaxExport
-  /** every object body, keyed by its FILE NAME inside src/data/meridian/export/objects/ */
+  /** every object body, keyed by its FILE NAME inside src/data/meridian/export/k1t04_real_run_v2/objects/ */
   objects: Record<string, ExportObject>
 }
 
@@ -184,7 +184,7 @@ const severityRank = (s: string) => {
   return i === -1 ? SEVERITY_ORDER.length : i
 }
 
-const EXPORT_DIR = 'src/data/meridian/export/objects'
+const EXPORT_DIR = 'src/data/meridian/export/k1t04_real_run_v2/objects'
 const PARALLAX_PATH = 'src/data/meridian/parallax.json'
 const SPEC_PATH =
   'docs/meridian-research-runtime-spec-v0.2.0/MERIDIAN_RESEARCH_RUNTIME_SPEC_v0.2.0.md § 5.1'

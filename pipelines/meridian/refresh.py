@@ -22,8 +22,14 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from graph import build_graph  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
-EXPORT = ROOT / "src" / "data" / "meridian" / "export"
+EXPORT_ROOT = ROOT / "src" / "data" / "meridian" / "export"
 OUT_DIR = ROOT / "src" / "data" / "meridian"
+
+# The run whose parallax /on-record shows. The instrument's subject is ONE
+# preserved disagreement, shown thoroughly — turning the page into a run
+# dashboard would answer the currency problem by destroying the work. Every
+# other run is still counted; see build_runs().
+FEATURE_RUN = "k1t04_real_run_v2"
 
 P = """
 PREFIX mrr: <https://example.invalid/mrr/vocab#>
@@ -39,6 +45,47 @@ def one(store: Store, sparql: str) -> dict:
 def val(sol, key, cast=str):
     t = sol[key]
     return cast(t.value) if t is not None else None
+
+
+def export_dirs() -> list[Path]:
+    """Every committed crate, in a stable order.
+
+    Reading the directory rather than a hard-coded name is the whole point of
+    this file's 2026-08-02 change: adding a run must be committing a directory,
+    never editing prose. The site had said "two claims from a single run" for
+    ten days while the archive held three runs and seven claims.
+    """
+    return sorted(d for d in EXPORT_ROOT.iterdir() if (d / "ro-crate-metadata.json").is_file())
+
+
+def build_runs(dirs: list[Path]) -> list[dict]:
+    """One row per exported run: what it holds, counted from its own crate.
+
+    Counts come from the crate's own @graph, so a number on the page can only
+    change when a committed byte changes — which is exactly what the CI job
+    "Meridian view model (derivation matches the committed export)" then
+    enforces.
+    """
+    runs = []
+    for directory in dirs:
+        crate = json.loads((directory / "ro-crate-metadata.json").read_text())
+        entries = crate["@graph"]
+        dataset = next((e for e in entries if e.get("@id") == "./"), {})
+
+        def _is(entry: dict, kind: str) -> bool:
+            declared = entry.get("@type")
+            types = declared if isinstance(declared, list) else [declared]
+            return f"mrr:{kind}" in types
+
+        runs.append({
+            "run": directory.name,
+            "object_count": len([e for e in entries if e.get("@type") == "File"]),
+            "claims": len([e for e in entries if _is(e, "Claim")]),
+            "verifications": len([e for e in entries if _is(e, "VerificationResult")]),
+            "sources": len([e for e in entries if _is(e, "SourceRecord")]),
+            "date_published": dataset.get("datePublished"),
+        })
+    return runs
 
 
 def build_view_model(export_dir: Path) -> dict:
@@ -149,13 +196,35 @@ def build_view_model(export_dir: Path) -> dict:
 
 def main() -> None:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    graph = build_graph(EXPORT)
+    dirs = export_dirs()
+    if not dirs:
+        raise SystemExit(f"no crate under {EXPORT_ROOT} — nothing to derive")
+
+    feature_dir = next((d for d in dirs if d.name == FEATURE_RUN), dirs[0])
+
+    # The portable graph stays the FEATURE run's: it is the graph /on-record
+    # queries, and joining three runs into one file would merge claims that
+    # were never in one another's context.
+    graph = build_graph(feature_dir)
     (OUT_DIR / "mrr-graph.ttl").write_text(graph.serialize(format="turtle"))
-    view = build_view_model(EXPORT)
+
+    view = build_view_model(feature_dir)
+    runs = build_runs(dirs)
+    view["runs"] = runs
+    view["totals"] = {
+        "runs": len(runs),
+        "claims": sum(r["claims"] for r in runs),
+        "verifications": sum(r["verifications"] for r in runs),
+        "objects": sum(r["object_count"] for r in runs),
+    }
+    view["feature_run"] = feature_dir.name
     (OUT_DIR / "parallax.json").write_text(json.dumps(view, indent=2, ensure_ascii=False) + "\n")
-    print(f"graph: {len(graph)} triples → mrr-graph.ttl")
+
+    print(f"graph: {len(graph)} triples → mrr-graph.ttl  (feature run {feature_dir.name})")
     print(f"view model → parallax.json  (feature claim: {view['claim']['status']}, "
           f"{len(view['verifications'])} verifications, {view['sources']['total']} sources)")
+    print(f"runs: {view['totals']['runs']} exported, "
+          f"{view['totals']['claims']} claims, {view['totals']['verifications']} verifications")
 
 
 if __name__ == "__main__":
