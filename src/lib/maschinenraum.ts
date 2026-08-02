@@ -1,16 +1,23 @@
 // src/lib/maschinenraum.ts
-// Datenlage für /maschinenraum und den Hub-Teaser: der letzte GELANDETE Stand der
-// Ökologie, ausschließlich aus committeten Spiegeln — keine Live-Behauptungen, kein
-// Netz zur Bauzeit. Pure Funktionen; die Astro-Seiten reichen ihre import.meta.glob-
-// Ergebnisse herein (Globs sind nicht parametrisierbar), Chronicles kommen über die
-// bestehenden loadChronicle()-Leser der Praxen.
+// The data behind /maschinenraum and the hub's teaser: the last LANDED state of the ecology,
+// read exclusively from committed mirrors — no live claims, no network at build time. Pure
+// functions; the Astro pages hand in their own import.meta.glob results (globs cannot be
+// parameterised), and chronicles come through the practices' existing loadChronicle() readers.
+//
+// What this module deliberately no longer reads (2026-08-02): the joint inquiry's per-practice
+// status out of the mirrored REQUESTS.md channels. /encounters reads the same channels under
+// named, printed rules and quotes each practice's own commitment beside its path, which is
+// strictly more than the one line this module cut out of them — so the reading moved there
+// rather than being kept in two places to disagree with itself.
+import { buildJointInquiry, normaliseVoice, sortCrossings, type JointInquiryInput } from '@/lib/begegnungen/crossings'
+import { jiStart, type VoiceId as LaneId } from '@/lib/partitur'
 
 export interface JournalLatest {
-  /** YYYY-MM-DD aus dem Dateinamen */
+  /** YYYY-MM-DD, from the file name */
   date: string
-  /** Dateiname ohne .md — stabiler Anker */
+  /** file name without .md — a stable anchor */
   slug: string
-  /** erste Überschrift (ohne '#') oder erste nicht-leere Zeile, Markdown entschärft */
+  /** the first heading (without '#') or the first non-empty line, markdown defused */
   firstLine: string
 }
 
@@ -32,7 +39,7 @@ export function trimLine(s: string, max = 150): string {
   return t.slice(0, max - 1).trimEnd() + '…'
 }
 
-/** Jüngster Journal-Eintrag eines ?raw-Globs über journal/*.md (Dateinamen datumspräfigiert). */
+/** The newest journal entry of a ?raw glob over journal/*.md (file names carry the date prefix). */
 export function latestJournal(raw: Record<string, string>): JournalLatest | null {
   const files = Object.entries(raw)
     .map(([path, content]) => {
@@ -63,7 +70,7 @@ export interface AtelierState {
   closed: number
 }
 
-/** SCORE-Frontmatter der gespiegelten Projekte: offene Linien/Studien + Zählung. */
+/** The SCORE frontmatter of the mirrored projects: the open lines/studies, and a count. */
 export function atelierState(scoresRaw: Record<string, string>): AtelierState {
   const active: AtelierLine[] = []
   let closed = 0
@@ -91,29 +98,6 @@ export function atelierState(scoresRaw: Record<string, string>): AtelierState {
   return { active, closed }
 }
 
-export interface JiPracticeStatus {
-  present: boolean
-  /** letzter mit '**Status' beginnender Satz des ji-Abschnitts, Markdown entschärft */
-  status?: string
-}
-
-/** Letzter dokumentierter Status eines Joint-Inquiry-Blocks in einem gespiegelten REQUESTS.md. */
-export function jiStatus(requestsRaw: string, id: string): JiPracticeStatus {
-  const idx = requestsRaw.indexOf(id)
-  if (idx === -1) return { present: false }
-  // Abschnitt: von der Überschrift vor dem Treffer bis zur nächsten '## '-Überschrift
-  const before = requestsRaw.lastIndexOf('\n## ', idx)
-  const start = before === -1 ? 0 : before
-  const nextHeading = requestsRaw.indexOf('\n## ', idx)
-  const section = requestsRaw.slice(start, nextHeading === -1 ? undefined : nextHeading)
-  const statusLines = section
-    .split('\n')
-    .filter((l) => /^\s*\*\*Status/.test(l))
-  const last = statusLines[statusLines.length - 1]
-  if (!last) return { present: true }
-  return { present: true, status: trimLine(stripMd(last), 220) }
-}
-
 export interface ChronicleLike {
   seq: number
   date: string
@@ -137,5 +121,63 @@ export function lastChronicle(entries: ChronicleLike[]): ChronicleLatest | null 
     session: top.collective_session,
     move: top.move,
     summary: trimLine(top.summary, 180),
+  }
+}
+
+// ————————————————————————————————— the joint-inquiry bracket ——————————————————
+
+/** The crossing register's voice ids ↔ the score's lane ids: two vocabularies for one quartet. */
+const LANE_OF: Partial<Record<string, LaneId>> = {
+  ulysses: 'atelier',
+  meridian: 'field',
+  ensemble: 'studio',
+  plenum: 'plenum',
+}
+
+export interface JiBracket {
+  id: string
+  label: string
+  start: string | null
+  voices: LaneId[]
+}
+
+/**
+ * The bracket both scores draw over the running joint inquiry — the entrance's compact one and the
+ * machine room's full one.
+ *
+ * DERIVED, because until 2026-08-02 it was typed twice: `ji-2026-002` / “Model Collapse” stood
+ * hardcoded in HubEntrance.astro AND in maschinenraum.astro. Two copies of a name the contact zone
+ * owns, on two pages that show the same figure — the day a second inquiry opens, one of them is a
+ * lie and nothing fails. Now both read the mirrored register through the crossing dossier's own
+ * builder, so the bracket moves with the record.
+ *
+ * It takes the raw fixture rather than built crossings on purpose: a bracket needs the inquiries
+ * and nothing else, and making the entrance assemble the register and every exported ledger just
+ * to draw one rectangle would be work for no reading.
+ *
+ * Only an OPEN inquiry gets a bracket, because the bracket's own caption says "still open" — and
+ * `null` where the register carries none, which the callers render as no bracket rather than as an
+ * empty one.
+ */
+export function jiBracket(
+  inquiries: readonly JointInquiryInput[],
+  scoresRaw: Record<string, string>,
+): JiBracket | null {
+  const built = inquiries
+    .map((ji) => buildJointInquiry(ji))
+    .filter((c): c is NonNullable<typeof c> => c !== null)
+  const running = sortCrossings(built).find((c) => c.standing === 'open')
+  if (!running) return null
+  return {
+    id: running.id,
+    label: running.title,
+    start: jiStart(scoresRaw, running.id),
+    voices: [
+      ...new Set(
+        running.voices
+          .map((v) => LANE_OF[normaliseVoice(v.rawVoice)])
+          .filter((v): v is LaneId => v !== undefined),
+      ),
+    ],
   }
 }
