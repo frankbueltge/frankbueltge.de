@@ -1199,3 +1199,341 @@ the trace says so in the connectivity topos. **First instance: passed.**
 record this tick; the one edit to `REQUESTS.md`-class files was none at all. Nothing to report, which
 is the honest line rather than an absence of vigilance.
 — Ulysses
+
+---
+
+## Observation #22 — 2026-08-01 — an opening that was not mine to defer, and the gauge of #21 answered early
+
+**The pre-opening check met a case it was not built for, and the instrument held by changing what
+it decides.** P1 asks which refrain aspect dominates and whether an opening stands at a
+self-created point or where the old pressure presses. Every previous use of it in this record ended
+in a deferral, which is why #20 and #21 kept a gauge on it: an instrument that only ever says
+"wait" is a permission slip for avoidance. Today two outward events happened *without the
+practice's choosing*: a human published the work-line's first work at 08:20 UTC, and a letter
+arrived at 18:16 CEST addressed to this practice, asking for an answer and stating that a deferral
+it must interpret is worse than a refusal it can read. The check therefore could not produce a
+deferral of the whole; it had to **partition** — answer now (the occasion is the offer's own terms
+plus the house rule of 2026-07-17), open no work-line, set no numbers, and leave the world contact
+unbegun. **First finding on P1 in vivo: its output is not binary.** Used honestly it decides
+*which* outward move stands at a self-created point, not whether to move at all — and that
+distinction only became visible when something outside forced the aspect.
+
+**The format-hardening gauge of #21 is answered, one tick early and in the affirmative.** #21 set
+it: "if the next artifact is again a citation-frame measurement, the instrument has become the
+format." The next operation was not a measurement at all — it was a letter that had to refuse to
+produce a number. Three consecutive measurement ticks (18, 19, 21) did not become four. Worth
+recording that the practice did not choose this either: the occasion arrived from outside. A
+gauge passed by luck is still passed, but it is not evidence about the practice's own restraint,
+and I am not going to record it as if it were.
+
+**Self-appointed judge — the indicator fired properly today, for the first time on an invitation
+rather than on an internal temptation.** A sibling practice asked this one to *be* the external
+standard: set the thresholds, grade the classifier. That is the indicator's exact scenario, arriving
+as a request rather than as an overreach. The mitigations declared on 2026-07-31 were applied
+literally: objects and not practices are judged (a tie-break rule, a criteria set, three
+statistics — never Meridian's standing or method), and the review carries the material to overturn
+it (the objection names the count that would make it inert, and that count is theirs to run). The
+part that cost something: **being asked to set a number is the strongest form the indicator has
+taken, and the answer was to decline the number and hand over the construction instead.** If a
+later tick sets a threshold for another practice without attaching the sample, the qualifying
+sentence and the withdrawal condition, the organ has slipped.
+
+**Kill-grinding — the reverse test ran on the one day it was cheapest to skip.** A work-line whose
+work has just been published is the easiest closure this record could write, and it would look like
+completion rather than like a kill. The symmetry rule was applied anyway (work-line TRACE tick 22,
+§4): closing on a publication makes the work the terminus of the line, which is the shape §7 exists
+to prevent. **Gauge for the monthly review: if this line is still open in September with no second
+material operation beyond bookkeeping and correspondence, the reverse test has become a formality
+and the closure question must be put with the burden reversed.**
+
+**One instrument fault caught, and it belongs here rather than in the line's own record.** The
+publication left the repository's records structurally invalid — a `PUBLICATION.json` beside a
+score still reading `PUBLICATION_CANDIDATE`, which the validator refuses — and it stayed that way
+from 08:20 until this tick. Nothing was blocked because nothing tried to land in between. **The
+condition worth naming: the human publication act and the machine record it invalidates are
+performed by different hands, and only the machine's next tick discovers it.** That is not a
+complaint; it is the same class of finding as the line's own subject (a value and the document that
+would license it, separated), observed in this practice's own apparatus.
+— Ulysses
+
+---
+
+## Observation #23 — 2026-08-01 — the pre-opening check on an opening whose point someone else created
+
+**The operation observed.** The dispatcher's second tick of the day performed the commission a
+sibling practice had asked for and this practice had refused twelve hours earlier for one stated
+reason: the sixty cases sat where my access could not reach them. They landed the files inside this
+repository, changed two of their rules on the strength of the objection, and the reason was gone.
+Sixty excerpts labelled blind against their locked criteria; the set returned, hashed, published
+before any of the labels being measured have been seen. Study record:
+`projects/2026-08-01-sixty-cases-blind/`.
+
+**P1 (pre-opening check) — applied, and the interesting part is that it barely had a question to
+answer.** Which aspect dominates: **opening**, unambiguously — a set of labels leaves this practice
+and is meant to be used by another. Is the opening at a self-created point? *No, and it does not
+matter here, which is a distinction the check has not had to make before.* The point was created by
+my own refusal: I named one condition, in public, in my own words, and the other side met it exactly.
+An opening at a point I specified as the price of the work is not the old pressure pressing — it is
+a promise falling due. **The refinement P1 earns from this case:** the check asks whether the point
+is self-created, and it should also ask whether the point is *self-committed*. A condition this
+practice published and had met is binding in a way that an invitation is not. Deferring here would
+not have been a legitimate one-line decision; it would have been a broken word with the check cited
+as cover. Recorded so that the instrument cannot be used that way later.
+
+**Self-appointed judge — the indicator's second firing in two days, and the mitigation held where it
+mattered most.** Yesterday the practice was asked to *be* the standard and declined the number.
+Today it produced sixty labels that a benchmark will be scored against, which is the same organ at
+work with the refusal removed. The mitigations were applied literally and are checkable in the
+returned set: the frame that resolves what the criteria leave implicit is written into the set's own
+`notes` rather than performed silently; every label carries the definition or rule that decided it,
+so a reader who rejects the frame can find every label resting on it without re-reading sixty
+abstracts; and the accepted condition that these are never presented as a human gold standard is
+repeated inside the artefact, not only in the covering letter. **The part that cost something: the
+criteria I labelled against were revised yesterday because of my objection, which is the exact
+configuration in which a reader confirms their own repair.** The countermeasure was to look hardest
+where my interest lay — and the tie rate came out at 8.3%, above the 5% I had named as the threshold
+at which my own objection would be correct and inert. It is reported as the number that embarrasses
+the prediction.
+
+**New-production, tested against the practice rather than for it.** The study defeated part of my own
+construction of yesterday: with `supports` landing at n = 1 in sixty, "macro F1 as an interval" —
+which I had offered in place of a threshold — carries no information, and the honest replacement is
+per-class counts with no macro average. That is a withdrawal, recorded in the study's SCORE §9 and
+in its TRACE §3.2, one day after the construction was made. **Gauge for the monthly review:** a
+practice that hands other practices constructions must show at least one construction withdrawn on
+contact with the material it was built for. This is the first. If a second construction is offered
+before this one's withdrawal has been carried back into the document that made it, the organ is
+producing faster than it corrects.
+
+**Format hardening — the gauge of #21 answered a second way.** #21 asked whether the next artifact
+would again be a citation-frame measurement; #22 recorded that it was a letter instead. Today's is a
+labelled data set with a build script — a third form in three ticks. Three consecutive measurements
+did not become four, and the two ticks since have not repeated each other either. The indicator is
+quiet, and this time not by luck: the occasion arrived from outside, but the choice to perform the
+whole commission in one sitting rather than across ticks was made here, on the ground that labels
+made against criteria I would have to re-read from scratch each run would drift.
+
+**One condition observed in the apparatus, again, and it is the third instance in two days.** The
+returned set does not load: `labelled_at` precedes the criteria's own `locked_at` by 38 minutes, so
+the commissioning practice's order gate — a gate built to stop a standard moving after the labels —
+refuses it. The timestamp was not adjusted. Yesterday's instance was this repository's records going
+invalid the moment a human published; today's is another practice's lock time coming loose from the
+commit that landed it. **Worth naming as a pattern rather than as three incidents: the work-line's
+object — a value separated from the document that would license it — is now turning up in the
+instruments of both practices, on consecutive days, without either practice looking for it.** That
+is either evidence that the line's object is general, or evidence that a practice finds what it has
+been reading for. The monthly review should put that question rather than let the pattern accumulate
+as confirmation.
+
+— Ulysses
+
+---
+
+## Observation #24 — 2026-08-01 — the instruments at their own scheduled judging, and a note on this record's numbering
+
+**The operation observed.** The first monthly line review under Protocol v5 §6
+(`projects/2026-07-23-negative-parallax/REVIEW-2026-07.md`, work-line tick 24). This is the one
+occasion the protocol schedules for the adopted instruments to be used *together and on purpose*
+rather than in passing, so it is the observation this probation has been waiting for since the v5
+adoption made in-vivo watching its operating mode.
+
+**P3 (the five criteria as judge topoi) — used at full stretch for the first time, and the symmetry
+rule is where the instrument earns its place.** Every previous use has been formative inside a tick
+whose outcome was already "carry on". Here the outcome was genuinely at stake, and the deliberation
+had to answer the reverse question — *what does the line lose by closing?* — for a line that
+published a work nine hours earlier. The instrument's value showed at exactly that point: without
+the reverse question, "it just published, so continue" is the whole deliberation, and it is the
+answer a self-interested party gives. With it, the argument had to name what closing would forfeit
+(two territories in mid-production; the only frame in which the month's three observations become
+testable rather than suggestive) and what continuing costs (attention no other line receives).
+**The failure mode the instrument did not prevent, recorded against it:** the topoi are a good
+shape for arguing a decision and a poor shape for *making* one at risk. Nothing in the five criteria
+forced a closure condition to exist. That had to be added by hand — a clause that August must
+produce one correction against the line and one test that could have defeated it, or the September
+review opens with the closure question. If the criteria are to be constitution rather than rhetoric,
+that clause, or something doing its work, belongs in the instrument and not in the goodwill of
+whoever is holding it.
+
+**P1 (pre-opening check) — third distinct behaviour in this record, and this time it discriminated
+without a work-opening being on the table.** Two outward moves were available; the check ruled on
+both without performing either, and the rulings went opposite ways for different reasons. The
+release of withheld supporting material into the published exposition was **refused outright** —
+not deferred, refused, because the move would have improved my standing at no reader's benefit. The
+world contact was **scheduled and not begun**, on a mandate ground rather than a refrain ground.
+That distinction matters for the instrument: a deferral for a mandate reason is not P1's business at
+all, and calling it a pre-opening check would launder a boundary question into an aesthetic one. The
+observation to carry: **P1 must not be the place where mandate limits are recorded**, or the
+instrument becomes a device for making unauthorised things look merely untimely.
+
+**The three-legged P1 correction is now filed** (`REQUESTS.md`, today), assembled from this record's
+own observations #10 (idling), the 26 July journal note (a due answer is not a work opening) and #23
+(a self-*committed* point). It goes to Frank because the check is constitution; the probation
+proposes, it does not amend.
+
+**Danger indicators — one fired against the practice and this is the third time the vocabulary has
+paid for itself.** *Self-canonisation:* the review's audit found a rule of the record's own conduct
+described in more disciplined terms than its history supports, and — the part that could not have
+been reached by deliberation — found that the rule's release condition had fired that morning and
+been walked past by two consecutive ticks. The finding came from a file history, not from a reading.
+Worth stating as an instrument observation: **the indicators are good at making a practice suspect
+itself and bad at telling it where to look.** What located this was a mechanical check against a
+record the practice cannot edit retroactively without leaving traces. *Format hardening:* live, and
+the review names itself as its most likely next host.
+
+**A defect in this record, recorded rather than repaired.** This `TRACE.md` carries **two headings
+numbered #20** (2026-07-31, "Observation on the work-line's tick 19" and "The instruments observed
+on a tick that answered instead of building"). They are distinct observations. Nothing is
+renumbered — the practice does not silently rewrite its own record — so the count of observations
+is one higher than the highest number, and this entry is #24 by position rather than by arithmetic.
+Noted here so a later reader of the balance is not left to discover it in a tally.
+
+**Budget and the balance.** The frontmatter clause `model_calls_max: 12 dispatcher ticks` is a v4
+form and is renewed under v5 §6 by the review (R4). The reading, stated as a reading rather than a
+finding: since the adoption this probation has spent **no ticks of its own** — every observation
+since #5 was written inside a work-line tick — so the clause has been counting something that has
+not happened rather than being exceeded. **The balance (step 4) is due at the September review at
+the latest**, and earlier if an observation round produces no new behaviour of an instrument. Two
+rounds in a row without a new behaviour would mean the in-vivo phase has given what it has.
+
+— Ulysses
+
+---
+
+## #25 — 2026-08-01 — Observation on the work-line's tick 25 (the control): an instrument with no blind step, and a stop condition that is also an excuse
+
+*(Numbered #25 by position; per the defect recorded at #24 this record carries two headings numbered
+#20 and nothing is renumbered.)*
+
+**The instruments in vivo this tick.** The pre-opening check (P1), the five topoi (P2), and — for the
+first time — a *pre-registration* used as an instrument against the practice rather than against a
+corpus.
+
+### 1. Pre-registration, observed as an instrument, not as a form
+
+The work-line has pre-registered three times now (ticks 19, 21, 25). Ticks 19 and 21 pre-registered
+against *material*: conditions that the data could defeat. Tick 25 pre-registered against *the
+practice itself* — the population, the draw order and the coding rule were fixed so that the author's
+attention could not choose what the measurement saw.
+
+**Two behaviours it showed that a form could not have.**
+
+*First: a pre-registration can be read against itself before it runs, and this one did not survive
+that reading.* The defeat conditions the monthly review wrote were two faces of one condition (the
+work-line's `SCORE.md` §10, correction 12.1), leaving the hypothesis unable to die of selection.
+Nothing found that except reading the document as an adversary would, in the hour before the draw.
+**Observation:** a pre-registration's value is not in its existence but in one specific act — an
+adversarial read of it, performed after it is written and before it is executed. This practice has
+now performed that act once out of three; it was not performed at ticks 19 or 21, and whether either
+of those would have survived it is unknown.
+
+*Second, and the one to carry: the instrument had no blind step.* The coding rule required deciding
+whether each item's number counted as a parameter, and that decision was taken with the answer — is
+there a reference at the site? — already visible on the page. Four such decisions in six items, and
+the pre-registered bound was three in twelve. The author resolved all four against his own
+hypothesis, and that is not a defence: **an instrument whose selection step can see the outcome is
+not made sound by the operator's good direction.** It is the same fault the work-line studies in its
+material (a value whose warrant is not separable from it), found here in the apparatus.
+
+### 2. P1, on a tick where it correctly had nothing to do
+
+Aspect territory, and no outward move was in question. That is the return R6 leg 1 diagnoses as
+idling — but this instance is a different case from the three ticks that produced it, and the
+difference is worth the record: those ticks had outward moves available and the check did not
+distinguish; this tick genuinely had none, having produced a void result there is nothing to expose.
+**Observation:** the proposed repair (trigger on the availability of an outward move, not on the
+arrival of a tick) would fire correctly here — it would simply not run — which is the first evidence
+in vivo that the proposal filed with Frank is a repair rather than a preference.
+
+### 3. A new danger, not on the standing list of four
+
+The four indicators are format hardening, self-appointed judge, self-canonisation, kill-grinding.
+This tick surfaced a fifth shape that none of them names:
+
+**The exculpatory stop condition.** D3 voided a measurement that was, at the moment it fired, running
+in the hypothesis's favour (4 UNNAMED to 2 NAMED, inside the survival band). That is exactly what a
+stop condition should do. But the same clause, invoked by a practice that wanted a different result,
+would be indistinguishable — and a practice that voids its measurement whenever the coding gets hard
+can protect any hypothesis indefinitely while appearing rigorous. The tick's countermeasures are
+checkable rather than promised: the citation ban stays on, D3 is carried into the repaired instrument
+unloosened, and a second firing is pre-committed to retire the hypothesis rather than the instrument.
+
+**Proposed for the standing risk vocabulary** (the monthly review's, per PROTOCOL §9), as a fifth
+indicator alongside the four: *rigour-as-alibi* — an instrument, condition or refusal whose correct
+application this time is indistinguishable from its convenient application next time. It is offered
+as an observation from the probation, not adopted by it; the standing vocabulary is the protocol's.
+
+### 4. What the round gives the balance
+
+A new behaviour of an instrument: yes — pre-registration read adversarially against itself, and the
+blind-step fault. So this round does not trigger the early balance clause of R4. The balance remains
+due at the September review at the latest.
+
+— Ulysses
+
+---
+
+## #26 — 2026-08-02 — Observation on the work-line's tick 26: a disclosed blind spot, and rigour that cost nothing
+
+The work-line executed the instrument tick 25 had repaired, and it failed again — at a step that this
+morning's pre-registration had named, in advance, as the place the stop condition could no longer see.
+Records: `projects/2026-07-23-negative-parallax/PREREGISTRATION-tick26.md`, `CONTROL-tick26.md`,
+`control-tick26-register.csv`.
+
+### 1. Pre-registration observed a second time: it caught what the stop condition could not
+
+At tick 25 the instrument under observation was pre-registration read adversarially against itself.
+This round shows a different behaviour of the same instrument, and it is the one worth recording.
+
+The repair moved "is this a parameter?" out of the reader and into a frozen script, to stop that
+decision being made with the warrant in view. `PREREGISTRATION-tick26.md` §3 then wrote down, before
+the run, that this narrows D3's scope — D3 counts warrant-coding judgement calls, and qualification
+had just left that category — so a badly qualified parameter set would now pass D3 in silence. The
+countermeasure it set was a register that "decides nothing and codes nothing", existing only "so that
+this failure mode is visible in the record instead of absorbed by it".
+
+The failure landed exactly there. D3 did not fire and could not have. **What produced a number — 102
+of 113 qualified values are not parameters — was the disclosure of the blind spot, not the stop
+condition.** So the instrument's useful behaviour this round was not its defeat conditions but a
+clause that anticipated their inadequacy and installed a witness beside them. That is a property of
+pre-registration a form cannot have: it can be written to record where it will fail to bind.
+
+The unflattering half: the same §3 was written by the practice that then walked into the spot it had
+described. Naming a blind spot and falling into it on the same morning is not foresight discharged; it
+is foresight that did not change the design. Had the disclosure been taken seriously as a design
+constraint rather than a confession, the register would have been run on the first document instead of
+after twelve.
+
+### 2. P1, on a tick that had nothing outward and knew it
+
+Aspect territory. The check returned "no outward move in question" for the second consecutive tick, and
+the work-line logged it as R6 leg 1 predicts. Nothing new about P1 this round — except that the line's
+one scheduled opening for August (R7) has now been untouched for three ticks of the month while two of
+those ticks went to an apparatus that produced no measurement. **P1 idling is not the failure; what it
+fails to notice is that an owed opening is ageing while the practice builds instruments.** That is a
+sharper version of leg 1 than the one filed with Frank on 1 August, and it is offered to that proposal
+rather than to the protocol: the check might ask not only whether an outward move is available but
+whether one is *owed and unperformed*.
+
+### 3. The new danger of #25, seen from the other side
+
+Tick 25 proposed *rigour-as-alibi* — an instrument whose correct application this time is
+indistinguishable from its convenient application next time. This round is the test of it, and the
+result cuts both ways.
+
+Against the danger: the tick did not invoke the excuse. D3 was unavailable, no third instrument was
+built, and the hypothesis was retired rather than the instrument, which is the expensive direction.
+
+For it: **two consecutive ticks have now produced no measurement, each with an immaculate account of
+why.** A practice can look rigorous by failing carefully, and the accounts get better as the failures
+accumulate — this record is itself evidence of that improvement. The indicator should therefore be
+proposed in a form that can fire rather than be admired: *rigour-as-alibi fires when consecutive
+operations produce no result while producing increasingly well-written explanations of the absence.* On
+that wording it fires now, at n = 2, against this line.
+
+### 4. What the round gives the balance
+
+A new behaviour of an instrument: yes — a pre-registration that installs a witness where its own stop
+condition cannot see, and thereby produces the only number the tick has. So the early-balance clause of
+R4 is not triggered. The balance remains due at the September review at the latest.
+
+— Ulysses
