@@ -1,7 +1,6 @@
 # DRAFT — pre-submission enquiry to the Journal for Artistic Research (JAR)
 
-**Status: draft for Frank's review. Nothing has been sent.** Nothing sends itself; the
-byline is his choice and so is the send.
+**Status: draft for Frank's review. Nothing has been sent.** Nothing sends itself.
 
 - **Piece:** *Cartography, not Tracing / Kartographie statt Kopie* — the ATP process-grammar
   paper, published 2026-07-24 at `/atelier/werke/2026-07-24-kartographie-statt-kopie/`.
@@ -9,9 +8,15 @@ byline is his choice and so is the send.
   Research. Editor in Chief: Michael Schwab, `michael.schwab@jar-online.net`. Alternative
   route: the contact form at jar-online.net, "Submissions" field, which reaches the
   Managing Editor.
-- **Why a letter and not a submission:** three questions decide whether a submission is
-  possible at all, and JAR's public guidelines leave all three open. Asking costs one page;
-  guessing costs an editorial round.
+- **Why a letter and not a submission:** two questions decide whether a submission is
+  possible at all, and JAR's public guidelines leave both open. Asking costs one page;
+  guessing costs an editorial round of eight to twelve months.
+- **Why the byline is not among the questions:** the problem, the questions put to the
+  material, the corrections and the decisions are Frank's; models drafted under his
+  direction. That is authorship in the ordinary sense, and asking permission for it would
+  turn a non-issue into an irregularity — inviting a procedural refusal before anyone reads
+  chapter 3. The letter therefore *states* how the work was made, in full, and asks only
+  what genuinely needs an editor's answer.
 
 ## What was verified about JAR on 2026-08-02
 
@@ -33,17 +38,17 @@ Checked against the journal's own pages, not assumed:
   restrictive than the ecology's own licence line (CC BY 4.0 for works) and Frank should
   note it before signing anything.
 - **Not published anywhere:** any policy on authorship, collectives, pseudonyms, AI use, or
-  prior publication. That silence is exactly why this letter exists.
+  prior publication. The silence on prior publication is why question 1 below is asked; the
+  silence on authorship and AI use is answered by disclosure, not by a request.
 
 ## The letter
 
-> **Subject:** Pre-submission enquiry — a methodology paper written inside a
-> machine-participatory practice
+> **Subject:** Pre-submission enquiry — *Cartography, not Tracing*
 >
 > Dear Michael Schwab,
 >
-> Before submitting, I would like to ask whether a particular piece of work is one JAR would
-> want to review — and how it should be signed. Three questions follow a short description.
+> Before submitting, I would like to ask two things about a piece of work — and to state a
+> third plainly rather than leave you to discover it.
 >
 > **The work.** *Cartography, not Tracing. A Model and Toolkit of Artistic Research from
 > Deleuze/Guattari's A Thousand Plateaus* — c. 22,000 words, German original with a full
@@ -56,46 +61,46 @@ Checked against the journal's own pages, not assumed:
 > the *Manifesto of Artistic Research* — and against the field's Deleuze reception, which the
 > *Manifesto* describes as quarrying.
 >
-> **How it was written, and why that is the question.** The text was drafted by language
-> models inside an artistic research practice I run and direct. I set the problem, corrected
-> the drafts, ordered the critical full review that produced v3, and hold the decision and the
-> responsibility. The practice publishes under the signature "Ulysses". That signature is
-> disclosed, not concealing: the site states throughout that Ulysses is a machine-participatory
-> practice of mine, and the work's published apparatus names the models used, their roles and
-> the revision passes, so that the process is reproducible. Ulysses is a practice name with a
-> named accountable person behind it, not a model listed as an author.
+> **How it was written.** The problem, the questions put to the material, the corrections and
+> the decisions are mine. The drafting was done by language models, inside an artistic
+> research practice I run and direct; I ordered the critical full review that produced v3, and
+> I hold the responsibility for every sentence. The work's published apparatus names the
+> models, their roles and the revision passes, so that the procedure is reproducible. The
+> practice publishes under the signature "Ulysses" — a disclosed practice name with a named
+> accountable person behind it, never a model listed as an author — and I would name it in an
+> author's note alongside my own.
 >
-> **1. Byline.** Would JAR accept an exposition signed *Frank Bültge (Ulysses / Atelier)* — a
-> personal author with the practice named — or does the journal require the plain personal
-> byline? Either is acceptable to me. I would rather ask than assume, because the paper's own
-> subject is a methodology of machine-participatory research and its signature is therefore
-> not decoration.
+> I state this rather than ask about it, because I believe it is where research is going, and
+> because the paper's own standard obliges me to: disclosed method, verifiable result.
+> Working this way is fast, and the fair question about anything written fast is whether the
+> reading underneath it is thin. That question is answerable, and I would rather it were asked
+> than assumed — which is what my last paragraph is about.
 >
-> **2. Prior publication.** The work has been public on the practice's own site since
-> 24 July 2026, in both languages, under an open licence. I read your FAQ as regulating the
-> other direction — republication after JAR. Would this count as disqualifying prior
-> publication, or as a preprint? A submitted version would not be identical: it would carry
-> the completed collation against the print edition, a closed source list, and the results of
-> the trial the paper pre-registers, which is running now as a separate project.
+> **1. Prior publication.** The work has been public on the practice's own site since 24 July
+> 2026, in both languages, under an open licence. I read your FAQ as regulating the other
+> direction — republication after JAR. Would this count as disqualifying prior publication, or
+> as a preprint? A submitted version would not be identical: it would carry the completed
+> collation against the print edition, a closed source list, and the results of the trial the
+> paper pre-registers, which is running now as a separate project.
 >
-> **3. Format.** The work is text-dominant: an argument rather than an enactment, deliberately
+> **2. Format.** The work is text-dominant: an argument rather than an enactment, deliberately
 > so — it is the practice's atypical register. Is a text-dominant exposition of this length
 > something JAR reviews, or would you expect it reworked into the Research Catalogue's
 > media-expanded form?
 >
-> **One thing you would find, so I say it first.** The paper's editorial note lists the sources
+> **The thing you would find, so I say it first.** The paper's editorial note lists the sources
 > it has so far verified only bibliographically. Two of them are yours: *Experimental Systems*
 > (2013) and, with Henk Borgdorff, *The Exposition of Artistic Research* (2014). The second is
 > the book about the format I am asking about, and reading it is not a formality. Both, with
 > Manning/Massumi 2014, Cotter 2019, Schön 1983 and Smith/Dean 2009, are to be closed in full
 > text before any submission; the paper flags every such title without page references rather
-> than quietly citing around the gap. I mention it because this practice's discipline is to
-> name its gaps before someone else does, and because it tells you where the work honestly
-> stands: finished as an argument, not yet closed as scholarship.
+> than quietly citing around the gap. This is the honest answer to the question about thin
+> reading: not a denial but a list — made by the practice itself, before anyone asked, and
+> closed before it submits.
 >
 > I would submit after the trial closes and those items are shut, not before. If the answers
-> to 1–3 are workable, I will prepare accordingly. If the work is simply not for JAR, that is
-> a useful answer too.
+> to 1 and 2 are workable, I will prepare accordingly. If the work is simply not for JAR, that
+> is a useful answer too.
 >
 > With thanks for your time,
 >
@@ -104,7 +109,8 @@ Checked against the journal's own pages, not assumed:
 
 ## To close before an actual submission (not before the letter)
 
-From the paper's own editorial note, plus what follows from the venue:
+From the paper's own editorial note, plus what follows from the venue. These are not
+housekeeping: they are the evidence for the letter's own claim that speed did not cost depth.
 
 1. Schwab 2013, Schwab/Borgdorff 2014, Manning/Massumi 2014, Cotter 2019 in full text.
 2. Schön 1983 and Smith/Dean 2009 with page references.
@@ -118,25 +124,28 @@ From the paper's own editorial note, plus what follows from the venue:
    self-conducted application by the practice that authored the model — and the trial is what
    there is to answer with. Submitting before it closes throws away the answer.
 
-## Prepared, not applied — the authorship amendment
+## Prepared, not applied — the authorship register
 
-Needed only if and when Frank submits under a personal byline. It is written here so that it
-can be applied in one move; **it is not applied, because he has not decided it.** Applying it
-without his instruction would fabricate a decision in a record whose entire purpose is that
-its decisions are true.
+Needed when Frank submits under his own name. Written here so it can be applied in one move;
+**not applied, because he has not instructed it.** Applying it unbidden would fabricate a
+decision in a record whose entire purpose is that its decisions are true.
+
+Note what this is and is not. It reassigns no authorship and retracts nothing: the signature
+was disclosed from the outset (EXPOSITION.md), so the submission records an existing fact
+under a second convention. Both registers stand — the work on the site signed Ulysses, the
+submission signed by its author.
 
 **For `src/content/atelier/projects/2026-07-24-kartographie-statt-kopie/SCORE.md` §10, which
 currently reads *(none yet)*:**
 
 > **[date] — Authorship register for external submission.** The disposition of 2026-07-24
 > fixed publication under the practice's signature and recorded the consequence "foundation,
-> not own submission". For external submission the register changes without the work changing:
-> Frank Bültge — who set the problem, directed and corrected the drafting, and holds the
-> responsibility — is named as author in the submitted version, with the practice named
-> alongside it where the receiving journal permits. The published work keeps its Ulysses
-> signature and stands unaltered; nothing is retracted. The signature was disclosed from the
-> outset (EXPOSITION.md), so this names an existing fact under a second convention rather than
-> reassigning authorship. Decided by Frank Bültge, [date]; recorded in DECISION.md.
+> not own submission". For external submission a second register applies without the work
+> changing: Frank Bültge — who set the problem, directed and corrected the drafting, and holds
+> the responsibility — is named as author of the submitted version, with the practice named in
+> the author's note. The published work keeps its Ulysses signature and stands unaltered.
+> Because the signature was disclosed from the outset, this records an existing fact under a
+> second convention rather than reassigning authorship. Instructed by Frank Bültge, [date].
 
 **For `DECISION.md`, as a further addendum:**
 
@@ -149,7 +158,5 @@ currently reads *(none yet)*:**
 
 ## Open for Frank
 
-- **The byline** (question 1 asks for B and accepts A; he can also strike question 1 and go
-  with the plain personal byline from the start).
 - Whether the CC BY-NC-ND 2.0 licence on JAR publications is acceptable to him.
 - Every word of the letter, and the send.
