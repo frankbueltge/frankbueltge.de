@@ -24,8 +24,9 @@ import { descFor } from '@/lib/engines/teaser'
 import { buildPulseSvg, formatWeekRange, type PulseSnapshot } from '@/lib/pulse/render'
 import pulseData from '@/data/pulse/pulse.json'
 import { NAMING, DRAFT_LABEL } from '@/config/naming'
-import { lastChronicle, latestJournal, trimLine } from '@/lib/maschinenraum'
-import { buildScore, chronicleEvents, clampToLastDays, jiStart, journalEvents, scoreOpenings } from '@/lib/partitur'
+import { jiBracket, lastChronicle, latestJournal, trimLine } from '@/lib/maschinenraum'
+import { buildScore, chronicleEvents, clampToLastDays, journalEvents, scoreOpenings } from '@/lib/partitur'
+import jointInquiries from '@/data/begegnungen/joint-inquiries.json'
 import Partitur from '@/components/maschinenraum/Partitur.astro'
 import Triptych from '@/components/hub/Triptych.astro'
 import { loadChronicle as loadFieldChronicle } from '@/lib/field/chronicle'
@@ -45,7 +46,6 @@ const mrPlenum = latestJournal(mrPlenumJournalsRaw)
 const mrField = lastChronicle(mrFieldChronicle)
 const mrStudio = lastChronicle(mrStudioChronicle)
 
-const MR_JI = 'ji-2026-002'
 const mrScore = buildScore(
   clampToLastDays(
     [
@@ -58,12 +58,11 @@ const mrScore = buildScore(
     14,
   ),
 )
-const mrJi = {
-  id: MR_JI,
-  label: 'Model Collapse',
-  start: jiStart(mrScoresRaw, MR_JI),
-  voices: ['atelier', 'field', 'studio'] as ('atelier' | 'field' | 'studio' | 'plenum')[],
-}
+// The bracket over the running joint inquiry, derived from the mirrored register rather than typed
+// here (2026-08-02). Its id and its name used to stand hardcoded on this page AND on
+// /maschinenraum — two copies of a name the contact zone owns, under the same figure; the day a
+// second inquiry opens, one of them would be wrong and nothing would fail.
+const mrJi = jiBracket(jointInquiries, mrScoresRaw)
 // Each voice lane also carries the way INTO that voice's own house — for the three practices the
 // tour anchor their door and their triptych card point at (WP7), taken from the doors themselves
 // so a renamed anchor is a one-line edit in the dictionary and not a hunt through three files.

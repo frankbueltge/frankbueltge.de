@@ -10,6 +10,7 @@ import {
   crossingVoices,
   encounterSlug,
   leadCrossing,
+  leadingClause,
   normaliseVoice,
   sortCrossings,
   sortRows,
@@ -50,6 +51,27 @@ describe('normaliseVoice', () => {
 
   it('keeps the conductor outside the categorical set', () => {
     expect(VOICES.conductor.hue).toBe('neutral')
+  })
+})
+
+/** The cut three surfaces share since 2026-08-02 — /encounters' orientation answer,
+ *  /maschinenraum's teaser line, and standingOf itself. A second split somewhere else is a second
+ *  rule, so this one is pinned. */
+describe('leadingClause', () => {
+  it('cuts at the record’s own dash and quotes what stands before it', () => {
+    expect(leadingClause('open/standing — transport automated, translation manual')).toBe('open/standing')
+    expect(leadingClause('REVIEW')).toBe('REVIEW')
+    // en dash as well as em dash: the exports use both
+    expect(leadingClause('closed – the correction landed')).toBe('closed')
+  })
+
+  it('answers null where the record states nothing, and never an empty string', () => {
+    expect(leadingClause(null)).toBeNull()
+    expect(leadingClause(undefined)).toBeNull()
+    expect(leadingClause('')).toBeNull()
+    expect(leadingClause('   ')).toBeNull()
+    // a line that opens with the dash keeps the whole line rather than collapsing to nothing
+    expect(leadingClause('— the correction landed')).toBe('— the correction landed')
   })
 })
 

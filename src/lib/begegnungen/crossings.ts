@@ -160,6 +160,22 @@ const CONCLUDED = /\b(closed|concluded|resolved|complete[d]?|settled|withdrawn|a
 const OPEN = /\b(open|standing|running|active|unresolved|ongoing|review|waiting|pending)\b/i
 
 /**
+ * The LEADING CLAUSE of a record's status line, verbatim — the span where the register states a
+ * standing, before the em dash that introduces what has happened since. `null` where the record
+ * states nothing; never a written summary, only a cut.
+ *
+ * Exported (2026-08-02) because three surfaces now need the same short form and a second `split`
+ * somewhere else is a second rule that will disagree with this one: `standingOf` below reads it,
+ * /encounters prints it in its orientation answer, and /maschinenraum's teaser prints it beside
+ * the running inquiry. One cut, one place.
+ */
+export function leadingClause(statusText: string | null | undefined): string | null {
+  const s = (statusText ?? '').trim()
+  if (s === '') return null
+  return s.split(/[—–]/)[0].trim() || s
+}
+
+/**
  * Derived from the record's own status words — and ONLY from its LEADING CLAUSE, which is where
  * the register states a standing. Its own format is `<standing> — <what has happened since>`,
  * and the second half runs to several hundred words on the newer encounters.
@@ -177,7 +193,7 @@ const OPEN = /\b(open|standing|running|active|unresolved|ongoing|review|waiting|
 export function standingOf(statusText: string | null | undefined): Standing {
   const s = (statusText ?? '').trim()
   if (s === '') return 'unstated'
-  const head = s.split(/[—–]/)[0].trim() || s
+  const head = leadingClause(s) ?? s
   const read = (t: string): Standing | null =>
     CONCLUDED.test(t) ? 'concluded' : OPEN.test(t) ? 'open' : null
   return read(head) ?? read(s) ?? 'unstated'

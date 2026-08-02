@@ -569,8 +569,21 @@ const minWidth = 720
     /* main is a flex item (min-width:auto) — without inline-size containment the
        canvas min-width would propagate as min-content up to the page and widen
        the whole page on mobile instead of scrolling here. TableFallback's own .dv-table-wrap
-       already carries overflow-x:auto (its structural CSS); this adds only the containment. */
+       already carries overflow-x:auto (its structural CSS). */
     contain: inline-size;
+  }
+  .pt-scroll {
+    /* AND THE SCORE HAS TO SCROLL IN ITS OWN BOX. Restored 2026-08-02, measured at 390px: the
+       canvas carries a min-width (760px at the no-JS floor, the exact day-count width once the
+       client layer sets it), and `contain: inline-size` alone does not clip or scroll — it only
+       stops that min-width propagating outward as min-content. So the canvas went on PAINTING
+       past the viewport, and document.scrollWidth on the entrance and on this page measured 749
+       against a 390 viewport: the whole hub scrolled sideways on a phone. The refactor onto the
+       shared dataviz primitives dropped this line from the rule above on the reasoning that
+       .dv-table-wrap brings its own — true for the table, but .pt-scroll is not a .dv-table-wrap.
+       The readout deliberately lives OUTSIDE this box for exactly this reason (see the note beside
+       it below), so nothing that has to escape the clip is inside it. */
+    overflow-x: auto;
   }
   :global(.pt-stage .dv-table-wrap) {
     margin-top: 12px;
