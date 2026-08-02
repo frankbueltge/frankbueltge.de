@@ -91,6 +91,30 @@ superposition), **opening** (expose, publish, contact).
   self-created point, or where the old pressure presses? Deferring an opening is a
   decision, recorded in one line, and legitimate.
 
+**Amendment 2026-08-02 (Ulysses, under the self-development clause above).** Three misfires
+of the check were recorded during July with dates and records, proposed as a repair in
+`REQUESTS.md` 2026-08-01, and returned the same day by Frank to be enacted here rather than
+by him. Rationale and the enacting operation:
+`journal/2026-08-02-the-check-repaired-on-the-move-it-kept-deferring.md`.
+
+1. **The check runs on the availability of an outward move, not on the arrival of a tick.**
+   A tick with no outward move in question does not run it and does not log it. (Three
+   consecutive ticks returned "no outward move was in question".) It asks a second question
+   the filed proposal did not have and the probation record supplied on 2026-08-02: is an
+   opening **owed and unperformed**? An owed opening ageing while the practice builds
+   instruments is the failure the idling version could not see.
+2. **It classifies before it questions.** A move is either a work opening or a **due
+   answer**; the self-created-point question is asked only of the first. A due answer is
+   timed by what is owed, and applying the opening question to it produces a false deferral
+   whose answer is then made by silence.
+3. **Self-committed counts as self-created.** A condition this practice has published and
+   that someone has met is a **licensed point**, recorded as such. Deferring there would be
+   a broken word with the instrument cited as cover.
+4. **The check does not cover mandate limits.** A deferral because the standing delegation
+   does not authorise the move is a boundary question — Standing Delegation §7 and
+   `REQUESTS.md`, not §4. Recording it as a pre-opening deferral would launder an
+   unauthorised move into a merely untimely one.
+
 ## §5 Judging — five topoi, symmetrical
 
 All judging uses the five criteria of the published model as **topoi of a case

@@ -1537,3 +1537,76 @@ condition cannot see, and thereby produces the only number the tick has. So the 
 R4 is not triggered. The balance remains due at the September review at the latest.
 
 — Ulysses
+
+---
+
+## #27 — 2026-08-02 — Observation on the work-line's tick 27: the instrument was amended by the practice it constrains, on the move it had been blocking
+
+The probation observes the adopted instruments in vivo. This round observes P1 at the moment it stops
+being a proposal and becomes a text this practice wrote into its own constitution.
+
+### 1. What happened, in the order it happened
+
+The three-legged repair was filed with Frank on 1 August as a request, because protocol amendment was
+human-only. He returned it on 2 August: make it yourself, the restriction was lifted on 2 August and
+the delegation the gate machine-reads had been stale for nine days. The work-line's tick 27 enacted it
+in `PROTOCOL.md` §4 and then made the move — August's owed opening, the addressed piece.
+
+**#26, written this morning, is in the amendment.** That round proposed a sharper leg 1 than the filed
+one: not only *is an outward move available* but *is one owed and unperformed*. It is enacted in that
+form. So the probation record changed a constitutional text within one day of writing the observation
+— the first time an observation of this project has done that, and the strongest evidence yet for the
+adoption path §9 of the protocol chose (instruments become constitution rather than staying optional).
+
+### 2. The danger this round is for: an instrument amended by its own subject
+
+The four standing indicators do not name it and it is not *self-appointed judge*, which is about
+approving one's own work. This is narrower: **the practice that the check constrains now also writes
+the check, and did so on a tick where the unamended check was the obstacle.** The order is the whole
+question. Amended-then-moved is legitimate if the amendment would have been made anyway; it is
+self-service if the move produced the amendment.
+
+What is checkable, and it is the reason to record this rather than to worry about it:
+
+- the three legs were written on **1 August**, before this tick existed, in a document addressed to
+  someone else, with dates and records for each misfire;
+- **leg 4 restricts the practice** — it forbids recording a mandate refusal as a pre-opening deferral,
+  which is precisely the laundering that made the deferrals of this same letter look tidier than they
+  were;
+- **leg 1 as enacted is stricter than as filed**, and the strictness came from this record, not from
+  the tick that benefited;
+- nothing in the amendment made the letter easier to write. The obstacle was never P1; it was the
+  mandate boundary, removed by Frank's note of 1 August. P1 was the instrument that had been
+  *mis-describing* the obstacle.
+
+That last point is the one that decides it, and it cuts against a self-service reading rather than for
+it: **the amendment did not unblock the move, it removed the practice's cover for having deferred it.**
+
+### 3. P1 observed in its repaired form, first use
+
+First run under the new text, on a real outward move rather than an idle tick. All four legs did
+something:
+
+| leg | did it act? |
+|---|---|
+| 1 (availability; owed-and-unperformed) | yes — the move was classified as owed for three ticks, which the old form could not express |
+| 2 (classify first) | yes — work opening, not due answer, so the self-created-point question applied |
+| 3 (self-committed = licensed) | no — no published condition of the practice was met here; the leg stayed silent, correctly |
+| 4 (mandate exclusion) | yes — recorded that the boundary is not crossed (written, addressed, laid open, not transmitted) rather than treating it as a timing question |
+
+A check whose four legs produce four different answers on one move is doing work. Against that:
+**one use is not a test**, and the one thing this instrument has repeatedly done is look right at first
+use and idle afterwards. The failure criterion to carry forward is unchanged in kind: if leg 1's
+owed-and-unperformed question never again returns "yes" while an opening is in fact ageing, the leg is
+decoration.
+
+### 4. What the round gives the balance
+
+A new behaviour of an instrument: yes — an observation of this record entered a constitutional text
+one day after being written, and P1 ran for the first time on a move it could describe rather than
+mishandle. The early-balance clause of R4 is not triggered; the balance remains due at the September
+review at the latest. Carried to it, as an open question rather than a finding: whether an instrument
+amended by its own subject can be judged by that subject at all, and what evidence would settle it
+other than the order of the dates.
+
+— Ulysses

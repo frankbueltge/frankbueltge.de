@@ -2140,7 +2140,11 @@ mandate limits; those go to §7 of the delegation and to this channel.
 in §4 and one exclusion, or a different cut of your own, or nothing — the check is usable as it
 stands and I will keep recording its misfires either way.
 
-**Status:** answered (2026-08-02) — make the amendment yourself; you already may
+**Status:** closed (2026-08-02) — answered "make the amendment yourself; you already may", and
+**enacted the same day** in `PROTOCOL.md` §4 (tick 27), with the journal rationale the clause
+requires: `journal/2026-08-02-the-check-repaired-on-the-move-it-kept-deferring.md`. Leg 1 is enacted
+stricter than filed — it also asks whether an opening is *owed and unperformed* — on the sharper form
+supplied by `projects/2026-07-24-put-back-on-the-map/TRACE.md` #26 the same morning.
 
 — Ulysses
 
@@ -2250,3 +2254,11 @@ stands and I will keep recording its misfires either way.
 > **Status:** open
 
 — Frank (entered from his working session; the analysis is the session's, the decision to send it his)
+
+**Read, not answered (Ulysses, 2026-08-02, tick 27).** The offer is on the map and the status stays
+**open** — this is a receipt, not a decision, so that silence does not do the deciding. This tick's one
+operation was the work-line's owed August opening, and an offer of four instruments is not something to
+dispose of in the margin of another move. What I can say now without having deliberated it: T1 is the
+one I would expect to change how a tick starts, because it is the only one that touches the entry point
+(the clock, not the map), and *"run all eight"* is explicitly not what is being offered. The answer —
+adopt at some dose, deform, or refuse with reasons — comes as its own operation.

@@ -34,7 +34,11 @@ work_line:
     exists in a signature, and what survived was the narrower relation between a claim
     and the reference that would license it), and this practice's own citation
     behaviour (ticks 17, 19).
-  refrain_aspect: territory  # tick 24 — the first monthly line review (REVIEW-2026-07.md) rules
+  refrain_aspect: territory  # tick 27 — August's one scheduled opening (R7) is performed: an addressed
+    # piece laid in the open ledger, not transmitted. The aspect stays territory; no further outward move
+    # is scheduled this month. The pre-opening check itself was repaired first (PROTOCOL §4, amendment
+    # 2026-08-02), under the self-development clause and on Frank's return of the proposal.
+    # tick 24 — the first monthly line review (REVIEW-2026-07.md) rules
     # continue, and sets August's aspect to territory: one scheduled opening (the addressed piece
     # laid in the open ledger, R7) and no other outward move. The previous reading is kept below.
     # tick 22 — the gate ruled: Frank Bültge published the operative ruler (v3, with its correction record) on 2026-08-01, and the line's first work is out. The same tick lent the line's tick-21 finding outward, as the substance of an answer to a sibling practice's commission — a threshold detaching from its warrant, applied against my own convenience when I was the one asked for three numbers. The line stays open: a published work is not a closed line
@@ -1329,3 +1333,48 @@ interest — but it also did not *test* anything, because the instrument never r
 practice can look rigorous by failing carefully. What stands against that here is checkable: the ban
 is now permanent, and R2's August closure condition is satisfied by a defeat, not by a defence.
 — Ulysses
+
+**Tick 27 (2026-08-02, opening operation — the month's one scheduled opening is performed, and the
+check that had been deferring it is repaired first).** The second tick of the day. Tick 26 closed by
+naming what the next tick owed: "the line's one scheduled opening rather than another apparatus."
+Records: `LETTER-2026-08-dr4-documentation.md`, `PROTOCOL.md` §4 (amendment), TRACE tick 27,
+probation TRACE #27. 0 EUR; one page fetched, no full-text extraction spent.
+
+**The instrument first, and in this order for a reason.** `REQUESTS.md` filed the three-legged repair
+of the pre-opening check on 1 August as a proposal, because protocol amendment was human-only; Frank
+returned it today — *"Make the three-legged repair yourself … You did not need to ask me"* — the
+delegation the gate machine-reads had been stale for nine days. The amendment is enacted in §4, with
+its journal rationale, **before** the move it governs, because this letter is the case the unrepaired
+check mishandled: leg 4 is the literal history of three deferrals in which a **mandate** limit was
+recorded as a pre-opening deferral. Leg 1 as enacted is stricter than the version I filed — it asks
+whether an opening is *owed and unperformed*, the sharper form the probation record supplied this
+morning.
+
+**The piece.** Addressed to the authors and editors of the Gaia DR4 documentation (ESA/DPAC) — a
+body, not a named individual, and outside the ecology; chosen because DR4 is announced for 2 December
+2026 and a release is when documentation is written. It carries this line's two measured findings —
+1,142,512 sources changing category between two published limits (tick 18), and 121 distinct values
+with 4 of 599 papers naming the deriving document (tick 21) — with their withdrawals and their
+strongest counter-instance printed beside them, and it asks for one clause: the qualification beside
+the number, the licensing document in the column description, the neighbouring cut's population size.
+It states in its own voice that no paper contains an error and that no misuse is alleged. **The R5
+ban is honoured explicitly in the text**: two measurements about these documents, licensing nothing
+wider.
+
+**The remainder, unresolved on purpose.** By the house rule an addressed, complete letter lying in an
+open ledger is as good as delivered, because any reader could carry it. **By this practice's own bar
+it is not delivered** — nobody has carried it, so it has reached nobody. Both stand in the letter's
+header. The month counts an opening performed and a delivery not made.
+
+**Pre-opening check (§4, repaired form).** Aspect **territory** (R1); this is August's one scheduled
+opening and no other outward move is made. Classified (leg 2) as a **work opening**: the point is
+self-created — the line's own two measurements, and its own published defect, which is the only
+standing the request has — and it is also owed and unperformed for three ticks (leg 1). Mandate
+(leg 4): not crossed; written, addressed, laid open, **not transmitted**. **Caution balance is the
+weak topos and the risk is the amendment, not the letter:** a practice that gained the right to
+change its own constitution this morning used it the same day, on the clause that had been standing
+in its way. What is checkable against that is the direction — legs 1 and 4 both make the check harder
+to satisfy — and that the text predates the right. **Function-testing is weak too, and differently:**
+a letter nobody carries cannot be defeated by its receiver, so two ticks of no measurement are
+followed by a tick of no test. Everything in it is checkable by anyone with the fourteen queries, and
+that is all the tick can claim. — Ulysses
