@@ -1,19 +1,42 @@
 ---
-// /maschinenraum — der letzte GELANDETE Stand der Ökologie auf einen Blick (Hub-Fläche,
-// Franks Auftrag 2026-07-25). Ehrlichkeitsregel: ausschließlich committete Spiegel, je
-// Karte mit eigenem as-of-Datum; die Seite behauptet nie „läuft gerade" — eine statische
-// Site weiß das nicht. Frische: mirror-watch.yml stößt die Integrates an, sobald sich ein
-// Engine-HEAD bewegt (≤ ~1 h nach jeder Landung). Hub-Grammatik (Tailwind-Tokens), nicht
-// Praxis-Grammatik — ADR 0010 bleibt unberührt.
+// /maschinenraum — THE BREADTH VIEW of the ecology: every voice, one time axis, one screen.
+//
+// WHAT THIS ROOM IS FOR, sharpened 2026-08-02. Every other room is now a dossier and leads with
+// its own current protagonist — the line in work (/atelier), the instrument in service (/field),
+// the work in the spotlight (/studio), the newest sitting (/plenum), the running crossing
+// (/encounters). This page is the one surface that does the opposite: it holds ALL of them at
+// once, at equal weight, and answers "what did the ecology last do" in a single screen. Depth is
+// deliberately not its job — every row here is a door into the room that carries it in full.
+//
+// WHICH IS WHY THE MIDDLE IS A TEASER HERE AND NOT A SECOND DOSSIER. Until today this page carried
+// a per-practice joint-inquiry table (re-read out of the mirrored REQUESTS.md channels) and a list
+// of the register's encounters. /encounters now renders both strictly better — one crossing at a
+// time, every span quoted with the path it came from and the rule that attached it — so the two
+// sections shrink to what this page is for: the fact that a crossing is running, and the door.
+// Nothing was dropped that is not rendered better there, and the derived lines below come from the
+// crossing dossier's OWN module (src/lib/begegnungen/crossings.ts), never from a second parse.
+//
+// Honesty rule, unchanged: committed mirrors only, each card with its own as-of date; the page
+// never claims "running right now" — a static site does not know that. Freshness: mirror-watch.yml
+// triggers the integrates as soon as an engine HEAD moves (≤ ~1 h after every landing).
+// Hub grammar (Tailwind tokens), not practice grammar — ADR 0010 stays untouched.
 import Page from '@/layouts/Page.astro'
 import Partitur from '@/components/maschinenraum/Partitur.astro'
 import { loadChronicle as loadFieldChronicle } from '@/lib/field/chronicle'
 import { loadChronicle as loadStudioChronicle } from '@/lib/studio/chronicle'
-import { atelierState, jiStatus, lastChronicle, latestJournal, trimLine } from '@/lib/maschinenraum'
-import { buildScore, chronicleEvents, jiStart, journalEvents, scoreOpenings } from '@/lib/partitur'
+import { atelierState, jiBracket, lastChronicle, latestJournal, trimLine } from '@/lib/maschinenraum'
+import {
+  buildScore,
+  chronicleEvents,
+  journalEvents,
+  scoreOpenings,
+  VOICE_META,
+  type VoiceId,
+} from '@/lib/partitur'
+import { buildCrossings, leadingClause, type Crossing, type LedgerInput } from '@/lib/begegnungen/crossings'
 import register from '@/data/begegnungen/register.json'
-
-const JI = 'ji-2026-002'
+import jointInquiries from '@/data/begegnungen/joint-inquiries.json'
+import entrance from '@/data/begegnungen/entrance.json'
 
 const atelierJournalsRaw = import.meta.glob('/src/content/atelier/journal/*.md', { eager: true, query: '?raw', import: 'default' }) as Record<string, string>
 const scoresRaw = import.meta.glob('/src/content/atelier/projects/*/SCORE.md', { eager: true, query: '?raw', import: 'default' }) as Record<string, string>
@@ -27,8 +50,59 @@ const studioChronicle = loadStudioChronicle()
 const field = lastChronicle(fieldChronicle)
 const studio = lastChronicle(studioChronicle)
 
-// The score: every landing of all four voices on one axis — the same mirrors that
-// feed the cards below; no second data path.
+// ——— the crossings, from the crossing dossier's own module ——————————————————————
+// The same three inputs /encounters hands it, read the same way (a glob over the exported ledgers
+// rather than a list, so a third export cannot go unseen). This page renders two SENTENCES out of
+// the result; the dossier renders the whole thing.
+const ledgerModules = import.meta.glob('/src/data/begegnungen/*/score.json', {
+  eager: true, import: 'default',
+}) as Record<string, LedgerInput>
+const ledgers = Object.fromEntries(
+  Object.entries(ledgerModules).map(([path, data]) => [
+    path.replace('/src/data/begegnungen/', '').replace('/score.json', ''),
+    data,
+  ]),
+)
+const crossings = buildCrossings({ inquiries: jointInquiries, register, ledgers, narrative: entrance })
+const inquiries = crossings.filter((c) => c.kind === 'joint-inquiry')
+const encounters = crossings.filter((c) => c.kind === 'encounter')
+// `buildCrossings` sorts open first, then by the crossing that moved most recently — so the running
+// inquiry is simply the first one. No second ordering rule on this page.
+const runningJi = inquiries[0]
+// The encounters teaser names the one that moved most recently, whatever its standing: this is a
+// "what last happened" surface, and putting a quiet open encounter above a concluded one that moved
+// yesterday would answer a different question than the one this page asks.
+const latestEncounter = [...encounters].sort((a, b) => (b.lastMove ?? '').localeCompare(a.lastMove ?? ''))[0]
+const openEncounters = encounters.filter((e) => e.standing === 'open').length
+
+/** One derived line per teaser, assembled from the crossing's own fields — nothing written here,
+ *  and the status cut is the dossier's own (`leadingClause`), not a second split. */
+const crossingLine = (c: Crossing, extra: (string | null)[] = []): string => {
+  const head = leadingClause(c.status?.text)
+  return [
+    head ? `the record states “${head}”` : 'the record states no standing',
+    ...extra,
+    c.lastMove ? `last move ${c.lastMove}` : null,
+  ]
+    .filter((p): p is string => p !== null)
+    .join(' · ')
+}
+
+const jiLine = runningJi
+  ? crossingLine(runningJi, [
+      `${runningJi.voices.length} practice${runningJi.voices.length === 1 ? '' : 's'} answering in parallel`,
+    ])
+  : null
+const encLine = latestEncounter
+  ? crossingLine(latestEncounter, [
+      `${encounters.length} recorded encounter${encounters.length === 1 ? '' : 's'} on the register, ${openEncounters} still open`,
+    ])
+  : null
+
+// The score: every landing of all four voices on one axis — the same mirrors that feed the cards
+// below; no second data path. Its joint-inquiry bracket is derived from the mirrored register (id,
+// name, the voices that committed), by the same helper the entrance's compact score uses — so a
+// second inquiry, or a renamed one, moves both brackets without a code edit.
 const score = buildScore([
   ...journalEvents(atelierJournalsRaw, 'atelier'),
   ...scoreOpenings(scoresRaw),
@@ -36,37 +110,19 @@ const score = buildScore([
   ...chronicleEvents(studioChronicle, 'studio'),
   ...journalEvents(plenumJournalsRaw, 'plenum'),
 ])
-const jiBracket = {
-  id: JI,
-  label: 'Model Collapse',
-  start: jiStart(scoresRaw, JI),
-  voices: ['atelier', 'field', 'studio'] as const,
-}
+const bracket = jiBracket(jointInquiries, scoresRaw)
 
-const requestsRaw = import.meta.glob('/src/content/{atelier,field,studio}/REQUESTS.md', {
-  eager: true, query: '?raw', import: 'default',
-}) as Record<string, string>
-const jiRows = (['atelier', 'field', 'studio'] as const).map((ns) => {
-  const raw = Object.entries(requestsRaw).find(([p]) => p.includes(`/${ns}/`))?.[1] ?? ''
-  return { ns, ...jiStatus(raw, JI) }
-})
-const nsLabel: Record<string, string> = { atelier: 'Atelier · Ulysses', field: 'Field · Meridian', studio: 'Studio · Ensemble' }
-
-// `status` grew historically: formerly string/null, since late July an object
-// {as_of, statusLine} — render both shapes honestly instead of "[object Object]".
-interface RegisterEntry {
-  encounter_id: string
-  title: string
-  status?: string | { as_of?: string; statusLine?: string } | null
+/** Each card leads into its voice's OWN room — the same href its lane on the score above carries
+ *  (VOICE_META in src/lib/partitur.ts, where that mapping is data and under test). One voice must
+ *  not lead two ways from one page; until today the atelier card and the atelier lane disagreed.
+ *  The label names what is actually behind the link, in the trailing-arrow form the entrance
+ *  settled on for the guest row on 2026-08-02. */
+const cardLink: Record<VoiceId, string> = {
+  atelier: 'journal →',
+  field: 'dossier →',
+  studio: 'stage →',
+  plenum: 'sittings →',
 }
-const statusBadge = (s: RegisterEntry['status']): string | null => {
-  if (!s) return null
-  if (typeof s === 'string') return s
-  const line = s.statusLine?.split('—')[0]?.trim()
-  if (!line) return null
-  return s.as_of ? `${line} · as of ${s.as_of.slice(5)}` : line
-}
-const encounters = (register as RegisterEntry[]).slice(0, 6)
 
 const kindLabel: Record<string, string> = { 'work-line': 'work-line', study: 'study', project: 'project' }
 ---
@@ -85,14 +141,22 @@ const kindLabel: Record<string, string> = { 'work-line': 'work-line', study: 'st
       repo's committed mirrors and never claims "running right now": each card carries the date
       of its own state.
     </p>
+    {/* The division of labour between this page and the rooms, said once and in plain words —
+        added 2026-08-02 with the shrinking of the two Middle sections below. */}
+    <p class="mt-3 max-w-[70ch] text-sm text-fg-muted">
+      This is the breadth view: everything at once, one screen. The depth lives behind each row —
+      every practice keeps its own dossier in its own room, and what the practices do
+      <em>with each other</em> is read one crossing at a time in
+      <a class="underline decoration-line underline-offset-4 hover:text-fg" href="/encounters">The Middle</a>.
+    </p>
 
     {/* ── The score: four voices, one time axis ──────────────────────────── */}
-    {score && <Partitur model={score} ji={{ ...jiBracket, voices: [...jiBracket.voices] }} />}
+    {score && <Partitur model={score} ji={bracket} />}
 
-    {/* ── Die vier Praktiken ─────────────────────────────────────────────── */}
+    {/* ── The four practices ─────────────────────────────────────────────── */}
     <section class="mt-12 grid gap-4 sm:grid-cols-2" aria-label="Practices">
       <article class="rounded-[10px] border border-line bg-panel p-5">
-        <p class="font-mono text-[10px] uppercase tracking-[0.16em] text-fg-muted">Atelier · Ulysses <a class="text-fg-faint underline hover:text-fg" href="/atelier/projects">→ log</a></p>
+        <p class="font-mono text-[10px] uppercase tracking-[0.16em] text-fg-muted">{VOICE_META.atelier.label} <a class="text-fg-faint underline hover:text-fg" href={VOICE_META.atelier.href}>{cardLink.atelier}</a></p>
         {atelierJournal ? (
           <p class="mt-3 text-sm"><span class="font-mono text-[11px] tabular-nums text-fg-faint">{atelierJournal.date}</span> — {trimLine(atelierJournal.firstLine, 110)}</p>
         ) : <p class="mt-3 text-sm text-fg-faint">no journal mirrored</p>}
@@ -108,7 +172,7 @@ const kindLabel: Record<string, string> = { 'work-line': 'work-line', study: 'st
       </article>
 
       <article class="rounded-[10px] border border-line bg-panel p-5">
-        <p class="font-mono text-[10px] uppercase tracking-[0.16em] text-fg-muted">Field · Meridian <a class="text-fg-faint underline hover:text-fg" href="/field">→ chronicle</a></p>
+        <p class="font-mono text-[10px] uppercase tracking-[0.16em] text-fg-muted">{VOICE_META.field.label} <a class="text-fg-faint underline hover:text-fg" href={VOICE_META.field.href}>{cardLink.field}</a></p>
         {field ? (
           <p class="mt-3 text-sm">
             <span class="font-mono text-[11px] tabular-nums text-fg-faint">{field.date}</span>
@@ -120,7 +184,7 @@ const kindLabel: Record<string, string> = { 'work-line': 'work-line', study: 'st
       </article>
 
       <article class="rounded-[10px] border border-line bg-panel p-5">
-        <p class="font-mono text-[10px] uppercase tracking-[0.16em] text-fg-muted">Studio · Ensemble <a class="text-fg-faint underline hover:text-fg" href="/studio">→ stage</a></p>
+        <p class="font-mono text-[10px] uppercase tracking-[0.16em] text-fg-muted">{VOICE_META.studio.label} <a class="text-fg-faint underline hover:text-fg" href={VOICE_META.studio.href}>{cardLink.studio}</a></p>
         {studio ? (
           <p class="mt-3 text-sm">
             <span class="font-mono text-[11px] tabular-nums text-fg-faint">{studio.date}</span>
@@ -135,7 +199,7 @@ const kindLabel: Record<string, string> = { 'work-line': 'work-line', study: 'st
         {/* "→ kitchen" until 2026-08-02, which promised the wrong thing: the kitchen is
             data-snack.com, and /plenum is the collective's paperwork — its sittings. The four
             cards each name what is actually behind their link. */}
-        <p class="font-mono text-[10px] uppercase tracking-[0.16em] text-fg-muted">Plenum · data-snack <a class="text-fg-faint underline hover:text-fg" href="/plenum">→ sittings</a></p>
+        <p class="font-mono text-[10px] uppercase tracking-[0.16em] text-fg-muted">{VOICE_META.plenum.label} <a class="text-fg-faint underline hover:text-fg" href={VOICE_META.plenum.href}>{cardLink.plenum}</a></p>
         {plenumJournal ? (
           <p class="mt-3 text-sm"><span class="font-mono text-[11px] tabular-nums text-fg-faint">{plenumJournal.date}</span> — {trimLine(plenumJournal.firstLine, 110)}</p>
         ) : <p class="mt-3 text-sm text-fg-faint">no journal mirrored</p>}
@@ -143,37 +207,45 @@ const kindLabel: Record<string, string> = { 'work-line': 'work-line', study: 'st
       </article>
     </section>
 
-    {/* ── Joint Inquiry ──────────────────────────────────────────────────── */}
-    <section class="mt-14 border-t border-line/60 pt-10" aria-label="Joint Inquiry">
-      <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted"><b class="text-fg">Joint Inquiry</b> · {JI} „Model Collapse"</p>
-      <p class="mt-3 max-w-[70ch] text-sm text-fg-muted">
-        A temporary research constellation: sovereign practices on one problem, each with its own
-        methods and the right to refuse. Below, per practice, the last status documented in the
-        mirrored channel (<code class="font-mono text-[11px]">REQUESTS.md</code>) — verbatim.
+    {/* ── The Middle: two teasers, not a second dossier ───────────────────────
+        The joint-inquiry table and the encounters list that stood here until 2026-08-02 are now
+        /encounters, one crossing at a time and quoted to the path. What a breadth view owes a
+        reader is the FACT that a crossing is running and the door to it — so that is what is
+        left: the running inquiry, the encounter that moved most recently, and two ways in. */}
+    <section class="mt-14 border-t border-line/60 pt-10" aria-label="The Middle">
+      <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted">
+        <b class="text-fg">The Middle</b> · what the practices do with each other
+        <a class="ml-2 normal-case tracking-normal text-fg-faint underline hover:text-fg" href="/encounters">the crossing dossier →</a>
       </p>
       <ul class="mt-5 divide-y divide-line/60 overflow-hidden rounded-[10px] border border-line bg-panel">
-        {jiRows.map((r) => (
-          <li class="px-4 py-3.5 sm:px-6">
-            <p class="font-mono text-[10px] uppercase tracking-[0.14em] text-fg-muted">{nsLabel[r.ns]}</p>
-            <p class="mt-1 text-xs leading-relaxed text-fg-muted">
-              {r.present ? (r.status ?? 'documented in the channel — status in running text') : 'no entry in the mirrored channel'}
-            </p>
-          </li>
-        ))}
-      </ul>
-    </section>
-
-    {/* ── Encounters ─────────────────────────────────────────────────────── */}
-    <section class="mt-14 border-t border-line/60 pt-10" aria-label="Encounters">
-      <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted"><b class="text-fg">Encounters</b> · The Middle <a class="text-fg-faint underline hover:text-fg" href="/begegnungen">→ register</a></p>
-      <ul class="mt-5 space-y-2">
-        {encounters.map((e) => (
-          <li class="text-sm">
-            <span class="font-mono text-[11px] text-fg-faint">{e.encounter_id}</span>
-            <span class="ml-2">{trimLine(e.title, 110)}</span>
-            {statusBadge(e.status) && <span class="ml-2 font-mono text-[10px] uppercase tracking-[0.08em] text-fg-muted">{statusBadge(e.status)}</span>}
-          </li>
-        ))}
+        <li class="px-4 py-3.5 sm:px-6">
+          <p class="font-mono text-[10px] uppercase tracking-[0.14em] text-fg-muted">
+            Joint inquiry{runningJi && <> · {runningJi.id}</>}
+          </p>
+          {runningJi ? (
+            <>
+              <p class="mt-1 text-sm">{trimLine(runningJi.title, 110)}</p>
+              <p class="mt-1 text-xs leading-relaxed text-fg-muted">{jiLine}</p>
+              <p class="mt-2">
+                <a class="font-mono text-[10px] uppercase tracking-[0.14em] text-fg-faint underline hover:text-fg" href={`/encounters#crossing-${runningJi.anchor}`}>the crossing dossier →</a>
+              </p>
+            </>
+          ) : <p class="mt-1 text-xs text-fg-faint">no joint inquiry in the mirrored register</p>}
+        </li>
+        <li class="px-4 py-3.5 sm:px-6">
+          <p class="font-mono text-[10px] uppercase tracking-[0.14em] text-fg-muted">
+            Encounters{latestEncounter && <> · {latestEncounter.id}</>}
+          </p>
+          {latestEncounter ? (
+            <>
+              <p class="mt-1 text-sm">{trimLine(latestEncounter.title, 110)}</p>
+              <p class="mt-1 text-xs leading-relaxed text-fg-muted">{encLine}</p>
+              <p class="mt-2">
+                <a class="font-mono text-[10px] uppercase tracking-[0.14em] text-fg-faint underline hover:text-fg" href={`/encounters#crossing-${latestEncounter.anchor}`}>the crossing dossier →</a>
+              </p>
+            </>
+          ) : <p class="mt-1 text-xs text-fg-faint">no encounter in the mirrored register</p>}
+        </li>
       </ul>
     </section>
 
