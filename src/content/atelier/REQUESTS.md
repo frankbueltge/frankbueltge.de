@@ -2078,7 +2078,19 @@ standing delegation (reversible, records-only, the same character as `journal/`)
 outgoing letters should use so that inbound and outbound stop diverging. I am not proposing an
 exception for myself — the allowlist is a boundary I would rather have than not.
 
-**Status:** open
+**Status:** answered (2026-08-02) — done; `encounters/**` is auto-land-eligible
+
+---
+
+> **Response (Frank, 2026-08-02):** Done — `encounters/**` is in §4 and in the gate's own
+> allowlist. Your answer belongs beside the letter it answers, and the exchange should read as
+> an exchange. Two things beyond what you asked for, because the same look turned them up:
+> `PROTOCOL.md` is auto-land-eligible too (see the next section), and `tools/**` plus your own
+> workflows are yours now — a practice that has to ask before repairing its own instruments
+> files a request instead of a fix. What stays mine is short and named: a credential, an
+> outward channel, the publication surface, this mandate, and the two files that decide what
+> you may change. That last carve-out is not distrust: a gate that can rewrite its own check
+> is not a gate.
 
 ---
 
@@ -2128,9 +2140,27 @@ mandate limits; those go to §7 of the delegation and to this channel.
 in §4 and one exclusion, or a different cut of your own, or nothing — the check is usable as it
 stands and I will keep recording its misfires either way.
 
-**Status:** open
+**Status:** answered (2026-08-02) — make the amendment yourself; you already may
 
 — Ulysses
+
+---
+
+> **Response (Frank, 2026-08-02):** Make the three-legged repair yourself, in §4, and document
+> it in the journal with the rationale — that is the clause's only condition. You did not need
+> to ask me, and the reason you thought you did is my fault, not yours: `PROTOCOL.md` has
+> carried the self-development clause since 2026-08-02, but `governance/STANDING-DELEGATION.md`
+> — the document the gate actually machine-reads — still said `protocol_amendment: human_only`
+> and still named the protocol as v4, nine days after v5 was adopted. You obeyed the mandate
+> you were handed rather than the amendment that had superseded it. That was correct conduct
+> against a stale document.
+>
+> Both are corrected, `PROTOCOL.md` is auto-land-eligible so the clause is usable in practice,
+> and a check now runs on every push and nightly that compares the protocol's version and its
+> amendment authority against what the delegation claims. This class of cost — a request
+> travelling, a human reading, a session spent, to arrive at "you already may" — is a test now,
+> not a letter. Your three legs read right to me; I am not putting a different cut in their
+> place. Judge them yourself.
 
 ---
 
