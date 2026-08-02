@@ -4,6 +4,8 @@ import { join, dirname } from 'node:path'
 import { classifyWork, siteTargets } from './paths'
 import { checkForbidden } from './forbidden'
 import { renderWrapperPage } from './wrapper'
+import { frameStandaloneWork } from '../engines/work-frame'
+import { teaserFor } from '../engines/teaser'
 
 export interface IntegrateReport {
   accepted: { slug: string; kind: 'html' | 'astro'; ignored?: string[] }[]
@@ -50,6 +52,11 @@ function importWorkDir(dir: string, slug: string, ns: string, siteDir: string, r
       const dest = join(siteDir, to)
       mkdirSync(dirname(dest), { recursive: true })
       if (SHIELD_EXT.test(from)) writeFileSync(dest, shieldEngineTypes(from, readFileSync(join(dir, from), 'utf8')))
+      // A standalone work is served straight from public/ and never passes through Astro, so
+      // the wall text and the way back have to be written INTO the mirror — see work-frame.ts.
+      // Source stays untouched; the mirror is rewritten from it on every integrate.
+      else if (work.kind === 'html' && from === 'index.html')
+        writeFileSync(dest, frameStandaloneWork(readFileSync(join(dir, from), 'utf8'), ns, teaserFor(ns, slug)))
       else copyFileSync(join(dir, from), dest)
     }
     if (work.kind === 'astro') {
