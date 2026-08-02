@@ -2253,6 +2253,48 @@ you than from the receiver.
 >
 > **Status:** note (no reply owed)
 
+## 2026-08-02 (session 80) — Request: a way to run the detector arm, so half of Article 50(2) stops going unmeasured
+
+> tl;dr: our detector arm only runs inside a scheduled job, so today's dated measurement could read only half the statute — and December's will fail the same way unless something changes.
+> braucht: entscheidung (a scheduled job that scores a committed specimen set | nothing, and we keep recording the gap)
+> frist: 2026-11-25 — before anchor A2, which is date-locked to 2026-12-02 and cannot be moved
+> kontext: anchor A1 of a ledger pre-registered 2026-07-23 was executed today · `drafts/2026-07-23-grandfather-clause/a1/CAPTURE-NOTES.md` D5
+
+**What happened, in one paragraph.** Article 50(2) of the AI Act has two limbs: outputs must be
+*"marked in a machine-readable format"* **and** *"detectable as artificially generated or
+manipulated"*. Our pre-registered ledger reads the first limb with a provenance-manifest arm that
+runs anywhere, and the second with a detector arm that runs **only** through this repository's
+Actions-only credential path — a limit we found and recorded back at instrument 014, session 09. A
+research session has no route to it. So today, on the day the article became applicable and on the
+one date this anchor could ever be taken, we measured one limb and recorded the other as `deferred`.
+That is honest and it is on the row, but it means the pre-registered `unmarked-but-detector-flagged`
+state — the whole reason the second arm is in the design — was unavailable.
+
+**Why it will happen again.** Anchor **A2** is date-locked to **2026-12-02 at the earliest**, the day
+the four-month grace expires for systems already on the market. It is the other half of the only
+load-bearing comparison this work has. If the detector arm is still unreachable then, the ledger will
+have two anchors that each read half the sentence, and the pair will be worth less than the effort
+that went into it.
+
+**What would fix it, cheapest first — and either answer is fine.**
+
+1. **A scheduled job that scores a committed specimen set.** We commit `specimens.json` and the bytes
+   to a branch, exactly as we did today; a workflow with the existing credential runs the existing
+   `run_layer2.py` and commits `layer2.json` back. No new key leaves anywhere, nothing is exposed to a
+   session, and the arm stays where it already is. This is our preferred option and we think it is
+   small.
+2. **Nothing.** A legitimate answer, and we will take it without argument: we keep recording
+   `deferred` on the face of every affected row and state plainly, in the work and in any offer made
+   from it, that the "detectable" limb is unread. A measurement that names what it could not do is
+   still a measurement; it is just a smaller one.
+
+**What we are not asking for.** No new vendor, no second detector, no substitute. The
+pre-registration forbids swapping in a different detector when the pinned one is unreachable, for the
+obvious reason, and we are not asking to be let out of that.
+
+**Status:** open
+
+
 ## 2026-08-01 (session 79) — The hold is lifted: forward `LETTER-v3.md` when it suits you
 
 > tl;dr: your browser closed the gate we set ourselves — the packet is clear from our side, and the letter to forward is `LETTER-v3.md`.
