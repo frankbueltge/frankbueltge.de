@@ -2410,3 +2410,55 @@ clearance file, under our own name.
 calling the packet held — both correct now, and the second is only correct because of item 1.
 
 **Status:** open — nothing owed by a date; the *Sent* row is yours to close whenever you forward.
+
+---
+
+## 2026-08-02 (session 82) — The access path ran, and the first run lost its own measurement to a push race
+
+> tl;dr: the queue works — 17/17 scored, hashes verified, file landed. It also spent one full pass for nothing, because the job pushes without a rebase and `main` moved under it. One line of yaml fixes it.
+> braucht: a `git pull --rebase` (or a short retry) before the `git push` in `layer2-queue.yml`
+> frist: none — the next queued job is A2, no earlier than 2026-12-02
+> kontext: `drafts/2026-07-23-grandfather-clause/LEDGER.md` row **A1-L2R** · `journal/2026-08-02.md`, session 82
+
+**1. It works, and the ledger's `deferred` marker is discharged.** A1's detector limb was read in
+session today under the rule committed before any score existed. 17 of 17 specimens scored, all 17
+sha256 hashes matched at scoring time, `operations_used_total: 85` exactly as our corrected estimate
+said, and `apply_layer2.py` ran offline against the landed file. Thank you for building it — the
+part that had to stay true stayed true: no session ever saw the credential.
+
+**2. The defect, which is small and real.** The job commits inside the runner and then pushes with a
+plain `git push`. If `main` moves during the run's ~60-second window, the push is rejected, the job
+goes red — correctly — and **the measurement is lost while the budget is spent**. That is what
+happened on run
+[`30769706221`](https://github.com/frankbueltge/field-research/actions/runs/30769706221): the log
+shows `layer2.json written — 17/17 scored`, the commit made (`[main d1b3d49] …`), and then
+`! [rejected] main -> main (fetch first)`. Roughly 85 operations of a shared free tier bought nothing — *roughly*, because the lost run's log prints its scores but no operations count; the figure is the second run's recorded total carried across.
+
+The ask is one line before the push:
+
+```yaml
+git pull --rebase origin main && git push
+```
+
+A rebase is safe here because the runner's commit only ever adds the files the entry declared.
+Failing that, a two-attempt retry would do. Everything else about the failure rule we would leave
+exactly as it is — red on a lost push is right.
+
+**3. What moved `main`, because it was us.** This session dispatched the job by hand while its own
+opening record was auto-landing, and the two collided within the same minute. The trigger was ours;
+the missing rebase is the path's. We are not filing our half elsewhere: it is in our ledger row and
+in our minutes under our own name. We re-dispatched once and stopped there — the second run landed —
+so this anchor cost **170 operations instead of 85**, and we would rather you know that from us.
+
+**4. One thing we got for free out of the accident, at its real size.** The lost run printed all 17
+raw scores to its public log, so we had read them before the second run existed. The reading rule was
+fixed in a commit made before either run, so knowing them bought no discretion — and we wrote the
+comparison commitment into the record *before* dispatching again. All 17 scores were identical across
+the two runs. Same bytes, same interface, five minutes apart: the weakest useful form of a
+reproducibility check, reported as such.
+
+**5. Not an ask, a courtesy note.** `layer2-queue.json` is now `[]` — the queue is empty and stays
+empty until anchor A2, which is date-locked to 2026-12-02 at the earliest. The daily schedule will
+be a no-op until then, which costs nothing, and we are not asking you to change it.
+
+**Status:** open — one yaml line, no deadline
