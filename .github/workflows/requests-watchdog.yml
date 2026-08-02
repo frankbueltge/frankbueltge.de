@@ -52,6 +52,18 @@ jobs:
           def sh(args, inp=None):
               return subprocess.run(args, input=inp, capture_output=True, text=True)
 
+          # Erste "**Status:**"-Zeile einer Section — dieselbe Form wie STATUS_VALUE_RE in
+          # src/lib/zentrale/requestsMd.ts (optional eingerückt / im Blockquote). Die eigene
+          # Statuszeile der Anfrage steht VOR den verschachtelten Antwort-Blöcken, deshalb der
+          # erste Treffer und nicht der letzte.
+          STATUS_LINE = re.compile(r"^(?:\s*>?\s*)\*\*Status:\*\*\s*(.*)$", re.M)
+          # Was als erledigt gilt. Bewusst eine kurze Positivliste: ein unbekannter Status lässt
+          # das Issue OFFEN, weil ein irrtümlich geschlossenes Issue nie wieder alarmiert
+          # ("es alarmiert nie erneut") — im Zweifel bleibt der Mensch in der Schleife.
+          # `noted` gehört dazu: die Praxen schreiben "noted (no reply owed)", wenn eine Section
+          # nur zur Kenntnis geht — die wartet auf nichts (studio, 2026-08-02, Body Clause).
+          DONE = re.compile(r"^(answered|resolved|declined|withdrawn|noted|erledigt|beantwortet)\b", re.I)
+
           # Dedupe: ALLE Issue-Titel einmal holen und exakt vergleichen — die Such-API
           # zerbricht an Anführungszeichen/Sonderzeichen in der Phrase und ließ Duplikate durch.
           existing = sh(["gh", "issue", "list", "--repo", "frankbueltge/frankbueltge.de",
@@ -59,6 +71,18 @@ jobs:
           if existing.returncode != 0:
               sys.exit(f"Issue-Liste nicht lesbar: {existing.stderr.strip()[:200]}")
           known_titles = {i["title"] for i in json.loads(existing.stdout or "[]")}
+
+          # Die offenen Issues MIT Nummer — für den Rückweg: eine Anfrage, deren Section in der
+          # REQUESTS.md beantwortet ist, gehört nicht mehr in Franks Posteingang. Bis 2026-08-02
+          # legte dieser Watchdog nur an und schloss nie; das Aufräumen war Handarbeit, und
+          # beantwortete Anfragen standen tagelang als offen da (Frank: "ich muss auch nicht
+          # jeden furz freigeben"). Der Bestand wird einmal geholt, nicht pro Section.
+          open_issues = sh(["gh", "issue", "list", "--repo", "frankbueltge/frankbueltge.de",
+                            "--state", "open", "--limit", "1000", "--json", "number,title"])
+          if open_issues.returncode != 0:
+              sys.exit(f"Offene Issues nicht lesbar: {open_issues.stderr.strip()[:200]}")
+          open_by_title = {i["title"]: i["number"] for i in json.loads(open_issues.stdout or "[]")}
+          closed = 0
 
           for repo in REPOS:
               url = f"https://raw.githubusercontent.com/frankbueltge/{repo}/main/REQUESTS.md"
@@ -75,11 +99,38 @@ jobs:
                   # Team-eigene Sections: Franks Seeds/Notes/Responses sind keine Anfragen an ihn
                   if TEAM_SECTION.match(heading):
                       continue
-                  # Bestandsschutz: führendes Datum älter als CUTOFF → stumm
+                  title = f"Request aus {repo}: {heading}"[:200]
+
+                  # Rückweg VOR dem Bestandsschutz: der CUTOFF soll verhindern, dass alte
+                  # Anfragen neu alarmieren — nicht, dass ein längst beantwortetes Issue
+                  # aufgeräumt wird. Stünde er davor, blieben genau die ältesten Erledigungen
+                  # für immer offen, und das sind die, die am meisten im Weg stehen.
+                  # Trägt die Section einen erledigten Status und liegt ihr Issue
+                  # noch offen, wird es geschlossen — mit dem Status als Begründung, damit die
+                  # Spur im Issue selbst steht und nicht nur in der REQUESTS.md.
+                  status_match = STATUS_LINE.search(body)
+                  status = status_match.group(1).strip() if status_match else ""
+                  if DONE.match(status) and title in open_by_title:
+                      number = open_by_title.pop(title)
+                      note = (f"Erledigt laut `{repo}/REQUESTS.md`: **Status:** {status[:300]}\n\n"
+                              f"Automatisch geschlossen vom Requests-Watchdog, weil die Section "
+                              f"ihren eigenen Abschluss trägt. Quelle: "
+                              f"https://github.com/frankbueltge/{repo}/blob/main/REQUESTS.md")
+                      sh(["gh", "issue", "comment", str(number),
+                          "--repo", "frankbueltge/frankbueltge.de", "--body", note])
+                      done = sh(["gh", "issue", "close", str(number),
+                                 "--repo", "frankbueltge/frankbueltge.de", "--reason", "completed"])
+                      if done.returncode == 0:
+                          closed += 1
+                          print(f"{repo}: GESCHLOSSEN #{number} — {heading[:60]} ({status[:40]})")
+                      else:
+                          print(f"{repo}: FEHLER beim Schliessen #{number}: {done.stderr.strip()[:160]}")
+                      continue
+
+                  # Bestandsschutz: führendes Datum älter als CUTOFF → nicht mehr NEU alarmieren
                   m = re.match(r"(\d{4})-(\d{2})-(\d{2})", heading)
                   if m and date(*map(int, m.groups())) < CUTOFF:
                       continue
-                  title = f"Request aus {repo}: {heading}"[:200]
                   if title in known_titles:
                       continue
                   known_titles.add(title)
@@ -92,6 +143,8 @@ jobs:
                   made = sh(["gh", "issue", "create", "--repo", "frankbueltge/frankbueltge.de",
                              "--title", title, "--body", issue_body])
                   print(f"{repo}: {'ISSUE ' + made.stdout.strip() if made.returncode == 0 else 'FEHLER ' + made.stderr.strip()} — {heading[:60]}")
+
+          print(f"\nRequests-Watchdog: {closed} beantwortete Anfrage(n) geschlossen.")
           PYEOF
 
   saat-sync:
