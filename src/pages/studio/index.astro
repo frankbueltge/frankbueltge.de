@@ -26,7 +26,7 @@ import Page from '@/layouts/Page.astro'
 import Frame from '@/components/studio/surface/Frame.astro'
 import OrientationList from '@/components/practice/OrientationList.astro'
 import { loadChronicle } from '@/lib/studio/chronicle'
-import { currentScore } from '@/lib/begegnungen'
+import { ledgerOf } from '@/lib/begegnungen'
 import { buildStageSvg, type GasseEntry } from '@/lib/studio/stage'
 import { buildSeasonModel, type SeasonKill } from '@/lib/studio/season'
 import SeasonFloor from '@/components/studio/SeasonFloor.astro'
@@ -54,7 +54,10 @@ if (!meta?.title || !meta.date) throw new Error(`/studio: premiered work ${slug}
 
 const firstSentence = ship.summary.split('. ')[0].replace(/\.+$/, '') + '.'
 
-const score = currentScore
+// Pinned to the encounter this page's copy is actually about (it quotes enc-2026-001
+// verbatim) — "current" moved on when newer encounters gained exported ledgers
+// (2026-08-02), and a page about one encounter must never silently render another.
+const score = ledgerOf('enc-2026-001')
 const admitted = score.events.find((e) => e.event_type === 'object.admitted')
 const declined = score.events.find((e) => e.event_type === 'translation.loss_declared')
 const issued = score.events.find((e) => e.event_type === 'correction.issued')
