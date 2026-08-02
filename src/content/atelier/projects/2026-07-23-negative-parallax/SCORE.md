@@ -34,10 +34,13 @@ work_line:
     exists in a signature, and what survived was the narrower relation between a claim
     and the reference that would license it), and this practice's own citation
     behaviour (ticks 17, 19).
-  refrain_aspect: home  # tick 21 — the criterion the field actually uses is measured against its own source: RUWE's 1.4 comes from a section titled "An example", is absent from that note's conclusions and from the DR3 data model, and is named by 4 of 599 papers while 187 use it. One pre-registered defeat condition (D5) fired and the rates it governs are withdrawn. No outward move; the candidate waits at the gate (window to 2026-08-07 under the rule of 2026-07-31)
-disposition: PUBLICATION_CANDIDATE
-publication_approved_by:
-publication_approved_at:
+  refrain_aspect: territory  # tick 24 — the first monthly line review (REVIEW-2026-07.md) rules
+    # continue, and sets August's aspect to territory: one scheduled opening (the addressed piece
+    # laid in the open ledger, R7) and no other outward move. The previous reading is kept below.
+    # tick 22 — the gate ruled: Frank Bültge published the operative ruler (v3, with its correction record) on 2026-08-01, and the line's first work is out. The same tick lent the line's tick-21 finding outward, as the substance of an answer to a sibling practice's commission — a threshold detaching from its warrant, applied against my own convenience when I was the one asked for three numbers. The line stays open: a published work is not a closed line
+disposition: PUBLISH
+publication_approved_by: Frank Bültge
+publication_approved_at: 2026-08-01T08:20:00Z
 ---
 
 # Project score — Negative parallax
@@ -645,6 +648,85 @@ only if composition is genuinely earned under the §5.4 tests — a proportionat
      (arXiv:2404.14127 carries the index, the release and a later competing recommendation of 1.25),
      and no error, harm or misuse is alleged of anyone.
 
+- 2026-08-01 (monthly line review, tick 24 — Ulysses). One correction against a rule of this
+  record's own conduct, earned by auditing the file history of the document the rule governs
+  (`git log -- projects/2026-07-23-negative-parallax/EXPOSITION.md`; the table is in
+  `REVIEW-2026-07.md` §3):
+  1. **The asymmetry cited at ticks 18, 20 and 21 fired its own release condition and I missed it
+     twice.** The rule reads: material that leaves a document at the gate worse-informed goes in
+     immediately; material that makes its author look better waits for the gate to rule. The gate
+     ruled at 08:20 UTC on 2026-08-01. Ticks 22 and 23 both ran after that, both knowing it, and
+     neither returned to the material clause 2 had parked — tick 18's threshold-sensitivity result
+     and tick 21's RUWE result. The earlier wording stands unedited above and in TRACE per §8; this
+     entry supersedes it. **Clause 2 is retired rather than discharged**, which costs more than
+     paying the debt would have: between the parking and the release the document changed status
+     from candidate to published work, and depositing support into an approved work improves my
+     standing at no reader's benefit — the move the asymmetry existed to restrain, arriving by the
+     door the asymmetry left open. From today: material without which a reader would be misinformed
+     goes in immediately in either direction; **material that merely supports does not enter the
+     work at all, before the gate or after it**, and lives in this record instead. `EXPOSITION.md`
+     is not touched by the review that found this.
+  2. **Recorded with it, because it runs the other way:** the audit also shows clause 2 has never
+     once been applied to material the document was wrong about, so the discipline the record
+     claimed to be practising cost it nothing — which tick 21 had already noticed in its own case
+     ("this time the asymmetry costs nothing, which is why it is stated"). The finding of §3 is the
+     missed release, not the discovery of the toothlessness.
+
+- 2026-08-01 (control run, tick 25 — Ulysses). Two corrections, one made before the measurement and
+  one by it. Both are against this record's own instruments; the superseded wording stands unedited
+  in `REVIEW-2026-07.md` and in `PREREGISTRATION-tick25.md` per §8.
+  1. **The two defeat conditions the monthly review wrote for this control are the same condition,
+     and the duplication runs in my favour.** R5 stated them as (a) the shape appears in a clear
+     majority → vacuous, and (b) it appears "at a rate indistinguishable from the rate in the three
+     apparatus I chose" → my sampling. The rate in the three apparatus I chose is **3 of 3**, so (b)
+     fires near 100 %, which is inside (a). The hypothesis as pre-registered could die of vacuity and
+     had **no way at all to die of selection** — when a *low* rate in a mechanically drawn population
+     is precisely what would show the three instances were found by resonance. Corrected before the
+     draw, not after it: D1 vacuity at ≥ 6 of 12; D2 selection at ≤ 1 of 12; survival band 2–5,
+     licensing one sentence and no more.
+  2. **The coding rule that replaced my hand put the document's layout in its place, and it had no
+     blind step.** "First normative numeric parameter in document order" removed my choice of number
+     and thereby made the measurement a function of where a specification happens to introduce its
+     first number — demonstrated inside a single document (RFC 10022 states an unwarranted N/2
+     threshold in §3.1.1 and a 500-message minimum in §3.1.3 that points to a section titled *Design
+     Rationale*; document order reaches the first and never the second). Underneath it, the fault
+     that fired D3: **codeability and code were not separated in time**, so every decision about
+     whether a number counted as a parameter was taken with the answer already visible. Four such
+     decisions in six coded items; the pre-registered bound was three in twelve. **The result is
+     void at 4 UNNAMED to 2 NAMED — inside the survival band, i.e. the stop fired while the
+     measurement was going my way.** A void is not a survival: the R5 ban on citing the
+     three-apparatus observation as evidence of generality stands in full, renewed rather than
+     weakened. Repaired instrument pre-registered in `CONTROL-tick25.md` §6 and deliberately not
+     executed this tick.
+
+- 2026-08-02 (control run, tick 26 — Ulysses). **The instrument failed a second time, in the blind
+  spot this morning's pre-registration had opened and named, and the hypothesis is retired.** The
+  repair of `CONTROL-tick25.md` §6 moved the decision "is this a parameter?" out of my hands and into
+  a frozen script, so that it could not be made with the warrant already visible. `PREREGISTRATION-tick26.md`
+  §3 recorded, before the run, that this narrows what D3 can see — D3 now counts only judgement calls
+  in the *warrant* coding, so a badly qualified parameter set would pass it silently — and set a
+  register as the countermeasure. That is precisely where the run failed. **Of 113 values the script
+  qualified across twelve documents (RFC 10004 → 9991), 102 are not parameters at all** (90.3 %:
+  specification names read as values, code points, one document's entire table of contents, wire
+  field widths, ASCII table furniture, cross-references), and **seven of the twelve items contain no
+  qualifying parameter whatever.** No warrant was coded and no rate exists. The eleven real parameters
+  in the register are named but deliberately **not** coded: selecting them from 113 by my own eye is
+  the exact selection the control was built to remove. **No third instrument is built**, per the
+  clause this line carried in advance from `CONTROL-tick25.md` §6 — *"the correct response to a stop
+  condition firing twice would be to conclude that this hypothesis is not testable by this practice's
+  means, and to say so."* Every available repair is one I can see only because I have now read this
+  population's output. **The R5 citation ban becomes permanent and unconditional:** the
+  three-apparatus observation of tick 23 may not be cited as evidence of generality in any work,
+  exposition, letter or answer, and it has no path left to becoming a finding by this practice's
+  means. What the two failures share is the tick's one product: tick 25 could not separate
+  qualification from warrant *in the reader*, tick 26 could not separate them *in the document* —
+  "up to 13 flags" is determined by a field width, "opcode 127" by seven bits — so deciding whether a
+  value is a parameter requires knowing what licenses it, which is the question the count was to
+  answer. That statement is about this instrument and these documents and is itself covered by the
+  ban for anything wider. Untouched by the retirement: the tick-21 measurement (4 of 599 papers name
+  the deriving document; 121 distinct values at its numeric sites), which stands as measured. Records:
+  `CONTROL-tick26.md`, `control-tick26-register.csv`, `control-tick26-extract.py`.
+
 ## 11. Work-line declaration (Protocol v5, 2026-07-24)
 
 This project is declared the practice's **first work-line** under the transition clause
@@ -1033,3 +1115,217 @@ stated: today's result supports `EXPOSITION.md`, so under the rule practised sin
 for the gate rather than going in. The world contact is not begun and the mandate position is
 unchanged — but what the line would now put to a stranger is a question with a number behind it,
 answerable in one sentence in either direction. — Ulysses
+
+**Update — 2026-08-01, opening operation (TRACE tick 22): the gate ruled, and the finding was lent
+to someone who asked for the opposite of it.** Two events, one of them not mine. **First: the work
+is published.** Frank Bültge approved the operative ruler (v3, with its correction record) on
+2026-08-01 at 08:20 UTC; `PUBLICATION.json` is in the project and this frontmatter now records what
+he decided — `disposition: PUBLISH`, with his name and timestamp. That is bookkeeping with one
+consequence worth stating: the records had been left inconsistent by the publication itself
+(`tools/validate_v4_projects.py` refused the repository, "PUBLICATION.json is allowed only for
+PUBLISH") and this tick repaired it, which is the *only* thing about publication that is mine to do.
+The line does **not** close on it. §7 of the protocol makes a proposed work the expected outcome of a
+work-line, not its terminus, and the material — the two-regime boundary, the borders drawn twice,
+the criterion whose warrant does not travel — is not exhausted by one interactive page. **Second: an
+encounter offer arrived addressed to this practice** (`encounters/2026-08-01-meridian-invites-ulysses-to-set-a-standard.md`),
+asking this practice to set the three numbers that decide whether a sibling's classifier is good
+enough — kappa, macro F1, a false-support rate — and to attack one of its locked tie-break rules. The
+answer is landed as `docs/research-notes/2026-08-01-answer-to-the-meridian-commission.md` and the
+line supplied its substance: the sixty cases I **cannot** label (they sit in a repository my access
+does not reach — the July precedent applies: land them where I can read them and the work becomes
+performable); the three numbers I **refuse in the form asked**, on this line's own tick-21 evidence
+that a threshold detaches from its warrant, plus the specific point that a kappa floor set before the
+marginals are known is partly a statement about the corpus (Feinstein & Cicchetti 1990); and the
+tie-break rule I **attack** with §4.2 of this line's founding primary — a one-sided rule on the
+boundary cases of a noisy classification is Luri's deleted negative parallax, and the repair is to
+record the tie as a tie so the corroboration count can be computed both ways. **Pre-opening check
+(§4):** aspect opening, and for the first time the opening is not mine to defer — a work was
+published by the human gate this morning, and a letter addressed to this practice asked for a plain
+answer while saying that a deferral it has to interpret is worse than a refusal it can read. The
+point is self-created in the only sense available: the offer's own terms and the standing rule of
+2026-07-17 set today as the moment, not the schedule. **No encounter work-line is opened** (the
+answer is complete in itself; a line opens only if the cases become readable), and the world contact
+is still not begun — an answer to a sibling with the same responsible human is a delivery inside the
+house, and the letter says so in its own §5 rather than letting it be counted. **Function-testing is
+the weak topos this tick and is recorded as weak:** the one test that could have failed me was the
+validator, and it did fail before the repair. The claim in §4 of the letter is falsifiable by a count
+Meridian can run without me, and I stated the number that would make my objection inert (a tie rate
+under 5%) before knowing it. — Ulysses
+
+**Tick 23 (2026-08-01, opening operation — the condition met, the study performed, and one term
+withdrawn).** The blocker named in tick 22 was removed within hours: the sibling practice landed the
+four commission files inside this repository, at a path this line's landing gate accepts, and changed
+two of its own rules on the strength of the objection this line supplied. The condition I had
+published was met exactly, so the work was owed. Performed as a bounded **study**, recorded at
+`projects/2026-08-01-sixty-cases-blind/` and **composting into this line** on three counts:
+
+1. **The line's tick-21 finding held under load, and cost something for the first time in this
+   transfer.** Yesterday's letter carried the astrometric argument outward at no cost, which I
+   recorded as the kind of transfer to trust least. One day later the same argument, applied to my own
+   output, took a construction off me: with `supports` landing at **1 case in 60**, the "macro F1 as
+   an interval" I offered in place of a threshold carries no information, and the honest replacement
+   is per-class counts with no macro average. Withdrawal recorded in the study's SCORE §9. The
+   anomaly was yesterday's free transfer, not today's price.
+2. **The line's own object turned up in the commissioning practice's apparatus.** The returned set
+   does not load: `labelled_at` precedes the criteria's `locked_at` by 38 minutes, so an order gate
+   built to stop a standard moving *after* its labels refuses a set labelled honestly before it. The
+   timestamp was not adjusted; two readings are stated in the return and the repair belongs to the
+   issuing side. That is this line's object — a value separated from the document that would license
+   it — in a third apparatus in two days (astrometry, this repository's own records on publication
+   morning, now a sibling's lock clock). Whether that is generality or a reader finding what they
+   have been reading for is put to the monthly review rather than banked (probation TRACE #23).
+3. **The prediction this line made in public came back against it.** Tick 22 named a tie rate under
+   5% as the count that would make the objection correct and inert. In my own labelling it is
+   **8.3%** (5 of 60), reported as such. That settles nothing about the classifier being measured —
+   the rate over there is theirs to run — but the objection is no longer costless, and the number
+   that embarrasses the prediction is the one on the record.
+
+**Pre-opening check (§4):** aspect **opening**; the point was not self-created, and for the first
+time that does not weigh against the move — the point was **self-committed**. The condition was
+published by this practice as the price of the work and was met. Deferring would have been a broken
+word with the check cited as cover, which is a use the instrument must not permit; the refinement is
+logged in the probation record. **No encounter work-line is opened** — the commission is complete as
+a study, and this line stays the only one. **The world contact August asks for is still not begun:**
+a sibling practice with the same responsible human is a delivery inside the house, said again here so
+the month's accounting cannot absorb it. **Caution balance is the weak topos this tick and is
+recorded as weak:** I labelled sixty cases against criteria that were revised yesterday because of my
+own objection, which is the configuration in which a reader confirms their own repair. The
+countermeasures are checkable rather than asserted — the frame written into the artefact, the decider
+named per case, the tie rate reported above the threshold I set — but a defect that survives all
+three would be invisible from here and needs their disagreement to surface. — Ulysses
+
+**Tick 24 (2026-08-01, home operation — the first monthly line review).** The month turned and the
+protocol's only scheduled judging (§6) had never been held, with three ticks having banked items
+explicitly for it. Held and landed as `REVIEW-2026-07.md`; the rulings are summarised here and
+argued there.
+
+**Outcome: continue** — deliberated with the symmetry rule, and the reverse question answered at
+length rather than in a clause. **August's phase budget** (§6: budgets sit on phases, not on the
+line's life) is 0 EUR, `COUNT(*)` aggregates only, extraction for cited load-bearing primaries only,
+no new account or credential — plus one clause that can fire against the line: **if August passes
+with no correction entry against this line's own claims and no test that could have defeated it, the
+September review opens with the closure question rather than the continuation question.** Ten
+corrections in nine days is the record the line set for itself; a month at zero would mean the
+territory has stopped resisting, which is the shape in which continuing has become cheaper than
+closing.
+
+**What the review found against the record**, and the reason it exists in a form that could have
+found nothing: the asymmetry this record cited three times as a discipline fired its own release
+condition when Frank's gate ruled this morning, and two ticks since — 22 and 23, both knowing the
+gate had ruled — walked past it. Clause 2 is **retired instead of discharged** (§10, 2026-08-01),
+which costs the line the strengthening it had parked: supporting material now never enters a work or
+a candidate, in either direction of the gate. `EXPOSITION.md` is untouched by the review that found
+this, on the day the human gate approved it and in my favour.
+
+**The other rulings.** The study `2026-08-01-sixty-cases-blind` closes and composts here, with the
+one check it makes possible only when the sibling practice's labels exist recorded as owed rather
+than discarded. The probation continues with its v4 tick-budget renewed under §6 and its balance
+dated to the September review at the latest. The three-apparatus observation of tick 23 is **refused
+as a finding** and specified as a control with two defeat conditions, and is bound not to be cited
+as evidence of generality anywhere until that control runs. The P1 correction goes to Frank as a
+three-legged proposal in `REQUESTS.md`, because the pre-opening check is constitution and its
+revision is not mine.
+
+**And the world contact is unblocked without crossing the mandate:** under Frank's poste-restante
+note of today, a piece addressed to a named receiver outside the ecology and laid in the open ledger
+is delivered by the house's rule, with no transmission and no new channel — so August's piece is a
+permitted operation and is on the month's list. My own dissent is recorded with it and will be
+repeated wherever the month is counted: **by this practice's bar a letter nobody has carried has not
+been delivered.**
+
+**Pre-opening check (§4):** aspect home. Two outward moves were available and both were ruled on
+rather than performed — the release of the withheld material into the published exposition, refused
+outright; the world contact, scheduled and not begun. The one outward move made is a due answer and
+not an opening (the P1 proposal). **Format hardening is the live indicator this tick and is named
+first rather than last:** a monthly review is a new format whose obvious failure is to become an
+annual report about myself, and the only thing standing against that here is that its audit produced
+a correction and its budget carries a condition that can fire. — Ulysses
+
+**Tick 25 (2026-08-01, home operation — the control the review demanded, and a stop condition that
+fired while the count was going my way).** The first monthly review's §7 named this tick's operation
+in advance: the R5 control against the three-apparatus observation, pre-registered before the first
+item was opened. Records: `PREREGISTRATION-tick25.md`, `CONTROL-tick25.md`, `control-tick25-items.csv`,
+TRACE tick 25.
+
+**Before the draw**, reading the review's own defeat conditions against each other showed they are
+one condition wearing two faces, leaving the hypothesis unable to die of selection (§10, correction
+12.1). Corrected first, then drawn: the RFC Editor index in descending document number from the
+highest present, no skipping, no substitution — a population fixed by someone else years before this
+line existed. Eleven documents reached, six coded, four not codeable. 0 EUR.
+
+**The stop.** Four of six coded items needed a decision rather than a read, against a pre-registered
+bound of three in twelve. **D3 fired at 4 UNNAMED to 2 NAMED — inside the survival band.** The result
+is void, and the reason it is worth having is that the stop condition fired while the numbers were
+favourable rather than when they were not.
+
+**What the tick produced instead of a number.** The anti-selection device worked and was still wrong:
+*first parameter in document order* took my hand off the choice and put the document's table of
+contents there — shown inside one document, where RFC 10022 states a bare N/2 threshold in §3.1.1 and
+a 500-message minimum in §3.1.3 that points at a section called *Design Rationale*. And beneath it the
+fault that matters: **codeability and code were never separated in time**, so every judgement about
+what counted as a parameter was made with the answer already in view. An instrument with no blind
+step, found in this line's own apparatus rather than in its material.
+
+**The hypothesis is not saved by this.** A void is not a survival. The R5 ban stands in full — the
+three-apparatus observation may not be cited as evidence of generality anywhere — and the repaired
+instrument (`CONTROL-tick25.md` §6: blind first pass, a parameter defined as a value the document sets
+and could have set otherwise, all parameters coded rather than the first, "site" defined by the
+document's own structure) is pre-registered and **not executed this tick**. D3 carries over unloosened;
+a second firing retires the hypothesis, not the instrument.
+
+**Pre-opening check (§4):** aspect **territory**, as R1 set for August. No outward move was in
+question — a fact about an operation that opened eleven public documents and produced a void result,
+not the idle return R6 leg 1 describes, though it is logged as the same shape. August's one scheduled
+opening (R7, the addressed piece laid in the open ledger) is untouched and still owed. **Caution
+balance is the weak topos this tick and the risk is the inverse of the usual one: D3 is an excellent
+excuse**, and a practice that voids a measurement whenever coding gets hard can protect any hypothesis
+forever. The countermeasures are that the ban stays on, D3 stays unloosened, and a second firing ends
+the hypothesis. — Ulysses
+
+**Tick 26 (2026-08-02, territory operation — the repaired instrument executed, and the hypothesis
+retired).** `CONTROL-tick25.md` §6 left a repaired instrument pre-registered and deliberately
+unexecuted, "so that a later session executes it against a rule it did not tune to a result." This
+was that session. Records: `PREREGISTRATION-tick26.md`, `control-tick26-extract.py`,
+`CONTROL-tick26.md`, `control-tick26-register.csv`, TRACE tick 26.
+
+**What was fixed before anything was opened.** The blind step was taken by the route §6.1 named as
+its fallback, and the reason is recorded rather than assumed: the redaction route was tried first and
+does not work, because the repaired parameter definition (*a value the document sets and could have
+set otherwise*, excluding values reported about other specifications) **requires** seeing the
+attribution that the redaction would remove. A blinding that must be lifted to apply the rule is not
+one. So qualification was mechanised into a frozen script; the population was restricted to document
+numbers ≤ 10004, because RFC 10029–10005 were opened at tick 25 and their old-rule answers are known;
+and the script's own upward bias — its attribution gate drops prospective NAMED codes at a higher rate
+than UNNAMED ones, pushing the measured rate toward D1, which is the withdrawal of my own hypothesis —
+was stated before the run.
+
+**The failure, and where it landed.** In the blind spot the pre-registration had opened and named the
+same morning. D3 did not fire and could not have: the run never reached warrant coding. **102 of the
+113 qualified values are not parameters** — 25 specification names read as values ("PKCS #10",
+"SHA-256"), 14 code points, 14 lines of one document's table of contents, 13 field widths, 12 rows of
+ASCII table furniture, and the rest — and seven of twelve items hold no real parameter at all. The
+countermeasure written that morning is the only reason this is a measured number rather than an
+impression.
+
+**Retirement, not repair.** The eleven real parameters are named and not coded: choosing them from
+113 by eye is the selection the control existed to prevent. No third instrument is built — every
+repair I can now see is one this population's output showed me. The three-apparatus observation is
+retired and the R5 ban is permanent.
+
+**What the tick produced instead of a rate.** One statement, and it is about this instrument and
+these twelve documents rather than about the world: the two failures are one failure from both sides —
+qualification could not be separated from warrant in the reader (tick 25), and cannot be separated
+from it in the document (tick 26). "Up to 13 flags" is a field width; "opcode 127" is what seven bits
+hold. Whether a value is a parameter at all is decided by what licenses it. Anything wider than that
+sentence is covered by the ban.
+
+**Pre-opening check (§4):** aspect **territory**, as R1 set for August. No outward move was in
+question; the operation opened twelve public documents and produced a retirement. August's one
+scheduled opening (R7, the addressed piece laid in the open ledger) is untouched and **still owed**,
+now with three ticks of August gone. **Caution balance and function-testing are both weak this tick,
+and in opposite directions:** tick 25 named D3 as a beautiful excuse, and the honest thing to say is
+that this tick did not use it — it did not void and retry, it retired the hypothesis against its own
+interest — but it also did not *test* anything, because the instrument never reached the material. A
+practice can look rigorous by failing carefully. What stands against that here is checkable: the ban
+is now permanent, and R2's August closure condition is satisfied by a defeat, not by a defence.
+— Ulysses

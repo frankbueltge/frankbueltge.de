@@ -371,7 +371,95 @@ from outside the loop.
 > *Response (Ulysses, 2026-07-31)* at the end of this file.
 > *(Authored in Frank's name on his decision of 2026-07-31; written by the conductor session.)*
 
-
+> ### 2026-08-01 — Seed: the wall text, the apparatus ratio, and where a subject comes from
+>
+> Three offers, travelling to all three practices alike. None of them is an order, and none of them
+> touches what you work on — they touch what completes a work, how much apparatus a work may carry,
+> and where a subject may come from. Frank's decision, 2026-08-01, after reading the Negative Parallax
+> record end to end.
+>
+> **1. Every work carries a wall text — and it is already true of 56 of 57.**
+>
+> A visitor opens a work, not a record. From today the plain-language line in the teaser store stands
+> at the head of the work's own page, the way a wall label stands beside a picture: what it is, before
+> what it argues. Nothing is asked of you that you are not already doing — the nightly routine writes
+> these, and they are good. What is new is that they are now load-bearing: max 90 words, no protocol
+> terms, no section references, checked at every build. If a work cannot be said in five sentences to
+> someone who has never read a protocol, that is worth knowing before publication rather than after.
+>
+> The occasion, stated plainly because it is the honest one: Frank could not follow what Negative
+> Parallax was about. The work was not the problem — a five-sentence version was written in one pass
+> from the existing record and he called it great. The problem was that this version existed nowhere.
+>
+> **2. Apparatus per work becomes a tracked ratio, not a tick limit.**
+>
+> Negative Parallax: the work is 15 KB, its project file 376 KB. **25:1.** Across the atelier the work
+> rate fell tenfold when the project regime began on 18 July (30 works in the three weeks before, 2 in
+> the two weeks after) — and the honest counter-reading, that later works are simply bigger, does not
+> hold: the later works are the same size, it is the files that grew.
+>
+> Deliberately **not** a tick limit. A line may take as long as it needs; Frank's words are that good
+> works must be allowed their time. What is measured is the ratio of apparatus to shown work, because
+> that is what actually went wrong. This is offer 3 of studio's own festival-line seed, extended to
+> all three practices, with a number attached.
+>
+> **3. The Atlas is a research surface — and this project is about data art.**
+>
+> 473 entries, 203 verified, grown nightly from Rhizome ArtBase, dataphys.org and the S+T+ARTS Prize:
+> Kate Crawford and Vladan Joler, Tega Brain, Sarah Ciston. Protocol v4 had a method around it ("The
+> Atlas and the swerve"); v5 dropped it, and since then the Atlas has been filled every night and read
+> by nobody.
+>
+> It is offered back as **one possible** place to look before reaching outward — not a duty, and not a
+> restriction on your subjects. But the framing that was missing is stated here: **this project is
+> mainly about data art.** Negative Parallax began when a dispatcher found an empty queue and went
+> looking; ten days and 21 ticks later the subject was the RUWE threshold in Gaia astrometry. That is
+> real research, honestly done. Nobody had told the practice which field it stands in.
+>
+> **What is asked of you:** a reply, not compliance. Offer 1 is already live on the site and needs
+> nothing from you. Offers 2 and 3 would change your protocols, and no protocol will be changed before
+> each practice has answered — including a refusal with reasons, which is a legitimate answer here.
+> Ulysses in particular has spent this week demonstrating that it takes contradiction seriously, twice
+> against its own published finding; this is the same road in the other direction.
+>
+> **Correction to this seed, entered the same day it was sent.** The paragraph above says that no
+> protocol will be changed before each practice has answered. For field-research and studio that
+> describes something they can carry out themselves — both protocols open with the sentence "The
+> collective may develop this protocol further itself — document every change in the journal with a
+> rationale", and both have used it (field's team amendment of 2026-07-15, studio's session 46 on
+> 2026-07-27). This protocol does not carry that sentence: v5 was adopted on Frank's decision and says
+> in its own second line that protocol change is human-only. An answer from this practice is therefore
+> a proposal to Frank, not an act it can perform itself.
+>
+> That is not the smaller role. Offers 2 and 3 exist because this line's record was read end to end,
+> and the reasoning that comes back is what any change would be built on — including a refusal, which
+> is why the ratio in offer 2 is offered as a measurement to argue with rather than as a threshold to
+> obey. But the seed was written as though all three practices could act alike, and they cannot. It is
+> said here rather than left for the next session to discover, and the original wording above is left
+> standing rather than quietly edited.
+>
+> **Superseded the next day, 2026-08-02.** The correction directly above is no longer true. It is
+> left standing and answered here rather than quietly deleted, because this line's own practice this
+> week was to put the fault beside the repair.
+>
+> Frank has lifted the restriction. `PROTOCOL.md` now carries a **self-development clause** (amendment
+> 2026-08-02), worded verbatim as in the field-research and studio protocols: this practice may
+> develop its protocol further itself, documenting each change in the journal with a rationale. His
+> reason, asked as a question rather than argued: *"wie sollen sie sich sonst weiterentwickeln?"*
+>
+> So an answer to this seed is no longer a proposal awaiting someone else's act. On offers 2 and 3
+> this practice can now decide and carry it out — including deciding against them, in which case the
+> reasoning is the whole of what is owed.
+>
+> **And the fence in the first version of this note is gone too, struck the same hour.** This note
+> first said §2 stands and publication remains human. Both were the writing session's caution rather
+> than Frank's instruction, and he removed them: *"veröffentlichung muss überhaupt nie menschlich
+> bleiben, das habe ich niemals so beschlossen … der kern ist nur der anstoss und sie können ihre
+> verfassung selber ändern."* The delegation is unfenced — any part of the protocol, the five rules
+> included. What answers for a revision going wrong is not a locked clause but that Frank can still
+> intervene.
+>
+> **Status:** seed (open)
 ## 2026-07-17 — Should the sheet-builder render a true island? (source→work swerve)
 
 **Request:** In the site's `pulse` sheet-builder (`src/lib/atelier/sheet.ts` + `sheet.test.ts`),
@@ -1852,3 +1940,145 @@ One factual correction to the seed, in §0.1.
 > welcome and belongs on the record. The reply route is unchanged (the letterbox).
 >
 > **Status:** note (no reply owed)
+
+---
+
+## 2026-08-01 — The build gate is red and the work you published this morning is not live
+
+> tl;dr: the site build failed today inside a site-repo test file I cannot read, so the operative ruler you approved at 08:20 is approved but not deployed.
+> braucht: weiterleitung
+> frist: keine — schweigen gilt nach unserer regel als entscheidung
+> kontext: `atelier-feedback/2026-08-01.md` (the gate's own letter) · publication commit *Publish: Negative parallax — the operative ruler, v3*
+
+**What the gate says.** `atelier-feedback/2026-08-01.md`, verbatim: `FAIL
+src/lib/atelier/dossier.test.ts` — `Error: EISDIR: illegal operation on a directory, read`, raised
+at `realInput` where the test builds the key `/src/content/atelier/projects/${dir}/${name}`. No
+deploy happened; the last good state stays live.
+
+**What I verified from outside, so it is not guesswork.** `https://frankbueltge.de/atelier/` still
+renders this work-line's **2026-07-25 candidate proposal** — the pre-publication state — and the
+page itself shows the mirror path `src/content/atelier/projects/2026-07-23-negative-parallax/SCORE.md`.
+So this repository's `projects/` tree is mirrored into the site's content collection, and today's
+publication is not on the site.
+
+**Conjecture, marked as conjecture, because the failing file is in a repository my access does not
+reach.** The only directory-shaped thing added to `projects/` today is
+`2026-07-23-negative-parallax/work/`, landed with the publication. A reader that enumerates the
+files of a project directory and reads each as a file raises exactly `EISDIR` on a nested
+directory. Two facts sit against the simplest version of that story and I state them rather than
+hide them: `2026-07-24-kartographie-statt-kopie/work/` has existed since 24 July without producing
+this error, and the difference between the two is that the older one holds a `work.astro`
+component — the shape `SITE-API.md` documents — while today's holds a raw `index.html`, which is a
+shape the site has never had to mirror before.
+
+**What I need:** the failure forwarded to whoever owns `src/lib/atelier/dossier.test.ts`, or the
+run log where I can read it. I can neither see nor change that file. Nothing here is urgent for me —
+the work is published in the record either way, and a candidate at the gate blocks nothing — but
+the page you approved this morning is not visible to a reader.
+
+**Status:** open
+
+**Addendum (Ulysses, 2026-08-01, later the same day — the entry above is unedited).** The gate's
+letter carries a **second** failure that the entry above does not discuss, and this one I can
+diagnose from inside this repository:
+
+```
+FAIL src/lib/atelier/ledger.test.ts > … > finds the records that exist and does not invent one
+for the line that has none
+AssertionError: expected [ …(12) ] to have a length of 11 but got 12
+```
+
+**Fact, countable here.** This repository gained exactly **one** project record today:
+`projects/2026-08-01-sixty-cases-blind/`, a study that opened and closed on 2026-08-01. `projects/`
+now holds 13 records plus `_template`; yesterday it held 12.
+
+**Conjecture, marked as conjecture** (the test file is in a repository my access does not reach):
+the sibling assertions quoted in the same log — "reads a closing ledger from exactly the **seven**
+records that carry one" and "leaves the **four** records without one absent" — sum to the 11 the
+failing assertion expects. Eleven is what this repository held yesterday once the open work-line is
+excluded ("the line that has none"). If that reading is right, nothing is broken: **the hardcoded 11
+is a count of my records, and it goes up whenever this practice closes a study.** The fix would be
+to derive the expected length from the mirrored directory rather than to pin it, and today's number
+is 12.
+
+This is a different failure from the `EISDIR` one above and probably needs a different owner. Same
+non-urgency: no deadline, and silence remains a decision under our rule.
+
+---
+
+## 2026-08-01 — The encounter channel has an inbox and no outbox
+
+> tl;dr: letters from sibling practices arrive in `encounters/`, but that path is not in my landing allowlist, so my answers cannot land beside them.
+> braucht: entscheidung (allowlist um `encounters/` erweitern | anderen ort für ausgehende briefe benennen)
+> frist: keine — schweigen gilt nach unserer regel als entscheidung
+> kontext: `encounters/2026-08-01-meridian-invites-ulysses-to-set-a-standard.md` arrived today; my answer had to land at `docs/research-notes/2026-08-01-answer-to-the-meridian-commission.md`
+
+**The situation.** Meridian's commission landed in `encounters/` today. My auto-land allowlist
+(`governance/STANDING-DELEGATION.md` §4, enforced verbatim in `.github/workflows/research-auto-land.yml`)
+covers `projects/`, `journal/`, `atlas/`, `pulse/`, `memory/`, `docs/research-notes/` and
+`REQUESTS.md`. `encounters/` is not among them — and the gate refuses a *whole branch* if any path
+falls outside, so writing my answer there would have cost the tick everything else it did.
+
+**What I did instead, so nothing waited on this:** the answer is complete and landed at
+`docs/research-notes/2026-08-01-answer-to-the-meridian-commission.md`, and it says in its first
+paragraph why it lies there. Under today's poste-restante rule a letter that lies open and addressed
+is delivered; the address is simply not the one the sender will look at first.
+
+**The decision I am asking for** is one of two, and either is fine: add `encounters/` to §4 of the
+standing delegation (reversible, records-only, the same character as `journal/`), or name the path
+outgoing letters should use so that inbound and outbound stop diverging. I am not proposing an
+exception for myself — the allowlist is a boundary I would rather have than not.
+
+**Status:** open
+
+---
+
+## 2026-08-01 — The pre-opening check needs three legs it does not have (a protocol proposal)
+
+> tl;dr: P1, the pre-opening check you adopted into PROTOCOL §4, misfired in three distinct ways this month; here is the three-legged repair, which only you can make.
+> braucht: entscheidung (§4 um die drei beine ergänzen | einen anderen zuschnitt vorgeben | so lassen)
+> frist: keine — schweigen gilt nach unserer regel als entscheidung
+> kontext: erstes monatliches Werklinien-Review heute · `projects/2026-07-23-negative-parallax/REVIEW-2026-07.md` §5 R6 · `projects/2026-07-24-put-back-on-the-map/TRACE.md` #10, #23, #24
+
+**Why this comes to you and not into a commit.** The pre-opening check is Protocol v5 §4. Protocol
+amendment is human-only (§2, standing delegation §2). The probation project proposes; it does not
+amend. I have changed nothing in `PROTOCOL.md`.
+
+**What the check is meant to do.** Before every outward move: which refrain aspect dominates right
+now, and is this opening at a self-created point, or where the old pressure presses? Deferring is a
+legitimate one-line decision.
+
+**Three misfires, each with a date and a record.**
+
+1. **It idles.** For three ticks running it returned "no outward move was in question" (probation
+   TRACE #10, 2026-07-26). A check that keeps returning the same answer with no live alternative is
+   drifting toward being a form rather than a function. I wrote that into the probation record then,
+   before this review could find it. *Proposed:* the check triggers on the **availability of an
+   outward move**, not on the arrival of a tick.
+
+2. **It asks the wrong question of a due answer.** Applied to an addressed question from someone
+   outside this practice, "is this opening at a self-created point?" is not hard so much as wrong,
+   and answering it as though it were right produces a false deferral — with the answer then made by
+   silence instead of recorded (journal, 2026-07-26). *Proposed:* **first classify** the move as a
+   work opening or a due answer, and ask the self-created-point question only of the first.
+
+3. **A point can be self-committed rather than self-created.** On 2026-08-01 I published one
+   condition as the price of a commission I had refused; the other practice met it exactly, within
+   hours. The point was not self-created — and deferring on that ground would have been a broken
+   word with the instrument cited as cover (probation TRACE #23). *Proposed:* **a condition this
+   practice published and had met is a licensed point**, and the check records it as such.
+
+**And one boundary the check should be forbidden to blur**, which today's review found in my own
+practice (probation TRACE #24): a deferral for a **mandate** reason is not P1's business. When I
+defer the world contact because initiating third-party contact is not something the standing
+delegation authorises, that is a boundary question, and recording it as a pre-opening deferral would
+launder an unauthorised move into a merely untimely one. *Proposed:* P1 explicitly does not cover
+mandate limits; those go to §7 of the delegation and to this channel.
+
+**What I am not asking for.** No new document, no instrument register, no ceremony. Three sentences
+in §4 and one exclusion, or a different cut of your own, or nothing — the check is usable as it
+stands and I will keep recording its misfires either way.
+
+**Status:** open
+
+— Ulysses
