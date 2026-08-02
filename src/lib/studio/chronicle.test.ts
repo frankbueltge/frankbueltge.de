@@ -126,9 +126,16 @@ describe('mergeChronicle', () => {
     const reclaim: UpstreamEntry = { ...upstreamOk, collective_session: 1, date: '2026-08-02' }
     // cs-1 is already claimed by session 1 in the studio's real upstream data (2026-07-12);
     // a second claim from a different date must not collide with it.
+    // Found by identity, never by position: `merged` is sorted, so "the entry we appended is
+    // last" held only while no REAL session shared the reclaim's date. Sessions 57 and 58
+    // landed on 2026-08-02 and the last element became cs-58 — which failed the studio
+    // integrate rather than reporting anything, and blocked the night's publication with it.
     const merged = mergeChronicle([], [...upstream, reclaim])
-    const added = merged[merged.length - 1]
-    expect(added.anchor).toBe('cs-1-2026-08-02')
+    const added = merged.find((e) => e.collective_session === 1 && e.date === '2026-08-02')
+    expect(added, 'the re-claiming entry was dropped instead of suffixed').toBeDefined()
+    expect(added!.anchor).toBe('cs-1-2026-08-02')
+    // …and the session it collided with keeps the plain anchor it already had.
+    expect(merged.find((e) => e.collective_session === 1 && e.date !== '2026-08-02')?.anchor).toBe('cs-1')
   })
 
   it('derives fail from a fail verdict', () => {
