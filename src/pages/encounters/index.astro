@@ -48,7 +48,7 @@ import { buildSittings } from '@/lib/plenum/dossier'
 import { renderInline } from '@/lib/atelier/dossier'
 import { loadChronicle as loadFieldChronicle } from '@/lib/field/chronicle'
 import { loadChronicle as loadStudioChronicle } from '@/lib/studio/chronicle'
-import { currentScore } from '@/lib/begegnungen'
+import { allLedgers } from '@/lib/begegnungen'
 import register from '@/data/begegnungen/register.json'
 import jointInquiries from '@/data/begegnungen/joint-inquiries.json'
 import entrance from '@/data/begegnungen/entrance.json'
@@ -235,21 +235,26 @@ const chip = MIDDLE.approval === 'approved' ? MIDDLE.provenance.approvedChip : M
     {/* ——— THE ARCHIVE: the recorded encounters, drawn — demoted below the running work ——— */}
     {map && (
       <CrossingsMap model={map} encounters={encounters}>
-        {/* The station map of the newest exported ledger — OPEN, not collapsed (Frank,
-            2026-08-02: the 2026-08-02 rebuild had folded it away, "fälschlicherweise
-            eingeklappt"). It draws ONE encounter at event level — currently the ecology's
-            first Ulysses-side crossing (enc-2026-005, the atlas lent) — and it is the
-            finest-grained notation this record has: the station score and its sign key are
-            part of the ecology's own notation language, not a leftover to be tidied away.
-            The <details> stays (a reader can still fold it), but the resting state shows
-            the score. */}
-        <details class="hm-station" open>
-          <summary>One encounter at station level — {currentScore.encounter_id}</summary>
-          <div class="score-map score-map-compact">
-            <ScoreFigure score={currentScore} />
-            <ScoreKey score={currentScore} />
-          </div>
-        </details>
+        {/* The station-level drawings — ONE PER EXPORTED LEDGER, newest first and newest open
+            (Frank, 2026-08-02, twice: the rebuild had folded the one score away, and the one
+            score was stale — "da ist ja alles wie zuvor?"). This is the finest-grained
+            notation the record has, and the one that draws the upstream/downstream flows;
+            the honest line under it names the crossings that have no drawing yet. */}
+        {allLedgers.map((ledger, i) => (
+          <details class="hm-station" open={i === 0}>
+            <summary>{MIDDLE.archive.stationLabel(ledger.encounter_id)}</summary>
+            <div class="score-map score-map-compact">
+              <ScoreFigure score={ledger} />
+              <ScoreKey score={ledger} />
+            </div>
+          </details>
+        ))}
+        {MIDDLE.archive.stationsGap(allLedgers.length, encounters.length) && (
+          <p class="d-note">
+            {MIDDLE.archive.stationsGap(allLedgers.length, encounters.length)}{' '}
+            <a href="/notation#station-score">→ /notation</a>
+          </p>
+        )}
       </CrossingsMap>
     )}
 

@@ -162,8 +162,12 @@ const rowsFor = (c: Crossing): CrossingRow[] => c.rows.slice(0, movesShown)
       </div>
 
       {/* — who is in it: each voice with its own account, in its own words — */}
-      <div class="d-block">
-        <p class="d-h">{w.fields.voices} {c.voices.length > 0 && <span class="d-count">{c.voices.length}</span>}</p>
+      {/* The long blocks fold (Frank, 2026-08-02: "ansonsten wird man von endlosen
+          textpassagen erschlagen") — native <details>, closed at rest, the heading itself is
+          the summary so nothing is added and nothing hides without a name. Question and
+          status stay open above: they are the orientation. */}
+      <details class="d-block d-fold">
+        <summary class="d-h">{w.fields.voices} {c.voices.length > 0 && <span class="d-count">{c.voices.length}</span>}</summary>
         {c.voices.length > 0 ? (
           <ul class="d-voices">
             {c.voices.map((v) => (
@@ -209,11 +213,11 @@ const rowsFor = (c: Crossing): CrossingRow[] => c.rows.slice(0, movesShown)
         {caveatsOf(c).map((x) => (
           <p class="d-caveat"><b>{x.label}</b> — {x.caveat}</p>
         ))}
-      </div>
+      </details>
 
       {/* — what is on the record: every row verbatim, newest first, each naming its own rule — */}
-      <div class="d-block">
-        <p class="d-h">{w.fields.moves} {c.rows.length > 0 && <span class="d-count">{c.rows.length}</span>}</p>
+      <details class="d-block d-fold">
+        <summary class="d-h">{w.fields.moves} {c.rows.length > 0 && <span class="d-count">{c.rows.length}</span>}</summary>
         {c.rows.length > 0 ? (
           <>
             <ol class="d-rows">
@@ -238,12 +242,12 @@ const rowsFor = (c: Crossing): CrossingRow[] => c.rows.slice(0, movesShown)
         ) : (
           <p class="d-gap">{w.gaps.moves}</p>
         )}
-      </div>
+      </details>
 
       {/* — preserved dissent: two readings the record refuses to resolve — */}
       {c.divergence && (
-        <div class="d-block">
-          <p class="d-h">{w.fields.divergence}</p>
+        <details class="d-block d-fold">
+          <summary class="d-h">{w.fields.divergence}</summary>
           <div class="d-div">
             <div class={`d-div-side ${hueClass(c.divergence.leftVoice)}`}>
               <p class="v-label"><span class="md-dot" aria-hidden="true" />{c.divergence.leftLabel}</p>
@@ -256,13 +260,13 @@ const rowsFor = (c: Crossing): CrossingRow[] => c.rows.slice(0, movesShown)
           </div>
           {c.divergence.closing && <p class="d-div-close">{c.divergence.closing}</p>}
           <p class="d-src">{w.labels.sourceLabel} <code>{c.divergence.source}</code>, {w.labels.verbatim}</p>
-        </div>
+        </details>
       )}
 
       {/* — a documented non-relation: a silence the record designed, never a gap — */}
       {c.nonParticipation.length > 0 && (
-        <div class="d-block">
-          <p class="d-h">{w.fields.silence}</p>
+        <details class="d-block d-fold">
+          <summary class="d-h">{w.fields.silence}</summary>
           <ul class="d-silence">
             {c.nonParticipation.map((n) => (
               <li>
@@ -272,13 +276,13 @@ const rowsFor = (c: Crossing): CrossingRow[] => c.rows.slice(0, movesShown)
               </li>
             ))}
           </ul>
-        </div>
+        </details>
       )}
 
       {/* — the same crossing, named elsewhere: stream rows that carry this crossing's own id — */}
       {(streamByCrossing[c.id] ?? []).length > 0 && (
-        <div class="d-block">
-          <p class="d-h">{w.fields.stream} <span class="d-count">{streamByCrossing[c.id].length}</span></p>
+        <details class="d-block d-fold">
+          <summary class="d-h">{w.fields.stream} <span class="d-count">{streamByCrossing[c.id].length}</span></summary>
           <ol class="d-rows d-rows-quiet">
             {streamByCrossing[c.id].map((r) => (
               <li class={`d-row ${hueClass(r.voice)}`}>
@@ -296,12 +300,12 @@ const rowsFor = (c: Crossing): CrossingRow[] => c.rows.slice(0, movesShown)
               </li>
             ))}
           </ol>
-        </div>
+        </details>
       )}
 
       {/* — what the record consists of — */}
-      <div class="d-block d-record">
-        <p class="d-h">{w.fields.record}</p>
+      <details class="d-block d-record d-fold">
+        <summary class="d-h">{w.fields.record}</summary>
         <ul class="d-files">
           {c.sources.map((s) => (
             <li><code>{s.path}</code> <span>{s.note}</span></li>
@@ -310,7 +314,7 @@ const rowsFor = (c: Crossing): CrossingRow[] => c.rows.slice(0, movesShown)
         {c.recordUrl && (
           <p class="d-doors"><a href={c.recordUrl} rel="noreferrer">{w.labels.recordLink} ↗</a></p>
         )}
-      </div>
+      </details>
     </article>
   ))}
 </section>

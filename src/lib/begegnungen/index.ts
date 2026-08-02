@@ -102,3 +102,24 @@ export const currentNarrative = narrativeData as unknown as {
  * subset doesn't carry. Built by research-ecology's apps/export-site — see its own README.md
  * for provenance. Rendered by src/lib/begegnungen/score.ts's `buildScoreSvg`. */
 export const currentScore = scoreData as unknown as ScoreExport
+
+/** One SPECIFIC encounter's exported ledger, by short slug (enc-2026-001, …). Fail-loud: the
+ * callers that need this quote the encounter by id in their own copy (the studio reads
+ * enc-2026-001's declined case, the field's history its caveat-preservation obligation) — a
+ * page written about one encounter must never silently render another. Added 2026-08-02, when
+ * the entrance moved to a newer encounter and "current" stopped meaning "the one this page
+ * is about" (it never did; it just happened to coincide while only one ledger existed). */
+export function ledgerOf(slug: string): ScoreExport {
+  const module_ = scoreModules[`/src/data/begegnungen/${slug}/score.json`]
+  if (module_ === undefined) {
+    throw new Error(`begegnungen: no exported ledger for ${slug} under src/data/begegnungen/`)
+  }
+  return module_.default as ScoreExport
+}
+
+/** Every exported ledger, newest first — the station-level drawings /encounters renders.
+ * Glob-driven: a new export appears here the build after it lands; nothing is counted. */
+export const allLedgers: ScoreExport[] = Object.keys(scoreModules)
+  .sort()
+  .reverse()
+  .map((path) => scoreModules[path].default as ScoreExport)

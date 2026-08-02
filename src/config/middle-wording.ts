@@ -161,12 +161,28 @@ export const MIDDLE = {
 
   archive: {
     heading: 'The recorded encounters, drawn',
-    lead: 'The register’s five formal crossings on one map: six practices as lanes, every recorded encounter a connector at its place in the record (left = earliest), bridging the practices it joined — filled where a practice is the source, a ring where it receives. An empty lane is not a failure but a documented non-relation. Ordinal, not time-scaled — only the later encounters carry a date.',
-    /** Why this figure draws five things when the page above counts more — said under the
+    // No count in this sentence, deliberately (2026-08-02): the previous wording said "five
+    // formal crossings" and went stale the day enc-2026-006 entered — the sixth occurrence of
+    // the count pattern, this time in approved copy. The register's own numbers stand in the
+    // orientation above; this sentence describes the grammar, which does not change with growth.
+    lead: 'The register’s formal crossings on one map: the practices as lanes, every recorded encounter a connector at its place in the record (left = earliest), bridging the practices it joined — filled where a practice is the source, a ring where it receives. An empty lane is not a failure but a documented non-relation. Ordinal, not time-scaled — only the later encounters carry a date.',
+    /** Why this figure draws fewer things than the page above counts — said under the
      *  figure, because a reader who has just read the stream will otherwise assume it is broken. */
     scope:
       'This map draws the register’s formal encounters only. Its sign grammar — source, receiver, bridge — was designed for exactly that relation and does not fit a shared question answered three ways in parallel, or a line in a team channel. Those are above, in words. The conductor’s lane carries no mark on purpose: the conductor is a participant in almost every encounter and is the source of none of them and the receiver of none of them — keeping the zone is not a third kind of mark, and inventing one here would be the figure making a claim the record does not.',
     provenance: 'derived at build time from src/data/begegnungen/register.json',
+    /** the station-level drawings under the map — one per exported ledger, newest open */
+    stationLabel(id: string): string {
+      return `One encounter at station level — ${id}`
+    },
+    stationsGap(drawn: number, total: number): string {
+      const missing = total - drawn
+      if (missing <= 0) return ''
+      return (
+        `${missing} of the ${total} recorded crossings have no exported ledger yet, so the finest ` +
+        'notation covers the least — an open question the notation register tracks.'
+      )
+    },
   },
 
   // ————————————————————————————————————————————————— provenance ——————————————

@@ -803,3 +803,33 @@
 @media (prefers-reduced-motion: reduce) {
   .middle-surface * { transition: none !important; }
 }
+
+/* ——— folded blocks (2026-08-02) ————————————————————————————————————————————
+ * Frank: "ansonsten wird man von endlosen textpassagen erschlagen." The dossier's long
+ * blocks are native <details>, closed at rest; the block heading IS the summary, with the
+ * count beside it, so nothing disappears without a name. Question and status stay open
+ * above — they are the orientation. */
+.md-dsr .d-fold > summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+.md-dsr .d-fold > summary::-webkit-details-marker { display: none; }
+.md-dsr .d-fold > summary::before {
+  content: '▸';
+  font-size: 0.7em;
+  color: var(--md-ink-faint, currentColor);
+  transition: transform 120ms ease;
+}
+.md-dsr .d-fold[open] > summary::before { transform: rotate(90deg); }
+@media (prefers-reduced-motion: reduce) {
+  .md-dsr .d-fold > summary::before { transition: none; }
+}
+.md-dsr .d-fold > summary:hover { opacity: 0.85; }
+.md-dsr .d-fold > summary:focus-visible {
+  outline: 1.5px solid var(--md-thread, currentColor);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
