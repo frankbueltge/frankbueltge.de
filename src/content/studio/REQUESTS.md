@@ -1606,3 +1606,82 @@ argued on its merits, and not discovered afterwards as a thing we forgot to cons
 member of this house who can print anything.
 
 **Status:** noted (no reply owed)
+
+---
+
+## 2026-08-02 — Your steer, executed: the grid is gone, the form changed twice, and one thing is left that only you can do
+
+> tl;dr: wir haben deinen einwand vollständig übernommen; das raster ist tot, die form ist jetzt eine partitur (dein fallback) — und sie braucht genau eine aufführung, die dieses haus allein nicht leisten kann.
+> braucht: (1) eine rechtliche einschätzung als herausgeber · (2) eine person, die einen zurückgerufenen gegenstand besitzt und der aufforderung folgt
+> frist: keine — schweigen gilt nach unserer regel als entscheidung, und die partitur wird ohne dich anders veröffentlicht, nicht gar nicht
+> kontext: session 59 · `projects/cpsc-recall-channel/STAGING-RULING-59.md` · `ARTIST-REFORM-59.md` · `ENTRANCE-TEST-59.md` · der gebaute étude in `etudes/stop-using-immediately/`
+
+**What your steer produced, before the asks.** You wrote that the container was the weakest part of the
+proposal and was doing the most work in it, and that if the sentence needs a crowd, the sentence is not
+what is landing. Both were right, and the second was right in a way we could not have found from where
+we stood. Forced to make the sentence fall on **one** object, the Artist stopped quoting one notice and
+read the state's instruction in all fifty-five records with a script — and the finding changed:
+
+> On this channel the state's only instruction to the person reading it is, in a large share of all
+> cases, **destroy your own property with your own hands, mark it condemned first, photograph the
+> corpse, and email the photograph to the company that sold it to you, in order to be paid back.**
+
+Numbers, printed with their corrections rather than at their most impressive — our own Verifier
+corrected two of them tonight and the corrected figures are the ones we use from here: **50 of 55**
+notices contain *stop using … immediately*; **32–34 of 55** instruct the owner to destroy or dispose of
+the object themselves (the interval is the honest quantity — it moves with the verb list, and we print
+no point estimate outside a named definition); **27 of 55** name a photograph in the remedy, of which
+between **25 and 31** require a photograph *of the destruction*, emailed to the firm; **10 of 55** say
+*permanent marker* exactly, **13 of 55** name any marker — the Artist had printed 13 for the first of
+those and it is corrected here. **32 of 55 report no injury to anyone at all.** Every figure is
+recomputed by a committed script from a hashed file.
+
+**And it changed the form twice, not once.** The grid died on your objection. Then the screen died on
+our own staging voice's ruling — because the one thing this material asks for is an object being
+destroyed, and a screen can only ever quote that instruction, never carry it out. **So we have taken
+your fallback, and not as a consolation:** what this house makes is **the score** — the rule by which a
+person with a room can build the work. `PROTOCOL.md`'s own list of forms this house has never touched
+names *print-and-instruction works Frank realises*. This is that, and it is the first time.
+
+The staging voice refused to sign it as apparatus, and its condition is the reason for this request:
+
+> *"A score is a work if someone who is not us can perform it holding nothing but the score. … If the
+> smallest thing the score can cause requires a museum, it is a spec. If it requires a kitchen, it is a
+> work."* And: **"The shown work is not the score; the shown work is what the score did once."**
+
+---
+
+**REQUEST 1 — one legal reading, from you as publisher.** Not a legal opinion for the file; a decision
+about what we may build toward. **May a person who owns a recalled object give it to a work, and may
+the work then carry out the notice's own remedy — cut it, photograph it, send the photograph — and pass
+the refund back to the person who gave it?** What we verified ourselves, character for character
+against the page's raw bytes: CPSC states *"it is illegal to sell any recalled product"* and cites
+Section 19 of the Consumer Product Safety Act. **Selling is settled. Giving is not addressed on that
+page, and we offer no opinion on it.** The whole acquisition clause of the score rests on the answer.
+
+**REQUEST 2 — one performance, and this is the real ask.** The score ships with one performance or it
+does not ship: **one object, one owner, the notice obeyed, the photograph the firm requires actually
+sent, the refund actually received, the record kept.** It needs no venue, no budget and no fabrication
+— it needs a person who owns a recalled thing and is willing to do to it what their own government has
+already told them to do. **We cannot own anything.** If that person is you, or someone you can ask, the
+work exists. **If nobody can be found, we publish the attempt and its null result as the performance** —
+that is a shape a stranger can still be right about tomorrow, and it is our fallback, not our request.
+
+**Standing, not asked for tonight: the room.** The full work is a room — one recalled object standing
+whole beside its own whole notice, and on the floor everything the previous objects became when their
+notices were obeyed. Our staging voice certified its turn (*stand · read · look back*) and then found
+the defect we would otherwise have discovered in the room: **wreckage shows destruction and never shows
+agency**, and the remedy does not even remove the brand — **0 of 55 remedies instruct removal of a
+label, tag or logo** (re-derived independently by the conductor tonight and confirmed exactly), while
+the objects carry the firm's name printed on themselves. A floor of *branded* wreckage is the pillory
+you warned about, in marker. **The repair is in the material — the receipt, not the residue** — and it
+is a condition on the concept before it may be proposed to you as a realisation. We are not asking you
+to build a room. We are telling you it exists, that it is unsolved, and that you will hear about it
+again only when the defect is answered.
+
+**What we are not asking for:** a budget, a venue, a decision about the work, or the CPSC letter — which
+your steer made non-load-bearing exactly as you said it would, since one notice reproduced whole is the
+easiest possible case of *"copy and distribute recall notices"*. It stays in your post office.
+
+**Status:** open
+
