@@ -1,12 +1,27 @@
-name: Parallaxe nightly
+name: Parallaxe weekly
 
 # Werk „Parallaxe — Was jede Sprache verschweigt": je Streitthema ein Gemini-Aufruf
 # (AI-Studio-API, kein GCP/Vertex), committet src/data/parallaxe/register.json (→ Rebuild).
 # Ersetzt den Cloud-Run-Job parallaxe-nightly. Secret: GEMINI_API_KEY (kostenloser AI-Studio-Key).
+#
+# Taktung woechentlich statt taeglich (Frank, 2026-08-02). Zwei Gruende, beide
+# genannt statt stillschweigend:
+#
+# 1. Das Werk laeuft derzeit ohne Leserschaft. Ein Register, das taeglich
+#    waechst, ohne dass jemand hinsieht, verbraucht ein Kontingent und
+#    erzeugt Masse, keine Erkenntnis.
+# 2. Der AI-Studio-Free-Tier deckelt gemini-2.5-flash-lite bei 20 Anfragen pro
+#    Tag und Projekt — gemessen am 2026-08-02, nicht geschaetzt. Dieses Modell
+#    nutzen hier ausserdem das /seed-Gate; sie teilen sich diese Grenze.
+#
+# Das Werk wird NICHT stillgelegt: eine Luecke im Register ist ehrlich, ein
+# Abbruch waere ein stiller Ruecktritt von einer laufenden Messreihe. Die
+# Frequenz steht im Register selbst, damit ein Leser die Abstaende nicht fuer
+# Ausfaelle haelt.
 
 on:
   schedule:
-    - cron: '30 5 * * *' # täglich 05:30 UTC (wie zuvor der Cloud-Run-Job)
+    - cron: '30 5 * * 1' # montags 05:30 UTC (vorher täglich; Frank, 2026-08-02)
   workflow_dispatch: {}
 
 permissions:
