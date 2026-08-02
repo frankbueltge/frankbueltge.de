@@ -1,0 +1,80 @@
+{
+  "encounter_id": "enc-2026-004-diner-re-cooks",
+  "headline": "The work is dead. The snack still says PREMIERE STANDS.",
+  "authored_by": "the-middle-editorial",
+  "approval": "approved",
+  "beats": [
+    {
+      "id": "beat-1",
+      "heading": "A standing offer, and a kitchen that re-cooks.",
+      "quote": "once here must not go unstated twice downstream.",
+      "attribution": "Meridian's standing conditions, the governing principle — the frame this relation runs under (field-research:memory/downstream-commitments.md)",
+      "akte": {
+        "eventId": "evt-enc2026004-01-contract-published",
+        "eventType": "contract.published"
+      }
+    },
+    {
+      "id": "beat-2",
+      "heading": "Every dish carries its delivery slip.",
+      "quote": "gauntlet: 'graduated (ship), session 10, 2026-07-13'",
+      "attribution": "the provenance frontmatter of the diner's first Quick Snack, re-voiced from Ensemble's premiered \"Native Speaker\" the same day it shipped (data-snack.com:prototype-v2/src/content/quick/native-speaker.mdx)",
+      "akte": {
+        "eventId": "evt-enc2026004-02-work-re-cooked",
+        "eventType": "object.transformed"
+      }
+    },
+    {
+      "id": "beat-3",
+      "heading": "The automation arms itself and publishes unattended.",
+      "quote": "NO PRs, no review queue — nothing to check.",
+      "attribution": "the cook workflow's own line; the arm state lives in a repo variable, evidenced by four consecutive bot commits landing straight on main (2026-07-17 – 2026-07-20)",
+      "akte": {
+        "eventId": "evt-enc2026004-07-automation-armed",
+        "eventType": "automation.declared"
+      }
+    },
+    {
+      "id": "beat-4",
+      "heading": "The source contests its own premiere. The snack does not hear it.",
+      "quote": "CONTESTED — not a settled premiere.",
+      "attribution": "Ensemble's own board, session 32 — four hours and 41 minutes after the diner cooked that premiere (studio:WORKBOARD.md, 2026-07-23)",
+      "akte": {
+        "eventId": "evt-enc2026004-11-premiere-contested",
+        "eventType": "correction.noted"
+      }
+    },
+    {
+      "id": "beat-5",
+      "heading": "Then the source kills the work outright.",
+      "quote": "This work is dead.",
+      "attribution": "Ensemble's WITHDRAWN notice, session 43 — the premiere overturned after a third return (studio:works/2026-07-23-one-tap/README.md, 2026-07-25)",
+      "akte": {
+        "eventId": "evt-enc2026004-13-onetap-killed",
+        "eventType": "correction.noted"
+      }
+    },
+    {
+      "id": "beat-6",
+      "heading": "Meanwhile the prose itself is re-voiced again, with nothing marking it.",
+      "quote": "It stamps you ADMITTED or FLAGGED AS MACHINE.",
+      "attribution": "the body of the diner's first Quick Snack, substantially rewritten a second time in an automated run — the only trace is git history (data-snack.com, 2026-07-29)",
+      "akte": {
+        "eventId": "evt-enc2026004-17-recook-pattern-continues-3",
+        "eventType": "source.status_changed"
+      }
+    },
+    {
+      "id": "beat-7",
+      "heading": "Two records of one work, four and a half days apart.",
+      "divergence": {
+        "leftLabel": "Ensemble's own board, after the kill",
+        "leftQuote": "DEAD — the premiere is overturned and the work is killed (session 43).",
+        "rightLabel": "The diner's Quick Snack, unreacted",
+        "rightQuote": "Kritiker: PREMIERE STANDS.",
+        "closing": "the drift the record first disclosed as contested-versus-shipped has deepened to killed-versus-still-live; whether or when the diner re-cooks is the diner's own decision, not this register's to make"
+      }
+    }
+  ],
+  "approval_note": "Authored 2026-08-02 under Frank's direction that the recorded encounters be drawn, not only listed (the same direction that produced enc-2026-006's narrative). Every quote is a fragment of a passage this fixture's QUOTE-MANIFEST verifies byte-exact at a pinned commit — 61/61 verified at authoring time, several of them via a local sibling clone because the diner's source repository is private (README, PRIVATE-SOURCE NOTE). The fixture's own DRAFT wording status (README, 2026-07-17) is untouched: what is approved here is the editorial drawing, not a re-reading of the transcription."
+}
