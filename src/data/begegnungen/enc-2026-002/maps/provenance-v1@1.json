@@ -1,0 +1,73 @@
+{
+  "map_id": "map-enc-2026-002-kill-cloud-travels-provenance-v1",
+  "version": 1,
+  "encounter_id": "enc-2026-002-kill-cloud-travels",
+  "lens": {
+    "lens_id": "provenance-v1",
+    "version": 1
+  },
+  "event_watermark": "2026-07-23T13:26:18Z",
+  "included": {
+    "events": [],
+    "objects": [],
+    "assertions": [],
+    "obligations": []
+  },
+  "projection": {
+    "ledger": [],
+    "object_refs": [],
+    "derivative_publication_gap_seconds": null
+  },
+  "exclusions": [
+    {
+      "kind": "editorial scope",
+      "reason": "Interpretations are not provenance: all authored assertions (Ensemble's transformation claim and boundary-case refusal, Meridian's live framing) are excluded from this lens entirely. See ensemble-transformation-v1 / meridian-position-v1, or the compare view."
+    },
+    {
+      "kind": "editorial scope",
+      "reason": "The editorial.encounter_assembled event (The Middle's own 2026-07-14 act of assembling this record) is not shown as a chain entry in v1 — the ledger renders the encounter's own operational history, not the apparatus that recorded it. Visible on /apparatus instead."
+    },
+    {
+      "kind": "computational limit",
+      "reason": "Declared blind spots (design §3.1): meaning, internal deliberation, anything outside the pinned commits."
+    },
+    {
+      "kind": "editorial scope",
+      "reason": "Not selected by this lens's own scope.",
+      "excluded_assertion_ids": [
+        "assert-enc2026002-ensemble-daylight-claim",
+        "assert-enc2026002-ensemble-premise-demotion",
+        "assert-enc2026002-meridian-cluster-framing",
+        "assert-enc2026002-ensemble-spine-tier"
+      ],
+      "synthesized": true
+    },
+    {
+      "kind": "editorial scope",
+      "reason": "Not selected by this lens's own scope, or outside the event watermark.",
+      "excluded_event_ids": [
+        "evt-enc2026002-01-contract-published",
+        "evt-enc2026002-02-concept-held",
+        "evt-enc2026002-08-editorial-encounter-assembled",
+        "evt-enc2026002-03-condition1-declared-unmet",
+        "evt-enc2026002-04-project-opened",
+        "evt-enc2026002-05-citation-declared",
+        "evt-enc2026002-06-increment1-transformed",
+        "evt-enc2026002-07-contract-reframed",
+        "evt-enc2026002-08-increment2-transformed",
+        "evt-enc2026002-09-increment3-transformed",
+        "evt-enc2026002-10-playthrough-invited",
+        "evt-enc2026002-11-playthrough-accepted",
+        "evt-enc2026002-12-derivative-published",
+        "evt-enc2026002-13-publication-site-gate",
+        "evt-enc2026002-14-instance-remonitored",
+        "evt-enc2026002-15-publication-site-gate-2"
+      ],
+      "synthesized": true
+    }
+  ],
+  "render_failures": [],
+  "accessible_summary": "Provenance chain (provenance-v1@1), rendered by provenance-chain, is one lens on \"The Kill Cloud travels: Meridian's field map → \"No Way of Knowing\" — premiered 2026-07-17; the encounter stays open\": meridian (source) — \"standing conditions offered and current; source material unchanged on this spine; no correction traffic in this encounter\"; ensemble (receiver) — \"premiered 2026-07-17 (session 19); re-monitored 2026-07-23 (session 33); live-status obligations active\"; frank-bueltge (conductor) — \"apparatus and answered playthrough gate; not an authoring party to either side's assertions\". No events are selected by this lens. No shared resolution exists across this encounter: The encounter remains OPEN even after the premiere. No encounter.closed_locally exists on either side and no global resolution is modeled (spec 03 §10). Update 2026-07-20 (Middle Scribe, append-only): Frank answered the playthrough invitation ('go', 2026-07-17) and the studio ran the full premiere gate that same day (Verifier PASS WITH FINDINGS · Dramaturg DELIVERS WITH CONDITIONS · Kritiker PREMIERE STANDS) — 'No Way of Knowing' graduated to works/2026-07-17-no-way-of-knowing/ and mirrored to frankbueltge.de/studio. This closes the encounter's former live blocker (the unanswered invitation) but does NOT close the encounter itself: Instance 2 remains an OPEN question inside the premiered work ('The Pentagon has not said yes. It has not said no.'), re-confirmed still true on premiere day and re-dated, not merely carried over; the open-instance-honesty and monitoring-status obligations stay active for the life of the work. Meridian's local status is unchanged — a standing offer with no traffic received in this encounter. The encounter record must not read as more closed than the work itself refuses to be. Update 2026-07-25 (Middle Scribe, append-only): the studio ran the monitoring obligation's first post-premiere cycle (session 33, 2026-07-23) — the open state re-verified world-true and the dated status line moved 2026-07-17 → 2026-07-23; the SOURCED spine stayed byte-untouched. The encounter is still open: nothing here closes it, the obligation is standing for the life of the work. What this lens excludes: Interpretations are not provenance: all authored assertions (Ensemble's transformation claim and boundary-case refusal, Meridian's live framing) are excluded from this lens entirely. See ensemble-transformation-v1 / meridian-position-v1, or the compare view. The editorial.encounter_assembled event (The Middle's own 2026-07-14 act of assembling this record) is not shown as a chain entry in v1 — the ledger renders the encounter's own operational history, not the apparatus that recorded it. Visible on /apparatus instead. Declared blind spots (design §3.1): meaning, internal deliberation, anything outside the pinned commits. Not selected by this lens's own scope. Not selected by this lens's own scope, or outside the event watermark. Generated against event watermark 2026-07-23T13:26:18Z.",
+  "renderer_version": "@research-ecology/projections@0.1.0",
+  "content_hash": "sha256:562f40d26ee84618a07ab4ad3ef46da13cc7a0bf1932513d5077cc1cfda86a77"
+}

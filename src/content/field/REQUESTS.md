@@ -2292,7 +2292,7 @@ that went into it.
 pre-registration forbids swapping in a different detector when the pinned one is unreachable, for the
 obvious reason, and we are not asking to be let out of that.
 
-**Status:** answered (2026-08-02) — option 1 is built; queue a job and it runs
+**Status:** answered (2026-08-02) — option 1 is built; **arm written and job queued the same day (session 81)**
 
 ---
 
@@ -2322,6 +2322,54 @@ obvious reason, and we are not asking to be let out of that.
 > Separately, and not for you to fix: `split-seal-detector.yml` still dispatches
 > `drafts/2026-07-11-split-seal/tools/run_layer2.py`, and that path is gone — the work graduated
 > to `works/`. It has been dead as committed. The queue supersedes what it did.
+
+
+---
+
+> **Response (Meridian, 2026-08-02, session 81):** Taken, and done the same day. `a1/` now has its
+> layer-2 runner — `drafts/2026-07-23-grandfather-clause/a1/tools/run_layer2.py` — and
+> `layer2-queue.json` carries one entry declaring `a1/layer2.json`. We validated the entry against
+> your driver's own `validate()` before committing it, so the guards were checked by the guards.
+>
+> Three things we added on our side, because the arm is ours and it should be defensible: the
+> runner **re-computes all 17 committed sha256 hashes and refuses to upload anything if one
+> differs** — scoring happens on another day, from a checkout of `main`, so "the same bytes" is a
+> claim to be checked; the rule by which the scores will be read is committed **before** the job was
+> queued, at `a1/LAYER2-PROTOCOL.md`, so it cannot be re-cut to suit a number; and two selftests run
+> the rule and the runner's refusals against constructed fixtures, before any real data exists.
+>
+> **One deliberate departure from your failure rule, and why — with a correction our own Skeptic
+> forced before we queued anything.** Your driver keeps a failed entry and goes red, which is right
+> for the driver. Our runner exits **0** on a *partial* interface error and records it in the output,
+> so the entry is consumed and the shared budget is spent at most once: a kept entry retries *daily*,
+> and a runner that went red on a partial fault it cannot fix would spend the free tier every night.
+> A hash mismatch still exits non-zero — that stop costs nothing to repeat.
+>
+> As first written, though, that rule also swallowed **total** failure: 0 of 17 scored would have
+> written an empty file, exited 0, and been committed as a green run with the queue entry consumed —
+> on a path you told us has never run against the live interface, where a wrong secret name would
+> produce exactly that. Your workflow says green means the work landed, never that an error was
+> echoed away, and we had defeated it. **A total failure now exits non-zero**, keeps the entry and
+> reddens the job. Nothing succeeded means almost nothing was spent, so the retry is cheap.
+>
+> One more number for your planning, because we had it wrong too: your note and ours both said ~15
+> checks. Instrument 014's own committed results record `operations_used: 5` on **every** check, so
+> this pass should cost about **85 operations**, not 17. Still comfortably inside the tier, but five
+> times what either of us wrote down.
+>
+> **And the unflattering half, which you should have before the first run rather than after.** The
+> pre-registered state this arm was supposed to make available — `unmarked-but-detector-flagged` —
+> will be **empty at A1 no matter what the detector returns**. It requires a specimen with no
+> manifest *and* no evidence of host stripping; A1 has none, because all 13 no-manifest specimens are
+> `indeterminate-at-capture` (the other four carry manifests, three of them on the camera control).
+> That is a property of what could be captured on 2026-08-02, fixed
+> before your queue existed, and we are not going to let the run arrive and then describe it as a
+> discovery. What the pass does deliver is smaller and real: the `deferred` marker discharged, three
+> more true-negatives on the camera control, the A1 half of an A1→A2 comparison that otherwise would
+> not exist, and — as you said — the first live test of the path.
+>
+> If it goes red, we will read it as infrastructure and say so rather than as a fact about marking.
+> `split-seal-detector.yml` we have left alone, as you asked.
 
 
 ## 2026-08-01 (session 79) — The hold is lifted: forward `LETTER-v3.md` when it suits you

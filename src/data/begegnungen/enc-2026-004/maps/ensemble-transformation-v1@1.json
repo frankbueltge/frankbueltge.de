@@ -1,0 +1,75 @@
+{
+  "map_id": "map-enc-2026-004-diner-re-cooks-ensemble-transformation-v1",
+  "version": 1,
+  "encounter_id": "enc-2026-004-diner-re-cooks",
+  "lens": {
+    "lens_id": "ensemble-transformation-v1",
+    "version": 1
+  },
+  "event_watermark": "2026-07-29T07:27:25Z",
+  "included": {
+    "events": [],
+    "objects": [],
+    "assertions": [],
+    "obligations": []
+  },
+  "projection": {
+    "source_column": [],
+    "derivative_column": [],
+    "transformation_band": [],
+    "tier_legend": [
+      "VERIFIED",
+      "DISCLOSED RECONSTRUCTION",
+      "IMAGINED"
+    ],
+    "obligations": []
+  },
+  "exclusions": [
+    {
+      "kind": "participant not included",
+      "excluded_author_collective_id": "meridian",
+      "reason": "Meridian's counter-framing (assert-enc2026001-meridian-live-framing) is excluded here — the source's response is visible in the compare view, not here."
+    },
+    {
+      "kind": "editorial scope",
+      "reason": "Events 01/03/05 (the standing contract's publication and Meridian's own correction chain) are excluded — this lens groups by material tier, not the full time-ordered chain; see provenance-v1."
+    },
+    {
+      "kind": "editorial scope",
+      "reason": "Not selected by this lens's own scope.",
+      "excluded_assertion_ids": [
+        "A1"
+      ],
+      "synthesized": true
+    },
+    {
+      "kind": "editorial scope",
+      "reason": "Not selected by this lens's own scope, or outside the event watermark.",
+      "excluded_event_ids": [
+        "evt-enc2026004-01-contract-published",
+        "evt-enc2026004-02-work-re-cooked",
+        "evt-enc2026004-03-corpus",
+        "evt-enc2026004-08-editorial-encounter-assembled",
+        "evt-enc2026004-04-transport-automated",
+        "evt-enc2026004-05-admission",
+        "evt-enc2026004-06-split-seal-refreshed",
+        "evt-enc2026004-07-automation-armed",
+        "evt-enc2026004-08-corpus-grown",
+        "evt-enc2026004-09-corpus-grown-2",
+        "evt-enc2026004-10-corpus-grown-3",
+        "evt-enc2026004-11-premiere-contested",
+        "evt-enc2026004-12-recook-pattern-continues",
+        "evt-enc2026004-13-onetap-killed",
+        "evt-enc2026004-14-corpus-grown-4",
+        "evt-enc2026004-15-recook-pattern-continues-2",
+        "evt-enc2026004-16-corpus-grown-5",
+        "evt-enc2026004-17-recook-pattern-continues-3"
+      ],
+      "synthesized": true
+    }
+  ],
+  "render_failures": [],
+  "accessible_summary": "Object transformation (Ensemble) (ensemble-transformation-v1@1), rendered by object-transformation, is one lens on \"The diner re-cooks: ecology works travel as provenance-locked Quick Snacks\": ensemble (source) — \"three works re-cooked (native-speaker S10, recovery S28, one-tap S31); one-tap KILLED/WITHDRAWN at source 2026-07-25 (studio session 43), superseding its CONTESTED premiere status of 2026-07-23; withdrawal notice + two corrections (a rendering defect and a false verified-fact claim) carried on the work's own face\"; meridian (source) — \"seven gauntlet-shipped works re-cooked under standing conditions (instrument 020 'One Line for Ten Thousand' added 2026-07-29); Split Seal's re-voiced headline number (hookStatBig) has now flipped twice without a new caveat added — 15→6 in the 2026-07-26 run, back to 15 in the 2026-07-29 run\"; data-snack-plenum (receiver) — \"re-voices with per-file provenance; 11 works as of 2026-07-29 (Meridian's instrument 020 added); admitted 2026-07-17; cook automation armed and firing unattended since 2026-07-17/18 (no PR); its 'One Tap' Quick Snack has not been re-cooked since the source premiere became contested (2026-07-23) and, as of the diner's latest commit touching it (ddd4a0a2, 2026-07-23T07:15:03Z), still has not reacted to the source's later withdrawal (2026-07-25T22:42:25Z), now roughly 4.5 days unreacted; the 2026-07-29 run (83efcdd1f) left one-tap untouched but re-voiced native-speaker and split-seal yet again — a fourth title flip and a rewritten body on native-speaker, and split-seal's headline number flipping back from 6 to 15\"; frank (conductor) — \"admitted the practice 2026-07-17; not an authoring party to either side's assertions\". No events are selected by this lens. No shared resolution exists across this encounter; participant-specific statuses stay distinct rather than being flattened into one. What this lens excludes: Meridian's counter-framing (assert-enc2026001-meridian-live-framing) is excluded here — the source's response is visible in the compare view, not here. Events 01/03/05 (the standing contract's publication and Meridian's own correction chain) are excluded — this lens groups by material tier, not the full time-ordered chain; see provenance-v1. Not selected by this lens's own scope. Not selected by this lens's own scope, or outside the event watermark. Generated against event watermark 2026-07-29T07:27:25Z.",
+  "renderer_version": "@research-ecology/projections@0.1.0",
+  "content_hash": "sha256:2b5e07596a00aeff9f3f5a0e09b25eb8f0b461ad3d1e26717810776d660675a1"
+}
