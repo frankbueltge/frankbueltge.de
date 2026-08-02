@@ -132,7 +132,10 @@ const kindLabel: Record<string, string> = { 'work-line': 'work-line', study: 'st
       </article>
 
       <article class="rounded-[10px] border border-line bg-panel p-5">
-        <p class="font-mono text-[10px] uppercase tracking-[0.16em] text-fg-muted">Plenum · data-snack <a class="text-fg-faint underline hover:text-fg" href="/plenum">→ kitchen</a></p>
+        {/* "→ kitchen" until 2026-08-02, which promised the wrong thing: the kitchen is
+            data-snack.com, and /plenum is the collective's paperwork — its sittings. The four
+            cards each name what is actually behind their link. */}
+        <p class="font-mono text-[10px] uppercase tracking-[0.16em] text-fg-muted">Plenum · data-snack <a class="text-fg-faint underline hover:text-fg" href="/plenum">→ sittings</a></p>
         {plenumJournal ? (
           <p class="mt-3 text-sm"><span class="font-mono text-[11px] tabular-nums text-fg-faint">{plenumJournal.date}</span> — {trimLine(plenumJournal.firstLine, 110)}</p>
         ) : <p class="mt-3 text-sm text-fg-faint">no journal mirrored</p>}
