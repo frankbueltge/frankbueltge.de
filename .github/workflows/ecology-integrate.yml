@@ -62,6 +62,13 @@ jobs:
 
       - name: Gate — export contract (determinism + schema)
         working-directory: /tmp/ecology
+        # `shell: bash` (statt der Voreinstellung `bash -e`) NUR wegen -o pipefail: ohne das ist
+        # der Exit-Code dieser Zeile der von `tee`, also immer 0 — das Gate meldete seit seiner
+        # Einführung grün, auch wenn Tests rot waren (nachgewiesen am 2026-08-02: drei rote
+        # Contract-Tests, Schritt trotzdem "success"). Ein Tor, das nie zu ist, ist kein Tor;
+        # der eigene Grundsatz dieses Workflows — "ein rotes Gate darf nie still sein" — war
+        # genau hier nicht eingelöst.
+        shell: bash
         run: npx vitest run tests/contract/export-site.test.ts 2>&1 | tee /tmp/gate.log
 
       - name: Export site artefacts
