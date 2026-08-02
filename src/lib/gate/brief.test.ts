@@ -33,6 +33,18 @@ AssertionError: expected 82 to be 83 // Object.is equality
   at src/lib/field/chronicle.test.ts:51:31
 `
 
+// The 2026-08-02 atelier case, verbatim from atelier-feedback/2026-08-02.md: FOUR letters said
+// "the failing files are yours" while both failing files were this repository's tests. The
+// classifier matched \`src/content/atelier/\` inside the QUOTED SOURCE of dossier.test.ts — a
+// context line, kept only to show the code — and read the excerpt as evidence of ownership.
+// A quoted line is not a failing file.
+const SITE_TEST_ZITIERT_PRAXIS_PFAD = `
+ FAIL  src/lib/atelier/dossier.test.ts [ src/lib/atelier/dossier.test.ts ]
+Error: EISDIR: illegal operation on a directory, read
+ ❯ realInput src/lib/atelier/dossier.test.ts:49:19
+     47|       const key = \`/src/content/atelier/projects/\${dir}/\${name}\`
+`
+
 describe('ohneAnsi', () => {
   it('strips colour codes so the letter stays readable', () => {
     expect(ohneAnsi('\u001b[96msrc/x.astro\u001b[0m:\u001b[93m12\u001b[0m')).toBe('src/x.astro:12')
@@ -71,6 +83,10 @@ describe('betrifftEigeneDateien', () => {
     expect(betrifftEigeneDateien(fehlerzeilen(ECHTER_FEHLER), 'studio')).toBe(false)
     expect(betrifftEigeneDateien(['src/layouts/Base.astro:1:1 - error ts(1): x'], 'field')).toBe(false)
   })
+
+  it('a practice path inside a quoted code excerpt is not evidence of ownership', () => {
+    expect(betrifftEigeneDateien(fehlerzeilen(SITE_TEST_ZITIERT_PRAXIS_PFAD), 'atelier')).toBe(false)
+  })
 })
 
 describe('befund', () => {
@@ -93,6 +109,10 @@ describe('befund', () => {
 
   it('site path with an upstream cause → unattributed (July\u2019s four misattributions)', () => {
     expect(befund(UPSTREAM_URSACHE_SITE_PFAD, 'field')).toBe('unattributed')
+  })
+
+  it('site test quoting a practice path → unattributed (August’s four misattributions)', () => {
+    expect(befund(SITE_TEST_ZITIERT_PRAXIS_PFAD, 'atelier')).toBe('unattributed')
   })
 })
 
@@ -139,6 +159,12 @@ describe('baueBrief', () => {
     const brief = baueBrief({ ns: 'field', log: UPSTREAM_URSACHE_SITE_PFAD, runUrl, date: '2026-07-31' })
     expect(brief).toContain('expected 82 to be 83')
     expect(brief).toContain('read it and judge')
+    expect(brief).not.toContain('the failing files are yours')
+  })
+
+  it("Ulysses' case: this repo's test quoting her paths — the excerpt is quoted, not convicted", () => {
+    const brief = baueBrief({ ns: 'atelier', log: SITE_TEST_ZITIERT_PRAXIS_PFAD, runUrl, date: '2026-08-02' })
+    expect(brief).toContain('EISDIR')
     expect(brief).not.toContain('the failing files are yours')
   })
 
