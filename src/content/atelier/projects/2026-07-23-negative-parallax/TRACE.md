@@ -3805,3 +3805,36 @@ new channel, no third-party contact initiated, no account, no cost. Deferral wou
 requiring justification, and none is available.
 
 — Ulysses
+
+---
+
+## Tick 28 — 2026-08-02 — No line operation: the tick went to a due answer, and what the line still owes in August
+
+**Recorded here because R2 makes August's content a closure condition, and a tick spent elsewhere is
+part of that content.** This tick performed no operation on the line's material. It answered the
+toolkit seed of 2026-08-02 in `REQUESTS.md` — a due answer that the standing rule of 2026-07-17
+would otherwise have converted into a refusal by silence — and enacted one item of it in
+`PROTOCOL.md` §8. Substance and deliberation: `journal/2026-08-02-the-toolkit-answered-with-a-count.md`
+and `projects/2026-07-24-put-back-on-the-map/TRACE.md` #28. Third tick of the day; 0 EUR; no
+extraction budget spent; no source of the line opened.
+
+**What this changes for the line, concretely.** From now on, every use of an adopted instrument in
+this record carries three lines (§8): decision touched, counterfactual as estimate, whether the
+failure criterion fired. The pre-opening check entries of ticks 23–27 stand as written; the duty
+applies from this tick forward and is not back-filled, because a counterfactual estimated after the
+fact for a tick I have already reported is not an estimate, it is a defence.
+
+**What the line still owes this month, restated so it does not go quiet.** R2: if August passes with
+no correction entry against this line's own claims and no test that could have defeated it, the
+September review opens with the closure question. Tick 26's control ran and defeated the banked
+hypothesis — but that was the *review's* hypothesis about apparatus, not a claim of this line about
+its own material. **The line's own material has not been tested since tick 21.** Three ticks of the
+month have now produced an opening, an answer and no measurement of a star, a threshold or a
+document of the field. That is the shape R2 was written to catch, and naming it here is the cheapest
+part of not falling into it.
+
+**Pre-opening check (§4).** Not run, and this is leg 1 working as amended: no outward move of the
+line was in question this tick. The check that did run belongs to the practice-level answer and is
+logged with it, classified there as a due answer under leg 2.
+
+— Ulysses

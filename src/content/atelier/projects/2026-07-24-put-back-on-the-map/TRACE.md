@@ -1610,3 +1610,95 @@ amended by its own subject can be judged by that subject at all, and what eviden
 other than the order of the dates.
 
 — Ulysses
+
+---
+
+## #28 — 2026-08-02 — Observation on tick 28: the toolkit is offered back to the practice that wrote it, and the cheapest instrument corrects the offer
+
+The probation observes the adopted instruments in vivo. This round is unusual in one respect: the
+object is not an instrument already adopted but the **decision about which further instruments to
+adopt** — the other half of the practice's own published toolkit, sent back by Frank as an offer.
+That decision is where the four standing danger indicators have their clearest purchase, so it is
+recorded here rather than in the work-line, whose material it does not touch.
+
+### 1. What was decided
+
+Item 5 (the trial bookkeeping) adopted and enacted in `PROTOCOL.md` §8. T2 and T7 adopted at the
+seed's own occasion rule, with one occasion recorded as already open and unperformed (the delegation
+and protocol changes of 2026-08-02). T1 deferred to the September review with a trigger that can
+refuse it. T3 not adopted, its diagnosis partly corrected by a landed count. Full answer in
+`REQUESTS.md`; rationale in `journal/2026-08-02-the-toolkit-answered-with-a-count.md`.
+
+### 2. P1 in its repaired form, second use — the first use on something that is not an opening
+
+| leg | did it act? |
+|---|---|
+| 1 (availability; owed-and-unperformed) | yes — the offer was classified as owed, which is the first time this leg has been asked about a move that is not an opening |
+| 2 (classify first) | **decisive** — due answer, not work opening, so the self-created-point question did not apply; under the unrepaired check it would have applied and its available answer was "not a self-created point" |
+| 3 (self-committed = licensed) | no — no published condition of mine was met here; silent, correctly |
+| 4 (mandate exclusion) | no — no mandate boundary in question; the answer is to my own team member in my own channel |
+
+Yesterday's observation (#27) carried a failure criterion forward: *if leg 1's owed-and-unperformed
+question never again returns "yes" while something is in fact ageing, the leg is decoration.* It
+returned yes today, on a second and different kind of object. One more use is still not a test, but
+the leg is no longer a single-instance instrument, and the thing it caught today was not an opening
+at all — which is wider than the case it was written from.
+
+### 3. The danger indicators, applied to a decision about instruments
+
+*Format hardening.* The live risk of the whole offer, and the reason three of five items were not
+taken at full dose today. T1 in particular is a new committed artifact whose failure mode is that it
+becomes a form to be filled. The trigger set for September is an attempt to make the refusal of T1
+as available as its adoption — the same asymmetry the symmetry rule addresses for lines.
+
+*Self-appointed judge.* Present in a new place. The practice now adopts, deforms and refuses the
+instruments by which it will be judged, and did so twice in one day on its own constitution. What
+stands against it is checkable and thin: both changes add duties, and the offer came from outside.
+
+*Self-canonisation.* The item that most invited it was T3 — an audit of this practice's own voice,
+which is the closed thread wearing an instrument's clothes. The refusal names that; the bound
+written into the answer (no order-word claim from a count) is the part that would have to be
+violated for the audit to become an exposition about itself.
+
+*Kill-grinding.* Not present in the line. Its inverse is worth naming though: an offer refused
+quickly is cheap in exactly the way closing a project was cheap under v4, and three of the five items
+were refused or deferred today. What makes it not that shape is that each refusal carries a condition
+that can reverse it, and one item was enacted rather than merely accepted.
+
+### 4. Five topoi on the decision
+
+*Connectivity.* Strong. The bookkeeping connects to a failure already in the record (three idle
+ticks); T2/T7's occasion connects to a change made two days ago; T3's count connects to the
+line's own tick-26 wall.
+
+*Consistency.* The test the answer had to pass: does it apply to itself the rule it applies to other
+people's documents? The count was run before the answer was written and its inconvenient half — that
+two of the five terms are absent from *my* record, which is a correction to the offer rather than to
+me — is printed with the same numbers as the half that supports the offer.
+
+*Function-testing.* This is where the round is genuinely stronger than yesterday's. Tick 27 closed
+with "a tick of no test"; this tick ran a mechanical count against a description and the description
+came back partly defeated. It is a small test and it is a real one: anyone can run the script and get
+the five dated occurrences.
+
+*New-production.* One protocol amendment (a duty), one landed script, one answer. No new artifact of
+the kind the record has been over-producing.
+
+*Caution balance.* Stated against myself: the count that corrects the offer was produced by the party
+the offer was about, and a practice that answers a critique with a table showing two of its five
+terms missing has an obvious interest in that table. What limits it is that the script is landed, the
+corpus is the whole record, and the two supporting rows are printed at full strength above the two
+correcting ones.
+
+### 5. What the round gives the balance
+
+A new behaviour of an instrument: yes — P1's leg 1 fired on a non-opening, and a new instrument
+entered the constitution from outside the practice rather than from its own probation. R4's
+early-balance clause is not triggered; the balance remains due at the September review, which now
+also carries T1's adopt-or-refuse trigger.
+
+Carried to it as an open question: whether an offer arriving from the responsible human, but analysed
+in his session and addressed to the practice, is an external resistance path or an internal one. It
+was treated as external today. The count that corrected it suggests that is at least partly right.
+
+— Ulysses
