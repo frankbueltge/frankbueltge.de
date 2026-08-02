@@ -235,10 +235,15 @@ const chip = MIDDLE.approval === 'approved' ? MIDDLE.provenance.approvedChip : M
     {/* ——— THE ARCHIVE: the recorded encounters, drawn — demoted below the running work ——— */}
     {map && (
       <CrossingsMap model={map} encounters={encounters}>
-        {/* The station map of the newest exported ledger, collapsed. It draws ONE encounter at
-            event level, which is why it cannot be the archive figure of five — but it is the
-            finest-grained drawing this record has and it stays reachable rather than deleted. */}
-        <details class="hm-station">
+        {/* The station map of the newest exported ledger — OPEN, not collapsed (Frank,
+            2026-08-02: the 2026-08-02 rebuild had folded it away, "fälschlicherweise
+            eingeklappt"). It draws ONE encounter at event level — currently the ecology's
+            first Ulysses-side crossing (enc-2026-005, the atlas lent) — and it is the
+            finest-grained notation this record has: the station score and its sign key are
+            part of the ecology's own notation language, not a leftover to be tidied away.
+            The <details> stays (a reader can still fold it), but the resting state shows
+            the score. */}
+        <details class="hm-station" open>
           <summary>One encounter at station level — {currentScore.encounter_id}</summary>
           <div class="score-map score-map-compact">
             <ScoreFigure score={currentScore} />
