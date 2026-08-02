@@ -101,15 +101,16 @@ export const NOTATION_REGISTER: readonly NotationEntry[] = [
         note: 'Demoted with the crossing-dossier rebuild, then reopened the same day on Frank’s call ("fälschlicherweise eingeklappt") — the resting state shows the score and its key.',
         record: 'src/pages/encounters/index.astro',
       },
-    ],
-    validation: { palette: 'ecology-voices', tests: ['src/lib/begegnungen/score.test.ts'] },
-    openQuestions: [
       {
         date: '2026-08-02',
-        note: 'Only 2 of 6 register entries have exported ledgers — the finest notation covers the least. Should every fixture export one?',
-        record: 'src/data/begegnungen/',
+        note: 'The coverage question this entry carried, answered the same day it was asked — and the gap turned out to be mechanical, not editorial: the export drew only the crossing holding the entrance, so a crossing a newer one had overtaken could have been approved forever and still never received a ledger, with nothing anywhere going red. The export now draws every approved crossing, and the three older ones were written their narratives; all six register entries carry a score.',
+        record: 'research-ecology:apps/export-site/src/export.ts',
       },
     ],
+    validation: { palette: 'ecology-voices', tests: ['src/lib/begegnungen/score.test.ts'] },
+    openQuestions: [],
+    noneOpen:
+      'None open on 2026-08-02 — the finest notation no longer covers the least: all six recorded crossings carry an exported ledger, and approval is now what draws one, so a drawing can no longer be silently withheld by the export order.',
   },
   {
     id: 'crossings-map',
