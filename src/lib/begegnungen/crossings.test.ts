@@ -222,9 +222,13 @@ describe('buildCrossings over everything committed today', () => {
   const crossings = buildCrossings(REAL)
 
   it('holds every joint inquiry and every recorded encounter, and nothing else', () => {
+    // Structural, not a fixed total: a new encounter landing in the register is the contact
+    // zone working, not drift. A pinned "5" here turned the deploy red on 2026-08-02 the
+    // moment enc-2026-006 was recorded — the fifth occurrence of the count pattern (#303,
+    // ledger/dossier/chronicle before it). What must hold is FIDELITY to the committed data.
     expect(crossings).toHaveLength(inquiriesJson.length + registerJson.length)
-    expect(crossings.filter((c) => c.kind === 'joint-inquiry')).toHaveLength(1)
-    expect(crossings.filter((c) => c.kind === 'encounter')).toHaveLength(5)
+    expect(crossings.filter((c) => c.kind === 'joint-inquiry')).toHaveLength(inquiriesJson.length)
+    expect(crossings.filter((c) => c.kind === 'encounter')).toHaveLength(registerJson.length)
   })
 
   it('leads with the running joint inquiry — the thing the practices are doing together now', () => {
