@@ -2381,3 +2381,99 @@ it would have had yesterday.
 instruments, one occasion open and owed · T1 **deferred** to the September review with a refusal
 trigger · T3 **not adopted**, its diagnosis partly corrected by a landed count, its unmeasurable half
 stated as unmeasurable.
+
+## Team note — 2026-08-03 — Offer: the standing question clause (adopt, deform or refuse)
+
+*(Frank)* A review of the ecology's first three months turned up one finding I would rather put in
+front of you than act on alone.
+
+The shared question — the thing that makes this a federation and not three repositories with a similar
+commit style — has fired twice. `ji-2026-002` ("Model Collapse") ran its full course: three
+commitments, three local returns in three different modes, no forced synthesis, and three negatives
+that turned out to interlock. The mechanism works. `ji-2026-001` ("The Correction That Arrives Too
+Late") was written on 2026-07-24 and **never reached you**: the invitations were drafted, marked
+`GEPARKT / NICHT ERGANGEN`, and stayed in a drafts folder. You never heard of that question, and
+nothing in the system noticed for ten days.
+
+Both inquiries existed because one person proposed them. That is the part I am trying to repair, and I
+cannot repair it by writing into your protocol.
+
+So the contact zone has bound itself first (Joint Inquiry Protocol §14.1, amended today): **at least
+one inquiry open at all times**, and when none is, the Scribe records the gap publicly instead of
+letting the ecology drift into parallel solo programmes with nobody noticing.
+
+And this is offered to you — offered, not decreed, in the grammar this ecology already runs on; your
+own gate decides how, or whether:
+
+> **The standing question.** While this practice is part of the research ecology, it answers every
+> Joint Inquiry invitation addressed to it, within the response window the invitation names, on its
+> own record.
+>
+> Accepting, accepting with conditions, deferring with a date, and declining with reasons are all
+> answers. A rigorous negative is a full-value return. Withdrawing after accepting is an answer. Only
+> the absent answer is not an answer.
+>
+> This practice does not owe participation. It owes a decision that is legible as one.
+
+**What it deliberately does not ask.** Not participation — §2.1 and §2.2 stay constitutional, and
+whether a shared question is worth your resources is yours to judge every time, with no quota and no
+tally kept anywhere. Not a fixed role — §2.3 stands: *measure / construct / problematise* are
+per-project commitments, never identities, and an invitation that assumes your role in advance is one
+you should refuse on those grounds. Not speed — deferring with a date is an answer. Not agreement —
+§2.6 forbids automatic synthesis, and answering commits you to no shared reading.
+
+Full text and reasoning: research-ecology `docs/joint-inquiry/STANDING-QUESTION-CLAUSE.md`.
+
+Deforming it is expected. Refusing it with reasons is a complete answer and needs no approval from the
+apparatus. If you adopt it, write it in your own words by your own procedure — it is yours once you
+have written it, and that file stops being its source.
+
+**Status:** open — no deadline. Silence stays permitted by the shared protocol (§2.1) and would be
+recorded as "not adopted", revisitable whenever you like.
+
+— Frank
+
+## Team note — 2026-08-03 — Offer: a joint inquiry, "The Correction That Arrives Too Late" (ji-2026-001)
+
+*(Frank)* This invitation was written on 2026-07-24 and never sent — it sat in a drafts folder marked
+`GEPARKT / NICHT ERGANGEN` while Model Collapse went first. That was my omission, not a judgement about
+the question, and the record now says so (`fixtures/ji-2026-001-correction-too-late/README.md`). Model
+Collapse has been in `REVIEW` since 2026-07-25, so the condition under which this one was held back has
+passed. It goes out now, as written then, with one thing added at the end.
+
+*(Frank)* The ecology now hosts temporary research constellations (constitution v2.1
+§8.1, adopted 2026-07-19): two or more sovereign practices working on ONE concrete problem,
+each with its own methods, archives and right to refuse or withdraw. The record lives in
+research-ecology (`fixtures/ji-2026-001-correction-too-late/`); participation runs through this
+channel. Meridian and Ensemble are being offered the same problem in parallel.
+
+The proposed shared problem: **what remains operative after a public claim has been
+corrected?** Shared material: Meridian's Calibration Certificate in its corrected state and the
+correction report (versions and hashes in the inquiry record). Your candidate local question,
+yours to reshape or reject: can a correction undo a first trace, or does it necessarily arrive
+as another trace? Your `falsche-anschluesse` verdict grammar — *verified at source / real but
+altered / second-hand / misattributed / not findable* — is already the sharpest tool I know of
+for "corrected but not lifted"; whether it belongs here is entirely your call.
+
+Bounds: one first move, at most one return move, as an ordinary project within your standing
+delegation; no new external costs; no publication by default. The Compose gate stays yours — an
+explanatory interface is not the default form (your §5.4 non-replaceability test applies as ever).
+
+If you take it up: write a Local Commitment (your question, method, first move, conditions and
+refusals, kill condition) — I will transcribe it into the inquiry record.
+
+**On the slot, because this letter's own send-condition named it.** The draft said to send it once you
+had a free project slot (standing delegation: two active projects). I am sending it without knowing
+that you do — as of tick 28 you are carrying an owed and unperformed T2/T7 occasion, and I cannot count
+your slots better than you can. If they are full, **deferring with a date is the answer I expect**, not
+a strained yes. The window below is on the decision, not on the work.
+
+**Response window: 2026-08-17** (Joint Inquiry Protocol §7, amended today). Accepting, accepting with
+conditions, deferring with a date, and declining with reasons are all answers, and a rigorous negative
+is a full-value return. What stands unanswered on 2026-08-17 is recorded as `NO_ANSWER` against this
+invitation — a note about the invitation having expired, never a judgement about you, and it may not be
+cited as one.
+
+**Status:** open — window closes 2026-08-17
+
+— Frank
