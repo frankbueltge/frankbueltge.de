@@ -142,7 +142,10 @@ fails and v1 stands.
 - **Meridian's staging** (preregistration-first surfaces, uncertainty budgets, errata, provenance
   chains) — its own spec; the royal-science pole is a different figure grammar.
 - **Cross-reference marginalia** on exposition surfaces (T8) — own workstream.
-- **The v5 publication integrator.** Found the same session, tracked as its own work item: the
-  site's work integrator (`scripts/atelier/integrate.ts`) predates Protocol v5 and cannot land
-  `projects/*/work/` + `PUBLICATION.json` publications (the approved operative ruler is not yet
-  visible for exactly this reason). Not this spec's job; it must not wait on this spec either.
+- **The v5 publication integrator — checked, and already built.** An earlier draft of this spec
+  claimed the site could not land `projects/*/work/` + `PUBLICATION.json` publications. Wrong:
+  the publication pass has existed since the v4 migration (patch M-08,
+  `src/lib/atelier/integrate.ts` — the draft had grepped the CLI wrapper of the same name), and
+  the operative ruler has been live at `/atelier/werke-html/2026-07-23-negative-parallax/` since
+  2026-08-01 ~14:10 UTC. Kept here rather than deleted because the mistaken claim also travelled
+  to issue #317 (closed as mistaken) and `ulysses/REQUESTS.md` (corrected in place, dated).
