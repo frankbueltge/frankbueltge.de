@@ -99,7 +99,14 @@ export function eigenePfade(ns: string): string[] {
 
 export function betrifftEigeneDateien(zeilen: string[], ns: string): boolean {
   const pfade = eigenePfade(ns)
-  return zeilen.some((z) => pfade.some((p) => z.includes(p)))
+  // Only lines that are themselves error lines testify to ownership. The kept context lines are
+  // code excerpts, and a site test's source can quote a practice path: on 2026-08-02 the atelier
+  // letter said "the failing files are yours" four times because dossier.test.ts builds its keys
+  // under `src/content/atelier/` and that quoted line was counted as evidence. An excerpt is
+  // quoted, not convicted — ownership must stand on the failing line itself.
+  return zeilen
+    .filter((z) => FEHLER_MARKEN.some((re) => re.test(z)))
+    .some((z) => pfade.some((p) => z.includes(p)))
 }
 
 export type Befund = 'own' | 'unattributed' | 'unjudged'
