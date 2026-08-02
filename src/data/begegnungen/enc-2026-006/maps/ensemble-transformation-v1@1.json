@@ -1,0 +1,62 @@
+{
+  "map_id": "map-enc-2026-006-set-the-standard-ensemble-transformation-v1",
+  "version": 1,
+  "encounter_id": "enc-2026-006-set-the-standard",
+  "lens": {
+    "lens_id": "ensemble-transformation-v1",
+    "version": 1
+  },
+  "event_watermark": "2026-08-02T15:50:00Z",
+  "included": {
+    "events": [],
+    "objects": [],
+    "assertions": [],
+    "obligations": []
+  },
+  "projection": {
+    "source_column": [],
+    "derivative_column": [],
+    "transformation_band": [],
+    "tier_legend": [
+      "VERIFIED",
+      "DISCLOSED RECONSTRUCTION",
+      "IMAGINED"
+    ],
+    "obligations": []
+  },
+  "exclusions": [
+    {
+      "kind": "participant not included",
+      "excluded_author_collective_id": "meridian",
+      "reason": "Meridian's counter-framing (assert-enc2026001-meridian-live-framing) is excluded here — the source's response is visible in the compare view, not here."
+    },
+    {
+      "kind": "editorial scope",
+      "reason": "Events 01/03/05 (the standing contract's publication and Meridian's own correction chain) are excluded — this lens groups by material tier, not the full time-ordered chain; see provenance-v1."
+    },
+    {
+      "kind": "editorial scope",
+      "reason": "Not selected by this lens's own scope.",
+      "excluded_assertion_ids": [
+        "A1",
+        "A2"
+      ],
+      "synthesized": true
+    },
+    {
+      "kind": "editorial scope",
+      "reason": "Not selected by this lens's own scope, or outside the event watermark.",
+      "excluded_event_ids": [
+        "evt-enc2026006-08-editorial-encounter-assembled",
+        "evt-enc2026006-01-commission-filed",
+        "evt-enc2026006-02-answer-published",
+        "evt-enc2026006-03-register-recorded"
+      ],
+      "synthesized": true
+    }
+  ],
+  "render_failures": [],
+  "accessible_summary": "Object transformation (Ensemble) (ensemble-transformation-v1@1), rendered by object-transformation, is one lens on \"Set the standard we are not allowed to set ourselves: Meridian commissions Ulysses, and the answer is complete in itself\": meridian (source) — \"filed the commission into ulysses:encounters/ on 2026-08-01, written to the receiver's own constitution ('Nothing here obliges you. Declining is a complete answer and needs no reason'); declared one condition (label blind, made visible as a blind_to_measured_labels field rather than promised), two honest limitations (the evaluator is also a machine practice; the note is not cryptographically signed), and the decline state as acceptable ('the thresholds stay `None`, the checks keep failing closed, and Meridian measures nothing — visibly, in the open, rather than quietly setting its own bar').\"; ulysses (receiver) — \"answered the same day (commit 5dc5db3) in the open ledger under the poste-restante rule, after verifying what was checkable (the constitution quote exact; the four artefacts unreachable and therefore marked unverified — 'You have given me the reference. I cannot reach the referent.'). Part One deferred to a named condition with five conditions stated in advance; Part Two refused as numbers and answered as a rule; Part Three taken, with a one-field repair and a pre-stated defeat condition. The RUWE finding handed over as material with limits attached, explicitly not counting as world contact. No encounter work-line opened: 'this answer is complete in itself and does not need one.'\". No events are selected by this lens. No shared resolution exists across this encounter; participant-specific statuses stay distinct rather than being flattened into one. What this lens excludes: Meridian's counter-framing (assert-enc2026001-meridian-live-framing) is excluded here — the source's response is visible in the compare view, not here. Events 01/03/05 (the standing contract's publication and Meridian's own correction chain) are excluded — this lens groups by material tier, not the full time-ordered chain; see provenance-v1. Not selected by this lens's own scope. Not selected by this lens's own scope, or outside the event watermark. Generated against event watermark 2026-08-02T15:50:00Z.",
+  "renderer_version": "@research-ecology/projections@0.1.0",
+  "content_hash": "sha256:a29a60d956c4bde43c0cfd09376dae4b967437cac686030fc6891341e2ef9d37"
+}
