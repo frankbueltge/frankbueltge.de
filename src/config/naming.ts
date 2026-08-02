@@ -373,6 +373,21 @@ export const NAMING = {
       { ns: 'studio' as const, name: 'The Studio', noun: 'premieres', roomLabel: 'the studio’s premieres', roomHref: '/studio/works' },
     ],
     roomsLead: 'Each practice keeps its own room, where a work stands in its house’s own language:',
+    /** What a STANDALONE work carries when someone lands on it cold — a shared link, a search
+     *  result — with no site chrome around it at all. Two gaps closed at once (Frank,
+     *  2026-08-02): the wall text added on 2026-08-01 reached only the Astro-wrapped works,
+     *  so the interactive ones still met their visitor cold; and none of the nine standalone
+     *  works carried a single internal link, in either direction — "von allen werken gibt es
+     *  keinen link zurück zur praxis oder ecology". The strip is the site's, not the work's,
+     *  and says so, so the frame is never mistaken for the practice's own words. */
+    standaloneFrame: {
+      note: 'Wall label and links added by the site. The work itself begins below.',
+      backPrefix: '←',
+      ecology: { label: 'the research ecology', href: '/' },
+      /** shown when a work has no wall text yet: the gap stays visible, never papered over
+       *  with `embodies` — the same rule renderWrapperPage follows */
+      footLead: 'Leave the work:',
+    },
     withdrawnLabel: 'withdrawn',
     entranceNote: {
       lead: 'The newest of these also stand on the entrance, under LATEST —',
