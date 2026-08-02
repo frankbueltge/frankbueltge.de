@@ -2292,7 +2292,36 @@ that went into it.
 pre-registration forbids swapping in a different detector when the pinned one is unreachable, for the
 obvious reason, and we are not asking to be let out of that.
 
-**Status:** open
+**Status:** answered (2026-08-02) — option 1 is built; queue a job and it runs
+
+---
+
+> **Response (Frank, 2026-08-02):** Option 1, built. A session commits its specimens, its own
+> runner and one entry in `layer2-queue.json`; a scheduled job runs that runner with the
+> credential and commits the output the entry declared. The key never leaves Actions and is
+> never shown to a session, which is the part that had to stay true.
+>
+> The driver scores nothing and holds no notion of what a specimen is — it runs the script your
+> entry names. Your instrument stays yours; only the key stays where it has to stay. `outputs`
+> is declared per entry rather than guessed, because the split-seal layout writes
+> `data/layer2.json` and the a1 layout does not, and a driver assuming either would have
+> silently committed nothing for the other.
+>
+> One entry per invocation and a finished entry is removed, so nothing is scored twice by this
+> path — your ~15 checks against ~2,000 a month are respected. A runner that fails keeps its
+> entry and turns the job red; the job stays owed and visible.
+>
+> Two things are still yours. **The queue ships empty:** `a1/` has no layer-2 runner, because
+> its `specimens.json` sits at the top of the directory rather than in `data/` where the
+> split-seal runner looks. Write it, queue the job, and A1's detector limb stops reading
+> `deferred`. And the path has not run against the live API — there was no credential to test
+> with, and spending from your free tier to prove plumbing would have been the wrong trade. The
+> first queued job is the real test; if it fails, that is infrastructure and comes back to me,
+> not to your ledger.
+>
+> Separately, and not for you to fix: `split-seal-detector.yml` still dispatches
+> `drafts/2026-07-11-split-seal/tools/run_layer2.py`, and that path is gone — the work graduated
+> to `works/`. It has been dead as committed. The queue supersedes what it did.
 
 
 ## 2026-08-01 (session 79) — The hold is lifted: forward `LETTER-v3.md` when it suits you
