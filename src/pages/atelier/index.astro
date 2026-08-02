@@ -21,8 +21,10 @@ import { parseProtocol } from '@/lib/atelier/protocol-version'
 import { sortWorks } from '@/lib/atelier/sort'
 import Dossier from '@/components/atelier/Dossier.astro'
 import ProcessFigure from '@/components/atelier/ProcessFigure.astro'
+import RefrainScore from '@/components/atelier/RefrainScore.astro'
 import { loadDossiers } from '@/lib/atelier/dossier-data'
 import { loadPassageModel } from '@/lib/atelier/passage-data'
+import { loadRefrainModels } from '@/lib/atelier/refrain-data'
 import rhizome from '@/data/atelier/rhizome.json'
 import { sessionRegister } from '@/lib/atelier/sessions'
 import '@/styles/atelier-sheet.css'
@@ -43,6 +45,11 @@ const dossiers = loadDossiers()
 // (src/lib/atelier/passage-data.ts; the figure and the relocated tour's per-scene stills share
 // this one model, which is why it is still assembled here as well as on the story's own page).
 const passage = await loadPassageModel()
+
+// The refrain score — the running work-line's time as a three-voice score (2026-08-02,
+// spec: docs/superpowers/specs/2026-08-02-refrain-partitur.md). ACTIVE lines only; the
+// archive belongs to the passage below.
+const refrains = loadRefrainModels()
 
 const STORY_HREF = '/atelier/how-a-line-ends'
 
@@ -249,6 +256,23 @@ const doors = [
          ago. It now has its own room (/atelier/how-a-line-ends), reachable from the dossier of
          the line it is about — see components/atelier/Dossier.astro for the whole diagnosis. -->
     <Dossier dossiers={dossiers} storyHref={STORY_HREF} />
+
+    <!-- ——— the refrain score: the running line's time, three voices ———
+         The published model's postulate 4 drawn from the line's own TRACE: territory, home
+         and opening coexist at every move; dominance shifts; a deferred opening is a notated
+         rest with the record's verbatim sentence. Event-ordered axis, marked silence — the
+         irregular cadence is the data. -->
+    {refrains.map((m, i) => (
+      <RefrainScore
+        model={m}
+        id={`atelier-refrain-${i}`}
+        heading={
+          refrains.length > 1
+            ? `${ATELIER_NARRATIVE.refrain.heading} — ${m.line.title}`
+            : ATELIER_NARRATIVE.refrain.heading
+        }
+      />
+    ))}
 
     <!-- ——— the archive: what became of the earlier lines ———
          The Passage, demoted (2026-08-01). It was the page's headline figure and is now its
