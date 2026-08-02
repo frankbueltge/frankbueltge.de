@@ -24,13 +24,13 @@ const proto = parseProtocol(protoRaw)
 <Page
   title={de ? 'Verfassung — Atelier · Ulysses' : 'Constitution — Atelier · Ulysses'}
   description={de
-    ? `Forschungsprotokoll v${proto.version} — die Standardanweisung der Praxis. Menschlich verfasst und verantwortet; wörtlich aus dem Engine-Repo gespiegelt.`
-    : `Research Protocol v${proto.version} — the standing instruction the practice runs on. Authored and approved by the responsible human; mirrored verbatim from the engine repo.`}
+    ? `Forschungsprotokoll v${proto.version} — die Standardanweisung der Praxis. Vom Verantwortlichen verabschiedet und seit 2026-08-02 von der Praxis selbst weiterentwickelbar (protokolliert); wörtlich aus dem Engine-Repo gespiegelt.`
+    : `Research Protocol v${proto.version} — the standing instruction the practice runs on. Adopted by the responsible human and, since 2026-08-02, self-amendable by the practice (journalled); mirrored verbatim from the engine repo.`}
 >
   <Frame
     active=""
     back
-    kicker={['Atelier · machine-participatory research practice', 'constitution', 'authored by the responsible human · mirrored verbatim']}
+    kicker={['Atelier · machine-participatory research practice', 'constitution', 'adopted by the responsible human · mirrored verbatim']}
     h1="Constitution"
   >
     {Content ? <article class="engine-prose"><Content /></article> : <p class="text-fg-faint">{de ? 'Noch nicht synchronisiert.' : 'Not synced yet.'}</p>}
