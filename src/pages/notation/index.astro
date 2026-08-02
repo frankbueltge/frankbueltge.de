@@ -1,0 +1,111 @@
+---
+// /notation — the notation register: the ecology's writing system, kept under proof.
+// Spec: docs/superpowers/specs/2026-08-02-notation-register.md. Frank's go, 2026-08-02.
+//
+// A DOCUMENT, deliberately: zero client JS, no figure of its own — the notations are the
+// figures, in their rooms; this page is the register that treats them as one developing
+// writing system. Every grammar line below is IMPORTED from the source the shipped figure
+// itself reads (src/lib/notation/register.ts) — the same string, so it cannot drift — and
+// every pointer is existence-tested (register.test.ts). Working name /notation: the room's
+// name goes through the wording gate like every hub string.
+import Page from '@/layouts/Page.astro'
+import { NOTATION } from '@/config/notation-wording'
+import { NOTATION_REGISTER } from '@/lib/notation/register'
+
+const w = NOTATION
+const chip = w.approval === 'approved' ? w.approvedChip : w.draftChip
+---
+
+<Page title={w.metaTitle} description={w.metaDescription}>
+  <main id="main" class="mx-auto w-[calc(100%-2rem)] max-w-[80rem] py-10">
+    <p class="flex flex-wrap items-center gap-3 font-mono text-[11px] uppercase tracking-[0.16em] text-fg-muted">
+      <span>{w.kicker}</span>
+      <span class="rounded border border-line px-2 py-0.5 text-[10px] text-fg-faint">{chip}</span>
+    </p>
+    <h1 class="mt-3 font-serif text-3xl font-semibold">{w.h1}</h1>
+    <p class="mt-4 max-w-[75ch] text-sm leading-relaxed text-fg-muted">{w.lede}</p>
+    <p class="mt-3 max-w-[75ch] text-sm leading-relaxed text-fg-muted">{w.discipline}</p>
+
+    <ol class="mt-10 space-y-10">
+      {NOTATION_REGISTER.map((e, i) => (
+        <li id={e.id} class="rounded-[10px] border border-line bg-panel p-6">
+          <p class="font-mono text-[10px] uppercase tracking-[0.16em] text-fg-faint">
+            {String(i + 1).padStart(2, '0')}
+          </p>
+          <h2 class="mt-1 font-serif text-xl font-semibold">{e.name}</h2>
+          <p class="mt-2 max-w-[70ch] text-sm leading-relaxed">{e.notates}</p>
+
+          <div class="mt-5 grid gap-6 md:grid-cols-2">
+            <div>
+              <p class="font-mono text-[10px] uppercase tracking-[0.14em] text-fg-muted">
+                {e.grammar.dataDriven ? w.fields.dataDriven : w.fields.grammar}
+                {!e.grammar.dataDriven && <> <code class="text-[10px] normal-case tracking-normal">{e.grammar.source}</code></>}
+              </p>
+              {e.grammar.dataDriven ? (
+                <p class="mt-2 text-sm leading-relaxed text-fg-muted">{e.grammar.dataDriven}</p>
+              ) : (
+                <ul class="mt-2 space-y-1.5">
+                  {e.grammar.lines.map((line) => (
+                    <li class="text-sm leading-relaxed text-fg-muted">{line}</li>
+                  ))}
+                </ul>
+              )}
+
+              <p class="mt-5 font-mono text-[10px] uppercase tracking-[0.14em] text-fg-muted">{w.fields.derivation}</p>
+              <p class="mt-1 text-sm leading-relaxed text-fg-muted">
+                {e.derivation.model} · <code class="text-[11px]">{e.derivation.record}</code>
+              </p>
+
+              <p class="mt-5 font-mono text-[10px] uppercase tracking-[0.14em] text-fg-muted">{w.fields.validation}</p>
+              <p class="mt-1 text-sm text-fg-muted">
+                {e.validation.palette && (
+                  <>{w.fields.palette}: <code class="text-[11px]">{e.validation.palette}</code> · </>
+                )}
+                {w.fields.tests}: {e.validation.tests.map((t, k) => (
+                  <>{k > 0 && ' · '}<code class="text-[11px]">{t}</code></>
+                ))}
+              </p>
+              <p class="mt-2 font-mono text-[10px] uppercase tracking-[0.14em] text-fg-muted">{w.fields.figure}</p>
+              <p class="mt-1 text-sm text-fg-muted">
+                {e.figure.map((f, k) => (
+                  <>{k > 0 && ' · '}<code class="text-[11px]">{f}</code></>
+                ))}
+              </p>
+            </div>
+
+            <div>
+              <p class="font-mono text-[10px] uppercase tracking-[0.14em] text-fg-muted">{w.fields.changes}</p>
+              <ul class="mt-2 space-y-2.5">
+                {e.changes.map((c) => (
+                  <li class="text-sm leading-relaxed text-fg-muted">
+                    <time class="font-mono text-[11px] tabular-nums text-fg-faint" datetime={c.date}>{c.date}</time>
+                    {' — '}{c.note}{' '}
+                    <code class="text-[10px]">{c.record}</code>
+                  </li>
+                ))}
+              </ul>
+
+              <p class="mt-5 font-mono text-[10px] uppercase tracking-[0.14em] text-fg-muted">{w.fields.openQuestions}</p>
+              {e.openQuestions.length > 0 ? (
+                <ul class="mt-2 space-y-2.5">
+                  {e.openQuestions.map((q) => (
+                    <li class="text-sm leading-relaxed">
+                      <time class="font-mono text-[11px] tabular-nums text-fg-faint" datetime={q.date}>{q.date}</time>
+                      {' — '}{q.note}{' '}
+                      <code class="text-[10px] text-fg-muted">{q.record}</code>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p class="mt-2 text-sm italic text-fg-faint">{e.noneOpen}</p>
+              )}
+            </div>
+          </div>
+        </li>
+      ))}
+    </ol>
+
+    <p class="mt-10 max-w-[75ch] text-xs leading-relaxed text-fg-faint">{w.provenance}</p>
+    <p class="mt-2 max-w-[75ch] text-xs leading-relaxed text-fg-faint">{w.closing}</p>
+  </main>
+</Page>
