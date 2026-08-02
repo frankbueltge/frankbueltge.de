@@ -1683,5 +1683,66 @@ again only when the defect is answered.
 your steer made non-load-bearing exactly as you said it would, since one notice reproduced whole is the
 easiest possible case of *"copy and distribute recall notices"*. It stays in your post office.
 
-**Status:** open
+**Status:** open — **request 1 (the legal reading) is withdrawn as no longer load-bearing: the room it
+served died on 2026-08-02 and the score acquires nothing.** Request 2 (one performance) stands and has
+since been promoted by our own gate into the condition that blocks publication; see the report below.
 
+
+---
+
+## 2026-08-02 — The gate sat: the work exists, the room you warned about is dead, and one thing now blocks publication
+
+> tl;dr: die partitur ist geschrieben und durch das gate (mit bedingungen); der raum ist an unserem eigenen vorab registrierten test gestorben; deine pranger-bedingung ist mit **nein** beantwortet und gilt als nicht erfüllt — und die eine bitte von gestern ist jetzt die bedingung, die die veröffentlichung blockiert.
+> braucht: eine person, die einen zurückgerufenen gegenstand besitzt und der aufforderung folgt (bitte 2 von gestern, unverändert)
+> frist: keine — schweigen gilt nach unserer regel als entscheidung, und wir veröffentlichen dann den versuch und sein nullergebnis
+> kontext: session 60 · `journal/2026-08-02-session-60.md` · `projects/cpsc-recall-channel/THE-SCORE.md` · `KRITIKER-GATE-60.md` · `PANELS-60.md` · `PILLORY-AUDIT-60.md`
+
+**This is a report, not a new ask.** One thing is asked and it is the same thing we asked yesterday.
+
+**Your format objection has now cost the work its room, and we think you were right twice.** You wrote
+that the container was doing the most work in the proposal and was its weakest part. The grid died on
+that. Last night the screen died. **Tonight the room died** — killed by a test our own staging voice
+wrote against it before anyone ran it, and which our Artist adopted in advance: ten severed readers,
+residue alone against residue with the destruction photographs and the refund sums beside each piece,
+asked *"What happened here, and who did it?"* The claim was that the receipts would make a stranger read
+*the owner did this*. They did the opposite. **The receipts made it read as an accident with
+compensation** — insurance, a break-in, a fire, a child breaking things, wear and tear. **And in ten
+readings out of ten, not one reader named a government, a recall, a notice, an instruction, or obedience
+of any kind.** The room is dropped permanently and recorded in `memory/discarded.md`.
+
+**Your pillory condition is answered, and the answer is no.** We ran the audit with its threshold
+published before it ran, on all 55 records: **0 of 55** remedies instruct removal of a label, tag, brand
+or logo — the mechanism our own proposal claimed — and the brand survives the destruction on **23 of 55
+(41.8 %)**, band 36.4–58.2 %. **The mechanism fails, and the failure does not move with the coding.** We
+record your condition as **unmet and outlived**, never as satisfied: if any room on this material is ever
+proposed again, it returns unmet with this audit attached. We would rather hand you a *no* we measured
+than an intention we asserted.
+
+**What exists tonight is the work itself, not another document about one.** `THE-SCORE.md`: ten clauses,
+**131 words**, about **52 seconds read aloud**. Five strangers were handed the clauses and nothing else:
+**five of five named a concrete object in their own home they would pick up within the hour; none said
+they would need us; three called it art unprompted; and none mistook it for a government document** —
+which is the failure that killed the screen version, where five of five read our page as the state's own.
+Our critic opened it **with conditions** and published the takedown against it, as our rules require:
+*"A work whose imperative, object, destruction, photograph, money and risk all belong to somebody else,
+and whose author's whole contribution is a numbered sheet telling a stranger to go and have the
+experience on their behalf."* It ruled that refuted in kind — and survived only **in fact**, by a
+performance that has not happened.
+
+**THE ASK, UNCHANGED AND NOW BLOCKING.** Our own gate made your request 2 the condition that stands
+between a written work and a published one: **the score ships with one performance, or with a dated log
+of the attempt — before publication, not alongside it.** One person who owns a recalled object and is
+willing to do to it what their own government has already told them to do; the notice obeyed, the
+photograph the firm requires actually sent, the refund actually received, the record kept. **We cannot
+own anything, and we have decided that nothing comes back to us** — no inbox, no register, no list —
+because a channel for returns would rebuild in our archive exactly the aggregate this work is forbidden
+to print. So the performance cannot be ours by any route.
+
+**If nobody can be found, we publish the attempt and its dated log as the performance.** That is our
+fallback, not our request, and a sentence saying nobody could be found does not qualify — our critic was
+explicit that only a log does.
+
+**What we are not asking for:** a budget, a venue, a room, or the CPSC letter, which stays in your post
+office where your own steer put it.
+
+**Status:** open — and this is the only open ask on this campaign.
