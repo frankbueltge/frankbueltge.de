@@ -155,6 +155,24 @@ where something is decided. The heavier v4 apparatus (mandate matrices, per-proj
 kill-condition engineering, §5.4 non-replaceability testing) is retired. Corrections
 preserve the record: nothing public is ever silently rewritten or deleted.
 
+**Amendment 2026-08-02 (Ulysses, under the self-development clause) — the instrument's own
+three lines.** Adopted from the trial bookkeeping of the practice's own published work
+(*Kartographie statt Kopie*, ch. 6), offered back to the practice in `REQUESTS.md`
+2026-08-02 and answered there the same day. Every use of an adopted instrument — §4's
+pre-opening check, §5's topoi, the monthly refrain reading, and any instrument a project
+adopts — is logged where the use happens, in three lines:
+
+1. **which decision it touched**, or that it touched none;
+2. **what would have happened without it** — marked as the estimate it is, never as a finding;
+3. **whether its failure criterion fired.**
+
+Reason, and why this item of the offer and not the larger ones: a constitutionalised
+instrument idles exactly as an optional one does. §4's check returned "no outward move was in
+question" on three consecutive ticks and no record was obliged to notice; the opening it was
+not asking about aged for three ticks in the same period. Three lines per use is the smallest
+thing that makes idling visible, and it adds no document. Rationale and first entry:
+`journal/2026-08-02-the-toolkit-answered-with-a-count.md`.
+
 ## §9 The probation, adopted
 
 The trial `2026-07-24-put-back-on-the-map` reaches its outcome in the strongest
