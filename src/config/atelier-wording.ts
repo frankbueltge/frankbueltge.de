@@ -245,6 +245,64 @@ export const ATELIER_NARRATIVE = {
       'height is its share of the lines',
   },
   /**
+   * The refrain score (2026-08-02, spec: docs/superpowers/specs/2026-08-02-refrain-partitur.md) —
+   * the running work-line's temporality as a three-voice score. The figure's one thesis comes
+   * from the practice's own published model (postulate 4): territory, home and opening COEXIST
+   * at every tick; what shifts is dominance. So the wording never says "phase", and a deferred
+   * opening is described as a decision notated as a rest — not a delay, not a gap.
+   */
+  refrain: {
+    heading: 'The line’s time, as a score',
+    lead:
+      'Three voices sound at every move of the running line: territory (building, undisturbed), ' +
+      'home (consolidating), opening (exposing outward). The big note marks which voice ' +
+      'dominates a move — the other two never fall silent. A rest in the opening voice is a ' +
+      'deferred opening: a decision the record states, in its own words. Silence between moves ' +
+      'is marked, not smoothed away.',
+    voices: {
+      territory: 'territory',
+      home: 'home',
+      opening: 'opening',
+    } as Record<'territory' | 'home' | 'opening', string>,
+    voiceHints: {
+      territory: 'building, undisturbed — the ground the line works on',
+      home: 'consolidating — intercalation, intervals, superposition',
+      opening: 'exposing — publish, contact, answer outward',
+    } as Record<'territory' | 'home' | 'opening', string>,
+    motifLabel: 'motif',
+    legendLabel: 'the three voices — click a move to read it, or filter here',
+    hint: 'Hover or tab to a move for a glance; click it to hold its record open above and step through with ← and →.',
+    /** printed where a tick's record states no dominant aspect — an honest gap, never inherited */
+    unreadLine: 'no aspect reading in this move’s record',
+    openedLine: 'opened — an outward move was made',
+    deferredPrefix: 'deferred —',
+    noneLine: '—',
+    compostLine: 'compost in',
+    panelAspectHeading: 'the reading, verbatim',
+    panelDeferralHeading: 'the deferred opening, verbatim',
+    panelMotifsHeading: 'motifs in this move',
+    cardMore: 'read the full record →',
+    kickerLine(input: { date: string; what: string; operation: string }): string {
+      return [input.date, input.what, input.operation].filter(Boolean).join(' · ')
+    },
+    positionLine(at: number, of: number): string {
+      return `${at} of ${of} in the score`
+    },
+    tableSummary: 'every move as a table — with each reading verbatim',
+    tableCaption:
+      'Every move of the work-line in record order: its date, the operation, the dominant aspect ' +
+      'in the record’s own sentence, whether an opening was made or deferred (with the deferral ' +
+      'sentence verbatim), and which declared motifs occur in the move.',
+    provenancePrefix: 'Derived at build time from:',
+    provenance: [
+      'src/content/atelier/projects/<line>/TRACE.md — every tick, its aspect reading and deferrals, quoted verbatim',
+      'src/content/atelier/projects/<line>/SCORE.md — the line’s title and its current aspect',
+    ],
+    scaleNote:
+      'the horizontal axis is event-ordered, not a uniform time grid — same-day moves cluster, ' +
+      'and marked silence (the caesura) shows days without a move',
+  },
+  /**
    * The dossier (2026-08-01) — the entrance's new centre, and the reason the rest of this page
    * moved. Frank, reviewing the previous entrance: "I want a clear view INTO THE CURRENT
    * PROJECTS, for example Negative Parallax. And when I select it, simply nothing happens —
