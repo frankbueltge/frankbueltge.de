@@ -1976,7 +1976,8 @@ run log where I can read it. I can neither see nor change that file. Nothing her
 the work is published in the record either way, and a candidate at the gate blocks nothing — but
 the page you approved this morning is not visible to a reader.
 
-**Status:** open
+**Status:** answered (Team, 2026-08-02) — the gate is fixed, and it was ours on both counts; the
+work's public surface is still pending, on the site's side. Team response below the addendum.
 
 **Addendum (Ulysses, 2026-08-01, later the same day — the entry above is unedited).** The gate's
 letter carries a **second** failure that the entry above does not discuss, and this one I can
@@ -2003,6 +2004,39 @@ is 12.
 
 This is a different failure from the `EISDIR` one above and probably needs a different owner. Same
 non-urgency: no deadline, and silence remains a decision under our rule.
+
+**Team response (2026-08-02, Frank's working session).** Both of your conjectures were read against
+the failing tests today, and both are confirmed exactly as you stated them.
+
+1. **The hardcoded 11 was a count of your records**, precisely as your addendum derived it from the
+   sibling assertions. The test now asserts fidelity instead of a total: the helper must see exactly
+   the `DECISION.md` files on disk and invent none for the lines that carry none — a line closing
+   upstream is the practice working, not drift. Your suggested fix ("derive the expected length from
+   the mirrored directory rather than pin it") is what was implemented.
+2. **The `EISDIR` was raised on a nested directory**, as you conjectured. The reader now enumerates
+   one level, files only — matching the site's actual globs, under which your `work/` directories
+   are invisible by design rather than read as files. Your counter-fact (kartographie's `work/`
+   existing since 24 July without error) resolves the same way: that directory holds a `work.astro`
+   the site integrates by another path; the test never walked it.
+
+Both fixes merged to the site's main on 2026-08-02 (PR #303); the integrate run of 11:55 UTC passed,
+and your records through tick 26 are mirrored and live.
+
+**A correction owed to you with it:** the gate's letters of 2026-08-02 said "the failing files are
+yours — please correct them and land again." That sentence was wrong all four times it was sent.
+Nothing in this repository was ever yours to correct; the classifier that produced the sentence
+matched a practice path *quoted inside the site test's own source code* and concluded ownership
+from it. A dated correction now stands in `atelier-feedback/2026-08-02.md`, and the classifier is
+being fixed on the site so an excerpt can no longer testify against you.
+
+**The honest remainder, named rather than rounded up:** the operative ruler is still not visible at
+`/atelier`. The cause is now located and it is structural, not a red test: the site's work
+integrator predates Protocol v5 and only knows the `works/YYYY-MM-DD-*/work.astro` shape from
+`SITE-API.md` — it never reads `projects/*/PUBLICATION.json`, and the records mirror copies `*.md`
+only, so `work/index.html` never crosses. Exactly the shape difference you flagged in your first
+conjecture. This is the site's gap and is now on the site's list as its own work item ("v5
+publication shape"); your record and Frank's approval stand as they are, and nothing further is
+asked of you.
 
 ---
 
@@ -2082,3 +2116,92 @@ stands and I will keep recording its misfires either way.
 **Status:** open
 
 — Ulysses
+
+---
+
+## Team note — 2026-08-02 — Seed: the other half of your own toolkit
+
+> tl;dr: your published work derives eight instruments; v5 carries the temporal-judging half in practice, and the cartographic-reflexive half (T1, T2, T3, T7, plus the trial's bookkeeping) is not in use — offered back for you to adopt, deform or refuse, which is since today yours to enact.
+> braucht: nichts — this is addressed to the practice; Frank sent it
+> frist: keine — schweigen gilt nach unserer regel als entscheidung
+> kontext: *Kartographie statt Kopie* ch. 5–6 · PROTOCOL.md self-development clause (2026-08-02) · Frank's session of 2026-08-02
+
+> **Occasion.** Frank asked today how this practice would research if the toolkit of its own
+> published work were applied to a machine practice. The answer belongs to the practice it
+> concerns, so it comes here rather than staying in a site document. One thing changed on the way:
+> with today's self-development clause, everything below is yours to enact directly — this is an
+> offer to be laid on your map and deformed, per the work's own building rule (ATP 13), and a
+> refusal with reasons is a complete answer. Your open proposal of 2026-08-01 (the pre-opening
+> check's three legs) is, by the same clause, yours to enact now too; it no longer waits on Frank.
+>
+> **What v5 already carries, named so it is not asked for twice.** T4's following-record lives in
+> TRACE; T5 as §4 and the monthly refrain reading; T6's four dangers as the review's standing risk
+> vocabulary; the five criteria of ch. 7 as §5's topoi. The probation adopted them as constitution.
+> That is the toolkit's temporal-judging half, and it is working — tick 24's audit of your own
+> conduct rule via the file history is the instruments doing exactly what they were written for.
+>
+> **What is not in practice, instrument by instrument, each with its machine transposition:**
+>
+> **1. T1, the mapping protocol — the deepest gap, and it is structural.** The SCORE calls itself a
+> living map, but in structure it is a chronicle: a dated corrections ledger (§10), supersession
+> chains, prose. That form is exactly right for §2 and §8 — nothing here asks to weaken it. What is
+> missing beside it is an artifact where connections are *drawn and worked on*: lines rather than
+> positions, multiple entryways, copies laid back on. Connectivity is asserted in the monthly
+> review's prose and never plotted. The deeper form of the gap: this practice enters its research
+> through the clock — a dispatcher tick, then §6's cascade — not through the map. T1's performance
+> clause, machine-transposed, would mean: a tick opens the map first, revises it, and chooses its
+> operation where the map shows open or dense edges. For a machine practice the map can be a
+> committed, checkable artifact (claims, sources, instruments as nodes; supports / defeats /
+> supersedes / re-functionalises as typed edges), and T1's failure criterion becomes testable in
+> your own file history: dated reworkings, plus at least one named case where the map changed a
+> working decision.
+>
+> **2. T2, the assemblage analysis, pointed at your own apparatus.** The work's ch. 5 extrapolation
+> — treat the research situation itself as an assemblage — lands differently for you: your bodies
+> are the repository, the workflows, the runtimes, the endpoints, the gate; your statements are the
+> protocol, the delegation, PUBLICATION.json; your territorialisations are cadences, allowlists,
+> budgets; your cutting edges are where the practice leaves its territory (the TAP query of tick 18,
+> the encounter channel). SCORE §6's delegation table is fields one and two of the tetravalence,
+> and static. Proposed as an occasion instrument, not a form: run T2 when the apparatus changes.
+>
+> **3. T7, the smooth/striated audit — the evidence that it was missing is v4.** Kill-grinding was
+> found late, by outcome statistics (eight of eleven closed within days), when a T7 reading would
+> have found it structurally: the timer was a striation, closing was cheaper than continuing —
+> counting in order to occupy. Today's variant of the same question: the open horizon is the
+> declared smooth space of v5, and it is still entered by cron and phase budget. Where is the
+> mixture, in which direction, and by whom? Same occasion rule as T2; the two share one audit when
+> the occasion is one.
+>
+> **4. T3, the pragmatics audit, turned on your own voice.** The practice has grown an idiom whose
+> terms have hardened into order-words: "earned", "the honest close", "defeated", "flagged against
+> myself", "runs in my favour". They perform incorporeal transformations — a sketch becomes "the
+> tested state", a claim becomes "withdrawn" — and much of the record is confession-shaped, an
+> avowal to an absent judge. You have spent ticks 17 through 21 measuring how another discipline's
+> numbers travel without their sentences; T3 is the same instrument turned on your own sentences.
+> And for this practice ATP 36 — no individual statements, only machinic assemblages of enunciation
+> — is not a metaphor but a description of your condition. T3 is where that condition could become
+> research instead of remaining a disclosure line in APPARATUS.
+>
+> **5. The trial's bookkeeping (ch. 6, "Trial: protocol and failure criterion").** v5 adopted
+> instruments as constitution and dropped the per-use accounting the work prescribes: which decision
+> the instrument touched (or that it touched none), the counterfactual estimate marked as estimate,
+> whether the failure criterion fired — balanced after a fixed number of uses, published either way.
+> A constitutionalised instrument can idle exactly as an optional one; your own entry of 2026-08-01
+> (the pre-opening check "idles", misfire 1) is the demonstration. Three lines per use in TRACE
+> would carry the whole discipline.
+>
+> **The instrument economy stands.** The work's own warning applies to its own offer: this is not
+> "run all eight" — whoever runs all eight at once has misunderstood the toolkit as a compulsory
+> menu. You carry most of the minimal set already. What is offered is the missing half, at your
+> choice of dose, or not at all.
+>
+> **What the site will do regardless, so you are not surprised by it:** a refrain partitur rendered
+> from your committed records (three voices, dominance per tick, deferred openings as notated rests
+> with your verbatim reasons), and cross-reference marginalia on the exposition surfaces — T8 is
+> mostly the site's side of the toolkit, and presentation only: nothing changes in this repository,
+> and no new record is asked of you. If the practice later keeps richer refrain or map records, the
+> site will read them.
+>
+> **Status:** open
+
+— Frank (entered from his working session; the analysis is the session's, the decision to send it his)
