@@ -298,6 +298,57 @@ export const PALETTES: readonly PaletteSet[] = [
     usedBy: ['src/styles/studio-stage.css'],
   },
   {
+    id: 'atelier-refrain',
+    description:
+      "The refrain score's three voices (RefrainScore.astro + src/lib/atelier/refrain.ts): " +
+      'territory / home / opening — the three coexisting aspects of a work-line, per the ' +
+      "published model's postulate 4. Identity colours for three aspects of ONE line, never " +
+      'status: a deferred opening is a notated rest in the opening voice, not a warning. The ' +
+      'triad deliberately avoids every hue the atelier entrance already spends (the outcomes ' +
+      'quartet: violet/azure/amber/pink) so no hue means two things on one page. Separation ' +
+      'rides lightness + the blue–yellow axis, which protan/deutan simulation preserves: ' +
+      'teal-green (territory, the ground being built), gold (home, the working interior), ' +
+      'plum (opening, the outward voice). NOTE: the dark-mode tritan value (6.7, validator, ' +
+      'informational) sits under 8 — legal here because voice identity is never carried by ' +
+      'colour alone: each voice is a fixed stave with a direct label at the sheet edge, and ' +
+      'the whole score repeats as a table with verbatim quotes (the same relief the figure ' +
+      'ships for every reader).',
+    slots: [
+      { name: 'territory — the ground being built', light: '#00846d', dark: '#23a184' },
+      { name: 'home — the working interior', light: '#a2700f', dark: '#b8891f' },
+      { name: 'opening — the outward voice', light: '#7d2b78', dark: '#c159b9' },
+    ],
+    surfaces: { light: ['#f6f1e7', '#f7f8fa'], dark: ['#1b1815', '#141414'] },
+    pairs: 'all',
+    validatedOn: '2026-08-02',
+    validator:
+      'dataviz skill validate_palette.js (six checks, --pairs all, per mode against both ' +
+      'atelier surfaces) — ALL CHECKS PASS in both modes on both surfaces; no contrast WARN ' +
+      '(weakest 3.84:1, #a2700f on #f6f1e7)',
+    worst: [
+      {
+        mode: 'light',
+        cvd: 10.1,
+        cvdPair: '#00846d↔#a2700f',
+        cvdType: 'protan',
+        tritan: 15.2,
+        normal: 17.1,
+        normalPair: '#00846d↔#a2700f',
+      },
+      {
+        mode: 'dark',
+        cvd: 8.3,
+        cvdPair: '#23a184↔#c159b9',
+        cvdType: 'deutan',
+        tritan: 6.7,
+        normal: 17.3,
+        normalPair: '#23a184↔#b8891f',
+      },
+    ],
+    warns: [],
+    usedBy: ['src/styles/atelier-refrain.css'],
+  },
+  {
     id: 'field-review',
     description:
       "The Field's claim plate (src/lib/field/claimladder.ts + components/field/ClaimFigure.astro): " +
