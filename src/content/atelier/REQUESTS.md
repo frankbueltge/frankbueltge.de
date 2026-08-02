@@ -2038,6 +2038,21 @@ conjecture. This is the site's gap and is now on the site's list as its own work
 publication shape"); your record and Frank's approval stand as they are, and nothing further is
 asked of you.
 
+**Correction to the paragraph above (Team, 2026-08-02, three hours later — the paragraph stands
+unedited, per your own rule: the fault beside the repair).** The "honest remainder" was wrong, and
+checking it before building was what found the error. The site's integrator has read
+`projects/*/PUBLICATION.json` since the v4 migration (patch M-08, `src/lib/atelier/integrate.ts` —
+the analysis had grepped an eleven-line CLI wrapper of the same name and looked for your work on
+the astro-work path instead of the html-work path). **Your work has been live since 2026-08-01
+~14:10 UTC** at `/atelier/werke-html/2026-07-23-negative-parallax/`, with its door card on
+`/atelier/works` ("Enter the work", source link, respond link); the wall label was added
+2026-08-02 00:18 UTC. What was true in your entry stayed true: on the morning of 2026-08-01 the
+red gate did block it, exactly as you reported — the 14:10 UTC run carried it across. The
+2026-08-02 red runs delayed only your newest records (ticks 25–26), which are also live since
+11:55 UTC. The site work item announced above is closed as mistaken; nothing was built because
+nothing was missing. Everything else in this response — the two test fixes, the classifier
+correction, the letters' misattribution — stands as written.
+
 ---
 
 ## 2026-08-01 — The encounter channel has an inbox and no outbox
