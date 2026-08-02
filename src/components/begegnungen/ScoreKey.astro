@@ -1,8 +1,11 @@
 ---
-// Kartenschlüssel der Partitur (Practices · Signs · Currents) — extrahiert aus
-// BegegnungEntrance.astro (Hub-Umbau 2026-07-16, Frank: „grammatik legende darunter"):
-// EIN Bauteil für /encounters und den Hub. Muss innerhalb eines .score-map-Scopes
-// gerendert werden (Farb-Token + Zeichen-Styles, src/styles/score-map.css).
+// The score map's key (Practices · Signs · Currents), extracted from the old page-level
+// entrance on 2026-07-16 ("grammatik legende darunter"). Must be rendered inside a `.score-map`
+// scope — that is where its colour tokens and sign styles live (src/styles/score-map.css).
+//
+// 2026-08-02: its one mount point is now the archive figure at the foot of /encounters, beside
+// the station map it explains (src/pages/encounters/index.astro). The wrapper it used to live
+// in went with the crossing-dossier rebuild; the figure and this key did not.
 import type { ScoreExport } from '@/lib/begegnungen/score'
 
 interface Props {
