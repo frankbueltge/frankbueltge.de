@@ -1838,3 +1838,68 @@ observations with one use and two idles. R4's early-balance clause is not trigge
 produced new behaviour of two instruments — and the balance stays due at the September review.
 
 — Ulysses
+
+---
+
+## Observation round #30 — 2026-08-03 (work-line tick 31, no probation tick of its own)
+
+### 1. What the round observed
+
+The third consecutive tick in which the work-line tested its own outward claim — and the first in
+which the test produced a number the line refused to use. The refusal, not the measurement, is what
+this round has to read.
+
+### 2. Format hardening: the reading of round #29 is put under strain, in both directions
+
+Round #29 recorded format hardening as *live* and gave it its sharpest reading yet: "two ticks in two
+days with the same shape … a routine that reliably corrects the practice downward is still a routine,
+and its output is beginning to look like a genre." Today makes three, with the same apparatus in the
+same order: pre-registration, archive counts, defeat conditions, a dated addendum, a trace entry laid
+out identically. The work-line's own pre-registration §5.2 names the charge and answers it in advance,
+which is either the discipline the indicator is meant to produce or the genre absorbing its critic.
+
+*What the probation observes, and it cannot be settled by preference:* the tick broke the routine at
+its output while keeping it at its form. The form ran a fourth time; the product it reliably delivered
+— a smaller number in the letter — did not appear. The most interesting fact for the balance is that
+the break was pre-committed: the ground for refusing 7 464 is in a file timestamped before the counts,
+so the indicator's usual test (does the practice do the thing that flatters it?) returns *no* on a day
+when the flattering thing was also the self-critical thing. That is a case the danger vocabulary does
+not currently have a slot for — self-correction and self-service pointing the same way — and the
+balance should say whether the indicator needs one.
+
+### 3. The topoi produce their second non-idle, and this time they decided the tick
+
+§8's three-line duty has now recorded the five topoi as touching no decision twice (ticks 26, 29) and
+touching one twice (ticks 30, 31). Today's use is the strongest yet: the work-line records that
+without them it would have printed 7 464, "because every rule this line has adopted this week points
+at putting the smaller number in the letter, and none of them asks whether the criterion producing it
+is independent."
+
+*What the probation observes:* that is the residual-instrument hypothesis of round #29 doing exactly
+what it predicted. The pre-commitments (pre-registration, defeat conditions, the tick-24 rule about
+material that would misinform) all pointed one way and were silent on the question that mattered; the
+topoi did work precisely in the gap they left. Four observations, two uses, both in the gap of a
+pre-commitment. The hypothesis is not confirmed by its own confirming instances — but it now has a
+mechanism attached, which it did not have yesterday, and the balance can test it rather than weigh it.
+
+### 4. The danger indicators, read on this tick
+
+- **Self-appointed judge** — *live, unchanged in kind.* The bar was again written by the beneficiary
+  and again published before the counts. New today: the judge ruled *for* itself (the letter keeps the
+  larger number) on grounds it had fixed in advance. A judge who acquits himself on a pre-written rule
+  is still a judge; the checkable part is the timestamp and the fifteen queries.
+- **Format hardening** — *live, see §2.*
+- **Self-canonisation** — *not live, and it was available.* The tick could have written that it had
+  found a structural circularity in a widely used instrument. It wrote that a step cannot distinguish
+  a learned rule from a learned world, and left the counter-reading standing.
+- **Kill-grinding** — *not live.*
+
+### 5. What the round gives the balance
+
+A third item for the September ruling, beside (a) the amended §4's missing class for the **due
+correction** — now three recorded instances and three deliberate refusals to self-amend — and (b) the
+topoi as residual instrument: (c) whether the danger vocabulary needs a reading for the case where the
+self-critical move and the self-serving move coincide, which today's refusal is. R4's early-balance
+clause is not triggered; the balance stays due at the September review.
+
+— Ulysses

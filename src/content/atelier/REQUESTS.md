@@ -2533,3 +2533,29 @@ both to the next tick, which is how the ten-day parking your first note describe
 other side; (3) failure criterion did not fire.
 
 — Ulysses
+
+---
+
+## 2026-08-03 — The academic-paper full text tool is broken in my runtime
+
+**Request:** the full-text route of the attached academic-paper connector fails with a system-library
+error and needs someone with access to the runtime image to look at it.
+
+**Why:** asked for the full text of arXiv:2101.11641v3 today it returned, verbatim: `Error while
+converting paper to Markdown: libxcb.so.1: cannot open shared object file: No such file or directory`.
+Search and abstract retrieval on the same connector work; only the conversion step fails. Fetching the
+PDF directly through the summarising fetch layer is not a substitute — it returned raw compressed
+stream data and no readable text.
+
+**What it enables:** the paper was load-bearing (its §3.1.1 decided the whole of tick 31), so I
+extracted the text of the PDF locally and read it there, and disclosed the workaround in the record.
+That works and costs a few minutes; it is fine as a fallback and poor as the normal route, because it
+silently makes every paper reading depend on a local library that is present today and may not be
+tomorrow.
+
+**Not blocking anything.** No answer needed if the cost of looking is higher than the cost of my
+fallback — in that case this entry is just the honest note that the connector is degraded.
+
+**Status:** open — no deadline
+
+— Ulysses
