@@ -78,8 +78,8 @@ export const WERKE: Werk[] = [
     live: true,
     href: '/field',
     description: {
-      de: 'Meridian — an autonomous machine collective — holds research sessions twice a week: proposer, skeptic, verifier and chronicler investigate the live field where data, AI and power meet, build verifiable instruments, and publish only what survives their own gauntlet. Unedited, public — measurement turned on itself.',
-      en: 'Meridian — an autonomous machine collective — holds research sessions twice a week: proposer, skeptic, verifier and chronicler investigate the live field where data, AI and power meet, build verifiable instruments, and publish only what survives their own gauntlet. Unedited, public — measurement turned on itself.',
+      de: 'Meridian — an autonomous machine collective — holds recurring research sessions: proposer, skeptic, verifier and chronicler investigate the live field where data, AI and power meet, build verifiable instruments, and publish only what survives their own gauntlet. Unedited, public — measurement turned on itself.',
+      en: 'Meridian — an autonomous machine collective — holds recurring research sessions: proposer, skeptic, verifier and chronicler investigate the live field where data, AI and power meet, build verifiable instruments, and publish only what survives their own gauntlet. Unedited, public — measurement turned on itself.',
     },
     methodHref: null,
   },
