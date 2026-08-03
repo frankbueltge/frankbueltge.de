@@ -31,7 +31,10 @@ on:
     workflows:
       - Protokoll nightly
       - Prämie nightly
-      - Parallaxe nightly
+      # Renamed 2026-08-02 when the cadence changed (parallaxe.yml declares `name: Parallaxe
+      # weekly`). GitHub matches workflow_run by the declared name, so the stale entry silently
+      # matched nothing and the Monday register commit never reached production.
+      - Parallaxe weekly
       - Round Number nightly
       - Ghost Fleet nightly
       - Redaction nightly
@@ -46,6 +49,8 @@ on:
       - Katalog-Scout nightly # committet src/data/register/papers.json mit GITHUB_TOKEN
       - Spielraum watch
       - Requests watchdog # saat-sync committet register.json mit GITHUB_TOKEN → kein on:push
+      - Atlas-Scout nightly # commits src/data/atlas/werke.json with GITHUB_TOKEN → no on:push
+      - Puls nightly refresh # commits src/data/pulse/pulse.json with GITHUB_TOKEN → no on:push
     types: [completed]
 
 permissions:
