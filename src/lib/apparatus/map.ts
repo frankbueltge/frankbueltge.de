@@ -334,6 +334,9 @@ export interface ApparatusRow {
   mechanism: string
   checked: string
   record: string
+  /** TableFallback takes Record<string, string | number>; this keeps the named fields above
+   *  while satisfying it, rather than loosening the row type to a bare record. */
+  [key: string]: string
 }
 
 export const APPARATUS_COLUMNS: { key: string; label: string; nowrap?: boolean }[] = [

@@ -1,0 +1,392 @@
+/* src/styles/apparatus-map.css — the apparatus map's skin.
+ *
+ * The idiom is A WIRING DIAGRAM ON A WORKSHOP PANEL: flat, measured, no depth, no gloss. The
+ * figure describes machinery, so it is drawn the way machinery is drawn — boxes and runs, legible
+ * at a glance, with nothing decorative competing for the eye.
+ *
+ * Everything is scoped to .apparatus-surface so it can never reach another practice's figure
+ * (ADR 0010: the practices share no visual grammar, and this page imposes none on them).
+ *
+ * The surface is var(--color-panel) in both modes ON PURPOSE, not the page background: the
+ * palette below is validated against #f7f8fa and #141414, which is exactly what that token
+ * resolves to. Putting the figure straight on --color-bg (#0a0a0a dark, #edeef0 light) would
+ * take it off the validated surface and quietly void the check.
+ */
+
+.apparatus-surface {
+  background: var(--color-panel);
+  border: 1px solid var(--color-line);
+  border-radius: 4px;
+  padding: 1rem 0.75rem 0.5rem;
+}
+
+/* PALETTE: ecology-voices (src/lib/dataviz/palette.ts) — validated 2026-07-31 against the panel
+   surface in both modes, --pairs all: PASS (worst CVD ΔE 9.2 light / 9.4 dark, worst normal 16.3
+   both). The same gated exception to the site's grayscale Mono-Skin the hub doors, the score map
+   and the Partitur already carry, so one practice never wears two colours on one page: a voice's
+   door, its Partitur lane and its box here are the same hue. `shared` takes the set's DECLARED
+   NEUTRAL — infrastructure has no resident, and the greyness is the meaning — and is never
+   counted as a fifth categorical slot. Own steps per mode, never an automatic light/dark flip.
+   No status colour appears anywhere below: a severed connection is drawn severed, not reddened,
+   because the apparatus does not grade its own parts. */
+.apparatus-surface {
+  --ap-c-atelier: #4a3aa7;
+  --ap-c-field: #2a78d6;
+  --ap-c-studio: #eb6834;
+  --ap-c-plenum: #1baf7a;
+  --ap-c-shared: #6b7684;
+}
+:root[data-theme='dark'] .apparatus-surface {
+  --ap-c-atelier: #9085e9;
+  --ap-c-field: #256abf;
+  --ap-c-studio: #d95926;
+  --ap-c-plenum: #199e70;
+  --ap-c-shared: #77828d;
+}
+
+/* one selector chain, five identities — the SVG emits only data-owner */
+.apparatus-surface [data-owner='atelier'] {
+  --ap-c: var(--ap-c-atelier);
+}
+.apparatus-surface [data-owner='field'] {
+  --ap-c: var(--ap-c-field);
+}
+.apparatus-surface [data-owner='studio'] {
+  --ap-c: var(--ap-c-studio);
+}
+.apparatus-surface [data-owner='plenum'] {
+  --ap-c: var(--ap-c-plenum);
+}
+.apparatus-surface [data-owner='shared'] {
+  --ap-c: var(--ap-c-shared);
+}
+
+/* ── the figure box ─────────────────────────────────────────────────────── */
+
+.ap-figure {
+  position: relative; /* load-bearing: the readout clamps to THIS box */
+  margin: 0;
+}
+.ap-scroll {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+.ap-svg {
+  display: block;
+  width: 100%;
+  min-width: 780px; /* below this the labels collide; the table floor carries the narrow case */
+  height: auto;
+}
+
+/* ── headings ───────────────────────────────────────────────────────────── */
+
+.ap-heading {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  fill: var(--color-fg-faint);
+}
+
+/* ── nodes ──────────────────────────────────────────────────────────────── */
+
+.ap-node .ap-box {
+  fill: var(--color-panel-2);
+  stroke: var(--ap-c);
+  stroke-width: 1.25;
+}
+.ap-node .ap-glyph {
+  fill: var(--ap-c);
+  stroke: var(--ap-c);
+  stroke-width: 1.1;
+}
+/* the store glyph is three rules, not a solid — it must not fill */
+.ap-node .ap-glyph[data-kind='store'] {
+  fill: none;
+}
+.ap-node .ap-glyph[data-kind='person'] circle:last-child {
+  fill: var(--color-panel-2);
+  stroke: none;
+}
+.ap-label {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  fill: var(--color-fg);
+}
+.ap-count {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  fill: var(--color-fg-faint);
+  text-anchor: end;
+}
+
+.ap-node[tabindex] {
+  cursor: pointer;
+}
+.ap-node[tabindex]:hover .ap-box,
+.ap-node[tabindex]:focus-visible .ap-box {
+  stroke-width: 2.25;
+}
+.ap-node:focus-visible {
+  outline: 2px solid var(--color-fg);
+  outline-offset: 2px;
+}
+
+/* ── connections ────────────────────────────────────────────────────────── */
+
+.ap-edge-line {
+  fill: none;
+  stroke: var(--color-fg-faint);
+  stroke-width: 1;
+  opacity: 0.55;
+}
+/* a declared connection is drawn lighter than one read back out of a file — the difference
+   between what the map can prove and what it only asserts is visible, not buried in a footnote */
+.ap-edge[data-checked='declared'] .ap-edge-line {
+  stroke-dasharray: 3 3;
+  opacity: 0.4;
+}
+.ap-edge-break {
+  stroke: var(--color-fg);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+}
+.ap-edge[data-severed] .ap-edge-line {
+  stroke-dasharray: 2 6;
+  opacity: 0.5;
+}
+
+/* ── filtering and tracing ──────────────────────────────────────────────── */
+
+.ap-svg[data-filtered] .ap-node:not([data-on]) {
+  opacity: 0.16;
+}
+.ap-svg[data-filtered] .ap-edge:not([data-on]) {
+  opacity: 0.1;
+}
+.ap-node[data-sel] .ap-box {
+  stroke-width: 2.5;
+}
+.ap-svg[data-traced] .ap-node:not([data-on]) {
+  opacity: 0.13;
+}
+.ap-svg[data-traced] .ap-edge:not([data-on]) {
+  opacity: 0.08;
+}
+.ap-svg[data-traced] .ap-edge[data-on] .ap-edge-line {
+  stroke: var(--color-fg);
+  opacity: 0.85;
+  stroke-width: 1.5;
+}
+
+.ap-node,
+.ap-edge {
+  transition: opacity 160ms ease;
+}
+
+/* ── the chrome around the figure ───────────────────────────────────────── */
+
+.ap-claim {
+  margin: 0 0 0.75rem;
+  padding-left: 0.75rem;
+  border-left: 2px solid var(--ap-c-shared);
+  font-size: 0.875rem;
+  color: var(--color-fg-muted);
+}
+.ap-claim b {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-fg-faint);
+  font-weight: 400;
+  margin-bottom: 0.2rem;
+}
+
+.ap-key {
+  margin: 0.9rem 0 0.3rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-fg-faint);
+}
+.ap-keys {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.1rem;
+  margin: 0.4rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.8125rem;
+  color: var(--color-fg-muted);
+}
+.ap-keys li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+}
+.ap-keys svg {
+  flex: none;
+  overflow: visible;
+}
+.ap-keys .ap-glyph {
+  fill: var(--color-fg-muted);
+  stroke: var(--color-fg-muted);
+  stroke-width: 1.1;
+}
+.ap-keys .ap-glyph[data-kind='store'] {
+  fill: none;
+}
+
+.ap-trace-off {
+  margin-top: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-fg-faint);
+  background: none;
+  border: 1px solid var(--color-line);
+  border-radius: 3px;
+  padding: 0.25rem 0.6rem;
+  cursor: pointer;
+}
+.ap-trace-off:hover {
+  color: var(--color-fg);
+}
+.ap-trace-off[hidden] {
+  display: none;
+}
+
+.ap-hint,
+.ap-prov {
+  font-size: 0.8125rem;
+  color: var(--color-fg-faint);
+}
+.ap-hint {
+  margin: 0.8rem 0 0;
+}
+.ap-prov {
+  margin: 1rem 0 0;
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--color-line);
+}
+.ap-omissions {
+  margin: 0.9rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.8125rem;
+  color: var(--color-fg-muted);
+}
+.ap-omissions li {
+  padding-left: 0.9rem;
+  text-indent: -0.9rem;
+  margin-top: 0.35rem;
+}
+.ap-omissions li::before {
+  content: '— ';
+  color: var(--color-fg-faint);
+}
+
+/* the shared primitives, skinned for this surface */
+.apparatus-surface .dv-readout {
+  max-width: 40ch;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid var(--color-line);
+  border-radius: 3px;
+  background: var(--color-panel-2);
+  color: var(--color-fg);
+  font-size: 0.8125rem;
+  line-height: 1.35;
+  box-shadow: 0 2px 10px rgb(0 0 0 / 0.18);
+}
+.apparatus-surface .dv-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 0;
+  margin: 0.4rem 0 0;
+}
+.apparatus-surface .dv-legend button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 0.2rem 0.55rem;
+  border: 1px solid var(--color-line);
+  border-radius: 3px;
+  background: none;
+  color: var(--color-fg-muted);
+  cursor: pointer;
+}
+.apparatus-surface .dv-legend button::before {
+  content: '';
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+  background: var(--dv-swatch, currentColor);
+}
+.apparatus-surface .dv-legend button[aria-pressed='true'] {
+  color: var(--color-fg);
+  border-color: var(--color-fg-faint);
+}
+.apparatus-surface .dv-panel {
+  margin-top: 0.9rem;
+  border: 1px solid var(--color-line);
+  border-radius: 3px;
+  background: var(--color-panel-2);
+  padding: 0.7rem 0.85rem;
+  font-size: 0.875rem;
+}
+.apparatus-surface .dv-panel h3 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+/* A wiring diagram has no order to step through: prev/next would offer a movement that means
+   nothing here. Only close stays. */
+.apparatus-surface .dv-panel [data-dv-prev],
+.apparatus-surface .dv-panel [data-dv-next] {
+  display: none;
+}
+.apparatus-surface .dv-panel [data-dv-close] {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-fg-faint);
+  background: none;
+  border: 1px solid var(--color-line);
+  border-radius: 3px;
+  padding: 0.2rem 0.55rem;
+  cursor: pointer;
+}
+.apparatus-surface .dv-panel ul {
+  margin: 0.25rem 0 0.6rem;
+  padding-left: 1rem;
+  color: var(--color-fg-muted);
+  font-size: 0.8125rem;
+}
+.apparatus-surface .dv-panel p {
+  margin-top: 0.4rem;
+}
+.apparatus-surface .dv-panel b {
+  color: var(--color-fg);
+  font-weight: 600;
+}
+.apparatus-surface .dv-table-fallback {
+  margin-top: 1rem;
+  font-size: 0.8125rem;
+}
+.apparatus-surface .dv-prov {
+  color: var(--color-fg-faint);
+}
+
+/* ── motion ─────────────────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .apparatus-surface *,
+  .apparatus-surface *::before,
+  .apparatus-surface *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}

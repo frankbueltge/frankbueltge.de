@@ -1,12 +1,23 @@
 ---
 // /apparatus — site-v2 work order §4 (decisions doc 2026-07-16, Abgleich A3: "Apparat &
-// menschliche Verantwortung als auffindbare Funktion"). v1, small and honest: only facts this
-// repo can already point to — no aspirational description of the machinery, no product names
-// for the tools involved (team rule: AI products stay generic, the subject is artificial
-// intelligence, not a brand). Workflow names/cadences are read from .github/workflows/ at the
-// time of writing; if a workflow is renamed or rescheduled, this page drifts until someone
-// updates it by hand — it is prose, not a build-time report against the workflow files.
+// menschliche Verantwortung als auffindbare Funktion"). Only facts this repo can already point
+// to — no aspirational description of the machinery, no product names for the tools involved
+// (team rule: AI products stay generic, the subject is artificial intelligence, not a brand).
+//
+// Until 2026-08-03 this file's header carried a confession: "Workflow names/cadences are read
+// from .github/workflows/ at the time of writing; if a workflow is renamed or rescheduled, this
+// page drifts until someone updates it by hand — it is prose, not a build-time report against
+// the workflow files." It had drifted: it named four gates while the repository held twenty-seven
+// workflows, and three workflows that commit to main had stopped reaching production without
+// anyone noticing.
+//
+// The map below replaces that arrangement. Its topology is data (src/lib/apparatus/topology.ts)
+// and topology.test.ts reads the real workflow files back, so the same drift now fails the build
+// instead of quietly ageing on the page. The gate table is rendered from that data too — the two
+// can no longer disagree.
+import ApparatusMap from '@/components/apparatus/ApparatusMap.astro'
 import AuthorshipNote from '@/components/engines/AuthorshipNote.astro'
+import { NODES } from '@/lib/apparatus/topology'
 
 // Wording follows the federated constitution (docs/federated-research-ecology/,
 // spec 02: local sovereignty, "what must never be assumed") — no wings, no fixed
@@ -36,12 +47,14 @@ const engines = [
   },
 ]
 
-const integrateGates = [
-  { name: 'Atelier integrate', cadence: 'daily 03:00 UTC (+ manual dispatch) — landing and site rebuild are decoupled since Protocol v4', workflow: 'atelier-integrate.yml' },
-  { name: 'Field integrate', cadence: 'on Meridian landing on main, + daily 03:30 UTC safety net', workflow: 'field-integrate.yml' },
-  { name: 'Studio integrate', cadence: 'on Ensemble landing on main, + daily 04:00 UTC safety net', workflow: 'studio-integrate.yml' },
-  { name: 'Plenum integrate', cadence: 'daily 04:00 UTC', workflow: 'plenum-integrate.yml', note: 'the data-snack cast’s weekly plenum — not one of the three research practices, listed here for completeness' },
-]
+// Rendered from the topology rather than retyped, so the table and the map cannot drift apart —
+// and so a gate added to the machinery cannot be forgotten here (topology.test.ts checks every
+// workflow file this points at).
+const integrateGates = NODES.filter((n) => n.layer === 'gates').map((n) => ({
+  name: n.label,
+  cadence: n.what,
+  workflow: n.ref?.replace('.github/workflows/', '') ?? '—',
+}))
 
 ---
 
@@ -97,6 +110,21 @@ const integrateGates = [
       resident of its own — it is kept by the conductor, and records only what happens when the
       three practices meet.
     </p>
+  </section>
+
+  <section class="mt-14" aria-labelledby="wiring-heading">
+    <h2 id="wiring-heading" class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">The wiring</h2>
+    <p class="mt-4 text-fg-muted">
+      Everything above, drawn as it is actually connected. The figure is built from the same
+      records the machinery runs on, and a test reads the workflow files back to keep the two
+      from drifting — so this account cannot quietly age the way its predecessor did.
+    </p>
+    {/* The prose column is 3xl; the figure needs more than that to place five columns without
+        collapsing into a scroll on every screen. It breaks out where there is room and scrolls
+        inside its own box where there is not — the page body never scrolls sideways. */}
+    <div class="mt-6 lg:-mx-24 xl:-mx-44">
+      <ApparatusMap />
+    </div>
   </section>
 
   <section class="mt-14" aria-labelledby="gates-heading">
