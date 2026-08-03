@@ -22,7 +22,7 @@
 // rest would be claiming they are a stage of it.
 
 import { escapeXml } from '@/lib/dataviz/geometry'
-import type { ApparatusEdge, ApparatusNode, Layer } from './topology'
+import { domainOf, type ApparatusEdge, type ApparatusNode, type Layer } from './topology'
 
 // ── layout constants (viewBox units) ─────────────────────────────────────────
 
@@ -325,6 +325,7 @@ export function buildApparatusSvg(model: ApparatusModel, opts: ApparatusRenderOp
       `data-owner="${node.owner}"`,
       `data-layer="${node.layer}"`,
       `data-node-kind="${node.kind}"`,
+      `data-domain="${domainOf(node.id) ?? 'shared'}"`,
     ]
     if (live) attrs.push(`data-key="${escapeXml(node.id)}"`, 'tabindex="0"', 'role="button"')
     s.push(`<g ${attrs.join(' ')}>`)
