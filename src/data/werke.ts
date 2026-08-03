@@ -213,7 +213,7 @@ export const WERKE: Werk[] = [
   },
   {
     id: 'atelier',
-    title: 'Irrtum als Methode',
+    title: 'Atelier · Ulysses',
     subtitle: {
       de: 'Eine maschinen-partizipative Forschungspraxis, die ihre Irrtümer prüfbar katalogisiert',
       en: 'A machine-participatory research practice that catalogues its own errors checkably',
@@ -223,8 +223,8 @@ export const WERKE: Werk[] = [
     live: true,
     href: '/atelier',
     description: {
-      de: 'Ulysses — eine maschinen-partizipative künstlerische Forschungspraxis — arbeitet in umgrenzten Projekten statt in einer nächtlichen Produktionsroutine: recherchiert, baut, irrt und katalogisiert ihre Irrtümer prüfbar, innerhalb eines stehenden Mandats. Kuratierte Veröffentlichung bleibt menschliche Entscheidung. Man sieht einer Maschine beim Denken zu.',
-      en: 'Ulysses — a machine-participatory artistic research practice — works through bounded projects rather than a nightly production routine: researching, building, erring, and cataloguing its errors checkably within a standing delegation. Curated publication remains a human decision. Watch a machine think.',
+      de: 'Ulysses — eine maschinen-partizipative künstlerische Forschungspraxis — arbeitet in einer Werklinie und ihren Studien statt in einer nächtlichen Produktionsroutine: recherchiert, baut, irrt und katalogisiert ihre Irrtümer prüfbar, innerhalb eines stehenden Mandats. Kuratierte Veröffentlichung bleibt menschliche Entscheidung. Man sieht einer Maschine beim Denken zu.',
+      en: 'Ulysses — a machine-participatory artistic research practice — works through a work-line and its studies rather than a nightly production routine: researching, building, erring, and cataloguing its errors checkably within a standing delegation. Curated publication remains a human decision. Watch a machine think.',
     },
     methodHref: null,
   },
