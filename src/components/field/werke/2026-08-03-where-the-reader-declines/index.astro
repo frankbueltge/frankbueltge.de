@@ -111,7 +111,7 @@ const maxCell = Math.max(...Object.values(grid).flatMap((row) => Object.values(r
                 <span
                   class="seg"
                   data-rel={r}
-                  style={`flex:${row.t[r]}`}
+                  data-n={row.t[r]}
                   title={`${r}: ${row.t[r]}`}
                 >
                   {row.t[r] >= 3 ? row.t[r] : ''}
@@ -225,7 +225,7 @@ const maxCell = Math.max(...Object.values(grid).flatMap((row) => Object.values(r
             {[...RELATIONS, 'undecidable'].map((m) => (
               <td
                 class={g === m ? 'diag' : ''}
-                style={grid[g][m] ? `--w:${grid[g][m] / maxCell}` : ''}
+                data-w={grid[g][m] ? Math.round((grid[g][m] / maxCell) * 20) : null}
               >
                 {grid[g][m] || ''}
               </td>
@@ -351,6 +351,34 @@ const maxCell = Math.max(...Object.values(grid).flatMap((row) => Object.values(r
   .seg[data-rel='contextualizes'] { background: var(--contextualizes); }
   .seg[data-rel='undecidable'] { background: var(--undecidable); }
 
+  /* Segment width and cell tint used to ride on inline style attributes. The site's CSP carries
+     style hashes, which makes its 'unsafe-inline' inert, and it has no 'unsafe-hashes' — so the
+     browser dropped both and the bars sized to their labels while the grid stayed blank. A
+     component <style> block IS hashed, but it cannot be generated at build time (Astro does not
+     hash a <style set:html>), so the values have to meet CSS that is written out in full. Counts
+     are exact; the tint is quantised into twentieths, and since it tops out at 22% one step is
+     about a percent of tint. No number this work reports changed. */
+  .seg[data-n='1'] { flex: 1 } .seg[data-n='2'] { flex: 2 } .seg[data-n='3'] { flex: 3 }
+  .seg[data-n='4'] { flex: 4 } .seg[data-n='5'] { flex: 5 } .seg[data-n='6'] { flex: 6 }
+  .seg[data-n='7'] { flex: 7 } .seg[data-n='8'] { flex: 8 } .seg[data-n='9'] { flex: 9 }
+  .seg[data-n='10'] { flex: 10 } .seg[data-n='11'] { flex: 11 } .seg[data-n='12'] { flex: 12 }
+  .seg[data-n='13'] { flex: 13 } .seg[data-n='14'] { flex: 14 } .seg[data-n='15'] { flex: 15 }
+  .seg[data-n='16'] { flex: 16 } .seg[data-n='17'] { flex: 17 } .seg[data-n='18'] { flex: 18 }
+  .seg[data-n='19'] { flex: 19 } .seg[data-n='20'] { flex: 20 } .seg[data-n='21'] { flex: 21 }
+  .seg[data-n='22'] { flex: 22 } .seg[data-n='23'] { flex: 23 } .seg[data-n='24'] { flex: 24 }
+  .seg[data-n='25'] { flex: 25 } .seg[data-n='26'] { flex: 26 } .seg[data-n='27'] { flex: 27 }
+  .seg[data-n='28'] { flex: 28 } .seg[data-n='29'] { flex: 29 } .seg[data-n='30'] { flex: 30 }
+  .seg[data-n='31'] { flex: 31 } .seg[data-n='32'] { flex: 32 } .seg[data-n='33'] { flex: 33 }
+  .seg[data-n='34'] { flex: 34 } .seg[data-n='35'] { flex: 35 } .seg[data-n='36'] { flex: 36 }
+  .seg[data-n='37'] { flex: 37 } .seg[data-n='38'] { flex: 38 } .seg[data-n='39'] { flex: 39 }
+  .seg[data-n='40'] { flex: 40 } .seg[data-n='41'] { flex: 41 } .seg[data-n='42'] { flex: 42 }
+  .seg[data-n='43'] { flex: 43 } .seg[data-n='44'] { flex: 44 } .seg[data-n='45'] { flex: 45 }
+  .seg[data-n='46'] { flex: 46 } .seg[data-n='47'] { flex: 47 } .seg[data-n='48'] { flex: 48 }
+  .seg[data-n='49'] { flex: 49 } .seg[data-n='50'] { flex: 50 } .seg[data-n='51'] { flex: 51 }
+  .seg[data-n='52'] { flex: 52 } .seg[data-n='53'] { flex: 53 } .seg[data-n='54'] { flex: 54 }
+  .seg[data-n='55'] { flex: 55 } .seg[data-n='56'] { flex: 56 } .seg[data-n='57'] { flex: 57 }
+  .seg[data-n='58'] { flex: 58 } .seg[data-n='59'] { flex: 59 } .seg[data-n='60'] { flex: 60 }
+
   .finding { border-top: 1px solid currentColor; padding-top: .7rem; margin-top: 1rem; }
 
   .tbl, .grid { border-collapse: collapse; width: 100%; font-size: .8rem; margin: 1rem 0; }
@@ -358,6 +386,16 @@ const maxCell = Math.max(...Object.values(grid).flatMap((row) => Object.values(r
   .tbl th[scope='row'], .grid th[scope='row'] { text-align: left; }
   caption { caption-side: bottom; font-size: .75rem; opacity: .8; padding-top: .5rem; text-align: left; }
   .grid td { background: color-mix(in srgb, currentColor calc(var(--w, 0) * 22%), transparent); }
+  .grid td[data-w='1'] { --w: .05 } .grid td[data-w='2'] { --w: .1 }
+  .grid td[data-w='3'] { --w: .15 } .grid td[data-w='4'] { --w: .2 }
+  .grid td[data-w='5'] { --w: .25 } .grid td[data-w='6'] { --w: .3 }
+  .grid td[data-w='7'] { --w: .35 } .grid td[data-w='8'] { --w: .4 }
+  .grid td[data-w='9'] { --w: .45 } .grid td[data-w='10'] { --w: .5 }
+  .grid td[data-w='11'] { --w: .55 } .grid td[data-w='12'] { --w: .6 }
+  .grid td[data-w='13'] { --w: .65 } .grid td[data-w='14'] { --w: .7 }
+  .grid td[data-w='15'] { --w: .75 } .grid td[data-w='16'] { --w: .8 }
+  .grid td[data-w='17'] { --w: .85 } .grid td[data-w='18'] { --w: .9 }
+  .grid td[data-w='19'] { --w: .95 } .grid td[data-w='20'] { --w: 1 }
   .grid td.diag { outline: 2px solid currentColor; outline-offset: -2px; }
   .vh { font-size: .68rem; opacity: .7; }
 
