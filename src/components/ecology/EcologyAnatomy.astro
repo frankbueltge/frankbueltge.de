@@ -1,0 +1,235 @@
+---
+// src/components/ecology/EcologyAnatomy.astro — the three cycles figure on /ecology: how a piece
+// of research becomes public in each practice, in each practice's own words.
+//
+// Build-time SVG, readable with nothing switched on: every step carries a native <title>, and the
+// table below repeats all of them. The client layer adds the readout and a detail panel that can
+// be stepped through, because a cycle — unlike a wiring diagram — has an order worth walking.
+import DetailPanel from '@/components/dataviz/DetailPanel.astro'
+import Readout from '@/components/dataviz/Readout.astro'
+import TableFallback from '@/components/dataviz/TableFallback.astro'
+import { jsonScriptPayload } from '@/lib/dataviz/runtime'
+import { ECOLOGY as W } from '@/config/ecology-wording'
+import { PRACTICES, allQuotes, type StageKind } from '@/lib/ecology/anatomy'
+import { CYCLE_COLUMNS, buildCyclesModel, buildCyclesSvg, cycleRows } from '@/lib/ecology/cycles'
+import '@/styles/ecology-anatomy.css'
+
+const id = 'ecology-cycles'
+const model = buildCyclesModel(PRACTICES)
+const svg = buildCyclesSvg(model, { label: `${W.cycles.heading} — ${W.standfirst}` })
+const rows = cycleRows(PRACTICES)
+
+const totalSteps = PRACTICES.reduce((n, p) => n + p.stages.length, 0)
+const provenance = W.cycles.provenanceLine(PRACTICES.length, totalSteps, allQuotes().length)
+
+// the shape key, drawn by the figure's own builder so the two can never disagree
+const KINDS: StageKind[] = ['work', 'gate', 'human', 'land']
+const kindKeys = KINDS.map((kind) => ({
+  kind,
+  label: W.cycles.keys[kind],
+  glyph:
+    kind === 'work'
+      ? '<g class="ec-glyph" data-stage-kind="work"><rect x="4" y="4" width="8" height="8" /></g>'
+      : kind === 'gate'
+        ? '<g class="ec-glyph" data-stage-kind="gate"><path d="M4 3 L12 8 L4 13" /></g>'
+        : kind === 'human'
+          ? '<g class="ec-glyph" data-stage-kind="human"><path d="M8 2 L14 8 L8 14 L2 8 Z" /></g>'
+          : '<g class="ec-glyph" data-stage-kind="land"><path d="M3 12 H13 M3 8 H13" /></g>',
+}))
+
+const payload = {
+  practices: PRACTICES.map((p) => ({
+    id: p.id,
+    persona: p.persona,
+    stages: p.stages.map((s) => ({
+      label: s.label,
+      kind: s.kind,
+      what: s.what,
+      artefact: s.artefact ?? null,
+    })),
+  })),
+}
+---
+
+<div class="ecology-surface" data-ecology>
+  <figure class="ec-figure" data-ec-figure>
+    <div class="ec-scroll"><div id={id} data-ec-svg set:html={svg} /></div>
+    <Readout id={`${id}-readout`} maxWidth="42ch" />
+  </figure>
+
+  <DetailPanel id={`${id}-panel`} />
+
+  <p class="ec-key">{W.cycles.keyLabel}</p>
+  <ul class="ec-keys">
+    {
+      kindKeys.map((k) => (
+        <li>
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" set:html={k.glyph} />
+          <span>{k.label}</span>
+        </li>
+      ))
+    }
+  </ul>
+
+  <p class="ec-hint">{W.cycles.hint}</p>
+
+  <TableFallback
+    summary={W.cycles.tableSummary}
+    caption={W.cycles.tableCaption}
+    columns={CYCLE_COLUMNS}
+    rows={rows}
+    provenance={provenance}
+  />
+
+  <script id={`${id}-payload`} type="application/json" set:html={jsonScriptPayload(payload)} />
+</div>
+
+<script>
+  import { createReadout, type ReadoutAnchor } from '@/lib/dataviz/readout'
+  import { readJsonScript, reducedMotion } from '@/lib/dataviz/runtime'
+  import { buildSegments, step } from '@/lib/dataviz/stepper'
+
+  interface Stage {
+    label: string
+    kind: string
+    what: string
+    artefact: string | null
+  }
+  interface Practice {
+    id: string
+    persona: string
+    stages: Stage[]
+  }
+
+  const KIND_WORD: Record<string, string> = {
+    work: 'the practice working',
+    gate: 'a gate — it must pass',
+    human: 'a human decides',
+    land: 'the record, or the site admitting it',
+  }
+
+  for (const root of document.querySelectorAll<HTMLElement>('[data-ecology]')) {
+    const figure = root.querySelector<HTMLElement>('[data-ec-figure]')
+    const host = root.querySelector<HTMLElement>('[data-ec-svg]')
+    const svg = host?.querySelector('svg')
+    const tipEl = root.querySelector<HTMLElement>('.dv-readout')
+    const panel = root.querySelector<HTMLElement>('.dv-panel')
+    if (!figure || !host || !svg || !tipEl || !panel) continue
+
+    let data: { practices: Practice[] }
+    try {
+      data = readJsonScript<{ practices: Practice[] }>(`${host.id}-payload`)
+    } catch {
+      continue // progressive enhancement: the server-rendered figure and table stand alone
+    }
+
+    const fig = figure
+    const gfx = svg
+    const pnl = panel
+    const readout = createReadout(tipEl, fig)
+
+    /** Flat walking order: every step of every practice, in column order. The panel steps along
+     *  a practice's own chain and stops at its ends, rather than wrapping into the next column —
+     *  a cycle is one practice's, and walking off it would suggest the three are one sequence. */
+    const flat: { p: Practice; i: number; key: string }[] = []
+    for (const p of data.practices) p.stages.forEach((_, i) => flat.push({ p, i, key: `${p.id}:${i}` }))
+    const segments = buildSegments(flat, (f) => f.p.id)
+    const posOf = new Map(flat.map((f, n) => [f.key, n]))
+
+    const stageEls = [...gfx.querySelectorAll<SVGGElement>('[data-key]')]
+    let chosen: string | null = null
+
+    const anchorOf = (el: SVGGElement, ev?: MouseEvent): ReadoutAnchor => {
+      const box = fig.getBoundingClientRect()
+      if (ev) return { anchorX: ev.clientX - box.left, anchorY: ev.clientY - box.top }
+      const r = el.getBoundingClientRect()
+      return { anchorX: r.left - box.left + r.width / 2, anchorY: r.top - box.top + r.height / 2 }
+    }
+
+    function tip(f: { p: Practice; i: number }): DocumentFragment {
+      const s = f.p.stages[f.i]
+      const frag = document.createDocumentFragment()
+      const b = document.createElement('strong')
+      b.textContent = `${f.p.persona} — ${s.label}`
+      frag.append(b, document.createElement('br'))
+      const span = document.createElement('span')
+      span.textContent = s.what
+      frag.append(span)
+      return frag
+    }
+
+    function render(pos: number): void {
+      const f = flat[pos]
+      if (!f) return
+      const s = f.p.stages[f.i]
+      chosen = f.key
+      for (const el of stageEls) el.toggleAttribute('data-sel', el.dataset.key === chosen)
+
+      const head = pnl.querySelector<HTMLElement>('.dv-panel-head') ?? pnl
+      const body = pnl.querySelector<HTMLElement>('.dv-panel-body') ?? pnl
+      head.textContent = ''
+      const h = document.createElement('h3')
+      h.textContent = `${f.p.persona} · ${s.label}`
+      head.append(h)
+
+      body.textContent = ''
+      const what = document.createElement('p')
+      what.textContent = s.what
+      body.append(what)
+
+      const kind = document.createElement('p')
+      const kb = document.createElement('b')
+      kb.textContent = 'kind: '
+      kind.append(kb, document.createTextNode(KIND_WORD[s.kind] ?? s.kind))
+      body.append(kind)
+
+      if (s.artefact) {
+        const a = document.createElement('p')
+        const ab = document.createElement('b')
+        ab.textContent = 'lands in: '
+        a.append(ab, document.createTextNode(s.artefact))
+        body.append(a)
+      }
+
+      pnl.dataset.dvPos = String(pos)
+      pnl.hidden = false
+      pnl.scrollIntoView({ block: 'nearest', behavior: reducedMotion() ? 'auto' : 'smooth' })
+    }
+
+    for (const el of stageEls) {
+      const key = el.dataset.key ?? ''
+      const pos = posOf.get(key)
+      if (pos === undefined) continue
+      const f = flat[pos]
+      el.addEventListener('mouseenter', (ev) => readout.show(tip(f), anchorOf(el, ev as MouseEvent)))
+      el.addEventListener('mousemove', (ev) => readout.show(tip(f), anchorOf(el, ev as MouseEvent)))
+      el.addEventListener('mouseleave', () => readout.hide())
+      el.addEventListener('focus', () => readout.show(tip(f), anchorOf(el)))
+      el.addEventListener('blur', () => readout.hide())
+      el.addEventListener('click', () => render(pos))
+      el.addEventListener('keydown', (ev) => {
+        const k = (ev as KeyboardEvent).key
+        if (k === 'Enter' || k === ' ') {
+          ev.preventDefault()
+          render(pos)
+        }
+      })
+    }
+
+    // The shell reports the position it WANTS (pos ± 1); stepper.ts clamps it to the practice's
+    // own segment, so prev/next walk one chain and stop at its ends instead of wrapping into the
+    // next column — the three cycles are not one sequence.
+    pnl.addEventListener('dv:step', (ev) => {
+      const from = Number(pnl.dataset.dvPos ?? '0')
+      const wanted = ((ev as CustomEvent).detail?.pos as number | undefined) ?? from
+      const next = step(segments, from, wanted - from)
+      if (next !== from) render(next)
+    })
+
+    pnl.addEventListener('dv:close', () => {
+      chosen = null
+      for (const el of stageEls) el.removeAttribute('data-sel')
+      pnl.hidden = true
+    })
+  }
+</script>
