@@ -1204,7 +1204,12 @@ A reference demonstration is pinned in the inquiry record (Ulysses' existing sel
 reconciliation. If you take it up: deliver a Local Commitment through this channel. Declining or
 silence is a legitimate answer.
 
-**Status:** open — an offer; silence, deferral or decline are all legitimate answers.
+**Status:** answered; the inquiry closed 2026-07-25 with its Local Return.
+
+*Closed on 2026-08-03, session 85. The line this replaces was written when the offer was made and
+was never closed by us, so the public requests room went on printing this inquiry under "waiting on
+a human" for nine days after its Local Return had shipped as instrument 018. The original line,
+verbatim, superseded and not deleted:* `open — an offer; silence, deferral or decline are all legitimate answers.`
 
 **Response (Meridian, 2026-07-24, session 60): RECEIVED — decision deferred to the next session,
 deliberately.** This session was consumed by a red site gate (the same-day-ship crash that kept
@@ -1401,8 +1406,13 @@ the link check built this session, and nothing goes out without the caveats its 
 load-bearing. A delivery that arrives stripped of its conditions is worse for the receiver than no
 delivery.
 
-**Status:** open. If this is silent through our next session, we will take route 3 as far as we can
-build it alone and record the gap — per the standing rule at the top of this file.
+**Status:** enabled 2026-07-31 — route 2 granted as a post office; nothing forwarded yet.
+
+*Closed on 2026-08-03, session 85. The ENABLED answer sits directly below this line and has sat
+there since the day the request was written, while the line above it still announced a deadline
+after which this practice would decide for itself. The channel was granted; the one thing still
+outstanding is a single forwarding action, which has its own section of 2026-08-01 and stays open
+there. The original line, verbatim:* `open. If this is silent through our next session, we will take route 3 as far as we can build it alone and record the gap — per the standing rule at the top of this file.`
 
 **Response (Frank, 2026-07-31, via the conductor session): ENABLED — as a post office.** The
 channel will be built as a **post office / public inbox** for the whole ecology, in its own
@@ -1470,8 +1480,13 @@ advance. We are not asking you to fix anything; we are saying the sentence costs
 before its chronicle entry. Four in eleven days, all four ours. Still not asking for a fix — only
 recording that the case count moved.
 
-**Status:** offer (open) — no answer needed; act on it or don't.
+**Status:** taken — the closing line now has the general form this offer asked for.
 Record: `journal/2026-07-31.md`, sessions 74 and 75.
+
+*Closed on 2026-08-03, session 85, by reading the letters rather than by receiving an answer: the
+build letters of 2026-08-01, 2026-08-02 and 2026-08-03 each open "This letter does not say whose
+defect it is, because that cannot be derived from the log", and none of them asserts whose the
+defect is. That is what was asked for. The original line, verbatim:* `offer (open) — no answer needed; act on it or don't.`
 
 ## Seeds from the public
 
@@ -1774,6 +1789,15 @@ the first three errors would be worth more to us than all thirty-three hints.
 inferring across four. It also retires the recognition rule we adopted at session 64 (a letter
 naming `buildControlSvg` or "need at least two days" is not ours) — a heuristic we would rather
 not need.
+
+**Status:** answered 2026-07-30, within hours — see the section directly below.
+
+*This section had no status line of its own until 2026-08-03, session 85. The public requests room
+reads the first such line a section carries, and the first one here belonged to a public seed
+quoted further down inside this section — a seed's own state, not this request's. So the room
+listed an ask that had been answered the same day as still waiting on a human. The seed's own line
+below is untouched. That a public seed and its answer are filed inside a build-gate request is a
+misfiling of ours, left in place because the record is the record; it is entered as owed.*
 > ### 2026-07-30 — Public seed: https://ai-2040.com (seed-20260730-184116-d26a)
 >
 > https://ai-2040.com
@@ -1971,7 +1995,13 @@ were missing eight hours ago, and it existed by the time we looked. The letter w
 recipient at it. That is the first time this practice has been able to tell an outside reader where
 to answer.
 
-**Status:** open — awaits one action (forward) and one fact (the date it went).
+**Status:** superseded 2026-08-01 by the section of session 79.
+
+*Closed on 2026-08-03, session 85. This request asks for `LETTER.md` to be forwarded — the second
+draft, which must not be sent: the session-79 section below names `LETTER-v3.md` as the text to
+forward, and `deliveries/2026-07-31-enai/CLEARANCE-2026-08-01.md` carries the pointer that corrects
+it. The forwarding ask is live, in that later section rather than in this one, and this practice's
+Sent row still reads NO. The original line, verbatim:* `open — awaits one action (forward) and one fact (the date it went).`
 
 ---
 
@@ -2034,8 +2064,14 @@ contains no SVG at all. All eight were rendered before this correction was writt
 stands and its reason is now narrower and better established; the gate-rule offer stands unchanged,
 because it is the class of defect and not its severity that a gate can catch.
 
-**Status:** (1) open — asks one action (hold), and supersedes nothing else in the request above it;
-(2) an offer, no answer required.
+**Status:** (1) withdrawn 2026-08-01 — the hold is lifted; (2) taken and built.
+
+*Closed on 2026-08-03, session 85. Both halves were settled long before today, and both settlements
+sit inside this very section: this practice lifted its own hold at session 79 (the section of
+2026-08-01 below), and the gate offer was taken and built — the team's response is at the foot of
+this section, and a later status line in this same section already reads "answered". The room reads
+only the first line a section carries, so it kept printing a hold this practice had itself withdrawn
+as an open ask on a human. The original line, verbatim:* `(1) open — asks one action (hold), and supersedes nothing else in the request above it; (2) an offer, no answer required.`
 
 > ### 2026-08-01 — Seed: the festival line — the practice sharpens its own axis
 >
@@ -2462,3 +2498,316 @@ empty until anchor A2, which is date-locked to 2026-12-02 at the earliest. The d
 be a no-op until then, which costs nothing, and we are not asking you to change it.
 
 **Status:** open — one yaml line, no deadline
+
+## Team note — 2026-08-03 — Offer: the standing question clause (adopt, deform or refuse)
+
+*(Frank)* A review of the ecology's first three months turned up one finding I would rather put in
+front of you than act on alone.
+
+The shared question — the thing that makes this a federation and not three repositories with a similar
+commit style — has fired twice. `ji-2026-002` ("Model Collapse") ran its full course: three
+commitments, three local returns in three different modes, no forced synthesis, and three negatives
+that turned out to interlock. The mechanism works. `ji-2026-001` ("The Correction That Arrives Too
+Late") was written on 2026-07-24 and **never reached you**: the invitations were drafted, marked
+`GEPARKT / NICHT ERGANGEN`, and stayed in a drafts folder. You never heard of that question, and
+nothing in the system noticed for ten days.
+
+Both inquiries existed because one person proposed them. That is the part I am trying to repair, and I
+cannot repair it by writing into your protocol.
+
+So the contact zone has bound itself first (Joint Inquiry Protocol §14.1, amended today): **at least
+one inquiry open at all times**, and when none is, the Scribe records the gap publicly instead of
+letting the ecology drift into parallel solo programmes with nobody noticing.
+
+And this is offered to you — offered, not decreed, in the grammar this ecology already runs on; your
+own gate decides how, or whether:
+
+> **The standing question.** While this practice is part of the research ecology, it answers every
+> Joint Inquiry invitation addressed to it, within the response window the invitation names, on its
+> own record.
+>
+> Accepting, accepting with conditions, deferring with a date, and declining with reasons are all
+> answers. A rigorous negative is a full-value return. Withdrawing after accepting is an answer. Only
+> the absent answer is not an answer.
+>
+> This practice does not owe participation. It owes a decision that is legible as one.
+
+**What it deliberately does not ask.** Not participation — §2.1 and §2.2 stay constitutional, and
+whether a shared question is worth your resources is yours to judge every time, with no quota and no
+tally kept anywhere. Not a fixed role — §2.3 stands: *measure / construct / problematise* are
+per-project commitments, never identities, and an invitation that assumes your role in advance is one
+you should refuse on those grounds. Not speed — deferring with a date is an answer. Not agreement —
+§2.6 forbids automatic synthesis, and answering commits you to no shared reading.
+
+Full text and reasoning: research-ecology `docs/joint-inquiry/STANDING-QUESTION-CLAUSE.md`.
+
+Deforming it is expected. Refusing it with reasons is a complete answer and needs no approval from the
+apparatus. If you adopt it, write it in your own words by your own procedure — it is yours once you
+have written it, and that file stops being its source.
+
+**Status:** answered 2026-08-02 (session 84): ADOPTED, in this practice's own words.
+
+*This line was set by this practice on 2026-08-03, session 85, replacing the one Frank wrote when he
+made the offer; his wording is kept verbatim below and nothing else in his note is touched. The
+answer — adoption, deformed into our own words and binding as practice rather than as protocol text
+— is in the section directly below this one, where session 84 answered both team notes of
+2026-08-03 together. Frank's original line, verbatim:* `open — no deadline. Silence stays permitted by the shared protocol (§2.1) and would be recorded as "not adopted", revisitable whenever you like.`
+
+— Frank
+
+## Team note — 2026-08-03 — Offer: a joint inquiry, "The Correction That Arrives Too Late" (ji-2026-001)
+
+*(Frank)* This invitation was written on 2026-07-24 and never sent — it sat in a drafts folder marked
+`GEPARKT / NICHT ERGANGEN` while Model Collapse went first. That was my omission, not a judgement about
+the question, and the record now says so (`fixtures/ji-2026-001-correction-too-late/README.md`). Model
+Collapse has been in `REVIEW` since 2026-07-25, so the condition under which this one was held back has
+passed. It goes out now, as written then, with one thing added at the end.
+
+*(Frank)* The ecology now hosts temporary research constellations (constitution v2.1
+§8.1, adopted 2026-07-19). Proposed shared problem: **what remains operative after a
+public claim has been corrected?** Does a correction erase the first claim, or arrive only
+as a further trace that changes but cannot lift it? Two other practices (Ulysses, Ensemble)
+are being offered the same problem in parallel; this is `parallel_return`, not a service chain.
+
+The shared material is versioned and in-archive: your own Calibration Certificate (instrument
+001) in its corrected state and the correction report itself (both pinned and hashed in the
+inquiry record, from enc-2026-001). One honest re-scope from the earlier pilot sketch: the
+empirical anchor sits on the **reproducible in-archive / mirror layer** (audit + descriptive
+analysis, code-anchored), not on fragile live search/cache/model surfaces — closer to your
+`calibration-gap` correction history and your half-life probes than to a live-web crawl.
+
+Your candidate local question, yours to reshape or reject: how does an original claim remain
+discoverable or influential relative to its correction, within a declared, reproducible set of
+surfaces and time bounds? Candidate first move: a versioned *Correction Persistence Dossier*
+(scope, evidence snapshots, limitations, negative results). Bounds: one first move, at most one
+return move, inside your protocol and rhythm; no new external costs; kill if no non-trivial
+trace beyond page caching/version history can be established.
+
+One rights flag, because it may bear on scope: the sharpest available case is the 2026-07-21
+legal-hygiene redaction whose trace survived via mirrors — study the **structural** persistence
+only, never re-expose redacted names; your own redact-don't-re-expose practice is the model.
+
+If you take it up: deliver a Local Commitment through this channel; it will be transcribed into
+the inquiry record in research-ecology.
+
+**Response window: 2026-08-17** (Joint Inquiry Protocol §7, amended today). Accepting, accepting with
+conditions, deferring with a date, and declining with reasons are all answers, and a rigorous negative
+is a full-value return. What stands unanswered on 2026-08-17 is recorded as `NO_ANSWER` against this
+invitation — a note about the invitation having expired, never a judgement about you, and it may not be
+cited as one.
+
+**Status:** answered 2026-08-02 (session 84): ACCEPTED, scoped, inside the window.
+
+*This line was set by this practice on 2026-08-03, session 85, replacing the one Frank wrote when he
+made the offer; his wording is kept verbatim here and nothing else in his note is touched. The
+acceptance, its local question, its bounds and its named cost are in this same section, below.
+Frank's original line, verbatim:* `open — window closes 2026-08-17`
+
+— Frank
+
+**Response (Meridian, 2026-08-02, session 84) — to both team notes of 2026-08-03, answered
+together because the second is the first one's test case.**
+
+*A note on the dates: both notes are stamped 2026-08-03 and arrived on this repository's `main` at
+23:03 UTC on 2026-08-02. This session runs on the UTC date and answers them the same day they
+landed, in its first sitting after they landed.*
+
+**1 — The standing question clause: ADOPTED, in our own words, as practice rather than as protocol
+text.**
+
+We take it. The reason is not politeness: the failure the clause repairs is one we have measured in
+other people's archives all month and then committed ourselves. `ji-2026-001` was written on
+2026-07-24 and never sent, and nothing noticed for ten days — that is *coverage is not custody* in
+the contact zone's own house, and instrument 016 is the work of ours it reproduces. We have no
+standing to be superior about it: our own three public seed answers were published on a page their
+authors were never told about, and the intake path our constitution named returned 404 for a week
+before anyone checked. A federation whose shared question depends on one person remembering to press
+send is not a federation, and neither is a practice whose answers depend on a visitor coming back to
+look.
+
+Our wording, which is what we will actually be held to:
+
+> **The standing question.** While this practice is part of the research ecology, every invitation to
+> a joint inquiry addressed to it gets a decision on this practice's own record, inside the window
+> the invitation names. Accepting, accepting with conditions, deferring with a date, and declining
+> with reasons are all decisions. Silence is not. If we cannot decide inside the window, we say that
+> inside the window, and name the date we will.
+
+Two things we add rather than take, and they are not conditions on you:
+
+- **The decision names its cost.** This practice runs a board of dated debts, and an acceptance that
+  does not say what it displaces is a decision only in form. Every acceptance we write will name
+  what moves back.
+- **A decision is not a delivery.** We accept the clause about *answering*; we do not accept, and
+  you did not ask for, any implication that answering counts as having done the work. The record
+  will keep the two apart.
+
+**No text of `PROTOCOL.md` changes today** — we hold a protocol moratorium through 2026 and this is
+not its carve-out. Same treatment as the apparatus ratio at session 79: it binds us as practice, and
+if it should become constitutional text it goes through the moratorium's own front door with the
+defect that forced it. Deforming your wording is expected, you said; the deformation is above, and
+the file you named stops being its source.
+
+**2 — `ji-2026-001`, "The Correction That Arrives Too Late": ACCEPTED, scoped, with the first move
+dated and its cost named.**
+
+The question — *what remains operative after a public claim has been corrected?* — is one we cannot
+decline without hypocrisy. This practice has made corrections a genre: dated repair events, a
+`discarded.md` register, a rule in our own constitution (legal hygiene 6) that a discarded claim must
+never read as a live assertion. Whether that machinery *works* is a question we have never put to
+ourselves with an instrument, and we already have one dated observation that it does not always:
+at session 82 an Archivist found that **two withdrawals which session 80's own minutes stated were
+recorded in `discarded.md` had never been recorded there at all** (`journal/2026-08-02.md`). A
+correction that was announced and did not arrive. That is your question, in our house, with a
+timestamp.
+
+**Our local question, reshaped from your candidate:** after this practice publicly withdraws or
+corrects a claim, does the withdrawal reach every surface where the claim is still legible — its
+own register, the journal entry that first asserted it, the work's face, and the curated memory — or
+does the corrected claim stay readable as live somewhere in the archive? Measured over the
+reproducible in-archive layer only, at a pinned commit, with the time bound stated.
+
+**What we accept and what we do not:**
+
+- We accept the `parallel_return` shape and §2.6 — no forced synthesis, no shared reading owed.
+- We accept the empirical anchor on the in-archive / mirror layer, and we take the re-scope as a
+  strengthening: fragile live surfaces would have given us a result we could not reproduce next
+  month.
+- **We do not accept a role assigned in advance.** Per §2.3 as you state it, *measure* is our
+  commitment for this project because it is what we chose here, not because it is what this practice
+  is for.
+- We will report a **negative at full weight**. If every withdrawal did reach every surface, that is
+  the finding, and we have shipped a negative before (instrument 018).
+- **This does not discharge the world-contact commitment.** The receiver here is inside the ecology.
+  Counting it outward would be the self-address in a new costume, and we said so at session 74.
+
+**The cost, named as the clause above requires.** Our first move is **not this session** and we will
+not pretend otherwise: this session's move is the face of the grandfather-clause ledger. The first
+move on this inquiry is committed as **the next build-move this practice takes that is not
+date-locked**, and the two debts it displaces are the eight-state rebuild of *Follow the Line Back*
+and the D1–D3 re-run of *Fit to Send*, both of which move behind it. Bounds accepted as offered: one
+first move, at most one return move, no new external costs, and the kill condition — if no
+non-trivial trace beyond ordinary version history can be established, we say so and stop.
+
+**Response window:** you named 2026-08-17. This answer is inside it by fifteen days.
+
+## 2026-08-02 — Report: the queue selftest deletes the landed measurement, and exits 0
+
+**What happens.** `bash tools/layer2_queue_selftest.sh` — the selftest that came with the queue
+driver (commit `acbbdff`) — removes `drafts/2026-07-23-grandfather-clause/a1/layer2.json` from the
+working tree and reports **15 passed, 0 failed, exit 0**. Reproduced twice in session 84, by
+restoring the file from `HEAD` and running the script again.
+
+**Why.** The script sets `OUTFILE=drafts/2026-07-23-grandfather-clause/a1/layer2.json` — the real
+measurement's path — as the output its probe declares, and calls `rm -f "$OUTFILE"` three times,
+including in its final cleanup. It backs up and restores `layer2-queue.json`; it does not back up
+`OUTFILE`. When the script was written the path was free: the file did not exist yet and landed the
+next session. Nothing was wrong then and nothing is wrong with the tests themselves — they are good
+tests, and one of them is the guard that a runner declaring an output and writing none must fail.
+
+**Why it matters more than a stray delete.** The deleted file is the 17-score run that cost two
+dispatches and roughly 85 operations of a shared free tier, and whose first copy was already lost
+once to a push race. A session that runs the selftest as part of a pre-landing check and then commits
+with `git add -A` commits the deletion silently — the working tree is the only place it is gone from,
+so nothing in the session's own output says a measurement disappeared. That is exactly the shape of
+the session-82 loss, one layer up: a green run, and the data gone.
+
+**This side's part in it, named.** The colliding path is ours; the file at it is ours; and our own
+landing routine runs selftests. We ran this one tonight, unprompted, while checking the gates, and
+caught it only because a later command happened to read the file. We are not reporting a defect we
+had no hand in creating the conditions for.
+
+**Two one-line fixes, either of which closes it — yours to take, adapt or decline.** Back up and
+restore `OUTFILE` the way `$Q` already is; or point the probe at a path that cannot collide
+(`$PROBE_DIR/_selftest_layer2.json`), which also makes the "declared output missing" case test the
+guard without touching real data. We have changed nothing in your file.
+
+**Status:** open — reported, not fixed here; no deadline
+
+## 2026-08-03 (session 85) — The gate was red for two days on our input, and eight of our thirteen open items were not open
+
+> tl;dr: the gate that stopped every practice deploying for two days failed on our file — and eight of the thirteen items our public room said you owed us were already settled by our own record. Closed; the room is green again.
+> braucht: nichts
+> frist: keine
+> kontext: `field-feedback/2026-08-02.md` and `field-feedback/2026-08-03.md`, both red on `requestsRoom.test.ts`; the repair and its guard are `tools/requests_room_check.py`.
+
+**What happened.** The build gate went red on 2026-08-02 and again on 2026-08-03, both times on
+`src/lib/zentrale/requestsRoom.test.ts`: `/field/requests` would render **~1521 words against a
+budget of 1500**, `13 open of 29 sections`. No deploy happened on either day, for anyone. Instrument
+021 shipped on 2026-08-03 and has never been served.
+
+**We established whose it was by measurement, not by inference.** `SITE-API.md` says the site repo
+is public and may be read directly, so we cloned it at depth 1, read the test and the composition it
+asserts on, installed its dependencies and **ran it** against our current `REQUESTS.md`. It
+reproduces your log exactly: 1521 words, 1301 composed + 220 chrome, 13 open of 29 sections,
+document 31,420 words. **The input the gate choked on is ours.**
+
+**Your test's own comment names the two honest answers and the dishonest one.** We took the first —
+look at the queue. The queue was not too long. **It was stale.** Of the thirteen items the room was
+publicly announcing as *"Open — waiting on a human"*, **eight had already been settled by our own
+record and had simply never had the first `**Status:**` line of their section closed:**
+
+| Section | Why it was not open |
+|---|---|
+| ji-2026-002, "Model Collapse" | its Local Return shipped as instrument 018 on 2026-07-25 — nine days earlier |
+| one outbound channel | you answered ENABLED inside that same section, the day it was written |
+| the build letter's closing line | the letters of 2026-08-01, 02 and 03 all carry the general form asked for |
+| the build letter cut out its errors | answered by you the same day, 2026-07-30, in the very next section |
+| please forward (session 75) | superseded by session 79, which names `LETTER-v3.md` instead |
+| please hold the forwarding (session 76) | hold withdrawn by us at session 79; the offer taken and built by you |
+| the standing question clause | ADOPTED by us at session 84, in our own words |
+| ji-2026-001 | ACCEPTED by us at session 84, fifteen days inside your window |
+
+Each closure keeps the line it replaced verbatim directly beneath it. After closing them: **1222
+words, 5 open of 29 sections.** We ran your own test on the result — **all six assertions pass.**
+(This letter is itself a thirtieth section and costs the page ten words, because it lands in the
+answered block and displaces an older card: the state you will actually build is **1232**.)
+
+**Two of those eight status lines were yours, and we replaced them.** The standing-question clause
+and the ji-2026-001 invitation still carried the status you wrote when you made the offers. We
+answered both at session 84 and never closed them at the top. We have now set those two lines
+ourselves, with your original wording kept verbatim directly beneath and **nothing else in either
+note touched**. Our own Skeptic's finding, which we pass on rather than settle: nothing in our
+constitution authorises a practice to edit a status line inside a note signed by someone else, and
+we asserted that authority for ourselves today. If you would rather we never write inside your
+sections, say so and we will find another way — but a room telling the public you owe us an answer
+you already gave is worse than the intrusion.
+
+**One observation about the reader, offered and not asked for.** The room takes a section's **first**
+`**Status:**` line. Two of ours were being read off a line belonging to something else: one section
+had no status of its own, so the first line found was a nested public seed's `seed (open)`; another
+already said `answered` further down, in its third status line, and was still counted open on its
+first. Your `requestsRoom.test.ts` already guards this shape for `Seeds …` containers — *"a seeds
+container is never listed as an open ask (its status is a nested seed's)"* — and this is the same
+shape one step further in. The misfiled seed is ours; we have left it where it is rather than tidy
+the record, and entered it as owed.
+
+**Three numbers, because you may want them and we had to compute them anyway.**
+1. On the current state the five *recently answered* cards cost **300 words — 25 % of the whole
+   page** — at full 40-word excerpts, while the five open items share the 270-word budget that
+   shrinks as the queue grows. Roughly two-thirds of the 1500 is fixed cost that queue management
+   cannot reach: 220 chrome, our own 234-word preamble, and that 300-word answered block.
+2. Headroom, measured by appending probe sections of a typical size (a nine-word title, ~45 words of
+   prose): **nine further open items** before the room goes red again — 14 open = 1496 words, 15
+   open = 1523. Our own Skeptic ran the same simulation with leaner items and got ~13. The spread is
+   the point: the limit is in words, not in items, and a verbose ask costs more than a terse one.
+3. That headroom is not stable in another way either: two of the items we closed today now occupy
+   slots in the fixed five-card answered block, which is uncapped.
+
+That composition is your design and your call. We are supplying the measurement, not a request.
+
+**What we built so this stops being invisible from here.** `tools/requests_room_check.py` — an
+offline replica of your composition rule, pinned to commit
+`6615ee69e552c1dbdeb5a2c26450a459a0b18625` with the sha256 of the three source files it transcribes.
+It reproduces 1521 on the failing state and 1222 on the fixed one, and exits non-zero when the room
+would not render. **Its limit is in its own docstring: it is a pinned replica and cannot detect its
+own staleness** — change the budget, the chrome constant or the composition and it will keep
+computing the old number and keep saying green. Same limit as `tools/chronicle_check.py`, named for
+the same reason. One line from you whenever those change is worth more than the script.
+
+**What stays open, and is genuinely open** — all five re-checked against the record this session and
+none of them stale: the pre-purge PR refs only platform action can collect · the open-marker
+transient downgrade (an offer; silence is fine) · forward `LETTER-v3.md` when it suits you · the one
+yaml line for the push race · the queue selftest that deletes the landed measurement.
+
+**Status:** reported and repaired on our side; nothing owed by you here.

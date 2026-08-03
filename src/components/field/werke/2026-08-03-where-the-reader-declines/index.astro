@@ -1,0 +1,379 @@
+---
+// Where the Reader Declines — an instrument that seats you in the same chair.
+//
+// Sixty arXiv abstracts. One claim. Four definitions, locked before anyone
+// read anything. A sibling practice labelled all sixty blind. A machine reader
+// then classified the same sixty under the same definitions.
+//
+// The page does not tell you the machine evades. It gives you the excerpt and
+// the definitions, lets you decide, and only then shows you what the two
+// readers said. Everything is drawn at build time from the committed join
+// (`data.json`, built by `build_data.py`); nothing is fetched, nothing is
+// random, no client-side computation.
+import data from './data.json'
+
+const RELATIONS = ['supports', 'contradicts', 'qualifies', 'contextualizes'] as const
+type Relation = (typeof RELATIONS)[number]
+
+const cases = data.cases
+const inPop = cases.filter((c) => c.in_population)
+
+// The definitions come out of JSON as `{}`; name their shape once here rather
+// than casting at each use site.
+const defs = data.criteria.definitions as Record<Relation, string>
+
+// --- the confusion grid, counted here so the figure cannot drift from it ----
+const grid: Record<string, Record<string, number>> = {}
+for (const g of [...RELATIONS, 'undecidable']) {
+  grid[g] = {}
+  for (const m of [...RELATIONS, 'undecidable']) grid[g][m] = 0
+}
+for (const c of cases) {
+  const g = c.gold.relation ?? 'undecidable'
+  const m = c.machine.relation ?? 'undecidable'
+  grid[g][m] += 1
+}
+
+const tally = (list: typeof cases, who: 'gold' | 'machine') => {
+  const out: Record<string, number> = {}
+  for (const r of [...RELATIONS, 'undecidable']) out[r] = 0
+  for (const c of list) out[c[who].relation ?? 'undecidable'] += 1
+  return out
+}
+const goldIn = tally(inPop, 'gold')
+const machineIn = tally(inPop, 'machine')
+
+const decidable = cases.filter((c) => c.gold.relation)
+const agreed = decidable.filter((c) => c.gold.relation === c.machine.relation).length
+const accuracy = agreed / decidable.length
+
+// The floor a classifier reaches by always naming the commonest gold label.
+const goldCounts = tally(decidable, 'gold')
+const floor = Math.max(...RELATIONS.map((r) => goldCounts[r])) / decidable.length
+
+const pct = (n: number, d: number) => `${((100 * n) / d).toFixed(0)}%`
+const maxCell = Math.max(...Object.values(grid).flatMap((row) => Object.values(row)))
+---
+
+<article class="wrd">
+  <header>
+    <p class="kicker">Instrument · sixty cases, two readers</p>
+    <h1>Where the Reader Declines</h1>
+    <p class="lede">
+      One claim, sixty published abstracts, and four definitions locked before anyone read
+      anything. A sibling practice labelled all sixty <strong>blind</strong>. Then a machine read
+      the same sixty under the same definitions. This page seats you between them.
+    </p>
+    <blockquote class="claim">{data.claim}</blockquote>
+  </header>
+
+  <section>
+    <h2>1 · The four definitions</h2>
+    <p>
+      Both readers worked from these, verbatim, version <code>{data.criteria.version}</code>, locked
+      {data.criteria.locked_at.slice(0, 10)} — before the labelling.
+    </p>
+    <dl class="defs">
+      {RELATIONS.map((r) => (
+        <div>
+          <dt data-rel={r}>{r}</dt>
+          <dd>{defs[r]}</dd>
+        </div>
+      ))}
+    </dl>
+    <p class="aside">
+      A fifth move exists and is not a category: a reader may declare a case <em>undecidable</em>
+      when the excerpt does not settle it. The blind reader used it three times. The machine used
+      it <strong>never</strong>.
+    </p>
+  </section>
+
+  <section>
+    <h2>2 · Where the two readers landed</h2>
+    <p>
+      Only the <strong>{inPop.length} sources whose own system does research</strong> — forms
+      hypotheses, runs experiments, analyses, writes up, reviews. The claim is about those. The
+      other {cases.length - inPop.length} are about reasoning, code, robotics, arithmetic, computer
+      operation, fact-checking, negotiation and style; they are kept in the data and marked, not
+      dropped.
+    </p>
+
+    <div class="bars" role="img" aria-label={`Distribution of the ${inPop.length} in-population cases. Blind reader: ${RELATIONS.map((r) => `${r} ${goldIn[r]}`).join(', ')}. Machine reader: ${RELATIONS.map((r) => `${r} ${machineIn[r]}`).join(', ')}.`}>
+      {[
+        { who: 'The blind reader', t: goldIn },
+        { who: 'The machine', t: machineIn },
+      ].map((row) => (
+        <div class="barrow">
+          <span class="who">{row.who}</span>
+          <div class="track">
+            {[...RELATIONS, 'undecidable'].map((r) =>
+              row.t[r] > 0 ? (
+                <span
+                  class="seg"
+                  data-rel={r}
+                  style={`flex:${row.t[r]}`}
+                  title={`${r}: ${row.t[r]}`}
+                >
+                  {row.t[r] >= 3 ? row.t[r] : ''}
+                </span>
+              ) : null
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <p class="finding">
+      The blind reader spread the {inPop.length} across every category. The machine put
+      <strong> {machineIn.contextualizes} of {inPop.length} ({pct(machineIn.contextualizes, inPop.length)})</strong>
+      into <em>contextualizes</em> — the one category that means <em>takes no position on the
+      claim</em>. The blind reader put {goldIn.contextualizes} there.
+    </p>
+
+    <table class="tbl">
+      <caption>The same figure as numbers — {inPop.length} in-population cases</caption>
+      <thead>
+        <tr><th scope="col">Relation</th><th scope="col">Blind reader</th><th scope="col">Machine</th></tr>
+      </thead>
+      <tbody>
+        {[...RELATIONS, 'undecidable'].map((r) => (
+          <tr>
+            <th scope="row" data-rel={r}>{r}</th>
+            <td>{goldIn[r]}</td>
+            <td>{machineIn[r]}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>3 · Every case, all {cases.length}</h2>
+    <p>
+      Read the excerpt. Decide, against the four definitions above, before you open the fold.
+      Then see what the two readers said and why. The fold is the whole instrument: it is the
+      moment you find out whether the difficulty you just felt is the same difficulty the machine
+      had.
+    </p>
+
+    {cases.map((c) => (
+      <article class="case" id={`case-${c.position}`}>
+        <h3>
+          <span class="num">{String(c.position).padStart(2, '0')}</span>
+          {c.title}
+          {!c.in_population && <span class="outpop" title={'Not in the claim’s population'}>outside the population</span>}
+        </h3>
+        <p class="meta">
+          arXiv <code>{c.arxiv}</code> · excerpt <code>{c.excerpt_sha256.slice(0, 19)}…</code>
+          {c.population_reason && <> · <span class="why">{c.population_reason}</span></>}
+        </p>
+        <blockquote class="excerpt">{c.excerpt}</blockquote>
+        <details>
+          <summary>What the two readers said</summary>
+          <div class="verdicts">
+            <div class="verdict">
+              <p class="vhead">
+                Blind reader —
+                <strong data-rel={c.gold.relation ?? 'undecidable'}>
+                  {c.gold.relation ?? 'undecidable'}
+                </strong>
+              </p>
+              <p>{c.gold.undecidable ? c.gold.undecidable_reason : c.gold.rationale}</p>
+              {c.gold.decided_by && <p class="by">decided by: {c.gold.decided_by}{c.gold.tie_with && <> · runner-up: {c.gold.tie_with}</>}</p>}
+            </div>
+            <div class="verdict">
+              <p class="vhead">
+                Machine —
+                <strong data-rel={c.machine.relation ?? 'undecidable'}>
+                  {c.machine.relation ?? 'undecidable'}
+                </strong>
+                {c.gold.relation && c.machine.relation !== c.gold.relation && (
+                  <span class="miss">differs</span>
+                )}
+              </p>
+              <p>{c.machine.rationale}</p>
+              {c.machine.decided_by && <p class="by">decided by: {c.machine.decided_by}{c.machine.tie_with && <> · runner-up: {c.machine.tie_with}</>}</p>}
+            </div>
+          </div>
+        </details>
+      </article>
+    ))}
+  </section>
+
+  <section>
+    <h2>4 · The grid</h2>
+    <p>
+      All {cases.length} cases: rows are what the blind reader said, columns what the machine
+      said. A perfect machine fills only the diagonal.
+    </p>
+    <table class="grid">
+      <caption>
+        Rows = blind reader · columns = machine · agreement on the diagonal
+        ({agreed} of {decidable.length}, {(100 * accuracy).toFixed(1)}%, against a
+        majority-class floor of {(100 * floor).toFixed(1)}%)
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col"><span class="vh">blind \ machine</span></th>
+          {[...RELATIONS, 'undecidable'].map((m) => <th scope="col">{m}</th>)}
+        </tr>
+      </thead>
+      <tbody>
+        {[...RELATIONS, 'undecidable'].map((g) => (
+          <tr>
+            <th scope="row" data-rel={g}>{g}</th>
+            {[...RELATIONS, 'undecidable'].map((m) => (
+              <td
+                class={g === m ? 'diag' : ''}
+                style={grid[g][m] ? `--w:${grid[g][m] / maxCell}` : ''}
+              >
+                {grid[g][m] || ''}
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+    <p class="finding">
+      The heavy column is <em>contextualizes</em>: {grid.contradicts.contextualizes} of the blind
+      reader's contradictions and {grid.qualifies.contextualizes} of its qualifications ended
+      there. Both are moves <em>away</em> from committing to the claim. The machine's accuracy —
+      {(100 * accuracy).toFixed(1)}% against a floor of {(100 * floor).toFixed(1)}% — is only
+      {((100 * (accuracy - floor))).toFixed(1)} points above what a classifier reaches by naming
+      the commonest label every time.
+    </p>
+  </section>
+
+  <footer>
+    <h2>Provenance</h2>
+    <p>
+      Built by <code>build_data.py</code> from four committed files in the Meridian runtime, joined
+      deterministically — no network, no clock, no model at build time.
+    </p>
+    <ul>
+      {Object.entries(data.sources).map(([k, v]: [string, any]) => (
+        <li><code>{v.path}</code> — <code>{v.sha256.slice(0, 23)}…</code></li>
+      ))}
+    </ul>
+    <p>
+      The labels were made by <strong>{data.labelling.practice}</strong>, blind, on
+      {' '}{data.labelling.labelled_at.slice(0, 10)}. The machine is
+      {' '}<code>{data.sources.predictions.model_name}</code>.
+    </p>
+    <p class="limits">
+      <strong>What this does not license.</strong> That the machine <em>avoids</em> commitment.
+      <code>contextualizes</code> is a broad definition — five disjuncts, from a background
+      measurement to a statement about something adjacent — and a reader applying it literally
+      will land there often and be right by the letter each time. Both readers had that same
+      definition. Nothing here separates <em>applies a broad category literally</em> from
+      <em>declines to commit</em>. What is measured is the distribution; the disposition is not
+      established, and would need a third reader or an ablation on the category's width.
+    </p>
+    <p class="limits">
+      <strong>What is not independently checked.</strong> The split in §2 — which sources are in
+      the claim's population — is one person's reading. Every one of the sixty carries its
+      one-line reason, in both directions, so any single line can be disputed without
+      reconstructing the rest. But <em>disclosed</em> is not <em>verified</em>: no second reader
+      has made that judgement independently, and an earlier automated attempt at the same split
+      put the single <code>supports</code> case on the wrong side. This work ships with that hole
+      open and named.
+    </p>
+    <p class="limits">
+      <strong>Which reader, and which field.</strong> The machine is not a representative
+      reader: it is the one that answered on a free tier without spending a quota another
+      practice depends on. Two stronger candidates were excluded for allowance reasons, not
+      for capability. Read this as <em>the floor of what is reachable without paying</em>, not
+      the middle of the market. And the sixty were drawn from a pool assembled by fourteen
+      frozen phrase searches — work that never uses those phrases is not merely absent from
+      this instrument, it is invisible to it, and nothing here estimates how much that is.
+    </p>
+    <p class="limits">
+      <strong>Limits.</strong> These are abstracts, not papers — what a source <em>says about
+      itself</em> in 200 words, which is roughly a quarter of a paper's own checkable claims. One
+      labelling practice, one machine, one run: a second run of the same machine over the same
+      frozen inputs scored 52.6% where this one scored 54.4%, so differences under about two
+      points are noise. The population split in §2 is a human judgement, written out case by case
+      in <code>build_data.py</code> so it can be contested line by line — an earlier automated
+      version of that same split was wrong about the single most consequential case.
+    </p>
+  </footer>
+</article>
+
+<style>
+  .wrd {
+    --supports: #1b7f5a;
+    --contradicts: #a8324a;
+    --qualifies: #b4741c;
+    --contextualizes: #4a5568;
+    --undecidable: #7c6f9e;
+    max-width: 46rem;
+    margin: 0 auto;
+    padding: 2rem 1rem 4rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    line-height: 1.6;
+  }
+  @media (prefers-color-scheme: dark) {
+    .wrd {
+      --supports: #4fbf92;
+      --contradicts: #e87a90;
+      --qualifies: #e0a44c;
+      --contextualizes: #9aa5b8;
+      --undecidable: #b4a8d8;
+    }
+  }
+  .kicker { text-transform: uppercase; letter-spacing: .18em; font-size: .7rem; opacity: .7; margin: 0 0 .4rem; }
+  h1 { font-size: 1.9rem; line-height: 1.15; margin: 0 0 .8rem; }
+  h2 { font-size: 1.05rem; margin: 2.6rem 0 .6rem; }
+  h3 { font-size: .95rem; margin: 0 0 .3rem; font-weight: 600; }
+  .lede { font-size: 1rem; }
+  .claim { margin: 1.2rem 0; padding: .9rem 1.1rem; border-left: 3px solid currentColor; font-style: italic; }
+  .aside, .meta, .by, .limits { font-size: .8rem; opacity: .8; }
+
+  .defs { margin: 1rem 0; }
+  .defs > div { margin-bottom: .8rem; }
+  .defs dt { font-weight: 700; }
+  .defs dd { margin: .15rem 0 0; font-size: .85rem; }
+
+  [data-rel='supports'] { color: var(--supports); }
+  [data-rel='contradicts'] { color: var(--contradicts); }
+  [data-rel='qualifies'] { color: var(--qualifies); }
+  [data-rel='contextualizes'] { color: var(--contextualizes); }
+  [data-rel='undecidable'] { color: var(--undecidable); }
+
+  .bars { margin: 1.2rem 0; }
+  .barrow { display: flex; align-items: center; gap: .6rem; margin-bottom: .45rem; }
+  .who { flex: 0 0 8.5rem; font-size: .78rem; text-align: right; }
+  .track { display: flex; flex: 1; height: 1.5rem; border: 1px solid currentColor; }
+  .seg { display: grid; place-items: center; font-size: .7rem; color: #fff; }
+  .seg[data-rel='supports'] { background: var(--supports); }
+  .seg[data-rel='contradicts'] { background: var(--contradicts); }
+  .seg[data-rel='qualifies'] { background: var(--qualifies); }
+  .seg[data-rel='contextualizes'] { background: var(--contextualizes); }
+  .seg[data-rel='undecidable'] { background: var(--undecidable); }
+
+  .finding { border-top: 1px solid currentColor; padding-top: .7rem; margin-top: 1rem; }
+
+  .tbl, .grid { border-collapse: collapse; width: 100%; font-size: .8rem; margin: 1rem 0; }
+  .tbl th, .tbl td, .grid th, .grid td { border: 1px solid currentColor; padding: .3rem .5rem; text-align: right; }
+  .tbl th[scope='row'], .grid th[scope='row'] { text-align: left; }
+  caption { caption-side: bottom; font-size: .75rem; opacity: .8; padding-top: .5rem; text-align: left; }
+  .grid td { background: color-mix(in srgb, currentColor calc(var(--w, 0) * 22%), transparent); }
+  .grid td.diag { outline: 2px solid currentColor; outline-offset: -2px; }
+  .vh { font-size: .68rem; opacity: .7; }
+
+  .case { margin: 1.6rem 0; padding-top: 1.1rem; border-top: 1px dashed currentColor; }
+  .num { display: inline-block; min-width: 2ch; opacity: .55; margin-right: .5rem; }
+  .outpop { font-size: .68rem; border: 1px solid currentColor; padding: 0 .35rem; margin-left: .5rem; opacity: .75; white-space: nowrap; }
+  .excerpt { margin: .7rem 0; padding: .7rem .9rem; border-left: 2px solid currentColor; font-size: .84rem; }
+  details summary { cursor: pointer; font-size: .82rem; padding: .35rem 0; }
+  .verdicts { display: grid; gap: .9rem; margin-top: .6rem; }
+  @media (min-width: 46rem) { .verdicts { grid-template-columns: 1fr 1fr; } }
+  .verdict { border: 1px solid currentColor; padding: .7rem .8rem; font-size: .82rem; }
+  .vhead { margin: 0 0 .35rem; }
+  .vhead strong { margin-left: .35rem; }
+  .miss { font-size: .68rem; border: 1px solid currentColor; padding: 0 .3rem; margin-left: .5rem; }
+
+  footer { margin-top: 3rem; border-top: 1px solid currentColor; padding-top: 1rem; font-size: .85rem; }
+  footer ul { padding-left: 1.1rem; }
+  footer code { font-size: .75rem; word-break: break-all; }
+</style>
