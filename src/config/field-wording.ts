@@ -335,7 +335,7 @@ export const FIELD_NARRATIVE = {
       correctionLabel: 'a correction arrives from outside',
       note: 'Every mark on this plate reads in words below — nothing here is reachable only by hovering.',
       horizonNote:
-        'Every instrument’s plate is a window on the same tape and runs on to the date the committed record currently ends, so the twenty read against each other: a long quiet stretch after an instrument’s last mark says that nothing further was recorded about it while the practice kept working.',
+        'Every instrument’s plate is a window on the same tape and runs on to the date the committed record currently ends, so they all read against each other: a long quiet stretch after an instrument’s last mark says that nothing further was recorded about it while the practice kept working.',
       tableSummary: 'the plate, mark by mark — as a table',
       tableCaption:
         'Every mark on this instrument’s plate: its date, the record’s own words for it, and the committed file it was read from.',
