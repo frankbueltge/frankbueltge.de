@@ -1,0 +1,398 @@
+---
+// src/components/apparatus/ApparatusMap.astro — the apparatus map on /apparatus: the ecology's
+// wiring, drawn from src/lib/apparatus/topology.ts and checked against the real workflow files by
+// topology.test.ts.
+//
+// The base image is build-time SVG and readable with no JavaScript at all — every box carries a
+// native <title>, and the table below repeats every connection in full. The client layer only
+// adds the readout, the legend filter, the detail panel and the trace. Nothing here decides a
+// colour: the SVG emits data-owner/data-kind and src/styles/apparatus-map.css decides what those
+// look like.
+//
+// Why this figure exists at all is on the page above it, but the short version belongs here too:
+// the prose that used to describe this machinery said of itself that it "drifts until someone
+// updates it by hand". It listed four gates while the repository held twenty-seven workflows,
+// and three workflows that commit to main never reached production. A comment cannot fail; a
+// test can.
+import { APPARATUS_MAP as W } from '@/config/apparatus-wording'
+import DetailPanel from '@/components/dataviz/DetailPanel.astro'
+import LegendFilter, { type LegendItem } from '@/components/dataviz/LegendFilter.astro'
+import Readout from '@/components/dataviz/Readout.astro'
+import TableFallback from '@/components/dataviz/TableFallback.astro'
+import { jsonScriptPayload } from '@/lib/dataviz/runtime'
+import {
+  APPARATUS_COLUMNS,
+  apparatusRows,
+  buildApparatusModel,
+  buildApparatusSvg,
+  kindMark,
+} from '@/lib/apparatus/map'
+import { EDGES, NODES, type Owner } from '@/lib/apparatus/topology'
+import '@/styles/apparatus-map.css'
+
+const id = 'apparatus-map'
+const model = buildApparatusModel(NODES, EDGES)
+const svg = buildApparatusSvg(model, { label: `${W.heading} — ${W.standfirst}` })
+const rows = apparatusRows(NODES, EDGES)
+
+const OWNERS: Owner[] = ['atelier', 'field', 'studio', 'plenum', 'shared']
+const legendItems: LegendItem[] = OWNERS.map((owner) => ({
+  key: owner,
+  label: W.legend[owner].label,
+  hint: W.legend[owner].hint,
+  count: NODES.filter((n) => n.owner === owner).length,
+  swatch: `var(--ap-c-${owner})`,
+}))
+
+// the shape key, drawn with the same builder the figure uses so the two can never disagree
+const kindKeys = (Object.keys(W.kinds) as (keyof typeof W.kinds)[]).map((kind) => ({
+  kind,
+  glyph: kindMark(kind, 8, 8),
+  label: W.kinds[kind],
+}))
+
+const derivedCount = EDGES.filter((e) => e.checked === 'derived').length
+const workflowCount = new Set(
+  [...NODES.flatMap((n) => n.members ?? []).map((m) => m.ref), ...EDGES.map((e) => e.ref)].filter(
+    (r): r is string => !!r && r.startsWith('.github/workflows/'),
+  ),
+).size
+
+// what the client needs: every box's own record, and the graph, so a trace is instant
+const payload = {
+  nodes: NODES.map((n) => ({
+    id: n.id,
+    label: n.label,
+    what: n.what,
+    kind: n.kind,
+    owner: n.owner,
+    ref: n.ref ?? null,
+    commitsAs: n.commitsAs ?? null,
+    members: (n.members ?? []).map((m) => ({
+      label: m.label,
+      what: m.what,
+      ref: m.ref ?? null,
+      cron: m.cron ?? null,
+      secrets: m.secrets ?? null,
+    })),
+  })),
+  edges: EDGES.map((e) => ({
+    from: e.from,
+    to: e.to,
+    mechanism: e.mechanism,
+    checked: e.checked,
+    ref: e.ref ?? null,
+    severed: e.severed ?? null,
+  })),
+  words: { ...W.panel, traceOn: W.traceOn },
+}
+
+const provenance = `${W.provenancePrefix} ${W.provenance.join(' · ')} — ${W.provenanceLine(
+  NODES.length,
+  EDGES.length,
+  derivedCount,
+  workflowCount,
+)}`
+---
+
+<div class="apparatus-surface" data-apparatus>
+  <p class="ap-claim"><b>{W.claimLabel}</b>{W.claim}</p>
+
+  <figure class="ap-figure" data-ap-figure>
+    <div class="ap-scroll"><div id={id} data-ap-svg set:html={svg} /></div>
+    <Readout id={`${id}-readout`} maxWidth="40ch" />
+  </figure>
+
+  <p class="ap-key" id={`${id}-legend-label`}>{W.legendLabel}</p>
+  <LegendFilter items={legendItems} mode="multi" labelledby={`${id}-legend-label`} />
+
+  <button type="button" class="ap-trace-off" data-ap-trace-off hidden>{W.traceOff}</button>
+
+  <DetailPanel id={`${id}-panel`} />
+
+  <p class="ap-key">{W.kindLabel}</p>
+  <ul class="ap-keys">
+    {
+      kindKeys.map((k) => (
+        <li>
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" set:html={k.glyph} />
+          <span>{k.label}</span>
+        </li>
+      ))
+    }
+  </ul>
+
+  <p class="ap-key">{W.lineLabel}</p>
+  <ul class="ap-omissions">
+    <li>{W.lines.derived}</li>
+    <li>{W.lines.declared}</li>
+    <li>{W.lines.severed}</li>
+  </ul>
+
+  <p class="ap-hint">{W.hint}</p>
+
+  <TableFallback
+    summary={W.tableSummary}
+    caption={W.tableCaption}
+    columns={APPARATUS_COLUMNS}
+    rows={rows}
+    provenance={provenance}
+  />
+
+  <p class="ap-key">{W.omissionsLabel}</p>
+  <ul class="ap-omissions">{W.omissions.map((o) => <li>{o}</li>)}</ul>
+
+  <script id={`${id}-payload`} type="application/json" set:html={jsonScriptPayload(payload)} />
+</div>
+
+<script>
+  import { isOn } from '@/lib/dataviz/filter'
+  import { createReadout, type ReadoutAnchor } from '@/lib/dataviz/readout'
+  import { readJsonScript, reducedMotion } from '@/lib/dataviz/runtime'
+
+  interface Member {
+    label: string
+    what: string
+    ref: string | null
+    cron: string[] | null
+    secrets: string[] | null
+  }
+  interface Node {
+    id: string
+    label: string
+    what: string
+    kind: string
+    owner: string
+    ref: string | null
+    commitsAs: string | null
+    members: Member[]
+  }
+  interface Edge {
+    from: string
+    to: string
+    mechanism: string
+    checked: string
+    ref: string | null
+    severed: string | null
+  }
+  interface Payload {
+    nodes: Node[]
+    edges: Edge[]
+    words: Record<string, string>
+  }
+
+  for (const root of document.querySelectorAll<HTMLElement>('[data-apparatus]')) {
+    const figure = root.querySelector<HTMLElement>('[data-ap-figure]')
+    const host = root.querySelector<HTMLElement>('[data-ap-svg]')
+    const svg = host?.querySelector('svg')
+    const tipEl = root.querySelector<HTMLElement>('.dv-readout')
+    const panel = root.querySelector<HTMLElement>('.dv-panel')
+    const traceOff = root.querySelector<HTMLButtonElement>('[data-ap-trace-off]')
+    if (!figure || !host || !svg || !tipEl || !panel) continue
+
+    // Progressive enhancement: without the payload the figure stays exactly what the server sent
+    // — every box still titled, every connection still in the table below.
+    let data: Payload
+    try {
+      data = readJsonScript<Payload>(`${host.id}-payload`)
+    } catch {
+      continue
+    }
+    // Re-bound non-null so the handlers below read without assertions on every line.
+    const fig = figure
+    const gfx = svg
+    const pnl = panel
+
+    const byId = new Map(data.nodes.map((n) => [n.id, n]))
+    const w = data.words
+    const readout = createReadout(tipEl, fig)
+
+    const nodeEls = [...gfx.querySelectorAll<SVGGElement>('[data-key]')]
+    const edgeEls = [...gfx.querySelectorAll<SVGGElement>('[data-edge]')]
+
+    let filter: string[] = []
+    let traced: Set<string> | null = null
+    let chosen: string | null = null
+
+    /** Mirrors traceFrom() in src/lib/apparatus/map.ts: cross an oversight edge, never continue
+     *  through an oversight node — unless the reader started there and asked for it. */
+    const OVERSIGHT = new Set(data.nodes.filter((n) => n.id.startsWith('ov-') || n.kind === 'person').map((n) => n.id))
+    function traceFrom(id: string): Set<string> {
+      const seen = new Set<string>([id])
+      const walk = (from: string, forward: boolean): void => {
+        for (const e of data.edges) {
+          const here = forward ? e.from : e.to
+          const there = forward ? e.to : e.from
+          if (here !== from || seen.has(there)) continue
+          seen.add(there)
+          if (!OVERSIGHT.has(there)) walk(there, forward)
+        }
+      }
+      if (OVERSIGHT.has(id)) {
+        for (const e of data.edges) {
+          if (e.from === id) seen.add(e.to)
+          if (e.to === id) seen.add(e.from)
+        }
+      } else {
+        walk(id, true)
+        walk(id, false)
+      }
+      return seen
+    }
+
+    function paint(): void {
+      for (const el of nodeEls) {
+        const key = el.dataset.key ?? ''
+        const owner = el.dataset.owner ?? ''
+        const inFilter = isOn(filter, owner)
+        const inTrace = !traced || traced.has(key)
+        el.toggleAttribute('data-on', inFilter && inTrace)
+        el.toggleAttribute('data-sel', chosen === key)
+      }
+      for (const el of edgeEls) {
+        const from = el.dataset.from ?? ''
+        const to = el.dataset.to ?? ''
+        const bothInTrace = !traced || (traced.has(from) && traced.has(to))
+        const a = byId.get(from)
+        const b = byId.get(to)
+        const inFilter = isOn(filter, a?.owner ?? '') || isOn(filter, b?.owner ?? '')
+        el.toggleAttribute('data-on', inFilter && bothInTrace)
+      }
+      gfx.toggleAttribute('data-filtered', filter.length > 0)
+      gfx.toggleAttribute('data-traced', traced !== null)
+      if (traceOff) traceOff.hidden = traced === null
+    }
+
+    // ── readout ────────────────────────────────────────────────────────────
+    const anchorOf = (el: SVGGElement, ev?: MouseEvent): ReadoutAnchor => {
+      const box = fig.getBoundingClientRect()
+      if (ev) return { anchorX: ev.clientX - box.left, anchorY: ev.clientY - box.top }
+      const r = el.getBoundingClientRect()
+      return { anchorX: r.left - box.left + r.width / 2, anchorY: r.top - box.top + r.height / 2 }
+    }
+
+    function nodeTip(node: Node): DocumentFragment {
+      const frag = document.createDocumentFragment()
+      const strong = document.createElement('strong')
+      strong.textContent = node.label
+      frag.append(strong, document.createElement('br'))
+      const span = document.createElement('span')
+      span.textContent = node.what
+      frag.append(span)
+      return frag
+    }
+
+    for (const el of nodeEls) {
+      const node = byId.get(el.dataset.key ?? '')
+      if (!node) continue
+      el.addEventListener('mouseenter', (ev) => readout.show(nodeTip(node), anchorOf(el, ev as MouseEvent)))
+      el.addEventListener('mousemove', (ev) => readout.show(nodeTip(node), anchorOf(el, ev as MouseEvent)))
+      el.addEventListener('mouseleave', () => readout.hide())
+      el.addEventListener('focus', () => readout.show(nodeTip(node), anchorOf(el)))
+      el.addEventListener('blur', () => readout.hide())
+      el.addEventListener('click', () => open(node))
+      el.addEventListener('keydown', (ev) => {
+        const k = (ev as KeyboardEvent).key
+        if (k === 'Enter' || k === ' ') {
+          ev.preventDefault()
+          open(node)
+        }
+      })
+    }
+
+    // ── detail panel + trace ───────────────────────────────────────────────
+    // The shell's prev/next are meaningless here — a wiring diagram has no order to step through,
+    // so the stylesheet hides them and this figure never emits dv:step.
+    const head = pnl.querySelector<HTMLElement>('.dv-panel-head') ?? panel
+    const body = pnl.querySelector<HTMLElement>('.dv-panel-body') ?? panel
+
+    const line = (label: string, value: string): HTMLElement => {
+      const p = document.createElement('p')
+      const b = document.createElement('b')
+      b.textContent = `${label}: `
+      p.append(b, document.createTextNode(value))
+      return p
+    }
+
+    function open(node: Node): void {
+      chosen = node.id
+      traced = traceFrom(node.id)
+
+      head.textContent = ''
+      const h = document.createElement('h3')
+      h.textContent = node.label
+      head.append(h)
+
+      body.textContent = ''
+      const what = document.createElement('p')
+      what.textContent = node.what
+      body.append(what)
+
+      if (node.commitsAs) body.append(line(w.commitsAs ?? 'commits as', node.commitsAs))
+      if (node.ref) body.append(line(w.record ?? 'written in', node.ref))
+
+      const inbound = data.edges.filter((e) => e.to === node.id)
+      const outbound = data.edges.filter((e) => e.from === node.id)
+      for (const [label, list, other] of [
+        [w.mechanismsIn ?? 'reached by', inbound, 'from'],
+        [w.mechanismsOut ?? 'reaches', outbound, 'to'],
+      ] as [string, Edge[], 'from' | 'to'][]) {
+        if (!list.length) continue
+        const p = document.createElement('p')
+        const b = document.createElement('b')
+        b.textContent = `${label}:`
+        p.append(b)
+        body.append(p)
+        const ul = document.createElement('ul')
+        for (const e of list) {
+          const li = document.createElement('li')
+          const name = byId.get(e[other])?.label ?? e[other]
+          li.textContent = `${name} — ${e.mechanism}${e.severed ? ` (severed: ${e.severed})` : ''}`
+          ul.append(li)
+        }
+        body.append(ul)
+      }
+
+      if (node.members.length) {
+        const p = document.createElement('p')
+        const b = document.createElement('b')
+        b.textContent = `${w.members ?? 'what is inside'}:`
+        p.append(b)
+        body.append(p)
+        const ul = document.createElement('ul')
+        for (const m of node.members) {
+          const li = document.createElement('li')
+          const bits = [m.what]
+          if (m.cron?.length) bits.push(`runs ${m.cron.join(', ')}`)
+          if (m.secrets?.length) bits.push(`needs ${m.secrets.join(', ')}`)
+          if (m.ref) bits.push(m.ref)
+          li.textContent = `${m.label} — ${bits.join(' · ')}`
+          ul.append(li)
+        }
+        body.append(ul)
+      }
+
+      pnl.hidden = false
+      paint()
+      pnl.scrollIntoView({ block: 'nearest', behavior: reducedMotion() ? 'auto' : 'smooth' })
+    }
+
+    function clearTrace(): void {
+      traced = null
+      chosen = null
+      pnl.hidden = true
+      paint()
+    }
+
+    traceOff?.addEventListener('click', clearTrace)
+    pnl.addEventListener('dv:close', clearTrace)
+
+    // ── legend ─────────────────────────────────────────────────────────────
+    root.addEventListener('dv:filter', (ev) => {
+      filter = ((ev as CustomEvent).detail?.keys as string[] | undefined) ?? []
+      paint()
+    })
+
+    paint()
+  }
+</script>
