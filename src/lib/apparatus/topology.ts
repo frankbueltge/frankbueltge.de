@@ -650,6 +650,75 @@ export const EDGES: readonly ApparatusEdge[] = [
   { from: 'del-pages', to: 'ov-inlets', kind: 'deploy', mechanism: 'the inlets run as functions on the same host that serves the static build', checked: 'declared', ref: 'functions/api/seed.js' },
 ] as const
 
+// ─────────────────────────────────────────────────────────── domains
+
+/**
+ * Which undertaking a part belongs to. This distinction is load-bearing and was missing from the
+ * first version of the figure, which stood the ecology's gates and the lab's nightly instruments
+ * side by side as if they were one thing (Frank, 2026-08-03: "da sind auch workflows dabei die
+ * nichts mit der research ecology zu tun haben").
+ *
+ * The wording canon keeps them apart: the research ecology stands ALONGSIDE the site's other
+ * undertakings, and `/holdings` — the Experiments, the counter-measurement line — is "our own
+ * earlier work", a separate collection with no umbrella. One repository carries both, and that is
+ * a fact about the apparatus, not a reason to blur them.
+ *
+ *   · `ecology` — exists only because a practice exists: the four voices, their gates, their
+ *     mirrors, the contact zone.
+ *   · `lab` — the counter-measurement instruments and the protocol: this site's own experiments.
+ *   · `shared` — carries both, and would still be needed if either stopped: the sources anyone
+ *     may read, the catalogues, the delivery chain, the watchdogs, the conductor.
+ */
+export type Domain = 'ecology' | 'lab' | 'shared'
+
+const DOMAIN: Record<string, Domain> = {
+  // the four voices, the contact zone, and the tool one of them uses
+  'repo-ulysses': 'ecology',
+  'repo-field': 'ecology',
+  'repo-studio': 'ecology',
+  'repo-plenum': 'ecology',
+  'repo-ecology': 'ecology',
+  'repo-mrr': 'ecology',
+  'in-meridian': 'ecology',
+  // the doors their work has to pass, and where it lands
+  'gate-atelier': 'ecology',
+  'gate-field': 'ecology',
+  'gate-studio': 'ecology',
+  'gate-plenum': 'ecology',
+  'gate-ecology': 'ecology',
+  'gate-sitepr': 'ecology',
+  'st-mirrors': 'ecology',
+  'st-encounters': 'ecology',
+  // the counter-measurement line and the protocol — this site's own experiments
+  'in-protokoll': 'lab',
+  'in-gegenmessung': 'lab',
+  'st-protokoll': 'lab',
+  'st-instruments': 'lab',
+  // read by whoever needs them; belonging to no undertaking
+  'src-earth': 'shared',
+  'src-conflict': 'shared',
+  'src-economy': 'shared',
+  'src-scholarly': 'shared',
+  'src-model': 'shared',
+  // infrastructure that would still be needed if either undertaking stopped
+  'in-scouts': 'shared',
+  'in-pulse': 'shared',
+  'in-saat': 'shared',
+  'st-catalogues': 'shared',
+  'st-inlets': 'shared',
+  'del-build': 'shared',
+  'del-pages': 'shared',
+  'del-workers': 'shared',
+  'ov-watchdogs': 'shared',
+  'ov-inlets': 'shared',
+  conductor: 'shared',
+}
+
+/** Every node has a domain, and topology.test.ts fails if one is added without getting one. */
+export const domainOf = (id: string): Domain | undefined => DOMAIN[id]
+
+export const DOMAIN_IDS = Object.keys(DOMAIN)
+
 // ─────────────────────────────────────────────────────────────── accessors
 
 export const nodeById = (id: string): ApparatusNode | undefined => NODES.find((n) => n.id === id)

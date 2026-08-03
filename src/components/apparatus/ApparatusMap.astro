@@ -27,7 +27,7 @@ import {
   buildApparatusSvg,
   kindMark,
 } from '@/lib/apparatus/map'
-import { EDGES, NODES, type Owner } from '@/lib/apparatus/topology'
+import { EDGES, NODES, domainOf, type Domain, type Owner } from '@/lib/apparatus/topology'
 import '@/styles/apparatus-map.css'
 
 const id = 'apparatus-map'
@@ -42,6 +42,14 @@ const legendItems: LegendItem[] = OWNERS.map((owner) => ({
   hint: W.legend[owner].hint,
   count: NODES.filter((n) => n.owner === owner).length,
   swatch: `var(--ap-c-${owner})`,
+}))
+
+const DOMAINS: Domain[] = ['ecology', 'lab', 'shared']
+const domainItems: LegendItem[] = DOMAINS.map((d) => ({
+  key: d,
+  label: W.domains[d].label,
+  hint: W.domains[d].hint,
+  count: NODES.filter((n) => domainOf(n.id) === d).length,
 }))
 
 // the shape key, drawn with the same builder the figure uses so the two can never disagree
@@ -66,6 +74,7 @@ const payload = {
     what: n.what,
     kind: n.kind,
     owner: n.owner,
+    domain: domainOf(n.id) ?? 'shared',
     ref: n.ref ?? null,
     commitsAs: n.commitsAs ?? null,
     members: (n.members ?? []).map((m) => ({
@@ -103,8 +112,11 @@ const provenance = `${W.provenancePrefix} ${W.provenance.join(' · ')} — ${W.p
     <Readout id={`${id}-readout`} maxWidth="40ch" />
   </figure>
 
+  <p class="ap-key" id={`${id}-domain-label`}>{W.domainLabel}</p>
+  <div data-ap-filter="domain"><LegendFilter items={domainItems} mode="multi" labelledby={`${id}-domain-label`} /></div>
+
   <p class="ap-key" id={`${id}-legend-label`}>{W.legendLabel}</p>
-  <LegendFilter items={legendItems} mode="multi" labelledby={`${id}-legend-label`} />
+  <div data-ap-filter="owner"><LegendFilter items={legendItems} mode="multi" labelledby={`${id}-legend-label`} /></div>
 
   <button type="button" class="ap-trace-off" data-ap-trace-off hidden>{W.traceOff}</button>
 
@@ -163,6 +175,7 @@ const provenance = `${W.provenancePrefix} ${W.provenance.join(' · ')} — ${W.p
     what: string
     kind: string
     owner: string
+    domain: string
     ref: string | null
     commitsAs: string | null
     members: Member[]
@@ -211,6 +224,7 @@ const provenance = `${W.provenancePrefix} ${W.provenance.join(' · ')} — ${W.p
     const edgeEls = [...gfx.querySelectorAll<SVGGElement>('[data-edge]')]
 
     let filter: string[] = []
+    let domainFilter: string[] = []
     let traced: Set<string> | null = null
     let chosen: string | null = null
 
@@ -241,24 +255,23 @@ const provenance = `${W.provenancePrefix} ${W.provenance.join(' · ')} — ${W.p
     }
 
     function paint(): void {
+      const shows = (n: Node | undefined): boolean =>
+        !!n && isOn(filter, n.owner) && isOn(domainFilter, n.domain)
       for (const el of nodeEls) {
         const key = el.dataset.key ?? ''
-        const owner = el.dataset.owner ?? ''
-        const inFilter = isOn(filter, owner)
         const inTrace = !traced || traced.has(key)
-        el.toggleAttribute('data-on', inFilter && inTrace)
+        el.toggleAttribute('data-on', shows(byId.get(key)) && inTrace)
         el.toggleAttribute('data-sel', chosen === key)
       }
       for (const el of edgeEls) {
         const from = el.dataset.from ?? ''
         const to = el.dataset.to ?? ''
         const bothInTrace = !traced || (traced.has(from) && traced.has(to))
-        const a = byId.get(from)
-        const b = byId.get(to)
-        const inFilter = isOn(filter, a?.owner ?? '') || isOn(filter, b?.owner ?? '')
-        el.toggleAttribute('data-on', inFilter && bothInTrace)
+        // A connection stays lit while either end is shown, so a link that leaves the selected
+        // undertaking is visible as leaving it rather than silently vanishing.
+        el.toggleAttribute('data-on', (shows(byId.get(from)) || shows(byId.get(to))) && bothInTrace)
       }
-      gfx.toggleAttribute('data-filtered', filter.length > 0)
+      gfx.toggleAttribute('data-filtered', filter.length > 0 || domainFilter.length > 0)
       gfx.toggleAttribute('data-traced', traced !== null)
       if (traceOff) traceOff.hidden = traced === null
     }
@@ -388,10 +401,15 @@ const provenance = `${W.provenancePrefix} ${W.provenance.join(' · ')} — ${W.p
     pnl.addEventListener('dv:close', clearTrace)
 
     // ── legend ─────────────────────────────────────────────────────────────
-    root.addEventListener('dv:filter', (ev) => {
-      filter = ((ev as CustomEvent).detail?.keys as string[] | undefined) ?? []
-      paint()
-    })
+    for (const wrap of root.querySelectorAll<HTMLElement>('[data-ap-filter]')) {
+      const which = wrap.dataset.apFilter
+      wrap.addEventListener('dv:filter', (ev) => {
+        const keys = ((ev as CustomEvent).detail?.keys as string[] | undefined) ?? []
+        if (which === 'domain') domainFilter = keys
+        else filter = keys
+        paint()
+      })
+    }
 
     paint()
   }
