@@ -14,7 +14,7 @@
 import { existsSync, readdirSync, readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
-import { EDGES, NODES, nodeById, repoRefs, workflowClaims } from './topology'
+import { DOMAIN_IDS, EDGES, NODES, domainOf, nodeById, repoRefs, workflowClaims } from './topology'
 
 const ROOT = fileURLToPath(new URL('../../../', import.meta.url))
 const WORKFLOW_DIR = `${ROOT}.github/workflows`
@@ -184,6 +184,42 @@ describe('the topology holds together as a graph', () => {
 
   it('carries appearance nowhere — colour belongs to the stylesheet (ADR 0010)', () => {
     expect(read('src/lib/apparatus/topology.ts')).not.toMatch(/#[0-9a-fA-F]{3,8}\b/)
+  })
+})
+
+describe('the map keeps the two undertakings apart', () => {
+  // The first version of this figure stood the ecology's gates and the lab's nightly instruments
+  // side by side as though they were one thing. One repository carries both; that is a fact about
+  // the apparatus, and the figure has to say which is which rather than blur them.
+  it('gives every node a domain, and names no domain for a node that does not exist', () => {
+    const ids = new Set(NODES.map((n) => n.id))
+    expect(NODES.filter((n) => !domainOf(n.id)).map((n) => n.id)).toEqual([])
+    expect(DOMAIN_IDS.filter((id) => !ids.has(id))).toEqual([])
+  })
+
+  it('puts every voice, gate and mirror in the ecology, and no instrument in it', () => {
+    for (const n of NODES) {
+      const d = domainOf(n.id)
+      if (n.layer === 'practices' || n.layer === 'gates') {
+        expect(d, `${n.id} is a ${n.layer} node but not in the ecology`).toBe('ecology')
+      }
+      // the counter-measurement line belongs to the Experiments, never to the ecology
+      if (n.id === 'in-protokoll' || n.id === 'in-gegenmessung') expect(d).toBe('lab')
+    }
+  })
+
+  it('leaves the ecology standing on its own — filtering to it strands no part of it', () => {
+    const eco = NODES.filter((n) => domainOf(n.id) === 'ecology').map((n) => n.id)
+    const inside = new Set(eco)
+    for (const id of eco) {
+      const touches = EDGES.some((e) => (e.from === id && inside.has(e.to)) || (e.to === id && inside.has(e.from)))
+      expect(touches, `${id} is in the ecology but connects to nothing else in it`).toBe(true)
+    }
+  })
+
+  it('carries all three domains, so the distinction is drawn and not merely declared', () => {
+    const seen = new Set(NODES.map((n) => domainOf(n.id)))
+    expect([...seen].sort()).toEqual(['ecology', 'lab', 'shared'])
   })
 })
 

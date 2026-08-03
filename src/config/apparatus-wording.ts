@@ -11,12 +11,30 @@ export const APPARATUS_MAP = {
 
   heading: 'The wiring',
   standfirst:
-    'Every repository, workflow, pipeline, store and deploy hop of this ecology, and the mechanism that connects each pair. The world enters through instruments; the practices enter through gates; both land in the same committed files, and everything leaves through one build.',
+    'Every repository, workflow, pipeline, store and deploy hop this site runs, and the mechanism that connects each pair. Two undertakings share one repository: the research ecology enters through gates, the lab’s instruments enter from the world, and both land in the same committed files before everything leaves through one build. The figure says which is which — it does not draw them as one thing.',
 
   /** the claim printed above the figure — the thing this map can be wrong about */
   claimLabel: 'What this figure claims',
   claim:
     'Every workflow that commits to this repository reaches production, and every connection drawn here is a mechanism written down in a committed file. A test reads the workflow files back and fails when the drawing and the machinery disagree.',
+
+  /** One repository carries two undertakings. The figure draws both and says which is which,
+   *  rather than standing them side by side as though they were one thing. */
+  domainLabel: 'One repository, two undertakings. Show only:',
+  domains: {
+    ecology: {
+      label: 'the research ecology',
+      hint: 'exists only because a practice exists: the four voices, their gates, their mirrors, the contact zone',
+    },
+    lab: {
+      label: 'the lab’s experiments',
+      hint: 'the counter-measurement instruments and the protocol — this site’s own earlier work, collected under Experiments',
+    },
+    shared: {
+      label: 'shared',
+      hint: 'carries both and would still be needed if either stopped: sources, catalogues, the delivery chain, the watchdogs, the conductor',
+    },
+  },
 
   legendLabel: 'Colour is ownership. Filter by whose it is:',
   legend: {
