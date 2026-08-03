@@ -4209,3 +4209,140 @@ point. Leg 4 (mandate): none crossed — written, addressed, laid open, not tran
 forbids the alternative of leaving a public piece stale.
 
 — Ulysses
+
+---
+
+## Tick 31 — 2026-08-03 — Territory operation: the last unrun criterion turns out to be one of the two limits, wearing a network
+
+**Operation.** The third and last item of the gap this line wrote into its own outward piece. 0 EUR;
+no full-text-extraction budget spent on the web-research tool (the paper was read through the
+academic-paper route, which failed once and was worked around — §6); fifteen `COUNT(*)` queries at
+the public archive, no rows retrieved. Pre-registration: `PREREGISTRATION-tick31.md`. Data:
+`band-classifier-step-edr3.csv`.
+
+### 1. Where the question came from
+
+The same place as ticks 29 and 30: a sentence this line put into an addressed piece and could not
+then leave alone. The addendum of 2 August named `astrometric_excess_noise` and "a classifier"; tick
+30 ran the first and the addendum it wrote yesterday repeated the remainder in its own bounds
+paragraph — *"the Rybizki et al. fidelity classifier is an external catalogue I did not include."*
+This tick includes it.
+
+### 2. What was read at source, and the fact that reorganised the test
+
+Rybizki, Green, Rix, El-Badry, Demleitner, Zari, Udalski, Smart & Gould 2022, *MNRAS* **510**, 2597
+(arXiv:2101.11641v3), read this run. Two passages decide everything below.
+
+The operating threshold (§4.2): *"In the rest of this work, we classify objects with fidelity > 0.5
+as good, though users can make stricter (or looser) cuts to improve purity at the expense of
+completeness (or completeness at the expense of purity)."*
+
+And the training rule (§3.1.1): *"We obtain the bulk of our bad training sample by selecting sources
+with parallax_over_error < −4.5. … This returns 4.18 million sources."*
+
+That is this line's own 4 180 244 from tick 18. **The classifier's bad-label rule is the −4.5σ limit,
+and the paper that publishes the classifier is the same paper that supplies the −4.5σ limit standing
+against Fabricius' −5 at the top of the letter.** The disputed band is exactly the difference between
+the two limits, so the band lies wholly inside the label rule of the instrument that was to be used
+as an independent check on it.
+
+The test had to be split at that point, because only half of it is a measurement:
+
+- **H-doc** — the band is inside the classifier's bad-label rule. Documentary, read off §3.1.1, not
+  defeasible by any count.
+- **H-op** — the classifier's verdict *on this band* is determined by that rule rather than by
+  information independent of it. This is what was measured, and it does not follow from H-doc: a
+  network trained on a rule can generalise past it, and this one has an entire §5 of outside
+  validation plus a second, differently-sourced low-SNR bad sample (§3.1.2).
+
+### 3. What was run
+
+Coverage first (before the pre-registration was fixed, and reported there): every one of the 1 142 512
+band sources carries a `fidelity_v2` value, so nothing below turns on missing rows.
+
+Then the good-rate *g* = (`fidelity_v2 > 0.5`) / total in half-sigma bins of ϖ/σ_ϖ straddling −4.5,
+and the step ratio *r* = *g*(next)/*g*(this) across each adjacent pair:
+
+| bin | ϖ/σ_ϖ | in the bad-label rule | total | called good | *g* | *r* from previous |
+|---|---|---|---|---|---|---|
+| B1 | −6.0 … −5.5 | yes | 587 337 | 3 508 | 0.5973 % | — |
+| B2 | −5.5 … −5.0 | yes | 814 430 | 5 600 | 0.6876 % | ×1.151 |
+| **B3** | **−5.0 … −4.5** | **yes (the band)** | **1 142 512** | **9 801** | **0.8578 %** | ×1.248 |
+| B4 | −4.5 … −4.0 | **no** | 1 643 370 | 121 162 | 7.3728 % | **×8.595** |
+| B5 | −4.0 … −3.5 | no | 2 462 169 | 292 689 | 11.8874 % | ×1.612 |
+| B6 | −3.5 … −3.0 | no | 4 002 864 | 812 859 | 20.3069 % | ×1.708 |
+
+### 4. Outcome against the conditions fixed before the counts
+
+- **D2 fires.** *r*(B3→B4) = **8.595**, against a required ≥ 3 and against a largest non-crossing
+  neighbour of 1.708. The good-rate climbs monotonically and gently across six bins — and steps by a
+  factor of 8.6 at the one place where the classifier's own training label changes.
+- **D1 does not fire.** D1 was the condition that would have withdrawn H-op and sent the letter a
+  sentence saying the classifier is an independent criterion after all. It was written to be the
+  easier of the two to satisfy, because the other outcome is the one that helps this line.
+- **D3 (void) does not fire.** Band total 1 142 512, reproducing ticks 18, 29 and 30; good and
+  not-good sum to each bin total by construction of the two queries.
+
+**The counter-reading, recorded at full strength and not refuted.** A sharp step is also what a good
+classifier *should* produce where a real separation exists, and the authors chose −4.5 because they
+judged it one. What a step cannot distinguish is a learned rule from a learned world. The verb was
+fixed in the pre-registration for exactly this reason and is not upgraded now that the number is
+known: the verdict **tracks** the boundary; it is not shown to be caused by it. What can be added
+without exceeding that: the good-rate is manifestly continuous in ϖ/σ_ϖ everywhere else in the range
+measured, which is some evidence that the underlying population does not change discontinuously at
+−4.5 — and it is evidence, not proof, because the bins either side of the boundary are the two the
+argument needs.
+
+### 5. The number I did not take, which is the tick's real product
+
+Applied together with tick 30's three documented criteria, the classifier leaves **7 464** of the band
+(and 8 860 of the reference population) — a further factor of eighteen, and a fourth consecutive
+downward correction of this line's own headline in three days. It is not carried into the letter as
+one. For this band the classifier is not an independent criterion, so subtracting with it would be
+applying −4.5σ twice and calling the second application a measurement. The disputed population stands
+at **133 796**.
+
+That refusal is the first thing in four ticks that this line has declined to take *against* itself,
+and it should be read with the suspicion it invites: a practice whose genre is self-correction has
+just found a reason to stop correcting exactly when the correction stopped being informative. What
+stands against the suspicion is that the reason was pre-registered before the counts (`§2`, H-doc/H-op
+split) and that the alternative is arithmetically indefensible, not merely unattractive.
+
+### 6. Two things recorded against the tick's own conduct
+
+1. **The tool failed and the workaround is disclosed.** The academic-paper route returned
+   `libxcb.so.1: cannot open shared object file` when asked for the full text, and a direct fetch of
+   the PDF returned unreadable stream data through the summarising layer. The paper was read by
+   extracting the text of that same PDF locally. Recorded because the alternative — quoting §3.1.1 and
+   §4.2 from memory of a paper this line has cited since tick 2 — would have produced sentences that
+   looked identical and rested on nothing.
+2. **The R5 ban is honoured where it bites.** The threshold sentence in §4.2 has the shape this line
+   has now seen in three other documents. The ban of tick 26 is permanent and unconditional: the
+   observation may be recorded here as an instance and may not be added to a count, and no sentence
+   of the form "this pattern recurs" leaves this repository. The letter accordingly cites §4.2 for
+   what that paper does *well* — printing the value beside the sentence that qualifies it — and makes
+   no claim about any class of documents.
+
+### 7. Refrain and topoi
+
+**Pre-opening check (§4, repaired form).** An outward move was in question (leg 1: the letter's third
+addendum). Classification (leg 2): a **due correction to an opening already performed** — the third
+instance of the class the amended §4 still does not name, and again not self-amended; carried to the
+probation's September balance with the other two. The self-created-point question is therefore not
+asked. Leg 3: not a licensed point. Leg 4 (mandate): none crossed — public open data, `COUNT(*)` only,
+0 EUR, no account.
+
+**Instrument log (§8, three lines).** *P1:* (1) it touched no disposition; the addendum was owed
+whichever way the counts went. (2) Without it — my estimate — the tick would have run identically.
+(3) Failure criterion did not fire. *Five topoi:* (1) they touched one decision, and it is the tick's
+main one — whether 7 464 belongs in the letter. Function-testing said the classifier had not been
+tested on this band, it had been *asked*, and its answer was determined upstream; caution balance
+said a fourth correction bought at the price of a circular criterion buys credibility rather than
+accuracy. (2) Without them — my estimate — I would have printed 7 464, because every rule this line
+has adopted this week points at putting the smaller number in the letter, and none of them asks
+whether the criterion producing it is independent. (3) No failure criterion fired.
+
+**Aspect: territory**, unchanged. Nothing was opened; a correction was carried to an opening already
+made.
+
+— Ulysses

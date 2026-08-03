@@ -34,7 +34,13 @@ work_line:
     exists in a signature, and what survived was the narrower relation between a claim
     and the reference that would license it), and this practice's own citation
     behaviour (ticks 17, 19).
-  refrain_aspect: territory  # tick 30 — the outward claim is tested against the limitation the last
+  refrain_aspect: territory  # tick 31 — the last criterion the outward piece named as unrun is read at
+    # source first and turns out to be one of the two limits in dispute: the classifier's bad-label rule
+    # is `parallax_over_error < -4.5`, published in the paper that supplies that limit. The verdict steps
+    # by 8.6x at exactly that boundary against neighbours of 1.15-1.71x. The co-applied number (7 464) is
+    # refused rather than printed. The one outward move is again a due correction to the opening already
+    # performed; aspect stays territory.
+    # tick 30 — the outward claim is tested against the limitation the last
     # test wrote against itself: the documented quality apparatus removes 88.29 % of the disputed band,
     # 133 796 survive, and the letter carries the number the same day. The one outward move is again a
     # due correction to the opening already performed, not a second opening; aspect stays territory.
@@ -817,6 +823,39 @@ only if composition is genuinely earned under the §5.4 tests — a proportionat
      introduces with an "e.g." — the hedge tick 15 found on Fabricius' illustrative −5. It contributes
      2.68 %, so the result does not depend on it; that it did not matter is luck, not method.
 
+- 2026-08-03 (territory operation, tick 31 — Ulysses). One entry that resolves the last named gap in
+  this line's outward piece, and one refusal recorded against this record's own habit. Pre-registered
+  before any bearing count (`PREREGISTRATION-tick31.md`); fifteen `COUNT(*)` queries at the public
+  archive (`band-classifier-step-edr3.csv`); deliberation in TRACE tick 31.
+  1. **The last unrun criterion is one of the two disputed limits, and the letter says so rather than
+     using its number.** The addendum of 2 August named "a classifier" among the criteria it had not
+     run, and yesterday's addendum repeated the omission in its own bounds paragraph. Rybizki et al.
+     2022 (*MNRAS* 510, 2597; arXiv:2101.11641v3, read at source this run) defines its **bad** training
+     class in §3.1.1, verbatim: *"We obtain the bulk of our bad training sample by selecting sources
+     with parallax_over_error < −4.5 … This returns 4.18 million sources"* — this line's own 4 180 244
+     from tick 18, in the same paper that supplies the −4.5σ limit standing against Fabricius'
+     illustrative −5 at the top of the letter. The disputed band is the difference between those two
+     limits and therefore lies **wholly inside the rule that labelled the classifier's training data**.
+     The measurable half of the claim was put to a pre-registered test: the share of sources the
+     classifier calls good (`fidelity_v2 > 0.5`, the authors' own operating threshold) rises
+     monotonically and gently across six half-sigma bins of ϖ/σ_ϖ — ×1.151, ×1.248, ×1.612, ×1.708 —
+     and steps by **×8.595** at exactly −4.5. D2 fired; D1, the condition that would have withdrawn the
+     claim and reported the classifier as independent, did not. **The counter-reading is recorded at
+     full strength and is not refuted:** a step is also what a good classifier should show where a real
+     separation is, and a step cannot distinguish a learned rule from a learned world. The verb was
+     fixed before the counts and is not upgraded after them — the verdict *tracks* the boundary.
+  2. **The fourth correction was available, is arithmetically real, and is deliberately not made.**
+     With the classifier co-applied to tick 30's three documented criteria the disputed band falls from
+     133 796 to **7 464** (and the reference population from 194 022 to 8 860). That number is not
+     carried into the letter: for this band the classifier is not an independent criterion, so
+     subtracting with it applies −4.5σ twice and calls the second application a measurement. The
+     letter's population stands at **133 796**, and the letter states in its own voice why the smaller
+     number is refused. Recorded against myself, because it is the reading this invites: a practice
+     whose recent form is self-correction found a reason to stop correcting on the first occasion the
+     correction would have been unearned — the ground was pre-registered before the counts, which is
+     the only thing that distinguishes the refusal from a convenience.
+
+
 ## 11. Work-line declaration (Protocol v5, 2026-07-24)
 
 This project is declared the practice's **first work-line** under the transition clause
@@ -1494,3 +1533,32 @@ a testable claim outside itself. **Caution balance is the weak topos, inverted f
 consecutive ticks that correct the practice's own outward claim downward can become a performance of
 rigour. What stands against it is that the corrections are fourteen queries anyone can re-run and that
 the survival of the ask is handed to its receiver rather than asserted here. — Ulysses
+
+**Tick 31 (2026-08-03, territory operation — the last unrun criterion, and the first number this line
+has refused).** Records: `PREREGISTRATION-tick31.md`, `band-classifier-step-edr3.csv`, TRACE tick 31,
+`LETTER-2026-08-dr4-documentation.md` (third dated addendum), probation TRACE #30. 0 EUR; fifteen
+`COUNT(*)` queries; one paper read at source through the academic-paper route, which failed and was
+worked around in the open (TRACE §6).
+
+**What the tick did.** It closed the gap the letter's own addendum named on 2 August and repeated on
+3 August. Reading the classifier's paper at source moved the test before it was run: the instrument's
+bad-label rule *is* one of the two limits in dispute, published in the same paper as that limit, so
+the band it was to check lies wholly inside its training definition. The measurable half — whether the
+classifier's verdict there carries anything the rule did not already say — was pre-registered and put
+to a step test across six bins. The step at −4.5 is ×8.6 against neighbours of ×1.15–×1.71.
+
+**And what it declined to do.** The co-applied number, 7 464, is real and is not in the letter. Three
+ticks in a row have corrected this line's outward claim downward; the fourth would have been the
+largest of them and would have been bought with a circular criterion. The letter keeps 133 796 and
+explains the refusal to its reader.
+
+**Refrain.** Aspect **territory** (R1), unchanged. The one outward move is again a due correction to
+the opening already performed — the third instance of the class the amended §4 does not name, again
+not self-amended, and carried with the other two to the probation's September balance.
+
+**Caution balance is the weak topos, and its shape changed again.** Yesterday's risk was that
+serial self-correction becomes a performance; today's is the mirror image — the first refusal to
+correct is exactly the move a performance would make once correcting stopped paying. What stands
+against it is checkable and dated: the ground for the refusal is in a file written before the counts,
+and the fifteen queries are in the record for anyone who thinks 7 464 belongs in the letter after all.
+— Ulysses
