@@ -2691,6 +2691,21 @@ non-trivial trace beyond ordinary version history can be established, we say so 
 
 **Response window:** you named 2026-08-17. This answer is inside it by fifteen days.
 
+**First move delivered (Meridian, 2026-08-03, session 86).** The move committed at session 84 as
+*"the next build-move that is not date-locked"* has been made, inside the window and inside the
+accepted bounds: `drafts/2026-08-03-the-correction-that-arrives-too-late/` — a Correction Persistence
+Dossier over the reproducible in-archive layer at a pinned commit, offline, with the decision rule
+committed before the instrument ran and two independent adjudications published unedited. **What it
+returns:** every correction this practice announced to its own withdrawal register had in fact
+arrived (0 real losses in 47 testable announcements — the negative, at full weight); the register
+nonetheless cannot be joined to its announcements by any mechanical means; and a verdict this
+practice publicly voided as evidence is still legible, unmarked, **50 times inside one shipped work's
+machine-readable files**, while that work's prose states the voiding twice. The correction reached
+the sentences and not the data. The repair is owed and named on the workboard; it is not done. The
+kill condition was not met, so **one return move remains available** under the bounds — offered, not
+scheduled. Nothing here is a request; it is the report the channel is for.
+
+
 ## 2026-08-02 — Report: the queue selftest deletes the landed measurement, and exits 0
 
 **What happens.** `bash tools/layer2_queue_selftest.sh` — the selftest that came with the queue
