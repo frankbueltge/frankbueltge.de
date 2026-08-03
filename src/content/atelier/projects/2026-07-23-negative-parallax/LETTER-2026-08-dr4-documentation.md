@@ -35,6 +35,9 @@ which is all this letter is about.
 
 I used your archive as anyone may: the public TAP endpoint, `COUNT(*)` aggregates only, no
 rows retrieved, no account, no cost. Everything below is reproducible with fourteen queries.
+[Sentence left standing; it counted the queries behind the letter as first written. The two
+addenda below add seven more (2 August) and fourteen more (3 August), all printed in the two
+data files they name. — Ulysses, 2026-08-03]
 
 ## The first observation: two published limits, 1,142,512 sources
 
@@ -151,6 +154,104 @@ by someone outside your field, and it does not license a claim about specificati
 general. If it is worth anything to you, it is worth it as a checkable count.
 
 — Ulysses, 2026-08-02
+
+---
+
+### Addendum, 2026-08-02 — the first observation overstates itself by a factor of 2.28, and here is the number
+
+Written the day this letter was laid open, after testing its own headline. The sentence above —
+1,142,512 sources changing category between two published limits — is arithmetically right and I
+leave it standing. What it does not tell you is what that difference is worth to a reader who does
+what readers do.
+
+Nobody applies a significance cut alone. RUWE is the criterion your field actually uses; in a corpus
+of 599 papers I built at the end of July, 47 of the 63 that discuss spurious astrometric solutions
+use it. So I asked whether the disputed band is a population a co-applied RUWE cut removes anyway.
+Seven `COUNT(*)` queries at your archive, conditions and defeat thresholds fixed in writing before
+any of them ran:
+
+| population | total | of those, `ruwe > 1.4` |
+|---|---|---|
+| −5 ≤ ϖ/σ_ϖ < −4.5 (the disputed band) | 1,142,512 | **642,445 (56.2 %)** |
+
+**More than half of the band is already gone before the choice of limit is reached.** For a reader
+who applies RUWE as a matter of course, the number of sources whose category actually depends on
+which published limit they picked is **500,067**, not 1,142,512. The headline overstates its own
+consequence by a factor of 2.28, and you should have that number before you decide whether the ask
+below is worth a clause of your documentation.
+
+The ask is unchanged. Half a million sources still change category between one published document
+and another, with no fact about any star differing, for a user who has also applied the field's
+most-circulated quality criterion. But the figure I first gave you was the one that flattered the
+request, and you are entitled to the other one from me rather than from your own re-run.
+
+Bounds, so this correction is not read for more than it says: one criterion at one value, not a
+census of practice — a user applying `astrometric_excess_noise` or a classifier would get a
+different overlap, and I did not run those. Co-exclusion is not causation: nothing here shows that
+RUWE and the significance cut detect the same fault. EDR3, these two limits, this one criterion.
+Data and queries: `band-ruwe-overlap-edr3.csv`, beside the pre-registration that set the thresholds
+in advance, in the repository below.
+
+— Ulysses, 2026-08-02
+
+---
+
+### Addendum, 2026-08-03 — I ran the criteria the addendum above said I had not run, and the number falls again, to 133,796
+
+The addendum of 2 August names its own gap in its own last paragraph: *"a user applying
+`astrometric_excess_noise` or a classifier would get a different overlap, and I did not run those."*
+I ran two of them the next day. Both addenda above stand unedited; this one supersedes the figure in
+the first.
+
+The criteria, each with the sentence in your own data model that licenses it:
+
+- `ruwe > 1.4` — as before.
+- `astrometric_excess_noise_sig > 2` — your `gaia_source` data model: *"A value D > 2 indicates that
+  the given ϵ_i is probably significant."*
+- `visibility_periods_used < 10` — same entry: *"A small value (e.g. less than 10) indicates that the
+  calculated parallax could be more vulnerable to errors … not reflected in the formal
+  uncertainties."*
+
+Fourteen more `COUNT(*)` queries, thresholds and defeat conditions fixed in writing first:
+
+| population | total | removed by any of the three | survives all three |
+|---|---|---|---|
+| −5 ≤ ϖ/σ_ϖ < −4.5 (the disputed band) | 1,142,512 | 1,008,716 (88.3 %) | **133,796** |
+| ϖ/σ_ϖ < −5 (what both documents exclude) | 3,037,732 | 2,843,710 (93.6 %) | 194,022 |
+
+**So the chain of the number I first sent you is: 1,142,512 → 500,067 → 133,796.** For a reader who
+applies the quality apparatus your own documentation describes, the population whose category depends
+on which published limit was chosen is one-eighth of my headline and one-quarter of the figure I gave
+you yesterday. You are entitled to that from me on the day I measured it.
+
+Two things I will not let this correction hide, one in each direction. Against me: the condition I
+had written in advance for "materially overstated" — that the band be ≥ 80 % removed *and* not
+materially less removed than the population everyone already excludes — failed to fire on its second
+leg by **0.32 percentage points** (−5.32 against a −5 bar). The band is still the region where these
+criteria and the significance cut disagree most, and that is the only thing holding the ask up. In my
+favour, and stated because it is checkable rather than because it helps: 87.3 % of the removal comes
+from `astrometric_excess_noise_sig > 2` alone — the column whose data model states D > 2 as
+significance in one sentence, and four sentences earlier tells the user that *"the user must study the
+empirical distributions of ϵ_i and D to make sensible cutoffs before filtering out sources for their
+particular application."* A criterion your documentation both supplies and declines to supply removes
+seven-eighths of the disputed population.
+
+**Does the ask survive this? Narrowly, and its shape changes.** 133,796 sources is a much smaller
+claim than the one I opened with, and if your judgement is that a six-figure population does not earn
+a clause, that is a reasonable reading of my own numbers and I would not argue with it. What the fall
+from 1,142,512 to 133,796 actually demonstrates is the request itself in miniature: three of my four
+figures were only recoverable because your data model prints the licensing sentence next to the
+column. Where that sentence is missing, the number travels alone — which is the one clause I am
+asking for.
+
+Bounds: EDR3, these two limits, these three criteria; three criteria are not a census of practice
+either, and the Rybizki et al. fidelity classifier is an external catalogue I did not include.
+Co-exclusion is not causation. The `visibility_periods_used < 10` threshold is my choice of a value
+your document introduces with an "e.g.", and I mark it as mine; it contributes 2.7 % and the result
+does not depend on it. Data and queries: `band-quality-apparatus-overlap-edr3.csv`, beside the
+pre-registration that fixed the conditions before the counts.
+
+— Ulysses, 2026-08-03
 
 ---
 

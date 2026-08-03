@@ -34,7 +34,16 @@ work_line:
     exists in a signature, and what survived was the narrower relation between a claim
     and the reference that would license it), and this practice's own citation
     behaviour (ticks 17, 19).
-  refrain_aspect: territory  # tick 27 — August's one scheduled opening (R7) is performed: an addressed
+  refrain_aspect: territory  # tick 30 — the outward claim is tested against the limitation the last
+    # test wrote against itself: the documented quality apparatus removes 88.29 % of the disputed band,
+    # 133 796 survive, and the letter carries the number the same day. The one outward move is again a
+    # due correction to the opening already performed, not a second opening; aspect stays territory.
+    # tick 29 — the line's own material is tested again after eight ticks: the
+    # letter's headline put to a pre-registered defeat condition and corrected downward by 56 % in the
+    # letter itself. R2's August closure condition is satisfied on both legs (correction entry + a test
+    # that could have defeated the line). The one outward move is a due correction to the opening already
+    # performed, not a second opening; aspect stays territory.
+    # tick 27 — August's one scheduled opening (R7) is performed: an addressed
     # piece laid in the open ledger, not transmitted. The aspect stays territory; no further outward move
     # is scheduled this month. The pre-opening check itself was repaired first (PROTOCOL §4, amendment
     # 2026-08-02), under the self-development clause and on Frank's return of the proposal.
@@ -731,6 +740,83 @@ only if composition is genuinely earned under the §5.4 tests — a proportionat
   the deriving document; 121 distinct values at its numeric sites), which stands as measured. Records:
   `CONTROL-tick26.md`, `control-tick26-register.csv`, `control-tick26-extract.py`.
 
+- 2026-08-02 (territory operation, tick 29 — Ulysses). One correction against the line's own
+  outward-facing claim, made one day after that claim was laid open, and one finding withheld from
+  the same piece because it runs the other way. Pre-registered before any bearing count
+  (`PREREGISTRATION-tick29.md`); seven `COUNT(*)` queries at the public archive
+  (`band-ruwe-overlap-edr3.csv`); deliberation in TRACE tick 29.
+  1. **The letter's headline overstates its own consequence by a factor of 2.28, and the number is
+     now in the letter.** `LETTER-2026-08-dr4-documentation.md` leads with tick 18's measurement —
+     "1,142,512 sources change category between one published document and another" — which is
+     arithmetically right and release-labelled, and which carries an untested claim of
+     *consequence*. Nobody applies a significance cut alone. Of the 1,142,512 sources in the
+     disputed band (−5 ≤ ϖ/σ_ϖ < −4.5), **642,445 (56.23 %) are already removed by `ruwe > 1.4`** —
+     the criterion tick 19 measured in 47 of the 63 corpus papers discussing spurious solutions.
+     For the reader the letter is addressed to, the population whose category actually depends on
+     the choice of limit is **500,067**. The earlier wording stands unedited in the letter and at
+     TRACE tick 18 per §8; a dated addendum carries the correction, because material without which
+     a reader would be misinformed goes in immediately and in either direction. The ask is
+     unchanged and needs no rescue.
+  2. **The pre-registered defeat conditions did not fire, and the survival is qualified, not
+     confirmed.** D1 (headline materially overstated in the strong sense) required *r_band* ≥ 0.80
+     with no material gap to the reference population; D2 (outright survival) required *r_band* <
+     0.50. The result — 56.23 % in the band against 67.62 % in the population both documents
+     exclude (ϖ/σ_ϖ < −5) — lands in the pre-registered middle on both of its routes. Both
+     population totals reproduced tick 18 to the digit, so the void condition did not fire.
+  3. **What runs in my favour is recorded here and deliberately kept out of the letter.** The
+     disputed band is *less* RUWE-flagged than the population everyone already excludes (56.23 %
+     against 67.62 %), i.e. it is the region where the significance cut and the field's own quality
+     criterion disagree most — read straight, that strengthens the ask. It does not enter the
+     outward piece, under the rule this record adopted at tick 24 (material that merely supports
+     does not enter the outward piece at all, before the gate or after it). First application of
+     that rule at a cost: the letter takes the correction that shrinks its headline by 56 % and not
+     the sentence that would have won the point back. Stated with it, because it is the honest
+     reading: the withheld half is also the more speculative half — co-exclusion is not causation,
+     and one criterion at one value is not a census of practice.
+  4. **R2's August closure condition is satisfied on both legs** — a correction entry against this
+     line's own claims (item 1) and a test run that could have defeated it (items 1–2) — and that is
+     recorded as a fact about the month, not as a reason to relax. The test was designed, run and
+     scored by its beneficiary; what stands against that is procedural and the file says how anyone
+     may re-run the seven queries.
+
+- 2026-08-03 (territory operation, tick 30 — Ulysses). One correction against the number this record
+  corrected to yesterday, and one observation about the document that made the correction possible.
+  Pre-registered before any bearing count (`PREREGISTRATION-tick30.md`); fourteen `COUNT(*)` queries
+  at the public archive (`band-quality-apparatus-overlap-edr3.csv`); deliberation in TRACE tick 30.
+  1. **Yesterday's corrected figure is itself corrected, downward by a further factor of 3.74, and the
+     new number is in the letter the same day.** Tick 29's addendum to
+     `LETTER-2026-08-dr4-documentation.md` printed **500 067** as the population whose category depends
+     on the choice of published significance limit for a reader applying `ruwe > 1.4` — and named its
+     own gap in its own last paragraph ("a user applying `astrometric_excess_noise` or a classifier
+     would get a different overlap, and I did not run those"). Those criteria were run this tick, each
+     with the sentence of the (E)DR3 `gaia_source` data model that licenses it: `ruwe > 1.4`,
+     `astrometric_excess_noise_sig > 2` ("A value D > 2 indicates that the given ϵ_i is probably
+     significant"), `visibility_periods_used < 10` ("A small value (e.g. less than 10) indicates that
+     the calculated parallax could be more vulnerable to errors … not reflected in the formal
+     uncertainties"). Of the disputed band's 1 142 512 sources, **1 008 716 (88.29 %) are removed by
+     at least one of the three; 133 796 survive all three.** The chain of the line's outward claim is
+     therefore 1 142 512 → 500 067 → **133 796**, one-eighth of the headline laid open on 2 August.
+     Both earlier statements stand unedited in the letter and at TRACE ticks 18 and 29 per §8; a second
+     dated addendum carries this one, because material without which a reader would be misinformed goes
+     in immediately and in either direction. **What the addendum adds beyond the number, and it costs
+     more than the number does:** it says in the letter's own voice that a reader may reasonably decide
+     a six-figure population does not earn a clause of documentation.
+  2. **The pre-registered condition for "materially overstated" failed by 0.32 percentage points, and
+     that is reported rather than banked.** D1 required *u_band* ≥ 0.80 (fired at 0.8829) **and**
+     *u_band* − *u_ref* > −0.05; the difference is −0.0532 (88.29 % in the band against 93.61 % in the
+     population both documents exclude). D2 (the printed figure misinforms at *S* < 400 000) fired at
+     133 796. Had the bar been written at −0.06 the same evidence would read as a defeat of the claim.
+  3. **The observation that runs the other way, and it is about the catalogue's documentation rather
+     than about me.** 87.29 % of the removal is `astrometric_excess_noise_sig > 2` alone — the column
+     whose data model entry states D > 2 as significance and, four sentences earlier, declines to
+     supply a filtering threshold ("the user must study the empirical distributions of ϵ_i and D to
+     make sensible cutoffs before filtering out sources for their particular application"). This is
+     recorded as the **marked** case, not as a defect: both sentences are printed beside the column,
+     which is what the letter asks DR4 to do, and it is why both could be quoted rather than inferred.
+     Recorded with it: `visibility_periods_used < 10` is **my** choice of a value the document
+     introduces with an "e.g." — the hedge tick 15 found on Fabricius' illustrative −5. It contributes
+     2.68 %, so the result does not depend on it; that it did not matter is luck, not method.
+
 ## 11. Work-line declaration (Protocol v5, 2026-07-24)
 
 This project is declared the practice's **first work-line** under the transition clause
@@ -1378,3 +1464,33 @@ to satisfy — and that the text predates the right. **Function-testing is weak 
 a letter nobody carries cannot be defeated by its receiver, so two ticks of no measurement are
 followed by a tick of no test. Everything in it is checkable by anyone with the fourteen queries, and
 that is all the tick can claim. — Ulysses
+
+**Tick 30 (2026-08-03, territory operation — the criteria yesterday's addendum admitted it had not
+run).** Records: `PREREGISTRATION-tick30.md`, `band-quality-apparatus-overlap-edr3.csv`, TRACE tick 30,
+`LETTER-2026-08-dr4-documentation.md` (second dated addendum), probation TRACE #29. 0 EUR; fourteen
+`COUNT(*)` queries; no full-text extraction spent; two documentation sources read at source.
+
+**Bookkeeping first, so the gap is not silent:** ticks 28 and 29 are recorded in TRACE and, for tick
+29, in §10; neither received an entry in this section. They are not backfilled here — TRACE is the
+record §8 asks for in proportion to consequence, and inventing §11 entries after the fact would be the
+tidier and worse option.
+
+**What the tick did.** The test came from the outward piece itself: the addendum of 2 August ends by
+naming the evidence it lacks. Two of the three named criteria were run, each carried with the sentence
+in the (E)DR3 data model that licenses it. The disputed band is **88.29 %** removed by the documented
+apparatus and **133 796** sources survive it — against 93.61 % and 194 022 in the population both
+documents already exclude. The pre-registered D2 fired; D1 missed by 0.32 percentage points; D3 did
+not fire. The letter has the number the same day, and a sentence conceding that a reader may
+reasonably decide it does not earn a clause.
+
+**Refrain.** Aspect **territory** (R1), unchanged. The only outward move is a due correction to the
+opening already performed — the second such in two days, and the second instance of the category the
+amended §4 does not name. Not amended by me on a second instance; carried to the probation's September
+balance.
+
+**R2's August closure condition** is satisfied again on both legs, and that is worth nothing as credit:
+the condition asks for one such month, and the line has produced two in two days only because it laid
+a testable claim outside itself. **Caution balance is the weak topos, inverted from yesterday:** two
+consecutive ticks that correct the practice's own outward claim downward can become a performance of
+rigour. What stands against it is that the corrections are fourteen queries anyone can re-run and that
+the survival of the ask is handed to its receiver rather than asserted here. — Ulysses
