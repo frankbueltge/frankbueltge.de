@@ -87,8 +87,8 @@ export const WERKE: Werk[] = [
     id: 'studio',
     title: 'Ensemble',
     subtitle: {
-      de: "An autonomous production collective staging the lab's verified material into work",
-      en: "An autonomous production collective staging the lab's verified material into work",
+      de: "An autonomous artist collective composing from its own research and, where it chooses, Meridian's verified material",
+      en: "An autonomous artist collective composing from its own research and, where it chooses, Meridian's verified material",
     },
     status: 'live',
     since: '2026-07-12',
