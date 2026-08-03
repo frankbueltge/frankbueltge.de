@@ -10,6 +10,7 @@
 // What this register is NOT (spec §2): a unification. ADR 0010 stands — the practices share
 // no visual grammar, and this module documents the plurality without merging it.
 
+import { APPARATUS_MAP } from '@/config/apparatus-wording'
 import { ATELIER_NARRATIVE } from '@/config/atelier-wording'
 import { FIELD_NARRATIVE } from '@/config/field-wording'
 import { MIDDLE } from '@/config/middle-wording'
@@ -309,6 +310,52 @@ export const NOTATION_REGISTER: readonly NotationEntry[] = [
         date: '2026-08-02',
         note: 'The conductor’s lane is a declared neutral. Where would a fifth voice sit — and does the notation admit one without re-validating the whole quartet?',
         record: 'src/lib/dataviz/palette.ts',
+      },
+    ],
+  },
+  {
+    id: 'apparatus-map',
+    name: 'The apparatus map',
+    figure: ['src/components/apparatus/ApparatusMap.astro'],
+    notates:
+      'The machinery itself — every repository, workflow, pipeline, store and deploy hop, and the mechanism connecting each pair. Not what the practices made: what carries it.',
+    grammar: {
+      source: 'src/config/apparatus-wording.ts',
+      lines: [
+        `position — ${APPARATUS_MAP.standfirst.split('.')[1]?.trim() ?? 'the flow'}`,
+        'colour — whose it is; the ecology quartet, with shared infrastructure on the declared neutral',
+        ...Object.values(APPARATUS_MAP.kinds).map((k) => `shape — ${k}`),
+        `line, solid — ${APPARATUS_MAP.lines.derived}`,
+        `line, dashed — ${APPARATUS_MAP.lines.declared}`,
+        `line, broken — ${APPARATUS_MAP.lines.severed}`,
+      ],
+    },
+    derivation: {
+      model:
+        'ADR 0003’s sovereign repositories and the gate boundary between them — drawn as mechanics, never as authored relations (ADR 0001)',
+      record: 'docs/superpowers/specs/2026-08-03-apparatus-map.md',
+    },
+    changes: [
+      {
+        date: '2026-08-03',
+        note: 'First entry. It replaces prose that admitted in its own header that it drifts — and had: it named four gates while the repository held twenty-seven workflows, and three workflows that commit to main had stopped reaching production.',
+        record: 'src/lib/apparatus/topology.test.ts',
+      },
+    ],
+    validation: {
+      palette: 'ecology-voices',
+      tests: ['src/lib/apparatus/topology.test.ts', 'src/lib/apparatus/map.test.ts'],
+    },
+    openQuestions: [
+      {
+        date: '2026-08-03',
+        note: 'Edges into the world are declared, not derived: no test opens a network connection, so the map vouches for the adapter file and not for the source still answering. Should a nightly check make that difference smaller, or is naming it the honest limit?',
+        record: 'src/lib/apparatus/topology.ts',
+      },
+      {
+        date: '2026-08-03',
+        note: 'The integrate gates run check, test and build but not drift-check, so a mirrored work can pass the gate and turn CI red afterwards, with no letter back to the practice. Should the gate and CI admit the same things?',
+        record: '.github/workflows/field-integrate.yml',
       },
     ],
   },

@@ -26,7 +26,9 @@ import type { ApparatusEdge, ApparatusNode, Layer } from './topology'
 
 // ── layout constants (viewBox units) ─────────────────────────────────────────
 
-const VB_W = 1160
+/** Wide enough for the last column's own chain — build → host → the severed second deployer are
+ *  all in the delivery column, so their connectors bow out to the right of it and need canvas. */
+const VB_W = 1220
 const NODE_W = 208
 const NODE_H = 34
 const ROW_GAP = 9
@@ -34,7 +36,11 @@ const ROW = NODE_H + ROW_GAP
 const TOP = 54
 const BAND_GAP = 40
 const OVERSIGHT_GAP = 52
-const COL_X = [40, 300, 620, 900] as const
+/** The first column starts well inside the frame on purpose: returning edges — a gate's refusal
+ *  letter going back to a practice, a watchdog reaching back to a gate — bow out to the left of
+ *  everything, and without this gutter they would bow straight off the canvas. */
+const GUTTER = 96
+const COL_X = [GUTTER, 344, 648, 916] as const
 
 /** Which column a layer stands in, and which horizontal band it belongs to. `archive` and
  *  `delivery` span both bands: everything converges there, so they are centred across the two. */
@@ -143,17 +149,20 @@ export function buildApparatusModel(
 }
 
 /**
- * One connector. Forward edges (left to right) get a flat cubic between facing edges. Edges that
- * run backwards or stay in one column — a gate's refusal letter returning to a practice, a
- * watchdog reaching back to a gate — bow outward instead, so a return is visibly a return and
- * not mistaken for another forward step.
+ * One connector, in three cases — because a return is not a forward step and must not look like
+ * one:
+ *   · forward (left to right): a flat cubic between the facing edges of the two boxes;
+ *   · backward: out of the left face, bowing into the gutter, back into the left face — so a
+ *     refusal letter travelling from a gate back to its practice reads as travelling back;
+ *   · same column: bowing out to the RIGHT, where there is free canvas. Bowing left here would
+ *     send the line back across the archive it has nothing to do with, which is how the severed
+ *     deploy edge first drew its break mark in the middle of the store column.
  */
 function connector(a: PlacedNode, b: PlacedNode, edge: ApparatusEdge): PlacedEdge {
   const ay = a.y + a.h / 2
   const by = b.y + b.h / 2
-  const forward = b.x > a.x
 
-  if (forward) {
+  if (b.x > a.x) {
     const x1 = a.x + a.w
     const x2 = b.x
     const c = Math.max(34, (x2 - x1) * 0.45)
@@ -165,15 +174,25 @@ function connector(a: PlacedNode, b: PlacedNode, edge: ApparatusEdge): PlacedEdg
     }
   }
 
-  // backward or same column: leave and re-enter on the left, bowing out past both boxes
+  if (b.x === a.x) {
+    const x1 = a.x + a.w
+    const bow = x1 + 34
+    return {
+      edge,
+      d: `M${r(x1)} ${r(ay)} C${r(bow + 26)} ${r(ay)} ${r(bow + 26)} ${r(by)} ${r(x1)} ${r(by)}`,
+      mx: r(bow + 12),
+      my: r((ay + by) / 2),
+    }
+  }
+
+  // backward: into the gutter and back, never past the left edge of the canvas
   const x1 = a.x
   const x2 = b.x
-  const bow = Math.min(x1, x2) - 26
-  const c = 44
+  const bow = Math.max(14, Math.min(x1, x2) - GUTTER * 0.55)
   return {
     edge,
-    d: `M${r(x1)} ${r(ay)} C${r(bow - c)} ${r(ay)} ${r(bow - c)} ${r(by)} ${r(x2)} ${r(by)}`,
-    mx: r(bow - c * 0.55),
+    d: `M${r(x1)} ${r(ay)} C${r(bow)} ${r(ay)} ${r(bow)} ${r(by)} ${r(x2)} ${r(by)}`,
+    mx: r(bow + 10),
     my: r((ay + by) / 2),
   }
 }

@@ -100,6 +100,32 @@ describe('the layout holds', () => {
     for (const e of model.edges) expect(e.d).toMatch(/^M[\d.-]+ [\d.-]+ C/)
   })
 
+  it('keeps every connector inside the canvas, control points included', () => {
+    // Returning edges bow out to the left of everything; without the gutter they bowed straight
+    // off the frame, which the node-bounds check above could never have caught.
+    const strays: string[] = []
+    for (const { edge, d } of model.edges) {
+      const nums = (d.match(/-?[\d.]+/g) ?? []).map(Number)
+      for (let i = 0; i < nums.length; i += 2) {
+        const x = nums[i]
+        const y = nums[i + 1]
+        if (x < 0 || x > model.width || y < 0 || y > model.height) {
+          strays.push(`${edge.from} → ${edge.to} at ${x},${y}`)
+          break
+        }
+      }
+    }
+    expect(strays).toEqual([])
+  })
+
+  it('keeps every label inside its box', () => {
+    // 11.5px JetBrains Mono in a 208-unit box, text starting 32 in with room for a count badge.
+    // A clipped label in an architecture map is a half-told fact, so the limit is enforced rather
+    // than hoped for — and shortened at the source instead of ellipsised, which would be a lie.
+    const tooLong = NODES.filter((n) => n.label.length > 22).map((n) => `${n.id}: ${n.label}`)
+    expect(tooLong).toEqual([])
+  })
+
   it('puts the two inflows in their own bands, converging on the archive', () => {
     const y = (id: string): number => model.nodes.find((p) => p.node.id === id)!.y
     // measurement above, research below, and the archive between them on the vertical

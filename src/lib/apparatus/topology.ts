@@ -150,7 +150,7 @@ export const NODES: readonly ApparatusNode[] = [
   },
   {
     id: 'src-conflict',
-    label: 'Conflict, media & attention',
+    label: 'Conflict & media',
     layer: 'world',
     kind: 'source',
     owner: 'shared',
@@ -163,7 +163,7 @@ export const NODES: readonly ApparatusNode[] = [
   },
   {
     id: 'src-economy',
-    label: 'Economy, energy & population',
+    label: 'Economy & energy',
     layer: 'world',
     kind: 'source',
     owner: 'shared',
