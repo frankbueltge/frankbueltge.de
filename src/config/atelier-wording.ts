@@ -104,7 +104,7 @@ export const ATELIER_NARRATIVE = {
       'Ulysses is a situated artistic research practice, developed through documented human–machine operations. Machines hold real operative agency here — they find problems, research, build, revise and archive inside a standing human delegation — while curated publication and responsibility remain human. The unit of work is the work-line, fed by studies that compost back into it; failures stay on the record, checkably.',
     doors: {
       now: 'the research log — the work-line and its studies under Protocol v5: scores, traces, dispositions',
-      works: 'works & catalogue — the nightly phase (28 June – 18 July 2026) and, since 24 July, the first curated v4 publication',
+      works: 'works & catalogue — the nightly phase (28 June – 18 July 2026) and, since 24 July, its curated publications',
       foundation: 'what this is, in plain language — the operating model, who decides what, and the theoretical ground',
       sheet: 'the working sheet — the practice’s own reading of its works and sources, drawn by itself',
     },
@@ -122,7 +122,7 @@ export const ATELIER_NARRATIVE = {
     // nightly phase closed on 18 July 2026 — so this number is final, not a moving count.
     // /atelier derives the same span from the mirror rather than repeating it (index.astro).
     mapCaption:
-      'each slab a work, hung by committed date — the nightly register (S1–S43), then bounded projects under Protocol v4; the red slab is the first curated v4 publication',
+      'each slab a work, hung by committed date — the nightly register (S1–S43), then bounded projects and work-lines under Protocol v4 and v5; the red slabs are its curated publications',
     mapProvenance:
       'drawn from committed mirrors — works meta.json · project SCORE states · read-only; project lines end where their disposition ends',
     doorsCaption: '“The plane is like a row of doors.” (ATP 508)',
@@ -387,7 +387,7 @@ export const ATELIER_NARRATIVE = {
   archive: {
     heading: 'What became of the earlier lines',
     lead:
-      'Twelve questions have been opened here. This sheet draws each one on real time, from the ' +
+      'The questions opened here, each drawn on real time by this sheet, from the ' +
       'day it opened to the day it ended, and where it ended: through the gate as a work, waiting ' +
       'at the gate, kept as a study, or closed on purpose. Pick a line to read its record.',
     storyLink: 'One of them ended on a fact inside its own instrument — read it in six scenes →',
@@ -468,7 +468,7 @@ export const ATELIER_NARRATIVE = {
     apparatus: 'How the machine runs — repo, constitution, team channel, integration machinery, in one room.',
     works: 'The works, newest first — each slab on the sheet is a door to one of these.',
     worksPhase:
-      'Most works date from the nightly phase (28 June – 18 July 2026). Since 24 July 2026 the surface also carries its first curated v4 publication — “Kartographie statt Kopie” (with a full English version), published by explicit human decision (PUBLICATION approved by the responsible human; see the project’s DECISION.md). Nothing enters this surface through a merge or a green build.',
+      'Most works date from the nightly phase (28 June – 18 July 2026). Since 24 July 2026 the surface also carries its curated publications — “Kartographie statt Kopie” (24 July, with a full English version) and “Negative Parallax — The Operative Ruler” (1 August) — each published by explicit human decision (PUBLICATION approved by the responsible human; see the project’s own DECISION.md). Nothing enters this surface through a merge or a green build.',
     cockpitArchiveNote: 'the atlas now lives in material',
     cockpitArchived:
       'Archived surface (ADR 0008): the cockpit is kept as a dated artefact, no longer the entrance.',

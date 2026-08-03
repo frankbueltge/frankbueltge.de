@@ -134,7 +134,11 @@ const hash = (s: string): number => {
 }
 
 // Works → slabs standing on the line; same-day slabs fan out around their date.
-const CURATED = '2026-07-24-kartographie-statt-kopie'
+// POSTULATE_SOURCE is the one work the postulate quotes below are taken from verbatim (§7
+// Conclusion) — unrelated to which slabs are marked curated: a second publication landed
+// 2026-08-01, so CURATED_WORKS now names both (Aktualitäts-Regel, 2026-08-03).
+const POSTULATE_SOURCE = '2026-07-24-kartographie-statt-kopie'
+const CURATED_WORKS = new Set([POSTULATE_SOURCE, '2026-07-23-negative-parallax'])
 const byDate = new Map<string, typeof works>()
 for (const w of works.filter((w) => w.date)) {
   byDate.set(w.date!, [...(byDate.get(w.date!) ?? []), w])
@@ -149,7 +153,7 @@ const slabs = [...byDate.entries()].flatMap(([date, group]) =>
       date,
       href: w.kind === 'astro' ? `/atelier/werke/${w.slug}` : `/atelier/werke-html/${w.slug}/`,
       x: cx - 2.5, y: Y0 - h, w: 5, h,
-      curated: w.slug === CURATED,
+      curated: CURATED_WORKS.has(w.slug),
     }
   }),
 )
@@ -313,11 +317,11 @@ const doors = [
           </text>
           <line x1={xOf(T1)} y1={Y0 - 6} x2={xOf(T1)} y2={Y0 + 46} class="m-seam" />
 
-          {/* works — ink slabs standing on the line; the red slab is the curated v4 publication */}
+          {/* works — ink slabs standing on the line; the red slabs are the curated publications */}
           {slabs.map((s) => (
             <a href={s.href} class="m-slab-link">
               <rect x={s.x} y={s.y} width={s.w} height={s.h} class={s.curated ? 'm-slab m-slab-curated' : 'm-slab'}>
-                <title>{s.title} · {s.date}{s.curated ? ' — first curated v4 publication' : ''}</title>
+                <title>{s.title} · {s.date}{s.curated ? ' — a curated publication' : ''}</title>
               </rect>
             </a>
           ))}
@@ -374,7 +378,7 @@ const doors = [
       <ul class="at-postulates">
         {V2.model.postulates.map((p) => (
           <li>
-            <a class="at-postulate" href={`/atelier/werke/${CURATED}`}>
+            <a class="at-postulate" href={`/atelier/werke/${POSTULATE_SOURCE}`}>
               <span class="p-axis">P{p.n} · {p.axis}</span>
               <span class="p-pair"><b>{p.is}</b>, <i>not {p.not}</i></span>
             </a>
@@ -383,7 +387,7 @@ const doors = [
       </ul>
       <p class="at-model-toolbox">{V2.model.toolboxLine}</p>
       <p class="at-model-links">
-        <a href={`/atelier/werke/${CURATED}`}>{V2.model.workLink}</a>
+        <a href={`/atelier/werke/${POSTULATE_SOURCE}`}>{V2.model.workLink}</a>
         <a href="/atelier/foundation">{V2.model.foundationLink}</a>
       </p>
     </section>
