@@ -12,6 +12,7 @@
 
 import { APPARATUS_MAP } from '@/config/apparatus-wording'
 import { ATELIER_NARRATIVE } from '@/config/atelier-wording'
+import { ECOLOGY } from '@/config/ecology-wording'
 import { FIELD_NARRATIVE } from '@/config/field-wording'
 import { MIDDLE } from '@/config/middle-wording'
 import { STUDIO_NARRATIVE } from '@/config/studio-wording'
@@ -354,8 +355,53 @@ export const NOTATION_REGISTER: readonly NotationEntry[] = [
       },
       {
         date: '2026-08-03',
-        note: 'The integrate gates run check, test and build but not drift-check, so a mirrored work can pass the gate and turn CI red afterwards, with no letter back to the practice. Should the gate and CI admit the same things?',
+        note: 'The integrate gates ran check, test and build but not drift-check, so a mirrored work could pass the gate and turn CI red afterwards with no letter back to the practice. Answered the same day: drift-check now runs first in every gate’s chain.',
         record: '.github/workflows/field-integrate.yml',
+      },
+    ],
+  },
+  {
+    id: 'three-cycles',
+    name: 'The three cycles',
+    figure: ['src/components/ecology/EcologyAnatomy.astro'],
+    notates:
+      'How a piece of research becomes public in each practice — one identical frame, three own vocabularies, so the difference a reader sees belongs to the practices and not to the layout.',
+    grammar: {
+      source: 'src/config/ecology-wording.ts',
+      lines: [
+        `work — ${ECOLOGY.cycles.keys.work}`,
+        `gate — ${ECOLOGY.cycles.keys.gate}`,
+        `human — ${ECOLOGY.cycles.keys.human}`,
+        `land — ${ECOLOGY.cycles.keys.land}`,
+        'column length — the number of steps a practice sets itself; the chains are deliberately unequal',
+      ],
+    },
+    derivation: {
+      model:
+        'The constitution’s §4 local sovereignty — a practice determines its own protocol — drawn as the shape of three chains rather than asserted under them',
+      record: 'docs/federated-research-ecology/01-CONSTITUTION-AND-RESEARCH-ECOLOGY.md',
+    },
+    changes: [
+      {
+        date: '2026-08-03',
+        note: 'First entry. Occasioned by the apparatus map showing wiring only — Frank: "so hat man immer noch kein holistische visualisierung von dem, was die research ecology ist und wie sie funktioniert". Every line it shows is quoted from a practice’s own mirrored constitution and checked against it.',
+        record: 'src/lib/ecology/anatomy.test.ts',
+      },
+    ],
+    validation: {
+      palette: 'ecology-voices',
+      tests: ['src/lib/ecology/anatomy.test.ts', 'src/lib/ecology/cycles.test.ts'],
+    },
+    openQuestions: [
+      {
+        date: '2026-08-03',
+        note: 'The atelier has no named cast while the other two do, and the figure shows the absence rather than filling it. Is that the practice’s form, or a gap in its protocol that its own next revision will close?',
+        record: 'src/content/atelier/PROTOCOL.md',
+      },
+      {
+        date: '2026-08-03',
+        note: 'One quote cannot be verified here: the ecology’s standing question about itself lives in the sibling repository and is labelled as external. Should the joint-inquiry protocol be mirrored the way the practices’ protocols are, so the Middle’s own text is checkable too?',
+        record: 'src/lib/ecology/anatomy.ts',
       },
     ],
   },
