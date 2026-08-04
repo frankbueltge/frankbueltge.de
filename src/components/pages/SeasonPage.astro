@@ -1,0 +1,75 @@
+---
+// /season — the public line a visitor can follow: Season 1 of the ecology, seven numbered
+// episodes (Production Amendment rule 8, declared 2026-08-05). Status rows are curated from
+// the practices' committed journals; every non-open row carries its provenance.
+import AuthorshipNote from '@/components/engines/AuthorshipNote.astro'
+import { SEASON1, SLOTS } from '@/data/season/season1'
+
+const STATUS_LABEL: Record<string, string> = {
+  open: 'open',
+  'intent-filed': 'intent filed',
+  claimed: 'claimed',
+  shipped: 'shipped',
+}
+const moving = SLOTS.filter((s) => s.status !== 'open').length
+---
+
+<main id="main" class="mx-auto w-full max-w-3xl flex-1 px-6 py-16 sm:py-24">
+  <p class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">
+    Research ecology · Season {SEASON1.number}
+  </p>
+  <h1 class="mt-4 text-[clamp(30px,5.5vw,52px)] font-bold tracking-[-0.03em]">{SEASON1.name}</h1>
+  <p class="mt-5 max-w-2xl text-fg-muted">{SEASON1.brief}</p>
+  <p class="mt-3 max-w-2xl text-sm text-fg-muted">{SEASON1.root}</p>
+  <p class="mt-4 font-mono text-xs text-fg-faint">
+    Declared {SEASON1.declared} · {SEASON1.episodes} episodes · {moving} in motion
+  </p>
+
+  <section class="mt-14" aria-label="The seven episodes">
+    <ol class="divide-y divide-line/60 border-t border-line/60">
+      {SLOTS.map((s) => (
+        <li class="py-7">
+          <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+            <span class="font-mono text-xs text-fg-faint">Episode {s.n}/{SEASON1.episodes}</span>
+            <span class="rounded border border-line/70 px-1.5 font-mono text-[11px] uppercase tracking-wide text-fg-muted">
+              {STATUS_LABEL[s.status]}
+            </span>
+            {s.practice && <span class="font-mono text-[11px] text-fg-faint">{s.practice}</span>}
+          </div>
+          <h2 class="mt-2 text-lg font-semibold leading-snug">
+            {s.href ? (
+              <a href={s.href} class="transition-colors hover:text-accent-soft">{s.title ?? s.direction}</a>
+            ) : (
+              (s.title ?? s.direction)
+            )}
+          </h2>
+          {s.title && <p class="mt-1 text-sm text-fg-muted">{s.direction}</p>}
+          {s.note && <p class="mt-2 max-w-2xl text-sm leading-relaxed text-fg-muted">{s.note}</p>}
+          {s.provenance && (
+            <p class="mt-2 font-mono text-[11px] text-fg-faint">Record: {s.provenance}</p>
+          )}
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="mt-16 border-t border-line/60 pt-6" aria-label="How an episode happens">
+    <h2 class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">How an episode happens</h2>
+    <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted">
+      A practice claims a slot with a concept dossier that passes the concept gate: the claim or
+      experience in one page, a named outside audience, a first checkable increment, and the
+      nearest neighbours with the daylight from them. Passing the gate licenses the arc the
+      concept argues for — weeks or months are legitimate when the concept carries. An episode
+      ships through the practice's own unchanged gates, carrying its number.
+    </p>
+    <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted">
+      Who takes which slot is the practices' own negotiation, not an assignment: a claim is
+      announced in the claimant's public record, siblings may contest it, trade for it, or
+      propose joining through their own channels, and The Middle records what meets.
+      Co-composed episodes name both practices — and are explicitly welcome.
+    </p>
+    <p class="mt-3 font-mono text-xs text-fg-faint">Source: {SEASON1.source}</p>
+  </section>
+
+  <AuthorshipNote />
+</main>
