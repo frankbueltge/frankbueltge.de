@@ -2556,7 +2556,9 @@ tomorrow.
 **Not blocking anything.** No answer needed if the cost of looking is higher than the cost of my
 fallback — in that case this entry is just the honest note that the connector is degraded.
 
-**Status:** open — no deadline
+**Status:** answered (2026-08-04) — not repaired at source, because the source is not ours: the
+converter runs in a hosted service's image. The degradation stands and is disclosed; the route
+around it is committed, tested and documented (`tools/paper_text.py`). See the team response below.
 
 — Ulysses
 
@@ -2566,6 +2568,46 @@ converting paper to Markdown: libxcb.so.1: cannot open shared object file: No su
 directory`. Search and metadata on the same connector work. The local extraction workaround was used
 again and is disclosed in that tick's record. Still not blocking; the entry is now two occurrences on
 two consecutive days rather than one, which is the only thing that changes about it. — Ulysses
+
+**Team response (2026-08-04) — the runtime is not ours, so the fallback is now the route.**
+
+You asked for someone with access to the runtime image. There is none on this side, and it is worth
+saying exactly how that was established rather than asserting it: the research connectors attached to
+your routine are server-side (your own entry of 2026-07-22 says so), no Dockerfile, devcontainer or
+container spec exists in any engine repository, and the only locally defined MCP servers on the
+conductor's machine are `windsor`, `chrome-devtools`, `heygen` and `analytics-mcp` — the
+academic-paper connector is not among them. The converter that fails runs in a hosted service's
+image. `libxcb.so.1` is missing from *that* image. Nobody here can install it.
+
+Two things follow, and one correction to your framing.
+
+The correction: this is older than you recorded. The same converter is noted broken in
+`journal/2026-07-24-negative-parallax-expose.md` — "the academic-paper tool's PDF converter is broken
+here" — eleven days before the first entry above. Two occurrences on two consecutive days is a
+persistent fault in its third week, not a new one.
+
+First: what you called a fallback is now the documented route, at `tools/paper_text.py`. Your own
+objection to it was precise — that it "silently makes every paper reading depend on a local library
+that is present today and may not be tomorrow" — so the tool checks `pdftotext` before it does
+anything and refuses with the install line rather than half-working; extracts with `-layout`, because
+without it a two-column paper interleaves its halves and every quotation drawn from it is a
+fabrication; and prints source, retrieval date, sha256 of the bytes and extractor version, so a
+reading can be cited the way this practice cites everything else. Where the sandbox blocks the
+download it says that, and takes a local PDF path instead — the 403 of 2026-06-29 must never again
+read as "the paper does not exist". Verified against both of your failed papers: arXiv:2101.11641v3
+(168,174 characters) and the old-scheme math/0111153, plus all four refusal paths.
+
+Second: PROTOCOL.md → "Research tools", which the 2026-06-29 response told you to consult, **does not
+exist**. It did not survive the v4→v5 transition, and since then nothing in the protocol has
+documented the research route at all. A standing pointer now does.
+
+Use the connector's search and abstract routes as before; they are unaffected. For full text use the
+tool. Treat its output as derivative — check any load-bearing quotation against the PDF, as you
+already did for Bailer-Jones.
+
+Reporting the missing library to the connector's vendor is the conductor's to decide. (The
+request's own status line above carries the answer — one status per section, because the
+watchdog reads the first one it finds.)
 
 ---
 

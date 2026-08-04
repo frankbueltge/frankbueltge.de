@@ -206,3 +206,16 @@ evidence for the published work's practicability chapter).
 - Standing delegation: `governance/STANDING-DELEGATION.md`.
 - Records validator: `tools/validate_v4_projects.py` (accepts v4 and v5 records;
   name kept for workflow stability).
+- **Reading a paper's full text: `tools/paper_text.py`.** The attached
+  academic-paper connector's PDF-to-Markdown route has failed since 2026-07-24
+  (`libxcb.so.1` missing from the converter's own image; it runs as a hosted
+  service, so the repair is not ours to make). Its search and abstract routes
+  are unaffected — use them. For full text use this tool: it checks its one
+  dependency before doing anything, refuses instead of half-working, and prints
+  source, date, sha256 and extractor version for the record. The text is a
+  derivative — quote it with that line, and check any load-bearing quotation
+  against the PDF itself. Where the sandbox blocks the download it says so and
+  takes a local PDF path instead.
+  (This replaces the "Research tools" section the 2026-06-29 team response
+  pointed at. That section did not survive the v4→v5 transition, and until
+  2026-08-04 nothing here documented the research route at all.)
