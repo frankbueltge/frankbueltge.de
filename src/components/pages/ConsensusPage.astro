@@ -1,8 +1,8 @@
 ---
-// Gegenmessung I — „The Consensus".
-// Misst orchestrierten Konsens: wie viel Nachrichten-„Konsens" eine Quelle ist, x-fach
-// kopiert. Daten: src/data/consensus/latest.json (GDELT, täglich; pipelines/consensus/).
-// Die Ironie steckt im Deadpan: 77 identische Blätter unter dem Etikett „unabhängig".
+// Counter-measurement I — "The Consensus".
+// Measures orchestrated consensus: how much news "consensus" is one source, copied
+// x-fold. Data: src/data/consensus/latest.json (GDELT, nightly; pipelines/consensus/).
+// The irony lives in the deadpan: 77 identical mastheads under the label "independent".
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import { t } from '@/i18n/ui'
 import type { Locale } from '@/lib/site'
@@ -27,7 +27,7 @@ const methodUrl = getRelativeLocaleUrl(locale, '/werke/consensus')
 const shownMastheads = h ? h.mastheads : []
 const moreCount = h ? Math.max(0, h.domain_count - shownMastheads.length) : 0
 
-// v3 — symbolische Klassifikation der Syndizierungs-Struktur (auditierbar).
+// v3 — symbolic classification of the syndication structure (auditable).
 const SYN: Record<string, { de: string; en: string }> = {
   'wire/chain syndication': {
     de: 'Ketten-Syndizierung — eine Verlagsgruppe, ein Push',
@@ -134,8 +134,11 @@ const syn = h?.syndication
         ? `Gescannt: ${d.stats.articles_scanned} Artikel über ${d.stats.domains_scanned} Domains (GDELT, ${d.stats.beats.length} Beats).`
         : `Scanned: ${d.stats.articles_scanned} articles across ${d.stats.domains_scanned} domains (GDELT, ${d.stats.beats.length} beats).`}
     </p>
-    <nav class="mt-2">
+    <nav class="mt-2 flex gap-4">
       <a href={methodUrl} class="font-mono text-xs text-fg-faint transition-colors hover:text-fg">{t(locale, 'prot.method')} →</a>
+      <a href="/consensus/archive" class="font-mono text-xs text-fg-faint transition-colors hover:text-fg">
+        {de ? 'Archiv — jeder committete Tag' : 'Archive — every committed day'} →
+      </a>
     </nav>
   </footer>
 </article>
