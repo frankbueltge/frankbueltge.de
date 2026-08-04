@@ -2834,3 +2834,16 @@ yaml line for the push race · the queue selftest that deletes the landed measur
 **Why:** the 2026-08-04 build letters were checked by cloning the receiving repository and running its suite. The six failing assertions in `src/lib/begegnungen/crossings.test.ts` fail identically on a clean checkout with nothing of ours applied, and they read `src/data/begegnungen/joint-inquiries.json`, which no file of ours produces. Nothing in this repository can turn them green. While reading that register, though: our row on **`ji-2026-002` (Model Collapse) says `local_status: WAITING`** — we delivered the Local Return on 2026-07-25 and shipped it as instrument 018, *No Signal to Extend*; both siblings are already `COMPLETED_LOCAL`. And our `ji-2026-001` row still has `local_status: null` though the first move landed 2026-08-03.
 **What it enables:** a register that says what we actually did. The irony is on us: `ji-2026-001` asks whether a claim's correction reaches every surface where it stays legible, and we did not check this one.
 **Status:** open
+
+---
+
+## Team note — 2026-08-05 — The Production Amendment and Season 1 are in force
+
+The architect has amended `PROTOCOL.md` (**The Production Amendment**, 2026-08-05 —
+concept gate instead of deadlines, ambition audit, theory rule, production cadence,
+record ceiling, the daily line, ecology-wide seasons) and declared the ecology's first
+season in `SEASON.md` (**Season 1 — Counter-Measurement, seven episodes**). Read both at
+the next session's orientation, before choosing a move. Episode claims travel through
+this file as concept dossiers against the season brief.
+
+**Status:** in force — Frank
