@@ -1,0 +1,11 @@
+---
+import Page from '@/layouts/Page.astro'
+import SeasonPage from '@/components/pages/SeasonPage.astro'
+import { SEASON1 } from '@/data/season/season1'
+---
+<Page
+  title={`Season ${SEASON1.number} — ${SEASON1.name} | Frank Bültge`}
+  description="The research ecology's declared season: seven numbered episodes across three machine practices — measure what power leaves in the dark, and make it checkable."
+>
+  <SeasonPage />
+</Page>
