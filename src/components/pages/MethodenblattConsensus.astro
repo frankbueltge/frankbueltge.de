@@ -26,8 +26,8 @@ const txt = {
     : 'Daily. The machine selects on its own: the phrase with the widest spread across distinct source domains is the "headline of the day". Canonical artefact: versioned JSON in src/data/consensus/ — git is the archive.',
   s3: de ? '3. Verarbeitung' : '3. Processing',
   s3body: de
-    ? 'Artikel poolen (Dedupe nach URL) → wortgleiche 6-Gramm-Phrasen je Titel über distinkte Domains zählen → die meist-replizierte ist die Schlagzeile. Echo-Index = Anteil der Titel, die zu einem ≥3-Domain-Echo gehören. Symbolische Provenienz: der früheste Zeitstempel markiert die Quell-Kandidatin und die Kaskade.'
-    : 'Pool articles (dedupe by URL) → count verbatim 6-gram title phrases across distinct domains → the most replicated is the headline. Echo index = share of titles belonging to a ≥3-domain echo. Symbolic provenance: the earliest timestamp marks the source candidate and the cascade.',
+    ? 'Artikel poolen (Dedupe nach URL) → wortgleiche 6-Gramm-Phrasen je Titel über distinkte Domains zählen → die meist-replizierte ist die Schlagzeile. Echo-Index = Anteil der Titel, die zu einem ≥3-Domain-Echo gehören. Symbolische Provenienz: der früheste Zeitstempel markiert die Quell-Kandidatin und die Kaskade. Beweis-Spur: je Domain wird der früheste Artikel-Link festgehalten — jedes Medium auf der Werkseite verlinkt auf den Artikel, der den Satz trug.'
+    : 'Pool articles (dedupe by URL) → count verbatim 6-gram title phrases across distinct domains → the most replicated is the headline. Echo index = share of titles belonging to a ≥3-domain echo. Symbolic provenance: the earliest timestamp marks the source candidate and the cascade. Evidence track: per domain the earliest article link is recorded — every outlet on the work page links to the article that carried the sentence.',
   aiHead: de ? 'KI/ML — gestaffelt, nachprüfbar' : 'AI/ML — staged, checkable',
   aiBody: de
     ? 'Das Lab experimentiert mit Daten UND KI. Umgesetzt: v1 wortgleiche Baseline; v2 TF-IDF/Cosinus fängt paraphrasierte Koordination (umformulierte Wire-Copy, die Verbatim verfehlt); v3 ein symbolischer, regelbasierter Klassifikator trennt aus der Graph-Struktur (TLD-Homogenität, Zeitfenster) Ketten-Syndizierung von verstreuter Platzierung — auditierbar, kein Black-Box-Modell. Optional/künftig: tiefe Embeddings und ein gegen den Graphen verifizierter LLM-Klassifikator (Prompt offengelegt). Bedingung immer: jeder KI-Schritt transparent, Output verifiziert oder als Schätzung markiert.'
@@ -54,8 +54,16 @@ const txt = {
     : 'Eight lightweight HTTP fetches per day, no API key, no LLM in v1. The site itself is static.',
   s6: de ? '6. Änderungsprotokoll' : '6. Change log',
   s6items: de
-    ? ['v1 (2026-06) — Erstfassung: wortgleiche Synchronität + Echo-Index + symbolische Provenienz.']
-    : ['v1 (2026-06) — first edition: verbatim synchronicity + echo index + symbolic provenance.'],
+    ? [
+        'v1 (2026-06) — Erstfassung: wortgleiche Synchronität + Echo-Index + symbolische Provenienz.',
+        'Archiv-Ansicht (2026-08-04) — /consensus/archive zeigt jeden committeten Tag; Ausfälle und Lücken bleiben sichtbar.',
+        'Beweis-Spur (2026-08-04) — je Medium wird der früheste Artikel-Link mit aufgezeichnet (ab 2026-08-05 im Archiv; frühere Tage werden nie rückgefüllt).',
+      ]
+    : [
+        'v1 (2026-06) — first edition: verbatim synchronicity + echo index + symbolic provenance.',
+        'Archive view (2026-08-04) — /consensus/archive renders every committed day; failures and gaps stay visible.',
+        'Evidence track (2026-08-04) — the earliest article link per outlet is recorded (in the archive from 2026-08-05 on; earlier days are never backfilled).',
+      ],
   toWork: de ? 'Zum Experiment' : 'To the experiment',
 }
 ---

@@ -16,6 +16,11 @@ Verfahren (deterministisch, kein LLM):
   5. Echo-Index = Anteil der Titel, die zu irgendeinem >=3-Domain-Echo-Cluster gehören.
 
 Output: src/data/consensus/latest.json (+ Archiv <datum>.json). Git ist das Archiv.
+
+Evidence track (2026-08-04): each story carries `articles` — per distinct domain the
+earliest article URL GDELT saw — so the site can link every masthead to the article
+that carried the sentence. Committed day files before 2026-08-05 predate this field
+and are never backfilled (archive files are immutable record).
 """
 import json
 import math
@@ -266,11 +271,28 @@ def analyse(articles: list[dict]) -> dict:
                     cascade.append({"at": sd.isoformat(timespec="minutes"), "domain": dom})
                 if len(cascade) >= 12:
                     break
+        # Evidence track (added 2026-08-04): one retrievable article URL per domain —
+        # the earliest GDELT saw — so every masthead chip on the site can link to the
+        # article that actually carried the sentence. Without this the claim
+        # "word-for-word across N outlets" was asserted, not checkable.
+        per_dom: dict[str, dict] = {}
+        for i in arts:
+            a = articles[i]
+            dom, art_url = a.get("domain", ""), a.get("url", "")
+            if not dom or not art_url:
+                continue
+            sd = parse_seen(a.get("seendate", ""))
+            at = sd.isoformat(timespec="minutes") if sd else ""
+            prev = per_dom.get(dom)
+            if prev is None or (at and (not prev["at"] or at < prev["at"])):
+                per_dom[dom] = {"domain": dom, "url": art_url, "at": at}
+        evidence = sorted(per_dom.values(), key=lambda e: (e["at"] or "9999", e["domain"]))[:40]
         return {
             "phrase": phrase,
             "sample_title": rep,
             "domain_count": len(doms),
             "mastheads": sorted(doms)[:40],
+            "articles": evidence,
             "article_count": len(arts),
             "first_domain": first_dom,
             "first_seen": first_at,
