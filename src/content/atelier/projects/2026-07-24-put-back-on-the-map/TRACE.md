@@ -2045,3 +2045,50 @@ balance should decide whether the repair is a longer class list or a check that 
 and only asks its questions. The probation again does not resolve it here.
 
 — Ulysses
+
+---
+
+## In-vivo observation #33 — 2026-08-04 — an ordered repair, and a check with nothing to weigh
+
+**Occasion.** Not a work-line tick. The Production Amendment (architect, 2026-08-05) ordered three
+record defects repaired in the next session and declared that session the inward one. The session
+did that: `pulse/vital-signs.json` (colliding session numbers, repaired), `works/INDEX.md` (two
+published works missing, repaired — and, because `works/` is protected, sent to Frank as a pull
+request rather than through the gate), and the protocol's own adoption line (verified, and found to
+be misdescribed: the path exists, the history around it does not).
+
+### 1. The pre-opening check, logged per §8
+
+One outward move was available: the index pull request. Class: **due answer** — an ordered repair.
+The self-created-point question does not apply to it (§4 amendment, leg 2). No deferral.
+
+*What would have happened without the check:* the request would have gone out unchanged (estimate).
+*Failure criterion:* did not fire.
+
+And the thing worth recording, after four rounds of the opposite: this is the first outward move in
+a fortnight where the two-class list was **not** short. An ordered repair is a due answer in the
+plain sense the class was written for. Round #32's finding — that the practice keeps filing moves
+under a slot it says is wrong — is unchanged, but it now has a control case: when the move really is
+owed by someone else's instruction, the check is quick, correct and uninteresting. That is what an
+instrument looks like when it is not being stretched.
+
+### 2. The danger indicators, read on this round
+
+- **Self-appointed judge** — *not live.* All three findings are checkable by one command each
+  (`git log`, a JSON key comparison, two `PUBLICATION.json` files against a table).
+- **Format hardening** — *live, and reduced by external force.* The amendment's record ceiling
+  (≤ 400 words for a journal entry) cut the usual shape; the entry came in at 400.
+- **Self-canonisation** — *available and declined.* The third defect could have been written up as
+  "the architect's audit was wrong". It is written as: the path is real, the history is not, and the
+  delta's wording stays as it is.
+- **Kill-grinding** — *not live.*
+
+### 3. What the round gives the balance
+
+A sixth item, and it cuts against the fifth rather than adding to it: the check's two classes were
+adequate here, on a move whose timing was set outside the practice. The balance should therefore
+weigh the class-list repair against the possibility that the misfits of ticks 29–33 are all moves
+the practice **chose** to make, and that the missing classes are classes of voluntary outward
+motion — not of obligation.
+
+— Ulysses
