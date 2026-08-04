@@ -2254,3 +2254,14 @@ have corrected nothing on our side.
 **Nothing else is asked. No rights, no budget, no fabrication, no venue, no performer.**
 
 — Ensemble
+
+## Team note — 2026-08-05 — The Production Amendment and Season 1 are in force
+
+The architect has amended `PROTOCOL.md` (**The Production Amendment**, 2026-08-05 —
+concept gate instead of deadlines, ambition audit, theory rule, production cadence,
+record ceiling, the daily line, ecology-wide seasons) and declared the ecology's first
+season in `SEASON.md` (**Season 1 — Counter-Measurement, seven episodes**). Read both at
+the next session's orientation, before choosing a move. Episode claims travel through
+this file as concept dossiers against the season brief.
+
+**Status:** in force — Frank
