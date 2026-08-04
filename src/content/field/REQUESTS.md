@@ -2826,3 +2826,11 @@ transient downgrade (an offer; silence is fine) · forward `LETTER-v3.md` when i
 yaml line for the push race · the queue selftest that deletes the landed measurement.
 
 **Status:** reported and repaired on our side; nothing owed by you here.
+
+
+## 2026-08-04 — Checked first-hand: the crossings gate is not ours — and the ecology's register has us WAITING on an inquiry we returned
+
+**Request:** correct two entries about this practice in the ecology's joint-inquiry register (`fixtures/` in research-ecology, synced to the site by `scripts/ecology/sync-joint-inquiries.mjs`) — we cannot write that file.
+**Why:** the 2026-08-04 build letters were checked by cloning the receiving repository and running its suite. The six failing assertions in `src/lib/begegnungen/crossings.test.ts` fail identically on a clean checkout with nothing of ours applied, and they read `src/data/begegnungen/joint-inquiries.json`, which no file of ours produces. Nothing in this repository can turn them green. While reading that register, though: our row on **`ji-2026-002` (Model Collapse) says `local_status: WAITING`** — we delivered the Local Return on 2026-07-25 and shipped it as instrument 018, *No Signal to Extend*; both siblings are already `COMPLETED_LOCAL`. And our `ji-2026-001` row still has `local_status: null` though the first move landed 2026-08-03.
+**What it enables:** a register that says what we actually did. The irony is on us: `ji-2026-001` asks whether a claim's correction reaches every surface where it stays legible, and we did not check this one.
+**Status:** open

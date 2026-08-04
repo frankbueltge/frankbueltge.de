@@ -11,12 +11,29 @@
 // (`data.json`, built by `build_data.py`); nothing is fetched, nothing is
 // random, no client-side computation.
 import data from './data.json'
+import second from './second-reader-2026-08-04.json'
 
 const RELATIONS = ['supports', 'contradicts', 'qualifies', 'contextualizes'] as const
 type Relation = (typeof RELATIONS)[number]
 
 const cases = data.cases
 const inPop = cases.filter((c) => c.in_population)
+
+// --- the 2026-08-04 correction, counted here for the same reason everything else on this
+// page is counted here: so the figure on the page cannot drift from the file it describes.
+// The published split is unchanged; these are what two independent blind readers returned.
+// `as const` on the pair: without it TypeScript widens the entry to (string | object)[]
+// and `new Map(...)` will not accept it. The build gate catches this; a shipped work of
+// this practice's already kept the whole ecology's gate red for days on exactly this kind
+// of type error, so it is fixed here rather than discovered there.
+const secondByCase = new Map(second.cases.map((c) => [c.case_id, c] as const))
+const readerPop = (who: 'R1' | 'R2') =>
+  cases.filter((c) => secondByCase.get(c.case_id)?.[who] === 'IN')
+const readerCtx = (who: 'R1' | 'R2', side: 'gold' | 'machine') =>
+  readerPop(who).filter((c) => c[side].relation === 'contextualizes').length
+const disputed = cases.filter(
+  (c) => c.in_population_status && c.in_population_status.startsWith('DISPUTED'),
+).length
 
 // The definitions come out of JSON as `{}`; name their shape once here rather
 // than casting at each use site.
@@ -65,6 +82,16 @@ const maxCell = Math.max(...Object.values(grid).flatMap((row) => Object.values(r
       the same sixty under the same definitions. This page seats you between them.
     </p>
     <blockquote class="claim">{data.claim}</blockquote>
+    <p class="correction">
+      <strong>Correction, 2026-08-04.</strong> The population this page computes its §2 figures
+      over — {inPop.length} of {cases.length} sources — <strong>was not reproduced</strong>. Two
+      readers who had never seen it re-made the judgement blind, from the same excerpts and the
+      same question, and each returned <strong>{readerPop('R1').length}</strong>. They agreed with
+      each other far more closely than either agreed with this split, and neither of them added a
+      single source this split excludes. The published numbers below are left exactly as they were
+      published; what changes is what may be concluded from them. Full record:{' '}
+      <code>CORRECTIONS.md</code>, entry 2026-08-04.
+    </p>
   </header>
 
   <section>
@@ -96,6 +123,20 @@ const maxCell = Math.max(...Object.values(grid).flatMap((row) => Object.values(r
       other {cases.length - inPop.length} are about reasoning, code, robotics, arithmetic, computer
       operation, fact-checking, negotiation and style; they are kept in the data and marked, not
       dropped.
+    </p>
+    <p class="correction">
+      <strong>And this is the number the 2026-08-04 correction lands on.</strong> Read blind, the
+      two independent readers put {readerPop('R1').length} and {readerPop('R2').length} sources in
+      this population, not {inPop.length}; {disputed} of the {cases.length} cases are disputed by
+      at least one of them, and every dispute runs the same way — this split including something
+      they would not. Recomputed on their narrower populations the gap does not close: the machine
+      still puts {readerCtx('R1', 'machine')} and {readerCtx('R2', 'machine')} sources in{' '}
+      <em>contextualizes</em> while the blind reader puts {readerCtx('R1', 'gold')} and{' '}
+      {readerCtx('R2', 'gold')} there. <strong>So the figure below is wrong; the finding it carries
+      is not.</strong> Whether the gap is genuinely <em>wider</em> on the narrower populations was
+      claimed here on 2026-08-04 and withdrawn the same day — the reviewers' own arithmetic put the
+      denominators at {readerCtx('R1', 'gold')} and {readerCtx('R2', 'gold')} cases and no
+      comparison reached significance. Each case's row marks its own status.
     </p>
 
     <div class="bars" role="img" aria-label={`Distribution of the ${inPop.length} in-population cases. Blind reader: ${RELATIONS.map((r) => `${r} ${goldIn[r]}`).join(', ')}. Machine reader: ${RELATIONS.map((r) => `${r} ${machineIn[r]}`).join(', ')}.`}>
@@ -162,6 +203,14 @@ const maxCell = Math.max(...Object.values(grid).flatMap((row) => Object.values(r
           <span class="num">{String(c.position).padStart(2, '0')}</span>
           {c.title}
           {!c.in_population && <span class="outpop" title={'Not in the claim’s population'}>outside the population</span>}
+          {c.in_population_status?.startsWith('DISPUTED') && (
+            <span
+              class="disputed"
+              title={`Blind re-reading 2026-08-04 — R1: ${secondByCase.get(c.case_id)?.R1}, R2: ${secondByCase.get(c.case_id)?.R2}`}
+            >
+              population disputed 2026-08-04
+            </span>
+          )}
         </h3>
         <p class="meta">
           arXiv <code>{c.arxiv}</code> · excerpt <code>{c.excerpt_sha256.slice(0, 19)}…</code>
@@ -402,6 +451,8 @@ const maxCell = Math.max(...Object.values(grid).flatMap((row) => Object.values(r
   .case { margin: 1.6rem 0; padding-top: 1.1rem; border-top: 1px dashed currentColor; }
   .num { display: inline-block; min-width: 2ch; opacity: .55; margin-right: .5rem; }
   .outpop { font-size: .68rem; border: 1px solid currentColor; padding: 0 .35rem; margin-left: .5rem; opacity: .75; white-space: nowrap; }
+  .disputed { font-size: .68rem; border: 1px dashed currentColor; padding: 0 .35rem; margin-left: .5rem; white-space: nowrap; color: var(--contradicts); }
+  .correction { margin: 1.1rem 0; padding: .8rem 1rem; border: 1px dashed currentColor; font-size: .84rem; }
   .excerpt { margin: .7rem 0; padding: .7rem .9rem; border-left: 2px solid currentColor; font-size: .84rem; }
   details summary { cursor: pointer; font-size: .82rem; padding: .35rem 0; }
   .verdicts { display: grid; gap: .9rem; margin-top: .6rem; }
