@@ -2,6 +2,7 @@
 import { describe, it, expect } from 'vitest'
 import {
   HOLDINGS_EXCLUDED_IDS,
+  HOLDINGS_RANKED,
   WERKE,
   WERKE_CHRONO,
   WERKE_EXPERIMENTE,
@@ -51,10 +52,16 @@ describe('WERKE_HOLDINGS (/holdings register)', () => {
       expect(WERKE_HOLDINGS.map((w) => w.id)).not.toContain(id)
     }
   })
-  it('keeps every non-excluded entry, in chronological order', () => {
-    expect(WERKE_HOLDINGS.map((w) => w.id)).toEqual(
-      WERKE_CHRONO.filter((w) => !HOLDINGS_EXCLUDED_IDS.has(w.id)).map((w) => w.id),
-    )
+  it('renders the curated strength ranking, The Consensus first and Iceberg Theory second (Frank, 2026-08-05)', () => {
+    expect(WERKE_HOLDINGS[0].id).toBe('consensus')
+    expect(WERKE_HOLDINGS[1].id).toBe('parallaxe')
+    expect(WERKE_HOLDINGS.map((w) => w.id)).toEqual([...HOLDINGS_RANKED])
+  })
+  it('keeps every non-excluded entry — ranked and register agree on the set', () => {
+    const ranked = new Set(WERKE_HOLDINGS.map((w) => w.id))
+    const expected = WERKE_CHRONO.filter((w) => !HOLDINGS_EXCLUDED_IDS.has(w.id)).map((w) => w.id)
+    expect(ranked.size).toBe(WERKE_HOLDINGS.length)
+    for (const id of expected) expect(ranked.has(id)).toBe(true)
     expect(WERKE_HOLDINGS.length).toBe(WERKE_CHRONO.length - HOLDINGS_EXCLUDED_IDS.size)
   })
   it('every excluded id actually exists in the register (no dead exclusions)', () => {
@@ -64,13 +71,8 @@ describe('WERKE_HOLDINGS (/holdings register)', () => {
 })
 
 describe('tier split (Experimente vs. Studien)', () => {
-  it('lists the four studies, newest first', () => {
-    expect(WERKE_STUDIEN.map((w) => w.id)).toEqual([
-      'ghost-fleet',
-      'consensus',
-      'correction',
-      'ueberflug',
-    ])
+  it('lists the three studies, newest first (The Consensus rejoined the experiments row, Frank 2026-08-05)', () => {
+    expect(WERKE_STUDIEN.map((w) => w.id)).toEqual(['ghost-fleet', 'correction', 'ueberflug'])
   })
   it('keeps studies out of the experiments list', () => {
     for (const w of WERKE_EXPERIMENTE) expect(w.tier).not.toBe('studie')

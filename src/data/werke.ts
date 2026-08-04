@@ -261,7 +261,9 @@ export const WERKE: Werk[] = [
       de: 'Aus der Linie „Gegenmessung". Jeden Tag wählt eine Maschine den Satz, den die meisten „unabhängigen" Medien wortgleich brachten, zeigt Quelle und Kaskade und rechnet, wie viel des Nachrichten-Konsenses Echo statt Recherche ist.',
       en: 'From the “Counter-Measurement” line. Each day a machine picks the sentence the most “independent” outlets ran word-for-word, shows source and cascade, and computes how much of the news consensus is echo rather than reporting.',
     },
-    tier: 'studie',
+    // Back in the experiments row (Frank, 2026-08-05): ranked first on /holdings; the
+    // 44-day committed archive and the evidence track ended its 'studie' demotion.
+    tier: 'experiment',
   },
   {
     id: 'correction',
@@ -327,8 +329,39 @@ export const HOLDINGS_EXCLUDED_IDS: ReadonlySet<string> = new Set([
   'on-record',
 ])
 
-/** What /holdings actually renders: the chronological register minus the exclusions above. */
-export const WERKE_HOLDINGS: Werk[] = WERKE_CHRONO.filter((w) => !HOLDINGS_EXCLUDED_IDS.has(w.id))
+/** Curated order for /holdings (Frank, 2026-08-05): ranked by strength/impact of the
+ *  experiment, not by launch date. The Consensus first and Iceberg Theory second are
+ *  Frank's calls; the rest is ranked by outward stakes a stranger recognizes plus
+ *  checkability of the figure. Reordering is one edit here. */
+export const HOLDINGS_RANKED: readonly string[] = [
+  'consensus',
+  'parallaxe',
+  'protokoll',
+  'praemie',
+  'redaction',
+  'ghost-fleet',
+  'spielraum',
+  'round-number',
+  'tell',
+  'beifang',
+  'correction',
+  'pattern',
+  'ueberflug',
+]
+
+/** What /holdings actually renders: the curated ranking above — validated loudly, so a new
+ *  werk cannot slip in unranked and a stale ranking cannot survive a rename. */
+export const WERKE_HOLDINGS: Werk[] = HOLDINGS_RANKED.map((id) => {
+  const w = WERKE.find((x) => x.id === id)
+  if (!w) throw new Error(`holdings ranking names unknown werk "${id}"`)
+  if (HOLDINGS_EXCLUDED_IDS.has(id)) throw new Error(`holdings ranking lists excluded werk "${id}"`)
+  return w
+})
+for (const w of WERKE) {
+  if (!HOLDINGS_EXCLUDED_IDS.has(w.id) && !HOLDINGS_RANKED.includes(w.id)) {
+    throw new Error(`werk "${w.id}" is neither ranked for /holdings nor excluded`)
+  }
+}
 
 // Überflug wurde am 2026-06-12 aus der Reihe der Experimente genommen (keine These,
 // keine Akkumulation) und lebt als Studie im Lab weiter:
