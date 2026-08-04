@@ -9,11 +9,19 @@ export interface Syndication {
   tld_share: number
   distinct_tlds: number
 }
+/** One retrievable article per domain — the evidence that the outlet ran the sentence.
+ *  Recorded by the pipeline from 2026-08-05 on; earlier committed days lack it. */
+export interface EvidenceArticle {
+  domain: string
+  url: string
+  at: string
+}
 export interface ConsensusStory {
   phrase: string
   sample_title: string
   domain_count: number
   mastheads: string[]
+  articles?: EvidenceArticle[]
   article_count: number
   first_domain: string
   first_seen: string
