@@ -404,7 +404,17 @@ describe('the record’s own emphasis is rendered, not printed as syntax', () =>
     for (const d of real) {
       for (const m of d.moves) {
         if (!m.text) continue
-        const plain = m.text.replace(/\*\*|`/g, '').replace(/(^|[\s(“"—–-])\*([^*\n]+)\*/g, '$1$2')
+        // The emphasis patterns below are renderInline's own, marker-stripping instead of
+        // tag-wrapping — including its flanking rule (a span may not open or close on
+        // whitespace). An earlier copy here omitted that rule, and on 2026-08-04 a dossier
+        // wrote `COUNT(*)` before an italic journal name: without flanking, one match ran
+        // from the literal asterisk all the way to the italic's opening one, swallowing
+        // both. renderInline was right; its understudy was not. If those patterns change,
+        // change them here in the same commit.
+        const plain = m.text
+          .replace(/\*\*|`/g, '')
+          .replace(/(^|[\s(“"—–-])\*([^*\s][^*\n]*?[^*\s]|[^*\s])\*/g, '$1$2')
+          .replace(/(^|[\s(“"—–])_([^_\s][^_\n]*?[^_\s]|[^_\s])_/g, '$1$2')
         expect(strip(renderInline(m.text))).toBe(plain)
       }
     }
