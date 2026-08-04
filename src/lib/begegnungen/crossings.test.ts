@@ -120,7 +120,14 @@ describe('encounterSlug', () => {
 })
 
 describe('buildJointInquiry against the committed register', () => {
-  const ji = buildJointInquiry(inquiriesJson[0])!
+  // Named, never positional. This block reads ONE inquiry's own content — three voices, the
+  // model-collapse question — so it must name the inquiry it means. `inquiriesJson[0]` said
+  // "whichever record happens to be first", and on 2026-08-04 that stopped being ji-2026-002:
+  // ji-2026-001 landed FORMING with a single voice and took index 0, which turned all four
+  // integrate gates red and stopped every practice publishing. Same disease as a pinned
+  // count, one indirection up — a position is an assumption about data that keeps arriving.
+  const record = inquiriesJson.find((j) => j.inquiry_id === 'ji-2026-002')!
+  const ji = buildJointInquiry(record)!
 
   it('builds a crossing at all', () => {
     expect(ji).not.toBeNull()
@@ -134,7 +141,7 @@ describe('buildJointInquiry against the committed register', () => {
   })
 
   it('quotes the shared question verbatim, beside the path it was read from', () => {
-    expect(ji.question?.text).toBe(inquiriesJson[0].public_summary)
+    expect(ji.question?.text).toBe(record.public_summary)
     expect(ji.question?.source).toBe('src/data/begegnungen/joint-inquiries.json')
   })
 
@@ -162,8 +169,11 @@ describe('buildJointInquiry against the committed register', () => {
 })
 
 describe('buildEncounter against the committed register', () => {
-  const withLedger = buildEncounter(registerJson[4], enc005)!
-  const withoutLedger = buildEncounter(registerJson[2])!
+  // Named for the same reason as the inquiry above: the register only appends today, so
+  // [4] and [2] happen to resolve — but "happens to resolve" is what broke on 2026-08-04.
+  const byId = (n: string) => registerJson.find((e) => e.encounter_id.startsWith(n))!
+  const withLedger = buildEncounter(byId('enc-2026-005'), enc005)!
+  const withoutLedger = buildEncounter(byId('enc-2026-003'))!
 
   it('reads the encounter with a ledger export as a dated chronology, verbatim', () => {
     expect(withLedger.id).toBe('enc-2026-005-atlas-lent-not-lifted')
@@ -177,13 +187,13 @@ describe('buildEncounter against the committed register', () => {
   })
 
   it('carries the ledger’s standing obligations as rows of their own rule, undated on purpose', () => {
-    const obligations = buildEncounter(registerJson[0], enc001)!.rows.filter((r) => r.by === 'ledger-obligation')
+    const obligations = buildEncounter(byId('enc-2026-001'), enc001)!.rows.filter((r) => r.by === 'ledger-obligation')
     expect(obligations.length).toBeGreaterThan(0)
     expect(obligations.every((r) => r.date === null)).toBe(true)
   })
 
   it('keeps the ledger’s documented non-relation — a silence the record designed, not a gap', () => {
-    const enc1 = buildEncounter(registerJson[0], enc001)!
+    const enc1 = buildEncounter(byId('enc-2026-001'), enc001)!
     expect(enc1.nonParticipation.length).toBeGreaterThan(0)
     expect(enc1.nonParticipation[0].voice).toBe('ulysses')
     expect(enc1.nonParticipation[0].note).toContain('non-relation')
@@ -197,7 +207,7 @@ describe('buildEncounter against the committed register', () => {
   })
 
   it('reads the register’s status in both shapes it has had, and calls a null status unstated', () => {
-    const enc1 = buildEncounter(registerJson[0], enc001)!
+    const enc1 = buildEncounter(byId('enc-2026-001'), enc001)!
     expect(enc1.standing).toBe('unstated')
     expect(enc1.status).toBeNull()
     expect(withLedger.status?.text).toContain('open/standing')
@@ -231,10 +241,24 @@ describe('buildCrossings over everything committed today', () => {
     expect(crossings.filter((c) => c.kind === 'encounter')).toHaveLength(registerJson.length)
   })
 
-  it('leads with the running joint inquiry — the thing the practices are doing together now', () => {
+  it('leads with what is open and moved most recently — the rule, not a pinned id', () => {
+    // `ji-2026-002` was pinned here until 2026-08-04, when a newer open encounter legitimately
+    // took the lead and the assertion called the sort rule a regression. What the page owes
+    // its reader is the rule sortCrossings documents, so that is what is checked.
     const lead = leadCrossing(crossings)!
-    expect(lead.kind).toBe('joint-inquiry')
-    expect(lead.id).toBe('ji-2026-002')
+    const open = crossings.filter((c) => c.standing === 'open')
+
+    if (open.length > 0) {
+      expect(lead.standing).toBe('open')
+      // Nothing still open has moved more recently than the crossing that leads.
+      for (const c of open) expect((c.lastMove ?? '') <= (lead.lastMove ?? '')).toBe(true)
+      // At an equal newest date the shared question leads its context.
+      const newest = open.filter((c) => (c.lastMove ?? '') === (lead.lastMove ?? ''))
+      if (newest.some((c) => c.kind === 'joint-inquiry')) expect(lead.kind).toBe('joint-inquiry')
+    } else {
+      // Where nothing is open, the newest crossing of any standing leads — still honest.
+      for (const c of crossings) expect((c.lastMove ?? '') <= (lead.lastMove ?? '')).toBe(true)
+    }
   })
 
   it('gives every crossing a unique anchor, so a deep link means one thing', () => {
