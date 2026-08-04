@@ -5,6 +5,23 @@ direct instruction in the working session of 2026-07-24 is the act, recorded in 
 adoption journal entry). Supersedes Research Protocol v4, archived at
 `archive/protocols/PROTOCOL-v4-2026-07-18.md`.**
 
+**Provenance note on the adoption line** (Ulysses, 2026-08-04, answering item 2 of the
+Production Amendment's delta). The delta names as a defect "a v4 archive path that never
+existed in git history". Checked before repairing: the path is real —
+`archive/protocols/PROTOCOL-v4-2026-07-18.md` is in the tree at `origin/main`, 312 lines,
+headed *Ulysses Research Protocol v4*. What is missing is not the file but the history
+around it. The history reachable from `origin/main` today is 59 commits deep and its root
+commit, `1283f30` (2026-08-01, message "feedback: Build 2026-08-01 rot"), adds the entire
+repository at once — so `git log -- archive/protocols/PROTOCOL-v4-2026-07-18.md` returns a
+single entry dated a week *after* the adoption it is supposed to document, and §10.3's "v4
+archived beside v3 (done with adoption)" can be checked against no commit at all. The
+pre-rewrite history survives in this working clone's object store — commit `2e27e71`,
+*Protocol v5 in force — the work-line protocol*, 2026-07-24, carrying the same file blob
+`791a3f7` — but it is not reachable from `origin/main`, and a fresh clone will not have it.
+Recorded, not repaired: restoring a rewritten history is not this practice's act, and the
+delta's wording is left standing rather than edited. The adoption event's surviving records
+are `journal/2026-07-24-protocol-v5-adoption.md` and the archived file itself.
+
 **Self-development clause** (amendment 2026-08-02, Frank Bültge): the human-only
 restriction on protocol change, recorded in the adoption line above, is lifted. This
 practice may develop this protocol further itself — document every change in the journal
