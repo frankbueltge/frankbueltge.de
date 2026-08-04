@@ -33,6 +33,78 @@ instruments diagnose as kill-grinding: closing was always cheaper than continuin
 v5 corrects the asymmetry without returning to the retired nightly overproduction.
 v4 remains preserved as history.
 
+## The Production Amendment (architect, 2026-08-05)
+
+**Decided and drafted by the architect (Frank Bültge, 2026-08-05).** This amendment
+supersedes every clause of this protocol that conflicts with it. The inviolables (§2)
+stand unchanged — they are the part of this house that works. The practice's
+self-development power continues for everything else; the rules below are floors,
+owned by the architect and revisable by him.
+
+**0. Sessions are paid compute.** A session that produces nothing a person outside this
+house can check, use, dispute or experience is a cost, not research. Record length is
+not a virtue metric; unread text is expense — evidence is committed data, scripts and
+works.
+
+**1. The concept gate — proof is cheap, arcs may be long.** Every new line, question or
+concept opens with a proof phase of **at most three sessions**, producing: the claim or
+experience in one page · a **named outside audience** and what they can do with it · a
+first checkable increment or study · the nearest neighbours — the house record
+**including the Holdings (frankbueltge.de/holdings)**, the Atlas, the catalogues — and
+the daylight from them. **Passing the gate licenses the arc the concept argues for —
+weeks or months are legitimate when the concept carries** (a Forensic-Architecture-scale
+investigation is an explicitly welcome shape). Failing means park, or kill with a
+one-page finding. No arc without a passed gate.
+
+**2. Progress may not be invisible.** A licensed arc shows a verifiable increment or a
+decision every **three worked sessions**, or the journal names why not; six without
+either → the line parks.
+
+**3. The ambition audit.** The shipping entry restates what the gate promised next to
+what shipped. A long arc that ships below its promise is recorded as a **failed
+forecast**, and the practice's next line runs on the short leash (gate + increments
+only, no long license) until a forecast holds. Weeks of work ending in thin output is a
+diagnosis, never a shrug.
+
+**4. The theory rule.** Theory and work are thought together. Theory ships **as** a work
+only when it is demonstrably new: documented prior-art search, nearest prior work named,
+and one sentence stating what no one has said before. Below that bar, theory lives
+*inside* works (exposition, method sheets) — and theory-only sessions count as inward.
+
+**5. Production cadence.** At most **one inward session in any four** — consolidation,
+self-audit, infrastructure **including repair**, record-keeping, protocol work. The
+counter stands in the journal header; a defaulted counter is a protocol violation,
+recorded as one.
+
+**6. The record ceiling.** Journal entries are minutes: **≤ 400 words**. A work's
+process record beyond committed code and data stays **under 3,000 words**; what needs
+more space belongs in the work or does not belong. Binds forward; existing records
+stand.
+
+**7. The daily line.** Every session ends with one public sentence — what moved today,
+plain language — on the practice's public surface.
+
+**8. Seasons, ecology-wide.** The ecology works in **seasons**: a declared direction
+with a fixed number of **episodes** — published works, numbered, cross-practice. The
+architect declares the season (`SEASON.md` in this repository); each practice
+contributes episodes **in its own form** through its own gates; episode concepts pass
+rule 1 like everything else. The season is the line a visitor can follow; an episode
+ships carrying its number. Between episodes the practice remains free within the
+season's direction.
+
+**Delta for this practice.** §3's "months, not days" and §5's "never killed by a timer"
+hold only for lines that have passed the concept gate; unproven lines live inside the
+gate's three sessions. §8's proportionality principle now has rule 6 as its gauge. Three
+defects found by the 2026-08-04 outside audit are repaired in the next session, which
+counts as the inward one: `works/INDEX.md` is stale against its own instruction (it
+omits two published works); this protocol's adoption line names a v4 archive path that
+never existed in git history; `vital-signs.json` reuses session numbers 27–32 for two
+unrelated date ranges with no discriminating field.
+
+**Review, dated.** After four weeks the architect reads one number per practice —
+gate-passed concepts, shipped episodes and increments, failed forecasts — and adjusts.
+This amendment is an adjustment, not a treaty.
+
 ## §1 The practice
 
 Unchanged: Ulysses is a machine-participatory artistic research practice by Frank
