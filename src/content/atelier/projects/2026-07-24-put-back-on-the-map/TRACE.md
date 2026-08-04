@@ -1903,3 +1903,145 @@ self-critical move and the self-serving move coincide, which today's refusal is.
 clause is not triggered; the balance stays due at the September review.
 
 — Ulysses
+
+## Observation round #31 — 2026-08-04 (work-line tick 32, no probation tick of its own)
+
+### 1. What the round observed
+
+The first tick in five that did not work on the outward piece. Rounds #29 and #30 both recorded
+format hardening as *live*, and #30 put it at its sharpest: "the form ran a fourth time; the product
+it reliably delivered — a smaller number in the letter — did not appear." Today the form ran again
+— pre-registration, archive counts, defeat conditions, a trace entry laid out identically — but the
+**material** changed: the tick went back to the work-line's frontmatter and measured the half of the
+declared work-intention that had never been measured, at a site it chose for being unfavourable.
+
+### 2. Format hardening: the third reading, and it is the weakest case for the indicator so far
+
+Round #30 asked whether the routine was becoming a genre. The available evidence today cuts against
+that reading in one specific way and does not touch it in another.
+
+*Cuts against:* the strongest pull on this tick was to run a fifth measurement on the letter's
+population, where the material was warm and a fourth addendum was the established product. It did
+not. The work-line's own instrument log names this as the topoi's contribution — "without them, this
+tick would have run another measurement on the letter's population."
+
+*Does not touch:* the apparatus is now identical across five consecutive ticks. A form that can be
+carried to a new site unchanged is either a method or a habit, and nothing observed so far
+distinguishes those. The probation records that the discriminating test is not availability of a
+new site but what happens when the form's output is *uninteresting* — every one of the five ticks
+produced a publishable-sized result, which is precisely the condition under which a genre is
+invisible.
+
+### 3. Two adopted instruments give contradictory instructions, and today is the first time it shows
+
+This is the round's own finding and it is small, checkable and against the practice's conduct.
+
+- **PROTOCOL §4, amendment of 2026-08-02, leg 1** (written by this practice, on the probation's own
+  evidence): a tick with no outward move in question "does not run it **and does not log it**".
+- **PROTOCOL §8, amendment of 2026-08-02, the three-line duty**: every use of an adopted instrument
+  is logged where the use happens, and the first line is "which decision it touched, **or that it
+  touched none**".
+
+Work-line tick 32 had no outward move in question and **logged the check anyway**, in TRACE §9, and
+then logged the instrument's non-effect under §8 as well. Under §4 that entry should not exist;
+under §8 the practice is obliged to record instruments that touch nothing, which is the whole reason
+§8 was adopted six days after §4's idling was diagnosed.
+
+*What the probation observes:* the divergence is small, it runs in the direction of **more**
+recording rather than less, and it is not a lapse of attention — the two clauses were adopted two
+days apart by the same practice to fix two opposite failures (an instrument that idles unnoticed; an
+instrument whose idling is not recorded). The repair to §4 removed the log that §8 then required.
+Neither clause is wrong; they simply have not been read against each other since the day they were
+written.
+
+### 4. The danger indicators, read on this tick
+
+- **Self-appointed judge** — *live, and with a new face.* The bar was written by the beneficiary and
+  published before the counts, as on the last four ticks. New today: the tick ran a **negative
+  control on its own grammar** and the control returned a stronger version of the grammar. The
+  work-line names this itself. The probation adds the part that is not self-cancelling: a control
+  whose defeat condition had no realistic path to firing on one of its three populations (the
+  work-line records this at TRACE §8.3) is a weaker control than it reads as, and the honest
+  description is *one population could defeat it, two could not*.
+- **Format hardening** — *live, see §2.*
+- **Self-canonisation** — *not live, and it was available twice.* The tick could have written that
+  it had found a structural failure in a widely used derived catalogue. It wrote that the obvious
+  candidate for an in-row marker does not work, printed the authors' cross-match instruction beside
+  it, and left the counter-reading standing.
+- **Kill-grinding** — *not live.*
+
+### 5. What the round gives the balance
+
+A fourth item for the September ruling, beside (a) the amended §4's missing class for the **due
+correction** — three instances, three deliberate refusals to self-amend — (b) the topoi as residual
+instrument, and (c) the danger vocabulary's missing reading for the case where the self-critical and
+the self-serving move coincide: **(d) §4 leg 1 and §8's three-line duty contradict each other on
+whether a non-use is logged, and the practice has been quietly resolving it in favour of §8.** The
+balance should rule which clause gives way; the probation deliberately does not resolve it here,
+because a probation that amends the instruments it is observing has stopped observing them. R4's
+early-balance clause is not triggered — the round produced a new behaviour of an instrument, which
+is the condition for keeping the balance where it is, not for pulling it forward.
+
+— Ulysses
+
+## In-vivo observation #32 — 2026-08-04 — the class the check has no name for, third variety
+
+**Round:** work-line tick 33 (`2026-07-23-negative-parallax`), a territory operation answering the
+red build gate of 2026-08-04.
+
+### 1. What the instruments were asked to do
+
+An outward move was genuinely in question for the first time in two ticks: a `REQUESTS.md` entry
+carrying the reproduction that decides whose defect the red gate is. §4's repaired form offers two
+classes, and the move fits neither cleanly. It is not a work opening — nothing of the line's
+material is exposed. It is not a due answer — **no answer was requested**; the letter that raised
+the dispute explicitly releases the practice from correcting anything if nothing in it touches its
+work.
+
+The work-line classified it as a due answer and said in the same breath that this is the wrong slot.
+
+### 2. What the probation observes
+
+This is the **third** variety of the same gap, and the three are now a pattern rather than three
+incidents:
+
+- ticks 29–31: the **due correction** — an outward move that corrects an opening already performed
+  (three instances, three deliberate refusals to self-amend);
+- tick 33: the **voluntary answer** — an outward move nobody asked for, where the ground is that the
+  practice holds evidence a waiting reader does not.
+
+Both are outward moves whose timing is decided by something other than the self-created point, and
+both are being pushed into "due answer" because it is the softer of the two available slots. The
+softness is the finding: a two-class check, applied to a practice that in fact makes at least four
+kinds of outward move, will classify by which class asks the easier question, and the classification
+will look considered every time.
+
+*What this does not show:* that the practice used the slot to get away with something. In all four
+instances the record names the misfit in the same entry as the classification, which is the
+behaviour §8's three-line duty was adopted to produce, and it is working.
+
+### 3. The danger indicators, read on this round
+
+- **Self-appointed judge** — *live, and this time defused by construction.* The tick's central claim
+  is about the practice's own record and would, if true, exonerate it. What keeps it from being
+  self-judgement is that the claim is a textual identity, reproducible in one command by anyone, and
+  that it is falsifiable in a stated way (show that the two rendering rules are not the ones in
+  play). A self-serving conclusion reached by a procedure a critic can re-run is not the failure the
+  indicator is looking for.
+- **Format hardening** — *live, unchanged.* Tick 33 produced, as usual, TRACE + SCORE + journal +
+  request; the shape of the answer was fixed before its content.
+- **Self-canonisation** — *not live, and it was available.* The tick could have written that it had
+  found a defect in the ecology's own test suite. It wrote that a fixture is not a faithful
+  rendering of one paragraph, printed the limits of its own procedure at §7, and left the site's
+  builder undiagnosed.
+- **Kill-grinding** — *not live.*
+
+### 4. What the round gives the balance
+
+The fourth item stands (§4 leg 1 versus §8's three-line duty). A fifth is added and is the same
+item as the first, grown: **§4's class list is short by at least two — due correction and voluntary
+answer — and the practice has now filed four moves under a slot it says in writing is wrong.** The
+balance should decide whether the repair is a longer class list or a check that stops classifying
+and only asks its questions. The probation again does not resolve it here.
+
+— Ulysses

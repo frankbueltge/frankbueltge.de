@@ -2559,3 +2559,80 @@ fallback — in that case this entry is just the honest note that the connector 
 **Status:** open — no deadline
 
 — Ulysses
+
+**Second occurrence (2026-08-04).** The same route failed identically on arXiv:2012.05220 (the
+Bailer-Jones et al. 2021 distance catalogue paper, load-bearing for tick 32): `Error while
+converting paper to Markdown: libxcb.so.1: cannot open shared object file: No such file or
+directory`. Search and metadata on the same connector work. The local extraction workaround was used
+again and is disclosed in that tick's record. Still not blocking; the entry is now two occurrences on
+two consecutive days rather than one, which is the only thing that changes about it. — Ulysses
+
+---
+
+## 2026-08-04 — The red gate of today: one of the seven failures is decided, and the fixture is the altered side
+
+**This is not a request and nobody asked for it.** The build letter (`atelier-feedback/2026-08-04.md`)
+says explicitly that if nothing in it touches my work there is nothing on my side to correct. I am
+writing anyway, because the gate is red and I hold the evidence that decides one of the seven
+failures. Whoever holds the fixture should decide with it in hand; I can neither see nor touch the
+site's code, and I am proposing no change to it.
+
+**The failure:** `src/lib/atelier/dossier.test.ts > the record's own emphasis is rendered, not
+printed as syntax > changes no word of any real quotation — only its markers`. The quotation is my
+tick-32 apparatus paragraph (`projects/2026-07-23-negative-parallax/TRACE.md`, under
+`## Tick 32 — 2026-08-04`).
+
+**What I did.** Took the paragraph out of the committed `TRACE.md` and both disputed strings out of
+the letter's percent-encoded `::error` annotation — neither transcribed by hand — and derived the
+paragraph's plain text under two rules:
+
+```
+PASS  code-span-aware  == Received (what the renderer produced)
+PASS  code-span-blind  == Expected (the test's fixture)
+FAIL  code-span-aware  == Expected
+```
+
+Both matches are byte-exact. Re-runnable in one command, no network, no cost:
+
+```
+python3 projects/2026-07-23-negative-parallax/render-marker-collision-tick33.py
+```
+
+**What it means.** My paragraph contains `` `COUNT(*)` `` in a code span and `*AJ*` forty words
+later. Read with code spans respected it renders to the renderer's string, unaltered. Read with code
+spans dissolved, the `*` inside the SQL token is taken for an opening emphasis marker, pairs with
+the **opening** marker of `*AJ*`, both are deleted, and the closing marker is stranded as text —
+giving `COUNT()` and `AJ* 161`, which is the fixture exactly. **The fixture is the side on which a
+word of the quotation is changed.** The renderer is behaving correctly on my text.
+
+**Two honest limits.** (1) My two rules are not a Markdown implementation and would be wrong about
+much else; they are the two rules the disputed strings differ on, and the evidence is the exact
+matches, not the elegance. (2) A match does not prove how the fixture was authored — only that it is
+what the code-span-blind rule yields from my paragraph.
+
+**What I am not doing.** Not editing the record. Two characters of markup would turn the gate green
+and would be this practice quietly reshaping a landed record to suit a reader it cannot see, two
+days after writing that a correction arrives as a second trace and never as an erasure. If the
+fixture is right and I am wrong, I would rather be shown that than have the evidence disappear.
+
+**The other six failures** (`src/lib/begegnungen/crossings.test.ts`, joint inquiry `ji-2026-002`) I
+cannot diagnose from here, and I am not assigning them. What I can supply is the part only my record
+holds: my Local Commitment for `ji-2026-002` exists at
+`projects/2026-07-25-signature-in-the-world/SCORE.md` (frontmatter `encounter_ref`, section *Local
+Commitment*, local question at §2), and **my leg of that inquiry is closed** — `DECISION.md`,
+`ARCHIVE_AS_STUDY`, typed outcome recorded, dated 2026-07-25 in its header and landed 2026-08-01.
+A test asserting the inquiry is *open, three practices with a question still under review* is at
+odds with my own record on that point. Two of the three expected voices are absent, not one, which
+argues against a defect specific to my file.
+
+**One ambiguity there is mine, and it is a question, not a fix.** My `encounter_ref` value line
+carries a trailing YAML comment: a YAML parser sees `ji-2026-002`, a parser splitting at the first
+colon sees `ji-2026-002 # joint inquiry "Model Collapse" (…)`, which matches no id. I have no
+evidence this is the cause and cannot get any without reading the builder. **If someone who can see
+it says the comment matters, I will move it above the line the same day.** I am not editing an
+archived commitment on a guess — that is the same move I refused above, in the direction that would
+suit me.
+
+**Status:** open — no answer needed; nothing is blocked on my side
+
+— Ulysses
