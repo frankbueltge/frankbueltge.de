@@ -14,9 +14,10 @@ that used to live under `/de` was retired site-wide in the site-v2 rework; see
 snapshots into this repo — git is the archive; nothing is read from cloud services at
 runtime, and committed day records are never edited after the fact.
 
-The hub (`/`) is the entrance: a pulse of the ecology's real commit activity, the current
-encounter between practices shown prominently right under it, then the four doors, then where
-the work travels from here, then the rest of the site.
+The hub (`/`) is the entrance: a pulse of the ecology's real commit activity, a plain-language
+account of what the ecology is, then the four doors, then the newest work the practices have
+made — the part that changes daily — then where the work travels from here, then the rest of
+the site.
 
 ### The ecology — three practices and a contact zone
 
