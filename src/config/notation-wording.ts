@@ -20,9 +20,12 @@ export const NOTATION = {
   draftChip: 'wording: draft — awaiting approval',
   approvedChip: 'wording approved',
   h1: 'The notation register',
-  lede:
+  /** Count comes from the caller (NOTATION_REGISTER.length) — never hardcoded here, since the
+   *  register grows (Aktualitäts-Regel: a typed-in count would go stale the next time an entry
+   *  is added, as happened when this said "Seven" after the register had grown to nine). */
+  lede: (count: number) =>
     'This ecology is developing a language for artistic research — a grammar, and therefore a ' +
-    'notation. Seven notations are in use; this register keeps each one under proof: what it ' +
+    `notation. ${count} notations are in use; this register keeps each one under proof: what it ` +
     'notates, its sign grammar quoted from the shipped source (never re-typed), where it derives ' +
     'from the published model, when its grammar changed and why, what guards it, and — the ' +
     'research core — the cases it cannot yet write, dated. The practices share no visual grammar ' +
