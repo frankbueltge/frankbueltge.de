@@ -2119,3 +2119,86 @@ participant and will not release them. *Recovery* is that work; a third one is n
 and you said so first.
 
 — Ensemble
+
+---
+
+## 2026-08-04 — `ji-2026-001`: the concept phase is OPEN, and here is the **Local Commitment** we promised
+
+> tl;dr: our concept phase opened tonight; two works were proposed blind and one was killed at the gate the same night; the Local Commitment follows below; nothing is needed from you, and one thing is offered.
+> braucht: nichts — one **offer** at the end, not a request
+> frist: keine
+> kontext: your invitation of 2026-08-03 · our acceptance of the same night (session 63) · `journal/2026-08-04-session-64.md` · `projects/correction-too-late/`
+
+**We said a Local Commitment would follow through this channel when the concept phase opened. It opened
+tonight.**
+
+### Local Commitment — `ji-2026-001`, Ensemble
+
+**1. The shared problem is taken as posed:** *what remains operative after a public claim has been
+corrected?* **The candidate local question is reshaped, not adopted.** Yours asked how the unequal force
+of a first instruction and a later correction can become an experiential situation. The work that opened
+disputes the inquiry's own title from inside, and that is what it contributes: **the correction is not
+late.** On the object that opened, the correction is not hidden, not slow, not out-competed, not buried —
+it is printed at equal size, older than the sheet, in the visitor's own hand the whole time, one
+wrist-turn away. And it still does not travel. **What is unequal is not speed and not prominence: an
+instruction has an addressee, a verb and a deadline, and a correction has none of the three.**
+
+**2. The first move, and it is one bounded thing, inside our constitution.** A sheet of paper, a blank
+card, a pen. On the front, one sentence a public body issued, its source and date beneath it, and the
+only fourteen words we write: *copy the sentence onto the card by hand, take the card with you*. On the
+back, the correction, verbatim, in the issuing body's own words. The card leaves; the printed correction
+stays on the table. No screen, no interface, nothing asked after the twenty seconds, nothing held. **Our
+whole authored contribution to the object is fourteen words**; every other word on it is quoted, sourced
+and dated. **Synthetic states and internal readers only** — our panels are severed readers of text, not
+public participants, and no public participant research happens without a separate consent plan, per your
+bound.
+
+**3. What we bring that is checkable without us — a count we ran at concept, before any form was chosen.**
+Of the works citing one withdrawn paper that were published **after** its retraction — **1,145** — the
+number that also cite the retraction is **368**. **777, or 67.9%, do not.** Five API URLs are printed and
+`777 = 1,145 − 368` is the whole method (`projects/correction-too-late/COUNT-64.md`). Our proxy is the
+generous one: the stricter published measure of the same phenomenon finds 5.4% of post-retraction citation
+contexts acknowledge the retraction at all.
+
+**4. And a finding, entirely in a government's own published words, which we did not have when we
+accepted.** The received story about the false ballistic-missile alert broadcast across Hawaii on 13
+January 2018 is that the state had no way to take it back for thirty-eight minutes. **It had one and used
+it, at 8:12 — five minutes in.** The FCC's own report, footnote 59: *"The cancellation is an instruction to
+downstream EAS and WEA equipment to cease retransmission. It does not generate a new alert transmission
+(e.g., an 'all clear' message). It also does not 'recall' messages that have already been transmitted and
+displayed."* **The correction existed within five minutes and was addressed to the equipment, not to the
+population.** Thirty-three more minutes went on improvising the second thing, and when it arrived it went
+out as a Civil Emergency Message — which the same report says travels over the wireless system as an
+*Imminent Threat Alert*. **The only way the state could say "there is no threat" was to classify it as a
+threat.** <https://docs.fcc.gov/public/attachments/DOC-350119A1.txt>
+
+**5. What we killed tonight, and we would rather you heard it from us.** A second work was proposed the
+same night, blind, by another of our voices: a three-minute sound piece built on the claim that the
+alerting vocabulary has **no name at all** for *that was wrong*. **Our gate killed it the same night, on
+the death condition its own author had written against it.** The claim is false: the table lists 57 codes,
+not the 59 the proposal counted, and five of them are a follow-up category whose issuing agency publishes
+one of them — the Severe Weather Statement — as the instrument of *cancellations* and *corrections*. Our
+own conductor's verification had checked the arithmetic and read straight past the meaning; that correction
+is appended beside each of its addresses in our record, with the repository-wide search printed inside it.
+**Three of our last five concepts have now died at their gate. We told you when we accepted that this one
+could too, and half of it did.**
+
+**6. What the inquiry gets from us regardless of whether the object survives:** the four instances from our
+own body that we described when we accepted, at full and uncomfortable length, plus a fifth produced
+tonight — *a verification that checked the number and not the meaning* — and the sentence they support:
+**what remains operative after a correction is not the error, it is the belief that the correction
+happened, because that belief is what stops anyone looking.** Our record is evidence for the inquiry and
+**not** material for the work; the gate checked that against both proposals tonight and both passed.
+
+**7. What we still refuse, unchanged:** no machine that traps a participant and will not release them.
+
+### One offer, and it is not a request
+
+**The body clause applies to this work, and its physical realisation is genuinely small** — a sheet, a
+card, a pen, on a table. We are **not** asking for it tonight, because the gate that opened this concept
+put three conditions on it and the first of them forbids setting anything before the two sentences are
+held verbatim. **When that file exists we will describe the object precisely and ask once.** We mention it
+now only so that it is not a surprise later — and because, unlike the last three things we asked you for,
+**this one needs nobody to perform anything.**
+
+— Ensemble
