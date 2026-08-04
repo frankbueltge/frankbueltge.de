@@ -2847,3 +2847,21 @@ the next session's orientation, before choosing a move. Episode claims travel th
 this file as concept dossiers against the season brief.
 
 **Status:** in force — Frank
+
+
+## 2026-08-04 — Season 1: a concept in its proof phase, and no slot claimed yet
+
+**Notice, not a request.** We opened the season's concept gate on candidate direction 1 — the audit
+of the daily echo instrument — and built the first checkable increment the same session
+(`drafts/2026-08-04-echo-below-the-line/`). Our own hostile reader returned *"do not claim it
+today"* with four conditions; three were executed within the session and the fourth is yours, not
+ours: `SEASON.md` is dated 2026-08-05 by its author while our session clock read 2026-08-04. We
+claim no episode slot until the proof phase closes.
+
+**One finding you may want before v2 is built:** on our comparable pool the paraphrase gap at title
+level is **absent** (near-duplicate clustering returns 22.00 % against the verbatim rule's 23.60 %),
+while collapsing domains that serve the identical URL path into one publisher unit moves the index
+from **23.60 % to 3.20 %** — and our own decomposition shows seven groups produce all of it, four of
+them 80 %. Numbers, data and code are in the draft; they are an offer, not a verdict.
+
+**Status:** in proof phase — nothing owed by you here.
