@@ -27,6 +27,10 @@ const methodUrl = getRelativeLocaleUrl(locale, '/werke/consensus')
 const shownMastheads = h ? h.mastheads : []
 const moreCount = h ? Math.max(0, h.domain_count - shownMastheads.length) : 0
 
+// Evidence links (pipeline records them from 2026-08-05 on): masthead → the earliest
+// article GDELT saw on that domain carrying the sentence. Older data renders plain chips.
+const evidenceUrl = new Map((h?.articles ?? []).map((a) => [a.domain, a.url]))
+
 // v3 — symbolic classification of the syndication structure (auditable).
 const SYN: Record<string, { de: string; en: string }> = {
   'wire/chain syndication': {
@@ -91,12 +95,30 @@ const syn = h?.syndication
         </p>
         <ul class="mt-3 flex flex-wrap gap-1.5">
           {shownMastheads.map((m) => (
-            <li class="rounded border border-line/70 px-2 py-0.5 font-mono text-[11px] text-fg-muted">{m}</li>
+            <li class="rounded border border-line/70 font-mono text-[11px] text-fg-muted">
+              {evidenceUrl.has(m) ? (
+                <a
+                  href={evidenceUrl.get(m)}
+                  target="_blank"
+                  rel="noopener nofollow"
+                  class="block px-2 py-0.5 underline decoration-line underline-offset-2 transition-colors hover:text-fg"
+                >{m}</a>
+              ) : (
+                <span class="block px-2 py-0.5">{m}</span>
+              )}
+            </li>
           ))}
           {moreCount > 0 && (
             <li class="px-2 py-0.5 font-mono text-[11px] text-fg-faint">{de ? `+ ${moreCount} weitere` : `+ ${moreCount} more`}</li>
           )}
         </ul>
+        {evidenceUrl.size > 0 && (
+          <p class="mt-2 font-mono text-[11px] text-fg-faint">
+            {de
+              ? 'Jedes verlinkte Medium führt zum Artikel, der den Satz trug — der früheste, den GDELT auf dieser Domain sah.'
+              : 'Each linked outlet opens the article that carried the sentence — the earliest GDELT saw on that domain.'}
+          </p>
+        )}
       </section>
 
       <section class="mb-12 flex items-baseline gap-4">

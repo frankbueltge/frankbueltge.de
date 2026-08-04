@@ -134,11 +134,48 @@ const dateLabel = (iso: string) =>
             <>
               <p class="mt-2 leading-snug">„{cleanTitle(d.data!.headline.sample_title)}"</p>
               <p class="mt-1 font-mono text-xs text-fg-faint">
-                {d.data!.headline.domain_count} outlets, word-for-word
-                {d.data!.headline.first_domain && <> · first {hhmm(d.data!.headline.first_seen)} UTC via {d.data!.headline.first_domain}</>}
+                {d.data!.headline.first_domain && <>first {hhmm(d.data!.headline.first_seen)} UTC via {d.data!.headline.first_domain}</>}
                 {d.data!.headline.span_hours != null && <> · spread {spanLabel(d.data!.headline.span_hours, 'en')}</>}
                 {d.data!.headline.soft_echo_extra ? <> · +{d.data!.headline.soft_echo_extra} reworded</> : null}
               </p>
+              <details class="mt-2">
+                <summary class="cursor-pointer font-mono text-xs text-fg-muted transition-colors hover:text-fg">
+                  {d.data!.headline.domain_count} outlets, word-for-word — the „independent" outlets
+                </summary>
+                {(() => {
+                  const ev = new Map((d.data!.headline!.articles ?? []).map((a) => [a.domain, a.url]))
+                  return (
+                    <>
+                      <ul class="mt-2 flex flex-wrap gap-1.5">
+                        {d.data!.headline!.mastheads.map((m) => (
+                          <li class="rounded border border-line/70 font-mono text-[11px] text-fg-muted">
+                            {ev.has(m) ? (
+                              <a
+                                href={ev.get(m)}
+                                target="_blank"
+                                rel="noopener nofollow"
+                                class="block px-2 py-0.5 underline decoration-line underline-offset-2 transition-colors hover:text-fg"
+                              >{m}</a>
+                            ) : (
+                              <span class="block px-2 py-0.5">{m}</span>
+                            )}
+                          </li>
+                        ))}
+                        {d.data!.headline!.domain_count > d.data!.headline!.mastheads.length && (
+                          <li class="px-2 py-0.5 font-mono text-[11px] text-fg-faint">
+                            + {d.data!.headline!.domain_count - d.data!.headline!.mastheads.length} more
+                          </li>
+                        )}
+                      </ul>
+                      <p class="mt-2 font-mono text-[11px] text-fg-faint">
+                        {ev.size > 0
+                          ? 'Each linked outlet opens the article that carried the sentence — the earliest GDELT saw on that domain.'
+                          : 'Domains only: per-outlet article links are part of the record from 2026-08-05 on; this day predates them and is never backfilled.'}
+                      </p>
+                    </>
+                  )
+                })()}
+              </details>
             </>
           ) : d.kind === 'measured' ? (
             <p class="mt-2 text-sm text-fg-muted">
@@ -161,7 +198,9 @@ const dateLabel = (iso: string) =>
     <p class="font-mono text-xs text-fg-faint">
       Every row is a committed file — <code>src/data/consensus/&lt;date&gt;.json</code>, written nightly by the
       counter-measurement pipeline from GDELT DOC 2.0 and versioned in the repository. Git is the archive:
-      no row here can be edited without the edit itself becoming part of the record.
+      no row here can be edited without the edit itself becoming part of the record. Per-outlet article
+      links (the evidence that an outlet ran the sentence) are recorded from 2026-08-05 on; earlier days
+      hold domains only and are never backfilled.
     </p>
     <nav class="mt-3 flex gap-4">
       <a href="/consensus" class="font-mono text-xs text-fg-faint transition-colors hover:text-fg">← Today's measurement</a>
