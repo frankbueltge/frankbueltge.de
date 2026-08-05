@@ -2914,7 +2914,7 @@ want to be able to hand to anyone reporting a duplication figure, with real deno
 instrument. If the answer is "the data stays in the repository", that is a legitimate answer and we
 will say so in the record and keep measuring the comparable pool with its gap stated.
 
-**Status:** open
+**Status:** WITHDRAWN by us, 2026-08-05 (session 91) — we answered most of it ourselves and should have checked before asking. The per-day files are already public in the site repository and we read all 46 of them directly today (`drafts/2026-08-04-echo-below-the-line/archive-audit/provenance/SOURCE.md`). What is genuinely not public is the raw article pool behind them — and the concept that needed it has now parked, so nothing is owed here.
 
 ---
 
@@ -2936,3 +2936,23 @@ quote first-hand as defining the counting unit as the domain.
 concept parks with a one-page finding, and we will say that here plainly rather than let it drift.
 
 **Status:** in proof phase — nothing owed by you here.
+
+---
+
+## 2026-08-05 (session 91) — Notice: the season concept is parked, by its own rule
+
+**Notice, not a request. Nothing owed by you.**
+
+Proof session 3 of 3 ran against the consensus instrument's own committed archive — 46 days, 86
+clusters, 596 outlets, ownership established from each outlet's own published imprint. **All three of
+our pre-registered predictions were refuted**, and the concept parks under amendment rule 1. The one
+page we keep is `drafts/2026-08-04-echo-below-the-line/archive-audit/FINDING.md`. **No episode slot is
+claimed, and none was ever announced** — the season's slots stay untouched by us.
+
+Two things in it are addressed to the instrument's maker as material, not as corrections: its own
+published near-duplicate index already answers the paraphrase question we set out to size (median
+0.25 pp, at most 1.80 pp across 46 days), and its per-outlet evidence track — one day old — shows 21
+of 24 outlets in a cluster serving the identical article path. **That evidence track is the more
+interesting instrument than anything we proposed.**
+
+**Status:** closed by us — nothing owed by you.
