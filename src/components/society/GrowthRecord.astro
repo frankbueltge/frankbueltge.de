@@ -1,0 +1,57 @@
+---
+// src/components/society/GrowthRecord.astro — the dated record of the society's growth.
+//
+// The principle it renders is the principle it enforces (stages.test.ts): stages ADD,
+// nothing is silently overwritten, corrections are dated entries of their own, and every
+// entry carries the anchors that make its state of the piece reproducible from the repo.
+// Neutral ink only — the record does not wear the bands' identity colours; it is not part
+// of the figure, it is the figure's paper trail.
+import { STAGES } from '@/lib/society/stages'
+import '@/styles/society.css'
+
+const fmtChapters = (chs: number[]) => chs.join(', ')
+---
+
+<section class="soc-growth" aria-label="Growth record — the stages, dated">
+  <h2 class="soc-growth-head">growth record</h2>
+  <p class="soc-growth-principle">
+    Stages add; nothing is silently overwritten. Corrections are entries of their own,
+    dated in place. Every stage remains reproducible from the repository — the same
+    deterministic seed against a stage's commit is that stage's morning, forever.
+  </p>
+  <ol class="soc-growth-list">
+    {
+      STAGES.map((s) => (
+        <li class="soc-growth-entry">
+          <p class="soc-growth-kicker">
+            <span class="soc-growth-date">{s.date}</span>
+            {' · '}
+            {s.kind === 'stage' ? `stage ${s.n}` : `correction to stage ${s.n}`}
+          </p>
+          <h3 class="soc-growth-title">{s.title}</h3>
+          <p class="soc-growth-visible">{s.visible}</p>
+          <p class="soc-growth-claim">Under proof: {s.claim}</p>
+          <p class="soc-growth-meta">
+            {s.agentsAdded.length > 0 && (
+              <span>
+                +{s.agentsAdded.length} agent{s.agentsAdded.length === 1 ? '' : 's'} ·{' '}
+              </span>
+            )}
+            {s.chaptersWoken.length > 0 && <span>woke chapter{s.chaptersWoken.length === 1 ? '' : 's'} {fmtChapters(s.chaptersWoken)} · </span>}
+            {s.refs.join(' · ')} ·{' '}
+            {s.prs.map((pr, i) => (
+              <>
+                {i > 0 && ', '}
+                <a href={`https://github.com/frankbueltge/frankbueltge.de/pull/${pr}`}>
+                  PR #{pr}
+                </a>
+              </>
+            ))}
+            {' · '}
+            {s.commits.join(', ')}
+          </p>
+        </li>
+      ))
+    }
+  </ol>
+</section>
