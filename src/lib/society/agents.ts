@@ -84,7 +84,10 @@ export const AGENTS: readonly AgentSpec[] = [
     name: 'NOVELTY',
     agency: 'the eye',
     band: 'senses',
-    ref: { ch: 8, sec: '8.4', title: 'Partial Mental States' },
+    // Reading protocol 2026-08-05: §8.4 says nothing about novelty (misattribution caught by
+    // the full read). The rule below IS §23.3's time blinking — hold what the eye said a
+    // moment ago, the difference is the signal. The boredom half is the piece's own.
+    ref: { ch: 23, sec: '23.3', title: 'Time Blinking' },
     role: 'compares now with a moment ago; sameness slowly bores it',
     code: `keep a fading copy of
   what SEE-MOTION said before
@@ -125,7 +128,9 @@ sameness, repeated,
     name: 'LIFT',
     agency: 'the hand',
     band: 'body',
-    ref: { ch: 1, sec: '1.4', title: 'The World of Blocks' },
+    // Reading protocol 2026-08-05: no LIFT exists in §1.4's diagrams (the piece invented the
+    // agent); its honest home is §12.10, where height comes from vertical Lifting by name.
+    ref: { ch: 12, sec: '12.10', title: 'How Towers Work' },
     role: 'raises a held block above the stack before placing',
     code: `while a block is held:
   keep it higher
@@ -150,7 +155,10 @@ sameness, repeated,
     name: 'TRACK',
     agency: 'the gaze',
     band: 'body',
-    ref: { ch: 16, sec: '16.3', title: 'Mental Proto-Specialists' },
+    // Reading protocol 2026-08-05: TRACK is body machinery, not a proto-specialist — §16.3
+    // was the roster's weakest ref. §16.7 is exact: a drive exploiting sense and body agents
+    // it does not understand (Thirst→See/Find/Get is CURIOSITY→TRACK, pattern for pattern).
+    ref: { ch: 16, sec: '16.7', title: 'Exploitation' },
     role: 'turns the eye toward what CURIOSITY points at',
     code: `while CURIOSITY rules:
   ease the gaze
@@ -165,11 +173,13 @@ sameness, repeated,
     agency: 'middle management',
     band: 'builders',
     ref: { ch: 10, sec: '10.4', title: "Papert's Principle" },
-    role: 'routes the wish to play toward building or wrecking; knows neither trade',
+    role: 'routes the wish to play; when its children both shout, it decides who speaks',
     code: `while PLAY rules:
   wake BUILDER
   (WRECKER wakes itself;
    my censor holds it)
+  when both shout, the louder
+  child gets the hand
 It cannot stack, and cannot smash.
 It is management.`,
     elegy: 'PLAY-WITH-BLOCKS is silent. The wish remains; the way is lost.',
@@ -425,10 +435,13 @@ export const CHAPTERS: readonly Chapter[] = [
   { n: 30, title: 'Mental Models' },
 ]
 
-/** Chapter numbers with at least one resident agent. K-lines are runtime creatures of
- *  chapter 8, so their chapter wakes with the roster's NOVELTY ref either way. */
+/** Chapter numbers whose concepts live in the society: every chapter with a resident
+ *  roster agent, plus chapter 8 — K-lines (§8.1) are runtime creatures, born whenever a
+ *  tower stands, so their chapter is awake although no static agent cites it. */
 export function awakeChapters(): Set<number> {
-  return new Set(AGENTS.map((a) => a.ref.ch))
+  const awake = new Set(AGENTS.map((a) => a.ref.ch))
+  awake.add(8)
+  return awake
 }
 
 export function agentById(id: string): AgentSpec {
