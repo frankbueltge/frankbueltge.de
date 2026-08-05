@@ -10,6 +10,11 @@
 // ablation a finding rather than an anecdote (engine.test.ts holds the claim).
 
 import {
+  ARCH_MID,
+  ARCH_X1,
+  ARCH_X2,
+  archState,
+  blockY,
   drop,
   GOAL_HEIGHT,
   grasp,
@@ -43,8 +48,10 @@ export const NO_VISITOR: VisitorInput = { present: false, x: 0, y: 0, speed: 0 }
 export interface KLine {
   id: number
   tick: number
-  /** the agents that were up when the tower stood — memory as re-arousal (SOM §8.1) */
+  /** the agents that were up when the work stood — memory as re-arousal (SOM §8.1) */
   agents: string[]
+  /** what stood: stage 2 gives memories a second kind, and the transfer test reads it */
+  kind: 'tower' | 'arch'
 }
 
 export interface TickerLine {
@@ -55,6 +62,7 @@ export interface TickerLine {
 type Ruler = 'play' | 'rest' | 'curiosity' | 'alarm'
 type Mode = 'build' | 'wreck' | 'watch' | 'rest' | 'freeze' | 'idle'
 type Phase = 'find' | 'get' | 'put'
+type Goal = 'tower' | 'arch'
 
 export interface Society {
   seed: number
@@ -68,6 +76,11 @@ export interface Society {
   ruler: Ruler
   mode: Mode
   phase: Phase
+  /** which difference-engine has the hand while building — BUILDER's tower or ARCHER's arch */
+  goal: Goal
+  /** the transfer's other half, spent once per morning: the first placement under the
+   *  arch goal follows the tower K-lines to the old site (§8.6) */
+  habitSpent: boolean
   targetBlock: string | null
   surprise: number
   boredom: number
@@ -124,6 +137,8 @@ export function makeSociety(seed: number): Society {
     ruler: 'play',
     mode: 'idle',
     phase: 'find',
+    goal: 'tower',
+    habitSpent: false,
     targetBlock: null,
     surprise: 0,
     boredom: 0,
@@ -274,6 +289,11 @@ export function step(s: Society, input: VisitorInput): StepResult {
   a['alarm'] = s.needs.alarm
 
   // ———————————————————————————————————————————————— managers —————————————
+  const arch = archState(w)
+  const towerK = s.kLines.filter((k) => k.kind === 'tower').length
+  const archK = s.kLines.filter((k) => k.kind === 'arch').length
+  const standing = w.blocks.filter((b) => b.inTower || b.inArch).length
+
   // wrecker — "it grows with PLAY, and now and then it surges"
   if (s.tick >= s.nextSurge) {
     s.surgeTicks = 25
@@ -281,46 +301,77 @@ export function step(s: Society, input: VisitorInput): StepResult {
   }
   const surging = s.surgeTicks > 0
   if (s.surgeTicks > 0) s.surgeTicks--
+  // what the censor calls "finished" is the ACTIVE goal's completion — tower or arch,
+  // it does not know the difference
+  const currentComplete = s.goal === 'arch' ? arch.complete : w.towerComplete
   let wreckWant = 0
-  if (!abl('wrecker') && towerHeight(w) > 0) {
-    wreckWant = (0.25 + 0.55 * s.needs.play + (w.towerComplete ? 0.2 : 0)) * (surging ? 2 : 1)
-    // censor-wreck — "while the tower is unfinished: press WRECKER down"
-    if (!abl('censor-wreck') && !w.towerComplete) wreckWant *= 0.1
+  if (!abl('wrecker') && standing > 0) {
+    wreckWant = (0.25 + 0.55 * s.needs.play + (currentComplete ? 0.2 : 0)) * (surging ? 2 : 1)
+    // censor-wreck — "while the work is unfinished: press WRECKER down"
+    if (!abl('censor-wreck') && !currentComplete) wreckWant *= 0.1
   }
-  a['censor-wreck'] = !abl('censor-wreck') && towerHeight(w) > 0 && !w.towerComplete ? 0.8 : 0
+  a['censor-wreck'] = !abl('censor-wreck') && standing > 0 && !currentComplete ? 0.8 : 0
 
   // play-with-blocks — "while PLAY rules: wake BUILDER" (it cannot stack, cannot smash)
-  // builder — "too short → wake FIND, GET, PUT; tall enough → rest"
+  // builder — "too short → wake FIND, GET, PUT; tall enough → rest";
+  // each finished tower makes the next one want a little less (satiation)
   let buildWant = 0
   if (s.ruler === 'play' && !abl('play-with-blocks') && !abl('builder')) {
-    buildWant = seenHeight < GOAL_HEIGHT ? 0.6 + 0.4 * s.needs.play : 0.1
+    buildWant =
+      (seenHeight < GOAL_HEIGHT ? 0.6 + 0.4 * s.needs.play : 0.1) *
+      Math.max(0.35, 1 - 0.25 * towerK)
+  }
+  // archer — "it wakes once towers have grown boring": after two tower K-lines, or from
+  // the morning if the tower-way itself is silent
+  let archWant = 0
+  if (
+    !abl('archer') &&
+    s.ruler === 'play' &&
+    !abl('play-with-blocks') &&
+    (towerK >= 2 || abl('builder'))
+  ) {
+    archWant = arch.complete
+      ? 0.1
+      : (0.55 + 0.35 * s.needs.play) * Math.max(0.35, 1 - 0.3 * archK)
   }
   a['play-with-blocks'] = s.ruler === 'play' && !abl('play-with-blocks') ? 0.8 : 0
 
-  // watch-quarrel — "if BUILDER and WRECKER shout equally loud, quiet them both;
+  // play-with-blocks arbitrates its builders — "the louder child gets the hand"
+  const constructWant = Math.max(buildWant, archWant)
+  const nextGoal: Goal = archWant > buildWant ? 'arch' : 'tower'
+
+  // watch-quarrel — "if the builders and WRECKER shout equally loud, quiet them both;
   // a clear victory it lets stand" (noncompromise, §3.2)
+  let quieted = 1
   if (
     !abl('watch-quarrel') &&
-    buildWant > 0.45 &&
+    constructWant > 0.45 &&
     wreckWant > 0.45 &&
-    Math.abs(buildWant - wreckWant) < 0.15
+    Math.abs(constructWant - wreckWant) < 0.15
   ) {
-    buildWant *= 0.25
+    quieted = 0.25
     wreckWant *= 0.25
-    say(s, 'quarrel', 300, 'BUILDER and WRECKER, equally loud. Noncompromise: neither gets the hand.')
+    say(s, 'quarrel', 300, 'The builders and WRECKER, equally loud. Noncompromise: neither gets the hand.')
   }
   a['wrecker'] = clamp01(wreckWant)
-  a['builder'] = clamp01(buildWant)
+  a['builder'] = clamp01(buildWant * quieted)
+  a['archer'] = clamp01(archWant * quieted)
   a['watch-quarrel'] = abl('watch-quarrel') ? 0 : 0.25
 
-  // the ruling drive picks the body's mode; between BUILDER and WRECKER it is
-  // play-with-blocks that arbitrates — "when both shout, the louder child gets the hand"
+  // the ruling drive picks the body's mode
   if (s.ruler === 'alarm') s.mode = 'freeze'
   else if (s.ruler === 'rest') s.mode = 'rest'
   else if (s.ruler === 'curiosity') s.mode = 'watch'
-  else if (wreckWant > buildWant && wreckWant > 0.5) s.mode = 'wreck'
-  else if (buildWant > 0) s.mode = 'build'
-  else s.mode = 'idle'
+  else if (wreckWant > constructWant * quieted && wreckWant > 0.5) s.mode = 'wreck'
+  else if (constructWant * quieted > 0) {
+    s.mode = 'build'
+    if (s.goal !== nextGoal) {
+      s.goal = nextGoal
+      s.phase = 'find'
+      if (nextGoal === 'arch')
+        say(s, 'goal-arch', 600, 'ARCHER wakes. Two towers were enough; the hands know the way.')
+    }
+  } else s.mode = 'idle'
 
   // ————————————————————————————————————————————————— the body ————————————
   // k-lines make practiced motion quicker — memory as re-arousal (§8.1)
@@ -341,9 +392,11 @@ export function step(s: Society, input: VisitorInput): StepResult {
   } else if (s.mode === 'wreck') {
     if (!abl('move')) {
       a['move'] = 1
-      const arrived = moveHand(w, TOWER_X, 8, handSpeed * 1.4)
+      // the hand sweeps where something actually stands — tower first, else the arch
+      const sweepX = towerHeight(w) > 0 ? TOWER_X : ARCH_MID
+      const arrived = moveHand(w, sweepX, 8, handSpeed * 1.4)
       if (arrived) {
-        const ev = wreck(w, s.rng)
+        const ev = wreck(w, s.rng, currentComplete)
         if (ev.length) {
           events.push(...ev)
           progressed = true
@@ -402,15 +455,44 @@ export function step(s: Society, input: VisitorInput): StepResult {
       } else if (abl('put')) {
         // put silent — "the society carries its block in circles"
         wander(s, handSpeed)
+      } else if (s.goal === 'arch' && abl('see-arch')) {
+        // the arch's eye is silent: ARCHER carries its block, blind to what stands
+        wander(s, handSpeed)
       } else if (!abl('move')) {
         a['move'] = 1
         // lift — "keep it higher than the tower's top"
         const lifted = !abl('lift')
         if (lifted) a['lift'] = 1
-        const targetY = lifted ? towerTopY(w) : 5
-        const arrived = moveHand(w, TOWER_X, targetY, handSpeed)
+
+        // where PUT carries the block: the active difference-engine's next missing part.
+        // The transfer's other half (§8.6): the FIRST move under the arch goal follows
+        // the tower K-lines to the OLD site — the hand hesitates there, the difference-
+        // engine catches it, and corrects. No block is lost; memory dragged the hand,
+        // the plan corrected it. Spent once per morning.
+        const habitPull = s.goal === 'arch' && !s.habitSpent && towerK > 0 && archK === 0
+        let tx = TOWER_X
+        let ty = lifted ? towerTopY(w) : 5
+        if (s.goal === 'arch' && !habitPull) {
+          a['see-arch'] = 1
+          const st = archState(w)
+          if (!st.left) {
+            tx = ARCH_X1
+            ty = 4
+          } else if (!st.right) {
+            tx = ARCH_X2
+            ty = 4
+          } else {
+            tx = ARCH_MID
+            ty = lifted ? blockY(1) + 4 : 5
+          }
+        }
+        const arrived = moveHand(w, tx, ty, handSpeed)
         if (arrived) {
-          if (!abl('release')) {
+          if (habitPull) {
+            s.habitSpent = true
+            events.push({ kind: 'misfire' })
+            say(s, 'misfire', 0, 'The hand goes to the old place. K-lines remember towers, not arches.')
+          } else if (!abl('release')) {
             a['release'] = 1
             // balance — "nudge the block until its edges agree with the block below"
             const jitter = abl('balance') ? (s.rng() * 2 - 1) * 3.6 : (s.rng() * 2 - 1) * 0.6
@@ -421,6 +503,8 @@ export function step(s: Society, input: VisitorInput): StepResult {
             for (const e of ev) {
               if (e.kind === 'placed')
                 say(s, 'placed', 120, `PUT lets go. The tower is ${e.level + 1} high.`)
+              if (e.kind === 'placedArch' && e.part !== 'span')
+                say(s, `placedArch-${e.part}`, 120, 'PUT lets go. An upright stands.')
               if (e.kind === 'collapsed')
                 say(s, 'collapsed', 80, 'The tower leaves without being pushed. BALANCE was not enough.')
               if (e.kind === 'dropped')
@@ -434,8 +518,18 @@ export function step(s: Society, input: VisitorInput): StepResult {
                 const up = Object.entries(a)
                   .filter(([, v]) => v > 0.5)
                   .map(([k]) => k)
-                s.kLines.push({ id: s.kLines.length + 1, tick: s.tick, agents: up })
+                s.kLines.push({ id: s.kLines.length + 1, tick: s.tick, agents: up, kind: 'tower' })
                 say(s, 'kline', 80, 'A K-line has formed. The next tower will come easier.')
+              }
+              if (e.kind === 'archComplete') {
+                say(s, 'archComplete', 80, 'An arch. FIND, GET and PUT never noticed the goal had changed.')
+                s.needs.play *= 0.25
+                s.needs.rest = clamp01(s.needs.rest + 0.2)
+                const up = Object.entries(a)
+                  .filter(([, v]) => v > 0.5)
+                  .map(([k]) => k)
+                s.kLines.push({ id: s.kLines.length + 1, tick: s.tick, agents: up, kind: 'arch' })
+                say(s, 'kline-arch', 80, 'A K-line has formed. This society now remembers two shapes.')
               }
             }
             s.phase = 'find'
@@ -498,6 +592,8 @@ export function snapshot(s: Society): string {
     ruler: s.ruler,
     mode: s.mode,
     phase: s.phase,
+    goal: s.goal,
+    habitSpent: s.habitSpent,
     kLines: s.kLines,
     lines: s.lines,
   })
