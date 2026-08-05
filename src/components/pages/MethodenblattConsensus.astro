@@ -17,9 +17,13 @@ const txt = {
     ? 'Jede hier genannte Quelle hat diese Worte wirklich gebracht. Genau das Echo zu zählen ist der Punkt: scheinbarer Konsens ist keine unabhängige Bestätigung. „47 Medien berichten X" heißt oft: eine Quelle, 47-mal. Gegenmessung zählt, was als unabhängig gilt, aber kopiert ist.'
     : 'Every outlet named here really ran these words. Counting that echo is the point: apparent consensus is not independent confirmation. "47 outlets report X" often means: one source, 47 times. Counter-measurement counts what passes as independent but is copied.',
   s1: de ? '1. Quellen & Lizenzen' : '1. Sources & licences',
-  s1body: de
-    ? `Nachrichten über die GDELT DOC 2.0 API (${d.source.license}). Acht breite Beats (${d.stats.beats.join(', ')}), englischsprachig. Die zitierten „unabhängigen" Quellen sind die Domains, die den Satz wortgleich brachten — auf der Werkseite namentlich gelistet.`
-    : `News via the GDELT DOC 2.0 API (${d.source.license}). Eight broad beats (${d.stats.beats.join(', ')}), English-language. The cited "independent" sources are the domains that ran the sentence verbatim — listed by name on the work page.`,
+  s1body: d.stats.beats
+    ? de
+      ? `Nachrichten über die GDELT DOC 2.0 API (${d.source.license}). Acht breite Beats (${d.stats.beats.join(', ')}), englischsprachig. Die zitierten „unabhängigen" Quellen sind die Domains, die den Satz wortgleich brachten — auf der Werkseite namentlich gelistet. Ab 2026-08-06 wechselt der Pool auf GDELTs 15-Minuten-Rohdateien (siehe Änderungsprotokoll).`
+      : `News via the GDELT DOC 2.0 API (${d.source.license}). Eight broad beats (${d.stats.beats.join(', ')}), English-language. The cited "independent" sources are the domains that ran the sentence verbatim — listed by name on the work page. From 2026-08-06 the pool moves to GDELT's 15-minute raw files (see change log).`
+    : de
+      ? `Nachrichten aus GDELTs rohen 15-Minuten-GKG-Dateien (${d.source.license}) — der volle englisch-beobachtete Strom, ~100.000+ Artikel pro Tag, Titel aus dem PAGE_TITLE-Feld der Dateien. Kein API-Key, kein Rate-Limit; jede Datei ist per URL + SHA256 nachladbar. Die zitierten „unabhängigen" Quellen sind die Domains, die den Satz wortgleich brachten — auf der Werkseite namentlich gelistet.`
+      : `News from GDELT's raw 15-minute GKG files (${d.source.license}) — the full English-monitored stream, ~100,000+ articles per day, titles from the files' PAGE_TITLE field. No API key, no rate limit; every file is re-fetchable by URL + SHA256. The cited "independent" sources are the domains that ran the sentence verbatim — listed by name on the work page.`,
   s2: de ? '2. Kadenz' : '2. Cadence',
   s2body: de
     ? 'Täglich. Die Maschine wählt selbst: die Phrase mit der höchsten Streuung über distinkte Quell-Domains ist die „Schlagzeile des Tages". Kanonisches Artefakt: versionierte JSON in src/data/consensus/ — Git ist das Archiv.'
@@ -30,39 +34,43 @@ const txt = {
     : 'Pool articles (dedupe by URL) → count verbatim 6-gram title phrases across distinct domains → the most replicated is the headline. Echo index = share of titles belonging to a ≥3-domain echo. Symbolic provenance: the earliest timestamp marks the source candidate and the cascade. Evidence track: per domain the earliest article link is recorded — every outlet on the work page links to the article that carried the sentence.',
   aiHead: de ? 'KI/ML — gestaffelt, nachprüfbar' : 'AI/ML — staged, checkable',
   aiBody: de
-    ? 'Das Lab experimentiert mit Daten UND KI. Umgesetzt: v1 wortgleiche Baseline; v2 TF-IDF/Cosinus fängt paraphrasierte Koordination (umformulierte Wire-Copy, die Verbatim verfehlt); v3 ein symbolischer, regelbasierter Klassifikator trennt aus der Graph-Struktur (TLD-Homogenität, Zeitfenster) Ketten-Syndizierung von verstreuter Platzierung — auditierbar, kein Black-Box-Modell. Optional/künftig: tiefe Embeddings und ein gegen den Graphen verifizierter LLM-Klassifikator (Prompt offengelegt). Bedingung immer: jeder KI-Schritt transparent, Output verifiziert oder als Schätzung markiert.'
-    : 'The lab experiments with data AND AI. Implemented: v1 verbatim baseline; v2 TF-IDF/cosine catches paraphrased coordination (reworded wire copy that verbatim misses); v3 a symbolic, rule-based classifier separates chain syndication from scattered placement from the graph structure (TLD homogeneity, time window) — auditable, no black-box model. Optional/future: deep embeddings and an LLM classifier verified against the graph (prompt disclosed). Condition throughout: every AI step transparent, output verified or marked as an estimate.',
+    ? 'Das Lab experimentiert mit Daten UND KI. Umgesetzt: die wortgleiche Baseline und ein symbolischer, regelbasierter Klassifikator, der aus der Graph-Struktur (TLD-Homogenität, Zeitfenster) Ketten-Syndizierung von verstreuter Platzierung trennt — auditierbar, kein Black-Box-Modell. Der TF-IDF/Cosinus-Paraphrase-Pass lief auf den API-Pools (bis 2026-08-05) und ist seit dem Rohdatei-Wechsel ausgesetzt: sein Token-Blocking war für ~2.000-Artikel-Pools kalibriert und trägt den vollen Strom nicht; er kommt neu gebaut zurück (z. B. MinHash) statt bedeutungslos mitzulaufen. Bedingung immer: jeder KI-Schritt transparent, Output verifiziert oder als Schätzung markiert.'
+    : 'The lab experiments with data AND AI. Implemented: the verbatim baseline and a symbolic, rule-based classifier separating chain syndication from scattered placement from the graph structure (TLD homogeneity, time window) — auditable, no black-box model. The TF-IDF/cosine paraphrase pass ran on the API pools (until 2026-08-05) and is suspended since the raw-file switch: its token blocking was calibrated for ~2,000-article pools and does not carry the full stream; it returns rebuilt (e.g. MinHash) rather than running meaninglessly. Condition throughout: every AI step transparent, output verified or marked as an estimate.',
   s4: de ? '4. Grenzen der Methode' : '4. Limits of the method',
   s4items: de
     ? [
         'GDELT-Abdeckung ist englisch-/westlich-lastig; gemessen wird ein Ausschnitt, nicht die Welt.',
         'GDELT-Zeitstempel haben ~15-Minuten-/Stundenauflösung — „zuerst gesehen" ist das früheste GDELT-Fenster, keine präzise Erstveröffentlichungs-Zuschreibung.',
-        'v1 wertet Titel aus, nicht Volltext; paraphrasierte Koordination entgeht ihm (kommt in v2).',
+        'Ausgewertet werden Titel, nicht Volltext; paraphrasierte Koordination entgeht der Baseline (der Paraphrase-Pass ist seit 2026-08-06 ausgesetzt, s. o.).',
         'Legitime Wire-/Ketten-Syndizierung ≠ Manipulation — aber sie erzeugt die Illusion unabhängiger Bestätigung; das Instrument behauptet keine Absicht.',
-        'Beats können bei API-Rate-Limits ausfallen (im Stats-Block je Tag ausgewiesen).',
+        'Bis 2026-08-05 (API-Pool): Beats konnten bei Rate-Limits ausfallen — je Tag im Stats-Block ausgewiesen; am 2026-08-05 traf es 5 von 8. Seit 2026-08-06 (Rohdateien): fehlende 15-Minuten-Dateien werden als Lücken ausgewiesen, nie still überbrückt.',
+        'Die Tage bis 2026-08-05 messen eine 8-Beat-Stichprobe (max. 2.000 Artikel), die Tage ab 2026-08-06 den vollen Strom — die Quote (Echo-Index) erwies sich im Fenstervergleich als robust (0,300 vs. 0,313), die absoluten Domain-Zahlen je Cluster sind zwischen den Generationen nicht vergleichbar.',
       ]
     : [
         'GDELT coverage skews English/Western; this measures a section, not the world.',
         'GDELT timestamps have ~15-minute/hourly resolution — "first seen" is the earliest GDELT window, not a precise first-publication attribution.',
-        'v1 reads titles, not full text; paraphrased coordination escapes it (arrives in v2).',
+        'Titles are read, not full text; paraphrased coordination escapes the baseline (the paraphrase pass is suspended since 2026-08-06, see above).',
         'Legitimate wire/chain syndication ≠ manipulation — but it creates the illusion of independent confirmation; the instrument claims no intent.',
-        'Beats can drop on API rate limits (disclosed per day in the stats block).',
+        'Until 2026-08-05 (API pool): beats could drop on rate limits — disclosed per day in the stats block; on 2026-08-05 it hit 5 of 8. Since 2026-08-06 (raw files): missing 15-minute files are disclosed as gaps, never silently bridged.',
+        'Days up to 2026-08-05 measure an 8-beat sample (max 2,000 articles), days from 2026-08-06 the full stream — the quotient (echo index) proved robust in a same-window comparison (0.300 vs 0.313), but absolute per-cluster domain counts are not comparable across the two generations.',
       ],
   s5: de ? '5. Compute-Fußabdruck' : '5. Compute footprint',
   s5body: de
-    ? 'Acht leichte HTTP-Abrufe pro Tag, kein API-Key, in v1 kein LLM. Die Site selbst ist statisch.'
-    : 'Eight lightweight HTTP fetches per day, no API key, no LLM in v1. The site itself is static.',
+    ? '96 statische Datei-Downloads pro Nacht (~700 MB, GDELTs 15-Minuten-Dateien), kein API-Key, kein LLM; Analyse in Sekunden auf einem freien CI-Runner. Die Site selbst ist statisch. (Bis 2026-08-05: acht leichte API-Abrufe pro Tag.)'
+    : '96 static file downloads per night (~700 MB, GDELT’s 15-minute files), no API key, no LLM; analysis takes seconds on a free CI runner. The site itself is static. (Until 2026-08-05: eight lightweight API fetches per day.)',
   s6: de ? '6. Änderungsprotokoll' : '6. Change log',
   s6items: de
     ? [
-        'v1 (2026-06) — Erstfassung: wortgleiche Synchronität + Echo-Index + symbolische Provenienz.',
+        'v1 (2026-06) — Erstfassung: wortgleiche Synchronität + Echo-Index + symbolische Provenienz; Pool über die GDELT DOC 2.0 API (8 Beats, max. 250 Artikel je Beat).',
         'Archiv-Ansicht (2026-08-04) — /consensus/archive zeigt jeden committeten Tag; Ausfälle und Lücken bleiben sichtbar.',
         'Beweis-Spur (2026-08-04) — je Medium wird der früheste Artikel-Link mit aufgezeichnet (ab 2026-08-05 im Archiv; frühere Tage werden nie rückgefüllt).',
+        'v2 — Rohdatei-Pool (2026-08-06, datierter Methodenschnitt) — die DOC-API verweigerte am 2026-08-05 fünf von acht Beats (klebrige 429-Blocks) und liefert nachweislich degradierte Titel-Strings (verschluckte Apostrophe, Abschnitte) — ein Materialfehler für ein Wortlaut-Instrument. Der Pool ist seither der volle englisch-beobachtete Rohstrom (~100.000+ Artikel/Tag, echte PAGE_TITLEs). Fenstergleicher Vergleich am Schnitt-Tag: Echo-Index 0,300 (API, 727 Artikel) vs. 0,313 (Rohdateien, 114.207 Artikel). Der Paraphrase-Pass ist ausgesetzt, bis er für die neue Größenordnung neu gebaut ist; committete v1-Tage bleiben unangetastet.',
       ]
     : [
-        'v1 (2026-06) — first edition: verbatim synchronicity + echo index + symbolic provenance.',
+        'v1 (2026-06) — first edition: verbatim synchronicity + echo index + symbolic provenance; pool via the GDELT DOC 2.0 API (8 beats, max 250 articles each).',
         'Archive view (2026-08-04) — /consensus/archive renders every committed day; failures and gaps stay visible.',
         'Evidence track (2026-08-04) — the earliest article link per outlet is recorded (in the archive from 2026-08-05 on; earlier days are never backfilled).',
+        'v2 — raw-file pool (2026-08-06, dated method break) — the DOC API refused five of eight beats on 2026-08-05 (sticky 429 blocks) and demonstrably serves degraded title strings (swallowed apostrophes, truncation) — a material defect for a verbatim instrument. The pool is since the full English-monitored raw stream (~100,000+ articles/day, faithful PAGE_TITLEs). Same-window comparison on the day of the break: echo index 0.300 (API, 727 articles) vs 0.313 (raw files, 114,207 articles). The paraphrase pass is suspended until rebuilt for the new scale; committed v1 days stay untouched.',
       ],
   toWork: de ? 'Zum Experiment' : 'To the experiment',
 }

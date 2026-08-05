@@ -143,8 +143,8 @@ const syn = h?.syndication
   ) : d.stats.articles_scanned === 0 ? (
     <p class="max-w-xl text-fg-muted">
       {de
-        ? 'Quelle nicht erreichbar — Feststellung entfällt. GDELT hat die nächtlichen Anfragen nicht beantwortet (Rate-Limit); es wurden 0 Artikel gescannt. Ein Ausfall der Messung, kein ruhiger Nachrichtentag.'
-        : 'Source unreachable — finding omitted. GDELT did not answer the nightly requests (rate limit); 0 articles were scanned. A failure of the measurement, not a quiet news day.'}
+        ? 'Quelle nicht erreichbar — Feststellung entfällt. GDELT hat die nächtlichen Abrufe nicht beantwortet; es wurden 0 Artikel gescannt. Ein Ausfall der Messung, kein ruhiger Nachrichtentag.'
+        : 'Source unreachable — finding omitted. GDELT did not answer the nightly fetches; 0 articles were scanned. A failure of the measurement, not a quiet news day.'}
     </p>
   ) : (
     <p class="text-fg-muted">{de ? 'Heute kein Echo-Cluster über der Schwelle.' : 'No echo cluster above threshold today.'}</p>
@@ -152,9 +152,13 @@ const syn = h?.syndication
 
   <footer class="mt-12 border-t border-line pt-6">
     <p class="font-mono text-xs text-fg-faint">
-      {de
-        ? `Gescannt: ${d.stats.articles_scanned} Artikel über ${d.stats.domains_scanned} Domains (GDELT, ${d.stats.beats.length} Beats).`
-        : `Scanned: ${d.stats.articles_scanned} articles across ${d.stats.domains_scanned} domains (GDELT, ${d.stats.beats.length} beats).`}
+      {d.stats.beats
+        ? de
+          ? `Gescannt: ${d.stats.articles_scanned} Artikel über ${d.stats.domains_scanned} Domains (GDELT, ${d.stats.beats.length} Beats).`
+          : `Scanned: ${d.stats.articles_scanned} articles across ${d.stats.domains_scanned} domains (GDELT, ${d.stats.beats.length} beats).`
+        : de
+          ? `Gescannt: ${d.stats.articles_scanned.toLocaleString('de-DE')} Artikel über ${d.stats.domains_scanned.toLocaleString('de-DE')} Domains (GDELT-Rohdateien, ${d.stats.slots_fetched}/${d.stats.slots_expected} 15-Minuten-Dateien).`
+          : `Scanned: ${d.stats.articles_scanned.toLocaleString('en-US')} articles across ${d.stats.domains_scanned.toLocaleString('en-US')} domains (GDELT raw files, ${d.stats.slots_fetched}/${d.stats.slots_expected} 15-minute files).`}
     </p>
     <nav class="mt-2 flex gap-4">
       <a href={methodUrl} class="font-mono text-xs text-fg-faint transition-colors hover:text-fg">{t(locale, 'prot.method')} →</a>

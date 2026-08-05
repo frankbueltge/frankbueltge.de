@@ -157,7 +157,7 @@ export const NODES: readonly ApparatusNode[] = [
     what: 'What the world is fighting about and looking at — the no-GCP replacement for BigQuery reads GDELT as raw files over plain HTTP.',
     members: [
       { label: 'GDELT raw files', what: 'the conflict item of the protocol agenda', ref: 'pipelines/protokoll/src/protokoll/adapters/conflict.py' },
-      { label: 'GDELT DOC 2.0 API', what: 'orchestrated consensus, measured by The Consensus', ref: 'pipelines/consensus/refresh.py' },
+      { label: 'GDELT GKG raw files', what: 'orchestrated consensus, measured by The Consensus (DOC API until 2026-08-05)', ref: 'pipelines/consensus/refresh.py' },
       { label: 'Wikimedia REST', what: 'most-read articles, the attention item', ref: 'pipelines/protokoll/src/protokoll/adapters/attention.py' },
     ],
   },
@@ -580,7 +580,7 @@ export const EDGES: readonly ApparatusEdge[] = [
   { from: 'src-economy', to: 'in-protokoll', kind: 'https', mechanism: 'HTTPS in the adapter modules', checked: 'declared', ref: 'pipelines/protokoll/src/protokoll/adapters' },
   { from: 'src-model', to: 'in-protokoll', kind: 'https', mechanism: 'one Gemini AI Studio call per disputed topic, weekly', checked: 'declared', ref: 'pipelines/protokoll/src/protokoll/parallaxe' },
   { from: 'src-earth', to: 'in-gegenmessung', kind: 'https', mechanism: 'Global Fishing Watch events', checked: 'declared', ref: 'pipelines/ghost-fleet' },
-  { from: 'src-conflict', to: 'in-gegenmessung', kind: 'https', mechanism: 'GDELT DOC 2.0 queries', checked: 'declared', ref: 'pipelines/consensus/refresh.py' },
+  { from: 'src-conflict', to: 'in-gegenmessung', kind: 'https', mechanism: 'GDELT 15-minute raw-file downloads', checked: 'declared', ref: 'pipelines/consensus/refresh.py' },
   { from: 'src-economy', to: 'in-gegenmessung', kind: 'https', mechanism: 'World Bank and Philadelphia Fed series', checked: 'declared', ref: 'pipelines/revision/refresh.py' },
   { from: 'src-scholarly', to: 'in-gegenmessung', kind: 'https', mechanism: 'Wayback snapshots and publisher pages read pre-consent', checked: 'declared', ref: 'pipelines/redaction' },
   { from: 'src-scholarly', to: 'in-scouts', kind: 'https', mechanism: 'OpenAlex, arXiv, ArtBase, dataphys, S+T+ARTS', checked: 'declared', ref: 'pipelines/atlas-scout' },
