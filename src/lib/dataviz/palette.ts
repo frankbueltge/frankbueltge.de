@@ -411,6 +411,78 @@ export const PALETTES: readonly PaletteSet[] = [
     ],
     usedBy: ['src/styles/field-plate.css'],
   },
+  {
+    id: 'society-bands',
+    description:
+      "The Society's four level-bands (/society, SocietyFigure.astro): senses azure, " +
+      'body+builders amber, proto-specialists magenta, reflection (B-brain and K-lines) ' +
+      'violet. The quartet is atelier-outcomes UNCHANGED — same eight hexes, new identities ' +
+      'on a different page (cross-page hue reuse is legal; one hue may never mean two things ' +
+      'on ONE page) — so the 2026-07-31 validator run stands, on a surface subset of the ' +
+      'one it was measured against. The censors wear the declared neutral: suppression has ' +
+      'no colour of its own. A silenced agent is carried by SHAPE (taped X + strikethrough ' +
+      'label), never by colour alone.',
+    slots: [
+      { name: 'senses', light: '#2a78d6', dark: '#256abf' },
+      { name: 'body + builders', light: '#eda100', dark: '#c98500' },
+      { name: 'proto-specialists', light: '#e87ba4', dark: '#d55181' },
+      { name: 'reflection — B-brain and K-lines', light: '#4a3aa7', dark: '#9085e9' },
+    ],
+    neutrals: [
+      {
+        name: 'censors / a silenced agent',
+        light: '#6b7684',
+        dark: '#77828d',
+        note: 'gate squares and ablated nodes; suppression deliberately wears no identity hue',
+      },
+    ],
+    surfaces: { light: ['#f7f8fa'], dark: ['#141414'] },
+    pairs: 'all',
+    validatedOn: '2026-07-31',
+    validator:
+      'dataviz skill validate_palette.js (six checks) — ALL CHECKS PASS per mode/surface, ' +
+      'run 2026-07-31 for atelier-outcomes; society-bands reuses that quartet unchanged on ' +
+      'a subset of the measured surfaces, and palette.test.ts re-derives the distances here',
+    worst: [
+      {
+        mode: 'light',
+        cvd: 13.0,
+        cvdPair: '#e87ba4↔#2a78d6',
+        cvdType: 'protan',
+        tritan: 5.8,
+        normal: 16.3,
+        normalPair: '#2a78d6↔#4a3aa7',
+      },
+      {
+        mode: 'dark',
+        cvd: 10.9,
+        cvdPair: '#d55181↔#256abf',
+        cvdType: 'protan',
+        tritan: 8.7,
+        normal: 16.3,
+        normalPair: '#256abf↔#9085e9',
+      },
+    ],
+    warns: [
+      {
+        hex: '#eda100',
+        mode: 'light',
+        contrast: 2.04,
+        relief:
+          'every node wears its name as a direct label, and the whole roster repeats as a ' +
+          'table (both shipped by SocietyFigure.astro)',
+      },
+      {
+        hex: '#e87ba4',
+        mode: 'light',
+        contrast: 2.53,
+        relief:
+          'every node wears its name as a direct label, and the whole roster repeats as a ' +
+          'table (both shipped by SocietyFigure.astro)',
+      },
+    ],
+    usedBy: ['src/styles/society.css'],
+  },
 ]
 
 /** Lookup by id — WP6 practice packages add their sets to PALETTES and get the same guards. */
