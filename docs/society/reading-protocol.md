@@ -477,7 +477,7 @@
   - §28.5 is the piece's **ontological license**: if minds are what processes do, and only connectivity matters, then 25 deterministic browser agents are mind-stuff *of the same kind*, not a picture of it. Finale/framing text almost writes itself.
   - §28.7 as a scene: **live substitution** — swap one agent's implementation mid-run; nothing observable changes; ticker: "did we return the same society?"
   - §28.8 as an interaction: let the visitor **lasso any subset** of the 25 agents and ask "is this a mind?" — the piece answers with what that sub-society can and cannot know of the rest.
-  - §28.3 for the lab's counter-measurement line: an agent `TREASURER — reduces every drive's claim to one number, then hides what the number cost.` Numbers as masters of disguise is counter-measurement material verbatim.
+  - §28.3 as a possible agent of this piece: `TREASURER — reduces every drive's claim to one number, then hides what the number cost.` Numbers as masters of disguise, staged inside the society itself. (An earlier draft framed this as material "for the lab's counter-measurement line" — struck on 2026-08-05: the experiments are deliberately a loose collection, each standing on its own; this protocol serves The Society and nothing else.)
 - **Shelf check (asleep):** the single strongest waker is §28.5 "Minds are simply what brains do" — it converts the simulation from illustration into instance, which is the piece's whole wager.
 - **Quote:** "Minds are simply what brains do." (§28.5) — "Numbers themselves are the greatest masters of disguise because they perfectly conceal all traces of their origins." (§28.3)
 
