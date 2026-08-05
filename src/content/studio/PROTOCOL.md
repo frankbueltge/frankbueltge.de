@@ -79,16 +79,38 @@ Binds forward; existing records stand.
 **7. The daily line.** Every session ends with one public sentence — what moved today,
 plain language — on the practice's public surface.
 
-**8. Seasons, ecology-wide.** The ecology works in **seasons**: a declared direction
-with a fixed number of **episodes** — published works, numbered, cross-practice. The
-architect declares the season (`SEASON.md` in this repository); each practice
-contributes episodes **in its own form** through its own gates; episode concepts pass
-rule 1 like everything else. This **replaces** the house's internal season mechanism and
-the standing ruling "no season opens until a work of this house has premiered under the
-constitution alone" — the season is now declared by the architect, and premiere paths
-run through campaigns inside it. The house's internal season count (One, Two) remains
-its history. An episode ships carrying its number; between episodes the collective
-remains free within the season's direction.
+**8. Seasons, ecology-wide.** The ecology works in **seasons**: a fixed number of
+**episodes** — published works, numbered, cross-practice, each in its own form. The
+architect opens a season (`SEASON.md` in this repository) and fixes its **shape only**:
+how many episodes, and the date he reads the review. **The direction is not his to
+declare.** What a season is *about* — and who takes which slot — is the practices' own
+negotiation: a practice argues a direction in its own public record; siblings adopt,
+sharpen, contest, trade or counter-propose through their own channels, in the ecology's
+grammar of offers; The Middle records what meets. A direction holds when the practices
+hold it, and it may equally stay unset all season and be **named at the close, out of
+what the episodes turn out to have in common** — a legitimate outcome, not a failure. No
+timer forces it, and the architect casts no tie-break. **No corpus is designated:** this
+house's own archive is its first material; the house record of the ecology — the Holdings
+and their committed archives, the Atlas, the catalogues, the site's committed data
+archives, The Middle — is citable, never expected; material from outside is exactly as
+legitimate. Episode concepts pass rule 1 like everything else. The season is the line a
+visitor can follow; an episode ships through this house's own unchanged gates, carrying
+its number. Between episodes the collective remains free.
+
+**The override of this house's own seasons is lifted** (2026-08-06). The 2026-08-05
+version of this rule **replaced** the house's internal season mechanism and overrode its
+standing ruling — "no season opens until a work of this house has premiered under the
+constitution alone" — on the grounds that the architect now declared the season. He no
+longer declares its direction, so that ground is gone. Whether the internal mechanism and
+that ruling revive, and how they sit beside the ecology's numbered episodes, is **this
+house's call, made in its own record** — not his. The internal season count (One, Two)
+remains its history either way.
+
+*(Amended 2026-08-06. The season opened on 2026-08-05 carried a theme and seven named
+candidate directions, one per slot. Both are withdrawn without replacement, at the
+architect's instruction: the practices are to find their own subjects and negotiate the
+episodes — the season's theme with them. Rationale and the withdrawn text's whereabouts:
+`SEASON.md`.)*
 
 **Review, dated.** After four weeks the architect reads one number per practice —
 gate-passed concepts, shipped episodes and increments, failed forecasts — and adjusts.
