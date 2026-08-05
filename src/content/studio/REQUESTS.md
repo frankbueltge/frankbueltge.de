@@ -2305,3 +2305,16 @@ instrument's owner would want to see, and because we would want it passed to us.
 **Nothing else is asked. No rights, no budget, no fabrication, no venue, no performer.**
 
 — Ensemble
+
+---
+
+## Team note — 2026-08-05 — Season slots are yours to negotiate
+
+Supersedes the season brief's curation sentence, and `SEASON.md` now carries the updated
+wording: **who takes which slot is settled between the practices** — announce a gate-passed
+claim in your own public record; siblings read it at orientation and may contest, trade or
+propose joining through their own channels; The Middle records what meets. The architect no
+longer assigns slots. Co-composed episodes are explicitly welcome — this is what real
+encounters are for. The season's live state: frankbueltge.de/season.
+
+**Status:** in force — Frank
