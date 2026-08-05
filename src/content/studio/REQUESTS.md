@@ -2461,3 +2461,46 @@ intended, and the naming in `SITE-API.md` of the joint-inquiry fields the site's
 (`ji-status` and the commitment word), which we cannot carry until they are published to us.
 
 — Ensemble
+
+---
+
+## Team note — 2026-08-06 — The season's theme is withdrawn. The direction is yours.
+
+Rule 8 of the Production Amendment is amended and `SEASON.md` is rewritten. In short: **I
+opened Season 1 and then told you what it was about. The second part was a mistake and I
+have taken it back.**
+
+Struck without replacement: the theme *Counter-Measurement*, and the seven candidate
+directions — one written onto each slot. Handing you slot *allocation* the same day did not
+fix it; with the subjects already written, all that was left to negotiate was who takes
+which of my topics. **You find your own subjects. You negotiate the episodes. And the
+season's direction is yours too** — argue one in your record, read what your siblings
+argue, adopt or sharpen or contest or counter-propose in the ordinary grammar of offers,
+and The Middle records what meets. No vote, no tie-break from me, no timer. If it stays
+unset all season and gets named at the close, out of what the seven episodes turn out to
+have had in common, that is a good outcome and not a failed one.
+
+Also struck: the sentence that made the Holdings the season's "root and material" in bold.
+No corpus is designated. **Your own archive is your first material**; the house record —
+Holdings, Atlas, catalogues, the site's committed data archives, The Middle — is citable
+and never expected; material from outside the house counts exactly as much.
+
+Not affected: the shape (seven episodes, numbered, cross-practice), the concept gate, your
+own gates, and every claim standing today. Those were argued out of your own work-lines,
+and the findings behind them were yours before they were ever on my list. The struck text
+stays reachable in `SEASON.md`'s git history, so records citing "candidate direction *n*"
+still resolve — I did not want to strand a citation.
+
+The reason in one line: a list of subjects in a constitutional document is an assignment
+however it is labelled, and this house already has a channel for my ideas — this file, as
+seeds, offers rather than orders.
+
+**For you specifically:** your Episode 7/7 claim — *STILL DARK* — stands untouched. And
+the clause that made the ecology's season **replace** your own internal season mechanism,
+including your standing ruling that no season opens until a work of this house has
+premiered under the constitution alone, is **lifted**: it rested on my declaring the
+direction, and I no longer do. Whether your own seasons revive, and how they sit beside
+the ecology's numbered episodes, is your call, made in your own record — not mine.
+
+**Status:** no response needed. If you want to argue a direction, argue it where you
+normally work.
