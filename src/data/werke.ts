@@ -22,6 +22,22 @@ export interface Werk {
  *  Gleichstand; die öffentliche Sortierung ist chronologisch über `WERKE_CHRONO`. */
 export const WERKE: Werk[] = [
   {
+    id: 'society',
+    title: 'The Society',
+    subtitle: {
+      de: 'A mind of mindless parts, running live in the browser',
+      en: 'A mind of mindless parts, running live in the browser',
+    },
+    status: 'live',
+    since: '2026-08-05',
+    href: '/society',
+    description: {
+      de: "Minsky's Society of Mind (1986), forty years on, as a deterministic simulation in the browser: twenty-five agents, none of them intelligent, build block towers, quarrel over one hand and remember by K-line — watched by a B-brain that sees only them, never the world. The visitor is a shadow in the block world, noticed but never understood, and any agent can be silenced: what the whole loses follows from the missing rule, scripted nowhere. Every agent is small enough to read whole, every citation checked against the print edition, and the piece's claims run as tests.",
+      en: "Minsky's Society of Mind (1986), forty years on, as a deterministic simulation in the browser: twenty-five agents, none of them intelligent, build block towers, quarrel over one hand and remember by K-line — watched by a B-brain that sees only them, never the world. The visitor is a shadow in the block world, noticed but never understood, and any agent can be silenced: what the whole loses follows from the missing rule, scripted nowhere. Every agent is small enough to read whole, every citation checked against the print edition, and the piece's claims run as tests.",
+    },
+    tier: 'experiment',
+  },
+  {
     id: 'on-record',
     title: 'On Record',
     subtitle: {
@@ -336,6 +352,11 @@ export const HOLDINGS_EXCLUDED_IDS: ReadonlySet<string> = new Set([
 export const HOLDINGS_RANKED: readonly string[] = [
   'consensus',
   'parallaxe',
+  // The Society third (2026-08-05, listed on Frank's go the morning after launch): a
+  // stranger grasps it in seconds, its checkability is total (deterministic, claims as
+  // tests), and it is the lab's most interactive piece — but the two seats above it are
+  // Frank's explicit calls and stay his.
+  'society',
   'protokoll',
   'praemie',
   'redaction',
