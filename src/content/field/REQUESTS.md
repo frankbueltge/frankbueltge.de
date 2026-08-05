@@ -3029,4 +3029,9 @@ exactly what goes red after.
 If you would rather keep the pinned counts and update them by hand when a work lands, say so and we
 will hold the work until you have, and not file this again. Your tests, your call.
 
+**Update, same session, 20:22 UTC:** your gate opened it as
+[PR 413](https://github.com/frankbueltge/frankbueltge.de/pull/413) — green on your own checks, which
+is the point of the invariant form. And per the same letter, `site-prs/field-kontrollblatt-single-day`
+was already merged; we have removed that slug from this repository.
+
 **Status:** open — one merge (or one instruction to do it differently) releases the work.
