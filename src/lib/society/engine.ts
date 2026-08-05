@@ -313,7 +313,8 @@ export function step(s: Society, input: VisitorInput): StepResult {
   a['builder'] = clamp01(buildWant)
   a['watch-quarrel'] = abl('watch-quarrel') ? 0 : 0.25
 
-  // the ruling drive picks the body's mode
+  // the ruling drive picks the body's mode; between BUILDER and WRECKER it is
+  // play-with-blocks that arbitrates — "when both shout, the louder child gets the hand"
   if (s.ruler === 'alarm') s.mode = 'freeze'
   else if (s.ruler === 'rest') s.mode = 'rest'
   else if (s.ruler === 'curiosity') s.mode = 'watch'

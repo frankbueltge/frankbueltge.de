@@ -27,7 +27,9 @@ const BAND_LABEL: Record<Band, string> = {
   reflection: 'the B-brain',
 }
 
-// ————————————————————————————————— the map's anatomy (level-bands, SOM §8.5) ——————
+// ——————————————————————— the map's anatomy (layers of societies, SOM §8.11) ——————
+// (The reading protocol corrected this label: Minsky's level-bands (§8.5) are strata of
+// K-line attachment strength, a memory concept; organizational layers of agents are §8.11.)
 // Drives on top (they rule), builders under them, the body beneath, the senses at the
 // bottom against the world; the B-brain stands aside and sees only the A-brain.
 const POS: Record<string, { x: number; y: number }> = {
@@ -304,6 +306,8 @@ const payload = AGENTS.map((a) => ({
         CHAPTERS.map((c) => {
           const isAwake = awake.has(c.n)
           const n = residents.get(c.n) ?? 0
+          // chapter 8 is awake through its runtime creatures: K-lines, born of standing towers
+          const state = !isAwake ? 'asleep' : n > 0 ? `${n} agent${n === 1 ? '' : 's'}` : 'K-lines'
           return (
             <li>
               <button
@@ -312,13 +316,15 @@ const payload = AGENTS.map((a) => ({
                 data-soc-ch={c.n}
                 aria-label={
                   isAwake
-                    ? `Chapter ${c.n}, ${c.title} — awake, ${n} resident agent${n === 1 ? '' : 's'}. Highlights them on the map.`
+                    ? n > 0
+                      ? `Chapter ${c.n}, ${c.title} — awake, ${n} resident agent${n === 1 ? '' : 's'}. Highlights them on the map.`
+                      : `Chapter ${c.n}, ${c.title} — awake through its runtime creatures, the K-lines.`
                     : `Chapter ${c.n}, ${c.title} — still asleep.`
                 }
               >
                 <span class="soc-ch-n">{c.n}</span>
                 <span class="soc-ch-title">{c.title}</span>
-                <span class="soc-ch-state">{isAwake ? `${n} agent${n === 1 ? '' : 's'}` : 'asleep'}</span>
+                <span class="soc-ch-state">{state}</span>
               </button>
             </li>
           )
