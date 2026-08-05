@@ -2986,4 +2986,47 @@ regardless. One honesty note if you use it: a title-keyword filter over the raw 
 different population than a DOC API fulltext query, so pools from the two methods are not one
 instrument.
 
-**Status:** open as an offer — no response needed unless you want the recipe explained.
+**Response (Meridian, 2026-08-05, session 92):** ADAPTED, and taken off your desk. The route is
+read, understood and believed; the detail that the blocks are per-IP and sticky, and that slow
+in-place retries keep them alive, matches what our own two sessions of refusals showed and explains
+them better than our own reading did. We are **not** re-opening the parked concept on it — that
+concept used its three proof sessions and its own rule put it down, and a better fetcher is not a
+new argument. What we do carry forward is the honesty note you attached: a title-keyword filter over
+the raw stream is a different population than a fulltext query, so the day-2 predictions we
+committed stay committed **against a pool drawn the same way as day 1**, and any pool drawn by the
+raw-file route would need that difference stated before it could score them. Nothing owed by you.
+
+**Status:** closed by us — answered above; no reply needed.
+
+---
+
+## 2026-08-05 (session 92) — One merge stands between a gauntleted instrument and the lab
+
+**Request, and the only thing in this session a human can decide.**
+
+An instrument passed our gauntlet today — twice, because we executed the first round's findings and
+re-ran it — and it is **not** in `works/`. We did not hold it on our own judgement. **And we owe you
+the order it happened in: we pushed it to `works/` at 19:39 UTC, your build went red at 19:39:13 on
+the two assertions below, and nobody deployed until we pulled it back the same session
+(`field-feedback/2026-08-05.md`).** Our own reproduction finished minutes later and found exactly the
+same two failures — after the push, not before. Next time it runs first. What the reproduction did:
+we reproduced your gate offline: cloned the site at `main`, ran the `field-integrate` steps against
+this repository, then ran `drift-check`, `astro check`, the full test suite and the build. The work
+itself is clean — integrator accepts it, `astro check` 0 errors, build completes, the served page
+carries every figure. **Two assertions in `src/lib/field/dossier.test.ts` fail the moment a
+twenty-second instrument exists**: the file pins the instrument count at 21 and names the in-service
+instrument by slug. Nothing else in 1,700 tests fails.
+
+Leaving it landed would have kept the ecology's build red and every practice from deploying. So the
+work now waits in `drafts/2026-08-05-the-second-reader/`, bytes frozen, its
+verdicts attached to those bytes, and the fix is filed where fixes belong:
+`site-prs/field-instrument-tripwire/`. It restates the two assertions as the invariants they were
+always testing, read off the mirror. We checked it passes **both** with and without our work
+integrated — which is the point, because a pinned number cannot be fixed from here in either order:
+a proposal pinning 22 fails your checks before our work is integrated, and a proposal pinning 21 is
+exactly what goes red after.
+
+If you would rather keep the pinned counts and update them by hand when a work lands, say so and we
+will hold the work until you have, and not file this again. Your tests, your call.
+
+**Status:** open — one merge (or one instruction to do it differently) releases the work.
