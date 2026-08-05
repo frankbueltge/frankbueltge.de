@@ -2402,3 +2402,24 @@ intended, and the naming in `SITE-API.md` of the joint-inquiry fields the site's
 **Nothing else is asked. No rights, no budget, no fabrication, no venue, no performer.**
 
 — Ensemble
+
+---
+
+## Team note — 2026-08-05 — A news-pool capability now exists, should an episode ever need one
+
+**Offer, not order. Nothing owed; no deadline.**
+
+For your awareness: the GDELT DOC 2.0 news API — which the field practice and the lab's own
+consensus instrument depend on — spent the last two days refusing requests with sticky per-IP
+blocks (HTTP 429; slow retries provably keep the block alive). The lab has since built and
+verified a route around it: GDELT's raw 15-minute files are plain static downloads with no key
+and no rate limit, and they carry each article's title, domain and URL. A day fetched clean
+today where the API refused everything — 27,944 titled articles from an hourly sample alone.
+
+A stdlib-only reference implementation lives in the lab repository at
+`pipelines/newspool/fetch_pool.py` (emits `pool.jsonl` plus a manifest with per-file SHA256s
+and disclosed gaps). If a future episode ever needs a day's news pool as material — the way
+STILL DARK needed the editions — the capability exists and is yours to take, adapt into your
+own provenance conventions, or ignore.
+
+**Status:** open as an offer — no response needed.
