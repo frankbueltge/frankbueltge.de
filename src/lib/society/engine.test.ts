@@ -16,7 +16,6 @@ import {
   type VisitorInput,
 } from './engine'
 import type { WorldEvent } from './world'
-import { GOAL_HEIGHT } from './world'
 import { AGENTS, awakeChapters, CHAPTERS } from './agents'
 
 const SEED = 20260805
@@ -59,12 +58,12 @@ describe('competence without a competent part', () => {
     expect(s.kLines[0].agents.length).toBeGreaterThan(0)
   })
 
-  it('the censor holds: an intact society only wrecks finished towers', () => {
+  it('the censor holds: an intact society only wrecks finished work', () => {
     const s = makeSociety(SEED)
     const events = run(s, 12000)
     const wrecks = events.filter((e) => e.kind === 'wrecked')
     for (const wreckEvent of wrecks) {
-      expect('height' in wreckEvent && wreckEvent.height).toBeGreaterThanOrEqual(GOAL_HEIGHT)
+      expect('complete' in wreckEvent && wreckEvent.complete).toBe(true)
     }
   })
 })
@@ -85,7 +84,7 @@ describe('what silencing one small agent costs', () => {
     const s = makeSociety(SEED)
     silence(s, 'censor-wreck')
     const events = run(s, 12000)
-    const early = events.filter((e) => e.kind === 'wrecked' && e.height < GOAL_HEIGHT)
+    const early = events.filter((e) => e.kind === 'wrecked' && !e.complete)
     expect(early.length).toBeGreaterThan(0)
   })
 
@@ -142,11 +141,56 @@ describe('the visitor is perceived, never understood', () => {
   })
 })
 
+describe('stage 2 — the transfer (§8.6)', () => {
+  it('after two towers the society turns to the arch — and its first move goes to the old site', () => {
+    const s = makeSociety(SEED)
+    const events = run(s, 30000)
+    const order = events.map((e) => e.kind)
+    const misfireAt = order.indexOf('misfire')
+    const archAt = order.indexOf('archComplete')
+    // the arch gets built at all…
+    expect(archAt).toBeGreaterThan(-1)
+    // …the practiced society's first arch move follows the tower K-lines to the old site…
+    expect(misfireAt).toBeGreaterThan(-1)
+    expect(misfireAt).toBeLessThan(archAt)
+    // …because two towers really did come first, and the arch is remembered afterwards
+    expect(s.kLines.filter((k) => k.kind === 'tower').length).toBeGreaterThanOrEqual(2)
+    expect(s.kLines.filter((k) => k.kind === 'arch').length).toBeGreaterThanOrEqual(1)
+  })
+
+  it('a society that never built towers reaches the arch without the detour', () => {
+    // silencing BUILDER routes play to the arch from the morning: no tower K-lines,
+    // no habit, no misfire — the detour belongs to memory, not to the arch
+    const s = makeSociety(SEED)
+    silence(s, 'builder')
+    const events = run(s, 30000)
+    expect(events.some((e) => e.kind === 'archComplete')).toBe(true)
+    expect(events.some((e) => e.kind === 'misfire')).toBe(false)
+    expect(s.kLines.filter((k) => k.kind === 'tower').length).toBe(0)
+  })
+
+  it('without ARCHER, this society builds towers until the end of its days', () => {
+    const s = makeSociety(SEED)
+    silence(s, 'archer')
+    const events = run(s, 20000)
+    expect(events.some((e) => e.kind === 'archComplete')).toBe(false)
+    expect(events.some((e) => e.kind === 'towerComplete')).toBe(true)
+  })
+
+  it('without SEE-ARCH, three parts never become an arch', () => {
+    const s = makeSociety(SEED)
+    silence(s, 'see-arch')
+    const events = run(s, 30000)
+    expect(events.some((e) => e.kind === 'archComplete')).toBe(false)
+  })
+})
+
 describe('the roster reflects the book', () => {
-  it('is exactly the twenty-five agents the page claims', () => {
-    // the prose on /society, the table caption and the map aria-label all say twenty-five;
-    // this pins the number so the copy can never drift from the roster again
-    expect(AGENTS.length).toBe(25)
+  it('is exactly the twenty-seven agents the page claims', () => {
+    // the prose on /society, the table caption and the map aria-label all say twenty-seven
+    // (stage 2 added ARCHER and SEE-ARCH); this pins the number so the copy can never
+    // drift from the roster again
+    expect(AGENTS.length).toBe(27)
   })
 
   it('every agent cites a real chapter of the 1986 edition', () => {
