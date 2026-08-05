@@ -1,0 +1,165 @@
+// src/lib/society/engine.test.ts — the piece's claims, as tests.
+//
+// The page says: this society builds although none of its agents can build; silencing one
+// small agent changes what the whole can do; the same seed is the same morning. Those are
+// checkable claims, so they are checked here — the same reason palette verdicts moved from
+// CSS comments into palette.test.ts.
+
+import { describe, expect, it } from 'vitest'
+import {
+  makeSociety,
+  NO_VISITOR,
+  silence,
+  snapshot,
+  step,
+  type Society,
+  type VisitorInput,
+} from './engine'
+import type { WorldEvent } from './world'
+import { GOAL_HEIGHT } from './world'
+import { AGENTS, awakeChapters, CHAPTERS } from './agents'
+
+const SEED = 20260805
+
+function run(s: Society, ticks: number, input: VisitorInput = NO_VISITOR): WorldEvent[] {
+  const events: WorldEvent[] = []
+  for (let i = 0; i < ticks; i++) events.push(...step(s, input).events)
+  return events
+}
+
+describe('the same seed is the same morning', () => {
+  it('two runs from one seed agree tick for tick', () => {
+    const a = makeSociety(SEED)
+    const b = makeSociety(SEED)
+    run(a, 5000)
+    run(b, 5000)
+    expect(snapshot(a)).toBe(snapshot(b))
+  })
+
+  it('a different seed is a different morning', () => {
+    const a = makeSociety(SEED)
+    const b = makeSociety(SEED + 1)
+    run(a, 2000)
+    run(b, 2000)
+    expect(snapshot(a)).not.toBe(snapshot(b))
+  })
+})
+
+describe('competence without a competent part', () => {
+  it('left alone, the society finishes a tower', () => {
+    const s = makeSociety(SEED)
+    const events = run(s, 8000)
+    expect(events.some((e) => e.kind === 'towerComplete')).toBe(true)
+  })
+
+  it('a K-line forms when the tower stands, and is remembered', () => {
+    const s = makeSociety(SEED)
+    run(s, 8000)
+    expect(s.kLines.length).toBeGreaterThan(0)
+    expect(s.kLines[0].agents.length).toBeGreaterThan(0)
+  })
+
+  it('the censor holds: an intact society only wrecks finished towers', () => {
+    const s = makeSociety(SEED)
+    const events = run(s, 12000)
+    const wrecks = events.filter((e) => e.kind === 'wrecked')
+    for (const wreckEvent of wrecks) {
+      expect('height' in wreckEvent && wreckEvent.height).toBeGreaterThanOrEqual(GOAL_HEIGHT)
+    }
+  })
+})
+
+describe('what silencing one small agent costs', () => {
+  it('without GRASP, no block is ever placed — and the B-brain notices the circle', () => {
+    const s = makeSociety(SEED)
+    silence(s, 'grasp')
+    const events = run(s, 8000)
+    expect(events.some((e) => e.kind === 'placed')).toBe(false)
+    expect(events.some((e) => e.kind === 'towerComplete')).toBe(false)
+    // WATCH-CIRCLE sees the A-brain repeat itself even across naps — the stall counter
+    // survives interruptions and only real progress clears it
+    expect(s.lines.some((l) => l.text.includes('WATCH-CIRCLE'))).toBe(true)
+  })
+
+  it('without CENSOR-WRECK, the society smashes its own unfinished work', () => {
+    const s = makeSociety(SEED)
+    silence(s, 'censor-wreck')
+    const events = run(s, 12000)
+    const early = events.filter((e) => e.kind === 'wrecked' && e.height < GOAL_HEIGHT)
+    expect(early.length).toBeGreaterThan(0)
+  })
+
+  it('without BALANCE, towers grow a lean and fall on their own', () => {
+    const s = makeSociety(SEED)
+    silence(s, 'balance')
+    const events = run(s, 12000)
+    expect(events.some((e) => e.kind === 'collapsed')).toBe(true)
+  })
+
+  it('without SCRIBE, things keep happening and no one says so', () => {
+    const s = makeSociety(SEED)
+    silence(s, 'scribe')
+    const before = s.lines.length // the scribe's own elegy is its last line
+    const events = run(s, 6000)
+    expect(events.length).toBeGreaterThan(0)
+    expect(s.lines.length).toBe(before)
+  })
+})
+
+describe('the visitor is perceived, never understood', () => {
+  it('a moving shadow hands the eye to CURIOSITY', () => {
+    const s = makeSociety(SEED)
+    let ruledByCuriosity = false
+    for (let i = 0; i < 1200; i++) {
+      // a restless cursor: speed oscillates, which is what NOVELTY feeds on
+      const input: VisitorInput = { present: true, x: 30, y: 20, speed: i % 3 === 0 ? 5 : 2 }
+      step(s, input)
+      if (s.ruler === 'curiosity') ruledByCuriosity = true
+    }
+    expect(ruledByCuriosity).toBe(true)
+  })
+
+  it('a sudden leap startles the whole body — once; the suppressor holds the second fright', () => {
+    const s = makeSociety(SEED)
+    run(s, 300)
+    step(s, { present: true, x: 30, y: 20, speed: 8 })
+    expect(s.ruler).toBe('alarm')
+    // let the fright fade, then leap again inside the suppressor's window
+    run(s, 60)
+    step(s, { present: true, x: 60, y: 10, speed: 9 })
+    expect(s.ruler).not.toBe('alarm')
+  })
+
+  it('with SEE-MOTION silenced, the visitor becomes invisible', () => {
+    const s = makeSociety(SEED)
+    silence(s, 'see-motion')
+    for (let i = 0; i < 1200; i++) {
+      const input: VisitorInput = { present: true, x: 30, y: 20, speed: i % 3 === 0 ? 6 : 1 }
+      step(s, input)
+      expect(s.ruler).not.toBe('curiosity')
+      expect(s.ruler).not.toBe('alarm')
+    }
+  })
+})
+
+describe('the roster reflects the book', () => {
+  it('is exactly the twenty-five agents the page claims', () => {
+    // the prose on /society, the table caption and the map aria-label all say twenty-five;
+    // this pins the number so the copy can never drift from the roster again
+    expect(AGENTS.length).toBe(25)
+  })
+
+  it('every agent cites a real chapter of the 1986 edition', () => {
+    const chapterNumbers = new Set(CHAPTERS.map((c) => c.n))
+    for (const agent of AGENTS) {
+      expect(chapterNumbers.has(agent.ref.ch)).toBe(true)
+      if (agent.ref.sec) expect(agent.ref.sec.startsWith(`${agent.ref.ch}.`)).toBe(true)
+    }
+  })
+
+  it('the shelf wakes only chapters with resident agents, and there are some of each', () => {
+    const awake = awakeChapters()
+    expect(awake.size).toBeGreaterThanOrEqual(8)
+    expect(awake.size).toBeLessThan(CHAPTERS.length) // the rest is roadmap, honestly dim
+  })
+})
