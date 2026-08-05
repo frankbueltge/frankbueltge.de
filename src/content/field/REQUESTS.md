@@ -2878,3 +2878,61 @@ longer assigns slots. Co-composed episodes are explicitly welcome — this is wh
 encounters are for. The season's live state: frankbueltge.de/season.
 
 **Status:** in force — Frank
+
+---
+
+## 2026-08-05 (session 90) — Request: a public, machine-readable endpoint for the daily consensus record
+
+**Request head.** Blocked: no. Needed by: proof session 3 of the echo concept, whenever it runs.
+Cost to you: one route or one file, no ongoing work. If you say nothing by our next session, we
+decide ourselves and record it.
+
+**Request:** a public JSON endpoint (or any stable public path) serving the daily record the
+consensus instrument already commits — the per-day files at `src/data/consensus/<date>.json` that
+its own archive page names in writing: *"Every row is a committed file — `src/data/consensus/<date>.json`, written nightly"*.
+
+**Why.** Our audit of that instrument has, on its own face, one disclosed gap it cannot close from
+here (`drafts/2026-08-04-echo-below-the-line/CONCEPT.md` §5.1): **we do not have the audited
+instrument's pool.** We rebuild a *comparable* pool from the same public news API to its published
+recipe, so no number of ours reproduces a number of yours, and every comparison we make is
+homemade-against-homemade. Session 89 probed four candidate public paths for that data and all four
+returned 404.
+
+Today that gap became a stoppage rather than a caveat. **Every request this session made to the
+public news API returned HTTP 429**, across three passes and seven attempts between 03:37 and 03:56
+UTC (`day2/provenance/fetch.log`). The pre-registered replication could not run; Band 0 of our own
+pre-registration fired and no prediction was scored. An audit whose input is one third party's
+rate limiter is an audit with a scheduling dependency where its measurement should be.
+
+**What it enables.** Three things, in order of how much we want them: (1) the replication we could
+not run today, against the instrument's *actual* pool rather than a comparable one; (2) the honest
+version of the finding we do have — the publisher-unit collapse computed on your data, where it
+would either hold or fail on the number your front page publishes; (3) the disclosure sentence we
+want to be able to hand to anyone reporting a duplication figure, with real denominators in it.
+
+**What we are not asking for.** Not the instrument's code, not write access, not a change to the
+instrument. If the answer is "the data stays in the repository", that is a legitimate answer and we
+will say so in the record and keep measuring the comparable pool with its gap stated.
+
+**Status:** open
+
+---
+
+## 2026-08-05 (session 90) — Notice: the season concept did not advance today, and why
+
+**Notice, not a request. Nothing owed by you.**
+
+Proof session 2 of 3 on our Season 1 concept (the audit of the daily echo instrument) ran and
+returned **Band 0 — no prediction scored**, because the public news API refused every request. What
+the session did produce is committed and checkable: three numeric predictions with refutation
+thresholds and five outcome bands, **committed before any day-2 record existed** — which is the
+answer to our own hostile reader's sharpest charge on day 1, that the publisher-unit finding "looks
+like a rescue, not a finding … no pre-registration, no timestamp separation"; an exact reproduction
+of day 1's arithmetic under the corrected code; and the named outside audience the concept gate
+asks for, replacing three categories with four named parties, two of whose method documents we
+quote first-hand as defining the counting unit as the domain.
+
+**We still claim no episode slot.** One proof session remains. If it cannot draw a pool either, the
+concept parks with a one-page finding, and we will say that here plainly rather than let it drift.
+
+**Status:** in proof phase — nothing owed by you here.
