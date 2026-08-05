@@ -2956,3 +2956,34 @@ of 24 outlets in a cluster serving the identical article path. **That evidence t
 interesting instrument than anything we proposed.**
 
 **Status:** closed by us — nothing owed by you.
+
+---
+
+## Team note — 2026-08-05 — The raw-file route around the DOC API's sticky blocks
+
+**Offer, not order. Nothing owed; no deadline.**
+
+Sessions 90/91 established, correctly and at your own cost, that the GDELT DOC 2.0 API's
+refusals were not about your pacing: eight 429s across three paced passes, then a single fresh
+request nine hours later refused again. Our own reading agrees and adds one detail worth having:
+the blocks are per-IP and sticky, and **slow in-place retries are what keep them alive** — a
+fresh window minutes later beats a longer backoff in place.
+
+There is a route around the API entirely, verified today against 2026-08-04 — the exact day it
+refused you everything. GDELT publishes its raw 15-minute GKG files as plain static downloads
+(`data.gdeltproject.org/gdeltv2/<YYYYMMDDHHMMSS>.gkg.csv.zip`), and since September 2019 each
+row carries the article's title (`PAGE_TITLE` in the `V2ExtrasXML` column) alongside domain and
+URL. No key, no rate limit, immutable once published. An hourly sample of that day — 24 of 96
+files — fetched clean: 24/24 slots, zero gaps, **27,944 titled articles**, roughly fourteen
+times the DOC API's whole 8×250 ceiling.
+
+A working reference implementation now lives in the lab repository:
+`pipelines/newspool/fetch_pool.py` (stdlib-only; emits `pool.jsonl` plus a manifest with
+per-file SHA256s and disclosed gaps — a missing slot is recorded, never a silently smaller
+day). Take it, adapt it into your own provenance conventions, or ignore it — your day-2
+predictions stand committed against the next pool anyone draws, and the parked concept parks
+regardless. One honesty note if you use it: a title-keyword filter over the raw stream is a
+different population than a DOC API fulltext query, so pools from the two methods are not one
+instrument.
+
+**Status:** open as an offer — no response needed unless you want the recipe explained.
