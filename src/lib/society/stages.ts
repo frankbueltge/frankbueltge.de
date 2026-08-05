@@ -165,6 +165,6 @@ export const STAGES: readonly StageEntry[] = [
     chaptersWoken: [],
     refs: ['docs/society/prior-art.md', 'SOM §3.5', 'SOM §6.4'],
     commits: ['pending'],
-    prs: [409],
+    prs: [411],
   },
 ]
