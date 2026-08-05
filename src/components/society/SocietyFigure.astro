@@ -168,6 +168,11 @@ const payload = AGENTS.map((a) => ({
         <g class="soc-hand" data-soc-hand aria-hidden="true">
           <path d="M -7 -14 L -7 0 L -4 6 M 7 -14 L 7 0 L 4 6 M -7 -14 L 7 -14"></path>
         </g>
+        {/* the camera (stage 3): looks at the day's dramas and says one line about them */}
+        <g class="soc-moment" data-soc-moment aria-hidden="true">
+          <circle class="soc-moment-ring" data-soc-moment-ring cx="0" cy="150" r="34"></circle>
+          <text class="soc-moment-caption" data-soc-moment-caption x="200" y="26"></text>
+        </g>
         <text class="soc-nojs-note" x="200" y="120">
           The world wakes with JavaScript. The record below stands without it.
         </text>
@@ -180,7 +185,7 @@ const payload = AGENTS.map((a) => ({
     <aside class="soc-ticker-wrap" aria-label="What the scribe writes">
       <h3 class="soc-ticker-head">The scribe's line — the only voice this mind has</h3>
       <ol class="soc-ticker" data-soc-ticker aria-live="polite">
-        <li>A morning. The society wakes wanting to play.</li>
+        <li class="soc-line-note">A morning. The society wakes wanting to play.</li>
       </ol>
     </aside>
   </div>
@@ -399,6 +404,7 @@ const payload = AGENTS.map((a) => ({
     type VisitorInput,
   } from '@/lib/society/engine'
   import { GOAL_HEIGHT } from '@/lib/society/world'
+  import { pickMoment } from '@/lib/society/moments'
   import { onMotionChange, readJsonScript, reducedMotion, setVars } from '@/lib/dataviz/runtime'
 
   interface AgentCard {
@@ -571,11 +577,26 @@ const payload = AGENTS.map((a) => ({
       renderCard()
     })
 
-    function appendLine(text: string) {
+    function appendLine(text: string, kind: 'note' | 'elegy' | 'wake' = 'note') {
       const li = document.createElement('li')
       li.textContent = text
+      li.className = `soc-line-${kind}`
       ticker.appendChild(li)
       while (ticker.children.length > 7) ticker.removeChild(ticker.firstChild!)
+    }
+
+    // ————————————————————————————— the camera ——————————————————————————————
+    // Stage 3: the world panel looks at its own dramas. Reduced motion keeps the caption
+    // (it carries meaning) and drops the ring's travel and pulse (they do not).
+    const momentG = root.querySelector<SVGGElement>('[data-soc-moment]')!
+    const momentRing = root.querySelector<SVGCircleElement>('[data-soc-moment-ring]')!
+    const momentCaption = root.querySelector<SVGTextElement>('[data-soc-moment-caption]')!
+    let momentUntil = 0
+    function showMoment(caption: string, x: number, holdMs: number, now: number) {
+      momentCaption.textContent = caption
+      momentRing.setAttribute('cx', String(WX(x)))
+      momentG.classList.add('soc-moment-on')
+      momentUntil = now + holdMs
     }
 
     // ————————————————————————————— the loop ————————————————————————————————
@@ -652,9 +673,10 @@ const payload = AGENTS.map((a) => ({
       const v = society.a[selected] ?? 0
       setVars(card.meter, { '--soc-meter': `${Math.round(v * 100)}%` })
 
-      // new scribe lines
+      // new scribe lines — an elegy arrives marked, and holds the ticker for a beat
       while (linesSeen < society.lines.length) {
-        appendLine(society.lines[linesSeen].text)
+        const line = society.lines[linesSeen]
+        appendLine(line.text, line.kind)
         linesSeen++
       }
     }
@@ -665,8 +687,14 @@ const payload = AGENTS.map((a) => ({
       // never spiral after a background tab: cap the debt
       if (acc > 1500) acc = 1500
       while (acc >= SIM_MS) {
-        step(society, tickInput())
+        const { events } = step(society, tickInput())
+        const moment = pickMoment(events)
+        if (moment) showMoment(moment.caption, moment.x, moment.holdMs, now)
         acc -= SIM_MS
+      }
+      if (momentUntil && now > momentUntil) {
+        momentG.classList.remove('soc-moment-on')
+        momentUntil = 0
       }
       // reduced motion: the mind still lives, the page repaints gently
       const drawEvery = reduce ? 400 : 0

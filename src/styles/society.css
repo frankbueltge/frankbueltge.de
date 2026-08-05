@@ -158,7 +158,74 @@
   border-top: 0;
 }
 .soc-ticker li:last-child {
-  color: var(--soc-reflect);
+  color: var(--soc-ink);
+}
+/* the elegy: the one line a silenced agent leaves behind. Stage 3 gives it its weight —
+   set apart by a rule and italics, never by colour alone (it must read the same to a
+   reader who sees no hue at all). */
+.soc-ticker li.soc-line-elegy {
+  font-style: italic;
+  padding-left: 0.55rem;
+  border-left: 2px solid var(--soc-reflect);
+  color: var(--soc-ink);
+}
+.soc-ticker li.soc-line-elegy::before {
+  content: '— ';
+  color: var(--soc-ink-muted);
+}
+.soc-ticker li.soc-line-wake {
+  color: var(--soc-ink-muted);
+}
+
+/* the camera: a ring where it happened, a caption above the world */
+.soc-moment {
+  opacity: 0;
+  transition: opacity 400ms ease;
+}
+.soc-moment-on {
+  opacity: 1;
+}
+.soc-moment-ring {
+  fill: none;
+  stroke: var(--soc-ink);
+  stroke-width: 1.2;
+  opacity: 0.5;
+  transition: cx 600ms ease;
+}
+.soc-moment-on .soc-moment-ring {
+  animation: soc-moment-pulse 2.2s ease-out infinite;
+}
+.soc-moment-caption {
+  fill: var(--soc-ink);
+  font-size: 11px;
+  text-anchor: middle;
+  font-family: 'JetBrains Mono Variable', ui-monospace, monospace;
+  letter-spacing: 0.02em;
+}
+@keyframes soc-moment-pulse {
+  0% {
+    r: 26;
+    opacity: 0.55;
+  }
+  70% {
+    r: 40;
+    opacity: 0.06;
+  }
+  100% {
+    r: 40;
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  /* the caption carries the meaning and stays; the ring stops travelling and pulsing */
+  .soc-moment,
+  .soc-moment-ring {
+    transition: none;
+  }
+  .soc-moment-on .soc-moment-ring {
+    animation: none;
+    opacity: 0.4;
+  }
 }
 
 /* ————————————————————————————— the map ————————————————————————————————— */

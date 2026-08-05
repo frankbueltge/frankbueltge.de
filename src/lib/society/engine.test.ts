@@ -95,6 +95,26 @@ describe('what silencing one small agent costs', () => {
     expect(events.some((e) => e.kind === 'collapsed')).toBe(true)
   })
 
+  it('an elegy arrives marked as one — the ticker must be able to give it its weight', () => {
+    const s = makeSociety(SEED)
+    run(s, 400)
+    silence(s, 'balance')
+    const elegies = s.lines.filter((l) => l.kind === 'elegy')
+    expect(elegies).toHaveLength(1)
+    expect(elegies[0].text).toContain('BALANCE is silent')
+    // ordinary reporting is never dressed as mourning
+    expect(s.lines.filter((l) => l.kind === 'note').length).toBeGreaterThan(0)
+  })
+
+  it('the scribe’s own elegy is the last thing it writes, and it is marked', () => {
+    const s = makeSociety(SEED)
+    run(s, 400)
+    silence(s, 'scribe')
+    const last = s.lines[s.lines.length - 1]
+    expect(last.kind).toBe('elegy')
+    expect(last.text).toContain('SCRIBE is silent')
+  })
+
   it('without SCRIBE, things keep happening and no one says so', () => {
     const s = makeSociety(SEED)
     silence(s, 'scribe')

@@ -57,6 +57,14 @@ export interface KLine {
 export interface TickerLine {
   tick: number
   text: string
+  /**
+   * What the scribe is doing. 'note' is its ordinary reporting; 'elegy' is the line a
+   * silenced agent leaves behind, and 'wake' its return. Stage 3 gives the elegy its own
+   * weight in the ticker — the prior-art searches found the elegy to be the one gesture
+   * this piece owns outright (docs/society/prior-art.md), and it was the weakest-staged
+   * thing on the page.
+   */
+  kind: 'note' | 'elegy' | 'wake'
 }
 
 type Ruler = 'play' | 'rest' | 'curiosity' | 'alarm'
@@ -159,13 +167,19 @@ export function makeSociety(seed: number): Society {
 
 const clamp01 = (v: number) => Math.max(0, Math.min(1, v))
 
-function say(s: Society, key: string, cooldown: number, text: string): void {
+function say(
+  s: Society,
+  key: string,
+  cooldown: number,
+  text: string,
+  kind: TickerLine['kind'] = 'note',
+): void {
   // SCRIBE — "when something changes hands, write one plain line about it".
   // A silenced scribe writes nothing: things keep happening; no one says so.
   if (s.ablated.has('scribe')) return
   if ((s.cooldowns[key] ?? -Infinity) + cooldown > s.tick) return
   s.cooldowns[key] = s.tick
-  s.lines.push({ tick: s.tick, text })
+  s.lines.push({ tick: s.tick, text, kind })
   if (s.lines.length > 60) s.lines.splice(0, s.lines.length - 60)
 }
 
@@ -175,18 +189,18 @@ export function silence(s: Society, id: string): void {
   const spec = agentById(id)
   if (id === 'scribe') {
     // the scribe's own elegy is the last thing it writes
-    s.lines.push({ tick: s.tick, text: spec.elegy })
+    s.lines.push({ tick: s.tick, text: spec.elegy, kind: 'elegy' })
     if (s.lines.length > 60) s.lines.splice(0, s.lines.length - 60)
     return
   }
-  say(s, `elegy-${id}`, 0, spec.elegy)
+  say(s, `elegy-${id}`, 0, spec.elegy, 'elegy')
 }
 
 export function wakeAgent(s: Society, id: string): void {
   if (!s.ablated.has(id)) return
   s.ablated.delete(id)
   const spec = agentById(id)
-  say(s, `wake-${id}`, 0, `${spec.name} answers again.`)
+  say(s, `wake-${id}`, 0, `${spec.name} answers again.`, 'wake')
 }
 
 export interface StepResult {
