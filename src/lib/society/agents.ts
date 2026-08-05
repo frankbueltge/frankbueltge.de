@@ -1,4 +1,4 @@
-// src/lib/society/agents.ts — the roster of The Society: twenty-five agents, none of them
+// src/lib/society/agents.ts — the roster of The Society: twenty-seven agents, none of them
 // intelligent, after Marvin Minsky, The Society of Mind (Simon & Schuster, 1986).
 //
 // Every agent carries:
@@ -64,6 +64,23 @@ export const AGENTS: readonly AgentSpec[] = [
 (it does not know
  what a tower is for)`,
     elegy: 'SEE-TOWER is silent. No tower will ever be tall enough now.',
+  },
+  {
+    id: 'see-arch',
+    name: 'SEE-ARCH',
+    agency: 'the eye',
+    band: 'senses',
+    // stage 2 (the transfer): SEE-ARCH embodies the book's canonical uniframe — "a top
+    // supported by two standing blocks that do not touch"
+    ref: { ch: 12, sec: '12.3', title: 'Uniframes' },
+    role: 'reports which of the arch’s three parts stand — never why they should',
+    code: `when ARCHER asks:
+  look at the two sites
+  answer: left upright? right?
+  a block lying across?
+(three yeses are its whole
+ idea of an arch)`,
+    elegy: 'SEE-ARCH is silent. Three parts stand; nothing in here knows they are an arch.',
   },
   {
     id: 'see-motion',
@@ -199,6 +216,27 @@ each moment:
     elegy: 'BUILDER is silent. What is left of play is WRECKER.',
   },
   {
+    id: 'archer',
+    name: 'ARCHER',
+    agency: 'the tower works',
+    band: 'builders',
+    // stage 2 (the transfer, §8.6): the second difference-engine, wanting the book's own
+    // arch. It wakes once two towers have taught the hands — and its first move follows
+    // the tower K-lines to the old site: memory transfers the middle, not the plan.
+    ref: { ch: 12, sec: '12.1', title: 'A Block-Arch Scenario' },
+    role: 'compares the scene with the arch it wants — two uprights, one lying across',
+    code: `goal: two standing blocks,
+  not touching, and one
+  lying across their tops
+each moment:
+  a part is missing → wake
+    FIND, GET, PUT toward it
+  the arch stands → rest
+(it wakes once towers
+ have grown boring)`,
+    elegy: 'ARCHER is silent. This society will build towers until the end of its days.',
+  },
+  {
     id: 'find',
     name: 'FIND',
     agency: 'the tower works',
@@ -327,11 +365,13 @@ while I rule:
     agency: 'the censors',
     band: 'censors',
     ref: { ch: 27, sec: '27.3', title: 'Censors' },
-    role: 'holds WRECKER down while the tower is still being built',
-    code: `while the tower is unfinished:
+    role: 'holds WRECKER down while the current work is still being built',
+    code: `while the work is unfinished:
   press WRECKER down
 when it is finished:
-  look away`,
+  look away
+(tower or arch — it does not
+ know the difference)`,
     elegy: 'CENSOR-WRECK is silent. Nothing here will ever be finished again.',
   },
   {
