@@ -24,6 +24,7 @@ and are never backfilled (archive files are immutable record).
 """
 import json
 import math
+import os
 import re
 import sys
 import time
@@ -62,9 +63,21 @@ def _pace(min_gap: float = 5.5) -> None:
 _beats_failed = [0]
 
 
-def fetch(query: str, retries: int = 4) -> list[dict]:
-    """Ein Beat über die GDELT DOC API; respektiert das 1-Request-/-5-s-Limit.
-    Backoff exponentiell (6/12/24 s) — GitHub-Runner teilen sich IPs, 429 ist kollektiv."""
+RETRY_WINDOWS = 3  # one first pass plus up to two fresh windows for unresolved beats
+WINDOW_GAP_S = int(os.environ.get("CONSENSUS_RETRY_WINDOW_S", "900"))
+
+
+def fetch(query: str) -> list[dict] | None:
+    """One beat via the GDELT DOC API — a single paced attempt per window.
+
+    Returns None when this window yielded nothing usable (HTTP 429, the
+    "Please limit" notice, or a network error). GDELT's per-IP blocks are
+    sticky, and in-place backoff keeps them alive rather than clearing them
+    (measured 2026-08-04/05: eight refusals across three paced passes, and a
+    fresh request nine hours later still refused). The caller therefore
+    re-runs unresolved beats in a fresh window minutes later instead of
+    hammering a live block.
+    """
     params = urllib.parse.urlencode(
         {
             "query": f'"{query}" sourcelang:english',
@@ -76,27 +89,58 @@ def fetch(query: str, retries: int = 4) -> list[dict]:
         }
     )
     url = f"{API}?{params}"
-    for attempt in range(retries):
-        _pace()
-        try:
-            req = urllib.request.Request(url, headers={"User-Agent": UA})
-            with urllib.request.urlopen(req, timeout=60) as r:
-                raw = r.read().decode("utf-8", "replace")
-        except Exception as e:  # Netz-/Timeout-Fehler: exponentiell warten, erneut
-            print(f"  ! {query}: {e}", file=sys.stderr)
-            if attempt < retries - 1:
-                time.sleep(6 * (2**attempt))
-            continue
-        if raw.lstrip().startswith("Please limit"):
-            if attempt < retries - 1:
-                time.sleep(6 * (2**attempt))
-            continue
-        try:
-            return json.loads(raw).get("articles", [])
-        except json.JSONDecodeError:
-            return []
-    _beats_failed[0] += 1
-    return []
+    _pace()
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": UA})
+        with urllib.request.urlopen(req, timeout=60) as r:
+            raw = r.read().decode("utf-8", "replace")
+    except Exception as e:
+        print(f"  ! {query}: {e} — deferred to next window", file=sys.stderr)
+        return None
+    if raw.lstrip().startswith("Please limit"):
+        print(f"  ! {query}: rate-limit notice — deferred to next window", file=sys.stderr)
+        return None
+    try:
+        return json.loads(raw).get("articles", [])
+    except json.JSONDecodeError:
+        return []
+
+
+def fetch_pool() -> tuple[dict[str, dict], dict[str, int]]:
+    """All beats across up to RETRY_WINDOWS passes.
+
+    Beats that a window could not resolve wait WINDOW_GAP_S seconds for the
+    next pass; only beats still unresolved after the last window count as
+    failed ("Feststellung entfällt" in the published stats, per lab rule).
+    """
+    pooled: dict[str, dict] = {}
+    per_beat: dict[str, int] = {}
+    open_beats = list(BEATS)
+    for window in range(RETRY_WINDOWS):
+        if not open_beats:
+            break
+        if window:
+            print(f"  window {window + 1}: {len(open_beats)} beat(s) left, "
+                  f"waiting {WINDOW_GAP_S}s for a fresh window", file=sys.stderr)
+            time.sleep(WINDOW_GAP_S)
+        still_open = []
+        for beat in open_beats:
+            arts = fetch(beat)
+            if arts is None:
+                still_open.append(beat)
+                continue
+            per_beat[beat] = len(arts)
+            for a in arts:
+                url = a.get("url")
+                if url and url not in pooled:
+                    pooled[url] = a
+            print(f"  {beat}: {len(arts)} Artikel (Pool {len(pooled)})", file=sys.stderr)
+        open_beats = still_open
+    for beat in open_beats:
+        per_beat[beat] = 0
+        _beats_failed[0] += 1
+        print(f"  {beat}: no window succeeded — recorded as failed", file=sys.stderr)
+    return pooled, {b: per_beat[b] for b in BEATS}
 
 
 def parse_seen(s: str):
@@ -353,16 +397,7 @@ def main() -> int:
         articles, per_beat = cached["articles"], cached["per_beat"]
         print(f"Reprocess aus Cache: {len(articles)} Artikel (kein GDELT-Abruf).", file=sys.stderr)
     else:
-        pooled: dict[str, dict] = {}
-        per_beat = {}
-        for beat in BEATS:
-            arts = fetch(beat)
-            per_beat[beat] = len(arts)
-            for a in arts:
-                url = a.get("url")
-                if url and url not in pooled:
-                    pooled[url] = a
-            print(f"  {beat}: {len(arts)} Artikel (Pool {len(pooled)})", file=sys.stderr)
+        pooled, per_beat = fetch_pool()
         articles = list(pooled.values())
         CACHE.write_text(json.dumps({"articles": articles, "per_beat": per_beat}))
     result = analyse(articles)
