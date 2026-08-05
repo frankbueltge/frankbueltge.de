@@ -26,7 +26,13 @@ export interface StageEntry {
   chaptersWoken: number[]
   /** book anchors this entry stands on */
   refs: string[]
-  /** merge commit(s) on main and PR number(s) — the reproducibility anchors */
+  /**
+   * merge commit(s) on main and PR number(s) — the reproducibility anchors. Because this
+   * repo squash-merges, an entry cannot know its own hash before it lands: the newest
+   * entry may carry the literal 'pending', which a follow-up commit replaces with the real
+   * hash (stages.test.ts allows it for the newest entry only, so a 'pending' can never
+   * quietly become permanent).
+   */
   commits: string[]
   prs: number[]
 }
@@ -117,5 +123,27 @@ export const STAGES: readonly StageEntry[] = [
     refs: ['SOM §8.6', 'SOM §12.1', 'SOM §12.3'],
     commits: ['10054ef4'],
     prs: [403],
+  },
+  {
+    n: 2,
+    kind: 'correction',
+    date: '2026-08-05',
+    title: 'The prior art',
+    visible:
+      'Four adversarial searches, briefed to refute this piece’s novelty claims rather ' +
+      'than confirm them. Three of four claims fell or were trimmed: Minsky’s book had ' +
+      'been staged interactively before (Voyager CD-ROM, 1994, made with Minsky); ' +
+      'ablation of a named unit in a running simulation is standard science (Neural ' +
+      'Interactome, 2017); apparatus-as-artwork is Forensic Architecture’s practice, not ' +
+      'ours. The page now concedes its lineage where it makes its claims.',
+    claim:
+      'What survives the searches: Minsky’s own agents running and ablatable with verified ' +
+      'citations, ablation as mourning rather than method, and claims that fail a build ' +
+      'when they stop being true.',
+    agentsAdded: [],
+    chaptersWoken: [],
+    refs: ['docs/society/prior-art.md'],
+    commits: ['pending'],
+    prs: [407],
   },
 ]

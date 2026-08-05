@@ -34,10 +34,22 @@ describe('the growth record accounts for the whole roster', () => {
       expect(s.claim.length).toBeGreaterThan(20)
       expect(s.visible.length).toBeGreaterThan(20)
       expect(s.commits.length).toBeGreaterThan(0)
-      for (const c of s.commits) expect(c).toMatch(/^[0-9a-f]{8}$/)
       expect(s.prs.length).toBeGreaterThan(0)
       expect(s.refs.length).toBeGreaterThan(0)
     }
+  })
+
+  it("only the newest entry may be 'pending' — squash-merge cannot know its own hash", () => {
+    // An entry written in the same PR it describes cannot carry its squash hash yet; a
+    // follow-up commit fills it in. Everything older must be a real hash, so a 'pending'
+    // can never quietly become permanent.
+    STAGES.forEach((s, i) => {
+      const last = i === STAGES.length - 1
+      for (const c of s.commits) {
+        if (last) expect(c).toMatch(/^([0-9a-f]{8}|pending)$/)
+        else expect(c, `entry "${s.title}" still pending`).toMatch(/^[0-9a-f]{8}$/)
+      }
+    })
   })
 
   it('the record reads forward: dates never decrease, stage numbers never decrease', () => {
