@@ -146,4 +146,25 @@ export const STAGES: readonly StageEntry[] = [
     commits: ['600af4de'],
     prs: [407],
   },
+  {
+    n: 3,
+    kind: 'stage',
+    date: '2026-08-05',
+    title: 'The mourning',
+    visible:
+      'The searches said this piece wins by composition, not mechanism — so this stage ' +
+      'adds none. The world now looks at its own dramas: a ring where it happened and one ' +
+      'line above the table when the hand goes to the old place, when a tower leaves ' +
+      'without being pushed, when the arch stands. And the elegy leaves the card for the ' +
+      'ticker, set apart, where the silenced agent’s last words belong.',
+    claim:
+      'A new drama cannot ship silent: every dramatic event carries a caption short enough ' +
+      'to read in the frame, ordinary traffic carries none, and an elegy always arrives ' +
+      'marked as one.',
+    agentsAdded: [],
+    chaptersWoken: [],
+    refs: ['docs/society/prior-art.md', 'SOM §3.5', 'SOM §6.4'],
+    commits: ['pending'],
+    prs: [409],
+  },
 ]
