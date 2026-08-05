@@ -1,0 +1,535 @@
+/* src/styles/society.css — The Society (/society): a mind of mindless parts.
+ *
+ * Identity system of the figure — PALETTE: society-bands (recorded in
+ * src/lib/dataviz/palette.ts; the test re-derives the distances):
+ *   senses           azure    #2a78d6 light / #256abf dark
+ *   body + builders  amber    #eda100 light / #c98500 dark
+ *   proto-specialists magenta #e87ba4 light / #d55181 dark
+ *   reflection (B-brain, K-lines) violet #4a3aa7 light / #9085e9 dark
+ * The censors wear the DECLARED NEUTRAL — suppression has no colour of its own — and a
+ * silenced agent is carried by SHAPE (the taped X) plus desaturation, never by colour
+ * alone. Identity is also never colour-only: every node is direct-labelled and the whole
+ * roster repeats as a table (the light-mode contrast WARNs' recorded relief).
+ * Dark values are the base (site default); light overrides under [data-theme='light'].
+ */
+
+.soc-figure {
+  --soc-senses: #256abf;
+  --soc-work: #c98500;
+  --soc-drives: #d55181;
+  --soc-reflect: #9085e9;
+  --soc-censor: #77828d;
+  --soc-ink: rgb(228 228 231 / 0.92);
+  --soc-ink-muted: rgb(161 161 170 / 0.9);
+  --soc-hairline: rgb(255 255 255 / 0.14);
+  --soc-band-bg: rgb(255 255 255 / 0.035);
+  --soc-panel-bg: rgb(255 255 255 / 0.03);
+  margin: 0;
+}
+:root[data-theme='light'] .soc-figure {
+  --soc-senses: #2a78d6;
+  --soc-work: #eda100;
+  --soc-drives: #e87ba4;
+  --soc-reflect: #4a3aa7;
+  --soc-censor: #6b7684;
+  --soc-ink: rgb(24 24 27 / 0.92);
+  --soc-ink-muted: rgb(63 63 70 / 0.75);
+  --soc-hairline: rgb(0 0 0 / 0.14);
+  --soc-band-bg: rgb(0 0 0 / 0.03);
+  --soc-panel-bg: rgb(0 0 0 / 0.025);
+}
+
+/* ————————————————————————————— stage: world + ticker ———————————————————— */
+.soc-stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 1rem;
+  align-items: stretch;
+}
+@media (max-width: 760px) {
+  .soc-stage {
+    grid-template-columns: 1fr;
+  }
+}
+
+.soc-world-wrap {
+  border: 1px solid var(--soc-hairline);
+  border-radius: 10px;
+  background: var(--soc-panel-bg);
+  padding: 0.6rem 0.6rem 0.4rem;
+}
+.soc-world {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.soc-world-caption {
+  margin: 0.35rem 0.2rem 0.1rem;
+  font-size: 0.72rem;
+  line-height: 1.4;
+  color: var(--soc-ink-muted);
+}
+
+.soc-table {
+  stroke: var(--soc-ink-muted);
+  stroke-width: 1.5;
+}
+.soc-site line {
+  stroke: var(--soc-hairline);
+  stroke-dasharray: 3 5;
+}
+.soc-site text {
+  fill: var(--soc-ink-muted);
+  font-size: 9px;
+  text-anchor: middle;
+  font-family: 'JetBrains Mono Variable', ui-monospace, monospace;
+}
+.soc-block {
+  fill: var(--soc-work);
+  opacity: 0.75;
+  stroke: none;
+  transition: opacity 300ms ease;
+}
+.soc-block-tower {
+  opacity: 1;
+}
+.soc-hand path {
+  fill: none;
+  stroke: var(--soc-ink);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+.soc-gaze circle {
+  fill: none;
+  stroke: var(--soc-senses);
+  stroke-width: 1.5;
+}
+.soc-gaze line {
+  stroke: var(--soc-senses);
+  stroke-width: 1.5;
+}
+.soc-shadow {
+  fill: currentColor;
+  color: var(--soc-ink);
+  opacity: 0;
+  transition: opacity 400ms ease;
+}
+.soc-shadow-present {
+  opacity: 0.18;
+}
+.soc-nojs-note {
+  fill: var(--soc-ink-muted);
+  font-size: 11px;
+  text-anchor: middle;
+}
+.soc-live .soc-nojs-note {
+  display: none;
+}
+
+.soc-ticker-wrap {
+  border: 1px solid var(--soc-hairline);
+  border-radius: 10px;
+  background: var(--soc-panel-bg);
+  padding: 0.7rem 0.9rem;
+  min-height: 9rem;
+}
+.soc-ticker-head {
+  margin: 0 0 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--soc-ink-muted);
+}
+.soc-ticker {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: 'JetBrains Mono Variable', ui-monospace, monospace;
+  font-size: 0.74rem;
+  line-height: 1.55;
+  color: var(--soc-ink);
+}
+.soc-ticker li {
+  padding: 0.1rem 0;
+  border-top: 1px dashed var(--soc-hairline);
+}
+.soc-ticker li:first-child {
+  border-top: 0;
+}
+.soc-ticker li:last-child {
+  color: var(--soc-reflect);
+}
+
+/* ————————————————————————————— the map ————————————————————————————————— */
+.soc-main {
+  display: grid;
+  grid-template-columns: minmax(0, 2.2fr) minmax(15rem, 1fr);
+  gap: 1rem;
+  margin-top: 1rem;
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .soc-main {
+    grid-template-columns: 1fr;
+  }
+}
+.soc-map {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.soc-band {
+  fill: var(--soc-band-bg);
+  stroke: var(--soc-hairline);
+}
+.soc-band-b {
+  stroke-dasharray: 4 4;
+}
+.soc-band-k {
+  stroke-dasharray: 2 5;
+}
+.soc-band-label {
+  fill: var(--soc-ink-muted);
+  font-size: 11px;
+  font-family: 'JetBrains Mono Variable', ui-monospace, monospace;
+}
+.soc-world-hint {
+  font-size: 10px;
+}
+.soc-watch-edge {
+  fill: none;
+  stroke: var(--soc-reflect);
+  stroke-width: 1;
+  stroke-dasharray: 2 4;
+  opacity: 0.6;
+}
+
+.soc-edge {
+  stroke: var(--soc-ink-muted);
+  stroke-width: 1;
+  opacity: 0.4;
+}
+.soc-edge-in {
+  stroke-dasharray: 4 3;
+}
+.soc-edge-bartip {
+  stroke: var(--soc-censor);
+  stroke-width: 2;
+}
+
+.soc-node {
+  cursor: pointer;
+  outline: none;
+}
+.soc-halo {
+  fill: currentColor;
+  opacity: 0.12;
+}
+.soc-core {
+  fill: currentColor;
+  stroke: none;
+  opacity: 0.45;
+  transition: opacity 180ms linear;
+}
+@media (prefers-reduced-motion: reduce) {
+  .soc-core,
+  .soc-block {
+    transition: none;
+  }
+}
+.soc-node-label {
+  fill: var(--soc-ink);
+  font-size: 9px;
+  text-anchor: middle;
+  font-family: 'JetBrains Mono Variable', ui-monospace, monospace;
+  letter-spacing: 0.02em;
+  pointer-events: none;
+}
+.soc-node-senses {
+  color: var(--soc-senses);
+}
+.soc-node-body,
+.soc-node-builders {
+  color: var(--soc-work);
+}
+.soc-node-drives {
+  color: var(--soc-drives);
+}
+.soc-node-censors {
+  color: var(--soc-censor);
+}
+.soc-node-reflection {
+  color: var(--soc-reflect);
+}
+
+.soc-node:focus-visible .soc-core,
+.soc-selected .soc-core {
+  stroke: var(--soc-ink);
+  stroke-width: 2;
+}
+
+/* a silenced agent: tape over the node — shape first, colour drained second */
+.soc-tape {
+  visibility: hidden;
+}
+.soc-tape line {
+  stroke: var(--soc-ink);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+}
+.soc-ablated .soc-tape {
+  visibility: visible;
+}
+.soc-ablated {
+  color: var(--soc-censor);
+}
+.soc-ablated .soc-node-label {
+  fill: var(--soc-ink-muted);
+  text-decoration: line-through;
+}
+
+/* chapter-shelf highlighting: the shelf dims the map to show a chapter's residents */
+.soc-highlighting .soc-node {
+  opacity: 0.25;
+}
+.soc-highlighting .soc-node.soc-highlit {
+  opacity: 1;
+}
+
+.soc-kline {
+  fill: var(--soc-reflect);
+  opacity: 0.85;
+}
+
+/* ————————————————————————————— the card ———————————————————————————————— */
+.soc-card {
+  border: 1px solid var(--soc-hairline);
+  border-radius: 10px;
+  background: var(--soc-panel-bg);
+  padding: 0.9rem 1rem;
+  position: sticky;
+  top: 4.5rem;
+}
+.soc-card-kicker {
+  margin: 0;
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--soc-ink-muted);
+}
+.soc-card-name {
+  margin: 0.2rem 0 0;
+  font-family: 'JetBrains Mono Variable', ui-monospace, monospace;
+  font-size: 1.05rem;
+}
+.soc-card-meta {
+  margin: 0.1rem 0 0;
+  font-size: 0.78rem;
+  color: var(--soc-ink-muted);
+}
+.soc-card-ref {
+  margin: 0.1rem 0 0;
+  font-size: 0.72rem;
+  font-family: 'JetBrains Mono Variable', ui-monospace, monospace;
+  color: var(--soc-ink-muted);
+}
+.soc-card-role {
+  margin: 0.6rem 0 0;
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+.soc-card-code {
+  margin: 0.6rem 0 0;
+  padding: 0.6rem 0.7rem;
+  border-radius: 8px;
+  border: 1px solid var(--soc-hairline);
+  background: var(--soc-band-bg);
+  font-size: 0.72rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-x: auto;
+}
+.soc-meter {
+  margin-top: 0.6rem;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--soc-hairline);
+  overflow: hidden;
+}
+.soc-meter-fill {
+  --soc-meter: 0%;
+  width: var(--soc-meter);
+  height: 100%;
+  background: currentColor;
+  color: var(--soc-ink-muted);
+  transition: width 200ms linear;
+}
+@media (prefers-reduced-motion: reduce) {
+  .soc-meter-fill {
+    transition: none;
+  }
+}
+.soc-card-elegy {
+  margin: 0.6rem 0 0;
+  font-size: 0.78rem;
+  font-style: italic;
+  color: var(--soc-ink-muted);
+}
+.soc-silence {
+  margin-top: 0.7rem;
+  padding: 0.4rem 0.8rem;
+  border: 1px solid var(--soc-hairline);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--soc-ink);
+  font-size: 0.76rem;
+  cursor: pointer;
+}
+.soc-silence:hover,
+.soc-silence:focus-visible {
+  border-color: var(--soc-ink-muted);
+}
+.soc-card-hint {
+  margin: 0.7rem 0 0;
+  font-size: 0.7rem;
+  line-height: 1.45;
+  color: var(--soc-ink-muted);
+}
+
+/* ————————————————————————————— controls ———————————————————————————————— */
+.soc-controls {
+  display: flex;
+  gap: 0.9rem;
+  align-items: baseline;
+  margin-top: 0.9rem;
+}
+.soc-morning {
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--soc-hairline);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--soc-ink);
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+.soc-morning:hover,
+.soc-morning:focus-visible {
+  border-color: var(--soc-ink-muted);
+}
+.soc-controls-note {
+  margin: 0;
+  font-size: 0.7rem;
+  line-height: 1.45;
+  color: var(--soc-ink-muted);
+  max-width: 46rem;
+}
+
+/* ————————————————————————————— the shelf ——————————————————————————————— */
+.soc-shelf {
+  margin-top: 1.6rem;
+}
+.soc-shelf-head {
+  margin: 0 0 0.6rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--soc-ink-muted);
+}
+.soc-shelf-grid {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
+  gap: 0.4rem;
+}
+.soc-ch {
+  width: 100%;
+  text-align: left;
+  border: 1px solid var(--soc-hairline);
+  border-radius: 8px;
+  background: transparent;
+  padding: 0.45rem 0.55rem;
+  cursor: default;
+  color: var(--soc-ink-muted);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 0.45rem;
+  align-items: baseline;
+}
+.soc-ch-awake {
+  color: var(--soc-ink);
+  border-bottom: 2px solid var(--soc-reflect);
+  cursor: pointer;
+}
+.soc-ch-n {
+  font-family: 'JetBrains Mono Variable', ui-monospace, monospace;
+  font-size: 0.72rem;
+}
+.soc-ch-title {
+  font-size: 0.72rem;
+  line-height: 1.25;
+}
+.soc-ch-state {
+  grid-column: 2;
+  font-size: 0.62rem;
+  color: var(--soc-ink-muted);
+  font-family: 'JetBrains Mono Variable', ui-monospace, monospace;
+}
+
+/* ————————————————————————————— table + provenance ——————————————————————— */
+.soc-table-wrap {
+  margin-top: 1.4rem;
+  border: 1px solid var(--soc-hairline);
+  border-radius: 10px;
+  padding: 0.6rem 0.9rem;
+}
+.soc-table-wrap summary {
+  cursor: pointer;
+  font-size: 0.78rem;
+  color: var(--soc-ink-muted);
+}
+.soc-table {
+  margin-top: 0.7rem;
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.74rem;
+  line-height: 1.45;
+}
+.soc-table caption {
+  text-align: left;
+  font-size: 0.7rem;
+  color: var(--soc-ink-muted);
+  padding-bottom: 0.4rem;
+}
+.soc-table th,
+.soc-table td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.3rem 0.7rem 0.3rem 0;
+  border-top: 1px solid var(--soc-hairline);
+}
+.soc-table thead th {
+  border-top: 0;
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--soc-ink-muted);
+}
+.soc-table tbody th {
+  font-family: 'JetBrains Mono Variable', ui-monospace, monospace;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.soc-provenance {
+  margin-top: 1rem;
+  font-size: 0.7rem;
+  line-height: 1.5;
+  color: var(--soc-ink-muted);
+  max-width: 52rem;
+}

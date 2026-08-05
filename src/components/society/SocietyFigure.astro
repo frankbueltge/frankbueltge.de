@@ -1,0 +1,661 @@
+---
+// src/components/society/SocietyFigure.astro — The Society, live: a mind of mindless parts.
+//
+// Scene 1 (it perceives you): the pointer is a shadow in the block world; SEE-MOTION,
+// NOVELTY, CURIOSITY, ALARM react. Scene 3 (you may hurt it): any agent can be silenced
+// from its card, and what the whole loses emerges — nothing is scripted, the ablation
+// simply removes one rule from the tick (src/lib/society/engine.ts).
+//
+// House rules inherited from ProcessFigure.astro (the reference implementation):
+//   · no is:inline scripts, no style="" anywhere — dynamic styles go through
+//     dataviz/runtime.ts setVars / CSSOM (the site's CSP drops style attributes silently);
+//   · the figure works without JS at its data floor: the full roster table, the chapter
+//     shelf, one server-rendered agent card and the map's anatomy render statically —
+//     only the LIFE of the figure needs a script, and the caption says so;
+//   · identity is never carried by colour alone: every node is labelled, every band named,
+//     the table repeats everything (PALETTE: society-bands, recorded in dataviz/palette.ts).
+import { AGENTS, awakeChapters, CHAPTERS, type AgentSpec, type Band } from '@/lib/society/agents'
+import { jsonScriptPayload } from '@/lib/dataviz/runtime'
+import '@/styles/society.css'
+
+const BAND_LABEL: Record<Band, string> = {
+  senses: 'the senses',
+  body: 'the body',
+  builders: 'the builders',
+  drives: 'the proto-specialists',
+  censors: 'the censors',
+  reflection: 'the B-brain',
+}
+
+// ————————————————————————————————— the map's anatomy (level-bands, SOM §8.5) ——————
+// Drives on top (they rule), builders under them, the body beneath, the senses at the
+// bottom against the world; the B-brain stands aside and sees only the A-brain.
+const POS: Record<string, { x: number; y: number }> = {
+  play: { x: 200, y: 90 },
+  rest: { x: 330, y: 90 },
+  curiosity: { x: 460, y: 90 },
+  alarm: { x: 590, y: 90 },
+  'suppressor-startle': { x: 686, y: 56 },
+  'censor-wreck': { x: 686, y: 160 },
+  'play-with-blocks': { x: 215, y: 200 },
+  builder: { x: 390, y: 200 },
+  wrecker: { x: 585, y: 205 },
+  find: { x: 215, y: 262 },
+  get: { x: 330, y: 262 },
+  put: { x: 445, y: 262 },
+  balance: { x: 560, y: 262 },
+  move: { x: 200, y: 350 },
+  grasp: { x: 310, y: 350 },
+  lift: { x: 420, y: 350 },
+  release: { x: 530, y: 350 },
+  track: { x: 632, y: 350 },
+  'see-block': { x: 215, y: 452 },
+  'see-tower': { x: 340, y: 452 },
+  'see-motion': { x: 465, y: 452 },
+  novelty: { x: 590, y: 452 },
+  'watch-quarrel': { x: 828, y: 295 },
+  'watch-circle': { x: 828, y: 355 },
+  scribe: { x: 828, y: 415 },
+}
+
+interface EdgeSpec {
+  from: string
+  to: string
+  kind: 'ex' | 'in'
+}
+const EDGES: EdgeSpec[] = [
+  { from: 'play', to: 'play-with-blocks', kind: 'ex' },
+  { from: 'play-with-blocks', to: 'builder', kind: 'ex' },
+  { from: 'play', to: 'wrecker', kind: 'ex' },
+  { from: 'builder', to: 'find', kind: 'ex' },
+  { from: 'builder', to: 'get', kind: 'ex' },
+  { from: 'builder', to: 'put', kind: 'ex' },
+  { from: 'put', to: 'balance', kind: 'ex' },
+  { from: 'find', to: 'see-block', kind: 'ex' },
+  { from: 'builder', to: 'see-tower', kind: 'ex' },
+  { from: 'get', to: 'move', kind: 'ex' },
+  { from: 'get', to: 'grasp', kind: 'ex' },
+  { from: 'put', to: 'lift', kind: 'ex' },
+  { from: 'put', to: 'release', kind: 'ex' },
+  { from: 'curiosity', to: 'track', kind: 'ex' },
+  { from: 'see-motion', to: 'curiosity', kind: 'ex' },
+  { from: 'see-motion', to: 'alarm', kind: 'ex' },
+  { from: 'novelty', to: 'curiosity', kind: 'ex' },
+  { from: 'censor-wreck', to: 'wrecker', kind: 'in' },
+  { from: 'suppressor-startle', to: 'alarm', kind: 'in' },
+]
+
+const NODE_R = 13
+function edgeLine(e: EdgeSpec) {
+  const a = POS[e.from]
+  const b = POS[e.to]
+  const dx = b.x - a.x
+  const dy = b.y - a.y
+  const d = Math.hypot(dx, dy)
+  const ux = dx / d
+  const uy = dy / d
+  const pad = NODE_R + 5
+  const x1 = a.x + ux * pad
+  const y1 = a.y + uy * pad
+  const x2 = b.x - ux * pad
+  const y2 = b.y - uy * pad
+  // inhibition wears a flat bar at its tip instead of touching the node — a gate, not a feed
+  const bar =
+    e.kind === 'in'
+      ? { x1: x2 - uy * 6, y1: y2 + ux * 6, x2: x2 + uy * 6, y2: y2 - ux * 6 }
+      : null
+  return { x1, y1, x2, y2, bar }
+}
+
+const awake = awakeChapters()
+const residents = new Map<number, number>()
+for (const a of AGENTS) residents.set(a.ref.ch, (residents.get(a.ref.ch) ?? 0) + 1)
+
+function refLabel(a: AgentSpec): string {
+  return a.ref.sec ? `SOM §${a.ref.sec} · ${a.ref.title}` : `SOM ch. ${a.ref.ch} · ${a.ref.title}`
+}
+
+// the card the page wakes with — server-rendered so the floor holds without JS
+const first = AGENTS.find((a) => a.id === 'builder')!
+
+const payload = AGENTS.map((a) => ({
+  id: a.id,
+  name: a.name,
+  agency: a.agency,
+  band: a.band,
+  bandLabel: BAND_LABEL[a.band],
+  ref: refLabel(a),
+  role: a.role,
+  code: a.code,
+  elegy: a.elegy,
+}))
+---
+
+<figure class="soc-figure" id="society-figure" data-soc>
+  <!-- ——————————————————————— the world, and the mind's only voice ——————————— -->
+  <div class="soc-stage">
+    <div class="soc-world-wrap">
+      <svg
+        class="soc-world"
+        viewBox="0 0 400 210"
+        role="img"
+        aria-label="The world of blocks: a table, seven blocks, one hand. The society builds here; your pointer is a shadow in this world."
+      >
+        <line class="soc-table" x1="8" y1="182" x2="392" y2="182"></line>
+        <g class="soc-site" aria-hidden="true">
+          <line x1="250" y1="182" x2="250" y2="60"></line>
+          <text x="250" y="52">the tower site</text>
+        </g>
+        <ellipse class="soc-shadow" data-soc-shadow cx="-40" cy="182" rx="24" ry="6"></ellipse>
+        <g data-soc-blocks></g>
+        <g class="soc-gaze" data-soc-gaze aria-hidden="true">
+          <circle cx="0" cy="0" r="7"></circle>
+          <line x1="-11" y1="0" x2="-4" y2="0"></line>
+          <line x1="4" y1="0" x2="11" y2="0"></line>
+        </g>
+        <g class="soc-hand" data-soc-hand aria-hidden="true">
+          <path d="M -7 -14 L -7 0 L -4 6 M 7 -14 L 7 0 L 4 6 M -7 -14 L 7 -14"></path>
+        </g>
+        <text class="soc-nojs-note" x="200" y="120">
+          The world wakes with JavaScript. The record below stands without it.
+        </text>
+      </svg>
+      <p class="soc-world-caption">
+        The world of blocks (SOM §1.4). Move your pointer: you are the shadow. Be sudden, and
+        you will be a fright.
+      </p>
+    </div>
+    <aside class="soc-ticker-wrap" aria-label="What the scribe writes">
+      <h3 class="soc-ticker-head">The scribe's line — the only voice this mind has</h3>
+      <ol class="soc-ticker" data-soc-ticker aria-live="polite">
+        <li>A morning. The society wakes wanting to play.</li>
+      </ol>
+    </aside>
+  </div>
+
+  <!-- ————————————————————————————— the society, drawn as its bands ————————— -->
+  <div class="soc-main">
+    <svg
+      class="soc-map"
+      viewBox="0 0 960 540"
+      role="group"
+      aria-label="The society's map: twenty-five agents in level-bands — proto-specialists, builders, body, senses — with censors at their gates, the B-brain watching from the side, and K-lines collecting on the left. Select an agent to read it whole."
+    >
+      <!-- bands -->
+      <g class="soc-bands" aria-hidden="true">
+        <rect class="soc-band" x="130" y="40" width="540" height="100" rx="10"></rect>
+        <rect class="soc-band" x="130" y="160" width="540" height="130" rx="10"></rect>
+        <rect class="soc-band" x="130" y="310" width="540" height="80" rx="10"></rect>
+        <rect class="soc-band" x="130" y="410" width="540" height="80" rx="10"></rect>
+        <rect class="soc-band soc-band-b" x="726" y="250" width="204" height="200" rx="10"></rect>
+        <rect class="soc-band soc-band-k" x="22" y="160" width="86" height="230" rx="10"></rect>
+        <text class="soc-band-label" x="136" y="34">proto-specialists — the appetites (§16.3)</text>
+        <text class="soc-band-label" x="136" y="154">builders — management and the tower works</text>
+        <text class="soc-band-label" x="136" y="304">the body</text>
+        <text class="soc-band-label" x="136" y="404">the senses</text>
+        <text class="soc-band-label" x="732" y="244">the B-brain — sees only the A-brain (§6.4)</text>
+        <text class="soc-band-label soc-band-label-k" x="28" y="154">K-lines (§8.1)</text>
+        <text class="soc-band-label soc-world-hint" x="136" y="512">
+          below the senses: the world of blocks — the table above, where the hand works
+        </text>
+        <path class="soc-watch-edge" d="M 726 350 C 700 350 690 300 672 280"></path>
+      </g>
+
+      <!-- edges under the nodes -->
+      <g class="soc-edges" aria-hidden="true">
+        {
+          EDGES.map((e) => {
+            const l = edgeLine(e)
+            return (
+              <>
+                <line
+                  class={`soc-edge soc-edge-${e.kind}`}
+                  x1={l.x1}
+                  y1={l.y1}
+                  x2={l.x2}
+                  y2={l.y2}
+                />
+                {l.bar && (
+                  <line class="soc-edge-bartip" x1={l.bar.x1} y1={l.bar.y1} x2={l.bar.x2} y2={l.bar.y2} />
+                )}
+              </>
+            )
+          })
+        }
+      </g>
+
+      <!-- runtime K-lines collect here -->
+      <g data-soc-klines></g>
+
+      <!-- the agents -->
+      <g class="soc-nodes">
+        {
+          AGENTS.map((a) => {
+            const p = POS[a.id]
+            const sq = a.band === 'censors'
+            return (
+              <g
+                class={`soc-node soc-node-${a.band}`}
+                data-soc-node={a.id}
+                tabindex="0"
+                role="button"
+                aria-pressed="false"
+                aria-label={`${a.name} — ${a.role}. Select to read its rule and silence it.`}
+                transform={`translate(${p.x} ${p.y})`}
+              >
+                <circle class="soc-halo" data-soc-halo r="6" cx="0" cy="0"></circle>
+                {sq ? (
+                  <rect class="soc-core" x="-9" y="-9" width="18" height="18" rx="3"></rect>
+                ) : (
+                  <circle class="soc-core" r={NODE_R} cx="0" cy="0"></circle>
+                )}
+                <g class="soc-tape" aria-hidden="true">
+                  <line x1="-10" y1="-10" x2="10" y2="10"></line>
+                  <line x1="-10" y1="10" x2="10" y2="-10"></line>
+                </g>
+                <text class="soc-node-label" y={NODE_R + 13}>
+                  {a.name}
+                </text>
+              </g>
+            )
+          })
+        }
+      </g>
+    </svg>
+
+    <!-- ————————————————————————— the card: one agent, whole ———————————————— -->
+    <aside class="soc-card" data-soc-card aria-live="polite">
+      <p class="soc-card-kicker">one agent, whole</p>
+      <h3 class="soc-card-name" data-soc-card-name>{first.name}</h3>
+      <p class="soc-card-meta" data-soc-card-meta>
+        {first.agency} · {BAND_LABEL[first.band]}
+      </p>
+      <p class="soc-card-ref" data-soc-card-ref>{refLabel(first)}</p>
+      <p class="soc-card-role" data-soc-card-role>{first.role}</p>
+      <pre class="soc-card-code" data-soc-card-code><code>{first.code}</code></pre>
+      <div class="soc-meter" aria-hidden="true"><div class="soc-meter-fill" data-soc-meter></div></div>
+      <p class="soc-card-elegy" data-soc-card-elegy hidden></p>
+      <button class="soc-silence" type="button" data-soc-silence data-id={first.id}>
+        silence this agent
+      </button>
+      <p class="soc-card-hint">
+        This is the entire agent — there is no cleverness hidden behind the card. Silence it
+        and the society loses exactly this.
+      </p>
+    </aside>
+  </div>
+
+  <!-- —————————————————————————————— controls ——————————————————————————————— -->
+  <div class="soc-controls">
+    <button class="soc-morning" type="button" data-soc-morning>new morning</button>
+    <p class="soc-controls-note">
+      Seeded by today's date: reloading gives you the same morning, silenced agents and all
+      their consequences included — an ablation here is a finding, not an anecdote.
+    </p>
+  </div>
+
+  <!-- ——————————————————— the book as shelf: 30 chapters ———————————————————— -->
+  <section class="soc-shelf" aria-label="The Society of Mind, 1986 — thirty chapters as shelf">
+    <h3 class="soc-shelf-head">
+      The book as shelf — a chapter wakes when its concepts live in the roster
+    </h3>
+    <ol class="soc-shelf-grid">
+      {
+        CHAPTERS.map((c) => {
+          const isAwake = awake.has(c.n)
+          const n = residents.get(c.n) ?? 0
+          return (
+            <li>
+              <button
+                type="button"
+                class={`soc-ch${isAwake ? ' soc-ch-awake' : ''}`}
+                data-soc-ch={c.n}
+                aria-label={
+                  isAwake
+                    ? `Chapter ${c.n}, ${c.title} — awake, ${n} resident agent${n === 1 ? '' : 's'}. Highlights them on the map.`
+                    : `Chapter ${c.n}, ${c.title} — still asleep.`
+                }
+              >
+                <span class="soc-ch-n">{c.n}</span>
+                <span class="soc-ch-title">{c.title}</span>
+                <span class="soc-ch-state">{isAwake ? `${n} agent${n === 1 ? '' : 's'}` : 'asleep'}</span>
+              </button>
+            </li>
+          )
+        })
+      }
+    </ol>
+  </section>
+
+  <!-- ————————————————— the data floor: the roster, in full ————————————————— -->
+  <details class="soc-table-wrap">
+    <summary>The roster as a table — every agent, its band, its essay</summary>
+    <table class="soc-table">
+      <caption>
+        Twenty-five agents; none of them intelligent. Chapter/section numbers cite the 1986
+        Simon &amp; Schuster edition.
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col">agent</th>
+          <th scope="col">agency</th>
+          <th scope="col">band</th>
+          <th scope="col">essay</th>
+          <th scope="col">what it does</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          AGENTS.map((a) => (
+            <tr>
+              <th scope="row">{a.name}</th>
+              <td>{a.agency}</td>
+              <td>{BAND_LABEL[a.band]}</td>
+              <td>{refLabel(a)}</td>
+              <td>{a.role}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </details>
+
+  <figcaption class="soc-provenance">
+    Simulation runs deterministically in your browser from the committed roster
+    (src/lib/society/) — nothing you do here is recorded or sent anywhere. After Marvin
+    Minsky, <cite>The Society of Mind</cite> (Simon &amp; Schuster, 1986); quotations and
+    section numbers verified against the 1986 edition. Roster v0.1, 2026-08-05.
+  </figcaption>
+
+  <script type="application/json" id="soc-agents" set:html={jsonScriptPayload(payload)} />
+</figure>
+
+<script>
+  import {
+    makeSociety,
+    NO_VISITOR,
+    seedFromString,
+    silence,
+    step,
+    TICKS_PER_SEC,
+    wakeAgent,
+    type Society,
+    type VisitorInput,
+  } from '@/lib/society/engine'
+  import { GOAL_HEIGHT } from '@/lib/society/world'
+  import { onMotionChange, readJsonScript, reducedMotion, setVars } from '@/lib/dataviz/runtime'
+
+  interface AgentCard {
+    id: string
+    name: string
+    agency: string
+    band: string
+    bandLabel: string
+    ref: string
+    role: string
+    code: string
+    elegy: string
+  }
+
+  const root = document.querySelector<HTMLElement>('[data-soc]')
+  if (root) init(root)
+
+  function init(root: HTMLElement) {
+    let agents: AgentCard[]
+    try {
+      agents = readJsonScript<AgentCard[]>('soc-agents')
+    } catch {
+      return // no payload — the figure stays at its data floor
+    }
+    const byId = new Map(agents.map((a) => [a.id, a]))
+    root.classList.add('soc-live') // hides the no-JS note; the figure is alive
+
+    // ————————————————————————————— the society itself ——————————————————————
+    const today = new Date().toISOString().slice(0, 10)
+    let society: Society = makeSociety(seedFromString(today))
+    let linesSeen = 1 // the server-rendered morning line
+
+    // ————————————————————————————— DOM handles —————————————————————————————
+    const worldSvg = root.querySelector<SVGSVGElement>('.soc-world')!
+    const blocksG = root.querySelector<SVGGElement>('[data-soc-blocks]')!
+    const handG = root.querySelector<SVGGElement>('[data-soc-hand]')!
+    const gazeG = root.querySelector<SVGGElement>('[data-soc-gaze]')!
+    const shadowEl = root.querySelector<SVGEllipseElement>('[data-soc-shadow]')!
+    const ticker = root.querySelector<HTMLOListElement>('[data-soc-ticker]')!
+    const klinesG = root.querySelector<SVGGElement>('[data-soc-klines]')!
+    const nodeEls = new Map<string, SVGGElement>()
+    const haloEls = new Map<string, SVGCircleElement>()
+    root.querySelectorAll<SVGGElement>('[data-soc-node]').forEach((el) => {
+      const id = el.dataset.socNode!
+      nodeEls.set(id, el)
+      haloEls.set(id, el.querySelector<SVGCircleElement>('[data-soc-halo]')!)
+    })
+
+    const card = {
+      name: root.querySelector<HTMLElement>('[data-soc-card-name]')!,
+      meta: root.querySelector<HTMLElement>('[data-soc-card-meta]')!,
+      ref: root.querySelector<HTMLElement>('[data-soc-card-ref]')!,
+      role: root.querySelector<HTMLElement>('[data-soc-card-role]')!,
+      code: root.querySelector<HTMLElement>('[data-soc-card-code]')!,
+      elegy: root.querySelector<HTMLElement>('[data-soc-card-elegy]')!,
+      meter: root.querySelector<HTMLElement>('[data-soc-meter]')!,
+      silenceBtn: root.querySelector<HTMLButtonElement>('[data-soc-silence]')!,
+    }
+    let selected = card.silenceBtn.dataset.id || 'builder'
+
+    // world units → world-SVG pixels
+    const WX = (x: number) => 20 + x * 3.6
+    const WY = (y: number) => 182 - y * 3.9
+    const BLOCK_W = 22
+    const BLOCK_H = 25
+
+    // seven block rects, created once
+    const blockEls = new Map<string, SVGRectElement>()
+    for (const b of society.world.blocks) {
+      const r = document.createElementNS('http://www.w3.org/2000/svg', 'rect')
+      r.setAttribute('class', 'soc-block')
+      r.setAttribute('width', String(BLOCK_W))
+      r.setAttribute('height', String(BLOCK_H))
+      r.setAttribute('rx', '2')
+      blocksG.appendChild(r)
+      blockEls.set(b.id, r)
+    }
+
+    // ————————————————————————————— the visitor ————————————————————————————
+    // The pointer, projected into world units; its speed is what SEE-MOTION shouts about.
+    const visitor = { present: false, x: 50, y: 20, lastX: 50, lastY: 20, speed: 0 }
+    function toWorld(ev: PointerEvent) {
+      const box = worldSvg.getBoundingClientRect()
+      const px = ((ev.clientX - box.left) / box.width) * 400
+      const py = ((ev.clientY - box.top) / box.height) * 210
+      // clamp into the table's coordinate frame even when the pointer roams the map:
+      // the whole figure is the room, the world panel is its window
+      return { x: Math.max(0, Math.min(100, (px - 20) / 3.6)), y: Math.max(0, Math.min(40, (182 - py) / 3.9)) }
+    }
+    root.addEventListener('pointermove', (ev) => {
+      const p = toWorld(ev)
+      visitor.x = p.x
+      visitor.y = p.y
+      visitor.present = true
+    })
+    root.addEventListener('pointerleave', () => {
+      visitor.present = false
+    })
+
+    // ————————————————————————————— selection & ablation ————————————————————
+    function renderCard() {
+      const a = byId.get(selected)
+      if (!a) return
+      const silenced = society.ablated.has(a.id)
+      card.name.textContent = a.name
+      card.meta.textContent = `${a.agency} · ${a.bandLabel}`
+      card.ref.textContent = a.ref
+      card.role.textContent = a.role
+      card.code.textContent = a.code
+      card.elegy.textContent = a.elegy
+      card.elegy.hidden = !silenced
+      card.silenceBtn.dataset.id = a.id
+      card.silenceBtn.textContent = silenced ? 'let it answer again' : 'silence this agent'
+    }
+    function select(id: string) {
+      selected = id
+      nodeEls.forEach((el, key) => el.classList.toggle('soc-selected', key === id))
+      renderCard()
+    }
+    nodeEls.forEach((el, id) => {
+      el.addEventListener('click', () => select(id))
+      el.addEventListener('keydown', (ev) => {
+        if (ev.key === 'Enter' || ev.key === ' ') {
+          ev.preventDefault()
+          select(id)
+        }
+      })
+    })
+    card.silenceBtn.addEventListener('click', () => {
+      const id = card.silenceBtn.dataset.id!
+      if (society.ablated.has(id)) wakeAgent(society, id)
+      else silence(society, id)
+      const el = nodeEls.get(id)
+      const silenced = society.ablated.has(id)
+      el?.classList.toggle('soc-ablated', silenced)
+      el?.setAttribute('aria-pressed', String(silenced))
+      renderCard()
+    })
+
+    // ————————————————————————————— chapter shelf ———————————————————————————
+    root.querySelectorAll<HTMLButtonElement>('[data-soc-ch]').forEach((btn) => {
+      const ch = Number(btn.dataset.socCh)
+      const members = agents.filter((a) => a.ref.includes(`§${ch}.`) || a.ref.includes(`ch. ${ch} `))
+      const on = () => {
+        if (!members.length) return
+        root.classList.add('soc-highlighting')
+        members.forEach((m) => nodeEls.get(m.id)?.classList.add('soc-highlit'))
+      }
+      const off = () => {
+        root.classList.remove('soc-highlighting')
+        nodeEls.forEach((el) => el.classList.remove('soc-highlit'))
+      }
+      btn.addEventListener('mouseenter', on)
+      btn.addEventListener('mouseleave', off)
+      btn.addEventListener('focus', on)
+      btn.addEventListener('blur', off)
+    })
+
+    // ————————————————————————————— new morning —————————————————————————————
+    root.querySelector<HTMLButtonElement>('[data-soc-morning]')?.addEventListener('click', () => {
+      nodeEls.forEach((el) => {
+        el.classList.remove('soc-ablated')
+        el.setAttribute('aria-pressed', 'false')
+      })
+      society = makeSociety(seedFromString(today))
+      linesSeen = 0
+      ticker.replaceChildren()
+      appendLine('A morning. The society wakes wanting to play.')
+      klinesG.replaceChildren()
+      renderCard()
+    })
+
+    function appendLine(text: string) {
+      const li = document.createElement('li')
+      li.textContent = text
+      ticker.appendChild(li)
+      while (ticker.children.length > 7) ticker.removeChild(ticker.firstChild!)
+    }
+
+    // ————————————————————————————— the loop ————————————————————————————————
+    const SIM_MS = 1000 / TICKS_PER_SEC
+    let reduce = reducedMotion()
+    onMotionChange((r) => (reduce = r))
+    let acc = 0
+    let last = performance.now()
+    let lastDraw = 0
+    let kDrawn = 0
+
+    function tickInput(): VisitorInput {
+      const dx = visitor.x - visitor.lastX
+      const dy = visitor.y - visitor.lastY
+      visitor.speed = visitor.present ? Math.min(10, Math.hypot(dx, dy) * 1.1 + visitor.speed * 0.35) : 0
+      visitor.lastX = visitor.x
+      visitor.lastY = visitor.y
+      return visitor.present
+        ? { present: true, x: visitor.x, y: visitor.y, speed: visitor.speed }
+        : NO_VISITOR
+    }
+
+    function draw() {
+      const w = society.world
+      for (const b of w.blocks) {
+        const el = blockEls.get(b.id)!
+        const held = w.hand.holding === b.id
+        const bx = held ? w.hand.x : b.x
+        const by = held ? w.hand.y : b.level * 7
+        el.setAttribute('x', String(WX(bx) - BLOCK_W / 2))
+        el.setAttribute('y', String(WY(by) - BLOCK_H))
+        el.classList.toggle('soc-block-tower', b.inTower)
+      }
+      handG.setAttribute('transform', `translate(${WX(w.hand.x)} ${WY(w.hand.y) - 26})`)
+      gazeG.setAttribute('transform', `translate(${WX(w.gaze.x)} ${WY(w.gaze.y) - 10})`)
+      if (visitor.present) {
+        shadowEl.setAttribute('cx', String(WX(visitor.x)))
+        shadowEl.setAttribute('cy', '182')
+        shadowEl.classList.add('soc-shadow-present')
+      } else shadowEl.classList.remove('soc-shadow-present')
+
+      for (const [id, halo] of haloEls) {
+        const v = society.a[id] ?? 0
+        halo.setAttribute('r', String(6 + 14 * v))
+        setVars(halo, { opacity: String(0.12 + 0.5 * v) })
+        const core = nodeEls.get(id)!.querySelector<SVGElement>('.soc-core')!
+        setVars(core, { opacity: String(0.45 + 0.55 * v) })
+      }
+
+      // K-lines collect as diamonds in their band; the strip holds an evening's worth
+      while (kDrawn < society.kLines.length && kDrawn < 9) {
+        const k = society.kLines[kDrawn]
+        const d = document.createElementNS('http://www.w3.org/2000/svg', 'rect')
+        d.setAttribute('class', 'soc-kline')
+        const y = 356 - kDrawn * 26
+        d.setAttribute('x', '56')
+        d.setAttribute('y', String(y))
+        d.setAttribute('width', '13')
+        d.setAttribute('height', '13')
+        d.setAttribute('transform', `rotate(45 ${56 + 6.5} ${y + 6.5})`)
+        const title = document.createElementNS('http://www.w3.org/2000/svg', 'title')
+        title.textContent = `K-line ${k.id}: a tower of ${GOAL_HEIGHT} stood at tick ${k.tick}; ${k.agents.length} agents were up, and are easier to wake now.`
+        d.appendChild(title)
+        klinesG.appendChild(d)
+        kDrawn++
+      }
+
+      // the meter on the card follows its agent
+      const v = society.a[selected] ?? 0
+      setVars(card.meter, { '--soc-meter': `${Math.round(v * 100)}%` })
+
+      // new scribe lines
+      while (linesSeen < society.lines.length) {
+        appendLine(society.lines[linesSeen].text)
+        linesSeen++
+      }
+    }
+
+    function frame(now: number) {
+      acc += now - last
+      last = now
+      // never spiral after a background tab: cap the debt
+      if (acc > 1500) acc = 1500
+      while (acc >= SIM_MS) {
+        step(society, tickInput())
+        acc -= SIM_MS
+      }
+      // reduced motion: the mind still lives, the page repaints gently
+      const drawEvery = reduce ? 400 : 0
+      if (now - lastDraw >= drawEvery) {
+        draw()
+        lastDraw = now
+      }
+      requestAnimationFrame(frame)
+    }
+    select('builder')
+    requestAnimationFrame(frame)
+  }
+</script>

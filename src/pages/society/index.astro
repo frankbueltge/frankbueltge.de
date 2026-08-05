@@ -1,0 +1,68 @@
+---
+// /society — The Society: a mind of mindless parts, live in the browser.
+// Prototype (2026-08-05), deliberately NOT yet listed in the /holdings register: a new
+// experiment shows itself before it claims a place on the shelf.
+import Page from '@/layouts/Page.astro'
+import SocietyFigure from '@/components/society/SocietyFigure.astro'
+---
+
+<Page
+  title="The Society | Frank Bültge"
+  description="A mind of mindless parts, running live in your browser — after Marvin Minsky's The Society of Mind (1986), forty years on. It perceives you; you may silence any of its agents."
+>
+  <article class="mx-auto max-w-5xl px-4 py-14">
+    <header class="max-w-3xl">
+      <p class="text-xs uppercase tracking-widest text-fg-muted">
+        experiment · prototype · started 2026-08-05
+      </p>
+      <h1 class="mt-2 text-3xl font-semibold">The Society</h1>
+      <p class="mt-1 text-fg-muted">a mind of mindless parts</p>
+
+      <blockquote class="mt-6 border-l-2 pl-4 text-sm leading-relaxed text-fg-muted">
+        “What magical trick makes us intelligent? The trick is that there is no trick. The
+        power of intelligence stems from our vast diversity, not from any single, perfect
+        principle.”
+        <footer class="mt-1 text-xs">
+          — Marvin Minsky, <cite>The Society of Mind</cite>, §30.8 (1986)
+        </footer>
+      </blockquote>
+
+      <p class="mt-6 text-sm leading-relaxed">
+        Forty years ago Minsky claimed a mind is a society of agents, each one mindless
+        alone. Today's machine minds bet on the opposite: one vast, opaque model. This piece
+        runs Minsky's architecture in your browser as a counter-model in a glass case —
+        twenty-five agents, every one small enough to read whole, building block towers,
+        quarrelling over one hand, remembering by K-line, watched by a B-brain that can see
+        only them, never the world.
+      </p>
+      <p class="mt-3 text-sm leading-relaxed">
+        You are in it. Your pointer is a shadow in the block world: the society notices
+        motion without ever knowing what moves, grows curious, gets bored of you, and
+        startles if you are sudden. And you may hurt it: select any agent and silence it —
+        what the whole loses is not scripted anywhere; it follows from the missing rule. A
+        reload heals everything.
+      </p>
+    </header>
+
+    <div class="mt-10">
+      <SocietyFigure />
+    </div>
+
+    <section class="mt-12 max-w-3xl" aria-label="Under proof">
+      <h2 class="text-sm font-semibold uppercase tracking-widest text-fg-muted">
+        under proof
+      </h2>
+      <p class="mt-3 text-sm leading-relaxed text-fg-muted">
+        The piece's claims are tests, not captions
+        (<code class="text-xs">src/lib/society/engine.test.ts</code>): the same seed is the
+        same morning, tick for tick · left alone, the society finishes a tower, though no
+        agent can build · an intact society wrecks only finished towers; silence
+        CENSOR-WRECK and it smashes its own unfinished work · silence GRASP and no block is
+        ever placed again · silence SEE-MOTION and you become invisible to it. Chapter and
+        section numbers are verified against the 1986 edition; the thirty-chapter shelf
+        shows honestly which parts of the book live here so far — ten chapters are awake,
+        twenty are roadmap.
+      </p>
+    </section>
+  </article>
+</Page>
