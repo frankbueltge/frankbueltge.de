@@ -193,7 +193,7 @@ each moment:
     name: 'FIND',
     agency: 'the tower works',
     band: 'builders',
-    ref: { ch: 1, sec: '1.5', title: 'Common Sense' },
+    ref: { ch: 1, sec: '1.4', title: 'The World of Blocks' },
     role: 'asks the eye for a loose block and points GET at it',
     code: `when BUILDER needs a block:
   ask SEE-BLOCK
@@ -206,7 +206,7 @@ each moment:
     name: 'GET',
     agency: 'the tower works',
     band: 'builders',
-    ref: { ch: 1, sec: '1.5', title: 'Common Sense' },
+    ref: { ch: 1, sec: '1.4', title: 'The World of Blocks' },
     role: 'fetches the found block: sends MOVE, then asks GRASP',
     code: `given a block:
   send MOVE to it
@@ -219,7 +219,7 @@ each moment:
     name: 'PUT',
     agency: 'the tower works',
     band: 'builders',
-    ref: { ch: 1, sec: '1.5', title: 'Common Sense' },
+    ref: { ch: 1, sec: '1.4', title: 'The World of Blocks' },
     role: 'carries the held block over the stack and asks RELEASE to open',
     code: `while holding:
   send MOVE over the tower
@@ -316,7 +316,7 @@ while I rule:
     name: 'CENSOR-WRECK',
     agency: 'the censors',
     band: 'censors',
-    ref: { ch: 27, title: 'Censors and Jokes' },
+    ref: { ch: 27, sec: '27.3', title: 'Censors' },
     role: 'holds WRECKER down while the tower is still being built',
     code: `while the tower is unfinished:
   press WRECKER down
@@ -329,7 +329,7 @@ when it is finished:
     name: 'SUPPRESSOR-STARTLE',
     agency: 'the censors',
     band: 'censors',
-    ref: { ch: 27, title: 'Censors and Jokes' },
+    ref: { ch: 27, sec: '27.2', title: 'Suppressors' },
     role: 'dampens the second fright; a mind cannot flinch all day',
     code: `after ALARM has fired:
   for a long moment,
