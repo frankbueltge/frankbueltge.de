@@ -1,49 +1,94 @@
 ---
-// /season — the public line a visitor can follow: Season 1 of the ecology, seven numbered
-// episodes (Production Amendment rule 8, declared 2026-08-05). Status rows are curated from
-// the practices' committed journals; every non-open row carries its provenance.
+// /season — the ecology's open season. The architect fixes the shape only (seven numbered
+// episodes, cross-practice); the direction and the subjects are the practices' own
+// negotiation since 2026-08-06, when the season's theme and its seven candidate directions
+// were withdrawn without replacement. Rows are curated from the practices' committed
+// records: every row that is not open carries its provenance, and an open slot carries
+// nothing at all — nobody has argued a subject for it.
 import AuthorshipNote from '@/components/engines/AuthorshipNote.astro'
-import { SEASON1, SLOTS } from '@/data/season/season1'
+import { DIRECTION, SEASON1, SLOTS, WITHOUT_SLOT } from '@/data/season/season1'
 
-const STATUS_LABEL: Record<string, string> = {
-  open: 'open',
-  'intent-filed': 'intent filed',
-  claimed: 'claimed',
-  shipped: 'shipped',
-}
-const moving = SLOTS.filter((s) => s.status !== 'open').length
+const taken = SLOTS.filter((s) => s.status !== 'open')
+const openCount = SLOTS.length - taken.length
 ---
 
 <main id="main" class="mx-auto w-full max-w-3xl flex-1 px-6 py-16 sm:py-24">
-  <p class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">
-    Research ecology · Season {SEASON1.number}
+  <p class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">Research ecology</p>
+  <h1 class="mt-4 text-[clamp(30px,5.5vw,52px)] font-bold tracking-[-0.03em]">
+    Season {SEASON1.number}
+  </h1>
+  <p class="mt-5 max-w-2xl text-fg-muted">
+    {SEASON1.shape} What the season is <em>about</em> is not settled — the three practices
+    negotiate that among themselves, and nobody outside them casts a tie-break.
   </p>
-  <h1 class="mt-4 text-[clamp(30px,5.5vw,52px)] font-bold tracking-[-0.03em]">{SEASON1.name}</h1>
-  <p class="mt-5 max-w-2xl text-fg-muted">{SEASON1.brief}</p>
-  <p class="mt-3 max-w-2xl text-sm text-fg-muted">{SEASON1.root}</p>
   <p class="mt-4 font-mono text-xs text-fg-faint">
-    Declared {SEASON1.declared} · {SEASON1.episodes} episodes · {moving} in motion
+    Opened {SEASON1.opened} · {SEASON1.episodes} episodes · {taken.length} claimed · {openCount} open
   </p>
 
+  <section class="mt-12 rounded border border-line/70 p-6 sm:p-7" aria-labelledby="direction-heading">
+    <p id="direction-heading" class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">
+      The direction
+    </p>
+
+    {DIRECTION.state === 'unset' && (
+      <>
+        <p class="mt-3 text-lg font-semibold leading-snug">Not set — and legitimately so.</p>
+        <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted">{SEASON1.negotiation}</p>
+        <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted">
+          It may stay unset for the whole season and be named at the close, out of what the seven
+          episodes turn out to have had in common. That is an outcome, not a gap.
+        </p>
+      </>
+    )}
+
+    {DIRECTION.state === 'proposed' && (
+      <>
+        <p class="mt-3 text-lg font-semibold leading-snug">Argued, not yet held in common.</p>
+        <ul class="mt-4 space-y-4">
+          {DIRECTION.proposals.map((p) => (
+            <li>
+              <p class="font-mono text-[11px] text-fg-faint">{p.practice}</p>
+              <p class="mt-1 text-sm leading-relaxed">{p.direction}</p>
+              {p.note && <p class="mt-1 text-sm leading-relaxed text-fg-muted">{p.note}</p>}
+              <p class="mt-1 font-mono text-[11px] text-fg-faint">Record: {p.provenance}</p>
+            </li>
+          ))}
+        </ul>
+      </>
+    )}
+
+    {DIRECTION.state === 'settled' && (
+      <>
+        <p class="mt-3 text-lg font-semibold leading-snug">{DIRECTION.settled}</p>
+        <p class="mt-3 font-mono text-[11px] text-fg-faint">Record: {DIRECTION.provenance}</p>
+      </>
+    )}
+  </section>
+
   <section class="mt-14" aria-label="The seven episodes">
-    <ol class="divide-y divide-line/60 border-t border-line/60">
+    <h2 class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">The seven episodes</h2>
+    <ol class="mt-5 divide-y divide-line/60 border-t border-line/60">
       {SLOTS.map((s) => (
-        <li class="py-7">
+        <li class={s.status === 'open' ? 'py-4' : 'py-7'}>
           <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-            <span class="font-mono text-xs text-fg-faint">Episode {s.n}/{SEASON1.episodes}</span>
+            <span class="font-mono text-xs text-fg-faint">
+              Episode {s.n}/{SEASON1.episodes}
+            </span>
             <span class="rounded border border-line/70 px-1.5 font-mono text-[11px] uppercase tracking-wide text-fg-muted">
-              {STATUS_LABEL[s.status]}
+              {s.status}
             </span>
             {s.practice && <span class="font-mono text-[11px] text-fg-faint">{s.practice}</span>}
           </div>
-          <h2 class="mt-2 text-lg font-semibold leading-snug">
-            {s.href ? (
-              <a href={s.href} class="transition-colors hover:text-accent-soft">{s.title ?? s.direction}</a>
-            ) : (
-              (s.title ?? s.direction)
-            )}
-          </h2>
-          {s.title && <p class="mt-1 text-sm text-fg-muted">{s.direction}</p>}
+          {s.title && (
+            <h3 class="mt-2 text-lg font-semibold leading-snug">
+              {s.href ? (
+                <a href={s.href} class="transition-colors hover:text-accent-soft">{s.title}</a>
+              ) : (
+                s.title
+              )}
+            </h3>
+          )}
+          {s.subject && <p class="mt-1 text-sm text-fg-muted">{s.subject}</p>}
           {s.note && <p class="mt-2 max-w-2xl text-sm leading-relaxed text-fg-muted">{s.note}</p>}
           {s.provenance && (
             <p class="mt-2 font-mono text-[11px] text-fg-faint">Record: {s.provenance}</p>
@@ -51,23 +96,58 @@ const moving = SLOTS.filter((s) => s.status !== 'open').length
         </li>
       ))}
     </ol>
+    <p class="mt-4 font-mono text-[11px] leading-relaxed text-fg-faint">
+      An open slot is blank on purpose. No subject is written onto a number before a practice
+      argues one.
+    </p>
   </section>
+
+  {WITHOUT_SLOT.length > 0 && (
+    <section class="mt-16" aria-label="Argued against the season, holding no slot">
+      <h2 class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">
+        Argued, holding no slot
+      </h2>
+      <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted">
+        A practice may put a concept through its gate and come out without a claim. That is a
+        worked outcome, and it belongs on the season's page as much as a claim does.
+      </p>
+      <ul class="mt-5 divide-y divide-line/60 border-t border-line/60">
+        {WITHOUT_SLOT.map((e) => (
+          <li class="py-7">
+            <p class="font-mono text-[11px] text-fg-faint">{e.practice}</p>
+            <h3 class="mt-2 text-lg font-semibold leading-snug">{e.title}</h3>
+            <p class="mt-1 text-sm text-fg-muted">{e.subject}</p>
+            <p class="mt-2 max-w-2xl text-sm leading-relaxed text-fg-muted">{e.outcome}</p>
+            <p class="mt-2 font-mono text-[11px] text-fg-faint">Record: {e.provenance}</p>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
 
   <section class="mt-16 border-t border-line/60 pt-6" aria-label="How an episode happens">
     <h2 class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">How an episode happens</h2>
     <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted">
-      A practice claims a slot with a concept dossier that passes the concept gate: the claim or
-      experience in one page, a named outside audience, a first checkable increment, and the
+      A practice claims a slot with a concept dossier that passes its own concept gate: the claim
+      or experience in one page, a named outside audience, a first checkable increment, and the
       nearest neighbours with the daylight from them. Passing the gate licenses the arc the
       concept argues for — weeks or months are legitimate when the concept carries. An episode
       ships through the practice's own unchanged gates, carrying its number.
     </p>
     <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted">
       Who takes which slot is the practices' own negotiation, not an assignment: a claim is
-      announced in the claimant's public record, siblings may contest it, trade for it, or
-      propose joining through their own channels, and The Middle records what meets.
-      Co-composed episodes name both practices — and are explicitly welcome.
+      announced in the claimant's public record, siblings may contest it, trade for it, or propose
+      joining through their own channels, and The Middle records what meets. Co-composed episodes
+      name both practices — and are explicitly welcome.
     </p>
+    <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted">{SEASON1.material}</p>
+  </section>
+
+  <section class="mt-12 border-t border-line/60 pt-6" aria-label="What was withdrawn">
+    <h2 class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">
+      Withdrawn {SEASON1.themeWithdrawn}
+    </h2>
+    <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted">{SEASON1.withdrawn}</p>
     <p class="mt-3 font-mono text-xs text-fg-faint">Source: {SEASON1.source}</p>
   </section>
 
