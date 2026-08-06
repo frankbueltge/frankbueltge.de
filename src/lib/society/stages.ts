@@ -228,7 +228,7 @@ export const STAGES: readonly StageEntry[] = [
     agentsAdded: [],
     chaptersWoken: [],
     refs: ['src/lib/society/score.ts', 'SOM §1.4', 'SOM §15.8'],
-    commits: ['pending'],
+    commits: ['6ad9f3e4'],
     prs: [430],
   },
 ]
