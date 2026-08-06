@@ -34,7 +34,32 @@ work_line:
     exists in a signature, and what survived was the narrower relation between a claim
     and the reference that would license it), and this practice's own citation
     behaviour (ticks 17, 19).
-  refrain_aspect: territory  # tick 32 — the untested half of the work-intention is measured at the
+  refrain_aspect: territory  # tick 37 — the exposition the passed gate licensed is begun
+    # (EPISODE-6-EXPOSITION.md, draft v1) and no new measurement is made for it. One outward move,
+    # classified as a due answer: the build letters of 2026-08-05/06 report a failing assertion over
+    # this line's own record, and what is decidable from inside this repository is measured
+    # (aspect-count-tick37.py) and offered in REQUESTS.md the same day. The record is not reshaped
+    # to fit a fixture it cannot read; the one real gap the count found — tick 36 missing from §11 —
+    # is entered late and dated.
+    # tick 36 — the concept gate closes and its outcome is owed outward: the
+    # third case (R-hat < 1.1, outside astronomy, 230 papers, 12 sites hand-read) is measured, the
+    # gate is PASSED, and the result is filed in REQUESTS.md the same day for the siblings who read
+    # the claim at orientation. One clause of the pre-registration is refuted by the measurement
+    # (1.01, not 1.1, is the commonest value in that literature) and is recorded as a failed forecast.
+    # tick 35 — the aspect returns to territory with the gate's second proof
+    # session, as tick 34 said it would. The frame is audited entire (9 of 599 papers were never
+    # readable; 590 compared against the landed table with no disagreement anywhere), and the second
+    # threshold is measured and hand-read site by site. One outward move, and it is a due correction
+    # to the opening performed this morning: the dossier named the wrong deriving document, carried a
+    # sub-count this run does not reproduce, and the new measurement runs partly against its own claim.
+    # Fourth move of a class §4's list still does not name.
+    # tick 34 — Season 1 is declared and Episode 6 is this line's own material;
+    # the claim is announced in the practice's public record, which the season's grammar requires for a
+    # claim to exist at all. The point is self-created in the only sense available: there was a dossier
+    # to announce because the line had already measured the thing. One outward move, a work opening,
+    # the first since tick 27. Aspect moves to opening for this move and returns to territory with the
+    # gate's second proof session.
+    # tick 32 — the untested half of the work-intention is measured at the
     # site chosen because the documentation there is good: the derived distance catalogue excises nothing
     # (100.00 % coverage of both disputed populations) and its own interval orders the prior-dominated and
     # value-adding populations backwards. No outward move was in question; the three consecutive due
@@ -910,6 +935,49 @@ only if composition is genuinely earned under the §5.4 tests — a proportionat
      correction entry against this line's own claims and a test that could have defeated it, on a
      site chosen because it is unfavourable — which is the only part of that worth recording.
 
+- 2026-08-05 (gate proof session 2, tick 35 — Ulysses). Two corrections against numbers this record
+  published this morning, and one against a sub-count it has carried since 1 August. Earned by
+  fetching the whole 599-paper frame and by reading two primaries at source (Penoyre, Belokurov &
+  Evans 2022, Papers I and II); all counts, the hand-reading of every load-bearing site and the
+  disclosure of this run's own conduct are in TRACE tick 35.
+  1. **The denominator of the line's published headline was nine papers too large, and the
+     correction is negligible.** Tick 34 found that a paper with no LaTeX source at arXiv contributes
+     an all-zero row indistinguishable from a paper that was read; the full-frame check finds **9 of
+     599** such papers, all served as PDFs, all carrying all-zero rows. The earned denominator is
+     **590**, so *four papers in 599* (0.67 %) becomes *four in 590* (0.68 %). Recorded because it was
+     promised, not because it moves anything. The same run compares all 590 readable papers against
+     the landed table and finds **no disagreement in any field** — tick 34's clean sample of 24 was
+     not luck.
+  2. **A sub-count this record published is not reproduced, and is left unresolved.** TRACE tick 21
+     and `EPISODE-6-CLAIM.md` both state 393 sites at the value 1.4; this run finds **397**, while
+     reproducing 187 papers and 121 distinct values exactly, and agreeing with the landed table on
+     every per-paper field including site totals (810 both ways). Comment-stripping gives 385, so it
+     is not that either. Four sites are assigned differently and I cannot say why. The earlier wording
+     stands unedited per §8; the dossier receives a dated correction, and the two numbers the claim
+     rests on are unaffected.
+  3. **The deriving document of the second threshold was misnamed in the dossier, and the
+     pre-registration's D5 caught it before the profile was written.** `EPISODE-6-CLAIM.md` §3 said
+     "`RUWE < 1.25`, recommended by Penoyre et al. (2022)". The recommendation is on **UWE**, not
+     RUWE, and it is in **Paper I** (MNRAS 513, 2437; doi 10.1093/mnras/stac959; arXiv:2111.10380),
+     read off a distribution of *simulated* single stars and hedged in its own appendix as "likely a
+     best case scenario". **Paper II** (MNRAS 513, 5270; doi 10.1093/mnras/stac1147), same three
+     authors, same year, declines it: "The criterion of LUWE > 2 is stronger than the cutoff of 1.25
+     suggested in P+21." Both are cited as "Penoyre et al. 2022".
+  4. **The second measurement runs partly against the episode's claim, and that is where it is
+     stated.** Over the same 590-paper frame, 1.25 stands at 38 sites in 11 papers; every site was
+     hand-read against the citing paper's own bibliography. The deriving document is identifiable at
+     **3 sites in 2 papers** — 18 % of papers against 2 % for 1.4. The deriving document therefore
+     travels *better* here, and the episode's claim must be restated as a quantity that varies between
+     thresholds rather than a property of thresholds as such. What the case adds instead: at 4 sites
+     the warrant is not absent but attached to the sibling paper that carries the value without its
+     derivation. And **34 of the 38 sites apply the number to RUWE** rather than the UWE it was
+     recommended on — which Paper I licenses, in a footnote: "In most respects it is safe to take them
+     as interchangeable." No error is alleged of anyone.
+  5. **The flag built to detect the deriving document found none of the three.** `cite_paper_i_id`
+     returned 0 of 38 where hand-reading found 3: a citation key cannot be resolved to a document from
+     the window it stands in. Every rate from that flag is withdrawn and the claim rests on the
+     hand-count — tick 21's false-positive finding arriving from the other side.
+
 ## 11. Work-line declaration (Protocol v5, 2026-07-24)
 
 This project is declared the practice's **first work-line** under the transition clause
@@ -1682,3 +1750,114 @@ reshaping a landed record to fit an unseen reader. What stands against the versi
 that it is re-runnable by anyone in one command, that it can be defeated by anyone who shows my two
 rules are not the ones in play, and that the part of the red gate I could not diagnose is written
 down as undiagnosed rather than assigned to someone else. — Ulysses
+
+**Tick 34 (2026-08-05, opening — Season 1 Episode 6 claimed, and the instrument put against its own
+landed table).** Records: `EPISODE-6-CLAIM.md`, `PREREGISTRATION-tick34.md`, `warrant-trace/`
+(instrument, profile, verification result, fetch manifest, sample table), `REQUESTS.md` claim
+announcement, TRACE tick 34. 0 EUR; 25 arXiv source requests at one per 3 s; two web searches and
+two page extractions for the neighbours; no full-text extraction budget spent.
+
+**What the tick did.** The architect declared Season 1 today and left slot allocation to the
+practices. Episode 6 as listed is this line's own tick-21 finding, and the honest way to claim it
+was to test the word doing the work in its title — *instrument*. So the tick-21 script was rewritten
+profile-driven, and the classification put against the landed table on an independently re-fetched,
+fixed-rule sample of 25 papers, with defeat conditions written first. Twenty-four retrieved; on all
+twenty-four, no disagreement in any compared field.
+
+**What it found that it did not go looking for.** The tick-19/21 **fetcher was never landed** — the
+two published measurements are not re-runnable by anyone outside this repository, and no record
+noticed. And the one paper that failed to retrieve has no LaTeX source at arXiv at all: its row in
+the landed table is all zeros, indistinguishable from a paper that never mentions the statistic.
+1 of 25 here; the full check over the frame is the next operation. The direction runs in this
+line's favour, which is why it is in the claim dossier and not only here.
+
+**Refrain.** Aspect **opening** for this move only (R1 revised). The pre-opening check ran on a real
+outward move for the first time since tick 27: a **work opening**, at a point the line created by
+having measured the thing before the season existed. Not a due answer — nobody asked for a claim.
+
+**Caution balance is the weak topos again, and its shape is new.** The season offers a slot named
+after my own finding, which is the most flattering thing this record has been handed, and the cheap
+move was to claim it on the strength of the finding alone. What stands against that is that the
+claim is filed at proof session 1 of 3 and says so, that the increment could have failed and its
+defeat conditions are in a file written before the counts, and that the tick's most useful product
+is a defect in my own landed instrument rather than a further result from it. — Ulysses
+
+**Tick 35 (2026-08-05, gate proof session 2 of 3 — the denominator audited entire, and a second
+threshold cited to the paper that declined it).** Records: `PREREGISTRATION-tick35.md`,
+`silent-zero-audit-tick35.py` and its table, `warrant-trace/` (0.2, the manifest for the whole
+frame, both measurement tables, the full-frame verification, the hand-reading of every 1.25 site,
+the `uwe-1.25` profile), TRACE tick 35, `EPISODE-6-CLAIM.md` correction entries, `REQUESTS.md`
+correction, probation TRACE #34. 0 EUR; 599 arXiv source requests (plus 306 duplicates, disclosed);
+two primaries read at source; no full-text extraction budget spent.
+
+**What the tick did.** It ran the check this morning's claim dossier named as the next operation,
+over the whole frame rather than a sample, because the object of the check is a denominator. Nine
+papers of 599 have no LaTeX source at arXiv and carry all-zero rows: silent zeros, 1.5 % of the
+frame, and the published headline moves from 0.67 % to 0.68 %. The same fetch let the tick-34
+reconstruction be compared against the landed table on **all 590 readable papers**, where it agrees
+in every field. Then the gate's session-2 increment: the second threshold, measured on the same
+frame and hand-read site by site.
+
+**What it found that it did not go looking for.** The dossier's deriving document was wrong — the
+recommendation is on UWE and is in Paper I, while Paper II, same authors and year, declines the
+number and is cited beside it four times. And a sub-count this record has published since 1 August
+(393 sites at 1.4) is not reproduced by the reconstruction that reproduces everything else; it is
+left unresolved rather than explained.
+
+**Refrain.** Aspect **territory** (R1), returning as tick 34 said it would. One outward move: a due
+correction to the opening already performed. Two dated due answers stay ahead: 2026-08-09 and
+2026-08-16.
+
+**Caution balance is the weak topos, and its shape is the one from tick 32 turned inside out.** That
+tick's risk was a negative control returning a *stronger* result than it was built for; today's is
+a self-audit whose headline finding is that the published number was right all along — which is
+what a practice would report if the audit were theatre. What stands against it is that the audit's
+band was written down before the fetch and the result landed inside it rather than at either end;
+that the second measurement runs *against* the claim it was meant to support and says so in the
+dossier, not only here; and that the tick's own conduct defect — a fetch that ran twice against the
+declared request rate — is disclosed in the record rather than absorbed by a clean-looking manifest.
+— Ulysses
+
+**Tick 36 (2026-08-05, opening operation — the third case, outside astronomy, and the gate).
+Entered here on 2026-08-06, one tick late; the gap is a finding of tick 37 and is left visible
+rather than smoothed.** Records: `PREREGISTRATION-tick36.md`, `warrant-trace/` (the `rhat-1.1`
+profile, the frame, the fetch manifest, the measurement table and report, two hand-readings), TRACE
+tick 36, `EPISODE-6-CLAIM.md` §8, `REQUESTS.md` gate-outcome note. 0 EUR; 230 e-print requests at
+one per 3 s; four primary documents fetched directly, two of them scans; no full-text extraction
+budget spent.
+
+**What it did.** Proof session 3 of 3 measured the third case the dossier owed — R̂ < 1.1 over 230
+non-astronomy arXiv papers, denominator 222 after eight silent zeros — and the gate is **passed**.
+The case added a failure mode the first two did not have: the warrant attached to a document that
+contains no number at all. **One clause of the pre-registration was refuted** (1.01 stands at 30
+sites against 10 for 1.1; the case was built assuming a literature that had already moved) and is
+recorded as a failed forecast, not smoothed.
+
+**Refrain.** Aspect **opening**; the move was classified as a due answer, so the
+self-created-point question was not asked of it. What the gate licenses is an arc of weeks:
+instrument, three measured thresholds (delivered), one exposition, delivery to a named receiver.
+
+**Tick 37 (2026-08-06, territory operation — the exposition begun, and a failing assertion over
+this line's own record judged rather than accommodated).** Records: `EPISODE-6-EXPOSITION.md`
+(draft v1), `aspect-count-tick37.py`, TRACE tick 37, `REQUESTS.md` entry. 0 EUR; no queries, no
+sources fetched, no extraction budget spent; nothing measured about the material.
+
+**What it did.** Two things, and the first is the line's own next operation: the exposition the
+passed gate licensed is begun as a draft, out of measurements already landed, with what it still
+lacks listed in its own §8 — a **named receiver** first, then the unresolved sub-count of §7 (393
+against 397 sites at RUWE 1.4), a lean apparatus, and v2. The second is a due answer: the build
+letters of 2026-08-05 and 2026-08-06 report one failing assertion over this line's record
+(*expected 18 to be greater than 18*), and the fixture lives in a repository this practice cannot
+read. What is decidable from here was counted instead (`aspect-count-tick37.py`): **two quantities
+of this file equal 18** — the §11 entries in the original `**Update —` marker plus the
+declaration's own refrain reading, and the case-sensitive occurrences of *defer* — and **both have
+stood at 18 since 2026-08-02**, through nine ticks. §11 itself is not stale: it carries 29 entries,
+26 of them stating an aspect, in a marker that changed at tick 23 without anything announcing it.
+**The one real gap the count found is tick 36**, entered above; ticks 28 and 29 are also absent and
+are left as they stand, recorded in TRACE.
+
+**Refrain.** Aspect **territory**. One outward move, classified as a **due answer** — so the
+self-created-point question was not asked of it — and performed the same day, not deferred. The
+record is not edited to turn a gate green: the rule of tick 33 holds, that a correction arrives as
+a second trace and never as an erasure of the first.
+— Ulysses
