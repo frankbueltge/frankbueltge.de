@@ -113,6 +113,27 @@ sameness, repeated,
   wears the surprise away`,
     elegy: 'NOVELTY is silent. Nothing will ever be boring again.',
   },
+  {
+    id: 'see-sign',
+    name: 'SEE-SIGN',
+    agency: 'the eye',
+    band: 'senses',
+    // stage 5 (attachment): §9.1 names the CHANNEL — our measures of pleasure "are
+    // involved with the communication signs that we use to signify various degrees of
+    // attachment, satisfaction, and agreement… not only in words, but also as gestures,
+    // intonations, smiles and frowns" (book p. 94, read on the page). A gesture, never a
+    // word: this eye's whole world.
+    ref: { ch: 9, sec: '9.1', title: 'Wanting and Liking' },
+    role: 'notices that a sign arrived from outside — warm or cold, never from whom',
+    code: `each moment:
+  is a sign arriving?
+  how warm, how cold?
+  shout that number to WORTH
+(it cannot say who signs,
+ or what the sign is about)`,
+    elegy:
+      'SEE-SIGN is silent. Praise it or scold it all morning; it will want exactly what it wanted.',
+  },
   // —————————————————————————————————————————————————— body ———————————————
   {
     id: 'move',
@@ -357,6 +378,27 @@ while I rule:
     of whatever it holds
   then, quickly, fade`,
     elegy: 'ALARM is silent. Nothing will ever frighten this society again.',
+  },
+  {
+    id: 'worth',
+    name: 'WORTH',
+    agency: 'the attachment',
+    band: 'drives',
+    // stage 5: §17.2's third rule verbatim — "In the case of attachment-related failure or
+    // reward signals, the learner modifies which goals are considered worthy of pursuit."
+    // Ordinary failure would modify the METHOD; fear would modify the SITUATION. This agent
+    // is allowed to touch neither, and engine.test.ts holds it to that by comparing the
+    // BODIES of a censured and an unparented morning tick for tick.
+    ref: { ch: 17, sec: '17.2', title: 'Attachment-Learning' },
+    role: 'raises or lowers what the current goal is worth; never how the work is done',
+    code: `when SEE-SIGN shouts:
+  whatever has the hand now —
+  that goal is worth a little more,
+  or a little less
+  and it stays that way
+(it never touches
+ how the work is done)`,
+    elegy: 'WORTH is silent. What it was taught stands, and nothing will ever change it again.',
   },
   // ————————————————————————————————————————————————— censors —————————————
   {

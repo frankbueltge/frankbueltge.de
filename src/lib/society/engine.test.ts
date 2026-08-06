@@ -7,11 +7,13 @@
 
 import { describe, expect, it } from 'vitest'
 import {
+  bodySnapshot,
   makeSociety,
   NO_VISITOR,
   silence,
   snapshot,
   step,
+  WORTH_FLOOR,
   type Society,
   type VisitorInput,
 } from './engine'
@@ -296,12 +298,150 @@ describe('stage 4 — the dream (§15.4, §15.8, §3.5)', () => {
   })
 })
 
+describe('stage 5 — attachment (§17.2)', () => {
+  /** a visitor who is present and holds a sign only when `when` says so */
+  function parent(s: Society, ticks: number, when: (s: Society) => number) {
+    for (let i = 0; i < ticks; i++) {
+      step(s, { present: true, x: 50, y: 20, speed: 0.2, sign: when(s) })
+    }
+  }
+
+  it('a morning with no sign is the morning we already had', () => {
+    const a = makeSociety(SEED)
+    const b = makeSociety(SEED)
+    for (let i = 0; i < 6000; i++) {
+      step(a, { present: true, x: 50, y: 20, speed: 0.2 })
+      step(b, { present: true, x: 50, y: 20, speed: 0.2, sign: 0 })
+    }
+    expect(snapshot(a)).toBe(snapshot(b))
+    expect(a.worth).toEqual({ tower: 1, arch: 1, wreck: 1 })
+  })
+
+  it('the same seed and the same parenting is the same morning', () => {
+    const a = makeSociety(SEED)
+    const b = makeSociety(SEED)
+    const script = (i: number) => (i % 400 < 60 ? -1 : 0)
+    for (let i = 0; i < 8000; i++) {
+      step(a, { present: true, x: 50, y: 20, speed: 0.2, sign: script(i) })
+      step(b, { present: true, x: 50, y: 20, speed: 0.2, sign: script(i) })
+    }
+    expect(snapshot(a)).toBe(snapshot(b))
+  })
+
+  it('censure changes ends, never means — the falsifier', () => {
+    // With nothing to outbid the tower, a censured society must build EXACTLY as an
+    // unparented one does: same placements, same lean, same collapses, same K-lines. If
+    // attachment ever touched a method — hand speed, jitter, the find/get/put chain —
+    // these two bodies come apart and this test goes red.
+    const make = () => {
+      const s = makeSociety(SEED)
+      silence(s, 'archer')
+      silence(s, 'wrecker')
+      return s
+    }
+    const parented = make()
+    const baseline = make()
+    parent(parented, 8000, () => -1)
+    for (let i = 0; i < 8000; i++) step(baseline, { present: true, x: 50, y: 20, speed: 0.2 })
+    expect(parented.worth.tower).toBeLessThan(1)
+    expect(bodySnapshot(parented)).toBe(bodySnapshot(baseline))
+  })
+
+  it('fear is not censure', () => {
+    const s = makeSociety(SEED)
+    let sawAlarm = false
+    for (let i = 0; i < 3000; i++) {
+      step(s, { present: true, x: 30, y: 20, speed: i % 60 === 0 ? 9 : 1, sign: 0 })
+      if (s.ruler === 'alarm') sawAlarm = true
+    }
+    expect(sawAlarm).toBe(true)
+    expect(s.worth).toEqual({ tower: 1, arch: 1, wreck: 1 })
+  })
+
+  it('ordinary failure is not censure', () => {
+    const s = makeSociety(SEED)
+    silence(s, 'balance')
+    const events: WorldEvent[] = []
+    for (let i = 0; i < 12000; i++) {
+      events.push(...step(s, { present: true, x: 50, y: 20, speed: 0.2 }).events)
+    }
+    expect(events.some((e) => e.kind === 'collapsed')).toBe(true)
+    expect(s.worth).toEqual({ tower: 1, arch: 1, wreck: 1 })
+  })
+
+  it('timing aims the sign, and a sign with nothing under it lands on nothing', () => {
+    const towerOnly = makeSociety(SEED)
+    parent(towerOnly, 12000, (s) => (s.mode === 'build' && s.goal === 'tower' ? 1 : 0))
+    expect(towerOnly.worth.tower).toBeGreaterThan(1)
+    expect(towerOnly.worth.wreck).toBe(1)
+
+    const wreckOnly = makeSociety(SEED)
+    parent(wreckOnly, 12000, (s) => (s.mode === 'wreck' ? 1 : 0))
+    expect(wreckOnly.worth.wreck).toBeGreaterThan(1)
+    expect(wreckOnly.worth.tower).toBe(1)
+
+    const restOnly = makeSociety(SEED)
+    parent(restOnly, 12000, (s) => (s.mode === 'rest' ? -1 : 0))
+    expect(restOnly.worth).toEqual({ tower: 1, arch: 1, wreck: 1 })
+    expect(restOnly.lines.some((l) => l.text.includes('lands on nothing'))).toBe(true)
+  })
+
+  it('you cannot parent past a censor: ends are taught, means are gated (§9.3)', () => {
+    const loved = makeSociety(SEED)
+    parent(loved, 14000, (s) => (s.mode === 'wreck' ? 1 : 0))
+    expect(loved.worth.wreck).toBeGreaterThan(1.2)
+    // …and still nothing unfinished is ever smashed while the censor stands
+    const s = makeSociety(SEED)
+    const events: WorldEvent[] = []
+    for (let i = 0; i < 14000; i++) {
+      events.push(...step(s, { present: true, x: 50, y: 20, speed: 0.2, sign: s.mode === 'wreck' ? 1 : 0 }).events)
+    }
+    expect(events.some((e) => e.kind === 'wrecked' && !e.complete)).toBe(false)
+  })
+
+  it('attachment cannot buy the transfer: praise wakes ARCHER no earlier (§17.6)', () => {
+    const s = makeSociety(SEED)
+    const events: WorldEvent[] = []
+    for (let i = 0; i < 30000; i++) {
+      events.push(...step(s, { present: true, x: 50, y: 20, speed: 0.2, sign: 1 }).events)
+    }
+    const order = events.map((e) => e.kind)
+    expect(order.indexOf('misfire')).toBeGreaterThan(-1)
+    expect(order.indexOf('archComplete')).toBeGreaterThan(order.indexOf('misfire'))
+    expect(s.kLines.filter((k) => k.kind === 'tower').length).toBeGreaterThanOrEqual(2)
+  })
+
+  it('both new agents are ablatable, and their losses differ', () => {
+    const blind = makeSociety(SEED)
+    silence(blind, 'see-sign')
+    parent(blind, 6000, () => -1)
+    expect(blind.worth).toEqual({ tower: 1, arch: 1, wreck: 1 })
+    expect(blind.a['worth']).toBe(0)
+
+    // WORTH silenced after it has already learned: the eye still reports, the values stand
+    const taught = makeSociety(SEED)
+    parent(taught, 6000, () => -1)
+    const learned = taught.worth.tower
+    expect(learned).toBeLessThan(1)
+    silence(taught, 'worth')
+    parent(taught, 6000, () => -1)
+    expect(taught.worth.tower).toBe(learned)
+    expect(taught.a['see-sign']).toBeGreaterThan(0)
+  })
+
+  it('a goal can be made unworthy, never impossible', () => {
+    const s = makeSociety(SEED)
+    parent(s, 40000, () => -1)
+    expect(s.worth.tower).toBeGreaterThanOrEqual(WORTH_FLOOR)
+  })
+})
+
 describe('the roster reflects the book', () => {
-  it('is exactly the twenty-seven agents the page claims', () => {
+  it('is exactly the twenty-nine agents the page claims', () => {
     // the prose on /society, the table caption and the map aria-label all say twenty-seven
     // (stage 2 added ARCHER and SEE-ARCH); this pins the number so the copy can never
     // drift from the roster again
-    expect(AGENTS.length).toBe(27)
+    expect(AGENTS.length).toBe(29)
   })
 
   it('every agent cites a real chapter of the 1986 edition', () => {

@@ -50,6 +50,9 @@ export type WorldEvent =
    *  tower K-lines to the OLD site, where the hand hesitates and the difference-engine
    *  corrects it — memory transfers the middle, not the plan (§8.6) */
   | { kind: 'misfire' }
+  /** stage 5 (§17.2): the parented society changes what it does — and would not have, had
+   *  no one ever signed to it. The moment attachment becomes visible in the body. */
+  | { kind: 'worthTurned'; goal: 'tower' | 'arch' | 'wreck' }
 
 export const TABLE_W = 100
 export const TOWER_X = 64

@@ -25,6 +25,7 @@ export interface Moment {
 /** Event kinds that are dramas, in the order they matter when several land in one tick. */
 export const DRAMATIC_KINDS = [
   'misfire',
+  'worthTurned',
   'collapsed',
   'archComplete',
   'towerComplete',
@@ -45,6 +46,14 @@ export function momentFor(event: WorldEvent): Moment | null {
     case 'misfire':
       // the transfer's own drama: memory dragging the hand to the old place
       return { caption: 'the hand goes where the towers were', x: TOWER_X, holdMs: 4200 }
+    case 'worthTurned':
+      // attachment made visible in the body: §17.2's "instead of trying to escape, the
+      // child would try to change what it was doing"
+      return {
+        caption: 'it changes what it does, not how it does it',
+        x: event.goal === 'arch' ? ARCH_MID : TOWER_X,
+        holdMs: 4600,
+      }
     case 'collapsed':
       return { caption: 'the tower leaves without being pushed', x: TOWER_X, holdMs: 3600 }
     case 'archComplete':

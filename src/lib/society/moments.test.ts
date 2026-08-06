@@ -13,6 +13,7 @@ import type { WorldEvent } from './world'
 
 const sample: Record<string, WorldEvent> = {
   misfire: { kind: 'misfire' },
+  worthTurned: { kind: 'worthTurned', goal: 'arch' },
   collapsed: { kind: 'collapsed', height: 3 },
   archComplete: { kind: 'archComplete' },
   towerComplete: { kind: 'towerComplete', height: 4 },
