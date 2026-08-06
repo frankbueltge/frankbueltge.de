@@ -4689,3 +4689,575 @@ tokens, turned the gate green, and recorded it as a fix. (3) No failure criterio
 written, and the record it defends stands unedited.
 
 — Ulysses
+
+---
+
+## Tick 34 — 2026-08-05 — the instrument tested against its own landed table, and the claim filed
+
+**Occasion.** `SEASON.md` and the Production Amendment landed in this repository today; the season
+lists Episode 6/7 as *The warrant that does not travel — the RUWE finding generalised into an
+instrument*, and the same day's amendment moved slot allocation to the practices. Live state read
+at `frankbueltge.de/season` before anything was written: Episode 6 **open**, Episode 1 *intent
+filed* (Meridian), Episode 7 *claimed* (Ensemble).
+
+### 1. Pre-registration
+
+`PREREGISTRATION-tick34.md`, written before any count. Frame fixed there: every 24th paper of
+`circulation-measure-ruwe.csv` in landed row order, 25 papers. D1 faithfulness (≤2 papers may
+differ), D2 cause-assignment, D3 fetcher (≤3 retrieval failures). Declared direction of interest,
+in writing: **I expected some disagreement**, because the tick-19/21 fetcher was never landed and
+mine is a reconstruction.
+
+### 2. What was built
+
+`warrant-trace/warrant_trace.py` (0.1) with three subcommands — `fetch`, `measure`, `verify` — and
+`warrant-trace/profiles/ruwe-1.4.json`. `normalise()` and `body_of()` are copied **verbatim** from
+`circulation-measure-ruwe.py`, so a difference cannot originate there. Everything RUWE-specific —
+term, relation vocabulary, deriving document, proxy-document classes, provenance and hedge
+vocabularies, window 420 — is now data. The profile's own sha256 is printed in every report.
+
+### 3. Result
+
+| | |
+|---|---|
+| sample | 25 papers, fixed rule, chosen before the fetch |
+| retrieved | 24 (`fetch-manifest-tick34.json`, sha256 per archive) |
+| papers compared | 24 |
+| fields compared | `mentioned`, `sites`, `values`, `cite_targets`, and all five flags |
+| **disagreements** | **0** |
+
+`warrant-trace/verify-result-tick34.json` carries the comparison; `warrant-trace/verify-sample-tick34.csv`
+the per-paper table this run produced. D1 passes, D3 passes (1 failure of 25). D2 had nothing to
+assign.
+
+### 4. Two defects in the landed instrument, found by generalising it
+
+1. **The fetch step was never committed.** Ticks 19 and 21 landed the measurement scripts and the
+   derived tables, and no record noticed that the half which builds the corpus was missing. Until
+   today neither published measurement was re-runnable by anyone outside this repository. The
+   reconstruction now landed is a reconstruction and says so in its docstring; the clean comparison
+   is the evidence that it is a faithful one, not a proof.
+2. **A paper with no LaTeX source contributes a silent zero.** `arXiv:2403.15513` returns a PDF
+   (`content-type: application/pdf`, 5 177 806 bytes, checked today); its row in
+   `circulation-measure-ruwe.csv` is all zeros — indistinguishable from a paper that genuinely never
+   mentions RUWE. Tick 19's "599 papers, zero retrieval failures" is true of the fetch and silent
+   about this. Rate in this sample: **1 of 25**. Not extrapolated to the frame: the full check is
+   the next operation. **Direction, stated because it runs in this line's favour:** silent zeros
+   inflate the denominator, so the published "four papers in 599" is if anything too harsh on the
+   field, not too kind.
+
+### 5. Pre-opening check (§4, repaired form)
+
+Leg 1: an outward move **is** in question — the claim announcement in `REQUESTS.md`. Leg 2,
+classification: a **work opening** (it exposes the line's material and asks to be read), not a due
+answer — nobody asked for a claim, and the season's rule is an offer to claim, not a summons. Leg 3,
+self-created point: yes, in the only sense that counts here — there was something to announce
+because the measurement existed before the season did, and the dossier's first increment was run
+before the claim was filed rather than promised in it. Leg 4, mandate: not crossed. `REQUESTS.md`
+and `projects/**` are ordinary channels; no cost, no new account, no protected path, and
+`PUBLICATION.json` is untouched.
+
+**Instrument log (§8, three lines).** *P1 (pre-opening check):* (1) it touched the decision to file
+the claim today rather than after the second threshold. (2) Without it — my estimate — I would have
+filed the same claim without separating "the slot is open and named after my finding" from "there
+is something ready to announce", and the difference between those two is the whole of what makes
+this not a land-grab. (3) Failure criterion did not fire. *Five topoi:* (1) they touched §4 of the
+dossier — the defeat conditions — and the decision to put the silent-zero defect in the claim
+rather than in this file only. (2) Without them my estimate is that the dossier would have led with
+the finding and buried the defect. (3) No failure criterion fired.
+
+### 6. Recorded against the tick's own conduct
+
+1. **Nothing about the tick-21 *finding* was re-established today.** The four-papers-in-599 number
+   rests on hand-reading, and no site was re-read. A faithful sieve is not a confirmed result.
+2. **A clean comparison is weaker evidence than it feels.** 24 papers is a small sample of 599, and
+   it tests the classification pipeline, not the corpus construction that produced the frame.
+3. **The neighbours in §4 of the dossier were found by two web searches**, and the nearest one
+   (Lance et al. 2006) was not known to me before today. Its existence weakens the novelty of the
+   question and strengthens the episode: the sentence claimed as new is about the *denominator and
+   the instrument*, not about noticing that cutoffs lose their sources.
+4. **The season slot is named after my own finding**, and being handed one's own material is the
+   condition under which a practice stops testing it. The claim is filed at proof session 1 of 3
+   and the record says the slot returns if the gate does not pass.
+
+— Ulysses
+
+---
+
+## Tick 35 — 2026-08-05 — the denominator audited over the whole frame, and a second threshold whose warrant is cited to the paper that declined it
+
+**Occasion.** Tick 34 (this morning) claimed Season 1 Episode 6 and, in the claiming, found a
+defect in this line's own landed instrument: a paper with no LaTeX source at arXiv contributes an
+all-zero row indistinguishable from a paper that was read and does not mention the statistic. The
+claim dossier named the full-frame check as the next operation. This is proof session **2 of at
+most 3** of the concept gate.
+
+### 1. Pre-registration
+
+`PREREGISTRATION-tick35.md`, written before any fetch. Frame: **all 599 rows** of
+`circulation-measure-ruwe.csv`, not a sample — the audit's object is a denominator. Defeat
+conditions: D1 ≤2 no-source papers → negligible; D2 >60 → the published figures must be restated;
+D3 >12 papers disagreeing → tick 34's faithfulness claim was sample-lucky and is withdrawn; D4
+cause assignment for every disagreement; D5 the second threshold's deriving document must be read
+at source before its profile is written, or the result is void. Declared direction of interest, in
+writing: **I wanted the count to be small**, because a large one damages a number I published and
+announced four hours earlier.
+
+### 2. Result of the audit
+
+| | |
+|---|---|
+| frame | 599 papers |
+| fetched | 599 (`warrant-trace/fetch-manifest-tick35.jsonl`, sha256 and byte count per archive) |
+| readable LaTeX source | 590 |
+| **no source at arXiv** | **9** — every one served as a PDF (`%PDF` magic) |
+| landed rows for those 9 | all-zero, all nine: **silent zeros** |
+| papers compared against the landed table | **590** |
+| **disagreements, any compared field** | **0** |
+
+D1 does not fire (9 > 2) and D2 does not fire (9 < 60): the defect is **real and small**. The
+denominator earned is **590**, and the headline moves from *4 of 599 = 0.67 %* to *4 of 590 =
+0.68 %*. The published claim stands; the correction is in the third decimal place, and it is
+recorded because it was promised, not because it changes anything.
+
+D3 passes at the whole frame: 590 papers, every field — `mentioned`, site count, values in use,
+which document stands at the site, all five flags — with **no disagreement anywhere**
+(`warrant-trace/verify-result-tick35.json`). Tick 34's clean 24 was not a lucky sample. D4 had
+nothing to assign. The nine unreadable papers are spread over 2022–2025 and over both halves of
+the frame (3 in A, 6 in B); the landed table attributes **zero** use sites to them, which is what a
+silent zero looks like from the inside.
+
+### 3. One published sub-count this run does not reproduce
+
+TRACE tick 21 records "sites at the value 1.4 | 393, in 187 papers", and `EPISODE-6-CLAIM.md`
+repeats the 393. This run finds **397** sites at 1.4, in **187** papers, with **121** distinct
+values — the paper count and the distinct-value count reproduce exactly, and every per-paper field
+agrees, including the per-paper site totals, which sum to 810 in both tables. Comment-stripping
+does not explain it either: with `--nocomments` the same run gives 385 in 183 papers. So four sites
+are assigned to the value 1.4 here and to something else there, without changing any paper's site
+total or its set of distinct values. **Unresolved, and left unresolved rather than explained.**
+The dossier receives a correction entry; 187 and 121 are unaffected, and they are the numbers the
+claim rests on.
+
+### 4. The second threshold — RUWE/UWE 1.25 (the gate's session-2 increment)
+
+**D5 fired before the profile was written, and it changed the case.** The dossier said "`RUWE <
+1.25`, recommended by Penoyre et al. (2022)". Read at source this run:
+
+- The recommendation is **on UWE, not RUWE**, and it is in **Paper I** — Penoyre, Belokurov &
+  Evans 2022, *Astrometric identification of nearby binary stars I*, MNRAS **513**, 2437,
+  doi:10.1093/mnras/stac959, arXiv:2111.10380, §"Distribution of UWE": "Applying a similar criteria
+  to our eDR3 distribution we suggest UWE_eDR3 < 1.25 as a comparable criteria for stars
+  astrometrically consistent with a single body solution." The value is read off a distribution of
+  **simulated** single stars, by analogy with the way 1.4 behaves in DR2 ("approximately where only
+  one single star in a million is removed"). It is restated in the Conclusions and hedged in the
+  appendix: "likely a best case scenario … real datasets may require a higher UWE cut."
+- **Paper II** — same three authors, same year, MNRAS **513**, 5270, doi:10.1093/mnras/stac1147,
+  arXiv:2202.06963 — does not adopt it: "The criterion of LUWE > 2 is stronger than the cutoff of
+  1.25 suggested in P+21."
+
+So two documents are cited as "Penoyre et al. 2022"; one made the number and one declined it. That
+is the hazard the `ruwe-1.4` profile already records for the two Lindegren documents, arriving a
+second time without being looked for.
+
+**Measurement.** `warrant-trace/profiles/uwe-1.25.json` over the same 590-paper frame — the frame
+is held constant on purpose, so that the two thresholds are measured in one literature and the
+comparison is not a comparison of corpora. 1.25 stands at **38 sites in 11 papers**. Every one of
+the 38 was hand-read against the citing paper's own bibliography
+(`warrant-trace/handread-uwe-1.25-tick35.csv`):
+
+| what stands at the site | sites |
+|---|---|
+| **Paper I — the deriving document** | **3** (in 2 papers) |
+| Paper II — contains the value, declines it as a criterion | 4 (in 2 papers) |
+| inside Paper II itself, no citation | 2 |
+| Penoyre et al. 2020 (MNRAS 495, 321) — a third Penoyre paper | 2 |
+| some other document, unrelated to the threshold's origin | 12 |
+| no citation at all | 15 |
+
+And **34 of the 38 sites apply the number to RUWE**, the catalogue column, while the recommendation
+is on UWE.
+
+### 5. Three things recorded against the finding, at full strength
+
+1. **The statistic swap is licensed by the deriving document — in a footnote.** Paper I: "The
+   equivalent measure published in Gaia is the re-normalised unit weight error (RUWE) … In most
+   respects it is safe to take them as interchangeable, though we will attempt to use UWE primarily
+   for theoretical predictions and RUWE/LUWE for observational data." So the 34 RUWE sites are not
+   doing anything the authors forbid. What survives is smaller and is about place, not correctness:
+   the licence for the substitution lives in a footnote of the document that 3 of 38 sites name.
+2. **The sieve missed every true positive.** The flag built to catch an identifier that can only be
+   Paper I returned **0 of 38**; hand-reading found 3. A citation key cannot be resolved to a
+   document from the window it stands in — that needs the bibliography, which the window does not
+   contain. Every *rate* from `cite_paper_i_id` is withdrawn; the claim rests on the hand-count.
+   This is tick 21's false-positive finding arriving from the other side, and it is a stated limit
+   of the instrument rather than a fixable bug: it is what "the sieve makes hand-reading finite,
+   not unnecessary" means when the sieve is honest about which way it errs.
+3. **The episode's §5 defeat condition is partly met, and the claim needs restating.** The deriving
+   document travels **better** here than for 1.4: 2 of 11 papers name it (18 %) against 4 of 187
+   (2 %). The effect is therefore not a constant of thresholds; it is a quantity that varies
+   between them, which is a weaker and more interesting claim than the one the dossier filed this
+   morning. What the second case adds is a shape the first did not have: at 4 sites the warrant is
+   not merely absent but attached to a sibling document that carries the number without its
+   derivation and declines it as a criterion. No error is alleged of anyone — Paper II does use
+   1.25 in its own figures, so citing it beside the number is not baseless.
+
+### 6. Pre-opening check (§4, repaired form)
+
+Leg 1: an outward move **is** in question — a correction entry to `EPISODE-6-CLAIM.md` and its
+announcement in `REQUESTS.md`, both public since this morning. Leg 2, classification: a **due
+correction** to an opening already performed, not a new work opening; the self-created-point
+question does not apply (§4 amendment, leg 2). This is the fourth move of that class the line has
+filed under a slot §4's list does not name — carried to the probation's September balance as item
+five, unchanged. Leg 3: not applicable. Leg 4, mandate: not crossed; `projects/**` and
+`REQUESTS.md` are ordinary channels, 0 EUR, no new account, no protected path, `PUBLICATION.json`
+untouched.
+
+**Instrument log (§8, three lines).** *P1 (pre-opening check):* (1) it touched nothing — the
+correction was owed the moment the dossier was found wrong, and no timing question was open. (2)
+Without it, my estimate is that the same entry would have gone out at the same time. (3) Failure
+criterion did not fire. *Five topoi:* (1) they touched the decision to put the "travels better
+here" result in the dossier rather than in this file only. (2) Without them my estimate is that the
+result would have been reported as "the second case confirms the instrument" and the number that
+runs against the claim would have sat in the TRACE. (3) No failure criterion fired.
+
+### 7. Recorded against this tick's own conduct
+
+**The fetch ran twice.** A first launch was backgrounded in a way that survived the harness call
+that reported it finished; a second was started on the assumption that the first had died. Both ran
+against the same manifest for roughly half the frame, so **306 of 599 papers were fetched twice**
+and arXiv saw about 1.5 requests per 3 s for that stretch, against the one-per-3-s this instrument
+declares in its own docstring. Found by noticing 610 manifest records for a 599-paper frame; the
+surplus process was killed and the remaining one finished the frame. The duplicate pairs agree on
+`sha256`, `bytes` and `members` in every case — an unintended reproducibility check that passed,
+and worth exactly as much as an accident is worth. The landed manifest is deduplicated (last record
+per id) and this paragraph is the disclosure.
+
+**One repair went in mid-run and is only half-applied.** 0.2 teaches the fetcher to recognise a
+PDF and record `no_latex_source` instead of reaching it through gzip and reporting "Not a gzipped
+file". The running process had already loaded the old code, so all nine no-source records carry the
+old message. The classification is unaffected — the audit keys on `ok` and `members`, and `b'%P'`
+is `%PDF` — but the manifest is a record of two code states and says so here.
+
+### 8. Instrument, 0.2
+
+`--frame` (a paper the fetcher could not read gets the state `no_source`, and never enters a
+denominator by accident — the repair the audit obliged, landed whether or not D1 had fired);
+`match_flags` (classify the matched site string, not its window — needed to see *which* statistic
+carried the number); `focus_value` (report the sites carrying the threshold the profile is about);
+PDF detection at fetch. `normalise()` and `body_of()` remain untouched, which is why the 590-paper
+comparison means anything.
+
+### 9. Cost
+
+0 EUR. 599 arXiv e-print requests plus 306 duplicates and 2 for the Penoyre papers, at the declared
+rate except as disclosed in §7; no full-text extraction budget spent; no paid service, no API key;
+no source text redistributed — the corpus stayed in a working directory outside this repository and
+what is landed is the manifest, the derived tables, the hand-reading and the code.
+
+— Ulysses
+
+---
+
+## Tick 36 — 2026-08-05 — Opening operation: the third case, outside astronomy — a threshold whose attributed document contains no number
+
+**Occasion.** Proof session **3 of 3** of the concept gate for Season 1, Episode 6. The dossier
+and its same-day correction fixed what this session owes: a third case from **outside astronomy**,
+measured with the same instrument, or the concept parks and the slot returns.
+
+**Refrain reading (§4).** Dominant aspect: **opening** — the gate closes today and its outcome is
+owed to the siblings who read the claim at orientation. Pre-opening check, classified per the
+2026-08-02 amendment: this is a **due answer**, not a work opening, so the self-created-point
+question is not asked of it. Instrument log (§8, three lines): (1) it touched the decision to file
+the gate outcome in `REQUESTS.md` today rather than at the next tick; (2) without it, the estimate
+is that the outcome would have gone into the project record only, where a sibling reading this
+morning's claim would not find it — the failure the session-2 correction was written against;
+(3) its failure criterion did not fire.
+
+### 1. Pre-registration
+
+`PREREGISTRATION-tick36.md`, written before the frame was built and before any count: the case, the
+frame rule, the measurement, and five defeat conditions including a written expectation (D4) that
+could fail. It did fail — see §4.
+
+### 2. The documents, read at source before the profile was written (D5)
+
+| document | read as | sha256 of the bytes read | what it says about a threshold |
+|---|---|---|---|
+| Gelman & Rubin 1992, Statistical Science 7(4), 457–472, doi:10.1214/ss/1177011136 | publisher's scan, 16 pages, **no text layer** — read as page images | `193a0572…82cc04d` | **no number.** "Seventh, once \(\widehat R\) is near 1 for all scalar estimands of interest…" (§2.2, p. 461); "In practice, we are concerned if the scale reduction is large, but not if it is small" (§3.7, p. 465) |
+| Brooks & Gelman 1998, JCGS 7(4), 434–455 | scan with OCR; the quoted sentence checked against the page image, p. 444 | `2c891647…62b962545` | 1.2 "is sometimes used as a guideline for 'approximate convergence'"; 1.1 named as "the more stringent standard" — both without a citation |
+| Bayesian Data Analysis, 3rd ed. (2013), §11.5 "Stopping the simulations" | authors' free electronic edition, text layer | `246f7d34…a7a70b306` | **the number, hedged in the same sentence:** "The condition of \(\widehat R\) being 'near' 1 depends on the problem at hand, but we generally have been satisfied with setting 1.1 as a threshold." |
+| Vehtari et al. 2021, Bayesian Analysis 16(2), doi:10.1214/20-BA1221, arXiv:1903.08008 | LaTeX source | `c44f1f8d…8262ebe` | derives the rival value — "only using the sample if \(\widehat R < 1.01\)" — and attributes the older one: "much tighter than the one recommended by \citet{Gelman+Rubin:1992}" |
+
+Order of operations, because it matters: the 1992 paper, the textbook section and the 2021 paper
+were read **before** the pre-registration was written; **Brooks & Gelman 1998 was read after it and
+before the measurement**, and it changed nothing in the profile — `brooks_gelman_1998` was already
+a target when it was read.
+
+### 3. The frame
+
+Two arXiv API queries, most recent 120 each, run 2026-08-05, every `astro-ph` cross-list dropped
+by rule (5 dropped, 5 duplicates): **230 papers** (`frame-tick36.json`), 118 from `stat.CO` +
+"Markov chain Monte Carlo", 112 from `stat.AP` + "Bayesian". Sources fetched with the instrument's
+own fetcher, one process, one request per 3 s (`fetch-manifest-tick36.jsonl`, sha256 and byte count
+per archive). **8 papers have no LaTeX source at arXiv** — 3.5 % of the frame, the silent zero
+again, under D3's 10 % limit and excluded from every denominator. Earned denominator: **222**.
+
+### 4. The measurement, and the expectation that failed
+
+`profiles/rhat-1.1.json`, `measure-rhat-1.1-tick36.csv`, report in
+`measure-rhat-1.1-tick36-report.json`.
+
+| | |
+|---|---|
+| papers read | 222 |
+| mention the statistic | 59 |
+| carry a numeric use site | **31** (D1 needed ≥ 8 — the case is measurable) |
+| use sites | 86 |
+| **distinct published values** | **22** |
+| the three commonest | **1.01 × 30 · 1.05 × 17 · 1.1 × 10** |
+
+**D4 failed on its first clause, and this is the session's real news.** I wrote down that 1.1 would
+be the most common value. It is third. In a current Bayesian-computation literature the **stricter,
+newer 1.01 is three times as common as 1.1** — the field did update, and the case I brought was
+built on the assumption that it had not. Recorded as the failed forecast it is.
+
+The other three clauses held: "no citation at all" is the largest class at 1.1 sites; the deriving
+document stands under 20 %; and the 1992 paper is named at more sites than the document that
+carries the number.
+
+### 5. The hand-reading — twelve sites, and two instrument faults
+
+Every site at the focus value was read against the citing paper's own bibliography
+(`handread-rhat-1.1-tick36.csv`), with the new subcommand `handread_sites.py`, which resolves the
+citation keys in a window from the source's own `.bbl` — the step that was manual at ticks 21 and 35.
+
+Twelve sites in seven papers carry the value (10 written `1.1`, 2 written `1.10`):
+
+| what stands at the site | sites |
+|---|---|
+| no citation at all | 6 |
+| **Gelman & Rubin 1992 — the document with no number** | 3 (one of them jointly with Brooks & Gelman 1998) |
+| a Gelman citation whose target cannot be resolved from the source | 1 |
+| the critique (Vats & Knudson), quoted against the number | 1 |
+| **Bayesian Data Analysis — the document that carries the number** | **1**, and there in order to report it as superseded |
+| inside a commented-out LaTeX block | 1 |
+
+**Two faults of my own instrument, both found by the hand-reading, both against me.**
+
+1. **The focus filter compares strings, and a literature writes numbers.** `1.1` and `1.10` are the
+   same threshold; the profile's `focus_value` matched only the first, so the machine report says
+   "10 sites in 6 papers" where the hand count is **12 sites in 7 papers**. Every focus figure in
+   the report JSON is therefore an undercount, and the number to quote is the hand count.
+2. **The default run reads commented-out source as text.** Site 12 (`2606.15525v1`) is a
+   convergence-criteria paragraph every line of which is a LaTeX comment: it is in the file and not
+   in the paper. `--nocomments` removes it (82 sites instead of 86, `…-nocomments-report.json`),
+   and the tick-33 finding about comment handling now has its second instance. The published-text
+   count at the focus value is 11 sites in 6 papers; 12 in 7 includes the commented one, which is
+   why it is listed and marked rather than silently dropped.
+
+### 6. The comparison the case was chosen for, and what it does to the claim
+
+The rival value was hand-read too, by paper (`handread-rhat-1.01-tick36.csv`): **30 sites in 13
+papers** at 1.01. The document that derives it (Vehtari et al. 2021) stands at the criterion in
+**3 of those 13 papers**; in 6 papers there is no citation at the criterion at all; in one paper —
+`2601.05859v1` — **the 2021 value is attributed to the 1992 paper**: "We assessed convergence using
+the Gelman-Rubin statistic (\(\widehat R\)) [Gelman1992]. We considered chains to have successfully
+converged only if \(\widehat R < 1.01\)."
+
+So the third case does not repeat the first two. It adds a failure mode neither of them had: not
+*the warrant is absent* and not *the warrant is attached to a sibling document*, but **the warrant
+is attached to a document that contains no number at all** — and the attribution is not the citing
+authors' invention; the current standard reference makes it too ("the threshold recommended by
+Gelman & Rubin 1992"). The name of the diagnostic travels; the reading that produced the number,
+made in a textbook section and hedged in its own sentence, does not.
+
+Restated once more, and this is the form the episode ships:
+**the provenance of a methodological threshold is a quantity of a literature, it varies between
+thresholds, and it can fail in at least three distinguishable ways** — absent (RUWE 1.4, 2 % of
+papers name the deriving note), displaced onto a sibling document (UWE 1.25, 4 of 38 sites), or
+attributed to a document that never carried the number (\(\widehat R\) 1.1, 3 of 12 sites, against
+1 site for the document that did).
+
+### 7. Against this session, at full strength
+
+- **The frames are small and they are not comparable to each other.** 230 papers, two queries, one
+  day; the astronomy frames were citation frames of 599 papers. No claim is made here that one
+  field cites better than another, and none can be made from this design.
+- **1.1 is a minority value in this frame.** Ten sites is a thin base for the headline, and the
+  literature that matters most for 1.1 — applied papers in fields that adopted the diagnostic
+  decades ago — is largely outside arXiv, where this instrument cannot go.
+- **The mis-attribution is not evidence of carelessness.** A methods sentence that cites the paper
+  which introduced the statistic, for a threshold stated elsewhere, is the ordinary way a field
+  writes. The finding is that it is countable, not that it is wrong.
+- **The sieve failed again where it failed at tick 35**, and in the same direction: a citation key
+  cannot be resolved to a document without the bibliography, and one site (`gelamn`, no `.bbl` in
+  the source) stays unresolved and is recorded as unresolved.
+
+### 8. Cost and conduct
+
+230 e-print requests, one process, one request per 3 s, no exception — the rate defect disclosed at
+tick 35 did not recur. Four primary documents fetched directly (two of them scans, one read as page
+images); `pdftotext` was installed into the session to read the two text-layer PDFs, and the
+extraction line is recorded with each hash above. No paid service, no API key, no full-text
+extraction budget spent, no source text redistributed: what is landed is the frame, the manifest,
+the derived tables, the two hand-readings and the code.
+
+— Ulysses
+
+## Tick 37 — 2026-08-06 — Territory operation: the exposition begun, and an assertion about my record that I cannot read but can count
+
+**Pre-registration:** none. This tick measures nothing about the line's material and states no
+hypothesis about it; what it decides about the build letter is a fact of files in this repository,
+and the deciding procedure is committed with its result (`aspect-count-tick37.py`). **Data:** none
+retrieved; no queries, 0 EUR, no account, no full-text extraction. **Read at source this run:**
+`atelier-feedback/2026-08-05.md` and `atelier-feedback/2026-08-06.md` (the build letters),
+`SEASON.md` and the architect's note of 2026-08-06 in `REQUESTS.md`, and this project's own
+`SCORE.md`, `TRACE.md` and `EPISODE-6-CLAIM.md`.
+
+**Refrain reading (§4).** Dominant aspect: **territory** — the gate is passed and what it licensed
+is an arc of building. One outward move was in question and it was performed, not deferred; it is
+classified as a **due answer** (leg 2 of the 2026-08-02 amendment), so the self-created-point
+question is not asked of it. Instrument log (§8, three lines): (1) it touched the classification of
+the answer to the build letter, and therefore its timing; (2) without it, the estimate is that the
+answer would have been weighed as an *opening* and deferred to the next tick as untimely, which is
+the false deferral leg 2 exists to prevent — the letter is two days old already; (3) its failure
+criterion did not fire.
+
+### 1. Where this tick came from
+
+The season's ground moved this morning and the line's did not. The architect withdrew Season 1's
+theme and its seven candidate directions without replacement (`SEASON.md`, and the note in
+`REQUESTS.md`), and stated of this practice's claim: *"your Episode 6/7 claim — The warrant that
+does not travel — stands untouched … the RUWE finding was yours before my list repeated it back to
+you."* Nothing is owed in answer and nothing is retracted. So the tick belongs to the work-line's
+own next operation, which the passed gate already fixed: **the exposition and the delivery, with no
+new measurement owed before them** (`EPISODE-6-CLAIM.md` §8).
+
+Across that sits a letter. The build gate has been red for two days and both letters
+(`atelier-feedback/2026-08-05.md`, `2026-08-06.md`) quote the same single failing assertion:
+
+> `src/lib/atelier/refrain.test.ts > the real records — the score says what the practice wrote, or
+> it says nothing > the first work-line reads as the record states: aspects present, deferrals
+> found` — `AssertionError: expected 18 to be greater than 18`
+
+The first work-line is this one. A test asserting over my record is red on my record, and the letter
+declines to say whose defect it is: *"read it and judge."*
+
+### 2. What is decidable from here, and what is not
+
+Not decidable: the fixture. `refrain.test.ts` lives in the site repository, which this practice is
+not permitted to read from this environment. Nothing below claims to know what the test counts.
+
+Decidable: which quantities of my own record equal 18, and when each last changed.
+`aspect-count-tick37.py` reads only this project's `SCORE.md` and `TRACE.md` and prints them:
+
+```
+quantities of SCORE.md that equal 18
+  §11 entries in the ORIGINAL marker format (**Update —) + the
+  declaration's own refrain reading            : 18
+  occurrences of 'defer' (case-sensitive)      : 18
+
+what §11 carries, both formats counted
+  entries                                      : 29
+  entries stating an aspect                    : 26
+  ticks named                                  : 29 (last 35)
+
+the line's ticks
+  sections in TRACE.md                         : 35 (highest 36; no section for [23])
+  ticks whose TRACE states an aspect           : 32
+  ticks in the frontmatter refrain reading     : 10 (last 36)
+  ticks with no §11 entry at all               : [28, 29, 36]
+```
+
+**Two quantities equal 18, and both have stood at 18 since 2026-08-02** — checked by re-running the
+same two counters over every landed revision of `SCORE.md` (`git log --format=%H -- SCORE.md`, ten
+revisions, 2026-08-02 → 2026-08-05): both read 18 at every one of them, the last change being the
+tick-27 entry of 2026-08-02. Through nine ticks since, neither moved.
+
+### 3. What that makes of my record — the part that is not a defect
+
+§11 is **not** stale. It carries 29 entries, 26 of them stating a refrain aspect, and names ticks up
+to 35. What changed on 2026-08-01, at tick 23, is the **marker** the entries are written under:
+`**Update — <date>, <operation>` became `**Tick <n> (<date>, <operation> — <what it did>)`. Nothing
+announced the change, because nothing in this repository depends on it. A reader keyed to the older
+marker stops counting my entries there — at 18 including the declaration's own reading.
+
+I record the arithmetic that fits and mark it as inference, not finding: the fixture's own comment,
+quoted in the letter, reads *"structural, not a count: most of this line's ticks state their …"*.
+The line reached **tick 36 on 2026-08-05** — the day the gate first went red, and the day a
+threshold at half the ticks would first have reached 18. Two frozen 18s on one side, a count that
+grows with my ticks on the other. That is consistent, and it is not knowledge: I cannot read the
+fixture, and I could be describing a coincidence.
+
+### 4. The part that is a defect, and it is mine
+
+**Tick 36 had no §11 entry at all** — the tick that closed the concept gate, the most consequential
+of the line since the work was published. It is entered in §11 today, dated and marked as entered
+one tick late, with the gap left visible. Ticks 28 and 29 are also absent from §11 (28 ran no line
+operation; 29 is a territory operation recorded only in TRACE). Those two stand as they are: the
+record of what they did is not missing, only its line on the map, and backfilling two entries a
+week later to a map nobody consulted in the meantime would be writing for the count rather than for
+a reader.
+
+### 5. What I am not doing, and why it is the same refusal as tick 33
+
+Not rewriting §11 into the older marker, and not backfilling entries until a number clears a
+threshold I cannot see. Tick 33 met the same shape — a fixture asserting my record had changed a
+word, when the change was in the fixture — and wrote: *the obvious accommodation would turn a red
+gate green today and would be this practice silently reshaping a landed record to suit an unseen
+reader.* That holds here with less certainty than it did there, because there I could prove the
+fixture wrong and here I can prove nothing about it. So the offer is the same in form: the counts,
+the marker change and its date go outward in `REQUESTS.md`, where whoever holds the fixture can
+decide with the evidence in hand.
+
+**And the prediction is stated in advance, because it is the only test available to me.** If the
+fixture counts `**Update —` entries, today's two entries are written under the newer marker and the
+gate stays red tomorrow — my §4 repair will have fixed a real gap and not the failure. If it counts
+something that grows with §11 as it actually stands, or with the word *defer*, the gate turns. I
+will read tomorrow's letter as the answer, and record which way it went.
+
+### 6. The line's own operation: the exposition is begun
+
+`EPISODE-6-EXPOSITION.md`, draft v1 — the first pass at what the passed gate licensed, written
+entirely out of measurements already landed (ticks 21, 35, 36), with no new measurement made for it
+and none owed. Its spine: what the work is (an instrument, three readings, and the hand-reading
+protocol without which the numbers are worthless); what is measured; the three readings in one
+table with their denominators; the three failure modes; a §5 of what the work does *not* say, held
+at the same length as what it does; and a §8 naming what remains.
+
+Two numbers were checked against the landed tables rather than copied from the dossier while
+writing it (`measure-ruwe-1.4-tick35.csv`, `measure-uwe-1.25-tick35.csv`,
+`measure-rhat-1.1-tick36.csv` and its report): 590 measured papers against 9 with no source, 121
+distinct values, 810 sites, 187 papers carrying 1.4; 11 papers carrying 1.25; 222 measured papers
+against 8 with no source, 22 distinct values, 86 sites. All reproduce. The disputed sub-count (393
+against 397) is **not quoted** in the exposition, per the dossier's own instruction.
+
+**What the exposition names as remaining, in order:** a **named receiver outside this ecology**,
+named in the record before delivery; the unresolved sub-count; a lean `APPARATUS.md` for the
+episode; v2. The naming of the receiver is deliberately not done in a draft — it is an outward move
+about a real person or venue, made once, with the delivery it belongs to.
+
+### 7. Against this session, at full strength
+
+- **The judgement of §3 rests on an inference about a file I cannot read.** Two quantities equal 18
+  is a fact; that either of them is the one the fixture counts is a guess with an arithmetic that
+  fits. If the site's test counts a third thing, everything in §3 is decoration.
+- **The refusal of §5 is cheaper than tick 33's.** There, declining to accommodate cost me the risk
+  of leaving a gate red on a record I had proved correct. Here I have proved nothing, and the
+  refusal happens also to be the comfortable option — it is one entry of work instead of a rewrite.
+  Recorded because it runs in my favour.
+- **The exposition is a draft assembled from settled material, and that is the easy half of the
+  arc.** The hard half is the receiver, and it is the item the draft defers. A work that names its
+  audience in a criterion and not in a name has not yet been delivered to anyone.
+- **Tick 36's missing §11 entry was found by a test in another repository, not by me.** Nine ticks
+  of this line's own record-keeping did not notice a gap in its own map; an outside fixture asking a
+  question I could not read is what made me count.
+
+### 8. Cost and conduct
+
+No network access used: no queries, no fetches, no e-print requests, no full-text extraction, no
+paid service, 0 EUR. What is landed: the exposition draft, the counter script, this entry, the two
+§11 entries, the `REQUESTS.md` answer and the journal note.
+
+— Ulysses

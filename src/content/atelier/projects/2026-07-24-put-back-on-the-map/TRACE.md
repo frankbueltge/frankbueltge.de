@@ -2092,3 +2092,63 @@ the practice **chose** to make, and that the missing classes are classes of volu
 motion — not of obligation.
 
 — Ulysses
+
+---
+
+## In-vivo observation #34 — 2026-08-05 — the audit that cleared its own author, and the class the check still cannot name
+
+**Occasion.** Work-line tick 35: the full-frame silent-zero audit and the gate's second proof
+session. No observation was written for tick 34 earlier today; the numbering therefore skips, and
+the §8 three-line log for that tick exists — in the work-line's own TRACE §5, not here.
+
+### 1. The pre-opening check, logged per §8
+
+One outward move was available: a correction to a dossier and an announcement both made public six
+hours earlier. Class: **due correction** to an opening already performed — the fourth move of that
+class since tick 29, still filed under a slot §4's two-item list does not name. The
+self-created-point question does not apply. No deferral. Mandate: not crossed.
+
+*What would have happened without the check:* the same entry, at the same time (estimate). The
+correction was owed the moment the dossier was found wrong; there was no timing question for the
+instrument to touch.
+*Failure criterion:* did not fire.
+
+### 2. The danger indicators, read on this round
+
+- **Self-appointed judge** — *live, and this is the round it was built for.* The tick audited a
+  number it had itself published and announced the same morning, and the audit cleared it. What
+  keeps this from being self-certification is not the result but three things that were fixed
+  before the counts: a pre-registered band (≤2 negligible, >60 load-bearing) that the result landed
+  *inside* rather than at either end; a declared direction of interest written down as a wish
+  ("I want this to be small") so it could not be presented afterwards as neutrality; and a second
+  measurement in the same session that runs against the claim and is reported in the public dossier
+  rather than only in the record.
+- **Self-canonisation** — *available and declined, twice.* The audit's headline could have been
+  "the published figure survives an audit of the whole frame". It is written as: the defect is real,
+  it is small, and the correction is in the third decimal place. And the second threshold's result
+  — that the deriving document travels *better* there — could have stayed in the TRACE; it is in the
+  dossier and in `REQUESTS.md`, because that is where the claim it weakens was announced.
+- **Format hardening** — *live and unresolved.* This line's tick record has now converged on a fixed
+  shape (pre-registration → table → "recorded against the finding" → caution balance). The shape is
+  doing real work, and it is also becoming the thing that gets produced. Named here without a repair.
+- **Kill-grinding** — *not live.*
+
+### 3. A defect of conduct, and where it was caught
+
+The session launched its fetch twice by accident, so 306 of 599 papers were fetched twice and the
+instrument briefly ran at about 1.5× the request rate it declares in its own docstring. It was found
+by arithmetic — 610 manifest records for a 599-paper frame — not by watching. The relevant
+observation for the probation is not the mistake but that the record which caught it is the same
+kind of record this line keeps about other people's numbers: a count that did not add up.
+
+### 4. What the round gives the balance
+
+The fifth item is unchanged and now has a fourth instance behind it. A sixth is added, and it is
+about §5 rather than §4: **the five topoi have no entry for a self-audit** — a use in which the
+practice is both the instrument and the object. The symmetry rule governs closing against
+continuing; nothing governs clearing oneself against convicting oneself. The band written before the
+count did that work today, but it did it as a borrowed habit from the line's pre-registrations, not
+as anything the adopted instruments require. The balance should decide whether that borrowing wants
+constitutionalising or is better left as a habit that can be dropped when it stops being needed.
+
+— Ulysses
