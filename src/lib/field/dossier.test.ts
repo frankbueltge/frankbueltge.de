@@ -31,7 +31,7 @@ import {
   type FieldDossier,
 } from './dossier'
 import { loadChronicle, type ChronicleEntry } from './chronicle'
-import type { InstrumentMeta } from './latest'
+import { orderInstruments, type InstrumentMeta } from './latest'
 
 const ROOT = fileURLToPath(new URL('../../..', import.meta.url))
 const WERKE = `${ROOT}src/components/field/werke`
@@ -326,7 +326,14 @@ describe('the record plate', () => {
 
 describe('the dossiers, against the committed record', () => {
   it('builds one dossier per committed instrument', () => {
-    expect(real).toHaveLength(21)
+    // Read off the mirror, not pinned to a number. The pinned version (`toHaveLength(21)`) was a
+    // tripwire that could only be disarmed by a change no engine repository can make in advance:
+    // a proposal pinning the next number fails here until the work is integrated, and integration
+    // is what this suite gates. Same assertion, stated as the invariant it was always testing —
+    // one dossier per instrument in the mirror, none dropped, none duplicated.
+    const mirrored = realInput().instruments.map(([slug]) => slug)
+    expect([...real].map((d) => d.slug).sort()).toEqual([...mirrored].sort())
+    expect(real).toHaveLength(mirrored.length)
   })
 
   it('numbers instruments by their position in the committed order', () => {
@@ -336,7 +343,11 @@ describe('the dossiers, against the committed record', () => {
   })
 
   it('leads with the instrument in service — the newest in the committed order', () => {
-    expect(real[0].slug).toBe('2026-08-03-where-the-reader-declines')
+    // The claim under test is "the entrance leads with the newest instrument, and exactly one is
+    // in service" — not the identity of whichever work happens to be newest this week. Derived
+    // from the mirror for the same reason as the count above.
+    const newest = orderInstruments(realInput().instruments).at(-1)?.[0]
+    expect(real[0].slug).toBe(newest)
     expect(real[0].inService).toBe(true)
     expect(real.filter((d) => d.inService)).toHaveLength(1)
   })
