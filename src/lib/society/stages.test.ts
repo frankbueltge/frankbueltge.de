@@ -39,14 +39,20 @@ describe('the growth record accounts for the whole roster', () => {
     }
   })
 
-  it("only the newest entry may be 'pending' — squash-merge cannot know its own hash", () => {
+  it("only unlanded entries may be 'pending', and they must be the last ones", () => {
     // An entry written in the same PR it describes cannot carry its squash hash yet; a
-    // follow-up commit fills it in. Everything older must be a real hash, so a 'pending'
-    // can never quietly become permanent.
+    // follow-up commit fills it in. Everything ALREADY LANDED must be a real hash, so a
+    // 'pending' can never quietly become permanent.
+    //
+    // Why a trailing BLOCK rather than a single entry (amended 2026-08-06): two stages can
+    // legitimately land in one commit — stage 4 and stage 5 did, while CI was out — and
+    // both then carry the same true hash. What must never happen is a pending entry
+    // followed by a landed one, which would mean an older stage lost its anchor.
+    const firstPending = STAGES.findIndex((s) => s.commits.includes('pending'))
     STAGES.forEach((s, i) => {
-      const last = i === STAGES.length - 1
+      const mayBePending = firstPending !== -1 && i >= firstPending
       for (const c of s.commits) {
-        if (last) expect(c).toMatch(/^([0-9a-f]{8}|pending)$/)
+        if (mayBePending) expect(c).toMatch(/^([0-9a-f]{8}|pending)$/)
         else expect(c, `entry "${s.title}" still pending`).toMatch(/^[0-9a-f]{8}$/)
       }
     })

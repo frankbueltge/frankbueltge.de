@@ -1,11 +1,19 @@
 // src/lib/society/moments.test.ts — a new drama cannot ship silent.
 
 import { describe, expect, it } from 'vitest'
-import { DRAMATIC_KINDS, isDramatic, momentFor, pickMoment } from './moments'
+import {
+  DRAMATIC_KINDS,
+  isDramatic,
+  momentFor,
+  pickMoment,
+  STATE_MOMENTS,
+  stateMoment,
+} from './moments'
 import type { WorldEvent } from './world'
 
 const sample: Record<string, WorldEvent> = {
   misfire: { kind: 'misfire' },
+  worthTurned: { kind: 'worthTurned', goal: 'arch' },
   collapsed: { kind: 'collapsed', height: 3 },
   archComplete: { kind: 'archComplete' },
   towerComplete: { kind: 'towerComplete', height: 4 },
@@ -51,6 +59,17 @@ describe('the camera looks at every drama, and only at dramas', () => {
   it('a quiet tick shows nothing', () => {
     expect(pickMoment([sample.grasped, sample.placed])).toBeNull()
     expect(pickMoment([])).toBeNull()
+  })
+
+  it('sleeping and waking carry captions too, under the same length rule', () => {
+    for (const kind of STATE_MOMENTS) {
+      const moment = stateMoment(kind, 50)
+      expect(moment.caption.length).toBeGreaterThan(5)
+      expect(moment.caption.length).toBeLessThanOrEqual(52)
+      expect(moment.holdMs).toBeGreaterThan(1000)
+    }
+    // a dreamless sleep must not read like a dreaming one — that difference IS the drama
+    expect(stateMoment('sleeps', 50).caption).not.toBe(stateMoment('dreamless', 50).caption)
   })
 
   it('the wreck caption tells finished from unfinished work', () => {
