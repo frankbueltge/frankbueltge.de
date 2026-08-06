@@ -1,0 +1,305 @@
+/* src/styles/society-room.css — the room exit: one screen, no scrolling, no paragraphs.
+ *
+ * Built for a projection or a terminal in a room where a stranger has four minutes. The
+ * reading exit (/society) explains; this one shows, and says one short line at a time.
+ * PALETTE: society-bands — the same recorded identity set as the page figure, on a dark
+ * room floor rather than paper; no new hues. Identity is never carried by colour alone:
+ * the constellation is arranged in named bands, and the only interactive thing (an agent)
+ * is named the moment it is touched.
+ */
+
+.room {
+  --room-bg: #0b0b0d;
+  --room-ink: #f4f4f5;
+  --room-dim: rgb(244 244 245 / 0.42);
+  --room-line: rgb(244 244 245 / 0.12);
+  --soc-senses: #4b8fe4;
+  --soc-work: #e2a33a;
+  --soc-drives: #e87ba4;
+  --soc-reflect: #9085e9;
+  --soc-censor: #8b95a1;
+  position: fixed;
+  inset: 0;
+  background: var(--room-bg);
+  color: var(--room-ink);
+  overflow: hidden;
+  display: grid;
+  /* three bands: the society, the one line, the world. The line gets its own air so it can
+     never cut through the constellation — an intertitle, not an overlay. */
+  grid-template-rows: 1fr auto auto;
+  font-family: 'JetBrains Mono Variable', ui-monospace, monospace;
+  cursor: default;
+}
+
+/* ————————————————————————————————— the sky: the society ————————————————— */
+.room-sky {
+  position: relative;
+  min-height: 0;
+}
+.room-sky svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.room-band {
+  fill: rgb(255 255 255 / 0.022);
+  stroke: var(--room-line);
+}
+.room-band-label {
+  fill: var(--room-dim);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
+}
+
+.room-edge {
+  stroke: rgb(244 244 245 / 0.16);
+  stroke-width: 1;
+}
+.room-edge-in {
+  stroke-dasharray: 4 3;
+}
+.room-edge-worth {
+  stroke-dasharray: 8 6;
+  opacity: 0.5;
+}
+/* a signal on its way: the thing that makes a society read as a mind from ten metres */
+.room-pulse {
+  fill: var(--room-ink);
+  opacity: 0;
+}
+
+.room-node {
+  cursor: pointer;
+}
+.room-halo {
+  fill: currentColor;
+  opacity: 0.14;
+}
+.room-core {
+  fill: currentColor;
+  opacity: 0.5;
+}
+.room-node-label {
+  fill: var(--room-dim);
+  font-size: 9px;
+  text-anchor: middle;
+  letter-spacing: 0.04em;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 260ms ease;
+}
+.room-node:hover .room-node-label,
+.room-node:focus-visible .room-node-label,
+.room-naming .room-node-label {
+  opacity: 1;
+}
+.room-node-senses {
+  color: var(--soc-senses);
+}
+.room-node-body,
+.room-node-builders {
+  color: var(--soc-work);
+}
+.room-node-drives {
+  color: var(--soc-drives);
+}
+.room-node-censors {
+  color: var(--soc-censor);
+}
+.room-node-reflection {
+  color: var(--soc-reflect);
+}
+.room-node:focus-visible .room-core {
+  stroke: var(--room-ink);
+  stroke-width: 2;
+}
+
+/* a silenced agent: gone dark, and taped */
+.room-tape {
+  visibility: hidden;
+}
+.room-tape line {
+  stroke: var(--room-ink);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+}
+.room-ablated .room-tape {
+  visibility: visible;
+}
+.room-ablated {
+  color: var(--soc-censor);
+}
+.room-ablated .room-halo {
+  opacity: 0;
+}
+
+/* ————————————————————————————————— the ground: the world ———————————————— */
+.room-ground {
+  height: min(30vh, 34vw);
+  border-top: 1px solid var(--room-line);
+  background: rgb(255 255 255 / 0.015);
+}
+.room-ground svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.room-table {
+  stroke: var(--room-dim);
+  stroke-width: 1.5;
+}
+.room-block {
+  fill: var(--soc-work);
+  opacity: 0.9;
+}
+.room-ghost {
+  fill: none;
+  stroke: var(--soc-reflect);
+  stroke-width: 1.4;
+  stroke-dasharray: 3 4;
+}
+.room-hand path {
+  fill: none;
+  stroke: var(--room-ink);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+.room-gaze circle,
+.room-gaze path,
+.room-gaze line {
+  fill: none;
+  stroke: var(--soc-senses);
+  stroke-width: 1.5;
+}
+.room-gaze-shut {
+  display: none;
+}
+.room-asleep .room-gaze-open {
+  display: none;
+}
+.room-asleep .room-gaze-shut {
+  display: inline;
+}
+.room-asleep .room-block,
+.room-asleep .room-hand path {
+  opacity: 0.35;
+}
+.room-shadow {
+  fill: var(--room-ink);
+  opacity: 0;
+  transition: opacity 500ms ease;
+}
+.room-shadow-on {
+  opacity: 0.14;
+}
+
+/* ————————————————————————————————— the one line at a time ——————————————— */
+.room-line {
+  display: grid;
+  place-content: center;
+  min-height: 15vh;
+  margin: 0;
+  text-align: center;
+  padding: 0 6vw;
+  font-size: clamp(20px, 2.6vw, 44px);
+  line-height: 1.3;
+  letter-spacing: 0.01em;
+  opacity: 0;
+  transition: opacity 700ms ease;
+  pointer-events: none;
+  text-wrap: balance;
+}
+.room-line-on {
+  opacity: 1;
+}
+
+/* an interjection: the world's own rare drama, smaller, at the top */
+.room-aside {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 5%;
+  text-align: center;
+  font-size: clamp(13px, 1.3vw, 20px);
+  color: var(--room-dim);
+  opacity: 0;
+  transition: opacity 500ms ease;
+  pointer-events: none;
+}
+.room-aside-on {
+  opacity: 1;
+}
+
+/* ————————————————————————————————— the elegy takeover ——————————————————— */
+/* the one gesture's answer: everything stops, and the silenced part gets the whole room */
+.room-elegy {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  gap: 1.2rem;
+  padding: 0 8vw;
+  background: rgb(11 11 13 / 0.94);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 500ms ease;
+  text-align: center;
+  z-index: 10;
+}
+.room-elegy-on {
+  opacity: 1;
+}
+.room-elegy-name {
+  font-size: clamp(12px, 1.2vw, 18px);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--room-dim);
+}
+.room-elegy-text {
+  font-size: clamp(22px, 3.2vw, 54px);
+  line-height: 1.32;
+  font-style: italic;
+  text-wrap: balance;
+}
+
+/* ————————————————————————————————— chrome ——————————————————————————————— */
+.room-exit {
+  position: fixed;
+  top: 1rem;
+  right: 1.2rem;
+  z-index: 20;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgb(244 244 245 / 0.25);
+  text-decoration: none;
+  transition: color 240ms ease;
+}
+.room-exit:hover,
+.room-exit:focus-visible {
+  color: var(--room-ink);
+}
+.room-credit {
+  position: fixed;
+  bottom: 0.9rem;
+  left: 1.2rem;
+  z-index: 20;
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  color: rgb(244 244 245 / 0.2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .room-line,
+  .room-aside,
+  .room-elegy,
+  .room-shadow,
+  .room-node-label {
+    transition: none;
+  }
+  .room-pulse {
+    display: none;
+  }
+}
