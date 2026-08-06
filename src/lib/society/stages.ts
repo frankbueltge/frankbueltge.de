@@ -28,10 +28,10 @@ export interface StageEntry {
   refs: string[]
   /**
    * merge commit(s) on main and PR number(s) — the reproducibility anchors. Because this
-   * repo squash-merges, an entry cannot know its own hash before it lands: the newest
-   * entry may carry the literal 'pending', which a follow-up commit replaces with the real
-   * hash (stages.test.ts allows it for the newest entry only, so a 'pending' can never
-   * quietly become permanent).
+   * repo squash-merges, an entry cannot know its own hash before it lands: unlanded
+   * entries carry the literal 'pending', which a follow-up commit replaces with the real
+   * hash. stages.test.ts allows 'pending' only as a TRAILING block, so an older stage can
+   * never quietly lose its anchor.
    */
   commits: string[]
   prs: number[]
@@ -166,5 +166,47 @@ export const STAGES: readonly StageEntry[] = [
     refs: ['docs/society/prior-art.md', 'SOM §3.5', 'SOM §6.4'],
     commits: ['e401d219'],
     prs: [411],
+  },
+  {
+    n: 4,
+    kind: 'stage',
+    date: '2026-08-06',
+    title: 'The dream',
+    visible:
+      'Leave it alone long enough and the society sleeps: the world dims, the eye shuts, ' +
+      'the hand rests. Its agents keep firing — a K-line is re-aroused, and what it ' +
+      'remembers is drawn in outline at the site where it once worked: a tower, or an ' +
+      'arch, that is not there. The censors sleep too, so the dream may hold what the day ' +
+      'forbade. Move, and it wakes.',
+    claim:
+      'While it sleeps nothing in the world moves and yet its agents keep firing — the mind ' +
+      'running without the body; and a society that never achieved anything sleeps ' +
+      'dreamlessly, having no memory to re-arouse.',
+    agentsAdded: [],
+    chaptersWoken: [15],
+    refs: ['SOM §15.4', 'SOM §15.8', 'SOM §3.5', 'SOM §27.3'],
+    commits: ['pending'],
+    prs: [428],
+  },
+  {
+    n: 5,
+    kind: 'stage',
+    date: '2026-08-06',
+    title: 'The attachment',
+    visible:
+      'Two marks under the table, pressed and held: the visitor stops being weather and ' +
+      'becomes a parent. A held sign lands on whatever has the hand at that moment and ' +
+      'changes what that goal is worth — never how it is done. Be sudden and the body ' +
+      'freezes; hold a sign and the society keeps working and changes what it works on. ' +
+      'The worth of the tower, the arch and the crash stands recorded beside the drives.',
+    claim:
+      'Attachment teaches ends, not means: a censured society builds exactly as an ' +
+      'unparented one does, body for body — and no amount of praise wakes ARCHER early, ' +
+      'buys past a censor, or erases the misfire that memory owns.',
+    agentsAdded: ['see-sign', 'worth'],
+    chaptersWoken: [9, 17],
+    refs: ['SOM §9.1', 'SOM §9.3', 'SOM §17.2', 'SOM §17.3', 'SOM §17.6'],
+    commits: ['pending'],
+    prs: [428],
   },
 ]

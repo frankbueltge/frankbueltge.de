@@ -113,6 +113,27 @@ sameness, repeated,
   wears the surprise away`,
     elegy: 'NOVELTY is silent. Nothing will ever be boring again.',
   },
+  {
+    id: 'see-sign',
+    name: 'SEE-SIGN',
+    agency: 'the eye',
+    band: 'senses',
+    // stage 5 (attachment): §9.1 names the CHANNEL — our measures of pleasure "are
+    // involved with the communication signs that we use to signify various degrees of
+    // attachment, satisfaction, and agreement… not only in words, but also as gestures,
+    // intonations, smiles and frowns" (book p. 94, read on the page). A gesture, never a
+    // word: this eye's whole world.
+    ref: { ch: 9, sec: '9.1', title: 'Wanting and Liking' },
+    role: 'notices that a sign arrived from outside — warm or cold, never from whom',
+    code: `each moment:
+  is a sign arriving?
+  how warm, how cold?
+  shout that number to WORTH
+(it cannot say who signs,
+ or what the sign is about)`,
+    elegy:
+      'SEE-SIGN is silent. Praise it or scold it all morning; it will want exactly what it wanted.',
+  },
   // —————————————————————————————————————————————————— body ———————————————
   {
     id: 'move',
@@ -358,6 +379,27 @@ while I rule:
   then, quickly, fade`,
     elegy: 'ALARM is silent. Nothing will ever frighten this society again.',
   },
+  {
+    id: 'worth',
+    name: 'WORTH',
+    agency: 'the attachment',
+    band: 'drives',
+    // stage 5: §17.2's third rule verbatim — "In the case of attachment-related failure or
+    // reward signals, the learner modifies which goals are considered worthy of pursuit."
+    // Ordinary failure would modify the METHOD; fear would modify the SITUATION. This agent
+    // is allowed to touch neither, and engine.test.ts holds it to that by comparing the
+    // BODIES of a censured and an unparented morning tick for tick.
+    ref: { ch: 17, sec: '17.2', title: 'Attachment-Learning' },
+    role: 'raises or lowers what the current goal is worth; never how the work is done',
+    code: `when SEE-SIGN shouts:
+  whatever has the hand now —
+  that goal is worth a little more,
+  or a little less
+  and it stays that way
+(it never touches
+ how the work is done)`,
+    elegy: 'WORTH is silent. What it was taught stands, and nothing will ever change it again.',
+  },
   // ————————————————————————————————————————————————— censors —————————————
   {
     id: 'censor-wreck',
@@ -475,12 +517,22 @@ export const CHAPTERS: readonly Chapter[] = [
   { n: 30, title: 'Mental Models' },
 ]
 
+/**
+ * Chapters whose concepts live in the society without a static agent to carry them,
+ * because they are creatures of the running simulation: K-lines are born whenever a work
+ * stands (§8.1), and the dream is a K-line re-aroused while the body sleeps (§15.8). The
+ * shelf names these residents instead of counting agents.
+ */
+export const RUNTIME_RESIDENTS: Readonly<Record<number, string>> = {
+  8: 'K-lines',
+  15: 'the dream',
+}
+
 /** Chapter numbers whose concepts live in the society: every chapter with a resident
- *  roster agent, plus chapter 8 — K-lines (§8.1) are runtime creatures, born whenever a
- *  tower stands, so their chapter is awake although no static agent cites it. */
+ *  roster agent, plus the runtime residents above. */
 export function awakeChapters(): Set<number> {
   const awake = new Set(AGENTS.map((a) => a.ref.ch))
-  awake.add(8)
+  for (const ch of Object.keys(RUNTIME_RESIDENTS)) awake.add(Number(ch))
   return awake
 }
 

@@ -176,6 +176,51 @@
 .soc-ticker li.soc-line-wake {
   color: var(--soc-ink-muted);
 }
+/* the dream: what the scribe writes while the body sleeps — set in the same hand, only
+   quieter, because the scribe does not know it is dreaming */
+.soc-ticker li.soc-line-dream {
+  color: var(--soc-ink-muted);
+  font-style: italic;
+}
+.soc-ticker li.soc-line-dream::before {
+  content: '· ';
+}
+
+/* ————————————————————————————— sleep and the dream —————————————————————— */
+/* the sleeping world dims; the eye shuts; what is dreamed is drawn as an outline */
+.soc-asleep .soc-block,
+.soc-asleep .soc-hand path,
+.soc-asleep .soc-table {
+  opacity: 0.4;
+  transition: opacity 1200ms ease;
+}
+.soc-gaze-shut {
+  display: none;
+  fill: none;
+  stroke: var(--soc-senses);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+.soc-asleep .soc-gaze-open {
+  display: none;
+}
+.soc-asleep .soc-gaze-shut {
+  display: inline;
+}
+.soc-ghost {
+  fill: none;
+  stroke: var(--soc-reflect);
+  stroke-width: 1.2;
+  stroke-dasharray: 3 4;
+  opacity: 0.75;
+}
+@media (prefers-reduced-motion: reduce) {
+  .soc-asleep .soc-block,
+  .soc-asleep .soc-hand path,
+  .soc-asleep .soc-table {
+    transition: none;
+  }
+}
 
 /* the camera: a ring where it happened, a caption above the world */
 .soc-moment {
@@ -284,6 +329,113 @@
 .soc-edge-bartip {
   stroke: var(--soc-censor);
   stroke-width: 2;
+}
+/* worth is a third kind of edge: it neither wakes nor gates a thing, it changes what the
+   thing is worth — long dashes, no tip of any kind (stage 5) */
+.soc-edge-worth {
+  stroke-dasharray: 7 5;
+  opacity: 0.3;
+}
+
+/* ————————————————————————————— attachment (stage 5) ———————————————————— */
+/* Two marks, pressed and HELD. No new hue: warm borrows the drives' magenta, cold wears
+   the declared neutral, because suppression has no colour of its own. Identity is never
+   by colour alone — warm is a filled mark, cold an open one wearing the gate-bar. */
+.soc-signs {
+  display: flex;
+  gap: 0.5rem;
+  margin: 0.5rem 0.2rem 0;
+}
+.soc-sign {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--soc-hairline);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--soc-ink-muted);
+  font-size: 0.7rem;
+  cursor: pointer;
+  touch-action: none;
+  user-select: none;
+}
+.soc-sign:hover,
+.soc-sign:focus-visible {
+  border-color: var(--soc-ink-muted);
+  color: var(--soc-ink);
+}
+.soc-sign-mark {
+  width: 11px;
+  height: 11px;
+  border-radius: 999px;
+  border: 2px solid currentColor;
+}
+.soc-sign-warm .soc-sign-mark {
+  background: var(--soc-drives);
+  border-color: var(--soc-drives);
+}
+.soc-sign-cold .soc-sign-mark {
+  border-color: var(--soc-censor);
+  position: relative;
+}
+.soc-sign-cold .soc-sign-mark::after {
+  content: '';
+  position: absolute;
+  left: -3px;
+  right: -3px;
+  top: 3px;
+  border-top: 2px solid var(--soc-censor);
+}
+.soc-sign-on {
+  color: var(--soc-ink);
+  border-color: var(--soc-ink-muted);
+}
+.soc-sign-word {
+  font-family: 'JetBrains Mono Variable', ui-monospace, monospace;
+  letter-spacing: 0.03em;
+}
+
+/* the shadow answers: a ring whose size is the length of the hold */
+.soc-sign-ring {
+  fill: none;
+  stroke: var(--soc-drives);
+  stroke-width: 1.5;
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+.soc-sign-ring-on {
+  opacity: 0.75;
+}
+.soc-sign-ring-cold {
+  stroke: var(--soc-censor);
+  stroke-dasharray: 4 3;
+}
+
+/* the record of what the parenting did */
+.soc-worth-mid {
+  stroke: var(--soc-hairline);
+}
+.soc-worth-label,
+.soc-worth-tick {
+  fill: var(--soc-ink-muted);
+  font-size: 9px;
+  font-family: 'JetBrains Mono Variable', ui-monospace, monospace;
+}
+.soc-worth-tick {
+  text-anchor: middle;
+}
+.soc-worth-bar {
+  fill: var(--soc-drives);
+  opacity: 0.85;
+}
+.soc-worth-bar.soc-worth-down {
+  fill: var(--soc-censor);
+}
+@media (prefers-reduced-motion: reduce) {
+  .soc-sign-ring {
+    transition: none;
+  }
 }
 
 .soc-node {

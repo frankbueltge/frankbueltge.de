@@ -14,7 +14,14 @@
 //     only the LIFE of the figure needs a script, and the caption says so;
 //   · identity is never carried by colour alone: every node is labelled, every band named,
 //     the table repeats everything (PALETTE: society-bands, recorded in dataviz/palette.ts).
-import { AGENTS, awakeChapters, CHAPTERS, type AgentSpec, type Band } from '@/lib/society/agents'
+import {
+  AGENTS,
+  awakeChapters,
+  CHAPTERS,
+  RUNTIME_RESIDENTS,
+  type AgentSpec,
+  type Band,
+} from '@/lib/society/agents'
 import { jsonScriptPayload } from '@/lib/dataviz/runtime'
 import '@/styles/society.css'
 
@@ -52,11 +59,14 @@ const POS: Record<string, { x: number; y: number }> = {
   lift: { x: 420, y: 350 },
   release: { x: 530, y: 350 },
   track: { x: 632, y: 350 },
-  'see-block': { x: 190, y: 452 },
-  'see-tower': { x: 302, y: 452 },
-  'see-arch': { x: 414, y: 452 },
-  'see-motion': { x: 526, y: 452 },
-  novelty: { x: 636, y: 452 },
+  'see-block': { x: 180, y: 452 },
+  'see-tower': { x: 282, y: 452 },
+  'see-arch': { x: 384, y: 452 },
+  'see-motion': { x: 486, y: 452 },
+  novelty: { x: 588, y: 452 },
+  'see-sign': { x: 690, y: 452 },
+  // attachment writes from the left of the drives band; suppression gates from the right
+  worth: { x: 104, y: 90 },
   'watch-quarrel': { x: 828, y: 295 },
   'watch-circle': { x: 828, y: 355 },
   scribe: { x: 828, y: 415 },
@@ -65,7 +75,9 @@ const POS: Record<string, { x: number; y: number }> = {
 interface EdgeSpec {
   from: string
   to: string
-  kind: 'ex' | 'in'
+  /** excitation, inhibition, or — stage 5 — worth: neither wakes nor gates a thing, it
+   *  changes what the thing is worth, so it is drawn as a third kind of line entirely */
+  kind: 'ex' | 'in' | 'worth'
 }
 const EDGES: EdgeSpec[] = [
   { from: 'play', to: 'play-with-blocks', kind: 'ex' },
@@ -90,6 +102,10 @@ const EDGES: EdgeSpec[] = [
   { from: 'novelty', to: 'curiosity', kind: 'ex' },
   { from: 'censor-wreck', to: 'wrecker', kind: 'in' },
   { from: 'suppressor-startle', to: 'alarm', kind: 'in' },
+  { from: 'see-sign', to: 'worth', kind: 'ex' },
+  { from: 'worth', to: 'builder', kind: 'worth' },
+  { from: 'worth', to: 'archer', kind: 'worth' },
+  { from: 'worth', to: 'wrecker', kind: 'worth' },
 ]
 
 const NODE_R = 13
@@ -159,9 +175,15 @@ const payload = AGENTS.map((a) => ({
           <text x="124" y="112">the arch site</text>
         </g>
         <ellipse class="soc-shadow" data-soc-shadow cx="-40" cy="182" rx="24" ry="6"></ellipse>
+        {/* the shadow's answer while a sign is held (stage 5) */}
+        <ellipse class="soc-sign-ring" data-soc-sign-ring cx="-40" cy="182" rx="24" ry="6"></ellipse>
+        {/* the dream (stage 4): what the sleeping society is building, which is not there */}
+        <g class="soc-ghosts" data-soc-ghosts aria-hidden="true"></g>
         <g data-soc-blocks></g>
         <g class="soc-gaze" data-soc-gaze aria-hidden="true">
-          <circle cx="0" cy="0" r="7"></circle>
+          <circle class="soc-gaze-open" cx="0" cy="0" r="7"></circle>
+          {/* the closed eye of a sleeping society */}
+          <path class="soc-gaze-shut" d="M -7 0 Q 0 5 7 0"></path>
           <line x1="-11" y1="0" x2="-4" y2="0"></line>
           <line x1="4" y1="0" x2="11" y2="0"></line>
         </g>
@@ -177,9 +199,20 @@ const payload = AGENTS.map((a) => ({
           The world wakes with JavaScript. The record below stands without it.
         </text>
       </svg>
+      <div class="soc-signs">
+        <button class="soc-sign soc-sign-warm" type="button" data-soc-sign="1" aria-label="Hold to sign warmly toward whatever the society is doing right now">
+          <span class="soc-sign-mark" aria-hidden="true"></span>
+          <span class="soc-sign-word">hold: warm</span>
+        </button>
+        <button class="soc-sign soc-sign-cold" type="button" data-soc-sign="-1" aria-label="Hold to sign coldly toward whatever the society is doing right now">
+          <span class="soc-sign-mark" aria-hidden="true"></span>
+          <span class="soc-sign-word">hold: cold</span>
+        </button>
+      </div>
       <p class="soc-world-caption">
         The world of blocks (SOM §1.4). Move your pointer: you are the shadow. Be sudden, and
-        you will be a fright.
+        you will be a fright. Hold a sign, and you are something else: what it is doing
+        becomes worth more, or less — and it will change what it does, never how.
       </p>
     </div>
     <aside class="soc-ticker-wrap" aria-label="What the scribe writes">
@@ -196,7 +229,7 @@ const payload = AGENTS.map((a) => ({
       class="soc-map"
       viewBox="0 0 960 540"
       role="group"
-      aria-label="The society's map: twenty-seven agents in level-bands — proto-specialists, builders, body, senses — with censors at their gates, the B-brain watching from the side, and K-lines collecting on the left. Select an agent to read it whole."
+      aria-label="The society's map: twenty-nine agents in level-bands — proto-specialists, builders, body, senses — with censors at their gates, the B-brain watching from the side, and K-lines collecting on the left. Select an agent to read it whole."
     >
       <!-- bands -->
       <g class="soc-bands" aria-hidden="true">
@@ -243,6 +276,26 @@ const payload = AGENTS.map((a) => ({
 
       <!-- runtime K-lines collect here -->
       <g data-soc-klines></g>
+
+      <!-- what the morning's parenting did: three worths, resting at a midline -->
+      <g class="soc-worths" data-soc-worths aria-hidden="true">
+        <line class="soc-worth-mid" x1="34" y1="150" x2="86" y2="150"></line>
+        <text class="soc-worth-label" x="34" y="142">worth</text>
+        {
+          [
+            { id: 'tower', x: 40 },
+            { id: 'arch', x: 56 },
+            { id: 'wreck', x: 72 },
+          ].map((b) => (
+            <g>
+              <rect class="soc-worth-bar" data-soc-worth={b.id} x={b.x} y="150" width="8" height="0" />
+              <text class="soc-worth-tick" x={b.x + 4} y="164">
+                {b.id === 'wreck' ? 'c' : b.id === 'arch' ? 'a' : 't'}
+              </text>
+            </g>
+          ))
+        }
+      </g>
 
       <!-- the agents -->
       <g class="soc-nodes">
@@ -321,8 +374,13 @@ const payload = AGENTS.map((a) => ({
         CHAPTERS.map((c) => {
           const isAwake = awake.has(c.n)
           const n = residents.get(c.n) ?? 0
-          // chapter 8 is awake through its runtime creatures: K-lines, born of standing towers
-          const state = !isAwake ? 'asleep' : n > 0 ? `${n} agent${n === 1 ? '' : 's'}` : 'K-lines'
+          // some chapters are awake through creatures of the running simulation rather
+          // than through static agents (K-lines, the dream) — the shelf names those
+          const state = !isAwake
+            ? 'asleep'
+            : n > 0
+              ? `${n} agent${n === 1 ? '' : 's'}`
+              : (RUNTIME_RESIDENTS[c.n] ?? 'live')
           return (
             <li>
               <button
@@ -333,7 +391,7 @@ const payload = AGENTS.map((a) => ({
                   isAwake
                     ? n > 0
                       ? `Chapter ${c.n}, ${c.title} — awake, ${n} resident agent${n === 1 ? '' : 's'}. Highlights them on the map.`
-                      : `Chapter ${c.n}, ${c.title} — awake through its runtime creatures, the K-lines.`
+                      : `Chapter ${c.n}, ${c.title} — awake through ${RUNTIME_RESIDENTS[c.n] ?? 'the running simulation'}, a creature of the running simulation.`
                     : `Chapter ${c.n}, ${c.title} — still asleep.`
                 }
               >
@@ -353,7 +411,7 @@ const payload = AGENTS.map((a) => ({
     <summary>The roster as a table — every agent, its band, its essay</summary>
     <table class="soc-table">
       <caption>
-        Twenty-seven agents; none of them intelligent. Chapter/section numbers cite the 1986
+        Twenty-nine agents; none of them intelligent. Chapter/section numbers cite the 1986
         Simon &amp; Schuster edition.
       </caption>
       <thead>
@@ -404,7 +462,8 @@ const payload = AGENTS.map((a) => ({
     type VisitorInput,
   } from '@/lib/society/engine'
   import { GOAL_HEIGHT } from '@/lib/society/world'
-  import { pickMoment } from '@/lib/society/moments'
+  import { pickMoment, stateMoment } from '@/lib/society/moments'
+  import { ARCH_MID, TOWER_X } from '@/lib/society/world'
   import { onMotionChange, readJsonScript, reducedMotion, setVars } from '@/lib/dataviz/runtime'
 
   interface AgentCard {
@@ -443,6 +502,7 @@ const payload = AGENTS.map((a) => ({
     const handG = root.querySelector<SVGGElement>('[data-soc-hand]')!
     const gazeG = root.querySelector<SVGGElement>('[data-soc-gaze]')!
     const shadowEl = root.querySelector<SVGEllipseElement>('[data-soc-shadow]')!
+    const signRing = root.querySelector<SVGEllipseElement>('[data-soc-sign-ring]')!
     const ticker = root.querySelector<HTMLOListElement>('[data-soc-ticker]')!
     const klinesG = root.querySelector<SVGGElement>('[data-soc-klines]')!
     const nodeEls = new Map<string, SVGGElement>()
@@ -472,6 +532,12 @@ const payload = AGENTS.map((a) => ({
     const BLOCK_H = 25
 
     // seven block rects, created once
+    const worthBars = (['tower', 'arch', 'wreck'] as const).map(
+      (goal) => [goal, root.querySelector<SVGRectElement>(`[data-soc-worth="${goal}"]`)!] as const,
+    )
+    const ghostsG = root.querySelector<SVGGElement>('[data-soc-ghosts]')!
+    let ghostState: { asleep: boolean; kLineId?: number } = { asleep: false }
+    let wasAsleep = false
     const blockEls = new Map<string, SVGRectElement>()
     for (const b of society.world.blocks) {
       const r = document.createElementNS('http://www.w3.org/2000/svg', 'rect')
@@ -502,6 +568,49 @@ const payload = AGENTS.map((a) => ({
     })
     root.addEventListener('pointerleave', () => {
       visitor.present = false
+    })
+
+    // ————————————————————————————— the held sign ———————————————————————————
+    // Pressed and HELD, never clicked: attachment is presence, not a vote (§17.3). The
+    // strength ramps with the length of the hold, and the sign lands on whatever has the
+    // hand at that moment — to parent this society you have to watch it.
+    let signHeld = 0
+    /** the direction of the last hold — kept while the strength fades, so a released warm
+     *  sign fades warm and not, absurdly, into a cold one */
+    let signDir = 0
+    let signStrength = 0
+    root.querySelectorAll<HTMLButtonElement>('[data-soc-sign]').forEach((btn) => {
+      const value = Number(btn.dataset.socSign)
+      const press = () => {
+        signHeld = value
+        visitor.present = true
+        btn.classList.add('soc-sign-on')
+      }
+      const release = () => {
+        if (signHeld === value) signHeld = 0
+        btn.classList.remove('soc-sign-on')
+      }
+      btn.addEventListener('pointerdown', (ev) => {
+        ev.preventDefault()
+        press()
+      })
+      btn.addEventListener('pointerup', release)
+      btn.addEventListener('pointercancel', release)
+      btn.addEventListener('pointerleave', release)
+      btn.addEventListener('blur', release)
+      btn.addEventListener('keydown', (ev) => {
+        if (ev.key === ' ' || ev.key === 'Enter') {
+          ev.preventDefault()
+          press()
+        }
+      })
+      btn.addEventListener('keyup', (ev) => {
+        if (ev.key === ' ' || ev.key === 'Enter') release()
+      })
+    })
+    document.addEventListener('pointerup', () => {
+      signHeld = 0
+      root.querySelectorAll('[data-soc-sign]').forEach((b) => b.classList.remove('soc-sign-on'))
     })
 
     // ————————————————————————————— selection & ablation ————————————————————
@@ -614,8 +723,15 @@ const payload = AGENTS.map((a) => ({
       visitor.speed = visitor.present ? Math.min(10, Math.hypot(dx, dy) * 1.1 + visitor.speed * 0.35) : 0
       visitor.lastX = visitor.x
       visitor.lastY = visitor.y
+      // the hold ramps up over ~1.2s and falls away in ~0.6s: a gesture with a duration
+      if (signHeld) signDir = signHeld
+      signStrength = signHeld
+        ? Math.min(1, signStrength + 1 / 12)
+        : Math.max(0, signStrength - 1 / 6)
+      const sign = signDir * signStrength
+      if (signHeld) visitor.present = true
       return visitor.present
-        ? { present: true, x: visitor.x, y: visitor.y, speed: visitor.speed }
+        ? { present: true, x: visitor.x, y: visitor.y, speed: visitor.speed, sign }
         : NO_VISITOR
     }
 
@@ -637,11 +753,53 @@ const payload = AGENTS.map((a) => ({
       }
       handG.setAttribute('transform', `translate(${WX(w.hand.x)} ${WY(w.hand.y) - 26})`)
       gazeG.setAttribute('transform', `translate(${WX(w.gaze.x)} ${WY(w.gaze.y) - 10})`)
+
+      // ————————————————————————— the dream, drawn ——————————————————————
+      // While asleep the world is untouched (engine.test.ts holds that), so what the
+      // dream builds is drawn as ghosts and nothing else: a tower or an arch that is not
+      // there, at the site the remembered agents worked. The society's eye shuts.
+      root.classList.toggle('soc-asleep', society.asleep)
+      if (society.asleep !== ghostState.asleep || society.dream?.kLineId !== ghostState.kLineId) {
+        ghostState = { asleep: society.asleep, kLineId: society.dream?.kLineId }
+        ghostsG.replaceChildren()
+        const k = society.dream
+          ? society.kLines.find((x) => x.id === society.dream!.kLineId)
+          : undefined
+        if (society.asleep && k) {
+          const arch = k.kind === 'arch'
+          const spots = arch
+            ? [
+                { x: 22, y: 0, lying: false },
+                { x: 36, y: 0, lying: false },
+                { x: ARCH_MID, y: 7, lying: true },
+              ]
+            : [0, 1, 2, 3].map((i) => ({ x: TOWER_X, y: i * 7, lying: false }))
+          for (const spot of spots) {
+            const g = document.createElementNS('http://www.w3.org/2000/svg', 'rect')
+            const gw = spot.lying ? BLOCK_H + 8 : BLOCK_W
+            const gh = spot.lying ? BLOCK_W - 4 : BLOCK_H
+            g.setAttribute('class', 'soc-ghost')
+            g.setAttribute('width', String(gw))
+            g.setAttribute('height', String(gh))
+            g.setAttribute('rx', '2')
+            g.setAttribute('x', String(WX(spot.x) - gw / 2))
+            g.setAttribute('y', String(WY(spot.y) - gh))
+            ghostsG.appendChild(g)
+          }
+        }
+      }
       if (visitor.present) {
         shadowEl.setAttribute('cx', String(WX(visitor.x)))
         shadowEl.setAttribute('cy', '182')
         shadowEl.classList.add('soc-shadow-present')
       } else shadowEl.classList.remove('soc-shadow-present')
+      // the shadow answers while a sign is held: the gesture enters the world, and its
+      // strength is visibly the length of the hold
+      signRing.setAttribute('cx', String(WX(visitor.x)))
+      signRing.setAttribute('rx', String(24 + 16 * signStrength))
+      signRing.setAttribute('ry', String(6 + 4 * signStrength))
+      signRing.classList.toggle('soc-sign-ring-on', signStrength > 0.02)
+      signRing.classList.toggle('soc-sign-ring-cold', signDir < 0)
 
       for (const [id, halo] of haloEls) {
         const v = society.a[id] ?? 0
@@ -673,6 +831,22 @@ const payload = AGENTS.map((a) => ({
       const v = society.a[selected] ?? 0
       setVars(card.meter, { '--soc-meter': `${Math.round(v * 100)}%` })
 
+      // the worth bars: what this morning's parenting did, above or below the midline
+      for (const [goal, bar] of worthBars) {
+        const worth = society.worth[goal]
+        const h = Math.min(26, Math.abs(worth - 1) * 26)
+        bar.setAttribute('y', String(worth >= 1 ? 150 - h : 150))
+        bar.setAttribute('height', String(h))
+        bar.classList.toggle('soc-worth-down', worth < 1)
+        let title = bar.querySelector('title')
+        if (!title) {
+          title = document.createElementNS('http://www.w3.org/2000/svg', 'title')
+          bar.appendChild(title)
+        }
+        const noun = goal === 'wreck' ? 'the crash' : `the ${goal}`
+        title.textContent = `${noun} is worth ${worth.toFixed(2)} of what it was worth this morning`
+      }
+
       // new scribe lines — an elegy arrives marked, and holds the ticker for a beat
       while (linesSeen < society.lines.length) {
         const line = society.lines[linesSeen]
@@ -690,6 +864,13 @@ const payload = AGENTS.map((a) => ({
         const { events } = step(society, tickInput())
         const moment = pickMoment(events)
         if (moment) showMoment(moment.caption, moment.x, moment.holdMs, now)
+        // falling asleep and waking move nothing, and are the largest changes there are
+        if (society.asleep !== wasAsleep) {
+          const kind = !society.asleep ? 'wakes' : society.dream ? 'sleeps' : 'dreamless'
+          const m = stateMoment(kind, society.world.hand.x)
+          showMoment(m.caption, m.x, m.holdMs, now)
+          wasAsleep = society.asleep
+        }
         acc -= SIM_MS
       }
       if (momentUntil && now > momentUntil) {

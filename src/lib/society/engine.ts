@@ -41,9 +41,23 @@ export interface VisitorInput {
   y: number
   /** movement speed, normalized by the figure script to roughly 0..10 */
   speed: number
+  /**
+   * stage 5 — a held sign, warm (+1) or cold (−1), ramped by the figure over the length of
+   * the hold. OPTIONAL, and an omitted sign is no sign: that is what keeps every stage 1–4
+   * morning identical to what it was before attachment existed.
+   */
+  sign?: number
 }
 
-export const NO_VISITOR: VisitorInput = { present: false, x: 0, y: 0, speed: 0 }
+export const NO_VISITOR: VisitorInput = { present: false, x: 0, y: 0, speed: 0, sign: 0 }
+
+/** stage 5 (§17.2): a goal can be made unworthy; it can never be made impossible, and the
+ *  skill under it is never touched. Hence a floor above zero. */
+export const WORTH_FLOOR = 0.2
+export const WORTH_CEIL = 2
+const WORTH_RATE = 0.006
+
+export type WorthGoal = 'tower' | 'arch' | 'wreck'
 
 export interface KLine {
   id: number
@@ -62,13 +76,15 @@ export interface TickerLine {
    * silenced agent leaves behind, and 'wake' its return. Stage 3 gives the elegy its own
    * weight in the ticker — the prior-art searches found the elegy to be the one gesture
    * this piece owns outright (docs/society/prior-art.md), and it was the weakest-staged
-   * thing on the page.
+   * thing on the page. 'dream' is what the scribe writes while the body sleeps (stage 4):
+   * the B-brain sees the A-brain firing and reports it, having no way to know that nothing
+   * out there is happening.
    */
-  kind: 'note' | 'elegy' | 'wake'
+  kind: 'note' | 'elegy' | 'wake' | 'dream'
 }
 
 type Ruler = 'play' | 'rest' | 'curiosity' | 'alarm'
-type Mode = 'build' | 'wreck' | 'watch' | 'rest' | 'freeze' | 'idle'
+type Mode = 'build' | 'wreck' | 'watch' | 'rest' | 'freeze' | 'idle' | 'sleep'
 type Phase = 'find' | 'get' | 'put'
 type Goal = 'tower' | 'arch'
 
@@ -101,6 +117,25 @@ export interface Society {
   stall: number
   kLines: KLine[]
   lines: TickerLine[]
+  /** stage 4 — the dream (§15.8): the society sleeps when nothing has happened for long
+   *  enough and no one is watching. Its agents keep firing; its body does not move. */
+  asleep: boolean
+  /** consecutive ticks with no visitor — being left alone is the road into sleep */
+  aloneTicks: number
+  /** which memory is being re-aroused, and how far in — a K-line replayed, not a plan run */
+  dream: { kLineId: number; agents: string[]; step: number } | null
+  /** how many dreams this morning; the record the figure draws its ghosts from */
+  dreamsHad: number
+  /**
+   * stage 5 (§17.2) — what each goal is worth. 1 = never parented. Attachment writes here
+   * and NOWHERE else: no skill, no sense, no censor and no memory reads it, and the only
+   * places it is read are the three lines that scale what the builders want.
+   */
+  worth: Record<WorthGoal, number>
+  /** which want held the hand last tick, with and without worth — the pair that lets the
+   *  piece say honestly that a turn was attachment's doing and not the morning's */
+  lastWinner: WorthGoal | 'none'
+  lastWinnerNeutral: WorthGoal | 'none'
   wanderTarget: { x: number; y: number }
   wanderAge: number
   cooldowns: Record<string, number>
@@ -157,6 +192,13 @@ export function makeSociety(seed: number): Society {
     stall: 0,
     kLines: [],
     lines: [],
+    asleep: false,
+    aloneTicks: 0,
+    dream: null,
+    dreamsHad: 0,
+    worth: { tower: 1, arch: 1, wreck: 1 },
+    lastWinner: 'none',
+    lastWinnerNeutral: 'none',
     wanderTarget: { x: 50, y: 18 },
     wanderAge: 0,
     cooldowns: {},
@@ -235,6 +277,17 @@ export function step(s: Society, input: VisitorInput): StepResult {
   s.prevSeen = seen
   a['novelty'] = s.surprise
 
+  // see-sign — "is a sign arriving? how warm, how cold? shout that number to WORTH".
+  // The second channel of the same shadow: the society cannot tell who signs, or what the
+  // sign is about — only that something out there is warm or cold.
+  const sign =
+    !abl('see-sign') && input.present ? Math.max(-1, Math.min(1, input.sign ?? 0)) : 0
+  a['see-sign'] = Math.abs(sign)
+  if (sign > 0.55)
+    say(s, 'sign-warm', 450, 'SEE-SIGN is loud. Something out there is warm; nothing in here knows toward what.')
+  if (sign < -0.55)
+    say(s, 'sign-cold', 450, 'SEE-SIGN is loud. Something out there is cold; nothing in here knows toward what.')
+
   // see-tower — "count the stacked blocks, tell BUILDER the number"
   const seenHeight = abl('see-tower') ? 0 : towerHeight(w)
   a['see-tower'] = towerHeight(w) / GOAL_HEIGHT
@@ -258,8 +311,11 @@ export function step(s: Society, input: VisitorInput): StepResult {
   // alarm — "if the shadow leaps: seize the body"
   if (s.startleGuard > 0) s.startleGuard--
   if (!abl('alarm')) {
-    // "if the shadow leaps" — a leap as the EYE reports it; a blind society cannot flinch
-    const leap = seen - seenBefore > 0.75 && seen > 0
+    // "if the shadow leaps" — a leap as the EYE reports it; a blind society cannot flinch.
+    // A sleeping society does not startle: it wakes (stage 4), and the waking IS the
+    // fright. This also keeps the sleep invariant true by construction — the startle's
+    // drop is the one way the body could have moved while asleep.
+    const leap = seen - seenBefore > 0.75 && seen > 0 && !s.asleep
     const suppressed = !abl('suppressor-startle') && s.startleGuard > 0
     if (leap && !suppressed && s.alarmTicks === 0) {
       s.alarmTicks = 12
@@ -274,6 +330,86 @@ export function step(s: Society, input: VisitorInput): StepResult {
   s.needs.alarm = s.alarmTicks > 0 ? 1 : 0
   if (s.alarmTicks > 0) s.alarmTicks--
   a['suppressor-startle'] = !abl('suppressor-startle') && s.startleGuard > 0 ? 0.7 : 0
+
+  // ————————————————————————————————— sleep and the dream ————————————————
+  // Stage 4 (§15.4, §15.8, §3.5). The society sleeps when its body has had nothing to do
+  // for a long stretch and no one is there; while it sleeps, a K-line is re-aroused —
+  // "memories are processes that make some of our agents act in much the same ways they
+  // did in the past" (§15.4) — and the agents fire into nothing. NOTHING IN THE WORLD
+  // MOVES: the dream is the mind running without the body, which is the whole point
+  // ("a real child can go to bed — yet still build towers in its head", §3.5).
+  // Being LEFT ALONE is what sends it to sleep — not idleness as such: a society with a
+  // visitor keeps working for as long as the visitor stays. It goes under at the next
+  // moment its body happens to be resting, so it never falls asleep mid-grasp.
+  s.aloneTicks = input.present ? 0 : s.aloneTicks + 1
+  const bodyIdle = s.mode === 'rest' || s.mode === 'idle'
+  if (!s.asleep && s.aloneTicks > 900 && bodyIdle && !w.hand.holding) {
+    s.asleep = true
+    s.aloneTicks = 0
+    // pick the memory to replay: the rng keeps it deterministic, the roster keeps it real
+    if (s.kLines.length > 0) {
+      const k = s.kLines[Math.floor(s.rng() * s.kLines.length)]
+      s.dream = { kLineId: k.id, agents: k.agents, step: 0 }
+      s.dreamsHad++
+      say(s, 'sleeps', 0, 'The society sleeps. Its hand rests.', 'dream')
+    } else {
+      // nothing was ever achieved, so there is no K-line to re-arouse: a dreamless sleep
+      s.dream = null
+      say(s, 'sleeps', 0, 'The society sleeps, and has nothing to dream of.', 'dream')
+    }
+  }
+
+  if (s.asleep) {
+    s.mode = 'sleep'
+    // the visitor's return wakes it — the eye still works while the body does not
+    const stirred = seen > 0.25
+    if (stirred || s.needs.play > 0.85) {
+      s.asleep = false
+      s.dream = null
+      say(s, 'wakes', 0, stirred ? 'Something moves. The society wakes.' : 'PLAY has grown loud enough to wake it.', 'wake')
+    } else if (s.dream) {
+      // the replay: the remembered agents light up in turn, and the scribe — which can see
+      // only the A-brain and never the table — reports them as if they were working
+      const d = s.dream
+      d.step++
+      for (let i = 0; i < d.agents.length; i++) {
+        const phase = (d.step / 22 + i / d.agents.length) % 1
+        a[d.agents[i]] = 0.35 + 0.45 * Math.sin(phase * Math.PI * 2) ** 2
+      }
+      // censors sleep too (§27.3: "sometimes censors must themselves be suppressed"), so a
+      // dream may contain what the day would not allow
+      a['censor-wreck'] = 0
+      a['suppressor-startle'] = 0
+      const k = s.kLines.find((x) => x.id === d.kLineId)
+      // dreams repeat, but a ticker that repeats itself reads as a bug rather than as a
+      // night: the same line waits a while before it may come again
+      if (d.step === 12)
+        say(
+          s,
+          'dream-building',
+          420,
+          k?.kind === 'arch'
+            ? 'It is building an arch that is not there.'
+            : 'It is building a tower that is not there.',
+          'dream',
+        )
+      if (d.step === 90)
+        say(s, 'dream-wrecker', 700, 'In the dream, nothing holds WRECKER back.', 'dream')
+      if (d.step > 150) {
+        // one memory is not enough for a night: take another, or wake on the last
+        const next = s.kLines[Math.floor(s.rng() * s.kLines.length)]
+        s.dream = { kLineId: next.id, agents: next.agents, step: 0 }
+        s.dreamsHad++
+      }
+    }
+    // the sleeping society draws no other conclusions: the body is skipped entirely
+    for (const id of s.ablated) a[id] = 0
+    s.a = a
+    // the gaze sinks shut
+    w.gaze.x += (w.hand.x - w.gaze.x) * 0.04
+    w.gaze.y += (REST_POS.y - w.gaze.y) * 0.04
+    return { events }
+  }
 
   // cross-exclusion (§16.4) — one proto-specialist rules; a challenger must clearly win
   const needs: [Ruler, number][] = [
@@ -301,6 +437,33 @@ export function step(s: Society, input: VisitorInput): StepResult {
   a['rest'] = s.needs.rest
   a['curiosity'] = s.needs.curiosity
   a['alarm'] = s.needs.alarm
+
+  // ——————————————————————————————————————————————— attachment ————————————
+  // worth — "when SEE-SIGN shouts: whatever has the hand now, that goal is worth a little
+  // more, or a little less, and it stays that way". §17.2's third rule, and ONLY that rule:
+  // ordinary failure modifies the methods, fear modifies the description of the situation,
+  // and attachment modifies which goals are considered worthy of pursuit. It reads the mode
+  // the previous tick left behind — what the hand was visibly doing when the sign arrived.
+  if (!abl('worth') && sign !== 0) {
+    const target: WorthGoal | null =
+      s.mode === 'build' ? s.goal : s.mode === 'wreck' ? 'wreck' : null
+    if (target) {
+      s.worth[target] = Math.max(
+        WORTH_FLOOR,
+        Math.min(WORTH_CEIL, s.worth[target] + sign * WORTH_RATE),
+      )
+      const noun = target === 'wreck' ? 'The crash' : target === 'arch' ? 'The arch' : 'The tower'
+      say(
+        s,
+        `worth-${target}-${sign > 0 ? 'up' : 'down'}`,
+        500,
+        `WORTH moves. ${noun} is worth ${sign > 0 ? 'more' : 'less'} than it was.`,
+      )
+    } else {
+      say(s, 'sign-nowhere', 600, 'A sign arrives, and nothing has the hand. It lands on nothing.')
+    }
+  }
+  a['worth'] = Math.abs(sign) * 0.8
 
   // ———————————————————————————————————————————————— managers —————————————
   const arch = archState(w)
@@ -350,9 +513,50 @@ export function step(s: Society, input: VisitorInput): StepResult {
   }
   a['play-with-blocks'] = s.ruler === 'play' && !abl('play-with-blocks') ? 0.8 : 0
 
+  // ——— what attachment is worth, and nothing else it could be —————————————
+  // The three lines where s.worth is read. Everything above computed how WELL the society
+  // can do a thing; these scale only how much it WANTS to (§17.2: ends, not means). Note
+  // the order: worth scales WRECKER's want BEFORE censor-wreck presses it down — you can
+  // make this society want to smash; you cannot make it smash (§9.3).
+  const buildWant0 = buildWant
+  const archWant0 = archWant
+  const wreckWant0 = wreckWant
+  buildWant *= s.worth.tower
+  archWant *= s.worth.arch
+  wreckWant *= s.worth.wreck
+
   // play-with-blocks arbitrates its builders — "the louder child gets the hand"
   const constructWant = Math.max(buildWant, archWant)
   const nextGoal: Goal = archWant > buildWant ? 'arch' : 'tower'
+
+  // A turn worth reporting is one that would NOT have happened to an unparented morning:
+  // the winner changed while the winner-without-worth stayed put. That second clause is
+  // what makes the caption true rather than decorative.
+  const winnerOf = (b: number, ar: number, wr: number): WorthGoal | 'none' => {
+    const best = Math.max(b, ar, wr)
+    if (best < 0.3) return 'none'
+    return best === wr ? 'wreck' : best === ar ? 'arch' : 'tower'
+  }
+  const winner = winnerOf(buildWant, archWant, wreckWant)
+  const winnerNeutral = winnerOf(buildWant0, archWant0, wreckWant0)
+  if (
+    winner !== 'none' &&
+    winner !== s.lastWinner &&
+    winnerNeutral === s.lastWinnerNeutral &&
+    s.lastWinner !== 'none' &&
+    (s.cooldowns['worth-turn'] ?? -Infinity) + 600 <= s.tick
+  ) {
+    s.cooldowns['worth-turn'] = s.tick
+    events.push({ kind: 'worthTurned', goal: winner })
+    say(
+      s,
+      'worth-turn-line',
+      600,
+      'The hand changes hands. No one learned anything; something is worth less.',
+    )
+  }
+  s.lastWinner = winner
+  s.lastWinnerNeutral = winnerNeutral
 
   // watch-quarrel — "if the builders and WRECKER shout equally loud, quiet them both;
   // a clear victory it lets stand" (noncompromise, §3.2)
@@ -608,7 +812,32 @@ export function snapshot(s: Society): string {
     phase: s.phase,
     goal: s.goal,
     habitSpent: s.habitSpent,
+    asleep: s.asleep,
+    dream: s.dream,
+    dreamsHad: s.dreamsHad,
+    worth: s.worth,
     kLines: s.kLines,
     lines: s.lines,
+  })
+}
+
+/**
+ * snapshot() minus the ticker and minus worth — the BODY of a morning: where every block
+ * went, when, and what was remembered. Stage 5's falsifier compares this between a
+ * censured society and an unparented one: if attachment ever touched a method — hand
+ * speed, jitter, the find/get/put chain — these two strings come apart (§17.2).
+ */
+export function bodySnapshot(s: Society): string {
+  return JSON.stringify({
+    tick: s.tick,
+    world: s.world,
+    phase: s.phase,
+    // WHEN each work stood and WHAT it was — but not which agents were up while it did.
+    // That roster is mind, not body, and it legitimately differs between a parented and an
+    // unparented morning: a society being signed to really does have SEE-SIGN and WORTH
+    // among the agents its memory attaches to. Comparing it here would flag attachment for
+    // existing rather than for touching a method (the first run of this test did exactly
+    // that, and the difference was the point).
+    works: s.kLines.map((k) => ({ id: k.id, tick: k.tick, kind: k.kind })),
   })
 }

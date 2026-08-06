@@ -25,6 +25,7 @@ export interface Moment {
 /** Event kinds that are dramas, in the order they matter when several land in one tick. */
 export const DRAMATIC_KINDS = [
   'misfire',
+  'worthTurned',
   'collapsed',
   'archComplete',
   'towerComplete',
@@ -45,6 +46,14 @@ export function momentFor(event: WorldEvent): Moment | null {
     case 'misfire':
       // the transfer's own drama: memory dragging the hand to the old place
       return { caption: 'the hand goes where the towers were', x: TOWER_X, holdMs: 4200 }
+    case 'worthTurned':
+      // attachment made visible in the body: §17.2's "instead of trying to escape, the
+      // child would try to change what it was doing"
+      return {
+        caption: 'it changes what it does, not how it does it',
+        x: event.goal === 'arch' ? ARCH_MID : TOWER_X,
+        holdMs: 4600,
+      }
     case 'collapsed':
       return { caption: 'the tower leaves without being pushed', x: TOWER_X, holdMs: 3600 }
     case 'archComplete':
@@ -69,4 +78,23 @@ export function pickMoment(events: WorldEvent[]): Moment | null {
     if (hit) return momentFor(hit)
   }
   return null
+}
+
+// ————————————————————————————— states, not events ——————————————————————
+// Stage 4: falling asleep and waking are not things that happen in the world — nothing
+// moves — but they are the two biggest changes a visitor can witness, so the camera
+// carries them too. Kept beside the world dramas so one test covers both kinds.
+
+export const STATE_MOMENTS = ['sleeps', 'dreamless', 'wakes'] as const
+export type StateKind = (typeof STATE_MOMENTS)[number]
+
+export function stateMoment(kind: StateKind, x: number): Moment {
+  switch (kind) {
+    case 'sleeps':
+      return { caption: 'left alone, the society sleeps', x, holdMs: 5000 }
+    case 'dreamless':
+      return { caption: 'it sleeps, with nothing to dream of', x, holdMs: 5000 }
+    case 'wakes':
+      return { caption: 'something moves — it wakes', x, holdMs: 3000 }
+  }
 }
