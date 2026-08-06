@@ -70,3 +70,22 @@ export function pickMoment(events: WorldEvent[]): Moment | null {
   }
   return null
 }
+
+// ————————————————————————————— states, not events ——————————————————————
+// Stage 4: falling asleep and waking are not things that happen in the world — nothing
+// moves — but they are the two biggest changes a visitor can witness, so the camera
+// carries them too. Kept beside the world dramas so one test covers both kinds.
+
+export const STATE_MOMENTS = ['sleeps', 'dreamless', 'wakes'] as const
+export type StateKind = (typeof STATE_MOMENTS)[number]
+
+export function stateMoment(kind: StateKind, x: number): Moment {
+  switch (kind) {
+    case 'sleeps':
+      return { caption: 'left alone, the society sleeps', x, holdMs: 5000 }
+    case 'dreamless':
+      return { caption: 'it sleeps, with nothing to dream of', x, holdMs: 5000 }
+    case 'wakes':
+      return { caption: 'something moves — it wakes', x, holdMs: 3000 }
+  }
+}

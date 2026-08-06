@@ -176,6 +176,51 @@
 .soc-ticker li.soc-line-wake {
   color: var(--soc-ink-muted);
 }
+/* the dream: what the scribe writes while the body sleeps — set in the same hand, only
+   quieter, because the scribe does not know it is dreaming */
+.soc-ticker li.soc-line-dream {
+  color: var(--soc-ink-muted);
+  font-style: italic;
+}
+.soc-ticker li.soc-line-dream::before {
+  content: '· ';
+}
+
+/* ————————————————————————————— sleep and the dream —————————————————————— */
+/* the sleeping world dims; the eye shuts; what is dreamed is drawn as an outline */
+.soc-asleep .soc-block,
+.soc-asleep .soc-hand path,
+.soc-asleep .soc-table {
+  opacity: 0.4;
+  transition: opacity 1200ms ease;
+}
+.soc-gaze-shut {
+  display: none;
+  fill: none;
+  stroke: var(--soc-senses);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+.soc-asleep .soc-gaze-open {
+  display: none;
+}
+.soc-asleep .soc-gaze-shut {
+  display: inline;
+}
+.soc-ghost {
+  fill: none;
+  stroke: var(--soc-reflect);
+  stroke-width: 1.2;
+  stroke-dasharray: 3 4;
+  opacity: 0.75;
+}
+@media (prefers-reduced-motion: reduce) {
+  .soc-asleep .soc-block,
+  .soc-asleep .soc-hand path,
+  .soc-asleep .soc-table {
+    transition: none;
+  }
+}
 
 /* the camera: a ring where it happened, a caption above the world */
 .soc-moment {

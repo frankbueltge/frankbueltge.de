@@ -7,12 +7,42 @@ import Page from '@/layouts/Page.astro'
 import SocietyFigure from '@/components/society/SocietyFigure.astro'
 import GrowthRecord from '@/components/society/GrowthRecord.astro'
 import { STAGES } from '@/lib/society/stages'
+import { awakeChapters, CHAPTERS } from '@/lib/society/agents'
 
 // The kicker is derived, never typed: it said "stage 2" while stage 3 was live (Frank
 // caught it, 2026-08-06). The growth record is the single source of what stage this is.
 const stages = STAGES.filter((s) => s.kind === 'stage')
 const current = stages[stages.length - 1]
 const started = STAGES[0].date
+
+// The shelf's count is derived too — it read "eleven" while twelve chapters were awake
+// the moment a stage woke one. The roster is the only place that knows.
+const WORDS = [
+  'no',
+  'one',
+  'two',
+  'three',
+  'four',
+  'five',
+  'six',
+  'seven',
+  'eight',
+  'nine',
+  'ten',
+  'eleven',
+  'twelve',
+  'thirteen',
+  'fourteen',
+  'fifteen',
+  'sixteen',
+  'seventeen',
+  'eighteen',
+  'nineteen',
+  'twenty',
+]
+const spell = (n: number) => WORDS[n] ?? String(n)
+const awakeCount = awakeChapters().size
+const asleepCount = CHAPTERS.length - awakeCount
 ---
 
 <Page
@@ -83,9 +113,10 @@ const started = STAGES[0].date
         is the middle, never the plan. Silence ARCHER and this society builds towers until
         the end of its days. Chapter and section numbers are verified against the 1986
         edition; the thirty-chapter shelf
-        shows honestly which parts of the book live here so far — eleven chapters are awake,
-        nineteen are roadmap. A full reading pass over the print edition stands behind the
-        citations (<code class="text-xs">docs/society/reading-protocol.md</code>).
+        shows honestly which parts of the book live here so far — {spell(awakeCount)} chapters
+        are awake, {spell(asleepCount)} are roadmap. A full reading pass over the print
+        edition stands behind the citations
+        (<code class="text-xs">docs/society/reading-protocol.md</code>).
       </p>
     </section>
 

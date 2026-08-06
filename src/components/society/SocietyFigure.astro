@@ -14,7 +14,14 @@
 //     only the LIFE of the figure needs a script, and the caption says so;
 //   · identity is never carried by colour alone: every node is labelled, every band named,
 //     the table repeats everything (PALETTE: society-bands, recorded in dataviz/palette.ts).
-import { AGENTS, awakeChapters, CHAPTERS, type AgentSpec, type Band } from '@/lib/society/agents'
+import {
+  AGENTS,
+  awakeChapters,
+  CHAPTERS,
+  RUNTIME_RESIDENTS,
+  type AgentSpec,
+  type Band,
+} from '@/lib/society/agents'
 import { jsonScriptPayload } from '@/lib/dataviz/runtime'
 import '@/styles/society.css'
 
@@ -159,9 +166,13 @@ const payload = AGENTS.map((a) => ({
           <text x="124" y="112">the arch site</text>
         </g>
         <ellipse class="soc-shadow" data-soc-shadow cx="-40" cy="182" rx="24" ry="6"></ellipse>
+        {/* the dream (stage 4): what the sleeping society is building, which is not there */}
+        <g class="soc-ghosts" data-soc-ghosts aria-hidden="true"></g>
         <g data-soc-blocks></g>
         <g class="soc-gaze" data-soc-gaze aria-hidden="true">
-          <circle cx="0" cy="0" r="7"></circle>
+          <circle class="soc-gaze-open" cx="0" cy="0" r="7"></circle>
+          {/* the closed eye of a sleeping society */}
+          <path class="soc-gaze-shut" d="M -7 0 Q 0 5 7 0"></path>
           <line x1="-11" y1="0" x2="-4" y2="0"></line>
           <line x1="4" y1="0" x2="11" y2="0"></line>
         </g>
@@ -321,8 +332,13 @@ const payload = AGENTS.map((a) => ({
         CHAPTERS.map((c) => {
           const isAwake = awake.has(c.n)
           const n = residents.get(c.n) ?? 0
-          // chapter 8 is awake through its runtime creatures: K-lines, born of standing towers
-          const state = !isAwake ? 'asleep' : n > 0 ? `${n} agent${n === 1 ? '' : 's'}` : 'K-lines'
+          // some chapters are awake through creatures of the running simulation rather
+          // than through static agents (K-lines, the dream) — the shelf names those
+          const state = !isAwake
+            ? 'asleep'
+            : n > 0
+              ? `${n} agent${n === 1 ? '' : 's'}`
+              : (RUNTIME_RESIDENTS[c.n] ?? 'live')
           return (
             <li>
               <button
@@ -333,7 +349,7 @@ const payload = AGENTS.map((a) => ({
                   isAwake
                     ? n > 0
                       ? `Chapter ${c.n}, ${c.title} — awake, ${n} resident agent${n === 1 ? '' : 's'}. Highlights them on the map.`
-                      : `Chapter ${c.n}, ${c.title} — awake through its runtime creatures, the K-lines.`
+                      : `Chapter ${c.n}, ${c.title} — awake through ${RUNTIME_RESIDENTS[c.n] ?? 'the running simulation'}, a creature of the running simulation.`
                     : `Chapter ${c.n}, ${c.title} — still asleep.`
                 }
               >
@@ -404,7 +420,8 @@ const payload = AGENTS.map((a) => ({
     type VisitorInput,
   } from '@/lib/society/engine'
   import { GOAL_HEIGHT } from '@/lib/society/world'
-  import { pickMoment } from '@/lib/society/moments'
+  import { pickMoment, stateMoment } from '@/lib/society/moments'
+  import { ARCH_MID, TOWER_X } from '@/lib/society/world'
   import { onMotionChange, readJsonScript, reducedMotion, setVars } from '@/lib/dataviz/runtime'
 
   interface AgentCard {
@@ -472,6 +489,9 @@ const payload = AGENTS.map((a) => ({
     const BLOCK_H = 25
 
     // seven block rects, created once
+    const ghostsG = root.querySelector<SVGGElement>('[data-soc-ghosts]')!
+    let ghostState: { asleep: boolean; kLineId?: number } = { asleep: false }
+    let wasAsleep = false
     const blockEls = new Map<string, SVGRectElement>()
     for (const b of society.world.blocks) {
       const r = document.createElementNS('http://www.w3.org/2000/svg', 'rect')
@@ -637,6 +657,41 @@ const payload = AGENTS.map((a) => ({
       }
       handG.setAttribute('transform', `translate(${WX(w.hand.x)} ${WY(w.hand.y) - 26})`)
       gazeG.setAttribute('transform', `translate(${WX(w.gaze.x)} ${WY(w.gaze.y) - 10})`)
+
+      // ————————————————————————— the dream, drawn ——————————————————————
+      // While asleep the world is untouched (engine.test.ts holds that), so what the
+      // dream builds is drawn as ghosts and nothing else: a tower or an arch that is not
+      // there, at the site the remembered agents worked. The society's eye shuts.
+      root.classList.toggle('soc-asleep', society.asleep)
+      if (society.asleep !== ghostState.asleep || society.dream?.kLineId !== ghostState.kLineId) {
+        ghostState = { asleep: society.asleep, kLineId: society.dream?.kLineId }
+        ghostsG.replaceChildren()
+        const k = society.dream
+          ? society.kLines.find((x) => x.id === society.dream!.kLineId)
+          : undefined
+        if (society.asleep && k) {
+          const arch = k.kind === 'arch'
+          const spots = arch
+            ? [
+                { x: 22, y: 0, lying: false },
+                { x: 36, y: 0, lying: false },
+                { x: ARCH_MID, y: 7, lying: true },
+              ]
+            : [0, 1, 2, 3].map((i) => ({ x: TOWER_X, y: i * 7, lying: false }))
+          for (const spot of spots) {
+            const g = document.createElementNS('http://www.w3.org/2000/svg', 'rect')
+            const gw = spot.lying ? BLOCK_H + 8 : BLOCK_W
+            const gh = spot.lying ? BLOCK_W - 4 : BLOCK_H
+            g.setAttribute('class', 'soc-ghost')
+            g.setAttribute('width', String(gw))
+            g.setAttribute('height', String(gh))
+            g.setAttribute('rx', '2')
+            g.setAttribute('x', String(WX(spot.x) - gw / 2))
+            g.setAttribute('y', String(WY(spot.y) - gh))
+            ghostsG.appendChild(g)
+          }
+        }
+      }
       if (visitor.present) {
         shadowEl.setAttribute('cx', String(WX(visitor.x)))
         shadowEl.setAttribute('cy', '182')
@@ -690,6 +745,13 @@ const payload = AGENTS.map((a) => ({
         const { events } = step(society, tickInput())
         const moment = pickMoment(events)
         if (moment) showMoment(moment.caption, moment.x, moment.holdMs, now)
+        // falling asleep and waking move nothing, and are the largest changes there are
+        if (society.asleep !== wasAsleep) {
+          const kind = !society.asleep ? 'wakes' : society.dream ? 'sleeps' : 'dreamless'
+          const m = stateMoment(kind, society.world.hand.x)
+          showMoment(m.caption, m.x, m.holdMs, now)
+          wasAsleep = society.asleep
+        }
         acc -= SIM_MS
       }
       if (momentUntil && now > momentUntil) {

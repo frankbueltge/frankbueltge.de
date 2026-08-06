@@ -62,13 +62,15 @@ export interface TickerLine {
    * silenced agent leaves behind, and 'wake' its return. Stage 3 gives the elegy its own
    * weight in the ticker — the prior-art searches found the elegy to be the one gesture
    * this piece owns outright (docs/society/prior-art.md), and it was the weakest-staged
-   * thing on the page.
+   * thing on the page. 'dream' is what the scribe writes while the body sleeps (stage 4):
+   * the B-brain sees the A-brain firing and reports it, having no way to know that nothing
+   * out there is happening.
    */
-  kind: 'note' | 'elegy' | 'wake'
+  kind: 'note' | 'elegy' | 'wake' | 'dream'
 }
 
 type Ruler = 'play' | 'rest' | 'curiosity' | 'alarm'
-type Mode = 'build' | 'wreck' | 'watch' | 'rest' | 'freeze' | 'idle'
+type Mode = 'build' | 'wreck' | 'watch' | 'rest' | 'freeze' | 'idle' | 'sleep'
 type Phase = 'find' | 'get' | 'put'
 type Goal = 'tower' | 'arch'
 
@@ -101,6 +103,15 @@ export interface Society {
   stall: number
   kLines: KLine[]
   lines: TickerLine[]
+  /** stage 4 — the dream (§15.8): the society sleeps when nothing has happened for long
+   *  enough and no one is watching. Its agents keep firing; its body does not move. */
+  asleep: boolean
+  /** consecutive ticks with no visitor — being left alone is the road into sleep */
+  aloneTicks: number
+  /** which memory is being re-aroused, and how far in — a K-line replayed, not a plan run */
+  dream: { kLineId: number; agents: string[]; step: number } | null
+  /** how many dreams this morning; the record the figure draws its ghosts from */
+  dreamsHad: number
   wanderTarget: { x: number; y: number }
   wanderAge: number
   cooldowns: Record<string, number>
@@ -157,6 +168,10 @@ export function makeSociety(seed: number): Society {
     stall: 0,
     kLines: [],
     lines: [],
+    asleep: false,
+    aloneTicks: 0,
+    dream: null,
+    dreamsHad: 0,
     wanderTarget: { x: 50, y: 18 },
     wanderAge: 0,
     cooldowns: {},
@@ -258,8 +273,11 @@ export function step(s: Society, input: VisitorInput): StepResult {
   // alarm — "if the shadow leaps: seize the body"
   if (s.startleGuard > 0) s.startleGuard--
   if (!abl('alarm')) {
-    // "if the shadow leaps" — a leap as the EYE reports it; a blind society cannot flinch
-    const leap = seen - seenBefore > 0.75 && seen > 0
+    // "if the shadow leaps" — a leap as the EYE reports it; a blind society cannot flinch.
+    // A sleeping society does not startle: it wakes (stage 4), and the waking IS the
+    // fright. This also keeps the sleep invariant true by construction — the startle's
+    // drop is the one way the body could have moved while asleep.
+    const leap = seen - seenBefore > 0.75 && seen > 0 && !s.asleep
     const suppressed = !abl('suppressor-startle') && s.startleGuard > 0
     if (leap && !suppressed && s.alarmTicks === 0) {
       s.alarmTicks = 12
@@ -274,6 +292,86 @@ export function step(s: Society, input: VisitorInput): StepResult {
   s.needs.alarm = s.alarmTicks > 0 ? 1 : 0
   if (s.alarmTicks > 0) s.alarmTicks--
   a['suppressor-startle'] = !abl('suppressor-startle') && s.startleGuard > 0 ? 0.7 : 0
+
+  // ————————————————————————————————— sleep and the dream ————————————————
+  // Stage 4 (§15.4, §15.8, §3.5). The society sleeps when its body has had nothing to do
+  // for a long stretch and no one is there; while it sleeps, a K-line is re-aroused —
+  // "memories are processes that make some of our agents act in much the same ways they
+  // did in the past" (§15.4) — and the agents fire into nothing. NOTHING IN THE WORLD
+  // MOVES: the dream is the mind running without the body, which is the whole point
+  // ("a real child can go to bed — yet still build towers in its head", §3.5).
+  // Being LEFT ALONE is what sends it to sleep — not idleness as such: a society with a
+  // visitor keeps working for as long as the visitor stays. It goes under at the next
+  // moment its body happens to be resting, so it never falls asleep mid-grasp.
+  s.aloneTicks = input.present ? 0 : s.aloneTicks + 1
+  const bodyIdle = s.mode === 'rest' || s.mode === 'idle'
+  if (!s.asleep && s.aloneTicks > 900 && bodyIdle && !w.hand.holding) {
+    s.asleep = true
+    s.aloneTicks = 0
+    // pick the memory to replay: the rng keeps it deterministic, the roster keeps it real
+    if (s.kLines.length > 0) {
+      const k = s.kLines[Math.floor(s.rng() * s.kLines.length)]
+      s.dream = { kLineId: k.id, agents: k.agents, step: 0 }
+      s.dreamsHad++
+      say(s, 'sleeps', 0, 'The society sleeps. Its hand rests.', 'dream')
+    } else {
+      // nothing was ever achieved, so there is no K-line to re-arouse: a dreamless sleep
+      s.dream = null
+      say(s, 'sleeps', 0, 'The society sleeps, and has nothing to dream of.', 'dream')
+    }
+  }
+
+  if (s.asleep) {
+    s.mode = 'sleep'
+    // the visitor's return wakes it — the eye still works while the body does not
+    const stirred = seen > 0.25
+    if (stirred || s.needs.play > 0.85) {
+      s.asleep = false
+      s.dream = null
+      say(s, 'wakes', 0, stirred ? 'Something moves. The society wakes.' : 'PLAY has grown loud enough to wake it.', 'wake')
+    } else if (s.dream) {
+      // the replay: the remembered agents light up in turn, and the scribe — which can see
+      // only the A-brain and never the table — reports them as if they were working
+      const d = s.dream
+      d.step++
+      for (let i = 0; i < d.agents.length; i++) {
+        const phase = (d.step / 22 + i / d.agents.length) % 1
+        a[d.agents[i]] = 0.35 + 0.45 * Math.sin(phase * Math.PI * 2) ** 2
+      }
+      // censors sleep too (§27.3: "sometimes censors must themselves be suppressed"), so a
+      // dream may contain what the day would not allow
+      a['censor-wreck'] = 0
+      a['suppressor-startle'] = 0
+      const k = s.kLines.find((x) => x.id === d.kLineId)
+      // dreams repeat, but a ticker that repeats itself reads as a bug rather than as a
+      // night: the same line waits a while before it may come again
+      if (d.step === 12)
+        say(
+          s,
+          'dream-building',
+          420,
+          k?.kind === 'arch'
+            ? 'It is building an arch that is not there.'
+            : 'It is building a tower that is not there.',
+          'dream',
+        )
+      if (d.step === 90)
+        say(s, 'dream-wrecker', 700, 'In the dream, nothing holds WRECKER back.', 'dream')
+      if (d.step > 150) {
+        // one memory is not enough for a night: take another, or wake on the last
+        const next = s.kLines[Math.floor(s.rng() * s.kLines.length)]
+        s.dream = { kLineId: next.id, agents: next.agents, step: 0 }
+        s.dreamsHad++
+      }
+    }
+    // the sleeping society draws no other conclusions: the body is skipped entirely
+    for (const id of s.ablated) a[id] = 0
+    s.a = a
+    // the gaze sinks shut
+    w.gaze.x += (w.hand.x - w.gaze.x) * 0.04
+    w.gaze.y += (REST_POS.y - w.gaze.y) * 0.04
+    return { events }
+  }
 
   // cross-exclusion (§16.4) — one proto-specialist rules; a challenger must clearly win
   const needs: [Ruler, number][] = [
@@ -608,6 +706,9 @@ export function snapshot(s: Society): string {
     phase: s.phase,
     goal: s.goal,
     habitSpent: s.habitSpent,
+    asleep: s.asleep,
+    dream: s.dream,
+    dreamsHad: s.dreamsHad,
     kLines: s.kLines,
     lines: s.lines,
   })

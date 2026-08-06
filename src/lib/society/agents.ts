@@ -475,12 +475,22 @@ export const CHAPTERS: readonly Chapter[] = [
   { n: 30, title: 'Mental Models' },
 ]
 
+/**
+ * Chapters whose concepts live in the society without a static agent to carry them,
+ * because they are creatures of the running simulation: K-lines are born whenever a work
+ * stands (§8.1), and the dream is a K-line re-aroused while the body sleeps (§15.8). The
+ * shelf names these residents instead of counting agents.
+ */
+export const RUNTIME_RESIDENTS: Readonly<Record<number, string>> = {
+  8: 'K-lines',
+  15: 'the dream',
+}
+
 /** Chapter numbers whose concepts live in the society: every chapter with a resident
- *  roster agent, plus chapter 8 — K-lines (§8.1) are runtime creatures, born whenever a
- *  tower stands, so their chapter is awake although no static agent cites it. */
+ *  roster agent, plus the runtime residents above. */
 export function awakeChapters(): Set<number> {
   const awake = new Set(AGENTS.map((a) => a.ref.ch))
-  awake.add(8)
+  for (const ch of Object.keys(RUNTIME_RESIDENTS)) awake.add(Number(ch))
   return awake
 }
 

@@ -167,4 +167,25 @@ export const STAGES: readonly StageEntry[] = [
     commits: ['e401d219'],
     prs: [411],
   },
+  {
+    n: 4,
+    kind: 'stage',
+    date: '2026-08-06',
+    title: 'The dream',
+    visible:
+      'Leave it alone long enough and the society sleeps: the world dims, the eye shuts, ' +
+      'the hand rests. Its agents keep firing — a K-line is re-aroused, and what it ' +
+      'remembers is drawn in outline at the site where it once worked: a tower, or an ' +
+      'arch, that is not there. The censors sleep too, so the dream may hold what the day ' +
+      'forbade. Move, and it wakes.',
+    claim:
+      'While it sleeps nothing in the world moves and yet its agents keep firing — the mind ' +
+      'running without the body; and a society that never achieved anything sleeps ' +
+      'dreamlessly, having no memory to re-arouse.',
+    agentsAdded: [],
+    chaptersWoken: [15],
+    refs: ['SOM §15.4', 'SOM §15.8', 'SOM §3.5', 'SOM §27.3'],
+    commits: ['pending'],
+    prs: [416],
+  },
 ]

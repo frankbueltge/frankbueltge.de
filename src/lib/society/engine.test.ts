@@ -205,6 +205,97 @@ describe('stage 2 — the transfer (§8.6)', () => {
   })
 })
 
+describe('stage 4 — the dream (§15.4, §15.8, §3.5)', () => {
+  /** a morning left alone long enough that the body runs out of things to do */
+  function sleepingSociety(seed = SEED) {
+    const s = makeSociety(seed)
+    for (let i = 0; i < 40000 && !s.asleep; i++) step(s, NO_VISITOR)
+    return s
+  }
+
+  it('left alone long enough, the society sleeps', () => {
+    const s = sleepingSociety()
+    expect(s.asleep).toBe(true)
+    expect(s.mode).toBe('sleep')
+  })
+
+  it('while it sleeps nothing in the world moves — the mind runs without the body', () => {
+    const s = sleepingSociety()
+    const before = JSON.stringify(s.world.blocks)
+    const hand = { ...s.world.hand }
+    const events: WorldEvent[] = []
+    for (let i = 0; i < 600 && s.asleep; i++) events.push(...step(s, NO_VISITOR).events)
+    expect(JSON.stringify(s.world.blocks)).toBe(before)
+    expect(s.world.hand.holding).toBe(hand.holding)
+    expect(events).toHaveLength(0)
+  })
+
+  it('but its agents keep firing: a K-line is re-aroused', () => {
+    const s = sleepingSociety()
+    expect(s.dream).not.toBeNull()
+    let sawFiring = false
+    for (let i = 0; i < 120 && s.asleep; i++) {
+      step(s, NO_VISITOR)
+      if (s.dream!.agents.some((id) => (s.a[id] ?? 0) > 0.5)) sawFiring = true
+    }
+    expect(sawFiring).toBe(true)
+  })
+
+  it('the scribe reports the dream as work — it can see only the A-brain', () => {
+    const s = sleepingSociety()
+    for (let i = 0; i < 200 && s.asleep; i++) step(s, NO_VISITOR)
+    const dreamLines = s.lines.filter((l) => l.kind === 'dream')
+    expect(dreamLines.length).toBeGreaterThan(1)
+    expect(dreamLines.some((l) => l.text.includes('is not there'))).toBe(true)
+  })
+
+  it('a society that never achieved anything sleeps dreamlessly', () => {
+    // GRASP silenced: no tower ever stands, so no K-line ever forms — nothing to re-arouse
+    const s = makeSociety(SEED)
+    silence(s, 'grasp')
+    for (let i = 0; i < 40000 && !s.asleep; i++) step(s, NO_VISITOR)
+    expect(s.asleep).toBe(true)
+    expect(s.kLines).toHaveLength(0)
+    expect(s.dream).toBeNull()
+    expect(s.lines.some((l) => l.text.includes('nothing to dream of'))).toBe(true)
+  })
+
+  it('the censors sleep too, so the dream may hold what the day forbade (§27.3)', () => {
+    const s = sleepingSociety()
+    for (let i = 0; i < 200 && s.asleep; i++) step(s, NO_VISITOR)
+    expect(s.a['censor-wreck']).toBe(0)
+    expect(s.a['suppressor-startle']).toBe(0)
+  })
+
+  it('the visitor’s return wakes it', () => {
+    const s = sleepingSociety()
+    for (let i = 0; i < 40 && s.asleep; i++) {
+      step(s, { present: true, x: 40, y: 20, speed: 6 })
+    }
+    expect(s.asleep).toBe(false)
+    expect(s.lines.some((l) => l.kind === 'wake' && l.text.includes('wakes'))).toBe(true)
+  })
+
+  it('a sleeping society is never startled into dropping something', () => {
+    // the startle's drop is the one way the body could move while asleep; waking is the
+    // fright instead
+    const s = sleepingSociety()
+    const before = JSON.stringify(s.world.blocks)
+    step(s, { present: true, x: 40, y: 20, speed: 10 })
+    expect(JSON.stringify(s.world.blocks)).toBe(before)
+  })
+
+  it('the night is still deterministic: one seed, one night', () => {
+    const a = sleepingSociety()
+    const b = sleepingSociety()
+    for (let i = 0; i < 500; i++) {
+      step(a, NO_VISITOR)
+      step(b, NO_VISITOR)
+    }
+    expect(snapshot(a)).toBe(snapshot(b))
+  })
+})
+
 describe('the roster reflects the book', () => {
   it('is exactly the twenty-seven agents the page claims', () => {
     // the prose on /society, the table caption and the map aria-label all say twenty-seven
