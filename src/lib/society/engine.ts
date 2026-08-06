@@ -122,6 +122,10 @@ export interface Society {
   asleep: boolean
   /** consecutive ticks with no visitor — being left alone is the road into sleep */
   aloneTicks: number
+  /** how long alone before it sleeps. The page gives it a minute and a half; the room
+   *  (components/society/Room.astro) shortens it, because a museum visit is four minutes
+   *  and a society that never sleeps in front of you never dreams in front of you. */
+  sleepAfter: number
   /** which memory is being re-aroused, and how far in — a K-line replayed, not a plan run */
   dream: { kLineId: number; agents: string[]; step: number } | null
   /** how many dreams this morning; the record the figure draws its ghosts from */
@@ -166,7 +170,7 @@ export function seedFromString(s: string): number {
   return h
 }
 
-export function makeSociety(seed: number): Society {
+export function makeSociety(seed: number, opts: { sleepAfter?: number } = {}): Society {
   const rng = mulberry32(seed)
   return {
     seed,
@@ -194,6 +198,7 @@ export function makeSociety(seed: number): Society {
     lines: [],
     asleep: false,
     aloneTicks: 0,
+    sleepAfter: opts.sleepAfter ?? 900,
     dream: null,
     dreamsHad: 0,
     worth: { tower: 1, arch: 1, wreck: 1 },
@@ -343,7 +348,7 @@ export function step(s: Society, input: VisitorInput): StepResult {
   // moment its body happens to be resting, so it never falls asleep mid-grasp.
   s.aloneTicks = input.present ? 0 : s.aloneTicks + 1
   const bodyIdle = s.mode === 'rest' || s.mode === 'idle'
-  if (!s.asleep && s.aloneTicks > 900 && bodyIdle && !w.hand.holding) {
+  if (!s.asleep && s.aloneTicks > s.sleepAfter && bodyIdle && !w.hand.holding) {
     s.asleep = true
     s.aloneTicks = 0
     // pick the memory to replay: the rng keeps it deterministic, the roster keeps it real

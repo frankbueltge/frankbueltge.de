@@ -278,19 +278,21 @@ const payload = AGENTS.map((a) => ({
       <g data-soc-klines></g>
 
       <!-- what the morning's parenting did: three worths, resting at a midline -->
+      {/* placed right of the censor gates, not left with WORTH: the left column already
+          carries the K-line strip and its label, and legibility beats symmetry */}
       <g class="soc-worths" data-soc-worths aria-hidden="true">
-        <line class="soc-worth-mid" x1="34" y1="150" x2="86" y2="150"></line>
-        <text class="soc-worth-label" x="34" y="142">worth</text>
+        <line class="soc-worth-mid" x1="750" y1="150" x2="890" y2="150"></line>
+        <text class="soc-worth-label" x="750" y="112">worth</text>
         {
           [
-            { id: 'tower', x: 40 },
-            { id: 'arch', x: 56 },
-            { id: 'wreck', x: 72 },
+            { id: 'tower', x: 762 },
+            { id: 'arch', x: 806 },
+            { id: 'wreck', x: 850 },
           ].map((b) => (
             <g>
-              <rect class="soc-worth-bar" data-soc-worth={b.id} x={b.x} y="150" width="8" height="0" />
-              <text class="soc-worth-tick" x={b.x + 4} y="164">
-                {b.id === 'wreck' ? 'c' : b.id === 'arch' ? 'a' : 't'}
+              <rect class="soc-worth-bar" data-soc-worth={b.id} x={b.x} y="150" width="10" height="0" />
+              <text class="soc-worth-tick" x={b.x + 5} y="192">
+                {b.id === 'wreck' ? 'crash' : b.id}
               </text>
             </g>
           ))
@@ -686,7 +688,7 @@ const payload = AGENTS.map((a) => ({
       renderCard()
     })
 
-    function appendLine(text: string, kind: 'note' | 'elegy' | 'wake' = 'note') {
+    function appendLine(text: string, kind: 'note' | 'elegy' | 'wake' | 'dream' = 'note') {
       const li = document.createElement('li')
       li.textContent = text
       li.className = `soc-line-${kind}`
@@ -838,7 +840,7 @@ const payload = AGENTS.map((a) => ({
         bar.setAttribute('y', String(worth >= 1 ? 150 - h : 150))
         bar.setAttribute('height', String(h))
         bar.classList.toggle('soc-worth-down', worth < 1)
-        let title = bar.querySelector('title')
+        let title = bar.querySelector<SVGTitleElement>('title')
         if (!title) {
           title = document.createElementNS('http://www.w3.org/2000/svg', 'title')
           bar.appendChild(title)

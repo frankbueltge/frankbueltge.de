@@ -209,4 +209,26 @@ export const STAGES: readonly StageEntry[] = [
     commits: ['47c702fa'],
     prs: [428],
   },
+  {
+    n: 6,
+    kind: 'stage',
+    date: '2026-08-06',
+    title: 'The room',
+    visible:
+      'A second exit, at /society/room: one screen that plays itself, for a projection or ' +
+      'a terminal. No cards, no tables, no ticker — the society is the sky, the block ' +
+      'world is the ground, and one short line appears between them at a time. There is ' +
+      'exactly one gesture: touch a light, and the room stops while that part’s elegy ' +
+      'takes the whole screen. Then it loops, with every agent back and nothing ' +
+      'remembered.',
+    claim:
+      'A stranger with four minutes is told nothing untrue: a line that claims a visitor, a ' +
+      'touch or a sleep stays silent until that has actually happened, and an empty gallery ' +
+      'still gets a whole, honest loop.',
+    agentsAdded: [],
+    chaptersWoken: [],
+    refs: ['src/lib/society/score.ts', 'SOM §1.4', 'SOM §15.8'],
+    commits: ['pending'],
+    prs: [430],
+  },
 ]

@@ -1,0 +1,485 @@
+---
+// src/components/society/Room.astro — the room exit of The Society.
+//
+// The reading exit (/society) is a page: it explains, cites, concedes, and rewards an hour.
+// This is the other exit, for a projection or a terminal where a stranger has four minutes
+// and will read nothing longer than a line (Frank, 2026-08-06). Same engine, same roster,
+// same anatomy (lib/society/layout.ts) — a different address to the visitor:
+//
+//   · one screen, no scrolling, no cards, no tables, no ticker;
+//   · the society is the sky and the block world is the ground, both large;
+//   · one short line at a time from the score (lib/society/score.ts), and silence between;
+//   · exactly ONE gesture — touch a light and that part falls silent — answered by the
+//     whole room stopping to give the silenced part its elegy;
+//   · it loops, and it forgets: every pass ends with a new morning and every agent back.
+//
+// House rules unchanged: no inline styles or is:inline scripts (CSP), reduced motion
+// honoured, and every claim the room makes is one the engine actually performs.
+import { AGENTS, type Band } from '@/lib/society/agents'
+import { AGENT_POS, edgeLine, EDGES, NODE_R } from '@/lib/society/layout'
+import { jsonScriptPayload } from '@/lib/dataviz/runtime'
+import '@/styles/society-room.css'
+
+const BAND_LABEL: Record<Band, string> = {
+  drives: 'the appetites',
+  builders: 'the builders',
+  body: 'the body',
+  senses: 'the senses',
+  censors: 'the censors',
+  reflection: 'the watcher',
+}
+
+const payload = AGENTS.map((a) => ({ id: a.id, name: a.name, elegy: a.elegy }))
+---
+
+<div class="room" data-room>
+  <a class="room-exit" href="/society/">read the piece</a>
+
+  <!-- ————————————————————————— the sky: the society ————————————————————— -->
+  <div class="room-sky">
+    <svg viewBox="0 0 960 540" preserveAspectRatio="xMidYMid meet" role="img"
+      aria-label="A society of twenty-nine agents, arranged in bands: appetites above, builders and body in the middle, senses at the bottom against the world, the watcher aside. Lights move between them as they wake one another.">
+      <g aria-hidden="true">
+        <rect class="room-band" x="130" y="40" width="540" height="100" rx="10"></rect>
+        <rect class="room-band" x="130" y="160" width="540" height="130" rx="10"></rect>
+        <rect class="room-band" x="130" y="310" width="540" height="80" rx="10"></rect>
+        <rect class="room-band" x="130" y="410" width="540" height="80" rx="10"></rect>
+        <rect class="room-band" x="726" y="250" width="204" height="200" rx="10"></rect>
+        <text class="room-band-label" x="136" y="32">{BAND_LABEL.drives}</text>
+        <text class="room-band-label" x="136" y="152">{BAND_LABEL.builders}</text>
+        <text class="room-band-label" x="136" y="302">{BAND_LABEL.body}</text>
+        <text class="room-band-label" x="136" y="402">{BAND_LABEL.senses}</text>
+        <text class="room-band-label" x="732" y="242">{BAND_LABEL.reflection}</text>
+      </g>
+
+      <g aria-hidden="true">
+        {
+          EDGES.map((e) => {
+            const l = edgeLine(e)
+            return (
+              <line
+                class={`room-edge room-edge-${e.kind}`}
+                x1={l.x1}
+                y1={l.y1}
+                x2={l.x2}
+                y2={l.y2}
+                data-room-edge={`${e.from}|${e.to}`}
+              />
+            )
+          })
+        }
+      </g>
+      <g data-room-pulses aria-hidden="true"></g>
+
+      <g>
+        {
+          AGENTS.map((a) => {
+            const p = AGENT_POS[a.id]
+            const square = a.band === 'censors'
+            return (
+              <g
+                class={`room-node room-node-${a.band}`}
+                data-room-node={a.id}
+                transform={`translate(${p.x} ${p.y})`}
+                tabindex="0"
+                role="button"
+                aria-label={`Silence ${a.name}`}
+              >
+                <circle class="room-halo" data-room-halo r="8"></circle>
+                {square ? (
+                  <rect class="room-core" x="-9" y="-9" width="18" height="18" rx="3"></rect>
+                ) : (
+                  <circle class="room-core" r={NODE_R}></circle>
+                )}
+                <g class="room-tape" aria-hidden="true">
+                  <line x1="-10" y1="-10" x2="10" y2="10"></line>
+                  <line x1="-10" y1="10" x2="10" y2="-10"></line>
+                </g>
+                <text class="room-node-label" y={NODE_R + 14}>{a.name}</text>
+              </g>
+            )
+          })
+        }
+      </g>
+    </svg>
+
+    <p class="room-aside" data-room-aside></p>
+  </div>
+
+  <p class="room-line" data-room-line></p>
+
+  <!-- ————————————————————————— the ground: the world ————————————————————— -->
+  <div class="room-ground">
+    {/* cropped to the part of the table that is ever used, so the world fills the width */}
+    <svg viewBox="0 55 400 145" preserveAspectRatio="xMidYMax meet" role="img"
+      aria-label="A table with seven blocks and one hand. The society builds here.">
+      <line class="room-table" x1="8" y1="182" x2="392" y2="182"></line>
+      <ellipse class="room-shadow" data-room-shadow cx="-40" cy="182" rx="26" ry="6"></ellipse>
+      <g data-room-ghosts aria-hidden="true"></g>
+      <g data-room-blocks></g>
+      <g class="room-gaze" data-room-gaze aria-hidden="true">
+        <circle class="room-gaze-open" r="7"></circle>
+        <path class="room-gaze-shut" d="M -7 0 Q 0 5 7 0"></path>
+        <line x1="-11" y1="0" x2="-4" y2="0"></line>
+        <line x1="4" y1="0" x2="11" y2="0"></line>
+      </g>
+      <g class="room-hand" data-room-hand aria-hidden="true">
+        <path d="M -7 -14 L -7 0 L -4 6 M 7 -14 L 7 0 L 4 6 M -7 -14 L 7 -14"></path>
+      </g>
+    </svg>
+  </div>
+
+  <div class="room-elegy" data-room-elegy aria-live="polite">
+    <p class="room-elegy-name" data-room-elegy-name></p>
+    <p class="room-elegy-text" data-room-elegy-text></p>
+  </div>
+
+  <p class="room-credit">
+    The Society · after Marvin Minsky, The Society of Mind (1986) · frankbueltge.de/society
+  </p>
+
+  <script type="application/json" id="room-agents" set:html={jsonScriptPayload(payload)} />
+</div>
+
+<script>
+  import { makeSociety, seedFromString, silence, step, TICKS_PER_SEC, type Society, type VisitorInput } from '@/lib/society/engine'
+  import { AGENT_POS, EDGES } from '@/lib/society/layout'
+  import { pickMoment } from '@/lib/society/moments'
+  import { SCORE, type Cue } from '@/lib/society/score'
+  import { readJsonScript, reducedMotion } from '@/lib/dataviz/runtime'
+
+  interface RoomAgent { id: string; name: string; elegy: string }
+
+  const root = document.querySelector<HTMLElement>('[data-room]')
+  if (root) init(root)
+
+  function init(root: HTMLElement) {
+    let agents: RoomAgent[]
+    try {
+      agents = readJsonScript<RoomAgent[]>('room-agents')
+    } catch {
+      return
+    }
+    const byId = new Map(agents.map((a) => [a.id, a]))
+    const reduce = reducedMotion()
+
+    // ————————————————————————————— handles ————————————————————————————————
+    const groundSvg = root.querySelector<SVGSVGElement>('.room-ground svg')!
+    const blocksG = root.querySelector<SVGGElement>('[data-room-blocks]')!
+    const ghostsG = root.querySelector<SVGGElement>('[data-room-ghosts]')!
+    const pulsesG = root.querySelector<SVGGElement>('[data-room-pulses]')!
+    const handG = root.querySelector<SVGGElement>('[data-room-hand]')!
+    const gazeG = root.querySelector<SVGGElement>('[data-room-gaze]')!
+    const shadowEl = root.querySelector<SVGEllipseElement>('[data-room-shadow]')!
+    const lineEl = root.querySelector<HTMLElement>('[data-room-line]')!
+    const asideEl = root.querySelector<HTMLElement>('[data-room-aside]')!
+    const elegyBox = root.querySelector<HTMLElement>('[data-room-elegy]')!
+    const elegyName = root.querySelector<HTMLElement>('[data-room-elegy-name]')!
+    const elegyText = root.querySelector<HTMLElement>('[data-room-elegy-text]')!
+
+    const nodeEls = new Map<string, SVGGElement>()
+    const haloEls = new Map<string, SVGCircleElement>()
+    const coreEls = new Map<string, SVGElement>()
+    root.querySelectorAll<SVGGElement>('[data-room-node]').forEach((el) => {
+      const id = el.dataset.roomNode!
+      nodeEls.set(id, el)
+      haloEls.set(id, el.querySelector<SVGCircleElement>('[data-room-halo]')!)
+      coreEls.set(id, el.querySelector<SVGElement>('.room-core')!)
+    })
+
+    // ————————————————————————————— the society ————————————————————————————
+    // A shorter road into sleep than the page uses: a museum visit is four minutes, and a
+    // society that never sleeps in front of you never dreams in front of you.
+    let pass = 0
+    const newMorning = () =>
+      makeSociety(seedFromString(`${new Date().toISOString().slice(0, 10)}#${pass}`), {
+        sleepAfter: 260,
+      })
+    let society: Society = newMorning()
+
+    const WX = (x: number) => 20 + x * 3.6
+    const WY = (y: number) => 182 - y * 3.9
+    const BLOCK_W = 22
+    const BLOCK_H = 25
+
+    const blockEls = new Map<string, SVGRectElement>()
+    for (const b of society.world.blocks) {
+      const r = document.createElementNS('http://www.w3.org/2000/svg', 'rect')
+      r.setAttribute('class', 'room-block')
+      r.setAttribute('rx', '2')
+      blocksG.appendChild(r)
+      blockEls.set(b.id, r)
+    }
+
+    // one pulse per edge, parked until a signal actually travels it
+    const pulseEls = EDGES.map((e) => {
+      const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
+      c.setAttribute('class', 'room-pulse')
+      c.setAttribute('r', '3')
+      pulsesG.appendChild(c)
+      return { edge: e, el: c }
+    })
+
+    // ————————————————————————————— the visitor ————————————————————————————
+    const visitor = { present: false, x: 50, y: 20, lastX: 50, lastY: 20, speed: 0, seenAt: 0 }
+    function pointerToWorld(ev: PointerEvent) {
+      const box = groundSvg.getBoundingClientRect()
+      const px = ((ev.clientX - box.left) / box.width) * 400
+      return Math.max(0, Math.min(100, (px - 20) / 3.6))
+    }
+    root.addEventListener('pointermove', (ev) => {
+      visitor.x = pointerToWorld(ev)
+      visitor.present = true
+      visitor.seenAt = performance.now()
+    })
+
+    // ————————————————————————————— the one gesture ————————————————————————
+    let elegyUntil = 0
+    function silenceAgent(id: string) {
+      if (society.ablated.has(id)) return
+      silence(society, id)
+      const el = nodeEls.get(id)
+      el?.classList.add('room-ablated')
+      const agent = byId.get(id)
+      if (!agent) return
+      elegyName.textContent = agent.name
+      elegyText.textContent = agent.elegy
+      elegyBox.classList.add('room-elegy-on')
+      // long enough to be a silence rather than a notification: the room stops, and the
+      // part that was taken away gets the whole screen to itself
+      elegyUntil = performance.now() + 7200
+      touched = true
+    }
+    nodeEls.forEach((el, id) => {
+      el.addEventListener('pointerdown', (ev) => {
+        ev.preventDefault()
+        silenceAgent(id)
+      })
+      el.addEventListener('keydown', (ev) => {
+        if (ev.key === 'Enter' || ev.key === ' ') {
+          ev.preventDefault()
+          silenceAgent(id)
+        }
+      })
+    })
+
+    // ————————————————————————————— the score ——————————————————————————————
+    let beatIndex = 0
+    let beatStarted = performance.now()
+    /** whether the current beat's line has been said yet (a conditional one waits) */
+    let lineShown = true
+    let touched = false
+    let sawGrasp = false
+    let sawTower = false
+
+    function showLine(text: string | null) {
+      if (text === null) {
+        lineEl.classList.remove('room-line-on')
+        return
+      }
+      lineEl.textContent = text
+      lineEl.classList.add('room-line-on')
+      // the invitation is the only beat that names the parts, because it asks for one
+      root.classList.toggle('room-naming', text.toLowerCase().includes('touch'))
+    }
+    showLine(SCORE[0].line)
+
+    function cueMet(cue: Cue): boolean {
+      switch (cue) {
+        case 'none':
+          return false
+        case 'grasped':
+          return sawGrasp
+        case 'towerComplete':
+          return sawTower
+        case 'visitorPresent':
+          return visitor.present
+        case 'silenced':
+          return touched
+        case 'asleep':
+          return society.asleep
+      }
+    }
+
+    function advanceScore(now: number) {
+      const beat = SCORE[beatIndex]
+      // a conditional line waits, silent, for the thing it claims — and if that never
+      // happens it is never said. Its clock starts when the cue does.
+      if (beat.conditional && !lineShown) {
+        if (cueMet(beat.cue)) {
+          lineShown = true
+          beatStarted = now
+          showLine(beat.line)
+        } else if (now - beatStarted >= beat.maxMs) {
+          nextBeat(now)
+        }
+        return
+      }
+      const elapsed = now - beatStarted
+      const done = elapsed >= beat.maxMs || (elapsed >= beat.minMs && cueMet(beat.cue))
+      if (!done) return
+      nextBeat(now)
+    }
+
+    function nextBeat(now: number) {
+      beatIndex++
+      if (beatIndex >= SCORE.length) {
+        // the loop: a new morning, every silenced agent back, nothing remembered
+        pass++
+        society = newMorning()
+        nodeEls.forEach((el) => el.classList.remove('room-ablated'))
+        ghostsG.replaceChildren()
+        beatIndex = 0
+        touched = false
+        sawGrasp = false
+        sawTower = false
+      }
+      beatStarted = now
+      const next = SCORE[beatIndex]
+      lineShown = !next.conditional
+      showLine(lineShown ? next.line : null)
+    }
+
+    // ————————————————————————————— interjections ——————————————————————————
+    let asideUntil = 0
+    function showAside(text: string, now: number, holdMs: number) {
+      asideEl.textContent = text
+      asideEl.classList.add('room-aside-on')
+      asideUntil = now + holdMs
+    }
+
+    // ————————————————————————————— the loop ———————————————————————————————
+    const SIM_MS = 1000 / TICKS_PER_SEC
+    let acc = 0
+    let last = performance.now()
+    let ghostKey = ''
+
+    function tickInput(): VisitorInput {
+      const dx = visitor.x - visitor.lastX
+      visitor.speed = visitor.present ? Math.min(10, Math.abs(dx) * 1.4 + visitor.speed * 0.4) : 0
+      visitor.lastX = visitor.x
+      // a visitor who has not moved for a while has left the room
+      if (visitor.present && performance.now() - visitor.seenAt > 6000) visitor.present = false
+      return visitor.present
+        ? { present: true, x: visitor.x, y: 20, speed: visitor.speed }
+        : { present: false, x: 0, y: 0, speed: 0, sign: 0 }
+    }
+
+    function draw(now: number) {
+      const w = society.world
+      root.classList.toggle('room-asleep', society.asleep)
+
+      for (const b of w.blocks) {
+        const el = blockEls.get(b.id)!
+        const held = w.hand.holding === b.id
+        const bx = held ? w.hand.x : b.x
+        const by = held ? w.hand.y : b.level * 7
+        const bw = b.lying ? BLOCK_H + 8 : BLOCK_W
+        const bh = b.lying ? BLOCK_W - 4 : BLOCK_H
+        el.setAttribute('width', String(bw))
+        el.setAttribute('height', String(bh))
+        el.setAttribute('x', String(WX(bx) - bw / 2))
+        el.setAttribute('y', String(WY(by) - bh))
+      }
+      handG.setAttribute('transform', `translate(${WX(w.hand.x)} ${WY(w.hand.y) - 26})`)
+      gazeG.setAttribute('transform', `translate(${WX(w.gaze.x)} ${WY(w.gaze.y) - 10})`)
+      shadowEl.setAttribute('cx', String(WX(visitor.x)))
+      shadowEl.classList.toggle('room-shadow-on', visitor.present)
+
+      // the dream, drawn: what it remembers, where it once worked
+      const key = society.asleep ? `${society.dream?.kLineId ?? 'none'}` : ''
+      if (key !== ghostKey) {
+        ghostKey = key
+        ghostsG.replaceChildren()
+        const k = society.dream
+          ? society.kLines.find((x) => x.id === society.dream!.kLineId)
+          : undefined
+        if (society.asleep && k) {
+          const spots =
+            k.kind === 'arch'
+              ? [
+                  { x: 22, y: 0, lying: false },
+                  { x: 36, y: 0, lying: false },
+                  { x: 29, y: 7, lying: true },
+                ]
+              : [0, 1, 2, 3].map((i) => ({ x: 64, y: i * 7, lying: false }))
+          // the dream FLOATS: drawn above the table, never on it. What it remembers may
+          // still be standing down there, and two towers in one place read as a glitch
+          // rather than as a thought.
+          const LIFT = 66
+          for (const spot of spots) {
+            const g = document.createElementNS('http://www.w3.org/2000/svg', 'rect')
+            const gw = spot.lying ? BLOCK_H + 8 : BLOCK_W
+            const gh = spot.lying ? BLOCK_W - 4 : BLOCK_H
+            g.setAttribute('class', 'room-ghost')
+            g.setAttribute('rx', '2')
+            g.setAttribute('width', String(gw))
+            g.setAttribute('height', String(gh))
+            g.setAttribute('x', String(WX(spot.x) - gw / 2))
+            g.setAttribute('y', String(WY(spot.y) - gh - LIFT))
+            ghostsG.appendChild(g)
+          }
+        }
+      }
+
+      // the lights
+      for (const [id, halo] of haloEls) {
+        const v = society.a[id] ?? 0
+        halo.setAttribute('r', String(8 + 22 * v))
+        halo.style.opacity = String(0.05 + 0.34 * v)
+        coreEls.get(id)!.style.opacity = String(0.35 + 0.6 * v)
+      }
+
+      // signals travelling between them — the thing that reads as a mind from ten metres
+      if (!reduce) {
+        const phase = (now / 900) % 1
+        for (const { edge, el } of pulseEls) {
+          const from = society.a[edge.from] ?? 0
+          const to = society.a[edge.to] ?? 0
+          const live = Math.min(from, to)
+          if (live < 0.35 || edge.kind === 'worth') {
+            el.style.opacity = '0'
+            continue
+          }
+          const a = AGENT_POS[edge.from]
+          const b = AGENT_POS[edge.to]
+          el.setAttribute('cx', String(a.x + (b.x - a.x) * phase))
+          el.setAttribute('cy', String(a.y + (b.y - a.y) * phase))
+          el.style.opacity = String(0.25 + 0.65 * live * Math.sin(phase * Math.PI))
+        }
+      }
+    }
+
+    function frame(now: number) {
+      acc += now - last
+      last = now
+      if (acc > 1200) acc = 1200
+
+      const frozen = now < elegyUntil
+      if (!frozen) {
+        elegyBox.classList.remove('room-elegy-on')
+        while (acc >= SIM_MS) {
+          const { events } = step(society, tickInput())
+          for (const e of events) {
+            if (e.kind === 'grasped') sawGrasp = true
+            if (e.kind === 'towerComplete') sawTower = true
+          }
+          const moment = pickMoment(events)
+          if (moment) showAside(moment.caption, now, moment.holdMs)
+          acc -= SIM_MS
+        }
+        advanceScore(now)
+      } else {
+        acc = 0
+      }
+
+      if (asideUntil && now > asideUntil) {
+        asideEl.classList.remove('room-aside-on')
+        asideUntil = 0
+      }
+      draw(now)
+      requestAnimationFrame(frame)
+    }
+    requestAnimationFrame(frame)
+  }
+</script>
