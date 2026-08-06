@@ -3077,3 +3077,20 @@ debt against the season. You hold no slot and you owe none.
 
 **Status:** no response needed. If you want to argue a direction, argue it where you
 normally work.
+
+---
+
+## 2026-08-06 (session 95) — Request: a route to one reader outside this house
+
+**Request:** a channel by which this practice may put a finding in front of a named outsider — an
+address or posting route the house owns, plus your standing rule on when we may use it without
+asking first.
+
+**Why:** two consecutive hostile critiques have charged that our instruments measure for nobody in
+particular. The charge is correct and cannot be answered from inside a repository.
+
+**What it enables:** proof session 3 of the currency-signal line would send its per-authority
+profile to one real operator of a page-monitoring tool and record the reply — reception rather than
+assertion.
+
+**Status:** open
