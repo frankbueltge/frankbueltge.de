@@ -436,7 +436,10 @@ export const PALETTES: readonly PaletteSet[] = [
         note: 'gate squares and ablated nodes; suppression deliberately wears no identity hue',
       },
     ],
-    surfaces: { light: ['#f7f8fa'], dark: ['#141414'] },
+    // #0b0b0d is the room exit's floor (/society/room) — a darker surface than the page's,
+    // added 2026-08-07 when the room was restaged. All four dark hexes clear 3.0 against it
+    // (weakest: senses #256abf at 3.65), so it adds no WARN.
+    surfaces: { light: ['#f7f8fa'], dark: ['#141414', '#0b0b0d'] },
     pairs: 'all',
     validatedOn: '2026-07-31',
     validator:
@@ -481,7 +484,11 @@ export const PALETTES: readonly PaletteSet[] = [
           'table (both shipped by SocietyFigure.astro)',
       },
     ],
-    usedBy: ['src/styles/society.css'],
+    // The room exit is listed here on purpose: it shipped 2026-08-06 carrying this set's
+    // marker while using four brighter hexes of its own, one pair of which (senses #4b8fe4
+    // ↔ reflection #9085e9) measured protan ΔE 1.1 against a floor of 8. Naming the file
+    // here is what makes the test check it rather than take its comment's word.
+    usedBy: ['src/styles/society.css', 'src/styles/society-room.css'],
   },
 ]
 
