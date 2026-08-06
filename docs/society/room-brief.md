@@ -5,6 +5,11 @@ prompted this note:** Frank, 2026-08-06/07 — *"ist noch nicht so richtig gut i
 right, and this file says exactly where the line runs, so the next working session starts from a
 diagnosis rather than from a blank page.
 
+> **Worked through, 2026-08-07 (later the same day).** All eight items below are done, and the
+> staging turned up four honesty defects that the diagnosis had not seen — recorded in
+> *What the restaging found* at the foot of this file. The eight-item list is kept as written
+> so the diagnosis and the answer can be read against each other.
+
 ---
 
 ## The brief this exit answers
@@ -69,10 +74,75 @@ not a compromise of the first.
 - The reading exit keeps its citations, proofs and concessions; the room owes none of that, and
   the page must not be simplified to match it.
 
+## What the restaging did, 2026-08-07
+
+One picture instead of two panels. The society and the block world now share a single
+coordinate space (`src/lib/society/stage.ts`) — the constellation above, the table directly
+beneath it, nothing drawn between them, because the gap is the relationship. On top of that
+sits a camera: a framing is a *region of interest*, grown at runtime to the screen's exact
+shape, so there is never a letterbox and never a stretch. The shot list is data
+(`SHOTS`, one entry per beat), so a new beat cannot ship without someone deciding where the
+room is looking while it is said.
+
+Against the eight:
+
+1. **Tempo** — the room runs its own clock (`ROOM_RATE`, playback not physics) and its own
+   road into sleep (`SLEEP_AFTER`), both in `room-clock.ts` so the test tunes what ships.
+2. **Typography** — five registers (`title · plain · quiet · invite · final`) declared per
+   beat in the score, because which sentence carries the piece is a dramaturgical decision,
+   not a stylesheet one. `forget` is the only `final`; `invite` the only instruction.
+3. **Camera** — `wide · mind · ground · site`, eased, with world dramas pulling the frame
+   only when the room is already watching the world.
+4. **The world breathes** — it fills the frame in `ground` and `site`, recedes in `mind`.
+5. **Arrival** — an attract state between passes: still working, saying nothing, resolving
+   into a new morning when someone appears (or after 24s, for an empty gallery).
+6. **The gesture is taught** — BALANCE offers itself with a slow ring while the invitation
+   stands, so the affordance is shown rather than described.
+7. **Silence is composed** — the constellation draws back, the table comes forward, and a
+   silent beat is never held on the constellation alone.
+8. **Portrait** — its own framings, sharing the composition's centre and differing only in
+   width, so a tall screen's unavoidable slack falls evenly instead of all beneath the
+   picture.
+
+## What the restaging found
+
+Four things the diagnosis had not seen, all of them the same class — the room saying
+something that was not true at the moment it said it:
+
+- **"A tower. And no one built it." over an empty table.** The beat's cue was a memory of an
+  event, not the state of the world; the first tower stands about ten seconds and then the
+  wrecker has it. The cue now reads live state, and the room waits — about fifteen silent
+  seconds of watching the hand work, which turns out to be the best part.
+- **The same line outliving its tower.** Even with a live cue, a claim shown for its full
+  four seconds can be falsified in second one. A shown claim is now *retracted* the moment it
+  stops being true, minimum reading time forfeited.
+- **`stands` and `remember` were unconditional** — they asserted a tower with nothing
+  requiring one to exist. Both are conditional now, and `score.test.ts` recognises them as
+  claims.
+- **Eighty seconds of black at the end for anyone who stayed.** A visitor who keeps moving
+  keeps the society awake, so "left alone, it sleeps" simply never became true and two beats
+  timed out in silence. The sleep act now has two endings and takes whichever happened; a
+  visitor who has walked off gets neither, because *"you keep it awake"* said to an empty
+  room is the same lie in the other direction.
+
+The lesson is the one the palette record already learned: `score.test.ts` checked that lines
+which make claims are *marked* as claims, which is a property of the data, while the promise
+is about the moment of speaking. `room-clock.test.ts` now runs whole passes against the real
+engine and asserts the promise itself. All four defects were found by watching the screen;
+none of them should have needed to be.
+
+**And one of the same kind in the palette.** The room shipped carrying the
+`PALETTE: society-bands` marker and a comment claiming "no new hues", while using four
+brighter hexes of its own — one pair of which, senses `#4b8fe4` against reflection `#9085e9`,
+measured protan ΔE **1.1** against the validator's floor of 8. Blue and violet were one
+colour for a protan visitor. The room now uses the measured quartet, and
+`src/styles/society-room.css` is named in the set's `usedBy`, so the test checks it instead
+of taking its comment's word.
+
 ## State of play, 2026-08-07
 
-- On `main`: stages 1–6 (`6ef3878b` and earlier). 65 society tests green locally, `astro check`
-  and `drift-check` clean, build 492 pages.
+- On `main`: stages 1–6 (`6ef3878b` and earlier), plus this restaging. 169 society tests green
+  locally (65 before), `astro check` and `drift-check` clean, build 492 pages.
 - **Not deployed:** GitHub Actions has been in a major outage since 2026-08-06 15:22 UTC —
   webhooks throttled, push/PR events not creating runs, dispatched runs dying with *"job was not
   acquired by Runner of type hosted"*. Production therefore still serves the pre-stage-4 site.

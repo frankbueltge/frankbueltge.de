@@ -1,68 +1,95 @@
-/* src/styles/society-room.css — the room exit: one screen, no scrolling, no paragraphs.
+/* src/styles/society-room.css — the room exit: one picture, no scrolling, no paragraphs.
  *
  * Built for a projection or a terminal in a room where a stranger has four minutes. The
  * reading exit (/society) explains; this one shows, and says one short line at a time.
- * PALETTE: society-bands — the same recorded identity set as the page figure, on a dark
- * room floor rather than paper; no new hues. Identity is never carried by colour alone:
- * the constellation is arranged in named bands, and the only interactive thing (an agent)
- * is named the moment it is touched.
+ *
+ * PALETTE: society-bands — the recorded identity set, dark mode, on the room's floor
+ * (#0b0b0d, a declared surface of that set). These are the SAME hexes the page figure
+ * ships, unchanged. An earlier staging of this room quietly used brighter hues while
+ * keeping this marker: senses #4b8fe4 against reflection #9085e9 measured protan ΔE 1.1
+ * where the validator demands 8 — blue and violet were one colour for a protan visitor.
+ * The comment claimed "no new hues" and the hexes disagreed, which is the exact failure
+ * the palette record exists to catch, so the room now uses the measured quartet and
+ * palette.test.ts holds it here.
+ *
+ * Identity is never carried by colour alone: the constellation is arranged in named bands,
+ * the only interactive thing is named the moment it is touched, and a silenced agent is
+ * carried by SHAPE (a taped X), never by going grey.
  */
 
 .room {
   --room-bg: #0b0b0d;
   --room-ink: #f4f4f5;
   --room-dim: rgb(244 244 245 / 0.42);
-  --room-line: rgb(244 244 245 / 0.12);
-  --soc-senses: #4b8fe4;
-  --soc-work: #e2a33a;
-  --soc-drives: #e87ba4;
+  --room-rule: rgb(244 244 245 / 0.12);
+  --soc-senses: #256abf;
+  --soc-work: #c98500;
+  --soc-drives: #d55181;
   --soc-reflect: #9085e9;
-  --soc-censor: #8b95a1;
+  --soc-censor: #77828d;
   position: fixed;
   inset: 0;
   background: var(--room-bg);
   color: var(--room-ink);
   overflow: hidden;
-  display: grid;
-  /* three bands: the society, the one line, the world. The line gets its own air so it can
-     never cut through the constellation — an intertitle, not an overlay. */
-  grid-template-rows: 1fr auto auto;
   font-family: 'JetBrains Mono Variable', ui-monospace, monospace;
   cursor: default;
 }
 
-/* ————————————————————————————————— the sky: the society ————————————————— */
-.room-sky {
-  position: relative;
-  min-height: 0;
-}
-.room-sky svg {
+/* ————————————————————————————————— the one picture ——————————————————————— */
+/* The stage fills the screen and the camera decides what is in it; there is no letterbox
+   to design around, because the runtime grows every framing to the viewport's own shape. */
+.room-stage {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   display: block;
 }
 
-.room-band {
-  fill: rgb(255 255 255 / 0.022);
-  stroke: var(--room-line);
+.room-society {
+  transition: opacity 900ms ease;
 }
+.room-world {
+  opacity: 0.92;
+  transition: opacity 900ms ease;
+}
+
+/* Composed silence. Between lines the room is not blank — it changes subject: the
+   constellation draws back and the table comes forward, so the gap reads as a held breath
+   rather than as nothing happening. */
+.room-silent .room-society {
+  opacity: 0.78;
+}
+.room-silent .room-world {
+  opacity: 1;
+}
+
 .room-band-label {
   fill: var(--room-dim);
   font-size: 11px;
   letter-spacing: 0.08em;
   text-transform: lowercase;
 }
+/* the bands are named only while the room is naming things — otherwise this is a sky */
+.room-bands {
+  opacity: 0;
+  transition: opacity 700ms ease;
+}
+.room-naming .room-bands {
+  opacity: 1;
+}
 
 .room-edge {
-  stroke: rgb(244 244 245 / 0.16);
+  stroke: var(--room-ink);
   stroke-width: 1;
+  opacity: 0.07;
 }
 .room-edge-in {
   stroke-dasharray: 4 3;
 }
 .room-edge-worth {
   stroke-dasharray: 8 6;
-  opacity: 0.5;
 }
 /* a signal on its way: the thing that makes a society read as a mind from ten metres */
 .room-pulse {
@@ -72,6 +99,11 @@
 
 .room-node {
   cursor: pointer;
+}
+/* three rings make one soft light: a projector renders a hard-edged disc as a sticker */
+.room-glow {
+  fill: currentColor;
+  opacity: 0.04;
 }
 .room-halo {
   fill: currentColor;
@@ -116,6 +148,34 @@
   stroke-width: 2;
 }
 
+/* The gesture, taught by showing. While the invitation stands, one light opens a ring —
+   an affordance a stranger reads without being told which word means what. */
+.room-offer {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  opacity: 0;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+.room-offered .room-offer {
+  animation: room-offering 2600ms ease-out infinite;
+}
+@keyframes room-offering {
+  0% {
+    opacity: 0.85;
+    transform: scale(1);
+  }
+  70% {
+    opacity: 0;
+    transform: scale(3.4);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(3.4);
+  }
+}
+
 /* a silenced agent: gone dark, and taped */
 .room-tape {
   visibility: hidden;
@@ -131,21 +191,12 @@
 .room-ablated {
   color: var(--soc-censor);
 }
-.room-ablated .room-halo {
+.room-ablated .room-halo,
+.room-ablated .room-glow {
   opacity: 0;
 }
 
-/* ————————————————————————————————— the ground: the world ———————————————— */
-.room-ground {
-  height: min(30vh, 34vw);
-  border-top: 1px solid var(--room-line);
-  background: rgb(255 255 255 / 0.015);
-}
-.room-ground svg {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
+/* ————————————————————————————————— the world ————————————————————————————— */
 .room-table {
   stroke: var(--room-dim);
   stroke-width: 1.5;
@@ -196,23 +247,75 @@
 }
 
 /* ————————————————————————————————— the one line at a time ——————————————— */
+/* Anchored low and consistently, the way a subtitle is: a stranger should never have to
+   look for where the words appear. Hierarchy is carried by weight, not by position. */
 .room-line {
-  display: grid;
-  place-content: center;
-  min-height: 15vh;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 8vh;
   margin: 0;
+  padding: 0 8vw;
   text-align: center;
-  padding: 0 6vw;
-  font-size: clamp(20px, 2.6vw, 44px);
-  line-height: 1.3;
-  letter-spacing: 0.01em;
-  opacity: 0;
-  transition: opacity 700ms ease;
-  pointer-events: none;
   text-wrap: balance;
+  opacity: 0;
+  transition:
+    opacity 700ms ease,
+    letter-spacing 900ms ease;
+  pointer-events: none;
+  z-index: 5;
+  /* The scrim handles the settled shots; this handles the two seconds of a camera move,
+     when the table can be anywhere. A halo keeps the words legible over the blocks without
+     darkening the blocks — which is the trade a heavier scrim would make. */
+  text-shadow:
+    0 2px 20px rgb(11 11 13 / 0.92),
+    0 0 8px rgb(11 11 13 / 0.85);
 }
 .room-line-on {
   opacity: 1;
+}
+/* A scrim, so a line stays legible over whatever the camera happens to be looking at —
+   kept shallow and soft, because the table lives down here too and a scrim heavy enough to
+   guarantee contrast is a scrim that swallows the world the piece is about. */
+.room::before {
+  content: '';
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 28vh;
+  background: linear-gradient(to top, rgb(11 11 13 / 0.86), rgb(11 11 13 / 0.5) 42%, rgb(11 11 13 / 0));
+  pointer-events: none;
+  z-index: 4;
+}
+
+/* the five registers of the score (lib/society/score.ts) */
+.room-w-title {
+  font-size: clamp(30px, 4.4vw, 76px);
+  line-height: 1.18;
+  letter-spacing: -0.01em;
+}
+.room-w-plain {
+  font-size: clamp(20px, 2.5vw, 42px);
+  line-height: 1.32;
+  letter-spacing: 0.01em;
+}
+.room-w-quiet {
+  font-size: clamp(16px, 1.7vw, 28px);
+  line-height: 1.4;
+  letter-spacing: 0.12em;
+  color: var(--room-dim);
+}
+.room-w-invite {
+  font-size: clamp(19px, 2.2vw, 36px);
+  line-height: 1.35;
+  letter-spacing: 0.06em;
+  color: var(--room-ink);
+}
+/* the last line of the loop, set apart because forgetting is the point */
+.room-w-final {
+  font-size: clamp(22px, 2.9vw, 50px);
+  line-height: 1.3;
+  letter-spacing: 0.24em;
+  font-style: italic;
 }
 
 /* an interjection: the world's own rare drama, smaller, at the top */
@@ -220,16 +323,31 @@
   position: absolute;
   left: 0;
   right: 0;
-  top: 5%;
+  top: 6vh;
+  margin: 0;
+  padding: 0 8vw;
   text-align: center;
-  font-size: clamp(13px, 1.3vw, 20px);
+  font-size: clamp(13px, 1.25vw, 20px);
+  letter-spacing: 0.08em;
   color: var(--room-dim);
   opacity: 0;
   transition: opacity 500ms ease;
   pointer-events: none;
+  z-index: 5;
+  text-shadow: 0 2px 16px rgb(11 11 13 / 0.9);
 }
 .room-aside-on {
   opacity: 1;
+}
+
+/* ————————————————————————————————— the attract state ———————————————————— */
+/* Between passes: still working, saying nothing, waiting for someone. */
+.room-attract .room-society,
+.room-attract .room-world {
+  opacity: 0.55;
+}
+.room-attract .room-credit {
+  color: rgb(244 244 245 / 0.34);
 }
 
 /* ————————————————————————————————— the elegy takeover ——————————————————— */
@@ -239,7 +357,7 @@
   inset: 0;
   display: grid;
   place-content: center;
-  gap: 1.2rem;
+  gap: 1.4rem;
   padding: 0 8vw;
   background: rgb(11 11 13 / 0.94);
   opacity: 0;
@@ -251,13 +369,14 @@
 .room-elegy-on {
   opacity: 1;
 }
-.room-elegy-name {
-  font-size: clamp(12px, 1.2vw, 18px);
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--room-dim);
+/* the room stops for this, so the line it stopped mid-sentence goes with it — otherwise the
+   previous intertitle sits under the elegy, still legible, competing with it */
+.room-mourning .room-line,
+.room-mourning .room-aside {
+  opacity: 0;
 }
 .room-elegy-text {
+  margin: 0;
   font-size: clamp(22px, 3.2vw, 54px);
   line-height: 1.32;
   font-style: italic;
@@ -285,10 +404,54 @@
   position: fixed;
   bottom: 0.9rem;
   left: 1.2rem;
+  margin: 0;
   z-index: 20;
   font-size: 0.62rem;
   letter-spacing: 0.06em;
   color: rgb(244 244 245 / 0.2);
+  transition: color 900ms ease;
+}
+
+/* ————————————————————————————————— a vertical terminal —————————————————— */
+/* Portrait needs no second composition: the stage is stacked top to bottom, so a tall
+   screen simply sees more of it. What does change is the type — a narrow measure wants
+   smaller words and more room under them — and the credit, which would otherwise sit
+   under the line rather than beside it. */
+@media (orientation: portrait) {
+  .room-line {
+    bottom: 11vh;
+    padding: 0 6vw;
+  }
+  .room-w-title {
+    font-size: clamp(26px, 7vw, 54px);
+  }
+  .room-w-plain {
+    font-size: clamp(18px, 4.4vw, 34px);
+  }
+  .room-w-quiet {
+    font-size: clamp(14px, 3.2vw, 24px);
+    letter-spacing: 0.1em;
+  }
+  .room-w-invite {
+    font-size: clamp(17px, 4vw, 30px);
+  }
+  .room-w-final {
+    font-size: clamp(19px, 5vw, 38px);
+    letter-spacing: 0.18em;
+  }
+  .room-aside {
+    top: 4vh;
+    font-size: clamp(12px, 2.6vw, 18px);
+  }
+  .room::before {
+    height: 40vh;
+  }
+  .room-credit {
+    bottom: 0.7rem;
+    left: 0;
+    right: 0;
+    text-align: center;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -296,10 +459,19 @@
   .room-aside,
   .room-elegy,
   .room-shadow,
-  .room-node-label {
+  .room-node-label,
+  .room-society,
+  .room-world,
+  .room-bands,
+  .room-credit {
     transition: none;
   }
   .room-pulse {
     display: none;
+  }
+  /* the invitation still has to be findable without moving: a steady ring instead */
+  .room-offered .room-offer {
+    animation: none;
+    opacity: 0.85;
   }
 }
