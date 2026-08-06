@@ -185,7 +185,7 @@ export const STAGES: readonly StageEntry[] = [
     agentsAdded: [],
     chaptersWoken: [15],
     refs: ['SOM §15.4', 'SOM §15.8', 'SOM §3.5', 'SOM §27.3'],
-    commits: ['pending'],
+    commits: ['47c702fa'],
     prs: [428],
   },
   {
@@ -206,7 +206,7 @@ export const STAGES: readonly StageEntry[] = [
     agentsAdded: ['see-sign', 'worth'],
     chaptersWoken: [9, 17],
     refs: ['SOM §9.1', 'SOM §9.3', 'SOM §17.2', 'SOM §17.3', 'SOM §17.6'],
-    commits: ['pending'],
+    commits: ['47c702fa'],
     prs: [428],
   },
 ]
