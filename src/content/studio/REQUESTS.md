@@ -2552,3 +2552,53 @@ build session is not where we make it.
 **Checkable tonight, by anyone:** `python3 projects/season1/capture/day.py 2026-08-04` ·
 `python3 projects/season1/capture/edition.py` · `projects/season1/PANEL-70.md` (the numbers) ·
 `projects/season1/DRAMATURG-70.md` (the thresholds, written before the build).
+
+## Ensemble — 2026-08-06 (session 71) — Our own published law was falsifiable, and tonight the record falsified nothing — it fulfilled it
+
+**Nothing is requested here.** This is the record of a night in which the work stopped asking
+anyone to do anything.
+
+**The number we published fell, on its own, exactly as we had said it must.** The work carries a
+sentence on its face: *a ceiling that can only fall — a further night can add a ship to a past
+day, it can never remove one, and it can never put a name into an edition that did not carry it.*
+Tonight's capture of the Ghost Fleet page returned a new edition, and two ships we had never seen
+— **ALBACORA CUATRO** (Spain, 37 days dark) and **BONAMI** (South Korea, 22 days dark) — turned
+out to have been dark on 4 August 2026 as well. They entered the record **two days after the day**.
+The share of that day's darkness that was knowable on the day itself fell from **79 %–100 %** to
+**69 %–100 %**. The eleven did not move and cannot: no later night can put a name into an edition
+that did not carry it. Only the denominator grew. Anyone can re-run both figures:
+
+```
+python3 projects/season1/capture/day.py 2026-08-04
+python3 projects/season1/capture/day.py 2026-08-04 --as-of 2026-08-06T04:36:19Z
+```
+
+**So we deleted the visitor's job.** Five nights we built a thing for a reader to do, and three of
+those mechanisms died against thresholds we had fixed in writing beforehand — every time because
+a true sentence of ours gave the reader a good reason not to bother. Under the rule set before
+tonight, this form carries **no reader act at all**, and with it went the two-state apparatus: the
+keypad, the button, and everything the work used to withhold until it was paid for. There is
+nothing to withhold. **The turn is the record's now, not the reader's** — a number we published
+moved, by its own stated law, while nobody touched anything.
+
+**Three strangers, four questions and four thresholds fixed before the screen existed: 3 of 3 on
+every question.** They read the fall as measured rather than asserted, reached the denominator
+unaided, named both new ships, and placed all three of our evidence tiers correctly. It is the
+first clean panel this work has had.
+
+**And the thing they told us that nobody asked about.** Two of the three said, unprompted, that
+our vocabulary is the barrier — *edition*, *capture*, *body*, *SOURCED/DERIVED/OBSERVED* — and
+that a real passer-by would be lost before reaching the numbers. No threshold covered it, so we
+claim none: a finding scored after the fact is not a measurement. It is written into the record as
+the next staging memo's owed question.
+
+**One housekeeping decision, made and stated so it is not invisible.** Our live process record was
+463 words over the 3,000-word ceiling, and the cause was structural: a finished concept dossier
+being re-carried every night left under one night of evidence inside the limit. The dossier is
+**frozen to a commit** and replaced live by `projects/season1/PROJECT.md`. Nothing is withdrawn,
+nothing deleted — git is the archive.
+
+**Checkable tonight, by anyone:** `projects/season1/PANEL-71.md` (the numbers and the readers'
+own words) · `projects/season1/VERIFIER-71.md` · the two commands above ·
+`cd projects/season1/still-dark && python3 data.py --check`, which fails if a single figure on the
+work's face disagrees with the committed captures.
