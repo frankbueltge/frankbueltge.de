@@ -17,6 +17,10 @@
 //   2 · it notices you, and cannot tell what you are
 //   3 · take a part away, and hear what it costs      ← the one gesture
 //   4 · left alone it sleeps, and builds what is not there — and forgets you
+//
+// The fourth turn has two endings, because it has two truths: a visitor who stands still
+// lets the society sleep, and a visitor who keeps moving keeps it awake. The room says
+// whichever happened and never the other one.
 
 /** What lets a beat end early. 'none' means it simply runs its time. */
 export type Cue =
@@ -26,11 +30,38 @@ export type Cue =
   | 'visitorPresent'
   | 'silenced'
   | 'asleep'
+  /**
+   * The sleep act's other outcome. A visitor who keeps moving keeps the society awake —
+   * `aloneTicks` resets on every frame they are seen — so "left alone, it sleeps" simply
+   * never becomes true for them, and the first staging answered that with eighty seconds
+   * of blank screen. Both endings are true; the room needs the one that happened.
+   */
+  | 'stayedAwake'
+
+/**
+ * How a line is set. A room has no headings, no rules and no white space to build hierarchy
+ * out of, so weight IS the hierarchy — and it belongs in the score rather than in the
+ * stylesheet, because it is a dramaturgical decision about which sentence carries the piece,
+ * not a decision about type. Five registers, no more: a stranger reads emphasis, not a scale.
+ */
+export type Weight =
+  /** the two sentences the piece is built on */
+  | 'title'
+  /** ordinary narration */
+  | 'plain'
+  /** an aside — smaller, dimmer, said almost to itself */
+  | 'quiet'
+  /** the one instruction, and the only line the visitor is asked to act on */
+  | 'invite'
+  /** the last line of the loop, set apart because forgetting is the point */
+  | 'final'
 
 export interface Beat {
   id: string
   /** the intertitle, or null for a beat that is deliberately silent */
   line: string | null
+  /** how it is set; silent beats leave it out */
+  weight?: Weight
   /** shown for at least this long, so a fast cue cannot flash the line away */
   minMs: number
   /** and never longer than this, so no beat can hold the room hostage */
@@ -49,10 +80,11 @@ export interface Beat {
 
 export const SCORE: readonly Beat[] = [
   // ————————————————————————————————— 0 · what this is ————————————————————
-  { id: 'open', line: 'This is a mind.', minMs: 3200, maxMs: 3600, cue: 'none' },
+  { id: 'open', line: 'This is a mind.', weight: 'title', minMs: 3200, maxMs: 3600, cue: 'none' },
   {
     id: 'parts',
     line: 'It is made of parts that cannot think.',
+    weight: 'plain',
     minMs: 4200,
     maxMs: 4600,
     cue: 'none',
@@ -60,30 +92,59 @@ export const SCORE: readonly Beat[] = [
   { id: 'settle', line: null, minMs: 2600, maxMs: 3000, cue: 'none' },
 
   // ————————————————————————————————— 1 · it builds ———————————————————————
-  { id: 'watch', line: 'Watch what they do together.', minMs: 3000, maxMs: 22000, cue: 'grasped' },
+  {
+    id: 'watch',
+    line: 'Watch what they do together.',
+    weight: 'plain',
+    minMs: 3000,
+    maxMs: 22000,
+    cue: 'grasped',
+  },
   {
     id: 'nobody',
     line: 'None of them knows what a tower is.',
+    weight: 'plain',
     minMs: 4200,
     maxMs: 4800,
     cue: 'none',
   },
-  { id: 'building', line: null, minMs: 2000, maxMs: 80000, cue: 'towerComplete' },
-  { id: 'stands', line: 'A tower. And no one built it.', minMs: 4200, maxMs: 4800, cue: 'none' },
-  { id: 'remember', line: 'It will remember this.', minMs: 3600, maxMs: 4000, cue: 'none' },
+  { id: 'building', line: null, minMs: 2000, maxMs: 40000, cue: 'towerComplete' },
+  // Both of these assert a tower, so both wait for one. A society whose WRECKER wins the
+  // morning, or that is put to sleep before it finishes, builds nothing — and the room that
+  // announced "a tower" over an empty table would be making the piece's central claim up.
+  {
+    id: 'stands',
+    line: 'A tower. And no one built it.',
+    weight: 'title',
+    minMs: 4200,
+    maxMs: 4800,
+    cue: 'towerComplete',
+    conditional: true,
+  },
+  {
+    id: 'remember',
+    line: 'It will remember this.',
+    weight: 'quiet',
+    minMs: 3600,
+    maxMs: 4000,
+    cue: 'towerComplete',
+    conditional: true,
+  },
 
   // ————————————————————————————————— 2 · it notices you ——————————————————
   {
     id: 'noticed',
     line: 'Something out there moved.',
+    weight: 'quiet',
     minMs: 3000,
-    maxMs: 26000,
+    maxMs: 12000,
     cue: 'visitorPresent',
     conditional: true,
   },
   {
     id: 'unknown',
     line: 'It cannot tell what you are.',
+    weight: 'plain',
     minMs: 4200,
     maxMs: 4800,
     cue: 'visitorPresent',
@@ -94,13 +155,15 @@ export const SCORE: readonly Beat[] = [
   {
     id: 'invite',
     line: 'Touch a light. That part falls silent.',
+    weight: 'invite',
     minMs: 4000,
-    maxMs: 55000,
+    maxMs: 30000,
     cue: 'silenced',
   },
   {
     id: 'consequence',
     line: 'Nothing was written for this. Only the rule is gone.',
+    weight: 'plain',
     minMs: 5000,
     maxMs: 5600,
     cue: 'silenced',
@@ -108,23 +171,45 @@ export const SCORE: readonly Beat[] = [
   },
 
   // ————————————————————————————————— 4 · it sleeps, and forgets ——————————
+  // Two endings, and the room takes whichever actually happened. A visitor who stands still
+  // lets the society fall asleep and dream; a visitor who keeps moving keeps it awake, and
+  // is told THAT instead. Neither line may be said unless it is true, so both are
+  // conditional and a pass that somehow earns neither simply goes quiet and loops.
   {
     id: 'alone',
     line: 'Left alone, it sleeps.',
+    weight: 'quiet',
     minMs: 3600,
-    maxMs: 40000,
+    maxMs: 16000,
     cue: 'asleep',
     conditional: true,
   },
   {
     id: 'dreaming',
     line: 'It is building something that is not there.',
+    weight: 'plain',
     minMs: 5000,
     maxMs: 5600,
     cue: 'asleep',
     conditional: true,
   },
-  { id: 'forget', line: 'It will not remember you.', minMs: 5200, maxMs: 5800, cue: 'none' },
+  {
+    id: 'awake',
+    line: 'You keep it awake.',
+    weight: 'quiet',
+    minMs: 3400,
+    maxMs: 3800,
+    cue: 'stayedAwake',
+    conditional: true,
+  },
+  {
+    id: 'forget',
+    line: 'It will not remember you.',
+    weight: 'final',
+    minMs: 5200,
+    maxMs: 5800,
+    cue: 'none',
+  },
 ]
 
 /** Longest a full pass can take if no cue ever fires — the room must loop, not hang. */

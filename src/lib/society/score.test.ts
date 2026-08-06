@@ -78,13 +78,65 @@ describe('the arc contains its turns', () => {
   it('no line claims something that may not have happened', () => {
     // A line asserting an event ("something moved", "it sleeps") must be conditional, so an
     // empty gallery is never told about a visitor who was not there.
-    const asserts = /moved|sleeps|not there|what you are|the rule is gone/i
+    const asserts =
+      /moved|sleeps|not there|what you are|the rule is gone|keep it awake|a tower\.|remember this/i
     for (const beat of SCORE) {
       if (beat.line && asserts.test(beat.line)) {
         expect(beat.conditional, `beat "${beat.id}" asserts without a cue`).toBe(true)
         expect(beat.cue).not.toBe('none')
       }
     }
+  })
+
+  it('the sleep act has both its endings, and they cannot both be true', () => {
+    // A visitor who stands still lets it sleep; a visitor who keeps moving keeps it awake.
+    // The first staging had only the sleeping ending, so a visitor who stayed got eighty
+    // seconds of blank screen instead of the true line.
+    const sleeps = SCORE.find((b) => b.id === 'alone')!
+    const wakes = SCORE.find((b) => b.id === 'awake')!
+    expect(sleeps.cue).toBe('asleep')
+    expect(wakes.cue).toBe('stayedAwake')
+    for (const b of [sleeps, wakes]) expect(b.conditional).toBe(true)
+    // and the ending that is always true comes last, whichever of them fired
+    expect(SCORE.at(-1)!.id).toBe('forget')
+    expect(SCORE.at(-1)!.conditional).toBeUndefined()
+  })
+
+  it('no conditional beat can spend long in silence waiting for a cue that will not come', () => {
+    // the ceiling that matters in a room: a beat nobody can satisfy is a dark screen, and
+    // a dark screen with no line is indistinguishable from a broken installation
+    for (const beat of SCORE.filter((b) => b.conditional)) {
+      expect(beat.maxMs, `beat "${beat.id}" can stall the room`).toBeLessThanOrEqual(20000)
+    }
+  })
+})
+
+describe('the score carries its own typography', () => {
+  it('every line declares how it is set, and every silence declares nothing', () => {
+    for (const beat of SCORE) {
+      if (beat.line === null) {
+        expect(beat.weight, `silent beat "${beat.id}" has a weight`).toBeUndefined()
+      } else {
+        expect(beat.weight, `beat "${beat.id}" has no weight`).toBeDefined()
+      }
+    }
+  })
+
+  it('the emphatic registers are spent sparingly, or they stop being emphatic', () => {
+    const of = (w: string) => SCORE.filter((b) => b.weight === w)
+    expect(of('title').length).toBeLessThanOrEqual(2)
+    expect(of('final')).toHaveLength(1)
+    expect(of('invite')).toHaveLength(1)
+  })
+
+  it('the one instruction is the one set as an instruction', () => {
+    const invite = SCORE.filter((b) => b.weight === 'invite')[0]
+    expect(invite.line?.toLowerCase()).toContain('touch')
+    expect(invite.cue).toBe('silenced')
+  })
+
+  it('the last line of the loop is the one set apart', () => {
+    expect(SCORE.at(-1)!.weight).toBe('final')
   })
 
   it('a conditional beat that never gets its cue simply says nothing', () => {
@@ -97,7 +149,15 @@ describe('the arc contains its turns', () => {
   })
 
   it('every cue a beat waits for is one the room can actually deliver', () => {
-    const known: Cue[] = ['none', 'grasped', 'towerComplete', 'visitorPresent', 'silenced', 'asleep']
+    const known: Cue[] = [
+      'none',
+      'grasped',
+      'towerComplete',
+      'visitorPresent',
+      'silenced',
+      'asleep',
+      'stayedAwake',
+    ]
     for (const beat of SCORE) expect(known).toContain(beat.cue)
   })
 
