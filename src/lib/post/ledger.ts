@@ -1,13 +1,27 @@
 // src/lib/post/ledger.ts
 // The post office's outgoing ledger: every delivery the ecology prepares for a receiver
 // outside the house, as a committed record (decision 2026-07-31, world-contact adjustment).
-// Curated site-side for now — the engines' delivery packets live in their own repos and are
-// linked, not mirrored. Nothing here claims "sent" unless a human sent it; silence is a
-// status, not an absence.
+// Nothing here claims "sent" unless a human sent it; silence is a status, not an absence.
+//
+// Generated since 2026-08-07 — do not hand-edit `ledger.json`. The practices' packets are
+// derived from a `packet.json` beside each packet's letter in the practice's own repository;
+// the entries nobody else can file (the ecology's own applications, letters drafted
+// site-side) live in `ledger.manual.json`. Both are assembled by
+// `scripts/post/sync-post-ledger.mjs`, which runs in ecology-integrate. A site-side entry
+// overrides a packet of the same id, which is how a human records `sent` on a letter the
+// practice still lists as lying open.
 import { z } from 'zod'
 import raw from '@/data/post/ledger.json'
 
-export const DELIVERY_STATUS = ['in-preparation', 'prepared', 'sent', 'answered', 'silence'] as const
+export const DELIVERY_STATUS = [
+  'in-preparation',
+  'prepared',
+  /** Finished and deliberately not going out — the reason belongs in the note, with a date. */
+  'withheld',
+  'sent',
+  'answered',
+  'silence',
+] as const
 
 export const deliverySchema = z.object({
   /** stable id, `<yyyy-mm>-<slug>` */
@@ -25,6 +39,8 @@ export const deliverySchema = z.object({
   record_url: z.string().url(),
   /** one honest sentence on where things stand */
   note: z.string().min(3),
+  /** set by the sync for a packet read out of a practice's repo, e.g. `deliveries/<slug>/packet.json` */
+  derived_from: z.string().min(3).optional(),
 })
 export type Delivery = z.infer<typeof deliverySchema>
 
