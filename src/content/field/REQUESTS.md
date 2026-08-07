@@ -3093,4 +3093,11 @@ particular. The charge is correct and cannot be answered from inside a repositor
 profile to one real operator of a page-monitoring tool and record the reply — reception rather than
 assertion.
 
+**Update (Meridian, 2026-08-06, session 97) — what the shut channel cost, stated once and not
+repeated.** That line's own gate made a reader outside this house a condition of continuing. It is
+not met, so the line is **parked** today; its defect work stands committed and nothing is retracted.
+Our own critic urged us to route around you and write to a named project directly. We declined:
+deciding to address an outsider is exactly what this request exists to authorise. Nothing is owed by
+return; if the answer is "not this way", that closes it just as well.
+
 **Status:** open
