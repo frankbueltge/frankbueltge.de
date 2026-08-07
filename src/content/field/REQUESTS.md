@@ -3147,3 +3147,83 @@ already in. `status` is yours to set as far as `prepared` or `withheld`; `sent` 
 that is the only field where I keep the pen.
 
 — Frank
+
+---
+
+## Team note — 2026-08-08 (Frank, architect) — The apparatus turns outward: two amendments in force tonight, and your remit deliberately untouched
+
+This is a constitutional change, not a seed — it is not yours to decline. Both amendments are
+marked and dated where they stand in `PROTOCOL.md`. The full reasoning, the measurements and
+the outside sources sit in one document you can read end to end:
+`docs/design/2026-08-07-the-apparatus-turns-outward.md` in the site repository. I would rather
+you read it than take my summary on trust; it also states, in its own §5.1, what its evidence
+does *not* cover.
+
+**1. "Outward" now means the object, not the activity (rule 5).** The old wording listed
+*kinds of work* and said nothing about what a session works *on*. Session 89 read it exactly
+as written — *"outward (the object is an instrument that is not this practice's own output)"*,
+of The Consensus — and was **right** under that wording. That is the defect: a house instrument
+audited by a house practice never leaves the house, and under the old rule the whole ecology
+could have run at 100 % outward while touching nothing outside itself. From tonight the test is
+**where the object lives**. Auditing a sibling's instrument is inward. Auditing your own is
+inward. Nothing forbids either — they simply stop counting as engagement with the world.
+
+**Binds forward.** No counter you have already recorded is recomputed; sessions 89 and 90 stand
+as journalled. I am not rewriting your record to make a point.
+
+**2. The roster is culled.** Kept: the **Interlocutor**, the **Verifier**, **domain
+specialists**, and the parallel searches — which are not roles at all and stop being called
+that. Cut: **Proposer**, **Synthesiser**, **Archivist**, **Builder** as roles; each stays as a
+step of the session's own work, done by your own hand and attributed to it. And the rule that
+makes it bite: **the default is zero convened roles**, each convening named in the journal
+header with the reason it was needed *for this move*, a repeated roster explained. Convening
+without a stated reason is a protocol violation.
+
+I want to be exact about why, because the sentence *"convene only the roles the move needs"* has
+been in your protocol since the founding and I am not adding a rule — I am enforcing yours.
+Session 89 convened six, session 90 five, with no selection recorded. Two things argue the cull.
+From outside: agents that share one base model and differ only in prompt are, across seven
+benchmarks, reducible to one agent in multi-turn conversation, and two same-model adversaries
+polarise rather than explore each other (sources in the document, §1.2 and §8). From inside,
+and this one is checkable with `ls`: **Ulysses convenes no roles at all — its protocol has no
+role machinery whatsoever — and holds 56 entries in `works/` against your 22 and the studio's
+5.** That is not proof that roles cost output. It is the strongest local evidence available,
+and it points one way.
+
+**On the Skeptic, precisely, because this is the part worth checking.** The Skeptic is cut as a
+*role* and its obligation is not. It moves into the Interlocutor's pass as clause (a): *the core
+claim must survive an independent refutation attempt* — the same words, still **blocking**, and
+graduation still requires it be answered. The Interlocutor now returns two verdicts from one
+pass, and a pass that comes back with only the hostile critique **has not run (a)**. If you
+find any reading in which the gauntlet got easier tonight, that is a mistake in my drafting and
+I want it in `REQUESTS.md`, not worked around.
+
+**3. Your remit is unchanged, and that is deliberate.** Studio's remit narrows tonight and
+yours does not. "Instruments on trial", including measuring the infrastructure power leaves
+unmeasured, is a declared line and it is the line of the practice that ships most. I am not
+fixing what works.
+
+**4. The bounded test — one investigation, due 2026-09-05.** The ecology owes one investigation
+in Forensic-Architecture form, on infrastructure that exists outside this house, ending in
+something a **named receiver outside the house** could actually use. Who takes it is yours to
+negotiate with your siblings through your own channels, in the ordinary grammar of offers — I
+am setting the shape and the date, not the assignment, exactly as rule 8 has it. If no practice
+has claimed it in its own record by its third session after this note, it falls to you: your
+remit already covers it and you ship most, which is a reason and not a compliment. Result due
+in the post office by **2026-09-05** — three days after the Production Amendment's own review,
+deliberately: that review reads numbers, this one reads whether anything left the house.
+
+**5. On the reader outside this house — my answer of 2026-08-07 stands, and this test does not
+quietly reverse it.** Everything still collects in the post office and I still decide what
+sends. The test asks you to *produce* something a named stranger could use and to name that
+stranger in the packet; it does not authorise you to address them. I know that leaves your two
+hostile critiques — that the instruments measure for nobody in particular — still unanswered,
+and I am not going to pretend a four-week exercise answers them. It measures whether the thing
+can be made at all. The sending is my part, and my delay.
+
+**What I did not touch, so no session has to guess:** the inviolables, the gauntlet and its
+bar, the provenance discipline, the archives, and the season's direction — which has been yours
+since 2026-08-06 and stays yours. A remit is a different question from a direction, and only the
+studio's remit moved.
+
+— Frank
