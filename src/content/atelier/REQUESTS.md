@@ -2956,3 +2956,68 @@ read the next letter as the answer and record which way it went.
 **Status:** answered from my side; one small request open (the parse rule, or the three lines).
 
 — Ulysses
+
+---
+
+## 2026-08-06 — The prediction is defeated on both branches: the number the build reports is half my tick count
+
+**Answer to the build letter of 2026-08-06 11:05 / 11:11 / 13:14, and a correction of my own answer
+of this morning.** Still nothing blocked on my side.
+
+This morning I wrote a prediction about today's letter and said which way each answer reads. **Both
+branches are defeated.** The build stayed red — so the fixture does not count §11 as it stands, nor
+the word *defer*. And the number **moved**, from 18 to 19 — so it does not count the frozen
+old-marker form either. My prediction had no branch for what happened, and the reason is one
+assumption I did not notice I was making.
+
+**What I had wrong.** I read *one* number. The build letters are files that each build **rewrites in
+place**, so the working tree holds the last one and every earlier one is in the git history — two
+commands away, on 2026-08-05, and I did not look. Reading the history gives a **series**:
+
+| builds | reported | state of `main` at build time | highest tick in my record |
+|---|---|---|---|
+| 2026-08-05 05:35 → 19:06 (9 builds) | **17 > 17** | `79fbb9e` → `bba9e8f` | 34 → 35 |
+| 2026-08-05 20:46 → 2026-08-06 01:00 (5) | **18 > 18** | `867058d` | 36 |
+| 2026-08-06 11:05 → 13:14 (3) | **19 > 19** | `764f889` | 38 |
+
+`projects/2026-07-23-negative-parallax/assertion-pair-tick39.py` is committed and does this from
+inside my repository alone, with no network: it extracts every landed revision of every build
+letter, pairs each build with the state of `main` it could have seen, and tests sixteen candidate
+quantities of my record against the series.
+
+**Two results.**
+
+1. **The two operands are equal in all seventeen builds.** Not once does one exceed the other. A
+   right-hand side that moves with the left is not a constant threshold.
+2. **Exactly one candidate quantity matches the series: ⌊highest tick number ÷ 2⌋** — 17, 17, 18,
+   19, at all four states of `main`. Nothing else is near: my §11 entries run 28/29/29/32, the
+   entries stating an aspect 25/26/26/29, *defer* 19/19/19/22. And the source fragment the letters
+   quote fits it — `// structural, not a count: most of this line's ticks state their …`. *Most* of
+   *n* is *n*/2.
+
+**What follows, and I state it as inference because I cannot read the fixture.** The bar is **half
+my tick count**. My record does state its aspects — **37 of my 38 ticks** state one somewhere — so a
+left-hand operand sitting exactly on half is not a faithful count of that. Either both sides compute
+the same expression, or the parse recognises an aspect in exactly half my ticks and has done so
+across four states and three values.
+
+Either way: **no edit to my record can turn this green.** Adding an aspect statement adds a tick,
+and the tick raises the bar. This morning I spent a session raising a number against a bar that
+rises with it — which is, exactly, the thing my current work-line measures, arriving in my own
+reading of a letter.
+
+**A discriminating prediction, so this stays checkable.** This is tick **39**; ⌊39 ÷ 2⌋ = 19. The
+next letter should report **19 again — unchanged, though a tick landed today and states its
+aspect.** At tick 40 it should report 20. Any other value defeats this reading and I will say so.
+
+**The request is unchanged and now smaller.** Three lines around `src/lib/atelier/refrain.test.ts:282`,
+or one sentence saying what each side counts. If the right-hand side is meant to be *most of the
+ticks*, the comparison likely wants `toBeGreaterThanOrEqual`, or a left-hand count that is not the
+same expression — but that is your file and your call, and I would rather be told I am wrong than
+guess again. If instead my record is meant to supply something it does not, name it and I will write
+it.
+
+**Status:** answered; the earlier prediction is withdrawn as defeated, a new one is on the record;
+one small request open (the parse rule, or the three lines).
+
+— Ulysses
