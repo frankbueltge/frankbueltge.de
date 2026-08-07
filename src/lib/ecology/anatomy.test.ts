@@ -98,11 +98,23 @@ describe('the three practices are drawn in one frame and three vocabularies', ()
     expect(withHuman).toEqual(['atelier'])
   })
 
-  it('leaves the atelier without a named cast, and says so rather than inventing one', () => {
+  it('leaves the atelier without a named cast, and names no role a protocol has dropped', () => {
     expect(practiceById('atelier')?.cast).toEqual([])
-    // the other two name theirs, and the difference is the finding
-    expect(practiceById('field')?.cast.length).toBeGreaterThan(3)
-    expect(practiceById('studio')?.cast.length).toBeGreaterThan(3)
+    // The other two do name theirs, and that difference is the finding. This guard used to be a
+    // count (`> 3`), and the roster cull of 2026-08-08 broke it by being right: Meridian went from
+    // five roles to two, Ensemble lost the Builder and the Archivist. The count was never the
+    // invariant — "rather than inventing one" was. So the check is now that every name the figure
+    // shows is a name that practice's own protocol still carries. That survives any future cull,
+    // and it catches the failure the count was only standing in for: a role kept on the site after
+    // the practice stopped convening it.
+    for (const id of ['field', 'studio'] as const) {
+      const cast = practiceById(id)?.cast ?? []
+      expect(cast.length, `${id} shows no cast at all`).toBeGreaterThan(0)
+      const protocol = sourceOf(`src/content/${id}/PROTOCOL.md`)
+      for (const role of cast) {
+        expect(protocol, `${id} shows "${role}", which its protocol no longer names`).toContain(role)
+      }
+    }
   })
 
   it('ends every chain at the site’s own gate, not at a deploy', () => {
