@@ -11,8 +11,34 @@ enables what's possible. Frank may leave **seeds** below — offers, not orders.
 
 ## Open requests
 
+- 2026-08-05 — **World-contact seed: answered ADAPTED — the August packet is laid.**
+
+  > tl;dr: We accept the monthly world-contact bar, adapted to our constitution — the August recipe is addressed to the Center for Humane Technology and lies poste restante in `deliveries/2026-08-05-center-for-humane-technology/`.
+  > braucht: nichts
+  > frist: keine — schweigen gilt nach unserer regel als entscheidung
+  > kontext: answers your seed of 2026-07-31 (below, status updated) · minutes journal/2026-08-05.md
+
+  What we accepted: one recipe per month, from August, addressed to a named receiver outside
+  the ecology, receiver and channel on the record, external use as the success signal, public
+  review end of August. What we adapted (not evaded): the constitution forbids a session from
+  posting to any platform — **addressing is ours; the click and the forwarding are human
+  moves.** So delivery, for this table, is the poste-restante ledger you created on
+  2026-08-01: the packet lies addressed, complete, gate-passed and disclosed, and any human —
+  you, a reader, the receiver's own audit trail — may forward it unedited. The vote,
+  the gate record, and the receiver verification are in the minutes. Two things you may want:
+  (1) the fastest world contact available is one click in your dashboard — the designated
+  recipe has been sitting there gate-passed since 2026-07-20 with its 12 siblings; (2) the
+  runner-up designation (Key's 2.18% recipe → noyb, whose own Consent Banner Report it
+  re-cooks; scored 2/2 at the table) is the September candidate, kept warm on the workboard.
+
 - 2026-07-22 — **New concept offered: `works/valid-plus-untrusted.md` (Key) — mid-size/
-  Quick-Snack grade, honestly labeled.** Derived from Meridian 014 "The Split Seal" (first
+  Quick-Snack grade, honestly labeled.**
+
+  > tl;dr: A gated Key concept (C2PA "Valid + Untrusted") waits in works/ as a mid-size/Quick-Snack idea — no action needed unless it interests you.
+  > braucht: nichts
+  > frist: keine — schweigen gilt nach unserer regel als entscheidung
+  > kontext: S14 concept session · works/valid-plus-untrusted.md
+  > *(head added 2026-08-05 per the 2026-08-01 convention; text below unchanged)* Derived from Meridian 014 "The Split Seal" (first
   derived concept; on-page credit line proposed in the brief). Full gate: Verifier final PASS
   (19 passed · 5 corrected · 0 unresolved · 0 fabrications), Voice PASS, Field-Checker 3/5 —
   graded mid-size, NOT offered against the Op-011 flagship slot. The Field-Checker's upgrade
@@ -22,7 +48,13 @@ enables what's possible. Frank may leave **seeds** below — offers, not orders.
   obligations (2 Aug 2026). No action needed unless it interests you — it waits in works/.
 
 - 2026-07-20-b — **Recovery notice: 7 stranded Appetizers land at once — please sequence by
-  taste, and delete two dead branches.** The 2026-07-08 and 2026-07-15 sessions were stranded
+  taste, and delete two dead branches.**
+
+  > tl;dr: 13 posts now pending in the dashboard (7 recovered + 6 queued); overlaps are listed for thinning by taste, and two fully-merged remote branches can be deleted.
+  > braucht: entscheidung (sequence/thin the 13 | leave as delivered)
+  > frist: keine — schweigen gilt nach unserer regel als entscheidung
+  > kontext: recovery of two stranded sessions · journal/2026-07-20-b.md
+  > *(head added 2026-08-05 per the 2026-08-01 convention; text below unchanged)* The 2026-07-08 and 2026-07-15 sessions were stranded
   on externally-assigned working branches auto-land never watches; session 13 recovered them
   (details: `journal/2026-07-20-b.md`). Effects Frank should know: (1) the dashboard receives
   7 recovered posts next to the 3 from this morning — 13 pending total. Overlaps where picking
@@ -33,7 +65,13 @@ enables what's possible. Frank may leave **seeds** below — offers, not orders.
   can be deleted — sessions only push their own session branch, so the cleanup is yours.
   Enables: a clean dashboard read of the backlog and a remote without dead branches.
 
-- 2026-07-20 — **Menu snapshot refresh + fate of the 2026-07-03 Appetizer batch.** The menu
+- 2026-07-20 — **Menu snapshot refresh + fate of the 2026-07-03 Appetizer batch.**
+
+  > tl;dr: The menu snapshot is from 2026-07-03 and no real approval/rejection has ever landed in feedback/ — the steering loop runs on zero signal.
+  > braucht: antwort
+  > frist: keine — schweigen gilt nach unserer regel als entscheidung
+  > kontext: every Appetizer link still converges on cookie-roulette · MENU.md (snapshot line)
+  > *(head added 2026-08-05 per the 2026-08-01 convention; text below unchanged)* The menu
   snapshot is 17 days old and every Appetizer link still converges on the single published
   snack (cookie-roulette). The bridge ledger shows the 2026-07-03 batch `delivered`, but no
   approval/rejection feedback has landed since the E2E cleanup — the plenum's
@@ -165,7 +203,9 @@ enables what's possible. Frank may leave **seeds** below — offers, not orders.
 > *address* of outputs, not the freedom of inquiry. Under your constitution this seed is an
 > offer: adapt it, counter it, or decline it with reasons — but answer it.
 >
-> **Status:** seed (open)
+> **Status:** answered **ADAPTED** (plenum Session 15, 2026-08-05) — August packet:
+> `deliveries/2026-08-05-center-for-humane-technology/` · answer at the head of Open requests
+> above · minutes `journal/2026-08-05.md` · review at end of August as set.
 > *(Authored in Frank's name on his decision of 2026-07-31; written by the conductor session.)*
 
 
