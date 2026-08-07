@@ -48,6 +48,10 @@ jobs:
           git clone https://github.com/frankbueltge/field-research /tmp/engines/field-research
           git clone https://github.com/frankbueltge/ulysses /tmp/engines/ulysses
           git clone https://github.com/frankbueltge/studio /tmp/engines/studio
+          # Outside /tmp/engines on purpose: the importer and export-site read that directory as
+          # "the three ecology practices", and the plenum is not one of them. It is cloned only
+          # for its post office packets.
+          git clone --depth 1 https://github.com/frankbueltge/data-snack-plenum /tmp/plenum
 
       - name: Install research-ecology
         working-directory: /tmp/ecology
@@ -96,6 +100,19 @@ jobs:
         # watches src/data/begegnungen, so this snapshot rides the same regeneration path.
         run: node scripts/ecology/sync-joint-inquiries.mjs --ecology /tmp/ecology
 
+      - name: Assemble post office ledger (packet.json in the engines → src/data/post)
+        # Frank, 2026-08-07: ALL outward communication collects in the post office first, and he
+        # decides what actually goes out. That rule is only as good as the ledger is complete, and
+        # a hand-curated one is only as complete as the last session that remembered — the
+        # plenum's CHT packet lay gate-passed for two days before anyone entered it. So the
+        # practices' packets now enter themselves; the send stays a human act either way.
+        run: |
+          node scripts/post/sync-post-ledger.mjs \
+            --repo /tmp/engines/field-research:field \
+            --repo /tmp/engines/ulysses:atelier \
+            --repo /tmp/engines/studio:studio \
+            --repo /tmp/plenum:plenum
+
       - name: Commit (regeneration) or PR (new meaning)
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -103,11 +120,33 @@ jobs:
           set -euo pipefail
           git config user.name "Ecology-Integrate"
           git config user.email "ecology-integrate@frankbueltge.de"
+          DATE=$(date -u +%F)
+          SHA=$(git -C /tmp/ecology rev-parse --short HEAD)
+
+          push_with_rebase() {
+            for attempt in 1 2 3 4 5; do
+              git pull --rebase origin main && git push origin HEAD:main && return 0
+              [ "$attempt" = 5 ] && { echo "push failed after 5 rebase attempts (concurrent push race)" >&2; return 1; }
+              echo "push race — rebasing and retrying ($attempt/5)"; sleep $((attempt * 5))
+            done
+          }
+
+          # The post office lands on its own, always and automatically. It is deliberately NOT
+          # routed through the new-meaning gate below: a packet appearing in the ledger is not a
+          # publication and not a send — it is the ecology's outward mail becoming visible in the
+          # one place Frank decides from. Holding that behind an approval would recreate exactly
+          # the delay this step exists to remove.
+          if git status --porcelain -- src/data/post/ledger.json | grep -q .; then
+            git add -- src/data/post/ledger.json
+            git commit -m "post office: ledger vom $DATE — Pakete der Praxen, wie sie in deren Repos liegen"
+            push_with_rebase || exit 1
+          else
+            echo "post office ledger unchanged"
+          fi
+
           if git status --porcelain src/data/begegnungen | grep -q .; then :; else
             echo "export byte-identical — nothing to do"; exit 0
           fi
-          DATE=$(date -u +%F)
-          SHA=$(git -C /tmp/ecology rev-parse --short HEAD)
           # Bedeutungsänderung? Neuer Begegnungs-Ordner ODER gewechselte encounter_id.
           NEW_DIRS=$(git status --porcelain src/data/begegnungen | grep -c '^??' || true)
           ID_CHANGE=$(git diff -- src/data/begegnungen/entrance.json | grep -c '^[+-].*"encounter_id"' || true)
@@ -123,11 +162,7 @@ jobs:
               --body "Ecology-Integrate hat eine neue Begegnung exportiert und als PR angelegt statt automatisch zu committen. Branch: $BRANCH." || true
           else
             git commit -m "ecology: Begegnungs-Export vom $DATE (research-ecology $SHA) — Regeneration der freigegebenen Projektion"
-            for attempt in 1 2 3 4 5; do
-              git pull --rebase origin main && git push origin HEAD:main && break
-              [ "$attempt" = 5 ] && { echo "push failed after 5 rebase attempts (concurrent push race)" >&2; exit 1; }
-              echo "push race — rebasing and retrying ($attempt/5)"; sleep $((attempt * 5))
-            done
+            push_with_rebase || exit 1
           fi
 
       # Ein Alarm, der nie ausgeht, ist keine Meldung mehr, sondern Möblierung: Drei der vier
