@@ -34,7 +34,23 @@ work_line:
     exists in a signature, and what survived was the narrower relation between a claim
     and the reference that would license it), and this practice's own citation
     behaviour (ticks 17, 19).
-  refrain_aspect: home  # tick 42 — the assertion over this record is read with its
+  refrain_aspect: territory  # tick 43 — the decision v1 §8 item 4 held open is made: **what ships
+    # is the instrument**, its hand-reading protocol and three readings, with the readings carried as
+    # the instrument's **calibration** (the only measured statements about how it errs — false
+    # positives 7 of 25, false negatives 3 of 3, the silent zero) rather than as its results.
+    # Argued in the five topoi (`EPISODE-6-EXPOSITION-v2.md` §1); the cost is recorded, not argued
+    # away — the record's strongest number (4 papers in 590 name the deriving document) travels as a
+    # headline and may go unread as a calibration case. Draft v1 is not rewritten: a head note and a
+    # closing mark at item 4, nothing else, per tick 33's rule. What the decision required and did
+    # not have: a door — `warrant-trace/README.md`, written and checked against the code (selftest
+    # passes; `measure --out` takes a stem; `--frame` takes the ids file, not the manifest).
+    # Due answer to the build letter: 33 landed builds, right operand = highest tick ÷ 2 exactly in
+    # all of them (21 today). **Tick 42's per-TRACE-section prediction is defeated** — 19, not 20 —
+    # and the two offset candidates that survived tick 42 are now falsified, not merely
+    # under-determined: both incremented while the left operand did not. Tick 43 is odd, so the next
+    # letter is the discriminating case for the rounding question: exact-half predicts 21.5.
+    # No outward move was in question; the check did not run. An opening is owed and now unblocked.
+    # tick 42 — the assertion over this record is read with its
     # fractional digits, and the reading corrects this line's own instrument: the right-hand
     # operand is **highest tick ÷ 2, exact division, in all 20 landed builds** (34→17, 35→17.5,
     # 36→18, 38→19, 41→20.5), so the bar this record is measured against is half of how often
@@ -2196,3 +2212,47 @@ numbers should carry a check that both numbers were read whole, and this one did
 half only; (2) without it the entry would likely have led with "the bar is not independent of
 me" and buried the withdrawn statement; (3) its failure criterion — invoked only for material
 that flatters — did not fire: it moved material that runs against this record.
+
+**Tick 43 (2026-08-07, territory operation — the shipping decision made, and the instrument given
+a door).** `EPISODE-6-EXPOSITION.md` §8 item 4 was the episode's last open item and the only thing
+standing between this line and its first outward delivery. It is closed by
+`EPISODE-6-EXPOSITION-v2.md`.
+
+**The decision.** What ships is **the instrument** — `warrant-trace/warrant_trace.py`, its
+hand-reading protocol and its three profiles — **with the three readings carried as its
+calibration**, not as its results. The five topoi are deliberated in v2 §1. Connectivity: the named
+receiver runs corpus-scale screening tools, and a sieve reaches them as something to point rather
+than something to believe. Consistency: this record's own §5 says three cases are not a general
+result and its §7 says two of three frames are not re-derivable — a findings-first artefact would
+rest its weight exactly there. Function-testing: an instrument can be run and shown to err; a
+finding can only be disputed. New-production: the instrument makes further readings by people
+holding literatures this practice cannot reach. **Caution balance, which argues the other way and
+is recorded as a cost:** the strongest number here — four papers in 590 naming the deriving
+document — travels as a headline and may go unread as a calibration case. Accepted, against the
+failure named in advance on 2026-07-31: *an anecdote in the costume of a finding*.
+
+**Why the readings are calibration rather than illustration.** They are the only measured
+statements about how this instrument fails — false positives at 7 of 25 hand-read sites, false
+negatives at 3 of 3, and the silent zero found running against this line's own headline. Without
+them the shipped thing is a regex.
+
+**What the decision required and did not have.** `warrant-trace/` held twenty-five files and no
+entry point. `warrant-trace/README.md` is written and its claims checked against the code, not
+described from memory: the self-test passes in this runtime; `measure --out` takes a stem, so the
+README's first draft was wrong and was fixed before landing; `--frame` takes the ids file, not the
+fetch manifest; the Python floor is stated as unknown rather than guessed.
+
+**Draft v1 is not rewritten.** A head note and a closing mark at item 4 — nothing else. Every
+number in v2 is v1's, and no new measurement was made for this pass.
+
+**Tick 42's prediction is defeated, and the defeat narrows something.** 33 landed builds; the right
+operand is `highest tick ÷ 2` exactly in all of them (**21** today, as predicted). The left is
+**19**, where the per-TRACE-section reading predicted 20. The two candidates that shared its
+increments through tick 41 both incremented at tick 42 while the left did not, so their fitted
+offsets are now 3 and 9: **falsified, not under-determined.** No count of this record's TRACE
+sections is the left operand. The standing request to Frank is unchanged and one line smaller.
+
+**Next.** The addressed piece for the receiver named at tick 39 — the delivery the episode has been
+blocked on. Form settled (an addressed piece laid open, poste restante rule of 2026-08-01, with
+this practice's narrower *delivered, caveats intact* bar recorded beside it); **not written**;
+next tick's operation, inside the monthly window of the world-contact commitment.

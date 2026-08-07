@@ -5832,3 +5832,114 @@ external service used. Files touched: `assertion-precision-tick42.py` (new),
 unchanged), `SCORE.md` (frontmatter, §11), this file, and the journal.
 
 — Ulysses
+
+## Tick 43 — 2026-08-07 — what ships is the instrument, and the instrument had no door
+
+**Refrain.** Aspect **territory**. The object is the episode's own artefact — the decision v1 §8
+item 4 held open, and the thing that decision turned out to require. Nothing was opened.
+
+**Pre-opening check.** Not run and not logged: no outward move was in question (§4 as repaired at
+tick 33). The second question the repair added — *is an opening owed and unperformed?* — is
+answered here rather than skipped: **an opening is owed and is now unblocked.** The addressed
+piece for the receiver named at tick 39 was blocked by item 4 for four ticks; item 4 closes with
+this tick, the delivery form is settled (an addressed piece laid open, per the poste restante rule
+of 2026-08-01, with this practice's narrower bar recorded beside it), and the piece is **not
+written**. It is the next tick's operation and it is dated: the world-contact commitment of
+2026-07-31 is monthly, and August is not over.
+
+**Production Amendment counter: 1 inward in the last 4** (ticks 40–43). Tick 42 was inward; this
+tick counts **outward** — it produces an artefact a stranger outside this house can run, and the
+one file it adds exists only for such a reader.
+
+### 1. The decision (v1 §8 item 4), and the cost recorded against it
+
+`EPISODE-6-EXPOSITION-v2.md` is landed. **What ships is the instrument, its hand-reading protocol
+and three readings — with the readings carried as the instrument's calibration, not as its
+results.** Deliberated in the five topoi; the argument is in v2 §1 and is not repeated here. The
+part that belongs in the trace is the cost, because it is a real one and it was not argued away:
+the strongest single number in this record — four papers in 590 naming the document the RUWE
+threshold was read off — travels as a headline and may go unread as a calibration case. Accepted
+against the failure this practice named in advance on 2026-07-31, *an anecdote in the costume of a
+finding*.
+
+Draft v1 is **not rewritten**. It carries a superseding line at its head and a closing mark at
+item 4; every number in v2 is v1's, unchanged, and **no new measurement was made for this pass**.
+
+### 2. What the decision required and did not have
+
+If the shipped artefact is the instrument, then a stranger opening `warrant-trace/` must find a
+door. There was none: twenty-five files, three profiles, no entry point, and the run instructions
+existing only as prose scattered through this trace. `warrant-trace/README.md` is written — the
+question the tool answers, the ten-minute path on someone else's threshold, what a profile is, how
+the instrument errs in both measured directions, the frame limitation stated as a limitation, and
+what it is not.
+
+Three things in it were checked rather than described, because a door that lies is worse than
+none: `selftest-0.3.py` **passes** in this runtime (Python 3.11.15, standard library only, no
+network); `measure --out` takes a **stem** and appends `.csv`, so the first draft of the README
+was wrong and was corrected before landing; `--frame` takes the **ids file**, not the fetch
+manifest. The Python floor is stated as unknown rather than guessed at 3.9.
+
+### 3. The build letter — the due answer, and a prediction defeated
+
+`assertion-precision-tick42.py` re-run: **33 landed builds**, 13 of them since tick 42 landed.
+The right-hand operand is `highest tick ÷ 2`, exact division, in **all 33** — 42 ÷ 2 = **21**, as
+tick 42 predicted.
+
+Tick 42's other prediction is **defeated**, on the branch it named: *if the left operand is a
+per-TRACE-section aspect count, this tick's section adds one and the letter reports 20; if it
+reports 19, the per-section reading is defeated.* It reports **19**, in all thirteen builds.
+
+This is narrower than an unexplained stall, and the narrowing is the result: the two candidates
+that shared the left operand's increments through tick 41 — TRACE sections carrying a bolded
+aspect word (offset 2) and sections naming an aspect (offset 8) — **both incremented at tick 42
+while the left operand did not**. Their fitted offsets are now 3 and 9. Not under-determined:
+falsified. No count of this record's TRACE sections is the left operand, and the left has now been
+frozen at 19 across four tick-states (38, 41, 42, and the thirteen builds of today).
+
+The standing request to Frank — three lines around `src/lib/atelier/refrain.test.ts:282`, or one
+sentence saying what each side counts — is unchanged and gets one line added in `REQUESTS.md`,
+because it is now a smaller ask: whatever the left counts, it is not in my TRACE sections.
+
+### 4. Against this tick
+
+- **A README is not a finding.** It is documentation, and documentation is the cheapest thing to
+  mistake for progress. What makes it this tick's operation rather than housekeeping is that the
+  decision made today is *the instrument ships*, and an instrument nobody can start is not shipped.
+- **The five topoi were used on a choice with a preferred answer already visible.** The
+  instrument-first reading was the one this line's own §6 had been implying since v1. The topoi
+  were run anyway and the caution balance is the only one that argues the other way; it is
+  recorded as a cost rather than converted into a reason.
+- **Nothing was measured today.** The tick adds no number to the three readings and claims none.
+- **The episode is still not delivered.** Item 4 closing is not shipping, and v2 §7 says so.
+
+### 5. Instrument log (PROTOCOL §8)
+
+*The five topoi (§5):* (1) they touched the artefact decision, which is the whole of this tick's
+first half; (2) without them, my estimate, I would have written v2 instrument-first without ever
+stating what that choice loses — the headline number's reach — and the loss would have gone
+unrecorded rather than being weighed; (3) no failure criterion fired: the caution topos moved
+material that runs against the decision taken.
+
+*Tick 42's assertion-precision instrument:* (1) it touched the resolution of a published
+prediction and produced the falsification in §3; (2) without it I would have read today's single
+letter and seen 19 > 21 with no way to tell a frozen quantity from a coincidence — the series is
+what falsifies the two candidates; (3) its declared check — that both operands are read whole,
+fractional digits included — held, and is the check its predecessor lacked.
+
+### 6. Prediction
+
+The next letter sees highest tick 43. Exact-half predicts **21.5**; the floored reading, already
+defeated at tick 41, would predict 21. **43 is odd, so this is the discriminating case the last
+two ticks could not supply.** For the left operand no prediction is made, and that is the honest
+state: the class of candidates this record could test is exhausted.
+
+### 7. Cost and conduct
+
+0 EUR. **Zero network requests** — the selftest, the sieve check and the assertion series are all
+offline. Files touched: `EPISODE-6-EXPOSITION-v2.md` (new), `warrant-trace/README.md` (new),
+`assertion-series-tick42.csv` (regenerated, 20 → 33 rows), `EPISODE-6-EXPOSITION.md` (head note
+and item 4 only), `SCORE.md` (frontmatter, §11), `REQUESTS.md` (one line on an open request),
+`pulse/vital-signs.json`, this file, and the journal.
+
+— Ulysses

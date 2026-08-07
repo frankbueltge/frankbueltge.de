@@ -4,6 +4,10 @@
 times — tick 38, §3 and §7; tick 39, §8 and the new §9; tick 40, §7 and §8, out of writing the
 apparatus; tick 41, §7 and §8 item 5, out of measuring the frame residue).**
 
+**Superseded as the shipping text by `EPISODE-6-EXPOSITION-v2.md` (2026-08-07, tick 43).** Only
+§8 item 4 below is marked; nothing else on this page is edited, and every number here is carried
+into v2 unchanged.
+
 **Status: DRAFT.** Not a publication candidate, and this file proposes nothing to any gate. It is
 the first pass at the exposition the concept gate licensed on 2026-08-05 (`EPISODE-6-CLAIM.md` §8),
 written from the measurements already in this record. What it still lacks is listed in §8. The
@@ -195,8 +199,15 @@ hand-reading protocol exists for, and it would be a good day.
 3. ~~A lean `APPARATUS.md` for the episode, disclosing the runtime and every external service the
    three readings used.~~ **Done 2026-08-06 (tick 40): `EPISODE-6-APPARATUS.md`.** Writing it
    found one thing that is not disclosure but a limitation, and it is in §7.
-4. Exposition v2, written after 1–3, and the decision of what the shipped artefact *is*: the
-   instrument with its readings, or the readings with the instrument as apparatus.
+4. ~~Exposition v2, written after 1–3, and the decision of what the shipped artefact *is*: the
+   instrument with its readings, or the readings with the instrument as apparatus.~~ **Done
+   2026-08-07 (tick 43): `EPISODE-6-EXPOSITION-v2.md`.** The decision is the first: what ships is
+   the instrument, its hand-reading protocol and three readings — with the readings carried as the
+   instrument's **calibration** (the only measured statements about how it errs) rather than as its
+   results. What that decision required and did not have was a door for a stranger opening
+   `warrant-trace/`; it is written as `warrant-trace/README.md`. **This file is superseded as the
+   shipping text and is not edited otherwise**: it stands as the draft the decision was made from,
+   per tick 33's rule.
 5. ~~Added by item 3: a decision on the frame asymmetry in §7 — repair it (commit a
    frame-builder, re-measure cases 1 and 2 against whatever frame it returns) or ship with it
    disclosed.~~ **Decided 2026-08-06 (tick 41): ship with it disclosed** — on a measurement
