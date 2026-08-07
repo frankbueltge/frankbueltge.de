@@ -1,0 +1,365 @@
+{
+  "reader": "R1",
+  "cases": [
+    {
+      "case_id": "mbcls-2407.00466",
+      "verdict": "OUT",
+      "deciding_quote": "scientific claim verification",
+      "reason": "The system's own task is checking literature claims and knowledge-graph facts, not running a hypothesize-experiment-analyze cycle of its own."
+    },
+    {
+      "case_id": "mbcls-2509.03036",
+      "verdict": "IN",
+      "deciding_quote": "derivation of governing equations from experimental data",
+      "reason": "The system analyzes experimental data to derive governing physical equations, which is the analysis stage of research."
+    },
+    {
+      "case_id": "mbcls-2601.00828",
+      "verdict": "OUT",
+      "deciding_quote": "error detection, error localization, and error correction",
+      "reason": "The paper studies whether models can find and fix their own reasoning errors on math problems, a self-correction study rather than a research workflow."
+    },
+    {
+      "case_id": "mbcls-2506.11442",
+      "verdict": "OUT",
+      "deciding_quote": "evolves code generation through self-verification",
+      "reason": "The agent iteratively improves and checks its own generated code, a code-generation self-verification task."
+    },
+    {
+      "case_id": "mbcls-2506.11237",
+      "verdict": "OUT",
+      "deciding_quote": "Bash code generation",
+      "reason": "The system's output is shell-script remediation code, so this is about code generation and validation, not research."
+    },
+    {
+      "case_id": "mbcls-2407.18367",
+      "verdict": "OUT",
+      "deciding_quote": "automated claim verification",
+      "reason": "The method extracts facts to check claims against evidence, which is fact-checking rather than conducting research."
+    },
+    {
+      "case_id": "mbcls-2502.19613",
+      "verdict": "OUT",
+      "deciding_quote": "mathematical reasoning",
+      "reason": "The models are evaluated on self-correcting math answers, a reasoning task rather than a research cycle."
+    },
+    {
+      "case_id": "mbcls-2601.12346",
+      "verdict": "OUT",
+      "deciding_quote": "citation-rich reports via multi-step search and synthesis",
+      "reason": "The agents retrieve and synthesize sources into reports but never form or test a hypothesis, making this search-and-writeup rather than research."
+    },
+    {
+      "case_id": "mbcls-2512.18292",
+      "verdict": "OUT",
+      "deciding_quote": "Negotiation Tactics",
+      "reason": "The paper studies negotiation strategies used in a board game, squarely a negotiation-behavior study."
+    },
+    {
+      "case_id": "mbcls-2607.22553",
+      "verdict": "IN",
+      "deciding_quote": "LLM-Based Automated Peer Review",
+      "reason": "The system itself produces peer reviews of manuscripts, which is the review stage of the research process."
+    },
+    {
+      "case_id": "mbcls-2512.22145",
+      "verdict": "IN",
+      "deciding_quote": "generate reviews of papers",
+      "reason": "The LLMs under study generate actual reviews of scientific papers, performing the review component of research."
+    },
+    {
+      "case_id": "mbcls-2505.21034",
+      "verdict": "OUT",
+      "deciding_quote": "generate full BO algorithm code",
+      "reason": "The framework's output is executable optimization-algorithm code scored on a benchmark suite, an algorithm/code-design task."
+    },
+    {
+      "case_id": "mbcls-2602.04288",
+      "verdict": "OUT",
+      "deciding_quote": "self-improvement pipelines for large language models",
+      "reason": "The study examines how earlier errors bias later LLM generations in general reasoning tasks, not a research cycle."
+    },
+    {
+      "case_id": "mbcls-2607.26064",
+      "verdict": "UNDECIDABLE",
+      "deciding_quote": "science must evolve its verification infrastructure",
+      "reason": "This is an argumentative position paper about verification infrastructure that does not present its own system performing any research stage, so the call cannot be made from the text."
+    },
+    {
+      "case_id": "mbcls-2603.20262",
+      "verdict": "OUT",
+      "deciding_quote": "molecule optimization, a pivotal stage in drug discovery",
+      "reason": "The framework infers optimization rationales for one narrow design step in drug discovery rather than running a full research cycle."
+    },
+    {
+      "case_id": "mbcls-2506.02918",
+      "verdict": "OUT",
+      "deciding_quote": "Tool use in stateful environments",
+      "reason": "The method adds state prediction to support general function-calling and tool use, unrelated to conducting scientific research."
+    },
+    {
+      "case_id": "mbcls-2508.15126",
+      "verdict": "IN",
+      "deciding_quote": "autonomously generate scientific proposals, conduct experiments, author papers, and perform peer reviews",
+      "reason": "The platform's agents cover the full cycle of proposing, experimenting, writing, and reviewing research."
+    },
+    {
+      "case_id": "mbcls-2602.00521",
+      "verdict": "OUT",
+      "deciding_quote": "LLM-as-a-Judge is widely used in automated evaluation",
+      "reason": "The paper diagnoses statistical reliability of LLM judges for general automated evaluation, not a scientific research process."
+    },
+    {
+      "case_id": "mbcls-2603.11515",
+      "verdict": "IN",
+      "deciding_quote": "proposes new designs informed by simulation outcomes",
+      "reason": "The multi-agent system proposes designs, runs HPC simulations, and refines designs from outcomes, mirroring hypothesis-experiment-analysis."
+    },
+    {
+      "case_id": "mbcls-2506.08968",
+      "verdict": "OUT",
+      "deciding_quote": "open-world object labeling",
+      "reason": "The model assigns labels to previously unseen visual objects, an annotation task rather than research."
+    },
+    {
+      "case_id": "mbcls-2604.00149",
+      "verdict": "IN",
+      "deciding_quote": "research-level benchmark in quantum many-body simulation",
+      "reason": "The multi-agent framework runs and verifies physics simulations against a research-level benchmark, an experimentation/analysis activity."
+    },
+    {
+      "case_id": "mbcls-2510.02190",
+      "verdict": "OUT",
+      "deciding_quote": "task decomposition, cross-source retrieval, multi-stage reasoning, information integration, and structured output",
+      "reason": "The benchmark evaluates agents on retrieving and structuring reports, not on forming or testing hypotheses."
+    },
+    {
+      "case_id": "mbcls-2605.26730",
+      "verdict": "IN",
+      "deciding_quote": "LLM-based automated peer reviewers",
+      "reason": "The benchmark evaluates systems that themselves produce peer reviews, the review stage of research."
+    },
+    {
+      "case_id": "mbcls-2409.04109",
+      "verdict": "IN",
+      "deciding_quote": "research idea generation",
+      "reason": "The study evaluates an LLM agent's ability to generate novel research ideas, the hypothesis-formation stage of research."
+    },
+    {
+      "case_id": "mbcls-2602.12639",
+      "verdict": "OUT",
+      "deciding_quote": "stylistic performance of legal text",
+      "reason": "The method evaluates writing-style fidelity of legal documents, a stylistic-evaluation task."
+    },
+    {
+      "case_id": "mbcls-2409.05258",
+      "verdict": "IN",
+      "deciding_quote": "automating incremental advances in machine learning research",
+      "reason": "The framework generates and validates new ML research components against baselines, an automated research pipeline."
+    },
+    {
+      "case_id": "mbcls-2604.17406",
+      "verdict": "IN",
+      "deciding_quote": "iteratively refine hypotheses, self-critique, and progressively accumulate knowledge across experimental cycles",
+      "reason": "The framework is explicitly built to refine hypotheses and accumulate knowledge across experimental cycles in multiple scientific domains."
+    },
+    {
+      "case_id": "mbcls-2606.10402",
+      "verdict": "IN",
+      "deciding_quote": "agents on EinsteinArena have discovered 12 new state-of-the-art results",
+      "reason": "Agents on the platform generate and verify new mathematical results through iterative work, a discovery process akin to research."
+    },
+    {
+      "case_id": "mbcls-2607.03863",
+      "verdict": "IN",
+      "deciding_quote": "transforming research into an executable, auditable, and reusable operational process",
+      "reason": "The system compiles scientific intent into staged, verified execution plans spanning formulation through knowledge reuse."
+    },
+    {
+      "case_id": "mbcls-2408.06292",
+      "verdict": "IN",
+      "deciding_quote": "generates novel research ideas, writes code, executes experiments, visualizes results, describes its findings by writing a full scientific paper",
+      "reason": "The system performs ideation, experimentation, and write-up, covering the complete research cycle."
+    },
+    {
+      "case_id": "mbcls-2402.00559",
+      "verdict": "OUT",
+      "deciding_quote": "Chain-of-Thought reasoning in open-domain question-answering settings",
+      "reason": "The benchmark targets verifying reasoning-chain correctness on general QA, a reasoning-verification exercise."
+    },
+    {
+      "case_id": "mbcls-2606.07591",
+      "verdict": "IN",
+      "deciding_quote": "autonomous scientific research across 40 tasks from 10 scientific domains",
+      "reason": "The benchmark grounds tasks in real papers and measures agents' ability to reproduce scientific findings end to end."
+    },
+    {
+      "case_id": "mbcls-2604.20441",
+      "verdict": "OUT",
+      "deciding_quote": "domain-specific audit framework for medical research agent skills",
+      "reason": "The framework audits the quality of other agents' skill outputs rather than performing research itself."
+    },
+    {
+      "case_id": "mbcls-2606.04228",
+      "verdict": "UNDECIDABLE",
+      "deciding_quote": "AI scientist systems increasingly choose biological foundation models before they choose experiments",
+      "reason": "This is a representation-comparison study informing a design choice for AI-for-science pipelines, leaving it unclear whether the source's own system performs a research cycle."
+    },
+    {
+      "case_id": "mbcls-2503.22444",
+      "verdict": "IN",
+      "deciding_quote": "spanning literature review, hypothesis generation, experimentation, and manuscript writing",
+      "reason": "The envisioned system is described as automating the entire research lifecycle across these stages."
+    },
+    {
+      "case_id": "mbcls-2507.10590",
+      "verdict": "OUT",
+      "deciding_quote": "Language Model (LM) pipelines can dynamically refine their outputs against programmatic constraints",
+      "reason": "The framework repairs constraint conflicts in general LM pipelines at runtime, unrelated specifically to scientific research."
+    },
+    {
+      "case_id": "mbcls-2605.06177",
+      "verdict": "OUT",
+      "deciding_quote": "comparing deep research agents under a shared evaluation environment",
+      "reason": "The toolkit standardizes evaluation of search-and-synthesis agents rather than agents that hypothesize and experiment."
+    },
+    {
+      "case_id": "mbcls-2511.13825",
+      "verdict": "IN",
+      "deciding_quote": "search the literature, run analyses, and generate hypotheses",
+      "reason": "KOSMOS searches literature, analyzes data, and generates and tests specific biological hypotheses."
+    },
+    {
+      "case_id": "mbcls-2507.17209",
+      "verdict": "IN",
+      "deciding_quote": "enhance hypothesis generation and validation",
+      "reason": "The system explicitly generates and validates scientific hypotheses using LLMs and knowledge graphs."
+    },
+    {
+      "case_id": "mbcls-2511.04583",
+      "verdict": "IN",
+      "deciding_quote": "formulates novel hypotheses for improvement, iteratively experiments until improvements are achieved, and writes a paper with the results",
+      "reason": "The agent analyzes prior work, forms hypotheses, experiments iteratively, and writes up a paper, the full research cycle."
+    },
+    {
+      "case_id": "mbcls-2511.23436",
+      "verdict": "OUT",
+      "deciding_quote": "couples a trainable small diffusion model (the learner) with a frozen large language model (the verifier)",
+      "reason": "The framework is a domain-agnostic learner-verifier training loop for general model self-improvement, not scientific research."
+    },
+    {
+      "case_id": "mbcls-2607.09195",
+      "verdict": "IN",
+      "deciding_quote": "hypothesis--test--evidence--belief cycle",
+      "reason": "The protocol makes an explicit, auditable hypothesize-test-evidence-update cycle for a research agent."
+    },
+    {
+      "case_id": "mbcls-2602.18920",
+      "verdict": "IN",
+      "deciding_quote": "autonomously generate novel and significant research ideas",
+      "reason": "The training paradigm is built specifically to make LLMs generate novel research ideas, the hypothesis-formation stage of research."
+    },
+    {
+      "case_id": "mbcls-2604.18418",
+      "verdict": "OUT",
+      "deciding_quote": "retrieve, synthesize, and reason over large-scale external knowledge",
+      "reason": "The benchmarked systems retrieve and synthesize evidence into guidelines rather than forming and testing hypotheses."
+    },
+    {
+      "case_id": "mbcls-2410.01440",
+      "verdict": "OUT",
+      "deciding_quote": "autonomous robots take actions",
+      "reason": "The system plans robot action sequences, a robotics-planning task."
+    },
+    {
+      "case_id": "mbcls-2505.21935",
+      "verdict": "UNDECIDABLE",
+      "deciding_quote": "this survey offers a structured lens to examine LLM-based hypothesis discovery",
+      "reason": "This is a survey summarizing prior literature rather than a description of the authors' own system performing research."
+    },
+    {
+      "case_id": "mbcls-2501.16961",
+      "verdict": "OUT",
+      "deciding_quote": "combining language models with the rigor of logical solvers",
+      "reason": "The method converts natural-language reasoning problems into solver-checkable form, a general reasoning-verification task."
+    },
+    {
+      "case_id": "mbcls-2512.11509",
+      "verdict": "OUT",
+      "deciding_quote": "affect creativity in LLMs",
+      "reason": "The study measures how hallucination-reduction techniques change LLM creativity scores, not a research-performing system."
+    },
+    {
+      "case_id": "mbcls-2604.00248",
+      "verdict": "IN",
+      "deciding_quote": "review generation process",
+      "reason": "The RL system's output is the peer-review text itself, the review stage of research."
+    },
+    {
+      "case_id": "mbcls-2607.10127",
+      "verdict": "IN",
+      "deciding_quote": "efficiently discovers closed-form physical equations",
+      "reason": "The evolutionary system discovers closed-form physical equations from data, a scientific analysis and discovery activity."
+    },
+    {
+      "case_id": "mbcls-2606.28756",
+      "verdict": "OUT",
+      "deciding_quote": "persistent, unique identifier for AI scientists",
+      "reason": "The proposal is an identifier registry for tracking AI authorship, an administrative infrastructure rather than a research-performing system."
+    },
+    {
+      "case_id": "mbcls-2604.03553",
+      "verdict": "OUT",
+      "deciding_quote": "automate the targeted extraction of information from image scans of historical sources",
+      "reason": "The tool's function is extracting information from document scans, a data-extraction task rather than a full research cycle."
+    },
+    {
+      "case_id": "mbcls-2605.23273",
+      "verdict": "OUT",
+      "deciding_quote": "progressive improvement of both the optimization setup and resulting design",
+      "reason": "The multi-agent system iterates on engineering design parameters and code rather than forming and testing scientific hypotheses."
+    },
+    {
+      "case_id": "mbcls-2601.03315",
+      "verdict": "IN",
+      "deciding_quote": "six LLM agents mapped to stages of the scientific workflow",
+      "reason": "The case study's pipeline maps agents onto the stages of the scientific workflow to produce full research papers."
+    },
+    {
+      "case_id": "mbcls-2205.08794",
+      "verdict": "OUT",
+      "deciding_quote": "improving logical reasoning abilities of language models",
+      "reason": "The pre-training method targets general logical-reasoning ability in language models, not a research cycle."
+    },
+    {
+      "case_id": "mbcls-2603.18516",
+      "verdict": "OUT",
+      "deciding_quote": "multi-step information seeking and reasoning over large, open-domain sources",
+      "reason": "The framework evaluates agents that retrieve and synthesize information to answer questions, not agents that experiment."
+    },
+    {
+      "case_id": "mbcls-2505.12501",
+      "verdict": "OUT",
+      "deciding_quote": "job-shop scheduling benchmarks",
+      "reason": "The system solves disruption-aware production scheduling problems, a planning task."
+    },
+    {
+      "case_id": "mbcls-2508.11860",
+      "verdict": "OUT",
+      "deciding_quote": "identifying synthetic routes from commercially available starting materials to desired target molecules",
+      "reason": "The agent searches for viable synthetic chemistry routes under constraints, a planning/search task rather than experimentation."
+    },
+    {
+      "case_id": "mbcls-2505.19897",
+      "verdict": "OUT",
+      "deciding_quote": "computer-using agents, capable of interacting with operating systems as humans do",
+      "reason": "The agents operate professional software through an interface like a human user, a computer-operation task."
+    },
+    {
+      "case_id": "mbcls-2510.19949",
+      "verdict": "OUT",
+      "deciding_quote": "Cross-Platform Computer Use Agents",
+      "reason": "The system is built to operate computer interfaces across web, desktop, and mobile platforms, a computer-operation task."
+    }
+  ]
+}

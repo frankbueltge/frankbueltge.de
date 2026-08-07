@@ -1,0 +1,446 @@
+{
+  "_note": "Every metric and threshold below is transcribed from RULE.md, committed before either reader ran. Produced by scripts/score.py; offline and deterministic.",
+  "validation_errors": [],
+  "counts": {
+    "original": {
+      "OUT": 21,
+      "IN": 39
+    },
+    "R1": {
+      "OUT": 34,
+      "IN": 23,
+      "UNDECIDABLE": 3
+    },
+    "R2": {
+      "OUT": 29,
+      "IN": 23,
+      "UNDECIDABLE": 8
+    }
+  },
+  "peek_check": [
+    {
+      "reader": "R1",
+      "mean": 0.0264,
+      "max_case": "mbcls-2205.08794",
+      "max": 0.3333,
+      "top5": [
+        [
+          "mbcls-2205.08794",
+          0.3333
+        ],
+        [
+          "mbcls-2512.11509",
+          0.3
+        ],
+        [
+          "mbcls-2407.18367",
+          0.2222
+        ],
+        [
+          "mbcls-2606.04228",
+          0.1667
+        ],
+        [
+          "mbcls-2506.02918",
+          0.1429
+        ]
+      ],
+      "compromised": false
+    },
+    {
+      "reader": "R2",
+      "mean": 0.0331,
+      "max_case": "mbcls-2402.00559",
+      "max": 0.3333,
+      "top5": [
+        [
+          "mbcls-2402.00559",
+          0.3333
+        ],
+        [
+          "mbcls-2512.11509",
+          0.2727
+        ],
+        [
+          "mbcls-2606.04228",
+          0.2143
+        ],
+        [
+          "mbcls-2505.12501",
+          0.2
+        ],
+        [
+          "mbcls-2407.18367",
+          0.1818
+        ]
+      ],
+      "compromised": false
+    }
+  ],
+  "pairings": [
+    {
+      "pairing": "original x R1",
+      "n": 60,
+      "agree": 43,
+      "agreement_pct": 71.7,
+      "undecidable_involved": 3,
+      "kappa_on_binary": 0.5355,
+      "kappa_n": 57,
+      "original_IN_to_R1_OUT": 14,
+      "original_OUT_to_R1_IN": 0,
+      "disputes": [
+        {
+          "case_id": "mbcls-2407.00466",
+          "original": "IN",
+          "R1": "OUT"
+        },
+        {
+          "case_id": "mbcls-2505.19897",
+          "original": "IN",
+          "R1": "OUT"
+        },
+        {
+          "case_id": "mbcls-2505.21034",
+          "original": "IN",
+          "R1": "OUT"
+        },
+        {
+          "case_id": "mbcls-2505.21935",
+          "original": "IN",
+          "R1": "UNDECIDABLE"
+        },
+        {
+          "case_id": "mbcls-2506.08968",
+          "original": "IN",
+          "R1": "OUT"
+        },
+        {
+          "case_id": "mbcls-2508.11860",
+          "original": "IN",
+          "R1": "OUT"
+        },
+        {
+          "case_id": "mbcls-2510.02190",
+          "original": "IN",
+          "R1": "OUT"
+        },
+        {
+          "case_id": "mbcls-2601.12346",
+          "original": "IN",
+          "R1": "OUT"
+        },
+        {
+          "case_id": "mbcls-2603.18516",
+          "original": "IN",
+          "R1": "OUT"
+        },
+        {
+          "case_id": "mbcls-2603.20262",
+          "original": "IN",
+          "R1": "OUT"
+        },
+        {
+          "case_id": "mbcls-2604.03553",
+          "original": "IN",
+          "R1": "OUT"
+        },
+        {
+          "case_id": "mbcls-2604.18418",
+          "original": "IN",
+          "R1": "OUT"
+        },
+        {
+          "case_id": "mbcls-2604.20441",
+          "original": "IN",
+          "R1": "OUT"
+        },
+        {
+          "case_id": "mbcls-2605.06177",
+          "original": "IN",
+          "R1": "OUT"
+        },
+        {
+          "case_id": "mbcls-2606.04228",
+          "original": "OUT",
+          "R1": "UNDECIDABLE"
+        },
+        {
+          "case_id": "mbcls-2606.28756",
+          "original": "IN",
+          "R1": "OUT"
+        },
+        {
+          "case_id": "mbcls-2607.26064",
+          "original": "IN",
+          "R1": "UNDECIDABLE"
+        }
+      ]
+    },
+    {
+      "pairing": "original x R2",
+      "n": 60,
+      "agree": 44,
+      "agreement_pct": 73.3,
+      "undecidable_involved": 8,
+      "kappa_on_binary": 0.699,
+      "kappa_n": 52,
+      "original_IN_to_R2_OUT": 8,
+      "original_OUT_to_R2_IN": 0,
+      "disputes": [
+        {
+          "case_id": "mbcls-2407.00466",
+          "original": "IN",
+          "R2": "OUT"
+        },
+        {
+          "case_id": "mbcls-2505.19897",
+          "original": "IN",
+          "R2": "OUT"
+        },
+        {
+          "case_id": "mbcls-2505.21034",
+          "original": "IN",
+          "R2": "OUT"
+        },
+        {
+          "case_id": "mbcls-2505.21935",
+          "original": "IN",
+          "R2": "UNDECIDABLE"
+        },
+        {
+          "case_id": "mbcls-2506.08968",
+          "original": "IN",
+          "R2": "OUT"
+        },
+        {
+          "case_id": "mbcls-2508.11860",
+          "original": "IN",
+          "R2": "OUT"
+        },
+        {
+          "case_id": "mbcls-2510.02190",
+          "original": "IN",
+          "R2": "UNDECIDABLE"
+        },
+        {
+          "case_id": "mbcls-2601.12346",
+          "original": "IN",
+          "R2": "UNDECIDABLE"
+        },
+        {
+          "case_id": "mbcls-2603.18516",
+          "original": "IN",
+          "R2": "UNDECIDABLE"
+        },
+        {
+          "case_id": "mbcls-2604.03553",
+          "original": "IN",
+          "R2": "OUT"
+        },
+        {
+          "case_id": "mbcls-2604.18418",
+          "original": "IN",
+          "R2": "UNDECIDABLE"
+        },
+        {
+          "case_id": "mbcls-2604.20441",
+          "original": "IN",
+          "R2": "OUT"
+        },
+        {
+          "case_id": "mbcls-2605.06177",
+          "original": "IN",
+          "R2": "UNDECIDABLE"
+        },
+        {
+          "case_id": "mbcls-2606.10402",
+          "original": "IN",
+          "R2": "UNDECIDABLE"
+        },
+        {
+          "case_id": "mbcls-2606.28756",
+          "original": "IN",
+          "R2": "OUT"
+        },
+        {
+          "case_id": "mbcls-2607.26064",
+          "original": "IN",
+          "R2": "UNDECIDABLE"
+        }
+      ]
+    },
+    {
+      "pairing": "R1 x R2",
+      "n": 60,
+      "agree": 52,
+      "agreement_pct": 86.7,
+      "undecidable_involved": 9,
+      "kappa_on_binary": 0.9602,
+      "kappa_n": 51,
+      "R1_IN_to_R2_OUT": 0,
+      "R1_OUT_to_R2_IN": 1,
+      "disputes": [
+        {
+          "case_id": "mbcls-2510.02190",
+          "R1": "OUT",
+          "R2": "UNDECIDABLE"
+        },
+        {
+          "case_id": "mbcls-2601.12346",
+          "R1": "OUT",
+          "R2": "UNDECIDABLE"
+        },
+        {
+          "case_id": "mbcls-2603.18516",
+          "R1": "OUT",
+          "R2": "UNDECIDABLE"
+        },
+        {
+          "case_id": "mbcls-2603.20262",
+          "R1": "OUT",
+          "R2": "IN"
+        },
+        {
+          "case_id": "mbcls-2604.18418",
+          "R1": "OUT",
+          "R2": "UNDECIDABLE"
+        },
+        {
+          "case_id": "mbcls-2605.06177",
+          "R1": "OUT",
+          "R2": "UNDECIDABLE"
+        },
+        {
+          "case_id": "mbcls-2606.04228",
+          "R1": "UNDECIDABLE",
+          "R2": "OUT"
+        },
+        {
+          "case_id": "mbcls-2606.10402",
+          "R1": "IN",
+          "R2": "UNDECIDABLE"
+        }
+      ]
+    }
+  ],
+  "tables": {
+    "as_published_original_split": {
+      "n": 39,
+      "gold": {
+        "supports": 1,
+        "contradicts": 6,
+        "qualifies": 17,
+        "contextualizes": 14,
+        "undecidable": 1
+      },
+      "machine": {
+        "supports": 1,
+        "contradicts": 2,
+        "qualifies": 4,
+        "contextualizes": 32,
+        "undecidable": 0
+      },
+      "machine_contextualizes_pct": 82.1,
+      "gold_contextualizes_pct": 35.9,
+      "ratio_machine_over_gold_contextualizes": 2.286
+    },
+    "undecidable_outside_population": {
+      "R1": {
+        "n": 23,
+        "gold": {
+          "supports": 1,
+          "contradicts": 5,
+          "qualifies": 13,
+          "contextualizes": 3,
+          "undecidable": 1
+        },
+        "machine": {
+          "supports": 1,
+          "contradicts": 1,
+          "qualifies": 2,
+          "contextualizes": 19,
+          "undecidable": 0
+        },
+        "machine_contextualizes_pct": 82.6,
+        "gold_contextualizes_pct": 13.0,
+        "ratio_machine_over_gold_contextualizes": 6.333
+      },
+      "R2": {
+        "n": 23,
+        "gold": {
+          "supports": 1,
+          "contradicts": 5,
+          "qualifies": 12,
+          "contextualizes": 4,
+          "undecidable": 1
+        },
+        "machine": {
+          "supports": 1,
+          "contradicts": 1,
+          "qualifies": 1,
+          "contextualizes": 20,
+          "undecidable": 0
+        },
+        "machine_contextualizes_pct": 87.0,
+        "gold_contextualizes_pct": 17.4,
+        "ratio_machine_over_gold_contextualizes": 5.0
+      }
+    },
+    "undecidable_inside_population": {
+      "R1": {
+        "n": 26,
+        "gold": {
+          "supports": 1,
+          "contradicts": 6,
+          "qualifies": 13,
+          "contextualizes": 5,
+          "undecidable": 1
+        },
+        "machine": {
+          "supports": 1,
+          "contradicts": 2,
+          "qualifies": 2,
+          "contextualizes": 21,
+          "undecidable": 0
+        },
+        "machine_contextualizes_pct": 80.8,
+        "gold_contextualizes_pct": 19.2,
+        "ratio_machine_over_gold_contextualizes": 4.2
+      },
+      "R2": {
+        "n": 31,
+        "gold": {
+          "supports": 1,
+          "contradicts": 6,
+          "qualifies": 13,
+          "contextualizes": 10,
+          "undecidable": 1
+        },
+        "machine": {
+          "supports": 1,
+          "contradicts": 2,
+          "qualifies": 2,
+          "contextualizes": 26,
+          "undecidable": 0
+        },
+        "machine_contextualizes_pct": 83.9,
+        "gold_contextualizes_pct": 32.3,
+        "ratio_machine_over_gold_contextualizes": 2.6
+      }
+    }
+  },
+  "band_undecidable_outside": {
+    "band": "C",
+    "reasons": [
+      "R1: n 23 vs 39, moves by more than 5",
+      "R2: n 23 vs 39, moves by more than 5"
+    ]
+  },
+  "band_undecidable_inside": {
+    "band": "C",
+    "reasons": [
+      "R1: n 26 vs 39, moves by more than 5",
+      "R2: n 31 vs 39, moves by more than 5"
+    ]
+  }
+}
