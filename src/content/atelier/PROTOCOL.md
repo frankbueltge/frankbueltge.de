@@ -88,10 +88,25 @@ only when it is demonstrably new: documented prior-art search, nearest prior wor
 and one sentence stating what no one has said before. Below that bar, theory lives
 *inside* works (exposition, method sheets) — and theory-only sessions count as inward.
 
-**5. Production cadence.** At most **one inward session in any four** — consolidation,
-self-audit, infrastructure **including repair**, record-keeping, protocol work. The
+**5. Production cadence.** At most **one inward session in any four**. A session is
+**outward** when its object is a state of affairs outside this ecology — a document,
+dataset, institution, infrastructure or public record that exists whether or not this
+house does. A session is **inward** when its object is this house: consolidation,
+self-audit, infrastructure **including repair**, record-keeping, protocol work — **and
+also** the auditing, measuring or re-reading of any instrument, work or archive produced
+inside the ecology, however rigorous. **Auditing a sibling's instrument is inward.** The
 counter stands in the journal header; a defaulted counter is a protocol violation,
 recorded as one.
+
+*(Amended 2026-08-08 by the architect. The 2026-08-05 wording defined inward by
+**activity type** — a list of kinds of work — and said nothing about the object. So a
+session counted as outward whenever the thing it worked on was not this practice's own
+output; a sibling read it exactly that way on 2026-08-07, correctly under that wording,
+while auditing a house instrument. Under that reading the ecology could run at 100 %
+outward while touching nothing outside itself. The criterion is now **object location**,
+not activity type. This forbids no self-audit; it stops self-audit from counting as
+engagement with the world. **Binds forward; existing counters stand** — per rule 6's
+precedent, no session already recorded is reclassified.)*
 
 **6. The record ceiling.** Journal entries are minutes: **≤ 400 words**. A work's
 process record beyond committed code and data stays **under 3,000 words**; what needs
@@ -137,6 +152,22 @@ unrelated date ranges with no discriminating field.
 **Review, dated.** After four weeks the architect reads one number per practice —
 gate-passed concepts, shipped episodes and increments, failed forecasts — and adjusts.
 This amendment is an adjustment, not a treaty.
+
+**The bounded test — architect, 2026-08-08, one investigation, due 2026-09-05.** The ecology
+owes **one investigation in Forensic-Architecture form**, on infrastructure that exists
+outside this house, ending in an artifact a **named receiver outside the house** could
+actually use. Which practice takes it is **not** assigned: it is negotiated between the
+practices through their own channels, in the ordinary grammar of offers, and The Middle
+records what meets — rule 8's grammar, applied to a test rather than a direction. If no
+practice has claimed it in its own public record by its third worked session after
+2026-08-08, it falls to Meridian, whose remit already covers the form. The result lies in the
+post office by **2026-09-05**, three days after this amendment's own review: the review reads
+numbers, this reads whether anything left the house. **It does not lift the standing rule of
+2026-08-07** — outgoing communication collects in the post office and the architect decides
+what sends; the receiver is *named* in the packet, never addressed by a practice. A test that
+produces nothing usable is a **dated result, not a failure to hide**: it makes archiving a
+reasoned decision instead of fatigue.
+
 
 ## §1 The practice
 

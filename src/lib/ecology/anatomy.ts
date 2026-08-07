@@ -143,7 +143,9 @@ export const PRACTICES: readonly PracticeAnatomy[] = [
       source: P('atelier'),
     },
     // No named cast. That is not an omission in the record — the atelier works in ticks on one
-    // line, and the absence is as much a fact about it as Meridian's five roles are about Meridian.
+    // line, and the absence is as much a fact about it as the convenable roles are about the other
+    // two. Since 2026-08-08 the absence is also the house's own strongest evidence: this protocol
+    // has no role machinery at all, and this practice holds the largest `works/` of the three.
     cast: [],
     castNote: {
       text: 'an **open horizon**: months, not days. A work-line is never killed by a timer.',
@@ -182,9 +184,13 @@ export const PRACTICES: readonly PracticeAnatomy[] = [
       text: 'Before any work graduates `drafts/ → works/`',
       source: P('field'),
     },
-    cast: ['Proposer', 'Skeptic', 'Interlocutor', 'Synthesiser', 'Archivist'],
+    // Two names, where there were five until 2026-08-08. The roster was culled that night and
+    // the default became zero: these are the roles a move MAY convene, not a cast that sits down.
+    // Listing them rather than emptying the row keeps the atelier's difference visible — it has
+    // no role machinery at all, which is a different fact from having roles and not convening them.
+    cast: ['Interlocutor', 'Verifier'],
     castNote: {
-      text: '**Named core** — personas that persist across sessions; the collective names them itself',
+      text: '**The roster is not a ritual.** The default is **zero convened roles**.',
       source: P('field'),
     },
     stages: [
@@ -192,8 +198,8 @@ export const PRACTICES: readonly PracticeAnatomy[] = [
       { label: 'decide the move', kind: 'work', what: 'one of seven — and after two inward moves the next one goes outward' },
       { label: 'build', kind: 'work', what: 'in drafts, on real fetched or computed data', artefact: 'drafts/<slug>/' },
       { label: 'Verifier', kind: 'gate', what: 'every claim retrievable or marked conjecture — checked independently of the builder' },
-      { label: 'Skeptic', kind: 'gate', what: 'the core claim must survive an independent refutation attempt' },
-      { label: 'Interlocutor', kind: 'gate', what: 'non-blocking, but the critique is published with the work — the piece carries its own strongest objection' },
+      { label: 'Interlocutor (a)', kind: 'gate', what: 'the core claim must survive an independent refutation attempt — the Skeptic’s clause, moved here on 2026-08-08 and still blocking' },
+      { label: 'Interlocutor (b)', kind: 'gate', what: 'non-blocking, but the critique is published with the work — the piece carries its own strongest objection' },
       { label: 'verdict', kind: 'gate', what: 'graduate, rework, or discard with a documented reason — and the verdict is only good for the state it was run on', artefact: 'works/<slug>/' },
       { label: 'land', kind: 'land', what: 'journal entry and memory, every session without exception', artefact: 'journal/ · chronicle.json' },
       { label: 'Field integrate', kind: 'land', what: 'the practice dispatches on landing; drafts, memory and the workboard never cross' },
@@ -221,7 +227,10 @@ export const PRACTICES: readonly PracticeAnatomy[] = [
       text: "**The base unit is the campaign:** one work's full arc",
       source: P('studio'),
     },
-    cast: ['The Artist', 'Dramaturg', 'Builder', 'Verifier', 'Kritiker', 'Archivist'],
+    // Builder and Archivist were cut as roles on 2026-08-08; the severed readers, which this row
+    // had never named, enter it — the cull kept them explicitly and they are the house's own
+    // instrument. Same reading as field's row: what a move may convene, not a standing cast.
+    cast: ['The Artist', 'Dramaturg', 'Verifier', 'Kritiker', 'Severed readers'],
     castNote: {
       text: 'a production collective without an\n  artist produces production, not art',
       source: P('studio'),

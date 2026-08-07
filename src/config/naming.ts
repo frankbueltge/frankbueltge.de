@@ -136,7 +136,9 @@ export const NAMING = {
         id: 'ensemble',
         name: 'The Studio',
         href: '/studio',
-        description: 'An artist collective under no label, staging works of data art in autonomous sessions — every element carries an honesty tier: verified, sourced or imagined.',
+        // "under no label" until 2026-08-08, when the architect gave this practice a line and the
+        // door had to stop advertising the remit it lost. See docs/decision-log.md, that date.
+        description: 'An artist collective on one line: only digital works, and only what a machine does better than a human — scale, repetition, verification, the temporal. Every element carries an honesty tier: verified, sourced or imagined.',
         tourHref: '/studio/how-a-premiere-returned',
       },
       {

@@ -1,8 +1,35 @@
 # The apparatus turns outward — a restructuring proposal
 
-**Status: PROPOSAL. Nothing here is in force.** Every item needs Frank's go, separately.
-Written 2026-08-07 for execution in a later session, from a research pass on multi-agent
-systems plus measurements taken against the three engine repositories on the same day.
+**Status: EXECUTED 2026-08-08.** Frank read this document and said *"setz um"*; the four
+questions §7 reserved for him were put to him first and are answered in §7 below, in place. What
+was built, and the two places where execution went beyond or short of this text, are recorded in
+`docs/decision-log.md` (row 2026-08-08) — that row, not this document, is the record of what is
+in force. This text is left as written, apart from the §7 answers and this block: it is the
+argument that was accepted, and rewriting it to match the outcome would destroy the only copy of
+the reasoning anyone could later contest.
+
+*Original status line, for the record: "PROPOSAL. Nothing here is in force. Every item needs
+Frank's go, separately."* Written 2026-08-07 for execution in a later session, from a research
+pass on multi-agent systems plus measurements taken against the three engine repositories on the
+same day.
+
+**Where execution differed from this text, so no later session has to diff it:**
+
+1. **§4.2's roster list omitted Ensemble's Artist**, and the executing session did not cut what
+   the architect had not been shown. The Artist stands, explicitly untouched, flagged in the
+   protocol and in the decision-log row as a live question for the four-week review.
+2. **§3's Studio row collides with clauses this document never lists** — the physical-realisation
+   channel, the fabrication specialist, the €150/quarter fabrication ceiling granted 2026-08-01,
+   and "Presence … digital or physical". All were marked dormant or superseded in place rather
+   than deleted, and works already realised physically stand as shipped.
+3. **§4.1's cut of the Skeptic silently carried a blocking gate clause with it.** The gauntlet's
+   graduation condition depended on the Skeptic by name. The clause moved into the Interlocutor's
+   pass verbatim, still blocking, rather than travelling out with the role — §6 says gates stay.
+4. **One in-house number in §1.1 did not reproduce.** This document reports 28 work pages for the
+   Atelier; `ls ulysses/works/` returns 56 entries. Both may be right of different things (pages
+   published on the site vs. directories in the repository). The executing session used the
+   directory counts, said which command produced them, and did not repeat the figure it could not
+   reproduce.
 
 ---
 
@@ -272,19 +299,38 @@ multi-agent orchestration. The role cull in §4 pays for the model diversity in 
 
 ---
 
-## 7. Open questions for Frank
+## 7. Open questions for Frank — **all four answered 2026-08-08**
 
 1. **Atelier's line** (§3) — the only remit gap. Needs him.
+   → **ANSWERED: the practice proposes its own.** Neither the candidate below nor a line from
+   the architect. Ulysses argues its own line in its own public record within three worked
+   sessions — what it is, what it excludes, the nearest thing it has already made that the line
+   would have licensed — and Frank decides on the proposal. *The warrant of numbers* travels as
+   offered material, explicitly not an instruction; a counter-proposal is the preferred outcome.
+   Silence past three sessions returns the decision to him. Consistent with the season change of
+   2026-08-06, and slower on purpose.
 2. **Does the outward redefinition apply retroactively** to the cadence counters, or bind
    forward only? Recommendation: **forward only**, consistent with rule 6's own precedent
    ("binds forward; existing records stand").
+   → **ANSWERED: forward only**, as recommended. Sessions 89 and 90 stand as journalled; no
+   recorded counter is recomputed.
 3. **Model heterogeneity** (§5.2) — worth the cost and the complexity, or a later step?
+   → **ANSWERED: later, not now.** Let §2 and §4 act first and measure at the four-week review.
+   The role cull is what would pay for it, so the money is not gone — it is unspent.
 4. **The bounded test.** Recommended shape: one investigation, FA-form, on existing
    infrastructure, with a **named receiver outside the house**, in four weeks. If something
    a stranger can use comes out, the diagnosis was right. If not, that is a dated result
    and archiving becomes a reasoned decision rather than fatigue. The two festival
    submissions already sitting `prepared` in the post office (DARC, 2026-08-28; ZKM Arte
    Útil, 2026-09-06) are the nearest existing test of the same question.
+   → **ANSWERED: yes, set it.** In force in all three protocols, beside the Production
+   Amendment's own review. Due in the post office **2026-09-05**. Not assigned to a practice —
+   negotiated between them in rule 8's grammar, falling to Meridian if unclaimed after three
+   worked sessions. **It does not lift the standing rule of 2026-08-07:** the receiver is named
+   in the packet and never addressed by a practice; sending stays Frank's. *(Note taken during
+   execution: the two festival packets this paragraph calls the nearest existing test were
+   **withheld** by Frank on 2026-08-07, for the same diagnosis this document argues — so they
+   are no longer running as a parallel test, which is part of why this one was set.)*
 
 ---
 
