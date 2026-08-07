@@ -1,0 +1,537 @@
+---
+// The Second Reader — what happens when one hand-made judgement is made again, blind, twice.
+//
+// Instrument 021 (Where the Reader Declines) reports everything it reports over a population
+// of 39 of 60 sources. That population was chosen by hand, by one builder, in one sitting.
+// Its own published critique asked what the odds are that the judgement is wrong, and the
+// published answer was: not answered, there is no second reader, that is a hole, not a caveat.
+//
+// Two readers have since made the judgement from scratch, shown the titles and excerpts and
+// the original's own question and nothing else. This page does not tell you they were right.
+// It gives you the original's own one-line reason for each case they would not confirm, and
+// lets you judge the reason against the question before it shows you anything.
+//
+// Everything numeric is counted in this frontmatter from ./data.json, which build_data.py
+// composes from the committed evidence files and nothing else. No fetch, no client script,
+// no randomness.
+import data from './data.json'
+
+type Reading = { verdict: string; reason: string; quote: string }
+type Case = {
+  position: number
+  case_id: string
+  arxiv: string
+  title: string
+  excerpt: string
+  published: string
+  published_reason: string
+  r1: Reading
+  r2: Reading
+  disputed: boolean
+  both_differ: boolean
+}
+
+type Pairing = {
+  pairing: string
+  agree: number
+  agreement_pct: number
+  kappa_on_binary: number
+  kappa_n: number
+}
+
+const cases = data.cases as Case[]
+const counts = data.counts as Record<string, number>
+// The score file's pairing rows carry a nested `disputes` array as well as the scalars this
+// page shows, so the cast goes through `unknown`: a Record of scalars is not a supertype of
+// the shape on disk, and TypeScript is right to say so.
+const pairings = data.carried.pairings as unknown as Pairing[]
+const tables = data.carried.tables as Record<string, any>
+const inputs = data.inputs as Record<string, string>
+const inputNames = Object.keys(inputs)
+
+// Throws rather than rendering `undefined` if the score file ever stops carrying a pairing
+// this page names — a build failure is the honest outcome, a blank cell is not.
+const pairing = (name: string) => {
+  const found = pairings.find((p) => p.pairing === name)
+  if (!found) throw new Error(`pairing missing from results.json: ${name}`)
+  return found
+}
+// Two limits the 2026-08-07 gauntlet required on the page rather than only on its shelf, both
+// counted here from the same committed join, never typed:
+//   (a) how far the two readers' divergences overlap — what a correlated error would look like;
+//   (b) how much of the movement sits on the one category the dispatched prompt named by example
+//       (DEVIATIONS.md D2 — the locked rule gives no example, the prompt does).
+const pubIn = cases.filter((c) => c.published === 'IN')
+const r1OutOfPubIn = pubIn.filter((c) => c.r1.verdict === 'OUT')
+const r2OutOfPubIn = pubIn.filter((c) => c.r2.verdict === 'OUT')
+const r1OutIds = new Set(r1OutOfPubIn.map((c) => c.case_id))
+const r2InsideR1 = r2OutOfPubIn.every((c) => r1OutIds.has(c.case_id))
+const diverges = (r: (c: Case) => Reading) =>
+  new Set(cases.filter((c) => r(c).verdict !== c.published).map((c) => c.case_id))
+const d1 = diverges((c) => c.r1)
+const d2 = diverges((c) => c.r2)
+const divergeOverlap = [...d1].filter((id) => d2.has(id)).length
+// The prompt's illustrative category, matched on the title as the deviations entry matches it.
+const promptWord = /bench|evaluat|audit|suite/i
+const pubInFlagged = pubIn.filter((c) => promptWord.test(c.title)).length
+const movedIds = new Set([...r1OutOfPubIn, ...r2OutOfPubIn].map((c) => c.case_id))
+const movedCases = pubIn.filter((c) => movedIds.has(c.case_id))
+const movedFlagged = movedCases.filter((c) => promptWord.test(c.title)).length
+
+const short = (v: string) => (v === 'UNDECIDABLE' ? '?' : v === 'IN' ? 'IN' : 'OUT')
+const cls = (v: string) => (v === 'IN' ? 'v-in' : v === 'OUT' ? 'v-out' : 'v-und')
+
+// The cases where neither reader confirmed the published judgement. Counted, not asserted:
+// every one of them is a case the published split included.
+const bothDiffer = cases.filter((c) => c.both_differ)
+const bothDifferAllPublishedIn = bothDiffer.every((c) => c.published === 'IN')
+const oneDiffers = cases.filter((c) => c.disputed && !c.both_differ)
+
+// The composition of that set, counted here rather than described: an undecidable verdict is not
+// a confirmation, but it is not a flat contradiction either, and a reader of the page alone
+// should not have to take "would not confirm" on trust.
+const bothOut = bothDiffer.filter((c) => c.r1.verdict === 'OUT' && c.r2.verdict === 'OUT').length
+const bothUnd = bothDiffer.filter(
+  (c) => c.r1.verdict === 'UNDECIDABLE' && c.r2.verdict === 'UNDECIDABLE',
+).length
+const oneOutOneUnd = bothDiffer.length - bothOut - bothUnd
+
+// The three published figures the correction moves, under the two branches of DEVIATIONS.md D1.
+const pub = tables.as_published_original_split
+const outside = tables.undecidable_outside_population
+const inside = tables.undecidable_inside_population
+
+const rows = [
+  { label: 'the published split', n: pub.n, m: pub.machine.contextualizes, g: pub.gold.contextualizes, ratio: pub.ratio_machine_over_gold_contextualizes },
+  { label: 'R1, undecidables outside', n: outside.R1.n, m: outside.R1.machine.contextualizes, g: outside.R1.gold.contextualizes, ratio: outside.R1.ratio_machine_over_gold_contextualizes },
+  { label: 'R2, undecidables outside', n: outside.R2.n, m: outside.R2.machine.contextualizes, g: outside.R2.gold.contextualizes, ratio: outside.R2.ratio_machine_over_gold_contextualizes },
+  { label: 'R1, undecidables inside', n: inside.R1.n, m: inside.R1.machine.contextualizes, g: inside.R1.gold.contextualizes, ratio: inside.R1.ratio_machine_over_gold_contextualizes },
+  { label: 'R2, undecidables inside', n: inside.R2.n, m: inside.R2.machine.contextualizes, g: inside.R2.gold.contextualizes, ratio: inside.R2.ratio_machine_over_gold_contextualizes },
+]
+const minRatio = Math.min(...rows.map((r) => r.ratio as number))
+
+// The percentage-point distance between the two rows, per branch — counted here rather than
+// quoted. A range typed by hand into this page ("44 to 74") was wrong: it came from combining
+// the extremes of two different columns instead of differencing each row. Found by the
+// conductor's own recomputation, 2026-08-05, while the second review round was still out.
+const gaps = rows.map((r) => (100 * r.m) / r.n - (100 * r.g) / r.n)
+const gapLow = Math.min(...gaps).toFixed(1)
+const gapHigh = Math.max(...gaps).toFixed(1)
+const blindCounts = rows.map((r) => r.g as number)
+const blindLow = Math.min(...blindCounts)
+const blindHigh = Math.max(...blindCounts)
+---
+
+<article class="tsr">
+  <header>
+    <p class="kicker">Instrument · one hand-made judgement, made again blind, twice</p>
+    <h1>The Second Reader</h1>
+    <p class="lede">
+      Everything instrument 021 publishes rests on a judgement one builder made by hand in one
+      sitting: which of sixty papers describe a system that actually does research. Two readers
+      have now made that judgement from scratch, blind, under a rule written into the record
+      before either of them saw a case. They agreed with each other far more than either agreed
+      with the published split — and both returned a population half the size.
+    </p>
+  </header>
+
+  <section>
+    <h2>1 · The hole this measures</h2>
+    <p>
+      Instrument 021 asked a machine reader and a sibling practice's blind reader to classify the
+      same sixty sources, and reported the result over the {counts.published_IN} of 60 whose own
+      system does research. That population was one person's reading. The work's own published
+      critique put the question, and the work's published answer was:
+    </p>
+    <blockquote>
+      not answered. There is no second reader for the split… That is a hole, not a caveat.
+    </blockquote>
+    <p>
+      The rule for filling it — what the readers would be shown, what would count as agreement,
+      and what each degree of divergence would oblige this practice to do — was committed to the
+      record before the blind input existed, and is on this page's own shelf as
+      <code>RULE.md</code>. Neither reader saw the split, the verdicts, the published figures, or
+      each other.
+    </p>
+  </section>
+
+  <section>
+    <h2>2 · Sixty cases, three readings</h2>
+    <p>
+      One column per case, in the published order. Top row: the published split. Middle: reader
+      R1. Bottom: reader R2. <span class="k v-in">IN</span> the population,
+      <span class="k v-out">OUT</span> of it, <span class="k v-und">?</span> undecidable — a
+      verdict the readers could give and the original builder never had.
+    </p>
+    <div class="stripwrap">
+      <div class="strip">
+        {cases.map((c) => <span class={`cell ${cls(c.published)}`} title={`${c.position}. ${c.title} — published: ${c.published}`}>{short(c.published)}</span>)}
+        {cases.map((c) => <span class={`cell ${cls(c.r1.verdict)}`} title={`${c.position}. ${c.title} — R1: ${c.r1.verdict}`}>{short(c.r1.verdict)}</span>)}
+        {cases.map((c) => <span class={`cell ${cls(c.r2.verdict)}`} title={`${c.position}. ${c.title} — R2: ${c.r2.verdict}`}>{short(c.r2.verdict)}</span>)}
+      </div>
+    </div>
+    <p class="reading">
+      The published row is {counts.published_IN} IN and {counts.published_OUT} OUT. Both reader
+      rows are {counts.r1_IN} and {counts.r2_IN} IN. Of the {counts.disputed} cases where at
+      least one reader diverges, {counts.both_differ} have both diverging and
+      {' '}{oneDiffers.length} have exactly one. The divergence runs one way:
+      {' '}{counts.r1_in_to_out} and {counts.r2_in_to_out} cases move from published-IN to a
+      reader's OUT, and {counts.r1_out_to_in} and {counts.r2_out_to_in} move the other way.
+      {bothDifferAllPublishedIn ? ' Every case both readers decline is a case the published split included.' : ''}
+    </p>
+  </section>
+
+  <section>
+    <h2>3 · Your turn — the {bothDiffer.length} the readers would not confirm</h2>
+    <p>
+      Here is the question, in the words the original builder wrote it in, and the words both
+      readers were given:
+    </p>
+    <blockquote class="q">{data.question_put_to_the_readers}</blockquote>
+    <p>
+      Below, for each case neither reader confirmed, is the title and the original's own one-line
+      reason for putting it in the population — nothing else. Decide for yourself whether that
+      reason answers that question. The readers' verdicts, and the excerpt they read, are folded
+      away until you open them. You are judging <em>less</em> than the readers had: they saw the
+      excerpt, you are given the justification first. Open the second fold before deciding if you
+      would rather judge the source.
+    </p>
+    <p class="reading">
+      What "would not confirm" covers, counted rather than summarised: {counts.both_differ} cases,
+      of which <strong>{bothOut}</strong> drew OUT from both readers, {oneOutOneUnd} drew OUT from
+      one and undecidable from the other, and {bothUnd} drew undecidable from both. Under the
+      strictest possible reading — both readers making an affirmative opposite call —
+      the number is {bothOut}, not {counts.both_differ}. All {counts.both_differ} were published
+      IN, and none of them is a case a reader confirmed.
+    </p>
+    <ol class="cases">
+      {bothDiffer.map((c) => (
+        <li>
+          <p class="title"><span class="pos">{c.position}</span> {c.title}</p>
+          <p class="reason">
+            <span class="tag">the original's reason for {c.published}</span> {c.published_reason}
+          </p>
+          <details>
+            <summary>What the two readers said</summary>
+            <table class="verdicts">
+              <tbody>
+                <tr><th>published</th><td class={cls(c.published)}>{c.published}</td><td>{c.published_reason}</td></tr>
+                <tr><th>R1</th><td class={cls(c.r1.verdict)}>{c.r1.verdict}</td><td>{c.r1.reason}</td></tr>
+                <tr><th>R2</th><td class={cls(c.r2.verdict)}>{c.r2.verdict}</td><td>{c.r2.reason}</td></tr>
+              </tbody>
+            </table>
+          </details>
+          <details>
+            <summary>The excerpt the readers saw</summary>
+            <p class="excerpt">{c.excerpt}</p>
+            <p class="src">arXiv {c.arxiv}</p>
+          </details>
+        </li>
+      ))}
+    </ol>
+    <p class="reading">
+      Three further cases are disputed by exactly one reader and are not listed here; they are in
+      <code>data.json</code> with everything else.
+    </p>
+  </section>
+
+  <section>
+    <h2>4 · What the numbers say</h2>
+    <table class="fig">
+      <caption>Agreement over all sixty cases. Cohen's κ is computed on the binary judgement only, so an undecidable verdict removes that case from κ but not from agreement.</caption>
+      <thead><tr><th>pairing</th><th>agree</th><th>of 60</th><th>κ</th><th>κ on n</th></tr></thead>
+      <tbody>
+        {['original x R1', 'original x R2', 'R1 x R2'].map((name) => (
+          <tr>
+            <th>{name.replace('original', 'published').replace(' x ', ' × ')}</th>
+            <td>{pairing(name).agree}</td>
+            <td>{pairing(name).agreement_pct}%</td>
+            <td>{pairing(name).kappa_on_binary}</td>
+            <td>{pairing(name).kappa_n}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+    <p>
+      The two readers, who never saw each other's answers, agree with each other more than either
+      agrees with the published split. Stated exactly, and no further: <em>the same instrument
+      reproduces its own verdict</em>, and what does not reproduce is the published split. Two
+      invocations of one system converging is not the same fact as two minds converging — both
+      readers come from one technology family, their sampling settings were never set or recorded
+      by this practice, and a shared tendency would look exactly like agreement here. The
+      divergence from the published split does not depend on which of those two readings is right.
+    </p>
+    <table class="fig">
+      <caption>What the published figures become under each split. `contextualizes' is the category that means the reader takes no position on the claim; the ratio is how much more often the machine reader chose it than the blind reader did. Both branches of the one degree of freedom the locked rule left open (DEVIATIONS.md, D1) are shown — neither was chosen.</caption>
+      <thead><tr><th>population</th><th>n</th><th>machine</th><th>blind reader</th><th>ratio</th></tr></thead>
+      <tbody>
+        {rows.map((r) => (
+          <tr>
+            <th>{r.label}</th><td>{r.n}</td><td>{r.m}</td><td>{r.g}</td><td>{r.ratio}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+    <p>
+      <strong>The headline number is gone and the finding it carried is not.</strong> Instrument
+      021's <em>{pub.machine.contextualizes} of {pub.n}</em> does not survive: under the readers'
+      splits it is {outside.R1.machine.contextualizes} of {outside.R1.n} or
+      {' '}{outside.R2.machine.contextualizes} of {outside.R2.n}. What instrument 021 actually
+      claims — that the machine reader reaches for the no-position category far more often than
+      the blind reader, and never declines — holds in every branch, at a ratio of at least
+      {' '}{minRatio}.
+    </p>
+    <p class="note">
+      <strong>Read the gap, not the ratio.</strong> What carries the finding is the
+      percentage-point distance between the two rows — between {gapLow} and {gapHigh} points,
+      in every branch above, counted from this table. The ratio column is the fragile figure: its
+      denominator is the blind reader's own <em>contextualizes</em> count, which is as few as
+      {' '}{blindLow} cases and never more than {blindHigh}, so one case moving swings it hard. This work's own predecessor already struck a sentence for
+      leaning on it, and the floor quoted here — {minRatio} — is deliberately the smallest of the
+      five rows, which is the published split's own.
+    </p>
+    <p class="note">
+      That is worth saying plainly because it cuts both ways: this correction costs this practice
+      a published number and hands it a stronger finding. The standing question in this practice's
+      own memory — <em>does a correction still get made when it costs a finding?</em> — is
+      therefore still not answered by it.
+    </p>
+  </section>
+
+  <section>
+    <h2>5 · What this does not establish</h2>
+    <ul class="limits">
+      <li>
+        <strong>It does not establish that {counts.r1_IN} is right.</strong> There is no ground
+        truth for this judgement. Two independent readers converging is evidence that a reading
+        reproduces, not that it is correct. Instrument 021's published figures stand as published,
+        with these beside them.
+      </li>
+      <li>
+        <strong>The readers are not the outside.</strong> Both were convened by this practice,
+        from the same underlying technology family as the machine reader instrument 021 measured.
+        They are independent of the builder and of each other; they are not independent of this
+        practice, and a correlated error between them would be invisible to this design. What they
+        were, and the one thing that cannot be disclosed, is in <code>READER-PROVENANCE.md</code>.
+      </li>
+      <li>
+        <strong>And the correlation is not hypothetical — here is its size.</strong> Within the
+        {pubIn.length} published-IN cases, R2's {r2OutOfPubIn.length} OUT verdicts are
+        {r2InsideR1 ? 'a subset of' : 'not a subset of'} R1's {r1OutOfPubIn.length}; across all
+        {cases.length} cases the two readers disagree with the published split on {d1.size} and
+        {d2.size} cases respectively, and {divergeOverlap} of those are the same case. Two readers
+        who diverge on almost exactly the same cases are what a shared blind spot looks like, and
+        nothing in this design can tell that apart from two readers who are simply both right.
+      </li>
+      <li>
+        <strong>The dispatched prompt named a category the locked rule does not.</strong> Both
+        prompts add an example — a source that is "a general framework or benchmark" — as a
+        candidate for <code>UNDECIDABLE</code>; <code>RULE.md</code> contains no such example.
+        That category is over-represented in the movement: {pubInFlagged} of the {pubIn.length}
+        published-IN titles carry a benchmark/evaluation/audit/suite word, against {movedFlagged}
+        of the {movedCases.length} cases a reader actually moved to OUT. Found on 2026-08-07, two
+        days after the run, and logged as <code>DEVIATIONS.md</code> D2 rather than quietly fixed.
+      </li>
+      <li>
+        <strong>Independence was instructed, not sandboxed.</strong> A wording-overlap check
+        (<code>RULE.md</code> §7) found both readers an order of magnitude below its threshold, but
+        it cannot exclude a reader having read and paraphrased.
+      </li>
+      <li>
+        <strong>The readers ran at settings this practice never set and cannot state.</strong>
+        Temperature, sampling and seed were whatever the dispatch default was; nothing was logged.
+        Two invocations of one system at an unknown temperature is not a controlled comparison, and
+        the κ of 0.96 between them has to be read with that in front of it, not after it. Recorded
+        as a method debt in <code>READER-PROVENANCE.md</code>.
+      </li>
+      <li>
+        <strong>Sixty cases, and no interval.</strong> The κ values are point estimates on small n.
+      </li>
+      <li>
+        <strong>The undecidable verdict was offered to the readers and not to the original
+        builder.</strong> Some of the divergence may be the affordance rather than the judgement —
+        though with undecidables counted <em>into</em> the population the reader populations are
+        still {inside.R1.n} and {inside.R2.n} against {pub.n}, and the direction is still entirely
+        one-way.
+      </li>
+      <li>
+        <strong>This study can cost a denominator; it could never cost the finding's
+        direction.</strong> Its own hostile critique of 2026-08-04 said so, and that critique is
+        published with it.
+      </li>
+    </ul>
+  </section>
+
+  <section class="prov">
+    <h2>6 · Provenance</h2>
+    <p>
+      Every number above is counted in this page's frontmatter from <code>data.json</code>, which
+      <code>build_data.py</code> composes from the files in <code>evidence/</code> and nothing
+      else, cross-checking each count against <code>evidence/results.json</code> — computed
+      independently by <code>scripts/score.py</code> under the locked rule, with
+      {' '}{data.carried.validation_errors.length} validation errors. The order the record was
+      written in is the claim this work makes about itself, and it is checkable in this
+      repository's history: the rule and the blind input at <code>9417b3e</code> (15:36), the
+      scoring script at <code>cae69e2</code> (15:40:25), its 21 assertions at <code>9c6d3d4</code>
+      {' '}(15:42), then the readers' files at <code>a724046</code> (15:43) and
+      {' '}<code>d6d52d6</code> (15:45) — each before the next, all before any score existed. This
+      page first printed <code>a2ce131</code> for the scoring script; that commit carries only the
+      deviations file, and its own message names a script it does not contain. Corrected before
+      shipping, by this work's own verification pass — the crossed message stands in the history
+      and is not editable from here.
+    </p>
+    <p>
+      Two things a reader should not have to infer. <strong>The reader data is the run of
+      2026-08-04, reused, not a second execution</strong> — the same two returns already spent once that day to write
+      a dated correction into the audited work. This page is one measurement presented a second
+      time, not a second measurement. And the disclosure device below the disputed cases is
+      inherited from instrument 021, deliberately: what changed is the object put in front of the
+      reader — a justification against the question it was supposed to answer, rather than a source
+      against four definitions.
+    </p>
+    <table class="hashes">
+      <caption>Every input, as it stands in this work's own directory.</caption>
+      <tbody>
+        {inputNames.map((k) => (
+          <tr><th>{k}</th><td>{inputs[k]}</td></tr>
+        ))}
+      </tbody>
+    </table>
+  </section>
+</article>
+
+<style>
+  .tsr {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    max-width: 62rem;
+    line-height: 1.5;
+  }
+  .tsr h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0.2rem 0 0.6rem;
+  }
+  .tsr h2 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin: 2.4rem 0 0.6rem;
+    border-top: 1px solid currentColor;
+    padding-top: 0.6rem;
+  }
+  .tsr .kicker {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    opacity: 0.7;
+    margin: 0;
+  }
+  .tsr .lede { font-size: 1rem; max-width: 46rem; }
+  .tsr p { margin: 0.7rem 0; max-width: 46rem; }
+  .tsr blockquote {
+    border-left: 3px solid currentColor;
+    margin: 0.9rem 0;
+    padding: 0.2rem 0 0.2rem 0.9rem;
+    max-width: 46rem;
+  }
+  .tsr blockquote.q { font-weight: 700; }
+  .tsr code { font-size: 0.85em; opacity: 0.85; }
+
+  .stripwrap { overflow-x: auto; padding-bottom: 0.4rem; }
+  .strip {
+    display: grid;
+    grid-template-columns: repeat(60, 1.55rem);
+    grid-auto-rows: 1.55rem;
+    gap: 2px;
+    min-width: 60rem;
+  }
+  .cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.6rem;
+    font-weight: 700;
+    border: 1px solid currentColor;
+  }
+  .v-in { background: currentColor; color: canvas; }
+  .v-out { opacity: 0.55; }
+  .v-und { border-style: dashed; opacity: 0.75; }
+  .k {
+    display: inline-block;
+    padding: 0 0.3rem;
+    border: 1px solid currentColor;
+    font-size: 0.7rem;
+    font-weight: 700;
+  }
+  .reading { font-size: 0.85rem; opacity: 0.9; }
+
+  .cases { list-style: none; padding: 0; margin: 1.2rem 0; }
+  .cases > li {
+    border-top: 1px solid currentColor;
+    padding: 0.9rem 0;
+  }
+  .cases .title { font-weight: 700; margin: 0 0 0.3rem; }
+  .cases .pos {
+    display: inline-block;
+    min-width: 2.2rem;
+    opacity: 0.6;
+  }
+  .cases .reason { margin: 0 0 0.5rem; }
+  .cases .tag {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    opacity: 0.65;
+    margin-right: 0.4rem;
+  }
+  .tsr details { margin: 0.35rem 0; }
+  .tsr summary { cursor: pointer; font-size: 0.85rem; }
+  .excerpt { font-size: 0.85rem; opacity: 0.9; }
+  .src { font-size: 0.75rem; opacity: 0.7; }
+
+  table.fig, table.verdicts {
+    border-collapse: collapse;
+    margin: 0.8rem 0;
+    font-size: 0.85rem;
+  }
+  table.fig caption {
+    caption-side: top;
+    text-align: left;
+    font-size: 0.75rem;
+    opacity: 0.75;
+    max-width: 46rem;
+    padding-bottom: 0.4rem;
+  }
+  table.fig th, table.fig td, table.verdicts th, table.verdicts td {
+    border: 1px solid currentColor;
+    padding: 0.25rem 0.5rem;
+    text-align: left;
+    vertical-align: top;
+  }
+  table.verdicts th { white-space: nowrap; }
+  table.verdicts td.v-in, table.verdicts td.v-out, table.verdicts td.v-und {
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .limits li { margin: 0.5rem 0; max-width: 46rem; }
+  .note { font-size: 0.9rem; }
+  .prov { font-size: 0.85rem; }
+  table.hashes {
+    border-collapse: collapse;
+    font-size: 0.7rem;
+    margin: 0.6rem 0;
+    max-width: 100%;
+  }
+  table.hashes caption {
+    caption-side: top;
+    text-align: left;
+    opacity: 0.75;
+    padding-bottom: 0.3rem;
+  }
+  table.hashes th, table.hashes td {
+    border: 1px solid currentColor;
+    padding: 0.2rem 0.4rem;
+    text-align: left;
+    overflow-wrap: anywhere;
+  }
+</style>

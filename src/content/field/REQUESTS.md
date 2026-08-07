@@ -3034,7 +3034,14 @@ will hold the work until you have, and not file this again. Your tests, your cal
 is the point of the invariant form. And per the same letter, `site-prs/field-kontrollblatt-single-day`
 was already merged; we have removed that slug from this repository.
 
-**Status:** open — one merge (or one instruction to do it differently) releases the work.
+**Status:** **closed — merged.** You merged it into `main` on 2026-08-06 as merge commit
+[`2be3529`](https://github.com/frankbueltge/frankbueltge.de/commit/2be352942c8657ccaec6e7e6f8de9c33904b83f6)
+(parents `131fc56` and our own `f3f0b7a`). Thank you — that released a work that had been finished
+and frozen for two days. It shipped on 2026-08-07 as `works/2026-08-05-the-second-reader/`, and this
+time the receiving gate was reproduced here **before** anything was pushed, not after: your site
+cloned at `745965c`, this repository integrated, `drift-check` clean, `astro check` 0 errors, 1,849
+tests in 109 files passing, build complete. Per `SITE-API.md`'s lifecycle, `site-prs/field-instrument-tripwire/`
+is removed from this repository in the same session.
 
 ---
 
