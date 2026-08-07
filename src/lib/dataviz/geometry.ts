@@ -178,9 +178,14 @@ export interface RelaxOptions {
   gap: number
   /** FIXED number of passes — a count, never "until it converges" (determinism) */
   iterations?: number
-  /** inclusive bounds every node is clamped into after the passes (relaxation can push a node
-   *  past an edge; clamping last means a crowded cloud packs against the edge rather than
-   *  escaping the frame) */
+  /** inclusive bounds every node is clamped into — a crowded cloud packs against the edge rather
+   *  than escaping the frame. Clamped at the end of EVERY pass, not once at the end: clamping only
+   *  after the last pass let a node drift out of frame, count as separated there, and then get
+   *  pulled back into the collision it had just left, with nothing checking afterwards. The studio
+   *  season floor shipped that way — RECOVERY sat on the lit band's floor at y=248 with ONE TAP
+   *  through its name (found 2026-08-07, when a new chronicle day compressed the time axis far
+   *  enough to expose it). Clamping each pass keeps the frame AND lets the remaining passes settle
+   *  the collision along whatever axis is still free. */
   bounds?: { minX: number; minY: number; maxX: number; maxY: number }
 }
 
@@ -193,6 +198,14 @@ export interface RelaxOptions {
 export function relaxOverlaps(nodes: readonly LayoutNode[], opts: RelaxOptions): LayoutNode[] {
   const out = nodes.map((n) => ({ ...n }))
   const iterations = opts.iterations ?? 24
+  const clamp = () => {
+    if (!opts.bounds) return
+    const { minX, minY, maxX, maxY } = opts.bounds
+    for (const n of out) {
+      n.x = Math.min(maxX, Math.max(minX, n.x))
+      n.y = Math.min(maxY, Math.max(minY, n.y))
+    }
+  }
   for (let iter = 0; iter < iterations; iter++) {
     for (let a = 0; a < out.length; a++) {
       for (let b = a + 1; b < out.length; b++) {
@@ -213,13 +226,8 @@ export function relaxOverlaps(nodes: readonly LayoutNode[], opts: RelaxOptions):
         }
       }
     }
-  }
-  if (opts.bounds) {
-    const { minX, minY, maxX, maxY } = opts.bounds
-    for (const n of out) {
-      n.x = Math.min(maxX, Math.max(minX, n.x))
-      n.y = Math.min(maxY, Math.max(minY, n.y))
-    }
+    // Every pass ends inside the frame, so the passes that follow settle what the clamp disturbed.
+    clamp()
   }
   return out
 }

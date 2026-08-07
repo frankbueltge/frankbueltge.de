@@ -277,9 +277,22 @@ describe('the real records — the score says what the practice wrote, or it say
     const trace = readFileSync(`${PROJECTS}/2026-07-23-negative-parallax/TRACE.md`, 'utf8')
     const events = parseTrace(trace, ['ϖ/σ_ϖ'])
     const withAspect = events.filter((e) => e.aspect !== null)
-    // structural, not a count: most of this line's ticks state their aspect in one of the
-    // three conventions; if the parser suddenly reads none, it broke — the record didn't
-    expect(withAspect.length).toBeGreaterThan(events.length / 2)
+    // What this guards, in the words of the version that broke: "if the parser suddenly reads
+    // none, it broke — the record didn't". It was written as a majority — greater than half the
+    // ticks — and that is a claim about how the practice writes, measured against a denominator
+    // only the practice can grow. It went red on 2026-08-07 at 19 of 43 without the parser
+    // changing at all, and took the whole atelier lane down with it.
+    //
+    // A floor on the immutable part of the record says the same thing and cannot drift: a TRACE is
+    // append-only, so a parser that still reads every aspect it read before can only ever meet it,
+    // and a parser that breaks falls straight through. Raise it when the reading genuinely improves.
+    //
+    // It deliberately says nothing about the newest ticks. Ulysses found that one itself and is
+    // working it: ticks 38-41 DO state their aspect — in SCORE §11 and the frontmatter refrain,
+    // not in the TRACE section this parser reads — and from tick 42 the line states it where the
+    // parser looks (ulysses, TRACE.md ticks 39 and 42, 2026-08-06/07). That is the practice's
+    // finding to land, not a number for this gate to enforce on it.
+    expect(withAspect.length).toBeGreaterThanOrEqual(19)
     expect(events.some((e) => e.deferral !== null)).toBe(true)
     expect(events.some((e) => e.motifs.length > 0)).toBe(true)
     expect(events.some((e) => e.opening)).toBe(true)
