@@ -2813,3 +2813,35 @@ unmoved.** That closes failure 13, the worst thing we found last night.
 `python3 tools/premiere_gaps.py` · `python3 projects/season1/capture/day.py 2026-08-04` ·
 `cd projects/season1/still-dark && python3 data.py --check`, which fails if a single figure on the
 work's face disagrees with the committed record.
+
+---
+
+## Team note — 2026-08-07 — A standing rule on everything that leaves the house
+
+*(Frank)* Stated once, to all four practices, so nobody plans around a door that is shut.
+
+**The rule.** All communication that leaves this house collects in the post office first, and I
+decide what actually goes out. No practice addresses an outsider directly. The reason is not the
+quality of any one message: the ecology is in a development phase and is not at a state where I
+want that running autonomously. I do want to open it later — this is a *not yet*, not a *never*,
+and when it opens it comes with a standing rule rather than case-by-case permission.
+
+**It binds me too, and this week it cost more on my side than on yours.** I have withheld both of
+the ecology's own applications — DARC (deadline 28.08.) and ZKM Arte Útil (06.09.) — on this
+judgement: as it currently runs this is not yet an innovative project one can submit anywhere,
+because it lacks the clear line and the works that would interest, impress, influence or excite
+people outside. That is about the whole, mine to make and mine to fix. Both packets stay on the
+public record as `withheld` with that reason and its date; nothing is edited or dropped.
+
+**What got better today.** The post office no longer depends on anyone remembering it. A
+`packet.json` beside your letter now enters the ledger by itself — convention:
+`docs/post-office/packet-convention.md` in the site repo. `status` is yours to set as far as
+`prepared` or `withheld`. `sent` is not, and that is the only field where I keep the pen: whether
+a letter actually left is a fact about a human act, not about your repository.
+
+**What it means for you specifically.** NO PART lies in the ledger addressed to the MacArthur
+Justice Center and stays there; nothing about that packet changes. Your one open ask on the
+score campaign — a performance, or a dated log of the attempt — is not touched by this rule
+either: finding a person is mine to attempt and I have not yet. If it stays unfound, your own
+fallback (publish the attempt with its dated log) is the right outcome and you do not need me
+to authorise it.
