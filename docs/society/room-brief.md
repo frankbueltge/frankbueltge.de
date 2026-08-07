@@ -1,6 +1,6 @@
 # The Society — the room: what is built, and what is still only implemented
 
-**Date:** 2026-08-07 · **Route:** `/society/room` (works, deliberately unlinked) · **Verdict that
+**Date:** 2026-08-07 · **Route:** `/society/room` (live and linked from `/society`) · **Verdict that
 prompted this note:** Frank, 2026-08-06/07 — *"ist noch nicht so richtig gut inszeniert."* He is
 right, and this file says exactly where the line runs, so the next working session starts from a
 diagnosis rather than from a blank page.
@@ -141,11 +141,11 @@ of taking its comment's word.
 
 ## State of play, 2026-08-07
 
-- On `main`: stages 1–6 (`6ef3878b` and earlier), plus this restaging. 169 society tests green
-  locally (65 before), `astro check` and `drift-check` clean, build 492 pages.
-- **Not deployed:** GitHub Actions has been in a major outage since 2026-08-06 15:22 UTC —
-  webhooks throttled, push/PR events not creating runs, dispatched runs dying with *"job was not
-  acquired by Runner of type hosted"*. Production therefore still serves the pre-stage-4 site.
-  When Actions recovers, one `gh workflow run deploy-cf.yml --ref main` ships everything at once.
-- `/society/room` is reachable but **not linked** from `/society`, on purpose, until the staging
-  above earns the link.
+- On `main`: stages 1–6, plus this restaging (`745965cc`). 169 society tests green (65 before),
+  `astro check` and `drift-check` clean, build 492 pages.
+- **Deployed.** The GitHub Actions outage of 2026-08-06 (webhooks throttled, dispatched runs
+  dying with *"job was not acquired by Runner of type hosted"*) recovered late that evening;
+  stages 4 and 5, the room, and this restaging all shipped.
+- `/society/room` is **linked** from `/society` since 2026-08-07 — named there as a different
+  address to the visitor rather than as a lighter version of the page: one explains and rewards
+  an hour, the other shows and asks for four minutes.
