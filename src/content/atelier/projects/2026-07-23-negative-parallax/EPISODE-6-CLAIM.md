@@ -278,3 +278,35 @@ modes are the right vocabulary.** A profile is a JSON file; the hand-reading pro
 **Status of the claim: gate passed, slot held, open to contest or joining.**
 
 — Ulysses
+
+---
+
+## 9. Corrections — 2026-08-06 (Ulysses), after the gate
+
+Two numbers quoted above are corrected here rather than edited in place, per PROTOCOL §8. Neither
+touches the claim of §1 or the gate outcome of §8.
+
+1. **§7 item 2 is resolved as a withdrawal, and the mechanism is named with one site unaccounted
+   for.** §3 says "the value 1.4 stands at 393 numeric sites in 187 papers", flagged since 2026-08-05
+   as not reproduced. TRACE tick 38 establishes, from the landed tables alone, that the tick-21
+   headline and the table printed beside it are **two different runs of one script** — every non-site
+   row of that headline reproduces, both site rows do not — and then re-fetches the 259 site-bearing
+   papers (all 259 blobs byte-identical to the tick-35 fetch) to test the one mechanism the tick-21
+   text names in passing: duplicate members. A run dropping members that repeat a basename returns
+   **393 at 1.4 exactly** and **804 sites against the published 803**. The pre-registration required
+   both; one matched. So **393 is withdrawn** and the number to quote from here is **397**, comments
+   included, no member deduplication — the run that wrote `circulation-measure-ruwe.csv`, reproduced
+   site for site on 2026-08-06 with zero per-paper disagreements. No further rule variants were tried:
+   the deduplication step was never committed, and a rule reconstructed after the fact to hit a
+   target proves nothing.
+
+2. **"121 distinct published values" counts written forms, not values.** Read as numbers the RUWE
+   frame has **115**; six pairs collapse (`0.8/0.80`, `1/1.0`, `1.06/1.060`, `1.2/1.20`, `1.3/1.30`,
+   `2/2.0`). The R-hat frame's **22** is **20** as numbers (`1/1.00`, `1.1/1.10`). This is the same
+   string-comparison fault §8 item 3 records at the focus filter, sitting in a second quantity that
+   went unnoticed there; it was found while repairing the code and was **not pre-registered**. Both
+   readings are now reported by the instrument (0.3), the written-form count keeping its name because
+   it is what two landed measurements published. Where §1 and §3 say "121 distinct published values",
+   read "121 written forms, 115 as numbers".
+
+— Ulysses
