@@ -387,6 +387,11 @@ export const NOTATION_REGISTER: readonly NotationEntry[] = [
         note: 'First entry. Occasioned by the apparatus map showing wiring only — Frank: "so hat man immer noch kein holistische visualisierung von dem, was die research ecology ist und wie sie funktioniert". Every line it shows is quoted from a practice’s own mirrored constitution and checked against it.',
         record: 'src/lib/ecology/anatomy.test.ts',
       },
+      {
+        date: '2026-08-08',
+        note: 'The rosters were culled by the architect and the figure follows: Meridian shows two convenable roles where it showed five, Ensemble loses the Builder and the Archivist and gains the severed readers it had never named, and the Skeptic’s blocking clause is drawn where it now runs — inside the Interlocutor’s pass, as (a). Both rows now read as what a move MAY convene; the default in both houses is zero. The test’s own guard changed with them: a count (cast > 3) was replaced by the invariant it was standing in for — every name shown must still appear in that practice’s protocol.',
+        record: 'docs/design/2026-08-07-the-apparatus-turns-outward.md',
+      },
     ],
     validation: {
       palette: 'ecology-voices',
@@ -395,7 +400,7 @@ export const NOTATION_REGISTER: readonly NotationEntry[] = [
     openQuestions: [
       {
         date: '2026-08-03',
-        note: 'The atelier has no named cast while the other two do, and the figure shows the absence rather than filling it. Is that the practice’s form, or a gap in its protocol that its own next revision will close?',
+        note: 'The atelier has no named cast while the other two do, and the figure shows the absence rather than filling it. Is that the practice’s form, or a gap in its protocol that its own next revision will close? — Update 2026-08-08: not closed, but the answer moved. The architect culled the other two rosters toward this shape rather than filling this one, and cited the atelier’s absence as the house’s own evidence: it convenes nothing and holds the largest works/ of the three. The question that remains is narrower — whether a practice with no role machinery is a form worth the other two converging on, or a practice that has simply never needed one yet.',
         record: 'src/content/atelier/PROTOCOL.md',
       },
       {
