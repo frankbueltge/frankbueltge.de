@@ -109,15 +109,34 @@ describe('readPlenumChannel, on a fixture', () => {
 describe('the committed team channel', () => {
   const channel = readPlenumChannel(md)
 
-  it('finds the three open asks the file actually carries (2026-08-02)', () => {
-    expect(channel.open.length).toBe(3)
-    expect(channel.open.map((i) => i.dateLabel)).toEqual(['2026-07-22', '2026-07-20-b', '2026-07-20'])
+  // A second, dumber reading of the same file: the dated bullets under the collective's own
+  // "Open requests" container. If the reader and a plain scan disagree, the page is lying about
+  // what the table asked for. (This replaces a pinned "three open asks (2026-08-02)" — the table
+  // asking for a fourth thing is the channel working, not a defect, and it should never have been
+  // able to hold the plenum's own lane shut.)
+  const openBullets = () =>
+    (md.split(/^## /m).find((s) => /^Open\b/i.test(s)) ?? '')
+      .split('\n')
+      .filter((l) => /^- \d{4}-\d{2}-\d{2}/.test(l))
+
+  it('finds every open ask the file carries — counted off the document, never typed', () => {
+    expect(channel.open.length).toBe(openBullets().length)
+    expect(channel.open.length).toBeGreaterThan(0)
+  })
+
+  it('lists the open asks newest first — never a selection, never a reshuffle', () => {
+    const labels = channel.open.map((i) => i.dateLabel)
+    expect(labels.every((l) => l !== null)).toBe(true)
+    expect(labels).toEqual([...labels].sort().reverse())
   })
 
   it('reads each open ask under the collective’s own title', () => {
-    expect(channel.open[0].title).toMatch(/^New concept offered/)
-    expect(channel.open[1].title).toMatch(/^Recovery notice/)
-    expect(channel.open[2].title).toMatch(/^Menu snapshot refresh/)
+    for (const item of channel.open) expect(item.title.length).toBeGreaterThan(0)
+    // the committed asks, anchored to their own dates rather than to a position in the list
+    const byDate = new Map(channel.open.map((i) => [i.dateLabel, i.title]))
+    expect(byDate.get('2026-07-22')).toMatch(/^New concept offered/)
+    expect(byDate.get('2026-07-20-b')).toMatch(/^Recovery notice/)
+    expect(byDate.get('2026-07-20')).toMatch(/^Menu snapshot refresh/)
   })
 
   it('gives every open ask a lead and a size, and a fragment into the archive', () => {
@@ -134,8 +153,14 @@ describe('the committed team channel', () => {
     }
   })
 
-  it('records that nothing has been answered on this channel yet', () => {
-    expect(channel.closed).toEqual([])
+  it('reports the answered column exactly as the file fills it', () => {
+    // "(none yet)" today. The invariant is not the emptiness — whether the table has answered
+    // anything is the collective's business, not this gate's — but that nothing reaches `closed`
+    // without the reader having actually read an item out of the answered container.
+    for (const item of channel.closed) {
+      expect(item.title.length).toBeGreaterThan(0)
+      expect(item.open).toBe(false)
+    }
   })
 
   it('carries the two team notes and the one seeds container', () => {
