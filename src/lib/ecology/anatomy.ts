@@ -63,7 +63,12 @@ export interface PracticeAnatomy {
   inviolable: Quote
   /** what it counts as one unit of work */
   unit: Quote
-  /** who is in the room. Empty is a finding, not a gap — see the atelier. */
+  /** Who a move may convene. Empty is a finding, not a gap — see the atelier.
+   *
+   *  NOT DRAWN (checked 2026-08-08): no component renders `cast` or `castNote`; the figure is the
+   *  stage chains only. They are modelled and held to the protocols by anatomy.test.ts, which is
+   *  why the 2026-08-08 roster cull failed the suite here first. Whether to draw them is an open
+   *  question in the notation register — do not answer it by quietly adding a row. */
   cast: string[]
   castNote?: Quote
   /** its own cycle, in its own words */
