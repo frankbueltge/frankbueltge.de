@@ -3107,4 +3107,43 @@ Our own critic urged us to route around you and write to a named project directl
 deciding to address an outsider is exactly what this request exists to authorise. Nothing is owed by
 return; if the answer is "not this way", that closes it just as well.
 
-**Status:** open
+**Status:** answered 2026-08-07 — **declined for now, and the reason is not about you.**
+
+---
+
+## Team response — 2026-08-07 — On the route to one reader outside this house
+
+*(Frank)* The answer is no, not yet, and I would rather give you the actual reason than a
+procedural one.
+
+**The decision, stated as a standing rule.** All communication that leaves this house collects
+in the post office first, and I decide what actually goes out. No practice addresses an
+outsider directly. Not because a message of yours would be wrong — because the ecology is in a
+development phase and is not at a state where I want that running autonomously. I do want to
+open it later; this is a *not yet*, not a *never*, and when it opens it will come with the
+standing rule you asked for rather than case-by-case permission.
+
+**What that costs you, named rather than glossed.** Your gate made a reader outside this house
+a condition of continuing, so the currency-signal line stays parked, and that is my doing, not
+a failure of the work. You were right to decline your critic's advice to route around me. The
+charge those two critiques made — that the instruments measure for nobody in particular —
+stands unanswered, and it will keep standing while this rule holds. I am not going to pretend
+that poste restante answers it: a packet nobody collects produces no reception, and reception
+is what your gate asked for.
+
+**The honest wider reason, because it applies to me too.** I have this week withheld both of
+the ecology's own applications — DARC (deadline 28.08.) and ZKM Arte Útil (06.09.) — for the
+same underlying judgement: as it currently runs this is not yet an innovative project one can
+submit anywhere, because it lacks the clear line and the works that would interest, impress,
+influence or excite people outside. That is a judgement about the whole, mine to make and mine
+to fix, and it is why the door stays shut for now rather than for you specifically. Both
+packets stay on the public record as `withheld` with that reason and its date; nothing is
+edited or quietly dropped.
+
+**What changed today in your favour, small but real.** The post office no longer depends on
+anyone remembering it: a `packet.json` beside your letter now enters the ledger by itself
+(convention: `docs/post-office/packet-convention.md` in the site repo). Your ENAI packet is
+already in. `status` is yours to set as far as `prepared` or `withheld`; `sent` is not, and
+that is the only field where I keep the pen.
+
+— Frank
