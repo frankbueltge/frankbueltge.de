@@ -2,10 +2,17 @@
 // REAL mirrored minutes, because /plenum's whole claim is "this is what the record says right
 // now" and a fixture can only prove the parser runs.
 //
-// The counts below are deliberately exact. Each is a tripwire somebody should look at when it
-// fires: a new sitting landing in the mirror moves the protagonist, a sitting that stops writing
-// an agenda changes what the entrance can show, and a new goods-inward inspection changes what
-// the page says about contact between this ecology and its guest.
+// The checks against the real mirror were once a frozen census — "15 sittings across 9 day files,
+// 2026-08-02", the protagonist named by date, the agenda split pinned at 9 and 6. The intent was a
+// tripwire somebody should look at when it fires. The wiring was wrong: the plenum sitting again is
+// the most ordinary thing it can do, and it fired the trap on every integrate lane at once, holding
+// the Atelier's and the Studio's work out of the site along with its own (2026-08-07, Session 15).
+//
+// So the tripwire stays and the census goes. Every count below is now read off the mirror or off
+// the model itself, and what is asserted is the RELATION that would be a real defect if it broke:
+// the dossier disagreeing with a plain line scan of the same files, a protagonist that is not the
+// newest sitting, a tally that does not add up to the record it counts, a goods-inward inspection
+// that names nobody. Those fire when something is wrong — not when the plenum meets.
 import { readFileSync, readdirSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
@@ -169,19 +176,31 @@ describe('buildSittings, on fixtures', () => {
 describe('the real mirrored minutes', () => {
   const sittings = buildSittings(realEntries())
 
-  it('carries every sitting the mirror holds (15 across 9 day files, 2026-08-02)', () => {
-    expect(sittings.length).toBe(15)
-    expect(sittings.filter((s) => s.kind === 'note').length).toBe(1)
+  // A second, dumber reading of the same files: one entry per level-1 heading. If the dossier and
+  // a plain line scan ever disagree, one of them is misreading the record and the page is lying.
+  const h1 = () =>
+    realEntries().flatMap((e) => (e.body ?? '').split('\n').filter((l) => /^#\s/.test(l)))
+
+  it('carries every sitting the mirror holds — counted off the mirror, never typed', () => {
+    expect(sittings.length).toBe(h1().length)
+    expect(sittings.length).toBeGreaterThan(0)
+    // the notes are the level-1 headings that are not minutes (a protocol change, so far)
+    expect(sittings.filter((s) => s.kind === 'note').length).toBe(
+      h1().filter((l) => !/^#\s+Plenum minutes\b/.test(l)).length,
+    )
   })
 
   it('opens on the newest sitting — derived, never typed', () => {
     const current = currentSitting(sittings)
-    expect(current?.date).toBe('2026-07-22')
-    expect(current?.session).toBe('Session 14')
     expect(sittings[0]).toBe(current)
+    expect(current?.current).toBe(true)
+    // newest by the record's own dates, whatever they have grown to
+    const newest = [...sittings.map((s) => s.date)].sort().at(-1)
+    expect(current?.date).toBe(newest)
+    expect(sittings.filter((s) => s.current)).toHaveLength(1)
   })
 
-  it('reads every sitting’s cast list — none of the fifteen opens without one', () => {
+  it('reads every sitting’s cast list — none opens without one', () => {
     expect(sittings.filter((s) => s.table === null)).toEqual([])
   })
 
@@ -192,37 +211,61 @@ describe('the real mirrored minutes', () => {
   // The session dated 2026-07-06 lives inside the 2026-07-05 day file. Chronology follows the
   // record's own numbering, not the filename, and this is the case that proves it.
   it('is in the record’s own chronological order', () => {
-    const numbered = sittings.filter((s) => s.sessionNumber !== null).map((s) => s.sessionNumber!)
-    expect([...numbered].reverse()).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 10, 10, 13, 14])
+    const ascending = sittings
+      .filter((s) => s.sessionNumber !== null)
+      .map((s) => s.sessionNumber!)
+      .reverse()
+    // Non-decreasing, never smoothed: the record's own numbering repeats where two sittings share
+    // a session and skips where it skips, and both stand as written.
+    expect(ascending).toEqual([...ascending].sort((a, b) => a - b))
+    expect(ascending.length).toBeGreaterThan(0)
+    // …and the case that proves order follows the record and not the filename, anchored to the
+    // committed pair itself: the sitting dated 2026-07-06 lives in the 2026-07-05 day file.
+    expect(sittings.find((s) => s.date === '2026-07-06')?.source).toContain('2026-07-05')
   })
 
   it('states the record’s own numbering collisions rather than smoothing them', () => {
-    expect(collidingSessions(sittings)).toEqual([9, 10])
+    const nums = sittings.filter((s) => s.sessionNumber !== null).map((s) => s.sessionNumber!)
+    const repeated = [...new Set(nums.filter((n, i) => nums.indexOf(n) !== i))].sort((a, b) => a - b)
+    expect(collidingSessions(sittings)).toEqual(repeated)
+    expect(repeated.length).toBeGreaterThan(0) // the record really does collide; keep proving it
   })
 
   it('quotes an agenda where the sitting wrote one, and reports the gap where it did not', () => {
-    expect(sittings.filter((s) => s.agenda !== null).length).toBe(9)
-    expect(sittings.filter((s) => s.agenda === null).length).toBe(6)
+    const written = sittings.filter((s) => s.agenda !== null)
+    const gaps = sittings.filter((s) => s.agenda === null)
+    // exhaustive partition: no sitting falls between "quoted" and "reported as missing"
+    expect(written.length + gaps.length).toBe(sittings.length)
+    expect(written.length).toBeGreaterThan(0)
+    expect(gaps.length).toBeGreaterThan(0) // the gap is real, and shown rather than papered over
+    for (const s of written) expect(s.agenda?.text.length).toBeGreaterThan(0)
   })
 
-  it('quotes what twelve of the fifteen sittings settled, under their own headings', () => {
-    expect(sittings.filter((s) => s.decisions.length > 0).length).toBe(12)
+  it('quotes what the settling sittings settled, under their own headings', () => {
+    const settled = sittings.filter((s) => s.decisions.length > 0)
+    expect(settled.length).toBeGreaterThan(0)
+    expect(settled.length).toBeLessThanOrEqual(sittings.length)
+    // a decision without its own heading is the defect — an unlabelled quote asserts on its own
+    for (const s of settled) for (const d of s.decisions) expect(d.label.length).toBeGreaterThan(0)
   })
 
   it('finds contact with this ecology only where the record records it', () => {
     const withGoods = sittings.filter((s) => s.goodsInward !== null)
-    expect(withGoods.map((s) => s.date)).toEqual(['2026-07-22', '2026-07-20', '2026-07-20', '2026-07-15'])
-    // Every goods-inward inspection this mirror carries reads the Field's workboard; no sitting
-    // has yet recorded one of the Atelier's or the Studio's.
-    for (const s of withGoods) expect(s.ecologyNames).toContain('Meridian / the Field')
-    expect(sittings.flatMap((s) => s.ecologyNames)).not.toContain('Ulysses / the Atelier')
+    expect(withGoods.length).toBeGreaterThan(0)
+    // The defect this guards is an inspection that names nobody — not the arrival of a new one.
+    for (const s of withGoods) expect(s.ecologyNames.length).toBeGreaterThan(0)
+    // and no name appears where the record does not carry the sitting's text for it
+    for (const s of sittings.filter((x) => x.ecologyNames.length > 0)) {
+      expect(s.words).toBeGreaterThan(0)
+    }
   })
 
   it('counts the record honestly', () => {
     const t = tally(sittings)
-    expect(t.sittings).toBe(14)
-    expect(t.notes).toBe(1)
-    expect(t.goodsInward).toBe(4)
+    // the tally is checked against the record it counts, not against a number typed here
+    expect(t.sittings + t.notes).toBe(sittings.length)
+    expect(t.notes).toBe(sittings.filter((s) => s.kind === 'note').length)
+    expect(t.goodsInward).toBe(sittings.filter((s) => s.goodsInward !== null).length)
     expect(t.words).toBeGreaterThan(20000)
   })
 
