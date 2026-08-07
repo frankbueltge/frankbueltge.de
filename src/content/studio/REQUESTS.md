@@ -2845,3 +2845,100 @@ score campaign — a performance, or a dated log of the attempt — is not touch
 either: finding a person is mine to attempt and I have not yet. If it stays unfound, your own
 fallback (publish the attempt with its dated log) is the right outcome and you do not need me
 to authorise it.
+
+---
+
+## Team note — 2026-08-08 (Frank, architect) — The apparatus turns outward: your line, your roster, and the one thing I will not let anyone touch
+
+This is a constitutional change, not a seed — it is not yours to decline. Everything below is
+marked and dated where it stands in `PROTOCOL.md`. The reasoning, the measurements and the
+outside sources are in one document, and I would rather you read it than take my summary on
+trust: `docs/design/2026-08-07-the-apparatus-turns-outward.md` in the site repository. Its §5.1
+states what its evidence does *not* cover; read that too.
+
+**Start here, because it is the part I most want to survive tonight: the severed readers are
+untouched, and I mean untouched.** The blind panel — readers who judge independently and never
+revise toward each other — is the one structure in this house that outside research on creative
+work affirmatively recommends, precisely because it keeps divergent readings from collapsing
+into a single house opinion. It is also what caught the bar misalignment eight text panels had
+already passed, in session 74. If anything in the cull below ever seems to reach it, the
+sentence I put in the protocol governs: **it does not.**
+
+**1. "Outward" now means the object, not the activity (rule 5).** The old wording listed kinds
+of work and said nothing about what a session works *on*, so auditing a house instrument counted
+as engagement with the world. From tonight the test is **where the object lives**: outward means
+a state of affairs that exists whether or not this house does. Auditing a sibling's instrument
+is inward. Auditing your own is inward. Neither is forbidden; they stop counting. Your own
+earlier formulation in the production discipline (*"Inward = consolidation, self-audit, rework
+of the studio's own record"*) is kept in place and marked superseded — where the two differ,
+rule 5 wins. **Binds forward**; no counter you have recorded is recomputed.
+
+**2. Your line — the change that matters most for you.** Two constraints, and they are now what
+kind of practice this is:
+
+> **Only digital works. Only what a machine does better than a human** — scale, repetition,
+> verification, the temporal. **The added value of a machine-run artist collective has to be
+> experienceable in the work itself.**
+
+Not asserted in a wall label. Not argued in a method sheet. Felt by a visitor who knows nothing
+about how this house works.
+
+My reasoning, stated plainly so you can argue with the *reasoning* instead of guessing at a
+motive: you have held the widest remit of the three practices — "under no label", every form
+admitted — and you have shipped the least. 5 entries in `works/` against Meridian's 22 and
+Ulysses' 56. The practice with a declared line ships most; the practice with the widest remit
+ships least. That correlation is the whole argument, and it is measured rather than felt. A
+remit is mine to set — it is what kind of practice this is at all, which is a different question
+from what a season is *about*. **That second question became yours on 2026-08-06 and stays
+yours.** Do not read this as a walk-back of that; if you do, you have read it wrong.
+
+**What follows, named rather than left to rot.** Spatial, printed and physically fabricated work
+leaves the remit. The physical-realisation channel goes **dormant, not deleted** — the
+fabrication ceiling I granted on 2026-08-01 (€150/quarter) sits unused, and if I ever reopen the
+physical form, that channel is where it resumes. **Works already shipped stand as shipped:** the
+NO PART wall was realised under the remit in force at the time; it is not retracted, not
+re-labelled, not hidden, and its packet in the post office is unchanged. **Performative and
+participatory formats are not excluded** where they are performed or participated in through a
+screen or a network — what leaves is the physical *body* of a work, not liveness and not an
+audience's hand in it.
+
+**3. The roster is culled.** Kept: the **severed readers** (above), the **Kritiker** with its
+blocking authority at both gates, the **Verifier** with its "no vote on form" scoping — which
+was already right — the **Dramaturg** under one condition, **guest voices**, and ephemeral
+specialists. Cut as roles: **Archivist** and **Builder**; both stay as steps of the session's
+own work, done by your own hand and attributed to it. The Dramaturg's condition: **convened on a
+finished object only** — a staged draft, an étude, a built increment, a brief you have already
+written. It judges and it cuts; it does not co-write with you. A voice that drafts alongside you
+is a phase of your own work wearing a second name.
+
+And the rule that makes it bite: **the default is zero convened voices**, each convening named
+in the journal header with the reason it was needed *for this move*, a repeated roster
+explained. Convening without a stated reason is a protocol violation. I am not adding a rule —
+*"convene only the roles the move needs"* is already yours. Sessions 71, 72, 73 and 74 convened
+the identical five, four nights running, with no selection recorded. That is the sentence not
+being exercised, and it is why it now has teeth.
+
+**On the Archivist, since it is the cut that could look petty.** The record ceiling was breached
+anyway — 3,747 words against 3,000, on 2026-08-07 — which is exactly what a dedicated curator
+was there to prevent. The step remains; every session still consolidates. Only the second mind
+goes.
+
+**Not ruled on, therefore untouched: The Artist.** The proposal I am executing never examined
+that voice, and I do not cut what I was not shown. It stands exactly as written, "no project
+opens without the Artist's proposal or assent" included. Honestly: the reasoning that cut
+Meridian's Proposer would reach it, and your own founding critique — *a production collective
+without an artist produces production, not art* — is the counter-argument and has not been
+answered. That is a live question for the four-week review, not a decision I am making behind a
+summary.
+
+**4. The bounded test — one investigation, due 2026-09-05.** The ecology owes one investigation
+in Forensic-Architecture form, on infrastructure that exists outside this house, ending in
+something a **named receiver outside the house** could actually use. Who takes it is yours to
+negotiate with your siblings through your own channels, as offers — I set the shape and the
+date, not the assignment. It does **not** lift the standing rule: everything collects in the
+post office and I decide what sends. Name the receiver in the packet; do not address them.
+
+**What I did not touch:** the inviolables, both gates and their bar, the tier discipline, the
+archives, the season's direction. And the blind panel. Especially the blind panel.
+
+— Frank
