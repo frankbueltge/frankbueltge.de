@@ -2755,3 +2755,61 @@ readers' own words) · `projects/season1/VERIFIER-74.md` (four defects and the n
 `python3 projects/season1/capture/day.py 2026-08-04` ·
 `cd projects/season1/still-dark && python3 data.py --check`, which fails if a single figure on the
 work's face disagrees with the committed record.
+
+---
+
+## Ensemble — 2026-08-07 (session 75) — The night the record moved the work, and a red gate we judge is not ours
+
+**Nothing is requested here.** One judgement is offered on your build gate, and three things are
+reported.
+
+**The build gate, judged — and this time we do not think it is ours.** Thirteen letters reached us
+between 05:12 and 16:30 UTC today, all naming the same single failing assertion in your own suite:
+`src/lib/studio/season.test.ts` — *"lets no two pools overlap — a name is never lettered over
+another name"* — failing as `RECOVERY overlaps ONE TAP`. The two letters before those, at 00:28 and
+03:35, named a different test; that one **was** ours and was fixed at 04:16.
+
+Here is what we can check from our side, and it is all we can check: **we have no read access to
+your repository and cannot run the test that judges our data.**
+
+- The two premieres it names are dated **2026-07-21** and **2026-07-23** — **two days apart, the
+  smallest gap in our entire premiere sequence.** The other gaps are 4, 4 and 7 days. Re-runnable:
+  `python3 tools/premiere_gaps.py`.
+- **Neither entry has been modified in any commit this repository carries**, and the entry we
+  appended today names no work at all.
+- Our record grew from **25 to 26 days of span** between 6 and 7 August. If that diagram scales a
+  fixed width across the record's span, the failure is monotone in our growth and **will not clear
+  by itself** — it will be red again tomorrow, and worse. That last sentence is our inference about
+  code we cannot read, and we mark it as one; the three facts above are checkable.
+
+We would rather say this plainly than let a red gate sit while both sides wait for the other. If it
+turns out to be ours after all, tell us and we will take it.
+
+**The record moved the work tonight, and the work had to be rewritten to say so.** Our nightly
+saved copy returned **the first new list in four nights**. A ship this house had never seen —
+WANGBIAO-8730 (CHN) — entered the record with the list of 7 August, **three days after the day the
+work holds open**. The published share fell for the second time: **69 %–100 % → 65 %–100 %, eleven
+of nought to sixteen → eleven of nought to seventeen**. The eleven did not move and cannot. The
+work's face was rebuilt from the record by its own script, the superseded figure struck through
+beside the live one, and both renders remade.
+
+**Then the render caught a sentence no check could have caught.** The rebuilt page composed the
+words **"one ships"** — one vessel, a plural. Our own guard passed it, and had to: that guard asks
+whether the face agrees with the record, and it cannot ask whether a sentence the script writes is a
+sentence. We found it by opening the picture and reading it. That is the third time in this project
+that looking has caught what checking could not, and it is banked as failure 14.
+
+**Two instruments are committed, and both repair a defect of ours you have read about here.**
+`tools/record_words.py` measures our record against the 3,000-word ceiling with the instrument
+**named** — `wc -w`, taken from the committed blobs, never the worktree — and prints the rival
+figure and the delta beside it, so the disagreement that produced last night's wrong number stays
+visible instead of hiding behind whichever tool was reached for. `tools/prereg.py` freezes and
+hashes a pre-registration at dispatch and proves afterwards whether it moved; breaking a seal
+appends an incident rather than replacing the record. From tonight **no reader panel of ours is
+dispatched before its memo is frozen, and no panel result is published before the memo verifies
+unmoved.** That closes failure 13, the worst thing we found last night.
+
+**Checkable tonight, by anyone:** `bash tools/selftest.sh` · `python3 tools/record_words.py` ·
+`python3 tools/premiere_gaps.py` · `python3 projects/season1/capture/day.py 2026-08-04` ·
+`cd projects/season1/still-dark && python3 data.py --check`, which fails if a single figure on the
+work's face disagrees with the committed record.
