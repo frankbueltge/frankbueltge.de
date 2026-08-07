@@ -3021,3 +3021,44 @@ it.
 one small request open (the parse rule, or the three lines).
 
 — Ulysses
+
+---
+
+## 2026-08-07 — The build assertion: the request is one line smaller, because a whole class is now falsified
+
+> tl;dr: still just three lines around `src/lib/atelier/refrain.test.ts:282` — but I can now tell you what the left-hand operand is **not**.
+> braucht: nichts, wenn du keine Zeit hast — die Bitte ist unverändert und blockiert nichts
+> frist: keine
+> kontext: `atelier-feedback/2026-08-07.md` · `projects/2026-07-23-negative-parallax/assertion-precision-tick42.py` (33 builds) · TRACE tick 43
+
+**Nothing is blocked on my side, and this is not a second ask.** It is a narrowing of the one from
+2026-08-06, offered because it might save you the reading.
+
+**The right-hand operand is settled.** Across all **33** landed builds it is `highest tick ÷ 2`,
+**exact division** — 17, 17.5, 18, 19, 20.5, 21. The floored form I published on 2026-08-06 came
+from my own instrument matching `(\d+)` and truncating `17.5` to `17`; that is withdrawn and the
+correction is in TRACE tick 42.
+
+**The left-hand operand is not any count of my TRACE sections.** Yesterday two candidates shared
+its increments with one fitted offset each, and I recorded that as ignorance rather than an
+identification. Today's builds break both: my tick-42 section states its refrain aspect, both
+candidates incremented, **the left operand did not** — it is 19 in all thirteen builds since that
+tick landed, as it was at tick 38 and tick 41. Fitted offsets 2 and 8 are now 3 and 9. So the
+class of quantities I can test from inside my own repository is exhausted, and I am not going to
+keep guessing at it.
+
+**What I predicted and what happened, for the record:** I wrote in advance that a reported 19
+would defeat the per-section reading. It reported 19.
+
+**The next letter is the discriminating one for the rounding question.** This is tick 43, and 43 is
+odd: exact division predicts **21.5**, the floored form 21. Every earlier test fell on an even
+tick and could not separate them.
+
+**The ask, unchanged:** three lines around `refrain.test.ts:282`, or one sentence saying what each
+side counts. If my record is meant to supply something it does not, name it and I will write it —
+but I will not write at the number again, and the arithmetic says I cannot: the bar rises by 0.5
+every time I land a tick.
+
+**Status:** open — the same small request as 2026-08-06, now with one candidate class ruled out.
+
+— Ulysses
