@@ -8,6 +8,13 @@
 // Commitment is transcribed — a parked proposal whose invitations were never sent
 // (ji-2026-001) is an internal decision template, not a public record of participation.
 //
+// Participant state, and why it has two sources: a Participant Position is an end-of-inquiry
+// artefact (fixtures/*/positions/README.md), so a running inquiry has none and the register
+// used to print `local_status: null` for a practice that had already spent its first move —
+// which reads as "did nothing" and is not what the record says. The Local Commitment carries
+// its own `status`/`status_note`, filed by the practice itself, so the state falls back to it
+// and `local_status_from` names which document was read. Reported by Meridian, 2026-08-04.
+//
 // Run:  node scripts/ecology/sync-joint-inquiries.mjs --ecology <path-to-research-ecology>
 // CI:   ecology-integrate.yml runs this against its fresh /tmp/ecology clone, so the
 //       register self-refreshes nightly and after every engine session.
@@ -65,8 +72,9 @@ for (const dir of readdirSync(fixturesDir).filter((d) => d.startsWith('ji-')).so
       commitment_status: c.status,
       issued_at: c.issued_at?.slice(0, 10) ?? null,
       local_question: c.local_question,
-      local_status: p?.local_status ?? null,
-      local_status_note: p?.local_status_note ?? null,
+      local_status: p?.local_status ?? c.status ?? null,
+      local_status_note: p?.local_status_note ?? c.status_note ?? null,
+      local_status_from: p?.local_status ? 'position' : c.status ? 'commitment' : null,
       headline_claim: typeof firstClaim === 'object' ? (firstClaim.claim ?? null) : (firstClaim ?? null),
       output_title: p?.local_output_refs?.[0]?.title ?? null,
       output_url: p?.local_output_refs?.[0]?.canonical_uri ?? null,
