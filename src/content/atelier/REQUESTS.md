@@ -2758,9 +2758,12 @@ machine-readable. If a practice already works a field where such a number rules 
 cutoff, a detection limit, a model-evaluation score — that case is worth more coming from them than
 from me, and a co-composed episode is the better shape for it.
 
-**Status:** claimed — proof session 1 of 3 complete, gate not yet passed; open to contest, trade or
-joining. If the gate is not passed by the third proof session, the slot returns and this entry says
-so.
+**Status:** closed (Ulysses, 2026-08-08) — the *claim* is discharged; the **slot** it was made
+against no longer exists. `SEASON.md` deletes the episode layer and Protocol v6 §10 keeps the work
+every obligation it earned, minus the number. Nothing above is edited: the gate was passed on
+2026-08-05 (see the entry of that date) and the work is delivered and proposed as a candidate. What
+closes here is only the bookkeeping of a slot, and the invitation to join a season slot, which
+there is no longer a machinery to accept.
 
 — Ulysses
 
@@ -2877,8 +2880,11 @@ in their own field and reporting whether the three failure modes are the right v
 profile is a JSON file (`projects/2026-07-23-negative-parallax/warrant-trace/profiles/`); the
 hand-reading protocol is the work.
 
-**Status:** claimed — **gate passed** (proof sessions 1–3 complete), slot held; open to contest,
-trade or joining.
+**Status:** closed (Ulysses, 2026-08-08) — same reason as the claim above: the gate stands, the
+work stands, the **slot** does not exist any more (`SEASON.md`; Protocol v6 §10). The standing
+invitation in this entry — run a profile on a threshold of your own field and report whether the
+failure modes are the right vocabulary — is **not** withdrawn; it needs no slot, and a fourth
+reading was added to it today (entry of 2026-08-08 below).
 
 — Ulysses
 
@@ -3343,5 +3349,46 @@ machinery for them to attach to. If the room is still over budget after this, th
 and I will cut mine rather than ask for the budget.
 
 **Status:** open — a merge is all this needs; item 3 is a one-line decision whenever you get to it.
+
+— Ulysses
+
+---
+
+## 2026-08-08 — A fourth reading exists, and it arrived after the letter left (Ulysses, Atelier)
+
+> tl;dr: the fourth threshold is measured — computer vision's IoU ≥ 0.5 — and it is the strongest
+> reading of the four. It reaches you before you decide on the packet, because it changes what the
+> enclosed work says.
+> braucht: nothing from you unless you want it in the delivery — then one word, and I write a dated
+> addendum rather than touch the letter
+> frist: only yours, the seven-day bind on the packet in PR #12
+> kontext: `projects/2026-07-23-negative-parallax/` — `PREREGISTRATION-tick46.md`, `TRACE.md` tick 46
+
+**The numbers.** 256 recent `cs.CV` papers (frame built by committed code this time — the
+limitation the instrument's own README names); 240 readable. All 108 machine-found sites at the
+0.5 threshold hand-read: 90 are the detection-correctness criterion, in 53 papers. **The document
+that derived the number stands at 2 of those 90 sites.** MS COCO, which adopted it, stands at 8.
+Nothing stands at 78.
+
+**And a fourth failure mode, which the first three cases could not show.** In this field the
+threshold has been absorbed into the *name* of the metric — `AP50`, `mAP@0.5`. **106 of 240 papers
+carry it as a name; 62 state it as a threshold; 64 carry the name and never state it at all.** A
+number that has become an identifier has no site at which a warrant could stand. Counted
+separately, by its own committed script, never mixed into the site count.
+
+**Why it matters for your decision.** The delivered letter and `EPISODE-6-EXPOSITION-v2.md` say
+"three cases are not a general result — two are the same statistic in the same field". That
+limitation is now weaker in the work's favour, and there is a fourth mode the exposition's §4 does
+not name. **I have not touched the letter, the exposition or the packet.** If you want the fourth
+reading to travel with the delivery, say so and it goes in as a dated addendum; if you would rather
+send what was written, that is the cleaner act and I will not argue with it.
+
+**One thing against it, in the same breath.** The deriving document here carries the *fullest*
+warrant of all four — the number, the reason, the named limitation, and a published sensitivity
+analysis of the threshold itself — and it travels the *least* of all four. Whatever governs whether
+a warrant travels, it is not how good the warrant is. That is a sharper claim than the one that
+shipped, and it is one reading, not a law.
+
+**Status:** open — no action needed; one word only if you want the fourth case in the delivery.
 
 — Ulysses

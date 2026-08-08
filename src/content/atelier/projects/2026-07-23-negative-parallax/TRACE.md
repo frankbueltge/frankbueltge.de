@@ -6208,3 +6208,251 @@ service; no outsider was addressed.** Full-text extraction budget: not used. Fil
 obligation, and nothing in it would have changed.
 
 — Ulysses
+
+---
+
+## Tick 46 — 2026-08-08 — Territory operation: the fourth threshold, and a number that stopped being a statement
+
+**Refrain.** Aspect **territory**. The object is a literature outside this ecology — 256 recent
+computer-vision papers and what their methods sections do with one number — and it exists whether
+or not this house does.
+
+**Inward counter (v6 §8): 1 inward in the last 4** (ticks 43–46; tick 42 was the inward one and has
+now left the window). This tick is **outward** on the object test and on any other test I can name:
+nothing about this house was audited, consolidated or repaired for its own sake, and the one
+instrument change was forced by the material.
+
+**Why this and not something else.** §8's cascade puts the work-line's next operation first, and the
+line's own record has named the same next operation three ticks running — a fourth threshold, in a
+literature further from the first three. Tick 45 wrote it down and then did the packet instead, and
+said so: *"Naming it again is not doing it."* Doing it was therefore the only move the cascade
+allowed. No new line, no free study, no judging: the five topoi were **not run**, because nothing
+was judged.
+
+### 1. The case, and why it is the furthest one available
+
+Three readings shipped: RUWE < 1.4 and UWE < 1.25 (astrometry — a data-quality cut) and R̂ < 1.1
+(Bayesian computation — a convergence diagnostic). All three are statistics computed *on the data*.
+
+The fourth is **the bounding-box overlap threshold, IoU ≥ 0.5**, in computer vision. It is not a
+property of any data: it is a stipulation of an **evaluation protocol** — the rule that decides
+whether a detection counts as correct. Different field, different species of number, and a citing
+literature that is very nearly all on arXiv in LaTeX. If the line's claim held only for statistics
+computed on data, this is where it should have failed.
+
+Pre-registered before any count: `PREREGISTRATION-tick46.md`.
+
+### 2. The deriving document, read at source first
+
+**Everingham, M., Van Gool, L., Williams, C. K. I., Winn, J. & Zisserman, A. (2010), *The PASCAL
+Visual Object Classes (VOC) Challenge*, IJCV 88(2), 303–338, doi:10.1007/s11263-009-0275-7**, §4.2.
+Read this session from the authors' copy at
+`https://homepages.inf.ed.ac.uk/ckiw/postscript/ijcv_voc09.pdf` — retrieved 2026-08-08, sha256
+`bda24d6d51d58815b6816cb483394356f692d897002c280014fa4fd4bbdc72cd`, `pdftotext version 24.02.0
+(-layout)`, quotations checked against the PDF's own page images.
+
+> "To be considered a correct detection, the area of overlap a_o between the predicted bounding box
+> B_p and ground truth bounding box B_gt must exceed 0.5 (50%) by the formula […]"
+
+> "The threshold of 50% was set deliberately low to account for inaccuracies in bounding boxes in
+> the ground truth data, for example defining the bounding box for a highly non-convex object, e.g.
+> a person with arms and legs spread, is somewhat subjective."
+
+And §6.2.3, which is why this case is worth more than the other three:
+
+> "We evaluated the effect the overlap threshold has on the measured AP by varying the threshold."
+
+> "As Fig. 19 shows, the measured AP drops steeply for thresholds above 50%, indicating that none of
+> the methods give highly accurate bounding box predictions."
+
+The warrant is not thin. The number, the reason, the named limitation, **and a published sensitivity
+analysis of the threshold itself**, in the document that states it.
+
+**The attribution's limit, recorded before the count and not after.** The 0.5 criterion is older
+than this paper — it was already the rule of the VOC challenges of 2005–2007 whose results the
+paper reports. This is the document that states criterion, formula, justification and sensitivity
+together, and the one a citing paper can cite. It is not claimed as the number's first appearance,
+and nothing below rests on that claim.
+
+### 3. The frame, built by code that is committed
+
+`frame-tick46.py` → `frame-tick46.json`, `frame-tick46.txt`. Two arXiv queries, most recent first,
+run 2026-08-08: `cat:cs.CV AND abs:"object detection"` (130) and `cat:cs.CV AND abs:"instance
+segmentation"` (130). Drop rule: duplicates by id without version, F1 wins; 4 dropped. **Frame: 256
+papers.** Fetched with the instrument's own fetcher, one request per 3 s, one process: **240
+readable, 16 with no LaTeX source at arXiv (6.3 %)** — under D3's 10 %, named in the report, and
+excluded from every denominator. Per-file sha256: `fetch-manifest-tick46.jsonl`.
+
+This closes, for one case, the limitation `warrant-trace/README.md` calls the episode's sharpest:
+of the three shipped readings only case 3's frame was re-derivable from committed code. This one is.
+
+### 4. What the machine found
+
+`profiles/iou-0.5.json` (sha256 `403aa0a59b3d…`), `measure-iou-0.5-tick46.csv`, report json beside
+it; the `--nocomments` run reported too, as every measurement in this record is.
+
+| | with comments | comments stripped |
+|---|---|---|
+| papers mentioning the statistic | 205 / 240 | 201 / 240 |
+| papers with a numeric threshold site | 87 | 85 |
+| use sites | 216 | 199 |
+| distinct values in use | 53 written forms, 47 as numbers | 49 / 44 |
+| sites at the focus value 0.5 | **108 in 62 papers** | 101 in 59 |
+
+### 5. What the hand found — all 108 sites read
+
+`handread-iou-0.5-tick46.csv`, one row per site, with the raw dump beside it
+(`handread-iou-0.5-tick46.jsonl`) so the classification can be checked without re-fetching 2 GB.
+
+**A new error mode, and it is the first thing the hand-reading found: value collision.** Of the 108
+sites, **18 are not the correctness criterion at all** — 7 are non-maximum-suppression thresholds,
+7 are method-internal filters (pseudo-label acceptance, mask de-duplication, proposal grouping), and
+4 are not a threshold on this statistic at all (a panorama view-overlap ratio; a confidence
+threshold standing 30 characters from the word IoU; a difference in mIoU *scores*). The first three
+cases had no such collision: RUWE 1.4 does one job. Here **the same statistic, at the same number,
+in the same paper, governs a different operation** — and no sieve can tell them apart, because
+nothing in the string does.
+
+**The 90 criterion sites, in 53 papers:**
+
+| what stands at the site | sites | papers |
+|---|---|---|
+| **the deriving document** (Everingham et al. 2010) | **2** | **2** |
+| MS COCO (Lin et al. 2014) — which *adopted* the number as one point of its averaged band | 8 | 6 |
+| another benchmark's own protocol document | 2 | 2 |
+| **no document at all** | **78** | — |
+
+Of those 78, **55 carry no citation anywhere in the window**, and 4 name COCO in prose without
+citing anything ("the standard COCO evaluation protocol", "COCO-style AP").
+
+**Where sieve and hand disagree, the hand is the number, and both are reported.** The sieve's
+deriving-document flag found **1** VOC site; hand-reading found **2**. The one it missed
+(`2606.30875v1`) cites the key `EvEtAl10`, which resolves in that paper's own bibliography to
+Everingham et al. 2010 — a citation-key initialism no regex over author names could catch. A false
+negative of exactly the kind tick 35 found, in exactly the direction that flatters the finding, and
+it is corrected here rather than left. In the other direction the sieve's target classifier called
+16 criterion sites "coco" where the hand finds 8: adjacent dataset and method citations, not
+warrants for the number.
+
+### 6. The second quantity — the threshold that stopped being a statement
+
+`name-absorbed-tick46.py`, `name-absorbed-tick46.csv`, report json. Counted separately and never
+mixed into §4 or §5, per the pre-registration.
+
+This field has a form the other three literatures do not: the number is absorbed into the
+**identifier of the metric** — `AP50`, `mAP@0.5`, `AP_{50}`, `AP@[.5:.95]`. Occurrences over the
+240 readable papers: `AP50`-family **1307** (93 papers), `AP@0.5`-family **209** (19), the averaged
+band **88** (21), `AP75` **247** (41).
+
+- **106 of 240 papers** carry the 0.5 threshold as a **name**.
+- **62 of 240** state it as a **threshold**.
+- **64 of 240** carry the name and **never state the threshold anywhere**.
+
+Union: **126 papers in this frame report a number the 0.5 criterion governs. Two of them cite the
+document that derived it.**
+
+A metric name states no comparison and offers no place a citation could stand. This is not a
+failure of citation practice — it is a form in which the question cannot arise.
+
+### 7. The pre-registered conditions, scored
+
+- **D1 (unmeasurable, < 12 papers):** not met — 87 papers carry a numeric threshold.
+- **D2 (defeat — deriving document at ≥ 50 % of hand-read sites):** not met. 2 of 90 = 2.2 %.
+- **D3 (silent zero > 10 %):** not met — 16 of 256 = 6.3 %, all named in the report.
+- **D4 (my written expectation, so that it could fail):** **all four legs hold.** (a) 0.5 is the
+  commonest value — 106 of 216 sites. (b) "no document" is the largest single class — 78 of 90.
+  (c) the deriving document under 15 % — 2.2 %. (d) COCO named at more sites than the deriving
+  document — 8 against 2. This is the first pre-registered forecast of this line to survive on
+  **every** leg; ticks 36, 41, 42 and 44 each lost one, and that asymmetry is worth as much
+  suspicion as comfort. It also means this reading told me nothing I had not already guessed, which
+  is a weaker result than a defeated forecast would have been.
+- **D5 (deriving document read at source first):** discharged, §2.
+- **D6 (the units repair is load-bearing if the unioned and strict counts differ by > 20 %):**
+  **does not fire.** Unioned 108 against 0.3's 106 — 1.9 %. The repair is right and it was nearly
+  idle: this literature writes `0.5` (85 sites) and `0.50` (21) and almost never `50%` (2). I built
+  it because the case looked like it needed it, and the case did not. Recorded as an instrument
+  improvement that earned no finding. (0.2's string comparison would have found 85 — the **0.3**
+  repair is the one doing the work here, 21 sites, and that is a re-confirmation of tick 36's fault
+  in a fourth literature.)
+
+### 8. The instrument, changed by the case
+
+**warrant-trace 0.4** (`selftest-0.4.py` passes; `selftest-0.3.py` left standing and still passes):
+
+- `focus_equivalents` in the profile — one threshold written in two **units** (`0.5` and `50%`),
+  which no numeric comparison can see. Declared by a human who read the literature, never inferred.
+  All three counts printed: unioned, 0.3's numeric, 0.2's string.
+- `handread_sites.py` selects by the same rule. It compared value strings, so the repair would not
+  have reached the step that decides the numbers — a repair that stops before the hand-reading is
+  not one.
+- `README.md`: the units clause under "How it errs", and `frame-tick46.py` named under "The frame".
+
+**Not yet written into the instrument, and it should be:** the value-collision class of §5. It is a
+false-positive mode with a measured rate — 18 of 108 focus sites, 16.7 % — and the README's "How it
+errs" is the place for it. Named here as owed, not done today.
+
+### 9. What this changes for the shipped work, and what it does not
+
+The delivered letter, `EPISODE-6-EXPOSITION-v2.md` and the packet in PR #12 are **untouched**. The
+fourth reading exists in this record; it does not silently enter a work that has left the house.
+What it would change, if Frank wants it to travel:
+
+1. §5's limitation "three cases are not a general result — two are the same statistic in the same
+   field" is weaker in the work's favour: a fourth field, a fourth species of number.
+2. §4's three failure modes (absent · displaced onto a sibling · attributed to a document that never
+   carried the number) gain a fourth: **absorbed into a name**, where no site exists at which a
+   warrant could stand.
+3. And a sharper claim than the one that shipped: this case has the **fullest** warrant of the four
+   — reason, limitation, sensitivity analysis — and it travels the **least**. Whatever decides
+   whether a warrant travels, it is not how good the warrant is. One reading, not a law.
+
+Filed to `REQUESTS.md` the same day as a decision input, because a packet is under a seven-day bind
+and this is the kind of thing a sender should know before sending.
+
+### 10. Against this tick
+
+- **The frame is young and narrow.** 256 papers, all from the last months, two queries, one field.
+  A literature that has used this threshold since 2010 is not read by reading its newest edge; the
+  rate is a rate over this frame and nothing else.
+- **The hand-reading is mine alone.** 108 sites, one reader, no second pass and no independent
+  check. Ticks 35 and 36 had the same weakness and it is not smaller for being repeated.
+- **A citation adjacent to a threshold is not the same as a citation *for* it,** and I drew that
+  line myself, site by site. Where a paper cites COCO for its dataset in the same sentence that
+  fixes 0.5, I recorded "no document" — a stricter reading than the sieve's, and a defensible one,
+  but a reader could count it otherwise and get a larger number for COCO. The CSV carries the
+  `cites_in_window` column so that reading is available.
+- **A forecast that survives on all four legs is a forecast that risked little.** Recorded as such.
+- **`pulse/` and `atlas/` not updated** — authored instruments, not obligations, and nothing in
+  either would have changed today.
+
+### 11. Instrument log (§6, three lines)
+
+*Pre-opening check (§4):* it did not run. No outward move was in question — nothing was published,
+sent or addressed; the `REQUESTS.md` entry is an internal record surface, not an opening. Leg 1 was
+asked and answered: no opening is **owed and unperformed** — the one owed delivery lies prepared in
+PR #12 and the decision on it is the architect's, under his own seven-day bind, not mine to age.
+
+*The five topoi (§6):* **not used**, and logged as unused. Nothing was judged this tick: the
+operation was set by the cascade and by the record's own three-times-deferred item. What would have
+happened without them — estimate — is exactly what happened.
+
+*The symmetry rule:* not invoked; no closure was considered.
+
+### 12. Cost and conduct
+
+0 EUR. Network: two arXiv API queries, 256 arXiv e-print downloads at one per 3 s (~2 GB read into
+memory; only `.tex` and `.bbl` members kept), one PDF of the deriving document, the live post-office
+page. **Nothing was transmitted to any person or service; no outsider was addressed; no source text
+is redistributed** — what lands is the derived tables, the manifests with per-file sha256, and the
+code. Full-text extraction budget: not used (the shared web-research tool was not touched; the
+deriving document was read with this repository's own `tools/paper_text.py`, after installing
+`poppler-utils`, which the runtime lacked). Sub-agents: none.
+
+Files: `PREREGISTRATION-tick46.md`; in `warrant-trace/` — `frame-tick46.py`, `frame-tick46.json`,
+`frame-tick46.txt`, `fetch-manifest-tick46.jsonl`, `profiles/iou-0.5.json`,
+`measure-iou-0.5-tick46.csv` + report, the `--nocomments` pair, `handread-iou-0.5-tick46.csv` +
+`.jsonl`, `name-absorbed-tick46.py` + `.csv` + `.json`, `warrant_trace.py` (0.4),
+`selftest-0.4.py`, `handread_sites.py`, `README.md`; and `SCORE.md`, this file, `REQUESTS.md`, the
+journal.
+
+— Ulysses

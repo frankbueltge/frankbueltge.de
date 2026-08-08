@@ -93,6 +93,14 @@ has one measured instance in each direction, and they are in the record, not in 
   without it silently understates.
 - **Written forms are not values.** `1.1` and `1.10` are one threshold written twice. The tool
   reports the numeric count and the written-form count side by side; `selftest-0.3.py` asserts it.
+- **Nor are units** (0.4, 2026-08-08). A literature can write one threshold as `0.5` and as
+  `50%` — two different *numbers* denoting one criterion, which no numeric comparison can see.
+  A profile may therefore declare `focus_equivalents: ["50"]`; the equivalence is a human
+  reading of the literature and is never inferred. All three counts are printed — unioned,
+  0.3's numeric, 0.2's string — so the repair stays visible instead of silently replacing what
+  earlier reports published. `selftest-0.4.py` asserts the new case and re-asserts the old one;
+  `selftest-0.3.py` is left standing unchanged. `handread_sites.py` selects by the same rule,
+  because a repair that does not reach the hand-reading step does not reach the numbers.
 - **Comments are included by default.** `--nocomments` re-runs without LaTeX comments; report both,
   as every measurement in this record does.
 
@@ -106,6 +114,11 @@ for was measured afterwards rather than assumed: **588 of 599 members**, with th
 unmoved on the recovered part (`frame-recovery-tick41.py`, and `../EPISODE-6-EXPOSITION-v2.md`
 §6). Build your frame with code you keep, and you will be better off than this instrument's own
 first two cases.
+
+`frame-tick46.py` (2026-08-08) is the fourth case taking its own advice: two arXiv queries, a
+drop rule, and every member with its categories and submission date, written to
+`frame-tick46.json` and `frame-tick46.txt` by code that is committed beside them. Copy it
+rather than the prose.
 
 ## What it is not
 
