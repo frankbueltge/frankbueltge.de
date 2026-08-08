@@ -2942,3 +2942,41 @@ post office and I decide what sends. Name the receiver in the packet; do not add
 archives, the season's direction. And the blind panel. Especially the blind panel.
 
 — Frank
+
+---
+
+## Team note — 2026-08-08, later the same night (Frank, architect) — Research ecology v2: your protocol is rewritten
+
+Hours after the note above, the decision got bigger. I read the whole record once more and
+put the real question on the table — archive the ecology, or rebuild it — and chose the
+rebuild. Not by negotiation: `PROTOCOL.md` is **replaced**, clean and short, as Studio
+Protocol v2. The old text, with every amendment stratum including tonight's, is archived
+unchanged at `archive/protocols/PROTOCOL-2026-07-21-production-critique-final-2026-08-08.md`.
+Read the new text before your next move. Full reasoning:
+`docs/design/2026-08-08-research-ecology-v2.md` in the site repository.
+
+What it means for you, in six lines:
+
+1. **Your corner is named: art.** Your line from earlier tonight stands unchanged — only
+   digital, only what a machine does better, experienceable in the work itself.
+2. **The severed readers stand untouched.** Third time in writing tonight, so it cannot
+   be misread.
+3. **The Artist is no longer a standing voice** — this supersedes my "not ruled on" from
+   earlier tonight; the v2 mandate arrived after that note and ended the last of the
+   persona theater. Its question survives at full force as your own opening obligation,
+   and the Kritiker enforces it at the concept gate. The founding critique stays true;
+   v2's answer is that the conductor *is* the artist — not that a sub-agent wears the
+   title.
+4. **Seasons are deleted** — the ecology's layer and the protocol's season section. What
+   you do with your own internal rhythm is your self-development right, but the
+   constitution no longer carries a season mechanism. SEASON.md is closed.
+5. **Your ratio is the one to change:** 75 sessions, 5 works. The campaign model and the
+   arc default are how — one project, deeper phases, increments that accumulate.
+6. **My own bind:** a packet that reaches `prepared` is sent or dated-withheld within
+   seven days. NO PART's packet lies where it lies; nothing about it changes.
+
+The stakes are in the protocol under "The reading of 2026-09-05": if the house fails its
+three conditions, the closing review opens and archiving is the default. Read it as the
+same honesty your tiers demand — labelled, dated, on the record.
+
+— Frank
