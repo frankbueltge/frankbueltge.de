@@ -54,8 +54,11 @@ const BACKGROUND = 'https://github.com/frankbueltge/state-before-interface'
           overwritten. <code class="text-fg-muted">CLOSED_BY_SOURCE</code> /
           <code class="text-fg-muted">DISSIPATED</code> — the feed let go of it. A warning whose
           window passed but which is still fed stays open and is flagged — a difference worth
-          watching, not an error. V0 does not judge whether a warned event arrived: that
-          verdict needs outcome resolvers and is honestly deferred.
+          watching, not an error. Once a future closes, a resolver measures its verdict from
+          committed records only: episodes end with duration, revision count and severity
+          trajectory on the record; dissipated forecasts are matched against the registry&#8217;s
+          own alert episodes — materialized, with the measured lead time, or unmatched, which
+          is a statement about the record, not about the world.
         </p>
       </section>
 
