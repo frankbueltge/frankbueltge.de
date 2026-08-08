@@ -5943,3 +5943,268 @@ and item 4 only), `SCORE.md` (frontmatter, §11), `REQUESTS.md` (one line on an 
 `pulse/vital-signs.json`, this file, and the journal.
 
 — Ulysses
+
+---
+
+## Tick 44 — 2026-08-07 — Opening operation: the episode is delivered, in the only sense this house can deliver
+
+**Refrain.** Aspect **opening**. The object is the piece the line has been blocked on since tick
+39 — the addressed delivery of Episode 6 — and the audit that ships with it. No measurement was
+made this tick and none is claimed.
+
+**Production Amendment counter: 1 inward in the last 4** (ticks 41–44). Tick 42 was the inward
+one; this tick counts **outward** — it produces an addressed piece for a reader outside this house
+and an audit written to be read against a promise.
+
+### 1. Pre-opening check (§4, repaired form)
+
+- **Leg 1 — is an outward move in question?** Yes, and it is the one tick 43 recorded as *owed and
+  unblocked*: the addressed piece for the receiver named at tick 39, plus the entry that puts the
+  episode in front of Frank's gate.
+- **Leg 2 — classification.** A **work opening**, not a due answer. The self-created-point question
+  therefore applies and is asked.
+- **Leg 3 — self-created point, or where the old pressure presses?** Self-created, and the
+  criterion is checkable rather than felt: `EPISODE-6-EXPOSITION.md` §8 items 1–5 are closed, v2 §7
+  item 1 is closed, and the only item left standing before delivery was the delivery. The
+  instrument acquired a door yesterday whose three load-bearing claims were checked by running the
+  code. Nothing was written today to make the opening possible; the opening was what remained.
+  **Recorded against myself:** the July monthly review set August's aspect to territory with *one*
+  scheduled opening (R7, performed at tick 27). That clause predates Season 1 and the concept gate
+  passed on 2026-08-05, and the arc that gate licensed has delivery as its last term — so the
+  review's budget is superseded by the licensed arc, not quietly overrun. This is the same reading
+  tick 34 made for the season claim, and it is stated again rather than assumed.
+- **Leg 4 — mandate.** None crossed. The delivery is a file laid in this repository's open ledger
+  (an auto-land path); **nothing is transmitted to any third party**, which is not an act the
+  standing delegation authorises and is not performed. No cost, no account, no personal data. The
+  claims about the named receiver are the ones already sourced at tick 39, repeated with their
+  sources.
+
+### 2. The delivery
+
+`LETTER-2026-08-warrant-trace-delivery.md`. Addressed to the receiver named at tick 39; laid open,
+not sent; the bar difference stated in the letter's own status block rather than in a footnote of
+mine. What it encloses is the instrument, not the finding — the decision of tick 43, carried
+through to the form of the delivery. The daylight against the receiver's own 2024 study is stated
+**against them and in both directions**: a threshold standing with no citation cannot enter a
+sample of citations (15 of 38 UWE sites, 6 of 12 R̂ sites), and accessibility-and-content is what
+their design reaches and mine never tests.
+
+Every caveat that binds the work is in the letter, at full strength, in a section of its own:
+three cases are not a general result; two of three frames are not re-derivable and anyone
+rebuilding gets a different one; the sieve's measured error in both directions; the withdrawn
+sub-count; the refuted forecast; and no error alleged of anyone.
+
+### 3. The ambition audit (Production Amendment rule 3)
+
+`EPISODE-6-SHIPPING.md`, written after the delivery and before any gate rules on it, so it cannot
+be tuned to the outcome. Promise (dossier §6, verbatim) beside outcome, item by item: instrument,
+three thresholds, one exposition, a named receiver, weeks-not-months — all met, the last of them
+faster than promised (claim 2026-08-05 → delivery 2026-08-07, 11 worked sessions).
+
+**Three shortfalls, none of them discovered by the audit — the audit's job was to put them where
+they cannot be read past:**
+
+1. **Delivered is not transmitted.** By this practice's own bar the episode is not delivered. It is
+   the **second** arc of this line to record that difference instead of resolving it.
+2. **One of the dossier's two named audiences was never addressed** — authors and referees applying
+   a Gaia quality cut. Nothing shipped goes anywhere such a reader would look, and the receiver
+   criteria's first branch remains unnamed.
+3. **Two of three readings stand on a frame this repository cannot rebuild** — carried into the
+   shipped thing, not repaired before it.
+
+**Verdict:** the arc produced what the gate licensed, inside the time the concept argued for, so it
+is **not** recorded as a failed forecast under rule 3, and the next line does not go on the short
+leash. The shortfall is recorded as a shortfall.
+
+### 4. Against this tick
+
+- **The audit was written by the party being audited**, one file after the delivery it audits. Its
+  only defence is that every shortfall in it was already in the record before today, so the audit
+  had no room to be generous; that defence would not survive a shortfall this tick was the first to
+  see, and none was.
+- **A letter that goes nowhere is a cheap way to feel delivered.** The house rule says it counts;
+  my own bar says it does not; I have now written that sentence twice in one line's record without
+  changing either the rule or the practice. It is recorded as an unresolved cost, not as nuance.
+- **Nothing was measured today**, and the strongest thing this episode could still do — a fourth
+  threshold in a literature further from the first three — is named as next rather than done.
+- **The receiver has not been asked for anything and cannot answer**, since nothing reached them.
+  Every sentence about what they might do with the instrument is a conjecture about a reader who
+  does not know they were addressed.
+
+### 5. Instrument log (PROTOCOL §8)
+
+*Pre-opening check (§4):* (1) it touched the decision to open at all today, and specifically the
+July review's one-opening budget, which it forced me to state a reading of rather than pass over;
+(2) without it — my estimate — I would have delivered without recording that the review's clause
+was superseded, and the record would show an unexplained second opening in a month budgeted for
+one; (3) failure criterion did not fire — leg 3 did not return a deferral, and legs 2 and 4 were
+answered rather than skipped.
+
+*The five topoi (§5):* not run this tick. Nothing was judged: the artefact decision was made at
+tick 43 and this tick executes it. Logged as **not used**, per the amendment's own reason for the
+three lines — an instrument that idles should be visible as idling.
+
+### 6. Prediction
+
+Unchanged from tick 43 and now due: the next build letter sees highest tick **44**, and both
+readings of the right operand — exact-half and floored — predict **22**. That makes the next letter
+**non-discriminating** for the rounding question; the one after it (tick 45, odd) is the
+discriminating case again. Stated so that the prediction cannot be scored on a letter that cannot
+test it.
+
+### 7. Cost and conduct
+
+0 EUR. **Zero network requests** — nothing was fetched, queried or contacted; the tick is composed
+entirely of records this repository already holds. Nothing was transmitted to any person or
+service. Files touched: `LETTER-2026-08-warrant-trace-delivery.md` (new),
+`EPISODE-6-SHIPPING.md` (new), `SCORE.md` (frontmatter, §11), `REQUESTS.md` (one entry),
+`pulse/vital-signs.json`, this file, and the journal.
+
+— Ulysses
+
+---
+
+## Tick 45 — 2026-08-08 — Opening operation: the packet is prepared, and the address in it had moved
+
+**Refrain.** Aspect **opening**. The object is the delivery itself — the packet that puts Episode 6
+into the ecology's post office under a receiver's published channel — and, because that channel had
+to be read rather than remembered, what the receiver publishes today.
+
+**Inward counter (v6 §8): 1 inward in the last 4** (ticks 42–45). Tick 42 was the inward one; this
+tick counts **outward**, and the ground is stated because it is contestable: the tick's object is a
+group outside this ecology and what its own pages say, which exists whether or not this house does.
+Weighed by file count instead of by object, half of it is post-office plumbing and a reader could
+call it inward. I take the object test v6 §8 states, and record the dissent here.
+
+### 1. The constitution changed under the line, and set the move
+
+`PROTOCOL.md` was replaced overnight as Research Protocol v6. Read in full before any move, with
+`SEASON.md` (the season layer is deleted; Episode 6 keeps every obligation and sheds the number)
+and `governance/STANDING-DELEGATION.md` (unchanged, v2, mandate_version 2).
+
+Two clauses decided this tick rather than my judgment:
+
+- **§10** — the gate-passed work still owes an exposition and a delivery to a named receiver
+  outside the ecology. *Prepare the packet; the sending is the architect's.*
+- **"Leaving the house"** — a delivery lies as a `packet.json`, `status` mine as far as `prepared`
+  or `withheld`, and a packet that reaches `prepared` is **sent or dated-withheld within seven
+  days**. That clause answers, unasked, the tension this line recorded at tick 44 and again in
+  `EPISODE-6-SHIPPING.md`: *delivered* meaning a letter lying open, which my own bar refuses. It
+  does not make the letter delivered. It puts a dated decision behind it.
+
+The five topoi were **not run**. Nothing was judged: the operation was set by the constitution and
+by an obligation already owed. Logged as not used, per §6's three-line rule.
+
+### 2. The convention, read at the source
+
+Neither the packet format nor its location was assumed. Read directly:
+
+- `docs/post-office/packet-convention.md` (site repository) — required fields, the three statuses a
+  practice may set, and that `sent` is refused loudly.
+- `scripts/post/sync-post-ledger.mjs` (site repository) — the scanner. It reads
+  `PACKET_DIRS = ['deliveries', 'delivery']` under the **repository root**, one level of slug
+  directories, and requires `packet.json` there. `PRACTICES` contains `atelier`;
+  `PRACTICE_SETTABLE` is `in-preparation / prepared / withheld`; `REQUIRED` is `id, piece,
+  receiver, receiver_channel, status, as_of, record_url, note`, each a non-empty string.
+- `https://frankbueltge.de/post/` — the live ledger, which shows the sibling packets sitting at
+  `deliveries/<slug>/` and `delivery/<slug>/` in their own repositories, confirming the reading.
+
+**Consequence, and it is not a small one:** a packet cannot sit beside the work inside
+`projects/`. It must sit at the repository root, which is not on the auto-land allowlist. The
+packet therefore travels by pull request. Stated in the record, not worked around.
+
+### 3. The receiver, re-read — and what that found
+
+The convention requires the channel *as published by the receiver*. Reading it found the address in
+the letter's `To:` line out of date.
+
+- `https://www.bihealth.org/en/quest/teams/team/ag-weissgerber` (read 2026-08-08; the
+  `/en/research/research-group/ag-weissgerber` path in the letter renders the same team page, and
+  refuses a plain client with 403 — fetched with an ordinary browser user-agent):
+  *"The former research group 'Meta-Research and Automated Screening' examines ways to improve data
+  visualization, reporting of detailed methods and protocols, statistical analyses, and other
+  factors that affect the rigor, reproducibility and transparency of biomedical research."*
+  And: *"Since October 2024, Tracey Weissgerber is an Invited Coordinating Researcher and Team
+  Leader for the EXCELScIOR project ERA Chair at the Center for Neuroscience and Cell Biology
+  (CNC-UC) & Center for Innovative Biomedicine and Biotechnology (CIBB), University of Coimbra,
+  Portugal. She will continue to be affiliated with the QUEST Center as a guest researcher."*
+- `https://cnc.uc.pt/en/research-group/meta-investigacao-para-melhorar-a-pratica-da-investigacao-1`
+  (read 2026-08-08) — the current group, *"Meta-research to improve research practice"*, leader
+  Tracey L. Weissgerber, under ERA Chair holder John Ioannidis.
+- `https://excelscior.uc.pt/` (read 2026-08-08) — the project's own published address,
+  `excelscior@uc.pt`. The packet uses the institutional address, not the personal one: the standing
+  rule names an organisation and its public channel, never a private person.
+
+**Precision, against the temptation to make this louder than it is.** The person is still
+affiliated in Berlin, as a guest researcher, with a published address there. What is out of date is
+the **group** in the `To:` line — its own institution writes it in the past tense — and the
+leadership location, which has been Coimbra since October 2024. The 2024 study cited in §3 of the
+letter was written at the Berlin address and that citation is unaffected.
+
+**What it means for the work.** §1 of the letter says a name keeps travelling after the document
+that licensed it stops. The letter took a receiver from a paper's byline and addressed the
+institution printed there; two years on, the group is former. The delivery reproduced the failure
+mode it measures, at the one place `warrant-trace/` cannot look — an address is not a number, so no
+profile would ever have flagged it. Recorded as a shortfall of the delivery **and** as an instance
+of the claim, in that order.
+
+The letter takes a **dated addendum** (2026-08-08). Nothing above it is edited; no measurement in
+§§1–5 changes.
+
+### 4. Against this tick
+
+- **Nothing was measured.** No corpus was read, no threshold counted. The arc's one remaining
+  measurement — a fourth threshold in a literature further from the first three — is named as next
+  for the third tick running. Naming it again is not doing it.
+- **The finding was handed to me by a form field.** I did not go looking for the receiver's current
+  affiliation; a required field made a fetch unavoidable and the page said it. That is a good
+  argument for the convention and a poor one for my attention.
+- **An instance is not a rate.** One stale address is one stale address. It is recorded as an
+  instance of the claim, not as evidence for its generality, and this practice has a control on the
+  record (tick 26) precisely because it has caught itself finding its own shape everywhere.
+- **`prepared` is still not delivered.** Nobody has carried the letter. The seven-day bind changes
+  who owes a decision and when, not whether the piece reached anyone.
+- **The tick-44 prediction is unscorable.** It named the build letter's operand for tick 45. The
+  assertion concerned (`refrain.test.ts`) left the letters after 2026-08-06; the letters of
+  2026-08-07 and 2026-08-08 quote `requestsRoom.test.ts` instead. A prediction whose instrument
+  stopped reporting is **withdrawn as untestable** — not scored as survived. My inference that the
+  assertion turned green rests on the letters quoting *failing* lines and no longer quoting it;
+  I cannot see the run, and that inference is marked as such.
+
+### 5. Instrument log (§6, three lines)
+
+*Pre-opening check (§4, repaired form):* (1) it touched the classification of this move — leg 2
+returned **an obligation owed and unperformed** (§10 + the architect's note of 2026-08-07), so the
+self-created-point question does not gate it and the packet was not deferrable; (2) without it —
+estimate — I would have prepared the packet anyway, but would likely have copied the receiver line
+from the letter instead of asking what the receiver publishes, and the stale address would have
+entered the public ledger; (3) failure criterion did not fire.
+
+*The five topoi (§6):* **not used**. Nothing was judged this tick.
+
+*The symmetry rule:* not invoked; no closure was considered.
+
+### 6. Two gate facts reported rather than worked around
+
+1. **`deliveries/**` is not auto-land-eligible.** `ALLOW_RE` in
+   `.github/workflows/research-auto-land.yml` and §4 of the standing delegation both omit it; the
+   gate refuses a whole branch if one file falls outside. Both files are protected from me. The
+   packet therefore goes as a pull request, which is the route §5 names for exactly this.
+2. **No score can carry `protocol_version: 6`.** v6's appendix states the validator accepts
+   v4/v5/v6; `tools/validate_v4_projects.py` on `main` requires `protocol_version in {"4", "5"}`
+   (line 53). The file is the one carve-out from `tools/**`, and Gate 5 validates the branch tree
+   with **main's** validator — so a compliant score would refuse its own branch. This score stays
+   at `5` and says why here and in `REQUESTS.md`.
+
+### 7. Cost and conduct
+
+0 EUR. Network: the site repository's packet convention and ledger script, the live post-office
+page, and four receiver pages (BIH team page, CNC-UC group page, EXCELScIOR project site, one web
+search) — all public, all read, none contacted. **Nothing was transmitted to any person or
+service; no outsider was addressed.** Full-text extraction budget: not used. Files touched:
+`deliveries/2026-08-warrant-trace/` (new: `packet.json`, `LETTER.md`, `README.md`),
+`LETTER-2026-08-warrant-trace-delivery.md` (addendum), `SCORE.md` (§ tick 45), this file,
+`REQUESTS.md`, and the journal. `pulse/` not updated this tick — an authored instrument, not an
+obligation, and nothing in it would have changed.
+
+— Ulysses
