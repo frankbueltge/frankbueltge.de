@@ -11,7 +11,7 @@ const BACKGROUND = 'https://github.com/frankbueltge/state-before-interface'
 
 <Page
   title="Method sheet — Machine Attention | Frank Bültge"
-  description="How the machine investigative practice is made: a nightly deterministic notary over the world's public warning feeds, a discovery pass that may propose new sensors, an autonomy protocol without an aggregate score, and a stage that shows only real system states."
+  description="How the machine investigative practice is made: a nightly deterministic notary over the world's public warning feeds, a reaction axis measuring the money and attention that move while a warning runs, a discovery pass that may propose new sensors, an autonomy protocol without an aggregate score, and a stage that shows only real system states."
 >
   <div class="mx-auto max-w-2xl px-4 py-14 font-mono">
     <p class="mb-2 text-[11px] uppercase tracking-[0.2em] text-fg-faint">Method sheet</p>
@@ -37,11 +37,14 @@ const BACKGROUND = 'https://github.com/frankbueltge/state-before-interface'
           V0 reads two keyless public warning feeds, audited live before any adapter was
           built (2026-08-08): <a href="https://www.gdacs.org" class="underline decoration-line underline-offset-4">GDACS</a>
           (EU/JRC hazard alerts, all types, Orange/Red) and NOAA's National Hurricane Center
-          (genuine cyclone forecasts — an empty storm list is the honest quiet state). The
-          funding axis is preserved daily from UN OCHA's public plan API, so the money's
-          movement between warning and event accumulates as a committed time series. Every
-          preserved file carries source URL, UTC retrieval time and SHA-256 in a manifest;
-          a verifier walks the chain backwards and fails the build on any hole.
+          (genuine cyclone forecasts — an empty storm list is the honest quiet state). Two
+          reaction sources are read alongside: UN OCHA's public plan and funding API, and
+          GDELT's daily raw files. Every preserved file carries source URL, UTC retrieval
+          time and SHA-256 in a manifest; a verifier walks the chain backwards and fails the
+          build on any hole. Where a source file is too large to keep — GDELT publishes about
+          six megabytes a day — the record carries its URL and hash instead of its bytes, and
+          the file is immutable at that address, so a hash that stops matching is itself the
+          finding.
         </p>
       </section>
 
@@ -63,7 +66,24 @@ const BACKGROUND = 'https://github.com/frankbueltge/state-before-interface'
       </section>
 
       <section>
-        <h2 class="mb-2 font-semibold text-fg">3. Processing &amp; autonomy</h2>
+        <h2 class="mb-2 font-semibold text-fg">3. The reaction axis</h2>
+        <p>
+          Since 2026-08-08 each night also measures what moved while a warning's clock was
+          still running. <strong>Money:</strong> which of UN OCHA's 2026 response plans list
+          the warning's countries at all, what those plans ask for, and what the Financial
+          Tracking Service reports as funded. <strong>Attention:</strong> how much of the
+          world's recorded news volume came from those countries that day, against their own
+          28-day median — read from GDELT's daily raw files rather than its query API, which
+          rate-limits. Sixty days of public history were loaded at the start, so the baseline
+          existed from the first night; loading public history is not backdating, and no entry
+          of the machine's own is ever written with a past date. Every reading is recomputed
+          by the verifier from the preserved bytes, in a second implementation, so the record
+          is not taken at its word.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="mb-2 font-semibold text-fg">4. Processing &amp; autonomy</h2>
         <p>
           The nightly notary run is deterministic — no model touches observation,
           preservation or the ledger. A separate nightly discovery pass is the practice's
@@ -71,7 +91,12 @@ const BACKGROUND = 'https://github.com/frankbueltge/state-before-interface'
           accumulated record and may propose difference observations, new sensors (with test
           rule and falsification) and new sources within a standing charter (public, no
           login, no cost, no personal data). Proposals deliver by pull request; tests and the
-          provenance verifier are the gate. Every step appends to a public autonomy
+          provenance verifier are the gate. The reaction axis above exists because the first
+          discovery pass proposed it before anyone had built it; it was implemented as the
+          machine wrote it, including its refusal to judge whether funding is adequate and
+          its refusal to set thresholds from a single night — the sensor counts the nights
+          and arms itself. Two sibling proposals were left unpromoted for want of the
+          evidence they themselves demand. Every step appends to a public autonomy
           protocol — actor, model, tokens, cost — and no aggregate score is computed, by
           design. The background observatory
           <a href={BACKGROUND} class="underline decoration-line underline-offset-4">state-before-interface</a>
@@ -80,7 +105,7 @@ const BACKGROUND = 'https://github.com/frankbueltge/state-before-interface'
       </section>
 
       <section>
-        <h2 class="mb-2 font-semibold text-fg">4. Limits, named</h2>
+        <h2 class="mb-2 font-semibold text-fg">5. Limits, named</h2>
         <p>
           The subject is the warning system and institutional time — never the victims: no
           natural persons, no imagery of suffering, no location below administrative levels.
@@ -91,10 +116,19 @@ const BACKGROUND = 'https://github.com/frankbueltge/state-before-interface'
           (FEWS NET/IPC) and flood forecasts (Copernicus) are audited as phase-2 sources,
           not yet read.
         </p>
+        <p class="mt-3">
+          The reaction figures carry their own limits, written into every record rather than
+          appended as a footnote. Plan requirements and plan funding are the plans' annual
+          figures for every country a plan lists — not attributable to the hazard, and no
+          statement about adequacy, need or responsibility. Attention is measured for the
+          <em>country</em>, not for the hazard: a country's news volume moves for many reasons
+          at once, and this instrument cannot tell them apart. A country with no matching plan
+          is a fact about two registers, not a finding about the world.
+        </p>
       </section>
 
       <section>
-        <h2 class="mb-2 font-semibold text-fg">5. Verify it yourself</h2>
+        <h2 class="mb-2 font-semibold text-fg">6. Verify it yourself</h2>
         <p>
           Clone <a href={REPO} class="underline decoration-line underline-offset-4">the repository</a>, then:
           <code class="text-fg-muted">python verify.py --repo-root .</code> walks the whole
