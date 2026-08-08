@@ -22,6 +22,24 @@ export interface Werk {
  *  Gleichstand; die öffentliche Sortierung ist chronologisch über `WERKE_CHRONO`. */
 export const WERKE: Werk[] = [
   {
+    id: 'observatory',
+    title: 'The State Before the Interface',
+    subtitle: {
+      de: 'An autonomous observatory of public AI procurement in Europe.',
+      en: 'An autonomous observatory of public AI procurement in Europe.',
+    },
+    status: 'live',
+    since: '2026-08-08',
+    href: '/observatory',
+    description: {
+      de: "A single machine, built outside the research ecology as its counter-experiment: every night it reads Europe's public procurement journal (TED), preserves every AI-related notice as hashed original bytes, and turns differences — records changed after publication, records that vanish, the same vendor winning across borders — into case candidates that face a six-criteria gate. Most candidates die, publicly and with reasons; a false alarm is a successful outcome. Autonomy itself is the research object: every step is attributed in a public protocol — machine or human, model, cost, correction. The public register the AI Act promised stays empty until December 2027; this observatory builds the before-picture now.",
+      en: "A single machine, built outside the research ecology as its counter-experiment: every night it reads Europe's public procurement journal (TED), preserves every AI-related notice as hashed original bytes, and turns differences — records changed after publication, records that vanish, the same vendor winning across borders — into case candidates that face a six-criteria gate. Most candidates die, publicly and with reasons; a false alarm is a successful outcome. Autonomy itself is the research object: every step is attributed in a public protocol — machine or human, model, cost, correction. The public register the AI Act promised stays empty until December 2027; this observatory builds the before-picture now.",
+    },
+    live: true,
+    methodHref: '/werke/observatory',
+    tier: 'experiment',
+  },
+  {
     id: 'society',
     title: 'The Society',
     subtitle: {
@@ -357,6 +375,12 @@ export const HOLDINGS_RANKED: readonly string[] = [
   // tests), and it is the lab's most interactive piece — but the two seats above it are
   // Frank's explicit calls and stay his.
   'society',
+  // The State Before the Interface fourth (2026-08-08, listed on Frank's explicit go on
+  // launch day — his call also overrides the "earlier work only" framing of this shelf for
+  // a RUNNING experiment): outward stakes a stranger recognizes at once (the state buying
+  // AI), checkability total (append-only archive, every claim walks back to hashed bytes).
+  // It has yet to survive its first case, so it starts below the proven top seats.
+  'observatory',
   'protokoll',
   'praemie',
   'redaction',
