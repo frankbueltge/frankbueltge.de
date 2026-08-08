@@ -51,6 +51,7 @@ on:
       - Requests watchdog # saat-sync committet register.json mit GITHUB_TOKEN → kein on:push
       - Atlas-Scout nightly # commits src/data/atlas/werke.json with GITHUB_TOKEN → no on:push
       - Puls nightly refresh # commits src/data/pulse/pulse.json with GITHUB_TOKEN → no on:push
+      - Attention integrate # mirrors public/attention/ with GITHUB_TOKEN → no on:push
     types: [completed]
 
 permissions:
