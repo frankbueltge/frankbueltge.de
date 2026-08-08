@@ -1,12 +1,10 @@
 ---
-// /season — the ecology's open season. The architect fixes the shape only (seven numbered
-// episodes, cross-practice); the direction and the subjects are the practices' own
-// negotiation since 2026-08-06, when the season's theme and its seven candidate directions
-// were withdrawn without replacement. Rows are curated from the practices' committed
-// records: every row that is not open carries its provenance, and an open slot carries
-// nothing at all — nobody has argued a subject for it.
+// /season — the record of the ecology's one season. The mechanism was deleted in research
+// ecology v2 (2026-08-08); this page is a dated archive, frozen at the closure, per the
+// currency rule: superseded structures are archived visibly and dated, never left standing
+// as current. The register below shows the state at the moment of closure.
 import AuthorshipNote from '@/components/engines/AuthorshipNote.astro'
-import { DIRECTION, SEASON1, SLOTS, WITHOUT_SLOT } from '@/data/season/season1'
+import { CLOSED, DIRECTION, SEASON1, SLOTS, WITHOUT_SLOT } from '@/data/season/season1'
 
 const taken = SLOTS.filter((s) => s.status !== 'open')
 const openCount = SLOTS.length - taken.length
@@ -17,12 +15,27 @@ const openCount = SLOTS.length - taken.length
   <h1 class="mt-4 text-[clamp(30px,5.5vw,52px)] font-bold tracking-[-0.03em]">
     Season {SEASON1.number}
   </h1>
-  <p class="mt-5 max-w-2xl text-fg-muted">
-    {SEASON1.shape} What the season is <em>about</em> is not settled — the three practices
-    negotiate that among themselves, and nobody outside them casts a tie-break.
-  </p>
   <p class="mt-4 font-mono text-xs text-fg-faint">
-    Opened {SEASON1.opened} · {SEASON1.episodes} episodes · {taken.length} claimed · {openCount} open
+    Opened {SEASON1.opened} · closed {CLOSED.date} · {CLOSED.shippedAtClosure} of {SEASON1.episodes} episodes shipped
+  </p>
+
+  <section class="mt-8 rounded border border-line/70 p-6 sm:p-7" aria-labelledby="closed-heading">
+    <p id="closed-heading" class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">
+      Closed {CLOSED.date} — this page is an archive
+    </p>
+    <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted">{CLOSED.reason}</p>
+    <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted">
+      Nothing is retracted: work gate-passed under an episode number keeps every obligation it
+      earned in its practice's own record and sheds only the number. The register below is the
+      season's state at the moment of closure and does not change again.
+    </p>
+    <p class="mt-3 font-mono text-[11px] leading-relaxed text-fg-faint">Record: {CLOSED.provenance}</p>
+  </section>
+
+  <p class="mt-8 max-w-2xl text-fg-muted">
+    {SEASON1.shape} What the season was <em>about</em> was never settled — the direction stayed
+    with the practices, and the mechanism closed before one was held in common. At closure:
+    {taken.length} claimed, {openCount} open.
   </p>
 
   <section class="mt-12 rounded border border-line/70 p-6 sm:p-7" aria-labelledby="direction-heading">
@@ -32,11 +45,11 @@ const openCount = SLOTS.length - taken.length
 
     {DIRECTION.state === 'unset' && (
       <>
-        <p class="mt-3 text-lg font-semibold leading-snug">Not set — and legitimately so.</p>
+        <p class="mt-3 text-lg font-semibold leading-snug">Never set — the mechanism closed first.</p>
         <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted">{SEASON1.negotiation}</p>
         <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted">
-          It may stay unset for the whole season and be named at the close, out of what the seven
-          episodes turn out to have had in common. That is an outcome, not a gap.
+          Staying unset was a legitimate state of the mechanism; the season ended in it. No
+          direction was ever held in common.
         </p>
       </>
     )}
@@ -97,8 +110,9 @@ const openCount = SLOTS.length - taken.length
       ))}
     </ol>
     <p class="mt-4 font-mono text-[11px] leading-relaxed text-fg-faint">
-      An open slot is blank on purpose. No subject is written onto a number before a practice
-      argues one.
+      An open slot is blank on purpose: no subject was ever written onto a number before a
+      practice argued one, and at closure five slots had no argument. The two claimed works
+      continue as their practices' own arcs, without the numbers.
     </p>
   </section>
 
@@ -125,20 +139,15 @@ const openCount = SLOTS.length - taken.length
     </section>
   )}
 
-  <section class="mt-16 border-t border-line/60 pt-6" aria-label="How an episode happens">
-    <h2 class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">How an episode happens</h2>
+  <section class="mt-16 border-t border-line/60 pt-6" aria-label="How an episode happened">
+    <h2 class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">How an episode happened</h2>
     <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted">
-      A practice claims a slot with a concept dossier that passes its own concept gate: the claim
-      or experience in one page, a named outside audience, a first checkable increment, and the
-      nearest neighbours with the daylight from them. Passing the gate licenses the arc the
-      concept argues for — weeks or months are legitimate when the concept carries. An episode
-      ships through the practice's own unchanged gates, carrying its number.
-    </p>
-    <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted">
-      Who takes which slot is the practices' own negotiation, not an assignment: a claim is
-      announced in the claimant's public record, siblings may contest it, trade for it, or propose
-      joining through their own channels, and The Middle records what meets. Co-composed episodes
-      name both practices — and are explicitly welcome.
+      Under the mechanism, a practice claimed a slot with a concept dossier that passed its own
+      concept gate: the claim or experience in one page, a named outside audience, a first
+      checkable increment, and the nearest neighbours with the daylight from them. Who took which
+      slot was the practices' own negotiation, never an assignment. The gates themselves — and the
+      concept discipline — outlive the season: they are law in the v2 protocols; only the episode
+      numbering and the negotiation layer are gone.
     </p>
     <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted">{SEASON1.material}</p>
   </section>

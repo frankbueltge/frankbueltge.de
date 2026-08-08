@@ -131,12 +131,12 @@ export const PRACTICES: readonly PracticeAnatomy[] = [
     persona: 'Ulysses',
     house: 'The Atelier',
     href: '/atelier',
-    protocolTitle: { text: 'Research Protocol v5 — the work-line protocol', source: P('atelier') },
+    protocolTitle: { text: 'Research Protocol v6 — the work-line protocol, sharpened', source: P('atelier') },
     identity: {
       // The protocol's sentence names its founder next; that name belongs on /about and the hub's
       // conductor line, not in prose on a practice page (drift-check rule 2), so the quotation
       // stops before it. The source is cited beside it and carries the whole sentence.
-      text: 'Ulysses is a machine-participatory artistic research practice',
+      text: 'Ulysses is a machine-participatory **artistic research** practice',
       source: P('atelier'),
     },
     inviolable: {
@@ -176,7 +176,7 @@ export const PRACTICES: readonly PracticeAnatomy[] = [
     persona: 'Meridian',
     house: 'The Field',
     href: '/field',
-    protocolTitle: { text: 'Research Protocol v2 — the standing instruction', source: P('field') },
+    protocolTitle: { text: 'Research Protocol v3 — the counter-measurement protocol', source: P('field') },
     identity: {
       text: 'the **conductor of an autonomous research collective**',
       source: P('field'),
@@ -200,7 +200,7 @@ export const PRACTICES: readonly PracticeAnatomy[] = [
     },
     stages: [
       { label: 'orient', kind: 'work', what: 'workboard, memory, journal, the field map, open requests, the letters the gate sent back' },
-      { label: 'decide the move', kind: 'work', what: 'one of seven — and after two inward moves the next one goes outward' },
+      { label: 'decide the move', kind: 'work', what: 'one of six — advance an arc · gauntlet · verify · ship · consolidate · expedition' },
       { label: 'build', kind: 'work', what: 'in drafts, on real fetched or computed data', artefact: 'drafts/<slug>/' },
       { label: 'Verifier', kind: 'gate', what: 'every claim retrievable or marked conjecture — checked independently of the builder' },
       { label: 'Interlocutor (a)', kind: 'gate', what: 'the core claim must survive an independent refutation attempt — the Skeptic’s clause, moved here on 2026-08-08 and still blocking' },
@@ -219,13 +219,13 @@ export const PRACTICES: readonly PracticeAnatomy[] = [
     persona: 'Ensemble',
     house: 'The Studio',
     href: '/studio',
-    protocolTitle: { text: 'Studio Protocol — the standing instruction', source: P('studio') },
+    protocolTitle: { text: 'Studio Protocol v2 — works of force', source: P('studio') },
     identity: {
       text: 'the **conductor of an autonomous artist collective**',
       source: P('studio'),
     },
     inviolable: {
-      text: 'every VERIFIED and SOURCED label',
+      text: "**Blurring tiers is this studio's cardinal sin.**",
       source: P('studio'),
     },
     unit: {
@@ -235,7 +235,7 @@ export const PRACTICES: readonly PracticeAnatomy[] = [
     // Builder and Archivist were cut as roles on 2026-08-08; the severed readers, which this row
     // had never named, enter it — the cull kept them explicitly and they are the house's own
     // instrument. Same reading as field's row: what a move may convene, not a standing cast.
-    cast: ['The Artist', 'Dramaturg', 'Verifier', 'Kritiker', 'Severed readers'],
+    cast: ['Kritiker', 'Dramaturg', 'Verifier', 'Severed readers'],
     castNote: {
       text: 'a production collective without an\n  artist produces production, not art',
       source: P('studio'),
@@ -253,7 +253,7 @@ export const PRACTICES: readonly PracticeAnatomy[] = [
       { label: 'Studio integrate', kind: 'land', what: 'the practice dispatches on landing; work in production stays in the studio until it premieres' },
     ],
     refuses: {
-      text: '**The register form is not available to this studio.**',
+      text: "No trial registers as a work's form.",
       source: P('studio'),
     },
   },
