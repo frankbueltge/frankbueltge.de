@@ -137,6 +137,13 @@ cloned only for post office packets"). What stands: the `/plenum` exhibition on 
 the post office service, the membership. What v2 changes for it anyway: **the seven-day
 bind covers its packets** — same pen, same rule — so the CHT letter lying `prepared` since
 2026-08-05 is due a send-or-withhold decision within seven days of the bind taking force.
+*(Extended the same day, midday, at Frank's instruction "so dass nichts stumm bleibt": the
+bind also covers the plenum's **review dashboard** — a delivered draft is approved, rejected
+or dated-held within seven days; the thirteen pending since July fall due 2026-08-15. The
+dashboard turned out to be the buried lede: it lives at `data-snack.com/lab/social`,
+token-gated in production, and Frank himself had to ask where it was — the thirteen were
+never ignored, they were invisible. Its location is now written into the plenum's protocol
+so it cannot be lost again.)*
 What v2 does not extend to it: the machine-advantage bar, the arc default, and **the
 reading of 2026-09-05** — if the house fails and archives, the Plenum continues as
 data-snack.com's own, and only its ecology connections wind down. Whether its membership
