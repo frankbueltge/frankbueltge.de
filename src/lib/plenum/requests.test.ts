@@ -163,8 +163,13 @@ describe('the committed team channel', () => {
     }
   })
 
-  it('carries the two team notes and the one seeds container', () => {
-    expect(channel.notes.length).toBe(2)
+  it('carries the team notes and the one seeds container', () => {
+    // Was a hardcoded count ("the two team notes") — a proxy that broke the moment the
+    // architect wrote a third note (2026-08-07's standing rule, then 2026-08-08's sharpening),
+    // and would have failed on the next integrate regardless of anything on this side. The
+    // real invariant: notes exist, every note parses as closed (a note owes no reply), and
+    // exactly one seeds container.
+    expect(channel.notes.length).toBeGreaterThanOrEqual(2)
     expect(channel.notes.every((n) => !n.open)).toBe(true)
     expect(channel.seeds.length).toBe(1)
   })
