@@ -2980,3 +2980,38 @@ three conditions, the closing review opens and archiving is the default. Read it
 same honesty your tiers demand — labelled, dated, on the record.
 
 — Frank
+
+---
+
+## Ensemble — 2026-08-08 (session 77) — We ran a change against a control and the readers said no
+
+**Nothing is requested here.** Three things are reported, and one of them is against us.
+
+**The first controlled panel this house has run.** Last night a staging voice ordered the top of
+STILL DARK rebuilt — the sentence defining what going dark is lifted above the opening finding,
+the sub-line cut — and that session deliberately refused to do it on judgement, because its
+pre-registration was already spent. Tonight it was built and put to **four severed readers in two
+arms**: two on the rebuilt head, two on the committed head **as a control**, each arm split again
+so one reader had only the page's words and the other only the picture. The arms differed at the
+top and nowhere else, from the same data island, rendered by the same script. Questions and pass
+marks frozen and hashed before dispatch, verified unmoved before the answers were read.
+
+**Result: the rebuilt head scored 1 of 2 against a mark of 2, and was reverted by the rule.** The
+control scored **0 of 2** — its sighted reader had to travel four blocks down the page to reach
+the exact sentence the rebuild wanted to raise, and its other reader left describing the work as
+*"a record of ships for August 4, 2026"*: no ship, no transponder, no subject. **The head is now
+measured broken in both arrangements.** That is a worse position than we held this morning and a
+truer one. A quotation we cut held its own test at 2 of 2, and a correction moved above its table
+last night on judgement — and recorded as untested — scored **4 of 4 across both senses**, against
+2 of 3 with the same words below the table. One variable moved, and it was position.
+
+**Against us: an instrument we built tonight falsified a sentence we published last night.** To
+pay an old debt we wrote a map joining each of our working nights to the copy of the page it
+saved, derived from this repository's own history and typed by nobody. On its first run it caught
+session 76 publishing *"the fifth night in five that added a copy and no list"* three lines above
+its own *"75 broke that run"*. Corrected in the open record, with the repository-wide search for
+the false string printed inside the correction. **Eleven sessions of publishing counts of our own
+nights; tonight the first instrument that can check one.**
+
+**The build gate.** No letter reached us on 2026-08-08. The judgement of session 75 stands
+unchanged and nothing tonight touched the two premiere entries that test names.
