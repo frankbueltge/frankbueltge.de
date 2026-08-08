@@ -1,0 +1,107 @@
+---
+// Method sheet for "Machine Attention" — the practice and its first project,
+// The Foreknown. English-only. Deliberately free of live counts: the stage at
+// /attention renders itself from the practice's committed records; this sheet
+// states only dated facts and standing rules that do not drift.
+import Page from '@/layouts/Page.astro'
+
+const REPO = 'https://github.com/frankbueltge/machine-attention'
+const BACKGROUND = 'https://github.com/frankbueltge/state-before-interface'
+---
+
+<Page
+  title="Method sheet — Machine Attention | Frank Bültge"
+  description="How the machine investigative practice is made: a nightly deterministic notary over the world's public warning feeds, a discovery pass that may propose new sensors, an autonomy protocol without an aggregate score, and a stage that shows only real system states."
+>
+  <div class="mx-auto max-w-2xl px-4 py-14 font-mono">
+    <p class="mb-2 text-[11px] uppercase tracking-[0.2em] text-fg-faint">Method sheet</p>
+    <h1 class="mb-8 font-sans text-2xl font-semibold">Machine Attention</h1>
+
+    <section class="mb-10 border border-line bg-panel/60 p-5">
+      <h2 class="mb-2 text-[11px] uppercase tracking-[0.18em] text-fg-faint">What this is</h2>
+      <p class="leading-relaxed text-fg-muted">
+        A machine investigative practice: one machine, no personas, built as the
+        counter-experiment to the research ecology — one constitution against many. Its first
+        project, <strong>The Foreknown</strong>, is an observatory of announced futures: the
+        machine notarizes the world's public warnings the moment they are issued, so the
+        archive proves what was knowable, when. The public face is a
+        <a href="/attention/" class="underline decoration-line underline-offset-4">stage</a>,
+        not documentation: real clocks, real ledger, quiet nights shown as exactly that.
+      </p>
+    </section>
+
+    <div class="space-y-9 text-sm leading-relaxed text-fg-muted">
+      <section>
+        <h2 class="mb-2 font-semibold text-fg">1. Sources &amp; provenance</h2>
+        <p>
+          V0 reads two keyless public warning feeds, audited live before any adapter was
+          built (2026-08-09): <a href="https://www.gdacs.org" class="underline decoration-line underline-offset-4">GDACS</a>
+          (EU/JRC hazard alerts, all types, Orange/Red) and NOAA's National Hurricane Center
+          (genuine cyclone forecasts — an empty storm list is the honest quiet state). The
+          funding axis is preserved daily from UN OCHA's public plan API, so the money's
+          movement between warning and event accumulates as a committed time series. Every
+          preserved file carries source URL, UTC retrieval time and SHA-256 in a manifest;
+          a verifier walks the chain backwards and fails the build on any hole.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="mb-2 font-semibold text-fg">2. The notary's ledger</h2>
+        <p>
+          The unit of the practice is the announced future. <code class="text-fg-muted">NOTARIZED</code>
+          — first seen, the retrieval time never changes again. <code class="text-fg-muted">REVISED</code>
+          — window or severity changed; the original stays in the history, nothing is
+          overwritten. <code class="text-fg-muted">CLOSED_BY_SOURCE</code> /
+          <code class="text-fg-muted">DISSIPATED</code> — the feed let go of it. A warning whose
+          window passed but which is still fed stays open and is flagged — a difference worth
+          watching, not an error. V0 does not judge whether a warned event arrived: that
+          verdict needs outcome resolvers and is honestly deferred.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="mb-2 font-semibold text-fg">3. Processing &amp; autonomy</h2>
+        <p>
+          The nightly notary run is deterministic — no model touches observation,
+          preservation or the ledger. A separate nightly discovery pass is the practice's
+          intelligence layer: an ephemeral, fully attributed agent run that reads the
+          accumulated record and may propose difference observations, new sensors (with test
+          rule and falsification) and new sources within a standing charter (public, no
+          login, no cost, no personal data). Proposals deliver by pull request; tests and the
+          provenance verifier are the gate. Every step appends to a public autonomy
+          protocol — actor, model, tokens, cost — and no aggregate score is computed, by
+          design. The background observatory
+          <a href={BACKGROUND} class="underline decoration-line underline-offset-4">state-before-interface</a>
+          (public AI procurement) keeps observing nightly alongside.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="mb-2 font-semibold text-fg">4. Limits, named</h2>
+        <p>
+          The subject is the warning system and institutional time — never the victims: no
+          natural persons, no imagery of suffering, no location below administrative levels.
+          No accusations: the machine publishes timestamps, amounts and volumes, not blame.
+          No forecasts of its own: it notarizes the issuers' predictions and adds none. GDACS
+          episodes are largely hazards already in motion (alert episodes), NHC entries are
+          genuine forecasts — the ledger keeps the two kinds distinct. Famine early warning
+          (FEWS NET/IPC) and flood forecasts (Copernicus) are audited as phase-2 sources,
+          not yet read.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="mb-2 font-semibold text-fg">5. Verify it yourself</h2>
+        <p>
+          Clone <a href={REPO} class="underline decoration-line underline-offset-4">the repository</a>, then:
+          <code class="text-fg-muted">python verify.py --repo-root .</code> walks the whole
+          chain backwards; <code class="text-fg-muted">cd practice &amp;&amp; python -m pytest</code>
+          runs the rules as tests. The stage at
+          <a href="/attention/" class="underline decoration-line underline-offset-4">/attention</a>
+          is a deterministic rebuild of the committed records — the verifier fails if the two
+          differ by one byte.
+        </p>
+      </section>
+    </div>
+  </div>
+</Page>
