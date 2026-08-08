@@ -34,7 +34,46 @@ work_line:
     exists in a signature, and what survived was the narrower relation between a claim
     and the reference that would license it), and this practice's own citation
     behaviour (ticks 17, 19).
-  refrain_aspect: opening  # tick 44 — the episode is **delivered** in the only sense this house
+  refrain_aspect: territory  # tick 46 — the fourth threshold is measured, and it is the strongest
+    # of the four. **IoU >= 0.5**, computer vision's detection-correctness criterion: not a statistic
+    # computed on data but a stipulation of an evaluation protocol, in the field furthest from the
+    # first three. Frame 256 recent cs.CV papers, **built by committed code** (`frame-tick46.py`) —
+    # closing, for one case, the limitation the instrument's own README calls the episode's sharpest;
+    # 240 readable, 16 no-LaTeX (6.3 %, under D3). 216 use sites, 53 written forms / 47 numbers; 108
+    # sites at 0.5 in 62 papers, **all 108 hand-read**. Of them 18 are a *different* threshold sharing
+    # the number (7 NMS, 7 method-internal filters, 4 not this statistic at all) — **value collision**,
+    # a false-positive class the first three cases could not produce and which the README does not yet
+    # carry (owed). At the 90 criterion sites in 53 papers: the deriving document — Everingham et al.
+    # 2010, IJCV 88(2), read at source with sha256 and extractor recorded — stands at **2 sites in 2
+    # papers**; MS COCO, which adopted the number, at 8; another benchmark's protocol at 2; **nothing
+    # at 78**, of which 55 carry no citation at all. Sieve found 1 of the 2 deriving-document sites;
+    # the missed one cites `EvEtAl10`, an initialism no author-name regex reaches — a false negative
+    # in the direction that flatters the finding, corrected here.
+    # **The fourth failure mode, and the one the first three cases could not show:** the number is
+    # absorbed into the metric's NAME (`AP50`, `mAP@0.5`), where no site exists at which a warrant
+    # could stand. Counted separately by committed code and never mixed into the site count: **106 of
+    # 240 papers carry it as a name, 62 state it as a threshold, 64 carry the name and never state
+    # it**. Union — **126 papers report a number this criterion governs; 2 cite the document that
+    # derived it.** And the sharpening this case licenses: the deriving document here carries the
+    # FULLEST warrant of the four (the number, the reason "set deliberately low to account for
+    # inaccuracies in bounding boxes in the ground truth data", the named limitation, and a published
+    # sensitivity analysis of the threshold in its own section 6.2.3) and travels the LEAST. Whatever
+    # decides whether a warrant travels, it is not how good the warrant is — one reading, not a law.
+    # Pre-registered before any count (`PREREGISTRATION-tick46.md`): D1/D2/D3 not met, **D4 holds on
+    # all four legs** — the line's first forecast to survive whole, which is worth as much suspicion
+    # as comfort, since a forecast that risks nothing wins cheaply. **D6 does not fire**: the units
+    # repair (0.4, `focus_equivalents`, one threshold written `0.5` and `50%`) moves the count by 1.9 %
+    # and is recorded as an instrument improvement that earned no finding; it is 0.3's written-form
+    # repair that does the work here, 21 of 108 sites, re-confirming tick 36's fault in a fourth
+    # literature. Instrument at **0.4**; `selftest-0.4.py` passes and `selftest-0.3.py` is left
+    # standing; `handread_sites.py` selects by the same rule, because a repair that stops before the
+    # hand-reading never reaches the numbers.
+    # **The shipped work is untouched** — letter, exposition and the packet in PR #12 are not
+    # rewritten; the fourth reading lives in this record and is offered to Frank in `REQUESTS.md` as a
+    # decision input under his seven-day bind. Aspect returns to **territory**; no outward move was in
+    # question and the pre-opening check did not run, its leg 1 asked and answered (nothing owed is
+    # ageing on my side). Five topoi **not used** and logged as unused: nothing was judged.
+    # tick 44 — the episode is **delivered** in the only sense this house
     # delivers: `LETTER-2026-08-warrant-trace-delivery.md`, addressed to the receiver named at tick 39,
     # laid open in the ledger, **not transmitted** — and the difference between the poste restante rule
     # and this practice's narrower *delivered, caveats intact* bar is stated in the letter itself, for
