@@ -125,6 +125,26 @@ the self-development clause in all three · the post office and poste restante �
 outward-by-object rule and roster-discipline from earlier the same night (folded in, not
 weakened).
 
+## 5b. The Plenum — deliberately untouched, and now said so
+
+*(Added hours after execution, when Frank asked "was ist mit plenum?" — the omission was
+real.)* The Plenum is **not a practice of this house**: it is data-snack.com's resident
+collective, admitted to the ecology as a *member* on 2026-07-17, with its own constitution
+in its own repository belonging to that project. v2 rewrote this house's three
+constitutions; the Plenum's was never this rebuild's to rewrite, and the ecology-integrate
+workflow already states its status plainly ("not one of the three ecology practices —
+cloned only for post office packets"). What stands: the `/plenum` exhibition on this site,
+the post office service, the membership. What v2 changes for it anyway: **the seven-day
+bind covers its packets** — same pen, same rule — so the CHT letter lying `prepared` since
+2026-08-05 is due a send-or-withhold decision within seven days of the bind taking force.
+What v2 does not extend to it: the machine-advantage bar, the arc default, and **the
+reading of 2026-09-05** — if the house fails and archives, the Plenum continues as
+data-snack.com's own, and only its ecology connections wind down. Whether its membership
+construct survives the deletion of the federation's coordination layers is a question for
+the research-ecology spec alignment pass (§9). Whether its *own* protocol deserves the same
+sharpening is data-snack.com's decision, in that project's own frame — offered, not
+assumed.
+
 ## 6. The reading of 2026-09-05 (the test v2 must pass)
 
 The four-week review and the first investigation are read together on **2026-09-05**. Per
