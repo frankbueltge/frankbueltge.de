@@ -105,6 +105,15 @@ Arbeiten", sondern das Verzeichnis der Experimente des Labors; der Untertitel de
 wurde entsprechend entschärft („offered to the ecology as material" entfiel — das
 Observatorium steht bewusst außerhalb der Ökologie).
 
+**Nachtrag (Frank, 09.08.):** Das zweite Experiment heißt jetzt **„machine attention"** —
+eine machine investigative practice (Name von Frank bestätigt, 09.08.). Ihre Bühne lebt
+unter **`/attention`** (nächtlich gespiegelt aus `machine-attention`, Franks Anweisung:
+„keine GitHub Page — auf frankbueltge.de veröffentlichen, wo es hingehört"). Erstes
+Projekt: **„The Foreknown"** (Beurkundung angekündigter Zukünfte); „The State Before the
+Interface" (`/observatory`) ist seit dem 09.08. **Hintergrund-Observatorium** dieser
+Praxis, nicht mehr das Experiment selbst. Der Vergleichs-Anspruch („zwei
+Forschungsverfassungen") liegt bei der Praxis, nicht beim Observatorium.
+
 ## Schwarze Liste (zurückgezogen — nie als aktuell verwenden)
 
 | Phrase | Status |
