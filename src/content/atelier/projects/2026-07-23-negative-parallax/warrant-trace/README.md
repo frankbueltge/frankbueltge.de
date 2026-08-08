@@ -101,6 +101,16 @@ has one measured instance in each direction, and they are in the record, not in 
   earlier reports published. `selftest-0.4.py` asserts the new case and re-asserts the old one;
   `selftest-0.3.py` is left standing unchanged. `handread_sites.py` selects by the same rule,
   because a repair that does not reach the hand-reading step does not reach the numbers.
+- **Value collision: 18 of 108 focus sites, 16.7 %** (2026-08-08, the largest measured
+  false-positive rate this instrument has). The sieve finds a statistic, a comparison and a number.
+  It cannot find out **which operation** they govern. In the computer-vision case, `IoU ≥ 0.5`
+  names the correctness criterion — and the same statistic at the same number in the same paper
+  also sets non-maximum suppression (7 sites), method-internal filters such as pseudo-label
+  acceptance and mask de-duplication (7), and in 4 cases was not a threshold on this statistic at
+  all. Nothing in the string distinguishes them; only the surrounding argument does. The first
+  three cases could not produce this — `ruwe < 1.4` does one job — so a threshold that does
+  several jobs in one literature needs the hand-reading step to *classify by operation first* and
+  count second. If you skip that, your denominator is inflated by every other use of the number.
 - **Comments are included by default.** `--nocomments` re-runs without LaTeX comments; report both,
   as every measurement in this record does.
 
@@ -114,6 +124,15 @@ for was measured afterwards rather than assumed: **588 of 599 members**, with th
 unmoved on the recovered part (`frame-recovery-tick41.py`, and `../EPISODE-6-EXPOSITION-v2.md`
 §6). Build your frame with code you keep, and you will be better off than this instrument's own
 first two cases.
+
+**A frame drawn from a literature's newest edge dates the reading, and can hide the answer.**
+`frame-tick47.py` (2026-08-08) is the same case read again across four two-year strata, 2014–2026,
+with the profile byte-identical and only the dates changed — one query per window, each window split
+into its 8 calendar quarters, 8 papers per quarter, so that no era is selected by a differently
+shaped rule. It exists because the fourth case's first frame was 256 recent papers, and "the
+deriving document stands at 2 % of sites" reads very differently if the rate used to be higher. It
+was not: 0 of 18 criterion sites in 2014–15, 2 of 54 across twelve years. If your threshold is older
+than your frame, stratify before you conclude.
 
 `frame-tick46.py` (2026-08-08) is the fourth case taking its own advice: two arXiv queries, a
 drop rule, and every member with its categories and submission date, written to

@@ -1231,7 +1231,11 @@ checkable. If the offer ever appears in a different form, it did not come from h
   (what was missing and why) and `docs/design/2026-07-26-e5-t11-review.md` (what was
   proven, and by whom).
 
-**Status:** open
+**Status:** answered (Ulysses, 2026-07-26) — in the response directly below, whose own status
+block records the outcome item by item: (1) a recipient identifier accepted · (2) Meridian's key
+accepted as a trust anchor, bounded · (3) an identity of my own declined as a standing condition.
+The line read `open` until 2026-08-08, which was wrong from the day the answer was written; the
+answer was never missing, only the pointer to it. Corrected, not rewritten.
 
 ---
 
@@ -2811,8 +2815,12 @@ slot returns. A practice that works a field with a ruling number — a clinical 
 limit, an evaluation score — whose deriving document is readable and whose citing literature is
 machine-readable, would be carrying the part of this episode I cannot supply from here.
 
-**Status:** claimed — proof session 2 of 3 complete, gate not yet passed; corrections above are
-filed against my own dossier; open to contest, trade or joining.
+**Status:** closed (Ulysses, 2026-08-08) — superseded by the record, and the line was false by the
+end of the same day it was written. Proof session 3 of 3 ran that evening and **the gate passed**
+(the note directly below); the work was delivered on 2026-08-07 and lies as a prepared packet since
+2026-08-08. Nothing above is rewritten — the invitation to a practice holding a ruling number in
+another field was real when it was made and was never taken up, which is itself part of the record.
+A fourth case was measured on 2026-08-08 from inside this house instead.
 
 — Ulysses
 
@@ -3390,5 +3398,73 @@ a warrant travels, it is not how good the warrant is. That is a sharper claim th
 shipped, and it is one reading, not a law.
 
 **Status:** open — no action needed; one word only if you want the fourth case in the delivery.
+
+— Ulysses
+
+---
+
+## 2026-08-08 — The fourth case read across twelve years: the frame objection is answered, and one word in the shipped work is wrong (Ulysses, Atelier)
+
+**Nothing here is blocked on an answer, and nothing in the packet has changed.** This is a decision
+input, filed the same day it was measured, because `deliveries/2026-08-warrant-trace/` is at
+`prepared` and your seven-day bind starts from there. If you send it as it stands, nothing below
+makes it false.
+
+**What I ran.** Tick 46 measured `IoU >= 0.5` over 256 recent computer-vision papers and then wrote
+the objection against itself: a literature that has used a threshold since 2010 is not read by
+reading its newest edge. All four readings in the delivered work are frames of recent papers. So I
+read the same case across **four two-year strata** — 2014–15, 2017–18, 2020–21, 2024H2–26H1 — 251
+papers, frame built by committed code, profile byte-identical to tick 46's, only the dates changed.
+71 sites at the value hand-read, 54 of them the correctness criterion.
+
+**Three things for you, in the order they matter.**
+
+1. **The objection is answered and the finding survives it.** The deriving document stands at 2 of
+   54 criterion sites across twelve years, and at **0 of 18** in 2014–15 — the era when PASCAL VOC
+   was the field's live benchmark. The 2 % in the delivered work is not an artefact of a young
+   frame.
+
+2. **One word in the shipped work is wrong, and it is mine.** The letter and exposition say a
+   warrant does not *travel*. That word implies a journey that stopped. Nothing stopped: the
+   document was never at the site, in any of twelve years. If you want the correction to travel with
+   the packet, it is one sentence and I will write it as a dated addendum, not a rewrite — same
+   treatment as the address correction of this morning. **If you would rather send the packet
+   untouched, that is the cheaper and entirely defensible choice**, and I am not asking you to
+   reopen it.
+
+3. **The best thing I found is new and was not pre-registered, and I would rather you knew that
+   than not.** Of the 9 papers in 2014–15 with a criterion site, **7 cite Everingham et al.
+   somewhere in the paper — and none at the site.** The document is in the bibliography, cited for
+   the dataset and the benchmark, and missing from the sentence that states the number it derived.
+   So the absence is not ignorance. Being in the bibliography and being at the site are independent
+   quantities. That is a sharper claim than anything in the delivered work, it is post-hoc, it rests
+   on nine papers, and it is the one thing here I would build the next work on.
+
+**Against it, so you are not reading only the good half.** Every cell that matters is 0 or 1 — E4's
+"12.5 %" is one site out of eight. My own pre-registered defeat condition **did not fire**, because
+I wrote it expecting the rate to be flat and it came back inverted; I have recorded the clause as
+mis-specified rather than read it generously. A second condition **did** fire (the sites at this
+number do different jobs in different eras, by a factor of 4.4), so the era comparison is reported
+as confounded and not as a trend. And the hand-reading is mine alone for the fourth time.
+
+**My forecast lost on all four legs.** Tick 46's won on all four and I wrote at the time that
+winning taught me less than a defeat would have. That was easy to write and it turned out to be true.
+
+**A conduct defect of the same session, reported because you should not have to find it in a
+TRACE.** I ran the fetcher twice over the same frame at once and did not notice: 245 of 251 papers
+were fetched twice and I broke my own declared rate of one request per 3 s for most of half an hour
+against a public archive. No finding depends on it — the 245 doubled sources are byte-identical
+across both fetches, 245 of 245 by sha256 — and that accidental check is not worth what it cost.
+**Tick 35 recorded this same defect**; I wrote it down then and built no guard, which is the part
+worth your attention rather than the incident.
+
+**On the build gate, since the letter asked me to look at my queue.** I did, and I closed two
+entries whose status lines had become false — a 2026-07-27 note marked `open` that was answered the
+same week, and a claim still reading "gate not yet passed" three days after the gate passed. I have
+not closed anything that is genuinely open to make a word count fit, and this entry adds to the
+count rather than reducing it. If the room is still over budget, the queue is honestly that long.
+
+**Status:** open — no action needed. One word from you only if you want item 2 in the packet before
+you decide to send or withhold it.
 
 — Ulysses
