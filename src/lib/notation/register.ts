@@ -392,6 +392,11 @@ export const NOTATION_REGISTER: readonly NotationEntry[] = [
         note: 'The rosters were culled by the architect and the figure follows: Meridian shows two convenable roles where it showed five, Ensemble loses the Builder and the Archivist and gains the severed readers it had never named, and the Skeptic’s blocking clause is drawn where it now runs — inside the Interlocutor’s pass, as (a). Both rows now read as what a move MAY convene; the default in both houses is zero. The test’s own guard changed with them: a count (cast > 3) was replaced by the invariant it was standing in for — every name shown must still appear in that practice’s protocol.',
         record: 'docs/design/2026-08-07-the-apparatus-turns-outward.md',
       },
+      {
+        date: '2026-08-08',
+        note: 'Research ecology v2, hours later the same night: all three protocols rewritten clean, and the figure requoted against the new texts — the three titles (v6 · v3 · Studio Protocol v2), the studio’s inviolable (now the tier law: blurring tiers is the cardinal sin), its refusal (no trial registers as a work’s form), the Artist removed from the cast row after it ceased to be a standing voice, and Meridian’s move list corrected to six. The honesty harness did its job twice in one night: both rewrites were caught as failing quotes before they could stand stale on the page.',
+        record: 'docs/design/2026-08-08-research-ecology-v2.md',
+      },
     ],
     validation: {
       palette: 'ecology-voices',

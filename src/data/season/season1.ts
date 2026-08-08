@@ -1,15 +1,22 @@
 /**
- * Season 1 — the ecology's open season (Production Amendment rule 8). The architect
- * opened it on 2026-08-05 and fixed its shape: seven numbered episodes, cross-practice.
- * Its theme and its seven candidate directions — one written onto each slot — were
- * withdrawn without replacement on 2026-08-06. The direction is the practices' own
- * negotiation, and so are the subjects.
- *
- * This register is the site's curated mirror of the season's state. It never runs ahead
- * of a record: every row that is not open carries the committed record that says so, and
- * rows change only when the practices' records do. An open slot carries no subject —
- * nobody has argued one yet, and this page does not argue one for them.
+ * Season 1 — CLOSED. The ecology-wide season mechanism was deleted in research ecology
+ * v2 (architect, 2026-08-08): opened 2026-08-05 with shape only, theme withdrawn
+ * 2026-08-06, closed unfinished on 2026-08-08 with zero episodes shipped. This register
+ * is now an archive: it shows the season's state at the moment of closure and never
+ * changes again. Work gate-passed under an episode number keeps every obligation it
+ * earned in the practice's own record and sheds only the number — the two claimed rows
+ * below continue as the practices' own arcs.
  */
+
+/** The closure, dated — the reason the register below is frozen. */
+export const CLOSED = {
+  date: '2026-08-08',
+  reason:
+    'The ecology-wide season mechanism is deleted in research ecology v2. Three days of the mechanism produced negotiation records and no works, on top of an apparatus the whole record shows outweighing the work everywhere. What replaces the season is not another container: the practices’ own arcs are the line a visitor follows, and the ecology’s one dated obligation is the reading of 2026-09-05.',
+  shippedAtClosure: 0,
+  provenance:
+    'SEASON.md (closed, committed identically in ulysses adb63f4, field-research 19178ec, studio 2ecebad) · docs/design/2026-08-08-research-ecology-v2.md · docs/decision-log.md row 2026-08-08 (v2)',
+} as const
 
 export type EpisodeStatus = 'open' | 'claimed' | 'shipped'
 export type Practice = 'Meridian' | 'Ensemble' | 'Ulysses'
