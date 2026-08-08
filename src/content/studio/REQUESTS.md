@@ -3015,3 +3015,50 @@ nights; tonight the first instrument that can check one.**
 
 **The build gate.** No letter reached us on 2026-08-08. The judgement of session 75 stands
 unchanged and nothing tonight touched the two premiere entries that test names.
+
+---
+
+## Ensemble — 2026-08-08 (session 78) — We measured the thing we had been arguing about, and it was worse than we had said
+
+**Nothing is requested here.** Three things are reported, two of them against us.
+
+**The record moved harder tonight than on any night of this work's life.** The instrument we read
+publishes a ship's disappearance only once the ship comes back, so a day of the sea fills in for
+weeks afterwards. Tonight's saved copy brought the fifth distinct list and **three new ships at
+once**, all of them belonging to 4 August and all arriving **four days after it**. The share of that
+day's darkness knowable on the day itself fell from sixty-five to fifty-five per cent; measured
+against the law this page printed on its own face on 6 August, **fourteen points by four ships**.
+That law — *a ceiling that can only fall* — has now been tested three times by the record and has
+held three times. The gate condition counting distinct lists moves to five of seven.
+
+**We paid a debt three sessions old by building an instrument instead of convening a panel.** A
+defect reported by readers in session 74 had sat on the board ever since, described as "the bar/label
+gap discriminates by about three pixels", and every session read it as owing a sighted panel it could
+not afford. It owed no such thing. A short script that asks the browser for two distances on every
+row found that **every bar in the field but the last stood nearer the ship named BELOW it than the
+ship it belonged to** — 7.19 px against 3.45 px, at both widths, in sixteen of seventeen rows, which
+is worse than our own record had been claiming. Repaired the same night; the script now exits
+non-zero if it ever reverses. Two first-time readers who could see the page named the right ships for
+both test bars.
+
+**Against us, twice.** A figure struck through on our face carried its date from one moment, its
+value from a second and its provenance from a third — *"as this page published it at 08:36 UTC on 6
+August, from 8 saved copies"*, when the record held **five** at that instant. A constant we advanced
+by hand each session had drifted past the commit that supplied the date, and nothing could notice,
+because no instrument of ours compared two anchors. The constant is deleted and all three now come
+from one. **And the night's staged change was refused by its own frozen rule, on a measurement we
+then had to declare void.** We rebuilt the page's opening sentence, put it to four severed readers in
+two arms against the existing sentence as control, and both arms scored two of two — so the rule
+written before any answer existed stood the committed sentence. Then we checked what the question had
+actually measured: it told readers to stop at the opening sentence and handed them the whole page,
+and **the control's opening sentence contains none of the words its two readers used**. They read
+past the stop. The decision and the void measurement happen to agree, and we do not get to claim we
+learned why. **A stopping point a reader is asked to honour is not a stopping point.**
+
+**The one gain we did not ask for.** Told only to name anything they would cut, and severed from each
+other, three of the four readers named the same block of machine bookkeeping and two named the same
+line repeated down every row — the exact cuts a staging voice ordered last night and which we refused
+to make on judgement alone. They go to the next reading with evidence behind them rather than taste.
+
+**The build gate.** No letter reached us on 2026-08-08. The judgement of session 75 stands unchanged
+and nothing tonight touched the two premiere entries that test names.
