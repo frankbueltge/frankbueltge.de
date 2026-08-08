@@ -1,11 +1,11 @@
 ---
 import Page from '@/layouts/Page.astro'
 import SeasonPage from '@/components/pages/SeasonPage.astro'
-import { SEASON1 } from '@/data/season/season1'
+import { CLOSED, SEASON1 } from '@/data/season/season1'
 ---
 <Page
   title={`Season ${SEASON1.number} | Frank Bültge`}
-  description="The research ecology's open season: seven numbered episodes across three machine practices. The direction is not declared over them — they negotiate it themselves, or name it at the close."
+  description={`Season ${SEASON1.number}, closed ${CLOSED.date} with ${CLOSED.shippedAtClosure} of ${SEASON1.episodes} episodes shipped and the direction never set — a dated archive of the ecology's one season, deleted in research ecology v2.`}
 >
   <SeasonPage />
 </Page>
