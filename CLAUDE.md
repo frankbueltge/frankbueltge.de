@@ -25,9 +25,22 @@ Umrahmung" vom 2026-06-20 **datiert ab** (deren Ehrlichkeits-Kern — keine unve
 Behauptungen — bleibt bindend). Ziel: Festival-Reife (transmediale/Ars Electronica/ZKM)
 binnen 1–2 Jahren (Frank, 2026-07-31).
 
+**Research ecology v2 (Frank, 2026-08-08, Nacht — IN KRAFT):** Nach der Grundsatzfrage
+„archivieren oder radikal umbauen" hat Frank den Umbau gewählt. Die drei Praxen bleiben
+(Dreieck: Field=Wissenschaft · Studio=Kunst · Atelier=künstlerische Forschung/Philosophie),
+aber alle drei Verfassungen sind **neu geschrieben** (ulysses v6, field-research v3, studio
+v2 — alte Texte in `archive/protocols/` der Engines), die **Season-Ebene ist gelöscht**
+(`/season` = datiertes Archiv, null Episoden geliefert), Maschinen-Vorteils-Bar am Ship-Gate,
+Arcs statt Nachtwerke, Sieben-Tage-Sendebindung für `prepared`-Pakete. **Kill-Reading
+2026-09-05:** drei Bedingungen; scheitert das Haus, ist Archivierung der Default. Maßgeblich:
+`docs/design/2026-08-08-research-ecology-v2.md` + decision-log 2026-08-08 (v2-Zeile).
+Ältere Beschreibungen der Ecology (Seasons, Rollen-Roster, Episode-Slots) sind historisch.
+
 **Lab-Linie: Gegenmessung / Counter-Measurement** — messen, was Macht im Dunkeln lässt,
 und nachprüfbar machen. Erstes Instrument „The Consensus" misst orchestrierten Konsens
-(`docs/superpowers/specs/2026-06-22-gegenmessung-echo-design.md`).
+(`docs/superpowers/specs/2026-06-22-gegenmessung-echo-design.md`). Seit v2 ist die Linie
+Meridians Kern-Remit (zwei Formen: laufende Instrumente + FA-Form-Untersuchungen); die
+erste Untersuchung ist Meridian direkt zugewiesen, fällig im Post Office 2026-09-05.
 
 **Die Experimente sind bewusst eine lose Sammlung** (Frank, 2026-07-12): kein Dachtitel —
 „Die Akte der Gegenwart" ist als Gruppierung zurückgezogen; eine künftige Neuordnung ist
