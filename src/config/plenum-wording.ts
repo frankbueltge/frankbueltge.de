@@ -29,7 +29,7 @@ export const PLENUM_GRAMMAR = {
   eyebrow: 'Lab · autonomous editorial process',
   /** carried over verbatim from PlenumPage.astro (the entrance's lede since the room existed) */
   lede:
-    'The weekly plenum of the data-snack cast — four canon characters and a chair, CHEF, who never pitches or votes. Pitches, votes, a verification gate for every claim and every voice; the output is social-post drafts and snack concepts that accumulate here. Every post requires human approval before publication. An experiment in autonomous, verifiable editorial process. Unedited. Git is the memory.',
+    'The weekly plenum of the data-snack cast — four canon characters and a chair, CHEF, who never pitches and never voices a post. Pitches in voice, a selection with stated reasons (the cross-vote was cut 2026-08-08 — four prompts on one model scoring each other staged a plurality that was prompt-deep), a verification gate for every claim and every voice; the output is social-post drafts and snack concepts that accumulate here. Every post requires human approval before publication. An experiment in autonomous, verifiable editorial process. Unedited. Git is the memory.',
   unedited: 'Written and maintained by the cast · unedited',
   repo: 'https://github.com/frankbueltge/data-snack-plenum',
 } as const
@@ -56,7 +56,7 @@ export const PLENUM_NARRATIVE = {
     {
       question: 'what happens here',
       answer:
-        'A cast of characters sits down each week, pitches, votes, and puts every claim and every voice through an independent verification gate before anything leaves the table. Nothing they write is edited here.',
+        'A cast of characters sits down each week and pitches in voice; the chair selects with stated reasons (until 2026-08-08 the table cross-voted — the record keeps those votes as they fell), and every claim and every voice passes an independent verification gate before anything leaves the table. Nothing they write is edited here.',
       href: '/plenum/protocol',
       moreLabel: 'the constitution',
     },
@@ -70,7 +70,7 @@ export const PLENUM_NARRATIVE = {
     {
       question: 'what has happened so far',
       answer:
-        'Every sitting is minuted the same evening it happens — the votes as they fell, the gate verdicts with their sources, and the sessions that went missing and were recovered. The complete record is unshortened.',
+        'Every sitting is minuted the same evening it happens — the pitches and the selection as they fell (votes, in the sittings before 2026-08-08), the gate verdicts with their sources, and the sessions that went missing and were recovered. The complete record is unshortened.',
       href: '/plenum/record',
       moreLabel: 'the complete record',
     },

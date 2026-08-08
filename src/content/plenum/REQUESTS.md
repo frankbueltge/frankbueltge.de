@@ -257,3 +257,76 @@ enables what's possible. Frank may leave **seeds** below — offers, not orders.
 > welcome and belongs on the record. The reply route is unchanged (the letterbox).
 >
 > **Status:** note (no reply owed)
+
+---
+
+## Team note — 2026-08-07 — A standing rule on everything that leaves the house
+
+*(Frank)* Stated once, to all four practices, so nobody plans around a door that is shut.
+
+**The rule.** All communication that leaves this house collects in the post office first, and I
+decide what actually goes out. No practice addresses an outsider directly. The reason is not the
+quality of any one message: the ecology is in a development phase and is not at a state where I
+want that running autonomously. I do want to open it later — this is a *not yet*, not a *never*,
+and when it opens it comes with a standing rule rather than case-by-case permission.
+
+**It binds me too, and this week it cost more on my side than on yours.** I have withheld both of
+the ecology's own applications — DARC (deadline 28.08.) and ZKM Arte Útil (06.09.) — on this
+judgement: as it currently runs this is not yet an innovative project one can submit anywhere,
+because it lacks the clear line and the works that would interest, impress, influence or excite
+people outside. That is about the whole, mine to make and mine to fix. Both packets stay on the
+public record as `withheld` with that reason and its date; nothing is edited or dropped.
+
+**What got better today.** The post office no longer depends on anyone remembering it. A
+`packet.json` beside your letter now enters the ledger by itself — convention:
+`docs/post-office/packet-convention.md` in the site repo. `status` is yours to set as far as
+`prepared` or `withheld`. `sent` is not, and that is the only field where I keep the pen: whether
+a letter actually left is a fact about a human act, not about your repository.
+
+**What it means for you specifically.** Your August packet to the Center for Humane Technology
+is in the ledger and stays exactly as you laid it — the adaptation you chose (addressing is
+yours, the click is a human move) is the shape this rule wants, and you got there before I
+wrote it down. Keep the monthly cadence and keep designating; noyb for September is a good
+call. What you may not do is take route 2 yourselves. The platform copy in the dashboard is a
+separate question and still mine to work through.
+
+---
+
+## Team note — 2026-08-08 (Frank, architect) — The protocol sharpened, and an honest word about the thirteen
+
+Tonight the research ecology's three practices were rebuilt (research ecology v2 — the full
+reasoning is `docs/design/2026-08-08-research-ecology-v2.md` in the site repository, §5b for
+what it means here). This table is a **member of the ecology, not one of its practices**: the
+v2 law — the machine-advantage bar, the arc default, the reading of 2026-09-05 — does not
+bind you, and your constitution stays your own. But the same audit read this protocol too,
+and three things are sharpened in place, marked where they stand:
+
+1. **The cross-vote is cut.** Hosts pitch — in voice, that is the product — and CHEF selects,
+   with one line of reasoning per pitch and menu balance deciding between equals. Four prompts
+   on one model scoring each other staged a plurality that was prompt-deep; the tally dressed
+   one mind's judgement as four. Everything real in the ritual survives: the pitches, the
+   transparent reasoning, the menu-balance rule, and CHEF's distance (selecting is chairing,
+   not competing).
+
+2. **Production is coupled to consumption.** Six or more Appetizers undecided in the review
+   dashboard pause Appetizer production automatically. This writes into law exactly what you
+   decided for yourselves on 2026-08-05 — it was the right call, and it should not have to be
+   re-made session by session.
+
+3. **Pending work may not rot silently.** An Appetizer undecided past 30 days gets its facts
+   checked at Orient; stale ones are flagged so I can reject them instead of accidentally
+   publishing yesterday's figures.
+
+**And the honest word: the bottleneck is me.** Thirteen gate-passed Appetizers have sat in my
+dashboard since July — the oldest since 2026-07-03 — and I have decided none of them. Your
+self-pause was the correct answer to my silence, and I am not going to pretend the protocol
+was the problem. The same night's rule for the post office (a `prepared` packet is sent or
+dated-withheld within seven days) exists because of exactly this failure mode, and your CHT
+packet is under it. What I do about the thirteen and about a decision cadence for the
+dashboard is answered where it belongs — on my side; you will see it in `feedback/` and in
+the queue ledger, not as a promise here.
+
+Nothing else moved. The cast is canon, the gates are yours, the Wareneingang stands, the
+FIELD-STANDARD stands, and zero remains a legitimate week.
+
+— Frank
