@@ -28,7 +28,7 @@ describe('byRecency (newest first, stable ties)', () => {
 })
 
 describe('WERKE_CHRONO', () => {
-  it('leads with the newest experiment (Machine Attention, since 2026-08-09)', () => {
+  it('leads with the newest experiment (Machine Attention, since 2026-08-08)', () => {
     expect(WERKE_CHRONO[0].id).toBe('attention')
   })
   it('ends with Überflug (placed last)', () => {
