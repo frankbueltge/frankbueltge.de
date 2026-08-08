@@ -98,6 +98,13 @@ zurückgenommen. **Die Route bleibt `/holdings`** (Links, Redirects, OG-Pfade un
 nur der sichtbare Name ändert sich. Bleibt gültig: es gibt **keinen Dachtitel** für die
 Sammlung (12.07.), jedes Experiment steht für sich.
 
+**Nachtrag (Frank, 08.08.):** `/holdings` führt seit dem 08.08. auch das **laufende** zweite
+Experiment „The State Before the Interface" (`/observatory`) — Franks Anweisung: „lege das
+als Experiment an unter Experiments". Die Fläche ist damit nicht mehr strikt „frühere
+Arbeiten", sondern das Verzeichnis der Experimente des Labors; der Untertitel der Seite
+wurde entsprechend entschärft („offered to the ecology as material" entfiel — das
+Observatorium steht bewusst außerhalb der Ökologie).
+
 ## Schwarze Liste (zurückgezogen — nie als aktuell verwenden)
 
 | Phrase | Status |

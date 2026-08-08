@@ -1,0 +1,101 @@
+---
+// Method sheet for "The State Before the Interface". English-only. Deliberately free of
+// live counts: the observatory's own register derives its figures from committed records;
+// this sheet states only dated facts and standing rules that do not drift.
+import Page from '@/layouts/Page.astro'
+
+const REGISTER = 'https://frankbueltge.github.io/state-before-interface/'
+const REPO = 'https://github.com/frankbueltge/state-before-interface'
+---
+
+<Page
+  title="Method sheet — The State Before the Interface | Frank Bültge"
+  description="How the observatory is made: TED Search API v3 as the single source, a nightly deterministic sentinel, a six-criteria gate, provenance invariants enforced by a verifier, and autonomy measured step by step."
+>
+  <div class="mx-auto max-w-2xl px-4 py-14 font-mono">
+    <p class="mb-2 text-[11px] uppercase tracking-[0.2em] text-fg-faint">Method sheet</p>
+    <h1 class="mb-8 font-sans text-2xl font-semibold">The State Before the Interface</h1>
+
+    <section class="mb-10 border border-line bg-panel/60 p-5">
+      <h2 class="mb-2 text-[11px] uppercase tracking-[0.18em] text-fg-faint">What this is</h2>
+      <p class="leading-relaxed text-fg-muted">
+        An autonomous observatory of public AI procurement in Europe, run as one machine in one
+        public repository. It tests a research question, not a product: can the chain
+        signal → candidate → investigation → evidence → verification → form → public result run
+        on its own — and what does that autonomy cost, where does it fail, who has to step in?
+        It is deliberately not part of the research ecology; it is the counter-experiment.
+      </p>
+    </section>
+
+    <div class="space-y-9 text-sm leading-relaxed text-fg-muted">
+      <section>
+        <h2 class="mb-2 font-semibold text-fg">1. Source &amp; provenance</h2>
+        <p>
+          One source in V0: the EU's Tenders Electronic Daily via the public
+          <a href="https://docs.ted.europa.eu/api/latest/index.html" class="underline decoration-line underline-offset-4">TED Search API v3</a>
+          (anonymous, no key; measured live on 2026-08-08 before any adapter was built). Every
+          matching notice is preserved as original eForms-UBL XML; each preserved file carries
+          source URL, UTC retrieval time and SHA-256 in a committed manifest. Procurement
+          notices are freely reusable documents of the Publications Office of the EU. The
+          machine's own derived data is CC0, texts CC BY 4.0, code Apache-2.0 — all in
+          <a href={REPO} class="underline decoration-line underline-offset-4">the archive</a>.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="mb-2 font-semibold text-fg">2. Cadence</h2>
+        <p>
+          One sentinel run per night (05:15 UTC, GitHub Actions), committed under the machine's
+          own identity. Git is the archive: snapshots are append-only, closed cases are never
+          edited, corrections supersede rather than overwrite, and there is no backfill — a
+          night the source was down is recorded as exactly that. A night without signal is the
+          normal case and is committed as "no signal".
+        </p>
+      </section>
+
+      <section>
+        <h2 class="mb-2 font-semibold text-fg">3. Processing</h2>
+        <p>
+          The sentinel is deterministic — no model touches observation, preservation, diffing or
+          the gate. It searches a versioned multilingual envelope (v1: the exact phrases
+          "artificial intelligence", "Künstliche Intelligenz", "intelligence artificielle"),
+          detects four difference types (new match, changed record, disappeared record,
+          cross-border vendor pattern) and hands each signal to a six-criteria gate whose
+          verdict is committed with per-criterion reasons. Case mode — the investigation of a
+          surviving candidate — is an ephemeral, fully attributed agent run that delivers by
+          pull request; a provenance verifier walks every published claim back to hashed bytes
+          and fails the build on any hole. The public register is a deterministic rebuild of the
+          committed records; the verifier fails if the two differ by one byte.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="mb-2 font-semibold text-fg">4. Limits, named</h2>
+        <p>
+          Full-text search has bycatch by design (a signal generator mentioning "artificial
+          intelligence" in passing was measured on day one) — the gate, not the envelope, sorts
+          it out, and a declined candidate stays on the record. The envelope sees only three
+          languages so far; coverage grows by committed, reasoned revisions. TED's full-text
+          hit series before 2024 is treated as uncalibrated (a suspected eForms indexing
+          artifact around 2022/23) and is not used for historical claims. The EU's public
+          register of high-risk AI systems was deferred to 2027-12-02 (Digital Omnibus), so the
+          two-register comparison is a baseline mission until then. Derived data carries
+          organization-level fields only — natural persons never leave the raw record. Costs
+          and models are logged per step; no aggregate autonomy score exists, by design.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="mb-2 font-semibold text-fg">5. Verify it yourself</h2>
+        <p>
+          Clone <a href={REPO} class="underline decoration-line underline-offset-4">the repository</a>, then:
+          <code class="text-fg-muted">python verify.py --repo-root .</code> walks the whole
+          chain backwards; <code class="text-fg-muted">cd sentinel &amp;&amp; python -m pytest</code>
+          runs the invariants as tests. The
+          <a href={REGISTER} class="underline decoration-line underline-offset-4">register</a>
+          links every figure to the committed record it is derived from.
+        </p>
+      </section>
+    </div>
+  </div>
+</Page>

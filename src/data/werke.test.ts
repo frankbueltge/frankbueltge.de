@@ -28,8 +28,8 @@ describe('byRecency (newest first, stable ties)', () => {
 })
 
 describe('WERKE_CHRONO', () => {
-  it('leads with the newest experiment (The Society, since 2026-08-05)', () => {
-    expect(WERKE_CHRONO[0].id).toBe('society')
+  it('leads with the newest experiment (The State Before the Interface, since 2026-08-08)', () => {
+    expect(WERKE_CHRONO[0].id).toBe('observatory')
   })
   it('ends with Überflug (placed last)', () => {
     expect(WERKE_CHRONO[WERKE_CHRONO.length - 1].id).toBe('ueberflug')
