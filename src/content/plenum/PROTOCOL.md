@@ -63,6 +63,19 @@ automatically — not as a failure but as the same honesty the post office runs 
 into a queue nobody empties is inventory, not publishing. This writes into law what the
 table already decided for itself on 2026-08-05, thirteen pending. A paused session serves
 the Wareneingang, a concept, or world-contact instead — or closes honestly short.
+
+**And the consumption side binds the architect (added later the same day, at his own
+instruction: "so dass nichts stumm bleibt").** A draft delivered to the review dashboard is
+**decided — approved or rejected — or held with a dated reason within seven days**, the same
+bind the post office got the same night. The thirteen pending at the bind's creation fall
+due together on **2026-08-15**. For the record, because the architect himself had to ask
+where his own dashboard was: it is the data-snack site's lab backend at
+**`data-snack.com/lab/social`** ("Key · Social Approval" — review, approve, post; drafts
+live in the site's `social_drafts` store; production access is token-gated by the site's
+backend guard, local dev is open). A review surface nobody can find is how thirteen
+gate-passed posts waited five weeks — the location is now part of the law so it cannot be
+lost again. Sessions themselves never touch the dashboard or any endpoint; this paragraph
+binds the human side only.
 **Pending work may not rot silently:** an Appetizer undecided for more than 30 days gets
 checked at Orient — if its numbers or its snack link have gone stale, flag it on
 `WORKBOARD.md` and in one `REQUESTS.md` line so Frank can reject it instead of publishing

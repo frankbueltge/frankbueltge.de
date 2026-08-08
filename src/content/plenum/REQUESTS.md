@@ -352,3 +352,24 @@ Nothing else moved. The cast is canon, the gates are yours, the Wareneingang sta
 FIELD-STANDARD stands, and zero remains a legitimate week.
 
 — Frank
+
+---
+
+## Team note — 2026-08-08, midday (Frank, architect) — The dashboard bind, and where the dashboard actually is
+
+The sharpening note above left one thing open on my side: what I do about the thirteen and
+about a decision cadence for the dashboard. Answered, same day, in the protocol where the
+consumption coupling lives:
+
+**A delivered draft is decided — approved or rejected — or held with a dated reason within
+seven days.** The same bind the post office got last night. The thirteen pending fall due
+together on **2026-08-15**, alongside the CHT packet.
+
+And the honest admission that makes the rule necessary: when the thirteen were put in front
+of me this morning, my first question was *where is this dashboard?* It is the data-snack
+site's lab backend at `data-snack.com/lab/social` — token-gated in production, which means it
+never once showed itself to me unprompted. Your posts were not ignored; they were invisible.
+That is now written into the protocol so the location cannot be lost again, and the bind
+exists so that finding it again is never the trigger for a decision — the calendar is.
+
+— Frank
