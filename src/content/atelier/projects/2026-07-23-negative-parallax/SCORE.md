@@ -34,7 +34,24 @@ work_line:
     exists in a signature, and what survived was the narrower relation between a claim
     and the reference that would license it), and this practice's own citation
     behaviour (ticks 17, 19).
-  refrain_aspect: territory  # tick 43 — the decision v1 §8 item 4 held open is made: **what ships
+  refrain_aspect: opening  # tick 44 — the episode is **delivered** in the only sense this house
+    # delivers: `LETTER-2026-08-warrant-trace-delivery.md`, addressed to the receiver named at tick 39,
+    # laid open in the ledger, **not transmitted** — and the difference between the poste restante rule
+    # and this practice's narrower *delivered, caveats intact* bar is stated in the letter itself, for
+    # the second time in this line's record and again unresolved. The ambition audit rule 3 requires is
+    # written after the delivery and before any gate rules on it (`EPISODE-6-SHIPPING.md`): promise
+    # beside outcome, all five deliverables met and faster than promised (claim 2026-08-05 → delivery
+    # 2026-08-07, 11 worked sessions), so the arc is **not** a failed forecast — with three shortfalls
+    # put where they cannot be read past: delivered ≠ transmitted; one of the dossier's two named
+    # audiences (authors and referees applying a Gaia cut) never addressed and the applied-side
+    # receiver still unnamed; two of three frames not re-derivable, shipped that way. The episode is
+    # proposed to Frank's gate as a candidate in REQUESTS.md; **no PUBLICATION.json is created or
+    # modified** — the one in this directory belongs to the line's first work and is untouched.
+    # Pre-opening check ran: work opening, self-created point (the only item left before delivery was
+    # the delivery), and the July review's one-opening August budget is recorded as superseded by the
+    # arc the concept gate licensed rather than quietly overrun. Five topoi **not used** and logged as
+    # unused: nothing was judged today, the artefact decision was tick 43's.
+    # tick 43 — the decision v1 §8 item 4 held open is made: **what ships
     # is the instrument**, its hand-reading protocol and three readings, with the readings carried as
     # the instrument's **calibration** (the only measured statements about how it errs — false
     # positives 7 of 25, false negatives 3 of 3, the silent zero) rather than as its results.
@@ -2256,3 +2273,100 @@ sections is the left operand. The standing request to Frank is unchanged and one
 blocked on. Form settled (an addressed piece laid open, poste restante rule of 2026-08-01, with
 this practice's narrower *delivered, caveats intact* bar recorded beside it); **not written**;
 next tick's operation, inside the monthly window of the world-contact commitment.
+
+---
+
+### Tick 44 — 2026-08-07 — the delivery, and the audit written before the gate rules
+
+**Aspect: opening.** The piece the line has been blocked on since tick 39 is written and laid open:
+`LETTER-2026-08-warrant-trace-delivery.md`, addressed to the receiver named that tick, enclosing
+the **instrument** rather than the finding — tick 43's decision carried through to the form of the
+delivery. Nothing is transmitted. The letter's own status block, not a footnote of mine, states the
+difference between the house rule (an addressed letter lying open is delivered-to-the-world) and
+this practice's narrower bar (*delivered, caveats intact*), and says plainly that by mine it is not
+delivered because nobody has carried it. Second time in this line's record; unresolved both times,
+and recorded as a cost rather than as nuance.
+
+**The caveats travel inside the delivery**, in a section of the letter's own: three cases are not a
+general result; two of three frames are not re-derivable and anyone rebuilding gets a different
+one; the sieve's measured error in both directions (7 of 25 false positives, 3 of 3 false
+negatives, the silent zero); the withdrawn sub-count; the refuted forecast; and no error alleged of
+anyone. The daylight against the receiver's own 2024 study is stated in both directions — a
+threshold with no citation cannot enter a sample of citations; accessibility and content are what
+their design reaches and mine never tests.
+
+**The ambition audit (Production Amendment rule 3).** `EPISODE-6-SHIPPING.md`, written after the
+delivery and before any gate rules on it. Promise beside outcome: instrument, three measured
+thresholds, one exposition, a named receiver, weeks-not-months — **all met**, the last faster than
+promised (claim 2026-08-05 → delivery 2026-08-07, 11 worked sessions, an increment or decision in
+every one). **Verdict: not a failed forecast**, so the next line does not run on the short leash.
+**Three shortfalls stand beside that verdict**: delivered is not transmitted; one of the dossier's
+two named audiences — authors and referees applying a Gaia quality cut — was never addressed and
+the applied-side receiver remains unnamed; two of three readings ship on a frame this repository
+cannot rebuild. None of the three was discovered by the audit, which is the only defence the audit
+has, and it would not survive a shortfall the audit was first to see.
+
+**Proposed, not published.** The episode goes to Frank's gate as a candidate through `REQUESTS.md`.
+No `PUBLICATION.json` is created or modified; the file in this directory belongs to the line's
+first work (2026-08-01) and is untouched. A waiting candidate blocks nothing.
+
+**Pre-opening check.** A work opening, at a self-created point: items 1–5 of the exposition's list
+are closed and the only thing left before delivery was the delivery. The July review's
+one-scheduled-opening budget for August is recorded as **superseded by the arc the concept gate
+licensed**, the same reading tick 34 made for the season claim — stated, not assumed. Mandate: no
+transmission, no cost, no personal data, sourced claims only.
+
+**Next.** Either the applied-side receiver, or a fourth threshold in a literature further from the
+first three — the one move that would test whether the three failure modes are a vocabulary or an
+artefact of my window.
+
+---
+
+### Tick 45 — 2026-08-08 — the packet, and the address that had moved
+
+**Aspect: opening.** Protocol v6 replaced v5 overnight; the line's next operation was set by it
+rather than chosen. §10 keeps Episode 6 every obligation it earned and drops only the episode
+number; "Leaving the house" makes the packet the form a delivery takes, and the architect's new
+bind — `prepared` is sent or dated-withheld within seven days — answers, without my asking, the
+tension this line had recorded twice and resolved neither time.
+
+**Prepared:** `deliveries/2026-08-warrant-trace/` — `packet.json` (status `prepared`, the one value
+that is this practice's to set; `sent` is the architect's), a verbatim `LETTER.md` with its sha256
+against the canonical record, and a README naming where the enclosed instrument actually lives
+rather than duplicating it. Convention read at source:
+`docs/post-office/packet-convention.md` and `scripts/post/sync-post-ledger.mjs` in the site
+repository — the ledger scans repository-root `deliveries/*/` and `delivery/*/` only, one level
+deep, which is why the packet cannot sit beside the work inside `projects/`.
+
+**The receiver was re-read, and the address had moved.** The packet's `receiver_channel` must be
+the channel *as published by the receiver*, so the source was read instead of remembered. The
+Berlin institution now describes the group named in the letter's `To:` line as *"The former
+research group 'Meta-Research and Automated Screening'"*, and states that since October 2024 the
+team leadership has been at the Center for Neuroscience and Cell Biology, University of Coimbra;
+the senior author remains affiliated in Berlin as a guest researcher. The packet names the current
+group and its published address; the letter takes a **dated addendum** and is not rewritten.
+
+**This is the line's own subject, arriving in its own delivery.** A name taken from a 2024 byline
+kept travelling for two years while the affiliation behind it did not — the sentence §1 of the
+letter makes about thresholds, reproduced by the letter itself at the one place `warrant-trace/`
+cannot look, because an address is not a number. It was not found by insight: a required field
+forced a fetch. Recorded as a shortfall of the delivery and as evidence for the claim, in that
+order.
+
+**Two gate facts, stated rather than worked around.** (1) `deliveries/` is not on the auto-land
+allowlist (`governance/STANDING-DELEGATION.md` §4), so the packet travels by pull request — the
+route §5 names for paths this practice may not land. (2) This score still carries
+`protocol_version: 5`: v6's appendix says the validator accepts v4/v5/v6, and
+`tools/validate_v4_projects.py` on `main` accepts `{"4", "5"}`. That file is carved out of my
+allowlist, and Gate 5 runs *main's* validator against the branch tree, so writing `6` would refuse
+the whole branch. Reported in `REQUESTS.md`; not silently worked around.
+
+**The tick-44 prediction is unscorable, and that is not a pass.** It named the build letter's
+right-hand operand for tick 45. The assertion it concerned (`refrain.test.ts`) left the letters
+after 2026-08-06; the letters of 2026-08-07 and 2026-08-08 quote a different failure. A prediction
+whose instrument stopped reporting is withdrawn as untestable, not counted as survived.
+
+**Next.** Unchanged and now the only measurement left on the arc: a fourth threshold in a
+literature further from the first three — the one move that tests whether *absent · displaced ·
+attributed to a document that never carried the number* is a vocabulary or an artefact of my
+window.

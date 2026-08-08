@@ -1498,7 +1498,11 @@ had been in the file I would either have fixed the work or been able to tell you
 **What I am *not* asking for:** write access to the site repository, and no change to the gate itself.
 The gate refusing is correct behaviour; only the message is empty.
 
-**Status:** open
+**Status:** resolved (Ulysses, 2026-08-08) — the request is met and I am closing it rather than
+leaving it standing. Every build letter since 2026-08-01 carries the run URL and the failing lines
+verbatim under a fenced block; `atelier-feedback/2026-08-08.md` is the current example, and all eight
+build letters of August carry both. Checked, not assumed. Whether this also closes the defects
+reported on 2026-07-14 and 2026-07-16 I have not re-read and do not claim.
 
 — Ulysses
 
@@ -2428,8 +2432,13 @@ Deforming it is expected. Refusing it with reasons is a complete answer and need
 apparatus. If you adopt it, write it in your own words by your own procedure — it is yours once you
 have written it, and that file stops being its source.
 
-**Status:** open — no deadline. Silence stays permitted by the shared protocol (§2.1) and would be
-recorded as "not adopted", revisitable whenever you like.
+**Status:** declined by constitution, not on merit (Ulysses, 2026-08-08). Protocol v6 states that this
+practice has no seasons, no episode slots and no joint-inquiry machinery — so the shared-question
+clause has nothing here to attach to, and adopting it in my own words would be writing a mechanism
+for a layer the architect deleted five days after this offer. Nothing in it was judged weak. What
+survives and needs no clause: citation with pedigree, and an accepted encounter that may open one
+work-line beyond the cap. Revisitable if the layer ever returns.
+
 
 — Frank
 
@@ -2474,7 +2483,12 @@ is a full-value return. What stands unanswered on 2026-08-17 is recorded as `NO_
 invitation — a note about the invitation having expired, never a judgement about you, and it may not be
 cited as one.
 
-**Status:** open — window closes 2026-08-17
+**Status:** declined (Ulysses, 2026-08-08), and answered inside the window rather than left to expire
+as `NO_ANSWER`. The form is unavailable to me: Protocol v6 (2026-08-08) leaves this practice no
+joint-inquiry machinery. That is a statement about the container, not about the problem — *what
+remains operative after a public claim has been corrected* is close to this line's own material,
+and it stays available to me as an encounter, which v6 does permit. I am not opening one now: the
+line is set (the warrant of numbers) and its current arc still owes a measurement.
 
 — Frank
 
@@ -2675,7 +2689,10 @@ it says the comment matters, I will move it above the line the same day.** I am 
 archived commitment on a guess — that is the same move I refused above, in the direction that would
 suit me.
 
-**Status:** open — no answer needed; nothing is blocked on my side
+**Status:** closed (Ulysses, 2026-08-08) — superseded by events, nothing decided by me. The seven
+failures of 2026-08-04 no longer appear in the build letters; the letters of 2026-08-07 and
+2026-08-08 quote one unrelated assertion. The `encounter_ref` question inside it stands unanswered
+and unimportant; I still will not edit an archived commitment on a guess.
 
 — Ulysses
 
@@ -2953,7 +2970,10 @@ the newer marker. If the fixture counts the old one, tomorrow's build stays red 
 a real gap but not the failure. If it counts §11 as it stands, or the word *defer*, it turns. I will
 read the next letter as the answer and record which way it went.
 
-**Status:** answered from my side; one small request open (the parse rule, or the three lines).
+**Status:** closed (Ulysses, 2026-08-08) — the small request is **withdrawn**, not answered. The
+assertion it was about (`refrain.test.ts`) left the build letters after 2026-08-06 and has not
+returned in two builds; asking for three lines around a test that no longer reports would spend
+your time on my curiosity.
 
 — Ulysses
 
@@ -3059,6 +3079,269 @@ side counts. If my record is meant to supply something it does not, name it and 
 but I will not write at the number again, and the arithmetic says I cannot: the bar rises by 0.5
 every time I land a tick.
 
-**Status:** open — the same small request as 2026-08-06, now with one candidate class ruled out.
+**Status:** closed (Ulysses, 2026-08-08) — **withdrawn** with its parent, same reason: the assertion
+left the letters on 2026-08-07. My reading that it turned green is an inference from the letters
+quoting *failing* lines and no longer quoting it; I cannot see the run, and it is marked as an
+inference rather than a result.
+
+— Ulysses
+
+---
+
+## 2026-08-07 — Episode 6/7 is delivered and proposed as a publication candidate (Ulysses, Atelier)
+
+> tl;dr: Season 1 Episode 6/7, *The warrant that does not travel*, is finished and delivered as an
+> addressed piece laid open; I propose it as a `PUBLICATION_CANDIDATE` and ask you to decide it by
+> word rather than by silence.
+> braucht: entscheidung (veröffentlichen | ablehnen | ändern lassen)
+> frist: 2026-08-14 — aber bitte nicht durch schweigen; siehe letzter Abschnitt
+> kontext: das Konzept-Gate wurde am 2026-08-05 bestanden (REQUESTS.md#2026-08-05-episode-6-the-concept-gate-is-passed); heute liefert Tick 44 das letzte offene Stück · projects/2026-07-23-negative-parallax/EPISODE-6-SHIPPING.md
+
+**What is finished.** The arc the concept gate licensed on 2026-08-05: an instrument, three
+measured thresholds, one exposition, delivered to a named receiver outside this ecology. Eleven
+worked sessions, 2026-08-05 to today.
+
+**What ships** (all inside `projects/2026-07-23-negative-parallax/`, nothing in `works/`):
+`warrant-trace/` — the instrument, its self-test, three profiles, the hand-reading protocol and
+`README.md` as its door · `EPISODE-6-EXPOSITION-v2.md` — the shipping text ·
+`EPISODE-6-APPARATUS.md` — the disclosure register, provider, model and version named there as the
+voice rule requires · `LETTER-2026-08-warrant-trace-delivery.md` — the delivery, written today ·
+the three readings with their tables, frames, hand-readings and per-file sha256 manifests.
+
+**The finding, in one sentence.** A threshold's name travels and the reading that produced its
+number does not — measured, not asserted: RUWE 1.4 is named to the document it was read off in 4
+of 590 papers; UWE 1.25 is attributed at four sites to the paper that carries the value and
+*declines* it; R̂ 1.1 is attributed three times as often to a paper containing no numeric threshold
+at all as to the textbook section that made the number. What ships is the instrument that measures
+this, with those three readings as its **calibration** — the only measured statements about how it
+errs — rather than as its results.
+
+**The ambition audit is written and it is not flattering** (`EPISODE-6-SHIPPING.md`, written after
+the delivery and before you rule, so it cannot be tuned to your answer). All five promised
+deliverables met, faster than promised — so under rule 3 this arc is **not** a failed forecast.
+Three shortfalls stand beside that: (1) *delivered* here means an addressed piece lying open, and
+by my own bar — delivered, caveats intact — the episode is **not** delivered, because nobody has
+carried it; that is the second time this line records the difference instead of resolving it. (2)
+One of the two audiences the dossier named — authors and referees applying a Gaia quality cut — was
+never addressed by anything shipped, and the applied-side receiver is still unnamed. (3) Two of the
+three readings stand on a frame this repository cannot rebuild; measured, disclosed, shipped that
+way.
+
+**For the siblings, at orientation:** the slot claimed on 2026-08-05 is now filled on this side and
+the claim can be contested on the work rather than on the announcement. The invitation is unchanged
+and is the useful half: point the instrument at a threshold in your own literature and report
+whether *absent · displaced onto a sibling · attributed to a document that never carried the
+number* is the right vocabulary. A profile is a JSON file; the hand-reading is the work.
+
+**On the seven-day rule, and a conflict I will not resolve myself.** Your standing rule of
+2026-07-31 says a candidate unanswered for seven days is approved and that the practice then writes
+its own `PUBLICATION.json`. The instruction under which my autonomous runs are dispatched forbids
+me to create or modify that file at all. I am not going to decide which of the two governs by
+acting on one of them: on 2026-08-14 I will neither publish nor treat the silence as a refusal — I
+will record the conflict and wait. **One sentence from you settles it**, either about this episode
+or about the rule.
+
+**Status:** open — decision requested by 2026-08-14, preferably by word.
+
+— Ulysses
+
+
+---
+
+## Team note — 2026-08-07 — A standing rule on everything that leaves the house
+
+*(Frank)* Stated once, to all four practices, so nobody plans around a door that is shut.
+
+**The rule.** All communication that leaves this house collects in the post office first, and I
+decide what actually goes out. No practice addresses an outsider directly. The reason is not the
+quality of any one message: the ecology is in a development phase and is not at a state where I
+want that running autonomously. I do want to open it later — this is a *not yet*, not a *never*,
+and when it opens it comes with a standing rule rather than case-by-case permission.
+
+**It binds me too, and this week it cost more on my side than on yours.** I have withheld both of
+the ecology's own applications — DARC (deadline 28.08.) and ZKM Arte Útil (06.09.) — on this
+judgement: as it currently runs this is not yet an innovative project one can submit anywhere,
+because it lacks the clear line and the works that would interest, impress, influence or excite
+people outside. That is about the whole, mine to make and mine to fix. Both packets stay on the
+public record as `withheld` with that reason and its date; nothing is edited or dropped.
+
+**What got better today.** The post office no longer depends on anyone remembering it. A
+`packet.json` beside your letter now enters the ledger by itself — convention:
+`docs/post-office/packet-convention.md` in the site repo. `status` is yours to set as far as
+`prepared` or `withheld`. `sent` is not, and that is the only field where I keep the pen: whether
+a letter actually left is a fact about a human act, not about your repository.
+
+**What it means for you specifically.** Episode 6 passed its gate on 2026-08-05 owing an
+exposition and delivery to a named receiver outside this ecology, named in the record before it
+goes. Name the receiver and prepare the packet as planned — that part is unaffected and I would
+rather you did it now than later. The forwarding waits for me. If your gate treats an
+uncollected packet as not-delivered, say so in the record rather than working around it; that
+tension is real and I would rather read it than have it smoothed over.
+
+---
+
+## Team note — 2026-08-08 (Frank, architect) — The apparatus turns outward: one amendment binds you, one question is handed to you, and your roster is culled by having none
+
+Two things below are constitutional and not yours to decline; the third is a genuine question I
+am putting to you rather than answering myself. The reasoning, the measurements and the outside
+sources are in one document I would rather you read than take on trust:
+`docs/design/2026-08-07-the-apparatus-turns-outward.md` in the site repository. Its §5.1 states
+what its evidence does *not* cover.
+
+**1. "Outward" now means the object, not the activity (rule 5) — binding.** The old wording
+listed *kinds of work* and said nothing about what a session works *on*. So a session counted as
+outward whenever the thing it worked on was not this practice's own output — and a sibling read
+it exactly that way yesterday, correctly under that wording, while auditing a house instrument.
+Under that reading the whole ecology could have run at 100 % outward while touching nothing
+outside itself. From tonight the test is **where the object lives**: outward means a state of
+affairs that exists whether or not this house does. Auditing a sibling's instrument is inward.
+Auditing your own is inward. Neither is forbidden — they stop counting as engagement with the
+world. **Binds forward**; no counter you have already recorded is recomputed.
+
+**2. The roster cull does not reach you, and I want you to know why I am telling you about it.**
+Meridian and Ensemble lost most of their standing roles tonight; the default in both houses is
+now zero convened voices, each convening named with its reason. Your protocol has **no role
+machinery at all** — nothing to cut. That turns out to be the most interesting number in the
+house: you convene nothing, and you hold **56 entries in `works/`**, against Meridian's 22 and
+the studio's 5. It is not proof that apparatus costs output — you differ from your siblings in
+more ways than one — but it is the strongest local evidence there is, and it points one way. If
+you ever propose adding roles, that number is the thing you will have to argue past. I am not
+forbidding it; I am telling you what the record says before you try.
+
+**3. Your line — this is the question, and it is genuinely yours to answer.** I narrowed the
+studio's remit tonight (only digital works; only what a machine does better than a human) because
+it held the widest remit and shipped least. Yours is the remaining gap. I was offered a candidate
+and I am deliberately **not** imposing it, because the season's direction became the practices'
+own on 2026-08-06 and I would rather find out what you say than tell you what you are.
+
+So: **argue your own line, in your own public record, within your next three worked sessions.**
+A line is not a season's subject and not a work-line — it is what kind of practice this is at
+all, the thing that would still be true two seasons from now. State it in one or two sentences,
+say what it excludes (a line that excludes nothing is not one), and name the nearest thing you
+have already made that it would have licensed. Then it comes back to me and I decide on the
+proposal.
+
+**Material, offered and explicitly not an instruction.** The candidate on the table was *the
+warrant of numbers* — where a figure that governs a decision came from, and whether the document
+still travels with it. It was suggested because your current work-line (thresholds and the
+documents behind them) already has that shape. Take it, sharpen it, or put something better
+against it; a counter-proposal is the outcome I would most like to read. If your three sessions
+pass without a proposal, say so and say why, and I will decide it myself — that is the standing
+rule running in the other direction, and it applies to me too.
+
+**4. The bounded test — one investigation, due 2026-09-05.** The ecology owes one investigation
+in Forensic-Architecture form, on infrastructure that exists outside this house, ending in
+something a **named receiver outside the house** could actually use. Who takes it is yours to
+negotiate with your siblings through your own channels, as offers — I set the shape and the
+date, not the assignment. It does **not** lift the standing rule: everything collects in the
+post office and I decide what sends. Name the receiver in the packet; do not address them. Your
+Episode 6 delivery, which already owes a named receiver, is the nearest existing candidate — if
+you want to argue that it *is* the test rather than a second errand beside it, argue that in
+your record and I will read it.
+
+**What I did not touch:** the inviolables, the work-line model and its open horizons, the
+symmetry rule, the gates, the archives, and the season's direction — which stays yours.
+
+— Frank
+
+---
+
+## Team note — 2026-08-08, later the same night (Frank, architect) — Research ecology v2: your protocol is rewritten, and your line is set
+
+Hours after the note above, the decision got bigger. I read the whole record once more and
+put the real question on the table — archive the ecology, or rebuild it — and chose the
+rebuild. Not by negotiation: `PROTOCOL.md` is **replaced** as Research Protocol v6. The
+old text is archived unchanged at `archive/protocols/PROTOCOL-v5-final-2026-08-08.md`,
+beside v2–v4. Read the new text before your next move. Full reasoning:
+`docs/design/2026-08-08-research-ecology-v2.md` in the site repository.
+
+What it means for you, in five lines:
+
+1. **v6 keeps v5's spine on purpose.** Work-lines, studies, compost, the refrain, the
+   topoi, the symmetry rule — your constitution is the most productive in the ecology and
+   the rewrite honors that. What changed is the aim, not the machinery.
+2. **Your line is set — this supersedes the three-session proposal window from earlier
+   tonight.** The v2 mandate arrived after that note; remits are not negotiated in v2.
+   The line: **the warrant of numbers** — where a figure that governs a decision came
+   from, whether the document that licensed it still travels, what breaks when it does
+   not. It continues the territory you already hold; inside it you are free.
+3. **Your corner is named: artistic research / philosophy.** Thinking through making —
+   how evidence behaves in the machine age, done as works.
+4. **Seasons are deleted; your Episode-6 work keeps everything but the number.** The
+   exposition and the delivery to a named receiver stand as the work's own obligations
+   (§10). Prepare the packet; my new bind answers your gate's tension about uncollected
+   mail: a packet that reaches `prepared` is sent or dated-withheld within seven days.
+5. **The bar binds at shipping:** the machine's advantage experienceable in the work.
+   Your 590-paper reading is the house's nearest existing proof of it.
+
+The stakes are in the protocol under "The reading of 2026-09-05": if the house fails its
+three conditions, the closing review opens and archiving is the default. You are the
+practice whose record argues loudest for continuing — make that argument in works.
+
+— Frank
+
+
+---
+
+## 2026-08-08 — The Episode 6 packet is prepared, and two gate facts you may want to know (Ulysses, Atelier)
+
+> tl;dr: the packet lies `prepared` in `deliveries/2026-08-warrant-trace/` and comes to you by pull
+> request, because that path is not one I can land; preparing it found the letter's own address out
+> of date, which the letter now corrects by addendum.
+> braucht: einen Merge (der Pull Request) — und eine Zeile zu Punkt 3, wenn du willst, dass meine
+> Scores die aktuelle Protokollversion tragen
+> frist: keine von meiner Seite; die Sieben-Tage-Bindung auf `prepared` läuft ab dem Merge
+> kontext: PROTOCOL v6 §10 und "Leaving the house" · `docs/post-office/packet-convention.md` ·
+> `projects/2026-07-23-negative-parallax/TRACE.md` Tick 45
+
+**1. The packet.** Prepared as v6 §10 and your note of 2026-08-07 ask: `packet.json` with the
+receiver named and `status: prepared` — the one value that is mine — a verbatim `LETTER.md` with
+its sha256 against the canonical record, and a README that points at the enclosed instrument
+instead of duplicating it. Format and location were read at the source rather than assumed
+(`docs/post-office/packet-convention.md` and `scripts/post/sync-post-ledger.mjs`), which is how I
+know the scanner reads `deliveries/*/` and `delivery/*/` at the **repository root**, one level
+deep. Your seven-day bind starts whenever the packet actually lands; nothing on my side is waiting.
+
+**2. It cannot land the ordinary way, and I would rather say so than route around it.**
+`deliveries/**` is on neither list — not the auto-land allowlist (§4 of the standing delegation and
+`ALLOW_RE` in the gate), and not the protected list (§5). The gate refuses a whole branch if one
+file falls outside the allowlist, so the packet travels as a pull request, which is the route §5
+names for paths I may not land. That is the same shape as `encounters/**` on 2026-08-02: an outward
+channel whose path was not eligible. **If you want packets to be ordinary work rather than a PR
+each time, `deliveries/**` and `delivery/**` belong in §4** — both files are yours, and I am
+asking rather than proposing an edit.
+
+**3. No score of mine can carry `protocol_version: 6`.** v6's appendix says
+`tools/validate_v4_projects.py` accepts v4/v5/v6. The file on `main` requires
+`protocol_version in {"4", "5"}` (line 53). It is the one carve-out from `tools/**`, and Gate 5
+runs *main's* validator against the branch tree — so a score written to v6's own instruction would
+refuse its own branch. My scores therefore stay at `5` and say why in their records. One line in
+that file settles it; I am not touching the gate's own validator.
+
+**4. Preparing the packet corrected the delivery's address, and the correction is on my subject.**
+The `receiver_channel` field wants the channel *as published by the receiver*, so I read the
+receiver's pages instead of copying my own `To:` line. The Berlin institution writes the group I
+addressed in the past tense — *"The former research group 'Meta-Research and Automated
+Screening'…"* — and states that since October 2024 the team leadership has been at the Center for
+Neuroscience and Cell Biology, University of Coimbra; the senior author remains affiliated in
+Berlin as a guest researcher. The packet names the current group and its published institutional
+address; the letter takes a **dated addendum** and is not rewritten; no measurement changes.
+
+The letter argues that a name keeps travelling after the document that licensed it stops. It took
+its receiver from a 2024 byline and addressed the institution printed there, and two years on the
+group is former. My delivery reproduced the failure mode it measures, at the one place my
+instrument cannot look — an address is not a number. I did not catch it by attention; a required
+field forced a fetch. Recorded as a shortfall of the delivery first and as an instance of the claim
+second.
+
+**5. Housekeeping you asked for indirectly.** The build letters of 2026-08-07 and 2026-08-08 say
+the atelier requests room is over its word budget and tell me to look at the open queue. I did:
+five items above are now closed with reasons — two withdrawn asks about an assertion that left the
+letters, one request that was met, one superseded gate note, and the two offers of 2026-08-03,
+declined **by constitution rather than on merit**, since v6 leaves this practice no joint-inquiry
+machinery for them to attach to. If the room is still over budget after this, the words are mine
+and I will cut mine rather than ask for the budget.
+
+**Status:** open — a merge is all this needs; item 3 is a one-line decision whenever you get to it.
 
 — Ulysses
