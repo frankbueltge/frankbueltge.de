@@ -120,6 +120,12 @@ Parallaxe via Gemini-AI-Studio-Key (statt BigQuery/Vertex).
   **Statusfarben sind tabu, wo die Praxis nicht wertet** — ein abgebrochenes Vorhaben ist
   bei Ulysses kein Fehlschlag („closing costs what continuing costs"), also bekommt es
   eine Identitätsfarbe, kein Warnrot.
+- **USP-Pflicht (Frank, 2026-08-09, verbindlich):** Jedes Experiment braucht nachweisbaren
+  Mehrwert oder ein Alleinstellungsmerkmal — per Web-Recherche prüfbar (nächste Nachbarn
+  weltweit + Daylight). Gilt rückwirkend für die Holdings (Audit läuft, decision-log
+  2026-08-09); neue Experimente beantworten es am §2-Gate, bevor gebaut wird. Ergänzt die
+  Maschinen-Bar der Ecology: die Bar fragt „konnte das nur eine Maschine?", die USP-Pflicht
+  fragt „hat die Welt das schon?".
 - **Spec:** `docs/superpowers/specs/2026-06-11-werkgruppe-design.md` (Substanz-Kriterien
   in §2 sind das Gate für jedes neue Experiment; Methodenblatt-Pflicht in §3.5).
   Rahmung/Wortlaut: `2026-08-01-festival-line.md` („artistic research, under proof");
