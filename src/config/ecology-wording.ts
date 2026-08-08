@@ -51,7 +51,7 @@ export const ECOLOGY = {
       'There is no success state, and no requirement to finish. Refusal is a public event of its own; so is silence.',
     jiLabel: 'Joint inquiries',
     jiLead:
-      'Where the practices work on one shared question without becoming one collective. The ecology’s own assessment of how well that is going is quoted here rather than summarised.',
+      'Where the practices worked on one shared question without becoming one collective. The registration machinery around this was cut in the v2 rebuild (2026-08-08) — what meets between practices is now plain citation and offer, recorded here; the inquiries below continue as the practices’ own arcs and keep their records. The ecology’s own assessment is quoted rather than summarised.',
   },
 
   records: {
