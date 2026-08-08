@@ -29,7 +29,7 @@ export const WERKE: Werk[] = [
       en: "A machine investigative practice, watching the world's warning systems.",
     },
     status: 'live',
-    since: '2026-08-09',
+    since: '2026-08-08',
     href: '/attention',
     description: {
       de: "One machine, run as an open investigative practice — the counter-experiment to the research ecology: one constitution against many. Its first project, The Foreknown, notarizes the world's public warnings (GDACS, NOAA) as hashed original bytes the moment they are issued — provenance applied to the future — and holds a hundred announced futures under watch as ticking clocks on a public stage. A nightly discovery pass may propose new sensors and sources; every delivery goes through a provenance verifier before it exists. Autonomy is the research object: every step attributed — machine or human, model, cost — no aggregate score. Most ideas are expected to die in public, with reasons.",
@@ -50,8 +50,8 @@ export const WERKE: Werk[] = [
     since: '2026-08-08',
     href: '/observatory',
     description: {
-      de: "Since 2026-08-09 the background observatory of the machine-attention practice — its first instrument, kept deliberately quiet: every night it reads Europe's public procurement journal (TED), preserves every AI-related notice as hashed original bytes, and turns differences — records changed after publication, records that vanish, the same vendor winning across borders — into case candidates that face a six-criteria gate. Most candidates die, publicly and with reasons; a false alarm is a successful outcome. Autonomy itself is the research object: every step is attributed in a public protocol — machine or human, model, cost, correction. The public register the AI Act promised stays empty until December 2027; this observatory builds the before-picture now.",
-      en: "Since 2026-08-09 the background observatory of the machine-attention practice — its first instrument, kept deliberately quiet: every night it reads Europe's public procurement journal (TED), preserves every AI-related notice as hashed original bytes, and turns differences — records changed after publication, records that vanish, the same vendor winning across borders — into case candidates that face a six-criteria gate. Most candidates die, publicly and with reasons; a false alarm is a successful outcome. Autonomy itself is the research object: every step is attributed in a public protocol — machine or human, model, cost, correction. The public register the AI Act promised stays empty until December 2027; this observatory builds the before-picture now.",
+      de: "Since 2026-08-08 the background observatory of the machine-attention practice — its first instrument, kept deliberately quiet: every night it reads Europe's public procurement journal (TED), preserves every AI-related notice as hashed original bytes, and turns differences — records changed after publication, records that vanish, the same vendor winning across borders — into case candidates that face a six-criteria gate. Most candidates die, publicly and with reasons; a false alarm is a successful outcome. Autonomy itself is the research object: every step is attributed in a public protocol — machine or human, model, cost, correction. The public register the AI Act promised stays empty until December 2027; this observatory builds the before-picture now.",
+      en: "Since 2026-08-08 the background observatory of the machine-attention practice — its first instrument, kept deliberately quiet: every night it reads Europe's public procurement journal (TED), preserves every AI-related notice as hashed original bytes, and turns differences — records changed after publication, records that vanish, the same vendor winning across borders — into case candidates that face a six-criteria gate. Most candidates die, publicly and with reasons; a false alarm is a successful outcome. Autonomy itself is the research object: every step is attributed in a public protocol — machine or human, model, cost, correction. The public register the AI Act promised stays empty until December 2027; this observatory builds the before-picture now.",
     },
     live: true,
     methodHref: '/werke/observatory',
@@ -393,11 +393,11 @@ export const HOLDINGS_RANKED: readonly string[] = [
   // tests), and it is the lab's most interactive piece — but the two seats above it are
   // Frank's explicit calls and stay his.
   'society',
-  // Machine Attention fourth (2026-08-09): the practice itself — flagship of the second
+  // Machine Attention fourth (2026-08-08): the practice itself — flagship of the second
   // constitution, with The Foreknown as its first project and a live stage at /attention.
   'attention',
   // The State Before the Interface fifth (2026-08-08, listed on Frank's explicit go on
-  // launch day; since 2026-08-09 the background observatory of the machine-attention
+  // launch day; since 2026-08-08 the background observatory of the machine-attention
   // practice): outward stakes a stranger recognizes at once (the state buying AI),
   // checkability total (append-only archive, every claim walks back to hashed bytes).
   'observatory',
