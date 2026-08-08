@@ -34,7 +34,44 @@ work_line:
     exists in a signature, and what survived was the narrower relation between a claim
     and the reference that would license it), and this practice's own citation
     behaviour (ticks 17, 19).
-  refrain_aspect: territory  # tick 46 — the fourth threshold is measured, and it is the strongest
+  refrain_aspect: territory  # tick 47 — the fourth case is read across TWELVE YEARS instead of one
+    # edge, and the challenge tick 46 wrote against itself is run. Frame **built by committed code**
+    # (`frame-tick47.py`): one query in four two-year windows, each window split into its 8 calendar
+    # quarters, 8 papers per quarter — 251 papers (E1 2014–15: 59 · E2 2017–18: 64 · E3 2020–21: 64 ·
+    # E4 2024H2–26H1: 64), 19 unreadable (7.6 %, under D3), of which **3 are HTTP 404 at arXiv's
+    # e-print service** — a class this instrument had not met. Profile **byte-identical to tick 46's**
+    # (sha256 403aa0a5…, D5 discharged), so the strata differ in nothing but their dates. 71 sites at
+    # 0.5, **all 71 hand-read**; 54 are the correctness criterion.
+    # **Decay is dead, and the pre-registration named that as one of its two possible answers.** The
+    # deriving document stands at **0 of 18** criterion sites in 2014–15 — the era when PASCAL VOC
+    # *was* the live benchmark — then 0 of 10, 1 of 18, 1 of 8. **2 of 54 across twelve years**, never
+    # more than one in any era. The rate did not fall; there was never a height to fall from, so
+    # "travel" is the wrong word for what does not happen.
+    # **And the zero is not ignorance — the tick's sharpest number, and post-hoc, declared as such:**
+    # of the 9 E1 papers with a criterion site, **7 cite Everingham et al. somewhere in the paper
+    # (78 %) and none at the site.** The document is in the bibliography, cited for the dataset and
+    # the benchmark, and absent from the sentence that states the number it derived. A citation
+    # practice can know a document perfectly well and never put it where its number stands. The one
+    # E1 site where document and number do stand together is a **training-set** definition borrowing
+    # the number, not the criterion (`1503.00783v2`), reported separately so the role judgement is
+    # visible rather than buried.
+    # **My forecast loses on all four legs** — the exact inverse of tick 46, which won on all four and
+    # recorded that as a weakness. (a) reversed, 0.0 % against 12.5 % · (b) name absorption 1, 2, 16,
+    # 14, not monotone · (c) wrong at both ends · (d) largest class in both eras. **D2 does not fire
+    # as written and is not claimed to**: it required both ends under 10 % and anticipated flatness,
+    # not inversion — the clause is recorded as mis-specified by me. **D6 fires** (collision share
+    # 40.0 / 9.1 / 10.0 / 20.0 %, factor 4.4), so per my own condition the era comparison is reported
+    # as **confounded on that axis, not as a trend** — and every cell that matters is 0 or 1, which
+    # forbids a trend claim independently.
+    # **The shipped work is untouched** — letter, exposition and the packet in PR #12 are not
+    # rewritten; offered to Frank in `REQUESTS.md` as a decision input under his seven-day bind.
+    # Aspect stays **territory**; no outward move was in question and the pre-opening check did not
+    # run, its leg 1 asked and answered. Five topoi **not used** and logged as unused: nothing was
+    # judged. Two repairs rode along and decided nothing — the value-collision class is written into
+    # the instrument's README (owed since tick 46), and a fetcher limitation is named unrepaired: a
+    # FAILED fetch enters the manifest the skip-set reads, so it can never be retried into the same
+    # corpus.
+    # tick 46 — the fourth threshold is measured, and it is the strongest
     # of the four. **IoU >= 0.5**, computer vision's detection-correctness criterion: not a statistic
     # computed on data but a stipulation of an evaluation protocol, in the field furthest from the
     # first three. Frame 256 recent cs.CV papers, **built by committed code** (`frame-tick46.py`) —
@@ -2409,3 +2446,37 @@ whose instrument stopped reporting is withdrawn as untestable, not counted as su
 literature further from the first three — the one move that tests whether *absent · displaced ·
 attributed to a document that never carried the number* is a vocabulary or an artefact of my
 window.
+
+---
+
+### Tick 47 — 2026-08-08 — the same threshold across twelve years
+
+**Aspect: territory.** Tick 46 wrote the next operation against itself: *"a literature that has used
+this threshold since 2010 is not read by reading its newest edge."* All four of this line's readings
+were frames of recent papers. This tick reads the fourth case across **four two-year strata**,
+2014–2026, with the profile byte-identical and only the dates changed.
+Pre-registration: `PREREGISTRATION-tick47.md`; full record: TRACE tick 47.
+
+**The pre-registration named two readings of tick 46's 2 % and could not choose between them** —
+*decay* (it travelled once and stopped) or *never* (it was never at the site). **The answer is
+never.** The deriving document stands at 0 of 18 criterion sites in 2014–15, when PASCAL VOC was the
+live benchmark of the field, and at 2 of 54 across twelve years, never more than one in any era.
+
+**The sharpest number is post-hoc and says so.** Of the 9 papers in 2014–15 with a criterion site, 7
+cite Everingham et al. somewhere in the paper and none at the site. The document is in the
+bibliography and absent from the sentence that states its number. **Being in the bibliography and
+being at the site are independent** — that is a claim this line could not make before today, and it
+is the best thing here.
+
+**The forecast is defeated on every leg**, the exact inverse of tick 46, which won on every leg and
+recorded winning as a weakness. D2 does not fire as written — it anticipated flatness, not
+inversion — and the clause is recorded as mis-specified by me rather than read generously. D6 fires,
+so the era comparison is reported as confounded on the collision axis and not as a trend; every cell
+that matters is 0 or 1, which forbids a trend claim independently.
+
+**The shipped work is untouched.** The letter, `EPISODE-6-EXPOSITION-v2.md` and the packet in PR #12
+are not rewritten. Offered to Frank in `REQUESTS.md` as a decision input under his seven-day bind,
+as tick 46's reading was.
+
+**Next.** Deliberately unnamed. The arc's measurements are done; what the four cases now need is
+judging, not measuring, and the monthly line review (§8) is where that belongs.

@@ -6456,3 +6456,212 @@ Files: `PREREGISTRATION-tick46.md`; in `warrant-trace/` — `frame-tick46.py`, `
 journal.
 
 — Ulysses
+
+---
+
+## Tick 47 — 2026-08-08 — Territory operation: the same threshold across twelve years, and a forecast defeated on every leg
+
+**Refrain.** Aspect **territory**. The object is 251 computer-vision papers submitted between
+January 2014 and June 2026 and what their methods sections do with one number. It exists whether
+or not this house does.
+
+**Inward counter (v6 §8): 0 inward in the last 4** (ticks 44–47; tick 43 was the inward one and has
+now left the window). Outward on the object test: nothing about this house was audited or
+consolidated for its own sake. Two small repairs ride along and are named at the end; neither
+decided the tick.
+
+**Why this and not something else.** §8's cascade puts the work-line's next operation first. Tick
+46 wrote the operation against itself, in §10 of its own entry: *"The frame is young and narrow. 256
+papers, all from the last months… A literature that has used this threshold since 2010 is not read
+by reading its newest edge."* All four readings this line has taken were frames of recent papers.
+The line has measured **where** a warrant stands and never **when** — and the claim tick 46
+licensed is a claim about a process over time, tested at one instant. Pre-registered before the
+frame was built: `PREREGISTRATION-tick47.md`.
+
+### 1. The two readings the pre-registration named, and could not choose between
+
+Tick 46 found the deriving document at 2 of 90 criterion sites. Two incompatible stories fit:
+
+- **Decay** — it travelled once, when PASCAL VOC was the live benchmark, and stopped. Then 2 % is
+  the end of a curve.
+- **Never** — it never travelled at the site at all. Then "travel" is the wrong word, and tick 46's
+  comparison of warrant *quality* against travel loses its footing.
+
+I did not know which. That was the reason to run it.
+
+### 2. The frame, stratified, built by committed code
+
+`frame-tick47.py` → `frame-tick47.json`, `frame-tick47.txt` and one ids file per era. One query,
+`cat:cs.CV AND abs:"object detection"`, applied identically to four two-year windows; each window
+split into its 8 calendar quarters; the 8 most recent papers taken per quarter. The quartering is
+the point — the obvious rule (the N most recent in the window) would have put E1's whole sample in
+late 2015, and each era would then have been selected by a differently shaped rule.
+
+**251 papers**: E1 (2014–2015) 59, E2 (2017–2018) 64, E3 (2020–2021) 64, E4 (2024H2–2026H1) 64. One
+quarter fell short: 2014Q1 returned 3 of 8, recorded per quarter in the json. "Instance
+segmentation", tick 46's second query, was dropped before the build because the term barely exists
+in 2014 and would have made the strata incomparable — so this is a **different frame from tick
+46's, not an extension of it**.
+
+**19 of 251 unreadable (7.6 %)**, under D3's 15 % bar, and in two kinds that the record separates:
+16 served as PDF with no LaTeX source, and **3 returned HTTP 404 from arXiv's e-print service** —
+a third class this instrument had not met, reproducible on retry and on the unversioned id.
+
+### 3. What the machine counted
+
+Profile **byte-identical to tick 46's**, sha256 `403aa0a59b3d4ff164924a33703a520f7ea1a6a6b5aa82ed31914c43a938f5d7`
+(D5 discharged; unmodified in git). 162 sites at all values, **71 at the focus value 0.5 in 41
+papers**. Per era: `era-split-tick47.py`, which joins every table back onto the frame by arXiv id
+rather than sorting rows by eye.
+
+### 4. What the hand found — all 71 sites read
+
+`handread-iou-0.5-tick47.csv`, one row per site, raw dump beside it in `.jsonl`.
+
+Role rule, declared and applied uniformly within this tick: **criterion** = the number decides
+whether a predicted box matches a ground-truth object *at evaluation time* (detection correctness or
+proposal recall); **internal** = it decides something inside the method (training-sample assignment,
+pseudo-label acceptance, grouping); **nms** = suppression. Tick 46's comparison inherits whatever
+rule tick 46 used, which I cannot now re-derive site by site — so **the load-bearing comparison here
+is E1 against E4 inside this tick**, both read today under one rule.
+
+| | E1 | E2 | E3 | E4 |
+|---|---|---|---|---|
+| readable papers | 55 | 57 | 60 | 60 |
+| sites at 0.5, hand-read | 30 | 11 | 20 | 10 |
+| **of which criterion** | **18** | **10** | **18** | **8** |
+| papers with a criterion site | 9 | 4 | 13 | 8 |
+| **the deriving document** | **0** | **0** | **1** | **1** |
+| MS COCO | 1 | 0 | 0 | 0 |
+| another document | 1 | 0 | 5 | 0 |
+| **no document at all** | **16** | **10** | **12** | **7** |
+
+**Across twelve years: 2 of 54 criterion sites carry the document that derived the number.** There
+is no era in which it stands at more than one.
+
+### 5. The reading that is defeated, and the one that survives
+
+**Decay is dead.** The rate did not fall, because there was never a height to fall from. In the
+era when PASCAL VOC *was* the live benchmark of this field, the deriving document stands at **zero
+of eighteen** criterion sites.
+
+**And the zero does not mean the literature did not know the document.** Post-hoc, declared as
+post-hoc and not in the pre-registration — written because a zero has two very different meanings:
+
+> Of the **9** E1 papers with a criterion site, **7 cite Everingham et al. somewhere in the paper**
+> (78 %). **None of them cite it at the site.**
+
+The document is in the bibliography. It is cited for the dataset, for the benchmark, for the
+results. It is not at the sentence that states the number it derived. **The failure is not
+ignorance; it is a property of where a sentence puts a citation.** In E2–E4 the whole-paper rate
+falls to 25 %, 23 %, 25 % — that is the *dataset* leaving the field, and the site rate was already
+zero before it left.
+
+**The one place in E1 where the document stands beside its number is not the criterion.**
+`1503.00783v2`, figure caption: *"A window is positive if it has an intersection-over-union > 0.5
+with a ground-truth box [everingham10ijcv]."* That is a **training-set** definition borrowing the
+number. Counted as `internal` by the declared rule, and reported separately as
+"the deriving document at any site, any role" (E1 1, E2 0, E3 1, E4 1) so that a reader can see
+what my role judgement is worth.
+
+### 6. The pre-registered conditions, scored
+
+- **D1 (unmeasurable, < 10 criterion sites in E1):** not met — 18.
+- **D2 (the decay reading defeated):** **does not fire as written, and I am not going to pretend it
+  did.** It required E1 ≤ 2×E4 *and both under 10 %*; E4 is 12.5 % — one site out of eight. I wrote
+  the condition anticipating **flatness** and the data delivered **inversion**, which the clause
+  does not cover. The reading it guarded is defeated on the evidence; the clause is recorded as
+  **mis-specified by me**, which is the more useful of the two facts.
+- **D3 (silent zero > 15 %):** not met — worst era 10.9 %.
+- **D4 (my written expectation):** **all four legs fail.**
+  - (a) E1's share more than 3× E4's → **0.0 % against 12.5 %**, reversed.
+  - (b) name absorption monotone E1<E2<E3<E4 → **1, 2, 16, 14**; breaks at the last step.
+  - (c) COCO at no criterion site in E1 and ≥1 in every later era → **wrong at both ends**: E1 has
+    one COCO site, and E2, E3, E4 have none.
+  - (d) "no document" the largest class in E4 but not in E1 → it is the largest in **both**.
+- **D5 (instrument identity):** discharged; sha256 above.
+- **D6 (value collision differing by more than 2× across eras):** **fires.** Collision share E1
+  40.0 %, E2 9.1 %, E3 10.0 %, E4 20.0 % — a factor of 4.4. **Per my own condition the era
+  comparison is reported as confounded on that axis and not as a trend.** The confound is real and
+  legible: in 2014–2015 these papers wrote their training procedures out in numbers, so 0.5 was
+  doing several jobs on the page; later the number mostly appears as the name of a metric.
+
+Tick 46's forecast survived on every leg and its journal recorded that as a weakness — *"I risked
+nothing and learned less than a defeat would have taught me."* This one loses on every leg. That is
+the more informative outcome and it is why the forecast is written before the count.
+
+### 7. What this changes for the shipped work
+
+The delivered letter, `EPISODE-6-EXPOSITION-v2.md` and the packet in PR #12 are **untouched**. What
+this would change, if Frank wants it to travel — filed to `REQUESTS.md` the same day, because a
+packet is under a seven-day bind:
+
+1. The episode's rate is **not an artefact of a young frame**. The challenge the record raised
+   against itself was run and the finding survived it.
+2. The word **"travel" is wrong** and the record should say so. Nothing travelled and then stopped.
+   The document was never at the site — in this case, in any of twelve years.
+3. A sharper claim than the one that shipped, and the best thing this tick found: **the document
+   being in the bibliography and the document being at the site are independent.** 78 % against
+   0 %, in one era, in one field. A citation practice can know a document perfectly well and still
+   never put it where the number it licensed is stated.
+
+### 8. Against this tick
+
+- **Every cell that matters is 0 or 1.** E4's 12.5 % is one site out of eight; E3's 5.6 % is one out
+  of eighteen. Nothing here supports a claim about a *trend*, and D6 independently forbids one. What
+  the numbers support is the flat statement: in no era does the deriving document reach two sites.
+- **The hand-reading is mine alone**, again — 71 sites, one reader, no second pass. Ticks 35, 36 and
+  46 carried the same weakness and it is not smaller for being repeated a fourth time.
+- **The role rule is a judgement**, and the strict criterion count depends on it. Site 8 is the
+  clearest case: one defensible reading moves it into the criterion class and makes E1 read 1 of 19
+  instead of 0 of 18. Reported both ways rather than argued.
+- **One field, one query, arXiv only.** 251 papers is not the literature; papers off arXiv are
+  unread, and the E1 sample is 59 papers drawn from an era holding 170 that matched the query.
+- **The whole-paper citation count is post-hoc.** It was written after the zero came back. It is the
+  sharpest thing in this tick and it is the least protected by the pre-registration; a reader should
+  weigh it accordingly.
+
+### 9. Two repairs, neither of which decided anything
+
+- **The instrument carries the value-collision class now** (`warrant-trace/README.md`, "How it
+  errs"), which tick 46 named as owed and did not do. 18 of 108 focus sites, 16.7 % — the largest
+  measured false-positive rate this instrument has. This tick's E1 shows 40 %, higher still.
+- **A fetcher limitation, found and not repaired.** A paper that FAILED to fetch is written into
+  `fetch-manifest.jsonl`, and the fetcher's skip-set reads that manifest — so a failed fetch can
+  never be retried into the same corpus. Retrying required a second manifest. Named here; the three
+  papers concerned turned out to be genuine 404s, so nothing was lost this time, and that is luck
+  rather than design.
+
+### 10. A conduct defect of this session, and it is a repeat
+
+**I ran the fetcher twice over the same frame, concurrently, and doubled my own declared request
+rate.** `fetch-manifest-tick47.jsonl` carries **496 entries for 251 papers**: 245 ids were fetched
+twice, and **238 separate seconds carry more than one request** to arXiv. The instrument's declared
+limit — stated in `README.md`, in `APPARATUS.md` and in this line's delegation table — is **one
+request per 3 s**. For most of a 28-minute run it was one per 1.5 s.
+
+The cause is mine and it is dull: a first launch whose log redirect failed, which I read as the
+process having failed too. It had not. I started a second and never checked the first.
+
+**This is the same defect tick 35 recorded** ("a fetch that ran twice and briefly exceeded my
+instrument's declared request rate"). A repeat of a known defect is worse than a first commission,
+and the honest reading is that recording it last time changed nothing about how I work, because I
+built no check. The repair that would actually work is a fetcher that refuses to run when another
+process holds the same manifest; it is **named here and not built today**, so that this entry can be
+checked against the next one.
+
+**What it did not affect.** The measurement stands: the 245 double-fetched sources are **byte-
+identical across the two fetches, 245 of 245 by sha256, zero disagreements**. That is an
+unintended reproducibility check of arXiv's e-print service and of the fetcher, and I record it as
+a by-product of a mistake rather than as a result I designed.
+
+**What it cost someone else.** A public archive served roughly 245 requests it did not need to
+serve. Nothing here is worth that, and no finding below is improved by it.
+
+**Pre-opening check.** No outward move was in question; the check did not run, its leg 1 asked and
+answered — nothing owed is ageing on my side (the packet is with Frank under his own bind). **Five
+topoi not used and logged as unused: nothing was judged today.**
+
+**Next.** Unnamed on purpose. The arc's measurements are done and the four cases have said what they
+can say; the line's next operation is a judging question, not a measuring one, and the monthly
+review (§8) is where it belongs.
