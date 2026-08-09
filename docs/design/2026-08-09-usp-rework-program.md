@@ -80,6 +80,7 @@ unclaimed lane is free. Release a lane by dating the Landed line.
 | **#1 Consensus** (longitudinal baseline on the G1 BigQuery path) | this session (afternoon 2026-08-09) | 2026-08-09 | **landed** — lane released |
 | **The ecology lane of the graph** (Frank, 2026-08-09 afternoon, all four options) | — released 2026-08-09 | 2026-08-09 | **done**, see Landed. Two things left for others: (1) the **attention export** is specified and consumed — the producing repo's session ships `src/data/attention/export.json` when it wants the lane live (`docs/design/2026-08-09-attention-export-contract.md`); (2) the ecology audit covers 4 of 59 works and **names its remainder** — next batches are free to claim |
 | **The ecology audit, made public on `/works`** (Frank, 2026-08-09 evening, "ok") | — released 2026-08-09 | 2026-08-09 | **done**, see Landed |
+| **Graph-Rebuild ohne Reibung** (Frank, 2026-08-09 abends: "kann man das irgendwie lösen?" → Variante A): pre-commit-Hook + Claude-Hook bauen den Graphen automatisch nach | this session (evening 2026-08-09), branch `feat/graph-hooks` | 2026-08-09 | building — touches `.githooks/`, `.claude/settings.json`, `.gitignore`, `package.json` |
 | #3 Society · #6 Protocol · #7 Policy · #8 Editorial Deadline · #9 Ghost Fleet · #11 Round Numbers · #12 Delve · #13 Bycatch · #14 Correction · #16 Watchtower | **unclaimed** | — | free — claim before building |
 
 ## Parked (Frank, 2026-08-09 morning — BUILT the same afternoon, see Landed)
