@@ -7,9 +7,17 @@ import Page from '@/layouts/Page.astro'
 import Frame from '@/components/atelier/surface/Frame.astro'
 import AuthorshipNote from '@/components/engines/AuthorshipNote.astro'
 import { ATELIER_NARRATIVE } from '@/config/atelier-wording'
+import { parseProtocol } from '@/lib/atelier/protocol-version'
 
 const repo = 'https://github.com/frankbueltge/ulysses'
 const kicker = ['Atelier · apparatus', 'ulysses', 'how the machine runs']
+
+// Version derived from the mirrored PROTOCOL.md, never hardcoded (Aktualitäts-Regel
+// 2026-07-25 — a hardcoded "v5" here outlived the v6 adoption of 2026-08-08).
+const protoRaw = Object.values(import.meta.glob('/src/content/atelier/PROTOCOL.md', {
+  eager: true, query: '?raw', import: 'default',
+}) as Record<string, string>)[0] ?? ''
+const proto = parseProtocol(protoRaw)
 
 // The full framing — the site's standing wording for this practice (v4 revision
 // 2026-07-18, public-surface patch): project-based under standing delegation; the
@@ -41,7 +49,7 @@ const historicalNote =
       </li>
       <li>
         <b><a href="/atelier/protocol">Constitution</a></b>
-        <span class="li-note">Research Protocol v5 — the standing instruction, adopted by the responsible human and, since 2026-08-02, self-amendable by the practice (journalled with a rationale); the standing delegation defines what the practice may do autonomously</span>
+        <span class="li-note">Research Protocol v{proto.version} — the standing instruction, adopted by the responsible human and, since 2026-08-02, self-amendable by the practice (journalled with a rationale); the standing delegation defines what the practice may do autonomously</span>
       </li>
       <li>
         <b><a href="/atelier/requests">Team channel</a></b>

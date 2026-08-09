@@ -29,7 +29,7 @@ export const ATELIER_GRAMMAR = {
    * Labels unverändert, nur die Tür des Blatts zeigt auf den neuen Ort. */
   rail: [
     { label: 'this sheet', href: '/atelier/sheet', hint: 'the current working sheet' },
-    { label: 'projects', href: '/atelier/projects', hint: 'the research log — the work-line and its studies under Protocol v5 (2026-07-24)' },
+    { label: 'projects', href: '/atelier/projects', hint: 'the research log — the work-line and its studies under Protocol v6 (2026-08-08, sharpened from v5)' },
     { label: 'sheets', href: '/atelier/sheets', hint: 'all sheets, one per thread' },
     { label: 'works', href: '/atelier/works', hint: 'works & catalogue — existing URLs stay' },
     { label: 'journal', href: '/atelier/journal', hint: 'the journal as session register, S1…' },
@@ -103,7 +103,7 @@ export const ATELIER_NARRATIVE = {
     lede:
       'Ulysses is a situated artistic research practice, developed through documented human–machine operations. Machines hold real operative agency here — they find problems, research, build, revise and archive inside a standing human delegation — while curated publication and responsibility remain human. The unit of work is the work-line, fed by studies that compost back into it; failures stay on the record, checkably.',
     doors: {
-      now: 'the research log — the work-line and its studies under Protocol v5: scores, traces, dispositions',
+      now: 'the research log — the work-line and its studies under Protocol v6: scores, traces, dispositions',
       works: 'works & catalogue — the nightly phase (28 June – 18 July 2026) and, since 24 July, its curated publications',
       foundation: 'what this is, in plain language — the operating model, who decides what, and the theoretical ground',
       sheet: 'the working sheet — the practice’s own reading of its works and sources, drawn by itself',
@@ -122,7 +122,7 @@ export const ATELIER_NARRATIVE = {
     // nightly phase closed on 18 July 2026 — so this number is final, not a moving count.
     // /atelier derives the same span from the mirror rather than repeating it (index.astro).
     mapCaption:
-      'each slab a work, hung by committed date — the nightly register (S1–S43), then bounded projects and work-lines under Protocol v4 and v5; the red slabs are its curated publications',
+      'each slab a work, hung by committed date — the nightly register (S1–S43), then bounded projects and work-lines under Protocol v4, v5 and now v6; the red slabs are its curated publications',
     mapProvenance:
       'drawn from committed mirrors — works meta.json · project SCORE states · read-only; project lines end where their disposition ends',
     doorsCaption: '“The plane is like a row of doors.” (ATP 508)',
@@ -138,7 +138,7 @@ export const ATELIER_NARRATIVE = {
     model: {
       heading: 'the model behind the practice',
       lede:
-        'Since 24 July 2026 the practice carries an explicit process model: read out of the whole of A Thousand Plateaus and published bilingually as the work “Kartographie statt Kopie / Cartography, not Tracing” — a map to be reworked by each project, not a template to be applied. It did not replace the older research foundation and its toolbox of methodological strategies — Protocol v5 names both as its sources. Six postulates:',
+        'Since 24 July 2026 the practice carries an explicit process model: read out of the whole of A Thousand Plateaus and published bilingually as the work “Kartographie statt Kopie / Cartography, not Tracing” — a map to be reworked by each project, not a template to be applied. It did not replace the older research foundation and its toolbox of methodological strategies — the practice names both as its sources. Six postulates:',
       /** Wörtlich aus dem Werk, **§5 „The Model: Artistic Research as Cartographic Practice"**.
        * (Fundstelle korrigiert 2026-07-31: hier stand §7 — das sind die Gütekriterien, aus denen
        * Protokoll v5 §5 die fünf Topoi des Urteilens nimmt. Die Postulate stehen eine Ebene
@@ -461,7 +461,7 @@ export const ATELIER_NARRATIVE = {
     journal: 'The nightly protocol archive (28 June – 18 July 2026) as a session register — one line per page.',
     journalNotesHeading: 'After the nightly phase — dispatcher ticks (not sessions)',
     journalNotes:
-      'Protocol v4 dissolved the nightly session as the unit of practice. The register above is closed at its last numbered night; what follows are unnumbered dispatcher ticks under the new protocol — they keep the historical record continuous, their full decision traces live in the engine repo’s projects/. Since 24 July 2026 the practice runs under Protocol v5, the work-line protocol.',
+      'Protocol v4 dissolved the nightly session as the unit of practice. The register above is closed at its last numbered night; what follows are unnumbered dispatcher ticks under the new protocol — they keep the historical record continuous, their full decision traces live in the engine repo’s projects/. Since 24 July 2026 the practice has run the work-line protocol — v5, then sharpened as v6 on 8 August 2026.',
     material: 'Ulysses’ own shelf: the sources the practice has pulled, as it catalogued them.',
     materialAtlasNote:
       'Frank’s atlas (/atlas) is the lab’s reference collection; this shelf is the practice’s own lens on it. Each points at the other.',
