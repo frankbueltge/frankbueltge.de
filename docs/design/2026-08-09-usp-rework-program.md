@@ -79,7 +79,7 @@ unclaimed lane is free. Release a lane by dating the Landed line.
 | **The parked package**: knowledge graph (substrate) · neighbor-graph visualization · CLAUDE.md diet (`.claude/rules/`) | — released 2026-08-09 | 2026-08-09 | **done**, see Landed; the lane is free again. One standing consequence for everyone: changing `werke.ts`, `docs/decision-log.md`, the audit or the post ledger now requires `npm run graph:build` in the same commit, or `src/lib/graph/graph.test.ts` goes red (`.claude/rules/knowledge-graph.md`) |
 | **#1 Consensus** (longitudinal baseline on the G1 BigQuery path) | this session (afternoon 2026-08-09) | 2026-08-09 | **landed** — lane released |
 | **The ecology lane of the graph** (Frank, 2026-08-09 afternoon, all four options) | — released 2026-08-09 | 2026-08-09 | **done**, see Landed. Two things left for others: (1) the **attention export** is specified and consumed — the producing repo's session ships `src/data/attention/export.json` when it wants the lane live (`docs/design/2026-08-09-attention-export-contract.md`); (2) the ecology audit covers 4 of 59 works and **names its remainder** — next batches are free to claim |
-| **The ecology audit, made public on `/works`** (Frank, 2026-08-09 evening, "ok"): every work of the practices shows the neighbours the audit named, and every unaudited work says so — derived from the same graph, no new data source | this session (evening 2026-08-09), branch `feat/works-verdicts` | 2026-08-09 | building — touches `src/components/pages/WorksRegister.astro`, `src/lib/engines/register.ts`, `src/lib/graph/**` |
+| **The ecology audit, made public on `/works`** (Frank, 2026-08-09 evening, "ok") | — released 2026-08-09 | 2026-08-09 | **done**, see Landed |
 | #3 Society · #6 Protocol · #7 Policy · #8 Editorial Deadline · #9 Ghost Fleet · #11 Round Numbers · #12 Delve · #13 Bycatch · #14 Correction · #16 Watchtower | **unclaimed** | — | free — claim before building |
 
 ## Parked (Frank, 2026-08-09 morning — BUILT the same afternoon, see Landed)
@@ -127,6 +127,19 @@ unclaimed lane is free. Release a lane by dating the Landed line.
 - 2026-08-09 — Phase 0 merged (#476): every in-repo experiment cites its nearest
   neighbors; attention skipped per the claims table; the platform's auto-appended
   AI-credit footer stripped from the PR body per the standing rule.
+- 2026-08-09 — **the ecology audit becomes public on `/works`.** The verdicts stopped being a
+  document only Frank and a session could read: every audited work now shows its nearest prior
+  art, named and linked, on its own row of the register — and the head line states the ratio
+  ("prior art checked for 3 of 59 works … a work without a note below is **unexamined, not
+  cleared**"), because stamping 56 rows with a disclaimer would turn a catalogue into noise
+  while stating it once cannot be skimmed past. No colour was added: the practice's hairline
+  stays the row's only hue and a verdict is stated in words. Derived from the same graph, so
+  the page cannot say anything the audit does not. Two things the build caught: the neighbour
+  links had to leave the row's own link (a link inside a link is invalid HTML browsers take
+  apart), and the first wording — "already done by" — was a false claim for an ADDED VALUE
+  verdict, so it reads "nearest prior art" instead. `register-audit.test.ts` guards the seam
+  the join runs on: rename a work's directory and the page would have quietly reported an
+  examined work as unexamined.
 - 2026-08-09 — **the ecology enters the graph** (Frank, afternoon: "die research ecology werke
   sind hier noch gar nicht abgebildet, aber bilden auch eine eigene 'machine-run' ökologie" —
   all four proposed lanes chosen). **(a)** The practices' own **59 works** and the **6

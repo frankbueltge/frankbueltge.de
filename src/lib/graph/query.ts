@@ -8,7 +8,7 @@
 //
 // Pure functions over a loaded graph — no fs here, so an Astro page may import this.
 
-import type { EdgeKind, GraphEdge, GraphNode, KnowledgeGraph, WorkNode } from './types'
+import type { EdgeKind, GraphEdge, GraphNode, KnowledgeGraph, PracticeWorkNode, WorkNode } from './types'
 
 /** An edge seen from one node: which way it runs, and what sits at the other end. */
 export interface Relation {
@@ -93,6 +93,47 @@ export function neighborhoodField(graph: KnowledgeGraph): FieldEntry[] {
       })
       .filter((n) => Boolean(n.node)),
   }))
+}
+
+/** What the ecology audit found about one practice work, shaped for a page to print. */
+export interface WorkAudit {
+  verdict: NonNullable<PracticeWorkNode['verdict']>
+  /** the audit's verdict sentence, verbatim */
+  verdictLabel: string
+  /** the audit's (d) paragraph */
+  daylight: string
+  neighbours: Array<{ label: string; url?: string; note?: string }>
+}
+
+/** The ecology audit, keyed the way the works register names a work (`<practice>/<slug>`).
+ *
+ *  Only works the audit actually examined appear here. **An absent key means UNEXAMINED, never
+ *  cleared** — 55 of 59 on 2026-08-09 — and a page that prints this must say which of the two
+ *  it is showing rather than let silence read as a pass. */
+export function practiceWorkAudits(graph: KnowledgeGraph): Map<string, WorkAudit> {
+  const byId = new Map(graph.nodes.map((n) => [n.id, n]))
+  const audits = new Map<string, WorkAudit>()
+  for (const node of graph.nodes) {
+    if (node.kind !== 'practice-work' || !node.verdict || !node.daylight) continue
+    const neighbours = graph.edges
+      .filter((e) => e.kind === 'neighbor-of' && e.from === node.id)
+      .map((edge) => {
+        const other = byId.get(edge.to)
+        return {
+          label: other?.label ?? '',
+          ...(other?.kind === 'neighbor' && other.url ? { url: other.url } : {}),
+          ...(edge.note ? { note: edge.note } : {}),
+        }
+      })
+      .filter((n) => n.label)
+    audits.set(node.id.replace(/^practice-work:/, ''), {
+      verdict: node.verdict,
+      verdictLabel: node.verdictLabel ?? '',
+      daylight: node.daylight,
+      neighbours,
+    })
+  }
+  return audits
 }
 
 /** How many of each kind of edge a node carries — the one-line answer to "is this connected?". */
