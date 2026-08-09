@@ -17,9 +17,10 @@ import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
 import { HOLDINGS_RANKED, WERKE } from '@/data/werke'
-import { SOURCE_FILES, buildGraph, digest } from './build'
+import { normaliseVoice } from '@/lib/begegnungen/crossings'
+import { SOURCE_FILES, WORK_META_DIRS, buildGraph, digest, groupDigest, readWorkMetas } from './build'
 import { parseAudit, type LedgerEntry } from './derive'
-import type { KnowledgeGraph, WorkNode } from './types'
+import type { EncounterNode, KnowledgeGraph, PracticeNode, PracticeWorkNode, WorkNode } from './types'
 
 const ROOT = fileURLToPath(new URL('../../../', import.meta.url))
 const read = (p: string): string => readFileSync(`${ROOT}${p}`, 'utf8')
@@ -30,10 +31,15 @@ const flat = (s: string): string => s.replace(/\s+/g, ' ').trim()
 
 const texts: Record<string, string> = {}
 for (const file of SOURCE_FILES) texts[file] = read(file)
+const workMetas = readWorkMetas(ROOT)
 
 const committed = JSON.parse(read('src/data/graph/graph.json')) as KnowledgeGraph
-const derived = buildGraph({ texts })
-const flatSources = new Map(SOURCE_FILES.map((f) => [f as string, flat(texts[f])]))
+const derived = buildGraph({ texts, workMetas })
+/** Every file a claim may name: the four fixed records, plus each practice work's own meta. */
+const flatSources = new Map<string, string>([
+  ...SOURCE_FILES.map((f) => [f as string, flat(texts[f])] as const),
+  ...Object.entries(workMetas).map(([path, text]) => [path, flat(text)] as const),
+])
 
 describe('every line the graph carries is still in the file it came from', () => {
   const claims = [
@@ -57,8 +63,11 @@ describe('every line the graph carries is still in the file it came from', () =>
   })
 
   it('reads only from the declared sources — there is no other way into this graph', () => {
-    for (const node of committed.nodes) expect(SOURCE_FILES).toContain(node.source.file)
-    for (const edge of committed.edges) expect(SOURCE_FILES).toContain(edge.source.file)
+    const declared = (file: string): boolean =>
+      (SOURCE_FILES as readonly string[]).includes(file) ||
+      WORK_META_DIRS.some((home) => new RegExp(`^${home.dir}/[^/]+/meta\\.json$`).test(file))
+    for (const node of committed.nodes) expect(declared(node.source.file), node.source.file).toBe(true)
+    for (const edge of committed.edges) expect(declared(edge.source.file), edge.source.file).toBe(true)
   })
 
   it('keeps the works’ own line quotes verbatim, curly quotes and all', () => {
@@ -75,12 +84,24 @@ describe('the committed graph is the derivation, not a copy of it', () => {
   })
 
   it('names a digest per source, and each one is that file today', () => {
-    expect(committed.meta.sources.map((s) => s.file)).toEqual([...SOURCE_FILES])
+    expect(committed.meta.sources.map((s) => s.file)).toEqual([
+      ...SOURCE_FILES,
+      ...WORK_META_DIRS.map((home) => `${home.dir}/*/meta.json`),
+    ])
     for (const source of committed.meta.sources) {
+      const home = WORK_META_DIRS.find((d) => source.file === `${d.dir}/*/meta.json`)
+      const current = home ? groupDigest(home.dir, workMetas) : { sha256: digest(texts[source.file]) }
       expect(
         source.sha256,
         `${source.file} changed since the graph was built — run \`npm run graph:build\``,
-      ).toBe(digest(texts[source.file]))
+      ).toBe(current.sha256)
+    }
+  })
+
+  it('counts the works it read per directory, so a vanished work is visible in the file itself', () => {
+    for (const home of WORK_META_DIRS) {
+      const recorded = committed.meta.sources.find((s) => s.file === `${home.dir}/*/meta.json`)
+      expect(recorded?.files).toBe(groupDigest(home.dir, workMetas).files)
     }
   })
 
@@ -138,6 +159,79 @@ describe('the register and the audit still describe the same shelf', () => {
       expect(['UNIQUE', 'ADDED VALUE', 'REDUNDANT']).toContain(work.verdict)
       expect(work.verdictLabel?.startsWith(work.verdict)).toBe(true)
     }
+  })
+})
+
+describe('the ecology lane — the practices’ own production', () => {
+  const practiceWorks = committed.nodes.filter((n): n is PracticeWorkNode => n.kind === 'practice-work')
+  const practices = committed.nodes.filter((n): n is PracticeNode => n.kind === 'practice')
+  const encounters = committed.nodes.filter((n): n is EncounterNode => n.kind === 'encounter')
+
+  it('carries every work that has a committed meta, and no work that has not', () => {
+    expect(practiceWorks.length).toBe(Object.keys(workMetas).length)
+    expect(practiceWorks.length).toBeGreaterThan(50)
+  })
+
+  it('gives every practice work a maker, read from where the work lives', () => {
+    const made = new Set(committed.edges.filter((e) => e.kind === 'made-by').map((e) => e.from))
+    for (const work of practiceWorks) {
+      expect(made, `${work.id} names no practice`).toContain(work.id)
+      expect(work.date).toMatch(/^\d{4}-\d{2}-\d{2}$/)
+    }
+  })
+
+  // The house keeps ONE register of voice spellings (src/lib/begegnungen/crossings.ts, whose
+  // own comment calls a second one "one drift waiting"). This asserts the graph really uses
+  // it: no practice may appear twice under two of its own names.
+  it('files each practice under one normalised voice, never twice under two spellings', () => {
+    const ids = practices.map((p) => p.id)
+    expect(new Set(ids).size).toBe(ids.length)
+    for (const practice of practices) {
+      expect(practice.spellings.length).toBeGreaterThan(0)
+      for (const spelling of practice.spellings) {
+        const voice = normaliseVoice(spelling)
+        const expected = voice === 'unknown' ? practice.practiceId : voice
+        expect(practice.practiceId, `"${spelling}" is filed under ${practice.id}`).toBe(expected)
+      }
+    }
+    // the four spellings that made this necessary
+    const meridian = practices.find((p) => p.practiceId === 'meridian')
+    expect(meridian?.spellings).toEqual(['field', 'meridian'])
+  })
+
+  it('sends every participant of an encounter to a practice the graph carries', () => {
+    const ids = new Set(practices.map((p) => p.id))
+    const participations = committed.edges.filter((e) => e.kind === 'participates')
+    expect(participations.length).toBeGreaterThan(encounters.length)
+    for (const edge of participations) {
+      expect(ids).toContain(edge.to)
+      expect(edge.state, 'a crossing without a role would hide who gave and who received').toBeTruthy()
+    }
+  })
+
+  it('only claims a crossing moved a work when this repo actually carries that work', () => {
+    const slugs = new Map(practiceWorks.map((w) => [w.id, w.slug]))
+    for (const edge of committed.edges.filter((e) => e.kind === 'concerns')) {
+      expect(slugs.has(edge.to), `${edge.to} is not a work in this repo`).toBe(true)
+      const named = /"work_slug": "(.+?)"/.exec(edge.source.quote)?.[1] as string
+      expect(slugs.get(edge.to)?.endsWith(named)).toBe(true)
+    }
+    // enc-2026-006 names `sixty-cases-decision`, which lives in the ulysses repo and not here.
+    // The absent edge is the point: the graph shows what this checkout can show.
+    const register = texts['src/data/begegnungen/register.json']
+    expect(register).toContain('sixty-cases-decision')
+    expect(committed.edges.some((e) => e.kind === 'concerns' && e.to.includes('sixty-cases'))).toBe(false)
+  })
+
+  it('reaches the ecology from a practice: work → practice → encounter → another practice', () => {
+    const madeBy = committed.edges.find((e) => e.kind === 'made-by' && e.from.startsWith('practice-work:studio/'))
+    expect(madeBy?.to).toBe('practice:ensemble')
+    const crossing = committed.edges.find((e) => e.kind === 'concerns')
+    const roles = committed.edges
+      .filter((e) => e.kind === 'participates' && e.from === crossing?.from)
+      .map((e) => e.state)
+    expect(roles).toContain('source')
+    expect(roles).toContain('receiver')
   })
 })
 

@@ -57,9 +57,11 @@ export function search(graph: KnowledgeGraph, term: string): GraphNode[] {
       else if (own.includes(needle)) score += 40
       else if (node.id.toLowerCase().includes(needle)) score += 10
       if (score === 0) return null
-      // the house's own things before the world's: a work is what a session is working on
+      // the house's own things before the world's: a work is what a session is working on,
+      // and since 2026-08-09 that includes the practices' own 59 works
       if (node.kind === 'work') score += 30
-      else if (node.kind === 'practice' || node.kind === 'decision') score += 10
+      else if (node.kind === 'practice-work') score += 25
+      else if (node.kind === 'practice' || node.kind === 'encounter' || node.kind === 'decision') score += 10
       return { node, score }
     })
     .filter((hit): hit is { node: GraphNode; score: number } => hit !== null)

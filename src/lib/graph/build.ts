@@ -9,14 +9,18 @@
 // pages read the committed JSON, never this.
 
 import { createHash } from 'node:crypto'
-import { readFileSync } from 'node:fs'
+import { existsSync, readFileSync, readdirSync } from 'node:fs'
 import { WERKE, HOLDINGS_RANKED, werkTitle, type Werk } from '../../data/werke'
+import { normaliseVoice, VOICES } from '../begegnungen/crossings'
 import { parseAudit, parseDecisionLog, repoPathsIn, tokens, type LedgerEntry } from './derive'
 import type {
+  EncounterNode,
   GraphEdge,
   GraphNode,
   KnowledgeGraph,
   NeighborNode,
+  PracticeNode,
+  PracticeWorkNode,
   Provenance,
   WorkNode,
 } from './types'
@@ -29,16 +33,31 @@ export const SOURCE_FILES = [
   'docs/audits/2026-08-09-usp-audit.md',
   'docs/decision-log.md',
   'src/data/post/ledger.json',
+  'src/data/begegnungen/register.json',
 ] as const
 
 const WERKE_FILE = SOURCE_FILES[0]
 const AUDIT_FILE = SOURCE_FILES[1]
 const DECISIONS_FILE = SOURCE_FILES[2]
 const LEDGER_FILE = SOURCE_FILES[3]
+const ENCOUNTERS_FILE = SOURCE_FILES[4]
+
+/** The practices' own production: every work carries a committed `meta.json` beside it, and
+ *  these four directories are where the register at /works reads them from
+ *  (src/lib/engines/register.ts). Listed rather than globbed at random so that a new home for
+ *  works is a decision someone makes here, in the open. */
+export const WORK_META_DIRS = [
+  { dir: 'src/components/field/werke', ns: 'field', hrefBase: '/field/werke' },
+  { dir: 'src/components/atelier/werke', ns: 'atelier', hrefBase: '/atelier/werke' },
+  { dir: 'src/content/atelier/works', ns: 'atelier', hrefBase: '/atelier/works' },
+  { dir: 'src/content/studio/works', ns: 'studio', hrefBase: '/studio/works' },
+] as const
 
 export interface RawSources {
   /** file path → file contents, for every entry of SOURCE_FILES */
   texts: Record<string, string>
+  /** every practice work's meta, keyed by its repo-relative path */
+  workMetas: Record<string, string>
 }
 
 /** Needles that identify a work inside a repo path. Derived from the register alone: the werk
@@ -173,18 +192,138 @@ export function buildGraph(sources: RawSources): KnowledgeGraph {
     }
   }
 
-  // ── practices and receivers (the post office) ───────────────────────────────────────────
+  // ── practices, spelled four ways and reconciled once ────────────────────────────────────
+  // The records disagree with each other on names: the ledger says `field`, the encounter
+  // register says `meridian`, the works sit under `src/components/field/werke`. This house
+  // already keeps one place where that is reconciled — normaliseVoice in
+  // src/lib/begegnungen/crossings.ts, whose own comment says a second register would be "one
+  // drift waiting". So the graph borrows it instead of opening one.
+  const spellings = new Map<string, Set<string>>()
+  const practiceNode = (raw: string, source: Provenance): string => {
+    const voice = normaliseVoice(raw)
+    // A name the house's own register does not know keeps its raw spelling rather than being
+    // filed under `unknown`: 'ecology' is a real addressee in the post office, not a mistake.
+    const id = voice === 'unknown' ? `practice:${slug(raw)}` : `practice:${voice}`
+    const seen = spellings.get(id) ?? new Set<string>()
+    seen.add(raw)
+    spellings.set(id, seen)
+    const node: PracticeNode = {
+      id,
+      kind: 'practice',
+      label: voice === 'unknown' ? raw : VOICES[voice].label,
+      practiceId: voice === 'unknown' ? slug(raw) : voice,
+      spellings: [...seen].sort(),
+      source,
+    }
+    const existing = nodes.get(id) as PracticeNode | undefined
+    if (existing) existing.spellings = [...seen].sort()
+    else nodes.set(id, node)
+    return id
+  }
+
+  // ── the practices' own works ────────────────────────────────────────────────────────────
+  // 59 of them sat committed in this repo while the graph knew the practices only as names in
+  // the post office. Each work's own meta.json is the source; the directory it sits in is the
+  // evidence of who made it (the same derivation /works runs).
+  for (const [path, text] of Object.entries(sources.workMetas)) {
+    const home = WORK_META_DIRS.find((d) => path.startsWith(`${d.dir}/`))
+    if (!home) continue
+    const workSlug = path.slice(home.dir.length + 1).replace(/\/meta\.json$/, '')
+    const meta = JSON.parse(text) as {
+      title?: string
+      date?: string
+      embodies?: string
+      verkoerpert?: string
+      medium?: string
+    }
+    if (!meta.title || !meta.date) continue
+    const practiceId = practiceNode(home.ns, provenance(path, `"title": ${JSON.stringify(meta.title)}`))
+    const id = `practice-work:${home.ns}/${workSlug}`
+    const node: PracticeWorkNode = {
+      id,
+      kind: 'practice-work',
+      label: meta.title,
+      slug: workSlug,
+      practiceId: practiceId.replace(/^practice:/, ''),
+      date: meta.date,
+      href: `${home.hrefBase}/${workSlug}`,
+      source: provenance(path, `"title": ${JSON.stringify(meta.title)}`),
+      ...(meta.embodies ?? meta.verkoerpert ? { embodies: meta.embodies ?? meta.verkoerpert } : {}),
+      ...(meta.medium ? { medium: meta.medium } : {}),
+    }
+    add(node)
+    edges.push({
+      kind: 'made-by',
+      from: id,
+      to: practiceId,
+      source: provenance(path, `"date": ${JSON.stringify(meta.date)}`),
+    })
+  }
+
+  // ── encounters (The Middle) ─────────────────────────────────────────────────────────────
+  // The one place where practices actually touch each other. The register is an export of the
+  // research-ecology repo; roles ride the edge, because "source" and "receiver" is the whole
+  // asymmetry a crossing has.
+  const encounters = JSON.parse(sources.texts[ENCOUNTERS_FILE]) as Array<{
+    encounter_id?: string
+    title?: string
+    record_url?: string
+    participants?: Array<{ id?: string; role?: string }>
+    observed?: { work_slug?: string; engine_repo?: string }
+  }>
+  for (const encounter of encounters) {
+    if (!encounter.encounter_id || !encounter.title) continue
+    const id = `encounter:${encounter.encounter_id}`
+    const quote = `"encounter_id": ${JSON.stringify(encounter.encounter_id)}`
+    const node: EncounterNode = {
+      id,
+      kind: 'encounter',
+      label: encounter.title,
+      encounterId: encounter.encounter_id,
+      source: provenance(ENCOUNTERS_FILE, quote),
+      ...(encounter.record_url ? { recordUrl: encounter.record_url } : {}),
+    }
+    add(node)
+    for (const participant of encounter.participants ?? []) {
+      if (!participant.id) continue
+      const practiceId = practiceNode(
+        participant.id,
+        provenance(ENCOUNTERS_FILE, `"id": ${JSON.stringify(participant.id)}`),
+      )
+      edges.push({
+        kind: 'participates',
+        from: id,
+        to: practiceId,
+        state: participant.role,
+        source: provenance(ENCOUNTERS_FILE, `"id": ${JSON.stringify(participant.id)}`),
+      })
+    }
+    // The crossing names the work it moved; the edge exists only if that work is one this repo
+    // actually carries — a slug pointing at nothing would be a claim the graph cannot show.
+    const moved = encounter.observed?.work_slug
+    if (moved) {
+      const target = [...nodes.values()].find(
+        (n): n is PracticeWorkNode => n.kind === 'practice-work' && n.slug.endsWith(moved),
+      )
+      if (target) {
+        edges.push({
+          kind: 'concerns',
+          from: id,
+          to: target.id,
+          source: provenance(ENCOUNTERS_FILE, `"work_slug": ${JSON.stringify(moved)}`),
+        })
+      }
+    }
+  }
+
+  // ── receivers (the post office) ─────────────────────────────────────────────────────────
   const ledger = JSON.parse(ledgerText) as LedgerEntry[]
   for (const packet of ledger) {
     if (!packet.practice || !packet.receiver) continue
-    const practiceId = `practice:${packet.practice}`
-    add({
-      id: practiceId,
-      kind: 'practice',
-      label: packet.practice,
-      practiceId: packet.practice,
-      source: provenance(LEDGER_FILE, `"practice": "${packet.practice}"`),
-    })
+    const practiceId = practiceNode(
+      packet.practice,
+      provenance(LEDGER_FILE, `"practice": "${packet.practice}"`),
+    )
     const receiverId = `receiver:${slug(packet.receiver)}`
     add({
       id: receiverId,
@@ -200,17 +339,22 @@ export function buildGraph(sources: RawSources): KnowledgeGraph {
       state: packet.status,
       source: provenance(LEDGER_FILE, `"receiver": "${packet.receiver}"`),
     })
-    // A practice that also keeps a door on this site is the same body in two records; the id
-    // match is the whole evidence, and werke.ts is where it is checkable.
-    const door = WERKE.find((w) => w.id === packet.practice)
-    if (door) {
-      edges.push({
-        kind: 'door',
-        from: practiceId,
-        to: `work:${door.id}`,
-        source: provenance(WERKE_FILE, `id: '${door.id}'`),
-      })
-    }
+  }
+
+  // A practice that also keeps a door on this site is the same body in two records. The match
+  // runs through the same normalisation as everything else, so `field` the werk and `meridian`
+  // the voice meet without a second alias table.
+  for (const werk of WERKE) {
+    const voice = normaliseVoice(werk.id)
+    if (voice === 'unknown') continue
+    const practiceId = `practice:${voice}`
+    if (!nodes.has(practiceId)) continue
+    edges.push({
+      kind: 'door',
+      from: practiceId,
+      to: `work:${werk.id}`,
+      source: provenance(WERKE_FILE, `id: '${werk.id}'`),
+    })
   }
 
   // ── shape it deterministically ──────────────────────────────────────────────────────────
@@ -230,7 +374,10 @@ export function buildGraph(sources: RawSources): KnowledgeGraph {
         'The house’s own records as a graph — derived from the files listed below, never typed. ' +
         'Rebuild with `npm run graph:build`; src/lib/graph/graph.test.ts fails if this file and ' +
         'those files disagree, or if any quote here is no longer in the file it names.',
-      sources: SOURCE_FILES.map((file) => ({ file, sha256: digest(sources.texts[file]) })),
+      sources: [
+        ...SOURCE_FILES.map((file) => ({ file, sha256: digest(sources.texts[file]) })),
+        ...WORK_META_DIRS.map((home) => groupDigest(home.dir, sources.workMetas)),
+      ],
       counts: { nodes: nodeList.length, edges: edgeList.length, nodesByKind, edgesByKind },
     },
     nodes: nodeList,
@@ -257,9 +404,41 @@ export function digest(text: string): string {
   return createHash('sha256').update(text, 'utf8').digest('hex').slice(0, 16)
 }
 
+/** One digest over a whole directory of work metas: paths and contents, sorted, concatenated.
+ *  59 separate rows in meta.sources would make the file unreadable for the reader it exists
+ *  for, and one digest still goes stale the moment any single meta moves. */
+export function groupDigest(dir: string, metas: Record<string, string>): {
+  file: string
+  sha256: string
+  files: number
+} {
+  const entries = Object.entries(metas)
+    .filter(([path]) => path.startsWith(`${dir}/`))
+    .sort(([a], [b]) => cmp(a, b))
+  const joined = entries.map(([path, text]) => `${path}\n${text}`).join('\n')
+  return { file: `${dir}/*/meta.json`, sha256: digest(joined), files: entries.length }
+}
+
+/** Read every practice work's meta.json out of a checkout. Shallow by design: a work is one
+ *  directory with one meta beside it, and a deeper walk would start collecting things that
+ *  are not works. */
+export function readWorkMetas(root: string): Record<string, string> {
+  const metas: Record<string, string> = {}
+  for (const home of WORK_META_DIRS) {
+    const base = `${root}${home.dir}`
+    if (!existsSync(base)) continue
+    for (const entry of readdirSync(base, { withFileTypes: true })) {
+      if (!entry.isDirectory()) continue
+      const path = `${home.dir}/${entry.name}/meta.json`
+      if (existsSync(`${root}${path}`)) metas[path] = readFileSync(`${root}${path}`, 'utf8')
+    }
+  }
+  return metas
+}
+
 /** Read every source out of a repo checkout and derive the graph. */
 export function buildGraphFromRepo(root: string): KnowledgeGraph {
   const texts: Record<string, string> = {}
   for (const file of SOURCE_FILES) texts[file] = readFileSync(`${root}${file}`, 'utf8')
-  return buildGraph({ texts })
+  return buildGraph({ texts, workMetas: readWorkMetas(root) })
 }
