@@ -132,8 +132,53 @@ const BACKGROUND = 'https://github.com/frankbueltge/state-before-interface'
         </p>
       </section>
 
+      <section class="border-t border-line pt-6">
+        <h2 class="mb-2 font-semibold text-fg">6. Nearest neighbors</h2>
+        <p>
+          Hashing a file and proving it existed at a point in time is a decade-old commodity,
+          and this work does not claim it:
+        </p>
+        <ul class="mt-3 space-y-2">
+          <li>
+            <a href="https://opentimestamps.org" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">OpenTimestamps</a>
+            — an open standard since ~2016: hash any file, anchor it to Bitcoin as
+            proof-of-existence. Generic, with no disaster focus and no resolution semantics.
+          </li>
+          <li>
+            Proof of Existence (2013) and OriginStamp (2015) — the original
+            hash-plus-blockchain timestamping services this whole mechanism descends from.
+          </li>
+          <li>
+            <a href="https://www.gdacs.org" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">GDACS</a>
+            itself, plus <a href="https://reliefweb.int" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">ReliefWeb</a>
+            and the third-party dashboards that combine them — the bulletins already carry
+            their own issuance timestamps. Nobody needs this machine to prove a GDACS alert
+            existed.
+          </li>
+          <li>
+            <a href="https://www.metaculus.com" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">Metaculus</a>
+            and Good Judgment — the mature ecosystems for resolution, calibration and Brier
+            scoring, applied to crowd forecasters rather than to institutions.
+          </li>
+          <li>
+            HDX and the ReliefWeb archives — institutional, versioned disaster-report
+            archiving, though not cryptographically hashed.
+          </li>
+        </ul>
+        <p class="mt-3">
+          <strong class="text-fg">The daylight, stated narrowly.</strong> What has no found
+          neighbor is not the notarizing: it is forecast-verification methodology turned
+          around onto the <em>institutions</em> — a continuous, public, falsifiable
+          calibration record of the early-warning systems themselves, in which every closed
+          warning gets a measured verdict with its lead time, derived from committed records
+          and never from a model. Metaculus audits forecasters; this audits the alerting
+          institutions. That combination is what the work is for; the hashes are its
+          bookkeeping, not its claim.
+        </p>
+      </section>
+
       <section>
-        <h2 class="mb-2 font-semibold text-fg">6. Verify it yourself</h2>
+        <h2 class="mb-2 font-semibold text-fg">7. Verify it yourself</h2>
         <p>
           Clone <a href={REPO} class="underline decoration-line underline-offset-4">the repository</a>, then:
           <code class="text-fg-muted">python verify.py --repo-root .</code> walks the whole

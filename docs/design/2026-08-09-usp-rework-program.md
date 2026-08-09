@@ -98,6 +98,23 @@ unclaimed lane is free. Release a lane by dating the Landed line.
 
 ## Landed
 
+- 2026-08-09 (afternoon) — **#4 Machine Attention: the Phase-0 gap closed**, the last of
+  the sixteen still without neighbors. The method sheet now names OpenTimestamps, Proof of
+  Existence/OriginStamp, GDACS+ReliefWeb's own timestamped bulletins, Metaculus/Good
+  Judgment and the HDX archives, and states the daylight narrowly: forecast verification
+  turned around from crowds onto the *institutions*, with a measured verdict and lead time
+  per closed warning. `werke.ts` drops **"provenance applied to the future"** — it
+  overclaims against a decade-old commodity — and says outright that hashing is the
+  bookkeeping, not the claim. Graph rebuilt in the same commit per the standing rule.
+  The Phase-1 build (making the calibration scorecard the page's headline figure) stays
+  open.
+- 2026-08-09 (afternoon) — **practice side, `machine-attention` repo:** Dark Ocean's
+  E-experiment criteria committed before the window (stage 4), extended by criteria group
+  N after a parallel session showed A–E measured the demonstration and not the act; the
+  continuity probe built, tested and live-verified so the window opens on time; and the
+  registry bug the machine's own discovery pass found — GDACS's primary country dropped
+  from six tropical cyclones, Vietnam never once in the registry — fixed, repaired as a
+  `CORRECTED` event naming the cause as ours, and guarded nightly.
 - 2026-08-09 — program decided and written; audit merged (#472); Phase 0 agent launched
   (PR pending review).
 - 2026-08-09 — coordination table added at Frank's instruction; attention + observatory
