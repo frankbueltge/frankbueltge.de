@@ -87,3 +87,12 @@ unclaimed lane is free. Release a lane by dating the Landed line.
 - 2026-08-09 — #1 Consensus: `src/lib/consensus/structure.ts` + test — the archive
   aggregate behind the why-classification (46 classified days at first run: 43 chain,
   3 scattered). Page wiring pending Phase 0.
+- 2026-08-09 — Phase 0 merged (#476): every in-repo experiment cites its nearest
+  neighbors; attention skipped per the claims table; the platform's auto-appended
+  AI-credit footer stripped from the PR body per the standing rule.
+- 2026-08-09 — Phase 1 wiring landed: **#1 Consensus** structure section (chain share
+  across the classified archive, derived at build time) · **#2 Iceberg** integrity panel
+  (44 committed revisions since 2026-06-14, git-derived dated snapshot + regeneration
+  script) · **#15 Patterns** null distribution drawn (pipeline emits the 20-bin histogram
+  from its next run; honest placeholder until the data carries it) · **#10 Headroom**
+  subtitle reframed onto the breakeven-vs-floor arithmetic.

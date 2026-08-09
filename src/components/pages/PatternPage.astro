@@ -22,6 +22,13 @@ const H = 150
 const pathA = linePath(normalize(h.a_series), W, H)
 const pathB = linePath(normalize(h.b_series), W, H)
 const survives = d.false_discovery_rate < 0.1
+
+// USP rework #15 (program doc 2026-08-09): the null distribution, drawn. The pipeline
+// emits it from 2026-08-09 on; older committed data renders the honest placeholder line.
+interface NullDist { bins: number; range: [number, number]; counts: number[] }
+const nd = (d as { null_distribution?: NullDist }).null_distribution
+const ndMax = nd ? Math.max(...nd.counts) : 0
+const ndMarkerX = nd ? Math.min(nd.bins * 10 - 1, Math.abs(h.r) * nd.bins * 10) : 0
 ---
 
 <article class="pattern mx-auto max-w-3xl px-4 py-14">
@@ -61,6 +68,43 @@ const survives = d.false_discovery_rate < 0.1
       {de
         ? `Nur ein Test trennt Signal von Rauschen: die Daten ${d.permutations.toLocaleString('de-DE')}-mal durchschütteln und zählen, wie oft der Zufall allein ein ebenso starkes Muster erzeugt. Hier: ${pct(d.false_discovery_rate, locale)} der Durchläufe. ${survives ? 'Das macht reinen Zufall unwahrscheinlich — es könnte echt sein (das Meer erwärmt sich, das Eis schmilzt). Aber die Maschine hatte Glück: morgen paart sie Erdbeben mit Fußball, mit derselben Überzeugung.' : 'Mit anderen Worten: reines Rauschen — der Zufall produziert das ständig.'} Und selbst dieser Test wird von Trends getäuscht.`
         : `Only one test separates signal from noise: shuffle the data ${d.permutations.toLocaleString('en-GB')} times and count how often chance alone produces a pattern this strong. Here: ${pct(d.false_discovery_rate, locale)} of runs. ${survives ? 'That makes pure chance unlikely — it might be real (the sea warms, the ice melts). But the machine got lucky: tomorrow it will pair earthquakes with football, with the same conviction.' : 'In other words, pure noise — chance manufactures this all the time.'} And even this test is fooled by trends.`}
+    </p>
+  </section>
+
+  <section class="mb-12 border-t border-line pt-6">
+    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+      {de ? 'Die Null-Verteilung — was der Zufall allein produziert' : 'The null distribution — what chance alone produces'}
+    </p>
+    <div class="mt-3 flex flex-wrap gap-x-10 gap-y-3">
+      <div>
+        <p class="text-2xl font-bold tabular-nums">{d.permutations.toLocaleString(de ? 'de-DE' : 'en-GB')}</p>
+        <p class="text-xs text-fg-muted">{de ? 'Durchschüttelungen, Seed = Datum' : 'shuffles, seeded by the date'}</p>
+      </div>
+      <div>
+        <p class="text-2xl font-bold tabular-nums">{pct(d.false_discovery_rate, locale)}</p>
+        <p class="text-xs text-fg-muted">{de ? 'der Zufalls-Läufe erreichten |r| des Funds' : "of chance runs matched the discovery's |r|"}</p>
+      </div>
+    </div>
+    {nd && ndMax > 0 && (
+      <svg viewBox={`0 0 ${nd.bins * 10} 46`} class="mt-4 h-16 w-full max-w-xl" role="img"
+        aria-label={de
+          ? `Histogramm: max|r| über ${d.permutations} gemischte Läufe, Markierung beim echten Fund (|r| = ${rStr(Math.abs(h.r), locale)})`
+          : `Histogram: max|r| across ${d.permutations} shuffled runs, marker at the real discovery (|r| = ${rStr(Math.abs(h.r), locale)})`}>
+        {nd.counts.map((c, i) => {
+          const bh = c === 0 ? 0 : Math.max(1.5, (c / ndMax) * 40)
+          return <rect x={i * 10 + 1} y={42 - bh} width={8} height={bh} class="fill-current text-fg-faint" />
+        })}
+        <line x1={ndMarkerX} x2={ndMarkerX} y1={0} y2={44} stroke="rgb(var(--rgb-accent))" stroke-width="1.5" />
+      </svg>
+    )}
+    <p class="mt-3 max-w-xl font-mono text-[11px] leading-relaxed text-fg-faint">
+      {nd
+        ? de
+          ? 'Balken: die Verteilung der stärksten Korrelation aus jedem gemischten Lauf. Die Linie: der echte Fund. Das ist der Unterschied zu Vigens statischem p-Wert — hier steht die ganze Resampling-Verteilung, nachrechenbar aus committeten Daten.'
+          : "Bars: the distribution of the strongest correlation in each shuffled run. The line: the real discovery. This is the difference from Vigen's static p-value — the whole resampling distribution, recomputable from committed data."
+        : de
+          ? 'Die Verteilung selbst erscheint hier, sobald die nächtliche Pipeline sie mitschreibt (in Arbeit seit 2026-08-09) — bis dahin steht nur die Rate, ehrlich.'
+          : 'The distribution itself appears here once the nightly pipeline records it (in progress since 2026-08-09) — until then only the rate stands, honestly.'}
     </p>
   </section>
 
