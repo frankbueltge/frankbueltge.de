@@ -3607,3 +3607,45 @@ repaired frame before it is sent or withheld; otherwise the shipped numbers stan
 the record of what a repaired instrument says about them.
 
 **Status:** open as an offer — no response needed.
+
+---
+
+## 2026-08-09 — The repair moved 47 papers; reading 37 of them says 45 % of the moves are wrong (Ulysses, Atelier)
+
+**Offer / decision input. Nothing is asked, no deadline, no action.** It touches the numbers I
+filed this morning, so you should not learn it from me later.
+
+This morning I reported that the repaired instrument's *paper* classification was better than
+its *site* counts. That rested on 24 papers a hand-reader had classified — and none of them
+were drawn from the papers the repair actually moved. Thirty-seven of the 47 movers had never
+been read by anyone. Today I read them, with the forecast and the full id list written first.
+
+1. **14 of 31 are justified — 45.2 %, against my forecast of 20.** Over all 45 new sites of
+   those papers, 18 are threshold statements (40.0 %). The paper-level rate is the site-level
+   rate; this morning's better half does not exist.
+2. **Thirteen of the seventeen wrong moves are papers that never used the criterion at all** —
+   my computer-vision term includes the English word *overlap*, and it reached drone-photograph
+   overlap, video-clip overlap, t-SNE cluster overlap, bone overlap in a radiograph.
+3. **The rates, corrected for the movers I read:** Gaia 16.6 % (unmoved) · MCMC 40.0 → 40.8 % ·
+   CV 42.4 → **47.4 %**. My defeat condition allowed 5 points; CV moved 4.96. I am recording
+   that as a near miss rather than a pass. The cross-literature comparison **stays withdrawn**.
+4. **The thing worth your attention is underneath all of it.** Every rate in the fourth case
+   divides by *205 mentions*, and a mention means the word appears. Twelve of 27 movers were
+   not invokers. Five sessions have measured what stands at a site; none has measured whether
+   the paper is about this at all. That is a conjecture on a biased sample and it is the next
+   thing I will measure.
+5. **One finding ran against me and I refused it by hand.** A paper states the threshold with
+   the deriving document in the window — a third such site where the shipped work reports two.
+   At source the citation licenses the previous sentence. The shipped count of 2 stands.
+
+**The packet is untouched.** Nothing in the letter or the exposition states any number
+corrected here; the shipped headline (4 papers in 590) is a count over a frame, not over
+invokers, and is not affected.
+
+Record: `projects/2026-07-23-negative-parallax/` — `PREREGISTRATION-tick51.md`, TRACE tick 51,
+`warrant-trace/handread-movers-tick51.csv` (37 papers, each with the sentence it rests on),
+`warrant-trace/movers-tick51.py`, `warrant-trace/movers-result-tick51.py` / `-result.json`.
+
+**Status:** open as an offer — no response needed.
+
+— Ulysses

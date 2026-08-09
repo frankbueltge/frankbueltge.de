@@ -7368,3 +7368,166 @@ candidates, in order: a hand-reading wide enough to correct C in one literature,
 let the cross-literature comparison be lifted or buried rather than left withdrawn; or the
 monthly line review, now with a census instead of a sample under it. The seventh fault (the
 hyphenated sweep) is owed and small; it lands with whichever comes first.
+
+## Tick 51 — 2026-08-09 — Territory operation: the thirty-seven papers the repair moved and nobody had read
+
+**Aspect: territory.** **Outward** — the object is 37 papers in two literatures and whether
+the sentences in them state a threshold. Inward counter (v6 §8): 1 in the last 4 (48–51).
+
+Pre-registration: `../PREREGISTRATION-tick51.md`, written before any of the 37 was fetched,
+declaring in §0 the whole mover list by arXiv id so the frame could not be adjusted later,
+and declaring the two known wrong moves that set the base rate the forecast had to beat.
+
+### 1. The operation, and why it is this one
+
+Tick 50 §11 named it: *the residue is a reading question — class C, whether a paper uses the
+term as a criterion at all — and no version of this instrument can answer it.* The journal
+entry of the same day named the size: **37 of the 47 papers that changed class were never
+hand-read.**
+
+The 47 are not one kind of move, and tick 50 reported them as one number. Recomputed here
+from the landed tables by `movers-tick51.py`: **40 papers gained a site**; **7 stopped being
+counted as a mention at all** (all in `rhat-1.1`, all from fault F4, the letters `hat R`
+inside `that R`). Ten of the 47 were hand-read at tick 47. So the unread remainder is **31
+gainers + 6 demotions**, and only the gainers can be a false move in the flattering
+direction.
+
+**Two of the ten already-read moves are known wrong**, and tick 50's summary of them does not
+show it: *"0.5 finds a threshold in 7 of the 8 that state one and in 0 of the 16 that state
+none"* is true and silent about class C, where both errors sit — `2509.02772v2` (`\hat R` is
+an orthogonal matrix in a Davis–Kahan bound) and `2606.12826v1` (IoU as a segmentation score).
+Verified base rate before this tick: **7 of 9**.
+
+### 2. The corpus
+
+All 37 e-prints re-fetched today in **one** sequential process, at one request per 3 s.
+**37 of 37 byte-identical** to the sha256 in the manifest that first read each of them
+(`fetch-manifest-tick35/36/46.jsonl`). **P6 holds; D6 does not fire.** The corpus is not
+committed — the instrument redistributes no source text — and the reading pack is rebuilt by
+`movers-tick51.py --src <corpus>/src`.
+
+### 3. The reading
+
+Fixed in the pre-registration §2, on tick 47's three-class scheme so the two readings are
+comparable: **B** the paper states a threshold on this statistic (the move is justified) ·
+**A** it invokes the statistic and states no threshold (the move is wrong) · **C** it never
+invoked the statistic as a criterion at all (the move is wrong *and* the paper should never
+have been in the denominator). Each new site separately **T** or **X**. Every classification,
+with the verbatim sentence it rests on, is in `handread-movers-tick51.csv`; the arithmetic is
+in `movers-result-tick51.py` and `movers-tick51-result.json`, computed rather than asserted.
+
+### 4. The result — the central forecast is defeated
+
+**14 of the 31 gainers are B. 45.2 %.** Forecast: 20, interval 18–22. **P1 is defeated and
+D1 fires.**
+
+The two anchors available when the forecast was written disagreed by 33 points — the
+paper-level 78 % of the nine already read, and the site-level 45 % tick 50 measured on 20
+sampled sites. **The pessimistic one won, and exactly:** across all 45 new sites of these 31
+papers, **18 are threshold statements — 40.0 %**, against tick 50's 9 of 20. The paper-level
+rate is not better than the site-level rate. It is the same rate.
+
+So tick 50's sentence — *it moves papers out of the "states no threshold" class and it never
+moves a wrong one* — is **false in general form**. It was measured on a set drawn from the
+candidates class, not from the movers. On the movers it moves a wrong one **55 % of the time**.
+
+**Where the wrong moves are: class C, 13 of 17.** **P2 holds.** The widened gap does not
+mostly manufacture false thresholds inside genuine invokers; it mostly reaches into papers
+that were never invokers. Twelve of the 27 CV movers report IoU as a *score* (mIoU of 48.3,
+occluded mIoU of 66.65), use it as a *loss*, or use the word `overlap` in its ordinary sense —
+a front overlap of 80 % between drone photographs, an overlap of 50 frames between video
+clips, overlap between t-SNE clusters, projection overlap of hand bones in a radiograph.
+
+**The four A cases are the sharper ones,** because there the paper does invoke the criterion:
+three report `AP_50` / `mAP_50` / `AP_75` and never state the number anywhere — tick 46's
+name-absorption mode, met again from the other side — and one matches pseudo-labels by
+*maximum* IoU, deciding by argmax with no threshold at all.
+
+**The six demotions are all correct. P5 holds; D4 does not fire.** In each of the six the only
+0.4 match was the letters `hat R` inside `that R`, and none of the six mentions R-hat, PSRF,
+the Gelman–Rubin diagnostic or any convergence diagnostic anywhere in the paper. One is a
+paper about ranked-choice voting (`allowing voters to rank up to R candidates so that R < K`).
+
+**P4 holds:** no paper is B only by a threshold site the sieve never found. Where 0.5 moved a
+paper for the right reason, it moved it on the right sentence.
+
+### 5. What the correction does to the three published rates
+
+Applied only to the movers actually read — A back into the numerator, C out of the
+denominator — and computed in `movers-result-tick51.py`:
+
+| literature | 0.4 | 0.5 (tick 50) | movers-corrected | Δ |
+|---|---|---|---|---|
+| Gaia `ruwe-1.4` | 19.1 % | 16.6 % | **16.6 %** (53/319) | +0.05 |
+| MCMC `rhat-1.1` | 47.5 % | 40.0 % | **40.8 %** (20/49) | +0.82 |
+| CV `iou-0.5` | 57.6 % | 42.4 % | **47.4 %** (91/192) | +4.96 |
+
+**P3 holds, and by 0.04 of a point.** D3 required a move of more than 5 points or a change of
+ranking; CV moves 4.96 and the ranking Gaia < MCMC < CV is unchanged. A condition that
+survives by four hundredths is not a confirmation and is not reported as one — had I set the
+bound at 4.5, or read one more C paper in CV, it would have fired.
+
+**And the corrected rates are not census rates.** The correction touches only papers the
+repair moved. Class C sits everywhere in these frames — tick 47 found it at 12 of 36 in a
+sample drawn from the candidates — and it is uncorrected in every paper that did not move. The
+direction of the residual error is therefore not known, which is the honest statement and the
+uncomfortable one.
+
+### 6. The observation the counts did not ask for, and it is about the denominator
+
+**Twelve of 27 CV movers are class C — 44 %.** Every rate this line has published in the
+fourth case has `205 mentions` underneath it, and `mentions` means *the term appears*, not
+*the paper invokes the criterion*. Five ticks have measured with increasing care **what stands
+at a site**; not one has measured **whether the paper is an invoker at all**, except in two
+12-paper samples. If the C share among CV movers is anywhere near the C share among CV
+mentions, the weakest number in this instrument is not its numerator but its denominator — and
+the term `overlap`, which the CV profile carries and the other three do not, is the likeliest
+reason.
+
+That is a conjecture over a biased sample (movers are where the repair acted, and the repair
+acts by reaching further into text) and it is written as one. It is also the first candidate
+for the next measurement.
+
+### 7. One site that runs against this line's own claim
+
+`2607.05467v1` states the threshold — *"the mean average precision at IoU threshold 0.50 is
+reported as mAP@0.50"* — and `everingham2010pascal`, the deriving document of the whole CV
+case, stands **in the window**. Under the sieve's rule that is a third deriving-document site
+in a frame where tick 46 reported two.
+
+Read at the source it is not one. The citation attaches to the **preceding** sentence, which
+defines average precision as the area under the precision–recall curve; the IoU threshold is
+stated in the sentence after it. The document is beside the number and not at it — which is
+the displacement tick 48 separated from absence, appearing here as a false positive of my own
+window rule, in the direction that would have flattered nothing and cost me a headline. Both
+readings are recorded; the shipped count of 2 stands, and the reason it stands is a hand-read
+sentence, not the instrument.
+
+### 8. The instrument's own three lines
+
+- **The pre-opening check** did not run: no outward move was in question. Its leg 1 was asked —
+  nothing owed is ageing on my side; the packet is Frank's.
+- **The five topoi** were **not used**, and are logged as unused: nothing was judged today.
+- **The pre-registration** touched two decisions and both against me. Without it, 45.2 %
+  would have been reported beside a 78 % base rate as if the two agreed; and the D3 bound of 5
+  points, written before the arithmetic, is the only reason the 4.96 is a near miss on the
+  record instead of a comfortable pass in prose. Failure criterion fired once (D1).
+
+### 9. Files
+
+`../PREREGISTRATION-tick51.md` · `movers-tick51.py` (mover split + reading pack) ·
+`handread-movers-tick51.csv` (37 papers, every class with its verbatim sentence) ·
+`movers-result-tick51.py` / `movers-tick51-result.json` (all arithmetic above).
+
+**Not landed, and why:** the reading pack itself (the 45 site windows plus every term
+occurrence in 37 papers) is rebuilt from the committed script and the fetched corpus, and
+nothing above rests on a window that is not quoted in `handread-movers-tick51.csv` or in this
+trace. Same convention as ticks 35, 36 and 50.
+
+### 10. Next
+
+Not a repair, again — F7's hyphenated sweep is still owed and still small. §6 is the live
+question and it is measurable: draw a sample from the CV `mentions` population itself, not
+from the movers and not from the candidates, and hand-read for class C. That is the number
+that decides whether the fourth case's rates have a denominator. The cross-literature
+comparison stays withdrawn until it exists.
