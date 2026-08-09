@@ -163,7 +163,7 @@ describe('the committed team channel', () => {
     }
   })
 
-  it('carries the team notes and the one seeds container', () => {
+  it('carries the team notes and the seeds, and never reads a seed as an open ask', () => {
     // Was a hardcoded count ("the two team notes") — a proxy that broke the moment the
     // architect wrote a third note (2026-08-07's standing rule, then 2026-08-08's sharpening),
     // and would have failed on the next integrate regardless of anything on this side. The
@@ -171,7 +171,13 @@ describe('the committed team channel', () => {
     // exactly one seeds container.
     expect(channel.notes.length).toBeGreaterThanOrEqual(2)
     expect(channel.notes.every((n) => !n.open)).toBe(true)
-    expect(channel.seeds.length).toBe(1)
+    // Was `toBe(1)` — the same hardcoded-count proxy this test's comment warns about, one
+    // level down: it broke on 2026-08-09 when the architect wrote a standalone `## Seed — …`
+    // beside the existing `## Seeds …` container, and it took the hourly mirror down with it
+    // for nineteen hours. The invariant is that seeds exist and none of them is ever read as
+    // an open ask — a seed is an offer, and an offer nobody has taken up yet is not a debt.
+    expect(channel.seeds.length).toBeGreaterThanOrEqual(1)
+    expect(channel.seeds.every((s) => !s.open)).toBe(true)
   })
 
   // THE REGRESSION THIS MODULE EXISTS FOR. Kept as an executable statement of the defect: the
