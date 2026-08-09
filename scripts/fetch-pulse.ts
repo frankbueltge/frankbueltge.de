@@ -1,8 +1,9 @@
-// Fetches the ecology's real commit activity — the five sibling repos this site, the three
-// autonomous engines and research-ecology (the conductor) all live in — and writes a
-// committed, citable snapshot to src/data/pulse/pulse.json: one row per ISO week (rolling,
-// the last 13 including the current, partial one), 2-hour UTC bins, Monday 00:00 → Sunday
-// 24:00. Same shape as scripts/fetch-climate.ts: the snapshot is committed so the build is
+// Fetches the real commit activity of ALL repositories involved in this site (Frank,
+// 2026-08-10: the pulse is the whole site's, not the ecology's) — the site itself, the three
+// ecology engines and research-ecology, machine-attention, and data-snack-plenum (the
+// resident collective this site integrates) — and writes a committed, citable snapshot to
+// src/data/pulse/pulse.json: one row per ISO week (rolling, the last 13 including the
+// current, partial one), 2-hour UTC bins, Monday 00:00 → Sunday 24:00. Same shape as scripts/fetch-climate.ts: the snapshot is committed so the build is
 // reproducible and offline-safe, and the exact numbers behind the hub's pulse are auditable.
 //
 // This script is the ONE place allowed to read the clock and the sibling checkouts (decisions
@@ -30,17 +31,34 @@ const WEEK_COUNT = 13
 // workspace convention as ~/Documents/GitHub/CLAUDE.md describes ("each subdirectory is an
 // independent project"). Resolved from cwd rather than hard-coded to one machine's username.
 const GH_ROOT = resolve(process.cwd(), '..')
-const REPOS = ['field-research', 'ulysses', 'studio', 'research-ecology', 'frankbueltge.de']
+const REPOS = [
+  'field-research',
+  'ulysses',
+  'studio',
+  'research-ecology',
+  'machine-attention',
+  'data-snack-plenum',
+  'frankbueltge.de',
+]
 
-// The pulse measures the MACHINES' activity (Frank, 2026-07-25): for the four engine repos
+// The pulse measures the MACHINES' activity (Frank, 2026-07-25): for the machine-run repos
 // the real work happens across their session/feature branches, so they are counted with
 // `git log --all` — the nightly must clone them with all branches present (--no-single-branch)
 // for this to reproduce. The site repo (frankbueltge.de) is Frank's own; its work lands on
 // main and its human feature branches are not "the ridge before dawn", so it is counted on
 // HEAD/main only. NOTE: `--all` is why the count is far higher than a main-only count would be
 // (field-research alone: ~170 on main vs ~690 across all branches) — that difference IS the
-// machine activity the hero is meant to show.
-const ALL_BRANCHES = new Set(['field-research', 'ulysses', 'studio', 'research-ecology'])
+// machine activity the hero is meant to show. machine-attention and data-snack-plenum joined
+// 2026-08-10 (Frank: the pulse shows every repo involved in this site); both are machine-run,
+// so they are counted like the engines.
+const ALL_BRANCHES = new Set([
+  'field-research',
+  'ulysses',
+  'studio',
+  'research-ecology',
+  'machine-attention',
+  'data-snack-plenum',
+])
 
 /** ISO 8601 week-numbering, the standard "nearest Thursday" algorithm (UTC throughout). */
 function isoWeekOf(date: Date): { year: number; week: number } {
