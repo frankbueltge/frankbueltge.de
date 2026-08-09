@@ -3435,3 +3435,58 @@ stack is healthy *today* — we measure **one** missed cycle in the last 365 day
 was dark for seventeen consecutive days fourteen months ago, with no dated statement of it
 in the project's own channels. Both are true. Minutes: `journal/2026-08-08.md`, session 103.
 
+
+---
+
+## 2026-08-09 (session 104) — Request: read access to the object's warehouse copy, reversing our own "not needed"
+
+**Request:** a credential (or any route you can give us) to run one grouped query against the public
+GDELT copy in the commercial cloud data warehouse — `gdelt-bq.gdeltv2` — counting rows per 15-minute
+timestamp. Your seed of 2026-08-09 offered exactly this and **session 103 declined it as "not
+needed". That judgement is reversed here, in writing.**
+
+**Why:** our adversary named it the one condition that could kill the current concept, and it is
+right. If that copy already shows which quarter-hours have no data, then the absence we measured is
+visible to any consumer for free and our artifact is redundant — the same trap that has already cost
+this arc two claims in a single day, both times because we had not asked what the object already
+gives away.
+
+**What it enables:** the gate decision at our next session. With the answer we either pass the gate
+or discard the concept with a one-page finding, and publish which, either way. Without it we record
+that we could not ask.
+
+**Status:** open. Under the standing rule, silence through our next session means we decide
+ourselves and say so.
+
+---
+
+## 2026-08-09 (session 104) — Notice: we opened the files, lost our best claim to our own test, and the gate did not pass
+
+**No answer needed. This is a report.**
+
+**What we measured.** 294 of the instrument's own archives downloaded and opened — 1.72 GB, 438,847
+records — plus 15,290 host probes, 0 probe errors. Eight predictions written down before anything was
+fetched; **four failed, and the two that mattered failed against us.**
+
+**The claim we lost, to our own pre-registration.** We had said the index cannot tell a consumer when
+a file is nearly empty. It can: the published byte size predicts the record count **to within about
+eleven per cent** in every year since 2015. The arm we had staked the whole receiver argument on is
+free to anyone. Withdrawn the same hour.
+
+**What we found instead, and it is checkable by anyone in a minute.** For **20 hours 45 minutes** on
+2022-11-10/11 the published index lists **495 files** — 83 quarter-hours × three types × two language
+streams — each with a byte size and an MD5, and the host serves none of them but one. The entries are
+**still published today, 1,367 days later**. The organisation's blog posted normally throughout, so
+there was nothing for anyone to notice. Our own register from yesterday recorded those hours as
+"present but thin", which was wrong, because it believed the index instead of asking the host.
+
+**Our adversary refuted our replacement claim too, and we reproduced its refutation before accepting
+it:** the window is findable from the index's byte column alone, in seconds. What survives is
+narrower — the index **locates** the anomaly and **misdescribes** it. Its verdict is STANDS WITH
+CONDITIONS; six of eight conditions are discharged with our own measurements, two are open, and one
+of those two is why **the gate did not pass**. It also found half our finding that we had not looked
+for, and a receiver we named this morning that cannot use what we offered.
+
+**What we owe.** The investigation is **not discharged**; 27 days remain. Session 3 of 3 answers the
+open condition above, runs the exhaustive verified negative, and passes the gate or discards the
+concept with one page. No packet is prepared; no `status` is claimed. Minutes: `journal/2026-08-09.md`.
