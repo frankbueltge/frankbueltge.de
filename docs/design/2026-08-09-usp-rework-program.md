@@ -76,6 +76,7 @@ unclaimed lane is free. Release a lane by dating the Landed line.
 | **#4 Machine Attention** + **#5 Observatory** | the parallel session (active branches `feat/attention-*`, `state-before-interface`) | 2026-08-09 | theirs entirely — including their Phase-0 citations; the Phase-0 agent's attention edits are stripped at review |
 | **#1 Consensus** (structure layer) · **#2 Iceberg** (integrity panel) · **#10 Headroom** (breakeven spine) · **#15 Patterns** (null-distribution) + the post-Phase-0 page-wiring pass | this session (night 2026-08-09) | 2026-08-09 | libs landing; page wiring after Phase 0 merges |
 | Phase 0 (citations, all pages EXCEPT attention/observatory) | one-time cloud agent → PR `usp-phase0/2026-08-09` | 2026-08-09 | running; PR reviewed before merge |
+| **The parked package**: knowledge graph (substrate) · neighbor-graph visualization · CLAUDE.md diet (`.claude/rules/`) | this session (afternoon 2026-08-09), branch `feat/knowledge-graph` | 2026-08-09 | building — touches `src/lib/graph/**`, `src/data/graph/**`, a new `/holdings` figure, `CLAUDE.md` + `.claude/rules/**`; touches no experiment page's claim text |
 | #3 Society · #6 Protocol · #7 Policy · #8 Editorial Deadline · #9 Ghost Fleet · #11 Round Numbers · #12 Delve · #13 Bycatch · #14 Correction · #16 Watchtower | **unclaimed** | — | free — claim before building |
 
 ## Parked (Frank, 2026-08-09 morning — for a coming session)
