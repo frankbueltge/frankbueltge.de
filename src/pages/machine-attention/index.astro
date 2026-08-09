@@ -1,7 +1,7 @@
 ---
-// The door to Machine Attention — the second constitution, kept deliberately
-// apart from the research ecology's four doors: it is the counter-experiment,
-// one machine against many practices, and a shared grid would hide that.
+// Machine Attention's own project page — one of the site's research projects,
+// beside the research ecology. It is the counter-experiment: one machine under
+// one constitution, against the ecology's many.
 //
 // Nothing about the investigations is typed here. Their names, dates, routes
 // and figures come from the practice's own export (attention-export/1,
@@ -31,9 +31,12 @@ const STATUS_WORDS: Record<string, string> = {
   'e-experiment': 'in its acceptance experiment',
 }
 
-/** Where a project can be read today. A null route is the admission path's
- *  rule made visible: no public stage before the E-experiment is passed. */
-const HOUSE_NOTE: Record<string, string> = {
+/** Where an experiment can be read today. A null route is the admission path's
+ *  rule made visible: no public stage before the E-experiment is passed.
+ *  (The export keys them as `projects` — the practice's own repo word for its
+ *  investigations; the site calls them experiments. Mapping documented in
+ *  docs/wording-kanon.md, so it is a translation and not a drift.) */
+const PROJECT_NOTE: Record<string, string> = {
   foreknown: 'The flagship: the stage, a dossier per warning, the full ledger, and a level where the claims meet the preserved bytes.',
   darkocean:
     'Notarizes the act of looking against the act of declaring — which Sentinel-1 passes covered which patch of the Baltic, against how the declared ocean distributed itself. No public stage until it passes; that is the rule, not an oversight.',
@@ -54,7 +57,7 @@ const CANDIDATES = [
   description="A machine investigative practice: one machine, no personas, running public data-intensive investigations with its attention, memory, rejections, uncertainty and cost on the record. How it works, what it is investigating, and how a new investigation gets admitted."
 >
   <div class="mx-auto max-w-2xl px-4 py-14 font-mono">
-    <p class="mb-2 text-[11px] uppercase tracking-[0.2em] text-fg-faint">A practice</p>
+    <p class="mb-2 text-[11px] uppercase tracking-[0.2em] text-fg-faint">A research project</p>
     <h1 class="mb-6 font-sans text-3xl font-semibold">Machine Attention</h1>
 
     <p class="mb-10 max-w-[62ch] text-[17px] leading-relaxed text-fg-muted">
@@ -84,7 +87,7 @@ const CANDIDATES = [
     </section>
 
     <section class="mb-12">
-      <h2 class="mb-1 font-sans text-xl font-semibold text-fg">What it is investigating</h2>
+      <h2 class="mb-1 font-sans text-xl font-semibold text-fg">Its experiments</h2>
       <p class="mb-5 text-sm text-fg-muted">
         {contractOk
           ? <>Read from the practice’s own export, mirrored nightly from commit <code class="text-fg-faint">{commit}</code>{asOf ? <> · figures as of {asOf}</> : null}.</>
@@ -102,7 +105,7 @@ const CANDIDATES = [
                 {STATUS_WORDS[p.status] ?? p.status} · since {p.since}
               </span>
             </div>
-            <p class="mt-2 text-sm leading-relaxed text-fg-muted">{HOUSE_NOTE[p.id]}</p>
+            <p class="mt-2 text-sm leading-relaxed text-fg-muted">{PROJECT_NOTE[p.id]}</p>
             <p class="mt-2 font-mono text-[11px] text-fg-faint">
               {p.site_route
                 ? <>Public at <a href={p.site_route} class="underline hover:text-fg">{p.site_route}</a></>

@@ -10,6 +10,18 @@
 // migration — "names are found, not invented" (decisions doc §1.1). Pages that render this
 // copy show a small draft marker when approval !== 'approved' (pattern: the score map's own
 // "wording approved" chip, the archive figure on /encounters).
+/** A card on the homepage overview. Only the two research projects carry their own strings;
+ *  every experiment reads its title, line and route from the works register instead, so the
+ *  homepage cannot describe a piece differently from the piece's own page. */
+export interface OverviewItem {
+  id: string
+  kindLabel: string
+  title?: string
+  line?: string
+  href?: string
+  meta?: string
+}
+
 export interface DoorItem {
   id: 'ulysses' | 'meridian' | 'ensemble' | 'conductor'
   name: string
@@ -116,35 +128,42 @@ export const NAMING = {
   /* `crossings` entfernt (Frank, 25.07.): der Link „…work together (5) →" unter den Türen
    * war redundant — The Middle ist bereits eine der vier Türen und führt nach /encounters. */
 
-  /** The houses (Frank, 2026-08-09). The level above a practice, and the word the house's
-   *  own vocabulary was missing until a second exemplar forced it out: a HOUSE is a
-   *  constituted arrangement under which practices run. The ecology runs many constitutions,
-   *  Machine Attention runs one — and that tension is the whole point of the second house,
-   *  so the site shows it as structure rather than asserting it in a paragraph. Equal weight
-   *  is deliberate: the ecology used to BE the homepage. */
-  houses: {
-    kicker: 'TWO HOUSES',
-    kickerSub: 'DELIBERATELY DIFFERENT CONSTITUTIONS',
+  /** THE OVERVIEW (Frank, 2026-08-09 evening). The homepage had become the ecology's project
+   *  page in the site's clothes; his correction: "auf der homepage lieber einen gesamtüberblick
+   *  geben". The house word introduced hours earlier is withdrawn with it — his call, and the
+   *  simpler staffel: PROJECTS contain experiments, instruments and works. The research ecology
+   *  and Machine Attention are projects like datavism.org is one; they simply live here.
+   *
+   *  A card names a `title`/`line`/`href` only when the thing is NOT in the works register —
+   *  the two research projects. Experiments carry theirs in `src/data/werke.ts`, and are read
+   *  from there so a reworded experiment cannot say two different things in two places. */
+  overview: {
+    kicker: 'WHAT IS HERE',
+    kickerSub: 'PROJECTS AND EXPERIMENTS, SIDE BY SIDE',
+    note: 'Two of these are long-running research projects with practices, experiments and instruments of their own; the rest are single pieces. Each leads to its own home.',
+    moreLead: 'Everything else: ',
     items: [
       {
         id: 'ecology',
-        name: 'The research ecology',
+        kindLabel: 'Project',
+        title: 'The research ecology',
+        line: 'Three machine-run research practices, each under its own written constitution, and a contact zone where they meet, cite and correct each other.',
         href: '/ecology',
-        constitution: 'many constitutions, federated',
-        description:
-          'Three machine-run research practices, each under its own written constitution, its own repository and its own public record — plus a contact zone where they meet, cite and correct each other.',
-        residentsLabel: 'Practices',
+        meta: 'practices: The Atelier · The Field · The Studio',
       },
       {
         id: 'attention',
-        name: 'Machine Attention',
+        kindLabel: 'Project',
+        title: 'Machine Attention',
+        line: 'The counter-experiment, built against the ecology on purpose: one machine running public investigations, its attention, refusals, uncertainty and cost on the record.',
         href: '/machine-attention',
-        constitution: 'one constitution, one machine',
-        description:
-          'The counter-experiment, built against the ecology on purpose: a single machine running public investigations, with its attention, refusals, uncertainty and cost on the record. Most of what it proposes is expected to die in the open, with reasons.',
-        residentsLabel: 'Investigations',
+        meta: 'experiments: The Foreknown · Dark Ocean · one instrument',
       },
-    ],
+      { id: 'consensus', kindLabel: 'Experiment' },
+      { id: 'society', kindLabel: 'Experiment' },
+      { id: 'parallaxe', kindLabel: 'Experiment' },
+      { id: 'ueberflug', kindLabel: 'Experiment' },
+    ] as OverviewItem[],
   },
 
   doors: {
