@@ -76,10 +76,10 @@ unclaimed lane is free. Release a lane by dating the Landed line.
 | **#4 Machine Attention** + **#5 Observatory** | ~~the parallel session~~ → **this session (afternoon 2026-08-09)** | 2026-08-09 | **Landed 2026-08-09 (night session):** every `feat/attention-*` branch merged, no open PR in `machine-attention`, last commit there 15 h old — lane released and re-claimed. Work now runs in the **`machine-attention` repo**, not on site pages: Dark Ocean E-experiment criteria (admission path stage 4). Site-side attention/observatory claim text is untouched. |
 | **#1 Consensus** (structure layer) · **#2 Iceberg** (integrity panel) · **#10 Headroom** (breakeven spine) · **#15 Patterns** (null-distribution) + the post-Phase-0 page-wiring pass | this session (night 2026-08-09) | 2026-08-09 | libs landing; page wiring after Phase 0 merges |
 | Phase 0 (citations, all pages EXCEPT attention/observatory) | one-time cloud agent → PR `usp-phase0/2026-08-09` | 2026-08-09 | running; PR reviewed before merge |
-| **The parked package**: knowledge graph (substrate) · neighbor-graph visualization · CLAUDE.md diet (`.claude/rules/`) | this session (afternoon 2026-08-09), branch `feat/knowledge-graph` | 2026-08-09 | building — touches `src/lib/graph/**`, `src/data/graph/**`, a new `/holdings` figure, `CLAUDE.md` + `.claude/rules/**`; touches no experiment page's claim text |
+| **The parked package**: knowledge graph (substrate) · neighbor-graph visualization · CLAUDE.md diet (`.claude/rules/`) | — released 2026-08-09 | 2026-08-09 | **done**, see Landed; the lane is free again. One standing consequence for everyone: changing `werke.ts`, `docs/decision-log.md`, the audit or the post ledger now requires `npm run graph:build` in the same commit, or `src/lib/graph/graph.test.ts` goes red (`.claude/rules/knowledge-graph.md`) |
 | #3 Society · #6 Protocol · #7 Policy · #8 Editorial Deadline · #9 Ghost Fleet · #11 Round Numbers · #12 Delve · #13 Bycatch · #14 Correction · #16 Watchtower | **unclaimed** | — | free — claim before building |
 
-## Parked (Frank, 2026-08-09 morning — for a coming session)
+## Parked (Frank, 2026-08-09 morning — BUILT the same afternoon, see Landed)
 
 - **The neighbor graph, visualized.** The audit's neighbor relations are already a graph
   in prose form (experiment → nearest neighbor → daylight); drawing it — every work's
@@ -107,6 +107,28 @@ unclaimed lane is free. Release a lane by dating the Landed line.
 - 2026-08-09 — Phase 0 merged (#476): every in-repo experiment cites its nearest
   neighbors; attention skipped per the claims table; the platform's auto-appended
   AI-credit footer stripped from the PR body per the standing rule.
+- 2026-08-09 — **the parked package, all three parts.**
+  **(a) The knowledge graph as instrument** — `src/data/graph/graph.json`, committed and
+  versioned, derived from four records (works register · the neighbour audit · the decision
+  log · the post ledger) and never typed: 123 nodes, 95 edges, each carrying the verbatim
+  string it was read out of. `src/lib/graph/graph.test.ts` holds every quote against its
+  file, rebuilds the graph from today's sources and fails if the committed artifact
+  disagrees, forbids receiver addresses in the file, and makes the **USP obligation
+  mechanical** — no experiment reaches `/holdings` without a verdict, a named daylight and
+  named prior art. Query layer for sessions: `npm run graph -- <term>` answers "what
+  touches X?" with the source file behind every line.
+  **(b) The neighbourhood figure** — `/holdings/neighbors`: sixteen experiments on one
+  rail, their prior art inward on the same spoke, the daylight drawn as the distance
+  between them (1 wide · 6 partial · 9 little). Palette `holdings-neighborhood` recorded
+  and re-derived, the validator's absence stated rather than implied; register below the
+  drawing carries every neighbour as a named link, page never scrolls sideways, geometry
+  asserted in `field.test.ts` (it caught the longest title walking off the canvas). Its own
+  prior art is named on the page — literature maps, patent landscaping, originality-as-
+  distance, the README "Alternatives" genre — with the daylight stated.
+  **(c) The CLAUDE.md diet** — 197 → 157 lines; the path-scoped rules
+  (`.claude/rules/{dataviz-figures,experiments,pipelines-and-archive,knowledge-graph}.md`)
+  carry the moved text verbatim and load only when matching files are touched. `.claude/`
+  is gitignored except `rules/`.
 - 2026-08-09 — Phase 1 wiring landed: **#1 Consensus** structure section (chain share
   across the classified archive, derived at build time) · **#2 Iceberg** integrity panel
   (44 committed revisions since 2026-06-14, git-derived dated snapshot + regeneration

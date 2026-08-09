@@ -1,0 +1,2429 @@
+{
+  "meta": {
+    "instrument": "The house’s own records as a graph — derived from the files listed below, never typed. Rebuild with `npm run graph:build`; src/lib/graph/graph.test.ts fails if this file and those files disagree, or if any quote here is no longer in the file it names.",
+    "sources": [
+      {
+        "file": "src/data/werke.ts",
+        "sha256": "e8014c36ba7304f0"
+      },
+      {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "sha256": "d9e52bfb05e6e497"
+      },
+      {
+        "file": "docs/decision-log.md",
+        "sha256": "a61d6cb6740ef1c6"
+      },
+      {
+        "file": "src/data/post/ledger.json",
+        "sha256": "a7ae78b6f4879297"
+      }
+    ],
+    "counts": {
+      "nodes": 123,
+      "edges": 95,
+      "nodesByKind": {
+        "decision": 25,
+        "neighbor": 67,
+        "practice": 5,
+        "receiver": 6,
+        "work": 20
+      },
+      "edgesByKind": {
+        "addresses": 6,
+        "door": 3,
+        "neighbor-of": 67,
+        "touches": 19
+      }
+    }
+  },
+  "nodes": [
+    {
+      "id": "decision:2026-07-15-1",
+      "kind": "decision",
+      "label": "The site entrance becomes the Partitur (score map) of the current encounter, replacing the prior bio/experiments home — Frank's own words: \"noch ziemlich dünn",
+      "date": "2026-07-15",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "The site entrance becomes the Partitur (score map) of the current encounter, replacing the prior bio/experiments home — Frank's own words: \"noch ziemlich dünn"
+      }
+    },
+    {
+      "id": "decision:2026-07-16-1",
+      "kind": "decision",
+      "label": "Hub wordings approved (\"wortlaute sind freigegeben\", Frank, morning session) — `NAMING",
+      "date": "2026-07-16",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Hub wordings approved (\"wortlaute sind freigegeben\", Frank, morning session) — `NAMING"
+      }
+    },
+    {
+      "id": "decision:2026-07-16-2",
+      "kind": "decision",
+      "label": "site-v2 principle session: descriptive lowercase title (\"a federated research ecology\"), pulse hero from real commit data, the current encounter prominent right under the hero, `/lab` → 301 to `/bestaende` (no two collection pages), German dropped site-wide (routes, toggle, i18n)",
+      "date": "2026-07-16",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "site-v2 principle session: descriptive lowercase title (\"a federated research ecology\"), pulse hero from real commit data, the current encounter prominent right under the hero, `/lab` → 301 to `/bestaende` (no two collection pages), German dropped site-wide (routes, toggle, i18n)"
+      }
+    },
+    {
+      "id": "decision:2026-07-17-1",
+      "kind": "decision",
+      "label": "Standing rule revised (Frank, afternoon session, \"keine 7 tage regel\"): the 7-day window for unanswered requests is replaced by same-session semantics — a request to Frank never blocks, and if he has not answered by the practice's own next session, it decides itself and journals the move",
+      "date": "2026-07-17",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Standing rule revised (Frank, afternoon session, \"keine 7 tage regel\"): the 7-day window for unanswered requests is replaced by same-session semantics — a request to Frank never blocks, and if he has not answered by the practice's own next session, it decides itself and journals the move"
+      }
+    },
+    {
+      "id": "decision:2026-07-17-2",
+      "kind": "decision",
+      "label": "Membership decisions (\"ja gib frei\", Frank, night session): Frank Bültge admitted to the ecology as a human practice (party to encounters, with the role-separation rule participant vs",
+      "date": "2026-07-17",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Membership decisions (\"ja gib frei\", Frank, night session): Frank Bültge admitted to the ecology as a human practice (party to encounters, with the role-separation rule participant vs"
+      }
+    },
+    {
+      "id": "decision:2026-07-20-1",
+      "kind": "decision",
+      "label": "Atelier-Eingang (Stufe 0), Frank approved 2026-07-20 („sieht cool aus, go\" auf den Vorher/Nachher-Mockup): `/atelier` wird eine verständliche Haustür — ein erklärender 4-Satz-Absatz und vier Türen (`now` mit Live-Projektzähler · `works` mit Nightly-Phasen-Rahmung · `what this is` → foundation · `the working sheet`), plus eine leise Zeile in die tieferen Räume",
+      "date": "2026-07-20",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Atelier-Eingang (Stufe 0), Frank approved 2026-07-20 („sieht cool aus, go\" auf den Vorher/Nachher-Mockup): `/atelier` wird eine verständliche Haustür — ein erklärender 4-Satz-Absatz und vier Türen (`now` mit Live-Projektzähler · `works` mit Nightly-Phasen-Rahmung · `what this is` → foundation · `the working sheet`), plus eine leise Zeile in die tieferen Räume"
+      }
+    },
+    {
+      "id": "decision:2026-07-20-2",
+      "kind": "decision",
+      "label": "Öffentliche Saat (Stufe 1), Frank approved 2026-07-20: D1 seeds address the ecology level, offered to one chosen practice or \"open\" to all three; D2 Turnstile is a deliberate, declared exception to the zero-third-party stance (same vendor as hosting); D3 the AI gate blocks autonomously with a public reason code, model, and prompt, but never has the last word — the practice does; D4 the register ships before email intake (Stufe 2), because a register with real seeds is the best case for signing up later; D5 only the three research practices (field, studio, atelier) are addressable in Stufe 1 — the Plenum is a later, separate question for data-snack",
+      "date": "2026-07-20",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Öffentliche Saat (Stufe 1), Frank approved 2026-07-20: D1 seeds address the ecology level, offered to one chosen practice or \"open\" to all three; D2 Turnstile is a deliberate, declared exception to the zero-third-party stance (same vendor as hosting); D3 the AI gate blocks autonomously with a public reason code, model, and prompt, but never has the last word — the practice does; D4 the register ships before email intake (Stufe 2), because a register with real seeds is the best case for signing up later; D5 only the three research practices (field, studio, atelier) are addressable in Stufe 1 — the Plenum is a later, separate question for data-snack"
+      }
+    },
+    {
+      "id": "decision:2026-07-24-1",
+      "kind": "decision",
+      "label": "Role line becomes \"Data Engineering & Analytics\" (Frank — not \"Data & AI Engineer\", not \"data artist\")",
+      "date": "2026-07-24",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Role line becomes \"Data Engineering & Analytics\" (Frank — not \"Data & AI Engineer\", not \"data artist\")"
+      }
+    },
+    {
+      "id": "decision:2026-07-25-1",
+      "kind": "decision",
+      "label": "Currency rule (Frank, binding): the site must always show the newest state of development — every session touching site or engines actively checks for drift; superseded structures are archived visibly and dated, never silently left standing as current",
+      "date": "2026-07-25",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Currency rule (Frank, binding): the site must always show the newest state of development — every session touching site or engines actively checks for drift; superseded structures are archived visibly and dated, never silently left standing as current"
+      }
+    },
+    {
+      "id": "decision:2026-07-26-1",
+      "kind": "decision",
+      "label": "Licence change (Frank): all lab repos move to open licences — code Apache 2",
+      "date": "2026-07-26",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Licence change (Frank): all lab repos move to open licences — code Apache 2"
+      }
+    },
+    {
+      "id": "decision:2026-07-28-1",
+      "kind": "decision",
+      "label": "Paper Catalogue ships, built from what the practices actually cite; the Dataset Register is cut back to a machine-readable index — 8,590 generated detail subpages removed",
+      "date": "2026-07-28",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Paper Catalogue ships, built from what the practices actually cite; the Dataset Register is cut back to a machine-readable index — 8,590 generated detail subpages removed"
+      }
+    },
+    {
+      "id": "decision:2026-07-30-1",
+      "kind": "decision",
+      "label": "Practice visualizations may carry their own visual language (Frank: „machs einfach interaktiv und chic, nicht immer dieses minimale langweilige monochrome — das passt hier nicht mehr, weil es ein eigenes Projekt ist\"): colour, depth and interaction are allowed for Atelier/Field/Studio figures — as long as every figure derives from committed data, palettes are validated against both surfaces, and status colours stay out where the practice does not judge",
+      "date": "2026-07-30",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Practice visualizations may carry their own visual language (Frank: „machs einfach interaktiv und chic, nicht immer dieses minimale langweilige monochrome — das passt hier nicht mehr, weil es ein eigenes Projekt ist\"): colour, depth and interaction are allowed for Atelier/Field/Studio figures — as long as every figure derives from committed data, palettes are validated against both surfaces, and status colours stay out where the practice does not judge"
+      }
+    },
+    {
+      "id": "decision:2026-07-31-1",
+      "kind": "decision",
+      "label": "English-only extended to code (Frank): comments, test names/descriptions and commit messages in this repo are English going forward; existing German comments migrate when a file is touched anyway — no mass rewrite of committed history",
+      "date": "2026-07-31",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "English-only extended to code (Frank): comments, test names/descriptions and commit messages in this repo are English going forward; existing German comments migrate when a file is touched anyway — no mass rewrite of committed history"
+      }
+    },
+    {
+      "id": "decision:2026-08-01-1",
+      "kind": "decision",
+      "label": "Poste restante",
+      "date": "2026-08-01",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Poste restante"
+      }
+    },
+    {
+      "id": "decision:2026-08-01-2",
+      "kind": "decision",
+      "label": "Governance in force + first gate decision (Frank, morning session): all four governance boxes yes, verbatim \"alle 4 governance kästchen ja\" — gate SLA 72 h with public gate ledger, fabrication ceiling €150/quarter (first draw: the NO PART wall), post rota 7 days, MRR leash",
+      "date": "2026-08-01",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Governance in force + first gate decision (Frank, morning session): all four governance boxes yes, verbatim \"alle 4 governance kästchen ja\" — gate SLA 72 h with public gate ledger, fabrication ceiling €150/quarter (first draw: the NO PART wall), post rota 7 days, MRR leash"
+      }
+    },
+    {
+      "id": "decision:2026-08-01-3",
+      "kind": "decision",
+      "label": "Festival line decided (Frank, night session 31",
+      "date": "2026-08-01",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Festival line decided (Frank, night session 31"
+      }
+    },
+    {
+      "id": "decision:2026-08-01-4",
+      "kind": "decision",
+      "label": "Entrance section order (WP7), approved arrangement:",
+      "date": "2026-08-01",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Entrance section order (WP7), approved arrangement:"
+      }
+    },
+    {
+      "id": "decision:2026-08-01-5",
+      "kind": "decision",
+      "label": "Climate ridgeline on the entrance: DECLINED",
+      "date": "2026-08-01",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Climate ridgeline on the entrance: DECLINED"
+      }
+    },
+    {
+      "id": "decision:2026-08-05-1",
+      "kind": "decision",
+      "label": "The Production Amendment + Season 1 (Frank, night session 04./05.08.):",
+      "date": "2026-08-05",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "The Production Amendment + Season 1 (Frank, night session 04./05.08.):"
+      }
+    },
+    {
+      "id": "decision:2026-08-06-1",
+      "kind": "decision",
+      "label": "Season 1's theme and its seven candidate directions withdrawn without replacement (Frank, night session).",
+      "date": "2026-08-06",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Season 1's theme and its seven candidate directions withdrawn without replacement (Frank, night session)."
+      }
+    },
+    {
+      "id": "decision:2026-08-08-1",
+      "kind": "decision",
+      "label": "Research ecology v2 — the rebuild (Frank, night session 07./08.08., second decision of this date; supersedes parts of the row below it, each named).",
+      "date": "2026-08-08",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Research ecology v2 — the rebuild (Frank, night session 07./08.08., second decision of this date; supersedes parts of the row below it, each named)."
+      }
+    },
+    {
+      "id": "decision:2026-08-08-2",
+      "kind": "decision",
+      "label": "The apparatus turns outward — the 2026-08-07 proposal executed (Frank, night session, \"lies … und setz um\").",
+      "date": "2026-08-08",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "The apparatus turns outward — the 2026-08-07 proposal executed (Frank, night session, \"lies … und setz um\")."
+      }
+    },
+    {
+      "id": "decision:2026-08-09-1",
+      "kind": "decision",
+      "label": "GCP returns as a targeted batch tool — G1 activated and live-tested, G5 conditionally approved (Frank, night session, on the portfolio audit's D6/D7).",
+      "date": "2026-08-09",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "GCP returns as a targeted batch tool — G1 activated and live-tested, G5 conditionally approved (Frank, night session, on the portfolio audit's D6/D7)."
+      }
+    },
+    {
+      "id": "decision:2026-08-09-2",
+      "kind": "decision",
+      "label": "Rework, never archive (Frank, same night, on reading the USP audit — verbatim): \"nein, nicht archivieren, sondern so ausbauen, dass wirklicher mehrwert und alleinstellungsmerkmale entstehen!\"",
+      "date": "2026-08-09",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Rework, never archive (Frank, same night, on reading the USP audit — verbatim): \"nein, nicht archivieren, sondern so ausbauen, dass wirklicher mehrwert und alleinstellungsmerkmale entstehen!\""
+      }
+    },
+    {
+      "id": "decision:2026-08-09-3",
+      "kind": "decision",
+      "label": "The USP obligation (Frank, night session, verbatim): every project must always carry \"einen Mehrwert oder ein Alleinstellungsmerkmal … das kann man easy überprüfen mit recherchen im web. jedes experiment auf frankbueltge.de was keinen nachweisbaren mehrwert hat oder nicht einzigartig ist … kann eigentlich weg bzw. müsste überarbeitet werden.\"",
+      "date": "2026-08-09",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "The USP obligation (Frank, night session, verbatim): every project must always carry \"einen Mehrwert oder ein Alleinstellungsmerkmal … das kann man easy überprüfen mit recherchen im web. jedes experiment auf frankbueltge.de was keinen nachweisbaren mehrwert hat oder nicht einzigartig ist … kann eigentlich weg bzw. müsste überarbeitet werden.\""
+      }
+    },
+    {
+      "id": "neighbor:aclanthology-org-2024-emnlp-main-384-pdf",
+      "kind": "neighbor",
+      "label": "INFOGAP",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[INFOGAP](https://aclanthology.org/2024.emnlp-main.384.pdf) (UBC/Johns Hopkins/UW, EMNLP 2024; [coverage](https://hub.jhu.edu/2025/01/09/finding-hidden-biases-in-wikipedias-multilingual-content)) — peer-reviewed, fact-level cross-lingual information-gap detector for Wikipedia at 2.7k-article scale; authors explicitly note it generalizes to contentious-topic argumentation across stances."
+      },
+      "url": "https://aclanthology.org/2024.emnlp-main.384.pdf"
+    },
+    {
+      "id": "neighbor:ai-watch-ec-europa-eu",
+      "kind": "neighbor",
+      "label": "EU JRC — AI Watch / Public Sector Tech Watch",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[EU JRC — AI Watch / Public Sector Tech Watch](https://ai-watch.ec.europa.eu) — the European Commission's *own* observatory of AI adoption in public administration, 940+ collected use cases as of 2024 (survey/desk-research based, no longer updated)."
+      },
+      "url": "https://ai-watch.ec.europa.eu"
+    },
+    {
+      "id": "neighbor:alfred-st-louis-fed",
+      "kind": "neighbor",
+      "label": "ALFRED (St. Louis Fed)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "ALFRED (St. Louis Fed) — general-purpose real-time-vintage infrastructure letting anyone reconstruct first-report-vs-correction for any BLS series."
+      }
+    },
+    {
+      "id": "neighbor:andrew-gray-ucl-chatgpt-contamination-estimating-the-prevale",
+      "kind": "neighbor",
+      "label": "Andrew Gray (UCL), \"ChatGPT 'contamination': estimating the prevalence of LLMs in the scholarly literature\" (2024)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "Andrew Gray (UCL), \"ChatGPT 'contamination': estimating the prevalence of LLMs in the scholarly literature\" (2024) — the original word-list study (incl. \"intricate\"), covered by [Scientific American](https://www.scientificamerican.com/article/chatbots-have-thoroughly-infiltrated-scientific-publishing) and Ars Technica."
+      }
+    },
+    {
+      "id": "neighbor:anthropocenefii-org-climate-risk-pricing-what-the-catastroph",
+      "kind": "neighbor",
+      "label": "Anthropocene Fixed Income Institute — cat-bond climate-risk pricing",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Anthropocene Fixed Income Institute — cat-bond climate-risk pricing](https://anthropocenefii.org/climate-risk-pricing/what-the-catastrophe-bond-market-could-be-telling-us-about-climate-risk) — professional fixed-income research asking whether market pricing already reveals climate risk, updated regularly."
+      },
+      "url": "https://anthropocenefii.org/climate-risk-pricing/what-the-catastrophe-bond-market-could-be-telling-us-about-climate-risk"
+    },
+    {
+      "id": "neighbor:arstechnica-com-information-technology-2013-04-churnalism-tr",
+      "kind": "neighbor",
+      "label": "Churnalism / Churnalism US",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Churnalism / Churnalism US](https://arstechnica.com/information-technology/2013/04/churnalism-tracker-catches-journalists-copying-press-releases-wikipedia) — pastes an article, checks it against a hashed corpus of press releases/other outlets for verbatim reuse (sliding-window hashing)."
+      },
+      "url": "https://arstechnica.com/information-technology/2013/04/churnalism-tracker-catches-journalists-copying-press-releases-wikipedia"
+    },
+    {
+      "id": "neighbor:arxiv-org-abs-2505-18228",
+      "kind": "neighbor",
+      "label": "\"Implementing Agents in JavaScript\"",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[\"Implementing Agents in JavaScript\"](https://arxiv.org/abs/2505.18228) — precedent for static, no-backend, browser-only multi-agent simulation as a deployment pattern, not built around Minsky's book."
+      },
+      "url": "https://arxiv.org/abs/2505.18228"
+    },
+    {
+      "id": "neighbor:c4ads-org-reports-oil-and-water",
+      "kind": "neighbor",
+      "label": "Windward AI / C4ADS \"Oil and Water\"",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Windward AI / C4ADS \"Oil and Water\"](https://c4ads.org/reports/oil-and-water) — commercial/NGO maritime intelligence tracking sanctioned shadow-fleet tankers with named case studies, regularly updated."
+      },
+      "url": "https://c4ads.org/reports/oil-and-water"
+    },
+    {
+      "id": "neighbor:cambridge-org-core-journals-political-analysis-article-comme",
+      "kind": "neighbor",
+      "label": "Deckert, Myagkov & Ordeshook, \"Benford's Law and the Detection of Election Fraud\" (2011)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "Deckert, Myagkov & Ordeshook, [\"Benford's Law and the Detection of Election Fraud\"](https://www.cambridge.org/core/journals/political-analysis/article/comment-on-benfords-law-and-the-detection-of-election-fraud) (2011) — 15-year-old academic debate making exactly this \"the test misfires\" case."
+      },
+      "url": "https://www.cambridge.org/core/journals/political-analysis/article/comment-on-benfords-law-and-the-detection-of-election-fraud"
+    },
+    {
+      "id": "neighbor:carbon-brief-daily-briefing",
+      "kind": "neighbor",
+      "label": "Carbon Brief \"Daily Briefing\"",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "Carbon Brief \"Daily Briefing\" — genuinely daily (weekday) climate/energy digest, human-curated prose, climate-only."
+      }
+    },
+    {
+      "id": "neighbor:changedetection-io",
+      "kind": "neighbor",
+      "label": "changedetection.io",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[changedetection.io](https://changedetection.io) — free/open-source, off-the-shelf scheduled-capture + diff + notification tool explicitly marketed for monitoring government pages."
+      },
+      "url": "https://changedetection.io"
+    },
+    {
+      "id": "neighbor:climate-conflict-org",
+      "kind": "neighbor",
+      "label": "Climate–Conflict–Vulnerability Index (CCVI)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Climate–Conflict–Vulnerability Index (CCVI)](https://climate-conflict.org) — fuses climate+conflict+vulnerability into one open index, quarterly cadence, not nightly."
+      },
+      "url": "https://climate-conflict.org"
+    },
+    {
+      "id": "neighbor:collablab-northwestern-edu-pubs-chi2012-baoetal-omnipedia-pd",
+      "kind": "neighbor",
+      "label": "Omnipedia",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Omnipedia](https://collablab.northwestern.edu/pubs/CHI2012-BaoEtAl-Omnipedia.pdf) (Northwestern, CHI 2012) — visualizes shared vs. unique content across up to 25 language editions at once."
+      },
+      "url": "https://collablab.northwestern.edu/pubs/CHI2012-BaoEtAl-Omnipedia.pdf"
+    },
+    {
+      "id": "neighbor:data-ted-europa-eu",
+      "kind": "neighbor",
+      "label": "TED Open Data Service",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[TED Open Data Service](https://data.ted.europa.eu) — the EU's own official SPARQL/knowledge-graph layer over all TED notices, already open and reusable."
+      },
+      "url": "https://data.ted.europa.eu"
+    },
+    {
+      "id": "neighbor:deepskyclimate-com-data-dashboard-charts-price-of-home-insur",
+      "kind": "neighbor",
+      "label": "Deep Sky Research — \"Insuring against climate risk is becoming unaffordable\"",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Deep Sky Research — \"Insuring against climate risk is becoming unaffordable\"](https://www.deepskyclimate.com/data-dashboard-charts/price-of-home-insurance) — a live, quarterly-updated public dashboard whose chart is literally \"Percent Increase in the Price of Home Insurance Premiums since 1998,\" sourced from the *same* BLS PPI series, same 1998 base year, same \"climate is unaffordable\" framing."
+      },
+      "url": "https://www.deepskyclimate.com/data-dashboard-charts/price-of-home-insurance"
+    },
+    {
+      "id": "neighbor:envirodatagov-org-federal-environmental-web-tracker-about-pa",
+      "kind": "neighbor",
+      "label": "EDGI — Federal Environmental Web Tracker",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[EDGI — Federal Environmental Web Tracker](https://envirodatagov.org/federal-environmental-web-tracker-about-page) — open-source \"Scanner\" automatically diffing federal webpages between dates, publishing a public dataset of 1,500+ significant changes since 2017, continuing through 2025 (632 changes in the first 100 days of the second Trump term alone, per NPR Aug 2025)."
+      },
+      "url": "https://envirodatagov.org/federal-environmental-web-tracker-about-page"
+    },
+    {
+      "id": "neighbor:essay-only-pieces-drawing-k-line-llm-memory-analogies-e-g-so",
+      "kind": "neighbor",
+      "label": "Essay-only pieces drawing K-line/LLM-memory analogies (e.g. \"Society of Mind: The 50-Year-Old Blueprint for AI Agents\")",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "Essay-only pieces drawing K-line/LLM-memory analogies (e.g. \"Society of Mind: The 50-Year-Old Blueprint for AI Agents\") — commentary, not implementations."
+      }
+    },
+    {
+      "id": "neighbor:firstmonday-org-ojs-index-php-fm-article-view-3939-3382",
+      "kind": "neighbor",
+      "label": "Manypedia",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Manypedia](https://firstmonday.org/ojs/index.php/fm/article/view/3939/3382) (First Monday 2013) — automated side-by-side \"language points of view\" comparison (now defunct)."
+      },
+      "url": "https://firstmonday.org/ojs/index.php/fm/article/view/3939/3382"
+    },
+    {
+      "id": "neighbor:foreignpolicy-com-2013-02-05-china-and-japans-wikipedia-war",
+      "kind": "neighbor",
+      "label": "\"China and Japan's Wikipedia War\"",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[\"China and Japan's Wikipedia War\"](https://foreignpolicy.com/2013/02/05/china-and-japans-wikipedia-war), *Foreign Policy* (2013) — journalistic deep-dive on the exact Senkaku/Diaoyu edit-war example the site cites."
+      },
+      "url": "https://foreignpolicy.com/2013/02/05/china-and-japans-wikipedia-war"
+    },
+    {
+      "id": "neighbor:frbsf-org",
+      "kind": "neighbor",
+      "label": "Federal Reserve Bank of San Francisco — \"Revisions to Payroll Employment Gains in Historical Context\"",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Federal Reserve Bank of San Francisco — \"Revisions to Payroll Employment Gains in Historical Context\"](https://www.frbsf.org) — a live, regularly updated (last updated 2026-07-02) official tool built on the Philadelphia Fed's Real-Time Data Set, visualizing first-vs-second-release revisions since 1990, average revision line, distribution, latest month highlighted, downloadable CSV."
+      },
+      "url": "https://www.frbsf.org"
+    },
+    {
+      "id": "neighbor:gdacs-itself-reliefweb-wired-by-third-party-dashboards",
+      "kind": "neighbor",
+      "label": "GDACS itself + ReliefWeb, wired by third-party dashboards",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "GDACS itself + ReliefWeb, wired by third-party dashboards — GDACS already issues timestamped, population-scored, RSS/CAP bulletins; commercial/NGO dashboards already combine GDACS+ReliefWeb for real-time awareness."
+      }
+    },
+    {
+      "id": "neighbor:github-com-metauto-ai-mindstorm",
+      "kind": "neighbor",
+      "label": "Mindstorm / NLSOM",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Mindstorm / NLSOM](https://github.com/metauto-ai/Mindstorm) — invokes \"Societies of Mind\" by name but implements it as LLMs/neural nets talking in natural language — the architectural inversion (opaque large models) of what the book and this site describe."
+      },
+      "url": "https://github.com/metauto-ai/Mindstorm"
+    },
+    {
+      "id": "neighbor:github-com-tsinghua-fib-lab-agentsociety",
+      "kind": "neighbor",
+      "label": "AgentSociety",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[AgentSociety](https://github.com/tsinghua-fib-lab/agentsociety) (Tsinghua FIB Lab) — large LLM-agent social-simulation platform, but LLM-native agents for social science, not Minsky's small deterministic rule agents."
+      },
+      "url": "https://github.com/tsinghua-fib-lab/agentsociety"
+    },
+    {
+      "id": "neighbor:globalfishingwatch-org-research-project-dark-vessels",
+      "kind": "neighbor",
+      "label": "Global Fishing Watch — Dark Vessels research",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Global Fishing Watch — Dark Vessels research](https://globalfishingwatch.org/research-project-dark-vessels) — the peer-reviewed source (*Science Advances*, 2022) of 55,000+ identified intentional AIS-disabling events, with a public interactive map and hotspot analysis. Since Ghost Fleet's own \"intentional\" flag *is* GFW's ML output, this experiment is a curation layer on GFW's already-public data, not an independent measurement."
+      },
+      "url": "https://globalfishingwatch.org/research-project-dark-vessels"
+    },
+    {
+      "id": "neighbor:hanson-2019-user-tracking-on-academic-publisher-platforms",
+      "kind": "neighbor",
+      "label": "Hanson (2019), \"User Tracking on Academic Publisher Platforms\"",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "Hanson (2019), \"User Tracking on Academic Publisher Platforms\" — snapshot analysis across 15 publisher platforms."
+      }
+    },
+    {
+      "id": "neighbor:hdx-reliefweb-archives",
+      "kind": "neighbor",
+      "label": "HDX / ReliefWeb archives",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "HDX / ReliefWeb archives — institutional, versioned disaster-report archiving, not cryptographically hashed."
+      }
+    },
+    {
+      "id": "neighbor:hdx-state-of-open-humanitarian-data-reports",
+      "kind": "neighbor",
+      "label": "HDX \"State of Open Humanitarian Data\" reports",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "HDX \"State of Open Humanitarian Data\" reports — periodic meta-assessments of global humanitarian data availability."
+      }
+    },
+    {
+      "id": "neighbor:heavens-above-wikipedia-s-list-of-satellite-pass-predictors",
+      "kind": "neighbor",
+      "label": "Heavens-Above / Wikipedia's \"List of satellite pass predictors\"",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "Heavens-Above / Wikipedia's \"List of satellite pass predictors\" — classic amateur-astronomy pass predictors, general-purpose."
+      }
+    },
+    {
+      "id": "neighbor:holdfastprojects-com-us-datacentre-pue-md-2",
+      "kind": "neighbor",
+      "label": "holdfastprojects.com — \"US data centre efficiency ranked by PUE\"",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[holdfastprojects.com — \"US data centre efficiency ranked by PUE\"](https://www.holdfastprojects.com/us-datacentre-pue.md-2) — maintained, continually updated leaderboard across Meta/Google/AWS/Microsoft/Oracle/others, with notes on who discloses well vs. poorly."
+      },
+      "url": "https://www.holdfastprojects.com/us-datacentre-pue.md-2"
+    },
+    {
+      "id": "neighbor:ijoc-org-index-php-ijoc-article-download-9904-2777",
+      "kind": "neighbor",
+      "label": "\"Detecting Textual Reuse in News Stories, At Scale\"",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[\"Detecting Textual Reuse in News Stories, At Scale\"](https://ijoc.org/index.php/ijoc/article/download/9904/2777), *International Journal of Communication* — peer-reviewed churnalism-at-scale methodology."
+      },
+      "url": "https://ijoc.org/index.php/ijoc/article/download/9904/2777"
+    },
+    {
+      "id": "neighbor:jeremy-nguyen-swinburne",
+      "kind": "neighbor",
+      "label": "Jeremy Nguyen (Swinburne)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "Jeremy Nguyen (Swinburne) — an individual researcher already runs an ongoing, updated \"delve\"-in-PubMed tracker since 2023 (referenced via [pshapira.net](https://pshapira.net/2024/03/31/delving-into-delve) and PMC12679996) — the closest functional analogue to a daily instrument."
+      }
+    },
+    {
+      "id": "neighbor:jonnyhuck-co-uk-permutation-test-teaching-tool",
+      "kind": "neighbor",
+      "label": "jonnyhuck.co.uk permutation-test teaching tool",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "jonnyhuck.co.uk permutation-test teaching tool — a simple browser permutation test on two samples (pedagogical, not automated mining)."
+      }
+    },
+    {
+      "id": "neighbor:jorpex-and-similar-ted-monitoring-saas",
+      "kind": "neighbor",
+      "label": "Jorpex and similar TED-monitoring SaaS",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "Jorpex and similar TED-monitoring SaaS — commercial continuous TED ingestion with keyword/CPV filters including AI terms, built for sales leads."
+      }
+    },
+    {
+      "id": "neighbor:journals-plos-org-plosone-article-id-10-1371-journal-pone-02",
+      "kind": "neighbor",
+      "label": "\"Testing for Benford's Law in very small samples...\"",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[\"Testing for Benford's Law in very small samples...\"](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0271969), *PLOS One* (2022) — rigorous Monte-Carlo simulation of false-positive rates as a function of sample size — the exact phenomenon the site demonstrates, done with formal statistical machinery."
+      },
+      "url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0271969"
+    },
+    {
+      "id": "neighbor:liang-et-al-monitoring-ai-modified-content-at-scale-icml-202",
+      "kind": "neighbor",
+      "label": "Liang et al., \"Monitoring AI-modified content at scale\" (ICML 2024)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "Liang et al., \"Monitoring AI-modified content at scale\" (ICML 2024) — names \"showcasing, realm\" among top LLM-preferred words; both appear in this experiment's own title/copy."
+      }
+    },
+    {
+      "id": "neighbor:marino-who-s-reading-who-exploring-the-state-of-third-party-",
+      "kind": "neighbor",
+      "label": "Marino, \"Who's Reading Who? Exploring the State of Third-Party Tracking Technology in Open Access Journal Content,\" *Journal of Intellectual Freedom & Privacy*",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "Marino, \"Who's Reading Who? Exploring the State of Third-Party Tracking Technology in Open Access Journal Content,\" *Journal of Intellectual Freedom & Privacy* — an academic study directly comparing subscription vs. open-access journal tracking, citing Hinchliffe/Zimmerman/Altman (2018) and Hanson (2019)."
+      }
+    },
+    {
+      "id": "neighbor:media-mit-edu-projects-media-cloud-overview",
+      "kind": "neighbor",
+      "label": "Media Cloud",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Media Cloud](https://www.media.mit.edu/projects/media-cloud/overview) (MIT/Harvard) — ingests 1B+ articles, [explicitly deduplicates repeated sentences across sources](https://medium.com/media-cloud-project/tech-brief-how-we-deduplicate-content-in-media-cloud-772cd46b6f7f) at global scale with an open API."
+      },
+      "url": "https://www.media.mit.edu/projects/media-cloud/overview"
+    },
+    {
+      "id": "neighbor:metaculus-good-judgment-superforecasters",
+      "kind": "neighbor",
+      "label": "Metaculus / Good Judgment (Superforecasters)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "Metaculus / Good Judgment (Superforecasters) — the dominant forecast-verification ecosystems with resolution, calibration, Brier scoring — the closest analogue to the \"materialized/unmatched\" verdict idea, applied to crowd predictions rather than institutions."
+      }
+    },
+    {
+      "id": "neighbor:metricgate-p-hacking-and-multiple-comparisons",
+      "kind": "neighbor",
+      "label": "MetricGate, \"P-Hacking and Multiple Comparisons\"",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "MetricGate, \"P-Hacking and Multiple Comparisons\" — interactive simulation demonstrating how many tests inflate false positives."
+      }
+    },
+    {
+      "id": "neighbor:n2yo-com",
+      "kind": "neighbor",
+      "label": "N2YO.com",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "N2YO.com — long-running (since 2004), huge database, real-time tracking, general-purpose, server-side."
+      }
+    },
+    {
+      "id": "neighbor:nytimes-com-interactive-2024-07-08-climate-home-insurance-cl",
+      "kind": "neighbor",
+      "label": "NYT interactive — \"Here's Where Climate Change Is Driving Up Home Insurance Rates\"",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[NYT interactive — \"Here's Where Climate Change Is Driving Up Home Insurance Rates\"](https://www.nytimes.com/interactive/2024/07/08/climate/home-insurance-climate-change.html) — mainstream journalism already runs this story with state/ZIP-level granularity."
+      },
+      "url": "https://www.nytimes.com/interactive/2024/07/08/climate/home-insurance-climate-change.html"
+    },
+    {
+      "id": "neighbor:opentimestamps-org",
+      "kind": "neighbor",
+      "label": "OpenTimestamps",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[OpenTimestamps](https://opentimestamps.org) — open standard since ~2016, hashes any file and anchors it to Bitcoin as proof-of-existence at a point in time; used by multiple member services. Generic, no disaster focus, no resolution semantics."
+      },
+      "url": "https://opentimestamps.org"
+    },
+    {
+      "id": "neighbor:ourworldindata-org",
+      "kind": "neighbor",
+      "label": "Our World in Data",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Our World in Data](https://ourworldindata.org) — 14,000+ interactive charts across poverty, climate, conflict, health, energy since 2013, Oxford-affiliated, CC BY. Dwarfs The Protocol on breadth and authority; no nightly deterministic \"minutes\" ritual, no stated no-LLM constraint."
+      },
+      "url": "https://ourworldindata.org"
+    },
+    {
+      "id": "neighbor:pmc-ncbi-nlm-nih-gov-articles-pmc12219543",
+      "kind": "neighbor",
+      "label": "Kobak, Márquez-Neila et al., \"Delving into LLM-assisted writing in biomedical publications through excess vocabulary\", *Science Advances* (also arXiv)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "Kobak, Márquez-Neila et al., [\"Delving into LLM-assisted writing in biomedical publications through excess vocabulary\"](https://pmc.ncbi.nlm.nih.gov/articles/PMC12219543), *Science Advances* (also [arXiv](https://arxiv.org/html/2406.07016v1)) — analyzed 14–15 million PubMed abstracts 2010–2024, the *same* per-100k excess-frequency metric on \"delve\" (25× over pre-LLM trend), \"showcasing,\" \"underscores,\" estimating >10% LLM-assisted abstracts. Same metric, same corpus, same framing, peer-reviewed, far larger scale."
+      },
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12219543"
+    },
+    {
+      "id": "neighbor:pmc-ncbi-nlm-nih-gov-articles-pmc12827721",
+      "kind": "neighbor",
+      "label": "PMC12827721 — \"The carbon and water footprints of data centers...\"",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[PMC12827721 — \"The carbon and water footprints of data centers...\"](https://pmc.ncbi.nlm.nih.gov/articles/PMC12827721) (2025, peer-reviewed) — a comparison table of PUE, disclosure completeness and consumption across the same hyperscalers."
+      },
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12827721"
+    },
+    {
+      "id": "neighbor:pmc-ncbi-nlm-nih-gov-articles-pmc7906373",
+      "kind": "neighbor",
+      "label": "\"Visualizing changes to US federal environmental agency websites, 2016–2020\"",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[\"Visualizing changes to US federal environmental agency websites, 2016–2020\"](https://pmc.ncbi.nlm.nih.gov/articles/PMC7906373), peer-reviewed — the same change-tracking/visualization approach on the same non-authoritative Wayback source."
+      },
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7906373"
+    },
+    {
+      "id": "neighbor:pnas-org-doi-10-1073-pnas-2103619118",
+      "kind": "neighbor",
+      "label": "Reuters Fact Check (Nov 2020), Matt Parker/Stand-up Maths (\"Why do Biden's votes not follow Benford's Law?\", 3.6M views), and PNAS's \"No evidence for systematic voter fraud\" guide",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "Reuters Fact Check (Nov 2020), Matt Parker/Stand-up Maths (\"Why do Biden's votes not follow Benford's Law?\", 3.6M views), and [PNAS's \"No evidence for systematic voter fraud\" guide](https://www.pnas.org/doi/10.1073/pnas.2103619118) — mass-audience and academic rebuttals of the same claim."
+      },
+      "url": "https://www.pnas.org/doi/10.1073/pnas.2103619118"
+    },
+    {
+      "id": "neighbor:proof-of-existence-originstamp",
+      "kind": "neighbor",
+      "label": "Proof of Existence / OriginStamp",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "Proof of Existence / OriginStamp — the original hash-plus-blockchain-timestamp services (2013/2015) this whole mechanism descends from."
+      }
+    },
+    {
+      "id": "neighbor:reusingthenews-org",
+      "kind": "neighbor",
+      "label": "Reusing the News",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Reusing the News](https://www.reusingthenews.org) — academic n-gram text-reuse study of broadcast news, same exact-match technique."
+      },
+      "url": "https://www.reusingthenews.org"
+    },
+    {
+      "id": "neighbor:satfleetlive-com",
+      "kind": "neighbor",
+      "label": "SatFleetLive",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[SatFleetLive](https://satfleetlive.com) — browser tool running SGP4 client-side on live CelesTrak TLE data, \"Only Visible\" filter, explicitly states location is used locally and never sent to a server — matches the technical/privacy architecture almost exactly, but general-purpose (14,000+ satellites, GPS/Starlink/military/weather) with no Earth-observation-specific owner filter."
+      },
+      "url": "https://satfleetlive.com"
+    },
+    {
+      "id": "neighbor:security-force-monitor-s-wayback-cdx-methodology",
+      "kind": "neighbor",
+      "label": "Security Force Monitor's Wayback CDX methodology",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "Security Force Monitor's Wayback CDX methodology — the identical \"two captures, spot the substantive difference\" evidentiary technique, documented."
+      }
+    },
+    {
+      "id": "neighbor:shiny-app-r-package-for-p-hacking-simulation-pmc9905987",
+      "kind": "neighbor",
+      "label": "Shiny app + R package for p-hacking simulation (PMC9905987)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "Shiny app + R package for p-hacking simulation (PMC9905987) — academic tool exploring p-hacking severity settings interactively."
+      }
+    },
+    {
+      "id": "neighbor:sparc-navigating-risk-in-vendor-data-privacy-practices",
+      "kind": "neighbor",
+      "label": "SPARC, \"Navigating Risk in Vendor Data Privacy Practices\"",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "SPARC, \"Navigating Risk in Vendor Data Privacy Practices\" — deep-dive reports on ScienceDirect and SpringerLink documenting 200+ named third parties."
+      }
+    },
+    {
+      "id": "neighbor:spymesat-ios-app-covered-since-2013-by-nbc-news-space-com",
+      "kind": "neighbor",
+      "label": "SpyMeSat (iOS app, covered since ~2013 by NBC News/Space.com)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "SpyMeSat (iOS app, covered since ~2013 by NBC News/Space.com) — purpose-built to alert when imaging/\"spy\" satellites are overhead, with the same caveat about classified satellites being absent — matches the EO-specific framing, but as a commercial account-based app its client-side/privacy architecture isn't verifiable the way Watchtower's is."
+      }
+    },
+    {
+      "id": "neighbor:stoptrackingscience-eu",
+      "kind": "neighbor",
+      "label": "Stop Tracking Science",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Stop Tracking Science](https://stoptrackingscience.eu) — EU advocacy site with detailed background documentation of publisher tracking as a business model, citing prior studies; not a live automated instrument itself."
+      },
+      "url": "https://stoptrackingscience.eu"
+    },
+    {
+      "id": "neighbor:sunlightfoundation-com-gov404",
+      "kind": "neighbor",
+      "label": "Sunlight Foundation / Berkman Klein — Web Integrity Project (\"Gov404\")",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Sunlight Foundation / Berkman Klein — Web Integrity Project (\"Gov404\")](https://sunlightfoundation.com/gov404) — monitors/catalogs federal website changes/removals since 2016 with detailed before/after documentation, feeding congressional oversight and FOIA investigations."
+      },
+      "url": "https://sunlightfoundation.com/gov404"
+    },
+    {
+      "id": "neighbor:support-skylight-global",
+      "kind": "neighbor",
+      "label": "Skylight",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Skylight](https://support.skylight.global) — nonprofit platform built specifically to detect and display dark-vessel events in near-real time, at operational enforcement scale."
+      },
+      "url": "https://support.skylight.global"
+    },
+    {
+      "id": "neighbor:swissre-com-library-swiss-re-cat-bond-indices-methodology-ht",
+      "kind": "neighbor",
+      "label": "Swiss Re Global Cat Bond Total Return Indices",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Swiss Re Global Cat Bond Total Return Indices](https://www.swissre.com/Library/swiss-re-cat-bond-indices-methodology.html) — established institutional index (since 2007) tracking catastrophe-bond pricing."
+      },
+      "url": "https://www.swissre.com/Library/swiss-re-cat-bond-indices-methodology.html"
+    },
+    {
+      "id": "neighbor:thenewstack-io-cloud-pue-comparing-aws-azure-and-gcp-global-",
+      "kind": "neighbor",
+      "label": "Adrian Cockcroft, \"Cloud PUE: Comparing AWS, Azure and GCP Global Regions\"",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Adrian Cockcroft, \"Cloud PUE: Comparing AWS, Azure and GCP Global Regions\"](https://thenewstack.io/cloud-pue-comparing-aws-azure-and-gcp-global-regions), *The New Stack*, Jan 2025 — region-by-region PUE comparison of the same hyperscalers plus explicit disclosure-quality ranking."
+      },
+      "url": "https://thenewstack.io/cloud-pue-comparing-aws-azure-and-gcp-global-regions"
+    },
+    {
+      "id": "neighbor:theoutlawocean-com-podcast-the-dark-fleet",
+      "kind": "neighbor",
+      "label": "The Outlaw Ocean Project",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[The Outlaw Ocean Project](https://theoutlawocean.com/podcast/the-dark-fleet) — investigative journalism running the \"single vessel dark for months\" narrative for years (e.g. the 110-day chase of the *Thunder*), with named vessels, crews, and months of reporting."
+      },
+      "url": "https://theoutlawocean.com/podcast/the-dark-fleet"
+    },
+    {
+      "id": "neighbor:transparency-eu-integrity-watch-red-flags",
+      "kind": "neighbor",
+      "label": "Transparency International EU — Integrity Watch Red Flags",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Transparency International EU — Integrity Watch Red Flags](https://transparency.eu/integrity-watch-red-flags) — real-time public procurement monitoring, ~40,000 EU-budget + 320,000+ national contracts across 9 countries, updated near-daily, 20 fraud/corruption risk indicators."
+      },
+      "url": "https://transparency.eu/integrity-watch-red-flags"
+    },
+    {
+      "id": "neighbor:tussell-com-insights-ai-procurement-tracker",
+      "kind": "neighbor",
+      "label": "Tussell — UK Public Sector AI Procurement Tracker",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Tussell — UK Public Sector AI Procurement Tracker](https://tussell.com/insights/ai-procurement-tracker) — commercial, monthly-updated tracker of AI spend/vendors in UK government, backed by a full contract database."
+      },
+      "url": "https://tussell.com/insights/ai-procurement-tracker"
+    },
+    {
+      "id": "neighbor:tylervigen-com-spurious-correlations",
+      "kind": "neighbor",
+      "label": "Tyler Vigen, Spurious Correlations",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Tyler Vigen, Spurious Correlations](https://tylervigen.com/spurious-correlations) — the canonical, extremely well-known site: mines a large database, generates a \"discovery,\" shows a correlation coefficient and p-value, and explicitly warns about lack of causal connection and confounders. Running since 2014, relaunched January 2024, includes an interactive \"Discover a correlation\" feature and user-data uploads."
+      },
+      "url": "https://tylervigen.com/spurious-correlations"
+    },
+    {
+      "id": "neighbor:uptime-institute-global-data-center-survey-annual-since-2007",
+      "kind": "neighbor",
+      "label": "Uptime Institute Global Data Center Survey (annual since 2007)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "Uptime Institute Global Data Center Survey (annual since 2007) — the canonical industry PUE benchmark."
+      }
+    },
+    {
+      "id": "neighbor:voyager-company-s-society-of-mind-cd-rom-1994",
+      "kind": "neighbor",
+      "label": "Voyager Company's *Society of Mind* CD-ROM (1994)",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "Voyager Company's *Society of Mind* CD-ROM (1994) — interactive hypertext edition made with Minsky's involvement, but navigable book, not executable agents (already cited by the site itself)."
+      }
+    },
+    {
+      "id": "neighbor:websites-umich-edu-wmebane-inapb-pdf",
+      "kind": "neighbor",
+      "label": "Walter R. Mebane Jr., \"Inappropriate Applications of Benford's Law Regularities to Some Data from the 2020 Presidential Election\"",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Walter R. Mebane Jr., \"Inappropriate Applications of Benford's Law Regularities to Some Data from the 2020 Presidential Election\"](https://websites.umich.edu/~wmebane/inapB.pdf) (2020) — direct, citable academic debunking of Benford-as-election-fraud-proof."
+      },
+      "url": "https://websites.umich.edu/~wmebane/inapB.pdf"
+    },
+    {
+      "id": "neighbor:wikicompare",
+      "kind": "neighbor",
+      "label": "WikiCompare",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "WikiCompare — browser plugin comparing English vs. 8 other-language editions, flags missing info."
+      }
+    },
+    {
+      "id": "practice:atelier",
+      "kind": "practice",
+      "label": "atelier",
+      "practiceId": "atelier",
+      "source": {
+        "file": "src/data/post/ledger.json",
+        "quote": "\"practice\": \"atelier\""
+      }
+    },
+    {
+      "id": "practice:ecology",
+      "kind": "practice",
+      "label": "ecology",
+      "practiceId": "ecology",
+      "source": {
+        "file": "src/data/post/ledger.json",
+        "quote": "\"practice\": \"ecology\""
+      }
+    },
+    {
+      "id": "practice:field",
+      "kind": "practice",
+      "label": "field",
+      "practiceId": "field",
+      "source": {
+        "file": "src/data/post/ledger.json",
+        "quote": "\"practice\": \"field\""
+      }
+    },
+    {
+      "id": "practice:plenum",
+      "kind": "practice",
+      "label": "plenum",
+      "practiceId": "plenum",
+      "source": {
+        "file": "src/data/post/ledger.json",
+        "quote": "\"practice\": \"plenum\""
+      }
+    },
+    {
+      "id": "practice:studio",
+      "kind": "practice",
+      "label": "studio",
+      "practiceId": "studio",
+      "source": {
+        "file": "src/data/post/ledger.json",
+        "quote": "\"practice\": \"studio\""
+      }
+    },
+    {
+      "id": "receiver:center-for-humane-technology",
+      "kind": "receiver",
+      "label": "Center for Humane Technology",
+      "source": {
+        "file": "src/data/post/ledger.json",
+        "quote": "\"receiver\": \"Center for Humane Technology\""
+      }
+    },
+    {
+      "id": "receiver:darc-digital-aesthetics-research-centre-aarhus-university-pa",
+      "kind": "receiver",
+      "label": "DARC — Digital Aesthetics Research Centre, Aarhus University (Pablo Velasco)",
+      "source": {
+        "file": "src/data/post/ledger.json",
+        "quote": "\"receiver\": \"DARC — Digital Aesthetics Research Centre, Aarhus University (Pablo Velasco)\""
+      }
+    },
+    {
+      "id": "receiver:european-network-for-academic-integrity-enai",
+      "kind": "receiver",
+      "label": "European Network for Academic Integrity (ENAI)",
+      "source": {
+        "file": "src/data/post/ledger.json",
+        "quote": "\"receiver\": \"European Network for Academic Integrity (ENAI)\""
+      }
+    },
+    {
+      "id": "receiver:journal-for-artistic-research-jar-society-for-artistic-resea",
+      "kind": "receiver",
+      "label": "Journal for Artistic Research (JAR), Society for Artistic Research — Michael Schwab, Editor in Chief",
+      "source": {
+        "file": "src/data/post/ledger.json",
+        "quote": "\"receiver\": \"Journal for Artistic Research (JAR), Society for Artistic Research — Michael Schwab, Editor in Chief\""
+      }
+    },
+    {
+      "id": "receiver:roderick-and-solange-macarthur-justice-center-northwestern-p",
+      "kind": "receiver",
+      "label": "Roderick and Solange MacArthur Justice Center, Northwestern Pritzker School of Law",
+      "source": {
+        "file": "src/data/post/ledger.json",
+        "quote": "\"receiver\": \"Roderick and Solange MacArthur Justice Center, Northwestern Pritzker School of Law\""
+      }
+    },
+    {
+      "id": "receiver:zkm-karlsruhe-arte-util-open-call-mira-hirtz",
+      "kind": "receiver",
+      "label": "ZKM | Karlsruhe, Arte Útil open call (Mira Hirtz)",
+      "source": {
+        "file": "src/data/post/ledger.json",
+        "quote": "\"receiver\": \"ZKM | Karlsruhe, Arte Útil open call (Mira Hirtz)\""
+      }
+    },
+    {
+      "id": "work:atelier",
+      "kind": "work",
+      "label": "Atelier · Ulysses",
+      "werkId": "atelier",
+      "href": "/atelier",
+      "since": "2026-06-29",
+      "source": {
+        "file": "src/data/werke.ts",
+        "quote": "id: 'atelier'"
+      }
+    },
+    {
+      "id": "work:attention",
+      "kind": "work",
+      "label": "Machine Attention",
+      "werkId": "attention",
+      "href": "/attention",
+      "since": "2026-08-08",
+      "source": {
+        "file": "src/data/werke.ts",
+        "quote": "id: 'attention'"
+      },
+      "rank": 4,
+      "tier": "experiment",
+      "verdict": "ADDED VALUE",
+      "verdictLabel": "ADDED VALUE, narrower than framed.",
+      "daylight": "Drop \"provenance applied to the future\" as the headline (it overclaims against OpenTimestamps); foreground the part with no found neighbor: an open, falsifiable, ongoing calibration/lead-time scorecard *of the warning institutions themselves* — audit the alerting systems' track record the way Metaculus audits forecasters.",
+      "auditSource": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "ADDED VALUE, narrower than framed."
+      }
+    },
+    {
+      "id": "work:beifang",
+      "kind": "work",
+      "label": "Bycatch",
+      "werkId": "beifang",
+      "href": "/bycatch",
+      "since": "2026-07-02",
+      "source": {
+        "file": "src/data/werke.ts",
+        "quote": "id: 'beifang'"
+      },
+      "rank": 13,
+      "verdict": "ADDED VALUE",
+      "verdictLabel": "ADDED VALUE (narrow).",
+      "daylight": "Cite the prior academic literature (Hanson, Marino, SPARC) explicitly on the page — currently absent, which reads as unawareness — and make the recurring-cadence, paired-control, dual-vantage-point apparatus the headline claim, since that's the part with no existing match.",
+      "auditSource": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "ADDED VALUE (narrow)."
+      }
+    },
+    {
+      "id": "work:consensus",
+      "kind": "work",
+      "label": "The Consensus",
+      "werkId": "consensus",
+      "href": "/consensus",
+      "since": "2026-06-22",
+      "source": {
+        "file": "src/data/werke.ts",
+        "quote": "id: 'consensus'"
+      },
+      "rank": 1,
+      "tier": "experiment",
+      "line": "From the “Counter-Measurement” line.",
+      "verdict": "ADDED VALUE",
+      "verdictLabel": "ADDED VALUE (thin).",
+      "daylight": "Publish the *syndication-structure* classification (chain syndication vs. scattered placement vs. mixed, TLD-share) as the distinguishing analytic layer — none of the neighbors classify *why* outlets converged, only *that* they did.",
+      "auditSource": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "ADDED VALUE (thin)."
+      }
+    },
+    {
+      "id": "work:correction",
+      "kind": "work",
+      "label": "The Correction",
+      "werkId": "correction",
+      "href": "/correction",
+      "since": "2026-06-22",
+      "source": {
+        "file": "src/data/werke.ts",
+        "quote": "id: 'correction'"
+      },
+      "rank": 14,
+      "tier": "studie",
+      "line": "From the “Counter-Measurement” line.",
+      "verdict": "REDUNDANT",
+      "verdictLabel": "REDUNDANT (weak added value).",
+      "daylight": "Stop competing on \"the number\" (the Fed does it better, explicitly cited) and pivot to what a Fed tool structurally can't say: the political/decision consequences of relying on the provisional number (rate decisions, elections, hiring calls made against a number later erased) — an accountability angle, explicitly differentiated from and citing the SF Fed tool.",
+      "auditSource": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "REDUNDANT (weak added value)."
+      }
+    },
+    {
+      "id": "work:field",
+      "kind": "work",
+      "label": "The Measuring Field",
+      "werkId": "field",
+      "href": "/field",
+      "since": "2026-07-01",
+      "source": {
+        "file": "src/data/werke.ts",
+        "quote": "id: 'field'"
+      }
+    },
+    {
+      "id": "work:ghost-fleet",
+      "kind": "work",
+      "label": "The Ghost Fleet",
+      "werkId": "ghost-fleet",
+      "href": "/ghost-fleet",
+      "since": "2026-06-26",
+      "source": {
+        "file": "src/data/werke.ts",
+        "quote": "id: 'ghost-fleet'"
+      },
+      "rank": 9,
+      "tier": "studie",
+      "line": "From the “Counter-Measurement” line.",
+      "verdict": "REDUNDANT",
+      "verdictLabel": "REDUNDANT — the most severe case in this audit, because the page's own text names the dependency.",
+      "daylight": "Since it cannot out-detect GFW/Skylight/Windward, the honest differentiator would be cross-referencing GFW's dark-vessel events against a second, independently computed public signal (marine protected area boundaries, sanctions lists, flag-state deflagging records) to surface a compound finding GFW's own site doesn't state — turning \"GFW re-narrated\" into \"GFW cross-referenced with X, join logic shown.\" Absent that, this is the strongest rework-or-remove candidate in the audit.",
+      "auditSource": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "REDUNDANT — the most severe case in this audit, because the page's own text names the dependency."
+      }
+    },
+    {
+      "id": "work:observatory",
+      "kind": "work",
+      "label": "The State Before the Interface",
+      "werkId": "observatory",
+      "href": "/observatory",
+      "since": "2026-08-08",
+      "source": {
+        "file": "src/data/werke.ts",
+        "quote": "id: 'observatory'"
+      },
+      "rank": 5,
+      "tier": "experiment",
+      "verdict": "REDUNDANT",
+      "verdictLabel": "REDUNDANT on the surface mission; ADDED VALUE only on method.",
+      "daylight": "Explicitly reframe away from \"first/only to watch AI procurement in Europe\" (false — name Tussell, TI-EU, AI Watch on the page itself, per the site's own \"checkable\" ethic) and toward what's actually unreplicated: a fully autonomous, hash-verifiable, publicly falsifiable *investigation* pipeline, not a monitoring dashboard.",
+      "auditSource": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "REDUNDANT on the surface mission; ADDED VALUE only on method."
+      }
+    },
+    {
+      "id": "work:on-record",
+      "kind": "work",
+      "label": "On Record",
+      "werkId": "on-record",
+      "href": "/on-record",
+      "since": "2026-07-23",
+      "source": {
+        "file": "src/data/werke.ts",
+        "quote": "id: 'on-record'"
+      },
+      "tier": "experiment"
+    },
+    {
+      "id": "work:parallaxe",
+      "kind": "work",
+      "label": "Iceberg Theory",
+      "werkId": "parallaxe",
+      "href": "/parallax",
+      "since": "2026-06-14",
+      "source": {
+        "file": "src/data/werke.ts",
+        "quote": "id: 'parallaxe'"
+      },
+      "rank": 2,
+      "verdict": "REDUNDANT",
+      "verdictLabel": "REDUNDANT-leaning.",
+      "daylight": "The plausible surviving differentiator is *process*, not method: a committed, versioned, git-archived daily register with a fixed non-selected topic set, never retconned — none of the neighbors offer that as a public, continuously-dated artifact (INFOGAP is a paper/dataset; Omnipedia/Manypedia are dead demos). Name this explicitly as the point, and cite INFOGAP/Omnipedia/Manypedia openly rather than let a visitor discover the overlap unassisted.",
+      "auditSource": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "REDUNDANT-leaning."
+      }
+    },
+    {
+      "id": "work:pattern",
+      "kind": "work",
+      "label": "Patterns",
+      "werkId": "pattern",
+      "href": "/pattern",
+      "since": "2026-06-22",
+      "source": {
+        "file": "src/data/werke.ts",
+        "quote": "id: 'pattern'"
+      },
+      "rank": 15,
+      "line": "Capstone of the “Counter-Measurement” line.",
+      "verdict": "REDUNDANT",
+      "verdictLabel": "REDUNDANT — the weakest claim to uniqueness in this audit.",
+      "daylight": "The permutation-test/false-discovery-rate machinery is the only defensible edge — make it the whole point. Foreground the resampling distribution itself (the null distribution of correlation strengths across thousands of shuffles of this specific, self-referential dataset) and cite Vigen by name as the piece this rigorously answers, rather than reading as an unattributed re-run of an already-famous joke.",
+      "auditSource": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "REDUNDANT — the weakest claim to uniqueness in this audit."
+      }
+    },
+    {
+      "id": "work:praemie",
+      "kind": "work",
+      "label": "The Policy",
+      "werkId": "praemie",
+      "href": "/policy",
+      "since": "2026-06-14",
+      "source": {
+        "file": "src/data/werke.ts",
+        "quote": "id: 'praemie'"
+      },
+      "rank": 7,
+      "verdict": "REDUNDANT",
+      "verdictLabel": "REDUNDANT.",
+      "daylight": "Either build on genuinely under-covered instruments — actual cat-bond spread/ROL data (Swiss Re index, Artemis.bm) rather than the BLS homeowner PPI others already use — or make the legal-document framing itself the explicit differentiator, citing Deep Sky/BLS/FRED openly rather than implying proprietary discovery.",
+      "auditSource": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "REDUNDANT."
+      }
+    },
+    {
+      "id": "work:protokoll",
+      "kind": "work",
+      "label": "The Protocol",
+      "werkId": "protokoll",
+      "href": "/protocol",
+      "since": "2026-06-12",
+      "source": {
+        "file": "src/data/werke.ts",
+        "quote": "id: 'protokoll'"
+      },
+      "rank": 6,
+      "verdict": "ADDED VALUE",
+      "verdictLabel": "ADDED VALUE, driven by the literary form, not the data aggregation.",
+      "daylight": "Stop positioning \"twelve open sources, daily\" as the value proposition (invites a losing comparison to OWID); foreground the deterministic/no-LLM/ test-locked-template mechanism and the \"adjourned\" bureaucratic-literary device as the explicit claim — an art piece about administrative language applied to planetary indicators, not a data-aggregation competitor to Our World in Data.",
+      "auditSource": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "ADDED VALUE, driven by the literary form, not the data aggregation."
+      }
+    },
+    {
+      "id": "work:redaction",
+      "kind": "work",
+      "label": "Editorial Deadline",
+      "werkId": "redaction",
+      "href": "/redaction",
+      "since": "2026-06-25",
+      "source": {
+        "file": "src/data/werke.ts",
+        "quote": "id: 'redaction'"
+      },
+      "rank": 8,
+      "line": "From the “Counter-Measurement” line.",
+      "verdict": "REDUNDANT",
+      "verdictLabel": "REDUNDANT, with a narrow honest carve-out.",
+      "daylight": "Either state outright that the no-human-curation, machine-only methodology is the point (genuinely different epistemics from EDGI/Sunlight's human review, and worth citing them as the human-curated alternative), or narrow the watched-page list to territory EDGI/Sunlight don't already cover well (they are US-federal/environment-focused) — non-US institutions or EU/international bodies, to claim real novel coverage.",
+      "auditSource": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "REDUNDANT, with a narrow honest carve-out."
+      }
+    },
+    {
+      "id": "work:round-number",
+      "kind": "work",
+      "label": "Round Numbers",
+      "werkId": "round-number",
+      "href": "/round-number",
+      "since": "2026-06-25",
+      "source": {
+        "file": "src/data/werke.ts",
+        "quote": "id: 'round-number'"
+      },
+      "rank": 11,
+      "line": "From the “Counter-Measurement” line.",
+      "verdict": "REDUNDANT",
+      "verdictLabel": "REDUNDANT.",
+      "daylight": "Either explicitly position as public-education standing on and citing the existing critique (Mebane, Deckert et al., PLOS One), or push into genuinely uncharted territory — run the false-positive-rate-by-sample-size test against contemporary government/administrative series nobody has tested this way (2020 US election data is thoroughly picked over), and publish the underlying rate-vs-n curve as a reusable, queryable artifact.",
+      "auditSource": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "REDUNDANT."
+      }
+    },
+    {
+      "id": "work:society",
+      "kind": "work",
+      "label": "The Society",
+      "werkId": "society",
+      "href": "/society",
+      "since": "2026-08-05",
+      "source": {
+        "file": "src/data/werke.ts",
+        "quote": "id: 'society'"
+      },
+      "rank": 3,
+      "tier": "experiment",
+      "verdict": "UNIQUE",
+      "verdictLabel": "UNIQUE (provisional).",
+      "daylight": "This verdict rests on absence-of-evidence, which is weaker than the other findings in this audit (where strong positive neighbors exist). Worth one more pass in academic HCI/cognitive-science venues specifically (SIGCHI/AIES archives, 1990s–2000s pedagogical Society-of-Mind simulations) before treating UNIQUE as settled.",
+      "auditSource": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "UNIQUE (provisional)."
+      }
+    },
+    {
+      "id": "work:spielraum",
+      "kind": "work",
+      "label": "Headroom",
+      "werkId": "spielraum",
+      "href": "/headroom",
+      "since": "2026-07-12",
+      "source": {
+        "file": "src/data/werke.ts",
+        "quote": "id: 'spielraum'"
+      },
+      "rank": 10,
+      "tier": "experiment",
+      "line": "From the counter-measurement line.",
+      "verdict": "ADDED VALUE",
+      "verdictLabel": "ADDED VALUE (weak/borderline).",
+      "daylight": "De-emphasize the \"who discloses what\" framing (already done, with more granularity, by Cockcroft and holdfastprojects) and make the breakeven-PUE/physical-floor derivation the entire spine, including region-level granularity to match or exceed the existing best neighbor.",
+      "auditSource": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "ADDED VALUE (weak/borderline)."
+      }
+    },
+    {
+      "id": "work:studio",
+      "kind": "work",
+      "label": "Ensemble",
+      "werkId": "studio",
+      "href": "/studio",
+      "since": "2026-07-12",
+      "source": {
+        "file": "src/data/werke.ts",
+        "quote": "id: 'studio'"
+      }
+    },
+    {
+      "id": "work:tell",
+      "kind": "work",
+      "label": "Delve into the intricate realm",
+      "werkId": "tell",
+      "href": "/tell",
+      "since": "2026-06-22",
+      "source": {
+        "file": "src/data/werke.ts",
+        "quote": "id: 'tell'"
+      },
+      "rank": 12,
+      "line": "From the “Counter-Measurement” line.",
+      "verdict": "REDUNDANT",
+      "verdictLabel": "REDUNDANT — the clearest case in this audit.",
+      "daylight": "The one surviving angle: track whether the marker words are now *declining* as authors consciously avoid them post-backlash (Shapira's blog and PMC12679996 note this arms-race dynamic) — a Goodhart's-law story nobody has published yet — or extend to corpora nobody has tracked this way (non-English journals, preprints vs. final PubMed abstracts to catch editorial cleanup, grant applications/peer reviews).",
+      "auditSource": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "REDUNDANT — the clearest case in this audit."
+      }
+    },
+    {
+      "id": "work:ueberflug",
+      "kind": "work",
+      "label": "All Along the Watchtower",
+      "werkId": "ueberflug",
+      "href": "/lab/ueberflug-studie",
+      "since": "2026-06-12",
+      "source": {
+        "file": "src/data/werke.ts",
+        "quote": "id: 'ueberflug'"
+      },
+      "rank": 16,
+      "tier": "studie",
+      "verdict": "ADDED VALUE",
+      "verdictLabel": "ADDED VALUE, genuine but narrow.",
+      "daylight": "If kept, name SatFleetLive and SpyMeSat explicitly on the page and state the differentiator in one sentence. The page's own \"open direction\" (turning the snapshot into a densification time-series — commercial-vs-military EO-satellite density over time) is the strongest candidate for genuine uniqueness among all 16 entries' rework directions, since no neighbor found tracks that.",
+      "auditSource": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "ADDED VALUE, genuine but narrow."
+      }
+    }
+  ],
+  "edges": [
+    {
+      "kind": "addresses",
+      "from": "practice:atelier",
+      "to": "receiver:journal-for-artistic-research-jar-society-for-artistic-resea",
+      "note": "Cartography, not Tracing / Kartographie statt Kopie — pre-submission enquiry for the ATP process-grammar paper (German original + full English version)",
+      "state": "in-preparation",
+      "source": {
+        "file": "src/data/post/ledger.json",
+        "quote": "\"receiver\": \"Journal for Artistic Research (JAR), Society for Artistic Research — Michael Schwab, Editor in Chief\""
+      }
+    },
+    {
+      "kind": "addresses",
+      "from": "practice:ecology",
+      "to": "receiver:darc-digital-aesthetics-research-centre-aarhus-university-pa",
+      "note": "Application to the DARC Research Workshop 2027, 'Interstices: Research (in) the gaps' — abstract 'Who signs the error?', feeding transmediale 2027 (RFC 40)",
+      "state": "withheld",
+      "source": {
+        "file": "src/data/post/ledger.json",
+        "quote": "\"receiver\": \"DARC — Digital Aesthetics Research Centre, Aarhus University (Pablo Velasco)\""
+      }
+    },
+    {
+      "kind": "addresses",
+      "from": "practice:ecology",
+      "to": "receiver:zkm-karlsruhe-arte-util-open-call-mira-hirtz",
+      "note": "Case study for the ZKM open call 'Arte Útil × Technology' — the ecology's accountability apparatus as a usable, forkable tool (leads into the Arte Útil archive + UN_CTRL festival)",
+      "state": "withheld",
+      "source": {
+        "file": "src/data/post/ledger.json",
+        "quote": "\"receiver\": \"ZKM | Karlsruhe, Arte Útil open call (Mira Hirtz)\""
+      }
+    },
+    {
+      "kind": "addresses",
+      "from": "practice:field",
+      "to": "receiver:european-network-for-academic-integrity-enai",
+      "note": "Calibration Certificate for AI-text detection tools (instrument 001)",
+      "state": "prepared",
+      "source": {
+        "file": "src/data/post/ledger.json",
+        "quote": "\"receiver\": \"European Network for Academic Integrity (ENAI)\""
+      }
+    },
+    {
+      "kind": "addresses",
+      "from": "practice:plenum",
+      "to": "receiver:center-for-humane-technology",
+      "note": "The August world-contact packet — Bite's recipe on the attention economy (2h23m a day, 35.8% of daily online time; frozen queue entry 2026-07-15/03) with a cover letter to CHEF spec: ≤180 words, the recipe quoted verbatim, the primary source named so the receiver can cite it without us, full plain-words disclosure, and no ask beyond \"take the number with its source\"",
+      "state": "prepared",
+      "source": {
+        "file": "src/data/post/ledger.json",
+        "quote": "\"receiver\": \"Center for Humane Technology\""
+      }
+    },
+    {
+      "kind": "addresses",
+      "from": "practice:studio",
+      "to": "receiver:roderick-and-solange-macarthur-justice-center-northwestern-p",
+      "note": "NO PART — print-and-instruction work on the Supreme Court order list of 2025-10-06",
+      "state": "prepared",
+      "source": {
+        "file": "src/data/post/ledger.json",
+        "quote": "\"receiver\": \"Roderick and Solange MacArthur Justice Center, Northwestern Pritzker School of Law\""
+      }
+    },
+    {
+      "kind": "door",
+      "from": "practice:atelier",
+      "to": "work:atelier",
+      "source": {
+        "file": "src/data/werke.ts",
+        "quote": "id: 'atelier'"
+      }
+    },
+    {
+      "kind": "door",
+      "from": "practice:field",
+      "to": "work:field",
+      "source": {
+        "file": "src/data/werke.ts",
+        "quote": "id: 'field'"
+      }
+    },
+    {
+      "kind": "door",
+      "from": "practice:studio",
+      "to": "work:studio",
+      "source": {
+        "file": "src/data/werke.ts",
+        "quote": "id: 'studio'"
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:attention",
+      "to": "neighbor:gdacs-itself-reliefweb-wired-by-third-party-dashboards",
+      "note": "GDACS already issues timestamped, population-scored, RSS/CAP bulletins; commercial/NGO dashboards already combine GDACS+ReliefWeb for real-time awareness.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "GDACS itself + ReliefWeb, wired by third-party dashboards — GDACS already issues timestamped, population-scored, RSS/CAP bulletins; commercial/NGO dashboards already combine GDACS+ReliefWeb for real-time awareness."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:attention",
+      "to": "neighbor:hdx-reliefweb-archives",
+      "note": "institutional, versioned disaster-report archiving, not cryptographically hashed.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "HDX / ReliefWeb archives — institutional, versioned disaster-report archiving, not cryptographically hashed."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:attention",
+      "to": "neighbor:metaculus-good-judgment-superforecasters",
+      "note": "the dominant forecast-verification ecosystems with resolution, calibration, Brier scoring — the closest analogue to the \"materialized/unmatched\" verdict idea, applied to crowd predictions rather than institutions.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "Metaculus / Good Judgment (Superforecasters) — the dominant forecast-verification ecosystems with resolution, calibration, Brier scoring — the closest analogue to the \"materialized/unmatched\" verdict idea, applied to crowd predictions rather than institutions."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:attention",
+      "to": "neighbor:opentimestamps-org",
+      "note": "open standard since ~2016, hashes any file and anchors it to Bitcoin as proof-of-existence at a point in time; used by multiple member services. Generic, no disaster focus, no resolution semantics.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[OpenTimestamps](https://opentimestamps.org) — open standard since ~2016, hashes any file and anchors it to Bitcoin as proof-of-existence at a point in time; used by multiple member services. Generic, no disaster focus, no resolution semantics."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:attention",
+      "to": "neighbor:proof-of-existence-originstamp",
+      "note": "the original hash-plus-blockchain-timestamp services (2013/2015) this whole mechanism descends from.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "Proof of Existence / OriginStamp — the original hash-plus-blockchain-timestamp services (2013/2015) this whole mechanism descends from."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:beifang",
+      "to": "neighbor:hanson-2019-user-tracking-on-academic-publisher-platforms",
+      "note": "snapshot analysis across 15 publisher platforms.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "Hanson (2019), \"User Tracking on Academic Publisher Platforms\" — snapshot analysis across 15 publisher platforms."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:beifang",
+      "to": "neighbor:marino-who-s-reading-who-exploring-the-state-of-third-party-",
+      "note": "an academic study directly comparing subscription vs. open-access journal tracking, citing Hinchliffe/Zimmerman/Altman (2018) and Hanson (2019).",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "Marino, \"Who's Reading Who? Exploring the State of Third-Party Tracking Technology in Open Access Journal Content,\" *Journal of Intellectual Freedom & Privacy* — an academic study directly comparing subscription vs. open-access journal tracking, citing Hinchliffe/Zimmerman/Altman (2018) and Hanson (2019)."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:beifang",
+      "to": "neighbor:sparc-navigating-risk-in-vendor-data-privacy-practices",
+      "note": "deep-dive reports on ScienceDirect and SpringerLink documenting 200+ named third parties.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "SPARC, \"Navigating Risk in Vendor Data Privacy Practices\" — deep-dive reports on ScienceDirect and SpringerLink documenting 200+ named third parties."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:beifang",
+      "to": "neighbor:stoptrackingscience-eu",
+      "note": "EU advocacy site with detailed background documentation of publisher tracking as a business model, citing prior studies; not a live automated instrument itself.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Stop Tracking Science](https://stoptrackingscience.eu) — EU advocacy site with detailed background documentation of publisher tracking as a business model, citing prior studies; not a live automated instrument itself."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:consensus",
+      "to": "neighbor:arstechnica-com-information-technology-2013-04-churnalism-tr",
+      "note": "pastes an article, checks it against a hashed corpus of press releases/other outlets for verbatim reuse (sliding-window hashing).",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Churnalism / Churnalism US](https://arstechnica.com/information-technology/2013/04/churnalism-tracker-catches-journalists-copying-press-releases-wikipedia) — pastes an article, checks it against a hashed corpus of press releases/other outlets for verbatim reuse (sliding-window hashing)."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:consensus",
+      "to": "neighbor:ijoc-org-index-php-ijoc-article-download-9904-2777",
+      "note": "peer-reviewed churnalism-at-scale methodology.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[\"Detecting Textual Reuse in News Stories, At Scale\"](https://ijoc.org/index.php/ijoc/article/download/9904/2777), *International Journal of Communication* — peer-reviewed churnalism-at-scale methodology."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:consensus",
+      "to": "neighbor:media-mit-edu-projects-media-cloud-overview",
+      "note": "ingests 1B+ articles, [explicitly deduplicates repeated sentences across sources](https://medium.com/media-cloud-project/tech-brief-how-we-deduplicate-content-in-media-cloud-772cd46b6f7f) at global scale with an open API.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Media Cloud](https://www.media.mit.edu/projects/media-cloud/overview) (MIT/Harvard) — ingests 1B+ articles, [explicitly deduplicates repeated sentences across sources](https://medium.com/media-cloud-project/tech-brief-how-we-deduplicate-content-in-media-cloud-772cd46b6f7f) at global scale with an open API."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:consensus",
+      "to": "neighbor:reusingthenews-org",
+      "note": "academic n-gram text-reuse study of broadcast news, same exact-match technique.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Reusing the News](https://www.reusingthenews.org) — academic n-gram text-reuse study of broadcast news, same exact-match technique."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:correction",
+      "to": "neighbor:alfred-st-louis-fed",
+      "note": "general-purpose real-time-vintage infrastructure letting anyone reconstruct first-report-vs-correction for any BLS series.",
+      "state": "REDUNDANT",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "ALFRED (St. Louis Fed) — general-purpose real-time-vintage infrastructure letting anyone reconstruct first-report-vs-correction for any BLS series."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:correction",
+      "to": "neighbor:frbsf-org",
+      "note": "a live, regularly updated (last updated 2026-07-02) official tool built on the Philadelphia Fed's Real-Time Data Set, visualizing first-vs-second-release revisions since 1990, average revision line, distribution, latest month highlighted, downloadable CSV.",
+      "state": "REDUNDANT",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Federal Reserve Bank of San Francisco — \"Revisions to Payroll Employment Gains in Historical Context\"](https://www.frbsf.org) — a live, regularly updated (last updated 2026-07-02) official tool built on the Philadelphia Fed's Real-Time Data Set, visualizing first-vs-second-release revisions since 1990, average revision line, distribution, latest month highlighted, downloadable CSV."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:ghost-fleet",
+      "to": "neighbor:c4ads-org-reports-oil-and-water",
+      "note": "commercial/NGO maritime intelligence tracking sanctioned shadow-fleet tankers with named case studies, regularly updated.",
+      "state": "REDUNDANT",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Windward AI / C4ADS \"Oil and Water\"](https://c4ads.org/reports/oil-and-water) — commercial/NGO maritime intelligence tracking sanctioned shadow-fleet tankers with named case studies, regularly updated."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:ghost-fleet",
+      "to": "neighbor:globalfishingwatch-org-research-project-dark-vessels",
+      "note": "the peer-reviewed source (*Science Advances*, 2022) of 55,000+ identified intentional AIS-disabling events, with a public interactive map and hotspot analysis. Since Ghost Fleet's own \"intentional\" flag *is* GFW's ML output, this experiment is a curation layer on GFW's already-public data, not an independent measurement.",
+      "state": "REDUNDANT",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Global Fishing Watch — Dark Vessels research](https://globalfishingwatch.org/research-project-dark-vessels) — the peer-reviewed source (*Science Advances*, 2022) of 55,000+ identified intentional AIS-disabling events, with a public interactive map and hotspot analysis. Since Ghost Fleet's own \"intentional\" flag *is* GFW's ML output, this experiment is a curation layer on GFW's already-public data, not an independent measurement."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:ghost-fleet",
+      "to": "neighbor:support-skylight-global",
+      "note": "nonprofit platform built specifically to detect and display dark-vessel events in near-real time, at operational enforcement scale.",
+      "state": "REDUNDANT",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Skylight](https://support.skylight.global) — nonprofit platform built specifically to detect and display dark-vessel events in near-real time, at operational enforcement scale."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:ghost-fleet",
+      "to": "neighbor:theoutlawocean-com-podcast-the-dark-fleet",
+      "note": "investigative journalism running the \"single vessel dark for months\" narrative for years (e.g. the 110-day chase of the *Thunder*), with named vessels, crews, and months of reporting.",
+      "state": "REDUNDANT",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[The Outlaw Ocean Project](https://theoutlawocean.com/podcast/the-dark-fleet) — investigative journalism running the \"single vessel dark for months\" narrative for years (e.g. the 110-day chase of the *Thunder*), with named vessels, crews, and months of reporting."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:observatory",
+      "to": "neighbor:ai-watch-ec-europa-eu",
+      "note": "the European Commission's *own* observatory of AI adoption in public administration, 940+ collected use cases as of 2024 (survey/desk-research based, no longer updated).",
+      "state": "REDUNDANT",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[EU JRC — AI Watch / Public Sector Tech Watch](https://ai-watch.ec.europa.eu) — the European Commission's *own* observatory of AI adoption in public administration, 940+ collected use cases as of 2024 (survey/desk-research based, no longer updated)."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:observatory",
+      "to": "neighbor:data-ted-europa-eu",
+      "note": "the EU's own official SPARQL/knowledge-graph layer over all TED notices, already open and reusable.",
+      "state": "REDUNDANT",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[TED Open Data Service](https://data.ted.europa.eu) — the EU's own official SPARQL/knowledge-graph layer over all TED notices, already open and reusable."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:observatory",
+      "to": "neighbor:jorpex-and-similar-ted-monitoring-saas",
+      "note": "commercial continuous TED ingestion with keyword/CPV filters including AI terms, built for sales leads.",
+      "state": "REDUNDANT",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "Jorpex and similar TED-monitoring SaaS — commercial continuous TED ingestion with keyword/CPV filters including AI terms, built for sales leads."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:observatory",
+      "to": "neighbor:transparency-eu-integrity-watch-red-flags",
+      "note": "real-time public procurement monitoring, ~40,000 EU-budget + 320,000+ national contracts across 9 countries, updated near-daily, 20 fraud/corruption risk indicators.",
+      "state": "REDUNDANT",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Transparency International EU — Integrity Watch Red Flags](https://transparency.eu/integrity-watch-red-flags) — real-time public procurement monitoring, ~40,000 EU-budget + 320,000+ national contracts across 9 countries, updated near-daily, 20 fraud/corruption risk indicators."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:observatory",
+      "to": "neighbor:tussell-com-insights-ai-procurement-tracker",
+      "note": "commercial, monthly-updated tracker of AI spend/vendors in UK government, backed by a full contract database.",
+      "state": "REDUNDANT",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Tussell — UK Public Sector AI Procurement Tracker](https://tussell.com/insights/ai-procurement-tracker) — commercial, monthly-updated tracker of AI spend/vendors in UK government, backed by a full contract database."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:parallaxe",
+      "to": "neighbor:aclanthology-org-2024-emnlp-main-384-pdf",
+      "note": "peer-reviewed, fact-level cross-lingual information-gap detector for Wikipedia at 2.7k-article scale; authors explicitly note it generalizes to contentious-topic argumentation across stances.",
+      "state": "REDUNDANT",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[INFOGAP](https://aclanthology.org/2024.emnlp-main.384.pdf) (UBC/Johns Hopkins/UW, EMNLP 2024; [coverage](https://hub.jhu.edu/2025/01/09/finding-hidden-biases-in-wikipedias-multilingual-content)) — peer-reviewed, fact-level cross-lingual information-gap detector for Wikipedia at 2.7k-article scale; authors explicitly note it generalizes to contentious-topic argumentation across stances."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:parallaxe",
+      "to": "neighbor:collablab-northwestern-edu-pubs-chi2012-baoetal-omnipedia-pd",
+      "note": "visualizes shared vs. unique content across up to 25 language editions at once.",
+      "state": "REDUNDANT",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Omnipedia](https://collablab.northwestern.edu/pubs/CHI2012-BaoEtAl-Omnipedia.pdf) (Northwestern, CHI 2012) — visualizes shared vs. unique content across up to 25 language editions at once."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:parallaxe",
+      "to": "neighbor:firstmonday-org-ojs-index-php-fm-article-view-3939-3382",
+      "note": "automated side-by-side \"language points of view\" comparison (now defunct).",
+      "state": "REDUNDANT",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Manypedia](https://firstmonday.org/ojs/index.php/fm/article/view/3939/3382) (First Monday 2013) — automated side-by-side \"language points of view\" comparison (now defunct)."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:parallaxe",
+      "to": "neighbor:foreignpolicy-com-2013-02-05-china-and-japans-wikipedia-war",
+      "note": "journalistic deep-dive on the exact Senkaku/Diaoyu edit-war example the site cites.",
+      "state": "REDUNDANT",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[\"China and Japan's Wikipedia War\"](https://foreignpolicy.com/2013/02/05/china-and-japans-wikipedia-war), *Foreign Policy* (2013) — journalistic deep-dive on the exact Senkaku/Diaoyu edit-war example the site cites."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:parallaxe",
+      "to": "neighbor:wikicompare",
+      "note": "browser plugin comparing English vs. 8 other-language editions, flags missing info.",
+      "state": "REDUNDANT",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "WikiCompare — browser plugin comparing English vs. 8 other-language editions, flags missing info."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:pattern",
+      "to": "neighbor:jonnyhuck-co-uk-permutation-test-teaching-tool",
+      "note": "a simple browser permutation test on two samples (pedagogical, not automated mining).",
+      "state": "REDUNDANT",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "jonnyhuck.co.uk permutation-test teaching tool — a simple browser permutation test on two samples (pedagogical, not automated mining)."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:pattern",
+      "to": "neighbor:metricgate-p-hacking-and-multiple-comparisons",
+      "note": "interactive simulation demonstrating how many tests inflate false positives.",
+      "state": "REDUNDANT",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "MetricGate, \"P-Hacking and Multiple Comparisons\" — interactive simulation demonstrating how many tests inflate false positives."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:pattern",
+      "to": "neighbor:shiny-app-r-package-for-p-hacking-simulation-pmc9905987",
+      "note": "academic tool exploring p-hacking severity settings interactively.",
+      "state": "REDUNDANT",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "Shiny app + R package for p-hacking simulation (PMC9905987) — academic tool exploring p-hacking severity settings interactively."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:pattern",
+      "to": "neighbor:tylervigen-com-spurious-correlations",
+      "note": "the canonical, extremely well-known site: mines a large database, generates a \"discovery,\" shows a correlation coefficient and p-value, and explicitly warns about lack of causal connection and confounders. Running since 2014, relaunched January 2024, includes an interactive \"Discover a correlation\" feature and user-data uploads.",
+      "state": "REDUNDANT",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Tyler Vigen, Spurious Correlations](https://tylervigen.com/spurious-correlations) — the canonical, extremely well-known site: mines a large database, generates a \"discovery,\" shows a correlation coefficient and p-value, and explicitly warns about lack of causal connection and confounders. Running since 2014, relaunched January 2024, includes an interactive \"Discover a correlation\" feature and user-data uploads."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:praemie",
+      "to": "neighbor:anthropocenefii-org-climate-risk-pricing-what-the-catastroph",
+      "note": "professional fixed-income research asking whether market pricing already reveals climate risk, updated regularly.",
+      "state": "REDUNDANT",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Anthropocene Fixed Income Institute — cat-bond climate-risk pricing](https://anthropocenefii.org/climate-risk-pricing/what-the-catastrophe-bond-market-could-be-telling-us-about-climate-risk) — professional fixed-income research asking whether market pricing already reveals climate risk, updated regularly."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:praemie",
+      "to": "neighbor:deepskyclimate-com-data-dashboard-charts-price-of-home-insur",
+      "note": "a live, quarterly-updated public dashboard whose chart is literally \"Percent Increase in the Price of Home Insurance Premiums since 1998,\" sourced from the *same* BLS PPI series, same 1998 base year, same \"climate is unaffordable\" framing.",
+      "state": "REDUNDANT",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Deep Sky Research — \"Insuring against climate risk is becoming unaffordable\"](https://www.deepskyclimate.com/data-dashboard-charts/price-of-home-insurance) — a live, quarterly-updated public dashboard whose chart is literally \"Percent Increase in the Price of Home Insurance Premiums since 1998,\" sourced from the *same* BLS PPI series, same 1998 base year, same \"climate is unaffordable\" framing."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:praemie",
+      "to": "neighbor:nytimes-com-interactive-2024-07-08-climate-home-insurance-cl",
+      "note": "mainstream journalism already runs this story with state/ZIP-level granularity.",
+      "state": "REDUNDANT",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[NYT interactive — \"Here's Where Climate Change Is Driving Up Home Insurance Rates\"](https://www.nytimes.com/interactive/2024/07/08/climate/home-insurance-climate-change.html) — mainstream journalism already runs this story with state/ZIP-level granularity."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:praemie",
+      "to": "neighbor:swissre-com-library-swiss-re-cat-bond-indices-methodology-ht",
+      "note": "established institutional index (since 2007) tracking catastrophe-bond pricing.",
+      "state": "REDUNDANT",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Swiss Re Global Cat Bond Total Return Indices](https://www.swissre.com/Library/swiss-re-cat-bond-indices-methodology.html) — established institutional index (since 2007) tracking catastrophe-bond pricing."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:protokoll",
+      "to": "neighbor:carbon-brief-daily-briefing",
+      "note": "genuinely daily (weekday) climate/energy digest, human-curated prose, climate-only.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "Carbon Brief \"Daily Briefing\" — genuinely daily (weekday) climate/energy digest, human-curated prose, climate-only."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:protokoll",
+      "to": "neighbor:climate-conflict-org",
+      "note": "fuses climate+conflict+vulnerability into one open index, quarterly cadence, not nightly.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Climate–Conflict–Vulnerability Index (CCVI)](https://climate-conflict.org) — fuses climate+conflict+vulnerability into one open index, quarterly cadence, not nightly."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:protokoll",
+      "to": "neighbor:hdx-state-of-open-humanitarian-data-reports",
+      "note": "periodic meta-assessments of global humanitarian data availability.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "HDX \"State of Open Humanitarian Data\" reports — periodic meta-assessments of global humanitarian data availability."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:protokoll",
+      "to": "neighbor:ourworldindata-org",
+      "note": "14,000+ interactive charts across poverty, climate, conflict, health, energy since 2013, Oxford-affiliated, CC BY. Dwarfs The Protocol on breadth and authority; no nightly deterministic \"minutes\" ritual, no stated no-LLM constraint.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Our World in Data](https://ourworldindata.org) — 14,000+ interactive charts across poverty, climate, conflict, health, energy since 2013, Oxford-affiliated, CC BY. Dwarfs The Protocol on breadth and authority; no nightly deterministic \"minutes\" ritual, no stated no-LLM constraint."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:redaction",
+      "to": "neighbor:changedetection-io",
+      "note": "free/open-source, off-the-shelf scheduled-capture + diff + notification tool explicitly marketed for monitoring government pages.",
+      "state": "REDUNDANT",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[changedetection.io](https://changedetection.io) — free/open-source, off-the-shelf scheduled-capture + diff + notification tool explicitly marketed for monitoring government pages."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:redaction",
+      "to": "neighbor:envirodatagov-org-federal-environmental-web-tracker-about-pa",
+      "note": "open-source \"Scanner\" automatically diffing federal webpages between dates, publishing a public dataset of 1,500+ significant changes since 2017, continuing through 2025 (632 changes in the first 100 days of the second Trump term alone, per NPR Aug 2025).",
+      "state": "REDUNDANT",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[EDGI — Federal Environmental Web Tracker](https://envirodatagov.org/federal-environmental-web-tracker-about-page) — open-source \"Scanner\" automatically diffing federal webpages between dates, publishing a public dataset of 1,500+ significant changes since 2017, continuing through 2025 (632 changes in the first 100 days of the second Trump term alone, per NPR Aug 2025)."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:redaction",
+      "to": "neighbor:pmc-ncbi-nlm-nih-gov-articles-pmc7906373",
+      "note": "the same change-tracking/visualization approach on the same non-authoritative Wayback source.",
+      "state": "REDUNDANT",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[\"Visualizing changes to US federal environmental agency websites, 2016–2020\"](https://pmc.ncbi.nlm.nih.gov/articles/PMC7906373), peer-reviewed — the same change-tracking/visualization approach on the same non-authoritative Wayback source."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:redaction",
+      "to": "neighbor:security-force-monitor-s-wayback-cdx-methodology",
+      "note": "the identical \"two captures, spot the substantive difference\" evidentiary technique, documented.",
+      "state": "REDUNDANT",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "Security Force Monitor's Wayback CDX methodology — the identical \"two captures, spot the substantive difference\" evidentiary technique, documented."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:redaction",
+      "to": "neighbor:sunlightfoundation-com-gov404",
+      "note": "monitors/catalogs federal website changes/removals since 2016 with detailed before/after documentation, feeding congressional oversight and FOIA investigations.",
+      "state": "REDUNDANT",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Sunlight Foundation / Berkman Klein — Web Integrity Project (\"Gov404\")](https://sunlightfoundation.com/gov404) — monitors/catalogs federal website changes/removals since 2016 with detailed before/after documentation, feeding congressional oversight and FOIA investigations."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:round-number",
+      "to": "neighbor:cambridge-org-core-journals-political-analysis-article-comme",
+      "note": "15-year-old academic debate making exactly this \"the test misfires\" case.",
+      "state": "REDUNDANT",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "Deckert, Myagkov & Ordeshook, [\"Benford's Law and the Detection of Election Fraud\"](https://www.cambridge.org/core/journals/political-analysis/article/comment-on-benfords-law-and-the-detection-of-election-fraud) (2011) — 15-year-old academic debate making exactly this \"the test misfires\" case."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:round-number",
+      "to": "neighbor:journals-plos-org-plosone-article-id-10-1371-journal-pone-02",
+      "note": "rigorous Monte-Carlo simulation of false-positive rates as a function of sample size — the exact phenomenon the site demonstrates, done with formal statistical machinery.",
+      "state": "REDUNDANT",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[\"Testing for Benford's Law in very small samples...\"](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0271969), *PLOS One* (2022) — rigorous Monte-Carlo simulation of false-positive rates as a function of sample size — the exact phenomenon the site demonstrates, done with formal statistical machinery."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:round-number",
+      "to": "neighbor:pnas-org-doi-10-1073-pnas-2103619118",
+      "note": "mass-audience and academic rebuttals of the same claim.",
+      "state": "REDUNDANT",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "Reuters Fact Check (Nov 2020), Matt Parker/Stand-up Maths (\"Why do Biden's votes not follow Benford's Law?\", 3.6M views), and [PNAS's \"No evidence for systematic voter fraud\" guide](https://www.pnas.org/doi/10.1073/pnas.2103619118) — mass-audience and academic rebuttals of the same claim."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:round-number",
+      "to": "neighbor:websites-umich-edu-wmebane-inapb-pdf",
+      "note": "direct, citable academic debunking of Benford-as-election-fraud-proof.",
+      "state": "REDUNDANT",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Walter R. Mebane Jr., \"Inappropriate Applications of Benford's Law Regularities to Some Data from the 2020 Presidential Election\"](https://websites.umich.edu/~wmebane/inapB.pdf) (2020) — direct, citable academic debunking of Benford-as-election-fraud-proof."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:society",
+      "to": "neighbor:arxiv-org-abs-2505-18228",
+      "note": "precedent for static, no-backend, browser-only multi-agent simulation as a deployment pattern, not built around Minsky's book.",
+      "state": "UNIQUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[\"Implementing Agents in JavaScript\"](https://arxiv.org/abs/2505.18228) — precedent for static, no-backend, browser-only multi-agent simulation as a deployment pattern, not built around Minsky's book."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:society",
+      "to": "neighbor:essay-only-pieces-drawing-k-line-llm-memory-analogies-e-g-so",
+      "note": "commentary, not implementations.",
+      "state": "UNIQUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "Essay-only pieces drawing K-line/LLM-memory analogies (e.g. \"Society of Mind: The 50-Year-Old Blueprint for AI Agents\") — commentary, not implementations."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:society",
+      "to": "neighbor:github-com-metauto-ai-mindstorm",
+      "note": "invokes \"Societies of Mind\" by name but implements it as LLMs/neural nets talking in natural language — the architectural inversion (opaque large models) of what the book and this site describe.",
+      "state": "UNIQUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Mindstorm / NLSOM](https://github.com/metauto-ai/Mindstorm) — invokes \"Societies of Mind\" by name but implements it as LLMs/neural nets talking in natural language — the architectural inversion (opaque large models) of what the book and this site describe."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:society",
+      "to": "neighbor:github-com-tsinghua-fib-lab-agentsociety",
+      "note": "large LLM-agent social-simulation platform, but LLM-native agents for social science, not Minsky's small deterministic rule agents.",
+      "state": "UNIQUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[AgentSociety](https://github.com/tsinghua-fib-lab/agentsociety) (Tsinghua FIB Lab) — large LLM-agent social-simulation platform, but LLM-native agents for social science, not Minsky's small deterministic rule agents."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:society",
+      "to": "neighbor:voyager-company-s-society-of-mind-cd-rom-1994",
+      "note": "interactive hypertext edition made with Minsky's involvement, but navigable book, not executable agents (already cited by the site itself).",
+      "state": "UNIQUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "Voyager Company's *Society of Mind* CD-ROM (1994) — interactive hypertext edition made with Minsky's involvement, but navigable book, not executable agents (already cited by the site itself)."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:spielraum",
+      "to": "neighbor:holdfastprojects-com-us-datacentre-pue-md-2",
+      "note": "maintained, continually updated leaderboard across Meta/Google/AWS/Microsoft/Oracle/others, with notes on who discloses well vs. poorly.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[holdfastprojects.com — \"US data centre efficiency ranked by PUE\"](https://www.holdfastprojects.com/us-datacentre-pue.md-2) — maintained, continually updated leaderboard across Meta/Google/AWS/Microsoft/Oracle/others, with notes on who discloses well vs. poorly."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:spielraum",
+      "to": "neighbor:pmc-ncbi-nlm-nih-gov-articles-pmc12827721",
+      "note": "a comparison table of PUE, disclosure completeness and consumption across the same hyperscalers.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[PMC12827721 — \"The carbon and water footprints of data centers...\"](https://pmc.ncbi.nlm.nih.gov/articles/PMC12827721) (2025, peer-reviewed) — a comparison table of PUE, disclosure completeness and consumption across the same hyperscalers."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:spielraum",
+      "to": "neighbor:thenewstack-io-cloud-pue-comparing-aws-azure-and-gcp-global-",
+      "note": "region-by-region PUE comparison of the same hyperscalers plus explicit disclosure-quality ranking.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[Adrian Cockcroft, \"Cloud PUE: Comparing AWS, Azure and GCP Global Regions\"](https://thenewstack.io/cloud-pue-comparing-aws-azure-and-gcp-global-regions), *The New Stack*, Jan 2025 — region-by-region PUE comparison of the same hyperscalers plus explicit disclosure-quality ranking."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:spielraum",
+      "to": "neighbor:uptime-institute-global-data-center-survey-annual-since-2007",
+      "note": "the canonical industry PUE benchmark.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "Uptime Institute Global Data Center Survey (annual since 2007) — the canonical industry PUE benchmark."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:tell",
+      "to": "neighbor:andrew-gray-ucl-chatgpt-contamination-estimating-the-prevale",
+      "note": "the original word-list study (incl. \"intricate\"), covered by [Scientific American](https://www.scientificamerican.com/article/chatbots-have-thoroughly-infiltrated-scientific-publishing) and Ars Technica.",
+      "state": "REDUNDANT",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "Andrew Gray (UCL), \"ChatGPT 'contamination': estimating the prevalence of LLMs in the scholarly literature\" (2024) — the original word-list study (incl. \"intricate\"), covered by [Scientific American](https://www.scientificamerican.com/article/chatbots-have-thoroughly-infiltrated-scientific-publishing) and Ars Technica."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:tell",
+      "to": "neighbor:jeremy-nguyen-swinburne",
+      "note": "an individual researcher already runs an ongoing, updated \"delve\"-in-PubMed tracker since 2023 (referenced via [pshapira.net](https://pshapira.net/2024/03/31/delving-into-delve) and PMC12679996) — the closest functional analogue to a daily instrument.",
+      "state": "REDUNDANT",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "Jeremy Nguyen (Swinburne) — an individual researcher already runs an ongoing, updated \"delve\"-in-PubMed tracker since 2023 (referenced via [pshapira.net](https://pshapira.net/2024/03/31/delving-into-delve) and PMC12679996) — the closest functional analogue to a daily instrument."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:tell",
+      "to": "neighbor:liang-et-al-monitoring-ai-modified-content-at-scale-icml-202",
+      "note": "names \"showcasing, realm\" among top LLM-preferred words; both appear in this experiment's own title/copy.",
+      "state": "REDUNDANT",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "Liang et al., \"Monitoring AI-modified content at scale\" (ICML 2024) — names \"showcasing, realm\" among top LLM-preferred words; both appear in this experiment's own title/copy."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:tell",
+      "to": "neighbor:pmc-ncbi-nlm-nih-gov-articles-pmc12219543",
+      "note": "analyzed 14–15 million PubMed abstracts 2010–2024, the *same* per-100k excess-frequency metric on \"delve\" (25× over pre-LLM trend), \"showcasing,\" \"underscores,\" estimating >10% LLM-assisted abstracts. Same metric, same corpus, same framing, peer-reviewed, far larger scale.",
+      "state": "REDUNDANT",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "Kobak, Márquez-Neila et al., [\"Delving into LLM-assisted writing in biomedical publications through excess vocabulary\"](https://pmc.ncbi.nlm.nih.gov/articles/PMC12219543), *Science Advances* (also [arXiv](https://arxiv.org/html/2406.07016v1)) — analyzed 14–15 million PubMed abstracts 2010–2024, the *same* per-100k excess-frequency metric on \"delve\" (25× over pre-LLM trend), \"showcasing,\" \"underscores,\" estimating >10% LLM-assisted abstracts. Same metric, same corpus, same framing, peer-reviewed, far larger scale."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:ueberflug",
+      "to": "neighbor:heavens-above-wikipedia-s-list-of-satellite-pass-predictors",
+      "note": "classic amateur-astronomy pass predictors, general-purpose.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "Heavens-Above / Wikipedia's \"List of satellite pass predictors\" — classic amateur-astronomy pass predictors, general-purpose."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:ueberflug",
+      "to": "neighbor:n2yo-com",
+      "note": "long-running (since 2004), huge database, real-time tracking, general-purpose, server-side.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "N2YO.com — long-running (since 2004), huge database, real-time tracking, general-purpose, server-side."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:ueberflug",
+      "to": "neighbor:satfleetlive-com",
+      "note": "browser tool running SGP4 client-side on live CelesTrak TLE data, \"Only Visible\" filter, explicitly states location is used locally and never sent to a server — matches the technical/privacy architecture almost exactly, but general-purpose (14,000+ satellites, GPS/Starlink/military/weather) with no Earth-observation-specific owner filter.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "[SatFleetLive](https://satfleetlive.com) — browser tool running SGP4 client-side on live CelesTrak TLE data, \"Only Visible\" filter, explicitly states location is used locally and never sent to a server — matches the technical/privacy architecture almost exactly, but general-purpose (14,000+ satellites, GPS/Starlink/military/weather) with no Earth-observation-specific owner filter."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "work:ueberflug",
+      "to": "neighbor:spymesat-ios-app-covered-since-2013-by-nbc-news-space-com",
+      "note": "purpose-built to alert when imaging/\"spy\" satellites are overhead, with the same caveat about classified satellites being absent — matches the EO-specific framing, but as a commercial account-based app its client-side/privacy architecture isn't verifiable the way Watchtower's is.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-usp-audit.md",
+        "quote": "SpyMeSat (iOS app, covered since ~2013 by NBC News/Space.com) — purpose-built to alert when imaging/\"spy\" satellites are overhead, with the same caveat about classified satellites being absent — matches the EO-specific framing, but as a commercial account-based app its client-side/privacy architecture isn't verifiable the way Watchtower's is."
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-07-16-1",
+      "to": "work:atelier",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "/atelier"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-07-17-2",
+      "to": "work:studio",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "/studio"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-07-20-1",
+      "to": "work:atelier",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/pages/atelier/index.astro"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-07-24-1",
+      "to": "work:atelier",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/content/atelier/journal/2026-07-24-protocol-v5-adoption.md"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-07-24-1",
+      "to": "work:protokoll",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/content/atelier/journal/2026-07-24-protocol-v5-adoption.md"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-07-30-1",
+      "to": "work:atelier",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/components/atelier/ProcessFigure.astro"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-08-05-1",
+      "to": "work:consensus",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "/consensus"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-08-06-1",
+      "to": "work:atelier",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/content/{atelier,field,studio}/PROTOCOL.md"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-08-06-1",
+      "to": "work:field",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/content/{atelier,field,studio}/PROTOCOL.md"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-08-06-1",
+      "to": "work:protokoll",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/content/{atelier,field,studio}/PROTOCOL.md"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-08-06-1",
+      "to": "work:studio",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/content/{atelier,field,studio}/PROTOCOL.md"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-08-08-1",
+      "to": "work:atelier",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/content/{atelier,field,studio}/PROTOCOL.md"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-08-08-1",
+      "to": "work:field",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/content/{atelier,field,studio}/PROTOCOL.md"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-08-08-1",
+      "to": "work:protokoll",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/content/{atelier,field,studio}/PROTOCOL.md"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-08-08-1",
+      "to": "work:studio",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/content/{atelier,field,studio}/PROTOCOL.md"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-08-08-2",
+      "to": "work:atelier",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/content/{atelier,field,studio}/PROTOCOL.md"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-08-08-2",
+      "to": "work:field",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/content/{atelier,field,studio}/PROTOCOL.md"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-08-08-2",
+      "to": "work:protokoll",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/content/{atelier,field,studio}/PROTOCOL.md"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-08-08-2",
+      "to": "work:studio",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/content/{atelier,field,studio}/PROTOCOL.md"
+      }
+    }
+  ]
+}
