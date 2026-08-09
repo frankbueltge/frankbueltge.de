@@ -1,21 +1,22 @@
 ---
-// The nav follows what the hub already says (Frank, 2026-07-31): the research ecology is ONE
-// project among others — alongside data-snack.com and datavism.org — not the identity of this
-// site. So the bar carries four points:
-//   Research Ecology ▾  everything that belongs to the ecology, in named sections
-//   Projects ▾          the main projects, read from src/data/projects.ts (ecology included)
-//   Experiments         the lab's earlier pieces (route /experiments keeps its URL)
-//   About
-// Before this, "Practices" sat at the top as if the ecology were the whole house, while
-// "Projects" was buried under "Archive" — the opposite of the hub's own framing
-// (naming.ts: "currently conducting" · "THE OTHER HOUSES — main projects in their own right").
-// "Holdings" → "Experiments" (Frank, 2026-07-31): plain word over house vocabulary.
+// The bar carries four points (Frank, 2026-08-09, late — "kein projekt fokussiert"):
+//   Projects ▾   Research projects (front doors: /ecology, /machine-attention, /atlas)
+//                and Other projects (card pages from src/data/projects.ts)
+//   Lab          the site's earlier experiments (route /experiments keeps its URL)
+//   About · Contact
+// Removed the same evening: the "Works" group (the registers are reachable from the homes
+// they belong to) and "Talk back" (the post office and the seed intake belong to the research
+// ecology and live on its own pages — the top bar is the whole site's, not one project's).
+// The ecology's /work card page went with its menu entry: it was an interstitial between the
+// menu and the project's real page at /ecology (301 covers the old address).
+// "Experiments" → "Lab" as the menu word — the route and page keep their names.
 // Practice names and project entries are DERIVED, not retyped — a rename in naming.ts or
 // projects.ts moves the nav with it.
 // Dropdowns are native <details>: they work without JS; the script below only closes them on
 // outside-click/Escape and keeps at most one open.
 // History: "Atlas" → "Catalogues" (Frank, 2026-07-26); DE/EN toggle removed with the
-// single-locale switch (site-v2 §1.5).
+// single-locale switch (site-v2 §1.5); the 2026-07-31 arrangement (Research Ecology ▾ /
+// Works ▾ / Talk back ▾) lives in git history.
 import { t } from '@/i18n/ui'
 import type { Locale } from '@/lib/site'
 import { getProjects } from '@/data/projects'
@@ -28,7 +29,11 @@ type NavGroup = { label: string; sections: NavSection[]; foot?: NavLink }
 type NavItem = NavLink | NavGroup
 
 // Every project gets its card page; the external site is one click further, on that page.
-const projects: NavLink[] = getProjects().map((p) => ({ href: `/work/${p.slug}`, label: p.name }))
+// Atlas is excluded here because it sits under Research projects with its direct door — one
+// menu, one address per thing.
+const projects: NavLink[] = getProjects()
+  .filter((p) => p.slug !== 'atlas')
+  .map((p) => ({ href: `/work/${p.slug}`, label: p.name }))
 
 const nav: NavItem[] = [
   {
@@ -42,42 +47,14 @@ const nav: NavItem[] = [
         items: [
           { href: '/ecology', label: 'The research ecology' },
           { href: '/machine-attention', label: 'Machine Attention' },
+          { href: '/atlas', label: 'Atlas' },
         ],
       },
       { label: 'Other projects', items: projects },
     ],
     foot: { href: '/work', label: 'all projects →' },
   },
-  { href: '/experiments', label: 'Experiments' },
-  {
-    label: 'Works',
-    sections: [
-      {
-        label: 'Registers',
-        items: [
-          // /works (plural) is the ecology's own complete works register. It sits beside
-          // Catalogues because it IS one of them; it is named separately because "all the
-          // works" is what a visitor actually looks for in a nav.
-          { href: '/works', label: 'Works register' },
-          { href: '/catalogues', label: 'Catalogues' },
-          { href: '/atlas', label: 'Atlas' },
-          { href: '/reception', label: 'Reception' },
-        ],
-      },
-    ],
-  },
-  {
-    label: 'Talk back',
-    sections: [
-      {
-        label: 'Ways in',
-        items: [
-          { href: '/post', label: 'Post office' },
-          { href: '/seed', label: 'Offer a seed' },
-        ],
-      },
-    ],
-  },
+  { href: '/experiments', label: 'Lab' },
   { href: '/about', label: 'About' },
   // Contact after About (Frank, 2026-08-01) — since the page carries a real form that lands
   // in the letter queue, it earns its own door instead of hiding behind the footer.
