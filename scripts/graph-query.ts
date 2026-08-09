@@ -35,6 +35,18 @@ for (const node of hits.slice(0, 6)) {
     if (node.line) console.log(`  line      ${node.line}`)
     if (node.daylight) console.log(`  daylight  ${wrap(node.daylight, 74, 12)}`)
   }
+  if (node.kind === 'practice-work') {
+    console.log(`  made      ${node.date} by ${node.practiceId}${node.medium ? `   ${node.medium}` : ''}`)
+    console.log(`  route     ${node.href}`)
+    if (node.embodies) console.log(`  embodies  ${wrap(node.embodies, 74, 12)}`)
+    // Absence is a fact here, and the CLI says which one: unexamined, not cleared.
+    console.log(`  verdict   ${node.verdictLabel ?? 'not audited yet (ecology audit, 2026-08-09)'}`)
+    if (node.daylight) console.log(`  daylight  ${wrap(node.daylight, 74, 12)}`)
+  }
+  if (node.kind === 'practice' && node.spellings.length > 1) {
+    console.log(`  spelled   ${node.spellings.join(', ')}`)
+  }
+  if (node.kind === 'encounter' && node.recordUrl) console.log(`  record    ${node.recordUrl}`)
   if (node.kind === 'neighbor' && node.url) console.log(`  url       ${node.url}`)
 
   const relations = relationsOf(graph, node.id)
