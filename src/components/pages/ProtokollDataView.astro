@@ -220,6 +220,31 @@ const txt = {
     </details>
   )}
 
+  <section class="mt-10 border-t border-line pt-6">
+    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+      {de ? 'Nächste Nachbarn' : 'Nearest neighbors'}
+    </p>
+    <ul class="mt-3 space-y-2 text-sm text-fg-muted">
+      <li>
+        <a href="https://ourworldindata.org" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">Our World in Data</a>
+        {de ? ' — über 14.000 interaktive Grafiken seit 2013, Oxford-affiliiert; deckt vermutlich eine Obermenge der zwölf Quellen ab, mit mehr Reichweite und Strenge.' : ' — 14,000+ interactive charts since 2013, Oxford-affiliated; almost certainly tracks a superset of these twelve sources, with more rigor and reach.'}
+      </li>
+      <li>
+        {de ? 'Carbon Briefs „Daily Briefing"' : 'Carbon Brief’s "Daily Briefing"'}
+        {de ? ' — echt tägliches (werktags), von Menschen redigiertes Klima-/Energie-Digest, aber nur Klima.' : ' — genuinely daily (weekday) human-curated climate/energy digest, but climate-only.'}
+      </li>
+      <li>
+        <a href="https://climate-conflict.org" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">{de ? 'Climate–Conflict–Vulnerability Index' : 'Climate–Conflict–Vulnerability Index'}</a>
+        {de ? ' — fusioniert Klima, Konflikt und Vulnerabilität zu einem offenen Index, aber vierteljährlich, nicht nächtlich.' : ' — fuses climate+conflict+vulnerability into one open index, but quarterly, not nightly.'}
+      </li>
+    </ul>
+    <p class="mt-3 max-w-xl text-sm leading-relaxed text-fg-muted">
+      {de
+        ? 'Als „wir aggregieren offene planetare Indikatoren täglich" tritt dieses Feld gegen besser ausgestattete Akteure an, die es verlieren würde — OWID allein schon der Reichweite wegen. Der eigentliche Anspruch ist ein anderer: eine nächtliche, vollständig deterministische, KI-freie, testgesperrte Pipeline, die jeden Punkt durch dieselbe bürokratische Vorlage rendert und mit „Beschluss: vertagt" endet — ein literarisch-prozedurales Verfahren über die Sprache von Verwaltung, kein Datenprodukt im Wettbewerb mit OWID.'
+        : 'As a "we aggregate open planetary indicators daily" pitch, this loses to better-resourced players — OWID alone, on reach. The actual claim is different: a nightly, fully deterministic, no-LLM, test-locked pipeline rendering every item through the same bureaucratic template, ending "Resolution: adjourned" — a literary-procedural device about the language of administration, not a data-aggregation competitor to OWID.'}
+    </p>
+  </section>
+
   <nav class="mt-10 flex gap-4 text-sm text-fg-muted print:hidden">
     <a href={archivUrl} class="transition-colors hover:text-fg">{t(locale, 'prot.archive')}</a>
     <a href={methodUrl} class="transition-colors hover:text-fg">{t(locale, 'prot.method')}</a>

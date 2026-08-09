@@ -115,6 +115,31 @@ const flagged = pick ? pick.control.false_positive_rate >= 0.2 : false
     <p class="mb-12 text-fg-muted">{t(locale, 'rn.empty')}</p>
   )}
 
+  <section class="mb-8 border-t border-line pt-6">
+    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+      {de ? 'Nächste Nachbarn' : 'Nearest neighbors'}
+    </p>
+    <ul class="mt-3 space-y-2 text-sm text-fg-muted">
+      <li>
+        <a href="https://websites.umich.edu/~wmebane/inapB.pdf" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">Walter R. Mebane Jr., "Inappropriate Applications of Benford's Law Regularities…"</a>
+        {de ? ' (2020) — direkte akademische Widerlegung von Benford als Wahlbetrugs-Beweis.' : ' (2020) — a direct, citable academic debunking of Benford-as-election-fraud-proof.'}
+      </li>
+      <li>
+        {de ? 'Deckert, Myagkov & Ordeshook, „Benford\'s Law and the Detection of Election Fraud"' : 'Deckert, Myagkov & Ordeshook, "Benford\'s Law and the Detection of Election Fraud"'}
+        {de ? ' (2011) — fünfzehn Jahre alte akademische Debatte, die exakt diesen Fehlalarm-Fall macht.' : ' (2011) — a 15-year-old academic debate making exactly this "the test misfires" case.'}
+      </li>
+      <li>
+        <a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0271969" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">{de ? '„Testing for Benford\'s Law in very small samples…"' : '"Testing for Benford\'s Law in very small samples…"'}</a>, PLOS One (2022)
+        {de ? ' — Monte-Carlo-Simulation der Falsch-Positiv-Rate über die Stichprobengröße, mit formalem statistischem Apparat.' : ' — a Monte-Carlo simulation of false-positive rates as a function of sample size, with formal statistical machinery.'}
+      </li>
+    </ul>
+    <p class="mt-3 max-w-xl text-sm leading-relaxed text-fg-muted">
+      {de
+        ? 'Die zentrale Einsicht — dass der Test bei kleinen Stichproben ein Artefakt der Größe liefert, kein Beweis — steht seit 15 Jahren in der Literatur, mit einer Monte-Carlo-Simulation, die dieselbe Kurve bereits liefert. Die Nachbarn haben die US-Wahl 2020 bereits gründlich durchgemessen; was hier offen bleibt: dieselbe Rate-vs-n-Kurve gegen zeitgenössische, noch nicht durchleuchtete Verwaltungsreihen laufen zu lassen und als eigenständiges, abfragbares Artefakt zu veröffentlichen.'
+        : "The central insight — that the test throws a sample-size artefact at small n, not proof — is 15 years old in the literature, with a Monte-Carlo simulation already delivering the same curve. The neighbors have thoroughly picked over the 2020 US election; what stays open here is running the same false-positive-rate-vs-n curve against contemporary administrative series nobody has tested this way, and publishing it as a standalone, queryable artifact."}
+    </p>
+  </section>
+
   <p class="border-t border-line pt-6 text-xs leading-relaxed text-fg-faint">
     {de
       ? 'Eine Anomalie ist kein Betrug — und dieses Instrument klagt keine Institution an, sondern das Werkzeug. Benford ist nicht universell anwendbar; die Schwellen und Kontrollen liegen offen.'

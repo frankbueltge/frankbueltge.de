@@ -87,6 +87,27 @@ const bars = rec.map((r, i) => ({ x: i * bw, h: (Math.abs(r.delta) / maxAbs) * (
     </section>
   )}
 
+  <section class="mb-12 border-t border-line pt-6">
+    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+      {de ? 'Nächste Nachbarn' : 'Nearest neighbors'}
+    </p>
+    <ul class="mt-3 space-y-2 text-sm text-fg-muted">
+      <li>
+        <a href="https://www.frbsf.org" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">{de ? 'Federal Reserve Bank of San Francisco — „Revisions to Payroll Employment Gains…"' : 'Federal Reserve Bank of San Francisco — "Revisions to Payroll Employment Gains…"'}</a>
+        {de ? ' — ein laufendes, amtliches Werkzeug auf demselben Real-Time-Datensatz (Philadelphia Fed), Erst- vs. Zweitausgabe seit 1990, mit CSV-Download.' : ' — a live, official tool on the same real-time dataset (Philadelphia Fed), first-vs-second-release since 1990, with a CSV download.'}
+      </li>
+      <li>
+        {de ? 'ALFRED (St. Louis Fed)' : 'ALFRED (St. Louis Fed)'}
+        {de ? ' — allgemeine Infrastruktur für Echtzeit-Datenversionen, mit der sich Erstmeldung gegen Korrektur für jede BLS-Reihe rekonstruieren lässt.' : ' — general-purpose real-time-vintage infrastructure letting anyone reconstruct first-report vs. correction for any BLS series.'}
+      </li>
+    </ul>
+    <p class="mt-3 max-w-xl text-sm leading-relaxed text-fg-muted">
+      {de
+        ? 'Das SF-Fed-Werkzeug leistet — mit mehr institutioneller Autorität und derselben Datenherkunft — fast genau das, was diese Seite zeigt: dass gemeldete Beschäftigungszahlen vorläufig sind und revidiert werden. Was ein amtliches, neutrales Werkzeug strukturell nicht sagt: welche Entscheidungen — Leitzinsen, Wahlen, Einstellungen — auf einer Zahl getroffen wurden, die später gestrichen wurde. Das ist die Konsequenzenebene, die hier ansetzt.'
+        : "The SF Fed tool does — with more institutional authority and the same data lineage — almost exactly what this page does: chart that reported employment numbers are provisional and get revised. What an official, neutral tool structurally can't say: which decisions — rate calls, elections, hiring — were made against a number later erased. That consequences layer is what this page builds toward."}
+    </p>
+  </section>
+
   <footer class="mt-12 border-t border-line pt-6">
     <p class="font-mono text-xs text-fg-faint">
       {de ? 'Quelle: ' : 'Source: '}{d.source.name}.
