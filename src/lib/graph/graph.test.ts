@@ -27,7 +27,7 @@ import {
   groupDigest,
   readWorkMetas,
 } from './build'
-import { parseAudit, type LedgerEntry } from './derive'
+import { malformedDecisionRows, parseAudit, type LedgerEntry } from './derive'
 import type { EncounterNode, KnowledgeGraph, PracticeNode, PracticeWorkNode, WorkNode } from './types'
 
 const ROOT = fileURLToPath(new URL('../../../', import.meta.url))
@@ -53,6 +53,22 @@ const flatSources = new Map<string, string>([
   ...Object.entries(workMetas).map(([path, text]) => [path, flat(text)] as const),
   ...(attention ? [[ATTENTION_FILE, flat(attention)] as const] : []),
 ])
+
+describe('the decision log parses whole', () => {
+  // A row written as `| 2026-08-09 (evening) |` was dropped in silence on 2026-08-09: the
+  // reader skipped it, the suite stayed green, and the decision was simply missing from the
+  // graph. Silence is the worst failure mode a derivation can have — a red test is a message,
+  // a dropped row is a lie by omission that nobody is told about.
+  it('leaves no table row behind', () => {
+    const log = readFileSync(`${ROOT}docs/decision-log.md`, 'utf8')
+    expect(
+      malformedDecisionRows(log),
+      'these decision-log rows look like entries but their first cell is not a bare ISO date, ' +
+        'so the graph would drop them without a word — put the qualifier inside the decision ' +
+        'cell instead of beside the date',
+    ).toEqual([])
+  })
+})
 
 describe('every line the graph carries is still in the file it came from', () => {
   const claims = [
