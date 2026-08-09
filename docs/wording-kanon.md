@@ -90,12 +90,39 @@ Navigation sagte das Gegenteil.
 - Zurückgezogen: „Practices" als oberster Nav-Punkt (las sich, als sei die Ökologie das
   ganze Haus) und „Archive ▾" als Sammelpunkt, unter dem *Projects* lag.
 
+## Die vier Wörter — Practice · Project · Instrument · Experiment (Frank, 2026-08-09, VERBINDLICH)
+
+Bis heute liefen vier Begriffe durcheinander: eine Praxis stand als Zeile in der
+Experimente-Liste, ein Instrument hieß „Hintergrund-Projekt", die Route hieß anders als die
+Seite. Ab jetzt gilt genau diese Staffel, auf der ganzen Site und in allen Repos:
+
+| Wort | Was es bezeichnet | Heute |
+|---|---|---|
+| **Practice** | Verfasste, maschinell betriebene Praxis mit eigener Verfassung. Bringt Arbeiten hervor; ist selbst keine Arbeit. | The Atelier · The Field · The Studio · **Machine Attention** |
+| **Project** | Aufgenommene Untersuchung **innerhalb** einer Praxis, die den Aufnahme-Pfad durchlaufen hat. | The Foreknown · Dark Ocean · The State Before the Interface |
+| **Instrument** | Klasse eines Projekts (oder ein Werkzeug des Hauses): läuft leise, liefert zu, **kein Bühnen-Anspruch**, darf jahrelang nichts liefern. Gegenstück: **Flagship**. | The State Before the Interface · der Wissensgraph |
+| **Experiment** | Eigenständiges Stück des Labors, keiner Praxis unterstellt. | The Protocol · Patterns · The Ghost Fleet … (14 auf `/experiments`) |
+
+**Folgen, umgesetzt am 2026-08-09:**
+
+- **Machine Attention ist kein Experiment mehr** und steht nicht mehr in der Liste — eine
+  Praxis ist kein Peer eines Einzelstücks. Eigene Tür: **`/machine-attention`**. Sie ist
+  auch **keine fünfte Tür** im Türen-Raster der Ökologie: sie ist das Gegen-Experiment
+  („eine Verfassung gegen viele"), und ein gemeinsames Raster löschte genau diese Spannung.
+- **„Hintergrund-Projekt" ist gestrichen.** Das Observatorium ist ein **Instrument** der
+  Praxis — leise, aber vollwertig, nicht „im Hintergrund".
+- **Route und Titel heißen gleich:** `/holdings` → **`/experiments`** (301 auf beide alten
+  Adressen; die Seite hieß seit dem 31.07. ohnehin „Experiments").
+- `tier` in `src/data/werke.ts` kennt die vier Wörter; `werke.test.ts` hält Praxis und
+  Instrument aus der Experimente-Reihe heraus, damit der nächste neue Rang nicht still
+  hineinwandert.
+
 ## „Experiments" statt „Holdings" (Frank, 31.07.)
 
 Die früheren Arbeiten des Labors heißen wieder **„Experiments"** (dt. „Experimente") —
 Klartext vor Haus-Vokabular; die Umwidmung zu „Holdings"/„Bestände" (Juli 2026) ist damit
-zurückgenommen. **Die Route bleibt `/holdings`** (Links, Redirects, OG-Pfade unverändert) —
-nur der sichtbare Name ändert sich. Bleibt gültig: es gibt **keinen Dachtitel** für die
+zurückgenommen. ~~**Die Route bleibt `/holdings`**~~ — **überholt am 2026-08-09:** Route und
+Titel heißen jetzt beide `/experiments`, siehe den Abschnitt „Die vier Wörter" oben. Bleibt gültig: es gibt **keinen Dachtitel** für die
 Sammlung (12.07.), jedes Experiment steht für sich.
 
 **Nachtrag (Frank, 08.08.):** `/holdings` führt seit dem 08.08. auch das **laufende** zweite
@@ -110,8 +137,9 @@ eine machine investigative practice (Name von Frank bestätigt, 08.08.). Ihre B�
 unter **`/attention`** (nächtlich gespiegelt aus `machine-attention`, Franks Anweisung:
 „keine GitHub Page — auf frankbueltge.de veröffentlichen, wo es hingehört"). Erstes
 Projekt: **„The Foreknown"** (Beurkundung angekündigter Zukünfte); „The State Before the
-Interface" (`/observatory`) ist seit dem 08.08. **Hintergrund-Observatorium** dieser
-Praxis, nicht mehr das Experiment selbst. Der Vergleichs-Anspruch („zwei
+Interface" (`/observatory`) ist seit dem 08.08. ein Projekt dieser Praxis, nicht mehr das
+Experiment selbst — ~~„Hintergrund-Observatorium"~~ heißt seit dem 2026-08-09 **Instrument**
+(siehe „Die vier Wörter"). Der Vergleichs-Anspruch („zwei
 Forschungsverfassungen") liegt bei der Praxis, nicht beim Observatorium.
 
 ## Schwarze Liste (zurückgezogen — nie als aktuell verwenden)

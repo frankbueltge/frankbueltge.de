@@ -493,7 +493,7 @@ export const PALETTES: readonly PaletteSet[] = [
   {
     id: 'holdings-neighborhood',
     description:
-      'The neighbourhood figure (/holdings/neighbors): every experiment on one rail, the ' +
+      'The neighbourhood figure (/experiments/neighbors): every experiment on one rail, the ' +
       'projects that already do something like it inward on the same spoke, and the empty ' +
       'stretch between them — the daylight. THREE categorical slots, one per verdict class of ' +
       'the USP audit of 2026-08-09, plus the DECLARED NEUTRAL every neighbour wears: a project ' +

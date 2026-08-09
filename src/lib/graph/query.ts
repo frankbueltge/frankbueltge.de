@@ -3,7 +3,7 @@
 // Purpose one of the instrument: a session that needs to know what a change touches asks here
 // instead of grepping a repository of 2,500 files ("what touches Iceberg Theory?" → its audit
 // verdict, its prior art, the decisions that named its files). Purpose two: the same functions
-// shape the neighbourhood figure at /holdings/neighbors, so page and command line answer out
+// shape the neighbourhood figure at /experiments/neighbors, so page and command line answer out
 // of one artifact and cannot drift apart.
 //
 // Pure functions over a loaded graph — no fs here, so an Astro page may import this.
@@ -75,7 +75,7 @@ export interface FieldEntry {
   neighbors: Array<{ node: GraphNode; url?: string; note?: string }>
 }
 
-/** The audited shelf, in the order /holdings ranks it. Works without a verdict are left out:
+/** The audited shelf, in the order /experiments ranks it. Works without a verdict are left out:
  *  the figure is about the audit, and an unaudited work has no position in this field. */
 export function neighborhoodField(graph: KnowledgeGraph): FieldEntry[] {
   const works = graph.nodes

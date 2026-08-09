@@ -1,7 +1,7 @@
 ---
-// The works index lives at /holdings (the lab's earlier experiments). This used to point at
+// The works index lives at /experiments (the lab's earlier experiments). This used to point at
 // the retired /lab route and only resolved via a second 301 in public/_redirects — redirect
 // straight to the real target. The method sheets at /werke/<id> remain in place and reachable.
 import { getRelativeLocaleUrl } from 'astro:i18n'
-return Astro.redirect(getRelativeLocaleUrl('en', '/holdings'))
+return Astro.redirect(getRelativeLocaleUrl('en', '/experiments'))
 ---

@@ -15,7 +15,7 @@ export interface Werk {
   /** Sekundärer „Methodenblatt"-Link; null = keiner (z. B. Atelier hat sein Protokoll inline). */
   methodHref?: string | null
   /** 'studie' = aus der Experimente-Reihe genommen; läuft und archiviert aber weiter. */
-  tier?: 'experiment' | 'studie'
+  tier?: 'experiment' | 'studie' | 'practice' | 'instrument'
 }
 
 /** Verzeichnis der Experimente. Reihenfolge unten = redaktionelle Feinordnung bei Datums-
@@ -37,7 +37,7 @@ export const WERKE: Werk[] = [
     },
     live: true,
     methodHref: '/werke/attention',
-    tier: 'experiment',
+    tier: 'practice',
   },
   {
     id: 'observatory',
@@ -50,12 +50,12 @@ export const WERKE: Werk[] = [
     since: '2026-08-08',
     href: '/observatory',
     description: {
-      de: "Since 2026-08-08 the background observatory of the machine-attention practice — its first instrument, kept deliberately quiet: every night it reads Europe's public procurement journal (TED), preserves every AI-related notice as hashed original bytes, and turns differences — records changed after publication, records that vanish, the same vendor winning across borders — into case candidates that face a six-criteria gate. Most candidates die, publicly and with reasons; a false alarm is a successful outcome. Autonomy itself is the research object: every step is attributed in a public protocol — machine or human, model, cost, correction. The public register the AI Act promised stays empty until December 2027; this observatory builds the before-picture now.",
-      en: "Since 2026-08-08 the background observatory of the machine-attention practice — its first instrument, kept deliberately quiet: every night it reads Europe's public procurement journal (TED), preserves every AI-related notice as hashed original bytes, and turns differences — records changed after publication, records that vanish, the same vendor winning across borders — into case candidates that face a six-criteria gate. Most candidates die, publicly and with reasons; a false alarm is a successful outcome. Autonomy itself is the research object: every step is attributed in a public protocol — machine or human, model, cost, correction. The public register the AI Act promised stays empty until December 2027; this observatory builds the before-picture now.",
+      de: "An instrument of the Machine Attention practice since 2026-08-08 — kept deliberately quiet, and none the less a project of it: every night it reads Europe's public procurement journal (TED), preserves every AI-related notice as hashed original bytes, and turns differences — records changed after publication, records that vanish, the same vendor winning across borders — into case candidates that face a six-criteria gate. Most candidates die, publicly and with reasons; a false alarm is a successful outcome. Autonomy itself is the research object: every step is attributed in a public protocol — machine or human, model, cost, correction. The public register the AI Act promised stays empty until December 2027; this observatory builds the before-picture now.",
+      en: "An instrument of the Machine Attention practice since 2026-08-08 — kept deliberately quiet, and none the less a project of it: every night it reads Europe's public procurement journal (TED), preserves every AI-related notice as hashed original bytes, and turns differences — records changed after publication, records that vanish, the same vendor winning across borders — into case candidates that face a six-criteria gate. Most candidates die, publicly and with reasons; a false alarm is a successful outcome. Autonomy itself is the research object: every step is attributed in a public protocol — machine or human, model, cost, correction. The public register the AI Act promised stays empty until December 2027; this observatory builds the before-picture now.",
     },
     live: true,
     methodHref: '/werke/observatory',
-    tier: 'experiment',
+    tier: 'instrument',
   },
   {
     id: 'society',
@@ -313,7 +313,7 @@ export const WERKE: Werk[] = [
       de: 'Aus der Linie „Gegenmessung". Jeden Tag wählt eine Maschine den Satz, den die meisten „unabhängigen" Medien wortgleich brachten, zeigt Quelle und Kaskade und rechnet, wie viel des Nachrichten-Konsenses Echo statt Recherche ist.',
       en: 'From the “Counter-Measurement” line. Each day a machine picks the sentence the most “independent” outlets ran word-for-word, shows source and cascade, and computes how much of the news consensus is echo rather than reporting.',
     },
-    // Back in the experiments row (Frank, 2026-08-05): ranked first on /holdings; the
+    // Back in the experiments row (Frank, 2026-08-05): ranked first on /experiments; the
     // 44-day committed archive and the evidence track ended its 'studie' demotion.
     tier: 'experiment',
   },
@@ -366,22 +366,37 @@ export function werkTitle(w: Werk, locale: Locale): string {
  *  Startseite und Lab rendern hierüber — keine Sonderstellung für The Protocol. */
 export const WERKE_CHRONO: Werk[] = [...WERKE].sort(byRecency)
 
-/** Kuratierte Experimente-Reihe vs. Studien außer der Reihe — beide chronologisch. */
-export const WERKE_EXPERIMENTE: Werk[] = WERKE_CHRONO.filter((w) => w.tier !== 'studie')
+/** Kuratierte Experimente-Reihe vs. Studien außer der Reihe — beide chronologisch.
+ *  Seit 2026-08-09 ist „alles außer Studie" nicht mehr dasselbe wie „Experiment":
+ *  eine Praxis (Machine Attention) und ein Instrument (das Observatorium) stehen im
+ *  Register, sind aber keine Experimente des Labors. Der Filter nennt darum, was er
+ *  einschließt, statt was er ausschließt — sonst wandert der nächste neue Rang still
+ *  in die Experimente-Reihe der Startseite. */
+export const WERKE_EXPERIMENTE: Werk[] = WERKE_CHRONO.filter(
+  (w) => w.tier === undefined || w.tier === 'experiment',
+)
 export const WERKE_STUDIEN: Werk[] = WERKE_CHRONO.filter((w) => w.tier === 'studie')
+export const WERKE_PRACTICES: Werk[] = WERKE_CHRONO.filter((w) => w.tier === 'practice')
+export const WERKE_INSTRUMENTS: Werk[] = WERKE_CHRONO.filter((w) => w.tier === 'instrument')
 
-/** Ids that must never surface on /holdings even though they sit in WERKE_CHRONO: the three
+/** Ids that must never surface on /experiments even though they sit in WERKE_CHRONO: the three
  *  practice doors (their own homes under /atelier, /field, /studio) and current MRR artefacts
- *  ('on-record', since 2026-07-23) — /holdings lists the lab's EARLIER experiments, not the
+ *  ('on-record', since 2026-07-23) — /experiments lists the lab's EARLIER experiments, not the
  *  ecology's running practices or the architect's current engineering line (CLAUDE.md). */
 export const HOLDINGS_EXCLUDED_IDS: ReadonlySet<string> = new Set([
   'field',
   'studio',
   'atelier',
   'on-record',
+  // Machine Attention and its instrument (Frank, 2026-08-09): a practice is not a peer of
+  // a single piece. Listing it beside The Protocol compared a house with a room. It has
+  // its own door at /machine-attention, which carries its projects; the observatory is
+  // one of those, an instrument of the practice rather than an experiment of the lab.
+  'attention',
+  'observatory',
 ])
 
-/** Curated order for /holdings (Frank, 2026-08-05): ranked by strength/impact of the
+/** Curated order for /experiments (Frank, 2026-08-05): ranked by strength/impact of the
  *  experiment, not by launch date. The Consensus first and Iceberg Theory second are
  *  Frank's calls; the rest is ranked by outward stakes a stranger recognizes plus
  *  checkability of the figure. Reordering is one edit here. */
@@ -393,14 +408,6 @@ export const HOLDINGS_RANKED: readonly string[] = [
   // tests), and it is the lab's most interactive piece — but the two seats above it are
   // Frank's explicit calls and stay his.
   'society',
-  // Machine Attention fourth (2026-08-08): the practice itself — flagship of the second
-  // constitution, with The Foreknown as its first project and a live stage at /attention.
-  'attention',
-  // The State Before the Interface fifth (2026-08-08, listed on Frank's explicit go on
-  // launch day; since 2026-08-08 the background observatory of the machine-attention
-  // practice): outward stakes a stranger recognizes at once (the state buying AI),
-  // checkability total (append-only archive, every claim walks back to hashed bytes).
-  'observatory',
   'protokoll',
   'praemie',
   'redaction',
@@ -414,7 +421,7 @@ export const HOLDINGS_RANKED: readonly string[] = [
   'ueberflug',
 ]
 
-/** What /holdings actually renders: the curated ranking above — validated loudly, so a new
+/** What /experiments actually renders: the curated ranking above — validated loudly, so a new
  *  werk cannot slip in unranked and a stale ranking cannot survive a rename. */
 export const WERKE_HOLDINGS: Werk[] = HOLDINGS_RANKED.map((id) => {
   const w = WERKE.find((x) => x.id === id)
@@ -424,7 +431,7 @@ export const WERKE_HOLDINGS: Werk[] = HOLDINGS_RANKED.map((id) => {
 })
 for (const w of WERKE) {
   if (!HOLDINGS_EXCLUDED_IDS.has(w.id) && !HOLDINGS_RANKED.includes(w.id)) {
-    throw new Error(`werk "${w.id}" is neither ranked for /holdings nor excluded`)
+    throw new Error(`werk "${w.id}" is neither ranked for /experiments nor excluded`)
   }
 }
 

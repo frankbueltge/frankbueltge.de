@@ -102,7 +102,7 @@ export const OG_PAGES: Record<string, { title: string; description: string }> = 
 export function ogSlug(pathname: string): keyof typeof OG_PAGES {
   const p = pathname.replace(/^\/de/, '').replace(/\/+$/, '') || '/'
   if (p === '/') return 'home'
-  if (p.startsWith('/holdings') || p.startsWith('/lab')) return 'holdings'
+  if (p.startsWith('/experiments') || p.startsWith('/lab')) return 'holdings'
   if (p.startsWith('/ueber') || p.startsWith('/about')) return 'about'
   if (p.startsWith('/work') || p.startsWith('/projekte')) return 'projects'
   if (p.startsWith('/atlas')) return 'atlas'

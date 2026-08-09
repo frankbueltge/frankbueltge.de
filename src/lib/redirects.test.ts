@@ -105,9 +105,9 @@ describe('removed DE routes are covered by public/_redirects', () => {
 describe('the retired /lab collection index', () => {
   const rules = parseRedirects(raw)
 
-  it('redirects to /holdings', () => {
+  it('redirects to /experiments', () => {
     const labRule = rules.find((r) => r.from === '/lab')
-    expect(labRule?.to).toBe('/holdings')
+    expect(labRule?.to).toBe('/experiments')
   })
 
   it('is an exact rule (no wildcard), so it never swallows /lab/ueberflug-studie or /lab/[slug]', () => {
@@ -121,7 +121,7 @@ describe('the retired /lab collection index', () => {
   })
 })
 
-// Routen englisch (2026-07-16, Frank): /encounters und /holdings sind kanonisch; die deutschen
+// Routen englisch (2026-07-16, Frank): /encounters und /experiments sind kanonisch; die deutschen
 // Ökologie-Pfade müssen abgedeckt sein, samt Unterseiten.
 const REMOVED_GERMAN_ECOLOGY_ROUTES = [
   '/begegnungen',
@@ -136,9 +136,9 @@ describe('German ecology routes are covered and point at the English canonicals'
     expect(isCovered(route, rules)).toBe(true)
   })
 
-  it('/begegnungen goes to /encounters, /bestaende to /holdings', () => {
+  it('/begegnungen goes to /encounters, /bestaende to /experiments', () => {
     expect(rules.find((r) => r.from === '/begegnungen')?.to).toBe('/encounters')
-    expect(rules.find((r) => r.from === '/bestaende')?.to).toBe('/holdings')
+    expect(rules.find((r) => r.from === '/bestaende')?.to).toBe('/experiments')
   })
 })
 
@@ -229,8 +229,8 @@ describe('the in-app /werke index redirect', () => {
   const PAGE_PATH = fileURLToPath(new URL('../pages/werke/index.astro', import.meta.url))
   const pageSource = readFileSync(PAGE_PATH, 'utf8')
 
-  it('targets /holdings directly', () => {
-    expect(pageSource).toContain("'/holdings'")
+  it('targets /experiments directly', () => {
+    expect(pageSource).toContain("'/experiments'")
   })
 
   it('no longer names the retired /lab route as its target', () => {

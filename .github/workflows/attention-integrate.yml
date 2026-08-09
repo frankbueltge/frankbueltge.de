@@ -32,17 +32,25 @@ jobs:
           rm -rf public/attention
           mkdir -p public/attention
           cp -R /tmp/machine-attention/public/. public/attention/
+          # What the practice says about itself, beside what it renders
+          # (attention-export/1, docs/design/2026-08-09-attention-export-contract.md).
+          # Absent is a legal state: the graph and the practice page both read
+          # it as "no attention lane" rather than failing.
+          mkdir -p src/data/attention
+          if [ -f /tmp/machine-attention/export.json ]; then
+            cp /tmp/machine-attention/export.json src/data/attention/export.json
+          fi
 
       - name: Commit mirror
         run: |
           git config user.name "Attention-Integrate"
           git config user.email "attention-integrate@frankbueltge.de"
-          git add public/attention
+          git add public/attention src/data/attention
           if git diff --cached --quiet; then
             echo "stage unchanged"
             exit 0
           fi
-          git commit -m "attention: mirror the practice stage of $(date -u +%F)"
+          git commit -m "attention: mirror the practice stage and export of $(date -u +%F)"
           for attempt in 1 2 3 4 5; do
             if git push; then exit 0; fi
             git pull --rebase

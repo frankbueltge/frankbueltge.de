@@ -102,7 +102,7 @@ export const NAMING = {
     kicker: 'LATEST',
     kickerSub: 'WHAT THE PRACTICES MADE — NEWEST FIRST',
     note: 'the living edge of the machine — new works land here as the practices make them, night after night; this is the part that changes daily. Each work links into its house above.',
-    /* 'the whole lab →' entfernt (Frank, 24.07.): der Link zeigte auf /holdings (die ALTEN
+    /* 'the whole lab →' entfernt (Frank, 24.07.): der Link zeigte auf /experiments (die ALTEN
      * Experimente), während die Liste hier die NEUEN Arbeiten der Praktiken führt —
      * semantisch falsch. Holdings hat seinen Platz unter ALSO ON THIS SITE. */
   },
@@ -149,6 +149,22 @@ export const NAMING = {
         noResident: 'no resident — kept by the conductor',
       },
     ] as DoorItem[],
+
+    /**
+     * The second house (Frank, 2026-08-09). Machine Attention is NOT a fifth door: it was
+     * built as the counter-experiment to this ecology — one constitution against many — and
+     * putting it in the same grid would dissolve exactly the tension it exists to hold. It
+     * also is not an experiment of the lab, which is where it wrongly sat until today: a
+     * practice is not a peer of a single piece. So it gets its own block under the doors,
+     * in its own words, with its own address.
+     */
+    secondHouse: {
+      kicker: 'AND NEXT DOOR',
+      name: 'Machine Attention',
+      href: '/machine-attention',
+      lead: 'A second constitution, deliberately built against this one: a single machine running public investigations, with its attention, refusals, uncertainty and cost on the record — one constitution against many.',
+      linkLabel: '→ what it is, and what it is investigating',
+    },
 
     /**
      * The guest voice, named where the residents are named (2026-08-02). The Plenum is
@@ -279,16 +295,16 @@ export const NAMING = {
   /** Sammelpunkt für die maschinell gepflegten Nachschlagewerke (Frank, 26.07.): der
    * Nav-Punkt „Atlas" wird zu „Catalogues" und hält Atlas UND Dataset Register — beides
    * wächst ohne menschliches Zutun und verzeichnet, was es in der WELT gibt (im
-   * Unterschied zu /holdings, wo eigene Arbeiten liegen, und zum Regal des Ateliers
+   * Unterschied zu /experiments, wo eigene Arbeiten liegen, und zum Regal des Ateliers
    * unter /atelier/material, das das Inventar EINER Praxis ist und dort bleibt).
    * „Hub" ist hier bewusst NICHT verwendet — der Begriff bezeichnet in dieser Codebasis
    * die Startseite der Ökologie; das Repo darf `dataset-hub` heißen, die Fläche nicht.
    * Zahlen stehen NICHT in diesen Texten (Kanon: Zahlen nur aus Daten rendern).
    * 2026-08-01: Der vierte Eintrag (Works Register, /works) bricht die ursprüngliche
    * Abgrenzung „verzeichnet, was es in der WELT gibt" bewusst auf — er verzeichnet, was
-   * DIESE Ökologie hervorgebracht hat. Er steht hier und nicht unter /holdings, weil er
+   * DIESE Ökologie hervorgebracht hat. Er steht hier und nicht unter /experiments, weil er
    * dasselbe Versprechen einlöst wie die anderen drei: maschinell gepflegt, jede Zeile
-   * auf ihre Quelldatei zurückführbar, gewachsen ohne Handarbeit. /holdings bleibt die
+   * auf ihre Quelldatei zurückführbar, gewachsen ohne Handarbeit. /experiments bleibt die
    * lose Sammlung der FRÜHEREN Experimente des Labors — ein anderer Bestand. */
   catalogues: {
     kicker: 'CATALOGUES',

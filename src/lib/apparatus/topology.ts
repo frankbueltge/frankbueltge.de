@@ -659,7 +659,7 @@ export const EDGES: readonly ApparatusEdge[] = [
  * nichts mit der research ecology zu tun haben").
  *
  * The wording canon keeps them apart: the research ecology stands ALONGSIDE the site's other
- * undertakings, and `/holdings` — the Experiments, the counter-measurement line — is "our own
+ * undertakings, and `/experiments` — the Experiments, the counter-measurement line — is "our own
  * earlier work", a separate collection with no umbrella. One repository carries both, and that is
  * a fact about the apparatus, not a reason to blur them.
  *

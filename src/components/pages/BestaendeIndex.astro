@@ -1,5 +1,5 @@
 ---
-// Ökologie-Neustrukturierung (Phase 3e, Branch ecology-restructure): "/holdings" widmet die
+// Ökologie-Neustrukturierung (Phase 3e, Branch ecology-restructure): "/experiments" widmet die
 // bisherigen Experimente (src/data/werke.ts, ohne die drei Engines) zu "Bestände des Labors —
 // Material, der Ökologie angeboten" um (docs/design/site-restructure-concept.md §2). Jede
 // bestehende Route bleibt unverändert erreichbar; hier ändert sich nur die Rahmung, keine
@@ -18,7 +18,7 @@ const locale = (Astro.currentLocale ?? 'en') as Locale
 // leak in as the top entry of a page that lists the lab's earlier experiments.
 const bestaende = WERKE_HOLDINGS
 // Back to "Experiments" (Frank, 2026-07-31): the 2026-07 redesignation to "Holdings" traded a
-// word everyone understands for house vocabulary. The route /holdings is unchanged — links,
+// word everyone understands for house vocabulary. The route /experiments is unchanged — links,
 // redirects and OG paths keep working; only the visible name goes back to the plain one.
 // "earlier work" dropped from the sub (Frank, 2026-08-08): this shelf now also lists the
 // RUNNING second experiment (The State Before the Interface) on Frank's explicit call —
@@ -48,7 +48,7 @@ const copy = {
   <p class="mt-4 max-w-2xl text-fg-muted">{copy.sub}</p>
   <p class="mt-5">
     <a
-      href={getRelativeLocaleUrl(locale, '/holdings/neighbors')}
+      href={getRelativeLocaleUrl(locale, '/experiments/neighbors')}
       class="font-mono text-[12px] uppercase tracking-[0.14em] text-fg-faint underline underline-offset-4 transition-colors hover:text-accent-soft"
     >
       {copy.field}

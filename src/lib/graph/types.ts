@@ -2,7 +2,7 @@
 //
 // An INSTRUMENT, not an experiment (docs/design/2026-08-09-usp-rework-program.md, "Parked"):
 // it answers "what touches X?" for a session at its start, and it is the substrate the
-// neighbourhood figure at /holdings/neighbors is drawn from.
+// neighbourhood figure at /experiments/neighbors is drawn from.
 //
 // The one law of this graph: EVERY node and EVERY edge is derived from a committed file and
 // carries the verbatim string it was derived from. Nothing here is typed by hand — a fact
@@ -11,7 +11,7 @@
 
 /** The kinds of thing this house records about itself.
  *
- *  `work` is an experiment of the lab (the /holdings shelf and the practice doors);
+ *  `work` is an experiment of the lab (the /experiments shelf and the practice doors);
  *  `practice-work` is a work one of the practices MADE — the ecology's own production, which
  *  the graph was blind to until 2026-08-09 although 59 of them sit committed in this repo. */
 export type NodeKind =
@@ -48,7 +48,7 @@ export interface WorkNode extends NodeBase {
   werkId: string
   href: string
   since: string
-  /** rank on /holdings; absent for the works the register excludes (practice doors, MRR) */
+  /** rank on /experiments; absent for the works the register excludes (practice doors, MRR) */
   rank?: number
   tier?: string
   /** the audit's draft verdict class, present only for audited works */
