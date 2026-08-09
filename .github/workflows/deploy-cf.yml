@@ -31,6 +31,11 @@ on:
     workflows:
       - Protokoll nightly
       - Prämie nightly
+      # The attention mirror commits with the built-in GITHUB_TOKEN, which
+      # never fires `on: push` — without this trigger, a freshly mirrored
+      # practice stage would sit undeployed until the next unrelated push
+      # (found 2026-08-09, the currency rule's exact failure mode).
+      - Attention integrate
       # Renamed 2026-08-02 when the cadence changed (parallaxe.yml declares `name: Parallaxe
       # weekly`). GitHub matches workflow_run by the declared name, so the stale entry silently
       # matched nothing and the Monday register commit never reached production.
