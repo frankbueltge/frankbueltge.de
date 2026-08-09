@@ -90,10 +90,10 @@ export const NAMING = {
    * Haus-Jargon). Qualifizierte Autonomie-Sprache bleibt: teilautonom unter menschlicher
    * Verantwortung, versioniert ist, was der Apparat erfassen kann. */
   sub: 'One question runs through the current projects here: what can machines genuinely do better than people — hold attention for months without blinking, measure the same thing every night, read evidence at a scale no one could — and can they research autonomously, with means of their own, and produce concrete, useful works whose value can be checked? Every claim leads back to its evidence, failures stay visible, and Git is the archive.',
+  /** Seit 2026-08-10 NICHT mehr im Hero (Frank: „das kann alles weg", zusammen mit dem
+   * „how this works →"-Link, der ganz entfiel — /apparatus bleibt als Seite, verlinkt von
+   * den Ökologie-Flächen). Bleibt hier, weil /dossier die Zeile im Presse-Kontext führt. */
   conductorLine: 'architect & conductor: Frank Bültge · the machines write, the record shows who wrote what',
-
-  /** Kleiner Link unter dem Hero-Sub zur vollen Apparat-Erklärung (Frank, 25.07.). */
-  apparatusLink: { label: 'how this works →', href: '/apparatus' },
 
   /** „What this is" — Klartext-Block direkt nach dem Puls, vor den Türen (Frank, 25.07.:
    * die Startseite war zu abstrakt und holte neue Besucher nicht ab). Sagt in einfacher
@@ -461,10 +461,13 @@ export const NAMING = {
    * snapshot (src/data/pulse/pulse.json) at render time, never hard-coded, so the caption never
    * drifts from what the chart actually shows. */
   pulseCaption(p: { weekRange: string; repoCount: number; totalCommits: number; asOf: string }): string {
+    // "all N repositories behind this site", not "the ecology's" (Frank, 2026-08-10): the
+    // pulse counts every repo involved here — site, engines, research-ecology,
+    // machine-attention, data-snack-plenum — see scripts/fetch-pulse.ts REPOS.
     return (
       `the pulse — one line per ISO week (${p.weekRange}) · Monday 00:00 → Sunday 24:00 UTC · ` +
-      `height = commit activity across the ecology's ${p.repoCount === 5 ? 'five' : p.repoCount} repositories ` +
-      `(all branches; the engines' session work included — ${p.totalCommits} in this window) · ` +
+      `height = commit activity across all ${p.repoCount} repositories behind this site ` +
+      `(all branches; the machines' session work included — ${p.totalCommits} in this window) · ` +
       `2-hour bins, moving average ×2 · the recurring ridge before dawn is the nightly machinery · as of ${p.asOf}`
     )
   },
