@@ -150,6 +150,31 @@ const syn = h?.syndication
     <p class="text-fg-muted">{de ? 'Heute kein Echo-Cluster über der Schwelle.' : 'No echo cluster above threshold today.'}</p>
   )}
 
+  <section class="mb-12 border-t border-line pt-6">
+    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+      {de ? 'Nächste Nachbarn' : 'Nearest neighbors'}
+    </p>
+    <ul class="mt-3 space-y-2 text-sm text-fg-muted">
+      <li>
+        <a href="https://arstechnica.com/information-technology/2013/04/churnalism-tracker-catches-journalists-copying-press-releases-wikipedia" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">Churnalism</a>
+        {de ? ' — prüft eingefügten Artikeltext gegen einen Hash-Korpus aus Pressemitteilungen auf wortgleiche Übernahme.' : ' — checks pasted article text against a hashed corpus of press releases for verbatim reuse.'}
+      </li>
+      <li>
+        <a href="https://www.media.mit.edu/projects/media-cloud/overview" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">Media Cloud</a>
+        {de ? ' (MIT/Harvard) — dedupliziert wiederholte Sätze über mehr als eine Milliarde Artikel hinweg, mit offener API.' : ' (MIT/Harvard) — deduplicates repeated sentences across 1B+ articles, with an open API.'}
+      </li>
+      <li>
+        <a href="https://ijoc.org/index.php/ijoc/article/download/9904/2777" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">{de ? '„Detecting Textual Reuse in News Stories, At Scale"' : '"Detecting Textual Reuse in News Stories, At Scale"'}</a>
+        {de ? ', International Journal of Communication — begutachtete Churnalism-Methodik im großen Maßstab.' : ', International Journal of Communication — peer-reviewed churnalism-at-scale methodology.'}
+      </li>
+    </ul>
+    <p class="mt-3 max-w-xl text-sm leading-relaxed text-fg-muted">
+      {de
+        ? 'Die Messtechnik ist über ein Jahrzehnt alt und institutionalisiert; was fehlt, ist das Format — ein tägliches, öffentliches Ritual mit laufendem Echo-Wert. Was hier neu dazukommt: die Klassifikation, WARUM Medien konvergieren (Ketten-Syndizierung vs. verstreute Platzierung, TLD-Anteil), nicht nur DASS sie es tun — das leistet keiner der Nachbarn.'
+        : "The measurement technique is over a decade old and institutionalized; what's missing elsewhere is the format — a daily public ritual with a running echo score. What's new here: a classification of WHY outlets converge (chain syndication vs. scattered placement, TLD share), not just THAT they did — none of the neighbors do that."}
+    </p>
+  </section>
+
   <footer class="mt-12 border-t border-line pt-6">
     <p class="font-mono text-xs text-fg-faint">
       {d.stats.beats

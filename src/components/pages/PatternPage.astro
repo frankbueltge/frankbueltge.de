@@ -72,6 +72,26 @@ const survives = d.false_discovery_rate < 0.1
     </p>
   </section>
 
+  <section class="mb-12 border-t border-line pt-6">
+    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+      {de ? 'Nächste Nachbarn' : 'Nearest neighbors'}
+    </p>
+    <p class="mt-3 max-w-xl text-sm leading-relaxed text-fg-muted">
+      {de
+        ? 'Diesen Witz macht bereits '
+        : 'This exact joke already runs at '}
+      <a href="https://tylervigen.com/spurious-correlations" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">Tyler Vigen, Spurious Correlations</a>
+      {de
+        ? ' — seit 2014 (Relaunch Januar 2024), die kanonische Referenz: eine Maschine, die autonom ihre eigene Datenbank durcheinandermischt, die stärkste Korrelation zeigt, als „Entdeckung" präsentiert und sich mit einem expliziten Kausalitäts-Vorbehalt selbst unterminiert.'
+        : ' — running since 2014 (relaunched January 2024), the canonical reference: a machine that autonomously mines its own database, surfaces the strongest correlation, presents it as a "discovery" and undercuts itself with an explicit spurious-correlation caveat.'}
+    </p>
+    <p class="mt-3 max-w-xl text-sm leading-relaxed text-fg-muted">
+      {de
+        ? 'Der eine reale Unterschied: Vigen zeigt einen statischen p-Wert, diese Seite rechnet tatsächlich einen Permutationstest — tausende Durchmischungen, eine echte Falsch-Entdeckungsrate für genau dieses Paar an genau diesem Tag. Diese Nulldistribution ist die eigentliche Sache; sie beantwortet Vigens Witz mit der Rechenstrenge, die er selbst nicht anlegt.'
+        : "The one real difference: Vigen shows a static p-value, this page actually runs a permutation test — thousands of shuffles, a real false-discovery rate for this exact pair on this exact day. That null distribution is the actual point — it answers Vigen's joke with the statistical rigor his own site doesn't apply."}
+    </p>
+  </section>
+
   <footer class="mt-12 border-t border-line pt-6">
     <p class="font-mono text-xs text-fg-faint">
       {de ? 'Quelle: ' : 'Source: '}{d.source.name}. {de ? `${d.metrics_count} variierende Metriken.` : `${d.metrics_count} varying metrics.`}

@@ -72,6 +72,31 @@ const cgX = xMax > xMin ? ((d.chatgpt_year - xMin) / (xMax - xMin)) * PCHART_W :
     <p class="mt-2 font-mono text-[11px] text-fg-faint">{de ? 'Treffer je 100.000 Abstracts; Basis ' : 'Hits per 100,000 abstracts; baseline '}{d.baseline_years[0]}–{d.baseline_years[1]}.</p>
   </section>
 
+  <section class="mb-12 border-t border-line pt-6">
+    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+      {de ? 'Nächste Nachbarn' : 'Nearest neighbors'}
+    </p>
+    <ul class="mt-3 space-y-2 text-sm text-fg-muted">
+      <li>
+        <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12219543" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">Kobak, Márquez-Neila et al., "Delving into LLM-assisted writing…"</a>, Science Advances
+        {de ? ' — 14–15 Mio. PubMed-Abstracts (2010–2024), dieselbe Kennzahl auf „delve" (25-fach über dem Vor-LLM-Trend), begutachtet, weit größerer Maßstab.' : ' — 14–15M PubMed abstracts (2010–2024), the same excess-frequency metric on "delve" (25× over pre-LLM trend), peer-reviewed, far larger scale.'}
+      </li>
+      <li>
+        {de ? 'Andrew Gray (UCL), „ChatGPT ‘contamination’"' : 'Andrew Gray (UCL), "ChatGPT \'contamination\'"'} (2024)
+        {de ? ' — die ursprüngliche Wortlisten-Studie (u. a. „intricate"), aufgegriffen von Scientific American und Ars Technica.' : ' — the original word-list study (incl. "intricate"), covered by Scientific American and Ars Technica.'}
+      </li>
+      <li>
+        {de ? 'Jeremy Nguyen (Swinburne) — ein laufender, seit 2023 aktualisierter „delve"-Tracker in PubMed' : 'Jeremy Nguyen (Swinburne) — an ongoing, updated "delve"-in-PubMed tracker since 2023'}
+        {de ? ' — der funktional nächste Einzelforscher-Analog zu einem täglichen Instrument.' : ' — the closest functional analogue to a daily instrument, run by an individual researcher.'}
+      </li>
+    </ul>
+    <p class="mt-3 max-w-xl text-sm leading-relaxed text-fg-muted">
+      {de
+        ? 'Dieselbe Kennzahl auf demselben Korpus ist bereits begutachtet und in 14–15 Mio. Abstracts veröffentlicht — kein neues Terrain. Der eine Ansatzpunkt, den kein Nachbar bearbeitet: ob die Marker-Wörter jetzt zurückgehen, weil Autoren sie nach dem Backlash bewusst vermeiden — eine Goodhart-Geschichte, die noch niemand publiziert hat.'
+        : "The same metric on the same corpus is already peer-reviewed and published at 14–15M abstracts — no new territory. The one angle no neighbor works: whether the marker words are now declining as authors consciously dodge them post-backlash — a Goodhart's-law story nobody has published yet."}
+    </p>
+  </section>
+
   <footer class="mt-12 border-t border-line pt-6">
     <p class="font-mono text-xs text-fg-faint">
       {de
