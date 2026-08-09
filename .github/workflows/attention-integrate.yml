@@ -40,6 +40,12 @@ jobs:
           if [ -f /tmp/machine-attention/export.json ]; then
             cp /tmp/machine-attention/export.json src/data/attention/export.json
           fi
+          # The moments the projects offer the shared stage at /machine-attention
+          # (stage-moments/1, docs/design/2026-08-09-stage-moments-contract.md).
+          # Absent is a legal state: the entrance shows its quiet state.
+          if [ -f /tmp/machine-attention/moments.json ]; then
+            cp /tmp/machine-attention/moments.json src/data/attention/moments.json
+          fi
 
       - name: Commit mirror
         run: |
