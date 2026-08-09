@@ -9,8 +9,19 @@
 // without a quote in a source file cannot enter, and graph.test.ts holds every quote against
 // its file, so the graph goes red rather than stale when a source moves underneath it.
 
-/** The five kinds of thing this house records about itself. */
-export type NodeKind = 'work' | 'practice' | 'decision' | 'neighbor' | 'receiver'
+/** The kinds of thing this house records about itself.
+ *
+ *  `work` is an experiment of the lab (the /holdings shelf and the practice doors);
+ *  `practice-work` is a work one of the practices MADE — the ecology's own production, which
+ *  the graph was blind to until 2026-08-09 although 59 of them sit committed in this repo. */
+export type NodeKind =
+  | 'work'
+  | 'practice-work'
+  | 'practice'
+  | 'encounter'
+  | 'decision'
+  | 'neighbor'
+  | 'receiver'
 
 /** Where a fact came from, and the words it was read out of. `quote` must occur verbatim
  *  (whitespace-normalised) in `file` — that assertion is the graph's honesty harness. */
@@ -52,10 +63,46 @@ export interface WorkNode extends NodeBase {
   auditSource?: Provenance
 }
 
-/** A research practice as the records name it (post ledger + the werke register). */
+/** A research practice as the records name it (post ledger + the werke register).
+ *
+ *  The id is the NORMALISED voice — the records spell one practice four ways (`field`,
+ *  `field-research`, `meridian`, and its door's own title), and this house already keeps the
+ *  one place where those spellings are reconciled: `normaliseVoice` in
+ *  src/lib/begegnungen/crossings.ts. The graph reuses it rather than opening a second register
+ *  of aliases that could disagree with the first. */
 export interface PracticeNode extends NodeBase {
   kind: 'practice'
   practiceId: string
+  /** every spelling of this practice the sources actually used, so a reader can follow back */
+  spellings: string[]
+  /** dated scalars a practice puts on record about itself (attention export contract §figures) */
+  figures?: Array<{ key: string; value: number; asOf: string }>
+}
+
+/** A work one of the practices made — read from the work's own committed `meta.json`. */
+export interface PracticeWorkNode extends NodeBase {
+  kind: 'practice-work'
+  slug: string
+  /** normalised voice of the practice that made it */
+  practiceId: string
+  date: string
+  /** the work's own statement of what it enacts, verbatim from its meta */
+  embodies?: string
+  medium?: string
+  href: string
+  /** present only where the ecology audit has actually examined this work. Absent means
+   *  UNEXAMINED, never CLEARED — 55 of 59 carry nothing on 2026-08-09 and the audit says so. */
+  verdict?: 'UNIQUE' | 'ADDED VALUE' | 'REDUNDANT'
+  verdictLabel?: string
+  daylight?: string
+  auditSource?: Provenance
+}
+
+/** A crossing between practices, from the encounter register the ecology exports. */
+export interface EncounterNode extends NodeBase {
+  kind: 'encounter'
+  encounterId: string
+  recordUrl?: string
 }
 
 /** A row of docs/decision-log.md — one dated approval that changed what this repo publishes. */
@@ -75,7 +122,14 @@ export interface ReceiverNode extends NodeBase {
   kind: 'receiver'
 }
 
-export type GraphNode = WorkNode | PracticeNode | DecisionNode | NeighborNode | ReceiverNode
+export type GraphNode =
+  | WorkNode
+  | PracticeWorkNode
+  | PracticeNode
+  | EncounterNode
+  | DecisionNode
+  | NeighborNode
+  | ReceiverNode
 
 export type EdgeKind =
   /** work → neighbor: prior art the audit found for this work */
@@ -86,6 +140,12 @@ export type EdgeKind =
   | 'addresses'
   /** practice → work: the practice's own door on this site */
   | 'door'
+  /** practice-work → practice: who made it, from the work's own location in the repo */
+  | 'made-by'
+  /** encounter → practice: a voice at a crossing, with its role as the edge's state */
+  | 'participates'
+  /** encounter → practice-work: the work the crossing actually moved */
+  | 'concerns'
 
 export interface GraphEdge {
   kind: EdgeKind
@@ -101,6 +161,10 @@ export interface GraphEdge {
 export interface GraphSource {
   file: string
   sha256: string
+  /** set for a GROUP of files (the practices' work metas): how many were read into the digest.
+   *  One digest over a sorted path+content concat keeps meta.sources readable at 59 files and
+   *  still turns red when any one of them moves. */
+  files?: number
 }
 
 export interface KnowledgeGraph {

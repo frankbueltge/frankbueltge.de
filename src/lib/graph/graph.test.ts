@@ -13,13 +13,22 @@
 //      obligation of 2026-08-09 made mechanical (docs/decision-log.md): a new experiment
 //      cannot reach the shelf without an answer to "does the world already have this?".
 
-import { readFileSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
 import { HOLDINGS_RANKED, WERKE } from '@/data/werke'
-import { SOURCE_FILES, buildGraph, digest } from './build'
+import { normaliseVoice } from '@/lib/begegnungen/crossings'
+import {
+  ATTENTION_FILE,
+  SOURCE_FILES,
+  WORK_META_DIRS,
+  buildGraph,
+  digest,
+  groupDigest,
+  readWorkMetas,
+} from './build'
 import { parseAudit, type LedgerEntry } from './derive'
-import type { KnowledgeGraph, WorkNode } from './types'
+import type { EncounterNode, KnowledgeGraph, PracticeNode, PracticeWorkNode, WorkNode } from './types'
 
 const ROOT = fileURLToPath(new URL('../../../', import.meta.url))
 const read = (p: string): string => readFileSync(`${ROOT}${p}`, 'utf8')
@@ -30,10 +39,20 @@ const flat = (s: string): string => s.replace(/\s+/g, ' ').trim()
 
 const texts: Record<string, string> = {}
 for (const file of SOURCE_FILES) texts[file] = read(file)
+const workMetas = readWorkMetas(ROOT)
 
 const committed = JSON.parse(read('src/data/graph/graph.json')) as KnowledgeGraph
-const derived = buildGraph({ texts })
-const flatSources = new Map(SOURCE_FILES.map((f) => [f as string, flat(texts[f])]))
+/** The optional source, read the same way the build reads it — so the day the practice
+ *  publishes its export, this harness follows instead of turning red. */
+const attention = existsSync(`${ROOT}${ATTENTION_FILE}`) ? read(ATTENTION_FILE) : undefined
+const derived = buildGraph({ texts, workMetas, ...(attention ? { attention } : {}) })
+/** Every file a claim may name: the fixed records, each practice work's own meta, and the
+ *  attention export once it exists. */
+const flatSources = new Map<string, string>([
+  ...SOURCE_FILES.map((f) => [f as string, flat(texts[f])] as const),
+  ...Object.entries(workMetas).map(([path, text]) => [path, flat(text)] as const),
+  ...(attention ? [[ATTENTION_FILE, flat(attention)] as const] : []),
+])
 
 describe('every line the graph carries is still in the file it came from', () => {
   const claims = [
@@ -57,8 +76,12 @@ describe('every line the graph carries is still in the file it came from', () =>
   })
 
   it('reads only from the declared sources — there is no other way into this graph', () => {
-    for (const node of committed.nodes) expect(SOURCE_FILES).toContain(node.source.file)
-    for (const edge of committed.edges) expect(SOURCE_FILES).toContain(edge.source.file)
+    const declared = (file: string): boolean =>
+      (SOURCE_FILES as readonly string[]).includes(file) ||
+      file === ATTENTION_FILE ||
+      WORK_META_DIRS.some((home) => new RegExp(`^${home.dir}/[^/]+/meta\\.json$`).test(file))
+    for (const node of committed.nodes) expect(declared(node.source.file), node.source.file).toBe(true)
+    for (const edge of committed.edges) expect(declared(edge.source.file), edge.source.file).toBe(true)
   })
 
   it('keeps the works’ own line quotes verbatim, curly quotes and all', () => {
@@ -75,12 +98,29 @@ describe('the committed graph is the derivation, not a copy of it', () => {
   })
 
   it('names a digest per source, and each one is that file today', () => {
-    expect(committed.meta.sources.map((s) => s.file)).toEqual([...SOURCE_FILES])
+    // The attention export is optional and listed only when it exists, so the expected list
+    // grows on the day it lands rather than that day turning this test red.
+    expect(committed.meta.sources.map((s) => s.file)).toEqual([
+      ...SOURCE_FILES,
+      ...WORK_META_DIRS.map((home) => `${home.dir}/*/meta.json`),
+      ...(existsSync(`${ROOT}${ATTENTION_FILE}`) ? [ATTENTION_FILE] : []),
+    ])
     for (const source of committed.meta.sources) {
+      const home = WORK_META_DIRS.find((d) => source.file === `${d.dir}/*/meta.json`)
+      const current = home
+        ? groupDigest(home.dir, workMetas)
+        : { sha256: digest(source.file === ATTENTION_FILE ? read(ATTENTION_FILE) : texts[source.file]) }
       expect(
         source.sha256,
         `${source.file} changed since the graph was built — run \`npm run graph:build\``,
-      ).toBe(digest(texts[source.file]))
+      ).toBe(current.sha256)
+    }
+  })
+
+  it('counts the works it read per directory, so a vanished work is visible in the file itself', () => {
+    for (const home of WORK_META_DIRS) {
+      const recorded = committed.meta.sources.find((s) => s.file === `${home.dir}/*/meta.json`)
+      expect(recorded?.files).toBe(groupDigest(home.dir, workMetas).files)
     }
   })
 
@@ -138,6 +178,175 @@ describe('the register and the audit still describe the same shelf', () => {
       expect(['UNIQUE', 'ADDED VALUE', 'REDUNDANT']).toContain(work.verdict)
       expect(work.verdictLabel?.startsWith(work.verdict)).toBe(true)
     }
+  })
+})
+
+describe('the ecology lane — the practices’ own production', () => {
+  const practiceWorks = committed.nodes.filter((n): n is PracticeWorkNode => n.kind === 'practice-work')
+  const practices = committed.nodes.filter((n): n is PracticeNode => n.kind === 'practice')
+  const encounters = committed.nodes.filter((n): n is EncounterNode => n.kind === 'encounter')
+
+  it('carries every work that has a committed meta, and no work that has not', () => {
+    // Counted against the metas only: a practice that exports its projects (the attention
+    // contract) contributes works whose source is that export, not a meta.json beside them.
+    const fromMetas = practiceWorks.filter((w) => w.source.file.endsWith('/meta.json'))
+    expect(fromMetas.length).toBe(Object.keys(workMetas).length)
+    expect(fromMetas.length).toBeGreaterThan(50)
+  })
+
+  it('gives every practice work a maker, read from where the work lives', () => {
+    const made = new Set(committed.edges.filter((e) => e.kind === 'made-by').map((e) => e.from))
+    for (const work of practiceWorks) {
+      expect(made, `${work.id} names no practice`).toContain(work.id)
+      expect(work.date).toMatch(/^\d{4}-\d{2}-\d{2}$/)
+    }
+  })
+
+  // The house keeps ONE register of voice spellings (src/lib/begegnungen/crossings.ts, whose
+  // own comment calls a second one "one drift waiting"). This asserts the graph really uses
+  // it: no practice may appear twice under two of its own names.
+  it('files each practice under one normalised voice, never twice under two spellings', () => {
+    const ids = practices.map((p) => p.id)
+    expect(new Set(ids).size).toBe(ids.length)
+    for (const practice of practices) {
+      expect(practice.spellings.length).toBeGreaterThan(0)
+      for (const spelling of practice.spellings) {
+        const voice = normaliseVoice(spelling)
+        const expected = voice === 'unknown' ? practice.practiceId : voice
+        expect(practice.practiceId, `"${spelling}" is filed under ${practice.id}`).toBe(expected)
+      }
+    }
+    // the four spellings that made this necessary
+    const meridian = practices.find((p) => p.practiceId === 'meridian')
+    expect(meridian?.spellings).toEqual(['field', 'meridian'])
+  })
+
+  it('sends every participant of an encounter to a practice the graph carries', () => {
+    const ids = new Set(practices.map((p) => p.id))
+    const participations = committed.edges.filter((e) => e.kind === 'participates')
+    expect(participations.length).toBeGreaterThan(encounters.length)
+    for (const edge of participations) {
+      expect(ids).toContain(edge.to)
+      expect(edge.state, 'a crossing without a role would hide who gave and who received').toBeTruthy()
+    }
+  })
+
+  it('only claims a crossing moved a work when this repo actually carries that work', () => {
+    const slugs = new Map(practiceWorks.map((w) => [w.id, w.slug]))
+    for (const edge of committed.edges.filter((e) => e.kind === 'concerns')) {
+      expect(slugs.has(edge.to), `${edge.to} is not a work in this repo`).toBe(true)
+      const named = /"work_slug": "(.+?)"/.exec(edge.source.quote)?.[1] as string
+      expect(slugs.get(edge.to)?.endsWith(named)).toBe(true)
+    }
+    // enc-2026-006 names `sixty-cases-decision`, which lives in the ulysses repo and not here.
+    // The absent edge is the point: the graph shows what this checkout can show.
+    const register = texts['src/data/begegnungen/register.json']
+    expect(register).toContain('sixty-cases-decision')
+    expect(committed.edges.some((e) => e.kind === 'concerns' && e.to.includes('sixty-cases'))).toBe(false)
+  })
+
+  // The USP obligation reaches the practices' own works on 2026-08-09 — but as an audit that
+  // GROWS, not as a gate that would turn 55 unexamined works red overnight. What is asserted:
+  // the audit cannot name a work this repo does not carry, and absence of a verdict must keep
+  // meaning "unexamined" rather than quietly reading as "cleared".
+  it('resolves every section of the ecology audit to a work this repo carries', () => {
+    const carried = new Set(practiceWorks.map((w) => w.id))
+    for (const entry of parseAudit(texts['docs/audits/2026-08-09-ecology-usp-audit.md'])) {
+      const home = WORK_META_DIRS.find((d) => entry.route.startsWith(`${d.dir}/`))
+      expect(home, `the ecology audit's §${entry.number} names ${entry.route}, which is in no work directory`).toBeDefined()
+      const id = `practice-work:${home?.ns}/${entry.route.slice((home?.dir.length ?? 0) + 1)}`
+      expect(carried, `the ecology audit's §${entry.number} names ${entry.route}, which this repo does not carry`).toContain(id)
+    }
+  })
+
+  it('audits a first batch and leaves the rest visibly unexamined, never implicitly cleared', () => {
+    const audited = practiceWorks.filter((w) => w.verdict)
+    expect(audited.length).toBeGreaterThan(0)
+    expect(audited.length).toBeLessThan(practiceWorks.length)
+    for (const work of audited) {
+      expect(work.daylight, `${work.id} has a verdict but no named daylight`).toBeTruthy()
+      expect(work.auditSource?.file).toBe('docs/audits/2026-08-09-ecology-usp-audit.md')
+    }
+    // the audit says how many it left, in the document a human reads
+    expect(texts['docs/audits/2026-08-09-ecology-usp-audit.md']).toContain('unaudited as of 2026-08-09')
+  })
+
+  it('lets an audit refuse to sign off: a section without a verdict enters no verdict', () => {
+    // NO PART's section states the search was too weak to conclude. That refusal must survive
+    // into the graph as an absence, not be rounded to a class by the parser.
+    const noPart = practiceWorks.find((w) => w.label === 'NO PART')
+    expect(noPart).toBeDefined()
+    expect(noPart?.verdict).toBeUndefined()
+    expect(committed.edges.some((e) => e.kind === 'neighbor-of' && e.from === noPart?.id)).toBe(false)
+    expect(texts['docs/audits/2026-08-09-ecology-usp-audit.md']).toContain('NOT SETTLED')
+  })
+
+  it('reaches the ecology from a practice: work → practice → encounter → another practice', () => {
+    const madeBy = committed.edges.find((e) => e.kind === 'made-by' && e.from.startsWith('practice-work:studio/'))
+    expect(madeBy?.to).toBe('practice:ensemble')
+    const crossing = committed.edges.find((e) => e.kind === 'concerns')
+    const roles = committed.edges
+      .filter((e) => e.kind === 'participates' && e.from === crossing?.from)
+      .map((e) => e.state)
+    expect(roles).toContain('source')
+    expect(roles).toContain('receiver')
+  })
+})
+
+// The attention lane is specified and consumed here, and produced in another repository whose
+// session owns that lane. These tests run against a fixture so the consuming half is proven
+// BEFORE the file lands — the alternative is shipping an integration nobody has ever executed.
+describe('the machine-attention export, when it arrives', () => {
+  const fixture = JSON.stringify({
+    $contract: 'attention-export/1',
+    generated_from: { repo: 'machine-attention', commit: '79f8a02' },
+    practice: { id: 'machine-attention', label: 'Machine Attention' },
+    projects: [
+      { id: 'foreknown', title: 'The Foreknown', since: '2026-08-08', site_route: '/attention', status: 'running' },
+      { id: 'darkocean', title: 'Dark Ocean', since: '2026-08-07', site_route: null, status: 'running' },
+    ],
+    figures: [{ key: 'futures_under_watch', value: 100, as_of: '2026-08-09' }],
+  })
+  const withAttention = buildGraph({ texts, workMetas, attention: fixture })
+
+  // Deliberately written for BOTH states. The producing session must be able to add the export
+  // and see green — a consumer that greets its own input with a failing test is not a contract,
+  // it is a trap. Today the file is absent and the graph carries no attention lane; the day it
+  // lands, the same assertion runs the other way.
+  it('is wired exactly when the export exists, and silent when it does not', () => {
+    const present = existsSync(`${ROOT}${ATTENTION_FILE}`)
+    expect(committed.nodes.some((n) => n.id === 'practice:machine-attention')).toBe(present)
+    expect(committed.meta.sources.some((s) => s.file === ATTENTION_FILE)).toBe(present)
+  })
+
+  it('gives a project with a room on this site a door to that room, not a second work', () => {
+    const doors = withAttention.edges.filter((e) => e.kind === 'door' && e.from === 'practice:machine-attention')
+    expect(doors.map((d) => d.to)).toContain('work:attention')
+    expect(withAttention.nodes.some((n) => n.id === 'practice-work:machine-attention/foreknown')).toBe(false)
+  })
+
+  it('gives a project that lives only in its own repo a work of its own', () => {
+    const dark = withAttention.nodes.find((n) => n.id === 'practice-work:machine-attention/darkocean')
+    expect(dark?.label).toBe('Dark Ocean')
+    expect(withAttention.edges.some((e) => e.kind === 'made-by' && e.from === dark?.id)).toBe(true)
+  })
+
+  it('puts the practice’s own dated figures on its node', () => {
+    const practice = withAttention.nodes.find(
+      (n): n is PracticeNode => n.id === 'practice:machine-attention',
+    )
+    expect(practice?.label).toBe('Machine Attention')
+    expect(practice?.figures).toEqual([{ key: 'futures_under_watch', value: 100, asOf: '2026-08-09' }])
+  })
+
+  it('refuses a contract version it does not implement, rather than guessing', () => {
+    const future = fixture.replace('attention-export/1', 'attention-export/2')
+    expect(() => buildGraph({ texts, workMetas, attention: future })).toThrow(/attention-export\/2/)
+  })
+
+  it('records the export as a source with its own digest once it is there', () => {
+    const source = withAttention.meta.sources.find((s) => s.file === ATTENTION_FILE)
+    expect(source?.sha256).toBe(digest(fixture))
   })
 })
 

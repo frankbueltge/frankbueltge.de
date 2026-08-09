@@ -1,0 +1,65 @@
+name: Knowledge graph nightly
+
+# Rebuilds src/data/graph/graph.json from the records it is derived from and commits it if
+# anything moved. The graph is an instrument, not a work: it has no pipeline of its own, no
+# API, no key — it only re-reads files that are already in this repository (the works register,
+# the neighbour audit, the decision log, the post ledger, the encounter register and the 59
+# committed work metas of the practices).
+#
+# Why this job exists (Frank, 2026-08-09): src/lib/graph/graph.test.ts fails when the committed
+# graph and its sources disagree. That guard is the point — a snapshot that has fallen behind
+# claims something false — but it also lands on sessions that have nothing to do with the graph
+# and merely added a row to the decision log. This job takes the residue: whatever a session
+# forgot, the night repairs.
+#
+# It is a SAFETY NET, not a substitute. A pull request whose sources moved without a rebuild
+# still goes red in CI, and it should: the artifact belongs in the same commit as the change
+# that altered it. `.claude/rules/knowledge-graph.md` says so where a session will read it.
+
+on:
+  schedule:
+    - cron: '25 4 * * *' # 04:25 UTC, after the night's pipelines have committed their data
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: graph
+  cancel-in-progress: false
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Install
+        run: npm ci
+      - name: Derive the graph
+        run: npm run graph:build
+      # The honesty harness runs here too: if the rebuild produced something whose quotes no
+      # longer stand in their files, the job fails instead of committing a graph that lies.
+      - name: Hold every quote against its source
+        run: npx vitest run src/lib/graph/
+      - name: Commit
+        run: |
+          git config user.name "Graph-Build"
+          git config user.email "graph-build@frankbueltge.de"
+          git add src/data/graph 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "The records did not move."; exit 0
+          fi
+          git commit -m "graph: derived anew from the records ($(date -u +%F))"
+          for i in 1 2 3 4 5; do
+            if git pull --rebase --autostash origin main && git push origin HEAD:main; then
+              echo "Pushed."; exit 0
+            fi
+            echo "Push attempt $i failed, retrying …"; sleep 5
+          done
+          echo "::error::push failed after 5 attempts"; exit 1

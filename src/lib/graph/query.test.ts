@@ -24,6 +24,12 @@ describe('search ranks the house’s own things first', () => {
     expect(search(graph, term)[0]?.id).toBe(expected)
   })
 
+  it('answers with the practices’ own works, which the graph learned on 2026-08-09', () => {
+    const hit = search(graph, 'native speaker')[0]
+    expect(hit?.kind).toBe('practice-work')
+    expect(hit?.label).toBe('Native Speaker')
+  })
+
   it('finds a project outside the house by name too', () => {
     const hit = search(graph, 'INFOGAP')[0]
     expect(hit?.kind).toBe('neighbor')

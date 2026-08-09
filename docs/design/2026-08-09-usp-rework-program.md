@@ -78,6 +78,7 @@ unclaimed lane is free. Release a lane by dating the Landed line.
 | Phase 0 (citations, all pages EXCEPT attention/observatory) | one-time cloud agent → PR `usp-phase0/2026-08-09` | 2026-08-09 | running; PR reviewed before merge |
 | **The parked package**: knowledge graph (substrate) · neighbor-graph visualization · CLAUDE.md diet (`.claude/rules/`) | — released 2026-08-09 | 2026-08-09 | **done**, see Landed; the lane is free again. One standing consequence for everyone: changing `werke.ts`, `docs/decision-log.md`, the audit or the post ledger now requires `npm run graph:build` in the same commit, or `src/lib/graph/graph.test.ts` goes red (`.claude/rules/knowledge-graph.md`) |
 | **#1 Consensus** (longitudinal baseline on the G1 BigQuery path) | this session (afternoon 2026-08-09) | 2026-08-09 | **landed** — lane released |
+| **The ecology lane of the graph** (Frank, 2026-08-09 afternoon, all four options) | — released 2026-08-09 | 2026-08-09 | **done**, see Landed. Two things left for others: (1) the **attention export** is specified and consumed — the producing repo's session ships `src/data/attention/export.json` when it wants the lane live (`docs/design/2026-08-09-attention-export-contract.md`); (2) the ecology audit covers 4 of 59 works and **names its remainder** — next batches are free to claim |
 | #3 Society · #6 Protocol · #7 Policy · #8 Editorial Deadline · #9 Ghost Fleet · #11 Round Numbers · #12 Delve · #13 Bycatch · #14 Correction · #16 Watchtower | **unclaimed** | — | free — claim before building |
 
 ## Parked (Frank, 2026-08-09 morning — BUILT the same afternoon, see Landed)
@@ -125,6 +126,25 @@ unclaimed lane is free. Release a lane by dating the Landed line.
 - 2026-08-09 — Phase 0 merged (#476): every in-repo experiment cites its nearest
   neighbors; attention skipped per the claims table; the platform's auto-appended
   AI-credit footer stripped from the PR body per the standing rule.
+- 2026-08-09 — **the ecology enters the graph** (Frank, afternoon: "die research ecology werke
+  sind hier noch gar nicht abgebildet, aber bilden auch eine eigene 'machine-run' ökologie" —
+  all four proposed lanes chosen). **(a)** The practices' own **59 works** and the **6
+  encounters** are now nodes: each work's `meta.json` is its source, the directory it lives in
+  is the evidence of who made it, and the crossings carry who gave, who received and which work
+  moved. 201 nodes / 183 edges, up from 123 / 95. Spellings are reconciled through the house's
+  existing register (`normaliseVoice`) rather than a second alias table. **(b)** A **nightly
+  rebuild** (`.github/workflows/graph.yml`) takes the residue so a session that forgets
+  `graph:build` does not leave the artifact stale — a safety net, not a substitute; a PR still
+  goes red. **(c)** The **attention export contract** is written and its consumer built and
+  probed with a real file, without touching the `machine-attention` repo, whose lane is claimed:
+  the day that session ships `src/data/attention/export.json`, the lane engages and CI stays
+  green. **(d)** The USP obligation now reaches the ecology:
+  `docs/audits/2026-08-09-ecology-usp-audit.md`, first batch of 4 chosen by a criterion the
+  records supply (works already put in front of someone outside — two packets, two encounters),
+  **55 named as unaudited** rather than silently cleared. **The finding that matters: the
+  Calibration Certificate is REDUNDANT against Weber-Wulff et al. (2023), published in the
+  journal of the very network its packet is addressed to.** The audit blocks that packet on a
+  citation; sending remains Frank's, as always.
 - 2026-08-09 — **the parked package, all three parts.**
   **(a) The knowledge graph as instrument** — `src/data/graph/graph.json`, committed and
   versioned, derived from four records (works register · the neighbour audit · the decision
