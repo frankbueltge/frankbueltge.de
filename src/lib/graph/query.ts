@@ -37,16 +37,34 @@ export function relationsOf(graph: KnowledgeGraph, id: string): Relation[] {
   return relations
 }
 
-/** Loose lookup for a human at a terminal: id, label or (for works) route and werk id. */
+/** Loose lookup for a human at a terminal: id, label or (for works) route and werk id.
+ *
+ *  Ranked, because unranked it was useless in practice: `graph -- society` answered with three
+ *  of the audit's neighbours and a journal before reaching The Society. What a session asks
+ *  about is almost always one of this house's own things, and almost always by its name. */
 export function search(graph: KnowledgeGraph, term: string): GraphNode[] {
   const needle = term.trim().toLowerCase()
   if (!needle) return []
-  return graph.nodes.filter((node) => {
-    const haystack = [node.id, node.label, node.kind === 'work' ? `${node.werkId} ${node.href}` : '']
-      .join(' ')
-      .toLowerCase()
-    return haystack.includes(needle)
-  })
+
+  const scored = graph.nodes
+    .map((node) => {
+      const label = node.label.toLowerCase()
+      const own = node.kind === 'work' ? `${node.werkId} ${node.href}`.toLowerCase() : ''
+      let score = 0
+      if (label === needle || own.split(' ').includes(needle)) score += 200
+      else if (label.startsWith(needle)) score += 120
+      else if (label.includes(needle)) score += 60
+      else if (own.includes(needle)) score += 40
+      else if (node.id.toLowerCase().includes(needle)) score += 10
+      if (score === 0) return null
+      // the house's own things before the world's: a work is what a session is working on
+      if (node.kind === 'work') score += 30
+      else if (node.kind === 'practice' || node.kind === 'decision') score += 10
+      return { node, score }
+    })
+    .filter((hit): hit is { node: GraphNode; score: number } => hit !== null)
+
+  return scored.sort((a, b) => b.score - a.score || a.node.label.localeCompare(b.node.label)).map((hit) => hit.node)
 }
 
 /** One work with its prior art — the row the figure draws and the table repeats. */
