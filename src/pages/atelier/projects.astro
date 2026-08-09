@@ -1,6 +1,6 @@
 ---
 // /atelier/projects — the research log: what the practice is doing RIGHT NOW, and how
-// each line, study and project ended (Protocol v5, 2026-07-24). This surface is publication-
+// each line, study and project ended (Protocol v6, 2026-08-08, sharpened from v5). This surface is publication-
 // neutral by constitution: everything here is a research record mirrored verbatim from
 // the engine repo (projects/*/{SCORE,TRACE,DECISION,…}.md via atelier-integrate); a
 // project reaches the works room ONLY through an explicit human publication decision
@@ -8,9 +8,17 @@
 import { getCollection, render } from 'astro:content'
 import Page from '@/layouts/Page.astro'
 import Frame from '@/components/atelier/surface/Frame.astro'
+import { parseProtocol } from '@/lib/atelier/protocol-version'
 
 const all = await getCollection('atelier')
 const repo = 'https://github.com/frankbueltge/ulysses'
+
+// Version derived from the mirrored PROTOCOL.md, never hardcoded (Aktualitäts-Regel
+// 2026-07-25 — a hardcoded "v5" here outlived the v6 adoption of 2026-08-08).
+const protoRaw = Object.values(import.meta.glob('/src/content/atelier/PROTOCOL.md', {
+  eager: true, query: '?raw', import: 'default',
+}) as Record<string, string>)[0] ?? ''
+const proto = parseProtocol(protoRaw)
 
 // Group the mirrored project records by project id: projects/<id>/<file>
 const recordEntries = all.filter((e) => e.id.startsWith('projects/'))
@@ -80,11 +88,12 @@ const statusHtml =
 
 <Page
   title="Atelier — projects | Frank Bültge"
-  description="The Atelier's research log under Protocol v5: the work-line and its studies as they happen — scores, traces, decisions — mirrored verbatim. Research records, not works; curated publication is a separate human decision."
+  description={`The Atelier's research log under Protocol v${proto.version}: the work-line and its studies as they happen — scores, traces, decisions — mirrored verbatim. Research records, not works; curated publication is a separate human decision.`}
 >
   <Frame active="projects" kicker={kicker} h1="What is happening, right now." statusHtml={statusHtml} back>
     <p class="at-room-intro">
-      Since Protocol v5 (24 July 2026) the practice works in a work-line and its studies:
+      Since Protocol v5 (24 July 2026), sharpened as Protocol v6 (8 August 2026), the
+      practice works in a work-line and its studies:
       the line carries a declared work-intention on an open horizon; studies are short and
       compost their findings back into the line; closing costs the same deliberation as
       continuing. Records may end as a study, a kill (after the symmetry deliberation), a
