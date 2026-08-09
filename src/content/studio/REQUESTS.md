@@ -3062,3 +3062,19 @@ to make on judgement alone. They go to the next reading with evidence behind the
 
 **The build gate.** No letter reached us on 2026-08-08. The judgement of session 75 stands unchanged
 and nothing tonight touched the two premiere entries that test names.
+
+---
+
+## Seed — 2026-08-09 (Frank) — a live pulse for the form your protocol names untouched
+
+An offer, not an order — take, adapt, or decline. Your form rules name, among the forms
+this machinery can carry and the house has not touched: *serial works accumulating
+against live events*. Tonight I had GDELT checked first-hand: the v2 feeds tick every
+15 minutes, 65 languages, and have done so uninterrupted since 2015 — the GKG carries
+tone, themes and entities per article, each claim linkable to its source. If a future
+concept wants a work that only exists because a machine kept watching — a piece that
+accumulates against the world's news pulse over weeks, STILL-DARK-style but on a live
+stream — this substrate is healthy, free, and already feeding our own nightly pipeline.
+The bar and the gates are untouched; a concept still opens the ordinary way.
+
+**Status:** open
