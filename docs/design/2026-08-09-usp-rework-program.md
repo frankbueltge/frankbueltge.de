@@ -77,6 +77,7 @@ unclaimed lane is free. Release a lane by dating the Landed line.
 | **#1 Consensus** (structure layer) · **#2 Iceberg** (integrity panel) · **#10 Headroom** (breakeven spine) · **#15 Patterns** (null-distribution) + the post-Phase-0 page-wiring pass | this session (night 2026-08-09) | 2026-08-09 | libs landing; page wiring after Phase 0 merges |
 | Phase 0 (citations, all pages EXCEPT attention/observatory) | one-time cloud agent → PR `usp-phase0/2026-08-09` | 2026-08-09 | running; PR reviewed before merge |
 | **The parked package**: knowledge graph (substrate) · neighbor-graph visualization · CLAUDE.md diet (`.claude/rules/`) | — released 2026-08-09 | 2026-08-09 | **done**, see Landed; the lane is free again. One standing consequence for everyone: changing `werke.ts`, `docs/decision-log.md`, the audit or the post ledger now requires `npm run graph:build` in the same commit, or `src/lib/graph/graph.test.ts` goes red (`.claude/rules/knowledge-graph.md`) |
+| **#1 Consensus** (longitudinal baseline on the G1 BigQuery path) | this session (afternoon 2026-08-09) | 2026-08-09 | **landed** — lane released |
 | #3 Society · #6 Protocol · #7 Policy · #8 Editorial Deadline · #9 Ghost Fleet · #11 Round Numbers · #12 Delve · #13 Bycatch · #14 Correction · #16 Watchtower | **unclaimed** | — | free — claim before building |
 
 ## Parked (Frank, 2026-08-09 morning — BUILT the same afternoon, see Landed)
@@ -135,3 +136,31 @@ unclaimed lane is free. Release a lane by dating the Landed line.
   script) · **#15 Patterns** null distribution drawn (pipeline emits the 20-bin histogram
   from its next run; honest placeholder until the data carries it) · **#10 Headroom**
   subtitle reframed onto the breakeven-vs-floor arithmetic.
+- 2026-08-09 (evening) — **#1 Consensus: the longitudinal baseline, and a correction to the
+  figure that landed this afternoon.** First real use of the G1 BigQuery path
+  (`2026-08-09-gcp-activation.md` §2 as the pattern): the nightly v2 measurement
+  re-implemented in SQL over the whole GKG archive and committed once as
+  `src/data/consensus/baseline.json` — 2,496 days, eight jobs, 482 GB billed (44 % of the
+  monthly free tier, 0 €), query text and job trace committed beside the data
+  (`pipelines/consensus/baseline.sql`). The page now answers "is that a lot?": today's echo
+  as a percentile of seven years measured the same way, plus the per-year trend (median echo
+  38.5 % in 2020 → 32.8 % in 2025 — the verbatim consensus is *falling*).
+  Three findings the build produced, each of which changed a claim rather than decorating one:
+  1. **Seven years, not ten.** The English GKG stream carries `PAGE_TITLE` only from
+     2019-09-22 — measured against sample days back to 2015, which return zero title-bearing
+     rows through 2019-06. A verbatim-title instrument has no deeper history than that.
+  2. **GDELT's own archive has a 17-day hole** (2025-06-15 … 2025-07-01). Recorded in the
+     baseline's `gaps`, never interpolated.
+  3. **The afternoon's chain-share figure was backwards.** The page read "91 % of 47
+     classified days were chain syndication" as a statement about the whole archive; 43 of
+     those days were measured by the v1 API pool (<1,000 articles/day), where the day's
+     widest sentence is routinely a tight wire push. Across 2,496 single-method days chain
+     runs at **4 %** — between 3 % and 5 % in every year. `aggregateStructure` now aggregates
+     **per method version** and exposes no archive-wide share to misread; the correction is
+     stated on the page and in the method sheet, and the v1 days stay in the archive, kept
+     apart. Guarded by `structure.test.ts` and `baseline.test.ts` (which recomputes every
+     ratio from the file's own components), not by a comment.
+  Also fixed, dated as classifier `c2-full-domain-set`: the nightly classified syndication on
+  the **40-name masthead display list** rather than every domain of the phrase — on a day with
+  200+ outlets the label came from an alphabetical fifth of them. Committed days keep the
+  values they were measured with.
