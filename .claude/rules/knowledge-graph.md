@@ -69,5 +69,5 @@ Am Anfang einer Session, die ein Werk anfasst, lohnt sich der eine Aufruf.
 - **Von Hand editieren gilt nicht.** `graph.json` ist Ausgabe. Ändere die Quelle oder den
   Ableiter (`src/lib/graph/build.ts`, `derive.ts`), nie die Ausgabe.
 
-Die Figur `/holdings/neighbors` zeichnet denselben Graphen; ihre Geometrie ist reine
+Die Figur `/experiments/neighbors` zeichnet denselben Graphen; ihre Geometrie ist reine
 Arithmetik und in `src/lib/graph/field.test.ts` geprüft (Abstände, Kollisionen, Rand).

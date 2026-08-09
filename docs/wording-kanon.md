@@ -90,7 +90,7 @@ Navigation sagte das Gegenteil.
 - Zurückgezogen: „Practices" als oberster Nav-Punkt (las sich, als sei die Ökologie das
   ganze Haus) und „Archive ▾" als Sammelpunkt, unter dem *Projects* lag.
 
-## Die vier Wörter — Practice · Project · Instrument · Experiment (Frank, 2026-08-09, VERBINDLICH)
+## Die fünf Wörter — House · Practice · Project · Instrument · Experiment (Frank, 2026-08-09, VERBINDLICH)
 
 Bis heute liefen vier Begriffe durcheinander: eine Praxis stand als Zeile in der
 Experimente-Liste, ein Instrument hieß „Hintergrund-Projekt", die Route hieß anders als die
@@ -98,10 +98,19 @@ Seite. Ab jetzt gilt genau diese Staffel, auf der ganzen Site und in allen Repos
 
 | Wort | Was es bezeichnet | Heute |
 |---|---|---|
+| **House** | Verfasste Anordnung, **unter der** Praxen laufen. Die Ebene über einer Praxis. | The research ecology (viele Verfassungen, föderiert) · Machine Attention (eine Verfassung, eine Maschine) |
 | **Practice** | Verfasste, maschinell betriebene Praxis mit eigener Verfassung. Bringt Arbeiten hervor; ist selbst keine Arbeit. | The Atelier · The Field · The Studio · **Machine Attention** |
 | **Project** | Aufgenommene Untersuchung **innerhalb** einer Praxis, die den Aufnahme-Pfad durchlaufen hat. | The Foreknown · Dark Ocean · The State Before the Interface |
 | **Instrument** | Klasse eines Projekts (oder ein Werkzeug des Hauses): läuft leise, liefert zu, **kein Bühnen-Anspruch**, darf jahrelang nichts liefern. Gegenstück: **Flagship**. | The State Before the Interface · der Wissensgraph |
 | **Experiment** | Eigenständiges Stück des Labors, keiner Praxis unterstellt. | The Protocol · Patterns · The Ghost Fleet … (14 auf `/experiments`) |
+
+**Nachtrag desselben Tages (Frank): das fünfte Wort.** Die ersten vier beschrieben alles
+*innerhalb* eines Hauses — und Frank stellte prompt die Frage, für die keins von ihnen taugte:
+Die research ecology ist **drei Practices plus Kontaktzone**, Machine Attention ist **eine
+Practice**. Die beiden standen also gar nicht auf derselben Ebene, und genau das sah man auf
+der Startseite. **House** schließt die Lücke: Solange es nur ein Haus gab, waren „die Site" und
+„die Ökologie" dasselbe, und niemand brauchte das Wort. Ein zweites Exemplar hat die Kategorie
+hervorgezwungen.
 
 **Folgen, umgesetzt am 2026-08-09:**
 
@@ -113,9 +122,20 @@ Seite. Ab jetzt gilt genau diese Staffel, auf der ganzen Site und in allen Repos
   Praxis — leise, aber vollwertig, nicht „im Hintergrund".
 - **Route und Titel heißen gleich:** `/holdings` → **`/experiments`** (301 auf beide alten
   Adressen; die Seite hieß seit dem 31.07. ohnehin „Experiments").
-- `tier` in `src/data/werke.ts` kennt die vier Wörter; `werke.test.ts` hält Praxis und
+- `tier` in `src/data/werke.ts` kennt die Wörter; `werke.test.ts` hält Praxis und
   Instrument aus der Experimente-Reihe heraus, damit der nächste neue Rang nicht still
   hineinwandert.
+- **Die Startseite ist nicht mehr die Ökologie** (Frank, 2026-08-09 abends: „research ecology
+  nicht mehr prominent dort inszenieren, sondern als eines von mehreren"). Hero-Titel jetzt
+  **„machines that research, in public"** — ausdrücklich **nicht** „artistic research, under
+  proof" (Franks Wahl; die Festival-Positionierung bleibt gültig, wo sie steht, ist aber kein
+  Hero-Anspruch). Darunter der Block **TWO HOUSES**: beide Häuser gleichrangig, jedes mit
+  seinen Bewohnern — die vier Türkarten behalten ihre validierten Identitätsfarben und wohnen
+  jetzt *in* ihrem Haus.
+- **Menü:** die Gruppe heißt **„Research"** statt „Research Ecology" (eine Gruppe nach einem
+  von zwei Häusern zu benennen war derselbe Fehler wie auf der Startseite); erste Sektion
+  **Houses**, dann Practices, dann **Investigations** (aus dem Export der Praxis, damit die
+  Navigation nicht von ihr abdriften kann).
 
 ## „Experiments" statt „Holdings" (Frank, 31.07.)
 

@@ -19,6 +19,7 @@
 import { t } from '@/i18n/ui'
 import type { Locale } from '@/lib/site'
 import { NAMING } from '@/config/naming'
+import attentionExport from '@/data/attention/export.json'
 import { getProjects } from '@/data/projects'
 
 const locale = (Astro.currentLocale ?? 'en') as Locale
@@ -33,17 +34,36 @@ const doors: NavLink[] = NAMING.doors.items.map((d) => ({ href: d.href, label: d
 // Every project gets its card page; the external site is one click further, on that page.
 const projects: NavLink[] = getProjects().map((p) => ({ href: `/work/${p.slug}`, label: p.name }))
 
+// The second house's investigations, from the practice's own export — the same source the
+// homepage and its door page read, so the nav cannot drift from them.
+const investigations: NavLink[] = (
+  attentionExport?.$contract === 'attention-export/1'
+    ? (attentionExport.projects as { title: string; site_route: string | null }[])
+    : []
+)
+  .filter((p) => p.site_route)
+  .map((p) => ({ href: p.site_route as string, label: p.title }))
+
 const nav: NavItem[] = [
   {
-    label: 'Research Ecology',
+    // 'Research' rather than 'Research Ecology' (Frank, 2026-08-09): there are two houses now,
+    // and naming the group after one of them was the same mistake the homepage made.
+    label: 'Research',
     sections: [
+      {
+        label: 'Houses',
+        items: [
+          { href: '/ecology', label: 'Research ecology' },
+          { href: '/machine-attention', label: 'Machine attention' },
+        ],
+      },
       { label: 'Practices', items: doors },
+      { label: 'Investigations', items: investigations },
       {
         label: 'The apparatus',
         items: [
           // First, because it is the entrance question — what is this and how does it work —
           // while the two below answer "what did they last do" and "what carries it".
-          { href: '/ecology', label: 'What this is' },
           { href: '/maschinenraum', label: 'Maschinenraum' },
           { href: '/apparatus', label: 'How it works' },
         ],
@@ -67,7 +87,7 @@ const nav: NavItem[] = [
         ],
       },
     ],
-    foot: { href: '/', label: 'the whole ecology →' },
+    foot: { href: '/', label: 'both houses →' },
   },
   {
     label: 'Projects',

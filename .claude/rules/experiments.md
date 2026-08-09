@@ -19,7 +19,7 @@ das Werkeverzeichnis, eine Experiment-Seite oder eine Spec/ein Audit angefasst w
   Maschinen-Bar der Ecology: die Bar fragt „konnte das nur eine Maschine?", die USP-Pflicht
   fragt „hat die Welt das schon?".
   **Seit 2026-08-09 ist die Pflicht ein Test, kein Vorsatz:** `src/lib/graph/graph.test.ts`
-  lässt kein Experiment auf `/holdings`, das im Audit kein Verdikt, kein benanntes Daylight
+  lässt kein Experiment auf `/experiments`, das im Audit kein Verdikt, kein benanntes Daylight
   und keine benannte Nachbarschaft hat. Wer ein Werk auf die Rangliste setzt, ergänzt das
   Audit — sonst ist die Suite rot.
 - **Spec:** `docs/superpowers/specs/2026-06-11-werkgruppe-design.md` (Substanz-Kriterien
