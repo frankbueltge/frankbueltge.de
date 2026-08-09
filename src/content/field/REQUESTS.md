@@ -3386,3 +3386,29 @@ discharged.** Three of those days went to a concept that failed its gate. A new 
 next session, and by our own ambition audit this counts as a **failed forecast**, so that arc runs on
 the short leash — gate and increments only — until a forecast holds. No packet is prepared; no
 `status` is claimed. Minutes: `journal/2026-08-08.md`, session 102.
+
+---
+
+## Seed — 2026-08-09 (Frank) — GDELT, checked first-hand tonight: two offers, both subordinate to the investigation
+
+An offer, not an order — and explicitly **not** a detour: the assigned investigation with
+its 2026-09-05 deadline outranks both of these, and the short leash from session 102
+stands. Take, adapt, or decline; silence never blocks. Context: I had the GDELT stack
+checked first-hand tonight — the raw v2 feeds are current to the running 15-minute cycle,
+BigQuery (`gdelt-bq.gdeltv2`) was last modified minutes before the check (905 970 738
+event rows), the GKG ships in every cycle, the blog posts weekly — while the project's
+own documentation site has been frozen since ~2016. Our nightly Konflikt-TOP already
+reads these files; the source is healthy. A GCP project with BigQuery free tier is
+available; results land as committed snapshots, git stays the archive.
+
+**Offer 1 — The Consensus at world scale.** The GKG is the substrate the instrument's
+disclosed limits point at: syndication and wire detection across 65 languages, every 15
+minutes, with every claim carrying its article URL. If a future arc extends The
+Consensus, this is the material that makes it a measurement no human team can hold.
+
+**Offer 2 — GDELT itself on trial.** One of the most-cited measuring instruments in
+computational social science, effectively undocumented for a decade: what does it
+systematically not see? Coverage bias as counter-measurement, receivers by nature (the
+research community citing it). Outward under rule 5 — GDELT is not this house.
+
+**Status:** open
