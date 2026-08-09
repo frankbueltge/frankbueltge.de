@@ -90,7 +90,7 @@ Navigation sagte das Gegenteil.
 - Zurückgezogen: „Practices" als oberster Nav-Punkt (las sich, als sei die Ökologie das
   ganze Haus) und „Archive ▾" als Sammelpunkt, unter dem *Projects* lag.
 
-## Die fünf Wörter — House · Practice · Project · Instrument · Experiment (Frank, 2026-08-09, VERBINDLICH)
+## Die Begriffsstaffel — Project · Practice · Experiment · Instrument · Work (Frank, 2026-08-09 abends, VERBINDLICH)
 
 Bis heute liefen vier Begriffe durcheinander: eine Praxis stand als Zeile in der
 Experimente-Liste, ein Instrument hieß „Hintergrund-Projekt", die Route hieß anders als die
@@ -98,19 +98,25 @@ Seite. Ab jetzt gilt genau diese Staffel, auf der ganzen Site und in allen Repos
 
 | Wort | Was es bezeichnet | Heute |
 |---|---|---|
-| **House** | Verfasste Anordnung, **unter der** Praxen laufen. Die Ebene über einer Praxis. | The research ecology (viele Verfassungen, föderiert) · Machine Attention (eine Verfassung, eine Maschine) |
-| **Practice** | Verfasste, maschinell betriebene Praxis mit eigener Verfassung. Bringt Arbeiten hervor; ist selbst keine Arbeit. | The Atelier · The Field · The Studio · **Machine Attention** |
-| **Project** | Aufgenommene Untersuchung **innerhalb** einer Praxis, die den Aufnahme-Pfad durchlaufen hat. | The Foreknown · Dark Ocean · The State Before the Interface |
-| **Instrument** | Klasse eines Projekts (oder ein Werkzeug des Hauses): läuft leise, liefert zu, **kein Bühnen-Anspruch**, darf jahrelang nichts liefern. Gegenstück: **Flagship**. | The State Before the Interface · der Wissensgraph |
-| **Experiment** | Eigenständiges Stück des Labors, keiner Praxis unterstellt. | The Protocol · Patterns · The Ghost Fleet … (14 auf `/experiments`) |
+| **Project** | Das große, laufende Vorhaben mit eigenem Zuhause. Enthält Praxen, Experimente, Instrumente und Werke. | The research ecology · Machine Attention · datavism.org · data-snack.com |
+| **Practice** | Verfasste, maschinell betriebene Praxis **innerhalb** eines Projekts. Bringt Werke hervor; ist selbst keins. | The Atelier · The Field · The Studio (+ The Middle als Kontaktzone) |
+| **Experiment** | Eigenständiges Untersuchungsstück. | die 14 auf `/experiments` · The Foreknown · Dark Ocean |
+| **Instrument** | Läuft leise, liefert einem Projekt zu, **kein Bühnen-Anspruch**, darf jahrelang nichts liefern. Gegenstück: **Flagship**. | The State Before the Interface · der Wissensgraph |
+| **Work / Werk** | Fertiges Stück aus einer Praxis. | die 60 Praxis-Werke |
 
-**Nachtrag desselben Tages (Frank): das fünfte Wort.** Die ersten vier beschrieben alles
-*innerhalb* eines Hauses — und Frank stellte prompt die Frage, für die keins von ihnen taugte:
-Die research ecology ist **drei Practices plus Kontaktzone**, Machine Attention ist **eine
-Practice**. Die beiden standen also gar nicht auf derselben Ebene, und genau das sah man auf
-der Startseite. **House** schließt die Lücke: Solange es nur ein Haus gab, waren „die Site" und
-„die Ökologie" dasselbe, und niemand brauchte das Wort. Ein zweites Exemplar hat die Kategorie
-hervorgezwungen.
+**Zurückgezogen am selben Tag: „House".** Nachmittags fehlte ein Wort für die Ebene über einer
+Praxis (die Ökologie ist drei Praxen, Machine Attention eine) — eingeführt als **House**, abends
+von Frank verworfen: *„insgesamt finde ich houses nicht so gut. und ich würde bei projekten
+bleiben, weil es projekte sind."* Die Staffel oben braucht das Sonderwort nicht: **Project** ist
+die oberste Ebene und enthält alles Übrige. Damit wandert auch **Project** eine Ebene nach oben —
+Foreknown und Dark Ocean heißen auf der Site jetzt **Experimente** eines Projekts, nicht Projekte
+einer Praxis. Die Zeile „Die vier/fünf Wörter" von heute Nachmittag ist damit **historisch**.
+
+**Übersetzung zum Praxis-Repo (dokumentiert, damit es keine Drift ist):** `machine-attention`
+nennt seine Untersuchungen intern weiterhin *investigations* — dort heißt die Abnahmestufe
+„E-EXPERIMENT", und „das E-Experiment des Experiments" wäre unlesbar. Site-Wort **Experiment**
+= Repo-Wort **investigation**. Eine dokumentierte Zuordnung ist keine Drift; zwei
+undokumentierte Vokabulare wären es.
 
 **Folgen, umgesetzt am 2026-08-09:**
 

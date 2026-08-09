@@ -10,6 +10,7 @@
 import Page from '@/layouts/Page.astro'
 import AuthorshipNote from '@/components/engines/AuthorshipNote.astro'
 import EcologyAnatomy from '@/components/ecology/EcologyAnatomy.astro'
+import EcologyRooms from '@/components/ecology/EcologyRooms.astro'
 import { ECOLOGY as W } from '@/config/ecology-wording'
 import { MIDDLE, PRACTICES, SHARED } from '@/lib/ecology/anatomy'
 import { allWorks, summarise } from '@/lib/engines/register'
@@ -47,6 +48,11 @@ const cite = (source: string): string => source.replace(/^src\/content\//, '').r
     <p class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">{W.eyebrow}</p>
     <h1 class="mt-4 text-[clamp(30px,5.5vw,52px)] font-bold tracking-[-0.03em]">{W.title}</h1>
     <p class="mt-5 max-w-2xl text-fg-muted">{W.standfirst}</p>
+
+    {/* The project's own rooms, moved here from the homepage on 2026-08-09: this is the page
+        a visitor lands on when they want THIS project, so its inhabitants and its rhythm
+        belong here rather than on a site-wide overview. */}
+    <EcologyRooms />
 
     <section class="mt-14" aria-labelledby="shared-heading">
       <h2 id="shared-heading" class="font-mono text-xs uppercase tracking-[0.18em] text-fg-faint">

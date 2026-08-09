@@ -15,7 +15,7 @@ export interface Werk {
   /** Sekundärer „Methodenblatt"-Link; null = keiner (z. B. Atelier hat sein Protokoll inline). */
   methodHref?: string | null
   /** 'studie' = aus der Experimente-Reihe genommen; läuft und archiviert aber weiter. */
-  tier?: 'experiment' | 'studie' | 'practice' | 'instrument'
+  tier?: 'experiment' | 'studie' | 'project' | 'instrument'
 }
 
 /** Verzeichnis der Experimente. Reihenfolge unten = redaktionelle Feinordnung bei Datums-
@@ -37,7 +37,7 @@ export const WERKE: Werk[] = [
     },
     live: true,
     methodHref: '/werke/attention',
-    tier: 'practice',
+    tier: 'project',
   },
   {
     id: 'observatory',
@@ -376,7 +376,7 @@ export const WERKE_EXPERIMENTE: Werk[] = WERKE_CHRONO.filter(
   (w) => w.tier === undefined || w.tier === 'experiment',
 )
 export const WERKE_STUDIEN: Werk[] = WERKE_CHRONO.filter((w) => w.tier === 'studie')
-export const WERKE_PRACTICES: Werk[] = WERKE_CHRONO.filter((w) => w.tier === 'practice')
+export const WERKE_PROJECTS: Werk[] = WERKE_CHRONO.filter((w) => w.tier === 'project')
 export const WERKE_INSTRUMENTS: Werk[] = WERKE_CHRONO.filter((w) => w.tier === 'instrument')
 
 /** Ids that must never surface on /experiments even though they sit in WERKE_CHRONO: the three
@@ -388,10 +388,10 @@ export const HOLDINGS_EXCLUDED_IDS: ReadonlySet<string> = new Set([
   'studio',
   'atelier',
   'on-record',
-  // Machine Attention and its instrument (Frank, 2026-08-09): a practice is not a peer of
-  // a single piece. Listing it beside The Protocol compared a house with a room. It has
-  // its own door at /machine-attention, which carries its projects; the observatory is
-  // one of those, an instrument of the practice rather than an experiment of the lab.
+  // Machine Attention and its instrument (Frank, 2026-08-09): a project is not a peer of a
+  // single piece. Listing it beside The Protocol compared a whole undertaking with one of its
+  // parts. It has its own page at /machine-attention, which carries its experiments; the
+  // observatory is an instrument of that project, not an experiment of the lab.
   'attention',
   'observatory',
 ])

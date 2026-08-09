@@ -1,7 +1,7 @@
 // src/data/werke.test.ts
 import { describe, it, expect } from 'vitest'
 import {
-  WERKE_PRACTICES,
+  WERKE_PROJECTS,
   WERKE_INSTRUMENTS,
   HOLDINGS_EXCLUDED_IDS,
   HOLDINGS_RANKED,
@@ -83,12 +83,12 @@ describe('tier split (Experimente vs. Studien)', () => {
     expect(
       WERKE_EXPERIMENTE.length +
         WERKE_STUDIEN.length +
-        WERKE_PRACTICES.length +
+        WERKE_PROJECTS.length +
         WERKE_INSTRUMENTS.length,
     ).toBe(WERKE.length)
   })
-  it('keeps the practice and its instrument out of the experiments row (Frank, 2026-08-09)', () => {
-    expect(WERKE_PRACTICES.map((w) => w.id)).toEqual(['attention'])
+  it('keeps the research project and its instrument out of the experiments row (Frank, 2026-08-09)', () => {
+    expect(WERKE_PROJECTS.map((w) => w.id)).toEqual(['attention'])
     expect(WERKE_INSTRUMENTS.map((w) => w.id)).toEqual(['observatory'])
     const experiments = WERKE_EXPERIMENTE.map((w) => w.id)
     expect(experiments).not.toContain('attention')

@@ -1,0 +1,209 @@
+---
+// The ecology's own rooms, moved off the homepage on 2026-08-09 (Frank: the front page had
+// become "eigentlich die haus- oder projektseite der ecology" — a project page wearing the
+// site's clothes). Everything here answers "what is this project and who lives in it", which
+// is /ecology's question, not the site's: the plain-language entry, the four doors with their
+// tours, the triptych of practice figures, and the score of the last fourteen days.
+//
+// Nothing was rewritten in the move — the markup and its comments travel as they stood, so a
+// reader of the git history sees a relocation and not a rewrite. Two deterministic,
+// build-time derivations come with it (no clock, no network): each door's "last recorded"
+// date from the newest committed journal entry, and the Maschinenraum score from the same
+// committed mirrors /maschinenraum reads.
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import type { Locale } from '@/lib/site'
+import { currentEntrance } from '@/lib/begegnungen'
+import { NAMING } from '@/config/naming'
+import { jiBracket, lastChronicle, latestJournal, trimLine } from '@/lib/maschinenraum'
+import { buildScore, chronicleEvents, clampToLastDays, journalEvents, scoreOpenings } from '@/lib/partitur'
+import jointInquiries from '@/data/begegnungen/joint-inquiries.json'
+import Partitur from '@/components/maschinenraum/Partitur.astro'
+import Triptych from '@/components/hub/Triptych.astro'
+import { loadChronicle as loadFieldChronicle } from '@/lib/field/chronicle'
+import { loadChronicle as loadStudioChronicle } from '@/lib/studio/chronicle'
+
+const mrAtelierJournalsRaw = import.meta.glob('/src/content/atelier/journal/*.md', { eager: true, query: '?raw', import: 'default' }) as Record<string, string>
+const mrPlenumJournalsRaw = import.meta.glob('/src/content/plenum/journal/*.md', { eager: true, query: '?raw', import: 'default' }) as Record<string, string>
+const mrScoresRaw = import.meta.glob('/src/content/atelier/projects/*/SCORE.md', { eager: true, query: '?raw', import: 'default' }) as Record<string, string>
+const mrFieldChronicle = loadFieldChronicle()
+const mrStudioChronicle = loadStudioChronicle()
+
+const mrAtelier = latestJournal(mrAtelierJournalsRaw)
+const mrPlenum = latestJournal(mrPlenumJournalsRaw)
+const mrField = lastChronicle(mrFieldChronicle)
+const mrStudio = lastChronicle(mrStudioChronicle)
+
+const mrScore = buildScore(
+  clampToLastDays(
+    [
+      ...journalEvents(mrAtelierJournalsRaw, 'atelier'),
+      ...scoreOpenings(mrScoresRaw),
+      ...chronicleEvents(mrFieldChronicle, 'field'),
+      ...chronicleEvents(mrStudioChronicle, 'studio'),
+      ...journalEvents(mrPlenumJournalsRaw, 'plenum'),
+    ],
+    14,
+  ),
+)
+// The bracket over the running joint inquiry, derived from the mirrored register rather than
+// typed here (2026-08-02): the day a second inquiry opens, a hardcoded name would be wrong and
+// nothing would fail.
+const mrJi = jiBracket(jointInquiries, mrScoresRaw)
+
+// Each voice lane carries the way INTO that voice's own house — for the three practices the
+// tour anchor their door and their triptych card point at, taken from the doors themselves so a
+// renamed anchor is a one-line edit in the dictionary. The Plenum's row leads to /plenum and
+// deliberately does NOT get the others' label: "tour →" would promise a walk through a practice
+// of this house, and data-snack is a house of its own — what it keeps here is minutes.
+const tourByVoice = new Map(NAMING.doors.items.map((d) => [d.id, d.tourHref]))
+const mrRows: { label: string; date?: string; line?: string; linkHref?: string; linkLabel: string }[] = [
+  { label: 'Atelier · Ulysses', date: mrAtelier?.date, line: mrAtelier ? trimLine(mrAtelier.firstLine, 92) : undefined, linkHref: tourByVoice.get('ulysses'), linkLabel: NAMING.maschinenraum.tourLabel },
+  { label: 'Field · Meridian', date: mrField?.date, line: mrField ? trimLine(`${mrField.move.toUpperCase()} — ${mrField.summary}`, 92) : undefined, linkHref: tourByVoice.get('meridian'), linkLabel: NAMING.maschinenraum.tourLabel },
+  { label: 'Studio · Ensemble', date: mrStudio?.date, line: mrStudio ? trimLine(`${mrStudio.move.toUpperCase()} — ${mrStudio.summary}`, 92) : undefined, linkHref: tourByVoice.get('ensemble'), linkLabel: NAMING.maschinenraum.tourLabel },
+  { label: 'Plenum · data-snack', date: mrPlenum?.date, line: mrPlenum ? trimLine(mrPlenum.firstLine, 92) : undefined, linkHref: NAMING.maschinenraum.guestHref, linkLabel: NAMING.maschinenraum.guestLabel },
+]
+
+const locale = (Astro.currentLocale ?? 'en') as Locale
+const entrance = currentEntrance
+
+// "Last recorded" per practice — from committed content, not a live git log. Journal filenames
+// are themselves the date (YYYY-MM-DD…), the same convention src/lib/engines/latest.ts uses.
+function latestJournalDate(glob: Record<string, unknown>): string | undefined {
+  const dates = Object.keys(glob)
+    .map((path) => path.match(/(\d{4}-\d{2}-\d{2})/)?.[1])
+    .filter((d): d is string => Boolean(d))
+  return dates.sort().at(-1)
+}
+const atelierJournal = import.meta.glob('/src/content/atelier/journal/*.md')
+const fieldJournal = import.meta.glob('/src/content/field/journal/*.md')
+const studioJournal = import.meta.glob('/src/content/studio/journal/*.md')
+
+const lastRecorded: Record<string, string | undefined> = {
+  ulysses: latestJournalDate(atelierJournal),
+  meridian: latestJournalDate(fieldJournal),
+  ensemble: latestJournalDate(studioJournal),
+  // The Middle has no journal of its own — the encounter export's own as-of stamp is the only
+  // committed date this repo carries for it.
+  conductor: entrance.status.as_of,
+}
+
+const doors = NAMING.doors.items.map((d) => ({
+  ...d,
+  meta: d.noResident
+    ? `${d.noResident} · last recorded: ${lastRecorded[d.id] ?? '—'}`
+    : `resident: ${d.id.charAt(0).toUpperCase()}${d.id.slice(1)} · last recorded: ${lastRecorded[d.id] ?? '—'}`,
+}))
+---
+
+{/* „What this is" (Frank, 25.07.): der Klartext-Einstieg, bevor die abstrakten Türen kommen. */}
+<section class="mt-16 border-t border-line/60 pt-14" id="what-this-is">
+  <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted">
+    <b class="text-fg">{NAMING.whatThis.kicker}</b>
+  </p>
+  <div class="mt-5 max-w-[68ch] space-y-4 text-[15px] leading-relaxed text-fg-muted">
+    {NAMING.whatThis.paragraphs.map((para) => <p>{para}</p>)}
+  </div>
+</section>
+
+{/* Reihenfolge (Frank, 24.07.): erst WER hier wohnt (Orientierung), dann was sie zuletzt
+    gemacht haben — ein Besucher soll die Werktitel einordnen können, bevor er sie liest. */}
+<section class="mt-16 border-t border-line/60 pt-14" id="doors">
+  <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted">
+    <b class="text-fg">{NAMING.doors.kicker}</b> · {NAMING.doors.kickerSub}
+  </p>
+  {/* A door is a block link; its tour link is a link INSIDE it, so the two are siblings rather
+      than nested anchors (which no browser resolves the way the markup reads). The cards keep
+      their validated identity colours — the ecology quartet reads the same here, on the
+      encounter map and on the Partitur. */}
+  <div class="doors hub-voices mt-7 grid gap-3.5 sm:grid-cols-2">
+    {doors.map((d) => (
+      <div class:list={['door', `door-${d.id}`, 'relative rounded-[10px] border border-line bg-panel p-5 pt-5 transition-colors hover:border-fg-faint']}>
+        <h3 class="text-[19px] font-semibold tracking-[-0.01em]">
+          <a href={d.href} class="door-link">{d.name}</a>
+        </h3>
+        <p class="mt-2 min-h-[4.2em] text-sm text-fg-muted">{d.description}</p>
+        <span class="mt-3 block font-mono text-[11px] text-fg-faint">{d.meta}</span>
+        {d.tourHref && (
+          <a href={d.tourHref} class="door-tour relative z-10 mt-2 inline-block font-mono text-[11px] text-fg-muted underline decoration-line underline-offset-4 transition-colors hover:text-fg">
+            {NAMING.doors.tourLabel}
+          </a>
+        )}
+      </div>
+    ))}
+  </div>
+
+  {/* The guest voice (2026-08-02), named where the residents are named — and nowhere near their
+      weight. One line in the same subordinate idiom as the seed line below: mono, faint, no
+      panel, no colour, no card. */}
+  <p class="mt-5 font-mono text-xs text-fg-faint">
+    {NAMING.doors.guest.lead}
+    <a href={getRelativeLocaleUrl(locale, NAMING.doors.guest.href)} class="underline decoration-line underline-offset-4 transition-colors hover:text-fg">{NAMING.doors.guest.label}</a>
+  </p>
+
+  {/* Three doors, three vocabularies (WP7): a fragment of each practice's own figure, in its own
+      drawing language, under an identical frame. An invitation, not a third dashboard. */}
+  <Triptych />
+
+  {/* Public seed (Design-Spec 2026-07-20-oeffentliche-saat-design.md §5): eine dezente Zeile,
+      keine eigene Karte — English route /seed. */}
+  <p class="mt-9 font-mono text-xs text-fg-faint">
+    Offer this research a seed →
+    <a href="/seed" class="underline decoration-line underline-offset-4 transition-colors hover:text-fg">/seed</a>
+  </p>
+</section>
+
+{/* WHO lives here and WHAT THEY LAST DID are one thought (WP7, 2026-08-01). */}
+<section class="mt-16 border-t border-line/60 pt-14" id="maschinenraum">
+  <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted">
+    <b class="text-fg">{NAMING.maschinenraum.kicker}</b> · {NAMING.maschinenraum.kickerSub}
+    <a href={NAMING.maschinenraum.fullView.href} class="ml-2 normal-case tracking-normal text-fg-faint underline hover:text-fg">{NAMING.maschinenraum.fullView.label}</a>
+  </p>
+  {/* The score of the last 14 days (Frank, 2026-07-31): every mark hoverable, clicking leads
+      to the full view. */}
+  {mrScore && <Partitur model={mrScore} ji={mrJi} compact />}
+  <ul class="mt-6 divide-y divide-line/60 overflow-hidden rounded-[10px] border border-line bg-panel">
+    {mrRows.map((r) => (
+      <li class="flex flex-wrap items-baseline gap-x-3 gap-y-1 px-4 py-3 sm:px-6">
+        {/* nowrap + the same width LATEST gives its dates: at 5.5em an ISO day broke over two
+            lines. */}
+        <span class="w-[6.5em] shrink-0 whitespace-nowrap font-mono text-[11px] tabular-nums text-fg-faint">{r.date ?? '—'}</span>
+        <span class="w-[11em] shrink-0 font-mono text-[10px] uppercase tracking-[0.14em] text-fg-muted">{r.label}</span>
+        <span class="text-sm text-fg-muted">{r.line ?? NAMING.maschinenraum.noMirror}</span>
+        {r.linkHref && (
+          <a href={r.linkHref} class="ml-auto shrink-0 font-mono text-[10px] uppercase tracking-[0.14em] text-fg-faint underline decoration-line underline-offset-4 transition-colors hover:text-fg">
+            {r.linkLabel}
+          </a>
+        )}
+      </li>
+    ))}
+  </ul>
+  <p class="mt-3 font-mono text-[11px] text-fg-faint">{NAMING.maschinenraum.noteLead} <a href={NAMING.maschinenraum.fullView.href} class="underline hover:text-fg">{NAMING.maschinenraum.noteLinkLabel}</a></p>
+</section>
+
+<style>
+  /* The four practice identity colours are declared once on .hub-voices in
+     src/styles/hub-triptych.css — the doors grid and the triptych both carry that class and
+     inherit from it. The rules here only REFERENCE the tokens; a colour that exists twice is a
+     colour that will disagree with itself. */
+  .door::before {
+    content: '';
+    display: block;
+    height: 3px;
+    margin: -1.25rem -1.25rem 1rem;
+    border-radius: 10px 10px 0 0;
+  }
+  .door-ulysses::before { background: var(--hub-c-ulysses); }
+  .door-meridian::before { background: var(--hub-c-meridian); }
+  .door-ensemble::before { background: var(--hub-c-ensemble); }
+  .door-conductor::before { background: var(--hub-c-conductor); }
+
+  /* The door stays one big click target even though it holds TWO links (WP7): the name's anchor
+     stretches over the whole card, and the tour link is lifted above it. Nested anchors would
+     have been the shorter markup and are not a thing any browser resolves as written. */
+  .door-link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+</style>
