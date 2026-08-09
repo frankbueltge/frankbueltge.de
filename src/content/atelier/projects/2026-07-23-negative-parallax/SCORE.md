@@ -34,7 +34,38 @@ work_line:
     exists in a signature, and what survived was the narrower relation between a claim
     and the reference that would license it), and this practice's own citation
     behaviour (ticks 17, 19).
-  refrain_aspect: territory  # tick 48 — the prior question the instrument had never asked is asked,
+  refrain_aspect: territory  # tick 50 — the instrument is repaired to 0.5 against the seven faults
+    # pinned at tick 47, and all three frames are re-measured with it in the same operation, because a
+    # repair without a re-measure earns no finding. 1 085 e-prints re-fetched in one sequential
+    # process; **every one byte-identical** to the sha256 of the manifest that first read it (599/599,
+    # 229/229, 256/256 — D6 silent), and **0.4 run over today's corpus reproduces all three landed
+    # tables exactly** (810/86/216 sites; 61/28/118 candidates), so every difference below is the
+    # instrument alone. Repaired: sites 810→855, 86→89, 216→328; candidates 61→53, 28→20, 118→87;
+    # rates **19.1→16.6 %, 47.5→40.0 %, 57.6→42.4 %** (P1, P2 hold).
+    # **The repair splits, and the two halves disagree.** Against the 36 papers tick 47 hand-read, 0.5
+    # finds a threshold in **7 of the 8** that state one and in **0 of the 16** that state none — its
+    # paper classification is better than 0.4's. But of **20 newly found sites, only 9 are threshold
+    # statements** (45 % against a forecast of 70 %): **P6 defeated, D5 fires**, and the eight worst
+    # are a colour, two parallaxes, a separation, a loss weight, a sample count and a threshold on a
+    # different column — all reached by the gap bound of 100 that I chose by a rule that never asked
+    # what else 100 characters reaches. **0.5's site counts are worse than 0.4's while its paper
+    # counts are better, and the two may not be quoted from one run.**
+    # **The census does not reproduce tick 47's correction. P3 and P4 defeated; D2 and D3 fire.** The
+    # ranking is Gaia 16.6 · MCMC 40.0 · CV 42.4 — the RAW order, not the reversal a 12-paper sample
+    # reported. Not a refutation: 0.5 repairs class B and cannot separate class C, which is what the
+    # claim turns on — and P3 as written compared two different quantities, which is my error, stated
+    # rather than redefined (matched properly: +3.9, +4.0, −7.5 points). **The withdrawal of the
+    # cross-literature comparison stays in force.**
+    # **P5 holds and the shipped frame does not.** On the shipped 187-paper frame the deriving note
+    # stands at the site in 4 papers under both versions — the published figure, unmoved. But that
+    # frame was built by the faulty sieve: over the full 599, 0.5 finds **194 papers / 412 sites** at
+    # 1.4 where 0.4 found 187 / 397, and one of the seven added papers carries the note at the site.
+    # The repaired reading is **5 of 194 (2.6 %)** against the shipped **4 of 187 (2.1 %)** — against
+    # this line's own claim, and not large enough to change it. Shipped work untouched; reported to
+    # Frank in `REQUESTS.md`.
+    # **Open and named:** 37 of the 47 papers that changed class were never hand-read; one fault of
+    # the seven survives (a hyphenated sweep, `IoU thresholds 0.5-0.95`).
+  refrain_aspect_prior: territory  # tick 48 — the prior question the instrument had never asked is asked,
     # in the FIRST case and by code: of the **187 papers that state `RUWE < 1.4`**, how many carry the
     # deriving note (`GAIA-C3-TN-LU-LL-124-01`) **anywhere in the paper**, as against the 4 that carry
     # it at the site? Pre-registered before any table (`PREREGISTRATION-tick48.md`); frame rebuilt from
@@ -2735,3 +2766,43 @@ out.
 seven pinned faults, and the re-measure of all three frames in one operation** — until that is
 done, every rate this line has published, tick 48's included, carries an unmeasured understatement
 in its own favour. Then the judging, at the monthly line review.
+
+---
+
+### Tick 50 — 2026-08-09 — the seven faults closed, and the price of closing them
+
+**Aspect: territory. OUTWARD** — 1 085 papers in three literatures, read twice. Inward
+counter: 1 in the last 4 (47–50). Full record: TRACE tick 50. Forecast written first:
+`PREREGISTRATION-tick50.md`; scored in `warrant-trace/forecast-tick50.json`.
+
+**One operation, as tick 47-B and tick 49 both required.** Instrument 0.5 repairs the seven
+faults pinned by hand-reading — two in the engine (the site gap that stopped at a decimal
+point; the text-mode `\textless`/`\textgreater`), five in the profiles (a subscript-defeated
+term boundary, the missing left boundary that read `that R` as R-hat, a value standing before
+the term, the bare `of` the CV relation list lacked, a swept threshold) — and all three frames
+are re-measured with it in the same tick.
+
+**Two things that had to be true before anything else could be said.** The manifest arithmetic
+that catches a double-launched fetch was run and passed (230/256/599 records for 230/256/599
+ids). Every re-fetched e-print is byte-identical to the manifest that first read it. And 0.4,
+run over today's corpus, reproduces **all three landed tables exactly** — so every difference
+is the instrument.
+
+**The repair is right about papers and wrong about sites.** Against tick 47's 36 hand-read
+papers it finds a threshold in 7 of the 8 that state one and in 0 of the 16 that state none.
+Against the sites it newly produces, only **9 of 20** are threshold statements at all. The
+flood is traceable to one decision I recorded in advance and got wrong: a gap bound of 100
+characters, chosen by a rule that asked only what it must admit.
+
+**Tick 47's reversal is not reproduced.** The census ranking is the raw one. The reading is
+withdrawn, not refuted — what separates the cases is class C, which no regex reaches.
+
+**The shipped headline is unmoved; the shipped frame is not.** 4 papers carry the note at the
+site under both versions. But the frame those 187 papers came from was selected by the faulty
+sieve, and the repaired sieve finds 194. Reported to Frank; the work itself is untouched.
+
+**Status:** ACTIVE, unchanged. Disposition unchanged. `mandate_check: PASS` — nothing here
+touches a mandate boundary.
+
+**Next:** not another repair. Class C is a reading problem: either a hand-reading wide enough
+to correct it in one literature, or the monthly line review, now with a census under it.

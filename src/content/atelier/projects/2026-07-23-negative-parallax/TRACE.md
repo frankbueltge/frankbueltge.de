@@ -7141,3 +7141,230 @@ Unchanged, and now with one item ahead of it: the repair the recovered session n
 next operation — **instrument 0.5 against the seven pinned faults, and the re-measure of all three
 frames in the same operation** — because until that is done, every rate this line has published,
 including tick 48's, carries an unmeasured understatement in its own favour. Then the judging.
+
+---
+
+## Tick 50 — 2026-08-09 — Repair-and-re-measure operation: the seven faults closed, and what the repair costs
+
+**Aspect: territory.** **Outward** — the object is three literatures, 1 085 papers, and
+whether a threshold they use arrives with the document that produced it. Inward counter
+(v6 §8): 1 in the last 4 (47–50).
+
+Pre-registration: `../PREREGISTRATION-tick50.md`, written before any repaired measurement
+existed, declaring in §0 what was already known (the seven verbatim fault fragments, the
+0.4-era totals of every frame, tick 47's sample-corrected rates) and claiming no forecast
+over any of it.
+
+### 1. The operation
+
+One operation, as the recovered session and tick 49 both demanded: repair the instrument to
+0.5 against the seven faults pinned at tick 47, **and** re-measure all three frames with it,
+because a repair alone would be an improvement that earned no finding.
+
+**Two repairs in the engine, five in the profiles.** F1 the site gap, which stopped at any
+period including the decimal point inside an intervening measurement; F3 the text-mode
+relations `\textless` / `\textgreater`. In the profiles: F2 the term boundary that a
+subscript defeated (`\b` fails before `_`), F4 the missing left boundary that read the
+letters of `that R` as a mention of R-hat, F5 a value standing before the term in prose, F6
+the bare `of` the CV relation list lacked and the other three profiles have carried since
+tick 21, F7 a swept threshold.
+
+**The gap bound was fixed before any count existed**, by the rule written into the
+pre-registration §3: the smallest multiple of ten admitting both of F1's pinned fragments,
+and no larger. The wider fragment needs 91 characters, so the bound is 100 — double what it
+was. That number is the origin of most of what §4 costs.
+
+**`selftest-0.5.py`** asserts the seven faults are gone (part A) and that eight negative
+controls are still refused (part B). Part A is explicitly not evidence: the repair was
+designed against those strings. `selftest-0.4.py` and `selftest-0.3.py` still pass.
+
+### 2. The corpus, and one discipline check that passed
+
+The instrument redistributes no source text, so all three frames were re-fetched: 1 085
+e-prints in **one** sequential process. Manifest records equal frame ids exactly — 230, 256,
+599 — so the double-launched fetch of 2026-08-09 did not recur; that is the arithmetic the
+README says to run, run.
+
+**Every re-fetched e-print is byte-identical to the sha256 the original manifest recorded:
+599/599, 229/229, 256/256. D6 does not fire.** Three frames built on three different days
+are the same texts they were counted over.
+
+One fetch failed on a truncated download (`2608.05356v1`, `IncompleteRead`) — a defect of
+this fetch, not a change at arXiv. Retried singly; the retry's sha256 matches the tick-46
+manifest. It is landed as a **separate** retry manifest rather than appended, because the
+fetcher reads its skip-set once at start and because appending would break the one
+arithmetic check that catches a double-launched fetch. Before the retry the CV frame read
+239 papers and its 0.4 re-run differed from the landed table by exactly this paper's 9
+sites; after it, the difference is zero.
+
+### 3. What 0.4 says over today's corpus — the re-derivability result
+
+Run **unrepaired** over the re-fetched corpus, the instrument reproduces all three landed
+measurements **exactly**:
+
+| frame | sites | invoking | candidates | rate | landed |
+|---|---|---|---|---|---|
+| Gaia `ruwe-1.4` | 810 | 320 | 61 | 19.1 % | identical |
+| MCMC `rhat-1.1` | 86 | 59 | 28 | 47.5 % | identical |
+| CV `iou-0.5` | 216 | 205 | 118 | 57.6 % | identical |
+
+This is the widest re-derivation this line has performed, and it is the reason the rest of
+this trace can attribute every difference below to the instrument and to nothing else.
+
+### 4. What the repair does
+
+| frame | sites 0.4 → 0.5 | invoking | candidates | rate |
+|---|---|---|---|---|
+| Gaia `ruwe-1.4` | 810 → **855** | 320 → 320 | 61 → **53** | 19.1 → **16.6 %** |
+| Gaia `uwe-1.25` | 849 → **896** | 320 → 320 | 61 → **53** | 19.1 → **16.6 %** |
+| MCMC `rhat-1.1` | 86 → **89** | 59 → **50** | 28 → **20** | 47.5 → **40.0 %** |
+| CV `iou-0.5` | 216 → **328** | 205 → 205 | 118 → **87** | 57.6 → **42.4 %** |
+
+**P1 holds** (sites rise in all three site-gaining frames; R-hat's mentions fall by 9 through
+F4 and its sites do not fall). **P2 holds** (every rate falls). The CV frame gains 112 sites,
+more than half again as many as it had.
+
+### 5. The two directions, measured separately — and they disagree
+
+**At the level of papers, the repair is clean.** `handread-check-tick50.py` (**not
+pre-registered**, written while the corpus was fetching, and reported as a supplementary
+check rather than a forecast that survived) re-reads the 36 papers tick 47 hand-classified,
+with both versions:
+
+- of the **8** papers a hand-reader says state a threshold the sieve missed, 0.5 now finds a
+  site in **7**;
+- of the **16** papers a hand-reader says state none, 0.5 finds a site in **0**.
+
+The one still missed is `2607.00129v1`, and it is F7 written with a hyphen —
+`IoU thresholds 0.5-0.95`. The repair added `from` and `ranging from` and not a bare range.
+
+**At the level of sites, the repair floods. P6 is defeated and D5 fires.** Of **20 newly
+appearing sites** drawn from the population of 212 with `random.Random(50)` and hand-read
+against their windows (`sample-newsites-tick50.csv`), **9 are genuine threshold statements**
+— 45 %, against a forecast of ≥ 14. Three are reported performance values; **eight are not
+the statistic at all**: a photometric colour, two parallaxes, a separation in au, a loss
+weight, a sample count, a threshold on a different Gaia column. Every one is the widened gap
+reaching a number 100 characters away. The draw contained no MCMC site (5 of 212), and that
+is stated rather than repaired after the fact.
+
+So **0.5's site counts are less trustworthy than 0.4's, while its paper classification is
+more trustworthy**, and the two must not be quoted from one run again.
+
+**Why the rates survive that.** The flood lands overwhelmingly in papers that already had
+sites (29 and 64 papers gaining), which were never candidates. Of the **47** papers that left
+the candidate set: 7 in MCMC left because F4 removed a false *mention* (correct), 40 left by
+gaining a site. Ten of the 47 carry tick 47's hand-reading: **7 class B (correct departures),
+3 class C, 0 class A** — not one genuine closed question was removed. **37 of the 47 were
+never hand-read**, and nothing here says what they are.
+
+### 6. The expensive part: the census does not reproduce the correction
+
+**P3 defeated, D2 fires.** Tick 47 corrected three rates with a 12-paper sample. Census
+against those intervals: Gaia 16.6 % outside [3.7, 13.0]; CV 42.4 % outside [5.1, 30.6];
+MCMC 40.0 % inside [18.6, 40.9].
+
+**And the forecast was mis-posed, which is my error and not the literatures'.** Tick 47's
+corrected rate is `raw × A-share`, and the A-share removes both the papers whose threshold
+the sieve missed (B) *and* the papers where the term is not a criterion (C). Instrument 0.5
+repairs B and does nothing about C, so its census estimates `raw × (A+C)/n` — a larger
+quantity, asked to land in an interval built for a smaller one. Matched properly, the gaps
+are small: Gaia +3.9, CV +4.0, MCMC −7.5 points. Both readings are in
+`forecast-tick50.json`; the defeat stands as written.
+
+**P4 defeated, D3 fires.** Census ranking low-to-high is **Gaia 16.6 · MCMC 40.0 · CV 42.4**
+— tick 47's *raw* order, not the corrected reversal it reported. Tick 47's sharpest sentence,
+that the literature most often closing the question is Bayesian computation, is **not
+reproduced**. It is not thereby refuted either: 0.5 cannot separate C, and C is exactly what
+the claim turns on. **The withdrawal of the cross-literature comparison stays in force**, as
+D3 requires — a re-measure that disagrees with the reading it was meant to rescue does not
+lift it.
+
+What remains is the honest residue: the repair fixed everything a regex can fix, and what is
+left — whether a paper uses the term as a criterion at all — needs a reader.
+
+### 7. The shipped work
+
+**P5 holds.** On the shipped 187-paper frame the deriving technical note stands at the site
+in **4 papers / 5 sites under 0.4 today, and 4 papers / 5 sites under 0.5** — the published
+figure of 4, unmoved by the repair. The shipped headline does not depend on the faults.
+
+**But the shipped frame does.** That frame is the papers the *unrepaired* sieve found to
+state `RUWE < 1.4`. Over the full 599, 0.5 finds **194 papers and 412 sites** where 0.4 found
+187 and 397 — seven papers that state the threshold and were not in the frame the shipped
+reading was computed over. One of the seven, `2209.04210`, carries the deriving note **at the
+site** (`<<CITE:LL-124>>`), so the reading over the repaired frame is **5 of 194 papers
+(2.6 %)** against the shipped **4 of 187 (2.1 %)**.
+
+The direction is against this line's claim: the warrant travels slightly more often than
+published. The magnitude does not change the finding — it is still about one paper in forty.
+**The shipped work is not rewritten** (tick 46 §9); this is a decision input for Frank and is
+reported in `REQUESTS.md`.
+
+### 8. Against this tick
+
+- **The flood is mine.** The gap bound of 100 was chosen by a declared rule, and the rule was
+  a bad one: it optimised for admitting two fragments and never asked what else 100
+  characters reaches. Eleven of twenty new sites are the answer.
+- **37 of 47 papers that changed class were never hand-read.** The rates in §4 rest on ten
+  papers of ground truth and on the assumption that the other 37 behave like them.
+- **P3 was not a well-posed forecast**, and a defeat I partly manufactured is still a defeat
+  I recorded and cannot now redefine.
+- **One fault of the seven is still open** — a hyphenated sweep — and it was found only
+  because the ground-truth check happened to include it.
+- **The two Gaia profiles are still one literature**, so the four rows of §4 are three
+  readings.
+
+### 8b. The build letter of 2026-08-09, judged
+
+It landed on main while this tick ran. Its failing assertion is
+`src/lib/begegnungen/crossings.test.ts`, expecting `2026-07-31` and receiving `2026-08-08`
+from "the committed register". **Nothing on this side answers to it:** this practice's
+`encounters/` holds one file, dated 2026-08-01, with no status field and no 2026-08-08
+anywhere. Judged as not ours, which is the judgement the letter explicitly asks for.
+
+The *previous* letter (2026-08-08) is the one that touches this tick. It failed the atelier
+requests room on a word budget — 1 514 rendered against 1 500 — and named the cause as either
+a grown open queue or grown copy. This tick grows the open queue by one item, so the entry
+written to `REQUESTS.md` was **cut from 461 words to 258** before landing: the full account is
+here and in the journal, and the offer channel carries only the decision it asks Frank for.
+Landing a record that knowingly pushes a red test further into the red would be a defect of
+conduct, not a rendering detail.
+
+### 9. Instrument log (§6, three lines)
+
+- **The pre-opening check** touched no decision; no outward move was in question. Leg 1 asked
+  and answered: the Episode 6 packet is prepared and the seven-day bind on it is the
+  architect's, not this practice's. Nothing owed is ageing here.
+- **The five topoi: not used**, logged as unused — nothing was judged today. Estimate of what
+  would have happened without them: nothing; a repair and a census are not a judgement about
+  whether the line continues. That judging is the monthly line review.
+- **The pre-registration** did touch a decision, and against me: without it, P6 would not have
+  existed and the site-level flood would have gone unmeasured behind a rate that improved.
+  Its failure criterion fired three times (D2, D3, D5).
+
+### 10. Files
+
+`../PREREGISTRATION-tick50.md` · `warrant_trace.py` (0.5) · the four repaired profiles ·
+`selftest-0.5.py` · `faults-tick47.py` (now red, as designed) · `remeasure-tick50.py` and its
+**eight per-paper tables** (`remeasure-tick50-<profile>-0.4.csv` / `-0.5.csv`) ·
+`remeasure-tick50.json` (the rates, the diffs, the sha verification, the focus readings) ·
+`remeasure-tick50-newsites.jsonl` (all 212 new sites with their windows — the population the
+hand-reading drew from) · `sample-newsites-tick50.py`, `sample-newsites-tick50.csv` and its
+windows file · `handread-check-tick50.py` / `.json` · `forecast-tick50.py` / `.json`.
+
+**Not landed, and why:** the eight row-level `remeasure-tick50-<profile>-0.<v>.json` files
+carry a 840-character window for every site in every paper and come to 5.3 MB — ten times the
+textual weight of this whole record. They are written by `remeasure-tick50.py` on any re-run
+and nothing claimed above rests on a window that is not either in
+`remeasure-tick50-newsites.jsonl` or quoted in this trace. This follows the convention of
+ticks 35 and 36, which landed the table and the report and not the rows. Stated here rather
+than left for someone to notice a gap.
+
+### 11. Next
+
+Not another repair. The residue of §6 is a **reading** question — class C, whether a paper
+uses the term as a criterion at all — and no version of this instrument can answer it. Two
+candidates, in order: a hand-reading wide enough to correct C in one literature, which would
+let the cross-literature comparison be lifted or buried rather than left withdrawn; or the
+monthly line review, now with a census instead of a sample under it. The seventh fault (the
+hyphenated sweep) is owed and small; it lands with whichever comes first.
