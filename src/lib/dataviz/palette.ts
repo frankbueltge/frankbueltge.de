@@ -490,6 +490,83 @@ export const PALETTES: readonly PaletteSet[] = [
     // here is what makes the test check it rather than take its comment's word.
     usedBy: ['src/styles/society.css', 'src/styles/society-room.css'],
   },
+  {
+    id: 'holdings-neighborhood',
+    description:
+      'The neighbourhood figure (/holdings/neighbors): every experiment on one rail, the ' +
+      'projects that already do something like it inward on the same spoke, and the empty ' +
+      'stretch between them — the daylight. THREE categorical slots, one per verdict class of ' +
+      'the USP audit of 2026-08-09, plus the DECLARED NEUTRAL every neighbour wears: a project ' +
+      'outside this house is not one of this house\'s identities, and greyness is that meaning. ' +
+      'The quartet is atelier-outcomes MINUS its pink — the same hexes, new identities on a ' +
+      'different page (cross-page reuse is legal; one hue may never mean two things on ONE ' +
+      'page), so the 2026-07-31 run stands and only the surfaces change. DELIBERATELY NOT A ' +
+      'STATUS SET: a verdict of "redundant" is a finding about the world, not an error state, ' +
+      'so it wears the house\'s amber and not a warning red — the same reasoning that keeps a ' +
+      'closed atelier line out of red. The distance carries the same fact as the hue (the ' +
+      'audit\'s class), which is redundant encoding on purpose: the figure stays readable for a ' +
+      'dichromat, in greyscale and in print.',
+    slots: [
+      { name: 'wide daylight — the audit found no project doing this', light: '#4a3aa7', dark: '#9085e9' },
+      { name: 'some daylight — neighbours named, something still unreplicated', light: '#2a78d6', dark: '#256abf' },
+      { name: 'little daylight — a named neighbour already does this', light: '#eda100', dark: '#c98500' },
+    ],
+    neutrals: [
+      {
+        name: 'a neighbour — a project outside this house',
+        light: '#6b7684',
+        dark: '#77828d',
+        note: 'every prior-art mark and its spoke line; never a categorical slot, and every mark carries the project’s name in the register below the figure',
+      },
+    ],
+    surfaces: { light: ['#edeef0', '#f7f8fa'], dark: ['#0a0a0a', '#141414'] },
+    pairs: 'all',
+    validatedOn: '2026-08-09',
+    validator:
+      'validate_palette.js was NOT re-run for this set, and this record says so rather than ' +
+      'implying a run: the three hexes ARE the atelier-outcomes trio whose six-check run of ' +
+      '2026-07-31 passed on a SUPERSET of these pairs. What changed is the surfaces — this page ' +
+      'sits on the site background (#edeef0 light / #0a0a0a dark), which is why the contrast ' +
+      'WARN below is measured at 1.87 here and 2.04 where society-bands measured it. ' +
+      'palette.test.ts re-derives the CVD and normal-vision distances below; the tritan values ' +
+      'were derived in-repo with the same Machado matrices (informational — protan/deutan carry ' +
+      'the pass/fail weight).',
+    worst: [
+      {
+        mode: 'light',
+        cvd: 14.6,
+        cvdPair: '#4a3aa7↔#2a78d6',
+        cvdType: 'deutan',
+        tritan: 17.5,
+        normal: 16.3,
+        normalPair: '#4a3aa7↔#2a78d6',
+      },
+      {
+        mode: 'dark',
+        cvd: 11.7,
+        cvdPair: '#9085e9↔#256abf',
+        cvdType: 'protan',
+        tritan: 17.3,
+        normal: 16.3,
+        normalPair: '#9085e9↔#256abf',
+      },
+    ],
+    warns: [
+      {
+        hex: '#eda100',
+        mode: 'light',
+        // against the page background #edeef0, which is the weaker of the two declared light
+        // surfaces for a hue this dark — not against the panel, where it measures 2.04
+        contrast: 1.87,
+        relief:
+          'every spoke is direct-labelled with its experiment’s title, and the whole field ' +
+          'repeats below the figure as a register (verdict, daylight sentence, every neighbour ' +
+          'as a named link) plus a compact table — nothing on this page is reachable only by ' +
+          'reading a colour',
+      },
+    ],
+    usedBy: ['src/styles/neighborhood.css'],
+  },
 ]
 
 /** Lookup by id — WP6 practice packages add their sets to PALETTES and get the same guards. */

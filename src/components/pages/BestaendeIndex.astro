@@ -29,11 +29,16 @@ const copy = {
     title: 'Experimente',
     sub: 'Die Experimente des Labors — laufende Instrumente, jedes mit offenen Quellen und offengelegtem Verfahren. Jede Route bleibt erreichbar, keine Pipeline endet dadurch.',
     live: 'live data',
+    field: 'Das Feld: jedes Experiment gegen die Projekte, die es schon gibt →',
   },
   en: {
     title: 'Experiments',
     sub: "The lab's experiments — ongoing instruments, each with open sources and a disclosed method. Every route stays reachable, no pipeline ends because of this.",
     live: 'live data',
+    // 2026-08-09: the neighbour audit drawn as one figure. It sits at the top of the shelf on
+    // purpose — a visitor should be able to see what already exists near this work before
+    // reading the work's own account of itself.
+    field: 'The field: every experiment against the projects that already exist →',
   },
 }[locale]
 ---
@@ -41,6 +46,14 @@ const copy = {
 <main id="main" class="mx-auto w-full max-w-4xl flex-1 px-6 py-16 sm:py-24">
   <h1 class="text-[clamp(34px,6vw,64px)] font-bold tracking-[-0.03em]">{copy.title}</h1>
   <p class="mt-4 max-w-2xl text-fg-muted">{copy.sub}</p>
+  <p class="mt-5">
+    <a
+      href={getRelativeLocaleUrl(locale, '/holdings/neighbors')}
+      class="font-mono text-[12px] uppercase tracking-[0.14em] text-fg-faint underline underline-offset-4 transition-colors hover:text-accent-soft"
+    >
+      {copy.field}
+    </a>
+  </p>
 
   <ul class="mt-12 divide-y divide-line/60 border-t border-line/60">
     {bestaende.map((werk) => (
