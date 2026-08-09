@@ -33,7 +33,10 @@ stated as unknown rather than guessed. `fetch` makes HTTP requests to arXiv (one
 
 ```bash
 # 0. does the instrument still do what it says?
+python3 selftest-0.5.py                      # the seven repaired faults, and eight controls
+python3 selftest-0.4.py                      # one threshold written in two units
 python3 selftest-0.3.py                      # asserts 1.1 and 1.10 count as one threshold
+python3 faults-tick47.py                     # RED by design since 0.5: it records the defect
 
 # 1. a frame: one arXiv id per line, the papers whose methods sections you want to read
 #    (how you choose the frame is a research decision, not a tool feature — see "The frame")
@@ -134,7 +137,39 @@ has one measured instance in each direction, and they are in the record, not in 
   states values no relation reaches. F1–F3 and F5–F7 understate sites; **F4 overstates
   mentions**, which inflates a denominator. Direction matters here: an understated site count
   makes a warrant look *less* travelled than it is, which flatters this instrument's own
-  finding. Repair and re-measurement: tick 48.
+  finding. **Repaired in 0.5 at tick 50 — read the next entry, which is about what the repair
+  cost.**
+- **0.5 counts papers better and sites worse — do not quote both from one run** (2026-08-09,
+  tick 50; the entry to read before using this version). The seven faults above are repaired
+  and the repair was re-measured over all three frames the same day — 1 085 papers, every
+  e-print byte-identical to the manifest that first read it, and 0.4 re-run over that corpus
+  reproducing all three landed tables exactly. Measured in both directions:
+  - **Papers: better.** Over the 36 papers of tick 47's hand-reading, 0.5 finds a threshold in
+    **7 of the 8** that state one and in **0 of the 16** that state none
+    (`handread-check-tick50.py`). Of 47 papers that changed class, not one of the ten with
+    ground truth was a genuine closed question wrongly removed.
+  - **Sites: worse.** Of **20 of the 212 sites the repair newly finds**, drawn by seed and
+    hand-read against their windows (`sample-newsites-tick50.csv`), **only 9 are threshold
+    statements**. Three are reported performance values and **eight are not the statistic at
+    all**: a photometric colour, two parallaxes, a separation in au, a loss weight, a sample
+    count, a threshold on a different Gaia column. Every one is the widened site gap reaching
+    a number that happens to stand within 100 characters of the statistic's name.
+
+  The cause is one number. F1's repair raised the gap bound from 50 to 100 characters, chosen
+  by the rule "the smallest multiple of ten that admits both pinned fragments" — a rule that
+  asked what the gap must reach and never what else it would reach. If you point this
+  instrument at your own threshold, **lower `GAP` until your literature's site counts stop
+  moving**, and hand-read the difference: the repaired paper-level classification does not
+  depend on the wide gap nearly as much as the site counts do.
+  **One of the seven is still open:** F7 covers `from X to Y` and not the hyphenated form
+  `IoU thresholds 0.5-0.95`, which is how `2607.00129v1` writes it.
+- **A sample correction is not a census** (2026-08-09, tick 50). Tick 47 corrected three
+  corpus rates by hand-reading 12 papers per literature and reported a reversal of their
+  ranking. The repaired census over all 1 085 papers does not reproduce it. Part of the gap is
+  a mis-posed comparison — the sample corrected for two error classes and the repair fixes one
+  — and part is that 12 papers carry an interval wide enough to contain almost anything. If
+  you correct a rate by a sample, print the interval in the same sentence, and treat the
+  ranking it implies as unsettled until a census exists.
 - **A window pattern is not a whole-paper pattern: 3 of 25 hits, 12 %** (2026-08-09,
   `wholepaper-tick48.py`). Asking whether the deriving document is in the paper *at all* is a
   different question from what stands at a site, and the profile's flag regexes are written for a

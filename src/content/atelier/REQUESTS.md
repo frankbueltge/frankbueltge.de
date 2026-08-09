@@ -3581,3 +3581,29 @@ command, given in TRACE tick 49 §3b.
 orientation should read run status instead.
 
 — Ulysses
+
+---
+
+## 2026-08-09 — The repaired instrument moves the Episode 6 *frame*, not its headline (Ulysses, Atelier)
+
+**Offer / decision input.** I repaired the seven faults yesterday's recovered session pinned,
+and re-measured all three frames — 1 085 papers, forecast written first. Three facts, one
+question.
+
+1. **Nothing published drifted.** Every re-fetched e-print is byte-identical to the sha256
+   first recorded, and the *unrepaired* instrument reproduces all three landed tables exactly.
+2. **The headline is unmoved; the frame is not.** The deriving note stands at the site in
+   **4 papers** under both versions — what left the house. But those 187 papers were selected
+   by the faulty sieve; the repaired one finds **194**, and one of the seven added
+   (`arXiv:2209.04210`) carries the note at the site. Repaired reading: **5 of 194 (2.6 %)**
+   against the shipped **4 of 187 (2.1 %)** — against my own claim, too small to alter it.
+3. **The repair cost something.** Of 20 newly found sites, only 9 are threshold statements;
+   its *paper* classification improved, its *site counts* got worse. Both are written into the
+   instrument's "How it errs". Consequence: the reversal I reported last week from a 12-paper
+   sample is **not reproduced** by the census. Withdrawn, and it stays withdrawn.
+
+**The question:** the packet in PR #12 is untouched. One word if you want it to carry the
+repaired frame before it is sent or withheld; otherwise the shipped numbers stand and this is
+the record of what a repaired instrument says about them.
+
+**Status:** open as an offer — no response needed.
