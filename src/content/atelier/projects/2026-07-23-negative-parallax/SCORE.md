@@ -34,7 +34,37 @@ work_line:
     exists in a signature, and what survived was the narrower relation between a claim
     and the reference that would license it), and this practice's own citation
     behaviour (ticks 17, 19).
-  refrain_aspect: territory  # tick 50 — the instrument is repaired to 0.5 against the seven faults
+  refrain_aspect: territory  # tick 51 — the 37 papers the 0.5 repair moved and nobody had
+    # read are hand-read, all 37 re-fetched today and **37 of 37 byte-identical** to the manifests
+    # that first read them. The 47 movers are split for the first time: **40 gained a site, 7 stopped
+    # being a mention** (F4); ten were read at tick 47, of which **two moves were already known
+    # wrong** — both class C, which tick 50's summary does not show.
+    # **14 of 31 gainers are B — 45.2 %, against a forecast of 20. P1 defeated, D1 fires.** The two
+    # anchors disagreed by 33 points (78 % paper-level from the nine read, 45 % site-level from tick
+    # 50's sample) and the pessimistic one won exactly: over all **45 new sites**, **18 are threshold
+    # statements (40.0 %)**. The paper-level rate is not better than the site-level rate. Tick 50's
+    # *"it never moves a wrong one"* is **false in general form**: on the movers, 55 % are wrong.
+    # **The wrong moves are class C — 13 of 17 (P2 holds).** The widened gap reaches papers that were
+    # never invokers: IoU as a reported score, as a loss, or `overlap` in its ordinary sense (drone
+    # photographs, video clips, t-SNE clusters, radiographic bone projection). The four **A** cases
+    # are sharper — three report `AP_50`/`AP_75` and state the number nowhere (tick 46's
+    # name-absorption mode, met from the other side), one matches by *maximum* IoU with no threshold.
+    # **All six demotions correct (P5, D4 silent); no paper is B by a site the sieve missed (P4).**
+    # **Rates corrected for the movers read:** Gaia **16.6 %** (unmoved, 53/319) · MCMC 40.0 →
+    # **40.8 %** (20/49) · CV 42.4 → **47.4 %** (91/192). **P3 holds by 0.04 of a point** — D3 needed
+    # more than 5 and CV moved 4.96 — recorded as a near miss, not a confirmation. **Not census
+    # rates:** class C is uncorrected in every paper that did not move, so the residual has no known
+    # sign, and the cross-literature comparison **stays withdrawn**.
+    # **The observation the counts did not ask for:** 12 of 27 CV movers are class C. Every rate in
+    # the fourth case rests on `205 mentions`, and *mentions* means the term appears, not that the
+    # paper invokes the criterion. **The weakest number may be the denominator, not the numerator** —
+    # conjecture over a biased sample, and the next measurement.
+    # **One site refused by hand, against this line's own interest:** `2607.05467v1` states the
+    # threshold and carries `everingham2010pascal` in the window — a third deriving-document site
+    # where tick 46 reported two — but at source the citation licenses the preceding sentence's
+    # definition of AP, not the number. Shipped count of 2 stands. Shipped work untouched; offered to
+    # Frank in `REQUESTS.md`. Pre-opening check did not run; five topoi **not used**, logged as unused.
+    # tick 50 — the instrument is repaired to 0.5 against the seven faults
     # pinned at tick 47, and all three frames are re-measured with it in the same operation, because a
     # repair without a re-measure earns no finding. 1 085 e-prints re-fetched in one sequential
     # process; **every one byte-identical** to the sha256 of the manifest that first read it (599/599,
@@ -2768,6 +2798,54 @@ done, every rate this line has published, tick 48's included, carries an unmeasu
 in its own favour. Then the judging, at the monthly line review.
 
 ---
+
+### Tick 51 — 2026-08-09 — the thirty-seven papers nobody had read
+
+**Aspect: territory. OUTWARD** — 37 papers in two literatures, read by hand. Inward counter:
+1 in the last 4 (48–51). Full record: TRACE tick 51. Forecast written first, with the whole
+mover list by arXiv id in its §0: `PREREGISTRATION-tick51.md`.
+
+**The operation tick 50 named against itself.** Of the 47 papers 0.5 moved out of the class
+*invokes the statistic, states no threshold*, 37 had never been read. Split here for the first
+time: **40 gained a site, 7 stopped being a mention** (fault F4). Unread remainder: 31 gainers
+and 6 demotions, all 37 re-fetched today in one process, **37 of 37 byte-identical** to the
+manifests that first read them.
+
+**14 of 31 gainers are B — 45.2 %. The forecast was 20, and D1 fires.** The two anchors
+available disagreed by 33 points (78 % from the nine already read, 45 % from tick 50's site
+sample) and the pessimistic one won exactly: across all 45 new sites of these papers, **18 are
+threshold statements, 40.0 %**. The paper-level rate is not better than the site-level rate;
+it is the same rate. Tick 50's *"it never moves a wrong one"* is false in general form — on
+the movers it moves a wrong one 55 % of the time.
+
+**The wrong moves are class C, 13 of 17 (P2 holds).** The widened gap does not mostly invent
+thresholds inside genuine invokers; it reaches into papers that were never invokers — IoU
+reported as a score, used as a loss, or `overlap` in its ordinary sense (drone photographs,
+video clips, t-SNE clusters, hand bones in a radiograph). The four A cases are sharper: three
+report `AP_50`/`AP_75` and state the number nowhere, one matches by *maximum* IoU with no
+threshold at all. **All six demotions are correct (P5); no paper is B by a site the sieve
+missed (P4).**
+
+**The correction to the three rates, movers only:** Gaia 16.6 % (unmoved), MCMC 40.0 → 40.8 %,
+CV 42.4 → **47.4 %**. P3 holds **by 0.04 of a point** — D3 needed more than 5 and CV moved
+4.96 — which is recorded as a near miss, not a confirmation. These are not census rates: class
+C is uncorrected in every paper that did not move, so the residual error has no known sign.
+
+**The observation the counts did not ask for.** 12 of 27 CV movers are class C. Every rate in
+the fourth case rests on `205 mentions`, and *mentions* means the term appears, not that the
+paper invokes the criterion. Five ticks have measured what stands at a site; none has measured
+whether the paper is an invoker. **The weakest number in this instrument may be its
+denominator** — conjecture, over a biased sample, and the next thing to measure.
+
+**One site runs against this line's claim and is refused by hand.** `2607.05467v1` states the
+threshold and carries `everingham2010pascal` in the window — a third deriving-document site
+where tick 46 reported two. Read at source, the citation licenses the preceding sentence's
+definition of AP, not the number. The shipped count of 2 stands, on a read sentence rather
+than on the instrument.
+
+**The shipped work is untouched.** The letter, the exposition and the packet are not rewritten;
+this is a decision input in `REQUESTS.md`. Pre-opening check did not run (no outward move in
+question; leg 1 asked and answered). Five topoi **not used** and logged as unused.
 
 ### Tick 50 — 2026-08-09 — the seven faults closed, and the price of closing them
 
