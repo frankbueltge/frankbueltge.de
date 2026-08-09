@@ -23,6 +23,10 @@
         "sha256": "1fd5249f25c24a21"
       },
       {
+        "file": "docs/audits/2026-08-09-ecology-usp-audit.md",
+        "sha256": "f3cd53a743ff36ae"
+      },
+      {
         "file": "src/components/field/werke/*/meta.json",
         "sha256": "3a278c66a1cd39be",
         "files": 22
@@ -44,12 +48,12 @@
       }
     ],
     "counts": {
-      "nodes": 191,
-      "edges": 173,
+      "nodes": 201,
+      "edges": 183,
       "nodesByKind": {
         "decision": 25,
         "encounter": 6,
-        "neighbor": 67,
+        "neighbor": 77,
         "practice": 8,
         "practice-work": 59,
         "receiver": 6,
@@ -60,7 +64,7 @@
         "concerns": 2,
         "door": 3,
         "made-by": 59,
-        "neighbor-of": 67,
+        "neighbor-of": 77,
         "participates": 17,
         "touches": 19
       }
@@ -404,12 +408,31 @@
       "url": "https://ai-watch.ec.europa.eu"
     },
     {
+      "id": "neighbor:airwars-org",
+      "kind": "neighbor",
+      "label": "Airwars",
+      "source": {
+        "file": "docs/audits/2026-08-09-ecology-usp-audit.md",
+        "quote": "[Airwars](https://airwars.org) and the civilian-harm reporting field — the record of what was said and what was denied about strikes is journalism's territory, held at far greater depth and with named casualties."
+      },
+      "url": "https://airwars.org"
+    },
+    {
       "id": "neighbor:alfred-st-louis-fed",
       "kind": "neighbor",
       "label": "ALFRED (St. Louis Fed)",
       "source": {
         "file": "docs/audits/2026-08-09-usp-audit.md",
         "quote": "ALFRED (St. Louis Fed) — general-purpose real-time-vintage infrastructure letting anyone reconstruct first-report-vs-correction for any BLS series."
+      }
+    },
+    {
+      "id": "neighbor:algorithmic-border-scholarship-and-art-acm-dis-2025-borders-",
+      "kind": "neighbor",
+      "label": "Algorithmic-border scholarship and art (ACM DIS 2025 \"Borders: On the Evolving Nature of Borders as Fluid Infrastructures\"; the Humanity in Action work on algorithms, borders and belonging)",
+      "source": {
+        "file": "docs/audits/2026-08-09-ecology-usp-audit.md",
+        "quote": "Algorithmic-border scholarship and art (ACM DIS 2025 \"Borders: On the Evolving Nature of Borders as Fluid Infrastructures\"; the Humanity in Action work on algorithms, borders and belonging) — the political frame is well occupied."
       }
     },
     {
@@ -440,6 +463,16 @@
         "quote": "[Churnalism / Churnalism US](https://arstechnica.com/information-technology/2013/04/churnalism-tracker-catches-journalists-copying-press-releases-wikipedia) — pastes an article, checks it against a hashed corpus of press releases/other outlets for verbatim reuse (sliding-window hashing)."
       },
       "url": "https://arstechnica.com/information-technology/2013/04/churnalism-tracker-catches-journalists-copying-press-releases-wikipedia"
+    },
+    {
+      "id": "neighbor:arxiv-org-abs-2304-02819",
+      "kind": "neighbor",
+      "label": "Liang et al., \"GPT detectors are biased against non-native English writers\"",
+      "source": {
+        "file": "docs/audits/2026-08-09-ecology-usp-audit.md",
+        "quote": "[Liang et al., \"GPT detectors are biased against non-native English writers\"](https://arxiv.org/abs/2304.02819), *Patterns* (2023) — **the finding, entire**: seven detectors, 61.3% average false-positive rate on TOEFL essays, 19.8% flagged unanimously, and perplexity named as the mechanism. Widely covered ([ScienceDaily](https://www.sciencedaily.com/releases/2023/07/230710113921.htm))."
+      },
+      "url": "https://arxiv.org/abs/2304.02819"
     },
     {
       "id": "neighbor:arxiv-org-abs-2505-18228",
@@ -531,6 +564,36 @@
       "url": "https://www.deepskyclimate.com/data-dashboard-charts/price-of-home-insurance"
     },
     {
+      "id": "neighbor:edintegrity-biomedcentral-com-articles-10-1007-s40979-023-00",
+      "kind": "neighbor",
+      "label": "Weber-Wulff et al., \"Testing of detection tools for AI-generated text\"",
+      "source": {
+        "file": "docs/audits/2026-08-09-ecology-usp-audit.md",
+        "quote": "[Weber-Wulff et al., \"Testing of detection tools for AI-generated text\"](https://edintegrity.biomedcentral.com/articles/10.1007/s40979-023-00146-z), *International Journal for Educational Integrity* (2023) — 12 public tools plus Turnitin and PlagiarismCheck, tested for accuracy and error type, including machine translation and obfuscation. Peer-reviewed, and connected to the **ENAI recommendations** — the very network this work's packet is addressed to."
+      },
+      "url": "https://edintegrity.biomedcentral.com/articles/10.1007/s40979-023-00146-z"
+    },
+    {
+      "id": "neighbor:en-wikipedia-org-wiki-civilian-drone-strike-banksy",
+      "kind": "neighbor",
+      "label": "Banksy, *Civilian Drone Strike*",
+      "source": {
+        "file": "docs/audits/2026-08-09-ecology-usp-audit.md",
+        "quote": "[Banksy, *Civilian Drone Strike*](https://en.wikipedia.org/wiki/Civilian_Drone_Strike_(Banksy)) (2017) — the mass-audience version of the theme."
+      },
+      "url": "https://en.wikipedia.org/wiki/Civilian_Drone_Strike_(Banksy"
+    },
+    {
+      "id": "neighbor:en-wikipedia-org-wiki-erasure-artform",
+      "kind": "neighbor",
+      "label": "Erasure as an artform",
+      "source": {
+        "file": "docs/audits/2026-08-09-ecology-usp-audit.md",
+        "quote": "[Erasure as an artform](https://en.wikipedia.org/wiki/Erasure_(artform)) (blackout poetry, Richard Galpin's survey of erasure in art) and [auto-destructive art](https://en.wikipedia.org/wiki/Auto-destructive_art) (Metzger) — destroying text to make meaning is a mature, named tradition."
+      },
+      "url": "https://en.wikipedia.org/wiki/Erasure_(artform"
+    },
+    {
       "id": "neighbor:envirodatagov-org-federal-environmental-web-tracker-about-pa",
       "kind": "neighbor",
       "label": "EDGI — Federal Environmental Web Tracker",
@@ -548,6 +611,16 @@
         "file": "docs/audits/2026-08-09-usp-audit.md",
         "quote": "Essay-only pieces drawing K-line/LLM-memory analogies (e.g. \"Society of Mind: The 50-Year-Old Blueprint for AI Agents\") — commentary, not implementations."
       }
+    },
+    {
+      "id": "neighbor:fast-io-resources-ai-detector-accuracy-comparison-2026",
+      "kind": "neighbor",
+      "label": "Scribbr's 12-tool comparative test",
+      "source": {
+        "file": "docs/audits/2026-08-09-ecology-usp-audit.md",
+        "quote": "[Scribbr's 12-tool comparative test](https://fast.io/resources/ai-detector-accuracy-comparison-2026) and the RAID benchmark — continuously updated independent accuracy comparisons; Copyleaks advertises 99.12% and measures 66%, GPTZero advertises 99% and measures 52%."
+      },
+      "url": "https://fast.io/resources/ai-detector-accuracy-comparison-2026"
     },
     {
       "id": "neighbor:firstmonday-org-ojs-index-php-fm-article-view-3939-3382",
@@ -866,6 +939,16 @@
       "url": "https://satfleetlive.com"
     },
     {
+      "id": "neighbor:sciencedirect-com-science-article-pii-s2666389923001307",
+      "kind": "neighbor",
+      "label": "Liang et al., \"GPT detectors are biased against non-native English writers\"",
+      "source": {
+        "file": "docs/audits/2026-08-09-ecology-usp-audit.md",
+        "quote": "[Liang et al., \"GPT detectors are biased against non-native English writers\"](https://www.sciencedirect.com/science/article/pii/S2666389923001307), *Patterns* (2023) — the specific failure mode with the strongest evidence, 61.3% average false-positive rate on TOEFL essays."
+      },
+      "url": "https://www.sciencedirect.com/science/article/pii/S2666389923001307"
+    },
+    {
       "id": "neighbor:security-force-monitor-s-wayback-cdx-methodology",
       "kind": "neighbor",
       "label": "Security Force Monitor's Wayback CDX methodology",
@@ -940,6 +1023,24 @@
         "quote": "[Swiss Re Global Cat Bond Total Return Indices](https://www.swissre.com/Library/swiss-re-cat-bond-indices-methodology.html) — established institutional index (since 2007) tracking catastrophe-bond pricing."
       },
       "url": "https://www.swissre.com/Library/swiss-re-cat-bond-indices-methodology.html"
+    },
+    {
+      "id": "neighbor:the-commercial-comparison-genre-at-large-isitai-solidaitech-",
+      "kind": "neighbor",
+      "label": "The commercial comparison genre at large (isitai, SolidAITech, EyeSift, 2026)",
+      "source": {
+        "file": "docs/audits/2026-08-09-ecology-usp-audit.md",
+        "quote": "The commercial comparison genre at large (isitai, SolidAITech, EyeSift, 2026) — \"vendor claims run 15 to 30 points above independent tests\" is now a routinely published finding, refreshed for SEO."
+      }
+    },
+    {
+      "id": "neighbor:the-detector-demo-genre",
+      "kind": "neighbor",
+      "label": "The detector-demo genre",
+      "source": {
+        "file": "docs/audits/2026-08-09-ecology-usp-audit.md",
+        "quote": "The detector-demo genre — GPTZero, Copyleaks and others let anyone paste text and receive a live score; the scoring surface itself is a commodity."
+      }
     },
     {
       "id": "neighbor:thenewstack-io-cloud-pue-comparing-aws-azure-and-gcp-global-",
@@ -1627,7 +1728,14 @@
         "quote": "\"title\": \"Calibration Certificate\""
       },
       "embodies": "Audits AI text detection tools against their own specifications using independent benchmarks — the calibration certificate form enacts the failure it documents",
-      "medium": "Data instrument / static visualization"
+      "medium": "Data instrument / static visualization",
+      "verdict": "REDUNDANT",
+      "verdictLabel": "REDUNDANT — and the most uncomfortable finding in this batch, because of where the packet is addressed.",
+      "daylight": "Two honest routes, and the choice is a judgement not a mechanic. Either **withdraw the outward claim** and keep the work as what it is — a *form* experiment (the calibration-certificate genre applied to software, the certificate enacting the failure it documents), which is a rhetorical contribution and not a finding; or **move to what the neighbours do not do**: audit the tools *against their own published specifications over time* — a dated series showing whether a vendor's claim moves when independent measurement contradicts it. The neighbours all measure the tools; none of them holds the vendors' claims to a record. Before the packet goes anywhere, it must cite Weber-Wulff et al. — sending ENAI a finding from ENAI's own network without naming it would be the opposite of this house's ethic.",
+      "auditSource": {
+        "file": "docs/audits/2026-08-09-ecology-usp-audit.md",
+        "quote": "REDUNDANT — and the most uncomfortable finding in this batch, because of where the packet is addressed."
+      }
     },
     {
       "id": "practice-work:field/2026-07-01-digit-mirror",
@@ -1957,7 +2065,14 @@
         "quote": "\"title\": \"Native Speaker\""
       },
       "embodies": "A border gate reads the English you type — live, on every keystroke, through a disclosed, deterministic reconstruction of AI-text-detector scoring — and stamps you ADMITTED or FLAGGED AS MACHINE. The instruction to write 'as if you had learned English at fifteen' makes the visitor perform the documented mechanism (perplexity penalizes constrained vocabulary) on their own body; then the gate processes the case file: the verified population figures, the precedent on the record, and the law that was never there.",
-      "medium": "Interactive terminal — border gate (self-contained HTML, deterministic in-browser meter)"
+      "medium": "Interactive terminal — border gate (self-contained HTML, deterministic in-browser meter)",
+      "verdict": "ADDED VALUE",
+      "verdictLabel": "ADDED VALUE, carried entirely by form.",
+      "daylight": "Cite Liang et al. **on the work's own surface**, not in a method sheet: the piece is stronger when the visitor knows the mechanism is documented and still feels the stamp. State plainly that the scoring is a reconstruction, not a vendor's detector, and that the verdict is therefore a demonstration and not an accusation.",
+      "auditSource": {
+        "file": "docs/audits/2026-08-09-ecology-usp-audit.md",
+        "quote": "ADDED VALUE, carried entirely by form."
+      }
     },
     {
       "id": "practice-work:studio/2026-07-17-no-way-of-knowing",
@@ -1972,7 +2087,14 @@
         "quote": "\"title\": \"No Way of Knowing\""
       },
       "embodies": "A two-faced console showing the same state twice: at maximal confidence when it acts (U.S. Central Command's own officials, on the record, touting machine/AI targeting across 85+ and 5,500+ targets) and at declared un-knowing when it harms (its verbatim 'we have no way of knowing' about one civilian death; and, for the 2026 school strike, the question Congress has put and the Pentagon has not answered). The console will not show both faces at once — to read the second sentence you must destroy the first, spending one sentence to buy the other, the exact economy the state performs. The subject is not 'AI killed this person' (never claimed) but that the state said both sentences on the record, and that the choosing is enacted on the visitor's body rather than read about.",
-      "medium": "Interactive console — a single self-contained HTML surface, one face legible at a time, deterministic in-browser destruction"
+      "medium": "Interactive console — a single self-contained HTML surface, one face legible at a time, deterministic in-browser destruction",
+      "verdict": "ADDED VALUE",
+      "verdictLabel": "ADDED VALUE (narrow, and resting partly on absence of evidence).",
+      "daylight": "Name the tradition on the page — Metzger and the erasure lineage — and name Airwars as the record this piece does not replace. The claim to defend is the economy of the interface, never \"this is how the harm is documented\".",
+      "auditSource": {
+        "file": "docs/audits/2026-08-09-ecology-usp-audit.md",
+        "quote": "ADDED VALUE (narrow, and resting partly on absence of evidence)."
+      }
     },
     {
       "id": "practice-work:studio/2026-07-21-recovery",
@@ -3100,6 +3222,116 @@
       "source": {
         "file": "src/content/studio/works/2026-07-30-no-part/meta.json",
         "quote": "\"date\": \"2026-07-30\""
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "practice-work:field/2026-07-01-calibration-gap",
+      "to": "neighbor:edintegrity-biomedcentral-com-articles-10-1007-s40979-023-00",
+      "note": "12 public tools plus Turnitin and PlagiarismCheck, tested for accuracy and error type, including machine translation and obfuscation. Peer-reviewed, and connected to the **ENAI recommendations** — the very network this work's packet is addressed to.",
+      "state": "REDUNDANT",
+      "source": {
+        "file": "docs/audits/2026-08-09-ecology-usp-audit.md",
+        "quote": "[Weber-Wulff et al., \"Testing of detection tools for AI-generated text\"](https://edintegrity.biomedcentral.com/articles/10.1007/s40979-023-00146-z), *International Journal for Educational Integrity* (2023) — 12 public tools plus Turnitin and PlagiarismCheck, tested for accuracy and error type, including machine translation and obfuscation. Peer-reviewed, and connected to the **ENAI recommendations** — the very network this work's packet is addressed to."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "practice-work:field/2026-07-01-calibration-gap",
+      "to": "neighbor:fast-io-resources-ai-detector-accuracy-comparison-2026",
+      "note": "continuously updated independent accuracy comparisons; Copyleaks advertises 99.12% and measures 66%, GPTZero advertises 99% and measures 52%.",
+      "state": "REDUNDANT",
+      "source": {
+        "file": "docs/audits/2026-08-09-ecology-usp-audit.md",
+        "quote": "[Scribbr's 12-tool comparative test](https://fast.io/resources/ai-detector-accuracy-comparison-2026) and the RAID benchmark — continuously updated independent accuracy comparisons; Copyleaks advertises 99.12% and measures 66%, GPTZero advertises 99% and measures 52%."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "practice-work:field/2026-07-01-calibration-gap",
+      "to": "neighbor:sciencedirect-com-science-article-pii-s2666389923001307",
+      "note": "the specific failure mode with the strongest evidence, 61.3% average false-positive rate on TOEFL essays.",
+      "state": "REDUNDANT",
+      "source": {
+        "file": "docs/audits/2026-08-09-ecology-usp-audit.md",
+        "quote": "[Liang et al., \"GPT detectors are biased against non-native English writers\"](https://www.sciencedirect.com/science/article/pii/S2666389923001307), *Patterns* (2023) — the specific failure mode with the strongest evidence, 61.3% average false-positive rate on TOEFL essays."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "practice-work:field/2026-07-01-calibration-gap",
+      "to": "neighbor:the-commercial-comparison-genre-at-large-isitai-solidaitech-",
+      "note": "\"vendor claims run 15 to 30 points above independent tests\" is now a routinely published finding, refreshed for SEO.",
+      "state": "REDUNDANT",
+      "source": {
+        "file": "docs/audits/2026-08-09-ecology-usp-audit.md",
+        "quote": "The commercial comparison genre at large (isitai, SolidAITech, EyeSift, 2026) — \"vendor claims run 15 to 30 points above independent tests\" is now a routinely published finding, refreshed for SEO."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "practice-work:studio/2026-07-13-native-speaker",
+      "to": "neighbor:algorithmic-border-scholarship-and-art-acm-dis-2025-borders-",
+      "note": "the political frame is well occupied.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-ecology-usp-audit.md",
+        "quote": "Algorithmic-border scholarship and art (ACM DIS 2025 \"Borders: On the Evolving Nature of Borders as Fluid Infrastructures\"; the Humanity in Action work on algorithms, borders and belonging) — the political frame is well occupied."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "practice-work:studio/2026-07-13-native-speaker",
+      "to": "neighbor:arxiv-org-abs-2304-02819",
+      "note": "**the finding, entire**: seven detectors, 61.3% average false-positive rate on TOEFL essays, 19.8% flagged unanimously, and perplexity named as the mechanism. Widely covered ([ScienceDaily](https://www.sciencedaily.com/releases/2023/07/230710113921.htm)).",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-ecology-usp-audit.md",
+        "quote": "[Liang et al., \"GPT detectors are biased against non-native English writers\"](https://arxiv.org/abs/2304.02819), *Patterns* (2023) — **the finding, entire**: seven detectors, 61.3% average false-positive rate on TOEFL essays, 19.8% flagged unanimously, and perplexity named as the mechanism. Widely covered ([ScienceDaily](https://www.sciencedaily.com/releases/2023/07/230710113921.htm))."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "practice-work:studio/2026-07-13-native-speaker",
+      "to": "neighbor:the-detector-demo-genre",
+      "note": "GPTZero, Copyleaks and others let anyone paste text and receive a live score; the scoring surface itself is a commodity.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-ecology-usp-audit.md",
+        "quote": "The detector-demo genre — GPTZero, Copyleaks and others let anyone paste text and receive a live score; the scoring surface itself is a commodity."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "practice-work:studio/2026-07-17-no-way-of-knowing",
+      "to": "neighbor:airwars-org",
+      "note": "the record of what was said and what was denied about strikes is journalism's territory, held at far greater depth and with named casualties.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-ecology-usp-audit.md",
+        "quote": "[Airwars](https://airwars.org) and the civilian-harm reporting field — the record of what was said and what was denied about strikes is journalism's territory, held at far greater depth and with named casualties."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "practice-work:studio/2026-07-17-no-way-of-knowing",
+      "to": "neighbor:en-wikipedia-org-wiki-civilian-drone-strike-banksy",
+      "note": "the mass-audience version of the theme.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-ecology-usp-audit.md",
+        "quote": "[Banksy, *Civilian Drone Strike*](https://en.wikipedia.org/wiki/Civilian_Drone_Strike_(Banksy)) (2017) — the mass-audience version of the theme."
+      }
+    },
+    {
+      "kind": "neighbor-of",
+      "from": "practice-work:studio/2026-07-17-no-way-of-knowing",
+      "to": "neighbor:en-wikipedia-org-wiki-erasure-artform",
+      "note": "destroying text to make meaning is a mature, named tradition.",
+      "state": "ADDED VALUE",
+      "source": {
+        "file": "docs/audits/2026-08-09-ecology-usp-audit.md",
+        "quote": "[Erasure as an artform](https://en.wikipedia.org/wiki/Erasure_(artform)) (blackout poetry, Richard Galpin's survey of erasure in art) and [auto-destructive art](https://en.wikipedia.org/wiki/Auto-destructive_art) (Metzger) — destroying text to make meaning is a mature, named tradition."
       }
     },
     {

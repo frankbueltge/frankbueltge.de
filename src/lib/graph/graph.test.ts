@@ -245,6 +245,42 @@ describe('the ecology lane — the practices’ own production', () => {
     expect(committed.edges.some((e) => e.kind === 'concerns' && e.to.includes('sixty-cases'))).toBe(false)
   })
 
+  // The USP obligation reaches the practices' own works on 2026-08-09 — but as an audit that
+  // GROWS, not as a gate that would turn 55 unexamined works red overnight. What is asserted:
+  // the audit cannot name a work this repo does not carry, and absence of a verdict must keep
+  // meaning "unexamined" rather than quietly reading as "cleared".
+  it('resolves every section of the ecology audit to a work this repo carries', () => {
+    const carried = new Set(practiceWorks.map((w) => w.id))
+    for (const entry of parseAudit(texts['docs/audits/2026-08-09-ecology-usp-audit.md'])) {
+      const home = WORK_META_DIRS.find((d) => entry.route.startsWith(`${d.dir}/`))
+      expect(home, `the ecology audit's §${entry.number} names ${entry.route}, which is in no work directory`).toBeDefined()
+      const id = `practice-work:${home?.ns}/${entry.route.slice((home?.dir.length ?? 0) + 1)}`
+      expect(carried, `the ecology audit's §${entry.number} names ${entry.route}, which this repo does not carry`).toContain(id)
+    }
+  })
+
+  it('audits a first batch and leaves the rest visibly unexamined, never implicitly cleared', () => {
+    const audited = practiceWorks.filter((w) => w.verdict)
+    expect(audited.length).toBeGreaterThan(0)
+    expect(audited.length).toBeLessThan(practiceWorks.length)
+    for (const work of audited) {
+      expect(work.daylight, `${work.id} has a verdict but no named daylight`).toBeTruthy()
+      expect(work.auditSource?.file).toBe('docs/audits/2026-08-09-ecology-usp-audit.md')
+    }
+    // the audit says how many it left, in the document a human reads
+    expect(texts['docs/audits/2026-08-09-ecology-usp-audit.md']).toContain('unaudited as of 2026-08-09')
+  })
+
+  it('lets an audit refuse to sign off: a section without a verdict enters no verdict', () => {
+    // NO PART's section states the search was too weak to conclude. That refusal must survive
+    // into the graph as an absence, not be rounded to a class by the parser.
+    const noPart = practiceWorks.find((w) => w.label === 'NO PART')
+    expect(noPart).toBeDefined()
+    expect(noPart?.verdict).toBeUndefined()
+    expect(committed.edges.some((e) => e.kind === 'neighbor-of' && e.from === noPart?.id)).toBe(false)
+    expect(texts['docs/audits/2026-08-09-ecology-usp-audit.md']).toContain('NOT SETTLED')
+  })
+
   it('reaches the ecology from a practice: work → practice → encounter → another practice', () => {
     const madeBy = committed.edges.find((e) => e.kind === 'made-by' && e.from.startsWith('practice-work:studio/'))
     expect(madeBy?.to).toBe('practice:ensemble')

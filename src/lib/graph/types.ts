@@ -90,6 +90,12 @@ export interface PracticeWorkNode extends NodeBase {
   embodies?: string
   medium?: string
   href: string
+  /** present only where the ecology audit has actually examined this work. Absent means
+   *  UNEXAMINED, never CLEARED — 55 of 59 carry nothing on 2026-08-09 and the audit says so. */
+  verdict?: 'UNIQUE' | 'ADDED VALUE' | 'REDUNDANT'
+  verdictLabel?: string
+  daylight?: string
+  auditSource?: Provenance
 }
 
 /** A crossing between practices, from the encounter register the ecology exports. */

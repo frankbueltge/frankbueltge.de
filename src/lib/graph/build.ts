@@ -34,6 +34,7 @@ export const SOURCE_FILES = [
   'docs/decision-log.md',
   'src/data/post/ledger.json',
   'src/data/begegnungen/register.json',
+  'docs/audits/2026-08-09-ecology-usp-audit.md',
 ] as const
 
 const WERKE_FILE = SOURCE_FILES[0]
@@ -41,6 +42,7 @@ const AUDIT_FILE = SOURCE_FILES[1]
 const DECISIONS_FILE = SOURCE_FILES[2]
 const LEDGER_FILE = SOURCE_FILES[3]
 const ENCOUNTERS_FILE = SOURCE_FILES[4]
+const ECOLOGY_AUDIT_FILE = SOURCE_FILES[5]
 
 /** The practices' own production: every work carries a committed `meta.json` beside it, and
  *  these four directories are where the register at /works reads them from
@@ -276,6 +278,44 @@ export function buildGraph(sources: RawSources): KnowledgeGraph {
       to: practiceId,
       source: provenance(path, `"date": ${JSON.stringify(meta.date)}`),
     })
+  }
+
+  // ── the ecology audit: the USP obligation, extended to the practices' own works ─────────
+  // Same document form as the Holdings audit, joined by the work's directory instead of a
+  // route. A work with no section carries no verdict, and that means UNEXAMINED — never
+  // cleared. Section 4 of the audit refuses to sign off on its own search ("NOT SETTLED"), so
+  // the parser drops it and the graph shows exactly that: no verdict, no prior art.
+  for (const entry of parseAudit(sources.texts[ECOLOGY_AUDIT_FILE])) {
+    const home = WORK_META_DIRS.find((d) => entry.route.startsWith(`${d.dir}/`))
+    if (!home) continue
+    const workSlug = entry.route.slice(home.dir.length + 1)
+    const node = nodes.get(`practice-work:${home.ns}/${workSlug}`) as PracticeWorkNode | undefined
+    if (!node) continue // an audited path this repo does not carry — the test says so loudly
+    node.verdict = entry.verdictClass
+    node.verdictLabel = entry.verdictLabel
+    node.daylight = entry.direction
+    node.auditSource = provenance(ECOLOGY_AUDIT_FILE, entry.verdictLabel)
+    for (const neighbor of entry.neighbors) {
+      const key = neighbor.url
+        ? neighbor.url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/+$/, '')
+        : neighbor.label
+      const id = `neighbor:${slug(key)}`
+      add({
+        id,
+        kind: 'neighbor',
+        label: neighbor.label,
+        source: provenance(ECOLOGY_AUDIT_FILE, neighbor.raw),
+        ...(neighbor.url ? { url: neighbor.url } : {}),
+      } as NeighborNode)
+      edges.push({
+        kind: 'neighbor-of',
+        from: node.id,
+        to: id,
+        note: neighbor.note,
+        state: entry.verdictClass,
+        source: provenance(ECOLOGY_AUDIT_FILE, neighbor.raw),
+      })
+    }
   }
 
   // ── encounters (The Middle) ─────────────────────────────────────────────────────────────
