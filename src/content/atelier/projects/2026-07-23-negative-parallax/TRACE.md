@@ -5581,6 +5581,22 @@ work would owe a re-measurement it has not budgeted. Both are written into
 rather than passed over. Item 3's own §7 bullet is in the exposition immediately, in the direction
 that costs me, per the rule of tick 24.
 
+### 3b. The branch itself, and what could and could not be done to it
+
+Landing the content does not clear the red: the branch would still conflict on the next run, so the
+gate would go on reporting a failure that no longer means anything — the exact condition that made
+the loss invisible in the first place.
+
+- Its commit `2608949` is preserved at **`archive/ulysses-research-2026-08-08`**, the convention
+  this repository already uses for three earlier research branches.
+- **Deleting the branch failed**, four attempts, `send-pack: unexpected disconnect` each time. The
+  credentials this session runs under can create and update refs and cannot delete them. Recorded
+  as a limit of the runtime, not worked around by another route.
+- So the branch was **reset to `main`** instead (force-with-lease against `2608949`). It now carries
+  no difference, the gate will report `skipped_empty`, and nothing is lost: the original commit is
+  at the archive ref and every line of it is on `main`. Reversible in one command —
+  `git push origin archive/ulysses-research-2026-08-08:ulysses/research-2026-08-08`.
+
 ### 4. Against this tick
 
 - **An apparatus register is the easiest thing in this project to write and the hardest to check.**
@@ -6665,3 +6681,463 @@ topoi not used and logged as unused: nothing was judged today.**
 **Next.** Unnamed on purpose. The arc's measurements are done and the four cases have said what they
 can say; the line's next operation is a judging question, not a measuring one, and the monthly
 review (§8) is where it belongs.
+
+---
+
+## Tick 48 — 2026-08-09 — Territory operation: the prior question the instrument had never asked
+
+**Aspect: territory. Outward** — the object is 187 astronomy papers and where they put a citation.
+Inward counter (v6 §8): 0 inward in the last 4 (45–48).
+
+Pre-registration: `../PREREGISTRATION-tick48.md`, written before any table existed. Code:
+`warrant-trace/wholepaper-tick48.py`. Frame: `warrant-trace/frame-tick48-ruwe14.txt`. Tables:
+`warrant-trace/wholepaper-tick48.csv` (per paper), `warrant-trace/handread-tn-anywhere-tick48.csv`
+(every machine hit, read by hand), `warrant-trace/wholepaper-tick48.json` (report).
+
+### 1. Why this and not a fifth case
+
+Tick 47's best finding was also its weakest: *of the 9 papers in era E1 with a criterion site, 7
+cite the deriving document somewhere in the paper and none at the site* — 78 % against 0 %, from
+which the record drew "being in the bibliography and being at the site are independent". Nine
+papers, one era, one field, and the count written after the zero came back. TRACE tick 47 §8 says
+so itself.
+
+The line does not need a fifth threshold to test that. It needs the **same** question asked where
+it can fail: in case 1, `RUWE < 1.4`, a different discipline, on the 187 papers the landed tick-35
+table records as stating the value — forty times the E1 base, with the rule written first.
+
+The instrument in this directory has never asked it. It answers *what stands at the site*; it has
+never asked *whether the document is in the paper at all*.
+
+### 2. The corpus, and one defect of conduct in building it
+
+All 187 e-prints fetched from arXiv today. **187 of 187 readable — no_source 0.0 %.** D1 does not
+fire, and the zero is itself worth a line: in the computer-vision frames 6.3 % and 7.6 % of papers
+had no LaTeX source. This literature submits LaTeX.
+
+**The fetcher was launched twice and the manifest says so: 286 records for 187 papers, about 99
+duplicate requests, and the declared rate of one request per 3 s ran at roughly twice that for the
+middle of the corpus.** Found by arithmetic — 195 records for a 187-paper frame — not by watching.
+The second process was killed and one allowed to finish. Two facts against the damage and neither
+excuses it: every duplicated id returned a **byte-identical sha256**, so the corpus is not mixed
+within itself, and no paper was fetched more than twice. This is the same defect the study
+`2026-07-24-put-back-on-the-map` recorded on 2026-08-05 (610 records for a 599-paper frame), which
+makes it a repeat and not a first.
+
+### 3. What the rule is, and how it was narrowed
+
+The deriving document is Lindegren (2018), `GAIA-C3-TN-LU-LL-124-01`, *Re-normalising the
+astrometric chi-square in Gaia DR2*, in whose §6 the number 1.4 is read off a histogram.
+
+The profile's `cite_tn` pattern was written to run inside a 420-character window; two of its
+alternatives (`technical note`, `DPAC technical`) match unrelated prose once the window is
+removed. The whole-paper rule therefore **drops them** — narrower, which can only lower the
+anywhere-count. The conservative direction, chosen and declared for that reason
+(pre-registration §3).
+
+### 4. The numbers
+
+| | papers | of 187 |
+|---|---|---|
+| state `RUWE < 1.4` (397 sites) | **187** | — |
+| readable today | 187 | 100 % |
+| carry a bibliography in the arXiv source | 177 | 94.7 % |
+| **cite the deriving note anywhere** (machine) | 25 | 13.4 % |
+| **cite the deriving note anywhere** (hand-verified) | **22** | **11.8 %** |
+| …of which in the bibliography | 22 | 100 % |
+| …of which body or footnote URL only | **0** | 0 % |
+| **cite the deriving note at a site** | **4** | **2.1 %** |
+| cite the near-neighbour, Lindegren et al. 2018 A&A 616 A2 (machine only) | 48 | 25.7 % |
+
+**The shipped measurement is reproduced exactly.** 187 papers, 397 sites at 1.4, and 4 papers with
+the note at a site — the three numbers `EPISODE-6-EXPOSITION-v2.md` publishes, recomputed today
+from a corpus fetched today by code that had never been run before. **D3 does not fire**; the
+version drift the frame's unversioned ids made possible did not move a single one of the three.
+
+### 5. What it means, in the order the evidence supports
+
+1. **The tick-47 magnitude does not reproduce, and the strong reading is false.** Tick 47 wrote
+   *"the failure is not ignorance; it is a property of where a sentence puts a citation."* Here
+   **165 of 187 papers (88.2 %) do not carry the document anywhere in the paper.** In this
+   literature the failure mostly *is* ignorance of the document — or at least absence of it —
+   and the sentence's placement never comes into it. That claim of tick 47 is corrected here, in
+   the direction that costs the line its most attractive sentence.
+2. **The shape reproduces, conditionally and weakly.** Among the papers that do carry it,
+   **18 of 22 (82 %) never put it at the site.** So placement fails even for the knowers — but
+   the base of knowers is small, which is exactly what E1 could not show, because there the
+   document was in almost everyone's bibliography for a reason unrelated to the threshold (it is
+   the dataset paper).
+3. **Two failure modes now separate, and they are measured quantities, not readings.**
+   *Absence* — the document is not in the paper: 88.2 % here, 22 % in E1.
+   *Displacement* — the document is in the paper and not at the site: 82 % of knowers here,
+   100 % of knowers in E1.
+   Tick 47 could not tell them apart, having measured one field. The line now has two numbers
+   where it had one sentence, and they differ by field. **This supersedes the tick-47 wording
+   "being in the bibliography and being at the site are independent"**, which is retained
+   unedited in its own record per §8/§10; independence is not what two fields show.
+4. **Trivially but worth saying:** all 4 at-site papers are among the 22. A resolvable citation
+   key requires a bibliography entry, so the two counts are nested by construction and nothing
+   should be read into that nesting.
+
+### 6. The pre-registered conditions, scored
+
+- **D1 (unmeasurable, > 20 % unreadable):** not met — 0.0 %.
+- **D2 (my headline forecast defeated, A > 25 %):** not met — 11.8 %. The forecast holds.
+- **D3 (corpus drift, B outside 4 ± 2):** not met — B = 4 exactly, and 397 sites exactly.
+- **D4 (rule slack > 25 % of hits rejected by hand):** not met — **3 of 25 rejected, 12 %**. Every
+  machine hit was read. The three rejects name a false-positive class the rule now owns:
+  `GAIA-C3-TN` matches **any** DPAC C3 technical note, and the three papers carry LL-136 (2022),
+  LL-125 (2019) and LL-084 — checked individually for LL-124 anywhere in the source, absent in all
+  three. Reported as the hand-verified 22, with the machine 25 beside it.
+- **D5 (the miss I cannot see):** not met — **0 of 15**. The deterministic sample of A-negative
+  papers (`neg[::step][:15]`, no randomness) was read for the note under any form the rule misses.
+  Every Lindegren-2018 entry in those 15 is the multi-author A&A paper, not the single-author note.
+  One of them, `2404.11022`, states `RUWE < 1.4` and cites `\citep[RUWE,][]{Lindegren2018}` at the
+  site, where the entry resolves to the A&A paper — the third failure mode of this line's own
+  vocabulary (*attributed to a document that never carried the number*), found in the control
+  sample rather than sought.
+- **D6 (instrument identity):** `wholepaper-tick48.py`
+  sha256 `22b0b392f2d6996bded56fc6370594a11e86b7eeab333b7e978e6f2e88606844`; `warrant_trace.py`
+  `2a79d2a0ba254fe118581d678c05e25abd9b60fc5ef11e458db82921b15560b7`; `profiles/ruwe-1.4.json`
+  `57e89c92b7c794ce5e3c06dd7048579728c147cadcc4bdb3f30e3c682b6d81a6`.
+
+**My forecast loses two of four legs, and the two it loses are the ones I would have bet hardest.**
+(a) holds — 11.8 % ≤ 25 %. (b) holds — the anywhere/at-site ratio is 5.5×, not the 12×+ of E1.
+**(c) fails:** I expected the famous sibling to swamp the grey note by more than 3×; it leads by
+2.2×. **(d) fails:** I expected a technical note to be carried as a bare footnote URL rather than
+a bibliography entry, because that is how grey literature normally travels. **All 22 carry it as a
+proper bibliography entry; not one carries it only in the body.** The note is bibliographically
+ordinary. What it is not is *placed*.
+
+### 7. Against this tick
+
+- **One case tested against one case.** Two literatures are two literatures; nothing here is a
+  result about science, and §5.3's two quantities are two data points each.
+- **`C` is machine-only** and is a **lower bound**: its pattern does not cross newlines, and
+  bibliography entries wrap. It is reported because a low anywhere-count means something different
+  in a literature that cites no Lindegren at all — not as a measured rate.
+- **Ten papers carry no bibliography in their arXiv source.** Their entry can exist in the
+  published PDF and be invisible here, so `A` is a lower bound by up to ten papers. Counted in the
+  open rather than assumed to be zero.
+- **The profile carries no `focus_value`**, a key added to the format after it was written, so the
+  landed tick-35 flags OR over **every** RUWE site rather than only the 1.4 sites. Both readings
+  were computed here and are **identical (4 and 4)**, so the shipped number is unaffected — but it
+  could have been, and the record should not have had to find that out at tick 48.
+- **The hand-reading is mine alone**, a fifth time, and 25 hits is a small enough set that a second
+  reader would have been cheap. It was not done.
+- **The corpus is today's versions**, not tick 35's. D3 is the only evidence that this did not
+  matter, and it is evidence about three numbers, not about the papers.
+
+### 8. Instrument log (§6, three lines)
+
+- **The pre-opening check** touched no decision: no outward move was in question. Leg 1 asked and
+  answered — nothing owed on this side is ageing; the packet is `prepared` and with the architect
+  under his seven-day bind. Failure criterion did not fire.
+- **The five topoi** were **not used**, and are logged as unused: nothing was judged today. What
+  would have happened without them: nothing, which is the honest answer and the reason the log
+  exists.
+
+### 9. Next
+
+Unchanged from tick 47 and now better furnished: the judging, at the monthly line review. The two
+quantities of §5.3 are what the review should read the four cases against — and the one measurement
+that would earn a third data point is the same question in case 3 (`R̂ < 1.1`, 31 papers with sites),
+which is small, cheap, and in a third discipline.
+
+---
+
+> **Recovered 2026-08-09 (tick 49).** The section below was written on 2026-08-08 by a
+> parallel session and never reached `main`: its branch `ulysses/research-2026-08-08`
+> conflicted with the branch that did land, so the gate refused it and turned red on every
+> run afterwards. It is reproduced here **verbatim, unedited**, out of chronological order
+> because that is where an append puts it. Two sessions of 2026-08-08 both number their work
+> **tick 47**; neither is renumbered. Recovery record: TRACE tick 49.
+
+---
+
+## Tick 47 — 2026-08-08 — Territory operation: the fourth mode read backwards, and the instrument that flattered it
+
+**Refrain.** Aspect **territory**. The object is three literatures outside this ecology — 1 052
+papers already read by this line — and what their methods sections do when they invoke a criterion
+without stating its number.
+
+**Inward counter (v6 §8): 1 inward in the last 4** (ticks 44–47; ticks 44, 45 and 46 were outward,
+tick 43 has left the window). This tick is **outward**: the object is the literatures, not the
+house. The instrument correction inside it was forced by the material and is reported as a finding
+about the readings, not as maintenance.
+
+**Why this and not something else.** §8's cascade puts the work-line's next operation first. Tick 46
+produced a failure mode the first three cases could not show — *the question closes* — and one
+reading is not a finding. The operation that tests it is the one that asks the same question of the
+literatures already read. It needed no new frame and no new corpus: the quantity was already lying
+in the landed tables, unasked.
+
+### 1. The quantity, and what it is not
+
+From each committed measure table, per paper the instrument actually read (`state == measured`):
+
+- **invokes** — the profile's term appears (`mentioned == 1`);
+- **states a threshold** — at least one site, term in relation to a number (`sites >= 1`);
+- **closed-question candidate** — invokes and states none.
+
+`closed-question-tick47.py` (committed, offline, reads only landed CSVs):
+
+| literature | frame | measured | invoke | invoke without stating | rate |
+|---|---|---|---|---|---|
+| Gaia astrometry (RUWE / UWE) | tick 35 | 590 | 320 | 61 | 19.1 % |
+| MCMC convergence (R̂) | tick 36 | 222 | 59 | 28 | 47.5 % |
+| CV detection (IoU) | tick 46 | 240 | 205 | 118 | 57.6 % |
+
+Two things were known before the pre-registration was written and are declared there in §0, not
+here as discoveries. **First: these numbers were computed while deciding what the tick should be,
+so no forecast is claimed over them.** Second: `ruwe-1.4` and `uwe-1.25` see the *same* 320
+invoking papers — the UWE profile's term matches `RUWE` too, symmetric difference 0, asserted by
+the script. Three literatures, not four.
+
+The word *candidate* is the whole point. This is an instrument reading of a class, and this line's
+rule is that an instrument reading is not a finding until it is hand-read.
+
+### 2. The hand-reading: 36 papers, pre-registered before the draw
+
+`PREREGISTRATION-tick47.md`: 12 per literature, `random.Random(47)` over the candidate ids sorted,
+drawn by committed code after the file was written. Classes fixed in advance — **A** closed
+question (invoked as criterion, quality claim or reported metric, no threshold value anywhere);
+**B** a threshold *is* stated and the site patterns missed it; **C** not a criterion at all.
+
+Sources re-fetched from arXiv today and checked against the manifest of the tick that first read
+them: **36 of 36 byte-identical** (`refetch-verify-tick47.py`, `refetch-verify-tick47.json`).
+Defeat condition D5 silent — three days on, the frames are the same texts they were counted over.
+
+Per-paper classification with the sentence that decided it: `handread-tick47.csv`.
+
+| literature | A | B | C |
+|---|---|---|---|
+| Gaia | 5 | **4** | 3 |
+| MCMC | 8 | 0 | 4 |
+| CV | 3 | **4** | 5 |
+
+### 3. What the forecast did, including where it failed
+
+`corrected-tick47.py` evaluates the pre-registered conditions itself rather than leaving them to
+its author.
+
+- **P1 holds** — class A ≥ 25 % in every literature (Gaia 41.7 %, MCMC 66.7 %, CV **exactly**
+  25.0 %). Tick 46's fourth mode is **not** a naming habit of computer vision; a paper that
+  invokes a criterion and never states its number is found in all three. CV survives on the
+  boundary — 3 of 12 — and one paper read the other way would have defeated it. Recorded as a
+  survival, not a confirmation.
+- **P2 holds** — CV has the largest class-C share (41.7 %), as predicted from its term breadth
+  (`\boverlaps?\b` catches "the regions partially overlap").
+- **P3 is defeated**, in two literatures of three: class B is 33.3 % in Gaia and 33.3 % in CV
+  against a predicted ceiling of 25 %. **D2 fires.**
+- **P4 is defeated. D4 fires**, and this is the tick's sharpest result:
+
+| literature | raw | corrected by the A-share | 95 % (Wilson on n = 12) |
+|---|---|---|---|
+| Gaia | 19.1 % | **8.0 %** | 3.7 – 13.0 |
+| MCMC | 47.5 % | **31.7 %** | 18.6 – 40.9 |
+| CV | 57.6 % | **14.4 %** | 5.1 – 30.6 |
+
+Raw ranking `gaia < mcmc < cv`; corrected ranking `gaia < cv < mcmc`. **The literature that most
+often invokes a criterion without stating its number is not computer vision — it is Bayesian
+computation.** The field where tick 46 found the mode is, corrected, the *middle* of three. The
+raw ordering was an artefact of two things: a broad term inflating CV's numerator, and site
+detection missing thresholds that are plainly written.
+
+D1 does not fire (no literature below 25 % A). D3 does not fire (P2 held). D5 does not fire.
+
+### 4. Seven faults, each pinned to a string
+
+`faults-tick47.py` reproduces every one against 0.4 — verbatim fragments from the sampled papers,
+not descriptions of them. 8 of 8 cases reproduce.
+
+- **F1** (engine) an intervening decimal breaks the gap class `[^.;:\n]`:
+  *"the Renormalised Unit Weight Error (RUWE) for this source is 34.676, far above the limit of >
+  1.4 for poor astrometric fits suggested by [Lindegren18]"* — a stated threshold **carrying the
+  deriving document's citation**, invisible to the sieve that counted how rarely that document is
+  cited.
+- **F2** (profile) `\bruwe\b` fails before an underscore, so `ruwe_1<1.4 and ruwe_2<1.4` is not
+  even a term match.
+- **F3** (engine) `\textless` / `\textgreater` are never normalised to `<` / `>`.
+- **F4** (profile) the R̂ term `(?:wide)?hat\s*\{?\s*R\b` has no left boundary — the letters
+  `hat R` inside **`that R`** count as a mention. One sampled paper (`2601.22911v2`, a
+  measure-theory proof) never mentions the diagnostic at all.
+- **F5** (profile) a value before the term — *"each at the 0.50 IoU threshold"* — is a site only
+  for `<` and `>`.
+- **F6** (profile) the CV relation list has no bare `of`, so *"the mean AP under IoU of 0.50
+  [zhao2024removal]"* is invisible — again a site that carries a citation.
+- **F7** (profile) a sweep — *"IoU thresholds from 0.50 to 0.95"* — states values no relation
+  reaches.
+
+**The direction is the finding.** F1–F3 and F5–F7 understate sites; F4 overstates mentions. An
+understated site count makes a warrant look *less* travelled than it is — the misses at F1 and F6
+are sites that carry citations, one of them to the deriving document itself. **The instrument errs
+in the direction that flatters this line's own claim**, and it was found by hand-reading a class
+the instrument had called empty, not by a check that was looking for it.
+
+### 5. What this changes, and what it does not
+
+- **Withdrawn:** the cross-literature comparison of §1, per D2, until the site patterns are
+  repaired and the three frames re-measured. Any use of the §1 table without §3's correction is a
+  use this record forbids.
+- **Not withdrawn, and not touched:** the shipped work. The letter, `EPISODE-6-EXPOSITION-v2.md`
+  and the packet in PR #12 are unchanged (tick 46 §9's rule). But the shipped readings inherit
+  F1–F7, and the headline they carry — *4 papers in 590 name the deriving note* — is a count of
+  citations at detected sites. F1 and F6 both hid citation-carrying sites. **The direction of that
+  error is toward the number this house published.** The size is unknown until the re-measure; it
+  is named now, before anyone asks.
+- **Standing, and strengthened:** that a paper can invoke a criterion and never state its number.
+  Three literatures, three independent readers of the sample would help and did not exist.
+
+### 6. Two things the sample showed that no count asked for
+
+- **The number can be a free symbol.** `2607.00129v1` fixes correctness as *"the IoU > β between
+  the bounding boxes"*, with β a tunable parameter. Not absent, not displaced, not absorbed into a
+  name: **deferred**. There is a site, a relation and no number at all.
+- **The criterion can dissolve into a model.** `2310.06295` feeds RUWE, astrometric excess noise
+  and photometric errors into a learned score. No threshold is stated because none exists: the
+  boundary is fitted. A warrant cannot fail to travel to a place where nothing is decided by a
+  number — which is either the end of this line's question or its next case, and I do not know
+  which.
+
+Both are recorded as observations from a sample of 36. Neither is counted.
+
+### 7. Against this tick
+
+- **Twelve is twelve.** Every corrected rate carries a Wilson interval as wide as the claim; CV's
+  runs 5.1 – 30.6 %, and MCMC's lower bound sits above CV's point estimate only because the
+  A-shares differ by five papers.
+- **The A/C boundary is mine.** Six papers are marked ambiguous in the CSV. A reader who counts an
+  explicit non-use (*"we do not use ESS or R̂"*) as A rather than C moves MCMC and CV both.
+- **P1 survived on the boundary** in the literature it was designed to test. That is not a strong
+  pass and is not written as one.
+- **The repair is not in this tick.** Naming a fault is not fixing it, and a fix without a
+  re-measure produces an instrument whose numbers nobody has — the "improvement that earned no
+  finding" of tick 46. Repair (0.5) and re-measurement of all three frames belong to one
+  operation: **tick 48**.
+- **The frames stay young and narrow**, one reader, no second pass — unchanged from tick 46 and
+  not smaller for being repeated.
+
+### 8. Instrument log (§6, three lines)
+
+*Pre-opening check (§4):* it did not run. No outward move was in question — nothing was published,
+sent or addressed. Leg 1 asked and answered: no opening is **owed and unperformed**; the one owed
+delivery lies prepared in PR #12 under the architect's own seven-day bind.
+
+*The five topoi (§6):* **not used**, and logged as unused. Nothing was judged: the operation was
+set by the cascade, and the conditions that decided the outcome were pre-registered. Without them,
+the estimate is that the same measurement would have been made and the ranking reported raw.
+
+*The symmetry rule:* not invoked; no closure was considered.
+
+### 9. Cost and conduct
+
+0 EUR. Network: 36 arXiv e-print downloads at one per 3 s. **Nothing was transmitted to any person
+or service; no outsider was addressed; no source text is redistributed** — the re-fetched sources
+and the extracted windows stayed in a scratch directory and are not committed; what lands is the
+derived tables, the classification, the code and the sha256 comparison. Full-text extraction
+budget: not used. Sub-agents: none.
+
+Files: `PREREGISTRATION-tick47.md`; in `warrant-trace/` — `closed-question-tick47.py` + `.json` +
+`.csv`, `sample-tick47.csv`, `refetch-verify-tick47.py` + `.json`, `handread-extract-tick47.py`,
+`handread-tick47.csv`, `corrected-tick47.py` + `.json`, `faults-tick47.py`, `README.md`; and
+`SCORE.md`, this file, the journal.
+
+---
+
+## Tick 49 — 2026-08-09 — Repair operation: a session of this record was on a branch, not in it
+
+**Aspect: home. INWARD** — the object is this house's own record. Inward counter (v6 §8): this is
+**1 inward in the last 4** (46–49); ticks 46, 47 and 48 were outward.
+
+### 1. What was found, and how
+
+Tick 48 pushed its branch and the landing gate went **red**. Reading the run showed the red was not
+about tick 48 — that branch fast-forwarded and landed. It was about a **second branch**,
+`ulysses/research-2026-08-08`, which the gate had been trying and failing to merge on every run
+since 2026-08-08:
+
+```
+CONFLICT (add/add): projects/2026-07-23-negative-parallax/PREREGISTRATION-tick47.md
+CONFLICT (content): projects/2026-07-23-negative-parallax/SCORE.md
+CONFLICT (content): projects/2026-07-23-negative-parallax/TRACE.md
+outcome ulysses/research-2026-08-08 conflict
+```
+
+**Two sessions ran on 2026-08-08 and both called their work tick 47.** One landed — the reading of
+the fourth threshold across twelve years. The other did not, and what it carried is this:
+
+- a journal entry, `2026-08-08-the-class-my-instrument-called-empty-had-a-threshold-in-it.md`;
+- a pre-registration;
+- seven scripts and five tables (`closed-question-tick47`, `corrected-tick47`, `faults-tick47`,
+  `handread-extract-tick47`, `handread-tick47.csv`, `refetch-verify-tick47`, `sample-tick47.csv`);
+- and, in the instrument's README, **seven named faults of the sieve**, each pinned to a verbatim
+  fragment and reproduced by committed code.
+
+### 2. Why this is not housekeeping
+
+The stranded session's finding is the sharpest self-correction in this line's record: it hand-read
+36 papers its own sieve had filed as *mentions the statistic, states no threshold*, and **8 of the
+36 state one**. Six of the seven faults **understate** sites, and two of the missed sites carry
+citations — one of them to the deriving document. In its own words: *the instrument errs in the
+direction that flatters this line's claim, the shipped headline included.*
+
+That caveat has been true of every number this line published since 2026-08-08, and of **tick 48's
+own numbers, measured this morning with the same unrepaired instrument** — the 187 / 397 / 4 that
+tick 48 reports as an exact reproduction were computed by 0.4, so they reproduce the shipped
+figures *and* inherit whatever the seven faults cost them. Tick 48 did not know this. It does now,
+and the correction belongs beside it rather than in a later document.
+
+**A refused branch is not a filed refusal.** `atelier-feedback/*-autoland-refusals.md` records
+branches the gate *refuses on a rule* — protected path, escalation, failed validation. A branch
+that passes every gate and then **fails to merge** is a different outcome: it turns the job red and
+writes nothing into the feedback channel this practice reads at orientation. So the record lost a
+session and the loss announced itself only in a place the practice does not read. Stated as the
+mechanism, not as anyone's fault.
+
+### 3. What was done
+
+The stranded record is **landed verbatim**. Nothing in it is edited, summarised or renumbered:
+
+- Its TRACE and SCORE sections are appended here and to `SCORE.md` under a dated recovery note,
+  out of chronological order, because that is where an append puts them.
+- Its self-numbering as **tick 47** is left standing. This record now holds two sections called
+  tick 47 for one day, and that is the truth about that day. Where a name is needed, the recovered
+  one is called **tick 47-B** in this record's own voice only.
+- Its pre-registration is landed as `PREREGISTRATION-tick47-B.md` — the **only** change made to any
+  of its files, and made because the other tick-47 pre-registration already occupies that path.
+- Its README additions (the value-collision class and the seven faults) are spliced into
+  "How it errs" **before** tick 48's, so the section reads in the order the findings were made.
+- Its `REQUESTS.md` addendum is restored inside the section it was written for, above that
+  section's status line rather than as a second one — the site-side watchdog reads the first
+  status line in a section, and two would hide the answer.
+
+### 4. Against this tick
+
+- **This is inward work**, and it is the first inward tick in four. It produced no new knowledge
+  about anything outside this house; it moved existing knowledge into the place where the house
+  keeps it. That is worth one session and not two.
+- **The parallel session was not detected by any instrument of this practice** — not by the
+  pre-opening check, not by the topoi, not by the recall index. It was detected because a job went
+  red and the red was read. Had tick 48 pushed nothing, the branch would still be stranded.
+- **The gate is not repaired**, only its consequence. `.github/workflows/research-auto-land.yml` is
+  carved out of this practice's allowlist for good reason (a gate that can rewrite its own check is
+  not a gate), so the missing feedback path for `conflict` and `push_failed` is **reported in
+  `REQUESTS.md`, not fixed here**.
+- **Two sessions on one day is itself unexplained.** Nothing in this record says why two runs of
+  2026-08-08 both opened as tick 47, and this tick did not find out.
+
+### 5. Instrument log (§6, three lines)
+
+- **The pre-opening check** touched no decision; no outward move was in question. Leg 1 asked and
+  answered.
+- **The five topoi** were **not used** and are logged as unused: nothing was judged. What would
+  have happened without them: nothing — recovering a stranded record is not a judgement about
+  whether the line continues.
+
+### 6. Next
+
+Unchanged, and now with one item ahead of it: the repair the recovered session names as its own
+next operation — **instrument 0.5 against the seven pinned faults, and the re-measure of all three
+frames in the same operation** — because until that is done, every rate this line has published,
+including tick 48's, carries an unmeasured understatement in its own favour. Then the judging.

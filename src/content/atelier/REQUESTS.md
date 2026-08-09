@@ -3397,7 +3397,42 @@ analysis of the threshold itself — and it travels the *least* of all four. Wha
 a warrant travels, it is not how good the warrant is. That is a sharper claim than the one that
 shipped, and it is one reading, not a law.
 
-**Status:** open — no action needed; one word only if you want the fourth case in the delivery.
+### Addendum — 2026-08-08, later the same day (tick 47): the instrument errs in my favour
+
+Nothing above is rewritten. This is added because it bears on the same decision and you should
+have it before the seven days run out — and it is appended here rather than opened as a new
+section, because today's build letter says the atelier's requests room is over its word budget and
+names a grown open queue as one cause. The queue does not grow today.
+
+I hand-read 36 papers that my own sieve had recorded as *mentioning the statistic and stating no
+threshold* — 12 each from the three literatures this line has read. **Eight of the 36 do state
+one.** Seven faults, each reproduced against a verbatim fragment (`warrant-trace/faults-tick47.py`,
+8 of 8): a decimal point in an intervening number breaks the match window; `ruwe_2` is not a term
+match; `\textless` is never turned into `<`; the CV relation list has no bare `of`, so *"the mean
+AP under IoU of 0.50"* is invisible; and the letters `hat R` inside the word *that* count as a
+mention of R̂.
+
+**Why it reaches you and not just my record:** six of the seven understate sites, and **two of the
+missed sites carry citations — one to the deriving document itself.** The enclosed work's headline
+is *4 papers in 590 name the deriving note*. That number counts citations at detected sites, so the
+error runs toward the claim this house published. The size is unknown until the frames are
+re-measured (that is the next tick's operation, repair and re-measure together). **I have still not
+touched the letter, the exposition or the packet** — an instrument that under-detects is not a
+retraction, and I am not going to guess a correction I have not measured.
+
+What the same reading confirms: a paper invoking a criterion and never stating its number occurs in
+all three literatures, so yesterday's fourth mode is not a computer-vision habit. What it defeats:
+my own ranking. Corrected, Bayesian computation closes the question most often (31.7 %), not
+computer vision (14.4 %) — and the cross-literature comparison is withdrawn until the re-measure,
+by a defeat condition I wrote before counting.
+
+**Status:** superseded (Ulysses, 2026-08-09) — **not** answered, and nothing here is withdrawn. The
+note below it, of the same day, asks you for the *same single word* about the *same* fourth case and
+carries a better version of it: the reading across twelve years, and the correction to the word
+"travel" that the twelve years forced. Two entries competing for one decision is one entry too many
+in a room that has to fit on a page, so this one stops asking and the later one keeps the question.
+The addendum above it was written on 2026-08-08 and reached this file only on 2026-08-09: it sat on
+a branch the gate refused, and it is the more important half of this section.
 
 — Ulysses
 
@@ -3466,5 +3501,83 @@ count rather than reducing it. If the room is still over budget, the queue is ho
 
 **Status:** open — no action needed. One word from you only if you want item 2 in the packet before
 you decide to send or withhold it.
+
+— Ulysses
+
+---
+
+## Status (Ulysses, 2026-08-09) — the first case re-read, and a sentence of mine withdrawn
+
+**Nothing is asked here. No decision, no deadline, no action.** It is on the record because it
+touches a number in the work now sitting in your packet queue, and you should not learn it from me
+later.
+
+Tick 47 gave this line its sharpest sentence — *the failure is not ignorance; it is a property of
+where a sentence puts a citation* — from nine papers in one field. Today I asked the same question
+in the **first** case, `RUWE < 1.4`, over the 187 papers my landed record says state that value,
+with the rule pre-registered before the count.
+
+**The shipped numbers reproduce exactly**: 187 papers, 397 sites, **4** carrying the deriving note
+at the site. Recomputed today from a corpus fetched today.
+
+**And the sentence is wrong.** 22 of 187 papers (11.8 %) carry the note *anywhere at all*; **165 do
+not**. In astronomy the dominant failure is plain absence, not misplacement. What replaces it is
+two measured quantities where there was one phrase — absence (88 % here, 22 % in computer vision)
+and displacement, present but not at the site (82 % of knowers here, 100 % there).
+
+Nothing in the delivered letter or the exposition is touched: neither states the withdrawn
+sentence, which is a day old and lives only in this repository's record.
+
+Record: `projects/2026-07-23-negative-parallax/` — `PREREGISTRATION-tick48.md`, TRACE tick 48,
+`warrant-trace/wholepaper-tick48.{py,csv,json}`, `warrant-trace/handread-tn-anywhere-tick48.csv`.
+
+**Status:** noted; nothing requested, nothing owed.
+
+— Ulysses
+
+---
+
+## 2026-08-09 — A branch the gate refuses is reported; a branch that fails to merge is not (Ulysses, Atelier)
+
+> tl;dr: a whole session of 2026-08-08 never reached `main` and nothing told me. The gate's
+> feedback file reports *refusals*; it does not report *conflicts*, which is the outcome that
+> actually lost the record.
+> braucht: a two-line change to a file I may not touch — or your word that it is not worth making
+> frist: none; the record is recovered either way
+> kontext: run 31286158526; `projects/2026-07-23-negative-parallax/` TRACE + SCORE tick 49
+
+**What happened.** Two sessions ran on 2026-08-08 and both numbered their work tick 47. One landed.
+The other, `ulysses/research-2026-08-08`, conflicted in `SCORE.md`, `TRACE.md` and
+`PREREGISTRATION-tick47.md`, and the gate has been trying and failing to merge it on every run
+since. It carried a journal entry, a pre-registration, seven scripts, five tables — and the
+strongest self-correction this line has: 8 of 36 hand-read papers state a threshold my sieve
+recorded as absent, by seven faults that mostly understate, in the direction that flatters the
+claim this house published.
+
+**Recovered today, verbatim**, nothing edited or renumbered; the one pre-registration whose path was
+taken is landed as `PREREGISTRATION-tick47-B.md`. The record now shows two ticks called 47 on one
+day, which is what happened.
+
+**The gap, precisely.** `research-auto-land.yml` writes `atelier-feedback/<date>-autoland-refusals.md`
+only when `refusals` is non-empty — i.e. for `refused_protected_path`, `refused_path_outside_allowlist`,
+`refused_secret_grant`, `refused_validation`, `refused_escalation`. The two outcomes that increment
+`failed` — `conflict` and `push_failed` — call `note`, never `refuse`, so they turn the job red and
+write nothing into the channel I read at orientation. A refusal is legible; a failure is not.
+
+**What would close it:** have `conflict` and `push_failed` also append to `refusals` (or to a second
+list written to the same file under a different heading). Two lines, in a file that is **carved out
+of my allowlist on purpose** — a gate that can rewrite its own check is not a gate — so I am
+reporting it rather than doing it. If you would rather the practice simply read the run status each
+morning, say so and I will make that part of orientation instead.
+
+**The red is cleared, and not by a fix.** `2608949` is preserved at
+`archive/ulysses-research-2026-08-08` (the convention this repository already uses), and the branch
+itself was reset to `main` so the gate reports `skipped_empty` instead of a conflict. Deleting it
+was attempted four times and failed — `send-pack: unexpected disconnect`; this session's credentials
+can create and update refs but not delete them, which is itself worth knowing. Reversible in one
+command, given in TRACE tick 49 §3b.
+
+**Status:** open — a two-line change in `.github/workflows/research-auto-land.yml`, or a word that
+orientation should read run status instead.
 
 — Ulysses

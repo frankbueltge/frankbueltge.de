@@ -113,6 +113,43 @@ has one measured instance in each direction, and they are in the record, not in 
   count second. If you skip that, your denominator is inflated by every other use of the number.
 - **Comments are included by default.** `--nocomments` re-runs without LaTeX comments; report both,
   as every measurement in this record does.
+- **Value collision: 18 of 108 hand-read focus sites** (2026-08-08, tick 46; owed to this section
+  since that day and written here at tick 47). A site can carry the focus *number* and a
+  *different threshold*: in computer vision, 7 of those 18 were a non-maximum-suppression
+  threshold, 7 method-internal filters, 4 not this statistic at all. A number is not a criterion,
+  and only hand-reading tells them apart. Rate measured in one literature; assume it exists in
+  yours.
+- **Site detection misses stated thresholds — seven named ways** (2026-08-08, tick 47). A
+  hand-read sample of 36 papers the sieve had recorded as *mentioning the statistic and stating
+  no threshold* found that **8 of 36 do state one** (4 of 12 in the Gaia frame, 0 of 12 in the
+  MCMC frame, 4 of 12 in the CV frame). Each miss is pinned to a verbatim fragment in
+  `faults-tick47.py`, which reproduces all seven against 0.4:
+  **F1** an intervening decimal (`RUWE … is 34.676, far above the limit of > 1.4`) breaks the gap
+  class `[^.;:\n]`; **F2** a subscripted identifier (`ruwe_2<1.4`) is not a term match;
+  **F3** LaTeX `\textless` / `\textgreater` are not normalised to `<` / `>`; **F4** the R-hat
+  term has no left boundary, so the letters `hat R` inside **`that R`** count as a mention;
+  **F5** a value standing before the term (`each at the 0.50 IoU threshold`) is a site only for
+  `<` and `>`; **F6** the CV profile's relation list has no bare `of`, so `IoU of 0.50` — a site
+  that carries a citation — is invisible; **F7** a sweep (`IoU thresholds from 0.50 to 0.95`)
+  states values no relation reaches. F1–F3 and F5–F7 understate sites; **F4 overstates
+  mentions**, which inflates a denominator. Direction matters here: an understated site count
+  makes a warrant look *less* travelled than it is, which flatters this instrument's own
+  finding. Repair and re-measurement: tick 48.
+- **A window pattern is not a whole-paper pattern: 3 of 25 hits, 12 %** (2026-08-09,
+  `wholepaper-tick48.py`). Asking whether the deriving document is in the paper *at all* is a
+  different question from what stands at a site, and the profile's flag regexes are written for a
+  420-character window. Two alternatives of `cite_tn` (`technical note`, `DPAC technical`) match
+  unrelated prose the moment the window is removed, and even after dropping them `GAIA-C3-TN`
+  matches **any** DPAC C3 technical note — the three rejects carry LL-136, LL-125 and LL-084, and
+  none carries LL-124. If you reuse a profile flag over a whole document, narrow it first (which
+  can only lower the count) and hand-read every hit.
+- **The fetcher's resume set is read once, at start.** Two `fetch` runs against the same manifest
+  therefore do not divide the work — they duplicate it, and the declared one-request-per-3 s
+  becomes two. This was done here on 2026-08-09: 286 records for a 187-paper frame, caught by
+  arithmetic afterwards. Check `wc -l` on the manifest against your frame before you trust a rate.
+  Unrepaired, and named rather than fixed, like the other fetcher limitation below: a `FAILED`
+  fetch also enters the manifest the skip-set reads, so it can never be retried into the same
+  corpus.
 
 ## The frame
 
