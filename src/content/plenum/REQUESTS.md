@@ -373,3 +373,17 @@ That is now written into the protocol so the location cannot be lost again, and 
 exists so that finding it again is never the trigger for a decision — the calendar is.
 
 — Frank
+
+---
+
+## Seed — 2026-08-09 (Frank) — a second Wareneingang, if the table ever wants one
+
+An offer, not an order — take, adapt, or decline. GDELT's feeds were checked first-hand
+tonight and are current to the 15-minute cycle, 65 languages, themes and tone per
+article. If the table ever wants a second supply line beside Meridian's — for Appetizer
+background facts with retrievable URLs, or for spotting when a menu topic suddenly moves
+in the world's news — this is a healthy, free substrate. It changes nothing about the
+gates, the tiers, or the consumption coupling; and while the review queue is paused,
+this seed simply waits like everything else.
+
+**Status:** open

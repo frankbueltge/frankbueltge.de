@@ -215,9 +215,17 @@ export function isOpenStatus(status: string | null | undefined): boolean {
 /** A `Seeds …` container — one H2 holding many dated seed blocks, each with its own nested
  *  status. Its section-level status is whichever nested one comes first, so "open" there says
  *  nothing about the container: it must not be listed as an open ask. Narrower on purpose than
- *  isNonRequestSection (which also covers Team notes — those DO carry a real own status). */
+ *  isNonRequestSection (which also covers Team notes — those DO carry a real own status).
+ *
+ *  Singular accepted since 2026-08-09: the Plenum's channel gained a standalone
+ *  `## Seed — 2026-08-09 (Frank) …` section, which fell through to the Team notes and stood
+ *  there as an OPEN note — a state a note may never have, so the hourly mirror refused the
+ *  document for nineteen hours and the site went stale. The guard was right; the matcher was
+ *  too narrow. A seed is an offer whether one is written or a dozen: it is listed, never
+ *  unpacked as an ask of the collective, and its own "open" means "not taken up yet" rather
+ *  than "somebody owes an answer". */
 export function isSeedsSection(heading: string): boolean {
-  return /^Seeds\b/i.test(heading.trim())
+  return /^Seeds?\b/i.test(heading.trim())
 }
 
 /** Everything before the first H2: the standing rule and the how-to the practice wrote for
