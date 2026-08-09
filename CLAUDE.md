@@ -89,8 +89,19 @@ JSON-Snapshots ins Repo (kein dynamisches Lesen aus Cloud-Diensten zur Laufzeit)
 Die Protokoll-Pipelines (`pipelines/protokoll/`, Python 3.12) laufen als nächtliche
 **GitHub-Actions-Workflows** und schreiben täglich `src/content/protokoll/<jahr>/<datum>.json`,
 `src/data/praemie/police.json` und `src/data/parallaxe/register.json`, committet als Autorin
-„Protokollführung" → Pages-Rebuild. **Kein GCP:** Konflikt-TOP via GDELT-Rohdateien (HTTP),
-Parallaxe via Gemini-AI-Studio-Key (statt BigQuery/Vertex).
+„Protokollführung" → Pages-Rebuild. **GCP gezielt (Frank, 2026-08-09 — ersetzt „Kein GCP"
+vom 2026-06-27):** Batch-Schritte der Pipelines dürfen GCP-Dienste nutzen, wo sie
+nachweisbaren Mehrwert stiften — nie zur Laufzeit der Site: **Git bleibt das Archiv.**
+Bedingungen je GCP-Schritt (Karte & Begründung: `docs/design/2026-08-09-portfolio-audit.md`
+§6, Aktivierung: `2026-08-09-gcp-activation.md`): Trace committen (Query-Text, Job-ID,
+Bytes billed — zur Laufzeit erfassen, Job-Historie verfällt nach 180 Tagen), Lizenz-Notice
+der Quelle beachten (GDELT: Zitat + Link; Sentinel: „Contains modified Copernicus Sentinel
+data" — solche Ableitungen nicht als nacktes CC0), Kostendisziplin (Richtwert 10 €/Monat,
+Compute-Fußabdruck im Methodenblatt), Ausfälle vermerkt wie bei jeder Quelle. **Aktiviert:**
+BigQuery-GDELT (G1, getestet 2026-08-09); Earth Engine S1 (G5) unter Null-Kosten-Vorbehalt
+für den Dark-Ocean-V1-Pfad. Konflikt-TOP läuft weiter über GDELT-Rohdateien, Parallaxe über
+den Gemini-AI-Studio-Key — bestehende Pfade werden nur ersetzt, wenn der Mehrwert im
+Methodenblatt steht.
 
 ## Experimente — verbindliche Regeln
 
@@ -161,7 +172,8 @@ Parallaxe via Gemini-AI-Studio-Key (statt BigQuery/Vertex).
 ## Deployment
 
 Runbook: `pipelines/protokoll/README.md`. Pipelines = **GitHub-Actions-Workflows**
-(`.github/workflows/{protokoll,praemie,parallaxe}.yml`, nächtlich), kein GCP. Secrets
+(`.github/workflows/{protokoll,praemie,parallaxe}.yml`, nächtlich); GCP nur als gezielter
+Batch-Baustein unter den Bedingungen des Architektur-Absatzes (2026-08-09). Secrets
 (GitHub → Actions): `FIRMS_MAP_KEY`, `EIA_API_KEY`, `GEMINI_API_KEY` (Parallaxe,
 AI-Studio-Free-Tier), `CF` (Cloudflare). Site: statisch (dist/) auf Cloudflare Pages via
 `deploy-cf.yml`; Rebuild-Trigger ist der `workflow_run` nach jedem Nightly (Push mit
