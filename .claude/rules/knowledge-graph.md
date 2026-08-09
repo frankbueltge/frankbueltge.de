@@ -40,11 +40,24 @@ etwas Falsches), aber es trifft auch Sessions, die mit dem Graphen nichts zu tun
 darum steht die Regel hier und nicht in einer Datei, die niemand liest. Die
 Fehlermeldung des Tests nennt den Befehl ebenfalls.
 
-**Netz darunter (seit 2026-08-09):** `.github/workflows/graph.yml` baut den Graphen
-nächtlich neu und committet ihn, wenn sich die Aufzeichnungen bewegt haben. Das nimmt die
-Reibung, ersetzt aber nicht den Rebuild im eigenen Commit — ein PR mit veralteter Datei
-läuft weiterhin rot, und das ist richtig so: das Artefakt gehört in denselben Commit wie
-die Änderung, die es verändert hat.
+**In der Praxis musst du das seit dem Abend des 2026-08-09 nicht mehr selbst tun** — zwei
+Hooks nehmen es ab, und der Test bleibt trotzdem die Garantie:
+
+- **`.githooks/pre-commit`** leitet den Graphen ab und legt ihn in denselben Commit, sobald
+  dieser etwas unter `src/` oder `docs/` berührt. Installiert sich über `npm install`
+  (`package.json` → `prepare` setzt `core.hooksPath`); von Hand:
+  `git config core.hooksPath .githooks`. Er **blockiert nie** — fehlt npm oder
+  `node_modules`, oder scheitert die Ableitung, tritt er beiseite.
+- **Claude-Code-Hook** (`.claude/settings.json`, PostToolUse auf `Write|Edit`): baut nach
+  jeder Bearbeitung einer Quelle nach, ohne dass jemand etwas einrichtet.
+- **`.github/workflows/graph.yml`** baut nächtlich nach — das Netz für alles, was durch
+  beide Maschen fällt (Rebase, `--no-verify`, ein fremdes Werkzeug).
+
+Ein PR mit veralteter Datei läuft weiterhin rot, und das ist richtig so: das Artefakt gehört
+in denselben Commit wie die Änderung, die es verändert hat. Die Hooks sorgen nur dafür, dass
+das von allein passiert. `src/lib/graph/hooks.test.ts` prüft, dass beide verdrahtet bleiben
+und **jede** deklarierte Quelle beobachten — genau diese Prüfung hat gefunden, dass der
+Attention-Export im Muster fehlte.
 
 ## Als Abfrage-Schicht benutzen
 

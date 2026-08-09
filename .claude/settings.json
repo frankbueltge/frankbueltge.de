@@ -1,0 +1,20 @@
+{
+  "enabledPlugins": {
+    "frontend-design@claude-plugins-official": true
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.file_path // .tool_response.filePath // empty' | { read -r f || exit 0; case \"$f\" in *src/data/werke.ts|*docs/decision-log.md|*docs/audits/*|*src/data/post/ledger.json|*src/data/begegnungen/register.json|*src/data/attention/export.json|*/meta.json) root=$(cd \"$(dirname \"$f\")\" 2>/dev/null && git rev-parse --show-toplevel 2>/dev/null) || exit 0; [ -d \"$root/node_modules\" ] || exit 0; (cd \"$root\" && npm run --silent graph:build >/dev/null 2>&1) || exit 0; echo '{\"systemMessage\":\"graph: re-derived from the records\"}' ;; esac; }",
+            "timeout": 60,
+            "statusMessage": "Re-deriving the knowledge graph"
+          }
+        ]
+      }
+    ]
+  }
+}
