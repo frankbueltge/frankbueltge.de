@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+# Re-derive the knowledge graph and put it in the commit that changed its sources.
+#
+# Why this exists (Frank, 2026-08-09): src/lib/graph/graph.test.ts fails when the committed
+# graph and the records it is derived from disagree. That guard is the point — a snapshot that
+# has fallen behind claims something false — but it landed on sessions that had nothing to do
+# with the graph and merely added a row to the decision log. This hook removes the friction
+# without weakening the guarantee: the artifact is simply always current on the way in.
+#
+# Installed automatically by `npm install` (package.json "prepare" sets core.hooksPath), so
+# nobody has to remember a setup step. To do it by hand:  git config core.hooksPath .githooks
+#
+# It never blocks a commit. If node_modules or npm are missing, or the derivation fails, the
+# hook steps aside — the test and the nightly workflow are the actual enforcement, and a commit
+# refused by a broken hook would teach people to pass --no-verify.
+
+set -uo pipefail
+
+# Sources all live under src/ or docs/; a commit touching neither cannot change the graph.
+if ! git diff --cached --name-only --diff-filter=ACMRD | grep -qE '^(src|docs)/'; then
+  exit 0
+fi
+
+command -v npm >/dev/null 2>&1 || exit 0
+[ -d node_modules ] || exit 0
+
+if ! npm run --silent graph:build >/dev/null 2>&1; then
+  echo "graph: derivation failed — committing without it; \`npm run graph:build\` will say why" >&2
+  exit 0
+fi
+
+# Compare the INDEX entry before and after staging, rather than asking `git diff` whether the
+# working tree differs. The first version of this hook did the latter and silently did nothing
+# in the case that matters most: a graph.json staged as DELETED is not a "difference" to git —
+# the rebuilt file counts as untracked — so the deletion sailed into the commit while the
+# freshly derived file sat on disk, unstaged. Found by deleting the artifact and committing.
+[ -f src/data/graph/graph.json ] || exit 0
+before=$(git rev-parse ":src/data/graph/graph.json" 2>/dev/null || echo none)
+git add -- src/data/graph/graph.json
+after=$(git rev-parse ":src/data/graph/graph.json" 2>/dev/null || echo none)
+if [ "$before" != "$after" ]; then
+  echo "graph: re-derived from the records and added to this commit"
+fi
+
+exit 0
