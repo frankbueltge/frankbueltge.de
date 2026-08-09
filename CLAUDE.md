@@ -122,10 +122,19 @@ Parallaxe via Gemini-AI-Studio-Key (statt BigQuery/Vertex).
   eine Identitätsfarbe, kein Warnrot.
 - **USP-Pflicht (Frank, 2026-08-09, verbindlich):** Jedes Experiment braucht nachweisbaren
   Mehrwert oder ein Alleinstellungsmerkmal — per Web-Recherche prüfbar (nächste Nachbarn
-  weltweit + Daylight). Gilt rückwirkend für die Holdings (Audit läuft, decision-log
-  2026-08-09); neue Experimente beantworten es am §2-Gate, bevor gebaut wird. Ergänzt die
-  Maschinen-Bar der Ecology: die Bar fragt „konnte das nur eine Maschine?", die USP-Pflicht
-  fragt „hat die Welt das schon?".
+  weltweit + Daylight). Gilt rückwirkend für die Holdings; neue Experimente beantworten es
+  am §2-Gate, bevor gebaut wird. Ergänzt die Maschinen-Bar der Ecology: die Bar fragt
+  „konnte das nur eine Maschine?", die USP-Pflicht fragt „hat die Welt das schon?".
+  **Der Audit ist abgeschlossen** (16 Holdings: 1 draft-UNIQUE, 6 added-value, 9 redundant,
+  jedes Verdikt gegen benannte Nachbarn; `docs/audits/2026-08-09-usp-audit.md`, gemerged
+  #472) — Franks Antwort darauf war **Ausbau statt Kürzung** (verbatim: „nein, nicht
+  archivieren, sondern so ausbauen, dass wirklicher mehrwert und alleinstellungsmerkmale
+  entstehen!"), seither das **USP-Rework-Programm** in Kraft: Phase 0 (Nachbarn zitiert,
+  Overclaims korrigiert, alle 16 Seiten — gemerged #476), Phase 1 (USP aus bereits
+  committeten Daten, u. a. Consensus/Iceberg/Patterns/Headroom — landet laufend), Phase 2
+  (USP braucht neues Material). Checkpoint: die Lesung am 2026-09-05, dann zeigt jede
+  Holding ihre USP live oder einen datierten Bauplan. Tracker:
+  `docs/design/2026-08-09-usp-rework-program.md`.
 - **Spec:** `docs/superpowers/specs/2026-06-11-werkgruppe-design.md` (Substanz-Kriterien
   in §2 sind das Gate für jedes neue Experiment; Methodenblatt-Pflicht in §3.5).
   Rahmung/Wortlaut: `2026-08-01-festival-line.md` („artistic research, under proof");
