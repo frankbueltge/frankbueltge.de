@@ -99,11 +99,19 @@ def main() -> int:
     # max|r| neu suchen, zählen wie oft >= |r0|. Das ist die False-Discovery-Rate.
     rng = np.random.default_rng(int(days[-1].replace("-", "")))  # deterministischer Seed aus dem Datum
     hits = 0
+    null_max = []  # max|r| of every shuffled run — the null distribution itself
     for _ in range(K):
         shuf = np.array([row[rng.permutation(n)] for row in mat])
-        if max_abs_offdiag(np.corrcoef(shuf)) >= abs(r0):
+        m = max_abs_offdiag(np.corrcoef(shuf))
+        null_max.append(m)
+        if m >= abs(r0):
             hits += 1
     fdr = round(hits / K, 3)
+    # USP rework #15 (program doc 2026-08-09): the null distribution is the piece — a
+    # histogram of what chance alone produces, so the page can DRAW the resampling
+    # distribution instead of only narrating the rate. 20 bins over [0, 1], counts.
+    hist, _edges = np.histogram(null_max, bins=20, range=(0.0, 1.0))
+    null_distribution = {"bins": 20, "range": [0.0, 1.0], "counts": [int(x) for x in hist]}
 
     now = datetime.now(timezone.utc)
     out = {
@@ -116,6 +124,7 @@ def main() -> int:
         "strong_threshold": 0.8,
         "permutations": K,
         "false_discovery_rate": fdr,
+        "null_distribution": null_distribution,
         "headline": {
             "a_id": a,
             "b_id": b,

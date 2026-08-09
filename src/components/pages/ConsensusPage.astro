@@ -31,6 +31,18 @@ const moreCount = h ? Math.max(0, h.domain_count - shownMastheads.length) : 0
 // article GDELT saw on that domain carrying the sentence. Older data renders plain chips.
 const evidenceUrl = new Map((h?.articles ?? []).map((a) => [a.domain, a.url]))
 
+// The structure of the consensus — USP rework #1 (program doc 2026-08-09). The audit's
+// daylight for this instrument is the WHY-classification: none of the neighbors classify
+// why outlets converged, only that they did. Aggregated at build time from every committed
+// day file; structure.test.ts holds the aggregate to the archive.
+import { CHAIN_LABEL, aggregateStructure } from '@/lib/consensus/structure'
+const archiveRaw = import.meta.glob('/src/data/consensus/2026-*.json', { eager: true, import: 'default' })
+const structure = aggregateStructure(
+  Object.fromEntries(Object.entries(archiveRaw).map(([p, v]) => [p.replace(/^.*\/(\d{4}-\d{2}-\d{2})\.json$/, '$1'), v])) as never,
+)
+const chainCount = structure.counts[CHAIN_LABEL] ?? 0
+const chainPct = Math.round(structure.chainShare * 100)
+
 // v3 — symbolic classification of the syndication structure (auditable).
 const SYN: Record<string, { de: string; en: string }> = {
   'wire/chain syndication': {
@@ -129,6 +141,33 @@ const syn = h?.syndication
             : "of today's scanned news stream was echo — copied verbatim by at least three outlets, not original reporting."}
         </p>
       </section>
+
+      {structure.classified > 0 && (
+        <section class="mb-12 border-t border-line pt-6">
+          <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+            {de ? 'Die Struktur des Konsenses — das ganze Archiv' : 'The structure of the consensus — the whole archive'}
+          </p>
+          <div class="mt-3 flex items-baseline gap-4">
+            <p class="text-[clamp(32px,6vw,56px)] font-bold leading-none tabular-nums">{chainPct}%</p>
+            <p class="max-w-md text-sm leading-snug text-fg-muted">
+              {de
+                ? `der ${structure.classified} klassifizierten Tage waren Ketten-Syndizierung — eine Verlagsgruppe, ein Push. Nur ${structure.classified - chainCount} ${structure.classified - chainCount === 1 ? 'Tag war' : 'Tage waren'} verstreute Platzierung über unabhängige Märkte.`
+                : `of ${structure.classified} classified days were chain syndication — one publishing group, one push. Only ${structure.classified - chainCount} ${structure.classified - chainCount === 1 ? 'day was' : 'days were'} scattered placement across independent markets.`}
+            </p>
+          </div>
+          <p class="mt-3 max-w-xl font-mono text-[11px] leading-relaxed text-fg-faint">
+            {de
+              ? 'Das ist die Schicht, die die Nachbarn nicht führen: nicht DASS Redaktionen denselben Satz drucken, sondern WARUM — Konzernkette oder echter, verstreuter Konsens. Klassifikation pro Tag im '
+              : 'This is the layer the neighbors do not keep: not THAT outlets print the same sentence, but WHY — corporate chain or genuine, scattered consensus. Per-day classification in the '}
+            <a href={getRelativeLocaleUrl(locale, '/consensus/archive')} class="underline decoration-line underline-offset-2 hover:text-fg">{de ? 'Archiv' : 'archive'}</a>
+            {structure.unclassified > 0
+              ? de
+                ? ` (${structure.unclassified} frühe Tage vor der Klassifikation, ehrlich unklassifiziert).`
+                : ` (${structure.unclassified} early days predate the classifier and stay honestly unclassified).`
+              : '.'}
+          </p>
+        </section>
+      )}
 
       {r && (
         <section class="mb-12 border-t border-line pt-6">
