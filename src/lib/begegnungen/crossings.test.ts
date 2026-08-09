@@ -211,7 +211,12 @@ describe('buildEncounter against the committed register', () => {
     expect(enc1.standing).toBe('unstated')
     expect(enc1.status).toBeNull()
     expect(withLedger.status?.text).toContain('open/standing')
-    expect(withLedger.asOf).toBe('2026-07-31')
+    // asOf moves with the committed register (nightly ecology export regenerates it) —
+    // assert the pass-through from the register's own status, never a pinned date
+    // (drift caught 2026-08-09: export bed6807e moved enc-2026-005 from 07-31 to 08-08).
+    const registerStatus = byId('enc-2026-005').status as { as_of?: string }
+    expect(withLedger.asOf).toBe(registerStatus.as_of)
+    expect(withLedger.asOf).toMatch(/^\d{4}-\d{2}-\d{2}$/)
   })
 
   it('accepts a legacy string status without a branch in the caller', () => {
