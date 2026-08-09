@@ -29,6 +29,7 @@ import { buildScore, chronicleEvents, clampToLastDays, journalEvents, scoreOpeni
 import jointInquiries from '@/data/begegnungen/joint-inquiries.json'
 import Partitur from '@/components/maschinenraum/Partitur.astro'
 import Triptych from '@/components/hub/Triptych.astro'
+import attentionExport from '@/data/attention/export.json'
 import { loadChronicle as loadFieldChronicle } from '@/lib/field/chronicle'
 import { loadChronicle as loadStudioChronicle } from '@/lib/studio/chronicle'
 
@@ -139,6 +140,17 @@ const doors = NAMING.doors.items.map((d) => ({
     : `resident: ${d.id.charAt(0).toUpperCase()}${d.id.slice(1)} · last recorded: ${lastRecorded[d.id] ?? '—'}`,
 }))
 
+/** The second house's inhabitants come from the practice's own export, not from a list typed
+ *  here — same discipline as its door page. Absent export = an empty list and a stated reason,
+ *  never an invented one. */
+const attentionProjects = (attentionExport?.$contract === 'attention-export/1'
+  ? (attentionExport.projects as { id: string; title: string; site_route: string | null; status: string }[])
+  : []
+).map((p) => ({
+  ...p,
+  word: p.status === 'e-experiment' ? 'in its acceptance experiment' : p.status,
+}))
+
 const isDraft = NAMING.approval !== 'approved'
 ---
 
@@ -180,51 +192,89 @@ const isDraft = NAMING.approval !== 'approved'
     </div>
   </section>
 
-  {/* Reihenfolge (Frank, 24.07.): erst WER hier wohnt (Orientierung), dann was sie zuletzt
-      gemacht haben — ein Besucher soll die Werktitel einordnen können, bevor er sie liest. */}
-  <section class="mt-20 border-t border-line/60 pt-16" id="doors">
+  {/* Two houses (Frank, 2026-08-09), replacing the bare doors grid: until today the homepage
+      WAS the ecology, so everything else read as an appendix. The level above a practice is a
+      house — a constituted arrangement — and there are two, on deliberately different
+      constitutions. Each house shows its own inhabitants; the ecology's four doors keep their
+      cards and their validated identity colours, they simply live inside their house now.
+      Order kept from 24.07.: who lives here first, what they last did after. */}
+  <section class="mt-20 border-t border-line/60 pt-16" id="houses">
     <p class="font-mono text-xs uppercase tracking-[0.22em] text-fg-muted">
-      <b class="text-fg">{NAMING.doors.kicker}</b> · {NAMING.doors.kickerSub}
+      <b class="text-fg">{NAMING.houses.kicker}</b> · {NAMING.houses.kickerSub}
     </p>
-    {/* A door is a block link; its tour link is a link INSIDE it, so the two are siblings rather
-        than nested anchors (which no browser resolves the way the markup reads). The door's own
-        surface stays clickable around them. */}
-    <div class="doors hub-voices mt-7 grid gap-3.5 sm:grid-cols-2 lg:grid-cols-4">
-      {doors.map((d) => (
-        <div class:list={['door', `door-${d.id}`, 'relative rounded-[10px] border border-line bg-panel p-5 pt-5 transition-colors hover:border-fg-faint']}>
-          <h3 class="text-[19px] font-semibold tracking-[-0.01em]">
-            <a href={d.href} class="door-link">{d.name}</a>
+    <div class="mt-7 grid gap-5 lg:grid-cols-2">
+      {NAMING.houses.items.map((house) => (
+        <div class="rounded-[10px] border border-line bg-panel/40 p-5">
+          <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-fg-faint">{house.constitution}</p>
+          <h3 class="mt-2 text-[22px] font-semibold tracking-[-0.01em]">
+            <a href={getRelativeLocaleUrl(locale, house.href)} class="underline decoration-line underline-offset-4 transition-colors hover:text-fg">{house.name}</a>
           </h3>
-          <p class="mt-2 min-h-[4.2em] text-sm text-fg-muted">{d.description}</p>
-          <span class="mt-3 block font-mono text-[11px] text-fg-faint">{d.meta}</span>
-          {d.tourHref && (
-            <a href={d.tourHref} class="door-tour relative z-10 mt-2 inline-block font-mono text-[11px] text-fg-muted underline decoration-line underline-offset-4 transition-colors hover:text-fg">
-              {NAMING.doors.tourLabel}
-            </a>
+          <p class="mt-2 text-sm leading-relaxed text-fg-muted">{house.description}</p>
+          <p class="mt-5 font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">{house.residentsLabel}</p>
+
+          {house.id === 'ecology' && (
+            <>
+              {/* A door is a block link; its tour link is a link INSIDE it, so the two are
+                  siblings rather than nested anchors (which no browser resolves the way the
+                  markup reads). The cards keep their validated identity colours — the ecology
+                  quartet reads the same here, on the encounter map and on the Partitur. */}
+              <div class="doors hub-voices mt-3 grid gap-3.5 sm:grid-cols-2">
+                {doors.map((d) => (
+                  <div class:list={['door', `door-${d.id}`, 'relative rounded-[10px] border border-line bg-panel p-5 pt-5 transition-colors hover:border-fg-faint']}>
+                    <h3 class="text-[17px] font-semibold tracking-[-0.01em]">
+                      <a href={d.href} class="door-link">{d.name}</a>
+                    </h3>
+                    <p class="mt-2 text-sm text-fg-muted">{d.description}</p>
+                    <span class="mt-3 block font-mono text-[11px] text-fg-faint">{d.meta}</span>
+                    {d.tourHref && (
+                      <a href={d.tourHref} class="door-tour relative z-10 mt-2 inline-block font-mono text-[11px] text-fg-muted underline decoration-line underline-offset-4 transition-colors hover:text-fg">
+                        {NAMING.doors.tourLabel}
+                      </a>
+                    )}
+                  </div>
+                ))}
+              </div>
+
+              {/* The guest voice (2026-08-02), named where the residents are named — and nowhere
+                  near their weight. One line in the same subordinate idiom as the seed line at the
+                  foot of this section: mono, faint, no panel, no colour, no card. */}
+              <p class="mt-4 font-mono text-xs text-fg-faint">
+                {NAMING.doors.guest.lead}
+                <a href={getRelativeLocaleUrl(locale, NAMING.doors.guest.href)} class="underline decoration-line underline-offset-4 transition-colors hover:text-fg">{NAMING.doors.guest.label}</a>
+              </p>
+            </>
           )}
+
+          {house.id === 'attention' && (
+            <>
+              <ul class="mt-3 space-y-3">
+                {attentionProjects.map((project) => (
+                  <li class="rounded-[10px] border border-line bg-panel p-4">
+                    <p class="text-[17px] font-semibold tracking-[-0.01em]">
+                      {project.site_route
+                        ? <a href={project.site_route} class="underline decoration-line underline-offset-4 transition-colors hover:text-fg">{project.title}</a>
+                        : project.title}
+                    </p>
+                    <p class="mt-1 font-mono text-[11px] text-fg-faint">
+                      {project.word}
+                      {project.site_route ? null : ' · public only in the practice’s repository, by rule, until it passes'}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+              {attentionProjects.length === 0 && (
+                <p class="mt-3 font-mono text-xs text-fg-faint">
+                  The practice’s export is not in this repository right now — a missing file, not an empty practice.
+                </p>
+              )}
+            </>
+          )}
+
+          <a href={getRelativeLocaleUrl(locale, house.href)} class="mt-4 inline-block font-mono text-[11px] text-fg-muted underline decoration-line underline-offset-4 transition-colors hover:text-fg">
+            → what this house is
+          </a>
         </div>
       ))}
-    </div>
-
-    {/* The guest voice (2026-08-02), named where the residents are named — and nowhere near their
-        weight. One line in the same subordinate idiom as the seed line at the foot of this
-        section: mono, faint, no panel, no colour, no card. The doors grid above is untouched;
-        four doors stay four, and the sentence itself says why the Plenum is not a fifth. */}
-    <p class="mt-5 font-mono text-xs text-fg-faint">
-      {NAMING.doors.guest.lead}
-      <a href={getRelativeLocaleUrl(locale, NAMING.doors.guest.href)} class="underline decoration-line underline-offset-4 transition-colors hover:text-fg">{NAMING.doors.guest.label}</a>
-    </p>
-
-    {/* The second house (2026-08-09): its own block, not a fifth door — see naming.ts. */}
-    <div class="mt-7 rounded-[10px] border border-line bg-panel/40 p-5">
-      <p class="font-mono text-[11px] uppercase tracking-[0.22em] text-fg-faint">{NAMING.doors.secondHouse.kicker}</p>
-      <h3 class="mt-2 text-[19px] font-semibold tracking-[-0.01em]">
-        <a href={getRelativeLocaleUrl(locale, NAMING.doors.secondHouse.href)} class="underline decoration-line underline-offset-4 transition-colors hover:text-fg">{NAMING.doors.secondHouse.name}</a>
-      </h3>
-      <p class="mt-2 max-w-[70ch] text-sm text-fg-muted">{NAMING.doors.secondHouse.lead}</p>
-      <a href={getRelativeLocaleUrl(locale, NAMING.doors.secondHouse.href)} class="mt-3 inline-block font-mono text-[11px] text-fg-muted underline decoration-line underline-offset-4 transition-colors hover:text-fg">
-        {NAMING.doors.secondHouse.linkLabel}
-      </a>
     </div>
 
     {/* Three doors, three vocabularies (WP7): a fragment of each practice's own figure, in its own

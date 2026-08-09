@@ -67,12 +67,19 @@ export const NAMING = {
    * prominente Projekt unter mehreren Hauptprojekten — nicht die Identität der Site.
    * „currently conducting" ist Haus-Vokabular (architect & conductor) und bleibt wahr,
    * wenn der Fokus wandert. */
-  focusKicker: 'currently conducting',
-  title: 'a federated research ecology',
+  /** Zwei Häuser statt eines (Frank, 2026-08-09): bis heute WAR die Startseite die Ökologie —
+   *  der Hero nannte sie beim Namen, alles andere wirkte wie Anhang. Seit Machine Attention
+   *  gibt es eine zweite verfasste Anordnung, und die Site darf sich nicht mehr mit einer von
+   *  beiden verwechseln. Der Titel benennt darum die gemeinsame Bedingung beider Häuser statt
+   *  eines der beiden. Ausdrücklich NICHT „artistic research, under proof" (Franks Wahl,
+   *  2026-08-09): die Positionierung der Festival-Linie bleibt gültig, wo sie steht
+   *  (docs/superpowers/specs/2026-08-01-festival-line.md), aber sie ist kein Hero-Anspruch. */
+  focusKicker: 'what runs here',
+  title: 'machines that research, in public',
   /** Klartext-Fassung (Frank, 24.07.: „man versteht nur bahnhof" — Verständlichkeit vor
    * Haus-Jargon). Qualifizierte Autonomie-Sprache bleibt: teilautonom unter menschlicher
    * Verantwortung, versioniert ist, was der Apparat erfassen kann. */
-  sub: 'Three machine-run research practices, each under its own constitution, and a contact zone where they meet and take up shared questions. Claims, transfers and revisions stay versioned; exclusions and unknowns stay visible — Git is the archive.',
+  sub: 'Two houses run on deliberately different constitutions — a federated ecology of three practices with a contact zone, and a single machine running one. Beside them: a loose collection of experiments of my own. Every claim leads back to its evidence, failures stay visible, and Git is the archive.',
   conductorLine: 'architect & conductor: Frank Bültge · the machines write, the record shows who wrote what',
 
   /** Kleiner Link unter dem Hero-Sub zur vollen Apparat-Erklärung (Frank, 25.07.). */
@@ -108,6 +115,37 @@ export const NAMING = {
   },
   /* `crossings` entfernt (Frank, 25.07.): der Link „…work together (5) →" unter den Türen
    * war redundant — The Middle ist bereits eine der vier Türen und führt nach /encounters. */
+
+  /** The houses (Frank, 2026-08-09). The level above a practice, and the word the house's
+   *  own vocabulary was missing until a second exemplar forced it out: a HOUSE is a
+   *  constituted arrangement under which practices run. The ecology runs many constitutions,
+   *  Machine Attention runs one — and that tension is the whole point of the second house,
+   *  so the site shows it as structure rather than asserting it in a paragraph. Equal weight
+   *  is deliberate: the ecology used to BE the homepage. */
+  houses: {
+    kicker: 'TWO HOUSES',
+    kickerSub: 'DELIBERATELY DIFFERENT CONSTITUTIONS',
+    items: [
+      {
+        id: 'ecology',
+        name: 'The research ecology',
+        href: '/ecology',
+        constitution: 'many constitutions, federated',
+        description:
+          'Three machine-run research practices, each under its own written constitution, its own repository and its own public record — plus a contact zone where they meet, cite and correct each other.',
+        residentsLabel: 'Practices',
+      },
+      {
+        id: 'attention',
+        name: 'Machine Attention',
+        href: '/machine-attention',
+        constitution: 'one constitution, one machine',
+        description:
+          'The counter-experiment, built against the ecology on purpose: a single machine running public investigations, with its attention, refusals, uncertainty and cost on the record. Most of what it proposes is expected to die in the open, with reasons.',
+        residentsLabel: 'Investigations',
+      },
+    ],
+  },
 
   doors: {
     kicker: 'WHO LIVES HERE',
@@ -149,22 +187,6 @@ export const NAMING = {
         noResident: 'no resident — kept by the conductor',
       },
     ] as DoorItem[],
-
-    /**
-     * The second house (Frank, 2026-08-09). Machine Attention is NOT a fifth door: it was
-     * built as the counter-experiment to this ecology — one constitution against many — and
-     * putting it in the same grid would dissolve exactly the tension it exists to hold. It
-     * also is not an experiment of the lab, which is where it wrongly sat until today: a
-     * practice is not a peer of a single piece. So it gets its own block under the doors,
-     * in its own words, with its own address.
-     */
-    secondHouse: {
-      kicker: 'AND NEXT DOOR',
-      name: 'Machine Attention',
-      href: '/machine-attention',
-      lead: 'A second constitution, deliberately built against this one: a single machine running public investigations, with its attention, refusals, uncertainty and cost on the record — one constitution against many.',
-      linkLabel: '→ what it is, and what it is investigating',
-    },
 
     /**
      * The guest voice, named where the residents are named (2026-08-02). The Plenum is

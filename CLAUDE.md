@@ -2,10 +2,16 @@
 
 Persönliche Website von Frank Bültge (Rollen-Zeile: „Data Engineering & Analytics",
 Franks Entscheidung 2026-07-24 — nicht „Data & AI Engineer", nicht „data artist") —
-öffentlicher Eingang zu einer
-**federated research ecology**: drei lokal konstituierte, maschinell betriebene
-Forschungspraktiken und eine Kontaktzone — The Atelier (Ulysses, `/atelier`), The Field
-(Meridian, `/field`), The Studio (Ensemble, `/studio`), The Middle (`/encounters`).
+öffentlicher Eingang zu **zwei Häusern** (Frank, 2026-08-09 — die Startseite inszeniert
+nicht mehr die Ökologie, sondern beide gleichrangig; Begriffsstaffel House · Practice ·
+Project · Instrument · Experiment im Wording-Kanon):
+**(1) die federated research ecology** — drei lokal konstituierte, maschinell betriebene
+Forschungspraktiken und eine Kontaktzone: The Atelier (Ulysses, `/atelier`), The Field
+(Meridian, `/field`), The Studio (Ensemble, `/studio`), The Middle (`/encounters`);
+**(2) Machine Attention** (`/machine-attention`) — das Gegen-Experiment: EINE Maschine unter
+EINER Verfassung, mit den Untersuchungen The Foreknown (`/attention`), Dark Ocean (nur im
+Praxis-Repo bis zum bestandenen E-Experiment) und dem Instrument The State Before the
+Interface (`/observatory`). Eigenes Repo: `../machine-attention`.
 **Wording: `docs/wording-kanon.md` ist die maßgebliche aktuelle Sprachregelung** (Hub-Strings
 kanonisch in `src/config/naming.ts`); Engine-READMEs/alte Configs sind KEINE Quelle für
 aktuelles Wording — sie hinken nach.
@@ -16,7 +22,7 @@ Session, die Site oder Engines berührt, prüft aktiv auf Drift („erzählt die
 aktuellen Stand?"). Überholte Strukturen werden sichtbar und datiert archiviert, nie
 unauffällig als aktuell stehen gelassen. (Warnbeispiel: /atelier beschrieb am 24.07. noch
 Protocol v4, während die Praxis auf v5 lief.) Daneben die früheren Experimente des Labs
-als **Holdings** (`/holdings`): The Protocol, Parallaxe, The Policy, die
+als **Experiments** (`/experiments`, vormals `/holdings`): The Protocol, Parallaxe, The Policy, die
 Gegenmessung-Instrumente — erste Annäherungen, praxisbasiert. Das gestaltete Arbeiten lebt
 in den Projekten (datavism.org, data-snack.com).
 Positionierung: `docs/superpowers/specs/2026-08-01-festival-line.md` — „artistic research,
@@ -44,7 +50,7 @@ erste Untersuchung ist Meridian direkt zugewiesen, fällig im Post Office 2026-0
 
 **Die Experimente sind bewusst eine lose Sammlung** (Frank, 2026-07-12): kein Dachtitel —
 „Die Akte der Gegenwart" ist als Gruppierung zurückgezogen; eine künftige Neuordnung ist
-offene Frage, bis dahin steht jedes Experiment für sich (Index: `/holdings`; das frühere
+offene Frage, bis dahin steht jedes Experiment für sich (Index: `/experiments`; das frühere
 `/lab` 301t dorthin).
 
 **Lizenz (alle Lab-Repos, 2026-07-26): offen** — Apache 2.0 für Code, CC BY 4.0 für
@@ -123,7 +129,7 @@ alles umgezogen). Was wo liegt:
   Mehrwert oder ein Alleinstellungsmerkmal — per Web-Recherche prüfbar (nächste Nachbarn
   weltweit + Daylight). Die Bar fragt „konnte das nur eine Maschine?", die USP-Pflicht
   fragt „hat die Welt das schon?". Seit 2026-08-09 testgesichert: kein Werk kommt ohne
-  Verdikt, Daylight und benannte Nachbarn auf `/holdings`. Details, Gate §2 und die
+  Verdikt, Daylight und benannte Nachbarn auf `/experiments`. Details, Gate §2 und die
   KI-als-Material-Regel: `.claude/rules/experiments.md`.
 - **Nachprüfbarkeit ist die einzige Bedingung für KI-Einsatz:** Modell/Prompt/Verfahren
   offengelegt, Output verifiziert oder als Schätzung markiert — nie ein unbelegtes Orakel.
