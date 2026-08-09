@@ -4,7 +4,7 @@
 // site. So the bar carries four points:
 //   Research Ecology ▾  everything that belongs to the ecology, in named sections
 //   Projects ▾          the main projects, read from src/data/projects.ts (ecology included)
-//   Experiments         the lab's earlier pieces (route /holdings keeps its URL)
+//   Experiments         the lab's earlier pieces (route /experiments keeps its URL)
 //   About
 // Before this, "Practices" sat at the top as if the ecology were the whole house, while
 // "Projects" was buried under "Archive" — the opposite of the hub's own framing
@@ -74,7 +74,7 @@ const nav: NavItem[] = [
     sections: [{ label: 'Main projects', items: projects }],
     foot: { href: '/work', label: 'all projects →' },
   },
-  { href: '/holdings', label: 'Experiments' },
+  { href: '/experiments', label: 'Experiments' },
   { href: '/about', label: 'About' },
   // Contact after About (Frank, 2026-08-01) — since the page carries a real form that lands
   // in the letter queue, it earns its own door instead of hiding behind the footer.

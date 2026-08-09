@@ -1,4 +1,4 @@
-// src/lib/graph/field.ts — the geometry of the neighbourhood figure (/holdings/neighbors).
+// src/lib/graph/field.ts — the geometry of the neighbourhood figure (/experiments/neighbors).
 //
 // Every experiment is a point on one rail; the projects that already do something like it sit
 // on the same spoke, INWARD. What the eye reads is the empty stretch between the two: the

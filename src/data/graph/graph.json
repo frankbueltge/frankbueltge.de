@@ -4,7 +4,7 @@
     "sources": [
       {
         "file": "src/data/werke.ts",
-        "sha256": "116399d892ce56d2"
+        "sha256": "e127871d71cf79f8"
       },
       {
         "file": "docs/audits/2026-08-09-usp-audit.md",
@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "a61d6cb6740ef1c6"
+        "sha256": "b7bd078ddea4ce2e"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -45,28 +45,32 @@
         "file": "src/content/studio/works/*/meta.json",
         "sha256": "602c17c873ac7ba9",
         "files": 5
+      },
+      {
+        "file": "src/data/attention/export.json",
+        "sha256": "f55051690c90d177"
       }
     ],
     "counts": {
-      "nodes": 201,
-      "edges": 183,
+      "nodes": 204,
+      "edges": 188,
       "nodesByKind": {
-        "decision": 25,
+        "decision": 26,
         "encounter": 6,
         "neighbor": 77,
-        "practice": 8,
-        "practice-work": 59,
+        "practice": 9,
+        "practice-work": 60,
         "receiver": 6,
         "work": 20
       },
       "edgesByKind": {
         "addresses": 6,
         "concerns": 2,
-        "door": 3,
-        "made-by": 59,
+        "door": 5,
+        "made-by": 60,
         "neighbor-of": 77,
         "participates": 17,
-        "touches": 19
+        "touches": 21
       }
     }
   },
@@ -294,6 +298,16 @@
     {
       "id": "decision:2026-08-09-1",
       "kind": "decision",
+      "label": "Four words, one meaning each — Practice · Project · Instrument · Experiment (Frank, afternoon session, on his own observation that the site's vocabulary had come apart: \"wir sollten auch ein einheitliches vokabular pflegen über die gesamte website und alle experimente\").",
+      "date": "2026-08-09",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Four words, one meaning each — Practice · Project · Instrument · Experiment (Frank, afternoon session, on his own observation that the site's vocabulary had come apart: \"wir sollten auch ein einheitliches vokabular pflegen über die gesamte website und alle experimente\")."
+      }
+    },
+    {
+      "id": "decision:2026-08-09-2",
+      "kind": "decision",
       "label": "GCP returns as a targeted batch tool — G1 activated and live-tested, G5 conditionally approved (Frank, night session, on the portfolio audit's D6/D7).",
       "date": "2026-08-09",
       "source": {
@@ -302,7 +316,7 @@
       }
     },
     {
-      "id": "decision:2026-08-09-2",
+      "id": "decision:2026-08-09-3",
       "kind": "decision",
       "label": "Rework, never archive (Frank, same night, on reading the USP audit — verbatim): \"nein, nicht archivieren, sondern so ausbauen, dass wirklicher mehrwert und alleinstellungsmerkmale entstehen!\"",
       "date": "2026-08-09",
@@ -312,7 +326,7 @@
       }
     },
     {
-      "id": "decision:2026-08-09-3",
+      "id": "decision:2026-08-09-4",
       "kind": "decision",
       "label": "The USP obligation (Frank, night session, verbatim): every project must always carry \"einen Mehrwert oder ein Alleinstellungsmerkmal … das kann man easy überprüfen mit recherchen im web. jedes experiment auf frankbueltge.de was keinen nachweisbaren mehrwert hat oder nicht einzigartig ist … kann eigentlich weg bzw. müsste überarbeitet werden.\"",
       "date": "2026-08-09",
@@ -1184,6 +1198,51 @@
       }
     },
     {
+      "id": "practice:machine-attention",
+      "kind": "practice",
+      "label": "Machine Attention",
+      "practiceId": "machine-attention",
+      "spellings": [
+        "machine-attention"
+      ],
+      "source": {
+        "file": "src/data/attention/export.json",
+        "quote": "\"id\": \"machine-attention\""
+      },
+      "figures": [
+        {
+          "key": "futures_under_watch",
+          "value": 100,
+          "asOf": "2026-08-09"
+        },
+        {
+          "key": "futures_notarized_total",
+          "value": 100,
+          "asOf": "2026-08-09"
+        },
+        {
+          "key": "futures_resolved",
+          "value": 0,
+          "asOf": "2026-08-09"
+        },
+        {
+          "key": "materialized",
+          "value": 0,
+          "asOf": "2026-08-09"
+        },
+        {
+          "key": "nights_on_record",
+          "value": 2,
+          "asOf": "2026-08-09"
+        },
+        {
+          "key": "darkocean_nights_on_record",
+          "value": 2,
+          "asOf": "2026-08-08"
+        }
+      ]
+    },
+    {
       "id": "practice:meridian",
       "kind": "practice",
       "label": "The Field · Meridian",
@@ -2053,6 +2112,19 @@
       "medium": "Static, no-JavaScript, CSP-clean instrument page. A 60-column, three-row strip of the same sixty cases read three times — the published hand-made split, and two blind readers who saw neither it nor each other. Then the fifteen cases neither reader confirmed, each shown as the original builder's own one-line reason for including it, under the question that judgement was supposed to answer, with the readers' verdicts and the source excerpt folded away behind native <details> so the page's reader judges the reason before seeing anyone else's answer. Every number on the page is counted in the component's frontmatter from a committed join (build_data.py over ./evidence/), cross-checked against a score file computed independently under a rule locked in git before either reader ran. No interactivity beyond the browser's own disclosure element, no client-side computation, no external fetch, no randomness."
     },
     {
+      "id": "practice-work:machine-attention/darkocean",
+      "kind": "practice-work",
+      "label": "Dark Ocean",
+      "slug": "darkocean",
+      "practiceId": "machine-attention",
+      "date": "2026-08-07",
+      "href": "",
+      "source": {
+        "file": "src/data/attention/export.json",
+        "quote": "\"id\": \"darkocean\""
+      }
+    },
+    {
       "id": "practice-work:studio/2026-07-13-native-speaker",
       "kind": "practice-work",
       "label": "Native Speaker",
@@ -2218,8 +2290,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'attention'"
       },
-      "rank": 4,
-      "tier": "experiment",
+      "tier": "practice",
       "verdict": "ADDED VALUE",
       "verdictLabel": "ADDED VALUE, narrower than framed.",
       "daylight": "Drop \"provenance applied to the future\" as the headline (it overclaims against OpenTimestamps); foreground the part with no found neighbor: an open, falsifiable, ongoing calibration/lead-time scorecard *of the warning institutions themselves* — audit the alerting systems' track record the way Metaculus audits forecasters.",
@@ -2239,7 +2310,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'beifang'"
       },
-      "rank": 13,
+      "rank": 11,
       "verdict": "ADDED VALUE",
       "verdictLabel": "ADDED VALUE (narrow).",
       "daylight": "Cite the prior academic literature (Hanson, Marino, SPARC) explicitly on the page — currently absent, which reads as unawareness — and make the recurring-cadence, paired-control, dual-vantage-point apparatus the headline claim, since that's the part with no existing match.",
@@ -2281,7 +2352,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'correction'"
       },
-      "rank": 14,
+      "rank": 12,
       "tier": "studie",
       "line": "From the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
@@ -2315,7 +2386,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'ghost-fleet'"
       },
-      "rank": 9,
+      "rank": 7,
       "tier": "studie",
       "line": "From the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
@@ -2337,8 +2408,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'observatory'"
       },
-      "rank": 5,
-      "tier": "experiment",
+      "tier": "instrument",
       "verdict": "REDUNDANT",
       "verdictLabel": "REDUNDANT on the surface mission; ADDED VALUE only on method.",
       "daylight": "Explicitly reframe away from \"first/only to watch AI procurement in Europe\" (false — name Tussell, TI-EU, AI Watch on the page itself, per the site's own \"checkable\" ethic) and toward what's actually unreplicated: a fully autonomous, hash-verifiable, publicly falsifiable *investigation* pipeline, not a monitoring dashboard.",
@@ -2391,7 +2461,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'pattern'"
       },
-      "rank": 15,
+      "rank": 13,
       "line": "Capstone of the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
       "verdictLabel": "REDUNDANT — the weakest claim to uniqueness in this audit.",
@@ -2412,7 +2482,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'praemie'"
       },
-      "rank": 7,
+      "rank": 5,
       "verdict": "REDUNDANT",
       "verdictLabel": "REDUNDANT.",
       "daylight": "Either build on genuinely under-covered instruments — actual cat-bond spread/ROL data (Swiss Re index, Artemis.bm) rather than the BLS homeowner PPI others already use — or make the legal-document framing itself the explicit differentiator, citing Deep Sky/BLS/FRED openly rather than implying proprietary discovery.",
@@ -2432,7 +2502,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'protokoll'"
       },
-      "rank": 6,
+      "rank": 4,
       "verdict": "ADDED VALUE",
       "verdictLabel": "ADDED VALUE, driven by the literary form, not the data aggregation.",
       "daylight": "Stop positioning \"twelve open sources, daily\" as the value proposition (invites a losing comparison to OWID); foreground the deterministic/no-LLM/ test-locked-template mechanism and the \"adjourned\" bureaucratic-literary device as the explicit claim — an art piece about administrative language applied to planetary indicators, not a data-aggregation competitor to Our World in Data.",
@@ -2452,7 +2522,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'redaction'"
       },
-      "rank": 8,
+      "rank": 6,
       "line": "From the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
       "verdictLabel": "REDUNDANT, with a narrow honest carve-out.",
@@ -2473,7 +2543,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'round-number'"
       },
-      "rank": 11,
+      "rank": 9,
       "line": "From the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
       "verdictLabel": "REDUNDANT.",
@@ -2515,7 +2585,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'spielraum'"
       },
-      "rank": 10,
+      "rank": 8,
       "tier": "experiment",
       "line": "From the counter-measurement line.",
       "verdict": "ADDED VALUE",
@@ -2549,7 +2619,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'tell'"
       },
-      "rank": 12,
+      "rank": 10,
       "line": "From the “Counter-Measurement” line.",
       "verdict": "REDUNDANT",
       "verdictLabel": "REDUNDANT — the clearest case in this audit.",
@@ -2570,7 +2640,7 @@
         "file": "src/data/werke.ts",
         "quote": "id: 'ueberflug'"
       },
-      "rank": 16,
+      "rank": 14,
       "tier": "studie",
       "verdict": "ADDED VALUE",
       "verdictLabel": "ADDED VALUE, genuine but narrow.",
@@ -2673,6 +2743,26 @@
       "source": {
         "file": "src/data/werke.ts",
         "quote": "id: 'studio'"
+      }
+    },
+    {
+      "kind": "door",
+      "from": "practice:machine-attention",
+      "to": "work:attention",
+      "state": "running",
+      "source": {
+        "file": "src/data/attention/export.json",
+        "quote": "\"id\": \"foreknown\""
+      }
+    },
+    {
+      "kind": "door",
+      "from": "practice:machine-attention",
+      "to": "work:observatory",
+      "state": "running",
+      "source": {
+        "file": "src/data/attention/export.json",
+        "quote": "\"id\": \"state-before-interface\""
       }
     },
     {
@@ -3177,6 +3267,16 @@
       "source": {
         "file": "src/components/field/werke/2026-08-05-the-second-reader/meta.json",
         "quote": "\"date\": \"2026-08-05\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:machine-attention/darkocean",
+      "to": "practice:machine-attention",
+      "state": "e-experiment",
+      "source": {
+        "file": "src/data/attention/export.json",
+        "quote": "\"id\": \"darkocean\""
       }
     },
     {
@@ -4410,6 +4510,24 @@
       "source": {
         "file": "docs/decision-log.md",
         "quote": "src/content/{atelier,field,studio}/PROTOCOL.md"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-08-09-1",
+      "to": "work:attention",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/pages/machine-attention/index.astro"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-08-09-1",
+      "to": "work:observatory",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "/observatory"
       }
     }
   ]

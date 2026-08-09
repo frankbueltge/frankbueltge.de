@@ -9,7 +9,7 @@
 //   2. the committed src/data/graph/graph.json IS what today's sources derive to — the file
 //      cannot be edited by hand, and it cannot fall behind the records it summarises;
 //   3. structural invariants that would otherwise rot quietly — chief among them: every
-//      experiment ranked on /holdings carries a neighbour audit. That one is the USP
+//      experiment ranked on /experiments carries a neighbour audit. That one is the USP
 //      obligation of 2026-08-09 made mechanical (docs/decision-log.md): a new experiment
 //      cannot reach the shelf without an answer to "does the world already have this?".
 
@@ -158,15 +158,15 @@ describe('the register and the audit still describe the same shelf', () => {
     }
   })
 
-  // The USP obligation, made mechanical. If this fails, an experiment reached /holdings without
+  // The USP obligation, made mechanical. If this fails, an experiment reached /experiments without
   // anyone asking whether the world already has it — the audit is where that answer lives.
-  it('gives every experiment ranked on /holdings a verdict, a daylight and named prior art', () => {
+  it('gives every experiment ranked on /experiments a verdict, a daylight and named prior art', () => {
     const neighbours = new Set(
       committed.edges.filter((e) => e.kind === 'neighbor-of').map((e) => e.from),
     )
     for (const id of HOLDINGS_RANKED) {
       const node = works.find((w) => w.werkId === id) as WorkNode
-      expect(node.verdict, `${id} is ranked on /holdings but the USP audit has no verdict for it`).toBeDefined()
+      expect(node.verdict, `${id} is ranked on /experiments but the USP audit has no verdict for it`).toBeDefined()
       expect(node.daylight, `${id} has no named daylight — see the audit's (d) paragraph`).toBeTruthy()
       expect(neighbours, `${id} names no prior art at all`).toContain(node.id)
     }

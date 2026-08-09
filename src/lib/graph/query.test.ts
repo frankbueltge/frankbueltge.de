@@ -70,7 +70,7 @@ describe('the field view is the audited shelf, in rank order', () => {
     }
   })
 
-  it('is sorted by the /holdings ranking', () => {
+  it('is sorted by the /experiments ranking', () => {
     const ranks = field.map((entry) => entry.work.rank as number)
     expect(ranks).toEqual([...ranks].sort((a, b) => a - b))
   })

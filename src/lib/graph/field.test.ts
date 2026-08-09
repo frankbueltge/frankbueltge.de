@@ -1,7 +1,7 @@
 // src/lib/graph/field.test.ts — the drawing keeps its promises.
 //
 // A figure whose geometry is arithmetic can be checked like arithmetic. These are the claims
-// the /holdings/neighbors page makes by DRAWING rather than by writing, so they are asserted
+// the /experiments/neighbors page makes by DRAWING rather than by writing, so they are asserted
 // here rather than trusted: that the daylight really is longer where the audit found more of
 // it, that no two marks land on top of each other, and that nothing crowds the centre caption
 // or runs off the canvas.
@@ -33,7 +33,11 @@ const layout = layoutField(entries)
 describe('the field draws the whole audited shelf', () => {
   it('gives one spoke to every ranked experiment, in the ranked order', () => {
     expect(layout.spokes).toHaveLength(entries.length)
-    expect(layout.spokes.length).toBeGreaterThanOrEqual(16)
+    // Fourteen since 2026-08-09, not sixteen: Machine Attention and its instrument left the
+    // shelf that day — a practice is not a peer of a single piece, and it has its own door at
+    // /machine-attention. The floor stays as a guard against a silent shrink; it moved because
+    // a decision moved it, and a comment says which.
+    expect(layout.spokes.length).toBeGreaterThanOrEqual(14)
     const ranks = layout.spokes.map((s) => s.work.rank as number)
     expect(ranks).toEqual([...ranks].sort((a, b) => a - b))
   })
