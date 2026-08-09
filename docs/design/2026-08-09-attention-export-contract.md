@@ -1,10 +1,13 @@
 # The attention export contract — what the graph needs from `machine-attention`
 
-**Status: specified 2026-08-09, consumer built, waiting on the producer.**
-**Written without touching the producing repository:** the Machine Attention lane is claimed by
-another session (`docs/design/2026-08-09-usp-rework-program.md`, work claims), so this document
-states the shape and the site implements the consuming half. The moment a file appears at
-`src/data/attention/export.json`, the graph reads it — no further change here.
+**Status: specified 2026-08-09, consumer built; the producer landed the same day**
+(`machine-attention/practice/src/practice/export.py`, nightly in `sentinel.yml`) — the file
+is live at `src/data/attention/export.json` and the graph reads it. Since the stage-honesty
+change of 2026-08-09 the figures include the epistemic split of the register
+(`futures_window_open` / `futures_cold_start` / `futures_drift`) — additive keys under the
+same contract. A sibling contract, `stage-moments/1`
+(`2026-08-09-stage-moments-contract.md`), carries what the export deliberately excludes:
+single dated events for the practice's entrance. Two files, two promises.
 
 ## Why an export at all
 
