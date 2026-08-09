@@ -1,0 +1,223 @@
+---
+// src/components/holdings/NeighborhoodFigure.astro — the field of experiments and their prior art.
+//
+// Reads the committed knowledge graph (src/data/graph/graph.json), which is derived from the USP
+// audit of 2026-08-09 and the works register — so this figure cannot say anything the audit does
+// not say, and it goes red rather than stale when either moves (src/lib/graph/graph.test.ts).
+//
+// What is drawn: one spoke per experiment, the experiment itself on the outer rail, the projects
+// that already do something like it inward on the same spoke, and between them the daylight —
+// the audit's verdict, drawn as distance. The colour repeats that same fact rather than adding
+// one, which is what keeps the figure readable in greyscale and for a dichromat.
+//
+// The floor under the drawing: the register below is server-rendered, complete, and carries every
+// neighbour as a named link. Nothing here is reachable only by hovering an SVG mark — the figure
+// is a way INTO the register, not a container of facts of its own.
+import '@/styles/neighborhood.css'
+import TableFallback from '@/components/dataviz/TableFallback.astro'
+import { GRAPH } from '@/lib/graph/load'
+import { neighborhoodField } from '@/lib/graph/query'
+import { CANVAS, CENTRE, LABEL_RADIUS, RAIL, VERDICT_LEGEND, layoutField } from '@/lib/graph/field'
+
+const entries = neighborhoodField(GRAPH)
+const layout = layoutField(entries)
+const legendOf = (verdict?: string): string =>
+  VERDICT_LEGEND.find((l) => l.key === verdict)?.label ?? ''
+
+const auditHref =
+  'https://github.com/frankbueltge/frankbueltge.de/blob/main/docs/audits/2026-08-09-usp-audit.md'
+---
+
+<figure class="nb-figure">
+  <div class="nb-field" data-nb-field>
+    <div class="nb-canvas-wrap">
+      <svg
+        class="nb-canvas"
+        viewBox={`0 0 ${CANVAS} ${CANVAS}`}
+        role="img"
+        aria-labelledby="nb-figure-title nb-figure-desc"
+      >
+        <title id="nb-figure-title">
+          {layout.counts.works} experiments and the {layout.counts.neighbors} projects the audit found doing something
+          like them
+        </title>
+        <desc id="nb-figure-desc">
+          Each experiment sits on the outer ring. The projects that already exist sit inward on the same line. The
+          coloured bar between them is the daylight the audit granted that experiment. Every value is listed in the
+          register below this drawing.
+        </desc>
+
+        <circle class="nb-rail" cx={CENTRE} cy={CENTRE} r={RAIL}></circle>
+        <text class="nb-centre" x={CENTRE} y={CENTRE - 4}>{layout.counts.works} experiments</text>
+        <text class="nb-centre nb-centre-sub" x={CENTRE} y={CENTRE + 14}>
+          {layout.counts.neighbors} neighbours named
+        </text>
+
+        {
+          layout.spokes.map((spoke) => {
+            const innermost = spoke.neighbors[spoke.neighbors.length - 1]
+            const nearest = spoke.neighbors[0]
+            return (
+              <g
+                class="nb-spoke"
+                data-verdict={spoke.work.verdict}
+                data-work={spoke.work.werkId}
+                tabindex="0"
+                role="button"
+                aria-label={`${spoke.work.label}: ${legendOf(spoke.work.verdict)}, ${spoke.neighbors.length} named neighbours. Opens its entry in the register below.`}
+              >
+                <line class="nb-crowd" x1={nearest.x} y1={nearest.y} x2={innermost.x} y2={innermost.y} />
+                <line
+                  class="nb-daylight"
+                  x1={spoke.daylight.x1}
+                  y1={spoke.daylight.y1}
+                  x2={spoke.daylight.x2}
+                  y2={spoke.daylight.y2}
+                />
+                {spoke.neighbors.map((neighbor) => (
+                  <circle class="nb-neighbor" cx={neighbor.x} cy={neighbor.y} r="3.4">
+                    <title>{neighbor.node.label}</title>
+                  </circle>
+                ))}
+                <circle class="nb-work" cx={spoke.x} cy={spoke.y} r="6">
+                  <title>{spoke.work.label} — {spoke.work.verdictLabel}</title>
+                </circle>
+                <text
+                  class="nb-label"
+                  x={spoke.label.x}
+                  y={spoke.label.y}
+                  transform={`rotate(${spoke.label.angle} ${spoke.label.x} ${spoke.label.y})`}
+                  text-anchor={spoke.label.flipped ? 'end' : 'start'}
+                  dominant-baseline="middle"
+                >
+                  {spoke.work.label}
+                </text>
+              </g>
+            )
+          })
+        }
+      </svg>
+    </div>
+
+    <ul class="nb-legend" aria-label="How to read this figure">
+      {
+        VERDICT_LEGEND.map((item) => (
+          <li data-verdict={item.key}>
+            <span class="nb-swatch" aria-hidden="true" />
+            <span>
+              {item.label} — {item.hint}
+            </span>
+          </li>
+        ))
+      }
+      <li>
+        <span class="nb-swatch" data-dot aria-hidden="true" />
+        <span>a project outside this house, named and linked in the register</span>
+      </li>
+    </ul>
+
+    <ol class="nb-register">
+      {
+        layout.spokes.map((spoke) => (
+          <li class="nb-row" data-verdict={spoke.work.verdict} data-row={spoke.work.werkId} id={`nb-${spoke.work.werkId}`}>
+            <div class="nb-row-head">
+              <span class="nb-row-rank">{String(spoke.work.rank).padStart(2, '0')}</span>
+              <a class="nb-row-title" href={spoke.work.href}>
+                {spoke.work.label}
+              </a>
+              <span class="nb-row-verdict">{legendOf(spoke.work.verdict)}</span>
+            </div>
+            <p class="nb-row-daylight">{spoke.work.daylight}</p>
+            <ul class="nb-row-neighbors">
+              {spoke.neighbors.map((neighbor) => (
+                <li>
+                  {neighbor.url ? (
+                    <a href={neighbor.url} rel="noopener nofollow">
+                      {neighbor.node.label}
+                    </a>
+                  ) : (
+                    <span>{neighbor.node.label}</span>
+                  )}
+                  {neighbor.note ? <span> — {neighbor.note}</span> : null}
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+
+  <figcaption>
+    <TableFallback
+      summary="The field as a table"
+      caption="Every audited experiment with its verdict, the daylight drawn for it, and how many neighbouring projects the audit named."
+      columns={[
+        { key: 'rank', label: '#', align: 'right', nowrap: true },
+        { key: 'work', label: 'Experiment' },
+        { key: 'daylight', label: 'Daylight drawn', nowrap: true },
+        { key: 'verdict', label: 'Verdict (draft, 2026-08-09)' },
+        { key: 'neighbors', label: 'Neighbours named', align: 'right' },
+      ]}
+      rows={layout.spokes.map((spoke) => ({
+        rank: spoke.work.rank ?? '',
+        work: spoke.work.label,
+        daylight: legendOf(spoke.work.verdict),
+        verdict: spoke.work.verdictLabel ?? '',
+        neighbors: spoke.neighbors.length,
+      }))}
+    />
+    <p class="nb-prov">
+      Derived, not drawn by hand: every mark comes from <code>src/data/graph/graph.json</code>, which is built from
+      <a href={auditHref} rel="noopener">the neighbour audit of 2026-08-09</a> and the works register
+      (<code>src/data/werke.ts</code>) by <code>npm run graph:build</code>. The distance is the audit's own verdict
+      class — a dated, cited judgement, not a computed similarity: nothing here measures how close two projects are, it
+      records what a search for prior art found and what it failed to find.
+    </p>
+  </figcaption>
+</figure>
+
+<script>
+  // Reading aid only: the register below carries every fact, so this script may fail entirely
+  // without anything becoming unreachable. It links the drawing to the register in both
+  // directions — point at a spoke, its entry lights up; point at an entry, its spoke does.
+  const field = document.querySelector<HTMLElement>('[data-nb-field]')
+  if (field) {
+    const spokes = [...field.querySelectorAll<SVGGElement>('.nb-spoke')]
+    const rows = [...field.querySelectorAll<HTMLElement>('.nb-row')]
+
+    const read = (werkId: string | null): void => {
+      for (const spoke of spokes) spoke.toggleAttribute('data-active', spoke.dataset.work === werkId)
+      for (const row of rows) row.toggleAttribute('data-active', row.dataset.row === werkId)
+      field.toggleAttribute('data-reading', Boolean(werkId))
+    }
+
+    for (const spoke of spokes) {
+      const werkId = spoke.dataset.work ?? null
+      spoke.addEventListener('pointerenter', () => read(werkId))
+      spoke.addEventListener('focus', () => read(werkId))
+      spoke.addEventListener('pointerleave', () => read(null))
+      spoke.addEventListener('blur', () => read(null))
+      const open = (): void => {
+        if (!werkId) return
+        const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        document.getElementById(`nb-${werkId}`)?.scrollIntoView({ block: 'center', behavior: still ? 'auto' : 'smooth' })
+      }
+      spoke.addEventListener('click', open)
+      spoke.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault()
+          open()
+        }
+      })
+    }
+
+    for (const row of rows) {
+      const werkId = row.dataset.row ?? null
+      row.addEventListener('pointerenter', () => read(werkId))
+      row.addEventListener('pointerleave', () => read(null))
+      row.addEventListener('focusin', () => read(werkId))
+      row.addEventListener('focusout', () => read(null))
+    }
+  }
+</script>

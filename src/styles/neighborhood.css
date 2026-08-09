@@ -1,0 +1,246 @@
+/* src/styles/neighborhood.css — the neighbourhood figure (/holdings/neighbors).
+ *
+ * Every experiment sits on one rail; the projects that already do something like it sit inward
+ * on the same spoke. The coloured bar between them is the daylight — length AND hue carry the
+ * same fact (the USP audit's verdict class), on purpose, so the figure survives greyscale,
+ * print and dichromacy.
+ *
+ * Identity system — PALETTE: holdings-neighborhood (recorded in src/lib/dataviz/palette.ts,
+ * where the test re-derives the distances):
+ *   wide daylight    violet #4a3aa7 light / #9085e9 dark
+ *   some daylight    azure  #2a78d6 light / #256abf dark
+ *   little daylight  amber  #eda100 light / #c98500 dark
+ *   a neighbour      DECLARED NEUTRAL #6b7684 light / #77828d dark — a project outside this
+ *                    house wears no house identity; greyness is the meaning.
+ * No warning red anywhere: "a named neighbour already does this" is a finding about the world,
+ * not an error state. Identity is never colour-only — every spoke is direct-labelled and the
+ * whole field repeats as a register and a table below the drawing (the recorded relief for the
+ * light-mode amber contrast WARN).
+ * Dark values are the base (site default); light overrides under [data-theme='light'].
+ */
+
+.nb-figure {
+  --nb-c-unique: #9085e9;
+  --nb-c-added: #256abf;
+  --nb-c-redundant: #c98500;
+  --nb-c-neighbor: #77828d;
+  --nb-ink: rgb(244 244 245 / 0.92);
+  --nb-ink-muted: rgb(163 163 168 / 0.9);
+  --nb-hairline: rgb(255 255 255 / 0.13);
+  --nb-panel: rgb(255 255 255 / 0.03);
+  margin: 0;
+}
+:root[data-theme='light'] .nb-figure {
+  --nb-c-unique: #4a3aa7;
+  --nb-c-added: #2a78d6;
+  --nb-c-redundant: #eda100;
+  --nb-c-neighbor: #6b7684;
+  --nb-ink: rgb(21 22 26 / 0.92);
+  --nb-ink-muted: rgb(84 85 92 / 0.85);
+  --nb-hairline: rgb(0 0 0 / 0.14);
+  --nb-panel: rgb(0 0 0 / 0.025);
+}
+
+/* one hue per verdict, resolved once and inherited by every mark on the spoke */
+.nb-figure [data-verdict='UNIQUE'] {
+  --nb-hue: var(--nb-c-unique);
+}
+.nb-figure [data-verdict='ADDED VALUE'] {
+  --nb-hue: var(--nb-c-added);
+}
+.nb-figure [data-verdict='REDUNDANT'] {
+  --nb-hue: var(--nb-c-redundant);
+}
+
+/* ————————————————————————————————— the drawing ————————————————————————————— */
+.nb-canvas-wrap {
+  overflow-x: auto;
+  margin: 0 -0.5rem;
+  padding: 0 0.5rem;
+}
+.nb-canvas {
+  display: block;
+  width: 100%;
+  min-width: 560px;
+  height: auto;
+}
+
+.nb-rail {
+  fill: none;
+  stroke: var(--nb-hairline);
+  stroke-width: 1;
+  stroke-dasharray: 2 6;
+}
+.nb-centre {
+  fill: var(--nb-ink-muted);
+  font-size: 11px;
+  text-anchor: middle;
+}
+.nb-centre-sub {
+  font-size: 9.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.nb-spoke {
+  cursor: pointer;
+  transition: opacity 0.16s ease;
+}
+.nb-spoke:focus {
+  outline: none;
+}
+.nb-spoke:focus-visible .nb-work {
+  stroke: var(--nb-ink);
+  stroke-width: 2.5;
+}
+
+/* the crowd: the stretch a work's neighbours occupy */
+.nb-crowd {
+  stroke: var(--nb-c-neighbor);
+  stroke-width: 1;
+  opacity: 0.55;
+}
+/* the claim: the empty stretch between a work and its nearest neighbour */
+.nb-daylight {
+  stroke: var(--nb-hue);
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  opacity: 0.85;
+}
+.nb-work {
+  fill: var(--nb-hue);
+  stroke: none;
+}
+.nb-neighbor {
+  fill: var(--nb-c-neighbor);
+}
+.nb-label {
+  fill: var(--nb-ink-muted);
+  font-size: 11px;
+  letter-spacing: 0.01em;
+}
+.nb-spoke[data-active] .nb-label,
+.nb-spoke:hover .nb-label {
+  fill: var(--nb-ink);
+}
+.nb-spoke[data-active] .nb-work {
+  r: 8;
+}
+
+/* dim the rest while one spoke is read — the figure holds ~85 marks */
+.nb-field[data-reading] .nb-spoke:not([data-active]) {
+  opacity: 0.28;
+}
+
+/* ————————————————————————————————— legend ————————————————————————————————— */
+.nb-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.1rem;
+  margin: 0.9rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 12px;
+  color: var(--nb-ink-muted);
+}
+.nb-legend li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+}
+.nb-legend .nb-swatch {
+  display: inline-block;
+  width: 22px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--nb-hue, var(--nb-c-neighbor));
+  transform: translateY(-2px);
+}
+.nb-legend .nb-swatch[data-dot] {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  transform: translateY(0);
+}
+
+/* ————————————————————————————————— register ———————————————————————————————— */
+.nb-register {
+  margin: 2.2rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.nb-row {
+  border-top: 1px solid var(--nb-hairline);
+  padding: 1rem 0 1.1rem 0.9rem;
+  border-left: 2px solid var(--nb-hue);
+  scroll-margin-top: 5rem;
+}
+.nb-row[data-active] {
+  background: var(--nb-panel);
+}
+.nb-row-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+.nb-row-rank {
+  font-size: 11px;
+  color: var(--nb-ink-muted);
+  font-variant-numeric: tabular-nums;
+}
+.nb-row-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--nb-ink);
+}
+.nb-row-verdict {
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--nb-hue);
+}
+.nb-row-daylight {
+  margin: 0.5rem 0 0;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--nb-ink-muted);
+  max-width: 68ch;
+}
+.nb-row-neighbors {
+  margin: 0.6rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 12.5px;
+  line-height: 1.65;
+  color: var(--nb-ink-muted);
+}
+.nb-row-neighbors li::before {
+  content: '';
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--nb-c-neighbor);
+  margin-right: 0.5rem;
+  transform: translateY(-1px);
+}
+.nb-row-neighbors a {
+  color: var(--nb-ink);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.nb-prov {
+  margin: 1.6rem 0 0;
+  font-size: 12px;
+  line-height: 1.65;
+  color: var(--nb-ink-muted);
+  max-width: 76ch;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nb-spoke {
+    transition: none;
+  }
+}
