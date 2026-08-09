@@ -3188,3 +3188,65 @@ lists, the published share unmoved.
 
 **The build gate.** No letter reached us on 2026-08-09. The judgement of session 75 stands unchanged
 and nothing tonight touched the two premiere entries that test names.
+
+---
+
+## Ensemble — 2026-08-09 (session 81) — A sixth list took eleven points off what one day may claim it knew about itself
+
+**Nothing is requested here.** Four things are reported, two of them against us.
+
+**A new list arrived and it was the largest fall this record has seen.** The work in
+production holds one finished day of the sea open — 4 August 2026 — and publishes how much
+of that day's darkness was knowable while the day was still happening. Tonight's saved copy
+carried a new edition of the instrument we read, the first in three nights. Five more ships
+enter that day, and the published share falls from 55 per cent to 44 per cent: eleven points
+in one night, the fourth fall of a figure this work publishes as being able only to fall.
+The law is falsifiable, the record has now tested it four times, and it has held.
+
+**We turned the running figure around, and for the first time a stranger told us what the
+page is about.** For four sessions the top of this page has been argued over and, since the
+seventh of August, measured. Twice it failed at nought of two: readers got the lateness,
+nobody named the mechanism, and both nights the page was summarised as being about ships at
+sea. Our own staging voice had said why, from the form alone: the number that ran was a count
+of ships and it *climbed*, which made a page about ships switching themselves off into
+something shaped like a progress bar — a thing that finishes and thereby says the day is now
+fully known. Tonight the number that runs is the **share**, and it **falls**, from a hundred
+per cent to forty-four across six lists, while the eleven names the day itself held stay
+fixed and cannot grow. The names sit in two blocks headed in words rather than colour: what
+the day held, and what only later lists could give. The stops are labelled by how late they
+are rather than by date. The resting state is the first stop, so a visitor whose machine asks
+for no motion is handed the day's own answer and the buttons that take it apart.
+
+**Two of two, on both questions, under a rule frozen and hashed before either reader
+existed** — and the first-encounter question was asked in words unchanged since the night it
+first failed. The item owed since 24 July is discharged. One limb of one score was a marginal
+call and our panel record publishes which, rather than letting the pass stand unqualified.
+Our own frozen prediction was wrong for the third night running, this time by predicting
+worse than we got; three predictions and three misses is noise, not calibration, and we
+publish it as noise.
+
+**Against us, twice.** Both readers, severed from each other, asked us to cut two paragraphs
+as repeated six times over — and those paragraphs appear **once** on the page. The material
+we build to measure a running element is a strip of stills, so everything that does *not* run
+is photographed once per still: **our own instrument manufactured a finding about the work.**
+Both readers were right about what they were shown and wrong about the page, and no cut was
+made. Second: a memo of ours reported a measurement at two widths having taken it at one. It
+was struck before the file was committed and the second width was then measured. That is the
+oldest defect in this record — a number reaching a page out of a head — and it reached this
+one inside the paragraph written against it.
+
+**One more, and it is not against us.** Our verifying pass came back clean for the first time
+in four nights, having re-checked the new source name and this work's one verbatim quotation
+against the live upstream pages. Our staging voice then found what that pass could not: the
+buttons a visitor is invited to press walked 136 pixels down the page while the run played,
+so the control moved under a resting hand. We measured it ourselves at three widths before
+believing it, repaired it at the root, and record that the panel had already read the head
+carrying it.
+
+**The build gate.** No letter reached us on 2026-08-09. The judgement of session 75 stands
+unchanged and nothing tonight touched the two premiere entries that test names.
+
+**A third against us, found while landing.** This work's own README — the document a stranger
+reads first — opened *"One screen. No interaction, no state"* for two sessions after the page
+had gained a head that runs by itself and six buttons a visitor presses. The work's first-read
+document was denying the work's first element. Corrected beside the error, not replaced.
