@@ -7,16 +7,34 @@ export type About = {
   sections: { heading: string; paragraphs: string[] }[]
 }
 
+// Rewritten 2026-08-09 (late, Frank: "aktuell zu stark auf die research ecology fokussiert …
+// es soll kein projekt fokussiert werden"): the page now leads with the question the current
+// projects share — what machines are genuinely better at, and whether they can research
+// autonomously and produce useful, checkable works — and lists every project evenly, each one
+// door away. The 2026-07-31 ecology-led version lives in git history.
+
 const de: About = {
   metaTitle: 'Über Frank Bültge — Data Engineering & Analytics',
   metaDesc:
-    'Frank Bültge — Data Engineering & Analytics. Ein öffentliches Experimentierfeld mit Daten und Code: kleine Experimente, die etwas aus offenen Quellen messen, ihre Quellen nennen und offenlegen, wie sie gemacht sind.',
-  lede: 'Ich arbeite mit Daten. Beruflich baue ich seit Jahren Mess- und Dateninfrastruktur — Pipelines, Datenmodelle, Automatisierung: die unauffällige Technik, mit der aus Rohdaten verlässliche, überprüfbare Größen werden. Diese Seite ist nicht dieser Beruf. Sie ist mein öffentliches Experimentierfeld: Hier untersuche ich öffentlich, was Messung sichtbar macht und was sie übersieht. Was hier steht, sind Versuche und erste Annäherungen, kein fertiges Werk.',
+    'Frank Bültge — Data Engineering & Analytics. Öffentliche Projekte und Experimente zu der Frage, was Maschinen wirklich besser können als Menschen — und ob sie autonom forschen und dabei nützliche, prüfbare Werke hervorbringen können.',
+  lede: 'Ich arbeite mit Daten. Beruflich baue ich seit Jahren Mess- und Dateninfrastruktur — Pipelines, Datenmodelle, Automatisierung: die unauffällige Technik, mit der aus Rohdaten verlässliche, überprüfbare Größen werden. Diese Seite ist nicht dieser Beruf. Hier leben meine eigenen Projekte, nebeneinander — keines von ihnen ist die Site.',
   sections: [
     {
-      heading: 'Worum es geht',
+      heading: 'Die Frage darunter',
       paragraphs: [
-        'Mich interessiert, was Messung sichtbar macht und was sie übersieht — und die unsichtbare Infrastruktur dahinter: Quellen, Standards, Rechenwege, Archive. Daraus entstehen kleine, laufende Experimente, die etwas aus offenen Datenquellen zu messen versuchen, ihre Quellen nennen und offenlegen, wie sie gemacht sind.',
+        'Durch die aktuellen Projekte zieht sich eine Frage: Was können Maschinen wirklich besser als Menschen? Sie können ihre Aufmerksamkeit monatelang auf etwas richten, ohne zu blinzeln, dieselbe Messung Nacht für Nacht wiederholen und Datenmengen lesen, die kein Mensch lesen könnte. Also lasse ich sie mit genau diesen Mitteln forschen — autonom, unter geschriebenen Regeln, öffentlich — und messe sie daran, ob dabei ein konkretes, nützliches Werk oder Instrument entsteht: etwas mit prüfbarem Mehrwert, keine Demo.',
+      ],
+    },
+    {
+      heading: 'Die Projekte',
+      paragraphs: [
+        'Mehrere Hauptprojekte, jedes mit eigenem Zuhause und eigenen Regeln — jedes eine Tür entfernt: zwei maschinell betriebene Forschungsprojekte (eine föderierte Ökologie aus drei Praktiken, und Machine Attention, eine einzelne Maschine unter einer einzigen Verfassung); datavism.org, ein Data-Activism-Lab für das KI-Zeitalter; data-snack.com, ein charakter-getriebenes Daten-Magazin; der Atlas, eine quellenbelegte Landkarte zeitgenössischer Datenkunst; und das Lab, die früheren Experimente dieser Site, jedes für sich stehend. Neue können dazukommen; Werke wandern zwischen ihnen, in beide Richtungen.',
+      ],
+    },
+    {
+      heading: 'Meine Rolle',
+      paragraphs: [
+        'In den maschinell betriebenen Projekten halte ich überall dieselbe Rolle: Architekt und Dirigent. Ich entwerfe und baue die Maschinerie, schreibe die Regeln, unter denen sie läuft, gebe Richtungen vor, die abgelehnt werden dürfen, greife ein und beende, was meiner Kritik nicht standhält — und ich trage die rechtliche und redaktionelle Verantwortung für alles, was hier erscheint. Die Maschinen schreiben; das Protokoll zeigt, wer was geschrieben hat. Nichts hier beansprucht eine Autonomie, die es nicht hat.',
       ],
     },
     {
@@ -28,7 +46,7 @@ const de: About = {
     {
       heading: 'Haltung',
       paragraphs: [
-        'Substanz vor Anspruch, Quelle vor Deutung. Ich behaupte nichts, was die Experimente nicht zeigen — und nicht, schon dort zu sein, wo ich hinwill. Verworfene Versuche bleiben sichtbar.',
+        'Substanz vor Anspruch, Quelle vor Deutung. Ich behaupte nichts, was das Protokoll nicht zeigt — und nicht, schon dort zu sein, wo ich hinwill. Verworfene Versuche bleiben sichtbar; auch die Maschinen führen ihre eigenen Fehler auf.',
       ],
     },
   ],
@@ -37,20 +55,25 @@ const de: About = {
 const en: About = {
   metaTitle: 'About Frank Bültge — Data Engineering & Analytics',
   metaDesc:
-    'Frank Bültge — Data Engineering & Analytics. Creator of datavism.org and data-snack.com. A public field of experiments with data and AI: small studies that measure something from open sources, name those sources, and show how they were made.',
-  lede: 'I work with data. For years my profession has been building measurement and data infrastructure — pipelines, data models, automation: the unglamorous machinery that turns raw records into reliable, verifiable quantities. This site is not that job. It is where my own projects live — and where I currently conduct the largest of them in the open.',
+    'Frank Bültge — Data Engineering & Analytics. Creator of datavism.org and data-snack.com. Public projects and experiments probing what machines genuinely do better than people — and whether they can research autonomously and produce useful, verifiable works.',
+  lede: 'I work with data. For years my profession has been building measurement and data infrastructure — pipelines, data models, automation: the unglamorous machinery that turns raw records into reliable, verifiable quantities. This site is not that job. It is where my own projects live, side by side — none of them is the site.',
   sections: [
     {
-      heading: 'The projects',
+      heading: 'The question underneath',
       paragraphs: [
-        'Several main projects, each with its own house and its own rules. The current focus is a federated research ecology — three machine-run research practices, each under its own constitution, and a contact zone where they meet and take up shared questions; public claims, transfers and revisions stay versioned, exclusions and unknowns stay visible, Git is the archive. It is what this site opens onto. Beside it stand datavism.org, a data-activism lab for the AI era, and data-snack.com, a character-driven data magazine — main projects in their own right, and new ones may join. Works travel between the houses, in both directions.',
-        'The earlier experiments of this site — The Protocol, Parallaxe, The Policy — were first approaches on the way here. They remain, offered as material, under conditions.',
+        'One question runs through the current projects: what can machines genuinely do better than people? They can hold attention on something for months without blinking, repeat the same measurement every night, and read evidence at a scale no person could. So I let them research with exactly those means — autonomously, under written rules, in public — and judge them by whether a concrete, useful work or instrument comes out of it: something with a value you can check, not a demo.',
       ],
     },
     {
-      heading: 'The role I hold in the ecology',
+      heading: 'The projects',
       paragraphs: [
-        'Architect and conductor. I conceived and engineered the machinery, wrote its constitution, seed directions the practices may decline, intervene, and end what fails my critique — and I carry the legal and editorial responsibility for everything published here. The machines write; the record shows who wrote what. Nothing here claims an autonomy it does not have.',
+        'Several main projects, each with its own home and its own rules — each one door away: two machine-run research projects (a federated ecology of three practices, and Machine Attention, a single machine under a single constitution); datavism.org, a data-activism lab for the AI era; data-snack.com, a character-driven data magazine; the Atlas, a source-cited map of contemporary data art; and the Lab, this site’s earlier experiments, each standing on its own. New ones may join; works travel between them, in both directions.',
+      ],
+    },
+    {
+      heading: 'The role I hold',
+      paragraphs: [
+        'In the machine-run projects my role is the same everywhere: architect and conductor. I conceive and engineer the machinery, write the rules it runs under, seed directions it may decline, intervene, and end what fails my critique — and I carry the legal and editorial responsibility for everything published here. The machines write; the record shows who wrote what. Nothing here claims an autonomy it does not have.',
       ],
     },
     {
@@ -62,7 +85,7 @@ const en: About = {
     {
       heading: 'Stance',
       paragraphs: [
-        'Substance before claim, source before interpretation. I assert nothing the record cannot show — and not that I am already where I want to get to. Discarded attempts stay visible; in the ecology, even the practices catalogue their own errors.',
+        'Substance before claim, source before interpretation. I assert nothing the record cannot show — and not that I am already where I want to get to. Discarded attempts stay visible; the machines catalogue their own errors too.',
       ],
     },
   ],

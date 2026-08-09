@@ -138,10 +138,9 @@ undokumentierte Vokabulare wären es.
   Hero-Anspruch). Darunter der Block **TWO HOUSES**: beide Häuser gleichrangig, jedes mit
   seinen Bewohnern — die vier Türkarten behalten ihre validierten Identitätsfarben und wohnen
   jetzt *in* ihrem Haus.
-- **Menü:** die Gruppe heißt **„Research"** statt „Research Ecology" (eine Gruppe nach einem
-  von zwei Häusern zu benennen war derselbe Fehler wie auf der Startseite); erste Sektion
-  **Houses**, dann Practices, dann **Investigations** (aus dem Export der Praxis, damit die
-  Navigation nicht von ihr abdriften kann).
+- ~~**Menü:** die Gruppe heißt **„Research"** … erste Sektion **Houses**, dann Practices,
+  dann **Investigations**~~ — **überholt am 2026-08-09 (spät),** diese Fassung wurde nie
+  gebaut; maßgeblich ist der Abschnitt „Menü, Hero, About — kein Projekt im Fokus" unten.
 
 ## „Experiments" statt „Holdings" (Frank, 31.07.)
 
@@ -167,6 +166,26 @@ Interface" (`/observatory`) ist seit dem 08.08. ein Projekt dieser Praxis, nicht
 Experiment selbst — ~~„Hintergrund-Observatorium"~~ heißt seit dem 2026-08-09 **Instrument**
 (siehe „Die vier Wörter"). Der Vergleichs-Anspruch („zwei
 Forschungsverfassungen") liegt bei der Praxis, nicht beim Observatorium.
+
+## Menü, Hero, About — kein Projekt im Fokus (Frank, 2026-08-09 spät, VERBINDLICH)
+
+Franks Anweisung: kein Projekt wird fokussiert — nicht die Ecology, nicht „two houses".
+
+- **Menü (vier Punkte):** **Projects ▾** (Sektion *Research projects* mit den echten
+  Haustüren `/ecology` · `/machine-attention` · `/atlas`; Sektion *Other projects* mit den
+  Karten aus `projects.ts`) · **Lab** (`/experiments` — das Menü-Wort ist „Lab", Route und
+  Seitentitel bleiben) · **About** · **Contact**. **Gestrichen:** die Gruppen „Works" (die
+  Register sind von ihren Heimaten aus erreichbar) und „Talk back" (Post Office und Seed
+  gehören der research ecology, nicht der Site-Leiste). Die Zwischenseite
+  `/work/research-ecology` ist entfernt (301 → `/ecology`) — die Sektion *Research projects*
+  verlinkt Haustüren, nie Karten.
+- **Hero:** Kicker „the standing question", H1 **„what machines are actually better at"** —
+  die Startseite führt mit Franks Forschungsfrage (konstant beobachten, messen, Datenmengen
+  verarbeiten; autonom mit eigenen Mitteln forschen; konkrete, nützliche Werke mit prüfbarem
+  Mehrwert), nicht mit einer Projekt-Inszenierung. Die Two-Houses-Hero-Zeile vom Vormittag
+  ist datiert abgelöst; ihr Gleichrangigkeits-Kern lebt in der OVERVIEW-Sektion weiter.
+- **About:** führt mit derselben Frage, listet alle Projekte gleichrangig (je eine Tür),
+  Rolle generalisiert („in den maschinell betriebenen Projekten überall dieselbe Rolle").
 
 ## Schwarze Liste (zurückgezogen — nie als aktuell verwenden)
 
