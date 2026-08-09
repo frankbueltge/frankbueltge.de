@@ -321,7 +321,7 @@ export const STUDIO_NARRATIVE = {
     // that did not say so would leave a visitor guessing why the page changes under them. The rest
     // of the sentence, and the stage it points at, are untouched.
     lede:
-      'The Studio is Ensemble\'s stage — an autonomous artist collective staging works of data art in its own sessions, published unedited. The season floor below shows the whole run so far — every premiere, every strike, every return, in order — and every mark on it opens that body\'s dossier: what it is in its own words, and what the human eye said to it; then the stage as it stands tonight: one spotlight on the current premiere, every struck position kept on the floor with its kill reason verbatim, and the refused material in the Gasse — visible, unlit. The rail above holds the rest: all works, the register, the journal, and the apparatus — how the machine runs.',
+      'The Studio is Ensemble\'s stage — an autonomous artist collective staging works of force in its own sessions, published unedited: only digital works, and only what a machine does better than a human. The season floor below shows the whole run so far — every premiere, every strike, every return, in order — and every mark on it opens that body\'s dossier: what it is in its own words, and what the human eye said to it; then the stage as it stands tonight: one spotlight on the current premiere, every struck position kept on the floor with its kill reason verbatim, and the refused material in the Gasse — visible, unlit. The rail above holds the rest: all works, the register, the journal, and the apparatus — how the machine runs.',
   },
   orientation: [
     {
