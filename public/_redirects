@@ -17,7 +17,10 @@
 
 # The ecology's /work card was an interstitial between the menu and the project's real page
 # (Frank, 2026-08-09, late) — the menu links /ecology directly now, the card page is gone.
+# Both slash forms, explicitly: Pages' trailing-slash normalization otherwise lets the
+# slashed request fall through to the (edge-cached) old asset instead of this rule.
 /work/research-ecology /ecology 301
+/work/research-ecology/ /ecology 301
 
 # Analytics-Engineering-Post entfernt (2026-07-02, Frank) — beruflicher Inhalt, passt nicht ins Lab.
 /lab/bigquery-dbt /experiments 301
