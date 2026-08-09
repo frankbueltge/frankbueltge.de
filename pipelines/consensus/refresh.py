@@ -54,6 +54,10 @@ SLOTS_PER_DAY = 96     # 24 h of 15-minute GKG files
 METHOD_VERSION = "v2-raw-files"
 METHOD_SINCE = "2026-08-06"
 SOFT_PASS_ENABLED = False  # suspended in v2 — token blocking was calibrated for ~2k pools
+# The syndication classifier is versioned separately from the pool method: c2 classifies on
+# every domain of the phrase, c1 (implicit, unrecorded) classified on the 40-name display list.
+CLASSIFIER_VERSION = "c2-full-domain-set"
+CLASSIFIER_SINCE = "2026-08-09"
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT_DIR = ROOT / "src" / "data" / "consensus"
@@ -305,6 +309,7 @@ def analyse(articles: list[dict]) -> dict:
             "sample_title": rep,
             "domain_count": len(doms),
             "mastheads": sorted(doms)[:40],
+            "_doms": sorted(doms),  # full set for the classifier; mastheads stay a display list
             "articles": evidence,
             "article_count": len(arts),
             "first_domain": first_dom,
@@ -339,8 +344,16 @@ def analyse(articles: list[dict]) -> dict:
     def enrich(story: dict | None) -> None:
         if not story:
             return
+        # Classify on ALL the phrase's domains, not on the 40-name display list.
+        # Dated fix, 2026-08-09 (classifier c2): `mastheads` is truncated to 40 for the
+        # page, and enrich() used to hand that truncated list to the classifier — so on a
+        # day whose widest sentence ran across 200+ outlets, the TLD share and the label
+        # were computed from an alphabetical slice of a fifth of them. Committed days keep
+        # the values they were measured with (the archive is not rewritten); days from here
+        # carry `classifier: c2` and are the ones comparable with the BigQuery baseline,
+        # which has always classified on the full set (src/data/consensus/baseline.json).
         story["syndication"] = classify_syndication(
-            story["mastheads"], story.get("span_hours"), story["domain_count"]
+            story.get("_doms") or story["mastheads"], story.get("span_hours"), story["domain_count"]
         )
         if not SOFT_PASS_ENABLED:
             return  # v2: no paraphrase fields — absent, not zero-faked
@@ -360,6 +373,7 @@ def analyse(articles: list[dict]) -> dict:
     for s in (headline, runner_up):
         if s:
             s.pop("_arts", None)
+            s.pop("_doms", None)
     return {
         "headline": headline,
         "runner_up": runner_up,
@@ -385,6 +399,8 @@ def main() -> int:
         "method": {
             "version": METHOD_VERSION,
             "since": METHOD_SINCE,
+            "classifier": CLASSIFIER_VERSION,
+            "classifier_since": CLASSIFIER_SINCE,
             "soft_pass": "suspended — token blocking was calibrated for ~2k pools; "
                          "rebuild for full-stream scale pending",
         },
