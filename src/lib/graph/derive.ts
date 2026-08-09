@@ -140,6 +140,32 @@ export function parseAudit(markdown: string): AuditEntry[] {
   return entries
 }
 
+/** Rows of the decision log that LOOK like entries but do not parse.
+ *
+ *  Added 2026-08-09 after a silent loss: a row written as `| 2026-08-09 (evening) |` was
+ *  skipped by the reader below without a word, the suite stayed green, and the decision was
+ *  simply absent from the graph. A parser that drops what it cannot read is worse than one
+ *  that fails — the failure is visible, the drop is not. This names the drops so a test can
+ *  refuse them; the reader itself stays a pure `continue`, because a build that dies on a
+ *  stray pipe in a prose cell would be its own kind of nuisance.
+ *
+ *  A table line is suspicious when it is not the header, not the separator, and its first
+ *  cell is not a bare ISO date. Everything else — prose, lists, fenced blocks — is not a
+ *  table line and is none of this function's business. */
+export function malformedDecisionRows(markdown: string): string[] {
+  const bad: string[] = []
+  for (const line of markdown.split('\n')) {
+    const trimmed = line.trim()
+    if (!trimmed.startsWith('|') || trimmed.split('|').length < 3) continue
+    if (/^\|[\s:-]+\|/.test(trimmed)) continue
+    const first = trimmed.split('|')[1]?.trim() ?? ''
+    if (first === 'Date' || first === '') continue
+    if (/^\d{4}-\d{2}-\d{2}$/.test(first)) continue
+    bad.push(trimmed.slice(0, 120))
+  }
+  return bad
+}
+
 /** Read the decision log's table. One row = one dated approval. */
 export function parseDecisionLog(markdown: string): DecisionRow[] {
   const rows: DecisionRow[] = []
