@@ -18,8 +18,16 @@ und vollständig aus vier Dateien abgeleitet — nichts darin ist getippt.
 ## Die eine Regel, wenn du eine Quelle änderst
 
 Quellen sind `src/data/werke.ts`, `docs/audits/2026-08-09-usp-audit.md`,
-`docs/decision-log.md`, `src/data/post/ledger.json`. Wer eine davon ändert — also z. B.
-**eine Zeile ins Entscheidungs-Log schreibt** —, führt danach aus:
+`docs/decision-log.md`, `src/data/post/ledger.json`,
+`src/data/begegnungen/register.json` und **jede `meta.json` eines Praxis-Werks**
+(`src/components/{field,atelier}/werke/*/`, `src/content/{atelier,studio}/works/*/` — 59 Stück
+am 2026-08-09). Dazu eine **optionale** Quelle: `src/data/attention/export.json`, der Export
+der Machine-Attention-Praxis (Kontrakt: `docs/design/2026-08-09-attention-export-contract.md`).
+Fehlt sie, hat der Graph schlicht keine Attention-Spur — der Test prüft beide Zustände, damit
+die produzierende Session ihren Export hinzufügen kann, ohne auf Rot zu laufen.
+
+Wer eine davon ändert — also z. B. **eine Zeile ins Entscheidungs-Log schreibt** oder **ein
+neues Praxis-Werk committet** —, führt danach aus:
 
 ```bash
 npm run graph:build     # schreibt src/data/graph/graph.json neu
@@ -31,6 +39,12 @@ Datei. Das ist Absicht (ein Snapshot, der hinter seinen Quellen zurückfällt, b
 etwas Falsches), aber es trifft auch Sessions, die mit dem Graphen nichts zu tun haben —
 darum steht die Regel hier und nicht in einer Datei, die niemand liest. Die
 Fehlermeldung des Tests nennt den Befehl ebenfalls.
+
+**Netz darunter (seit 2026-08-09):** `.github/workflows/graph.yml` baut den Graphen
+nächtlich neu und committet ihn, wenn sich die Aufzeichnungen bewegt haben. Das nimmt die
+Reibung, ersetzt aber nicht den Rebuild im eigenen Commit — ein PR mit veralteter Datei
+läuft weiterhin rot, und das ist richtig so: das Artefakt gehört in denselben Commit wie
+die Änderung, die es verändert hat.
 
 ## Als Abfrage-Schicht benutzen
 

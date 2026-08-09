@@ -75,6 +75,8 @@ export interface PracticeNode extends NodeBase {
   practiceId: string
   /** every spelling of this practice the sources actually used, so a reader can follow back */
   spellings: string[]
+  /** dated scalars a practice puts on record about itself (attention export contract §figures) */
+  figures?: Array<{ key: string; value: number; asOf: string }>
 }
 
 /** A work one of the practices made — read from the work's own committed `meta.json`. */

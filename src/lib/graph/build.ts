@@ -53,11 +53,29 @@ export const WORK_META_DIRS = [
   { dir: 'src/content/studio/works', ns: 'studio', hrefBase: '/studio/works' },
 ] as const
 
+/** The one OPTIONAL source: Machine Attention is the second constitution and lives in its own
+ *  repository, mirrored here only as rendered HTML. Parsing pages back into facts would be a
+ *  brittle re-derivation, so the practice exports what it wants known
+ *  (docs/design/2026-08-09-attention-export-contract.md). Until that file appears the graph has
+ *  no attention lane — stated in a test rather than left as an unexplained gap. */
+export const ATTENTION_FILE = 'src/data/attention/export.json'
+export const ATTENTION_CONTRACT = 'attention-export/1'
+
 export interface RawSources {
   /** file path → file contents, for every entry of SOURCE_FILES */
   texts: Record<string, string>
   /** every practice work's meta, keyed by its repo-relative path */
   workMetas: Record<string, string>
+  /** the attention export, when the practice has published one */
+  attention?: string
+}
+
+interface AttentionExport {
+  $contract?: string
+  generated_from?: { repo?: string; commit?: string }
+  practice?: { id?: string; label?: string }
+  projects?: Array<{ id?: string; title?: string; since?: string; site_route?: string | null; status?: string }>
+  figures?: Array<{ key?: string; value?: number; as_of?: string }>
 }
 
 /** Needles that identify a work inside a repo path. Derived from the register alone: the werk
@@ -341,6 +359,69 @@ export function buildGraph(sources: RawSources): KnowledgeGraph {
     })
   }
 
+  // ── machine attention, if it has published an export ────────────────────────────────────
+  if (sources.attention) {
+    const attention = JSON.parse(sources.attention) as AttentionExport
+    // A version this consumer does not know is refused rather than guessed at: the contract is
+    // the whole agreement between two repositories that cannot see each other's tests.
+    if (attention.$contract !== ATTENTION_CONTRACT) {
+      throw new Error(
+        `${ATTENTION_FILE} declares "${attention.$contract}", but this consumer implements ` +
+          `"${ATTENTION_CONTRACT}" (docs/design/2026-08-09-attention-export-contract.md)`,
+      )
+    }
+    const practice = attention.practice
+    if (!practice?.id || !practice.label) throw new Error(`${ATTENTION_FILE}: practice.id and .label are required`)
+
+    const practiceId = practiceNode(
+      practice.id,
+      provenance(ATTENTION_FILE, `"id": ${JSON.stringify(practice.id)}`),
+    )
+    const node = nodes.get(practiceId) as PracticeNode
+    node.label = practice.label
+    if (attention.figures?.length) {
+      node.figures = attention.figures
+        .filter((f) => f.key && typeof f.value === 'number' && f.as_of)
+        .map((f) => ({ key: f.key as string, value: f.value as number, asOf: f.as_of as string }))
+    }
+
+    for (const project of attention.projects ?? []) {
+      if (!project.id || !project.title || !project.since) continue
+      const quote = `"id": ${JSON.stringify(project.id)}`
+      // A project with a room on this site is the same body in two records; one without is the
+      // practice's own production and enters as its work.
+      const room = project.site_route ? WERKE.find((w) => w.href === project.site_route) : undefined
+      if (room) {
+        edges.push({
+          kind: 'door',
+          from: practiceId,
+          to: `work:${room.id}`,
+          state: project.status,
+          source: provenance(ATTENTION_FILE, quote),
+        })
+        continue
+      }
+      const id = `practice-work:${practice.id}/${project.id}`
+      add({
+        id,
+        kind: 'practice-work',
+        label: project.title,
+        slug: project.id,
+        practiceId: practiceId.replace(/^practice:/, ''),
+        date: project.since,
+        href: project.site_route ?? '',
+        source: provenance(ATTENTION_FILE, quote),
+      })
+      edges.push({
+        kind: 'made-by',
+        from: id,
+        to: practiceId,
+        state: project.status,
+        source: provenance(ATTENTION_FILE, quote),
+      })
+    }
+  }
+
   // A practice that also keeps a door on this site is the same body in two records. The match
   // runs through the same normalisation as everything else, so `field` the werk and `meridian`
   // the voice meet without a second alias table.
@@ -377,6 +458,8 @@ export function buildGraph(sources: RawSources): KnowledgeGraph {
       sources: [
         ...SOURCE_FILES.map((file) => ({ file, sha256: digest(sources.texts[file]) })),
         ...WORK_META_DIRS.map((home) => groupDigest(home.dir, sources.workMetas)),
+        // listed only when it exists — an absent optional source is not a zero digest
+        ...(sources.attention ? [{ file: ATTENTION_FILE, sha256: digest(sources.attention) }] : []),
       ],
       counts: { nodes: nodeList.length, edges: edgeList.length, nodesByKind, edgesByKind },
     },
@@ -440,5 +523,10 @@ export function readWorkMetas(root: string): Record<string, string> {
 export function buildGraphFromRepo(root: string): KnowledgeGraph {
   const texts: Record<string, string> = {}
   for (const file of SOURCE_FILES) texts[file] = readFileSync(`${root}${file}`, 'utf8')
-  return buildGraph({ texts, workMetas: readWorkMetas(root) })
+  const attentionPath = `${root}${ATTENTION_FILE}`
+  return buildGraph({
+    texts,
+    workMetas: readWorkMetas(root),
+    ...(existsSync(attentionPath) ? { attention: readFileSync(attentionPath, 'utf8') } : {}),
+  })
 }

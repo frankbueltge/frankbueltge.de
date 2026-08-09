@@ -13,12 +13,20 @@
 //      obligation of 2026-08-09 made mechanical (docs/decision-log.md): a new experiment
 //      cannot reach the shelf without an answer to "does the world already have this?".
 
-import { readFileSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
 import { HOLDINGS_RANKED, WERKE } from '@/data/werke'
 import { normaliseVoice } from '@/lib/begegnungen/crossings'
-import { SOURCE_FILES, WORK_META_DIRS, buildGraph, digest, groupDigest, readWorkMetas } from './build'
+import {
+  ATTENTION_FILE,
+  SOURCE_FILES,
+  WORK_META_DIRS,
+  buildGraph,
+  digest,
+  groupDigest,
+  readWorkMetas,
+} from './build'
 import { parseAudit, type LedgerEntry } from './derive'
 import type { EncounterNode, KnowledgeGraph, PracticeNode, PracticeWorkNode, WorkNode } from './types'
 
@@ -34,11 +42,16 @@ for (const file of SOURCE_FILES) texts[file] = read(file)
 const workMetas = readWorkMetas(ROOT)
 
 const committed = JSON.parse(read('src/data/graph/graph.json')) as KnowledgeGraph
-const derived = buildGraph({ texts, workMetas })
-/** Every file a claim may name: the four fixed records, plus each practice work's own meta. */
+/** The optional source, read the same way the build reads it — so the day the practice
+ *  publishes its export, this harness follows instead of turning red. */
+const attention = existsSync(`${ROOT}${ATTENTION_FILE}`) ? read(ATTENTION_FILE) : undefined
+const derived = buildGraph({ texts, workMetas, ...(attention ? { attention } : {}) })
+/** Every file a claim may name: the fixed records, each practice work's own meta, and the
+ *  attention export once it exists. */
 const flatSources = new Map<string, string>([
   ...SOURCE_FILES.map((f) => [f as string, flat(texts[f])] as const),
   ...Object.entries(workMetas).map(([path, text]) => [path, flat(text)] as const),
+  ...(attention ? [[ATTENTION_FILE, flat(attention)] as const] : []),
 ])
 
 describe('every line the graph carries is still in the file it came from', () => {
@@ -65,6 +78,7 @@ describe('every line the graph carries is still in the file it came from', () =>
   it('reads only from the declared sources — there is no other way into this graph', () => {
     const declared = (file: string): boolean =>
       (SOURCE_FILES as readonly string[]).includes(file) ||
+      file === ATTENTION_FILE ||
       WORK_META_DIRS.some((home) => new RegExp(`^${home.dir}/[^/]+/meta\\.json$`).test(file))
     for (const node of committed.nodes) expect(declared(node.source.file), node.source.file).toBe(true)
     for (const edge of committed.edges) expect(declared(edge.source.file), edge.source.file).toBe(true)
@@ -84,13 +98,18 @@ describe('the committed graph is the derivation, not a copy of it', () => {
   })
 
   it('names a digest per source, and each one is that file today', () => {
+    // The attention export is optional and listed only when it exists, so the expected list
+    // grows on the day it lands rather than that day turning this test red.
     expect(committed.meta.sources.map((s) => s.file)).toEqual([
       ...SOURCE_FILES,
       ...WORK_META_DIRS.map((home) => `${home.dir}/*/meta.json`),
+      ...(existsSync(`${ROOT}${ATTENTION_FILE}`) ? [ATTENTION_FILE] : []),
     ])
     for (const source of committed.meta.sources) {
       const home = WORK_META_DIRS.find((d) => source.file === `${d.dir}/*/meta.json`)
-      const current = home ? groupDigest(home.dir, workMetas) : { sha256: digest(texts[source.file]) }
+      const current = home
+        ? groupDigest(home.dir, workMetas)
+        : { sha256: digest(source.file === ATTENTION_FILE ? read(ATTENTION_FILE) : texts[source.file]) }
       expect(
         source.sha256,
         `${source.file} changed since the graph was built — run \`npm run graph:build\``,
@@ -168,8 +187,11 @@ describe('the ecology lane — the practices’ own production', () => {
   const encounters = committed.nodes.filter((n): n is EncounterNode => n.kind === 'encounter')
 
   it('carries every work that has a committed meta, and no work that has not', () => {
-    expect(practiceWorks.length).toBe(Object.keys(workMetas).length)
-    expect(practiceWorks.length).toBeGreaterThan(50)
+    // Counted against the metas only: a practice that exports its projects (the attention
+    // contract) contributes works whose source is that export, not a meta.json beside them.
+    const fromMetas = practiceWorks.filter((w) => w.source.file.endsWith('/meta.json'))
+    expect(fromMetas.length).toBe(Object.keys(workMetas).length)
+    expect(fromMetas.length).toBeGreaterThan(50)
   })
 
   it('gives every practice work a maker, read from where the work lives', () => {
@@ -232,6 +254,63 @@ describe('the ecology lane — the practices’ own production', () => {
       .map((e) => e.state)
     expect(roles).toContain('source')
     expect(roles).toContain('receiver')
+  })
+})
+
+// The attention lane is specified and consumed here, and produced in another repository whose
+// session owns that lane. These tests run against a fixture so the consuming half is proven
+// BEFORE the file lands — the alternative is shipping an integration nobody has ever executed.
+describe('the machine-attention export, when it arrives', () => {
+  const fixture = JSON.stringify({
+    $contract: 'attention-export/1',
+    generated_from: { repo: 'machine-attention', commit: '79f8a02' },
+    practice: { id: 'machine-attention', label: 'Machine Attention' },
+    projects: [
+      { id: 'foreknown', title: 'The Foreknown', since: '2026-08-08', site_route: '/attention', status: 'running' },
+      { id: 'darkocean', title: 'Dark Ocean', since: '2026-08-07', site_route: null, status: 'running' },
+    ],
+    figures: [{ key: 'futures_under_watch', value: 100, as_of: '2026-08-09' }],
+  })
+  const withAttention = buildGraph({ texts, workMetas, attention: fixture })
+
+  // Deliberately written for BOTH states. The producing session must be able to add the export
+  // and see green — a consumer that greets its own input with a failing test is not a contract,
+  // it is a trap. Today the file is absent and the graph carries no attention lane; the day it
+  // lands, the same assertion runs the other way.
+  it('is wired exactly when the export exists, and silent when it does not', () => {
+    const present = existsSync(`${ROOT}${ATTENTION_FILE}`)
+    expect(committed.nodes.some((n) => n.id === 'practice:machine-attention')).toBe(present)
+    expect(committed.meta.sources.some((s) => s.file === ATTENTION_FILE)).toBe(present)
+  })
+
+  it('gives a project with a room on this site a door to that room, not a second work', () => {
+    const doors = withAttention.edges.filter((e) => e.kind === 'door' && e.from === 'practice:machine-attention')
+    expect(doors.map((d) => d.to)).toContain('work:attention')
+    expect(withAttention.nodes.some((n) => n.id === 'practice-work:machine-attention/foreknown')).toBe(false)
+  })
+
+  it('gives a project that lives only in its own repo a work of its own', () => {
+    const dark = withAttention.nodes.find((n) => n.id === 'practice-work:machine-attention/darkocean')
+    expect(dark?.label).toBe('Dark Ocean')
+    expect(withAttention.edges.some((e) => e.kind === 'made-by' && e.from === dark?.id)).toBe(true)
+  })
+
+  it('puts the practice’s own dated figures on its node', () => {
+    const practice = withAttention.nodes.find(
+      (n): n is PracticeNode => n.id === 'practice:machine-attention',
+    )
+    expect(practice?.label).toBe('Machine Attention')
+    expect(practice?.figures).toEqual([{ key: 'futures_under_watch', value: 100, asOf: '2026-08-09' }])
+  })
+
+  it('refuses a contract version it does not implement, rather than guessing', () => {
+    const future = fixture.replace('attention-export/1', 'attention-export/2')
+    expect(() => buildGraph({ texts, workMetas, attention: future })).toThrow(/attention-export\/2/)
+  })
+
+  it('records the export as a source with its own digest once it is there', () => {
+    const source = withAttention.meta.sources.find((s) => s.file === ATTENTION_FILE)
+    expect(source?.sha256).toBe(digest(fixture))
   })
 })
 
