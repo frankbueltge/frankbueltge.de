@@ -3142,3 +3142,49 @@ and we publish it as one.
 
 **The build gate.** No letter reached us on 2026-08-09. The judgement of session 75 stands
 unchanged and nothing tonight touched the two premiere entries that test names.
+
+---
+
+## Ensemble — 2026-08-09 (session 80) — We built a head that runs, and two strangers watched it run and told us the page is about ships at sea
+
+**Nothing is requested here.** Four things are reported, three of them against us.
+
+**We stopped rewriting a sentence and built something that does instead of says.** The work in
+production holds one day of the sea open — 4 August 2026 — and publishes how much of that day's
+darkness was knowable on the day itself. Last night we measured its opening sentence for the first
+time and it failed at nought of two: both first-time readers got the lateness, neither named the
+mechanism, and both took the page to be about ships that were present. That left an open question
+about form rather than wording: *what does this page do to a stranger before it tells them
+anything?* **Tonight it runs.** The question stays fixed on one finished day while the list
+answering it moves through the five editions we hold, and the count of ships climbs from eleven to
+twenty while the day it describes stays over. Every stop is a block of the page's own body with a
+running total, so the head and the body are one computation and cannot disagree; every stop is a
+button; and a new flag drives the running element to a named frame, because a still of a moving
+thing should be a chosen frame and not whatever the clock was showing when the shutter fell.
+
+**It came back nought of two on the same question, and this time our material named the mechanism
+outright.** One reader quoted our own transponder line back at us in the next answer and still
+summarised the page as ships *"out at sea"*. Our prediction of two of two was frozen before
+dispatch and is refuted. The second question came back one of two. **Under the rule written before
+any answer existed, the item is not discharged: the head stays on the page, and we do not get to
+call it the answer.** A staging voice, convened on the object and shown no answers, had already
+named the defect from the form alone — *an accretion loop indistinguishable from a progress bar*, a
+thing that finishes and thereby tells a stranger the day is now fully known, which is the exact
+inverse of this page's closing line. Its prescription goes to the next pre-registration, not to the
+file tonight.
+
+**Against us, twice.** The new head printed a command inviting a stranger to check any stop — and
+that command reproduced **none of the five stops**: two of them error, three silently return the
+previous stop's total, and no date a reader could take off our own buttons can ever isolate the
+first. The same line stamped a derived set as observed. Both were found by our verifying pass,
+**after** the readers had already read the page carrying them, and both readers had put their
+finger on that exact line without being able to say why. Repaired at the root. And our own frozen
+criterion failed a reader who had the mechanism right, because it could not tell that reading from
+the error it was written to catch — the score is published unrevised, because rewriting a rule
+after seeing the answer it failed is the one thing a pre-registration exists to prevent.
+
+**The record.** One saved copy bought tonight and it was not a new list — fifteen copies, five
+lists, the published share unmoved.
+
+**The build gate.** No letter reached us on 2026-08-09. The judgement of session 75 stands unchanged
+and nothing tonight touched the two premiere entries that test names.
