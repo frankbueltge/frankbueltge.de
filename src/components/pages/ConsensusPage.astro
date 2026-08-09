@@ -8,7 +8,10 @@ import { t } from '@/i18n/ui'
 import type { Locale } from '@/lib/site'
 import type { ConsensusData } from '@/lib/consensus/types'
 import { cleanTitle, echoPercent, spanLabel, hhmm } from '@/lib/consensus/format'
+import { CHAIN_LABEL, aggregateStructure } from '@/lib/consensus/structure'
+import { byYear, standing, summarise, type Baseline } from '@/lib/consensus/baseline'
 import data from '@/data/consensus/latest.json'
+import baselineJson from '@/data/consensus/baseline.json'
 
 interface Props { locale: Locale }
 const { locale } = Astro.props
@@ -35,13 +38,32 @@ const evidenceUrl = new Map((h?.articles ?? []).map((a) => [a.domain, a.url]))
 // daylight for this instrument is the WHY-classification: none of the neighbors classify
 // why outlets converged, only that they did. Aggregated at build time from every committed
 // day file; structure.test.ts holds the aggregate to the archive.
-import { CHAIN_LABEL, aggregateStructure } from '@/lib/consensus/structure'
 const archiveRaw = import.meta.glob('/src/data/consensus/2026-*.json', { eager: true, import: 'default' })
 const structure = aggregateStructure(
   Object.fromEntries(Object.entries(archiveRaw).map(([p, v]) => [p.replace(/^.*\/(\d{4}-\d{2}-\d{2})\.json$/, '$1'), v])) as never,
 )
-const chainCount = structure.counts[CHAIN_LABEL] ?? 0
-const chainPct = Math.round(structure.chainShare * 100)
+// Per method version since the dated correction of 2026-08-09 — the archive-wide share the
+// page used to show pooled the v1 API days with the v2 full-stream days and came out
+// backwards. The current instrument leads; superseded versions are named, not deleted.
+const current = structure.byMethod[0]
+const superseded = structure.byMethod.slice(1)
+// the figure the page used to show: chain days pooled across ALL versions over all
+// classified days — reconstructed here so the correction quotes itself accurately
+const pooledChainDays = structure.byMethod.reduce((n, m) => n + (m.counts[CHAIN_LABEL] ?? 0), 0)
+const pooledChainPct = structure.classified === 0 ? 0 : Math.round((pooledChainDays / structure.classified) * 100)
+const supersededDays = superseded.reduce((n, m) => n + m.classified, 0)
+
+// The longitudinal layer (G1 BigQuery path, activated 2026-08-09): the same measurement over
+// the whole historical archive, computed once and committed. baseline.test.ts recomputes every
+// ratio from the file's own components, so nothing here is asserted.
+const baseline = baselineJson as unknown as Baseline
+const base = summarise(baseline)
+const years = byYear(baseline.days)
+// only a v2 reading may be ranked against a v2 baseline — a v1 day would be a different pool
+const nightlyMethod = (d as unknown as Record<string, { version?: string } | undefined>).method
+const todayIsComparable = nightlyMethod?.version === 'v2-raw-files'
+const stand = todayIsComparable ? standing(d.echo_index, baseline) : null
+const pct = (x: number) => Math.round(x * 100)
 
 // v3 — symbolic classification of the syndication structure (auditable).
 const SYN: Record<string, { de: string; en: string }> = {
@@ -142,29 +164,66 @@ const syn = h?.syndication
         </p>
       </section>
 
-      {structure.classified > 0 && (
+      {stand && (
         <section class="mb-12 border-t border-line pt-6">
           <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
-            {de ? 'Die Struktur des Konsenses — das ganze Archiv' : 'The structure of the consensus — the whole archive'}
+            {de ? 'Ist das viel? — sieben Jahre, eine Methode' : 'Is that a lot? — seven years, one method'}
           </p>
           <div class="mt-3 flex items-baseline gap-4">
-            <p class="text-[clamp(32px,6vw,56px)] font-bold leading-none tabular-nums">{chainPct}%</p>
+            <p class="text-[clamp(32px,6vw,56px)] font-bold leading-none tabular-nums">{de ? `${pct(stand.percentile)}.` : `${pct(stand.percentile)}th`}<span class="ml-1 text-[0.32em] font-normal uppercase tracking-[0.18em] text-fg-muted">{de ? 'Perzentil' : 'percentile'}</span></p>
             <p class="max-w-md text-sm leading-snug text-fg-muted">
               {de
-                ? `der ${structure.classified} klassifizierten Tage waren Ketten-Syndizierung — eine Verlagsgruppe, ein Push. Nur ${structure.classified - chainCount} ${structure.classified - chainCount === 1 ? 'Tag war' : 'Tage waren'} verstreute Platzierung über unabhängige Märkte.`
-                : `of ${structure.classified} classified days were chain syndication — one publishing group, one push. Only ${structure.classified - chainCount} ${structure.classified - chainCount === 1 ? 'day was' : 'days were'} scattered placement across independent markets.`}
+                ? `— so steht das heutige Echo von ${echoPercent(d.echo_index, locale)} in ${base.days.toLocaleString('de-DE')} Tagen, die seit dem ${base.from} genauso gemessen wurden. Median über den ganzen Zeitraum: ${echoPercent(base.medianEcho, locale)}.`
+                : `— where today's echo of ${echoPercent(d.echo_index, locale)} stands among ${base.days.toLocaleString('en-GB')} days measured the same way since ${base.from}. Median across the record: ${echoPercent(base.medianEcho, locale)}.`}
             </p>
           </div>
+
+          <table class="mt-6 w-full border-collapse font-mono text-[11px]">
+            <caption class="sr-only">{de ? 'Median-Echo und Ketten-Anteil je Jahr' : 'Median echo and chain share per year'}</caption>
+            <thead class="text-fg-faint">
+              <tr class="border-b border-line text-left">
+                <th scope="col" class="py-1 pr-3 font-normal">{de ? 'Jahr' : 'Year'}</th>
+                <th scope="col" class="py-1 pr-3 font-normal">{de ? 'Tage' : 'Days'}</th>
+                <th scope="col" class="py-1 pr-3 font-normal">{de ? 'Median-Echo' : 'Median echo'}</th>
+                <th scope="col" class="py-1 pl-3 text-right font-normal">{de ? 'Kette' : 'Chain'}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {years.map((y) => (
+                <tr class="border-b border-line/40">
+                  <td class="py-1 pr-3 tabular-nums">{y.year}</td>
+                  <td class="py-1 pr-3 tabular-nums text-fg-faint">{y.days}</td>
+                  <td class="py-1 pr-3 tabular-nums">{echoPercent(y.medianEcho, locale)}</td>
+                  <td class="py-1 pl-3 text-right tabular-nums text-fg-faint">{pct(y.chainShare)}%</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <p class="mt-2 font-mono text-[11px] leading-relaxed text-fg-faint">
+            {de
+              ? `Der wortgleiche Konsens ist über den Zeitraum gefallen: von ${echoPercent(stand.firstMedian, locale)} (${stand.firstYear}) auf ${echoPercent(stand.recentMedian, locale)} (${stand.recentYear}) — gerechnet über die vollen Kalenderjahre. ${stand.firstYear === years[0].year ? '' : `${years[0].year} beginnt am ${base.from}, `}${years[years.length - 1].year} ist noch nicht zu Ende; die Tage-Spalte zeigt, welche Jahre unvollständig sind.`
+              : `The verbatim consensus has fallen across the record: from ${echoPercent(stand.firstMedian, locale)} (${stand.firstYear}) to ${echoPercent(stand.recentMedian, locale)} (${stand.recentYear}) — measured over the full calendar years. ${stand.firstYear === years[0].year ? '' : `${years[0].year} starts on ${base.from}, `}${years[years.length - 1].year} is not over yet; the days column shows which years are partial.`}
+          </p>
+
+          <p class="mt-5 max-w-xl font-mono text-[11px] leading-relaxed text-fg-faint">
+            {de
+              ? `Und die Schicht, die die Nachbarn nicht führen: nicht DASS Redaktionen denselben Satz drucken, sondern WARUM. Über die ${base.days.toLocaleString('de-DE')} Tage der Baseline war der breiteste Satz des Tages in ${pct(base.chainShare)} % der Fälle eine Konzernkette — verstreute Aufnahme über mehrere Märkte ist der Normalfall, Ketten-Syndizierung die Ausnahme. `
+              : `And the layer the neighbors do not keep: not THAT outlets print the same sentence, but WHY. Across the baseline's ${base.days.toLocaleString('en-GB')} days the widest sentence of the day was a corporate chain in ${pct(base.chainShare)}% of cases — scattered pickup across markets is the norm, chain syndication the exception. `}
+            <a href={getRelativeLocaleUrl(locale, '/consensus/archive')} class="underline decoration-line underline-offset-2 hover:text-fg">{de ? 'Archiv' : 'archive'}</a>{current && (de
+              ? `. Der laufende nächtliche Datensatz (${current.methodVersion}) trägt bisher ${current.classified} klassifizierte ${current.classified === 1 ? 'Tag' : 'Tage'}, davon ${pct(current.chainShare)} % Kette.`
+              : `. The running nightly record (${current.methodVersion}) carries ${current.classified} classified ${current.classified === 1 ? 'day' : 'days'} so far, ${pct(current.chainShare)}% of them chain.`)}
+          </p>
+
+          <p class="mt-3 max-w-xl border-l-2 border-line pl-3 font-mono text-[11px] leading-relaxed text-fg-faint">
+            {de
+              ? `Korrektur vom 2026-08-09: Hier stand „${pooledChainPct} % der ${structure.classified} klassifizierten Tage waren Ketten-Syndizierung" — als Aussage über das ganze Archiv. Die Zahl mischte zwei Messpools: ${supersededDays} der Tage stammen aus der alten API-Methode mit unter tausend Artikeln je Tag, in der der breiteste Satz des Tages regelmäßig ein enger Wire-Push ist. Über ${base.days.toLocaleString('de-DE')} Tage einer Methode sagt die Messung das Gegenteil. Die alten Tage bleiben im Archiv und werden getrennt geführt.`
+              : `Correction, 2026-08-09: this section used to read "${pooledChainPct}% of ${structure.classified} classified days were chain syndication" — as a statement about the whole archive. That figure pooled two measurement pools: ${supersededDays} of those days come from the old API method with under a thousand articles a day, where the day's widest sentence is routinely a tight wire push. Across ${base.days.toLocaleString('en-GB')} days of one method the measurement says the opposite. The old days stay in the archive and are kept apart.`}
+          </p>
+
           <p class="mt-3 max-w-xl font-mono text-[11px] leading-relaxed text-fg-faint">
             {de
-              ? 'Das ist die Schicht, die die Nachbarn nicht führen: nicht DASS Redaktionen denselben Satz drucken, sondern WARUM — Konzernkette oder echter, verstreuter Konsens. Klassifikation pro Tag im '
-              : 'This is the layer the neighbors do not keep: not THAT outlets print the same sentence, but WHY — corporate chain or genuine, scattered consensus. Per-day classification in the '}
-            <a href={getRelativeLocaleUrl(locale, '/consensus/archive')} class="underline decoration-line underline-offset-2 hover:text-fg">{de ? 'Archiv' : 'archive'}</a>
-            {structure.unclassified > 0
-              ? de
-                ? ` (${structure.unclassified} frühe Tage vor der Klassifikation, ehrlich unklassifiziert).`
-                : ` (${structure.unclassified} early days predate the classifier and stay honestly unclassified).`
-              : '.'}
+              ? `Herkunft: ${baseline.source.citation} · GKG 2.1 über BigQuery, ${baseline.provenance.jobs.length} Jobs, Query und Job-Trace committet (${baseline.provenance.query}); ${baseline.gaps.missing_days} Tage fehlen in GDELTs Archiv und werden nicht interpoliert. Die nächtliche Lesung ist ein rollendes 24-Stunden-Fenster, die Baseline-Tage sind UTC-Kalendertage — vergleichbar, nicht identisch.`
+              : `Provenance: ${baseline.source.citation} · GKG 2.1 via BigQuery, ${baseline.provenance.jobs.length} jobs, query and job trace committed (${baseline.provenance.query}); ${baseline.gaps.missing_days} days are absent from GDELT's own archive and are not interpolated. The nightly reading is a rolling 24-hour window, the baseline days are UTC calendar days — comparable, not identical.`}
           </p>
         </section>
       )}
