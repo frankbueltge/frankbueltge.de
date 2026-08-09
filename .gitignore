@@ -2,8 +2,9 @@
 dist/
 .astro/
 
-# dependencies
-node_modules/
+# dependencies (no trailing slash: a git worktree often carries node_modules as a
+# symlink to the main checkout's, and a directory-only pattern would not ignore it)
+node_modules
 
 # archived Next.js build (kept locally for content porting, not shipped)
 _archive-next/
@@ -43,3 +44,7 @@ design_handoff_homepage/
 
 # Registerdaten kommen beim Bauen aus dem dataset-hub-Release (scripts/hole-dataset-daten.mjs)
 src/data/datasets/
+
+# Claude Code: nur die geteilten Regeln gehören ins Repo
+.claude/*
+!.claude/rules/

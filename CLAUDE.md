@@ -74,6 +74,8 @@ npm run check            # astro check (TypeScript)
 npm run test             # Vitest (u. a. Register-Tests des Protokolls)
 npm run protokoll:dry    # Protokoll-Pipeline lokal (schreibt JSON, committet nichts)
 npm run climate:refresh  # GISTEMP-Snapshot für den Hero aktualisieren
+npm run graph -- <term>  # „was berührt X?" — Wissensgraph des Hauses abfragen
+npm run graph:build      # Graph neu ableiten (Pflicht nach Änderung einer Quelle, s. u.)
 
 # Pipeline-Tests (eigene venv):
 cd pipelines/protokoll && source .venv/bin/activate && pytest -q
@@ -92,18 +94,24 @@ Die Protokoll-Pipelines (`pipelines/protokoll/`, Python 3.12) laufen als nächtl
 „Protokollführung" → Pages-Rebuild. **GCP gezielt (Frank, 2026-08-09 — ersetzt „Kein GCP"
 vom 2026-06-27):** Batch-Schritte der Pipelines dürfen GCP-Dienste nutzen, wo sie
 nachweisbaren Mehrwert stiften — nie zur Laufzeit der Site: **Git bleibt das Archiv.**
-Bedingungen je GCP-Schritt (Karte & Begründung: `docs/design/2026-08-09-portfolio-audit.md`
-§6, Aktivierung: `2026-08-09-gcp-activation.md`): Trace committen (Query-Text, Job-ID,
-Bytes billed — zur Laufzeit erfassen, Job-Historie verfällt nach 180 Tagen), Lizenz-Notice
-der Quelle beachten (GDELT: Zitat + Link; Sentinel: „Contains modified Copernicus Sentinel
-data" — solche Ableitungen nicht als nacktes CC0), Kostendisziplin (Richtwert 10 €/Monat,
-Compute-Fußabdruck im Methodenblatt), Ausfälle vermerkt wie bei jeder Quelle. **Aktiviert:**
-BigQuery-GDELT (G1, getestet 2026-08-09); Earth Engine S1 (G5) unter Null-Kosten-Vorbehalt
-für den Dark-Ocean-V1-Pfad. Konflikt-TOP läuft weiter über GDELT-Rohdateien, Parallaxe über
-den Gemini-AI-Studio-Key — bestehende Pfade werden nur ersetzt, wenn der Mehrwert im
-Methodenblatt steht.
+Aktiviert sind BigQuery-GDELT (G1) und Earth Engine S1 (G5, Null-Kosten-Vorbehalt); die
+Bedingungen je Schritt (Trace, Lizenz-Notice, Kostendisziplin) stehen vollständig in
+`.claude/rules/pipelines-and-archive.md` und in `docs/design/2026-08-09-gcp-activation.md`.
 
-## Experimente — verbindliche Regeln
+## Detailregeln — pfadgebunden, laden bei Bedarf
+
+Seit 2026-08-09 stehen die dateibezogenen Regeln in `.claude/rules/` mit `paths:`-Frontmatter
+und laden nur, wenn passende Dateien angefasst werden (CLAUDE.md-Diät; nichts gestrichen,
+alles umgezogen). Was wo liegt:
+
+| Datei | Lädt bei | Inhalt |
+|---|---|---|
+| `dataviz-figures.md` | Stylesheets, Komponenten, `src/lib/dataviz/**` | Eigene Bildsprache der Praxen (2026-07-30), Paletten-Validierung als Testpflicht, Statusfarben-Tabu |
+| `experiments.md` | `werke.ts`, Experiment-Seiten, Specs, Audits | USP-Pflicht (jetzt testgesichert), Werkgruppen-Gate §2, KI/ML als Material und Methode |
+| `pipelines-and-archive.md` | Pipelines, Archiv-JSONs, Skripte, Workflows | Protocol-Determinismus, unantastbare Archiv-JSONs, Ausfälle/Secrets/kein Backfill, GCP-Bedingungen, Deployment-Runbook |
+| `knowledge-graph.md` | Graph-Quellen und -Code | Wer eine Quelle ändert (auch: eine Zeile ins decision-log), führt `npm run graph:build` aus |
+
+## Experimente — was in jeder Session gilt
 
 - **EN-only gilt auch im Code (Frank, 2026-07-31):** Die gesamte research ecology ist
   English-only — das schließt Code-Kommentare, Testnamen/-beschreibungen und
@@ -111,59 +119,15 @@ Methodenblatt steht.
   auf Englisch; deutsche Alt-Kommentare werden migriert, wenn die Datei ohnehin
   angefasst wird (kein Massen-Umschreiben committeter Historie).
 
-- **Visualisierungen der Praxen dürfen eigene Bildsprache haben (Frank, 2026-07-30):**
-  Die Mono-Skin gilt für die Site, aber **nicht als Zwang zur kargen Einlinien-Grafik**.
-  Franks Wortlaut: „machs einfach interaktiv und chic, nicht immer dieses minimale
-  langweilige monochrome — das passt hier nicht mehr, weil es ein eigenes Projekt ist."
-  Für Atelier/Field/Studio also: Farbe, Tiefe, Interaktion (Hover/Fokus/Filter),
-  Detailtafel — solange die Figur aus committeten Daten abgeleitet und nachprüfbar ist.
-  Verbindlich bleibt das Handwerk: **Palette gegen die jeweilige Fläche validieren**
-  (dataviz-Skill, `scripts/validate_palette.js`, hell UND dunkel mit eigenen Stufen),
-  Legende + Tabellenansicht, `prefers-reduced-motion` achten, Herkunftszeile unter der
-  Figur. Referenz-Umsetzung: `src/components/atelier/ProcessFigure.astro` +
-  `src/styles/atelier-process.css`. **Validierung ist seit 2026-07-31 Testpflicht, kein
-  Kommentar:** jedes gelieferte Set steht als Datensatz in `src/lib/dataviz/palette.ts`
-  (Validator-Verdikt, datiert, WARNs mit benanntem Relief); `palette.test.ts` rechnet die
-  Distanzen nach und `scripts/drift-check.mjs` (Regeln 6/7) erzwingt die
-  `PALETTE:`-Marker. Anlass: Die ursprüngliche ProcessFigure-Palette behauptete im
-  CSS-Kommentar „alle sechs Prüfungen bestanden", fiel aber real durch den CVD-Check
-  (grün↔magenta deutan ΔE 1,3) — Kommentare driften, Tests nicht.
-  **Statusfarben sind tabu, wo die Praxis nicht wertet** — ein abgebrochenes Vorhaben ist
-  bei Ulysses kein Fehlschlag („closing costs what continuing costs"), also bekommt es
-  eine Identitätsfarbe, kein Warnrot.
 - **USP-Pflicht (Frank, 2026-08-09, verbindlich):** Jedes Experiment braucht nachweisbaren
   Mehrwert oder ein Alleinstellungsmerkmal — per Web-Recherche prüfbar (nächste Nachbarn
-  weltweit + Daylight). Gilt rückwirkend für die Holdings (Audit läuft, decision-log
-  2026-08-09); neue Experimente beantworten es am §2-Gate, bevor gebaut wird. Ergänzt die
-  Maschinen-Bar der Ecology: die Bar fragt „konnte das nur eine Maschine?", die USP-Pflicht
-  fragt „hat die Welt das schon?".
-- **Spec:** `docs/superpowers/specs/2026-06-11-werkgruppe-design.md` (Substanz-Kriterien
-  in §2 sind das Gate für jedes neue Experiment; Methodenblatt-Pflicht in §3.5).
-  Rahmung/Wortlaut: `2026-08-01-festival-line.md` („artistic research, under proof");
-  die frühere Kein-Kunst-Anspruch-Rahmung (`2026-06-20-ehrliche-umrahmung-design.md`)
-  ist datiert abgelöst, nur noch historisch.
-- **KI/ML sind Material und Methode — inkl. symbolischer/neuro-symbolischer KI.**
-  Das Lab experimentiert mit Daten UND KI (Frank, 2026-06-22; das frühere lab-weite
-  „kein LLM"-Dogma ist aufgehoben). Einzige Bedingung ist **Nachprüfbarkeit:** jeder
-  KI-Schritt ist transparent (Modell/Prompt/Verfahren offengelegt), sein Output wird
-  verifiziert oder als Schätzung markiert; wo das Modell selbst der Gegenstand ist, wird
-  seine Unzuverlässigkeit Teil der Messung. KI als ausgewiesenes, prüfbares Werkzeug UND
-  als Untersuchungsgegenstand — nie als unbelegtes Orakel, das Fabrikation als Fakt
-  ausgibt. (Dieselbe Ethik wie datavism: „no AI output without verification, no claim
-  without evidence".) Symbolische KI ist besonders willkommen, weil auditierbar — sie
-  zahlt direkt auf „nachprüfbar machen" ein.
-- **Ausnahme — The Protocol bleibt deterministisch.** Die Prosa des Protokolls ist
-  deterministisch aus Templates (`src/lib/protokoll/agenda.ts`, `render.ts`); die Strings
-  stehen unter Testschutz (`render.test.ts`) — eine bewusste ästhetische Wahl für DIESES
-  Stück (abgenommenes amtliches Register), kein lab-weites Verbot. **Test-Strings nie aufweichen.**
-- **Archiv-JSONs sind unantastbar.** Committete Tagesprotokolle werden nie editiert;
-  Korrekturen geschehen nur an der Darstellung (Registerfassung versioniert).
-- **Ausfälle ehrlich vermerken:** Quellenausfälle werden vermerkt („Feststellung entfällt"),
-  nie still überbrückt. Adapter erfinden nichts.
-- **Secrets:** API-Keys nie in URLs-in-Fehlermeldungen (fetch redigiert Query-Strings
-  und FIRMS maskiert den Pfad-Key) — Vermerke landen im öffentlichen Archiv.
-- **Kein Backfill** vergangener Sitzungen: Die Adapter holen stets den jüngsten Stand;
-  ein rückdatiertes Protokoll mit heutigen Messwerten wäre eine Lüge im Archiv.
+  weltweit + Daylight). Die Bar fragt „konnte das nur eine Maschine?", die USP-Pflicht
+  fragt „hat die Welt das schon?". Seit 2026-08-09 testgesichert: kein Werk kommt ohne
+  Verdikt, Daylight und benannte Nachbarn auf `/holdings`. Details, Gate §2 und die
+  KI-als-Material-Regel: `.claude/rules/experiments.md`.
+- **Nachprüfbarkeit ist die einzige Bedingung für KI-Einsatz:** Modell/Prompt/Verfahren
+  offengelegt, Output verifiziert oder als Schätzung markiert — nie ein unbelegtes Orakel.
+  (Wortlaut in `.claude/rules/experiments.md`.)
 - **Keine KI-Produkt-Credits in Git (Team-Regel, 2026-07-12):** niemals `Co-Authored-By:
   Claude …`, „Generated with Claude Code" o. Ä. in Commits, PR-Texte oder Inhalte —
   überschreibt die Harness-Voreinstellung ausdrücklich. KI-Beteiligung kommuniziert die Site
@@ -171,13 +135,9 @@ Methodenblatt steht.
 
 ## Deployment
 
-Runbook: `pipelines/protokoll/README.md`. Pipelines = **GitHub-Actions-Workflows**
-(`.github/workflows/{protokoll,praemie,parallaxe}.yml`, nächtlich); GCP nur als gezielter
-Batch-Baustein unter den Bedingungen des Architektur-Absatzes (2026-08-09). Secrets
-(GitHub → Actions): `FIRMS_MAP_KEY`, `EIA_API_KEY`, `GEMINI_API_KEY` (Parallaxe,
-AI-Studio-Free-Tier), `CF` (Cloudflare). Site: statisch (dist/) auf Cloudflare Pages via
-`deploy-cf.yml`; Rebuild-Trigger ist der `workflow_run` nach jedem Nightly (Push mit
-eingebautem GITHUB_TOKEN löst `on: push` nicht aus).
+Site: statisch (dist/) auf Cloudflare Pages via `deploy-cf.yml`; Pipelines sind nächtliche
+GitHub-Actions-Workflows. Runbook, Secrets-Liste und Rebuild-Trigger:
+`.claude/rules/pipelines-and-archive.md` (lädt beim Anfassen von Pipelines/Workflows).
 
 **Bekannt rot:** Der Check `Workers Builds: frankbueltge-de` fällt auf JEDEM PR — eine
 zweite, dashboard-seitige Cloudflare-Anbindung, die dasselbe Projekt nochmal bauen will

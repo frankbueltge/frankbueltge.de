@@ -17,7 +17,8 @@ import '@/styles/neighborhood.css'
 import TableFallback from '@/components/dataviz/TableFallback.astro'
 import { GRAPH } from '@/lib/graph/load'
 import { neighborhoodField } from '@/lib/graph/query'
-import { CANVAS, CENTRE, LABEL_RADIUS, RAIL, VERDICT_LEGEND, layoutField } from '@/lib/graph/field'
+import { CANVAS, CENTRE, RAIL, VERDICT_LEGEND, layoutField } from '@/lib/graph/field'
+import { readable } from '@/lib/graph/derive'
 
 const entries = neighborhoodField(GRAPH)
 const layout = layoutField(entries)
@@ -80,7 +81,7 @@ const auditHref =
                   </circle>
                 ))}
                 <circle class="nb-work" cx={spoke.x} cy={spoke.y} r="6">
-                  <title>{spoke.work.label} — {spoke.work.verdictLabel}</title>
+                  <title>{spoke.work.label} — {readable(spoke.work.verdictLabel ?? '')}</title>
                 </circle>
                 <text
                   class="nb-label"
@@ -122,23 +123,22 @@ const auditHref =
           <li class="nb-row" data-verdict={spoke.work.verdict} data-row={spoke.work.werkId} id={`nb-${spoke.work.werkId}`}>
             <div class="nb-row-head">
               <span class="nb-row-rank">{String(spoke.work.rank).padStart(2, '0')}</span>
-              <a class="nb-row-title" href={spoke.work.href}>
-                {spoke.work.label}
-              </a>
+              <a class="nb-row-title" href={spoke.work.href}>{spoke.work.label}</a>
               <span class="nb-row-verdict">{legendOf(spoke.work.verdict)}</span>
             </div>
-            <p class="nb-row-daylight">{spoke.work.daylight}</p>
+            <p class="nb-row-daylight">{readable(spoke.work.daylight ?? '')}</p>
             <ul class="nb-row-neighbors">
               {spoke.neighbors.map((neighbor) => (
                 <li>
+                  {/* the expression stays on the anchor's own line: JSX keeps the surrounding
+                      whitespace, and an underline running past the last letter is a link that
+                      looks broken */}
                   {neighbor.url ? (
-                    <a href={neighbor.url} rel="noopener nofollow">
-                      {neighbor.node.label}
-                    </a>
+                    <a href={neighbor.url} rel="noopener nofollow">{neighbor.node.label}</a>
                   ) : (
                     <span>{neighbor.node.label}</span>
                   )}
-                  {neighbor.note ? <span> — {neighbor.note}</span> : null}
+                  {neighbor.note ? <span> — {readable(neighbor.note)}</span> : null}
                 </li>
               ))}
             </ul>
@@ -163,7 +163,7 @@ const auditHref =
         rank: spoke.work.rank ?? '',
         work: spoke.work.label,
         daylight: legendOf(spoke.work.verdict),
-        verdict: spoke.work.verdictLabel ?? '',
+        verdict: readable(spoke.work.verdictLabel ?? ''),
         neighbors: spoke.neighbors.length,
       }))}
     />

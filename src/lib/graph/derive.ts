@@ -46,6 +46,18 @@ export function flattenLinks(text: string): string {
   return text.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, '$1')
 }
 
+/** The graph stores the audit's own markdown, verbatim, because that is what the honesty test
+ *  checks against the file. A PAGE must not print asterisks and bracket syntax at a reader, so
+ *  rendering flattens: links to their text, emphasis to plain words. Nothing is added, nothing
+ *  is reordered — only markup is dropped. */
+export function readable(text: string): string {
+  return flattenLinks(text)
+    .replace(/\*\*([^*]+)\*\*/g, '$1')
+    .replace(/(^|[\s(“"])\*([^*]+)\*(?=[\s.,;:)”"]|$)/g, '$1$2')
+    .replace(/\s{2,}/g, ' ')
+    .trim()
+}
+
 /** First url in a markdown link, if the fragment carries one. */
 function firstUrl(text: string): string | undefined {
   return /\[[^\]]+\]\(([^)\s]+)\)/.exec(text)?.[1]

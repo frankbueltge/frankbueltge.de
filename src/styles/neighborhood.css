@@ -194,11 +194,24 @@
   font-weight: 600;
   color: var(--nb-ink);
 }
+/* The chip states the verdict in WORDS and wears muted ink, never the identity hue: the amber
+ * carries a light-mode contrast WARN (1.87:1), which is legal for a MARK beside a label and
+ * never for the label itself. The hue rides a swatch in front of the words instead. */
 .nb-row-verdict {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   font-size: 11px;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: var(--nb-hue);
+  color: var(--nb-ink-muted);
+}
+.nb-row-verdict::before {
+  content: '';
+  width: 14px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--nb-hue);
 }
 .nb-row-daylight {
   margin: 0.5rem 0 0;
