@@ -63,7 +63,27 @@ on the page, or a dated build plan in this document — nothing stands unpositio
   when Frank asks for it.
 - This document is the tracker: each build lands with a dated line here.
 
+## Work claims — read before building, write before building
+
+**The coordination rule (Frank, 2026-08-09: "ihr müsst euch absprechen"):** more than one
+session works this program in parallel. Before any session builds on an experiment, it
+reads this table and writes its claim here (one commit, pushed immediately — the same
+race-guard idea the practices use). A claimed lane is not touched by anyone else; an
+unclaimed lane is free. Release a lane by dating the Landed line.
+
+| Lane | Claimed by | Since | State |
+|---|---|---|---|
+| **#4 Machine Attention** + **#5 Observatory** | the parallel session (active branches `feat/attention-*`, `state-before-interface`) | 2026-08-09 | theirs entirely — including their Phase-0 citations; the Phase-0 agent's attention edits are stripped at review |
+| **#1 Consensus** (structure layer) · **#2 Iceberg** (integrity panel) · **#10 Headroom** (breakeven spine) · **#15 Patterns** (null-distribution) + the post-Phase-0 page-wiring pass | this session (night 2026-08-09) | 2026-08-09 | libs landing; page wiring after Phase 0 merges |
+| Phase 0 (citations, all pages EXCEPT attention/observatory) | one-time cloud agent → PR `usp-phase0/2026-08-09` | 2026-08-09 | running; PR reviewed before merge |
+| #3 Society · #6 Protocol · #7 Policy · #8 Editorial Deadline · #9 Ghost Fleet · #11 Round Numbers · #12 Delve · #13 Bycatch · #14 Correction · #16 Watchtower | **unclaimed** | — | free — claim before building |
+
 ## Landed
 
 - 2026-08-09 — program decided and written; audit merged (#472); Phase 0 agent launched
   (PR pending review).
+- 2026-08-09 — coordination table added at Frank's instruction; attention + observatory
+  ceded to the parallel session.
+- 2026-08-09 — #1 Consensus: `src/lib/consensus/structure.ts` + test — the archive
+  aggregate behind the why-classification (46 classified days at first run: 43 chain,
+  3 scattered). Page wiring pending Phase 0.
