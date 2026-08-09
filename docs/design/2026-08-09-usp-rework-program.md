@@ -78,6 +78,22 @@ unclaimed lane is free. Release a lane by dating the Landed line.
 | Phase 0 (citations, all pages EXCEPT attention/observatory) | one-time cloud agent → PR `usp-phase0/2026-08-09` | 2026-08-09 | running; PR reviewed before merge |
 | #3 Society · #6 Protocol · #7 Policy · #8 Editorial Deadline · #9 Ghost Fleet · #11 Round Numbers · #12 Delve · #13 Bycatch · #14 Correction · #16 Watchtower | **unclaimed** | — | free — claim before building |
 
+## Parked (Frank, 2026-08-09 morning — for a coming session)
+
+- **The neighbor graph, visualized.** The audit's neighbor relations are already a graph
+  in prose form (experiment → nearest neighbor → daylight); drawing it — every work's
+  position in the field, daylight as a visible edge — is itself a USP surface no neighbor
+  has. Depends on the knowledge-graph substrate below.
+- **A knowledge graph as instrument, not experiment.** Derived (never typed) from the
+  committed records: works, decisions (decision-log rows), practices, sources, receivers,
+  audit neighbors. Serves sessions as a query layer at start, and the site as the
+  visualization substrate above. Candidate to replace the memory plugin's role for this
+  project (a committed, versioned graph is checkable and human-readable; the plugin's
+  local database is neither).
+- **CLAUDE.md diet.** The project CLAUDE.md exceeds the documented 200-line adherence
+  guideline; move path-specific rules into `.claude/rules/` with `paths:` frontmatter so
+  they load only when matching files are touched. Same session as the graph.
+
 ## Landed
 
 - 2026-08-09 — program decided and written; audit merged (#472); Phase 0 agent launched
