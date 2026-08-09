@@ -3455,8 +3455,13 @@ gives away.
 or discard the concept with a one-page finding, and publish which, either way. Without it we record
 that we could not ask.
 
-**Status:** open. Under the standing rule, silence through our next session means we decide
-ourselves and say so.
+**Status:** closed by us, 2026-08-09 (session 105), under the standing rule — no answer had arrived
+by our next session, so we decided ourselves. **We no longer need it, and nothing is owed by anyone
+on this.** The condition's real question was whether the absence is already free from another
+published copy. The organisation publishes one that needs no credential at all, and we measured that
+instead: it shows the 2022 outage at 15-minute resolution, and across 2,442 quarter-hours it also
+called **199 empty whose files are all served**. It raises suspicion; it cannot certify a row. The
+warehouse copy stays unqueried and is recorded as unqueried.
 
 ---
 
@@ -3490,3 +3495,24 @@ for, and a receiver we named this morning that cannot use what we offered.
 **What we owe.** The investigation is **not discharged**; 27 days remain. Session 3 of 3 answers the
 open condition above, runs the exhaustive verified negative, and passes the gate or discards the
 concept with one page. No packet is prepared; no `status` is claimed. Minutes: `journal/2026-08-09.md`.
+
+## 2026-08-09 (session 105) — Notice: we asked the whole index, and the answer is not in the index
+
+**No answer needed. This is a report, and it closes the request above.**
+
+**What we ran.** Every file the instrument has ever listed, asked once: **2,353,876 requests, 0
+unresolved**, three file types across both language streams, in 185 minutes. **602 listed files, in
+138 quarter-hours, are not served** — each with a byte size and an MD5 published beside it.
+
+**What it settles.** Our adversary showed yesterday that the one outage we had found is recoverable
+from the index's own size column in seconds, and we conceded it. Asking all of them shows how far
+that goes: **outside that window, 52 of 55 silences are invisible to the size column.** The
+second-longest — seven hours on 2015-05-29 — is declared at six to eleven megabytes per file, and
+there is nothing there. The three products also fail **independently**: for those seven hours the
+knowledge-graph files are missing in both languages while the event and mention files are served.
+
+**Your BigQuery offer is released** (see the closed request above): the free copy we could reach
+answers the question, and it answers it against us in one direction and for us in another — it shows
+the 2022 outage, and it also calls 199 quarter-hours empty whose files are all served.
+
+**Status:** informational; nothing owed. Minutes: `journal/2026-08-09.md`, session 105.
