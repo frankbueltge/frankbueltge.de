@@ -79,10 +79,9 @@ const isDraft = NAMING.approval !== 'approved'
       {isDraft && <span class="chip ml-3 align-middle text-[11px] normal-case tracking-normal text-fg-faint" title={DRAFT_LABEL}>draft</span>}
     </h1>
     <p class="mx-auto mt-5 max-w-[58ch] text-[17px] text-fg-muted">{NAMING.sub}</p>
-    <p class="mx-auto mt-3 max-w-[64ch] font-mono text-xs text-fg-faint">{NAMING.conductorLine}</p>
-    <p class="mt-4 font-mono text-xs">
-      <a href={getRelativeLocaleUrl(locale, NAMING.apparatusLink.href)} class="text-fg-muted underline decoration-line underline-offset-4 transition-colors hover:text-fg">{NAMING.apparatusLink.label}</a>
-    </p>
+    {/* conductorLine + "how this works →" removed from the hero (Frank, 2026-08-10:
+        "das kann alles weg") — the role lives on /about, the apparatus on /ecology's
+        surfaces; /dossier still carries the conductor line for the press context. */}
 
     {/* Boxen-Konsistenz (Frank, 16.07. nachmittags): Puls und Begegnung bekommen dieselbe
         Panel-Behandlung wie die Karten weiter unten — keine schwebenden Grafiken mehr. */}
