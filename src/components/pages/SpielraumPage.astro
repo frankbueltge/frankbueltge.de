@@ -547,6 +547,29 @@ const methodLabel = de ? 'Methodenblatt' : 'Method sheet'
 
   <p class="mb-10 font-mono text-xs text-fg-faint">{berichtslageText}</p>
 
+  <section class="mb-10">
+    <h2 class="mb-3 font-semibold">{de ? 'Nächste Nachbarn' : 'Nearest neighbors'}</h2>
+    <ul class="space-y-2 text-sm text-fg-muted">
+      <li>
+        <a href="https://thenewstack.io/cloud-pue-comparing-aws-azure-and-gcp-global-regions" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">Adrian Cockcroft, "Cloud PUE"</a>, <cite>The New Stack</cite>
+        {de ? ' (Jan. 2025) — regionsscharfer PUE-Vergleich derselben Hyperscaler, granularer als hier.' : ' (Jan 2025) — region-by-region PUE comparison of the same hyperscalers, more granular than this page.'}
+      </li>
+      <li>
+        <a href="https://www.holdfastprojects.com/us-datacentre-pue.md-2" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">holdfastprojects.com</a>
+        {de ? ' — laufend gepflegtes Ranking nach PUE über Meta/Google/AWS/Microsoft/Oracle u. a., mit Vermerk zur Offenlegungsqualität.' : ' — a maintained, continually updated PUE leaderboard across Meta/Google/AWS/Microsoft/Oracle and others, noting disclosure quality.'}
+      </li>
+      <li>
+        {de ? 'Uptime Institute Global Data Center Survey' : 'Uptime Institute Global Data Center Survey'}
+        {de ? ' — die kanonische jährliche PUE-Erhebung der Branche seit 2007.' : ' — the canonical annual industry PUE benchmark, running since 2007.'}
+      </li>
+    </ul>
+    <p class="mt-3 max-w-prose text-sm leading-relaxed text-fg-muted">
+      {de
+        ? 'Der Vergleich „wer legt was offen" ist bereits besetzt, und Cockcroft misst dabei sogar feiner (pro Region statt pro Flotte). Was keiner der Nachbarn rechnet: den erforderlichen Breakeven-PUE gegen den physikalischen Boden von 1,00 — die „unmögliche Zone" oben ist diese Seite ganz eigene Ableitung.'
+        : "The \"who discloses what\" comparison is already occupied, and Cockcroft's is even more granular (per-region, not fleet-wide). What none of the neighbors compute: the required breakeven PUE against the 1.00 physical floor — the \"impossible zone\" above is this page's own derivation."}
+    </p>
+  </section>
+
   <footer class="mt-12 space-y-1 border-t border-line pt-6">
     <nav class="flex gap-4 pt-2 text-sm text-fg-muted print:hidden">
       <a href={methodUrl} class="transition-colors hover:text-fg">{methodLabel}</a>

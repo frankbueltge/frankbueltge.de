@@ -144,6 +144,31 @@ const cellLabel = (m: ClaimMark) => (de ? CLAIM_MARK[m].de : CLAIM_MARK[m].en)
     )
   })}
 
+  <section class="mb-10 border-t border-line pt-6">
+    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+      {de ? 'Nächste Nachbarn' : 'Nearest neighbors'}
+    </p>
+    <ul class="mt-3 space-y-2 text-sm text-fg-muted">
+      <li>
+        <a href="https://aclanthology.org/2024.emnlp-main.384.pdf" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">INFOGAP</a>
+        {de ? ' (UBC/Johns Hopkins/UW, EMNLP 2024) — begutachteter, faktenbasierter Auslassungs-Detektor über Wikipedia-Sprachversionen, größerer Maßstab, nennt umstrittene Themen als Zielanwendung.' : ' (UBC/Johns Hopkins/UW, EMNLP 2024) — peer-reviewed, fact-level cross-lingual omission detector for Wikipedia, larger scale, names contentious topics as a target application.'}
+      </li>
+      <li>
+        <a href="https://collablab.northwestern.edu/pubs/CHI2012-BaoEtAl-Omnipedia.pdf" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">Omnipedia</a>
+        {de ? ' (Northwestern, CHI 2012) — visualisiert Gemeinsames und Eigenes über bis zu 25 Sprachversionen gleichzeitig.' : ' (Northwestern, CHI 2012) — visualizes shared vs. unique content across up to 25 language editions at once.'}
+      </li>
+      <li>
+        <a href="https://firstmonday.org/ojs/index.php/fm/article/view/3939/3382" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">Manypedia</a>
+        {de ? ' (First Monday 2013, inzwischen offline) — automatisierter Seite-an-Seite-Vergleich von Sprachperspektiven.' : ' (First Monday 2013, now defunct) — automated side-by-side "language points of view" comparison.'}
+      </li>
+    </ul>
+    <p class="mt-3 max-w-xl text-sm leading-relaxed text-fg-muted">
+      {de
+        ? 'Die Auslassungsmessung selbst ist ein gelöstes Genre — INFOGAP läuft peer-reviewed und größer. Was keiner der Nachbarn führt: ein committetes, versioniertes Tagesregister mit fest eingefrorenem, nicht kuratiertem Themensatz, das nie rückwirkend geändert wird (INFOGAP ist ein Paper/Datensatz, Omnipedia/Manypedia tote Demos).'
+        : "The omission measurement itself is a solved genre — INFOGAP runs peer-reviewed and at larger scale. What none of the neighbors keep: a committed, versioned daily register with a fixed, non-selected topic set that is never retconned (INFOGAP is a paper/dataset, Omnipedia/Manypedia are dead demos)."}
+    </p>
+  </section>
+
   <footer class="mt-12 border-t border-line pt-6 font-mono text-xs text-fg-faint">
     {reg.census && reg.census.measured < reg.census.attempted && (
       <p class="mb-2">{txt.censusNote(reg.census.attempted, reg.census.measured)}</p>

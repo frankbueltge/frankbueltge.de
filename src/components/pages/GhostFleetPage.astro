@@ -84,6 +84,31 @@ const protectedCount = d.index.in_no_take + d.index.in_mpa
     </>
   )}
 
+  <section class="mb-8 border-t border-line pt-6">
+    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+      {de ? 'Nächste Nachbarn' : 'Nearest neighbors'}
+    </p>
+    <ul class="mt-3 space-y-2 text-sm text-fg-muted">
+      <li>
+        <a href="https://globalfishingwatch.org/research-project-dark-vessels" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">Global Fishing Watch — Dark Vessels research</a>
+        {de ? ' — die begutachtete Quelle (Science Advances, 2022) der „absichtlich" markierten Ereignisse selbst, mit eigener öffentlicher Karte und Hotspot-Analyse. Jeder Fall hier verlinkt zu ihr.' : ' — the peer-reviewed source (Science Advances, 2022) of the "intentional" flag itself, with its own public map and hotspot analysis. Every case here links out to it.'}
+      </li>
+      <li>
+        <a href="https://theoutlawocean.com/podcast/the-dark-fleet" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">The Outlaw Ocean Project</a>
+        {de ? ' — investigativer Langform-Journalismus über einzelne Dunkelschiffe, mit benannten Schiffen, Crews und monatelanger Recherche.' : ' — long-form investigative journalism on individual dark vessels, with named vessels, crews and months of reporting.'}
+      </li>
+      <li>
+        <a href="https://support.skylight.global" target="_blank" rel="noopener nofollow" class="underline decoration-line underline-offset-2 hover:text-fg">Skylight</a>
+        {de ? ' — gemeinnützige Plattform, eigens gebaut, um Dunkelschiff-Ereignisse nahezu in Echtzeit zu erkennen, im operativen Maßstab.' : ' — nonprofit platform built specifically to detect dark-vessel events in near-real time, at operational scale.'}
+      </li>
+    </ul>
+    <p class="mt-3 max-w-xl text-sm leading-relaxed text-fg-muted">
+      {de
+        ? 'Die „Absichts"-Einschätzung ist die von GFW, nicht diese Seite — jeder Fall verlinkt dorthin. GFW veröffentlicht selbst Hotspot-Karten, The Outlaw Ocean geht mit einzelnen Schiffen tiefer, Skylight/Windward/C4ADS liefern kontinuierliche Erkennung im Einsatzmaßstab. Der Zähler oben (Schiffe in Meeresschutzgebieten) ist ein erster eigener Abgleich mit einer zweiten, unabhängigen Geodatenquelle — Sanktionslisten und Flaggenstaats-Register als weitere Abgleiche sind der offene, noch nicht gebaute Schritt, der aus einer Nacherzählung einen eigenen Fund macht.'
+        : "The \"intentional\" judgment is GFW's, not this page's — every case links out to it. GFW itself publishes hotspot maps, The Outlaw Ocean goes deeper on individual vessels, Skylight/Windward/C4ADS deliver continuous detection at operational scale. The counter above (ships inside marine protected areas) is a first independent cross-reference against a second geodata source — sanctions lists and flag-state records are the further, not-yet-built joins that would turn re-narration into a finding of its own."}
+    </p>
+  </section>
+
   <p class="border-t border-line pt-6 text-xs leading-relaxed text-fg-faint">
     {de
       ? '„Absichtlich" ist eine Schätzung von Global Fishing Watch (ML), kein Beweis — Abschalten kann legitime Gründe haben (etwa Piraterie-Zonen). Dieses Instrument erhebt keinen Vorwurf gegen ein Schiff oder einen Staat. Es erfasst nur offshore, gut beobachtete Abschaltungen.'
