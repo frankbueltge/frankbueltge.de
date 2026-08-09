@@ -75,23 +75,21 @@ export const NAMING = {
   approval: 'approved' as 'draft' | 'approved',
 
   eyebrow: 'FRANK BÜLTGE · DATA ENGINEERING & ANALYTICS',
-  /** Fokus-Zeile über dem Titel (Frank, 16.07. nachmittags): die Ökologie ist das aktuell
-   * prominente Projekt unter mehreren Hauptprojekten — nicht die Identität der Site.
-   * „currently conducting" ist Haus-Vokabular (architect & conductor) und bleibt wahr,
-   * wenn der Fokus wandert. */
-  /** Zwei Häuser statt eines (Frank, 2026-08-09): bis heute WAR die Startseite die Ökologie —
-   *  der Hero nannte sie beim Namen, alles andere wirkte wie Anhang. Seit Machine Attention
-   *  gibt es eine zweite verfasste Anordnung, und die Site darf sich nicht mehr mit einer von
-   *  beiden verwechseln. Der Titel benennt darum die gemeinsame Bedingung beider Häuser statt
-   *  eines der beiden. Ausdrücklich NICHT „artistic research, under proof" (Franks Wahl,
-   *  2026-08-09): die Positionierung der Festival-Linie bleibt gültig, wo sie steht
-   *  (docs/superpowers/specs/2026-08-01-festival-line.md), aber sie ist kein Hero-Anspruch. */
-  focusKicker: 'what runs here',
-  title: 'machines that research, in public',
+  /** Die Forschungsfrage statt der Häuser (Frank, 2026-08-09, spät): der Hero war auf „two
+   *  houses" konzentriert, „die H1 macht so auch keinen Sinn" — kein Projekt wird fokussiert,
+   *  auch nicht zwei. Was die aktuellen Projekte verbindet, ist Franks Frage: was können
+   *  Maschinen wirklich besser als Menschen (konstant beobachten, messen, riesige Datenmengen
+   *  verarbeiten) — und können sie autonom, mit eigenen Mitteln forschen und dabei ein
+   *  konkretes, nützliches Werk oder Instrument mit prüfbarem Mehrwert hervorbringen?
+   *  Löst die Two-Houses-Hero-Zeile vom Vormittag datiert ab (deren Gleichrangigkeits-Kern
+   *  lebt in der OVERVIEW-Sektion weiter). Ausdrücklich weiterhin NICHT „artistic research,
+   *  under proof": die Festival-Linie bleibt gültig, wo sie steht, ist aber kein Hero-Anspruch. */
+  focusKicker: 'the standing question',
+  title: 'what machines are actually better at',
   /** Klartext-Fassung (Frank, 24.07.: „man versteht nur bahnhof" — Verständlichkeit vor
    * Haus-Jargon). Qualifizierte Autonomie-Sprache bleibt: teilautonom unter menschlicher
    * Verantwortung, versioniert ist, was der Apparat erfassen kann. */
-  sub: 'Two houses run on deliberately different constitutions — a federated ecology of three practices with a contact zone, and a single machine running one. Beside them: a loose collection of experiments of my own. Every claim leads back to its evidence, failures stay visible, and Git is the archive.',
+  sub: 'One question runs through the current projects here: what can machines genuinely do better than people — hold attention for months without blinking, measure the same thing every night, read evidence at a scale no one could — and can they research autonomously, with means of their own, and produce concrete, useful works whose value can be checked? Every claim leads back to its evidence, failures stay visible, and Git is the archive.',
   conductorLine: 'architect & conductor: Frank Bültge · the machines write, the record shows who wrote what',
 
   /** Kleiner Link unter dem Hero-Sub zur vollen Apparat-Erklärung (Frank, 25.07.). */

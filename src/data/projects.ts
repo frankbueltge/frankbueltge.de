@@ -23,47 +23,11 @@ export type Project = {
 }
 
 export const projects: Project[] = [
-  {
-    // The ecology is a main project like the others, not the identity of this site (Frank,
-    // 2026-07-31) — the hub says as much ("currently conducting" · "THE OTHER HOUSES"), but
-    // the project register did not list it at all. It does now, and the nav reads from here.
-    // Wordings taken from src/config/naming.ts (hero, whatThis), not paraphrased.
-    slug: 'research-ecology',
-    name: 'Research Ecology',
-    year: '2026',
-    // Lives on this site — the hub IS its front door.
-    url: '/',
-    status: { de: 'Aktiv', en: 'Active' },
-    role: {
-      de: 'Eigenprojekt · Architekt & Dirigent',
-      en: 'Personal project · architect & conductor',
-    },
-    tagline: {
-      de: 'Drei maschinell betriebene Forschungspraktiken und eine Kontaktzone.',
-      en: 'Three machine-run research practices and a contact zone.',
-    },
-    description: {
-      de: 'Eine föderierte Forschungsökologie: drei Praktiken — The Atelier, The Field, The Studio —, jede unter eigener Verfassung, mit eigenem Repository und eigenem öffentlichen Register, Nacht für Nacht unredigiert veröffentlicht; dazu The Middle als Kontaktzone, in der sie sich begegnen und gemeinsame Forschungsfragen aufnehmen. Ich schreibe ihre Arbeit nicht: ich habe den Aufbau entworfen und gebaut, die Verfassungen geschrieben, gebe Richtungen vor und beende, was meiner Kritik nicht standhält. Nichts gilt auf Wort einer Maschine — jede Behauptung hängt an ihrem Beleg, Ausfälle bleiben sichtbar, Git ist das Archiv.',
-      en: 'A federated research ecology: three practices — The Atelier, The Field, The Studio — each under its own written constitution, its own repository and its own public record, published unedited night after night; plus The Middle, the contact zone where they meet and take up shared research questions. I do not write their work: I conceived and engineered the setup, wrote the constitutions, seed directions, and end what fails my critique. Nothing is taken on a machine’s word — every claim is tied to its evidence, failures stay visible, and Git is the archive.',
-    },
-    highlights: {
-      de: [
-        'Drei Praktiken, je eigene Verfassung — keine steht über der anderen',
-        'Nächtliche Pipelines committen versionierte Snapshots: Git ist das Archiv',
-        'Ein Gate lässt nur durch, was nicht kaputt ist — Ausfälle bleiben vermerkt',
-        'The Middle: gemeinsame Forschungsfragen, aktenkundig',
-      ],
-      en: [
-        'Three practices, each under its own constitution — none above another',
-        'Nightly pipelines commit versioned snapshots: Git is the archive',
-        'A gate rejects anything broken — failures stay on the record',
-        'The Middle: shared research questions, all on the record',
-      ],
-    },
-    tech: ['Astro', 'TypeScript', 'Python', 'GitHub Actions', 'Gemini'],
-    badge: 'live',
-    order: 1,
-  },
+  // The research ecology is deliberately NOT in this register (Frank, 2026-08-09, late):
+  // its /work/<slug> card page was an interstitial between the menu and the project's real
+  // page — removed with the menu entry, /work/research-ecology 301s to /ecology. The nav's
+  // "Research projects" section links front doors (/ecology, /machine-attention, /atlas),
+  // never cards. The 2026-07-31 entry lives in git history.
   {
     slug: 'data-snack',
     name: 'data-snack.com',
