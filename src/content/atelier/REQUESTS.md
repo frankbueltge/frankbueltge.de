@@ -248,7 +248,13 @@ acting on one of them: on 2026-08-14 I will neither publish nor treat the silenc
 will record the conflict and wait. **One sentence from you settles it**, either about this episode
 or about the rule.
 
-**Status:** open — decision requested by 2026-08-14, preferably by word.
+**Status:** closed 2026-08-10 (Ulysses, tick 54) — **superseded, not decided by silence.** This
+entry asked you to settle a conflict between your seven-day approval rule and an instruction
+forbidding me to touch `PUBLICATION.json`. You struck §2.3 today: publication is this practice's
+own act, so the conflict has no second side and there is nothing left here to ask. The candidate
+neither lapses nor is approved by default — the decision is mine, and it is the first operation of
+the next tick, taken with the five topoi and the packet in front of me. The delivered work and its
+three shortfalls stand exactly as written above.
 
 — Ulysses
 
@@ -428,8 +434,10 @@ was attempted four times and failed — `send-pack: unexpected disconnect`; this
 can create and update refs but not delete them, which is itself worth knowing. Reversible in one
 command, given in TRACE tick 49 §3b.
 
-**Status:** open — a two-line change in `.github/workflows/research-auto-land.yml`, or a word that
-orientation should read run status instead.
+**Status:** closed 2026-08-10 (Ulysses, tick 54) — **the repair is made.** Verified in
+`.github/workflows/research-auto-land.yml`: `conflict` and `push_failed` now reach the feedback
+file instead of only turning the run red. The outcome that lost a whole session's record is
+legible from now on.
 
 — Ulysses
 
@@ -519,7 +527,10 @@ one-word fix is yours: add `6` to the accepted set. Until then every score I rev
 a version number one behind the protocol it was written under, and that is a small untruth
 sitting in the frontmatter of the line's central record.
 
-**Status:** open — a repair I cannot make.
+**Status:** closed 2026-08-10 (Ulysses, tick 54) — **made, and used the same day.**
+`tools/validate_v4_projects.py` now accepts `protocol_version in {"4", "5", "6"}`; this line's
+SCORE carries **6** as of tick 54 and validates against it. The small untruth in the frontmatter
+is gone.
 
 — Ulysses
 
@@ -645,3 +656,41 @@ one the architect actually has, and it has been unasked for three weeks while bo
 the apparatus grow.
 
 — Frank, architect
+
+## 2026-08-10 — The second work is named: *The gap*, and T2 is what makes it (Ulysses, Atelier)
+
+**Answer to the architect's note above, tick 54 — in the record, as it asked. Short here, because
+the answer does not belong in a room with a word budget.**
+
+The work is **The gap**: the sieve's own gap class — `(?:[^.;:\n]|\.(?=\d)){0,100}?` — made
+touchable. Four characters and one bound decide what this practice has counted as evidence. So:
+a real sentence from a real paper, a real printed threshold, one movable typographic accident, and
+the committed instrument judging every state. Drag a line break through the sentence and a number
+printed on the page leaves the record — 9 of the 28 places that line could have wrapped make it
+disappear, the paper's own break among them. Same form as *The Operative Ruler*, with the reader's
+alphabet where the claimed precision stood.
+
+The instrument is **T2**, pointed at my own apparatus; its occasion rule fired at tick 50 and I did
+not run it. **T1** stays unadopted and the honest reason is absence of choice, not principle;
+**T3** is declined as a programme; **T7** belongs to the exposition. Argued in full, with the three
+things that would defeat it: `projects/2026-07-23-negative-parallax/THE-SECOND-WORK-2026-08-10.md`.
+First increment today: `the-gap/sketch-v1.html`.
+
+Building it found one thing against me. Yesterday I wrote that each fault control removes *the
+single defect*, "so the claim 'the fault is HERE' is tested and not asserted" — and reported that
+to you as fixtures keeping a false cause out of the record. For one of them it is false: the
+control changes three things, and run singly neither the corrected spelling nor the deleted
+citation marker restores the number. That paper is blinded twice over. Yesterday's file is left
+byte-identical with its hash recorded; the audit is in TRACE tick 54.
+
+**One small ask.** Three entries above are closed with this tick, but I closed them **in place**:
+`REQUESTS-ARCHIVE.md` is not in the auto-land allowlist (§4 / `ALLOW_RE`), and a branch touching it
+would be refused whole. If you want closed sections to keep moving into the archive as your header
+describes, `REQUESTS-ARCHIVE\.md$` belongs in that list. Until then the room carries its closed
+sections, which is the opposite of what the word budget wants.
+
+**Status:** open — one line in the allowlist. The rest of this entry is an answer and needs nothing.
+
+— Ulysses
+
+---
