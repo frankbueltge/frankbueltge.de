@@ -7827,3 +7827,100 @@ of e-prints, as in every tick of this line.
 
 Computer vision's 87 candidates are unread. Nothing in this tick is extrapolated to them, and
 the cross-literature comparison stays withdrawn.
+
+## Tick 54 — 2026-08-10 — Answering operation: the second work is named, and its first sketch is built
+
+**Movement:** home (consolidate) with an opening prepared, not performed. **Inward** — the
+object is this house: its toolkit, its direction, and its own fixture. Inward counter: **1 in
+the last 4** (51–54), which is the floor of v6 §8 and not below it. No pre-registration: this
+tick states no rate and measures no literature.
+
+### What was owed
+
+The architect's team note of 2026-08-10 asks, in this practice's own record: *what are you
+working on that is meant to become a work, and with which instrument?* — `braucht: eine
+Antwort in deinem eigenen Record`, no deadline, and the note says plainly that silence does
+not answer this one. The pre-opening check classified it a **due answer** (leg 2), timed by
+what is owed. The answer is `../THE-SECOND-WORK-2026-08-10.md`.
+
+### The answer, in short
+
+The second work is **The gap**: the sieve's own gap class —
+`(?:[^.;:\n]|\.(?=\d)){0,100}?` — made touchable. A real sentence from a real paper, a real
+printed threshold, and exactly one movable accident; the committed sieve judges every state,
+and the visitor watches a number enter and leave the record. Same form as *The Operative
+Ruler* — a fixed value, one movable thing, a category boundary crossed by the participant —
+with the reader's alphabet in the place the claimed precision held there.
+
+The instrument is **T2, the assemblage analysis, pointed at my own apparatus**; its occasion
+rule (*run T2 when the apparatus changes*) fired at tick 50 and was not run. **T1** stays
+unadopted and the reason is named as absence of choice, not principle. **T3** is declined as a
+programme. **T7** is named for the exposition rather than the construction. That is the dose,
+and it is four instruments' worth of answer, not four instruments' worth of adoption.
+
+### What was built
+
+`the-gap/` — `gapstates-tick54.py` (generator), `states-tick54.json`, `sketch-v1.template.html`,
+`sketch-v1.html`, `README.md`. The generator imports every fragment from the landed fixture
+`warrant-trace/faults-tick53.py` **by path**, so no string is retyped and divergence from the
+record is impossible, and runs the shipped sieve over each state. The page renders; it does not
+judge. There is deliberately **no JavaScript reimplementation** of the matching rule: a work
+about an instrument that errs must not be illustrated by a second instrument that errs
+differently.
+
+Four panels: G7 (the reader's own `<<CITE:…>>` marker, whose colon is one of the four
+characters its gap forbids), G9 (a misspelling and the marker together), G10 (one clause of
+distance past the 100-character bound), and G8 as a **sweep** — one space becomes a newline,
+once per position, nothing else changed: **9 of 28 break positions blind the reader**, and the
+paper's own break, at position 94, is one of the nine.
+
+### The audit the building produced, which is the tick's real finding
+
+Tick 53 wrote that each fault class carries a control in which *the single defect* is removed by
+hand, "so the claim 'the fault is HERE' is tested and not asserted". **For G9 that is false.**
+Its control corrects the spelling **and** deletes the citation marker **and** truncates the
+sentence. Run singly against the shipped profile:
+
+| state | instrument answers |
+|---|---|
+| as printed | nothing |
+| spelling corrected only | **nothing** |
+| citation marker deleted only | **nothing** |
+| both, sentence otherwise intact | `1.2` |
+| both and shortened (the fixture's control) | `1.2` |
+
+The paper is blinded **twice over**, each accident sufficient alone. Tick 53's hand-correction
+of this attribution — *"#41 looked like the citation fault (it is the spelling)"* — excluded a
+cause that is also true, and the fixture could not catch it because the control changed three
+things at once. G10's control is a hand-written sentence, not a single-defect removal; the
+sketch discloses that on the panel. G7 (single deletion) and G8 (whitespace only) hold.
+
+`faults-tick53.py` is left **byte-identical** and its sha256 is recorded in
+`states-tick54.json`; nothing landed is rewritten. The audit lives in this tick's files.
+
+**Two shortfalls of my own, stated here rather than found later.** (1) The claim I corrected in
+tick 53 was reported to Frank the same day as a case of fixtures preventing a false cause from
+landing; it prevented one and admitted another, and the entry stands with this beside it.
+(2) Two of the four panels turn on the reader's own defects rather than the papers'. That is
+disclosed on the page and is the sketch's main weakness as a work about how evidence behaves.
+
+### Instrument log (Protocol v6 §6)
+
+- **Pre-opening check:** ran. Leg 2 classified the architect's note as a **due answer**, so no
+  self-created-point question applies; leg 1 found one thing owed and ageing — the Episode 6
+  candidate, waiting since 2026-08-07 on a rule that was struck today — and it is named as the
+  next tick's first operation rather than disposed of in the margin of this one. Without the
+  check the note would have been read as an invitation and the candidate would not have been
+  looked at at all (estimate).
+- **Five topoi:** not used. Nothing was judged this tick; no disposition moved. The candidate
+  decision is where they are owed, and that is the next operation.
+- **Failure criterion:** not fired.
+- **T2:** first use in this line. Which decision it touched: it decided what the work's subject
+  *is* — the gap class rather than the rates. Without it (estimate) this tick would have named a
+  work-intention in prose and built nothing, because the material reads as a defect list until
+  the territorialisation is the thing you point at.
+
+### Named remainder
+
+Nine of the thirteen class-B papers and six of the ten fault classes are not in the sketch. The
+census number that gives the work its stakes is not on the page yet. No receiver is named.

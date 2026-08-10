@@ -6,7 +6,7 @@ kind: work-line
 initiated_by: Ulysses (dispatcher tick under Protocol v4, cascade b — outward initiation)
 declared_work_line: 2026-07-24 (Ulysses, Protocol v5 §10.1 transition — first work-line)
 responsible_human: Frank Bültge
-protocol_version: 5
+protocol_version: 6
 standing_delegation_version: 2
 mandate_check: PASS
 created: 2026-07-23
@@ -34,7 +34,41 @@ work_line:
     exists in a signature, and what survived was the narrower relation between a claim
     and the reference that would license it), and this practice's own citation
     behaviour (ticks 17, 19).
-  refrain_aspect: territory  # tick 53 — the candidate class is not sampled but **read whole**:
+  work_target: >
+    **The gap** (named tick 54, 2026-08-10, answering the architect's note of the same day).
+    The second work of this line: the sieve's own gap class —
+    `(?:[^.;:\n]|\.(?=\d)){0,100}?` — made touchable. A real sentence from a real paper, a
+    real printed threshold, one movable typographic accident, and the committed instrument
+    judging every state. Same form as *The Operative Ruler*: a fixed value, one movable
+    thing, a cited boundary crossed by the participant — with the reader's alphabet where
+    the claimed precision stood. Instrument: **T2**, the assemblage analysis pointed at this
+    practice's own apparatus. T1 unadopted (named as absence of choice, not principle), T3
+    declined as a programme, T7 named for the exposition. Argued in full:
+    `THE-SECOND-WORK-2026-08-10.md`. First increment: `the-gap/sketch-v1.html`, tick 54.
+    The work_intention above is unchanged and stands; this is its concrete target.
+  refrain_aspect: home  # tick 54 — the **answering** tick. The architect's note of 2026-08-10
+    # asked, in this record, what work this line is heading toward and with which instrument;
+    # the pre-opening check classified it a **due answer** and it is answered in
+    # `THE-SECOND-WORK-2026-08-10.md`, with a first checkable increment beside it rather than
+    # a prose intention alone: `the-gap/` — generator, states, template, sketch, README.
+    # **Inward** (1 in the last 4, 51–54): the object is this house's toolkit and its own
+    # fixture. Every fragment is imported from the landed `faults-tick53.py` by path, so no
+    # string is retyped; the shipped sieve computes every verdict and the page only renders.
+    # The sweep is the measurement: one space becomes a newline, once per position — **9 of 28
+    # break positions blind the reader**, the paper's own break among them.
+    # **The finding the building produced, and it is against tick 53:** the claim that each
+    # fault class carries a control removing *the single defect* is **false for G9**. Its
+    # control changes three things; run singly, spelling-corrected-only and marker-deleted-only
+    # both return **nothing**, and only both together return `1.2`. The paper is blinded twice
+    # over, each accident sufficient alone, and tick 53's hand-correction ("it is the spelling,
+    # not the citation fault") excluded a cause that is also true — reported to Frank the same
+    # day as a case of fixtures preventing a false cause from landing. G10's control is a
+    # hand-written sentence and the sketch says so; G7 and G8 hold. `faults-tick53.py` is left
+    # **byte-identical**, its sha256 recorded in `the-gap/states-tick54.json`; nothing landed is
+    # rewritten. **T2's first use in this line** is logged in TRACE with its counterfactual.
+    # Named remainder: nine of thirteen class-B papers and six of ten fault classes are not in
+    # the sketch, the census number is not on the page, and no receiver is named.
+  refrain_aspect_tick53: territory  # tick 53 — the candidate class is not sampled but **read whole**:
     # all **53 gaia** and all **20 mcmc** papers the instrument files as *invokes the statistic,
     # states no threshold*. 73 of 73 fetched, **73 of 73 byte-identical** to the manifests that
     # first read them (D0 silent), one manifest record per id (D7 silent), no unreadable source.
@@ -2885,6 +2919,54 @@ out.
 seven pinned faults, and the re-measure of all three frames in one operation** — until that is
 done, every rate this line has published, tick 48's included, carries an unmeasured understatement
 in its own favour. Then the judging, at the monthly line review.
+
+---
+
+### Tick 55 — 2026-08-10 — the ten faults repaired *(landed mid-operation; see the note)*
+
+**Aspect: territory. The classification is deliberately NOT set yet, and that is the point.**
+The repair on its own is inward — its object is this house's toolkit — and the floor allows
+one inward session in four, which tick 54 has already spent (51–54). The half that makes this
+tick outward is the re-measure of 1 085 papers in three frames, which was still running when
+this section was written. So the honest state is: **the operation is not finished, and the
+repair alone would not have been a legitimate tick.** Recorded here rather than backdated
+later.
+
+**What exists at this point.** `PREREGISTRATION-tick55.md` — the repair specified before it
+was written, two faults declined with their reasons, nine forecasts with defeat conditions,
+and two amendments dated before any measurement rather than discovered after. Instrument
+**0.6**: five repairs in the engine (the relation macros `\geqslant`/`\gtrsim` and their
+mirrors · the gap steps over the instrument's OWN `<<CITE:…>>` marker, whose colon is one of
+the four characters its gap forbids · a footnote is moved out of its host sentence and not
+deleted · the gap steps over a single non-paragraph newline · `\phantom{…}` is dropped) and
+two in the profiles (`{VGAP}`, the step from a relation to its number; one optional letter in
+the RUWE term, for a paper that misspells it at the site). `selftest-0.6.py` passes — eleven
+repaired cases green, twelve controls still refused, and the footnote repair held to both
+halves. The rendered fixtures of `faults-tick53.py` go **9 green / 5 red** under 0.6, which is
+exactly what P1 forecast, red case for red case; the landed file and its json are left
+byte-identical and the 0.6 run is kept beside them as `faults-tick53-under-0.6.json`.
+
+**Two corrections against this record, both proven rather than asserted.**
+`g10-double-block-tick55.py`: tick 53 named the one mcmc miss *"the gap bound of 100
+characters is shorter than the sentence"*. As a diagnosis that is wrong — the fragment is
+blocked **twice**, each block sufficient alone. The full stop between the term and the number
+hides it at a bound of 10 000; with that one character turned into a comma and nothing else
+changed, the bound of 100 hides it and 200 does not. Second fault class in two days named
+after one cause that has two (tick 54 found the first, in G9). And a control written for the
+new profile repair **failed against 0.5 as well**: `of` reaches a number through an ordinary
+English genitive — *the companion mass **of** 1.4 solar masses* — with no comparison in the
+sentence. Recorded as **N1** in `selftest-0.6.py`, red by design and NOT repaired: no instance
+of it is pinned in a paper, and repairing an invented string would reverse the order every
+other repair of this line obeyed. Its direction is overstatement of sites, and a false site
+carries no deriving document, so it lowers the fraction the shipped reading reports — the
+direction that flatters the claim.
+
+**Standing until the operation completes:** no number of this line may be recomputed with 0.6
+until the re-measure of all three frames is landed. That is tick 50's rule, tick 51 paid for
+it, and tick 53 restated it as the reason this tick exists.
+
+**Status:** ACTIVE, unchanged. Disposition unchanged. `mandate_check: PASS`. Shipped work
+untouched.
 
 ---
 
