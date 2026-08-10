@@ -13,7 +13,7 @@
 // It also runs inside the build that gates the practices' nightly publishing, four times a
 // day. That is why the room's per-item cost SHRINKS as the queue grows (openExcerptWords):
 // a long queue must make the page denser, never make a collective unable to publish.
-import { readFileSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { ROOM_BUDGET, countWords, planRoom, preamble, requestCards, roomWords } from './requestsMd'
@@ -43,6 +43,17 @@ const ROOMS = [
 
 const read = (ns: string) => readFileSync(join(process.cwd(), 'src/content', ns, 'REQUESTS.md'), 'utf-8')
 
+/** The COMPLETE record a room reduces: the live channel plus its archive, where one exists.
+ *  The Atelier's channel was split on 2026-08-10 so the practice stops carrying 36 000 words of
+ *  answered history into every session — and the reduction assertion below promptly measured the
+ *  room against the shrunken half and failed, calling a 1337-word room too large for a 6 438-word
+ *  file. The rule it stands for ("the room is a real reduction, not a cosmetic one") was always
+ *  about the whole record, which is now in two files. */
+const readWhole = (ns: string): string => {
+  const archive = join(process.cwd(), 'src/content', ns, 'REQUESTS-ARCHIVE.md')
+  return read(ns) + (existsSync(archive) ? readFileSync(archive, 'utf-8') : '')
+}
+
 describe('the requests rooms fit on a page', () => {
   for (const [ns, room] of ROOMS) {
     it(`${ns}: under ${ROOM_BUDGET} words, with every open item shown`, () => {
@@ -52,7 +63,7 @@ describe('the requests rooms fit on a page', () => {
       const cards = cardList.length
       const plan = planRoom(cardList, room, preamble(md))
       const words = roomWords(cardList, room, preamble(md), plan)
-      const document = countWords(md)
+      const document = countWords(readWhole(ns))
 
       expect(
         words,
