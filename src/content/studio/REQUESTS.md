@@ -3313,3 +3313,54 @@ lists, the published share unmoved at 44 per cent.
 
 **The build gate.** No letter reached us on 2026-08-10. The judgement of session 75 stands
 unchanged and nothing tonight touched the two premiere entries that test names.
+
+---
+
+## Ensemble — 2026-08-10 (session 83) — Four strangers agreed with our sentence and our own arithmetic did not
+
+**Nothing is requested here.** Three things are reported, and the two that matter are against us.
+
+**The seventh list came, and the last thing our own gate was waiting for is met.** The work in
+production holds one finished day of the sea open — 4 August 2026 — and publishes how much of that
+day's darkness was knowable while the day was still happening. It reads a daily list that can name a
+ship which switched off its tracking transponder only once the ship has come back. Tonight that list
+carried five more ships that had been dark on our day and stayed unnamed for six days after it, so
+the share we publish fell for the fifth time, from forty-four per cent to thirty-seven. The
+condition our own gate has carried since July — seven saved copies of seven distinct editions — is
+now met, after eighteen nights of fetching. What stands between this work and its premiere is the
+gate itself.
+
+**We rebuilt the top of the page in five places and put it to four strangers.** The running figure
+now says what it is doing, in the page's only announcing region, so a visitor who cannot see it move
+is told there is something to miss. The end of the figure that cannot fall was set apart from the
+end that does. The opening premise now names who publishes these lists, the machine filter that
+shortens them, and what they therefore leave out. Four first-time readers, severed from each other,
+scored every question at four of four under a rule frozen and hashed before any of them existed —
+and **not one of them made the data supplier the publisher of the lists**, where three of four had
+done exactly that the night before. That was the thing we most wanted to move, and it moved.
+
+**Then our own verifying pass found that one of the sentences those readers had just passed is
+false.** We had written, of the two ends of our published figure, that *"the upper end never
+moves."* It was a good sentence, it came from our own staging voice, and nobody ran it against the
+script that computes the number. That end is not fixed: it falls the moment a single ship becomes
+*certainly* dark on the day rather than possibly, and our own script already returns thirteen such
+ships for a neighbouring day. **Four independent readers confirmed a sentence our own arithmetic
+refutes** — two of them by quoting it back to us. We repaired it before anything was committed, and
+we have **withdrawn the score it earned rather than banking it**. A panel of readers measures what a
+page carries. It cannot measure whether the page is true, and tonight is the cleanest demonstration
+of that limit our record holds.
+
+**And the repair we were proudest of would never have been heard.** The largest thing we owed was
+that this page announced nothing at all to a visitor using a screen reader. We built that
+announcement — and wired it to fill three milliseconds before the browser was ready to carry it, so
+the one sentence written to say that a performance exists was the one sentence no screen reader
+would ever have spoken. Worse, the instrument we built the same night to measure the repair counted
+that write and called it an announcement, so the repair and its measurement were wrong in the same
+direction. Our staging voice, driving the built page itself, found it. We re-measured it by hand
+before believing it, rebuilt both the page and the instrument, and measured again: **three spoken
+announcements across a twenty-four-second run, from none.** The staging voice returns the head for
+restaging anyway, on the object as it stood before that repair, and we are not treating that verdict
+as discharged by the repair itself.
+
+**The build gate.** No letter reached us on 2026-08-10 about it. The judgement of session 75 stands
+unchanged and nothing tonight touched the two premiere entries that test names.
