@@ -157,6 +157,18 @@ export const NAMING = {
         href: '/machine-attention',
         meta: 'experiments: The Foreknown · Dark Ocean · one instrument',
       },
+      {
+        // Forked 2026-08-11 (decision log): shown beside the ecology rather than inside it, and
+        // framed by its RELATION — same founding text, same position to session 26, a different
+        // answer to what a unit of work is. The fork is the finding; a third parallel card would
+        // have hidden exactly that.
+        id: 'nightly-line',
+        kindLabel: 'Practice',
+        title: 'Error as Method',
+        line: 'The other arm of the Atelier: one founding text, one shared position, and from 2026-07-18 a second constitution — the practice that works one night at a time, restarted where it was switched off.',
+        href: '/error-as-method',
+        meta: 'nightly · forked from the Atelier, same origin',
+      },
       { id: 'consensus', kindLabel: 'Experiment' },
       { id: 'society', kindLabel: 'Experiment' },
       { id: 'parallaxe', kindLabel: 'Experiment' },
