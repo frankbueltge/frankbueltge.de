@@ -28,9 +28,12 @@ const monthName = (key: string): string =>
     <h1 class="mt-3 text-[clamp(30px,5vw,52px)] font-bold tracking-[-0.03em]">Error as Method</h1>
     <p class="mt-4 max-w-2xl text-fg-muted">
       One night, one work, on the record. This practice ran that way for <strong>{line.days} days</strong> and left
-      <strong>{line.count} works</strong> — and then it was switched off, not finished: the day after its last night,
-      a new protocol replaced nightly work with bounded projects, and six days later with open-horizon work-lines.
-      Since {LINE_RESUMED} the line runs again, in its own repository, under the protocol that produced it.
+      <strong>{line.inherited} works</strong> — and then it was switched off, not finished: the day after its last
+      night, a new protocol replaced nightly work with bounded projects, and six days later with open-horizon
+      work-lines. After <strong>{line.dormant} days</strong> standing still it runs again, in its own repository,
+      under the protocol that produced it{
+        line.sinceFork > 0 ? ` — ${line.sinceFork} night${line.sinceFork === 1 ? '' : 's'} since.` : '.'
+      }
     </p>
 
     <section class="mt-14 grid gap-8 border-t border-line/60 pt-8 sm:grid-cols-2">
@@ -66,7 +69,8 @@ const monthName = (key: string): string =>
       <h2 class="text-lg font-semibold">The line, night by night</h2>
       <p class="mt-2 max-w-2xl text-sm text-fg-muted">
         Every work the line made, newest first, each on its own page. Nothing is selected: a work is here if the
-        practice made it on or before {LINE_END}.
+        practice made it on or before {LINE_END}, or if the forked line has made it since. The two halves live in
+        two repositories and are one list, because they are one line.
       </p>
 
       {
@@ -81,6 +85,9 @@ const monthName = (key: string): string =>
                   <a href={work.href} class="group flex flex-wrap items-baseline gap-x-3">
                     <span class="w-[6.5em] shrink-0 font-mono text-[11px] tabular-nums text-fg-faint">{work.date}</span>
                     <span class="font-medium transition-colors group-hover:text-accent-soft">{work.title}</span>
+                    {work.date > LINE_END && (
+                      <span class="font-mono text-[10px] uppercase tracking-wider text-fg-faint">since the fork</span>
+                    )}
                     {work.state === 'withdrawn' && (
                       <span class="font-mono text-[10px] uppercase tracking-wider text-fg-faint">withdrawn, still listed</span>
                     )}

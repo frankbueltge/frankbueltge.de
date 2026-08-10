@@ -1,0 +1,204 @@
+---
+// /error-as-method/<slug> — one night of the forked line, as the practice wrote it.
+//
+// The text is rendered verbatim from the work's own work.md; the head above it is read from its
+// meta.json. Nothing on this page is authored here, and the two things a reader needs in order to
+// disbelieve it are always present: the work's directory in the repository (where the measuring
+// code and the harvested evidence stay) and the night's research journal.
+//
+// The figure resolves relatively. The practice writes `![…](figure.svg)` next to its work, and the
+// mirror puts that file at /error-as-method/<slug>/figure.svg — the same address this route is
+// served from, so its markdown needs no rewriting. That is also why the house's own markdown
+// renderer is used here rather than Astro's content pipeline: the pipeline would try to resolve
+// the relative image as a bundled asset next to the source file, where the mirror deliberately
+// does not put it.
+import Page from '@/layouts/Page.astro'
+import { renderMarkdown } from '@/lib/engines/journal'
+import { LINE_REPO, forkedMeta, forkedWorks } from '@/lib/engines/nightly-line'
+
+export async function getStaticPaths() {
+  // Raw markdown, deliberately: see the note in src/content.config.ts on why the nightly mirror
+  // is not a content collection. The globs live inside this function because getStaticPaths runs
+  // in its own isolated scope and cannot see the component's.
+  const TEXTS = import.meta.glob('/src/data/nightly/works/*/work.md', {
+    eager: true, query: '?raw', import: 'default',
+  }) as Record<string, string>
+  const DAYS = import.meta.glob('/src/data/nightly/journal/*.md', {
+    eager: true, query: '?raw', import: 'default',
+  }) as Record<string, string>
+
+  return forkedWorks().map((work) => ({
+    params: { slug: work.slug },
+    props: {
+      work,
+      // `docs` is empty: that set names root docs this page bakes as modal templates, and this
+      // one bakes none — so a `PROTOCOL.md` in the night's text links into the repository, which
+      // is where a reader can actually read it.
+      html: renderMarkdown(TEXTS[`/src/data/nightly/works/${work.slug}/work.md`] ?? '', {
+        repo: LINE_REPO,
+        docs: new Set<string>(),
+      }),
+      hasJournal: `/src/data/nightly/journal/${work.date}.md` in DAYS,
+    },
+  }))
+}
+
+const { work, html, hasJournal } = Astro.props
+const medium = forkedMeta(work.slug)?.medium
+// The work's own `embodies`, cut to a meta description. A work that carries none falls back to
+// naming the line rather than to an empty tag.
+const description = work.blurb?.slice(0, 300) ?? `A night of the forked line Error as Method, ${work.date}.`
+---
+
+<Page title={`${work.title} — Error as Method | Frank Bültge`} description={description}>
+  <main id="main" class="mx-auto w-full max-w-3xl flex-1 px-6 py-16 sm:py-24">
+    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+      <a href="/error-as-method" class="transition-colors hover:text-fg">Error as Method</a>
+      <span> · night of </span><span class="tabular-nums">{work.date}</span>
+    </p>
+
+    {
+      medium && (
+        <div class="mt-6 border-l-2 border-line pl-4">
+          <p class="font-mono text-[10px] uppercase tracking-[0.14em] text-fg-faint">Medium</p>
+          <p class="mt-1 text-sm leading-relaxed text-fg-muted">{medium}</p>
+        </div>
+      )
+    }
+
+    <article class="night-prose mt-10" set:html={html} />
+
+    <section class="mt-14 border-t border-line/60 pt-6 font-mono text-xs leading-relaxed">
+      <p class="text-fg-faint">Where to check it</p>
+      <p class="mt-2">
+        <a
+          href={`${LINE_REPO}/tree/main/works/${work.slug}`}
+          rel="noopener"
+          class="underline decoration-line underline-offset-4 transition-colors hover:text-fg"
+        >
+          the work's directory — measuring code, harvested evidence, metadata ↗
+        </a>
+      </p>
+      {
+        hasJournal && (
+          <p class="mt-1">
+            <a
+              href={`${LINE_REPO}/blob/main/journal/${work.date}.md`}
+              rel="noopener"
+              class="underline decoration-line underline-offset-4 transition-colors hover:text-fg"
+            >
+              the night's research journal — what it took up, and what went against it ↗
+            </a>
+          </p>
+        )
+      }
+      <p class="mt-4 text-fg-faint">
+        Mirrored from the practice's repository, not written here. The line's other works:
+        <a href="/error-as-method" class="underline decoration-line underline-offset-4 transition-colors hover:text-fg">
+          night by night →
+        </a>
+      </p>
+    </section>
+  </main>
+</Page>
+
+<style>
+  /* A night's text is prose with a figure, a few tables and a lot of quotation — styled here
+     rather than in a global sheet, because this is the only surface that renders it. */
+  .night-prose :global(h1) {
+    font-size: clamp(28px, 4.5vw, 44px);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
+  .night-prose :global(h2) {
+    margin-top: 2.5rem;
+    font-size: 1.15rem;
+    font-weight: 600;
+  }
+  .night-prose :global(h3) {
+    margin-top: 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  .night-prose :global(p),
+  .night-prose :global(ul),
+  .night-prose :global(ol) {
+    margin-top: 1rem;
+    line-height: 1.75;
+    color: var(--color-fg-muted, inherit);
+  }
+  .night-prose :global(ul),
+  .night-prose :global(ol) {
+    padding-left: 1.25rem;
+    list-style: disc;
+  }
+  .night-prose :global(ol) {
+    list-style: decimal;
+  }
+  .night-prose :global(li) {
+    margin-top: 0.35rem;
+  }
+  .night-prose :global(em) {
+    font-style: italic;
+  }
+  .night-prose :global(strong) {
+    color: var(--color-fg, inherit);
+    font-weight: 600;
+  }
+  .night-prose :global(a) {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-color: var(--color-line, currentColor);
+  }
+  .night-prose :global(blockquote) {
+    margin-top: 1.25rem;
+    border-left: 2px solid var(--color-line, currentColor);
+    padding-left: 1rem;
+    font-style: italic;
+  }
+  .night-prose :global(hr) {
+    margin: 2.5rem 0;
+    border: 0;
+    border-top: 1px solid var(--color-line, currentColor);
+  }
+  .night-prose :global(img),
+  .night-prose :global(svg) {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 2rem 0;
+  }
+  .night-prose :global(code) {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.85em;
+  }
+  .night-prose :global(pre) {
+    margin-top: 1.25rem;
+    overflow-x: auto;
+    border: 1px solid var(--color-line, currentColor);
+    padding: 0.85rem 1rem;
+    font-size: 0.8rem;
+  }
+  /* Wide tables scroll inside their own box; the page never scrolls sideways. */
+  .night-prose :global(table) {
+    display: block;
+    overflow-x: auto;
+    margin-top: 1.5rem;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+  }
+  .night-prose :global(th),
+  .night-prose :global(td) {
+    border-bottom: 1px solid var(--color-line, currentColor);
+    padding: 0.4rem 0.9rem 0.4rem 0;
+    text-align: left;
+    vertical-align: top;
+  }
+  .night-prose :global(th) {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+</style>
