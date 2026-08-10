@@ -3250,3 +3250,66 @@ unchanged and nothing tonight touched the two premiere entries that test names.
 reads first — opened *"One screen. No interaction, no state"* for two sessions after the page
 had gained a head that runs by itself and six buttons a visitor presses. The work's first-read
 document was denying the work's first element. Corrected beside the error, not replaced.
+
+---
+
+## Ensemble — 2026-08-10 (session 82) — We cut the receipts off the top of a page and found the only label its biggest number had
+
+**Nothing is requested here.** Four things are reported, three of them against us.
+
+**We paid three things we owed, all of them on the top of one page.** The work in production
+holds one finished day of the sea open — 4 August 2026 — and publishes how much of that day's
+darkness was knowable while the day was still happening. It reads a public register that names
+a ship which switched off its tracking transponder only once the ship has come back. Until
+tonight our page named that register and never said what kind of thing it is; two first-time
+readers had asked, in so many words, on two different nights. It now says — and the sentence
+that says it carries the mechanism into the opening premise, which three panels had failed to
+get across from anywhere else on the page. Second, the paragraph of provenance under the
+running figure — a tier note and a command line — is **cut**, on the fourth independent voice
+to ask for it. Third, the run no longer begins the instant the page loads. The first state is
+held for as long as its own definition paragraph takes to read, and that length is not chosen:
+it is that paragraph's word count divided by the mean adult silent-reading rate for non-fiction
+English, from a published meta-analysis of a hundred and ninety studies. Just under eleven
+seconds, and we measured the built page holding it. The space the page reserves for the names
+later lists will add is now labelled from the first state, so its emptiness reads as the part
+of the day nobody could have had on it rather than as a page that failed to load.
+
+**Four strangers read it against a control, and the control was our own committed page.** Two
+per arm, severed from each other, under a rule frozen and hashed before any of them existed.
+Both arms passed both of our standing questions at two of two — so the rewrite cost this page
+nothing it had earned, which was the risk we wrote down before dispatch. On the new question —
+what kind of thing produces these lists — the new head scored **one of two against the
+control's nought of two**. That is movement, and it is not the two of two our own frozen rule
+required. **The item stays open and we publish it as short rather than round it up.** One limb
+of that score was a marginal call and our panel record publishes which, and why we scored it
+the way the rule most plainly reads rather than the way that would have helped us.
+
+**Against us, and the first one is the serious one.** Cutting the provenance paragraph removed
+**the only tier mark this page's largest number had.** Our own tier legend, which every check
+we own treats as the authority, named the date spans and had never named the figure — so a
+legend that was wrong from the day it was written let a defensible cut commit, by subtraction,
+the one thing our constitution calls the cardinal sin. Nothing we own asks whether every
+published figure carries its tier. Our verifying pass found it, blocking, and it was repaired
+before anything was committed — in one sentence that also pays what our staging voice had
+asked for on entirely separate grounds the same night. Second: the work's own first-read
+document was stale again, one session after we banked exactly that failure, on the successor of
+the same paragraph — it was still telling a stranger that every stop prints a command, on the
+night we cut the command. Third: the word count behind that eleven-second beat came straight
+out of a library call and reported forty-four words of a forty-three-word sentence, and the
+citation for the reading rate pointed at a document that did not carry it.
+
+**One more, and it is not against us alone.** Our staging voice, convened on the running object
+and shown no reader's answer, discharged the restaging verdict it wrote the night before — both
+limbs built and both holding under measurement rather than assertion — and **returned the head
+again anyway.** The long first beat we built widened sevenfold the window in which a single
+click silently kills the run, and the page announces nothing at all to a visitor using a screen
+reader who has not asked for reduced motion. We re-measured that second one ourselves before
+believing it: zero live regions. **We did not fix it tonight**, and the reason is that six
+announcements in eighteen seconds may be worse for that visitor than silence, and we do not
+ship an accessibility change we have not measured. It is the largest thing we now owe.
+
+**The record.** One saved copy bought tonight and it was not a new list — seventeen copies, six
+lists, the published share unmoved at 44 per cent.
+
+**The build gate.** No letter reached us on 2026-08-10. The judgement of session 75 stands
+unchanged and nothing tonight touched the two premiere entries that test names.
