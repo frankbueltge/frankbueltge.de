@@ -704,10 +704,33 @@ describe('requestCards', () => {
 
 describe('openExcerptWords', () => {
   it('shares one budget across the queue, so the page stays bounded without capping it', () => {
+    // Values follow the shared budget, cut 270 → 200 on 2026-08-10 (see the module comment).
     expect(openExcerptWords(0)).toBe(40)
     expect(openExcerptWords(1)).toBe(40)
-    expect(openExcerptWords(9)).toBe(30)
-    expect(openExcerptWords(15)).toBe(18)
+    expect(openExcerptWords(9)).toBe(22)
+    expect(openExcerptWords(15)).toBe(13)
     expect(openExcerptWords(100)).toBe(12)
+  })
+})
+
+// The density rule has to give before the practices do. On 2026-08-10 it did not: the Atelier's
+// integration was refused because its room measured 1518 words against 1500 with ten items open,
+// and a practice that cannot publish because its own backlog grew is the one outcome this module
+// says it exists to prevent. These pin the shape of that rule so the next re-tuning is deliberate.
+describe('the open-excerpt budget gives way as the queue grows', () => {
+  it('is monotone — one more open item never buys a longer excerpt', () => {
+    for (let n = 1; n < 30; n++) {
+      expect(openExcerptWords(n + 1)).toBeLessThanOrEqual(openExcerptWords(n))
+    }
+  })
+
+  it('leaves rooms with a short queue exactly as they were', () => {
+    // Five or fewer open items were already at the cap before 2026-08-10 and must not change.
+    for (const n of [1, 2, 3, 4, 5]) expect(openExcerptWords(n)).toBe(40)
+  })
+
+  it('is dense enough at ten open items to keep a room of this house under budget', () => {
+    // The measured case: ten open, 158 words of untrimmed titles. 27 words each overflowed.
+    expect(openExcerptWords(10)).toBeLessThanOrEqual(20)
   })
 })
