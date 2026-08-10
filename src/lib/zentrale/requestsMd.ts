@@ -392,9 +392,21 @@ export function requestCards(md: string, opts: RequestCardOptions = {}): Request
  * Why bounded at all: the page's word count is asserted by requestsMd.test.ts, and that test
  * runs in the build that gates the practices' nightly publishing. A growing backlog must
  * make the page denser, not make the practices unable to publish.
+ *
+ * 2026-08-10: that last sentence failed its first real test. The Atelier's integration was
+ * refused all evening — including a manual trigger — because its room measured 1518 words
+ * against a budget of 1500 with TEN items open. The density rule was the part that did not
+ * give: at ten open items each excerpt still bought 27 words, while the ten titles printed
+ * 158 words untrimmed. So the shared budget drops 270 → 200 (ten open items now get 20 words
+ * each, and the room measures 1448). Rooms with five or fewer open items are unaffected —
+ * their per-item share was already above the 40-word cap — so this bites exactly where the
+ * page is under pressure and nowhere else.
+ *
+ * What this is NOT: an answer. Ten asks addressed to a human are still ten asks; this only
+ * stops the queue from silencing the practice that filed them.
  */
 export function openExcerptWords(openCount: number): number {
-  const BUDGET = 270
+  const BUDGET = 200
   const per = Math.floor(BUDGET / Math.max(1, openCount))
   return Math.max(12, Math.min(40, per))
 }
