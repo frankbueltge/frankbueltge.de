@@ -4,7 +4,7 @@
 //
 // The hub's LATEST strip reads the same derivation and shows the newest few (see
 // src/lib/engines/latest.ts). This module adds the two things a complete register needs and a
-// strip does not: it glob-reads ALL four work sources in one place, so the page and the
+// strip does not: it glob-reads ALL five work sources in one place, so the page and the
 // catalogues card can never count differently, and it counts what it found instead of
 // carrying numbers in prose.
 //
@@ -12,12 +12,16 @@
 // (data-snack) keeps its works in src/content/plenum/works as essays without work metas —
 // it is a house of its own, and quietly folding its texts in here would make the count a
 // claim nobody could check against these files.
-import { collectWorks, type EngineKind, type EngineNs, type EngineWorkMeta, type LatestWork } from './latest'
+import { collectWorks, type EngineKind, type EngineNs, type EngineWorkMeta, type LatestWork, type WorkSource } from './latest'
 
-/** The four committed sources of work metadata, with the shape each one has.
+/** The forked nightly line's mirror — named once, because three things must agree about it:
+ *  the source below, the works that come out of it, and the tests that hold both. */
+export const NIGHTLY_FORK_DIR = 'src/data/nightly/works'
+
+/** The five committed sources of work metadata, with the shape each one has.
  *  import.meta.glob needs literal arguments (Vite analyses them statically), so they are
  *  listed rather than generated. An empty namespace yields {} and drops out harmlessly. */
-export const WORK_SOURCES: { ns: EngineNs; kind: EngineKind; dir: string; metas: Record<string, EngineWorkMeta> }[] = [
+export const WORK_SOURCES: (WorkSource & { dir: string })[] = [
   {
     ns: 'field', kind: 'astro', dir: 'src/components/field/werke',
     metas: import.meta.glob('/src/components/field/werke/*/meta.json', { eager: true, import: 'default' }) as Record<string, EngineWorkMeta>,
@@ -34,6 +38,18 @@ export const WORK_SOURCES: { ns: EngineNs; kind: EngineKind; dir: string; metas:
     ns: 'studio', kind: 'html', dir: 'src/content/studio/works',
     metas: import.meta.glob('/src/content/studio/works/*/meta.json', { eager: true, import: 'default' }) as Record<string, EngineWorkMeta>,
   },
+  // The fifth source, and the only one outside the three practices' own repositories: the nightly
+  // line's fork (frankbueltge/error-as-method), mirrored by scripts/nightly/mirror.mjs. It carries
+  // the Atelier's namespace because it IS the Atelier's practice by descent — one founding text,
+  // one position, two constitutions since 2026-07-18 — and only its address differs, which is why
+  // the source declares its own stage. Its inherited half is deliberately absent: those works have
+  // been in src/content/atelier since the night each was made, and a register reading both mirrors
+  // would count all thirty of them twice.
+  {
+    ns: 'atelier', kind: 'html', dir: NIGHTLY_FORK_DIR,
+    stage: (slug: string) => `/error-as-method/${slug}/`,
+    metas: import.meta.glob('/src/data/nightly/works/*/meta.json', { eager: true, import: 'default' }) as Record<string, EngineWorkMeta>,
+  },
 ]
 
 /** Every work, newest first — withdrawn ones included and marked, never dropped.
@@ -41,6 +57,13 @@ export const WORK_SOURCES: { ns: EngineNs; kind: EngineKind; dir: string; metas:
  *  full-viewport route and not the practice's front page. */
 export function allWorks(): LatestWork[] {
   return collectWorks(WORK_SOURCES, { hrefMode: 'stage' })
+}
+
+/** The works the forked nightly line has made since 2026-07-18 — the register's own rows,
+ *  filtered by the directory they were read from rather than re-globbed, so the line's page
+ *  and the house's register can never disagree about what the fork has made. */
+export function forkedNightlyWorks(): LatestWork[] {
+  return allWorks().filter((w) => w.dir === NIGHTLY_FORK_DIR)
 }
 
 export interface WorksSummary {
