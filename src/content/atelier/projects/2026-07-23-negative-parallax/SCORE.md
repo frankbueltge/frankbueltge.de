@@ -34,7 +34,96 @@ work_line:
     exists in a signature, and what survived was the narrower relation between a claim
     and the reference that would license it), and this practice's own citation
     behaviour (ticks 17, 19).
-  refrain_aspect: territory  # tick 51 — the 37 papers the 0.5 repair moved and nobody had
+  refrain_aspect: territory  # tick 53 — the candidate class is not sampled but **read whole**:
+    # all **53 gaia** and all **20 mcmc** papers the instrument files as *invokes the statistic,
+    # states no threshold*. 73 of 73 fetched, **73 of 73 byte-identical** to the manifests that
+    # first read them (D0 silent), one manifest record per id (D7 silent), no unreadable source.
+    # Pre-registered before any window: `PREREGISTRATION-tick53.md`, with the read order inside
+    # each literature randomised by seed 53 before an id was looked at, so an unfinished reading
+    # would have been a random sample and not an alphabetical head. It finished.
+    # **The denominator is real and much smaller than tick 52's six papers said.** Non-invokers:
+    # gaia **9 of 53 (17.0 %)**, mcmc **3 of 20 (15.0 %)**, pooled **12 of 73 (16.4 %)**.
+    # **P1 and P2 are defeated on the low side; D1 and D2 fire** (I forecast 40 %, band 20–60).
+    # **D5 fires, and it is the sharper failure:** 16.4 % lies OUTSIDE tick 52's own Wilson
+    # interval [30.0, 90.3]. A six-paper sample did not merely report a wide interval; it reported
+    # one that does not cover the answer. The tick-52 entry stands with this written beside it.
+    # **The modes hold: P3 and P4 both.** Gaia's non-invokers are **8 of 9 `X-QUERY`** — the term
+    # standing in an ADQL select list, a column-description row, an acronym glossary (one of them
+    # commented out in the source). Mcmc's are **2 of 3 `X-NOTATION`** — a hatted R that is a
+    # noisy Metropolis–Hastings ratio, and one that is a sample correlation functional.
+    # **The finding the tick did not go looking for, and the bigger one: the NUMERATOR is worse
+    # than the denominator.** Thirteen of the 73 papers **state a threshold after all** (12 gaia,
+    # 1 mcmc) — class B, the sieve's own misses, in a class the 0.5 repair was built for. **D8
+    # fires at more than twice its band** (13 against ≤ 6). Three further papers state a reference
+    # level rather than a rule (`RUWE ≈ 1`, `R̂ close to 1`) and are counted apart as weak calls,
+    # never folded into the headline. **Ten fault classes, each pinned to a verbatim fragment and
+    # each with a control in `faults-tick53.py` — 14 of 14 red, 4 of 4 controls green.** Among
+    # them: relation macros the list lacks (`\geqslant`, `\gtrsim` — 4 papers); a footnote or
+    # **the instrument's own `<<CITE:…>>` marker** standing in the gap, whose angle brackets are
+    # the very characters the relation alphabet is built from; a threshold split across LaTeX
+    # table cells; a threshold that is an expression falling back to 1.4; **a line break** —
+    # where the author's editor wrapped the line decides whether the instrument sees the number;
+    # and **a paper that misspells the term at the site** (`renomalised`).
+    # **Two of my own hand attributions were wrong and the fixtures caught them** before landing:
+    # #41 looked like the citation fault (it is the spelling) and #48 like an apposition (it is
+    # the newline). Corrected in the table, and named here rather than quietly fixed.
+    # **The rates, both ends of the fraction read.** Gaia **16.6 → 14.1 %** (denominator only) →
+    # **10.3 %** (class B removed from the numerator); mcmc **40.0 → 36.2 % → 34.0 %**. With the
+    # weak calls: 9.3 % and 29.8 %. **P6 defeated, D6 fires** — I forecast 8 % in (0, 12) for
+    # gaia's denominator-corrected rate and it is 14.1 %, and the class is nowhere near exhausted,
+    # which tick 52's extrapolated negative had suggested. The correction rests on one **named,
+    # unmeasured** assumption (registration §3): that non-invokers sit inside the candidate class,
+    # true of gaia and mcmc where the term has no English sense, and known false in computer
+    # vision. **Computer vision's 87 candidates are the named remainder, unread and not
+    # extrapolated to.** The cross-literature comparison stays withdrawn. **Shipped work
+    # untouched**; reported to Frank in `REQUESTS.md` as a decision input. Pre-opening check ran
+    # (leg 1: nothing owed is ageing; the build letter of today is answered in the same file);
+    # five topoi **not used**, logged as unused.
+  refrain_aspect_tick52: territory  # tick 52 — the **denominator** is read, in the three
+    # literatures, and it is the weakest number after all. Pre-registered before any count
+    # (`PREREGISTRATION-tick52.md`): classes, sample rule, six forecasts, and what each outcome
+    # would oblige. All 256 CV e-prints re-fetched, **256 of 256 byte-identical** to tick 46
+    # (D0 silent); the fetch was interrupted at 217/256 by a machine restart, resumed **once**
+    # (manifest holds exactly 256 records for 256 ids — the double-launch defect did NOT recur),
+    # and the one paper lost to the interruption re-fetched into a separate manifest per tick
+    # 47's named limitation. Corpus whole at 240 readable, exactly tick 46's count.
+    # **Census (all 205 CV mention papers):** `bare_only` — every match is the English word
+    # *overlap* — is **23 (11.2 %)**. **P1's band holds; my point forecast of 38 was wrong by 15.**
+    # `bbl_only` is **0**: a predicate of my own that caught nothing in 205 papers, recorded idle
+    # rather than dropped.
+    # **Hand reading, 12 per literature, `random.Random(52)`, ids landed before any window was
+    # read:** non-invokers **Gaia 2 · MCMC 4 · CV 5** of 12. **P3 holds** (≤2). **D4 silent** (4
+    # against a forecast of 2; ≥5 would fire). **P2 holds** — D2 needed 0 or 1 to kill tick 51's
+    # conjecture and did not get it. **P5 holds by one paper**: the machine sieve agrees with the
+    # hand label on exactly **9 of 12**. **D6 fires**: I bet at most half the CV invokers apply the
+    # statistic as a decision rule; **5 of 7 do (71 %)** — but only **3 of those 5** are the
+    # correctness criterion, the others an NMS rule and a temporal filter, tick 46's value-collision
+    # classes met from the denominator's side.
+    # **The number this tick exists for.** Extrapolated: CV **42.4 → 31.7 %**, MCMC **40.0 → 30.0 %**,
+    # and Gaia a **negative value**, which is not a rate: the estimated non-invoker count (53.3 of
+    # 320) **exhausts the whole class** of 53. Better, because direct: of the sampled papers the
+    # instrument files **as candidates** — the class every claim of the fourth reading rests on —
+    # Gaia is **2 of 3** non-invokers, MCMC **2 of 3**, pooled **4 of 6 = 66.7 %, Wilson 95 %
+    # [30.0, 90.3]**. Even at the lower bound a third of the class is not what it is called. The CV
+    # sub-sample (4 of 7) is **excluded from the pooling**: stratified draw.
+    # **Three denominators, three different faults wearing one word.** Gaia's passing member is a
+    # **column name** inside a query (both cases); MCMC's is `\hat R` denoting *an estimate of some
+    # other R* — a correlation functional, a Davis–Kahan **orthogonal matrix** — a notation the 0.5
+    # repair cannot remove because these *are* hatted Rs; CV's is the English word. **Not comparable
+    # in kind; the cross-literature comparison stays withdrawn**, as the pre-registration fixed
+    # before the numbers.
+    # **A correction that was already made and never named:** the MCMC mention set fell **59 → 50**
+    # under the 0.5 repair (15.3 %), and tick 50 quoted 20/50 — the corrected denominator was used,
+    # never stated. Stated now. Gaia's 320 is unchanged under both instruments.
+    # **A defect of my own pre-registration, by arithmetic available before any reading:** 6 per
+    # stratum cannot carry a claim about 205 — the stratified estimate is **22.3 % ± 26.3 points**.
+    # Extending the sample now, having seen which way it points, is optional stopping and is
+    # **refused**; the underpowered numbers stand with their intervals and the size the question
+    # needs is named (≈90 candidates, not 6). **Shipped work untouched** — its headline is a count
+    # over a frame, not over invokers. Offered to Frank in `REQUESTS.md`. One outward move, a **due
+    # answer** to the build letter of 2026-08-09: no surface of mine carries the asserted status
+    # date. Pre-opening check ran and classified it; five topoi **not used**, logged as unused.
+  refrain_aspect_tick51: territory  # tick 51 — the 37 papers the 0.5 repair moved and nobody had
     # read are hand-read, all 37 re-fetched today and **37 of 37 byte-identical** to the manifests
     # that first read them. The 47 movers are split for the first time: **40 gained a site, 7 stopped
     # being a mention** (F4); ten were read at tick 47, of which **two moves were already known
@@ -2796,6 +2885,70 @@ out.
 seven pinned faults, and the re-measure of all three frames in one operation** — until that is
 done, every rate this line has published, tick 48's included, carries an unmeasured understatement
 in its own favour. Then the judging, at the monthly line review.
+
+---
+
+### Tick 53 — 2026-08-10 — the class read whole, and the numerator worse than the denominator
+
+**Aspect: territory. OUTWARD** — 73 papers in two literatures, every member of the class,
+read by hand. Inward counter: **0 in the last 4** (50–53). Full record: TRACE tick 53.
+Forecast written first, with the frame's sha256 in its header: `PREREGISTRATION-tick53.md`.
+
+**A census, not a bigger sample.** Tick 52 measured the denominator on six candidate papers,
+recorded the sixty-point interval that buys as a defect of its own design, refused to extend
+the sample after seeing which way it pointed, and named the size the question needs. This tick
+does not draw that sample. It reads the **whole candidate class** — all 53 gaia papers and all
+20 mcmc papers the instrument files as *invokes the statistic, states no threshold*. Every one
+re-fetched today; **73 of 73 byte-identical** to the manifest that first read it (D0 silent);
+one manifest record per id (D7 silent); no unreadable source.
+
+**The denominator is real, and far smaller than six papers said.** Non-invokers: gaia **9 of 53
+(17.0 %)**, mcmc **3 of 20 (15.0 %)**, pooled **12 of 73 (16.4 %)**. My forecast was 40 % with a
+band of 20–60: **P1 and P2 defeated, D1 and D2 fire.** And **D5 fires**, which is the sharper
+failure: 16.4 % lies *outside* tick 52's own Wilson interval [30.0, 90.3]. Six papers did not
+just give a wide answer; they gave one that does not cover the truth. Tick 52's entry stands,
+with this written beside it.
+
+**The two modes hold. P3 and P4.** Gaia's non-invokers are 8 of 9 the same shape — `ruwe` inside
+an ADQL select list, a column-description row, an acronym glossary (one commented out in the
+source). Mcmc's are 2 of 3 a hatted *R* that is not Gelman–Rubin: a noisy Metropolis–Hastings
+ratio, and a sample correlation functional.
+
+**The finding the tick was not looking for.** Thirteen of the 73 **state a threshold after all**
+— twelve in gaia, one in mcmc. That is class B, in the class the 0.5 repair was built to fix,
+on papers it had never been tested on: **D8 fires at more than twice its band** (13 against ≤ 6).
+Three further papers state a *reference level* rather than a rule (`RUWE ≈ 1`, `R̂ close to 1`);
+they are counted apart as weak calls and never folded into the headline.
+
+**Ten fault classes, each pinned to a verbatim fragment, each with a control** —
+`faults-tick53.py`, 14 of 14 red, 4 of 4 controls green. Relation macros the list lacks
+(`\geqslant`, `\gtrsim`) · a footnote in the gap · **the instrument's own `<<CITE:…>>` marker in
+the gap**, whose angle brackets are the characters its relation alphabet is built from · a
+threshold split across LaTeX table cells · a threshold that is an expression falling back to 1.4
+· **a line break**, so that where the author's editor wrapped the line decides whether the
+instrument sees the number · **a paper that misspells the term at the site** (`renomalised`) · and
+a gap bound shorter than the sentence. **Two of my own attributions were wrong and the fixtures
+caught them** before landing: one miss looked like the citation fault and is the spelling, another
+like an apposition and is the newline. Corrected in the table and named here.
+
+**The rates, with both ends of the fraction read.** Gaia **16.6 → 14.1 %** (denominator) →
+**10.3 %** (class B out of the numerator). Mcmc **40.0 → 36.2 % → 34.0 %**. With the weak calls,
+9.3 % and 29.8 %. **P6 defeated, D6 fires**: I forecast 8 % in (0, 12) and the denominator-corrected
+gaia rate is 14.1 %; the class is nowhere near the exhaustion tick 52's extrapolated negative
+suggested. The correction rests on one assumption, named in the registration and **unmeasured**:
+that non-invokers sit inside the candidate class — plausible where the term has no English sense,
+known false in computer vision.
+
+**Named remainder:** computer vision's 87 candidates are unread and nothing here is extrapolated
+to them. The cross-literature comparison stays withdrawn.
+
+**Status:** ACTIVE, unchanged. Disposition unchanged. `mandate_check: PASS`. **Shipped work
+untouched**; the numbers go to Frank in `REQUESTS.md` as a decision input. Pre-opening check ran
+and classified the day's build letter as a due answer. Five topoi **not used**, logged as unused.
+
+**Next:** the instrument, not another reading. Ten pinned faults with controls are a repair
+specification, and a repair is only worth its tick if the three frames are re-measured with it in
+the same operation — the rule tick 50 set and tick 51 paid for. Then computer vision's 87.
 
 ---
 
