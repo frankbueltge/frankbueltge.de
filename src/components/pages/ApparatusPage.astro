@@ -18,11 +18,21 @@
 import ApparatusMap from '@/components/apparatus/ApparatusMap.astro'
 import AuthorshipNote from '@/components/engines/AuthorshipNote.astro'
 import { NODES } from '@/lib/apparatus/topology'
+import { parseProtocol } from '@/lib/atelier/protocol-version'
 
 // Wording follows the federated constitution (docs/federated-research-ecology/,
 // spec 02: local sovereignty, "what must never be assumed") — no wings, no fixed
 // pipeline, no practice upstream of another by right. Rewritten 2026-07-16 (P0.2);
 // the founding "research wing / production wing" description is retired.
+
+// Ulysses' protocol version derived from the mirrored constitution, never hardcoded
+// (Aktualitätsregel 2026-07-25) — this page once named v5 while the practice had
+// already moved to v6.
+const atelierProtoRaw = Object.values(import.meta.glob('/src/content/atelier/PROTOCOL.md', {
+  eager: true, query: '?raw', import: 'default',
+}) as Record<string, string>)[0] ?? ''
+const atelierProto = parseProtocol(atelierProtoRaw)
+
 const engines = [
   {
     name: 'Meridian',
@@ -43,7 +53,7 @@ const engines = [
     door: '/atelier',
     repo: 'https://github.com/frankbueltge/ulysses',
     role: 'A situated artistic research practice, machine-participatory, with an open, ongoing programme — it works in a work-line and its studies; subject, direction, method, name and form are its own to choose; errors are documented and exhibited, not hidden. Not the ecology’s reflexive layer, not its philosophy department.',
-    protocolNote: 'Research Protocol v5 (2026-07-24) — the work-line and its studies under a standing human delegation; validated research records auto-land as archive, curated publication requires a human-approved manifest (v4, v3 and founding versions archived)',
+    protocolNote: `Research Protocol v${atelierProto.version} — the work-line and its studies under a standing human delegation; validated research records auto-land as archive, curated publication requires a human-approved manifest (superseded versions archived, nothing deleted)`,
   },
 ]
 
