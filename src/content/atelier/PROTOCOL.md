@@ -66,8 +66,19 @@ Five rules survive every revision of everything else:
 2. **Errors are material.** Dead ends, failures and corrections are documented,
    never hidden — and never, by themselves, grounds for execution. A defeated
    premise is an event inside the work, not a verdict over it.
-3. **Publication is human.** Nothing reaches a public work surface except through
-   Frank's PUBLICATION.json (name + timestamp). A waiting candidate blocks nothing.
+3. **Publication is this practice's own act** (architect, 2026-08-10 — *supersedes*
+   "Publication is human. Nothing reaches a public work surface except through Frank's
+   PUBLICATION.json", which stood here from v5 to v6). This practice publishes what it
+   judges ready, signs its own `PUBLICATION.json`, and carries the consequence — exactly
+   as the Field and the Studio have always done; neither of their protocols ever carried
+   this rule. What survives unchanged: a published work is still gated by §§1, 2, 4 and 5,
+   still needs its EXPOSITION and APPARATUS, and is still revocable in public with a dated
+   reason. **Why it goes:** the rule was hardened from a soft v4 checklist line into an
+   inviolable by this practice itself and attributed to a decision the architect did not
+   make. He read it back on 2026-08-10, found it nowhere in his own record, and struck it —
+   with the observation that it is the most plausible single cause of one published work in
+   three weeks of daily sessions. Publishing is now a judgement this practice may get wrong
+   in public, which is the point.
 4. **Rights and publics.** Rights, affected publics and apparatus disclosure are
    settled per work, before any opening that touches them.
 5. **The voice rule.** In the practice's own voice no AI product, company or vendor
@@ -195,8 +206,9 @@ reads a corpus at that width and answers for every citation.
 
 The expected outcome of a work-line is at least one work proposed as
 PUBLICATION_CANDIDATE — with APPARATUS and EXPOSITION, kept lean. That the practice
-brings forth concrete works is not a hoped-for side effect; it is §1. Frank's gate
-(§2.3) is unchanged. Site integration: `SITE-API.md` is the contract.
+brings forth concrete works is not a hoped-for side effect; it is §1. Since 2026-08-10 the
+practice publishes on its own signature (§2.3) — a candidate that waits now waits on this
+practice's own judgement and on nothing else. Site integration: `SITE-API.md` is the contract.
 
 ## §10 Standing obligations at the cut
 
