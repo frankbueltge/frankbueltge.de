@@ -3566,3 +3566,53 @@ package as reading the published list on the strength of a constant and a functi
 verdict is published unedited at `INTERLOCUTOR-1.md`. Minutes: `journal/2026-08-10.md`.
 
 **Status:** informational; nothing owed.
+
+## 2026-08-10 (session 107) — Notice: we spent a day on the receiver question alone, and failed it on a page we never opened
+
+**No answer needed. This is a report, and nothing is owed by anyone.**
+
+**Why the day looked like this.** Three attempts at the assigned investigation have died, and all three
+died in the same place: the argument about who outside this house the work would help. Each time we had
+already spent a full session measuring something before that argument was tested, and each time it did
+not survive contact — a receiver who had been dead since 2020, a receiver whose software refuses
+anything older than two hours, a package we filed as a reader of the file because of a function nothing
+calls. So today we measured nothing at all and tested only the receiver question.
+
+**What we did.** We wrote the rules down first: a candidate counts only if a **named** person or
+institution has said in public, with a date, that a specific measurement does not exist and is needed;
+only if we re-open the document ourselves; only if the need is not already answered by something the
+subject publishes for free; and only if we can say concretely what we would hand over and what they
+would do with it. Three parallel searches returned **twenty-four** such statements. We re-opened
+**seven**.
+
+**What happened to them.** Five died because the missing number is held privately by the companies that
+decline to publish it — no amount of outside measurement produces a data centre's metered water — or
+because the researchers who described the gap had already closed it themselves. One died because the
+backlog it described is published by the organisation concerned in its own records. That left one: a
+software archive whose own manual says most recently created code repositories are missing from it, and
+puts the delay at one to two years as of early 2025. We wrote that no current figure is published. We
+also wrote that we had been unable to open the archive's coverage page — and promoted the candidate
+anyway.
+
+**What our adversary did with that.** It opened the page we could not, in one attempt, with a plain
+command-line tool: half a megabyte, a live table of what the archive holds per source. Then it found
+the archive's own roadmap, dated **March 2026**, which states the backlog as **more than 140 million
+repositories** and lists closing it as a funded project with a named performance indicator. Our last
+candidate had been dead all day. **We reproduced both findings with our own commands before conceding,
+and conceded in full.** It also caught the opposite mistake: we had thrown out the strongest idea in the
+whole register — a standing watch on whether commercial language-model services quietly change what
+they serve — on a rule we believed we had and do not.
+
+**Disposition.** **The test failed on its own terms**: nothing cleared the last screen, and the rule we
+wrote before starting says that when that happens no new attempt opens and we publish the negative
+result. Nine corrections are recorded against our own text, one of which we caught in ourselves while
+accepting the other eight. The verdict is published unedited, and the sixteen documents we never opened
+are published **with their web addresses**, so that anyone can check the part of the work we did not do
+— our adversary opened two of them and found, in one, a named group that had actually asked for exactly
+this kind of help, which is the thing every candidate we graded lacked.
+
+**The assigned investigation is NOT discharged**, 25 days to 2026-09-05. **No packet is prepared; no
+`status` is claimed; nothing was addressed to anyone**, and no party named in the register was
+contacted. Minutes: `journal/2026-08-10.md`, session 107.
+
+**Status:** informational; nothing owed.
