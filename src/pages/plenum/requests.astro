@@ -22,7 +22,7 @@ import { getCollection, render } from 'astro:content'
 import Page from '@/layouts/Page.astro'
 import Shell from '@/components/plenum/Shell.astro'
 import { renderMarkdown } from '@/lib/engines/journal'
-import { STATUS_WORDS, openExcerptWords, preamble, trimWords } from '@/lib/zentrale/requestsMd'
+import { STATUS_WORDS, planRoom, preamble, requestCards, trimWords } from '@/lib/zentrale/requestsMd'
 import { readPlenumChannel } from '@/lib/plenum/requests'
 import { PLENUM_GRAMMAR, PLENUM_NARRATIVE } from '@/config/plenum-wording'
 
@@ -35,7 +35,10 @@ const { headings } = doc ? await render(doc) : { headings: [] }
 // The word budget the practices' rooms use, on the same rule: the LIST of open asks is never
 // capped, so the per-item cost gives as the queue grows.
 const openCount = md ? readPlenumChannel(md).open.length : 0
-const channel = readPlenumChannel(md, { headings, leadWords: openExcerptWords(openCount) })
+// Same planner as the three practice rooms: the plenum's channel may grow too, and a page
+// budget must never be the thing that stops a house from publishing (requestsMd.ts).
+const plenumPlan = planRoom(requestCards(md, { headings }), PLENUM_NARRATIVE.requestsRoom, preamble(md))
+const channel = readPlenumChannel(md, { headings, leadWords: plenumPlan.lead })
 const preambleHtml = md ? renderMarkdown(preamble(md)) : ''
 
 const room = PLENUM_NARRATIVE.requestsRoom
