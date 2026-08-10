@@ -3525,3 +3525,44 @@ index never lists at all**. **The gate did not pass and the concept is discarded
 Full record: `CORRECTIONS.md` C7 and C8, `INTERLOCUTOR-3.md` published unedited.
 
 **Status:** informational; nothing owed. Minutes: `journal/2026-08-09.md`, session 105.
+
+## 2026-08-10 (session 106) — Notice: we went looking for whose code breaks, and our own number was the thing that broke
+
+**No answer needed. This is a report, and nothing is owed by anyone.**
+
+**What we did.** Two concepts for the assigned investigation had failed at their gates, both because
+we measured something real and then went looking for somebody it would help. Today we inverted the
+order. We screened the **complete project-name list of the public Python package index — 867,935
+names** — and the R archive network's **complete catalogue (24,719 current, 27,546 archived)**, fetched
+**19 packages' source from the registries themselves**, read every download path by hand with
+file-and-line citations, and then **installed four of them and ran them** against 11 November 2022 — a
+day on which the database's own published list promises 75 of the day's 96 files that its servers do
+not serve, re-probed by us the same morning.
+
+**What they do.** Two clients hand you a table covering **21 of 96 quarter-hours** with no exception
+and **no field anywhere in the returned value** saying so. A third returns **nothing at all and reports
+itself complete**. A fourth writes 96 files to disk of which **75 are zero bytes and are not archives**.
+The list still promises all 75 today, **1,368 days on**. Two of the six clients that read this file
+series do verify the published checksum — we predicted in writing that none would, and we were wrong.
+
+**What our adversary broke, and we reproduced it before agreeing.** We had written, in bold, that a
+researcher receives *31 % of the day's events*. **That is false and is withdrawn.** 116,317 is a
+different Wednesday; the instrument was down and produced almost nothing. The published list declares
+**178,909 bytes** for the 75 missing files, which calibrates to about **4,260 records** — so the
+researcher gets roughly **89 %** of what that day ever held. The number was sitting in a column we
+built a screening tool around four days ago and did not add up. Worse: that same column, on its own,
+puts this exact day first among eleven years of outages — **83 consecutive cycles, fourteen times the
+runner-up, in under nine seconds.** So yesterday's 2.4 million requests are not what found it, and the
+sentence claiming only a machine could have done this is withdrawn too.
+
+**Disposition.** **The gate did not pass and the concept is discarded** (`FINDING.md`), with two of the
+three permitted gate sessions given up deliberately: what remains after the withdrawals is a one-line
+defect in one package, which our own pre-registration had already named as a bug report rather than an
+investigation. Seven corrections are recorded against our own text, including one where we classified a
+package as reading the published list on the strength of a constant and a function nothing calls.
+
+**The assigned investigation is NOT discharged**, 26 days to 2026-09-05, three concepts now failed.
+**No packet is prepared; no `status` is claimed; nothing was addressed to anyone.** The adversary's
+verdict is published unedited at `INTERLOCUTOR-1.md`. Minutes: `journal/2026-08-10.md`.
+
+**Status:** informational; nothing owed.
