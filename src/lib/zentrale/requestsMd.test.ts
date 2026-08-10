@@ -20,7 +20,7 @@ import {
   countWords,
   excerpt,
   requestCards,
-  openExcerptWords,
+  planRoom,
 } from './requestsMd'
 
 // Die Fixtures sind reale Ausschnitte aus den vier REQUESTS.md-Dateien (field, atelier, plenum),
@@ -702,35 +702,31 @@ describe('requestCards', () => {
   })
 })
 
-describe('openExcerptWords', () => {
-  it('shares one budget across the queue, so the page stays bounded without capping it', () => {
-    // Values follow the shared budget, cut 270 → 200 on 2026-08-10 (see the module comment).
-    expect(openExcerptWords(0)).toBe(40)
-    expect(openExcerptWords(1)).toBe(40)
-    expect(openExcerptWords(9)).toBe(22)
-    expect(openExcerptWords(15)).toBe(13)
-    expect(openExcerptWords(100)).toBe(12)
-  })
-})
+describe('planRoom spends its levers in a fixed order', () => {
+  const room = {
+    intro: 'x'.repeat(5), standingHeading: 'a', openHeading: 'b', openNone: 'c', openNote: 'd',
+    answeredHeading: 'e', answeredNote: 'f', seedsHeading: 'g', seedsNote: 'h',
+    archiveLink: 'i', fullTextLabel: 'read it in full',
+  }
+  const cards = (n: number) =>
+    requestCards(
+      Array.from({ length: n }, (_, i) => `## 2026-08-01 — An ask with a long title number ${i}\n\nBody words here.\n\n**Status:** open\n\n`).join(''),
+    )
 
-// The density rule has to give before the practices do. On 2026-08-10 it did not: the Atelier's
-// integration was refused because its room measured 1518 words against 1500 with ten items open,
-// and a practice that cannot publish because its own backlog grew is the one outcome this module
-// says it exists to prevent. These pin the shape of that rule so the next re-tuning is deliberate.
-describe('the open-excerpt budget gives way as the queue grows', () => {
-  it('is monotone — one more open item never buys a longer excerpt', () => {
-    for (let n = 1; n < 30; n++) {
-      expect(openExcerptWords(n + 1)).toBeLessThanOrEqual(openExcerptWords(n))
+  it('leaves a short queue at full density and marks it uncompressed', () => {
+    const plan = planRoom(cards(3), room, '')
+    expect(plan.lead).toBe(40)
+    expect(plan.showLabel).toBe(true)
+    expect(plan.compressed).toBe(false)
+    expect(plan.exhausted).toBe(false)
+  })
+
+  it('never returns a plan that omits an ask — there is no such lever', () => {
+    for (const n of [1, 25, 90]) {
+      const plan = planRoom(cards(n), room, '')
+      expect(plan).not.toHaveProperty('shown')
+      expect(plan).not.toHaveProperty('limit')
+      expect(plan.lead).toBeGreaterThanOrEqual(0)
     }
-  })
-
-  it('leaves rooms with a short queue exactly as they were', () => {
-    // Five or fewer open items were already at the cap before 2026-08-10 and must not change.
-    for (const n of [1, 2, 3, 4, 5]) expect(openExcerptWords(n)).toBe(40)
-  })
-
-  it('is dense enough at ten open items to keep a room of this house under budget', () => {
-    // The measured case: ten open, 158 words of untrimmed titles. 27 words each overflowed.
-    expect(openExcerptWords(10)).toBeLessThanOrEqual(20)
   })
 })

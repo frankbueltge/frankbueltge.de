@@ -16,13 +16,12 @@
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
-import { STATUS_WORDS, countWords, openExcerptWords, preamble, requestCards, trimWords } from './requestsMd'
+import { ROOM_BUDGET, countWords, planRoom, preamble, requestCards, roomWords } from './requestsMd'
 import { ATELIER_NARRATIVE } from '@/config/atelier-wording'
 import { FIELD_NARRATIVE } from '@/config/field-wording'
 import { STUDIO_NARRATIVE } from '@/config/studio-wording'
 
 /** The budget every practice's requests room stays under — the whole page, chrome included. */
-const BUDGET = 1500
 
 /**
  * Words the site puts on every page regardless of its content: the Page layout's header and
@@ -35,7 +34,6 @@ const BUDGET = 1500
  *   npm run build && node -e "const h=require('fs').readFileSync('dist/field/requests/index.html','utf8');
  *   console.log(h.replace(/<(script|style)[\\s\\S]*?<\\/\\1>/g,' ').replace(/<[^>]+>/g,' ').split(/\\s+/).filter(Boolean).length)"
  */
-const CHROME_WORDS = 220
 
 const ROOMS = [
   ['atelier', ATELIER_NARRATIVE.requestsRoom],
@@ -45,57 +43,30 @@ const ROOMS = [
 
 const read = (ns: string) => readFileSync(join(process.cwd(), 'src/content', ns, 'REQUESTS.md'), 'utf-8')
 
-/**
- * Counts the words the room renders — modelled on the three requests.astro pages, which are
- * byte-identical in structure and differ only in their skin and their copy (ADR 0010: shared
- * logic, no shared visual grammar). Kept next to the pages in review, not derived from them:
- * a test that rendered the Astro component would measure Astro, not the composition.
- */
-function roomWords(md: string, room: (typeof ROOMS)[number][1]) {
-  const cards = requestCards(md)
-  const open = cards.filter((c) => c.open)
-  const answered = cards.filter((c) => !c.open && !c.seeds).slice(-5)
-  const seeds = cards.filter((c) => c.seeds)
-  const lead = openExcerptWords(open.length)
-
-  let words = countWords(preamble(md))
-  words += countWords([room.intro, room.standingHeading, room.openHeading, room.answeredHeading, room.answeredNote, room.archiveLink].join(' '))
-  words += countWords(open.length === 0 ? room.openNone : room.openNote)
-  if (seeds.length > 0) words += countWords(`${room.seedsHeading} ${room.seedsNote}`)
-
-  for (const c of open) {
-    words += countWords(c.title) + (c.date ? 1 : 0) + countWords(trimWords(c.status ?? '', STATUS_WORDS.open)) + 2
-    words += countWords(trimWords(c.excerpt, lead)) + countWords(room.fullTextLabel) + 1
-  }
-  for (const c of answered) {
-    words += countWords(c.title) + (c.date ? 1 : 0) + countWords(trimWords(c.status ?? '', STATUS_WORDS.closed)) + 2
-    words += countWords(c.excerpt)
-  }
-  for (const c of seeds) words += countWords(c.heading) + 3
-
-  return { words, open: open.length, answered: answered.length, seeds: seeds.length, cards: cards.length }
-}
-
 describe('the requests rooms fit on a page', () => {
   for (const [ns, room] of ROOMS) {
-    it(`${ns}: under ${BUDGET} words, with every open item shown`, () => {
+    it(`${ns}: under ${ROOM_BUDGET} words, with every open item shown`, () => {
       const md = read(ns)
-      const { words: composed, open, cards } = roomWords(md, room)
-      const words = composed + CHROME_WORDS
+      const cardList = requestCards(md)
+      const open = cardList.filter((c) => c.open).length
+      const cards = cardList.length
+      const plan = planRoom(cardList, room, preamble(md))
+      const words = roomWords(cardList, room, preamble(md), plan)
       const document = countWords(md)
 
       expect(
         words,
-        `/${ns}/requests would render ~${words} words (${composed} composed + ${CHROME_WORDS} chrome; ` +
+        `/${ns}/requests would render ~${words} words at plan lead ${plan.lead}, title cap ${plan.titleCap}; ` +
           `document: ${document}, ${open} open of ${cards} sections).\n` +
-          `Budget is ${BUDGET}. Do NOT just raise it: check whether the open queue has grown ` +
-          `(then look at the queue) or whether ${ns}-wording.ts requestsRoom copy has grown (then shorten it).`,
-      ).toBeLessThan(BUDGET)
+          `Budget is ${ROOM_BUDGET}. Do NOT raise it and do NOT hide an item: the planner is supposed to ` +
+          `make this impossible by degrading density first (requestsMd.ts planRoom). If this fails, the ` +
+          `planner ran out of levers — the queue needs answering, or a lever needs adding.`,
+      ).toBeLessThan(ROOM_BUDGET)
 
       // The room must be a real reduction, not a cosmetic one.
       expect(words).toBeLessThan(document / 5)
       // …and it must never be a reduction by omission of an open ask.
-      expect(open).toBe(requestCards(md).filter((c) => c.open).length)
+      expect(open).toBe(cardList.filter((c) => c.open).length)
     })
   }
 
@@ -124,5 +95,67 @@ describe('the requests rooms fit on a page', () => {
       expect(cards.length, ns).toBeGreaterThan(0)
       for (const c of cards) expect(typeof c.excerpt, `${ns}: ${c.heading}`).toBe('string')
     }
+  })
+})
+
+// The property the 2026-08-10 outage was missing. A constant that happened to fit today is not a
+// guarantee; this is. Twelve integrations of the Atelier were refused by this budget in one day,
+// so the room must now be provably unable to do that — for any queue, of any length, with the
+// long titles this house actually writes.
+describe('no queue can silence a practice', () => {
+  const longTitle = (i: number) =>
+    `2026-08-${String((i % 28) + 1).padStart(2, '0')} — The fourth case read across twelve years: ` +
+    `the frame objection is answered, and one word in the shipped work is wrong (Ulysses, Atelier) #${i}`
+
+  const synthetic = (openCount: number): string => {
+    let md = '# Team channel\n\nA preamble of a few words, as every channel carries.\n\n'
+    for (let i = 0; i < openCount; i++) {
+      md += `## ${longTitle(i)}\n\n`
+      md += 'A body paragraph of roughly forty words, which is what these asks actually look like when '
+      md += 'the practice explains what it found, why it matters, what it needs and what happens if the '
+      md += 'answer never comes at all in time.\n\n'
+      md += '**Status:** open — a decision, a repair, or nothing at all.\n\n'
+    }
+    return md
+  }
+
+  it.each([1, 5, 10, 20, 40, 80])('fits with %i open items, and hides none of them', (n) => {
+    const md = synthetic(n)
+    const cards = requestCards(md)
+    const open = cards.filter((c) => c.open)
+    expect(open.length, 'the fixture must really produce open cards').toBe(n)
+
+    const plan = planRoom(cards, ATELIER_NARRATIVE.requestsRoom, preamble(md))
+    const words = roomWords(cards, ATELIER_NARRATIVE.requestsRoom, preamble(md), plan)
+
+    expect(words, `${n} open items overflow the room even at its tightest plan`).toBeLessThan(ROOM_BUDGET)
+    // …and the room never buys the fit by dropping an ask: the plan has no lever for that.
+    expect(Object.keys(plan)).not.toContain('shown')
+    expect(plan.lead).toBeGreaterThanOrEqual(0)
+  })
+
+  it('spends its levers in order — density before titles, and titles last', () => {
+    const short = planRoom(requestCards(synthetic(2)), ATELIER_NARRATIVE.requestsRoom, '')
+    const long = planRoom(requestCards(synthetic(40)), ATELIER_NARRATIVE.requestsRoom, '')
+    expect(short.lead).toBe(40)
+    expect(short.titleCap).toBe(Number.POSITIVE_INFINITY)
+    expect(short.compressed).toBe(false)
+    expect(long.lead).toBeLessThan(short.lead)
+    expect(long.compressed).toBe(true)
+  })
+
+  it('degrades honestly instead of blocking when even the last lever is spent', () => {
+    // Around a hundred open asks no density rule can save the page. What must NOT happen is a
+    // refusal to render or a hidden item; what must happen is that the room says it is at its
+    // limit. Nothing downstream may read `exhausted` as permission to block publishing.
+    const md = synthetic(120)
+    const cards = requestCards(md)
+    const plan = planRoom(cards, ATELIER_NARRATIVE.requestsRoom, preamble(md))
+    expect(plan.exhausted).toBe(true)
+    expect(plan.compressed).toBe(true)
+    expect(plan.lead).toBe(0)
+    expect(plan.titleCap).toBe(3)
+    expect(cards.filter((c) => c.open)).toHaveLength(120)
+    expect(plan.words).toBeGreaterThan(ROOM_BUDGET)
   })
 })

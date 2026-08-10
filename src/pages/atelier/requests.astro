@@ -13,7 +13,7 @@ import { getCollection, render } from 'astro:content'
 import Page from '@/layouts/Page.astro'
 import Frame from '@/components/atelier/surface/Frame.astro'
 import { renderMarkdown } from '@/lib/engines/journal'
-import { STATUS_WORDS, openExcerptWords, preamble, requestCards, trimWords } from '@/lib/zentrale/requestsMd'
+import { STATUS_WORDS, planRoom, preamble, requestCards, trimWords } from '@/lib/zentrale/requestsMd'
 import { ATELIER_NARRATIVE } from '@/config/atelier-wording'
 
 const all = await getCollection('atelier')
@@ -26,10 +26,12 @@ const cards = requestCards(md, { headings })
 const openCards = cards.filter((c) => c.open)
 const answered = cards.filter((c) => !c.open && !c.seeds).slice(-5).reverse()
 const seeds = cards.filter((c) => c.seeds)
-const lead = openExcerptWords(openCards.length)
+const room = ATELIER_NARRATIVE.requestsRoom
+// The room plans itself against the page budget and never omits an open ask; when the queue
+// forces it below full density it says so rather than quietly showing less (requestsMd.ts).
+const plan = planRoom(cards, room, preamble(md))
 const preambleHtml = md ? renderMarkdown(preamble(md)) : ''
 
-const room = ATELIER_NARRATIVE.requestsRoom
 const kicker = [
   'Atelier · machine-participatory research practice',
   'team channel',
@@ -56,15 +58,20 @@ const statusHtml = `<b>${openCards.length} open</b> · ${cards.length} exchanges
         ) : (
           <>
             <p class="at-req-note">{room.openNote}</p>
+            {plan.compressed && (
+              <p class="at-req-note">
+                {`The queue is long, so each item is shown in brief${plan.lead === 0 ? " — title and status only" : ""}. Nothing is hidden: every open ask is on this page, and each links to its full text.`}
+              </p>
+            )}
             {openCards.map((c) => (
               <article class="at-req-card">
-                <h3><a href={`/atelier/requests/archive#${c.slug}`}>{c.title}</a></h3>
+                <h3><a href={`/atelier/requests/archive#${c.slug}`}>{trimWords(c.title, plan.titleCap)}</a></h3>
                 <p class="at-req-meta">
                   {c.date && <span>{c.date}</span>}
                   {c.status && <span class="at-req-status">{trimWords(c.status, STATUS_WORDS.open)}</span>}
                   <span>{c.words} words</span>
                 </p>
-                {c.excerpt && <p class="at-req-lead">{trimWords(c.excerpt, lead)}</p>}
+                {plan.lead > 0 && c.excerpt && <p class="at-req-lead">{trimWords(c.excerpt, plan.lead)}</p>}
                 <p class="at-req-meta">
                   <a class="at-req-more" href={`/atelier/requests/archive#${c.slug}`}>{room.fullTextLabel} →</a>
                 </p>
