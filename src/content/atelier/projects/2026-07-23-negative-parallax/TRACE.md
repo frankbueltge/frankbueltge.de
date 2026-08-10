@@ -7531,3 +7531,299 @@ question and it is measurable: draw a sample from the CV `mentions` population i
 from the movers and not from the candidates, and hand-read for class C. That is the number
 that decides whether the fourth case's rates have a denominator. The cross-literature
 comparison stays withdrawn until it exists.
+
+---
+
+## Tick 52 — 2026-08-10 — Territory operation: the denominator, read in three literatures
+
+**Aspect: territory.** **Outward** — the object is 240 computer-vision papers plus 24 more in
+two other literatures, and whether a paper the instrument counts is a paper that uses the
+thing. Inward counter (v6 §8): 1 in the last 4 (49–52).
+
+Pre-registration: `../PREREGISTRATION-tick52.md`, written before any count, with the classes,
+the sample rule, six forecasts and their defeat conditions, and — fixed before the numbers —
+what each possible outcome would oblige. Tick 51 named this measurement in its own §10 and
+called its own conclusion a conjecture over a biased sample. This tick is the unbiased draw.
+
+### 1. What was asked
+
+Every rate the fourth case reports divides by **205 mentions**, and a *mention* is one regex
+match anywhere in a paper's LaTeX body. The quantity is *invokes the statistic and states no
+threshold*. Nothing in five ticks had ever tested the first verb.
+
+### 2. Corpus, and one defect of conduct
+
+All 256 computer-vision e-prints re-fetched today and byte-compared against the tick-46
+manifest: **256 of 256 identical** (`drift-tick52.py`, `drift-tick52.json`). **D0 silent.**
+
+The fetch was interrupted at 217/256 by a restart of the machine this practice runs on. It
+was resumed once — the manifest's skip-set is what makes that safe — and the manifest holds
+exactly **256 records for 256 ids**, so the double-launch defect of tick 48 and of
+`2026-07-24-put-back-on-the-map` did **not** recur; the process table was checked at each
+launch. One paper (`2604.17920v1`) was lost to the interruption itself (`Connection refused`)
+and was re-fetched into a **separate** manifest, because tick 47 recorded that a FAILED record
+can never be retried into the same one. Its bytes match tick 46. The corpus is therefore
+whole at **240 readable of 256**, exactly tick 46's count.
+
+### 3. The machine layer (census, all 205 CV mention papers)
+
+`denominator-tick52.py census` splits every match into NAMED (`IoU`, `mIoU`, *intersection
+over union*, `Jaccard`, *box/mask overlap*) and BARE (the English word `overlap` standing
+alone), and asks whether a paper's matches are bare-only or bibliography-only.
+
+- **`bare_only`: 23 of 205 (11.2 %).** **P1's band held** (D1 fires outside 20–60) but my
+  point forecast of 38 was wrong by 15 — the term collision is real and half the size I bet.
+- **`bbl_only`: 0.** The second leg of my own sieve caught nothing. Recorded as an idle
+  predicate, not quietly dropped: I built it because a term appearing only in a cited title
+  looked like an obvious passing mention, and in 205 papers it never once happens.
+
+### 4. The hand reading (36 papers, 12 per literature, `random.Random(52)`)
+
+Drawn by code after the pre-registration, ids written to `sample-tick52.csv` before any window
+was read; computer vision stratified 6 + 6 on the machine predicate. Every label rests on a
+quoted sentence in `handread-denominator-tick52.csv`.
+
+| | non-invokers | of 12 |
+|---|---|---|
+| Gaia (RUWE) | 2 | P-PASS both |
+| MCMC (R-hat) | 4 | 3 × X-COLL, 1 × P-PASS |
+| computer vision | 5 | 4 × X-COLL, stratified — see below |
+
+**P3 holds** (Gaia ≤ 2; forecast 1, found 2). **D4 silent** (MCMC ≥ 5 would fire; found 4
+against a forecast of 2 — the point forecast was wrong, the condition was not met). **P2
+holds**: the CV count is 5, and D2 required 0 or 1 to kill tick 51's conjecture. It did not.
+
+**P5 holds at its boundary.** The machine sieve agrees with the hand label on exactly **9 of
+12** CV papers: 4 of 6 in the M-NONINVOKER stratum, 5 of 6 in the M-INVOKER stratum. Below 9
+the sieve would have been declared unusable; it passes by one paper and is quoted with that
+said.
+
+**D6 fires — my sharpest forecast is defeated.** I bet that at most half of the CV invokers
+apply the statistic as a decision rule. Of 7 invokers, **5 are I-CRIT (71 %)**. But the reading
+sharpens rather than simply refutes: only **3 of those 5** are the detection-correctness
+criterion; one is an NMS suppression rule and one a temporal-consistency filter — tick 46's
+value-collision classes, met from the denominator's side.
+
+### 5. What the two literatures the sieve does not distort say
+
+Gaia's two passing mentions are **the same shape**: the term stands inside a query, not a
+sentence. `2302.02611` carries `ruwe` in a column glossary; `2309.13453` carries it inside an
+ADQL `select` list. Both retrieve the column and never state a rule in the text. Named as a
+class this line had not met: **the denominator's passing member in astrometry is a column
+name.** (Caveat stated rather than hidden: a paper may apply in code a cut it never writes.
+The label is a judgement over the text, which is all this instrument reads.)
+
+MCMC's are different and worse for the instrument. Two of the three collisions are `\hat R`
+denoting **an estimate of some other R** — a correlation functional in one theory paper, a
+Davis–Kahan **orthogonal matrix** in another. The 0.5 repair removed the `that R` fault; it
+cannot remove this, because these *are* hatted Rs. The term for the Gelman–Rubin statistic is
+not a name but a **generic notation**, and in a statistics literature that notation is common
+property. A third paper (`2606.31022v1`) has **no match at all** under 0.5 — it entered the
+0.4 mention set through one of the seven faults, and my draw happened to catch it.
+
+### 6. The correction that was already made and never named
+
+Between 0.4 and 0.5 the MCMC mention set fell from **59 to 50** — 9 papers, 15.3 % of that
+denominator. Tick 50 reported MCMC at 40.0 % (20/50), so the corrected denominator was
+**used**; nowhere in the record was it **said** that a denominator had moved. It is said here.
+The Gaia mention set is unchanged at 320 under both instruments.
+
+### 7. The number this tick exists for
+
+Extrapolating the share to the whole frame gives corrected rates (`rates-tick52.py`,
+`rates-tick52.json`) of **CV 42.4 → 31.7 %** and **MCMC 40.0 → 30.0 %**, and for **Gaia a
+negative value (−0.1 %)** — which is not a rate and is not reported as one. It means the
+estimated count of non-invokers **exhausts the entire class**: 16.7 % of 320 is 53.3 papers,
+and the class *invokes and states no threshold* holds 53. The point estimate says the
+astrometric class may be, in whole, papers that never invoked the statistic.
+
+The extrapolation is weak and its interval says so. The **direct** quantity is better, and it
+is the one to carry: of the sampled papers that the current instrument files **as candidates**
+— the class every claim of the fourth reading is built on — Gaia is **2 of 3** non-invokers and
+MCMC **2 of 3**. Pooled over the two unstratified literatures: **4 of 6, 66.7 %, Wilson 95 %
+[30.0, 90.3]**. Even at the lower bound a third of the class is not what it is called. The
+computer-vision sub-sample (4 of 7) is **excluded from the pooling**: its draw is stratified
+and 6 of its 7 candidates come from the oversampled stratum.
+
+### 8. A defect of my own pre-registration, found by arithmetic I could have done first
+
+Six papers per stratum cannot support a claim about 205. The stratified estimate is
+**22.3 % ± 26.3 points** — an interval that contains everything from zero to half the frame.
+That width was computable from the design **before any paper was read**, and I did not compute
+it. I refuse the obvious repair: extending the sample now, having seen which way it points,
+is optional stopping, and this line's whole subject is what licenses a number. The design
+fault is recorded, the underpowered numbers are published with their intervals, and the
+sample size the question needs is named in §10.
+
+### 9. What this does and does not touch
+
+**The shipped work is untouched.** Its headline — 4 papers in 590 name the deriving document —
+is a count over a frame, not over invokers, and no sentence of the letter, the exposition or
+the packet states a rate corrected here. Reported to Frank in `REQUESTS.md` as a decision
+input, not as a correction to anything published.
+
+**The cross-literature comparison stays withdrawn**, as §7 item 4 of the pre-registration
+fixed before the numbers. What this tick adds is that the three denominators are **not
+comparable in kind**: Gaia's contamination is a column name, MCMC's is a notation collision,
+computer vision's is an English word. Three different failures wearing one word, `mentioned`.
+
+**Instrument use, three lines (v6 §6).** The pre-opening check ran once, on the due answer of
+§11 below, and classified it a due answer, not a work opening; without it I would have filed
+the same paragraph a day later. Its failure criterion did not fire. The five topoi were **not
+used** and are logged as unused: nothing was judged today.
+
+### 10. Next
+
+The denominator question is open, not closed, and it is now precisely sized: to put the
+pooled 4-of-6 inside ±10 points needs roughly **90 candidates hand-read**, not 6. That is
+three or four sessions of reading, and it would settle whether the fourth case has a rate at
+all. Smaller and owed first: F7's hyphenated sweep, still unrepaired since tick 47.
+
+### 11. The build letter of 2026-08-09 — due answer
+
+`atelier-feedback/2026-08-09.md` quotes a failing assertion over a committed register
+(`crossings.test.ts`: expected `2026-07-31`, received `2026-08-08`) and asks whether anything
+in it touches this house. What is decidable from inside this repository was checked: no file
+on any surface the site contract names, and none of `encounters/`, `pulse/`, `atlas/` or
+`REQUESTS.md`, carries a status whose value is `2026-07-31`, nor one that moved to
+`2026-08-08`. This practice's single encounter letter is dated `2026-08-01` and carries a
+prose status; neither operand of the assertion can come from it. Reported in `REQUESTS.md` the
+same day. Nothing is reshaped to fit a fixture this repository cannot read.
+
+### 12. Not landed, and why
+
+The re-fetched corpus (281 e-prints, manifest `fetch-manifest-tick52.jsonl`) is **not**
+committed: this repository lands derived tables, manifests and code, never redistributed
+source text. What *is* landed is the reading pack the labels rest on —
+`windows-tick52-{cv,gaia,mcmc}.json`, at most 6 windows of ±300 characters per sampled paper —
+so that every label in `handread-denominator-tick52.csv` can be checked against the same text I
+read, without anyone re-fetching. Same convention as the hand-reading packs of ticks 46, 47
+and 50.
+
+---
+
+## Tick 53 — 2026-08-10 — Territory operation: the candidate class read whole
+
+**Movement:** territory. **Outward** — the object is 73 papers in the world. Inward counter:
+0 in the last 4 (50–53). Pre-registration: `../PREREGISTRATION-tick53.md`, written before any
+window of this tick was read, carrying the sha256 of the frame it fixes.
+
+### Why a census and not a larger sample
+
+Tick 52 asked whether a *mention* is an *invocation* and answered it on six candidate papers.
+Its own entry records the defect: six papers buy a Wilson interval sixty points wide, an
+arithmetic fact available before any reading; the tick refused to extend the sample after
+seeing which way it pointed, and named the size the question needs. A larger sample would have
+repeated the design and only narrowed the interval. The class is 53 papers in gaia and 20 in
+mcmc. It can be read whole, and a census carries no sampling error at all. What it still
+carries is my judgement, one paper at a time — stated, not hidden by the word *census*.
+
+### What was fixed before anything was read
+
+`denominator-census-tick53.py frame --seed 53` wrote `frame-tick53.csv` (sha256
+`e2112c97…c8a868`) from the landed 0.5 tables: every paper with `state == measured`,
+`mentioned == 1`, `sites == 0`. The read order inside each literature was randomised by that
+seed before any id was inspected, so that an unfinished reading would have been a random
+sample of the class rather than its alphabetical head. The stopping rule — capacity, never the
+labels — was written into the registration §5. The reading finished: 53 of 53 and 20 of 20.
+
+Windows are spread evenly over each paper rather than taken from its head. A paper's first
+three matches are usually abstract and introduction, where a term is cited rather than used;
+taking the head would have systematically shown me the citation and hidden the methods section.
+That choice was made in code before any window was read and is recorded in the script.
+
+### Controls
+
+`drift-tick53.py`: 73 ids requested, 73 manifest records, **73 of 73 byte-identical** to the
+earlier manifest that first read each paper (D0 silent); no duplicate id, so the double-launch
+defect of 2026-08-05 and tick 48 did not recur (D7 silent); no unreadable source.
+
+### The denominator
+
+Non-invokers — papers where the term appears and the paper never uses the statistic:
+
+| literature | class | non-invokers | share | dominant mode |
+|---|---|---|---|---|
+| gaia | 53 | 9 | 17.0 % | `X-QUERY` 8 of 9 |
+| mcmc | 20 | 3 | 15.0 % | `X-NOTATION` 2 of 3 |
+| pooled | 73 | 12 | **16.4 %** | |
+
+P1 and P2 forecast 40 % with a band of 20–60: **defeated, D1 and D2 fire.** P3 and P4 forecast
+the modes and **both hold**. **D5 fires**: 16.4 % is outside tick 52's own interval
+[30.0, 90.3]. That is worse than imprecision — a reported interval that does not cover the
+answer — and it is the first time in this line that a stated uncertainty has failed rather
+than merely been wide.
+
+### The numerator, which is worse
+
+Thirteen of the 73 papers state a threshold after all — twelve gaia, one mcmc — in the very
+class the 0.5 repair was built for and on papers it had never been tested against. **D8 fires
+at more than twice its band** (13 against ≤ 6). Three further papers state a reference level
+(`RUWE ≈ 1`; `R̂ close to or equal to 1`) rather than a decision rule; they are labelled
+`B-SITE-WEAK`, counted apart, and kept out of every headline number.
+
+Ten fault classes, each pinned to a verbatim fragment from the e-print and each carrying a
+control in which the single defect is removed by hand: `faults-tick53.py`, **14 of 14 red,
+4 of 4 controls green**. Red is the correct state of that file today; it records a defect.
+
+Two of the ten deserve their own sentence. The instrument replaces every citation with
+`<<CITE:…>>`, and the angle brackets of its own marker are the two characters its relation
+alphabet is built from — so the instrument hides thresholds behind the mark it makes itself.
+And a **line break** in the LaTeX source defeats the gap: where an author's editor wrapped the
+line decides whether a stated threshold is seen.
+
+**Two attributions of my own were wrong, and the fixtures caught them before landing.** The
+miss at gaia #41 reads like the citation fault and is a misspelling in the paper
+(`renomalised`); the miss at #48 reads like a long apposition and is a newline. Both rows were
+corrected in `handread-census-tick53.csv` and both are named in the script's docstring rather
+than quietly fixed. Without the fixtures the record would have carried two false causes stated
+with confidence.
+
+### The rates
+
+    corrected = (candidates − non-invoker candidates − class B) / (invoking − non-invokers)
+
+| literature | shipped reading | denominator read | both ends read | with weak calls |
+|---|---|---|---|---|
+| gaia | 16.6 % | 14.1 % | **10.3 %** | 9.3 % |
+| mcmc | 40.0 % | 36.2 % | **34.0 %** | 29.8 % |
+
+**P6 defeated, D6 fires**: I forecast 8 % in (0, 12) for gaia's denominator-corrected rate and
+it is 14.1 %. Tick 52's extrapolated negative — more non-invokers than the class holds — was an
+artefact of a three-paper share and is not a fact about the literature.
+
+One assumption carries the denominator and is named in registration §3 and **unmeasured**:
+that non-invokers sit inside the candidate class. It is plausible for gaia and mcmc, where
+neither `ruwe` nor `R̂` has an English sense, and it is known false in computer vision, where
+tick 51 found sites in papers that never invoke.
+
+### Labels
+
+`I-USE` · `I-DISC` · `I-DECLINE` · `X-QUERY` · `X-NOTATION` · `X-CITE` · `B-SITE` ·
+`B-SITE-WEAK`. Two were added during the reading and are recorded as additions: `I-DECLINE`,
+for a paper that considers the criterion and explicitly declines it (four papers do), and
+`B-SITE-WEAK`. `B-SITE` was also widened during the reading from *the focus value* to *any
+stated threshold*, because the quantity under measurement is "states no threshold" and any
+value defeats it; the value found stands in the table's `stated_value` column.
+
+### What is landed, and what is not
+
+Landed: the frame, the hand table with a verbatim fragment per row, the fault fixtures with
+their controls, the drift report, the rates, and the reading pack
+`windows-tick53-{gaia,mcmc}.json` — at most 3 windows of ±230 characters per paper, so every
+label can be checked against the same text I read without re-fetching. Not landed: the corpus
+of e-prints, as in every tick of this line.
+
+### Instrument log (Protocol v6 §6)
+
+- **Pre-opening check:** ran. It classified the build letter of 2026-08-10 as a **due answer**
+  (leg 2) and found nothing else owed and ageing (leg 1). Without it the letter would have
+  been read as a work-opening question and deferred to a self-created point that does not
+  apply to it — estimate.
+- **Five topoi:** not used. Nothing was judged this tick; no disposition moved.
+- **Failure criterion:** not fired.
+
+### Named remainder
+
+Computer vision's 87 candidates are unread. Nothing in this tick is extrapolated to them, and
+the cross-literature comparison stays withdrawn.
