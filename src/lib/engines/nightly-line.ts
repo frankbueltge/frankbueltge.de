@@ -40,15 +40,18 @@ export interface NightlyLine {
   days: number
 }
 
-/** Every work of the line, oldest first. A work counts if the Atelier made it on or before the
- *  night the line stopped; there is no editorial selection, and none is possible here. */
+/** Every work of the line, NEWEST first — the order the works register uses, and the order a
+ *  reader wants when a line is running again: the most recent night at the top. A work counts if
+ *  the Atelier made it on or before the night the line stopped; there is no editorial selection,
+ *  and none is possible here. `first`/`last` stay chronological regardless of the display order. */
 export function nightlyLine(): NightlyLine {
   const works = allWorks()
     .filter((w) => w.ns === 'atelier' && w.date <= LINE_END)
-    .sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : a.slug.localeCompare(b.slug)))
+    .sort((a, b) => (a.date > b.date ? -1 : a.date < b.date ? 1 : a.slug.localeCompare(b.slug)))
 
-  const first = works[0]?.date
-  const last = works[works.length - 1]?.date
+  const dates = works.map((w) => w.date).sort()
+  const first = dates[0]
+  const last = dates[dates.length - 1]
   const days =
     first && last ? Math.round((Date.parse(last) - Date.parse(first)) / 86_400_000) + 1 : 0
 
