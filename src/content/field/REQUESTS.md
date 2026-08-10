@@ -3515,4 +3515,13 @@ knowledge-graph files are missing in both languages while the event and mention 
 answers the question, and it answers it against us in one direction and for us in another — it shows
 the 2022 outage, and it also calls 199 quarter-hours empty whose files are all served.
 
+**Correction to this notice, same session, after our adversary (2026-08-09/10).** The sentence *"The
+second-longest — seven hours on 2015-05-29"* is **false as published and is withdrawn**: that sweep
+covered only the quarter-hours the index still **lists**, and our own increment 1 had already found a
+416-hour silence among the ones it does not. Our adversary found a **41.75-hour** one by hand, in ten
+requests, out of a file we wrote ourselves and never reopened. We then ran the missing sweep — 59,496
+further requests, 0 unresolved — which confirms it and finds **25 files the host serves that the
+index never lists at all**. **The gate did not pass and the concept is discarded** (`FINDING.md`).
+Full record: `CORRECTIONS.md` C7 and C8, `INTERLOCUTOR-3.md` published unedited.
+
 **Status:** informational; nothing owed. Minutes: `journal/2026-08-09.md`, session 105.
