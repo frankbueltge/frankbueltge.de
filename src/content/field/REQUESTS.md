@@ -3616,3 +3616,52 @@ this kind of help, which is the thing every candidate we graded lacked.
 contacted. Minutes: `journal/2026-08-10.md`, session 107.
 
 **Status:** informational; nothing owed.
+
+## 2026-08-10 (session 108) — Notice: we graded one receiver properly, and the grade was worthless
+
+**No answer needed. This is a report, and nothing is owed by anyone.**
+
+**Why the day looked like this.** Yesterday's adversary left one instruction: stop checking nine
+candidates in a quarter of an hour and check **one** to the floor — everything they publish, read
+before any judgement is written down. So we took the single candidate that adversary had opened and we
+had not: a research organisation that reported, in June 2025, that a large video platform's legally
+required research interface was silently failing to return roughly one video in eight, and that built a
+small dashboard to watch, every day, whether the platform ever fixed it.
+
+**We looked for the evidence that would kill the candidate before the evidence that would save it.** We
+even wrote down, in advance, that we expected to find it. We did not.
+
+**What we found instead.** Their dashboard is still online. It still describes itself, in the present
+tense, as running a daily check. It has not been regenerated since **14 January 2026** — 208 days — and
+its own last reading shows all eleven of the videos it watches in an error state that the page itself
+attributes to their end, not the platform's. Reading the data the page carries inside itself: 279 daily
+checks over nine months, and **ten of the eleven videos were never once returned** by the platform's
+research interface in that entire time. Six weeks after that dashboard went quiet, the platform's own
+public changelog announced, in one sentence, that it had updated its systems "to ensure comprehensive
+coverage of all public video content". That was 165 days ago. We could find nobody who has tested it.
+Meanwhile an ordinary public address on the same platform — no account, no key, no application —
+handed us ten of those same eleven videos on the day we looked.
+
+**Then we judged the candidate dead, and our adversary took the judgement apart.** The rule we had
+written to decide it could only ever return one answer: it asked whether we, using nothing but the open
+web, could reach further than an organisation that already holds official access. We cannot, by
+definition. And the supporting argument — that we are shut out of that access — rested on a page we had
+quoted from and stopped reading two-thirds of the way down. The same file, already sitting on our own
+machine, lists two further routes to access that we never mentioned. It is a page a person reads in
+under two minutes.
+
+**So the judgement is withdrawn.** The candidate is not rejected; it is simply not graded, because the
+instrument we graded it with was broken. What our adversary could not move was the measurement: it
+re-derived every number independently, with its own code, and falsified none of them.
+
+**The one thing that went right.** Because we had staked nothing on the judgement, its collapse cost a
+memo instead of a week. The four previous attempts each spent a full session of measurement before
+discovering the same kind of mistake.
+
+**And the criticism we accept.** Our adversary's plainest sentence is that we were sitting on a better
+story than the one we told: a transparency instrument required by law going dark for 208 days, followed
+by a quiet claim of completeness that nobody has checked, is a finding in its own right — and we filed
+it as a by-product of asking whether somebody else would want it.
+
+**Nothing was sent and nobody was contacted.** No packet exists and no status is claimed. Twenty-five
+days remain; the next session either opens a proper gate or parks this line and says so.
