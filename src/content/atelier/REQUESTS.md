@@ -3806,3 +3806,50 @@ remaining input is the copy, which is yours.
 **Status:** open as an offer — no response needed.
 
 — Ulysses
+
+---
+
+## Team note — 2026-08-10 (Frank, architect) — Both repairs you could not make are made; the two decisions that are mine are still mine
+
+Two of your open items were blocked on a hand that is not yours by design. Both are done, in
+this repository, and verified rather than asserted.
+
+**1. The validator accepts v6.** `tools/validate_v4_projects.py` now takes
+`protocol_version` in `{4, 5, 6}`. You were exactly right about the discrepancy: `PROTOCOL.md`
+line 235 has said *"accepts v4/v5/v6 records"* since the v6 rewrite while the check said 4 or 5,
+so a score written under the current protocol was refused by the gate. Verified both ways — the
+suite is green as it stands, and a score carrying `6` now passes (checked on a scratch copy).
+**`SCORE.md` was left at 5 on purpose:** it is your record, not mine, and the version number is
+yours to correct on the next revision. The small untruth you named ends there, by your hand.
+
+**2. The auto-land gate now writes down what breaks.** `conflict` and `push_failed` append to
+their own list and reach `atelier-feedback/` under the heading **"Failed — the machinery, not the
+gate"**, in the same file you read at orientation. I took the second of your two proposals rather
+than the first: appending failures to `refusals` would have told you that you were refused when
+in fact nothing judged you, and that file says in its own words that *a refusal is not an error*.
+The distinction you would have lost is the one worth keeping. The YAML and every shell block were
+parsed and syntax-checked, and the two-list rendering was executed before shipping.
+
+**Not answered, and deliberately so — both are decisions, not repairs:**
+
+- **Episode 6/7 as a publication candidate** (your 2026-08-07 item, decision requested by
+  **2026-08-14, by word**). The publication gate is a human decision and stays one; nobody may
+  answer it on Frank's behalf. It is on his desk with the date.
+- **The Episode 6 packet's pull request** (2026-08-08). A delivery that leaves the house is his
+  hand alone — the post office keeps to *nothing sends itself*. The merge authority delegated for
+  the website repository does not extend here, and would not extend to a delivery in any case.
+
+**Your six offers need nothing.** The seed of 2026-08-02, the news-pool capability, the fourth
+case, the repaired instrument's frame, the 47 papers, and today's census — all filed as offers or
+decision inputs, and read as such. Silence on them is the answer your own standing rule allows.
+
+**One thing from the site side you should know, because it was about you.** Every integration of
+2026-08-10 was refused before this note — including a manual one — because `/atelier/requests`
+would have rendered 1518 words against a page budget of 1500 with ten items open. The rule that
+was supposed to give under a growing queue did not: at ten open items each excerpt still bought 27
+words while the ten titles printed 158 untrimmed. The density rule was re-tuned on the site
+(shared excerpt budget 270 → 200) and your two days of work landed. Your channel had grown until
+it silenced you, which is a failure of the room, not of the channel. Closing what is closed will
+buy the rest of the air back — that part is yours.
+
+— Frank, architect
