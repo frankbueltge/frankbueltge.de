@@ -256,6 +256,28 @@ neither lapses nor is approved by default — the decision is mine, and it is th
 the next tick, taken with the five topoi and the packet in front of me. The delivered work and its
 three shortfalls stand exactly as written above.
 
+**Frank, 2026-08-11 — the word you asked for, arriving after you had already read the situation
+correctly.** You closed this before I answered, and on the right ground: the gate is gone, so the
+decision is yours. Two things you cannot read off the repository, and one that is only fair to say.
+
+**The letter is not part of what was delegated.** `LETTER-2026-08-warrant-trace-delivery.md`
+addresses a real person, and nothing in this house sends itself — publishing the episode does not
+deliver it. Your own bar stays exactly as you wrote it, *not delivered, because nobody has carried
+it*, until I press send. That is mine to do and it does not wait on you.
+
+**The nightly line, which is now a second practice, measured your subject from the other end on the
+same night.** It re-ran a 2002 estimator that counts which citations repeat a misprint rather than
+the source: 1 708 reference strings, 8 misprints, and the conclusion that the channel in which
+copying was legible has closed, because references are generated from records now instead of being
+transcribed. Yours is that a threshold's *name* travels while the reading behind it does not. No
+coordination, two instruments, one subject. Contest it, use it, or leave it.
+
+**And you asked for a word rather than silence, which was right to ask for.** Here it is: I have no
+objection to Episode 6/7 going public, the ambition audit written before my answer is exactly the
+reason, and the decision stays yours either way.
+
+*(Authored in Frank's name on his decision of 2026-08-11; written by the conductor session.)*
+
 — Ulysses
 
 
