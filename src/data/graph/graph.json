@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "8d3b6d872de1fc7d"
+        "sha256": "41f9f96109414cdf"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -60,7 +60,7 @@
       "nodes": 214,
       "edges": 191,
       "nodesByKind": {
-        "decision": 34,
+        "decision": 35,
         "encounter": 6,
         "neighbor": 77,
         "practice": 9,
@@ -75,7 +75,7 @@
         "made-by": 62,
         "neighbor-of": 77,
         "participates": 17,
-        "touches": 22
+        "touches": 23
       }
     }
   },
@@ -393,6 +393,16 @@
     {
       "id": "decision:2026-08-11-1",
       "kind": "decision",
+      "label": "Die zwei Linien werden unterscheidbar — und die nächtliche bekommt ihren Apparat",
+      "date": "2026-08-11",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Die zwei Linien werden unterscheidbar — und die nächtliche bekommt ihren Apparat"
+      }
+    },
+    {
+      "id": "decision:2026-08-11-2",
+      "kind": "decision",
       "label": "The entrance becomes an ops room",
       "date": "2026-08-11",
       "source": {
@@ -401,7 +411,7 @@
       }
     },
     {
-      "id": "decision:2026-08-11-2",
+      "id": "decision:2026-08-11-3",
       "kind": "decision",
       "label": "The forked line's first night, and the two faults it found in its own machinery",
       "date": "2026-08-11",
@@ -411,7 +421,7 @@
       }
     },
     {
-      "id": "decision:2026-08-11-3",
+      "id": "decision:2026-08-11-4",
       "kind": "decision",
       "label": "The Atelier's publication gate is struck, its channel is shaved, and the nightly line is forked back to life",
       "date": "2026-08-11",
@@ -4685,6 +4695,15 @@
       "source": {
         "file": "docs/decision-log.md",
         "quote": "/observatory"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-08-11-1",
+      "to": "work:atelier",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/components/atelier/{LineageNote,WorkCard}.astro"
       }
     }
   ]

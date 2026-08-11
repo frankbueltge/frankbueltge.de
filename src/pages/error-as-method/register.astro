@@ -1,0 +1,183 @@
+---
+// /error-as-method/register — the error register as the instrument it claims to be.
+//
+// The line's founding instrument, and its strongest claim: "an error register is not a confession
+// and not a gesture of humility. It is an epistemic instrument: every error is documented in such
+// a way that a second person can trace it and evaluate the documented corrective thread
+// themselves." Twenty-one numbered registers, thirty-eight typed entries, and — this is the part
+// that makes it an instrument rather than a disclaimer — entries that are returned to and
+// reclassified as later sessions learn more.
+//
+// The register's own status declaration is quoted, never recomputed. Each register ends by naming
+// which errors are still active; that is the practice's finding about its own state, and a
+// surface that silently recalculated it would be overruling the instrument it displays.
+import Page from '@/layouts/Page.astro'
+import SectionNav from '@/components/nightly/SectionNav.astro'
+import { LINE_END, LINE_REPO } from '@/lib/engines/nightly-line'
+import { ERROR_TYPES, errorRegister } from '@/lib/nightly/apparatus'
+
+const reg = errorRegister()
+const active = new Set(reg.active.ids)
+const revisitsById = new Map<string, typeof reg.revisits>()
+for (const revisit of reg.revisits) {
+  revisitsById.set(revisit.id, [...(revisitsById.get(revisit.id) ?? []), revisit])
+}
+
+const sessions = reg.registers.map((r) => r.session).filter((s): s is number => typeof s === 'number')
+const firstSession = Math.min(...sessions)
+const lastSession = Math.max(...sessions)
+const maxTypeCount = Math.max(...reg.byType.map((t) => t.count))
+---
+
+<Page
+  title="The error register — Error as Method | Frank Bültge"
+  description="Thirty-eight typed errors across twenty-one numbered registers: the line's instrument for making its own fallibility checkable by a reader, with the entries it returned to and the ones it still calls open."
+>
+  <main id="main" class="mx-auto w-full max-w-4xl flex-1 px-6 py-16 sm:py-24">
+    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+      <a href="/error-as-method" class="transition-colors hover:text-fg">Error as Method</a>
+      <span> · the error register</span>
+    </p>
+    <h1 class="mt-3 text-[clamp(28px,4.6vw,46px)] font-bold tracking-[-0.03em]">The error register</h1>
+    <p class="mt-4 max-w-2xl text-fg-muted">
+      <strong>{reg.opened.length} errors</strong>, typed and numbered, across
+      {' '}<strong>{reg.registers.length} registers</strong> written between sessions {firstSession}
+      and {lastSession}. Not a disclaimer: each entry names the erroneous claim, the evidence base
+      at the time, how the error was found, the corrective thread, what uncertainty remains, and
+      the condition that would have caught it earlier — so a reader can make the assessment rather
+      than take the practice's word for it.
+    </p>
+
+    <SectionNav active="register" />
+
+    <section class="mt-14">
+      <h2 class="text-lg font-semibold">What kinds of error this line makes</h2>
+      <p class="mt-2 max-w-2xl text-sm text-fg-muted">
+        The typology grew with the work — four letters in the first register, eight by the last.
+        Counted once per distinct entry, so returning to an error cannot inflate its type.
+      </p>
+      {/* SVG, not styled spans: this site's CSP drops inline style attributes, so a bar width
+          computed into `style=""` would silently render as nothing. */}
+      <svg
+        class="mt-6 w-full max-w-2xl"
+        viewBox={`0 0 370 ${reg.byType.length * 24}`}
+        role="img"
+        aria-label={`Errors by type: ${reg.byType.map((t) => `${t.type}, ${t.gloss}, ${t.count}`).join('; ')}`}
+      >
+        {
+          reg.byType.map((row, i) => {
+            // The bars start clear of the longest gloss. Mono at 10 user units advances ~6 per
+            // character, and the longest label here runs to about 200 — an earlier version put
+            // the bars at 196 and drew them straight through the text.
+            const w = Math.round((row.count / maxTypeCount) * 110)
+            return (
+              <g>
+                <text x="0" y={i * 24 + 13} class="ty-letter">{row.type}</text>
+                <text x="16" y={i * 24 + 13} class="ty-gloss">{row.gloss}</text>
+                <rect x="216" y={i * 24 + 4} width={w} height="10" class="ty-bar" />
+                <text x={216 + w + 6} y={i * 24 + 13} class="ty-count">{row.count}</text>
+              </g>
+            )
+          })
+        }
+      </svg>
+    </section>
+
+    <section class="mt-14 border-t border-line/60 pt-8">
+      <h2 class="text-lg font-semibold">What it still calls open</h2>
+      <p class="mt-2 max-w-2xl text-sm text-fg-muted">
+        <strong>{reg.active.ids.length} of {reg.opened.length}</strong> errors were still active
+        when the instrument last declared its own state, in register
+        {' '}{reg.active.register} ({reg.active.date}). That figure is the register's, quoted as it
+        wrote it — not recounted here from the entries, because the practice's judgement about
+        which of its errors are closed is a finding and not a sum.
+      </p>
+      <p class="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted">
+        The instrument's own last entry is {reg.lastEntry}, while the line kept working to
+        {' '}{LINE_END}. The final nights are therefore covered by the journal and the works, not
+        by a numbered register — stated here because a page that quietly implied otherwise would
+        be doing the concealment the instrument exists to prevent.
+      </p>
+    </section>
+
+    <section class="mt-14 border-t border-line/60 pt-8">
+      <h2 class="text-lg font-semibold">Every entry</h2>
+      <p class="mt-2 max-w-2xl text-sm text-fg-muted">
+        Oldest first, with the session that opened it and the register it stands in. Rows marked
+        <span class="mx-1 font-mono text-[10px] uppercase tracking-wider text-fg">still open</span>
+        are the ones named in that last declaration; a row with a return under it is an error the
+        practice came back to — the corrective thread it says is the whole point.
+      </p>
+      <ol class="mt-6 divide-y divide-line/60 border-y border-line/60">
+        {
+          reg.opened.map((entry) => (
+            <li class="py-3 scroll-mt-24" id={entry.id}>
+              <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                <span class="w-[3.6rem] shrink-0 font-mono text-[11px] tabular-nums text-fg-faint">{entry.id}</span>
+                <span class="font-mono text-[10px] uppercase tracking-wider text-fg-faint">
+                  {entry.types.map((t) => `${t} — ${ERROR_TYPES[t]}`).join(' + ')}
+                </span>
+                <span class="font-mono text-[10px] tabular-nums text-fg-faint">
+                  S{entry.session} · reg {entry.register}
+                </span>
+                {active.has(entry.id) && (
+                  <span class="font-mono text-[10px] uppercase tracking-wider text-fg">still open</span>
+                )}
+              </div>
+              {entry.headline && (
+                <p class="mt-1 pl-0 text-sm leading-relaxed text-fg-muted sm:pl-[4.6rem]">{entry.headline}</p>
+              )}
+              {(revisitsById.get(entry.id) ?? []).map((revisit) => (
+                <p class="mt-1 pl-0 font-mono text-[11px] leading-relaxed text-fg-faint sm:pl-[4.6rem]">
+                  ↳ returned to in register {revisit.register}
+                  {revisit.headline && <span> — {revisit.headline}</span>}
+                </p>
+              ))}
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <section class="mt-14 border-t border-line/60 pt-8 font-mono text-xs leading-relaxed">
+      <p class="text-fg-faint">Where to read them whole</p>
+      <p class="mt-2">
+        <a href="/atelier/works#fehlerkataster-021" class="underline decoration-line underline-offset-4 transition-colors hover:text-fg">
+          the registers, mirrored verbatim →
+        </a>
+      </p>
+      <p class="mt-1">
+        <a href={`${LINE_REPO}/tree/main/works`} rel="noopener" class="underline decoration-line underline-offset-4 transition-colors hover:text-fg">
+          works/fehlerkataster-*.md in the practice's repository ↗
+        </a>
+      </p>
+      <p class="mt-4 text-fg-faint">
+        Every number on this page is parsed from those files at build time. If a register arrives
+        in a shape this parse does not recognise, the build's tests fail rather than the page
+        reporting an empty register as a clean record.
+      </p>
+    </section>
+  </main>
+</Page>
+
+<style>
+  /* Deliberately no status palette. An open error is not a warning and a closed one is not a
+     success — the register's whole argument is that a documented error is the method working. */
+  .ty-letter {
+    font-family: var(--font-mono, monospace);
+    font-size: 11px;
+    font-weight: 600;
+    fill: var(--color-fg, currentColor);
+  }
+  .ty-gloss {
+    font-family: var(--font-mono, monospace);
+    font-size: 10px;
+    fill: var(--color-fg-faint, currentColor);
+  }
+  .ty-count {
+    font-family: var(--font-mono, monospace);
+    font-size: 10px;
+    fill: var(--color-fg-faint, currentColor);
+  }
+  .ty-bar { fill: var(--color-fg-muted, currentColor); opacity: 0.45; }
+</style>

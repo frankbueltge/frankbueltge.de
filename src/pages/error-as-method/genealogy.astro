@@ -1,0 +1,174 @@
+---
+// /error-as-method/genealogy — the research direction, and how it developed.
+//
+// The line's genealogy is a single 1 600-line document that grew for thirty sessions. It opened
+// with four stations of a historical argument, then split into three parallel tracks as the
+// practice read further, and every extension is dated and attributed to the session that made
+// it. That development is the most legible evidence this line has that it is research and not a
+// series of pieces — and it was invisible, because the document rendered as one undifferentiated
+// wall of markdown at the foot of the Atelier's works room.
+//
+// Nothing here is a summary. The stations, their years and their claims are the document's own
+// headings; the addenda are its own dated section titles, in its own order. The full text stays
+// where it is mirrored and is linked, not duplicated.
+import Page from '@/layouts/Page.astro'
+import SectionNav from '@/components/nightly/SectionNav.astro'
+import { LINE_REPO } from '@/lib/engines/nightly-line'
+import { addenda, stations, tracks } from '@/lib/nightly/apparatus'
+
+const STATIONS = stations()
+const ADDENDA = addenda()
+const TRACKS = tracks()
+
+const dated = ADDENDA.filter((a) => a.date)
+const firstDate = dated[0]?.date
+const lastDate = dated[dated.length - 1]?.date
+const lastSession = ADDENDA[ADDENDA.length - 1]?.from
+// Built as one string rather than a conditional element: an inline `{cond && <span>, …</span>}`
+// left a stray space in front of the comma, because JSX keeps the whitespace around it.
+const span = firstDate && lastDate ? `, ${firstDate} to ${lastDate}` : ''
+---
+
+<Page
+  title="The genealogy — Error as Method | Frank Bültge"
+  description="A genealogy of epistemic indifference: four historical stations that grew into three parallel tracks across thirty sessions, each extension dated by the night that made it."
+>
+  <main id="main" class="mx-auto w-full max-w-4xl flex-1 px-6 py-16 sm:py-24">
+    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+      <a href="/error-as-method" class="transition-colors hover:text-fg">Error as Method</a>
+      <span> · the genealogy</span>
+    </p>
+    <h1 class="mt-3 text-[clamp(28px,4.6vw,46px)] font-bold tracking-[-0.03em]">
+      The Genealogy of Epistemic Indifference
+    </h1>
+    <p class="mt-4 max-w-2xl text-fg-muted">
+      The line's standing theoretical document. It opens on one question — <em>what is a machine's
+      error, and who decides that?</em> — and answers it with a history rather than a definition:
+      {STATIONS.length} stations across a century, describing not progress but a steady shift of the
+      error out of the system and into the observer. It did not stay that way.
+    </p>
+
+    <SectionNav active="genealogy" />
+
+    <section class="mt-14">
+      <h2 class="text-lg font-semibold">The stations it was built on</h2>
+      <p class="mt-2 max-w-2xl text-sm text-fg-muted">
+        The argument the genealogy was built on, in the document's own words. Each station names a
+        text, a year, and what the error is <em>in</em> that text.
+      </p>
+      <ol class="mt-6 divide-y divide-line/60 border-y border-line/60">
+        {
+          STATIONS.map((station) => (
+            <li class="grid gap-x-5 gap-y-1 py-4 sm:grid-cols-[2rem_10rem_1fr]">
+              <span class="font-mono text-[11px] tabular-nums text-fg-faint">{station.n}</span>
+              <span class="font-medium">
+                {station.author}
+                <span class="ml-2 font-mono text-[11px] tabular-nums text-fg-faint">{station.year}</span>
+              </span>
+              <span class="text-sm leading-relaxed text-fg-muted">{station.claim}</span>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    {
+      TRACKS.length > 0 && (
+        <section class="mt-14 border-t border-line/60 pt-8">
+          <h2 class="text-lg font-semibold">Then it grew tracks</h2>
+          <p class="mt-2 max-w-2xl text-sm text-fg-muted">
+            The four stations turned out to be one line through a wider field, and the practice
+            opened parallel tracks rather than forcing later reading into the original sequence.
+            The weight below is how often each track is named in the document — a rough measure of
+            where the work actually went, not a claim about which matters.
+          </p>
+          {/* Drawn as SVG, not as a styled span: this site's CSP drops `style=""` attributes
+              silently, so a width computed into an inline style would render as a zero-width bar
+              that still looked like a deliberate design. Geometry belongs in the geometry. */}
+          <svg
+            class="mt-6 w-full max-w-xl"
+            viewBox={`0 0 320 ${TRACKS.length * 26}`}
+            role="img"
+            aria-label={`How often each track is named: ${TRACKS.map((t) => `${t.label}, ${t.mentions}`).join('; ')}`}
+          >
+            {
+              TRACKS.map((track, i) => {
+                const max = Math.max(...TRACKS.map((t) => t.mentions))
+                const w = Math.round((track.mentions / max) * 210)
+                return (
+                  <g>
+                    <text x="0" y={i * 26 + 14} class="tr-label">{track.label}</text>
+                    <rect x="62" y={i * 26 + 5} width={w} height="10" class="tr-bar" />
+                    <text x={62 + w + 6} y={i * 26 + 14} class="tr-count">{track.mentions}</text>
+                  </g>
+                )
+              })
+            }
+          </svg>
+        </section>
+      )
+    }
+
+    <section class="mt-14 border-t border-line/60 pt-8">
+      <h2 class="text-lg font-semibold">The direction, developing</h2>
+      <p class="mt-2 max-w-2xl text-sm text-fg-muted">
+        Every extension the document carries, in its own order — {ADDENDA.length} of them, from
+        session {ADDENDA[0]?.from} to session {lastSession}{span}. This is the part a finished
+        essay hides: a research direction is not announced, it accumulates, and each row below is
+        a night that read something and had to change the argument to fit it.
+      </p>
+      <ol class="mt-6 divide-y divide-line/60 border-y border-line/60">
+        {
+          ADDENDA.map((addendum) => (
+            <li class="grid gap-x-5 gap-y-1 py-3 sm:grid-cols-[4rem_6.5rem_1fr]">
+              <span class="font-mono text-[11px] tabular-nums text-fg-faint">S{addendum.sessions}</span>
+              <span class="font-mono text-[11px] tabular-nums text-fg-faint">{addendum.date || '—'}</span>
+              <span class="text-sm leading-relaxed">{addendum.title}</span>
+            </li>
+          ))
+        }
+      </ol>
+      <p class="mt-4 max-w-2xl text-xs leading-relaxed text-fg-faint">
+        Rows without a date are extensions the document titles by session alone. Nothing is
+        selected or reordered here: this is every dated addendum the file carries, parsed from its
+        own headings.
+      </p>
+    </section>
+
+    <section class="mt-14 border-t border-line/60 pt-8 font-mono text-xs leading-relaxed">
+      <p class="text-fg-faint">Where to read it whole</p>
+      <p class="mt-2">
+        <a href="/atelier/works#genealogie" class="underline decoration-line underline-offset-4 transition-colors hover:text-fg">
+          the full text, mirrored verbatim →
+        </a>
+      </p>
+      <p class="mt-1">
+        <a href={`${LINE_REPO}/blob/main/works/genealogie.md`} rel="noopener" class="underline decoration-line underline-offset-4 transition-colors hover:text-fg">
+          works/genealogie.md in the practice's repository ↗
+        </a>
+      </p>
+      <p class="mt-4 text-fg-faint">
+        Derived at build time from that file's own headings — stations, tracks and addenda are the
+        document's, not this page's.
+      </p>
+    </section>
+  </main>
+</Page>
+
+<style>
+  /* One identity ink for the track bars — not a status palette. A track that is named less often
+     is not a worse track, so nothing here encodes a judgement in colour. */
+  .tr-label {
+    font-family: var(--font-mono, monospace);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    fill: var(--color-fg-faint, currentColor);
+  }
+  .tr-count {
+    font-family: var(--font-mono, monospace);
+    font-size: 10px;
+    fill: var(--color-fg-faint, currentColor);
+  }
+  .tr-bar { fill: var(--color-fg-muted, currentColor); opacity: 0.45; }
+</style>
