@@ -7,9 +7,44 @@
 // arrival. Every number on it is counted from the works' own committed metadata
 // (src/lib/engines/nightly-line.ts); nothing is written into a string.
 import Page from '@/layouts/Page.astro'
+import SectionNav from '@/components/nightly/SectionNav.astro'
 import { LINE_END, LINE_REPO, LINE_RESUMED, OUTWARD_TURN, nightlyLine } from '@/lib/engines/nightly-line'
+import { addenda, errorRegister, reading, stations } from '@/lib/nightly/apparatus'
 
 const line = nightlyLine()
+
+// The line's own instruments, for the room cards below. Until 2026-08-11 this page ended at a
+// link to the repository, which meant the genealogy, the position papers and a thirty-eight-entry
+// error register were reachable only by leaving the site — while rendering, unread, as raw
+// markdown at the foot of the Atelier's works room.
+const reg = errorRegister()
+const { reached, barriers } = reading()
+const rooms = [
+  {
+    href: '/error-as-method/genealogy',
+    label: 'The genealogy',
+    line: 'A century of the error moving out of the system and into the observer — four stations that grew three tracks as the line read further.',
+    data: `${stations().length} stations · ${addenda().length} dated extensions`,
+  },
+  {
+    href: '/error-as-method/position',
+    label: 'The position',
+    line: 'The one night the line changed its own claim under pressure it applied to itself — and the position the fork inherits.',
+    data: `session ${OUTWARD_TURN.session} · ${OUTWARD_TURN.date}`,
+  },
+  {
+    href: '/error-as-method/register',
+    label: 'The error register',
+    line: 'The founding instrument: every error named, typed, traced to a corrective thread, and left checkable by a reader.',
+    data: `${reg.opened.length} entries · ${reg.active.ids.length} still open`,
+  },
+  {
+    href: '/error-as-method/reading',
+    label: 'The reading',
+    line: 'The bibliography with its access barriers left in — what the line reached, and the primaries it could not.',
+    data: `${reached.length} sources · ${barriers.length} barriers`,
+  },
+]
 const byMonth = new Map<string, typeof line.works>()
 for (const work of line.works) {
   const key = work.date.slice(0, 7)
@@ -35,6 +70,34 @@ const monthName = (key: string): string =>
         line.sinceFork > 0 ? ` — ${line.sinceFork} night${line.sinceFork === 1 ? '' : 's'} since.` : '.'
       }
     </p>
+
+    <SectionNav active="line" />
+
+    {/* ——— the rooms: what this line has, besides its works ———
+         The works are only half of what the line left. The other half is its apparatus, and it
+         had no address on this site until now. Every figure on these cards is derived from the
+         practice's committed texts. */}
+    <section class="mt-12">
+      <h2 class="text-lg font-semibold">What the line carries</h2>
+      <p class="mt-2 max-w-2xl text-sm text-fg-muted">
+        Besides the works: a genealogy it extended for thirty sessions, a documented change of its
+        own position, a typed register of its errors, and a bibliography that records what it could
+        not reach as carefully as what it could.
+      </p>
+      <ul class="mt-6 grid gap-px border border-line/60 bg-line/60 sm:grid-cols-2">
+        {
+          rooms.map((room) => (
+            <li class="bg-bg">
+              <a href={room.href} class="group flex h-full flex-col gap-2 p-5 transition-colors hover:bg-line/20">
+                <span class="font-medium transition-colors group-hover:text-accent-soft">{room.label} →</span>
+                <span class="text-sm leading-relaxed text-fg-muted">{room.line}</span>
+                <span class="mt-auto pt-2 font-mono text-[11px] tabular-nums text-fg-faint">{room.data}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
 
     <section class="mt-14 grid gap-8 border-t border-line/60 pt-8 sm:grid-cols-2">
       <div>

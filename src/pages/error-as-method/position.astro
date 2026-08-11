@@ -1,0 +1,130 @@
+---
+// /error-as-method/position — the night the line's own claim moved.
+//
+// This is the single most consequential event in the line's history and it had no page. For
+// twenty-five sessions the practice asserted "error is what method is made of" and never read
+// the field it worked in. At session 26 it did, and took the word out of the centre of its own
+// claim: error became a special case of Rheinberger's epistemic thing — a difference onto which
+// an observer has already imposed a norm.
+//
+// It matters here for a structural reason too. The fork inherits THIS position, not the founding
+// one, which is why restarting the nightly line is a continuation and not a revival — and why
+// the two arms of the practice share everything up to session 26 and differ only after it.
+//
+// The papers themselves are mirrored verbatim and linked. This page states the turn and quotes
+// the practice; the titles and dates are read off the papers.
+import Page from '@/layouts/Page.astro'
+import SectionNav from '@/components/nightly/SectionNav.astro'
+import { LINE_REPO, OUTWARD_TURN, PROTOCOL_LADDER } from '@/lib/engines/nightly-line'
+import { positionShift } from '@/lib/nightly/apparatus'
+
+const shift = positionShift()
+const founding = PROTOCOL_LADDER[0]!
+---
+
+<Page
+  title="The position, and the night it moved — Error as Method | Frank Bültge"
+  description="For twenty-five sessions the line asserted that error is what method is made of. At session 26 it read its own field and subtracted a word — error became a special case of the epistemic thing."
+>
+  <main id="main" class="mx-auto w-full max-w-4xl flex-1 px-6 py-16 sm:py-24">
+    <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-faint">
+      <a href="/error-as-method" class="transition-colors hover:text-fg">Error as Method</a>
+      <span> · the position</span>
+    </p>
+    <h1 class="mt-3 text-[clamp(28px,4.6vw,46px)] font-bold tracking-[-0.03em]">
+      The night a word left the centre
+    </h1>
+    <p class="mt-4 max-w-2xl text-fg-muted">
+      A research line is worth reading when it can be shown to have changed its mind under
+      pressure it applied to itself. This one did, once, on {OUTWARD_TURN.date} — and the position
+      it arrived at is the one the forked line inherits. That is what makes the restart a
+      continuation rather than a revival.
+    </p>
+
+    <SectionNav active="position" />
+
+    <section class="mt-14">
+      <blockquote class="border-l-2 border-line pl-5 text-base italic leading-relaxed text-fg-muted sm:text-lg">
+        “{OUTWARD_TURN.quote}”
+        <cite class="mt-3 block font-mono text-[11px] not-italic uppercase tracking-[0.12em] text-fg-faint">
+          session {OUTWARD_TURN.session} · {OUTWARD_TURN.date}
+        </cite>
+      </blockquote>
+    </section>
+
+    <section class="mt-14 border-t border-line/60 pt-8">
+      <h2 class="text-lg font-semibold">Before, and after</h2>
+      <p class="mt-2 max-w-2xl text-sm text-fg-muted">
+        Both papers stand in the record; neither is retracted. The second does not replace the
+        first by decree — it subtracts from it, and says what the subtraction costs.
+      </p>
+
+      <div class="mt-8 grid gap-8 sm:grid-cols-2">
+        <div class="border-l-2 border-line/60 pl-5">
+          <p class="font-mono text-[11px] uppercase tracking-[0.14em] text-fg-faint">
+            {shift.before.date} · sessions 1–{OUTWARD_TURN.session - 1}
+          </p>
+          <h3 class="mt-2 font-medium">{shift.before.title}</h3>
+          <p class="mt-3 text-sm leading-relaxed text-fg-muted">
+            The claim, held for twenty-five sessions and argued from three structural arguments —
+            signal, observer, reflexivity: <strong class="text-fg">{shift.before.claim}</strong>.
+          </p>
+        </div>
+        <div class="border-l-2 border-fg-faint pl-5">
+          <p class="font-mono text-[11px] uppercase tracking-[0.14em] text-fg-faint">
+            {shift.after.date} · session {OUTWARD_TURN.session}
+          </p>
+          <h3 class="mt-2 font-medium">{shift.after.title}</h3>
+          <p class="mt-3 text-sm leading-relaxed text-fg-muted">
+            After reading its own field for the first time:
+            <strong class="text-fg">{shift.after.claim}</strong> — a difference onto which an
+            observer has already imposed a norm. The error stops being the thing itself and
+            becomes a case of something larger.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="mt-14 border-t border-line/60 pt-8">
+      <h2 class="text-lg font-semibold">Why the subtraction is the finding</h2>
+      <div class="mt-4 grid gap-8 sm:grid-cols-2">
+        <p class="max-w-prose text-sm leading-relaxed text-fg-muted">
+          The move is not a retreat from the subject. It buys the two poles the line had been
+          holding apart — the error as material and the error as epistemic event — and snaps them
+          together under one mechanism, at the cost of the line's most quotable sentence. A
+          practice that only ever sharpens its founding slogan has not been tested by anything.
+        </p>
+        <p class="max-w-prose text-sm leading-relaxed text-fg-muted">
+          It also settles what the line's name is worth. The founding text of
+          {' '}{founding.date} already said it: <em>“‘Ulysses’ and ‘Error as Method’ are
+          provisional; both may shift when the work demands it (not as gesture). The subject is
+          free.”</em> The error line was chosen by this practice over twenty-six sessions and was
+          never assigned to it. It may leave it, and it names itself.
+        </p>
+      </div>
+    </section>
+
+    <section class="mt-14 border-t border-line/60 pt-8 font-mono text-xs leading-relaxed">
+      <p class="text-fg-faint">The papers, mirrored verbatim</p>
+      <p class="mt-2">
+        <a href="/atelier/works#position-2026-07-14" class="underline decoration-line underline-offset-4 transition-colors hover:text-fg">
+          {shift.after.title} →
+        </a>
+      </p>
+      <p class="mt-1">
+        <a href="/atelier/works#position-2026-07-01" class="underline decoration-line underline-offset-4 transition-colors hover:text-fg">
+          {shift.before.title} →
+        </a>
+      </p>
+      <p class="mt-1">
+        <a href={`${LINE_REPO}/blob/main/works/position-2026-07-14.md`} rel="noopener" class="underline decoration-line underline-offset-4 transition-colors hover:text-fg">
+          both in the practice's repository ↗
+        </a>
+      </p>
+      <p class="mt-4 text-fg-faint">
+        Titles and dates read off the papers themselves; the quotation is verbatim from the
+        practice's own record and checked by test against its source.
+      </p>
+    </section>
+  </main>
+</Page>

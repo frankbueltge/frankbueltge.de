@@ -11,6 +11,12 @@ import Page from '@/layouts/Page.astro'
 import Frame from '@/components/atelier/surface/Frame.astro'
 import { buildSessionEntries } from '@/lib/atelier/sessions'
 import { ATELIER_NARRATIVE } from '@/config/atelier-wording'
+import { parseProtocol } from '@/lib/atelier/protocol-version'
+
+const protoRaw = Object.values(import.meta.glob('/src/content/atelier/PROTOCOL.md', {
+  eager: true, query: '?raw', import: 'default',
+}) as Record<string, string>)[0] ?? ''
+const proto = parseProtocol(protoRaw)
 
 const all = await getCollection('atelier')
 const entries = buildSessionEntries(all.filter((e) => e.id.startsWith('journal/')))
@@ -42,7 +48,7 @@ const statusHtml =
     {notes.length > 0 && (
       <section class="at-notes">
         <h2 class="at-notes-h">{ATELIER_NARRATIVE.rooms.journalNotesHeading}</h2>
-        <p class="at-room-intro">{ATELIER_NARRATIVE.rooms.journalNotes}</p>
+        <p class="at-room-intro">{ATELIER_NARRATIVE.rooms.journalNotes(proto.version)}</p>
         {notes.map((note) => (
           <a class="at-reg-row" id={note.slug} data-journal={note.slug} href={`/atelier/journal/${note.slug}/`}>
             <span class="at-sess-no">v4</span>

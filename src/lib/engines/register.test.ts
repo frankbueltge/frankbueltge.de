@@ -59,7 +59,9 @@ describe('allWorks covers every committed work source', () => {
     const forked = works.filter((w) => w.dir === NIGHTLY_FORK_DIR)
     for (const w of forked) {
       expect(w.href).toBe(`/error-as-method/${w.slug}/`)
-      expect(existsSync(`${ROOT}${NIGHTLY_FORK_DIR}/${w.slug}/work.md`), w.slug).toBe(true)
+      const text = existsSync(`${ROOT}${NIGHTLY_FORK_DIR}/${w.slug}/work.md`)
+      const stage = existsSync(`${ROOT}public/error-as-method/${w.slug}/index.html`)
+      expect(text || stage, `${w.slug} has neither a mirrored text nor a stage`).toBe(true)
       expect(existsSync(`${ROOT}src/pages/error-as-method/[slug].astro`)).toBe(true)
     }
   })
