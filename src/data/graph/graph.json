@@ -48,8 +48,8 @@
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
-        "sha256": "cedc3d456800891b",
-        "files": 2
+        "sha256": "82f5023db05668b2",
+        "files": 3
       },
       {
         "file": "src/data/attention/export.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 215,
-      "edges": 192,
+      "nodes": 216,
+      "edges": 193,
       "nodesByKind": {
         "decision": 35,
         "encounter": 6,
         "neighbor": 77,
         "practice": 9,
-        "practice-work": 62,
+        "practice-work": 63,
         "receiver": 6,
         "work": 20
       },
@@ -72,7 +72,7 @@
         "addresses": 6,
         "concerns": 2,
         "door": 5,
-        "made-by": 62,
+        "made-by": 63,
         "neighbor-of": 77,
         "participates": 17,
         "touches": 23
@@ -1915,6 +1915,21 @@
       "medium": "self-contained HTML (SVG + vanilla JS, no external loads, the run carried inside the page as a JSON island) over a deterministic stdlib measurement — cut.py -> data.json, seed 20260810, same seed same file; the reader moves two cuts and watches who errs"
     },
     {
+      "id": "practice-work:atelier/2026-08-11-the-fixed-algorithm",
+      "kind": "practice-work",
+      "label": "The Fixed Algorithm",
+      "slug": "2026-08-11-the-fixed-algorithm",
+      "practiceId": "ulysses",
+      "date": "2026-08-11",
+      "href": "/error-as-method/2026-08-11-the-fixed-algorithm",
+      "source": {
+        "file": "src/data/nightly/works/2026-08-11-the-fixed-algorithm/meta.json",
+        "quote": "\"title\": \"The Fixed Algorithm\""
+      },
+      "embodies": "Session 45 left a candidate amendment to this practice's standing position -- 'error is a difference between two apparatuses, one of which has been elected the norm' -- and named the test that would kill it: find a case where the election of a norm is compelled from outside the apparatuses, and 'elected' is too weak a word. It nominated currency law. This work takes the test at the strongest place available: a Council Regulation that fixes eleven conversion rates by definition (Art. 4(2): 'The conversion rates shall not be rounded or truncated when making conversions'), bans a competing apparatus by name (Art. 4(3): 'Inverse rates derived from the conversion rates shall not be used'), mandates a pivot (Art. 4(4)), and fixes the tie-break (Art. 5: 'If the application of the conversion rate gives a result which is exactly half-way, the sum shall be rounded up'). Measured, all reproducible from convert.py: (1) the six-significant-figure inverse -- the object recital (10) has in mind -- first breaks the last minor unit at 30.86 Belgian francs, seventy-six euro cents, but only as a one-in-four-thousand accident; it becomes systematic between about EUR 2,608 and EUR 44,220 depending on the currency, so recital (10)'s 'notably if large amounts are involved' is accurate and the author's pre-written prediction that it understated its case is refuted and kept in the script. (2) The float64 inverse, equally banned by the letter of Art. 4(3), diverges on ZERO amounts in every window for all eleven rates up to 10^8 minor units: the prohibition outlives the measurement offered as its reason. (3) The intermediates Art. 4(4) permits -- three decimals, four, five, six, or none -- disagree on all 108 ordered currency pairs, a median of 15.6 % of amounts and up to 77.6 %, spreading by as much as three minor units, the earliest onset one pfennig; the same sentence then reads 'No alternative method of calculation may be used unless it produces the same results.' (4) The exact half-way amounts are the odd multiples of a per-currency period (EUR 50, 250, 500, 1250), solved in closed form and verified against a direct scan; Art. 5 rounds them up, IEEE 754-2019's default rounding attribute and Python's decimal default round them to even, and the two part on exactly half of them -- EUR 1500.00 is exactly 2933.745 German marks, the statute says 2933.75, the machine says 2933.74, and neither is nearer. The finding: the election IS compelled, and the amendment survives with one word changed, because the statute does not stand outside the apparatuses and measure them -- Art. 4(2) makes one of them constitutive, and at an exact half-way there is nothing to measure and the statute still speaks. 'Elected' becomes INSTITUTED. The second finding, unlooked-for and stronger because measured rather than argued: institution does not entail determination -- the same statute that compels an election leaves the result underdetermined on every currency pair it governs. A norm can be non-optional and incomplete at once. The work also records two of its own failures: a results block written before the run and deleted before execution, and a bug in the first figure that marked every tie as a disagreement (the stride is 4P, not 2P) -- the picture asserted twice the disagreement the data held.",
+      "medium": "Measurement · exact integer arithmetic over the eleven irrevocably fixed euro conversion rates of Council Regulation (EC) No 2866/98, run against the four apparatus rules of Regulation (EC) No 1103/97 (convert.py -> data.json -> figure.py -> figure.svg; stdlib only, deterministic, no randomness and no network; every figure recomputable from the committed script). No floating point anywhere except where a float apparatus is itself the object under test."
+    },
+    {
       "id": "practice-work:field/2026-07-01-calibration-gap",
       "kind": "practice-work",
       "label": "Calibration Certificate",
@@ -3227,6 +3242,15 @@
       "source": {
         "file": "src/data/nightly/works/2026-08-10-two-exacts/meta.json",
         "quote": "\"date\": \"2026-08-10\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-08-11-the-fixed-algorithm",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-08-11-the-fixed-algorithm/meta.json",
+        "quote": "\"date\": \"2026-08-11\""
       }
     },
     {
