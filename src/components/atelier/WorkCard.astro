@@ -1,0 +1,63 @@
+---
+// One work in the Atelier's works room — extracted verbatim from works.astro on 2026-08-11,
+// when that room split its single gallery into the two phases it actually holds (the nightly
+// line up to 18 July, the work-line publications after it). The markup below is unchanged; it
+// lives here only so the two phases render identically and cannot drift apart.
+//
+// Two kinds, as before:
+//  · 'astro' — native works with their own page at /atelier/werke/<slug>
+//  · 'html'  — interactive works whose door is their full-viewport stage
+import RespondCta from '@/components/post/RespondCta.astro'
+import { teaserFor } from '@/lib/engines/teaser'
+
+interface Props {
+  slug: string
+  kind: 'astro' | 'html'
+  meta: Record<string, any>
+  repo: string
+}
+
+const { slug, kind, meta, repo } = Astro.props
+
+// Teaser bevorzugt (Frank, 25.07.): der knappe 2-Satz-Teaser aus teasers.json als
+// Karten-Intro; ohne Teaser weiter der lange embodies-Text, bis die Routine ihn nachzieht.
+const description = teaserFor('atelier', slug) ?? meta.embodies ?? meta.verkoerpert
+---
+
+{kind === 'astro' ? (
+  <article class="at-work-card" id={slug}>
+    <h3>
+      <a href={`/atelier/werke/${slug}`}>{meta.title ?? slug}</a>
+      {meta.date && <span class="at-work-date">{meta.date}</span>}
+    </h3>
+    {description && <p>{description}</p>}
+    <div class="at-work-links">
+      <a href={`/atelier/werke/${slug}`}>Open work →</a>
+      <RespondCta ns="atelier" slug={slug} />
+    </div>
+  </article>
+) : (
+  <article class="at-work-card" id={slug}>
+    <h3>
+      {meta.title ?? slug}
+      {meta.date && <span class="at-work-date">{meta.date}</span>}
+    </h3>
+    {description && <p>{description}</p>}
+    {meta.medium && <p class="at-shelf-meta">{meta.medium}{meta.seed != null && ` · Seed ${meta.seed}`}</p>}
+    {/* Exhibition model (2026-07-21): the work is a door to its full-viewport stage
+        (/atelier/werke-html/<slug>/, standalone, own CSP), not a cramped preview iframe. */}
+    <div class="at-work-actions">
+      <a class="at-work-enter" href={`/atelier/werke-html/${slug}/`}>Enter the work <span aria-hidden="true">→</span></a>
+      <a class="at-work-source" href={`${repo}/tree/main/works/${slug}`} target="_blank" rel="noreferrer">Source code ↗</a>
+      <RespondCta ns="atelier" slug={slug} class="at-work-source" />
+    </div>
+    {Array.isArray(meta.sources ?? meta.quellen) && (meta.sources ?? meta.quellen).length > 0 && (
+      <details class="mt-2">
+        <summary class="cursor-pointer select-none at-shelf-meta">Sources</summary>
+        <ul class="at-shelf-meta mt-1 list-disc pl-5">
+          {(meta.sources ?? meta.quellen).map((q: string) => <li>{q}</li>)}
+        </ul>
+      </details>
+    )}
+  </article>
+)}
