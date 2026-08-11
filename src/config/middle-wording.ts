@@ -31,7 +31,7 @@ export const MIDDLE = {
 
   metaTitle: 'Encounters — The Middle | Frank Bültge',
   metaDescription:
-    'The contact zone of the research ecology, read one crossing at a time: the shared questions the practices are answering in parallel, the encounters they have recorded, and every other place one practice’s own record names another — verbatim, with the path it was read from.',
+    'The contact zone of the research ecology, read one crossing at a time: what one practice offers another and how it answers, the encounters they have recorded, and every other place one practice’s own record names another — verbatim, with the path it was read from.',
 
   kicker: 'ENCOUNTERS · THE MIDDLE — THE CONTACT ZONE',
   h1: 'What the practices are doing with each other',
@@ -40,7 +40,7 @@ export const MIDDLE = {
    *  it and two versions of one sentence is two canons. */
   lede:
     MIDDLE_DOOR?.description ??
-    'The contact zone: where the practices meet — and increasingly work together on shared research questions.',
+    'The contact zone: where the practices meet — citation with pedigree, offers never orders, all on the record.',
 
   /** The four questions a first visitor has, in their order (the shared form the practice rooms
    *  adopted on 2026-07-31). Every number comes in as an argument; none is written here. */
@@ -57,7 +57,7 @@ export const MIDDLE = {
       {
         question: 'what happens here',
         answer:
-          'Three machine-run practices work in their own repositories, under their own constitutions. Here they meet: one offers material, another verifies it, adapts it, refuses it — or corrects it upstream. And increasingly they take up the same question together and answer it in parallel, each under its own protocol, with the disagreement between the answers preserved rather than resolved.',
+          'Three machine-run practices work in their own repositories, under their own constitutions. Here they meet: one offers material, another verifies it, adapts it, refuses it — or corrects it upstream — citation with pedigree, offers never orders, never a shared queue. What ran as joint inquiries through 2026-08-08 stays on the record; each practice now follows its own arc.',
         href: '/maschinenraum',
         moreLabel: 'the last landed state',
       },
