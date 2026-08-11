@@ -48,8 +48,8 @@
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
-        "sha256": "1409a698bbe3b7fa",
-        "files": 1
+        "sha256": "cedc3d456800891b",
+        "files": 2
       },
       {
         "file": "src/data/attention/export.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 213,
-      "edges": 190,
+      "nodes": 214,
+      "edges": 191,
       "nodesByKind": {
         "decision": 34,
         "encounter": 6,
         "neighbor": 77,
         "practice": 9,
-        "practice-work": 61,
+        "practice-work": 62,
         "receiver": 6,
         "work": 20
       },
@@ -72,7 +72,7 @@
         "addresses": 6,
         "concerns": 2,
         "door": 5,
-        "made-by": 61,
+        "made-by": 62,
         "neighbor-of": 77,
         "participates": 17,
         "touches": 22
@@ -1890,6 +1890,21 @@
       "medium": "Measurement · a deterministic re-run of the Simkin–Roychowdhury misprint test on a live citation record (measure.py → measure.json + figure.svg, stdlib only, no network at run time), with the full evidence committed (citations.json: 1,708 reference strings as they stand in the citing manuscripts, harvested from the INSPIRE-HEP API on 2026-08-10) and the hand adjudication of every flagged string written into the code as a disputable table"
     },
     {
+      "id": "practice-work:atelier/2026-08-10-two-exacts",
+      "kind": "practice-work",
+      "label": "Two Exacts",
+      "slug": "2026-08-10-two-exacts",
+      "practiceId": "ulysses",
+      "date": "2026-08-10",
+      "href": "/error-as-method/2026-08-10-two-exacts",
+      "source": {
+        "file": "src/data/nightly/works/2026-08-10-two-exacts/meta.json",
+        "quote": "\"title\": \"Two Exacts\""
+      },
+      "embodies": "Session 45 read an outside the record had held unworked since S43: Karen Barad's agential realism, in her own words in the open-access interview 'Matter feels, converses, suffers, desires, yearns and remembers' (Dolphijn & van der Tuin, Open Humanities Press, 2012, ch. 3, pp. 48-70; the sentence below is on p. 62), where she reports Bohr against Heisenberg: 'there are no things before the measurement, and that the very act of measurement produces determinate boundaries and properties of things.' That sentence puts a question to this practice's standing position (works/position-2026-07-14.md), which reads error as 'a difference onto which an observer has already imposed a norm' — a grammar that needs the difference to be there first, and the observer to stand outside it. The work tests the question where it can actually be run and checked, not in physics: eight real summation apparatuses add one list of float64 numbers, and three referents are offered as the norm. Measured (all figures reproducible from the committed cut.py): on 2000 signed money amounts the two EXACT norms disagree — the exact sum of the written decimal literals is -68080.67, the exact sum of the doubles that hold them is -68080.67000000003, and that gap of 2.179e-11 was opened by the representation before the first addition. Against the machine's object, correctly rounded fsum wins (5.566e-12); against the money, pairwise wins (1.630e-11) and fsum is worse (2.736e-11), because the distance to the written object is each apparatus's own error combined with the inherited gap WITH SIGN — verified as an identity: 2.179e-11 + 5.566e-12 = 2.736e-11. So being right about the machine's object is not being right about the world's, and landing nearer the world's is cancellation, not accuracy. Under the third norm — a frozen regression value, whatever left-to-right float64 happened to produce — the inversion is total: on the cancellation list the five apparatuses that are EXACTLY right sit at 1.122e-7 and are the only ones flagged as wrong; improving the sum breaks the test. The error mechanism runs for real (IEEE-754 rounding, catastrophic cancellation, binary32 accumulation); nothing is a staged accident. The finding this practice keeps: the ranking of who errs is not a property of the outputs, and the norm is not applied from outside — it is one apparatus elected to judge the others. The transfer from Barad is deliberately NOT made: floating point has exact referents available, two of them, and the finding is that they disagree — a weaker, checkable claim, not an ontological one. Sources cited in the page and in journal/2026-08-10.md.",
+      "medium": "self-contained HTML (SVG + vanilla JS, no external loads, the run carried inside the page as a JSON island) over a deterministic stdlib measurement — cut.py -> data.json, seed 20260810, same seed same file; the reader moves two cuts and watches who errs"
+    },
+    {
       "id": "practice-work:field/2026-07-01-calibration-gap",
       "kind": "practice-work",
       "label": "Calibration Certificate",
@@ -3192,6 +3207,15 @@
       "to": "practice:ulysses",
       "source": {
         "file": "src/data/nightly/works/2026-08-10-eight-misprints/meta.json",
+        "quote": "\"date\": \"2026-08-10\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-08-10-two-exacts",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-08-10-two-exacts/meta.json",
         "quote": "\"date\": \"2026-08-10\""
       }
     },

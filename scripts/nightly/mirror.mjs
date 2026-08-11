@@ -30,8 +30,18 @@
 import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync } from 'node:fs'
 import { join, resolve } from 'node:path'
 
-const TAKE_FILES = ['meta.json', 'work.md']
+// Two forms, because the practice makes both. A TEXT work is `work.md` beside its metadata,
+// rendered by this site at /error-as-method/<slug>/ with `figure.svg` resolving relatively. An
+// INTERACTIVE work is a self-contained `index.html`, which this site does not render at all —
+// it serves the practice's own page from public/error-as-method/<slug>/, exactly as built. Both
+// answer to the same address; only one of them is a route.
+const META = 'meta.json'
+const TEXT = 'work.md'
+const STAGE = 'index.html'
 const FIGURE = 'figure.svg'
+/** Big enough that carrying it would make this site claim to be the archive. The repository
+ *  holds the evidence and the work page links to it. */
+const HEAVY = /\.(py|ipynb)$|citations\.json$/
 /** The last night under the Atelier's roof — kept in sync with src/lib/engines/nightly-line.ts. */
 export const LINE_END = '2026-07-18'
 
@@ -73,21 +83,42 @@ export function mirror(src, dest) {
       inherited.push(slug)
       continue
     }
-    // A work directory the site can show is one that carries both its metadata and its text.
-    // Anything else is skipped by name, never guessed at — a malformed new work is a report,
-    // not a silent gap.
-    const missing = TAKE_FILES.filter((f) => !existsSync(join(dir, f)))
+    // A work the site can show carries its metadata and one of the two forms. Anything else is
+    // skipped by name, never guessed at — a malformed new work is a report, not a silent gap.
+    const hasText = existsSync(join(dir, TEXT))
+    const hasStage = existsSync(join(dir, STAGE))
+    const missing = [
+      ...(existsSync(join(dir, META)) ? [] : [META]),
+      ...(hasText || hasStage ? [] : [`${TEXT} or ${STAGE}`]),
+    ]
     if (missing.length) {
       skipped.push({ slug, missing })
       continue
     }
+
+    // The metadata always travels: it is what the register, the entrance and the line's page
+    // read, whichever form the work itself takes.
     mkdirSync(join(worksDest, slug), { recursive: true })
-    for (const file of TAKE_FILES) cpSync(join(dir, file), join(worksDest, slug, file))
-    if (existsSync(join(dir, FIGURE))) {
+    cpSync(join(dir, META), join(worksDest, slug, META))
+
+    if (hasText) {
+      cpSync(join(dir, TEXT), join(worksDest, slug, TEXT))
+      if (existsSync(join(dir, FIGURE))) {
+        mkdirSync(join(figuresDest, slug), { recursive: true })
+        cpSync(join(dir, FIGURE), join(figuresDest, slug, FIGURE))
+      }
+    } else {
+      // An interactive work is served as the practice built it. Everything beside it travels
+      // too — a self-contained page may still load its own data file — except the measuring
+      // code and the harvested evidence, which stay in the repository and are linked.
       mkdirSync(join(figuresDest, slug), { recursive: true })
-      cpSync(join(dir, FIGURE), join(figuresDest, slug, FIGURE))
+      for (const file of readdirSync(dir)) {
+        if (file === META || HEAVY.test(file)) continue
+        if (statSync(join(dir, file)).isDirectory()) continue
+        cpSync(join(dir, file), join(figuresDest, slug, file))
+      }
     }
-    works.push(slug)
+    works.push({ slug, form: hasText ? 'text' : 'stage' })
   }
 
   const journal = []
