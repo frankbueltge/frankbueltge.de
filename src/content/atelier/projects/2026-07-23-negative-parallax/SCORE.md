@@ -46,7 +46,51 @@ work_line:
     declined as a programme, T7 named for the exposition. Argued in full:
     `THE-SECOND-WORK-2026-08-10.md`. First increment: `the-gap/sketch-v1.html`, tick 54.
     The work_intention above is unchanged and stands; this is its concrete target.
-  refrain_aspect: territory  # tick 56 (2026-08-11) — the **named remainder** is read, and it is the
+  refrain_aspect: territory  # tick 57 (2026-08-11) — the **third end of the fraction**, read whole.
+    # Tick 56 measured two ends of a rate and found a third it could only bracket: its own sieve's
+    # sites, 7 of 24 of which state no threshold at all. That bracket is why it wrote **28.4 % is a
+    # lower bound, not an answer**. This tick reads the remaining **97** site-bearing papers, so
+    # every quantity in the rate is a count and **no interval enters any figure**.
+    # **OUTWARD** (1 inward in the last 4, 54–57): 160 e-prints fetched, **160 of 160
+    # byte-identical** (D0), one record per id (D7), **0 unreadable** (D9), and **no landed file
+    # opened for writing** (D10, new this tick — the `windows` step borrows tick 56's extractor and
+    # the first version of that borrow rebuilt exactly the overwrite defect tick 56 found; it was
+    # replaced before it ran).
+    # **The census: X_B = 25 of 121 — 20.7 %.** Tick 56's sample said 20.8 % [9.2, 40.5] and its
+    # point estimate of 25.2 papers is right to a fifth of a paper. **The headline is unmoved:
+    # 28.4 % → 28.9 %**, and the half-point is a correction, not noise.
+    # **Two forecasts of six are defeated, and they are the pair that mattered.** P4: the papers the
+    # numerator loses to an invented site were forecast at 12 of 97, band [5, 22] — **4**. P5: the
+    # rate with them returned was forecast at 39.0 %, band [35.5, 43.5] — **33.8 %**. Tick 56
+    # extrapolated **15.1 papers [5.3, 37.5]** from three in twenty-four; the census says **7 in
+    # 121**. So the floor and the answer are **4.9 points apart, not 10.8**, and tick 56's alarm was
+    # roughly four times too loud. P1 (21 of 97, band [12,30]), P2 (28.9 %, band [26.5,30.8]), P3
+    # (20 invented, band [19,39] — inside **by one paper**) and P6 hold.
+    # **The reading standard changed, was declared before any label, and was then checked.** Tick 56
+    # judged the site question from windows cut around the TERM; this tick reads the SITES. Because
+    # that is stronger evidence, tick 56's 24 were re-read at the same standard: **24 of 24 site
+    # states confirmed, zero disagreements.** The two halves are comparable.
+    # **What the stronger evidence did change is three labels, all in one direction, all found by
+    # one mechanical test.** A paper can report `AP_50` / `mAP@50` in live text and never write the
+    # term at a threshold — it is an invoker whose criterion lives wholly in a name, and windows cut
+    # around the term cannot see it. `2604.01907v2` writes the term **once** in the whole paper
+    # (`overlap of 50 frames`) and carries AP_25/AP_50 tables; `2604.19609v1`'s two sites are
+    # pgfplots axis options and its text says `82.7 mAP50`. Both were mine, both corrected before
+    # landing. The test was then run over tick 56's landed table: `2607.27585v1` (stratum B) and
+    # **`2606.22439v1` (stratum A)** are the same error, and X_A falls 39 → 38. Nothing landed is
+    # rewritten: the corrections live in `correction-tick56-labels.csv` with their evidence, and the
+    # rates script is the only place they enter an arithmetic.
+    # **The check is one-directional and that is stated, not hidden:** it can only move a paper from
+    # non-invoker to invoker. The reverse error — an `I-NAME` that is not one — is untested, and
+    # stratum A's 45 invokers were not tested at all. Flag rate 3 of 44 site-bearing (6.8 %) against
+    # 1 of 39 candidates (2.6 %).
+    # **The sieve is NOT repaired here**, for tick 56's reason, unchanged. Named remainder and next
+    # operation: the repair specification this reading produced — the apposition with no relation
+    # token, the gap that runs into `\sum_ i=1` and into pgfplots options, the reported value read
+    # as a rule — **with the re-measure in the same tick**, per tick 50's rule. Shipped work
+    # untouched; cross-literature comparison stays withdrawn. Five topoi **not used**, logged as
+    # unused. Pre-opening check ran: no outward move was owed or available.
+  refrain_aspect_tick56: territory  # tick 56 (2026-08-11) — the **named remainder** is read, and it is the
     # first rate in this line computed with BOTH ends of the fraction measured rather than one end
     # assumed. Computer vision's candidate class, left open in writing by tick 53's own §5 and now
     # **84** under instrument 0.6, is read **whole**; beside it, **24 of the 121** site-bearing
