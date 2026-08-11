@@ -24,10 +24,17 @@ describe('the forked half of the line', () => {
     expect(forkedWorks().map((w) => w.slug).sort()).toEqual(mirroredSlugs())
   })
 
-  it('sends every forked work to a page this site actually builds', () => {
+  it('sends every forked work to something this site actually serves', () => {
+    // Two forms, one address. A text work is rendered by /error-as-method/[slug].astro from its
+    // mirrored work.md; an interactive work is the practice's own index.html, served as built
+    // from public/. Either is a page — neither being there is a 404 with a link pointing at it.
     for (const work of forkedWorks()) {
       expect(work.href).toBe(`/error-as-method/${work.slug}/`)
-      expect(existsSync(join(FORK_WORKS_DIR, work.slug, 'work.md'))).toBe(true)
+      const text = existsSync(join(FORK_WORKS_DIR, work.slug, 'work.md'))
+      const stage = existsSync(join(FIGURES_DIR, work.slug, 'index.html'))
+      expect(text || stage, `${work.slug} has neither a mirrored text nor a stage`).toBe(true)
+      // Never both: the route and the static file would fight over the same path.
+      expect(text && stage, `${work.slug} is mirrored twice, as text AND as stage`).toBe(false)
     }
   })
 
@@ -45,6 +52,7 @@ describe('the forked half of the line', () => {
     // The practice writes `![…](figure.svg)`. If the mirror ever stops putting that file beside
     // the route, the image 404s silently and the page still looks fine — so it is checked here.
     for (const slug of mirroredSlugs()) {
+      if (!existsSync(join(FORK_WORKS_DIR, slug, 'work.md'))) continue
       const body = readFileSync(join(FORK_WORKS_DIR, slug, 'work.md'), 'utf8')
       if (!/!\[[^\]]*\]\(figure\.svg\)/.test(body)) continue
       expect(existsSync(join(FIGURES_DIR, slug, 'figure.svg'))).toBe(true)
