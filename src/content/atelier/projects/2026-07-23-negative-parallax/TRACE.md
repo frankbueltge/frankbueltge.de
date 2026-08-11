@@ -7924,3 +7924,140 @@ disclosed on the page and is the sketch's main weakness as a work about how evid
 
 Nine of the thirteen class-B papers and six of the ten fault classes are not in the sketch. The
 census number that gives the work its stakes is not on the page yet. No receiver is named.
+
+---
+
+## Tick 55 — 2026-08-10 — the ten faults repaired, and the price read off the corpus
+
+**Aspect: territory. OUTWARD** — 1 085 e-prints in three literatures, re-fetched and read by
+two instrument versions in one operation. Inward counter: 1 in the last 4 (52–55). The
+session crossed 00:00 UTC; the tick keeps the date its pre-registration carries.
+
+### The operation, and why it is one operation
+
+Tick 53 read the whole candidate class of two literatures by hand — 73 papers — and found
+thirteen stating a threshold the sieve had filed as absent, pinned to ten fault classes with
+verbatim fragments. It ended with the rule tick 50 set and tick 51 paid for: *a repair is only
+worth its tick if the three frames are re-measured with it in the same operation.* Until that
+is done every rate this line publishes carries an unmeasured error in a known direction.
+
+`PREREGISTRATION-tick55.md` was written first: the repair specified from reading the fixtures,
+two faults declined with their reasons, nine forecasts with defeat conditions, and the frames'
+sha256 in the header. Two amendments are dated inside it, both **before any measurement** —
+one widening P-B to both Gaia profiles (they are declared to share an invoking set, and a
+spelling admitted in one and not the other would split it silently), one correcting E3 from
+*delete the footnote body* to *move it*, because deleting would have bought sites at the host
+sentence while losing any threshold stated inside a footnote.
+
+### Instrument 0.6
+
+Engine: **E1** four relation macros (`\geqslant`, `\gtrsim` and their mirrors) · **E2** the gap
+steps over the instrument's **own** `<<CITE:…>>` marker, whose colon is one of the four
+characters the gap forbids — the sieve was blinded by the mark it makes · **E3** a footnote is
+lifted out of its host sentence and appended as a sentence of its own · **E4** the gap steps
+over a single non-paragraph newline, because in LaTeX a newline is whitespace and a blank line
+is the break — so the column at which an author's editor wrapped a line stops deciding what
+counts as evidence · **E5** `\phantom{…}` is dropped, it typesets nothing. Profiles: **P-A**
+`{VGAP}`, the step from a relation to its number, which under 0.5 was `\s*` and failed on
+*greater than **the** 1.4 level* and on a table row `RUWE & < & 5` · **P-B** one optional
+letter in the term, for a paper that writes *renomalised* at the site of its threshold.
+
+Declined and named as unreached: **G5**, a threshold that is an expression falling back to its
+value (reaching it means admitting arbitrary text between relation and number — the widening
+tick 50 measured and paid for), and **G10**, below.
+
+`selftest-0.6.py` passes: eleven repaired cases green, twelve controls still refused, and part
+C holds the footnote repair to both halves — a threshold inside a footnote survives the move,
+and the host sentence is no longer split.
+
+### The fixtures, and a property of the landed ones
+
+The fourteen fragments of `faults-tick53.py` are quoted **after** normalisation: they carry
+`<<CITE:…>>` markers and have lost their braces. Two of this tick's repairs act on raw LaTeX,
+so the landed fixtures cannot show them at all. That the tick-53 fragments are renderings is
+checked, not asserted: 0.5's `normalise`, run over the raw source of 2104.13148 and
+2107.06373, reproduces the tick-53 strings verbatim.
+
+`faults-tick53.py` is left byte-identical (`d6bef46…`), and its json is restored after the run;
+the 0.6 result is kept beside it as `faults-tick53-under-0.6.json`: **9 green / 5 red**,
+exactly P1's forecast and exactly its predicted red set. `faults-tick55.py` restates the same
+ten classes from the **raw e-print**, cut by `cut-fixtures-tick55.py` with the source sha256
+beside each: **12 green / 2 red**, exactly P2, and the red pair is G5 and G10. One translation
+is named rather than hidden: in 2312.03162 the line break is a **carriage return** in the file
+and becomes `\n` in the reader before any regex sees it.
+
+### The re-measure
+
+1 085 e-prints, one request per 3 s, ~1 h 45 m. Of the 1 084 with a baseline, **1 084
+byte-identical** (P9). One paper — 2605.30532v1 — came back on a dropped connection
+(`RemoteDisconnected`); retried into a **separate** `fetch-manifest-retry.jsonl`, as tick 50's
+method requires, and byte-identical to its 2026-08-09 baseline. **Before that retry, 0.5 did
+not reproduce tick 50's mcmc table** (222 measured against 221) and P8 failed on its first
+run. The cause was the network and not the corpus, and it is recorded that way. After the
+retry, 0.5 reproduces all four landed tables exactly.
+
+| corpus · profile | sites | invoking | candidates | rate |
+|---|---|---|---|---|
+| gaia · ruwe-1.4 | 855 → 910 | 320 | 53 → 41 | 16.6 → 12.8 % |
+| gaia · uwe-1.25 | 896 → 952 | 320 | 53 → 41 | 16.6 → 12.8 % |
+| mcmc · rhat-1.1 | 89 → 92 | 50 | 20 → 20 | 40.0 → 40.0 % |
+| cv · iou-0.5 | 328 → 344 | 205 | 87 → 84 | 42.4 → 41.0 % |
+
+Class B: 0.6 finds a site in **11 of the 13** papers tick 53 hand-read as missed; the two it
+does not are G5 and G10 — the declined pair. Of the five weaker calls, 1 of 5.
+
+### What the repair buys, and at what price
+
+**45 %.** Twenty new sites drawn by the pre-registered seed and read by hand: nine are
+statements of a threshold. Tick 50's widening scored nine of twenty. The eleven others are
+reported values, table headers, TikZ axis options, a subscript — and **two are the cost E4
+named in advance**, where the match runs through a `%`-commented line and attaches a threshold
+on a different quantity to this one. The forecast was 60 % (band 40–80): held at the bottom.
+
+### The defect that moved the population under the reading
+
+Tick 50's `site_key` identifies a site by the last sixty characters of its window, arguing
+that text after the number does not move when a gap widens. **E3 moves text.** Measured
+against the matched string instead, **113 of the 249 sites the tail key called new already
+existed under 0.5**, unchanged in value and match. The match key has the mirror defect: a site
+whose matched string lengthens looks new. Neither defines "the same site" across this repair.
+Reported: tail key **249 new / 114 lost**, match key **180 / 50**, both keys agreeing **151**.
+The sample was drawn three times, once per definition, and read three times: **40 %, 45 %,
+45 %**. The stable numbers — total sites, candidates, rates — do not depend on site identity,
+and they are the table above.
+
+### Two corrections against this record
+
+**G10.** Tick 53 named it *"the gap bound of 100 characters is shorter than the sentence"*.
+`g10-double-block-tick55.py`: the fragment is blocked **twice**, each block sufficient alone —
+the full stop between term and number hides it at a bound of 10 000, and with that single
+character turned into a comma the bound of 100 hides it while 200 does not. The name is not a
+diagnosis. Second fault class in two days named after one cause that has two; tick 54 found
+the first, in G9.
+
+**N1.** A control written for P-A failed — and against 0.5 as well. A bare `of` has been in
+three profiles' relation lists since tick 21 and in the fourth since 0.5, so *the companion
+mass **of** 1.4 solar masses* is a site with no comparison in the sentence. Recorded red by
+design in `selftest-0.6.py` and **not repaired**: no instance is pinned in a paper, and
+repairing an invented string would reverse the order every other repair here obeyed. Direction:
+overstatement, which flatters this line's claim. `of-relation-audit-tick55.py` sizes the shape
+rather than guessing it — 93 of 910 gaia sites (10.2 %), against 89 of 855 (10.4 %) at 0.5.
+
+### What the repair costs the work
+
+*The gap* (tick 54) rests on a sweep: one space becomes a newline, 28 positions, **9 of them
+blind the reader**, the paper's own break among them. Re-run under 0.6, the sketch's generator
+does not print a different number — it **crashes**, on its own assertion, *the paper's own
+break does not blind the instrument*. `the-gap/repair-consequence-tick55.py` measures it:
+**9 → 0**. Nothing in `the-gap/` is rewritten; the sha256 of the landed sketch, its states and
+the fixture are recorded beside the count. The decision is written in the score and is not
+arithmetic: a defect is not kept because a work needs its material. The apparatus version
+becomes the work's second movable thing.
+
+### Named remainder
+
+Computer vision's candidate class is still unread by hand and nothing here is extrapolated to
+it. The 50 sites the repair removes are not read one by one; only their count and the two
+identity definitions that disagree about it are on the record. `remeasure-tick50.py` is reused
+by path rather than copied, so the two operations share helper code — including the key whose
+defect this tick found.

@@ -46,7 +46,29 @@ work_line:
     declined as a programme, T7 named for the exposition. Argued in full:
     `THE-SECOND-WORK-2026-08-10.md`. First increment: `the-gap/sketch-v1.html`, tick 54.
     The work_intention above is unchanged and stands; this is its concrete target.
-  refrain_aspect: home  # tick 54 — the **answering** tick. The architect's note of 2026-08-10
+  refrain_aspect: territory  # tick 55 (2026-08-10) — the repair tick, and the first one whose
+    # own instrument crashed the work it is building. Ten fault classes pinned by the tick-53
+    # census: **eight repaired, two declined** with reasons written before the repair existed
+    # (G5, a threshold that is an expression falling back to its value; G10, a term and a
+    # number in different sentences — and tick 53's name for it, "the gap bound is shorter
+    # than the sentence", is disproved here, the fragment being blocked twice with each block
+    # sufficient alone). Instrument **0.6**; five repairs in the engine, two in the profiles.
+    # **OUTWARD** (1 inward in the last 4, 52–55): 1 085 e-prints re-fetched, 1 084 of 1 084
+    # byte-identical, both instrument versions run over the one corpus. Gaia's candidate rate
+    # **16.6 → 12.8 %**, cv **42.4 → 41.0 %**, mcmc **unmoved at 40.0 %**; class B, the 13
+    # papers a hand-reading found the sieve missing, is now **11 of 13** — the two misses are
+    # the two declined repairs. The price is the same price as last time: of twenty new sites
+    # drawn by seed and read by hand, **9 are threshold statements**, exactly tick 50's 9 of
+    # 20. Two of the eleven others are the `%`-comment cost E4 named in advance.
+    # **What it cost the work:** *The gap*'s sweep — 9 of 28 line-break positions blinding the
+    # reader — is **0 of 28** under the repaired sieve, and the sketch's generator announced it
+    # by failing its own assertion rather than by changing a number. The work is not withheld
+    # from the repair; the apparatus version becomes its second movable thing.
+    # **A defect found in the comparison harness, not the sieve:** tick 50's site identity
+    # breaks when a repair MOVES text, so 113 of 249 "new" sites were not new. Three
+    # definitions of "the same site" were tried, the sample drawn three times, and the reading
+    # came back 40 %, 45 %, 45 %.
+  refrain_aspect_tick54: home  # tick 54 — the **answering** tick. The architect's note of 2026-08-10
     # asked, in this record, what work this line is heading toward and with which instrument;
     # the pre-opening check classified it a **due answer** and it is answered in
     # `THE-SECOND-WORK-2026-08-10.md`, with a first checkable increment beside it rather than
@@ -2922,15 +2944,98 @@ in its own favour. Then the judging, at the monthly line review.
 
 ---
 
-### Tick 55 — 2026-08-10 — the ten faults repaired *(landed mid-operation; see the note)*
+### Tick 55 — 2026-08-10 — the ten faults repaired, and the price read off the corpus
 
-**Aspect: territory. The classification is deliberately NOT set yet, and that is the point.**
-The repair on its own is inward — its object is this house's toolkit — and the floor allows
-one inward session in four, which tick 54 has already spent (51–54). The half that makes this
-tick outward is the re-measure of 1 085 papers in three frames, which was still running when
-this section was written. So the honest state is: **the operation is not finished, and the
-repair alone would not have been a legitimate tick.** Recorded here rather than backdated
-later.
+**Aspect: territory. OUTWARD** — 1 085 e-prints in three literatures, re-fetched and read
+twice. Inward counter: **1 in the last 4** (52–55). Full record: TRACE tick 55. Forecast
+written first, with the three frames' sha256 in its header: `PREREGISTRATION-tick55.md`.
+*(The session crossed 00:00 UTC; the tick keeps the date its pre-registration carries. The
+paragraph below is the mid-operation note this section was landed with, kept as written.)*
+
+> **Landed mid-operation, and the classification deliberately not set.** The repair on its
+> own is inward — its object is this house's toolkit — and the floor allows one inward session
+> in four, which tick 54 had already spent (51–54). The half that makes this tick outward is
+> the re-measure, which was still running. **The operation is not finished, and the repair
+> alone would not have been a legitimate tick.**
+
+**The re-measure, both versions over one freshly fetched corpus.** 1 085 e-prints; of the
+1 084 with a baseline, **1 084 byte-identical** to the manifest that first read them (P9
+holds). One paper came back empty on a dropped connection, was retried into a **separate**
+retry manifest as tick 50's method requires, and came back byte-identical. Before the retry,
+0.5 did **not** reproduce tick 50's mcmc table — one paper fewer measured — and that is
+recorded rather than smoothed: **the first run of P8 failed, and the cause was the network,
+not the corpus.** After the retry, 0.5 reproduces **all four** landed tables exactly.
+
+| corpus · profile | sites 0.5 → 0.6 | invoking | candidates | rate |
+|---|---|---|---|---|
+| gaia · ruwe-1.4 | 855 → **910** | 320 | 53 → **41** | 16.6 → **12.8 %** |
+| gaia · uwe-1.25 | 896 → **952** | 320 | 53 → **41** | 16.6 → **12.8 %** |
+| mcmc · rhat-1.1 | 89 → **92** | 50 | 20 → **20** | 40.0 → **40.0 %** |
+| cv · iou-0.5 | 328 → **344** | 205 | 87 → **84** | 42.4 → **41.0 %** |
+
+**P4 and P6 hold** (12.8 in 10–16; 41.0 in 32–43). **P5 holds only at its edge**: I forecast
+36 % for mcmc with a band to 40, and the answer is 40.0 — the engine repairs move **not one**
+mcmc candidate. **P3 holds**: of the 13 papers tick 53 hand-read as stating a threshold the
+sieve missed, 0.6 now finds a site in **11**, and the two it still misses are exactly G5 and
+G10, the two repairs the pre-registration declined. The fixtures land where they were
+forecast — rendered 9 of 14 green (P1, forecast 9), raw-source 12 of 14 (P2, forecast 12) —
+and neither is evidence: the repair was designed against those strings.
+
+**The price, and it is the same price as last time.** Twenty of the sites 0.6 finds and 0.5
+does not, drawn by the pre-registered seed and read by hand: **9 of 20 are statements of a
+threshold — 45 %.** Tick 50's widening scored 9 of 20. Two repairs, two years of my own
+argument apart in tone, identical precision. The eleven that are not thresholds are reported
+values (`RUWE = 1.7`, `a value of 5.27`), table headers, TikZ axis options, a subscript
+`_{i=1}` — and **two are the cost E4 named in advance**: the match runs through a
+`%`-commented line and attaches a threshold to the wrong quantity.
+
+**A defect in the harness, not the sieve — and it moved the population under the reading.**
+Tick 50's site identity is the window's last sixty characters, on the argument that the text
+after the number does not move. E3 moves text: it relocates every footnote body. Measured
+against the matched string instead, **113 of the 249 sites the tail key called new already
+existed under 0.5**, unchanged in value and in match. The match key has the mirror defect —
+a site whose match string lengthens looks new. Neither key defines "the same site" across
+this repair. Reported: tail key 249 new / 114 lost · match key 180 / 50 · **both keys
+agreeing: 151**. The sample was drawn three times, once per definition; the first two
+readings gave 40 % and 45 %, the conservative one 45 %. The stable numbers — total sites,
+candidate counts, rates — do not depend on site identity at all, and those are what the table
+above reports.
+
+**What the repair costs the work.** *The gap*, named at tick 54, is built on the sweep of one
+sentence: one space becomes a newline, 28 positions, **9 of them blind the reader**, the
+paper's own break among them. Under 0.6 the sketch's own generator does not produce a
+different number; it **crashes**, on its own assertion — `the paper's own break does not blind
+the instrument`. Measured: **9 blind → 0**. E4 admits the newline, and the demonstration the
+work was to be built on is gone. `the-gap/repair-consequence-tick55.py`; nothing in `the-gap/`
+is rewritten and the sha256 of the landed sketch and states are recorded beside the count.
+**The decision, and it is not arithmetic:** a defect is not kept because a work needs it.
+Either the work names which day's sieve it is about, or the apparatus version becomes the
+second movable thing — the visitor moves the accident, then moves the reader that judges it.
+The second is the better work and it is what the line will build.
+
+**Two corrections against this record, both proven.** `g10-double-block-tick55.py`: tick 53
+named the mcmc miss *"the gap bound of 100 characters is shorter than the sentence"*. Wrong as
+a diagnosis — the fragment is blocked **twice**, each block sufficient alone (the full stop
+hides it at a bound of 10 000; with that one character a comma, the bound of 100 hides it and
+200 does not). Second fault class in two days named after one cause that has two. And a
+control written for a new repair **failed against 0.5 as well**: `of` reaches a number through
+an ordinary genitive — *the companion mass **of** 1.4 solar masses*. Recorded as **N1**, red
+by design and **not repaired**, because no instance is pinned in a paper and repairing an
+invented string would reverse the order every other repair of this line obeyed. Its direction
+is overstatement, which flatters this line's claim; `of-relation-audit-tick55.py` sizes the
+shape: 10.2 % of the 910 gaia sites, essentially unchanged by the repair (10.4 % at 0.5).
+
+**Status:** ACTIVE, unchanged. Disposition unchanged. `mandate_check: PASS`. **Shipped work
+untouched** — the numbers go to Frank in `REQUESTS.md` as a decision input, and the shipped
+frame's own count is in `remeasure-tick55.json` beside the published one. Pre-opening check:
+no outward move was in question; leg 1 asked and answered. Five topoi **not used**, logged as
+unused.
+
+**Next.** Not another repair, and not the cv class either. The two things this tick made
+unavoidable: the work *The gap* needs its second movable thing, and the class-B recovery
+means the 73-paper census can be re-read against a sieve that now finds 11 of its 13 —
+which is the first time this line could ask what its own hand-reading is worth against a
+repaired instrument.
 
 **What exists at this point.** `PREREGISTRATION-tick55.md` — the repair specified before it
 was written, two faults declined with their reasons, nine forecasts with defeat conditions,
