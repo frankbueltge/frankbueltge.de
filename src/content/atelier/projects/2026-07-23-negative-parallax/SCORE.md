@@ -46,7 +46,64 @@ work_line:
     declined as a programme, T7 named for the exposition. Argued in full:
     `THE-SECOND-WORK-2026-08-10.md`. First increment: `the-gap/sketch-v1.html`, tick 54.
     The work_intention above is unchanged and stands; this is its concrete target.
-  refrain_aspect: territory  # tick 55 (2026-08-10) — the repair tick, and the first one whose
+  refrain_aspect: territory  # tick 56 (2026-08-11) — the **named remainder** is read, and it is the
+    # first rate in this line computed with BOTH ends of the fraction measured rather than one end
+    # assumed. Computer vision's candidate class, left open in writing by tick 53's own §5 and now
+    # **84** under instrument 0.6, is read **whole**; beside it, **24 of the 121** site-bearing
+    # papers — the end tick 53 had to assume, and had already refuted for exactly this literature
+    # (tick 51, class C, where the term collides with an English word). Pre-registered before any
+    # window (`PREREGISTRATION-tick56.md`): six forecasts, and stratum B's interval width named IN
+    # ADVANCE by arithmetic, per tick 52's lesson. **OUTWARD** (1 inward in the last 4, 53–56):
+    # 108 e-prints re-fetched, **108 of 108 byte-identical** (D0), one record per id (D7), **0
+    # unreadable** (D9). The drift check was re-run with today's own manifest out of its glob,
+    # because the first run compared four ids against themselves.
+    # **The census: 39 of 84 are not invokers — 46.4 %, exact, no sampling error.** Modes:
+    # `X-SCORE` 13 and `X-ENGLISH` 13, **tied**. **Five of six forecasts hold** (P1 46.4 % · P3
+    # class B 5 of 84 · P4 20.8 % · P5 32.0 % · P6 96.4 %); **D2 fires** — nothing is the mode,
+    # and computer vision's non-invokers are not mostly the English word: half are the criterion's
+    # own statistic reported as a score. A clean sweep on 35-point bands is worth tick 46's own
+    # suspicion, and it is recorded as one.
+    # **The rate: 41.0 → 32.0 % [29.1, 38.5] denominator-corrected → 28.4 % [25.8, 34.2] with
+    # class B removed.** The interval is narrow because the estimated end enters the denominator
+    # only; the census enters both, which is why it was the part read whole.
+    # **A correction against this record and against tick 53's:** tick 53's registration defines a
+    # candidate as a paper with "no site at the **focus value**", and I copied that into my own §0
+    # this morning. The code selects `sites == 0`, and that column is not focus-filtered — the
+    # class is "states **no threshold at all**", which is what tick 47's numerator always claimed.
+    # No number moves; the sentence is wrong in two registrations and is corrected forward, with a
+    # dated head note on today's and its body left as written.
+    # **The finding the tick did not go looking for, and it runs AGAINST this line's claim:**
+    # reading the sieve's own sites asked whether a site is a threshold statement at all. Of 24 —
+    # **12 real at 0.5, 5 real at another value, 7 none at all (29.2 %)**: reported values read as
+    # thresholds (`mIoU of 0.8444`, `an IoU of 0.9008` between annotators), one where the gap ran
+    # into `\sum_{i=1}^{3}`. Tick 47 recorded that the instrument errs in the direction that
+    # flatters this line; here it errs **both ways in one literature**, and the against-the-claim
+    # error is larger — class B overstates the class by 5, invented sites understate it by an
+    # estimated **15.1** [5.3, 37.5]. Returning them: **39.2 % [32.1, 55.1]**, computed post-hoc,
+    # declared post-hoc, and NOT the headline. **28.4 % is a lower bound, not an answer.** The
+    # fault is measured and deliberately **not repaired**: repairing the sieve inside the tick that
+    # measures it would leave no version in which the measurement holds.
+    # **Five class-B papers, three fault shapes, each verified at source and re-run under 0.6:**
+    # the sweep (hyphen and colon forms — tick 50's one unrepaired fault, in another suit); **the
+    # apposition with no relation token at all** (`at IoU threshold 0.5`), which is not among the
+    # ten classes tick 53 pinned; and the number standing second in a parenthetical list.
+    # Three observations the counts did not ask for: the machine's 28 name-absorbed candidates and
+    # my 28 hand-labelled `I-NAME` **are not the same 28** (overlap 25; the counter misses `mAP@50`
+    # and `mAP@50-95`); one paper states a threshold whose **quantity is unnamed** — the mirror of
+    # name absorption; and at least four candidates state an IoU threshold for another role, so
+    # "states no threshold" is false of them in a third way. Named remainder: **97 site-bearing
+    # papers unread**, and that is this line's next operation. Gaia and mcmc are not re-read.
+    # Cross-literature comparison **stays withdrawn**; shipped work untouched. Pre-opening check
+    # ran and classified the one outward move a **due answer** — the build gate red since
+    # 2026-08-10 on my requests room, the part the architect's own note left to me. The five
+    # sections were moved and then **could not be landed**: `REQUESTS-ARCHIVE.md` is not in the
+    # auto-land allowlist and Gate 1 refuses a whole branch for one path outside it, so the move
+    # goes as a pull request and the request is one line of `ALLOW_RE`. Two halves of one
+    # operation, opposite sides of the mandate. A second defect, found by `git status` and not by
+    # an instrument: `drift-tick53.py` wrote to a hard-coded filename and **overwrote tick 53's
+    # landed control record**; restored from the commit, and the script now takes `--out`/`--tick`
+    # with its old behaviour as the default. Five topoi **not used**, logged as unused.
+  refrain_aspect_tick55: territory  # tick 55 (2026-08-10) — the repair tick, and the first one whose
     # own instrument crashed the work it is building. Ten fault classes pinned by the tick-53
     # census: **eight repaired, two declined** with reasons written before the repair existed
     # (G5, a threshold that is an expression falling back to its value; G10, a term and a
