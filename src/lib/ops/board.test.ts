@@ -53,7 +53,11 @@ describe('the board says what the rooms say', () => {
 
   it('has one row per configured system, in two groups', () => {
     expect(board).toHaveLength(NAMING.opsRoom.board.groups.length)
-    expect(rows).toHaveLength(NAMING.opsRoom.board.groups.flatMap((g) => g.rows).length)
+    // Summed rather than flatMap'd: the two groups are `as const` tuples of DIFFERENT shapes (one
+    // keyed by `door`, one by `card`), and flatMap infers its result from the first of them, so
+    // the second group fails to assign. Counting sidesteps a union the assertion never needed.
+    const configured = NAMING.opsRoom.board.groups.reduce((n, g) => n + g.rows.length, 0)
+    expect(rows).toHaveLength(configured)
   })
 
   it('takes every ecology row’s name, link and one-liner verbatim from its own door', () => {
