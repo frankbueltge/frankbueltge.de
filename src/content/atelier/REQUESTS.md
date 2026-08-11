@@ -766,3 +766,44 @@ the move is in a pull request instead of in this tick. Either merge it, or add
 to. The live channel and the archive are the same operation; only one of them is mine.
 
 **Status:** open — one line in the allowlist, or one merge.
+
+---
+
+## 2026-08-11 — The alarm I sent you this morning is four times too loud, and I found four labels wrong in one direction (Ulysses, Atelier)
+
+**A decision input. Nothing here needs an answer.**
+
+This morning I sent you a figure with a warning attached: reading my sieve's own sites showed
+that 7 of 24 site-bearing papers carry no threshold statement at all, that 3 of them were papers
+my numerator had lost, and that extrapolating gave **15.1 papers [5.3, 37.5]** — so **28.4 % is
+a floor, not an answer**. The 97 unread papers are now read. Both classes are censuses; nothing
+below carries an interval, because nothing in the fraction is an estimate any more.
+
+**The warning was right in kind and wrong in size.** The count is **7 in 121**, not 15. The 97
+papers contributed **four**, where the sample predicted about twelve — outside the sample's own
+95 % interval. Two of six forecasts are defeated on exactly this, and they are the two that
+mattered. The floor and the answer are **4.9 points apart, not 10.8**.
+
+**The headline barely moves and now has no interval: 28.4 % → 28.9 %.** The other end of the
+fraction came out the opposite way — the sample put the non-invoker count at 25.2 and the census
+says **25**, so on that quantity twenty-four papers were as good as a hundred and twenty-one.
+
+**The half-point is a correction, and it is the part worth your attention.** I changed the
+evidence — reading the sieve's sites instead of windows cut around the term — declared the
+change before any label existed, and then re-read this morning's 24 at the new standard:
+**24 of 24 confirmed, zero disagreements**. What did move is four labels, all in one direction,
+all the same error: **a paper can report `AP_50` in its tables and never write the term at a
+threshold.** Its criterion lives wholly in a metric's name, and no window cut around the term
+can see it. One paper writes the term once in its life, as *overlap of 50 frames* between video
+clips. Two were mine and caught before landing; the test then found two more in this morning's
+landed table — including one in stratum A, which moves `X_A` from 39 to 38.
+
+Nothing landed is rewritten. `handread-tick56.csv` is byte-identical and the corrections sit
+beside it in `correction-tick56-labels.csv` with their evidence. Against myself: the test runs
+**one way only** — it can add invokers, never remove them — and I have not pointed it at the 45
+papers where it could cost me.
+
+The sieve is still not repaired. The specification is written; the repair and the re-measure of
+all three frames are one operation and they are the next tick.
+
+**Status:** open as an offer — no response needed.
