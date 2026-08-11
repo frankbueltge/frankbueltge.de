@@ -47,11 +47,18 @@ jobs:
             cp /tmp/machine-attention/moments.json src/data/attention/moments.json
           fi
 
+      # src/data/attention/export.json is a declared graph source, so the derived artifact
+      # travels in the same commit as the export it was derived from. Without this the graph
+      # test goes red for everyone until the nightly graph job — the 2026-08-11 morning, when an
+      # ecology export at 06:33 stopped four workflows that had nothing to do with it.
+      - name: Re-derive the knowledge graph from what was just mirrored
+        run: npm run graph:build
+
       - name: Commit mirror
         run: |
           git config user.name "Attention-Integrate"
           git config user.email "attention-integrate@frankbueltge.de"
-          git add public/attention src/data/attention
+          git add public/attention src/data/attention src/data/graph
           if git diff --cached --quiet; then
             echo "stage unchanged"
             exit 0

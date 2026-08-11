@@ -27,6 +27,7 @@ import { loadPassageModel } from '@/lib/atelier/passage-data'
 import { loadRefrainModels } from '@/lib/atelier/refrain-data'
 import rhizome from '@/data/atelier/rhizome.json'
 import { sessionRegister } from '@/lib/atelier/sessions'
+import { LINE_END, LINE_RESUMED, PROTOCOL_LADDER, nightlyLine } from '@/lib/engines/nightly-line'
 import '@/styles/atelier-sheet.css'
 
 // The nightly register's span, derived instead of typed: both places below said "S1–S44"
@@ -36,6 +37,7 @@ const nightlySpan = `S1–S${sessionRegister(Object.keys(import.meta.glob('/src/
 
 const E = ATELIER_NARRATIVE.entrance
 const V2 = ATELIER_NARRATIVE.entranceV2
+const PAIR = ATELIER_NARRATIVE.pair
 
 // The dossiers — the entrance's centre since 2026-08-01 (see components/atelier/Dossier.astro
 // for the why). Running lines first, each read out of its own committed record.
@@ -117,7 +119,9 @@ const dated = [
   ...works.filter((w) => w.date).map((w) => t(w.date!)),
   ...projects.filter((p) => p.created).map((p) => t(p.created!)),
 ]
-const T2 = Math.max(...dated) + DAY / 2
+// The axis has to reach the day the nightly line started again, or the branch drawn below would
+// have to be clamped to the edge and would quietly misdate itself.
+const T2 = Math.max(...dated, t(LINE_RESUMED)) + DAY / 2
 const W = 960, H = 232, padL = 16, padR = 46
 const innerW = W - padL - padR
 const xOf = (ts: number): number =>
@@ -183,6 +187,22 @@ const baselinePts = Array.from({ length: 13 }, (_, i) => {
 
 const xNightlyMid = (xOf(T0) + xOf(T1)) / 2
 const xV4Mid = (xOf(T1) + xOf(T2)) / 2
+
+// ————————————————————————————————————————————————— the fork, drawn ——————————
+// The map already bent at 18 July to show that the unit of work changed. What it did not show
+// is that the OLD unit did not stop existing — it was switched off, stood still for three weeks
+// and was forked back to life in its own repository. Drawn as a branch that leaves the seam,
+// runs dashed while it is dormant and solid once it is running again: the dashed length IS the
+// dormancy, on the same axis as everything else, so the figure cannot overstate the pause.
+//
+// It rises above the baseline rather than hanging below it, because below the line means
+// "project" in this figure's own grammar and this is not a project — it is the other arm.
+const line = nightlyLine()
+const FORK_Y = 62
+const xFork = xOf(T1)
+const xResumed = xOf(t(LINE_RESUMED))
+const xForkEnd = W - padR + 34
+const forkPath = `M ${xFork} ${Y0 - 4} C ${xFork + 10} ${Y0 - 30}, ${xFork + 6} ${FORK_Y + 14}, ${xFork + 26} ${FORK_Y}`
 
 // ————————————————————————————————— Orientierung für Erstbesucher ——————————
 // Frank, 2026-07-31: „Genau das müssen Erstbesucher verstehen: was passiert hier
@@ -317,6 +337,33 @@ const doors = [
           </text>
           <line x1={xOf(T1)} y1={Y0 - 6} x2={xOf(T1)} y2={Y0 + 46} class="m-seam" />
 
+          {/* the other arm: the nightly line, switched off at the seam and running again since
+              10 Aug. Dashed while dormant, solid once it works — the dashed run is drawn on the
+              same time axis as the rest, so its length is the pause and not a decoration. */}
+          <g class="m-fork">
+            <title>
+              The nightly line — switched off {LINE_END}, forked back to life {LINE_RESUMED} ·
+              {' '}{line.dormant} days dormant
+            </title>
+            <path d={forkPath} class="m-fork-line" />
+            <line x1={xFork + 26} y1={FORK_Y} x2={xResumed} y2={FORK_Y} class="m-fork-line m-fork-dormant" />
+            <line x1={xResumed} y1={FORK_Y} x2={xForkEnd} y2={FORK_Y} class="m-fork-line" />
+            <path d={`M ${xForkEnd} ${FORK_Y} l -9 0 m 5.5 -3 l 3.5 3 l -3.5 3`} class="m-fork-line" />
+            <circle cx={xResumed} cy={FORK_Y} r={2.6} class="m-fork-mark" />
+            {/* Three labels, each over the run it describes. One centred label at the resume
+                mark ran off the right edge — the mark sits within 40px of it, because the axis
+                now reaches the day the line restarted. */}
+            <text x={xFork + 30} y={FORK_Y - 9} class="m-caption m-fork-caption">
+              the nightly line — switched off, then forked
+            </text>
+            <text x={(xFork + 26 + xResumed) / 2} y={FORK_Y + 16} class="m-caption m-fork-caption" text-anchor="middle">
+              {line.dormant} days dormant
+            </text>
+            <text x={xForkEnd} y={FORK_Y + 16} class="m-caption m-fork-caption" text-anchor="end">
+              running again {LINE_RESUMED}
+            </text>
+          </g>
+
           {/* works — ink slabs standing on the line; the red slabs are the curated publications */}
           {slabs.map((s) => (
             <a href={s.href} class="m-slab-link">
@@ -355,9 +402,59 @@ const doors = [
         {V2.mapCaption} · below the line: projects — ✕ killed · ▢ archived as study · ● published · ⤳ active
       </figcaption>
       <figcaption class="at-map-prov">
-        {V2.mapProvenance} · time scale bends at 18 Jul (protocol v4)
+        {V2.mapProvenance} · time scale bends at 18 Jul (protocol v4) · the branch above the line
+        is the nightly line, forked back to life on {LINE_RESUMED}
       </figcaption>
     </figure>
+
+    <!-- ——— the pair: the other arm of this practice ———
+         New 2026-08-11. Before this, no Atelier page contained the word "fork": the nightly
+         works stood in the same gallery as the work-line publications, the session register
+         simply stopped mid-count, and /error-as-method told the other half of the story to a
+         reader with no way of arriving from here. The pair was decided in the log on 2026-08-11
+         and built on one side only; this is the other side.
+         Every figure below is derived — the ladder from nightly-line.ts, the counts from the two
+         mirrors the line is drawn across. -->
+    <section class="at-pair" aria-labelledby="at-pair-head">
+      <p class="at-pair-kicker">{PAIR.kicker}</p>
+      <h2 class="at-pair-head" id="at-pair-head">{PAIR.heading}</h2>
+      <p class="at-pair-lead">{PAIR.lead}</p>
+      <p class="at-pair-relation">{PAIR.relation}</p>
+
+      <div class="at-pair-arms">
+        <div class="at-arm at-arm-here">
+          <p class="at-arm-label">this practice · Protocol v{proto.version}</p>
+          <p class="at-arm-unit">{PAIR.arms.here}</p>
+          <p class="at-arm-data">
+            {projects.length} projects on the record · {dispCount('PUBLISH')} published
+          </p>
+        </div>
+        <div class="at-arm at-arm-there">
+          <p class="at-arm-label">the nightly line · Protocol v3, restored</p>
+          <p class="at-arm-unit">{PAIR.arms.there}</p>
+          <p class="at-arm-data">
+            {line.inherited} works to {LINE_END} · {line.dormant} days dormant ·
+            {' '}{line.sinceFork} night{line.sinceFork === 1 ? '' : 's'} since
+          </p>
+        </div>
+      </div>
+
+      <h3 class="at-pair-ladder-head">{PAIR.ladderHeading}</h3>
+      <ol class="at-ladder">
+        {PROTOCOL_LADDER.map((step) => (
+          <li class={step.restored ? 'at-rung at-rung-restored' : 'at-rung'}>
+            <span class="at-rung-v">v{step.version}</span>
+            <span class="at-rung-date">{step.date}</span>
+            <span class="at-rung-unit">unit: {step.unit}</span>
+            <span class="at-rung-note">{step.note}</span>
+            {step.restored && <span class="at-rung-flag">restored by the fork</span>}
+          </li>
+        ))}
+      </ol>
+      <p class="at-pair-ladder-note">{PAIR.ladderNote}</p>
+
+      <p class="at-pair-link"><a href="/error-as-method">{PAIR.link}</a></p>
+    </section>
 
     <!-- ——— the row of doors ——— -->
     <p class="at-doors-caption">{V2.doorsCaption}</p>
@@ -405,7 +502,11 @@ const doors = [
       <a href="/atelier/journal">nightly journal, {nightlySpan}</a> ·
       <a href="/atelier/history">the spine</a> ·
       <a href="/atelier/sheets">the sheets</a>
-      <span>— nightly sessions 28 Jun – 18 Jul · bounded projects (v4) 18–24 Jul, preserved in the research log</span>
+      <span>
+        — nightly sessions 28 Jun – 18 Jul · bounded projects (v4) 18–24 Jul, preserved in the
+        research log. The nightly phase is closed <em>here</em>, not everywhere: that line runs
+        again at <a href="/error-as-method">Error as Method</a>.
+      </span>
     </p>
 
     <p class="at-quiet">
@@ -438,6 +539,122 @@ const doors = [
   .at-archive-story a { color: inherit; text-decoration: underline; }
   .at-archive-story a:hover { color: var(--at-thread); }
 
+  /* ——— the pair: this practice and the other arm ———
+     Deliberately NOT styled as a card or a callout. A boxed-off panel would read as an aside
+     about a neighbour; this is a statement about what this practice is, so it stands in the
+     page's own column with the same heavy rule the archive uses. */
+  .at-pair {
+    margin: 0 0 2.5rem;
+    padding-top: 0.6rem;
+    border-top: 2px solid var(--at-ink);
+  }
+  .at-pair-kicker {
+    font-family: var(--at-font-record);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--at-ink-2);
+    margin: 0;
+  }
+  .at-pair-head { font-size: 1.05rem; margin: 0.35rem 0 0.6rem; }
+  .at-pair-lead, .at-pair-relation {
+    max-width: 62ch;
+    margin: 0 0 0.7rem;
+    font-size: 0.9rem;
+    line-height: 1.65;
+  }
+  .at-pair-relation { color: var(--at-ink-2); }
+
+  /* the two arms, side by side — the difference has to be visible without reading */
+  .at-pair-arms {
+    display: grid;
+    gap: 0.9rem;
+    margin: 1.1rem 0 1.4rem;
+  }
+  @media (min-width: 46rem) {
+    .at-pair-arms { grid-template-columns: 1fr 1fr; gap: 1.6rem; }
+  }
+  .at-arm { padding-left: 0.8rem; border-left: 2px solid var(--at-hairline); }
+  .at-arm-there { border-left-color: var(--at-graphite); }
+  .at-arm-label {
+    font-family: var(--at-font-record);
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--at-ink-2);
+    margin: 0 0 0.3rem;
+  }
+  .at-arm-unit { margin: 0 0 0.35rem; font-size: 0.9rem; line-height: 1.55; }
+  .at-arm-data {
+    margin: 0;
+    font-family: var(--at-font-record);
+    font-size: 11px;
+    color: var(--at-ink-2);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* the ladder of constitutions */
+  .at-pair-ladder-head {
+    font-family: var(--at-font-record);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--at-ink-2);
+    margin: 0 0 0.5rem;
+    font-weight: 400;
+  }
+  .at-ladder { list-style: none; margin: 0 0 0.6rem; padding: 0; }
+  .at-rung {
+    display: grid;
+    grid-template-columns: 2.4rem 5.6rem 1fr;
+    gap: 0.1rem 0.7rem;
+    padding: 0.4rem 0;
+    border-top: 1px solid var(--at-hairline);
+    font-size: 0.82rem;
+    align-items: baseline;
+  }
+  .at-rung:last-child { border-bottom: 1px solid var(--at-hairline); }
+  .at-rung-v {
+    font-family: var(--at-font-record);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  .at-rung-date {
+    font-family: var(--at-font-record);
+    font-size: 11px;
+    color: var(--at-ink-2);
+    font-variant-numeric: tabular-nums;
+  }
+  .at-rung-unit {
+    font-family: var(--at-font-record);
+    font-size: 11px;
+    color: var(--at-ink-2);
+  }
+  .at-rung-note { grid-column: 3; line-height: 1.5; }
+  .at-rung-flag {
+    grid-column: 3;
+    font-family: var(--at-font-record);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--at-thread);
+  }
+  .at-rung-restored .at-rung-v { color: var(--at-thread); }
+  @media (max-width: 34rem) {
+    .at-rung { grid-template-columns: 2.4rem 1fr; }
+    .at-rung-unit, .at-rung-note, .at-rung-flag { grid-column: 2; }
+  }
+  .at-pair-ladder-note {
+    max-width: 62ch;
+    margin: 0 0 0.9rem;
+    font-size: 0.8rem;
+    line-height: 1.6;
+    color: var(--at-ink-2);
+  }
+  .at-pair-link { margin: 0; font-size: 0.88rem; }
+  .at-pair-link a { color: inherit; text-decoration: underline; }
+  .at-pair-link a:hover { color: var(--at-thread); }
+
   /* ——— the map ——— */
   .at-map { margin: 0 0 2.25rem; }
   .at-map-head {
@@ -457,6 +674,14 @@ const doors = [
   .m-slab-link:hover .m-slab, .m-slab-link:focus .m-slab { fill: var(--at-thread); }
   .m-slab-curated { fill: var(--at-red); }
   .m-slab-link:hover .m-slab-curated, .m-slab-link:focus .m-slab-curated { fill: var(--at-red); opacity: 0.75; }
+  /* the other arm — same ink weight as the baseline, because it is a line of equal standing
+     and not an annotation on this one; dashed only where it stood still. */
+  .m-fork-line { fill: none; stroke: var(--at-graphite); stroke-width: 1.1; }
+  .m-fork-dormant { stroke-dasharray: 3 4; opacity: 0.55; }
+  .m-fork-mark { fill: var(--at-graphite); }
+  .m-fork-caption { fill: var(--at-ink-2); }
+  .m-fork:hover .m-fork-line, .m-fork:focus-within .m-fork-line { stroke: var(--at-thread); }
+  .m-fork:hover .m-fork-mark, .m-fork:focus-within .m-fork-mark { fill: var(--at-thread); }
   .m-proj-line { fill: none; stroke: var(--at-graphite); stroke-width: 1.1; }
   .m-proj-active { stroke: var(--at-thread); stroke-dasharray: 4 3; }
   /* Disposition marks wear the shared outcome identities (--at-out-*, atelier-sheet.css,

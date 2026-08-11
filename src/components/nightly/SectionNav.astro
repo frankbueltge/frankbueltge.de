@@ -1,0 +1,39 @@
+---
+// The nightly line's rooms (2026-08-11). Until now the line had one page and a link to its
+// repository, while the material that makes it legible as research — a genealogy that grew for
+// thirty sessions, two position papers with a documented turn between them, a typed error
+// register of thirty-eight entries — rendered as an accordion of raw markdown at the foot of
+// the Atelier's works room, where nobody reads it.
+//
+// Each room below is derived from that same committed material; none of it is retyped. The
+// texts themselves stay mirrored verbatim where they already are — these rooms are a way in,
+// not a replacement, and every one of them says which file it was read from.
+interface Props {
+  /** the room the visitor is in, so it is marked rather than linked */
+  active?: 'line' | 'genealogy' | 'position' | 'register' | 'reading'
+}
+
+const { active } = Astro.props
+
+const ROOMS = [
+  { id: 'line', href: '/error-as-method', label: 'the line' },
+  { id: 'genealogy', href: '/error-as-method/genealogy', label: 'the genealogy' },
+  { id: 'position', href: '/error-as-method/position', label: 'the position' },
+  { id: 'register', href: '/error-as-method/register', label: 'the error register' },
+  { id: 'reading', href: '/error-as-method/reading', label: 'the reading' },
+] as const
+---
+
+<nav class="mt-8 flex flex-wrap gap-x-5 gap-y-2 border-y border-line/60 py-3 font-mono text-[11px] uppercase tracking-[0.12em]" aria-label="The nightly line's rooms">
+  {
+    ROOMS.map((room) =>
+      room.id === active ? (
+        <span class="text-fg" aria-current="page">{room.label}</span>
+      ) : (
+        <a href={room.href} class="text-fg-faint underline decoration-line underline-offset-4 transition-colors hover:text-fg">
+          {room.label}
+        </a>
+      ),
+    )
+  }
+</nav>

@@ -50,8 +50,20 @@ Hooks nehmen es ab, und der Test bleibt trotzdem die Garantie:
   `node_modules`, oder scheitert die Ableitung, tritt er beiseite.
 - **Claude-Code-Hook** (`.claude/settings.json`, PostToolUse auf `Write|Edit`): baut nach
   jeder Bearbeitung einer Quelle nach, ohne dass jemand etwas einrichtet.
+- **Die Spiegel-Workflows leiten selbst ab** (seit 2026-08-11). Ein Workflow committet mit dem
+  eingebauten Token und läuft damit an *beiden* Hooks vorbei — er würde eine Quelle nach `main`
+  bringen und die Ableitung stehen lassen. Deshalb ruft jeder Workflow, der eine Quelle
+  schreibt, `npm run graph:build` vor der Validierung auf und committet `src/data/graph` mit
+  (`{atelier,field,studio,nightly,attention}-integrate.yml`); `ecology-integrate.yml` stößt
+  stattdessen `graph.yml` an, weil es die Site-Abhängigkeiten gar nicht installiert und seine
+  Commits sich gabeln. **`hooks.test.ts` hält das fest:** Es liest alle Workflows, findet die,
+  die eine deklarierte Quelle nennen, und verlangt von jedem die Ableitung — inklusive der
+  Präfix-Fälle (ein Workflow nennt `src/data/nightly`, die Quelle heißt `src/data/nightly/works`).
 - **`.github/workflows/graph.yml`** baut nächtlich nach — das Netz für alles, was durch
-  beide Maschen fällt (Rebase, `--no-verify`, ein fremdes Werkzeug).
+  die anderen Maschen fällt (Rebase, `--no-verify`, ein fremdes Werkzeug).
+  **Es ist das letzte Netz, nicht das erste:** Am Morgen des 2026-08-11 änderte der
+  Ökologie-Export um 06:33 eine Quelle, und vier Workflows, die damit nichts zu tun hatten,
+  liefen rot — der nächtliche Lauf um 04:25 hätte das erst 22 Stunden später repariert.
 
 Ein PR mit veralteter Datei läuft weiterhin rot, und das ist richtig so: das Artefakt gehört
 in denselben Commit wie die Änderung, die es verändert hat. Die Hooks sorgen nur dafür, dass

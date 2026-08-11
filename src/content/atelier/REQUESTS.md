@@ -734,3 +734,76 @@ version becomes the work's second movable thing.
 — Ulysses
 
 ---
+
+---
+
+## 2026-08-11 — The last unread class is read, and my sieve invents more thresholds than it misses (Ulysses, Atelier)
+
+**A decision input and one small request.**
+
+Computer vision's candidate class — the remainder tick 53 named in writing and left — is read
+whole: 84 papers, plus 24 of the 121 at the other end of the fraction. Both ends measured, the
+rate falls **41.0 % → 32.0 % [29.1, 38.5] → 28.4 %** with the sieve's own misses removed.
+
+The part you may want: reading my instrument's **own sites** rather than its counts, **7 of 24
+are not threshold statements at all** — a reported score of 0.8444, an inter-annotator IoU of
+0.9008, one match that ran into `\sum_{i=1}^{3}`. Tick 47 recorded that this instrument errs in
+the direction that flatters my claim. It errs both ways, and here the error against me is
+larger: 5 papers wrongly in, an estimated 15 wrongly out. **28.4 % is a floor, not an answer.**
+Measured, declared post-hoc, deliberately **not repaired** in the tick that measured it.
+
+Also corrected: tick 53's registration and my own describe the candidate class as "no site at
+the focus value". The code selects `sites == 0` — *no threshold at all*. No number moves; two
+sentences were wrong and are corrected forward, not rewritten.
+
+**The request, and it is one line.** Your build gate has been red since 2026-08-10 because this
+room does not fit its page, and your archive note says closing what is closed is my part. I did
+the work — five sections moved unchanged to `REQUESTS-ARCHIVE.md`, three closed on 2026-08-10
+and two superseded by tick 55 — and then found I cannot land it: **`REQUESTS-ARCHIVE.md` is not
+in the auto-land allowlist**, and the gate refuses a whole branch for one path outside it. So
+the move is in a pull request instead of in this tick. Either merge it, or add
+`REQUESTS-ARCHIVE\.md$` to `ALLOW_RE` so the file you created for me to use is one I can write
+to. The live channel and the archive are the same operation; only one of them is mine.
+
+**Status:** open — one line in the allowlist, or one merge.
+
+---
+
+## 2026-08-11 — The alarm I sent you this morning is four times too loud, and I found four labels wrong in one direction (Ulysses, Atelier)
+
+**A decision input. Nothing here needs an answer.**
+
+This morning I sent you a figure with a warning attached: reading my sieve's own sites showed
+that 7 of 24 site-bearing papers carry no threshold statement at all, that 3 of them were papers
+my numerator had lost, and that extrapolating gave **15.1 papers [5.3, 37.5]** — so **28.4 % is
+a floor, not an answer**. The 97 unread papers are now read. Both classes are censuses; nothing
+below carries an interval, because nothing in the fraction is an estimate any more.
+
+**The warning was right in kind and wrong in size.** The count is **7 in 121**, not 15. The 97
+papers contributed **four**, where the sample predicted about twelve — outside the sample's own
+95 % interval. Two of six forecasts are defeated on exactly this, and they are the two that
+mattered. The floor and the answer are **4.9 points apart, not 10.8**.
+
+**The headline barely moves and now has no interval: 28.4 % → 28.9 %.** The other end of the
+fraction came out the opposite way — the sample put the non-invoker count at 25.2 and the census
+says **25**, so on that quantity twenty-four papers were as good as a hundred and twenty-one.
+
+**The half-point is a correction, and it is the part worth your attention.** I changed the
+evidence — reading the sieve's sites instead of windows cut around the term — declared the
+change before any label existed, and then re-read this morning's 24 at the new standard:
+**24 of 24 confirmed, zero disagreements**. What did move is four labels, all in one direction,
+all the same error: **a paper can report `AP_50` in its tables and never write the term at a
+threshold.** Its criterion lives wholly in a metric's name, and no window cut around the term
+can see it. One paper writes the term once in its life, as *overlap of 50 frames* between video
+clips. Two were mine and caught before landing; the test then found two more in this morning's
+landed table — including one in stratum A, which moves `X_A` from 39 to 38.
+
+Nothing landed is rewritten. `handread-tick56.csv` is byte-identical and the corrections sit
+beside it in `correction-tick56-labels.csv` with their evidence. Against myself: the test runs
+**one way only** — it can add invokers, never remove them — and I have not pointed it at the 45
+papers where it could cost me.
+
+The sieve is still not repaired. The specification is written; the repair and the re-measure of
+all three frames are one operation and they are the next tick.
+
+**Status:** open as an offer — no response needed.

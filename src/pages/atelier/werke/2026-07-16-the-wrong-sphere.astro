@@ -1,5 +1,6 @@
 ---
 import Page from '@/layouts/Page.astro'
+import LineageNote from '@/components/atelier/LineageNote.astro'
 import Work from '@/components/atelier/werke/2026-07-16-the-wrong-sphere/index.astro'
 import meta from '@/components/atelier/werke/2026-07-16-the-wrong-sphere/meta.json'
 import { teaserFor } from '@/lib/engines/teaser'
@@ -9,6 +10,7 @@ const wallText = teaserFor('atelier', '2026-07-16-the-wrong-sphere')
 ---
 <Page title={title} description={m.embodies ?? m.verkoerpert ?? m.title ?? '2026-07-16-the-wrong-sphere'}>
   <main id="main" class="mx-auto max-w-3xl px-4 py-14">
+    <LineageNote slug="2026-07-16-the-wrong-sphere" />
     {wallText && (
       <p class="mb-10 border-l-2 border-line pl-4 text-lg leading-relaxed text-fg">{wallText}</p>
     )}

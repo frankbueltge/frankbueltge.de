@@ -429,6 +429,39 @@
 .atelier-surface .at-shelf-row p { margin: 0.35em 0; font-size: 14.5px; line-height: 1.55; max-width: 76ch; }
 .atelier-surface .at-shelf-row .at-relevance { color: var(--at-ink-2); font-style: italic; }
 
+/* phases (works room, 2026-08-11) — the room holds two phases of one practice under two
+   constitutions. The heading rule is the same weight for both: neither phase is the footnote
+   of the other, and a lighter rule on the nightly section would say it was. */
+.atelier-surface .at-phase { margin: 0 0 2.5rem; }
+.atelier-surface .at-phase-head {
+  font-family: var(--at-font-record);
+  font-size: 15px;
+  font-style: normal;
+  letter-spacing: 0.02em;
+  margin: 0 0 0.4rem;
+  padding-top: 0.5rem;
+  border-top: 2px solid var(--at-ink);
+}
+.atelier-surface .at-phase-span {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--at-ink-2);
+  margin-left: 0.7em;
+  white-space: nowrap;
+}
+.atelier-surface .at-phase-note {
+  margin: 0 0 0.9rem;
+  font-family: var(--at-font-record);
+  font-size: 14px;
+  line-height: 1.62;
+  color: var(--at-ink-2);
+  max-width: 68ch;
+}
+.atelier-surface .at-phase-link { margin: -0.4rem 0 1.1rem; font-size: 14px; }
+.atelier-surface .at-phase-link a { color: inherit; text-decoration: underline; }
+.atelier-surface .at-phase-link a:hover { color: var(--at-thread); }
+
 /* work cards (works room) */
 .atelier-surface .at-work-card {
   border: 1px solid var(--at-hairline);
