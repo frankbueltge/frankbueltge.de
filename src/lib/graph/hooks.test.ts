@@ -10,10 +10,10 @@
 // things; that they WORK was proven by deleting the artifact and committing (see the pre-commit
 // hook's own comment about the version that silently did nothing).
 
-import { readFileSync, statSync } from 'node:fs'
+import { readFileSync, readdirSync, statSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
-import { ATTENTION_FILE, SOURCE_FILES } from './build'
+import { ATTENTION_FILE, SOURCE_FILES, WORK_META_DIRS } from './build'
 
 const ROOT = fileURLToPath(new URL('../../../', import.meta.url))
 const read = (p: string): string => readFileSync(`${ROOT}${p}`, 'utf8')
@@ -83,4 +83,56 @@ describe('the Claude Code hook that re-derives after an edit', () => {
     expect(command).toContain('/meta.json')
     expect(command).toContain(ATTENTION_FILE.replace('src/data/attention/', ''))
   })
+})
+
+// The third net, added 2026-08-11 after the second time it was needed.
+//
+// The two hooks above cover a hand and a session. They cannot cover a WORKFLOW: a mirror that
+// commits with the built-in token runs no git hook and no Claude hook, so a graph source can
+// reach main with the derivation left behind — and then every OTHER workflow that validates goes
+// red on a disagreement it did not cause. That happened on 2026-08-11: an ecology export landed
+// at 06:33, four workflows failed on it, and the nightly graph job at 04:25 was the first thing
+// that would have repaired it — twenty-two hours later. A net that catches tomorrow morning is
+// not a net for today.
+//
+// So: a workflow that writes a declared graph source must also derive the graph — itself, or by
+// dispatching the job that does. This test finds them by the paths they name, which is exactly
+// how such a workflow rots: someone adds a mirror for a new source and nothing says a word.
+describe('the workflows that write a graph source keep it derived', () => {
+  const dir = `${ROOT}.github/workflows`
+  const workflows = readdirSync(dir)
+    .filter((f) => f.endsWith('.yml'))
+    .map((f) => ({ name: f, text: readFileSync(`${dir}/${f}`, 'utf8') }))
+
+  const sourcePaths = [
+    ...SOURCE_FILES,
+    ...WORK_META_DIRS.map((d) => d.dir),
+    ATTENTION_FILE,
+  ]
+
+  /** A workflow rarely names a source exactly: it mirrors into `src/data/nightly` while the
+   *  source is `src/data/nightly/works`. So a source counts as touched when the workflow names
+   *  it OR any ancestor of it three segments deep or more — deep enough that `src/data` alone
+   *  never matches. Found by this test's own first version, which missed the workflow written
+   *  the same night for exactly this reason. */
+  const touches = (text: string, source: string): boolean => {
+    const parts = source.split('/')
+    for (let n = parts.length; n >= 3; n -= 1) {
+      if (text.includes(parts.slice(0, n).join('/'))) return true
+    }
+    return false
+  }
+
+  it('finds the workflows at all — an empty sweep would pass silently', () => {
+    expect(workflows.length).toBeGreaterThan(10)
+  })
+
+  for (const { name, text } of workflows) {
+    const writes = sourcePaths.filter((p) => touches(text, p))
+    if (!writes.length) continue
+    it(`${name} derives the graph it disturbs (${writes.length} source(s))`, () => {
+      const derives = text.includes('graph:build') || text.includes('graph.yml')
+      expect(derives, `${name} names ${writes[0]} but never re-derives the graph`).toBe(true)
+    })
+  }
 })

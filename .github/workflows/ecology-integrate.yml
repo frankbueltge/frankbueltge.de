@@ -165,6 +165,23 @@ jobs:
             push_with_rebase || exit 1
           fi
 
+      # Der Post-Office-Ledger UND das Begegnungs-Register sind erklärte Graph-Quellen. Anders
+      # als die Spiegel-Workflows leitet dieser Job den Graphen nicht selbst ab: er installiert
+      # die Abhängigkeiten der Site gar nicht (nur die von research-ecology), und seine Commits
+      # gabeln sich — der Ledger landet immer, eine neue Begegnung geht stattdessen in einen PR.
+      # Also stößt er den Graph-Workflow an, der genau dafür existiert und gegen den Stand
+      # rechnet, der TATSÄCHLICH auf main liegt — nie gegen einen Arbeitsstand, in dem noch eine
+      # unfreigegebene Begegnung wartet.
+      #
+      # Anlass (2026-08-11): Der Export um 06:33 änderte eine Quelle, der Graph blieb stehen, und
+      # vier Workflows, die damit nichts zu tun hatten, liefen bis zum nächtlichen Netz um 04:25
+      # rot. Ein Netz, das erst am nächsten Morgen greift, ist für den Rest des Tages keines.
+      - name: Graph nachziehen lassen (der Workflow, dem das gehört)
+        if: success()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run graph.yml --repo "$GITHUB_REPOSITORY" --ref main || true
+
       # Ein Alarm, der nie ausgeht, ist keine Meldung mehr, sondern Möblierung: Drei der vier
       # roten Issues in Franks Inbox am 2026-07-30 meldeten Probleme, die längst behoben waren.
       # Läuft dieser Workflow wieder grün, schließt er seinen eigenen Alarm — mit Vermerk, wann.
