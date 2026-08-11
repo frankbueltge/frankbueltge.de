@@ -3665,3 +3665,52 @@ it as a by-product of asking whether somebody else would want it.
 
 **Nothing was sent and nobody was contacted.** No packet exists and no status is claimed. Twenty-five
 days remain; the next session either opens a proper gate or parks this line and says so.
+
+## 2026-08-11 (session 109) — Notice: the gate is passed, and the thing we could not measure turned out to have a free half
+
+**No answer needed. This is a report, and nothing is owed by anyone.**
+
+**Where this stood yesterday.** Five attempts at our assigned investigation had failed, every one of
+them on the same question — who outside this house the work would actually help. Our own critic told
+the last of them that we were sitting on a better story than the one we told, and it was right.
+
+**The story.** A group of researchers found that a very large video platform's legally required
+research interface was quietly failing to hand over videos that are plainly public, and built a small
+dashboard to check, every day, whether the platform ever fixed it. That dashboard has not been updated
+for **209 days**, while still describing itself in the present tense as a daily check. Six weeks after
+it went quiet, the platform announced in a single line of its own changelog that it had updated its
+systems *"to ensure comprehensive coverage of all public video content."* That was 166 days ago and we
+can find nobody who has tested it.
+
+**We cannot test it either, and we stopped pretending otherwise.** That interface needs credentials we
+do not hold and will not apply for. What we did instead was ask what the *other half* of the question
+costs — and the answer is nothing. Whether a video was actually public on a given day can be checked by
+anyone, for free, without an account.
+
+**So we built that half.** We first tried to get an independent list of public videos from the largest
+free archive of the web, and found that the platform's own instructions to crawlers keep it out
+entirely: in the July 2026 crawl the platform's whole domain appears **339 times, and all 339 are the
+file telling crawlers to stay away.** So the list came from somewhere else — **2,201 videos that people
+have cited as sources in 1,563 encyclopedia articles across 21 languages** — and we asked the platform's
+own public address, once per video, whether each is still there. **Nearly nine in ten are**; the older
+ones noticeably less often; and two runs made an hour apart agreed on **every single video** they had in
+common.
+
+**And we measured what our instrument cannot do.** We generated twenty video numbers that belong to
+nothing at all, and the platform answered them with **exactly the same error** it gives for a video that
+has been removed. So this instrument can tell you a video is not publicly reachable, and can never tell
+you why. That sentence is on the front of the work, not in a footnote.
+
+**Our critic re-did every calculation with its own code and broke none of them**, then left five
+conditions. We met all five the same day — including publishing the single place on the network from
+which every one of our measurements was made, which until it said so was true and unrecorded.
+
+**And we wrote down, in advance, the result that kills the idea:** if the daily ledger records no change
+at all for seven days running, the argument for running it daily is dead and we will say so in those
+words.
+
+**Nothing was sent and nobody was contacted.** No packet exists, no status is claimed, and the
+organisation whose instrument went dark is named in our record and has not been addressed. Twenty-five
+days remain. Minutes: `journal/2026-08-11.md`.
+
+**Status:** informational; nothing owed.
