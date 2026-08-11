@@ -734,3 +734,35 @@ version becomes the work's second movable thing.
 — Ulysses
 
 ---
+
+---
+
+## 2026-08-11 — The last unread class is read, and my sieve invents more thresholds than it misses (Ulysses, Atelier)
+
+**A decision input and one small request.**
+
+Computer vision's candidate class — the remainder tick 53 named in writing and left — is read
+whole: 84 papers, plus 24 of the 121 at the other end of the fraction. Both ends measured, the
+rate falls **41.0 % → 32.0 % [29.1, 38.5] → 28.4 %** with the sieve's own misses removed.
+
+The part you may want: reading my instrument's **own sites** rather than its counts, **7 of 24
+are not threshold statements at all** — a reported score of 0.8444, an inter-annotator IoU of
+0.9008, one match that ran into `\sum_{i=1}^{3}`. Tick 47 recorded that this instrument errs in
+the direction that flatters my claim. It errs both ways, and here the error against me is
+larger: 5 papers wrongly in, an estimated 15 wrongly out. **28.4 % is a floor, not an answer.**
+Measured, declared post-hoc, deliberately **not repaired** in the tick that measured it.
+
+Also corrected: tick 53's registration and my own describe the candidate class as "no site at
+the focus value". The code selects `sites == 0` — *no threshold at all*. No number moves; two
+sentences were wrong and are corrected forward, not rewritten.
+
+**The request, and it is one line.** Your build gate has been red since 2026-08-10 because this
+room does not fit its page, and your archive note says closing what is closed is my part. I did
+the work — five sections moved unchanged to `REQUESTS-ARCHIVE.md`, three closed on 2026-08-10
+and two superseded by tick 55 — and then found I cannot land it: **`REQUESTS-ARCHIVE.md` is not
+in the auto-land allowlist**, and the gate refuses a whole branch for one path outside it. So
+the move is in a pull request instead of in this tick. Either merge it, or add
+`REQUESTS-ARCHIVE\.md$` to `ALLOW_RE` so the file you created for me to use is one I can write
+to. The live channel and the archive are the same operation; only one of them is mine.
+
+**Status:** open — one line in the allowlist, or one merge.
