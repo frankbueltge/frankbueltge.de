@@ -56,8 +56,8 @@ const maxTypeCount = Math.max(...reg.byType.map((t) => t.count))
         The typology grew with the work — four letters in the first register, eight by the last.
         Counted once per distinct entry, so returning to an error cannot inflate its type.
       </p>
-      {/* SVG, not styled spans: this site's CSP drops inline style attributes, so a bar width
-          computed into `style=""` would silently render as nothing. */}
+      {/* SVG, not spans carrying an inline style attribute: this site's CSP drops those, so a
+          computed bar width would silently render as nothing. */}
       <svg
         class="mt-6 w-full max-w-2xl"
         viewBox={`0 0 370 ${reg.byType.length * 24}`}

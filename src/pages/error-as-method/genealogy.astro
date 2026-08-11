@@ -82,9 +82,9 @@ const span = firstDate && lastDate ? `, ${firstDate} to ${lastDate}` : ''
             The weight below is how often each track is named in the document — a rough measure of
             where the work actually went, not a claim about which matters.
           </p>
-          {/* Drawn as SVG, not as a styled span: this site's CSP drops `style=""` attributes
-              silently, so a width computed into an inline style would render as a zero-width bar
-              that still looked like a deliberate design. Geometry belongs in the geometry. */}
+          {/* Drawn as SVG, not as a span with an inline style attribute: this site's CSP drops
+              those silently, so a computed width would render as a zero-width bar that still
+              looked like a deliberate design. Geometry belongs in the geometry. */}
           <svg
             class="mt-6 w-full max-w-xl"
             viewBox={`0 0 320 ${TRACKS.length * 26}`}
