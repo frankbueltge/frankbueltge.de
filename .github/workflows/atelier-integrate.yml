@@ -78,6 +78,13 @@ jobs:
           mkdir -p src/data/atelier
           cp /tmp/atelier/atlas/atlas.json /tmp/atelier/pulse/*.json src/data/atelier/ 2>/dev/null || true
 
+      # The graph is derived from what this mirror just wrote (a work's meta.json, the
+      # attention export, the encounters register). Deriving it HERE, before validation, is what
+      # makes the honesty test guard the mirrored content instead of tripping over it: on
+      # 2026-08-11 an ecology export landed at 06:33 and every validating workflow after it went
+      # red until the nightly graph job at 04:25 the next morning. See .claude/rules/knowledge-graph.md.
+      - name: Re-derive the knowledge graph from what was just mirrored
+        run: npm run graph:build
       - name: Validate (check + test + build)
         id: validate
         run: |
@@ -87,10 +94,10 @@ jobs:
       - name: Commit + let deploy-cf rebuild (on success)
         if: success()
         run: |
-          if [ -n "$(git status --porcelain src/content/atelier src/components/atelier src/pages/atelier src/data/atelier public/atelier/werke-html)" ]; then
+          if [ -n "$(git status --porcelain src/content/atelier src/components/atelier src/pages/atelier src/data/atelier src/data/graph public/atelier/werke-html)" ]; then
             git config user.name "Atelier-Integrate"
             git config user.email "atelier-integrate@frankbueltge.de"
-            git add -A src/content/atelier src/components/atelier src/pages/atelier src/data/atelier
+            git add -A src/content/atelier src/components/atelier src/pages/atelier src/data/atelier src/data/graph
             if [ -d public/atelier/werke-html ]; then git add -A public/atelier/werke-html; fi
             git commit -m "atelier: integrate $(date -u +%F)"
             for attempt in 1 2 3 4 5; do
