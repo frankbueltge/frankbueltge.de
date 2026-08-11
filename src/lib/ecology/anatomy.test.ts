@@ -93,9 +93,9 @@ describe('the three practices are drawn in one frame and three vocabularies', ()
     }
   })
 
-  it('puts the human publication gate on exactly one practice, and names which', () => {
+  it('carries no human publication gate anymore — Protocol v6 §2.3 (2026-08-10) struck the atelier’s, the ecology’s last one', () => {
     const withHuman = PRACTICES.filter((p) => shapeOf(p).human > 0).map((p) => p.id)
-    expect(withHuman).toEqual(['atelier'])
+    expect(withHuman).toEqual([])
   })
 
   it('leaves the atelier without a named cast, and names no role a protocol has dropped', () => {
