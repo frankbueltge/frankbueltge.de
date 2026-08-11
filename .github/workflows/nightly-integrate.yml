@@ -58,6 +58,13 @@ jobs:
             }
           '
 
+      # The graph is derived from what this mirror just wrote (a work's meta.json, the
+      # attention export, the encounters register). Deriving it HERE, before validation, is what
+      # makes the honesty test guard the mirrored content instead of tripping over it: on
+      # 2026-08-11 an ecology export landed at 06:33 and every validating workflow after it went
+      # red until the nightly graph job at 04:25 the next morning. See .claude/rules/knowledge-graph.md.
+      - name: Re-derive the knowledge graph from what was just mirrored
+        run: npm run graph:build
       - name: Validate (drift + check + test + build)
         run: |
           set -o pipefail
@@ -66,10 +73,10 @@ jobs:
       - name: Commit + let deploy-cf rebuild (on success)
         if: success()
         run: |
-          if [ -n "$(git status --porcelain src/data/nightly public/error-as-method)" ]; then
+          if [ -n "$(git status --porcelain src/data/nightly public/error-as-method src/data/graph)" ]; then
             git config user.name "Nightly-Integrate"
             git config user.email "nightly-integrate@frankbueltge.de"
-            git add -A src/data/nightly public/error-as-method
+            git add -A src/data/nightly public/error-as-method src/data/graph
             git commit -m "nightly line: integrate $(date -u +%F)"
             for attempt in 1 2 3 4 5; do
               git pull --rebase --autostash origin main && git push && break
