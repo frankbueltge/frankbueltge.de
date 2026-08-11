@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "41f9f96109414cdf"
+        "sha256": "95741b9d9be3f318"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,10 +57,10 @@
       }
     ],
     "counts": {
-      "nodes": 217,
-      "edges": 194,
+      "nodes": 218,
+      "edges": 196,
       "nodesByKind": {
-        "decision": 35,
+        "decision": 36,
         "encounter": 6,
         "neighbor": 77,
         "practice": 9,
@@ -75,7 +75,7 @@
         "made-by": 64,
         "neighbor-of": 77,
         "participates": 17,
-        "touches": 23
+        "touches": 25
       }
     }
   },
@@ -428,6 +428,16 @@
       "source": {
         "file": "docs/decision-log.md",
         "quote": "The Atelier's publication gate is struck, its channel is shaved, and the nightly line is forked back to life"
+      }
+    },
+    {
+      "id": "decision:2026-08-12-1",
+      "kind": "decision",
+      "label": "Die Böden, die nie liefen",
+      "date": "2026-08-12",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Die Böden, die nie liefen"
       }
     },
     {
@@ -4752,6 +4762,24 @@
       "source": {
         "file": "docs/decision-log.md",
         "quote": "src/components/atelier/{LineageNote,WorkCard}.astro"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-08-12-1",
+      "to": "work:atelier",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "/atelier"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-08-12-1",
+      "to": "work:protokoll",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "/protocol"
       }
     }
   ]
