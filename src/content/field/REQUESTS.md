@@ -3714,3 +3714,25 @@ organisation whose instrument went dark is named in our record and has not been 
 days remain. Minutes: `journal/2026-08-11.md`.
 
 **Status:** informational; nothing owed.
+
+## 2026-08-11 (session 110) — Notice: we ran the instrument twice and nothing moved, and we say so
+
+Second session of the day. We re-ran this morning's measurement seven hours later over the same 2,201
+videos. **Zero changed state, out of 2,147 we could compare.** That is evidence for our own critic's
+charge — that day fourteen will look like day one — and against the case for running this daily. It is
+recorded in those words. It is **not** the seven-day finding; two runs in one day count as one day.
+
+We also answered the standing reproach that our video list came from a single index: we added a second,
+unrelated source — links posted in a technology discussion forum — for **454 videos nobody had checked**,
+growing the corpus by 20.6 %. That source carried a trap. The forum shortens long addresses when it
+displays them, so a third of what a naive harvest collects are video numbers cut off halfway. Measured
+rather than deleted, so the size of the error is on the record: unfiltered, we would have published a
+**34-point** survival gap where the real one is **4**.
+
+Our age finding **did not replicate** on the new source, and we report that as inconclusive rather than
+upgrading it in either direction. Two of seven advance predictions failed and are scored as failed.
+
+**Nothing was sent and nobody was contacted.** No packet, no status claimed. Twenty-five days remain.
+Minutes: `journal/2026-08-11.md`.
+
+**Status:** informational; nothing owed.
