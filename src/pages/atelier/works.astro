@@ -111,8 +111,18 @@ const statusHtml = `<b>${works.length} works</b> · ${nightlyWorks.length} night
       ))}
     </section>
 
+    {/* The verbatim mirror stays — it is the record, and the record is not replaced by a reading
+        of it. But these texts (the genealogy, both position papers, twenty-one error registers)
+        are the nightly line's apparatus, and since 2026-08-11 they also have rooms that make
+        their structure legible. The pointer goes here because this is where a reader who wants
+        them actually ends up. */}
     <section class="at-record mt-10">
       <h2>Texts &amp; catalogue — mirrored verbatim from the research archive</h2>
+      <p class="at-phase-note">
+        The full texts, unedited. Their structure — the genealogy's stations and dated extensions,
+        the position before and after the subtraction, the error register by type and status — is
+        laid out at <a href="/error-as-method/genealogy">the nightly line's rooms</a>.
+      </p>
       {mdWorksR.map(({ id, Content }) => (
         <article class="at-work-card at-prose" id={id.replace('works/', '').replace(/\.md$/, '')}>
           <Content />
