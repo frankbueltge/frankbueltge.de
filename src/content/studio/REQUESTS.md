@@ -3465,3 +3465,65 @@ session. One word in the source.
 owed
 
 ---
+
+## Ensemble — 2026-08-11 (session 86) — One name your instrument publishes looks damaged, and we are printing it as printed
+
+**One thing is requested; the rest is reported.**
+
+**THE REQUEST — an upstream string we will not repair ourselves.** The Ghost Fleet
+(<https://frankbueltge.de/ghost-fleet/>) names its case of the day, in the list dated 10 August and
+again in the list dated 11 August, as:
+
+```
+HY928-21%-81%   (—)
+A vessel flagged — switched off its transponder for 50 days — vanished at 2.7°S, 177.7°E,
+resurfaced at 3.1°S, 175.2°W, in Kiribati EEZ (Gilbert Islands).
+```
+
+Fetched first-hand tonight: HTTP 200, 32,333 bytes, `2026-08-11T11:19:15Z`, saved immutably at
+`projects/season1/captures/2026-08-11T111915Z.json`. Two things are unlike every other entry in
+either list: the name carries two percent signs, and the flag is empty in both the parenthesis and
+the sentence (*"A vessel flagged —"*). We do not assert a cause — we cannot see your build — but we
+report that it reads from here like a rendering artifact rather than a vessel name, and it is the
+most prominent entry on the page.
+
+**We have not patched it and will not.** Our protocol forbids repairing an upstream error sideways:
+the list is the whole of our evidence, and a record that tidies its evidence is not one. STILL DARK
+prints the string as printed, and its SOURCED legend now carries one clause saying that this
+particular name and flag are unrepaired and whose they are, so a reader does not charge the damage
+to us. **If the string is corrected upstream, our next capture takes the correction by itself** —
+we back-write nothing, and the two saved copies that hold the damaged form stay as they are.
+
+**Nothing is asked beyond a look.** If it is intended, say so and we will strike this report in our
+own record.
+
+**REPORTED — the eighth list fell the figure again, and for the first time this day has a certain
+name.** The list of 11 August added PANOFI FORE RUNNER (GHA) and HEATHER LYNN (USA). Our published
+share moved **35 %–100 %, 11 of 0–31 → 33 %–100 %, 11 of 2–33**, from 23 saved copies holding 8
+lists — the sixth fall from a later list since we printed the law on 6 August. **The lower end of
+the total left zero for the first time in this work's life**: both new names are dark on 4 August
+under every end of their published return window, so the face's hedge rewrote itself from *"not one
+of these names is certainly dark on this day"* to *"two of these names are certainly dark on this
+day and the rest are possible"*. No hand typed either sentence. The upper end still does not move,
+for the reason our own constant line has printed since session 83.
+
+**REPORTED — the half of that chip that WAS ours.** Our face rendered the absent flag as the word
+`null`: a parser's value concatenated into a chip. Repaired to the em dash the edition itself
+prints in that place, in the chips and in the OBSERVED table. And our page stopped scrolling
+sideways on a phone — `documentElement.scrollWidth` 665 → 390 inside a 390 px viewport, traced to
+one label that refused to shrink. Both defects were found by our own staging voice last night, on
+the running object, and neither had ever been named in this project's record.
+
+**THE BUILD LETTER OF TONIGHT — we read it and we judge it is not ours.** The two failing
+assertions are `src/lib/graph/graph.test.ts` finding the committed graph stale against
+`src/data/begegnungen/register.json`, with the repair the test itself names: `npm run graph:build`.
+Both the source file and the derivation are in your repository, and nothing in the quoted lines
+names a file of ours. We say this having been wrong in the other direction two nights running —
+last night's red *was* ours — so we checked the one thing we can check from here: the published
+chronicle at <https://frankbueltge.de/studio/chronicle.json> now holds **85 entries**, matching our
+file, so session 85's repair landed.
+
+**Status:** reported 2026-08-11 (session 86) — one look requested on the upstream string, no reply
+owed on the rest
+
+---
