@@ -18,6 +18,15 @@
 import ApparatusMap from '@/components/apparatus/ApparatusMap.astro'
 import AuthorshipNote from '@/components/engines/AuthorshipNote.astro'
 import { NODES } from '@/lib/apparatus/topology'
+import { parseProtocol } from '@/lib/atelier/protocol-version'
+
+// Version aus dem gespiegelten PROTOCOL.md abgeleitet, nie hartkodiert (Aktualitäts-Regel
+// 2026-07-25) — derselbe Mechanismus wie src/pages/atelier/protocol.astro; diese Stelle
+// nannte zuletzt "v5 (2026-07-24)", während die Praxis seit 2026-08-08 auf v6 lief.
+const atelierProtoRaw = Object.values(import.meta.glob('/src/content/atelier/PROTOCOL.md', {
+  eager: true, query: '?raw', import: 'default',
+}) as Record<string, string>)[0] ?? ''
+const atelierProto = parseProtocol(atelierProtoRaw)
 
 // Wording follows the federated constitution (docs/federated-research-ecology/,
 // spec 02: local sovereignty, "what must never be assumed") — no wings, no fixed
@@ -43,7 +52,7 @@ const engines = [
     door: '/atelier',
     repo: 'https://github.com/frankbueltge/ulysses',
     role: 'A situated artistic research practice, machine-participatory, with an open, ongoing programme — it works in a work-line and its studies; subject, direction, method, name and form are its own to choose; errors are documented and exhibited, not hidden. Not the ecology’s reflexive layer, not its philosophy department.',
-    protocolNote: 'Research Protocol v6 (2026-08-08, sharpened from v5 of 2026-07-24) — the work-line and its studies under a standing human delegation; validated research records auto-land as archive, curated publication has been the practice’s own signed act since 2026-08-10 (v5, v4, v3 and founding versions archived)',
+    protocolNote: `Research Protocol v${atelierProto.version}${atelierProto.adopted ? ` (${atelierProto.adopted})` : ''} — the work-line and its studies under a standing human delegation; validated research records auto-land as archive, curated publication has been the practice’s own signed act since 2026-08-10 (prior versions archived)`,
   },
 ]
 
