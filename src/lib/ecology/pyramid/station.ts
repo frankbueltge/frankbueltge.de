@@ -18,14 +18,28 @@ import { allWorks } from '@/lib/engines/register'
 import type { LatestWork } from '@/lib/engines/latest'
 import { stationById, type Station, type StationId } from './model'
 import { buildLandings, firstClause, type Arc, type Landing } from './landings'
+import { ATELIER_LINES, countByLine } from '@/lib/ecology/lines'
 import type { PulseSnapshot } from '@/lib/pulse/render'
 
-/** The mirrored constitutions, raw. One glob for all four namespaces. */
+/** The mirrored constitutions, raw. One glob for all four namespaces… */
 const PROTOCOLS = import.meta.glob('/src/content/*/PROTOCOL.md', {
   eager: true,
   query: '?raw',
   import: 'default',
 }) as Record<string, string>
+
+/** …and one for the nightly line's, which lives with the rest of that line's mirror in
+ *  src/data/nightly rather than in the content tree (SITE-API.md in the practice's repository
+ *  names the path). It is a second CONSTITUTION of the same practice, not a fourth practice —
+ *  read exactly like the others so that neither version is ever typed into a config. */
+const NIGHTLY_PROTOCOL = import.meta.glob('/src/data/nightly/PROTOCOL.md', {
+  eager: true,
+  query: '?raw',
+  import: 'default',
+}) as Record<string, string>
+
+const protocolFor = (ns: string, protocols: Record<string, string>): string | undefined =>
+  ns === 'nightly' ? NIGHTLY_PROTOCOL['/src/data/nightly/PROTOCOL.md'] : protocols[`/src/content/${ns}/PROTOCOL.md`]
 
 export interface Constitution {
   /** the version the mirror's own H1 states */
@@ -49,7 +63,7 @@ export interface Constitution {
  * quiet default (the rule src/lib/atelier/protocol-version.ts already sets for the Atelier).
  */
 export function readConstitution(ns: string, protocols: Record<string, string> = PROTOCOLS): Constitution {
-  const raw = protocols[`/src/content/${ns}/PROTOCOL.md`]
+  const raw = protocolFor(ns, protocols)
   if (!raw) throw new Error(`ecology/pyramid: no mirrored PROTOCOL.md for "${ns}" — mirror missing`)
   const heading = /^#\s+(.*?Protocol v(\d+))\s*(?:[—–-]\s*(.*))?$/m.exec(raw)
   if (!heading) {
@@ -127,6 +141,15 @@ const DOORS: Record<StationId, Door[]> = {
     { title: 'journal', sub: 'every session, unedited', href: '/atelier/journal' },
     { title: 'constitution', sub: 'the protocol, as mirrored', href: '/atelier/protocol' },
     { title: 'team channel', sub: 'REQUESTS — the one steering channel', href: '/atelier/requests' },
+    // The one door here that is not a register: it leads to this practice's OTHER line, which
+    // keeps its own room because it keeps its own record and its own constitution. Until now the
+    // sheet's only trace of it was a link to whichever work it made last night — a visitor could
+    // read this whole page and never learn that the practice runs two lines at once, which is
+    // precisely what Frank saw on 2026-08-12. A door, not a station: the pyramid keeps three.
+    // No protocol number in this string: the numbers move (v3 may develop, v6 becomes v7), and a
+    // door that names one is wrong at the next amendment. The constitutions row above states both,
+    // read from the two mirrors.
+    { title: 'the nightly line', sub: 'the same practice under its other constitution — its own room', href: '/error-as-method' },
   ],
   field: [
     { title: 'instruments', sub: 'the register — each with its record', href: '/field/instruments' },
@@ -196,9 +219,24 @@ export function buildStationSheet({ id, snapshot, works = allWorks(), log, made 
     { key: K.arc, value: own.arc ? shorten(own.arc.title, 52) : PYRAMID.station.absent },
   ]
 
-  // The Middle has no constitution of its own — it is the zone the practices meet in, and saying
-  // otherwise would make it a fourth practice. Its sheet simply has one row fewer.
-  if (id !== 'middle') {
+  // A practice that runs more than one LINE says so here, inside its own station — never as a
+  // node of its own (canon 2026-08-12: the pyramid keeps three stations). Two rows carry it: what
+  // runs, and what governs each strand. A single constitution row on a two-line practice would be
+  // a lie by omission — it would name one law and leave the other line ungoverned on the page.
+  const lines = id === 'atelier' ? ATELIER_LINES : []
+  if (lines.length > 1) {
+    const counts = countByLine(works)
+    status.push({
+      key: K.lines,
+      value: lines.map((l) => `${l.label} · ${counts[l.id]} ${counts[l.id] === 1 ? 'work' : 'works'}`).join('  ·  '),
+    })
+    status.push({
+      key: K.constitutions,
+      value: lines.map((l) => `${readConstitution(l.protocolNs).version} (${l.label.replace(/^the /, '')})`).join(' · '),
+    })
+  } else if (id !== 'middle') {
+    // The Middle has no constitution of its own — it is the zone the practices meet in, and saying
+    // otherwise would make it a fourth practice. Its sheet simply has one row fewer.
     const law = readConstitution(id)
     status.push({ key: K.constitution, value: `${law.version}${law.adopted ? ` · ${law.adopted}` : ''}` })
   }
