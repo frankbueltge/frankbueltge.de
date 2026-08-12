@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "f27e8169f0fa0153"
+        "sha256": "e84c3a8084abda21"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,10 +57,10 @@
       }
     ],
     "counts": {
-      "nodes": 218,
-      "edges": 194,
+      "nodes": 220,
+      "edges": 196,
       "nodesByKind": {
-        "decision": 36,
+        "decision": 38,
         "encounter": 6,
         "neighbor": 77,
         "practice": 9,
@@ -75,7 +75,7 @@
         "made-by": 64,
         "neighbor-of": 77,
         "participates": 17,
-        "touches": 23
+        "touches": 25
       }
     }
   },
@@ -432,6 +432,26 @@
     },
     {
       "id": "decision:2026-08-12-1",
+      "kind": "decision",
+      "label": "Gedächtnis in allen vier Häusern",
+      "date": "2026-08-12",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Gedächtnis in allen vier Häusern"
+      }
+    },
+    {
+      "id": "decision:2026-08-12-2",
+      "kind": "decision",
+      "label": "Die Böden, die nie liefen",
+      "date": "2026-08-12",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Die Böden, die nie liefen"
+      }
+    },
+    {
+      "id": "decision:2026-08-12-3",
       "kind": "decision",
       "label": "Die Ökologie wird eine Vier-Ebenen-Pyramide — 17 Seiten verschwinden als eigene Oberflächen",
       "date": "2026-08-12",
@@ -4762,6 +4782,24 @@
       "source": {
         "file": "docs/decision-log.md",
         "quote": "src/components/atelier/{LineageNote,WorkCard}.astro"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-08-12-2",
+      "to": "work:atelier",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "/atelier"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-08-12-2",
+      "to": "work:protokoll",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "/protocol"
       }
     }
   ]
