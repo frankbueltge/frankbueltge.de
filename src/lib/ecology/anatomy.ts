@@ -153,7 +153,12 @@ export const PRACTICES: readonly PracticeAnatomy[] = [
     // has no role machinery at all, and this practice holds the largest `works/` of the three.
     cast: [],
     castNote: {
-      text: 'an **open horizon**: months, not days. A work-line is never killed by a timer.',
+      // Re-quoted 2026-08-12. The practice's own amendment of that date REPLACED the open horizon
+      // with a bounded one, and said so in the text: a line's duration is now licensed by what it
+      // pre-registers, not granted by default. The old quote — "never killed by a timer" — had
+      // become the opposite of the constitution it cited, which is the failure this quote's test
+      // exists to catch, and did.
+      text: 'a **bounded horizon** (architect, 2026-08-12 — this replaces "an open horizon: months, not days")',
       source: P('atelier'),
     },
     stages: [
