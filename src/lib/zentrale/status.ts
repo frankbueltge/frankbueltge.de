@@ -263,6 +263,16 @@ export type InboxTray = 'today' | 'postoffice' | 'running' | 'fyi'
  *  simply working and the item is not owed an answer this morning. */
 export const FRIST_WINDOW_DAYS = 14
 
+/** How many whole days a request without a reachable deadline stays visible at all.
+ *  The practices run nightly, so the window in which a word from Frank could still reach
+ *  their next session closes within a day or two; after this margin the standing rule has
+ *  already decided ("silence through your own next session means: decide yourselves") and
+ *  the entry is settled, not owed. Settled entries leave the dashboard entirely (Frank,
+ *  2026-08-12: "wenn das ohne mich läuft, muss ich das ja auch nicht sehen") — the record
+ *  lives on in the practice's REQUESTS.md, and the requests-watchdog closes the issue on
+ *  the same rule. Mirrored in .github/workflows/requests-watchdog.yml — change both. */
+export const SETTLED_AFTER_DAYS = 3
+
 /**
  * Sort an entry into its tray, following the standing rule the practices are actually bound by
  * (Frank, 2026-07-17, at the head of every REQUESTS.md): *"a request or offer addressed to Frank
@@ -352,13 +362,25 @@ export function buildInbox(issues: InboxIssue[], nowIso: string): InboxEntry[] {
     const body = issue.body ?? ''
     const head = parseRequestHead(body)
     const tray = trayFor(head, nowIso)
+    const age = ageDays(issue.created_at, nowIso)
+    const fristInDays = head.fristDate ? daysUntil(head.fristDate, nowIso) : null
+    // Settled by the standing rule: past the window, with no named deadline still ahead,
+    // the practice has long since decided — the entry is record, not inbox. Forwarding
+    // (postoffice) is exempt: the post lies until Frank sends or discards it, by design.
+    if (
+      (tray === 'running' || tray === 'fyi') &&
+      age > SETTLED_AFTER_DAYS &&
+      (fristInDays === null || fristInDays < 0)
+    ) {
+      continue
+    }
     out.push({
       repo: parsed.repo,
       heading: parsed.heading,
       issueNumber: issue.number,
       issueUrl: issue.html_url,
       openedAt: issue.created_at,
-      ageDays: ageDays(issue.created_at, nowIso),
+      ageDays: age,
       excerpt: body.slice(0, EXCERPT_LEN),
       structured: head.structured,
       summary: head.structured && head.tlDr ? head.tlDr : fallbackSummary(body),
@@ -369,7 +391,7 @@ export function buildInbox(issues: InboxIssue[], nowIso: string): InboxEntry[] {
       kontext: head.kontext,
       tray,
       needsAction: tray === 'today',
-      fristInDays: head.fristDate ? daysUntil(head.fristDate, nowIso) : null,
+      fristInDays,
     })
   }
   return out
