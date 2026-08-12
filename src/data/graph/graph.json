@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "8d3b6d872de1fc7d"
+        "sha256": "e84c3a8084abda21"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -48,8 +48,8 @@
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
-        "sha256": "1409a698bbe3b7fa",
-        "files": 1
+        "sha256": "772393952b8ca50f",
+        "files": 4
       },
       {
         "file": "src/data/attention/export.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 213,
-      "edges": 190,
+      "nodes": 220,
+      "edges": 196,
       "nodesByKind": {
-        "decision": 34,
+        "decision": 38,
         "encounter": 6,
         "neighbor": 77,
         "practice": 9,
-        "practice-work": 61,
+        "practice-work": 64,
         "receiver": 6,
         "work": 20
       },
@@ -72,10 +72,10 @@
         "addresses": 6,
         "concerns": 2,
         "door": 5,
-        "made-by": 61,
+        "made-by": 64,
         "neighbor-of": 77,
         "participates": 17,
-        "touches": 22
+        "touches": 25
       }
     }
   },
@@ -393,6 +393,16 @@
     {
       "id": "decision:2026-08-11-1",
       "kind": "decision",
+      "label": "Die zwei Linien werden unterscheidbar — und die nächtliche bekommt ihren Apparat",
+      "date": "2026-08-11",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Die zwei Linien werden unterscheidbar — und die nächtliche bekommt ihren Apparat"
+      }
+    },
+    {
+      "id": "decision:2026-08-11-2",
+      "kind": "decision",
       "label": "The entrance becomes an ops room",
       "date": "2026-08-11",
       "source": {
@@ -401,7 +411,7 @@
       }
     },
     {
-      "id": "decision:2026-08-11-2",
+      "id": "decision:2026-08-11-3",
       "kind": "decision",
       "label": "The forked line's first night, and the two faults it found in its own machinery",
       "date": "2026-08-11",
@@ -411,13 +421,43 @@
       }
     },
     {
-      "id": "decision:2026-08-11-3",
+      "id": "decision:2026-08-11-4",
       "kind": "decision",
       "label": "The Atelier's publication gate is struck, its channel is shaved, and the nightly line is forked back to life",
       "date": "2026-08-11",
       "source": {
         "file": "docs/decision-log.md",
         "quote": "The Atelier's publication gate is struck, its channel is shaved, and the nightly line is forked back to life"
+      }
+    },
+    {
+      "id": "decision:2026-08-12-1",
+      "kind": "decision",
+      "label": "Gedächtnis in allen vier Häusern",
+      "date": "2026-08-12",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Gedächtnis in allen vier Häusern"
+      }
+    },
+    {
+      "id": "decision:2026-08-12-2",
+      "kind": "decision",
+      "label": "Die Böden, die nie liefen",
+      "date": "2026-08-12",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Die Böden, die nie liefen"
+      }
+    },
+    {
+      "id": "decision:2026-08-12-3",
+      "kind": "decision",
+      "label": "Die Ökologie wird eine Vier-Ebenen-Pyramide — 17 Seiten verschwinden als eigene Oberflächen",
+      "date": "2026-08-12",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Die Ökologie wird eine Vier-Ebenen-Pyramide — 17 Seiten verschwinden als eigene Oberflächen"
       }
     },
     {
@@ -1890,6 +1930,51 @@
       "medium": "Measurement · a deterministic re-run of the Simkin–Roychowdhury misprint test on a live citation record (measure.py → measure.json + figure.svg, stdlib only, no network at run time), with the full evidence committed (citations.json: 1,708 reference strings as they stand in the citing manuscripts, harvested from the INSPIRE-HEP API on 2026-08-10) and the hand adjudication of every flagged string written into the code as a disputable table"
     },
     {
+      "id": "practice-work:atelier/2026-08-10-two-exacts",
+      "kind": "practice-work",
+      "label": "Two Exacts",
+      "slug": "2026-08-10-two-exacts",
+      "practiceId": "ulysses",
+      "date": "2026-08-10",
+      "href": "/error-as-method/2026-08-10-two-exacts",
+      "source": {
+        "file": "src/data/nightly/works/2026-08-10-two-exacts/meta.json",
+        "quote": "\"title\": \"Two Exacts\""
+      },
+      "embodies": "Session 45 read an outside the record had held unworked since S43: Karen Barad's agential realism, in her own words in the open-access interview 'Matter feels, converses, suffers, desires, yearns and remembers' (Dolphijn & van der Tuin, Open Humanities Press, 2012, ch. 3, pp. 48-70; the sentence below is on p. 62), where she reports Bohr against Heisenberg: 'there are no things before the measurement, and that the very act of measurement produces determinate boundaries and properties of things.' That sentence puts a question to this practice's standing position (works/position-2026-07-14.md), which reads error as 'a difference onto which an observer has already imposed a norm' — a grammar that needs the difference to be there first, and the observer to stand outside it. The work tests the question where it can actually be run and checked, not in physics: eight real summation apparatuses add one list of float64 numbers, and three referents are offered as the norm. Measured (all figures reproducible from the committed cut.py): on 2000 signed money amounts the two EXACT norms disagree — the exact sum of the written decimal literals is -68080.67, the exact sum of the doubles that hold them is -68080.67000000003, and that gap of 2.179e-11 was opened by the representation before the first addition. Against the machine's object, correctly rounded fsum wins (5.566e-12); against the money, pairwise wins (1.630e-11) and fsum is worse (2.736e-11), because the distance to the written object is each apparatus's own error combined with the inherited gap WITH SIGN — verified as an identity: 2.179e-11 + 5.566e-12 = 2.736e-11. So being right about the machine's object is not being right about the world's, and landing nearer the world's is cancellation, not accuracy. Under the third norm — a frozen regression value, whatever left-to-right float64 happened to produce — the inversion is total: on the cancellation list the five apparatuses that are EXACTLY right sit at 1.122e-7 and are the only ones flagged as wrong; improving the sum breaks the test. The error mechanism runs for real (IEEE-754 rounding, catastrophic cancellation, binary32 accumulation); nothing is a staged accident. The finding this practice keeps: the ranking of who errs is not a property of the outputs, and the norm is not applied from outside — it is one apparatus elected to judge the others. The transfer from Barad is deliberately NOT made: floating point has exact referents available, two of them, and the finding is that they disagree — a weaker, checkable claim, not an ontological one. Sources cited in the page and in journal/2026-08-10.md.",
+      "medium": "self-contained HTML (SVG + vanilla JS, no external loads, the run carried inside the page as a JSON island) over a deterministic stdlib measurement — cut.py -> data.json, seed 20260810, same seed same file; the reader moves two cuts and watches who errs"
+    },
+    {
+      "id": "practice-work:atelier/2026-08-11-the-fixed-algorithm",
+      "kind": "practice-work",
+      "label": "The Fixed Algorithm",
+      "slug": "2026-08-11-the-fixed-algorithm",
+      "practiceId": "ulysses",
+      "date": "2026-08-11",
+      "href": "/error-as-method/2026-08-11-the-fixed-algorithm",
+      "source": {
+        "file": "src/data/nightly/works/2026-08-11-the-fixed-algorithm/meta.json",
+        "quote": "\"title\": \"The Fixed Algorithm\""
+      },
+      "embodies": "Session 45 left a candidate amendment to this practice's standing position -- 'error is a difference between two apparatuses, one of which has been elected the norm' -- and named the test that would kill it: find a case where the election of a norm is compelled from outside the apparatuses, and 'elected' is too weak a word. It nominated currency law. This work takes the test at the strongest place available: a Council Regulation that fixes eleven conversion rates by definition (Art. 4(2): 'The conversion rates shall not be rounded or truncated when making conversions'), bans a competing apparatus by name (Art. 4(3): 'Inverse rates derived from the conversion rates shall not be used'), mandates a pivot (Art. 4(4)), and fixes the tie-break (Art. 5: 'If the application of the conversion rate gives a result which is exactly half-way, the sum shall be rounded up'). Measured, all reproducible from convert.py: (1) the six-significant-figure inverse -- the object recital (10) has in mind -- first breaks the last minor unit at 30.86 Belgian francs, seventy-six euro cents, but only as a one-in-four-thousand accident; it becomes systematic between about EUR 2,608 and EUR 44,220 depending on the currency, so recital (10)'s 'notably if large amounts are involved' is accurate and the author's pre-written prediction that it understated its case is refuted and kept in the script. (2) The float64 inverse, equally banned by the letter of Art. 4(3), diverges on ZERO amounts in every window for all eleven rates up to 10^8 minor units: the prohibition outlives the measurement offered as its reason. (3) The intermediates Art. 4(4) permits -- three decimals, four, five, six, or none -- disagree on all 108 ordered currency pairs, a median of 15.6 % of amounts and up to 77.6 %, spreading by as much as three minor units, the earliest onset one pfennig; the same sentence then reads 'No alternative method of calculation may be used unless it produces the same results.' (4) The exact half-way amounts are the odd multiples of a per-currency period (EUR 50, 250, 500, 1250), solved in closed form and verified against a direct scan; Art. 5 rounds them up, IEEE 754-2019's default rounding attribute and Python's decimal default round them to even, and the two part on exactly half of them -- EUR 1500.00 is exactly 2933.745 German marks, the statute says 2933.75, the machine says 2933.74, and neither is nearer. The finding: the election IS compelled, and the amendment survives with one word changed, because the statute does not stand outside the apparatuses and measure them -- Art. 4(2) makes one of them constitutive, and at an exact half-way there is nothing to measure and the statute still speaks. 'Elected' becomes INSTITUTED. The second finding, unlooked-for and stronger because measured rather than argued: institution does not entail determination -- the same statute that compels an election leaves the result underdetermined on every currency pair it governs. A norm can be non-optional and incomplete at once. The work also records two of its own failures: a results block written before the run and deleted before execution, and a bug in the first figure that marked every tie as a disagreement (the stride is 4P, not 2P) -- the picture asserted twice the disagreement the data held.",
+      "medium": "Measurement · exact integer arithmetic over the eleven irrevocably fixed euro conversion rates of Council Regulation (EC) No 2866/98, run against the four apparatus rules of Regulation (EC) No 1103/97 (convert.py -> data.json -> figure.py -> figure.svg; stdlib only, deterministic, no randomness and no network; every figure recomputable from the committed script). No floating point anywhere except where a float apparatus is itself the object under test."
+    },
+    {
+      "id": "practice-work:atelier/2026-08-11-the-forwarding-address",
+      "kind": "practice-work",
+      "label": "The Forwarding Address",
+      "slug": "2026-08-11-the-forwarding-address",
+      "practiceId": "ulysses",
+      "date": "2026-08-11",
+      "href": "/error-as-method/2026-08-11-the-forwarding-address",
+      "source": {
+        "file": "src/data/nightly/works/2026-08-11-the-forwarding-address/meta.json",
+        "quote": "\"title\": \"The Forwarding Address\""
+      },
+      "embodies": "Session 46 conceded the strongest objection to its own night -- 'you went to law to find an election, and law is the institution of elections; the hard case is physical' -- and named the unverified candidate: the 2019 SI revision, which redefined the kilogram by fixing the Planck constant instead of maintaining an artefact. This work runs that test. The apparatus is the word '(exact)' printed in the uncertainty column of the CODATA tables, where measurements go: a status assigned by a decision, in the place reserved for what measurement found. Diffing that flag mechanically across three adjustments: SIX quantities lost exactness (mu_0 and Z_0 exact from 1948, e_0 and 4*pi*e_0 from 1983, M_u and M(12C) from 1971) and FIFTY-NINE gained it; between 2018 and 2022 not one status changes. Measured, all reproducible from ledger.py: (1) the released quantities did not stay where their definitions had put them -- mu_0, Z_0, e_0 and 4*pi*e_0 sit 3.6 standard uncertainties from their abrogated values in CODATA 2018, and M_u and M(12C) sit 3.4 away in CODATA 2022, on the other side. (2) That drift is ONE constant wearing six names: the shift of all six between adjustments is the shift of alpha, taken independently from the twelve-figure inverse fine-structure constant, matching to better than seven parts in a thousand for the four electromagnetic quantities (alpha^1) and to 3 % for the two molar masses (alpha^-2 -- an exponent written as +2 and refuted by the run, right magnitude, wrong sign, kept in the script). (3) What the stipulation fixes is not quantities but a subspace: e_0 and mu_0 are each ~5.4e-10 from their abrogated values while their product e_0*mu_0*c^2 is exact to a residual 12,520x smaller. Nature settles how many quantities may be stipulated; the Conference settled which, and chose the value of h so that nothing would visibly move on the day -- continuity with a platinum-iridium cylinder, not a requirement of nature. (4) Exactness is not conserved but multiplied without knowledge: 17 exact rows became 81, and the 59 new ones fall into two bands (33 near +/-1.35 sd, 23 near +/-0.6 sd, 3 stragglers) because they are algebra on four numbers. The eleven rows exact on both sides include three pure conventions -- standard atmosphere, standard gravity, standard-state pressure -- so the notation cannot distinguish 'we know this perfectly' from 'we have defined it' from 'we have agreed to pretend'. The findings: institution does not create determination, it relocates it -- what is exact is never a quantity but a relation, and which term wears the exactness is a decision; and the outside compels the ARITY of an election without compelling its outcome. The candidate amendment to the standing position ('error is a difference between two apparatuses, one of which has been instituted as the norm') survives its hard physical test and is still not promoted; the seventh-night clause puts that at Session 50. The work also records its own withdrawn claim: the first run reported that all five losers' uncertainties grew between 2018 and 2022, which is one unit of two-significant-figure printing and not a measurement -- the instrument's resolution was the typography, which is the same mistake one level down as reading '(exact)' as a fact about the world.",
+      "medium": "Measurement · an exactness ledger of the 2019 revision of the SI, computed with exact decimal arithmetic (60 digits) over the three NIST CODATA tables committed in tables/ (2014, 2018, 2022): ledger.py -> data.json -> figure.py -> figure.svg. Stdlib only, deterministic, no randomness and therefore no seed, no network at run time; the harvested tables carry their SHA-256 in the output. Eight predictions written into the script before its first execution and kept there with their verdicts appended, three of them refuted."
+    },
+    {
       "id": "practice-work:field/2026-07-01-calibration-gap",
       "kind": "practice-work",
       "label": "Calibration Certificate",
@@ -3193,6 +3278,33 @@
       "source": {
         "file": "src/data/nightly/works/2026-08-10-eight-misprints/meta.json",
         "quote": "\"date\": \"2026-08-10\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-08-10-two-exacts",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-08-10-two-exacts/meta.json",
+        "quote": "\"date\": \"2026-08-10\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-08-11-the-fixed-algorithm",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-08-11-the-fixed-algorithm/meta.json",
+        "quote": "\"date\": \"2026-08-11\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-08-11-the-forwarding-address",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-08-11-the-forwarding-address/meta.json",
+        "quote": "\"date\": \"2026-08-11\""
       }
     },
     {
@@ -4661,6 +4773,33 @@
       "source": {
         "file": "docs/decision-log.md",
         "quote": "/observatory"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-08-11-1",
+      "to": "work:atelier",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/components/atelier/{LineageNote,WorkCard}.astro"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-08-12-2",
+      "to": "work:atelier",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "/atelier"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-08-12-2",
+      "to": "work:protokoll",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "/protocol"
       }
     }
   ]

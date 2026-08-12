@@ -93,7 +93,9 @@ export const PLENUM_NARRATIVE = {
     houseDescription: DATA_SNACK.description,
     laneNote:
       'The Plenum holds the fourth lane of the Partitur — the ecology’s shared score — as a guest voice. It has no door on the hub, because there is no practice of this house behind it.',
-    laneHref: '/maschinenraum',
+    // The score lost its own page in the v3 pyramid (2026-08-12): the Middle's station sheet
+    // draws the lanes now, and the Plenum's is one of them.
+    laneHref: '/encounters#figure',
     laneLinkLabel: 'the ecology’s score',
   },
 

@@ -180,7 +180,7 @@ export const NAMING = {
     kicker: 'WHO LIVES HERE',
     kickerSub: 'FOUR DOORS',
     /** the small link inside each practice door (WP7) — one wording for all three */
-    tourLabel: '→ take the tour',
+    tourLabel: '→ see its figure',
     items: [
       /* Türbeschreibungen neu (Frank, 24.07.): Auskunft statt Poesie — jede Tür sagt in
        * einem Satz, was die Praxis tut, aus ihrer aktuellen Selbstbeschreibung (Engine-READMEs),
@@ -190,14 +190,14 @@ export const NAMING = {
         name: 'The Atelier',
         href: '/atelier',
         description: 'Machine-run artistic research in a work-line and its studies — the machines find problems, build works and critique themselves; failures stay on the record, checkably.',
-        tourHref: '/atelier/how-a-line-ends',
+        tourHref: '/atelier#figure',
       },
       {
         id: 'meridian',
         name: 'The Field',
         href: '/field',
         description: 'An empirical research collective putting the measuring instruments of our time on trial — verifiable instruments, adversarial review, a claims ledger.',
-        tourHref: '/field/how-a-claim-came-off',
+        tourHref: '/field#figure',
       },
       {
         id: 'ensemble',
@@ -206,7 +206,7 @@ export const NAMING = {
         // "under no label" until 2026-08-08, when the architect gave this practice a line and the
         // door had to stop advertising the remit it lost. See docs/decision-log.md, that date.
         description: 'An artist collective on one line: only digital works, and only what a machine does better than a human — scale, repetition, verification, the temporal. Every element carries an honesty tier: verified, sourced or imagined.',
-        tourHref: '/studio/how-a-premiere-returned',
+        tourHref: '/studio#figure',
       },
       {
         id: 'conductor',
@@ -265,24 +265,24 @@ export const NAMING = {
         practice: 'The Atelier · Ulysses',
         title: 'a measured sheet',
         caption: 'The line this practice opened most recently, and where the lines around it come to rest: on this sheet every question runs along one shared time axis and curves into the harbour it reached — published, kept as a study, or closed unfinished.',
-        cta: 'read how a question was killed on its own terms →',
-        href: '/atelier/how-a-line-ends',
+        cta: 'see the whole map on its station sheet →',
+        href: '/atelier#figure',
       },
       {
         id: 'meridian',
         practice: 'The Field · Meridian',
         title: 'a strip of millimetre tape',
         caption: 'The last marked days of the record strip: an instrument entering service, the sessions stamped on their own day, a review cutting in from outside — and the resting pen, where the tape runs on.',
-        cta: 'read how a claim was taken off them →',
-        href: '/field/how-a-claim-came-off',
+        cta: 'see the whole gate on its station sheet →',
+        href: '/field#figure',
       },
       {
         id: 'ensemble',
         practice: 'The Studio · Ensemble',
         title: 'a floor that keeps every mark',
         caption: 'The position this house lit most recently, on the stage floor: the lamp on the bar, the hard-edged pool it plays in, and the tape that blocks the position whether or not the light is still on.',
-        cta: 'read how a premiere came back three times →',
-        href: '/studio/how-a-premiere-returned',
+        cta: 'see the whole floor on its station sheet →',
+        href: '/studio#figure',
       },
     ] as TriptychCard[],
   },
@@ -296,7 +296,7 @@ export const NAMING = {
   maschinenraum: {
     kicker: 'MASCHINENRAUM',
     kickerSub: 'WHAT THEY LAST DID',
-    fullView: { label: '→ full view', href: '/maschinenraum' },
+    fullView: { label: '→ full view', href: '/ecology#now' },
     /** the per-lane link into that practice's tour — the three practices only */
     tourLabel: 'tour →',
     /**
@@ -530,7 +530,7 @@ export const NAMING = {
     board: {
       kicker: 'THE BOARD',
       kickerSub: 'WHAT IS RUNNING HERE, LIVE FROM THE RECORD',
-      link: { label: 'maschinenraum →', href: '/maschinenraum' },
+      link: { label: 'the last landed state →', href: '/ecology#now' },
       /** what a row says instead of a title when its source carries no landed work */
       noWork: 'no landed work yet',
       groups: [

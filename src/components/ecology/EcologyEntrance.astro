@@ -1,0 +1,458 @@
+---
+// The research ecology's ONE entrance (Level 0), 2026-08-12 — design handoff option 1a,
+// docs/design_handoff_research_ecology/README.md.
+//
+// Replaces the prose /ecology and, as standalone surfaces, /maschinenraum and the explanatory
+// half of /apparatus. Frank's diagnosis on 2026-08-12: too many pages, too much text, and nobody
+// grasps the ecology without hours of reading. So this page answers five questions on one
+// surface, in this order, and stops: what this is · why it exists · what has happened · how it
+// works · what happened last night. The fifth doubles as Frank's own daily view (#now).
+//
+// The properties this component is built to keep — the ops room's three, plus one of its own:
+//
+//   · NO NUMBER IS TYPED. Counts, dates, week bins, the countdown, the seams: every one is
+//     derived by src/lib/ecology/pyramid/* from committed files. Copy that has to wrap a number
+//     is a function in PYRAMID taking that number as its argument.
+//   · NO CLIENT DATA FETCHING. Static output. Two things move on their own — the UTC clock and
+//     the countdown — and both are time, not data.
+//   · ABSENCE IS DRAWN. A station whose record is silent says so on its row and on the map. No
+//     placeholder ever stands in for a record that does not exist.
+//   · THE MAP HAS NO SHORTCUTS. There is no edge between two practices, because there is no such
+//     relation: what meets is recorded in the Middle. Drawing one would be a claim about this
+//     ecology's constitution that its constitution denies.
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import type { Locale } from '@/lib/site'
+import { PYRAMID } from '@/config/ecology-pyramid-wording'
+import { NAMING } from '@/config/naming'
+import pulseData from '@/data/pulse/pulse.json'
+import type { PulseSnapshot } from '@/lib/pulse/render'
+import { allWorks } from '@/lib/engines/register'
+import { buildSignalLog } from '@/lib/ops/board'
+import { linePath, smooth3 } from '@/lib/ops/viz'
+import { MAP_NODES, daysUntil, readingDate, type StationId } from '@/lib/ecology/pyramid/model'
+import { buildLandings } from '@/lib/ecology/pyramid/landings'
+import { buildTimeline, timelineGeometry, TIMELINE_BOX, weekOffset } from '@/lib/ecology/pyramid/timeline'
+import { houseCounts } from '@/lib/ecology/pyramid/counts'
+import '@/styles/ecology-pyramid.css'
+import '@/styles/hub-triptych.css'
+
+const locale = (Astro.currentLocale ?? 'en') as Locale
+const url = (href: string) => (href.startsWith('http') ? href : getRelativeLocaleUrl(locale, href))
+
+const W = PYRAMID.entrance
+const now = new Date()
+const reading = readingDate()
+const daysToReading = daysUntil(reading, now)
+
+const works = allWorks()
+const landings = buildLandings({ snapshot: pulseData as PulseSnapshot, works })
+const counts = houseCounts()
+const timeline = buildTimeline({ works, now, readingDate: reading, origin: counts.since })
+const geo = timelineGeometry(timeline)
+const feed = buildSignalLog(works, 5)
+
+// The map's mini-sparkline box — 44px wide, which is what fits beside a node without crowding the
+// label under it. Its own box rather than SPARK_BOX: this line is a texture, not a reading.
+const MAP_SPARK = { width: 44, height: 12, pad: 1 }
+
+const nsVoice: Record<string, StationId> = { atelier: 'atelier', field: 'field', studio: 'studio' }
+const voiceOf = (id: StationId) => landings.find((l) => l.station.id === id)!.station.voice
+
+/** The spoke a practice's dot travels: out to the Middle and back, which is what an offer does. */
+const spokePath = (id: StationId): string => {
+  const from = MAP_NODES[id]
+  const mid = MAP_NODES.middle
+  return `M${from.x} ${from.y} L${mid.x} ${mid.y} L${from.x} ${from.y}`
+}
+
+/** Different durations per practice so the three dots never march in step — they are independent
+ *  practices, and a synchronised animation would say the opposite. The node breathing is varied
+ *  the same way, in CSS (ecology-pyramid.css, `.eco-map-breathe[data-node]`) rather than here:
+ *  inline style attributes are dropped by this site's CSP without a trace. */
+const DOT_SECONDS: Record<string, number> = { atelier: 9, field: 11, studio: 13 }
+
+/**
+ * Where a node's two label blocks go. The Atelier sits at the top of the map with its spoke
+ * running straight down through the space under it, so its landing line goes to the SIDE; the two
+ * lower practices have clear air above them and take it. Written out per station rather than
+ * derived from the geometry, because "which side is free" is a fact about this particular
+ * arrangement of three nodes and would be wrong the moment the arrangement changed.
+ */
+const LABELS: Record<'atelier' | 'field' | 'studio', {
+  corner: number
+  landed: { x: number; y: number; anchor: 'middle' | 'start' }
+  spark: { x: number; y: number }
+}> = {
+  atelier: { corner: -48, landed: { x: 46, y: -6, anchor: 'start' }, spark: { x: 46, y: 2 } },
+  field: { corner: 56, landed: { x: 0, y: -60, anchor: 'middle' }, spark: { x: -22, y: -54 } },
+  studio: { corner: 56, landed: { x: 0, y: -60, anchor: 'middle' }, spark: { x: -22, y: -54 } },
+}
+
+const practices = landings.filter((l) => l.station.id !== 'middle')
+const middle = landings.find((l) => l.station.id === 'middle')!
+
+const weeksOnRecord = Math.max(1, Math.ceil(weekOffset(timeline.origin, now.toISOString().slice(0, 10))))
+---
+
+<main id="main" class="eco hub-voices flex-1" data-eco>
+  <div class="eco-wrap">
+    {/* ── the strip: what this surface is, and a clock that proves it is live ─────────────── */}
+    <div class="eco-strip">
+      <span class="eco-crumb-here">{W.kicker}</span>
+      {/* Rendered empty and filled by the script: a build-time clock is a stopped clock claiming
+          to be a live one — worse than no clock at all. */}
+      <span class="eco-clock" data-eco-clock aria-live="off"></span>
+    </div>
+
+    {/* ── 1 · what, why, and the map ──────────────────────────────────────────────────────── */}
+    <section class="eco-hero">
+      <div>
+        <p class="eco-hero-kicker">{W.kicker}</p>
+        <h1>{W.h1}</h1>
+        <p class="eco-hero-answer"><b>{W.why.label}</b> {W.why.text}</p>
+        <p class="eco-hero-answer"><b>{W.law.label}</b> {W.law.text}</p>
+        <div class="eco-hero-links">
+          <a href={W.links.now.href}>{W.links.now.label}</a>
+          <a href={W.links.how.href}>{W.links.how.label}</a>
+        </div>
+        {/* The dated test, rendered at build time and corrected by the page's own clock: the
+            countdown is arithmetic on a fixed date, so a stale build can be fixed in the browser
+            without fetching anything. */}
+        <p class="eco-chip-reading">
+          <span class="eco-led"></span>
+          <span>
+            {W.reading.lead} · {reading} ·{' '}
+            {/* The script re-renders this span when the browser's date has moved past the build's.
+                It gets the WORDS from here rather than carrying its own copies — a countdown that
+                said something slightly different after midnight than it did before would be a
+                second, unreviewed wording nobody signed off. */}
+            <span
+              data-eco-countdown={reading}
+              data-tpl-days={W.reading.countdown(0).replace('0', '{n}')}
+              data-tpl-one={W.reading.countdown(1)}
+              data-tpl-due={W.reading.due}
+            >
+              {daysToReading > 0 ? W.reading.countdown(daysToReading) : W.reading.due}
+            </span>
+          </span>
+        </p>
+      </div>
+
+      <figure class="eco-panel eco-map">
+        <div class="eco-panel-strip">
+          <span>{W.map.headLeft}</span><span>{W.map.headRight}</span>
+        </div>
+        <svg viewBox="0 0 560 380" role="img" aria-label={W.map.alt}>
+          {/* spokes first, so every node sits on top of its own line */}
+          {practices.map((l) => (
+            <line
+              class="eco-map-spoke"
+              x1={MAP_NODES[l.station.id].x}
+              y1={MAP_NODES[l.station.id].y}
+              x2={MAP_NODES.middle.x}
+              y2={MAP_NODES.middle.y}
+            />
+          ))}
+          <circle class="eco-map-pulse" cx={MAP_NODES.middle.x} cy={MAP_NODES.middle.y} r="26">
+            <animate attributeName="r" values="24;30;24" dur="6s" repeatCount="indefinite" />
+          </circle>
+
+          {/* one dot per practice, travelling to the Middle and back along its own spoke */}
+          {practices.map((l) => (
+            <circle class={`eco-map-dot eco-voice-${l.station.voice}`} r="3">
+              <animateMotion dur={`${DOT_SECONDS[l.station.id] ?? 10}s`} repeatCount="indefinite" path={spokePath(l.station.id)} />
+            </circle>
+          ))}
+
+          {practices.map((l) => {
+            const node = MAP_NODES[l.station.id]
+            const at = LABELS[l.station.id as 'atelier' | 'field' | 'studio']
+            const spark = l.spark ? smooth3(l.spark).slice(-9) : null
+            return (
+              <g class={`eco-voice-${l.station.voice}`}>
+                {/* transform-origin per node lives in the stylesheet, keyed by data-node */}
+                <g class="eco-map-breathe" data-node={l.station.id}>
+                  <circle class="eco-map-node-ring" cx={node.x} cy={node.y} r="34" />
+                  <circle class="eco-map-node-halo" cx={node.x} cy={node.y} r="41" />
+                </g>
+                <text class="eco-map-name" x={node.x} y={node.y - 4} text-anchor="middle">{l.station.name}</text>
+                <text class="eco-map-resident" x={node.x} y={node.y + 11} text-anchor="middle">
+                  {l.station.voice.toUpperCase()}
+                </text>
+                <text class="eco-map-corner" x={node.x} y={node.y + at.corner} text-anchor="middle">
+                  {l.station.corner}
+                </text>
+                {/* what this practice last landed, and the texture of its recent commits */}
+                <text class="eco-map-landed" x={node.x + at.landed.x} y={node.y + at.landed.y} text-anchor={at.landed.anchor}>
+                  {l.landing ? `${W.map.landed(l.landing.date.slice(5))}${l.landing.marker ? ` · ${l.landing.marker}` : ''}` : W.map.noLanding}
+                </text>
+                {spark && (
+                  <path
+                    class="eco-map-spark"
+                    transform={`translate(${node.x + at.spark.x}, ${node.y + at.spark.y})`}
+                    d={linePath(spark, MAP_SPARK)}
+                  />
+                )}
+              </g>
+            )
+          })}
+
+          <circle class="eco-map-middle" cx={MAP_NODES.middle.x} cy={MAP_NODES.middle.y} r="20" />
+          <text class="eco-map-middle-name" x={MAP_NODES.middle.x} y={MAP_NODES.middle.y - 3} text-anchor="middle">The</text>
+          <text class="eco-map-middle-name" x={MAP_NODES.middle.x} y={MAP_NODES.middle.y + 9} text-anchor="middle">Middle</text>
+        </svg>
+        <div class="eco-panel-strip">
+          <span>{W.map.footLeft}</span><span>{W.map.footRight(counts.crossings)}</span>
+        </div>
+      </figure>
+    </section>
+
+    {/* ── 2 · what has happened ───────────────────────────────────────────────────────────── */}
+    <section class="eco-section" id="record">
+      <div class="eco-head">
+        <p class="eco-kicker"><b>{W.timeline.kicker}</b> · {W.timeline.kickerSub(weeksOnRecord)}</p>
+        <span class="eco-aside eco-aside-amber">
+          {daysToReading > 0 ? W.timeline.next(reading, daysToReading) : W.timeline.nextDue(reading)}
+        </span>
+      </div>
+
+      {timeline.bars.length === 0 ? (
+        <p class="eco-stats">{W.timeline.empty}</p>
+      ) : (
+        <>
+          <div class="eco-panel eco-timeline">
+            <svg viewBox={`0 0 ${TIMELINE_BOX.width} ${TIMELINE_BOX.height}`} role="img" aria-label={W.timeline.caption}>
+              <line class="eco-tl-axis" x1={TIMELINE_BOX.left - 4} y1={TIMELINE_BOX.base} x2={geo.axisEnd} y2={TIMELINE_BOX.base} />
+              <line class="eco-tl-future" x1={geo.axisEnd} y1={TIMELINE_BOX.base} x2={geo.readingX} y2={TIMELINE_BOX.base} />
+              {geo.bars.map((bar) => (
+                <rect class={bar.count > 0 ? 'eco-tl-bar' : 'eco-tl-bar-empty'} x={bar.x} y={bar.y} width={bar.width} height={bar.height} />
+              ))}
+              {geo.seams.map((seam) => (
+                <>
+                  <line
+                    class={`eco-tl-seam${seam.emphasis ? ' eco-tl-seam-strong' : ''}`}
+                    x1={seam.x}
+                    y1={seam.labelY - 6}
+                    x2={seam.x}
+                    y2={TIMELINE_BOX.base + 8}
+                  />
+                  <text class={`eco-tl-seam-label${seam.emphasis ? ' eco-tl-seam-label-strong' : ''}`} x={seam.x + 4} y={seam.labelY}>
+                    {seam.label}
+                  </text>
+                </>
+              ))}
+              <line class="eco-tl-flag" x1={geo.readingX} y1={TIMELINE_BOX.top - 2} x2={geo.readingX} y2={TIMELINE_BOX.base + 8} />
+              <text class="eco-tl-flag-label" x={geo.readingX - 4} y={TIMELINE_BOX.top + 4} text-anchor="end">
+                {W.timeline.readingFlag(reading)}
+              </text>
+              <text class="eco-tl-caption" x={TIMELINE_BOX.left} y={TIMELINE_BOX.base + 26}>{W.timeline.caption}</text>
+              <text class="eco-tl-today" x={geo.todayX} y={TIMELINE_BOX.base + 26} text-anchor="middle">{W.timeline.today}</text>
+            </svg>
+          </div>
+          <p class="eco-stats">{W.timeline.stats(counts.since, counts.works, counts.journalPages, counts.crossings)}</p>
+        </>
+      )}
+    </section>
+
+    {/* ── 3 · how it works ────────────────────────────────────────────────────────────────── */}
+    <section class="eco-section" id="how">
+      <p class="eco-kicker"><b>{W.pipeline.kicker}</b> · {W.pipeline.kickerSub}</p>
+      <div class="eco-panel eco-pipe">
+        <div class="eco-pipe-rail"></div>
+        <span class="eco-pipe-dot"></span>
+        <div class="eco-pipe-stations">
+          {W.pipeline.stations.map((station) => (
+            <div class="eco-pipe-station">
+              <p class="eco-pipe-n">{station.n}</p>
+              <p class="eco-pipe-title">{station.title}</p>
+              <p class="eco-pipe-sub">{station.sub}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+      {/* the gate's rejections are not an exit — they re-enter the next session */}
+      <div class="eco-loop">
+        <svg viewBox="0 0 1000 38" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M 500 4 C 500 28, 310 28, 310 4" />
+          <path class="eco-loop-head" d="M 310 4 l -4 8 l 8 0 z" />
+        </svg>
+        <span>{W.pipeline.loopBack}</span>
+      </div>
+      <p class="eco-note">
+        {W.pipeline.human} · <a href={url(W.pipeline.more.href)}>{W.pipeline.more.label}</a>
+      </p>
+    </section>
+
+    {/* ── 4 · last night — the daily view ─────────────────────────────────────────────────── */}
+    <section class="eco-section" id="now">
+      <div class="eco-head">
+        <p class="eco-kicker"><b>{W.board.kicker}</b> · {W.board.kickerSub}</p>
+        <span class="eco-aside">{W.board.aside}</span>
+      </div>
+      <ul class="eco-panel eco-board">
+        {landings.map((row) => (
+          <li>
+            <a class={`eco-row eco-voice-${row.station.voice}`} href={url(row.station.href)}>
+              <span class="eco-led"></span>
+              <span>
+                <span class="eco-row-name">{row.station.name}</span>
+                <span class="eco-row-resident">{row.station.resident}</span>
+              </span>
+              <span class="eco-row-last">
+                {row.landing ? (
+                  <>
+                    <span class="eco-row-date">{row.landing.date}</span>
+                    {row.landing.line ? <> — {row.landing.line}</> : null}
+                  </>
+                ) : (
+                  <span class="eco-absent">{W.board.silent}</span>
+                )}
+              </span>
+              <span>
+                {row.spark ? (
+                  <svg class="eco-spark" viewBox="0 0 84 24" preserveAspectRatio="none" aria-hidden="true">
+                    <path d={linePath(smooth3(row.spark), { width: 84, height: 24, pad: 3 })} />
+                  </svg>
+                ) : (
+                  <span class="eco-absent">{W.board.noSpark}</span>
+                )}
+              </span>
+              <span class="eco-row-arc">
+                {row.arc ? (
+                  <>
+                    {row.arc.label}
+                    <b>{row.arc.title}</b>
+                  </>
+                ) : (
+                  <span class="eco-absent">{W.board.noArc}</span>
+                )}
+              </span>
+              <span class="eco-row-status">
+                <span class="eco-row-chip">{row.status}</span>
+                {row.landing && <span class="eco-row-stamp">{W.board.asOf(row.landing.date.slice(5))}</span>}
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <ul class="eco-cards">
+        {feed.map((entry, i) => (
+          /* The stagger comes from a class, never an inline delay: this site's CSP drops inline
+             style attributes silently, so a per-card delay written that way would have failed
+             without a trace. */
+          <li>
+            <a class={`eco-card eco-rise-${Math.min(i, 7)} eco-voice-${voiceOf(nsVoice[entry.ns])}`} href={url(entry.href)}>
+              <span class="eco-card-meta">
+                {entry.date} · <span class="eco-card-voice">{entry.practice}</span>
+              </span>
+              <span class="eco-card-title">{entry.title}</span>
+              <span class="eco-card-kind">
+                {entry.kind}
+                {entry.withdrawn && ` · ${NAMING.worksRegister.withdrawnLabel}`}
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <p class="eco-note">{W.board.foot} <span class="eco-cursor">▍</span></p>
+    </section>
+
+    {/* ── 5 · go deeper ───────────────────────────────────────────────────────────────────── */}
+    <section class="eco-section" id="deeper">
+      <p class="eco-kicker"><b>{W.deeper.kicker}</b> · {W.deeper.kickerSub}</p>
+      <ul class="eco-levels">
+        {W.deeper.levels.map((level, i) => (
+          <li>
+            <div class="eco-level">
+              <span class="eco-level-tag"><span>{level.tag}</span><span>→</span></span>
+              <span class="eco-level-title">{level.title}</span>
+              <span class="eco-level-sub">{level.sub}</span>
+              <ul class="eco-chips">
+                {/* Level 1's chips are the rooms themselves, read from the stations rather than
+                    listed again here — the entrance cannot offer a door the ecology does not have. */}
+                {i === 0
+                  ? landings.map((l) => (
+                      <li>
+                        <a class={`eco-chip eco-voice-${l.station.voice}`} href={url(l.station.href)}>
+                          {l.station.name.toLowerCase()} →
+                        </a>
+                      </li>
+                    ))
+                  : (level.chips ?? []).map((chip) => (
+                      <li>
+                        <a class="eco-chip eco-chip-plain" href={url(chip.href)} {...(chip.href.startsWith('http') ? { target: '_blank', rel: 'noreferrer' } : {})}>
+                          {chip.label}
+                        </a>
+                      </li>
+                    ))}
+              </ul>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <div class="eco-foot">
+      <span>{W.footer.left}</span>
+      <span>{W.footer.right}</span>
+    </div>
+  </div>
+</main>
+
+<script>
+  // The entrance's only script: the UTC clock, and the countdown correcting itself.
+  //
+  // Neither reads data. The clock is the local machine's idea of UTC; the countdown is arithmetic
+  // on a date rendered into the markup at build time. A page built last night therefore shows the
+  // right number of days this morning without a request — which is the whole reason the countdown
+  // is not left as a static build-time figure.
+  const room = document.querySelector<HTMLElement>('[data-eco]')
+  if (room) {
+    const clock = room.querySelector<HTMLElement>('[data-eco-clock]')
+    const countdown = room.querySelector<HTMLElement>('[data-eco-countdown]')
+    const pad = (n: number) => String(n).padStart(2, '0')
+    const stamp = (d: Date) =>
+      `${d.getUTCFullYear()}-${pad(d.getUTCMonth() + 1)}-${pad(d.getUTCDate())} ` +
+      `${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())}:${pad(d.getUTCSeconds())} UTC`
+
+    const target = countdown?.dataset.ecoCountdown
+    const daysLeft = () => {
+      if (!target) return null
+      const now = new Date()
+      const today = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate())
+      return Math.max(0, Math.ceil((Date.parse(`${target}T00:00:00Z`) - today) / 86400000))
+    }
+    const renderCountdown = () => {
+      const days = daysLeft()
+      if (!countdown || days === null) return
+      const d = countdown.dataset
+      countdown.textContent =
+        days === 0 ? (d.tplDue ?? '') : days === 1 ? (d.tplOne ?? '') : (d.tplDays ?? '').replace('{n}', String(days))
+    }
+
+    if (clock) clock.textContent = stamp(new Date())
+    renderCountdown()
+
+    // One rAF loop rather than a setInterval: a throttled background tab resumes it correctly,
+    // and the clock only repaints when the rendered second actually changed.
+    let lastTick = 0
+    let lastSecond = ''
+    let lastDay = ''
+    const step = (t: number) => {
+      requestAnimationFrame(step)
+      if (t - lastTick < 200) return
+      lastTick = t
+      const next = stamp(new Date())
+      if (next === lastSecond) return
+      lastSecond = next
+      if (clock) clock.textContent = next
+      const day = next.slice(0, 10)
+      if (day !== lastDay) {
+        lastDay = day
+        renderCountdown()
+      }
+    }
+    requestAnimationFrame(step)
+  }
+</script>

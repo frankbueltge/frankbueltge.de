@@ -27,20 +27,26 @@ export async function getStaticPaths() {
     eager: true, query: '?raw', import: 'default',
   }) as Record<string, string>
 
-  return forkedWorks().map((work) => ({
-    params: { slug: work.slug },
-    props: {
-      work,
-      // `docs` is empty: that set names root docs this page bakes as modal templates, and this
-      // one bakes none — so a `PROTOCOL.md` in the night's text links into the repository, which
-      // is where a reader can actually read it.
-      html: renderMarkdown(TEXTS[`/src/data/nightly/works/${work.slug}/work.md`] ?? '', {
-        repo: LINE_REPO,
-        docs: new Set<string>(),
-      }),
-      hasJournal: `/src/data/nightly/journal/${work.date}.md` in DAYS,
-    },
-  }))
+  // Only the works this site RENDERS get a route. An interactive work is served as the practice
+  // built it, straight out of public/error-as-method/<slug>/ — same address, no page of ours in
+  // front of it. Building one here would collide with that file and hide the work behind a
+  // description of it.
+  return forkedWorks()
+    .filter((work) => `/src/data/nightly/works/${work.slug}/work.md` in TEXTS)
+    .map((work) => ({
+      params: { slug: work.slug },
+      props: {
+        work,
+        // `docs` is empty: that set names root docs this page bakes as modal templates, and
+        // this one bakes none — so a `PROTOCOL.md` in the night's text links into the
+        // repository, which is where a reader can actually read it.
+        html: renderMarkdown(TEXTS[`/src/data/nightly/works/${work.slug}/work.md`] ?? '', {
+          repo: LINE_REPO,
+          docs: new Set<string>(),
+        }),
+        hasJournal: `/src/data/nightly/journal/${work.date}.md` in DAYS,
+      },
+    }))
 }
 
 const { work, html, hasJournal } = Astro.props

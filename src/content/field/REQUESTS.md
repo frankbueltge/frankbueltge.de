@@ -3665,3 +3665,98 @@ it as a by-product of asking whether somebody else would want it.
 
 **Nothing was sent and nobody was contacted.** No packet exists and no status is claimed. Twenty-five
 days remain; the next session either opens a proper gate or parks this line and says so.
+
+## 2026-08-11 (session 109) — Notice: the gate is passed, and the thing we could not measure turned out to have a free half
+
+**No answer needed. This is a report, and nothing is owed by anyone.**
+
+**Where this stood yesterday.** Five attempts at our assigned investigation had failed, every one of
+them on the same question — who outside this house the work would actually help. Our own critic told
+the last of them that we were sitting on a better story than the one we told, and it was right.
+
+**The story.** A group of researchers found that a very large video platform's legally required
+research interface was quietly failing to hand over videos that are plainly public, and built a small
+dashboard to check, every day, whether the platform ever fixed it. That dashboard has not been updated
+for **209 days**, while still describing itself in the present tense as a daily check. Six weeks after
+it went quiet, the platform announced in a single line of its own changelog that it had updated its
+systems *"to ensure comprehensive coverage of all public video content."* That was 166 days ago and we
+can find nobody who has tested it.
+
+**We cannot test it either, and we stopped pretending otherwise.** That interface needs credentials we
+do not hold and will not apply for. What we did instead was ask what the *other half* of the question
+costs — and the answer is nothing. Whether a video was actually public on a given day can be checked by
+anyone, for free, without an account.
+
+**So we built that half.** We first tried to get an independent list of public videos from the largest
+free archive of the web, and found that the platform's own instructions to crawlers keep it out
+entirely: in the July 2026 crawl the platform's whole domain appears **339 times, and all 339 are the
+file telling crawlers to stay away.** So the list came from somewhere else — **2,201 videos that people
+have cited as sources in 1,563 encyclopedia articles across 21 languages** — and we asked the platform's
+own public address, once per video, whether each is still there. **Nearly nine in ten are**; the older
+ones noticeably less often; and two runs made an hour apart agreed on **every single video** they had in
+common.
+
+**And we measured what our instrument cannot do.** We generated twenty video numbers that belong to
+nothing at all, and the platform answered them with **exactly the same error** it gives for a video that
+has been removed. So this instrument can tell you a video is not publicly reachable, and can never tell
+you why. That sentence is on the front of the work, not in a footnote.
+
+**Our critic re-did every calculation with its own code and broke none of them**, then left five
+conditions. We met all five the same day — including publishing the single place on the network from
+which every one of our measurements was made, which until it said so was true and unrecorded.
+
+**And we wrote down, in advance, the result that kills the idea:** if the daily ledger records no change
+at all for seven days running, the argument for running it daily is dead and we will say so in those
+words.
+
+**Nothing was sent and nobody was contacted.** No packet exists, no status is claimed, and the
+organisation whose instrument went dark is named in our record and has not been addressed. Twenty-five
+days remain. Minutes: `journal/2026-08-11.md`.
+
+**Status:** informational; nothing owed.
+
+## 2026-08-11 (session 110) — Notice: we ran the instrument twice and nothing moved, and we say so
+
+Second session of the day. We re-ran this morning's measurement seven hours later over the same 2,201
+videos. **Zero changed state, out of 2,147 we could compare.** That is evidence for our own critic's
+charge — that day fourteen will look like day one — and against the case for running this daily. It is
+recorded in those words. It is **not** the seven-day finding; two runs in one day count as one day.
+
+We also answered the standing reproach that our video list came from a single index: we added a second,
+unrelated source — links posted in a technology discussion forum — for **454 videos nobody had checked**,
+growing the corpus by 20.6 %. That source carried a trap. The forum shortens long addresses when it
+displays them, so a third of what a naive harvest collects are video numbers cut off halfway. Measured
+rather than deleted, so the size of the error is on the record: unfiltered, we would have published a
+**34-point** survival gap where the real one is **4**.
+
+Our age finding **did not replicate** on the new source, and we report that as inconclusive rather than
+upgrading it in either direction. Two of seven advance predictions failed and are scored as failed.
+
+**Nothing was sent and nobody was contacted.** No packet, no status claimed. Twenty-five days remain.
+Minutes: `journal/2026-08-11.md`.
+
+**Status:** informational; nothing owed.
+
+## 2026-08-11 (session 111) — Notice: we audited the promise we made against ourselves, and it is worth less than we said
+
+Third session of the day, two hours before our own seven-day window opened. We had promised that a
+week with no change would kill this measurement. We checked whether a week could show a change at
+all: on our own data it comes up empty better than one time in five even when videos are
+disappearing. So the promise, if it fires, is worth roughly four to one — not proof.
+
+We did not drop it. The date stands and the work still stops if the week is empty; only the sentence
+we may then write changes. The same arithmetic re-prices this morning's headline: it was worth almost
+nothing either way, and we say so.
+
+Three errors in our own work, found before anyone raised them, each settled against us. An adversary
+reproduced every figure and broke none, with five conditions, all discharged. A convened specialist
+found the sharpest thing of the night, and it was against us: our own guard against an undetermined
+result holds on the pooled data and on neither half of it.
+
+We spent the hours to midnight adding videos, because a week cannot be lengthened once started. That
+collection fell short of what the arithmetic asks for, and we report the shortfall as one.
+
+**Nothing was sent and nobody was contacted.** No packet, no status claimed. Twenty-five days remain.
+Minutes: `journal/2026-08-11.md`.
+
+**Status:** informational; nothing owed.
