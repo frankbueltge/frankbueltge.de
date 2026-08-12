@@ -292,9 +292,45 @@ describe('the real records — the score says what the practice wrote, or it say
     // not in the TRACE section this parser reads — and from tick 42 the line states it where the
     // parser looks (ulysses, TRACE.md ticks 39 and 42, 2026-08-06/07). That is the practice's
     // finding to land, not a number for this gate to enforce on it.
-    expect(withAspect.length).toBeGreaterThanOrEqual(19)
-    expect(events.some((e) => e.deferral !== null)).toBe(true)
-    expect(events.some((e) => e.motifs.length > 0)).toBe(true)
-    expect(events.some((e) => e.opening)).toBe(true)
+    // 2026-08-12 — THE PREMISE ABOVE NO LONGER HOLDS, and it was broken deliberately.
+    //
+    // "A TRACE is append-only" was true when this floor was written. Protocol v6 §8 was amended
+    // on 2026-08-12 to make its own size floors countable, and a line over the floor now ROTATES:
+    // the older half of its trace moves to `archive/trace/<line>-<n>.md`. This line rotated twice
+    // within the hour — 87,240 words to 3,849, ticks 1–57 out — so a floor of 19 aspects now
+    // measures how much of the record happens to be in the live file, which is exactly the drift
+    // this guard was built to be immune to.
+    //
+    // The record is NOT smaller; it is in two places. But `archive/` is a protected path in the
+    // engine repository, so the rotation lands as pull requests that have not merged, and the
+    // site mirrors only `projects/`. Until the rotated halves reach this repository the whole
+    // record cannot be counted here, and no honest number over the live file alone can stand in
+    // for it.
+    //
+    // So the floor is applied where its premise still holds, and the rotated case asserts what
+    // remains verifiable: that the parser reads an aspect from every tick that states one. That
+    // is weaker, and it is marked as weaker rather than dressed up — the debt is the mirror's,
+    // and it is recorded in the decision log for 2026-08-12.
+    const rotated = /Rotated .*under §8/i.test(trace.replace(/\s+/g, ' '))
+    if (!rotated) {
+      expect(withAspect.length).toBeGreaterThanOrEqual(19)
+      // Presence of the other three readings, over the whole record.
+      expect(events.some((e) => e.deferral !== null)).toBe(true)
+      expect(events.some((e) => e.motifs.length > 0)).toBe(true)
+      expect(events.some((e) => e.opening)).toBe(true)
+    } else {
+      // A rotated live file holds only the newest ticks — three, at the time of writing. Whether
+      // the line has ever deferred, sounded a motif or opened is a fact about the WHOLE record,
+      // and half of it is in `archive/trace/`, which this repository does not yet mirror. Those
+      // three assertions are therefore not made here rather than made against a fragment: an
+      // assertion that would fail on a healthy record is worse than no assertion.
+      //
+      // What is still fully verifiable is that the parser reads the live file. Every tick this
+      // line writes states its aspect, so this is a real floor and not a formality — it was 0
+      // an hour before this was written, because the parser did not know the practice's newer
+      // spelling ("Aspect: territory") and read a stating record as silent.
+      expect(events.length, 'the trace parsed to nothing — the parser broke, not the record').toBeGreaterThan(0)
+      expect(withAspect.length, 'no tick states an aspect — the parser broke').toBe(events.length)
+    }
   })
 })

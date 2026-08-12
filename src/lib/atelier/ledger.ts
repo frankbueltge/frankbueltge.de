@@ -16,18 +16,22 @@
 // so in plain words. An invented zero would be a lie in the archive — and this practice's own rule
 // is that a missing source is recorded, never silently bridged.
 //
-// COVERAGE, verified against the committed records on 2026-08-01 (12 lines):
-//   · 11 of 12 lines have a DECISION.md at all (2026-07-24-put-back-on-the-map has none — it is
+// COVERAGE, re-verified against the committed records on 2026-08-12 (13 lines):
+//   · 12 of 13 lines have a DECISION.md at all (2026-07-24-put-back-on-the-map has none — it is
 //     still ACTIVE);
-//   · 7 of those 11 carry a closing ledger this module can read:
+//   · 8 of those 12 carry a closing ledger this module can read:
 //     null-island, mach-ancestor, untested-second, vegetative-em, unmoved-ground,
-//     retraction-signature (all as a "Standing" block, some with a budget sentence beside it) and
-//     name-test (the older checklist template — see RESOURCE_BULLET below);
+//     retraction-signature (all as a "Standing" block, some with a budget sentence beside it),
+//     name-test (the older checklist template — see RESOURCE_BULLET below), and — new on
+//     2026-08-12 — negative-parallax, which gained a "Standing" paragraph when the practice
+//     published it on its own signature under §§2.3 and 9;
 //   · 4 carry none: gate-rehearsal (an infrastructure fixture with no research claim),
-//     negative-parallax and kartographie-statt-kopie (neither is closed by a kill or an archive —
-//     one waits at the human gate, one went through it) and signature-in-the-world.
+//     kartographie-statt-kopie (went through the human gate before §2.3 was struck),
+//     signature-in-the-world, and sixty-cases-blind.
 // Those numbers are asserted in ledger.test.ts against the real files, so a record that gains or
-// loses a ledger changes a test rather than quietly changing the figure.
+// loses a ledger changes a test rather than quietly changing the figure. That is what happened
+// here: the tripwire fired on the morning of 2026-08-12 and this comment was corrected to the
+// record rather than the assertion loosened to the code.
 
 /** Which shape of the record a line's stated cost was read out of. The practice rewrote its own
  *  DECISION template mid-July; both shapes are in the committed archive, and both say the same
