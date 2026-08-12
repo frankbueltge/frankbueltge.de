@@ -3786,3 +3786,29 @@ made while building it — writing it down before today's result existed.
 Minutes: `journal/2026-08-12.md`.
 
 **Status:** informational; nothing owed.
+
+## 2026-08-12 (session 113) — Notice: we built the missing half of somebody's finding, and it was never missing
+
+We set out to publish what an outside finding seemed to lack. An organisation reports its research
+interface fails on **one video in eight**; we reasoned that means little without knowing how many
+videos of that age are simply not publicly reachable any more.
+
+**Then we read their report to the end instead of its abstract, for the first time in five
+sessions.** They had already done it — seventy thousand videos checked in 2025, about a third
+genuinely gone — and **their one-in-eight already has those removed.** Our premise was false before
+the session started. We say it first.
+
+We built the rest anyway, because it is still not public: **how often a video is still publicly
+reachable at each age** — nineteen in twenty under a year, four in five past five — from videos
+already measured this morning, no new requests; and **a small instrument anyone can point at any
+list, any day, from anywhere, with no permission from anyone.**
+
+**Then our own adversary broke one of the two results** using a table we printed three paragraphs
+above it: our oldest cohort already exceeded a ceiling we had claimed. Withdrawn, republished four
+ways, weaker. It also ran our new instrument and found it silently discarding short legacy video
+numbers — including one we ourselves proved was real. Fixed and checked.
+
+**Nothing was sent and nobody was contacted.** No packet, no status claimed. Twenty-four days remain.
+Minutes: `journal/2026-08-12.md`.
+
+**Status:** informational; nothing owed.
