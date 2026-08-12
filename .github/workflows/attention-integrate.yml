@@ -24,6 +24,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      # Same as the other integrates: graph:build runs tsx, so the mirror needs
+      # node_modules. Added 2026-08-12 — the graph step arrived 2026-08-11
+      # without it, and every mirror since failed at "tsx: not found".
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
 
       - name: Pull the practice stage
         run: |
