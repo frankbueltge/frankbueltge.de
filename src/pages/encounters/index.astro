@@ -27,6 +27,11 @@ const crossings = buildCrossings(register as Parameters<typeof buildCrossings>[0
 // The Middle's record is the crossings themselves: newest first, each with its own title as the
 // line — the register carries no separate summary, and inventing one would be the Middle editing
 // what it is only supposed to record.
+// The rows carry NO href. The obvious one — /encounters/<encounter_id> — does not exist: this
+// route builds exactly one detail page, for the current entrance, under a short slug. Four rows
+// shipped on 2026-08-12 pointing at routes that were never built, and all four 404'd. Where a
+// reader can go from here is the register below, which links each crossing to its own committed
+// record.
 const log: LogEntry[] = [...crossings]
   .filter((c) => c.date)
   .sort((a, b) => ((a.date ?? '') < (b.date ?? '') ? 1 : -1))
@@ -35,7 +40,6 @@ const log: LogEntry[] = [...crossings]
     date: c.date!,
     marker: c.id.split('-').slice(0, 3).join('-'),
     line: firstClause(c.title, 190) ?? PYRAMID.station.absent,
-    href: `/encounters/${c.id}`,
   }))
 
 const sheet = buildStationSheet({
@@ -57,16 +61,17 @@ const bracket = running && crossings.length > 1
 // The SAME inquiry the status row names, chosen by the same rule (in motion, most recently
 // updated). Picking it twice by two rules is how a sheet ends up naming one inquiry in its status
 // panel and a different one in its lede — which it did, for exactly one build.
-const live = (inquiries as { status?: string; title?: string; slug?: string; inquiry_id?: string; public_summary?: string; updated_at?: string }[])
+const live = (inquiries as { status?: string; title?: string; slug?: string; inquiry_id?: string; public_summary?: string; updated_at?: string; record_url?: string }[])
   .filter((i) => i.status === 'ACTIVE' || i.status === 'REVIEW')
   .sort((a, b) => ((a.updated_at ?? '') < (b.updated_at ?? '') ? -1 : 1))
   .at(-1)
 
 const door = splitDoorLine(sheet.station.description)
+const SEO = PYRAMID.stationSeo.middle
 const F = FIGURES.middle
 ---
 
-<Page title={`${sheet.station.name} — ${door.lead} | Frank Bültge`} description={sheet.station.description}>
+<Page title={`${SEO.title} | Frank Bültge`} description={SEO.description}>
   <StationSheet
     id="middle"
     kicker={`${sheet.station.name.toUpperCase()} · ${sheet.station.resident.toUpperCase()}`}
@@ -82,13 +87,15 @@ const F = FIGURES.middle
           note: running?.label ?? null,
           noteLabel: F.lede.noteLabel,
           links: [
-            { label: F.lede.open, href: `/encounters/${live.slug ?? live.inquiry_id ?? ''}` },
-            { label: F.lede.record, href: '/encounters' },
+            // The inquiry's own committed record — there is no detail route for it on this site,
+            // and a link into the repository is the honest way to open the thing itself.
+            { label: F.lede.open, href: live.record_url ?? '/encounters/register' },
+            { label: F.lede.record, href: '/encounters/register' },
           ],
         }
       : null}
     log={sheet.log}
-    logMore={{ label: F.lede.record, href: '/encounters' }}
+    logMore={{ label: F.lede.record, href: '/encounters/register' }}
     doors={sheet.doors}
   >
     <Figure

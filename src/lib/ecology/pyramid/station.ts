@@ -133,6 +133,10 @@ const DOORS: Record<StationId, Door[]> = {
     { title: 'journal', sub: 'every session, unedited', href: '/field/journal' },
     { title: 'constitution', sub: 'the protocol, as mirrored', href: '/field/protocol' },
     { title: 'team channel', sub: 'REQUESTS — the one steering channel', href: '/field/requests' },
+    // The survey stood on this practice's old entrance and was orphaned when the station sheet
+    // replaced it — nothing else on the site links it. It belongs here: a primary-source survey
+    // of automated research is this practice's subject, from the outside.
+    { title: 'the survey', sub: 'end-to-end AI research automation, mid-2026', href: '/e2e-automation' },
   ],
   studio: [
     { title: 'premieres', sub: 'the register — what reached the stage', href: '/studio/works' },
@@ -141,7 +145,7 @@ const DOORS: Record<StationId, Door[]> = {
     { title: 'team channel', sub: 'REQUESTS — the one steering channel', href: '/studio/requests' },
   ],
   middle: [
-    { title: 'crossings', sub: 'every recorded encounter, in full', href: '/encounters' },
+    { title: 'crossings', sub: 'every recorded encounter, in full', href: '/encounters/register' },
     { title: 'the plenum', sub: 'the guest voice, with a lane and no door', href: '/plenum' },
     { title: 'reception', sub: 'what came back from outside the house', href: '/reception' },
     { title: 'seeds', sub: 'what visitors offered the practices', href: '/seed' },

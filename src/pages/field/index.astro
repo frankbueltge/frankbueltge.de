@@ -52,13 +52,11 @@ const gauntlet = buildGauntlet(
 )
 
 const door = splitDoorLine(sheet.station.description)
+const SEO = PYRAMID.stationSeo.field
 const F = FIGURES.field
 ---
 
-<Page
-  title={`${sheet.station.name} — ${door.lead} | Frank Bültge`}
-  description={sheet.station.description}
->
+<Page title={`${SEO.title} | Frank Bültge`} description={SEO.description}>
   <StationSheet
     id="field"
     kicker={`${sheet.station.name.toUpperCase()} · ${sheet.station.resident.toUpperCase()} · ${sheet.station.corner}`}
