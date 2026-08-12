@@ -71,16 +71,19 @@ function importWorkDir(dir: string, slug: string, ns: string, siteDir: string, r
   }
 }
 
-// Publication gate for Protocol-v4 projects (migration patch M-08): a project under
-// projects/<id>/ reaches the curated works surface ONLY through a valid, human-approved
-// PUBLICATION.json. Returns the reason for refusal, or null when the manifest is valid.
+// Publication gate for Protocol-v4+ projects (migration patch M-08): a project under
+// projects/<id>/ reaches the curated works surface ONLY through a valid, signed
+// PUBLICATION.json. Who signs has changed with the constitution: human-only under v4/v5,
+// the practice's own signed act since Protocol v6 §2.3 (2026-08-10) — approved_by names
+// whoever actually decided, human or practice, and stays free text for exactly that reason.
+// Returns the reason for refusal, or null when the manifest is valid.
 // The site never infers publication from presence, merge, build or project status.
 function publicationRefusal(pub: unknown, id: string, projectDir: string): string | null {
   if (typeof pub !== 'object' || pub === null) return 'manifest is not an object'
   const p = pub as Record<string, unknown>
   if (p.project_id !== id) return 'project_id does not match the project directory'
   if (p.status !== 'PUBLISHED_WORK') return `status must be PUBLISHED_WORK (got ${JSON.stringify(p.status ?? null)})`
-  if (typeof p.approved_by !== 'string' || !p.approved_by.trim()) return 'approved_by (human approver) is required'
+  if (typeof p.approved_by !== 'string' || !p.approved_by.trim()) return 'approved_by (who signed this publication) is required'
   if (typeof p.approved_at !== 'string' || !p.approved_at.trim()) return 'approved_at is required'
   for (const key of ['work_path', 'exposition_path', 'apparatus_path'] as const) {
     const v = p[key]
@@ -107,9 +110,9 @@ export function integrate(opts: { sourceDir: string; siteDir: string; ns?: strin
     }
   }
 
-  // Protocol-v4 projects: active projects, studies, killed lines and candidates are
+  // Protocol-v4+ projects: active projects, studies, killed lines and candidates are
   // research records and stay invisible here — only PUBLISH (a valid PUBLICATION.json,
-  // which only the responsible human may create) projects a work onto the site.
+  // the practice's own signed act since Protocol v6 §2.3) projects a work onto the site.
   const projectsDir = join(opts.sourceDir, 'projects')
   if (existsSync(projectsDir)) {
     for (const id of readdirSync(projectsDir)) {

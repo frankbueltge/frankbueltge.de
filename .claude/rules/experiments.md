@@ -14,8 +14,11 @@ das Werkeverzeichnis, eine Experiment-Seite oder eine Spec/ein Audit angefasst w
 
 - **USP-Pflicht (Frank, 2026-08-09, verbindlich):** Jedes Experiment braucht nachweisbaren
   Mehrwert oder ein Alleinstellungsmerkmal — per Web-Recherche prüfbar (nächste Nachbarn
-  weltweit + Daylight). Gilt rückwirkend für die Holdings (Audit läuft, decision-log
-  2026-08-09); neue Experimente beantworten es am §2-Gate, bevor gebaut wird. Ergänzt die
+  weltweit + Daylight). Gilt rückwirkend für die Holdings — das Nachbarn-Audit ist
+  abgeschlossen (16 Werke verdiktet, gemergt als #472; decision-log 2026-08-09), Franks
+  Entscheid darauf: nicht archivieren, sondern ausbauen — das USP-Rework-Programm
+  (`docs/design/2026-08-09-usp-rework-program.md`, Checkpoint 2026-09-05) ist in Kraft.
+  Neue Experimente beantworten die Frage am §2-Gate, bevor gebaut wird. Ergänzt die
   Maschinen-Bar der Ecology: die Bar fragt „konnte das nur eine Maschine?", die USP-Pflicht
   fragt „hat die Welt das schon?".
   **Seit 2026-08-09 ist die Pflicht ein Test, kein Vorsatz:** `src/lib/graph/graph.test.ts`
