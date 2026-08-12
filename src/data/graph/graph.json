@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "5781a66b7de5ddd1"
+        "sha256": "e1ab2c943672f8e3"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,10 +57,10 @@
       }
     ],
     "counts": {
-      "nodes": 225,
-      "edges": 201,
+      "nodes": 226,
+      "edges": 202,
       "nodesByKind": {
-        "decision": 41,
+        "decision": 42,
         "encounter": 6,
         "neighbor": 77,
         "practice": 9,
@@ -75,7 +75,7 @@
         "made-by": 66,
         "neighbor-of": 77,
         "participates": 17,
-        "touches": 28
+        "touches": 29
       }
     }
   },
@@ -482,6 +482,16 @@
     },
     {
       "id": "decision:2026-08-13-1",
+      "kind": "decision",
+      "label": "Linien werden auf der Oberfläche sichtbar — innerhalb der Station, nicht daneben",
+      "date": "2026-08-13",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Linien werden auf der Oberfläche sichtbar — innerhalb der Station, nicht daneben"
+      }
+    },
+    {
+      "id": "decision:2026-08-13-2",
       "kind": "decision",
       "label": "Die Kataloge des Hauses werden maschinenlesbar — und die nächtliche Anweisung nennt sie",
       "date": "2026-08-13",
@@ -4901,6 +4911,15 @@
     {
       "kind": "touches",
       "from": "decision:2026-08-13-1",
+      "to": "work:atelier",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "/atelier"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-08-13-2",
       "to": "work:studio",
       "source": {
         "file": "docs/decision-log.md",

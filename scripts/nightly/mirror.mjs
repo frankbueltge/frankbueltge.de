@@ -9,6 +9,7 @@
 //   works/<slug>/work.md    → src/data/nightly/works/<slug>/work.md
 //   works/<slug>/figure.svg → public/error-as-method/<slug>/figure.svg
 //   journal/<date>.md       → src/data/nightly/journal/<date>.md
+//   PROTOCOL.md             → src/data/nightly/PROTOCOL.md
 //
 // The figure lands beside the work's own route rather than in the content directory, because
 // the practice writes `![…](figure.svg)` relative to its work — and a page served at
@@ -129,7 +130,22 @@ export function mirror(src, dest) {
     journal.push(file)
   }
 
-  return { works, inherited, journal, skipped }
+  // The line's constitution. Added 2026-08-13, and it is the reason the station sheet can say
+  // "two lines, two constitutions" without anybody typing a version number into a config: the
+  // Atelier's own PROTOCOL.md is mirrored for the work-line, this one for the nightly line, and
+  // both are read the same way (src/lib/ecology/pyramid/station.ts). A number that is typed is a
+  // number that goes stale — this house spent 2026-08-12 proving that four times over.
+  //
+  // Copied whole and unedited, like everything else here. It is a fifth path and therefore a
+  // change to the contract: SITE-API.md in the practice's repository names it.
+  const protocolSrc = join(src, 'PROTOCOL.md')
+  let protocol = null
+  if (existsSync(protocolSrc)) {
+    cpSync(protocolSrc, join(dest, 'src/data/nightly/PROTOCOL.md'))
+    protocol = 'PROTOCOL.md'
+  }
+
+  return { works, inherited, journal, skipped, protocol }
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {
