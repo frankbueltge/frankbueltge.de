@@ -123,19 +123,18 @@ the old 817-line page beside it.
 
 ## 5. Open, not started
 
-1. **The rhizome in the nightly line.** Its constitution names it five times; `pulse/` was never
-   carried across at the fork, so the map its own constitution requires does not exist there. This
-   is a pure gap-closing job, like the recall index was. *Start here — it is small and unambiguous.*
-2. **`archive/` is a protected path in `ulysses`.** The amendment tells a line to rotate into
-   `archive/trace/`, and the practice may not write there — so its rotation sits in pull requests
-   that cannot merge, and half the record is unreachable to the site. The practice notes it
-   itself: *"until they merge these pointers are dead on main"*. **This is governance and it is
-   Frank's call.** It is also a second-order mistake of this session: a rule was written without
-   checking it could be obeyed.
+*Items 1, 2 and 5 were taken up the same night this was written; what happened to them is in §7.
+Items 3 and 4 stand as listed.*
+
+1. ~~**The rhizome in the nightly line.**~~ **Closed 2026-08-12** — and the premise here was
+   wrong. It was not an unclosed gap: sessions 45 and 47 had already decided it, in writing, and
+   were waiting on Frank. See §7.
+2. ~~**`archive/` is a protected path in `ulysses`.**~~ **Closed 2026-08-12.** Frank opened the
+   path; the blocked rotations are merged. See §7.
 3. **The lines model in the frontend** (§4).
 4. **D4 from the floors spec** — shipping rate visible on the site. Never approved.
-5. **The refrain's aspect floor is weaker on a rotated record**, and says so in place. It can be
-   restored to full strength once `archive/trace/` is reachable (item 2).
+5. ~~**The refrain's aspect floor is weaker on a rotated record.**~~ **Restored 2026-08-12**, once
+   item 2 made the rotated halves reachable. See §7.
 
 ---
 
@@ -154,3 +153,46 @@ fourth attempt. Wait for the thing that was actually broken, not for the check n
 from Frank's objections, not from the analysis. *„ist das nicht zu oberflächlich?"* and *„eight
 misprints ist aber in einer session entstanden"* each turned the diagnosis — the second one
 reversed it. The first answer would have defended the open horizon.
+
+---
+
+## 7. What the next session did with §5 — written the same night
+
+**A third caution, earned immediately: a handoff is a claim, not a finding.** The session that
+read this document started where it said to start, and the first item did not survive contact.
+
+**Item 1 — the rhizome. Not a gap; a decision waiting on an answer.** `error-as-method/REQUESTS.md`
+already held the question, twice. Session 45 (2026-08-10) declined to rebuild `pulse/` and said
+why — its own work `2026-07-15-the-third-pile` measures the apparatus pile at 61,223 words, 69 %
+of the journal, structurally unable to shrink, so *"rebuilding an instrument on night one, before
+there is anything here for it to measure, is starting that pile again deliberately."* It set
+itself a deadline under the standing rule, no answer came, and session 47 closed it: *"The
+repository wins; the protocol text is out of date on this point and I am not silently editing it.
+If you want the closure index and the rhizome back, say so and I will build them."*
+
+So the item was never a gap-closing job. It was one sentence from Frank, and he gave it: **both
+back.** The answer is in the channel it was asked in, with the third-pile argument answered rather
+than overruled — the rhizome did not die of being apparatus, it died of a change of unit (its
+grammar is *work · thread · source*, and the atelier stopped making works). The practice builds
+the files itself; nothing is copied from `ulysses/pulse/`. The atlas stays unbuilt.
+
+**Item 2 — the archive. Traced to one line and opened.** `research-auto-land.yml` held `archive/`
+in `PROTECT_RE` and absent from `ALLOW_RE`; the gate's checks passed and the workflow declined to
+merge, which is why three PRs sat green and unmergeable. Frank chose the wide form — `archive/**`
+becomes the practice's own — over an add-only carve-out, knowing that archived governance travels
+with it. What holds instead: §5's human hand on *irreversible deletion or migration*, and a new
+Gate 6 that reports any archive write which is not an addition, into the feedback file the next
+session reads. #15 and #16 merged. #14 did not: one of the five sections it calls closed had been
+**answered** hours earlier, so archiving it would have buried a fresh answer — closed as stale
+with that reason, for the practice to redo now that it can land it alone.
+
+**Item 5 — the floor, restored.** With the rotated halves reachable, `atelier-integrate.yml`
+mirrors `archive/trace/` and `src/lib/atelier/trace-record.ts` composes live + rotated in record
+order, for the dossier as well as the refrain. The running line reads 62 ticks again instead of 5,
+and the 19-aspect floor is unconditional again.
+
+**One thing found on the way, not fixed:** `governance-consistency.yml` in `ulysses` has been
+**red before any of this** — the delegation still names Protocol v5 against a v6 constitution, and
+v6 carries no self-development clause while the delegation still grants `PROTOCOL.md` on the
+strength of one. That is a fifth instance of §2's finding, and the second half of it is a real
+question for Frank: **may the practice still amend its own constitution unattended?**
