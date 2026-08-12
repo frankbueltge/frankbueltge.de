@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "d63251c01659a475"
+        "sha256": "47a2489474433a24"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,10 +57,10 @@
       }
     ],
     "counts": {
-      "nodes": 224,
-      "edges": 200,
+      "nodes": 225,
+      "edges": 201,
       "nodesByKind": {
-        "decision": 40,
+        "decision": 41,
         "encounter": 6,
         "neighbor": 77,
         "practice": 9,
@@ -75,7 +75,7 @@
         "made-by": 66,
         "neighbor-of": 77,
         "participates": 17,
-        "touches": 27
+        "touches": 28
       }
     }
   },
@@ -478,6 +478,16 @@
       "source": {
         "file": "docs/decision-log.md",
         "quote": "Die Ökologie wird eine Vier-Ebenen-Pyramide — 17 Seiten verschwinden als eigene Oberflächen"
+      }
+    },
+    {
+      "id": "decision:2026-08-13-1",
+      "kind": "decision",
+      "label": "Die Kataloge des Hauses werden maschinenlesbar — und die nächtliche Anweisung nennt sie",
+      "date": "2026-08-13",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Die Kataloge des Hauses werden maschinenlesbar — und die nächtliche Anweisung nennt sie"
       }
     },
     {
@@ -4886,6 +4896,15 @@
       "source": {
         "file": "docs/decision-log.md",
         "quote": "/protocol"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-08-13-1",
+      "to": "work:studio",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "/studio"
       }
     }
   ]
