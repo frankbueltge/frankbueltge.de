@@ -41,18 +41,29 @@ jobs:
           from datetime import date, timedelta
 
           CUTOFF = date.today() - timedelta(days=10)
-          # Window for the standing rule (Frank, 2026-07-17, at the head of every REQUESTS.md):
-          # silence past a named deadline — or past the practice's own next session — means
-          # "decide yourselves". The practices run nightly, so three days after a section's
-          # date the window is over and an unanswered request is settled BY the rule, not
-          # stuck. Wired 2026-08-12 (Frank: "wenn das ohne mich läuft, muss ich das ja auch
-          # nicht sehen"). Mirrors SETTLED_AFTER_DAYS in src/lib/zentrale/status.ts — change both.
-          WINDOW = date.today() - timedelta(days=3)
-          # A forwarding request is exempt: the post lies in the post office until Frank sends
-          # or discards it — that lane never expires (same exemption as the Zentrale's tray).
+          # Claims only (Frank, 2026-08-12, second pass — the first fix kept a 3-day window
+          # and at ~8 sections a day that alone held two dozen cards): a claim on Frank's
+          # attention NAMES a future deadline or is a forwarding. Everything else runs
+          # without him by his standing rule (2026-07-17, at the head of every REQUESTS.md:
+          # "silence means: decide yourselves") — it gets NO issue, and existing issues for
+          # it are closed. Mirrors the claims-only filter in src/lib/zentrale/status.ts
+          # buildInbox — change both.
+          # A forwarding request never expires: the post lies in the post office until Frank
+          # sends or discards it (same exemption as the Zentrale's tray).
           FORWARD_LINE = re.compile(r"^(?:\s*>?\s*)\**(?:braucht|needs)\**\s*:\s*\**\s*(weiterleitung|forward)", re.I | re.M)
           # First ISO date on a frist/deadline head line, if the section names one.
           FRIST_LINE = re.compile(r"^(?:\s*>?\s*)\**(?:frist|deadline)\**\s*:\s*(.*)$", re.I | re.M)
+
+          def section_claim(body):
+              """A future frist date or a forwarding — the only two claims on Frank."""
+              if FORWARD_LINE.search(body):
+                  return "weiterleitung"
+              fm = FRIST_LINE.search(body)
+              if fm:
+                  fd = re.search(r"\d{4}-\d{2}-\d{2}", fm.group(1))
+                  if fd and date(*map(int, fd.group(0).split("-"))) >= date.today():
+                      return f"frist {fd.group(0)}"
+              return None
           REPOS = ["ulysses", "field-research", "studio", "data-snack-plenum"]
           # Spiegel von NON_REQUEST_SECTION_RE (src/lib/zentrale/requestsMd.ts): Sections, die
           # keine Anfrage an Frank sind — BEIDE Gesprächsrichtungen. Seeds/Team note/Team
@@ -90,11 +101,10 @@ jobs:
           # beantwortete Anfragen standen tagelang als offen da (Frank: "ich muss auch nicht
           # jeden furz freigeben"). Der Bestand wird einmal geholt, nicht pro Section.
           open_issues = sh(["gh", "issue", "list", "--repo", "frankbueltge/frankbueltge.de",
-                            "--state", "open", "--limit", "1000", "--json", "number,title,createdAt"])
+                            "--state", "open", "--limit", "1000", "--json", "number,title"])
           if open_issues.returncode != 0:
               sys.exit(f"Offene Issues nicht lesbar: {open_issues.stderr.strip()[:200]}")
           open_by_title = {i["title"]: i["number"] for i in json.loads(open_issues.stdout or "[]")}
-          open_created = {i["title"]: i["createdAt"][:10] for i in json.loads(open_issues.stdout or "[]")}
           closed = 0
 
           def close_issue(number, note, label):
@@ -146,39 +156,31 @@ jobs:
                       close_issue(number, note, f"{repo}: {heading[:60]} ({status[:40]})")
                       continue
 
-                  # Fenster-Schluss (Standing Rule, seit 2026-08-12): keine Antwort binnen
-                  # drei Tagen und keine kommende Frist → die Regel selbst hat entschieden
-                  # ("Schweigen bis zur nächsten Session heißt: entscheidet selbst").
-                  # Weiterleitungen sind ausgenommen — die Post liegt, bis Frank sie anfasst.
-                  if title in open_by_title and not FORWARD_LINE.search(body):
-                      m = re.search(r"\d{4}-\d{2}-\d{2}", heading)
-                      opened_str = m.group(0) if m else open_created.get(title, "")
-                      try:
-                          opened = date(*map(int, opened_str.split("-")))
-                      except (TypeError, ValueError):
-                          opened = None
-                      frist = None
-                      fm = FRIST_LINE.search(body)
-                      if fm:
-                          fd = re.search(r"\d{4}-\d{2}-\d{2}", fm.group(1))
-                          if fd:
-                              frist = date(*map(int, fd.group(0).split("-")))
-                      if opened and opened < WINDOW and (frist is None or frist < date.today()):
-                          number = open_by_title.pop(title)
-                          note = (f"Das Fenster ist zu: die Anfrage stand seit {opened_str} ohne Antwort, "
-                                  f"und die stehende Regel im Kopf jeder REQUESTS.md hat damit entschieden — "
-                                  f"„Schweigen bis zur eigenen nächsten Session heißt: entscheidet selbst.“ "
-                                  f"Nichts ist hier liegengeblieben; die Praxis ist längst weiter, und die "
-                                  f"Section in `{repo}/REQUESTS.md` bleibt das Archiv.\n\n"
-                                  f"Automatisch geschlossen vom Requests-Watchdog (Fenster-Schluss, 2026-08-12).")
-                          close_issue(number, note, f"{repo}: Fenster zu — {heading[:60]}")
-                          continue
+                  # Anspruchs-Schluss (claims only, seit 2026-08-12): keine kommende Frist
+                  # und keine Weiterleitung → die Section erhebt keinen Anspruch auf Frank.
+                  # Sie läuft ohne ihn — per stehender Regel („Schweigen heißt: entscheidet
+                  # selbst") — und ihr Issue wird geschlossen, egal wie frisch sie ist.
+                  if title in open_by_title and section_claim(body) is None:
+                      number = open_by_title.pop(title)
+                      note = (f"Kein Anspruch an Frank: die Section nennt keine kommende Frist und ist "
+                              f"keine Weiterleitung — sie läuft ohne ihn, so wie es die stehende Regel "
+                              f"im Kopf jeder REQUESTS.md vorsieht („Schweigen heißt: entscheidet selbst“). "
+                              f"Wer sein Wort wirklich braucht, nennt eine Frist. Die Section in "
+                              f"`{repo}/REQUESTS.md` bleibt das Archiv.\n\n"
+                              f"Automatisch geschlossen vom Requests-Watchdog (claims only, 2026-08-12).")
+                      close_issue(number, note, f"{repo}: kein Anspruch — {heading[:60]}")
+                      continue
 
                   # Bestandsschutz: führendes Datum älter als CUTOFF → nicht mehr NEU alarmieren
                   m = re.match(r"(\d{4})-(\d{2})-(\d{2})", heading)
                   if m and date(*map(int, m.groups())) < CUTOFF:
                       continue
                   if title in known_titles:
+                      continue
+                  # Claims only: eine Section ohne kommende Frist und ohne Weiterleitung
+                  # erhebt keinen Anspruch auf Frank — für sie entsteht gar kein Issue.
+                  # Die REQUESTS.md der Praxis ist die Akte; der Tagesüberblick liest sie.
+                  if section_claim(body) is None:
                       continue
                   known_titles.add(title)
                   excerpt = "\n".join(body.strip().splitlines()[:40])

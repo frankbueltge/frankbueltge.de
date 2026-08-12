@@ -88,21 +88,12 @@
       <div data-zx="needed" class="flex flex-col gap-4"></div>
     </section>
 
-    {/* Was ohne ihn weiterläuft: Entscheidungen ohne datierte Frist (oder mit einer, die
-        weit weg ist). Schweigt er, entscheidet die Praxis bei ihrer nächsten Session und
-        dokumentiert das im Journal — ein legitimer Ausgang, kein Versäumnis. Steht hier,
-        damit es sichtbar bleibt, ohne als Schuld zu erscheinen. */}
-    <section aria-labelledby="zx-running-h" class="mb-12">
-      <h2 id="zx-running-h" class="mb-4 font-mono text-xs uppercase tracking-[0.22em] text-fg-faint">Läuft ohne dich</h2>
-      <p class="mb-4 text-sm text-fg-muted">
-        Schweigen heißt hier: die Praxis entscheidet bei ihrer nächsten Session selbst und hält es
-        im Journal fest. Lesen ist freiwillig — Eingreifen ändert etwas, Nichtstun blockiert nichts.
-        Sichtbar ist nur das offene Fenster (drei Tage, oder bis zu einer genannten Frist); danach
-        gilt die Sache als selbst entschieden und verlässt dieses Fach — die REQUESTS.md der Praxis
-        bleibt das Archiv, der Watchdog schließt das Issue mit Begründung.
-      </p>
-      <div data-zx="running" class="flex flex-col gap-4"></div>
-    </section>
+    {/* "Läuft ohne dich" und "Zur Kenntnis" gab es hier bis 2026-08-12. Beide wuchsen nur
+        (die Praxen schreiben ~8 Sections am Tag), und Franks Antwort war beide Male
+        dieselbe: was ohne ihn läuft, ist kein Posteingang. Die Linie ist jetzt der
+        frist-Mechanismus der Praxen selbst: ein Anspruch an Frank nennt eine kommende
+        Frist oder ist eine Weiterleitung — alles andere ist Akte (REQUESTS.md der Praxis),
+        und der Requests-Watchdog legt dafür gar kein Issue mehr an. */}
 
     {/* Gate-Spur (v2 P2, Governance §1): Publikations-Kandidaten mit 72-h-Uhr und
         GO/HALTEN — die Entscheidung wird als datierte Section in die REQUESTS.md der
@@ -122,10 +113,6 @@
       <div data-zx="post" class="flex flex-col gap-4"></div>
     </section>
 
-    <section aria-labelledby="zx-inbox-h" class="mb-12">
-      <h2 id="zx-inbox-h" class="mb-4 font-mono text-xs uppercase tracking-[0.22em] text-fg-faint">Zur Kenntnis</h2>
-      <div data-zx="inbox" class="flex flex-col gap-4"></div>
-    </section>
 
     <section aria-labelledby="zx-siteprs-h" class="mb-12">
       <h2 id="zx-siteprs-h" class="mb-4 font-mono text-xs uppercase tracking-[0.22em] text-fg-faint">Site-PRs</h2>
@@ -460,9 +447,7 @@
   const refreshBtn = document.querySelector<HTMLButtonElement>('[data-zx="refresh"]')
   const errorsEl = document.querySelector<HTMLElement>('[data-zx="errors"]')
   const nightEl = document.querySelector<HTMLElement>('[data-zx="night"]')
-  const inboxEl = document.querySelector<HTMLElement>('[data-zx="inbox"]')
   const neededEl = document.querySelector<HTMLElement>('[data-zx="needed"]')
-  const runningEl = document.querySelector<HTMLElement>('[data-zx="running"]')
   const gateEl = document.querySelector<HTMLElement>('[data-zx="gate"]')
   const postEl = document.querySelector<HTMLElement>('[data-zx="post"]')
   const sitePrsEl = document.querySelector<HTMLElement>('[data-zx="siteprs"]')
@@ -1376,41 +1361,23 @@
       for (const c of body.collectives) nightEl.append(renderCollective(c))
     }
 
-    // Triage-Split (v2 P1, nach Fächern seit 2026-08-02 — status.ts trayFor trägt das Fach
-    // an jedem Eintrag). Vier Ziele statt zwei: heute nötig / läuft ohne dich / Postausgang /
-    // zur Kenntnis. Der Leerzustand oben ist das Ziel des ganzen Umbaus, und er ist jetzt
-    // erreichbar, weil nur noch datierte Fristen in Reichweite dort landen.
+    // Triage-Split (v2 P1; claims-only seit 2026-08-12): der Server schickt nur noch
+    // Ansprüche — datierte Fristen in Reichweite ('today') und Weiterleitungen
+    // ('postoffice'). Was ohne Frank läuft, kommt gar nicht mehr an (status.ts buildInbox);
+    // die früheren Fächer "Läuft ohne dich" und "Zur Kenntnis" sind ersatzlos weg.
     const byFrist = (a: (typeof body.inbox)[number], b: (typeof body.inbox)[number]) => {
       const fa = a.fristDate ?? '9999-12-31'
       const fb = b.fristDate ?? '9999-12-31'
       return fa < fb ? -1 : fa > fb ? 1 : b.ageDays - a.ageDays
     }
     const needed = body.inbox.filter((e) => e.tray === 'today').sort(byFrist)
-    const running = body.inbox.filter((e) => e.tray === 'running').sort(byFrist)
     const forwarding = body.inbox.filter((e) => e.tray === 'postoffice').sort(byFrist)
-    const rest = body.inbox.filter((e) => e.tray === 'fyi')
     if (neededEl) {
       neededEl.replaceChildren()
       if (needed.length === 0) {
         neededEl.append(el('p', { class: 'text-base text-fg' }, 'Nichts braucht dich heute.'))
       } else {
         for (const entry of needed) neededEl.append(renderInboxCard(entry))
-      }
-    }
-    if (runningEl) {
-      runningEl.replaceChildren()
-      if (running.length === 0) {
-        runningEl.append(el('p', { class: 'text-sm text-fg-muted' }, 'Keine offene Frage bei den Praxen.'))
-      } else {
-        for (const entry of running) runningEl.append(renderInboxCard(entry))
-      }
-    }
-    if (inboxEl) {
-      inboxEl.replaceChildren()
-      if (rest.length === 0) {
-        inboxEl.append(el('p', { class: 'text-sm text-fg-muted' }, 'Nichts Neues zur Kenntnis.'))
-      } else {
-        for (const entry of rest) inboxEl.append(renderInboxCard(entry))
       }
     }
 

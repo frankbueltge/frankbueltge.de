@@ -238,13 +238,15 @@ describe('ageDays', () => {
 
 describe('buildInbox', () => {
   it('überspringt Issues mit nicht parsbarem Titel und kürzt den Excerpt auf ~600 Zeichen', () => {
+    // Claims only (2026-08-12): the fixture carries a forwarding head so the entry renders.
+    const body = `> tl;dr: one line\n> braucht: weiterleitung\n\n${'x'.repeat(650)}`
     const issues = [
       {
         number: 1,
         title: 'Request aus field-research: 2026-07-01 — Request: Foo',
         html_url: 'https://x/1',
         created_at: '2026-07-15T00:00:00Z',
-        body: 'x'.repeat(650),
+        body,
       },
       { number: 2, title: 'Irgendein anderer Issue-Titel', html_url: 'https://x/2', created_at: '2026-07-16T00:00:00Z', body: 'y' },
     ]
@@ -261,7 +263,7 @@ describe('buildInbox', () => {
     // Eine 650 Zeichen lange Anfrage kommt VOLLSTÄNDIG an. Früher schnitt der Bau bei 600 ab,
     // und weil der Rest nie gesendet wurde, konnte der „mehr“-Knopf im Dashboard nichts
     // aufklappen (Frank, 2026-07-31: „passiert nix“).
-    expect(result[0].excerpt).toHaveLength(650)
+    expect(result[0].excerpt).toBe(body)
   })
 
   // 15s instead of the 5s default: the 20k-char regex pass is fast in isolation (~3.6s)
@@ -274,42 +276,43 @@ describe('buildInbox', () => {
         title: 'Request aus field-research: 2026-07-31 — Request: lang',
         html_url: 'https://x/9',
         created_at: '2026-07-17T00:00:00Z',
-        body: 'z'.repeat(20000),
+        body: `> tl;dr: one line\n> braucht: weiterleitung\n\n${'z'.repeat(20000)}`,
       },
     ]
     const result = buildInbox(issues, '2026-07-17T00:00:00Z')
     expect(result[0].excerpt).toHaveLength(12000)
   })
 
-  it('fehlender Body → leerer Excerpt statt Crash', () => {
+  it('fehlender Body → kein Crash; ohne Kopf ist es ohnehin kein Anspruch', () => {
     const issues = [{ number: 3, title: 'Request aus studio: Titel', html_url: 'https://x/3', created_at: '2026-07-17T00:00:00Z' }]
-    const result = buildInbox(issues, '2026-07-17T00:00:00Z')
-    expect(result[0].excerpt).toBe('')
+    expect(buildInbox(issues, '2026-07-17T00:00:00Z')).toHaveLength(0)
   })
 
-  // The settled rule (2026-08-12): past SETTLED_AFTER_DAYS with no deadline still ahead,
-  // the standing rule has decided and the entry leaves the inbox entirely. These tests pin
-  // the exemptions as much as the rule: forwarding never expires, a future deadline keeps
-  // the window open, and fresh entries stay visible.
-  it('drops a running entry once the window is past and no deadline lies ahead', () => {
+  // Claims only (2026-08-12): the inbox carries what names a claim on Frank — a dated
+  // deadline in reach or a forwarding. Everything else runs without him by the standing
+  // rule and never renders, however fresh it is. These tests pin the line and both lanes.
+  it('drops everything without a claim — asks without deadline and notices, fresh or old', () => {
     const head = (b: string) => `> tl;dr: one line\n> braucht: ${b}\n> frist: keine\n\nText.`
     const issues = [
       { number: 1, title: 'Request aus studio: old ask', html_url: 'u', created_at: '2026-08-01T00:00:00Z', body: head('entscheidung') },
       { number: 2, title: 'Request aus studio: old notice', html_url: 'u', created_at: '2026-08-01T00:00:00Z', body: head('nichts') },
-      { number: 3, title: 'Request aus studio: fresh ask', html_url: 'u', created_at: '2026-08-10T00:00:00Z', body: head('entscheidung') },
+      { number: 3, title: 'Request aus studio: fresh ask', html_url: 'u', created_at: '2026-08-12T00:00:00Z', body: head('entscheidung') },
     ]
-    const result = buildInbox(issues, '2026-08-12T00:00:00Z')
-    expect(result.map((e) => e.issueNumber)).toEqual([3])
+    expect(buildInbox(issues, '2026-08-12T00:00:00Z')).toHaveLength(0)
   })
 
-  it('a future deadline keeps the window open past the age limit; a passed one does not', () => {
+  it('a deadline in reach is a claim; a passed or far-off one is not on the dashboard', () => {
     const head = (frist: string) => `> tl;dr: one line\n> braucht: entscheidung\n> frist: ${frist}\n\nText.`
     const issues = [
-      { number: 1, title: 'Request aus field-research: due later', html_url: 'u', created_at: '2026-08-01T00:00:00Z', body: head('2026-09-05') },
+      { number: 1, title: 'Request aus field-research: due soon', html_url: 'u', created_at: '2026-08-10T00:00:00Z', body: head('2026-08-20') },
       { number: 2, title: 'Request aus field-research: due past', html_url: 'u', created_at: '2026-08-01T00:00:00Z', body: head('2026-08-05') },
+      // Beyond FRIST_WINDOW_DAYS: the issue stays open (the watchdog keeps claims), and
+      // this entry surfaces under "Heute nötig" the day the deadline comes within reach.
+      { number: 3, title: 'Request aus field-research: due far out', html_url: 'u', created_at: '2026-08-10T00:00:00Z', body: head('2026-09-30') },
     ]
     const result = buildInbox(issues, '2026-08-12T00:00:00Z')
     expect(result.map((e) => e.issueNumber)).toEqual([1])
+    expect(result[0].tray).toBe('today')
   })
 
   it('forwarding never expires — the post lies until Frank touches it', () => {
@@ -327,9 +330,9 @@ describe('buildInbox', () => {
     expect(result[0].tray).toBe('postoffice')
   })
 
-  it('an unstructured old-format request settles by the same rule', () => {
+  it('an unstructured old-format request makes no claim either', () => {
     const issues = [
-      { number: 1, title: 'Request aus studio: headless old note', html_url: 'u', created_at: '2026-07-20T00:00:00Z', body: 'Just prose, no head.' },
+      { number: 1, title: 'Request aus studio: headless old note', html_url: 'u', created_at: '2026-08-12T00:00:00Z', body: 'Just prose, no head.' },
     ]
     expect(buildInbox(issues, '2026-08-12T00:00:00Z')).toHaveLength(0)
   })
