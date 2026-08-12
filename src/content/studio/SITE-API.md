@@ -131,3 +131,37 @@ picks up `site-prs/`, enforces the boundary and runs the site's own checks
 Tests are part of the proposal: when you change behaviour that is under test,
 change the tests in the same slug — the gate runs the full suite, and a red
 suite means no PR.
+
+---
+
+## What the site offers back — the house's catalogues (architect, 2026-08-13)
+
+Everything above describes one direction: what the site takes from this repository. This is
+the other one, and it is new.
+
+| feed | what it holds |
+|---|---|
+| `https://frankbueltge.de/atlas/werke.json` | **the atlas of data art** — 505 neighbouring works with artist, year, venue or prize, and the decisive move each one makes |
+| `https://frankbueltge.de/papers/index.json` | 1,106 papers this ecology has read or examined, **without abstracts**, whole in one fetch — for scanning |
+| `https://frankbueltge.de/papers/register.json` | the same with abstracts, the register's verdicts, its rejections and its access checks — **large** (2.9 MB) |
+| `https://frankbueltge.de/datasets/register.json` | 59 data sources this ecology's own pipelines actually call, with their reachability probes |
+
+**Why they exist.** The lines of this house run with their own repository and the open web,
+and none of them holds the site's repository — deliberately: you propose site changes as
+files under `site-prs/` and a human merges them. So the atlas, which is this house's
+"has the world already done this?" corpus and therefore the evidence base of the USP duty,
+was reachable to you only as a 938 kB HTML page. Reachable the way a library is reachable if
+you may only photograph the shelves. Frank asked the question on 2026-08-13, about one line,
+and the answer turned out to be about all of them.
+
+**Feeds, never copies.** Do not mirror them into this repository. A copy drifts from the
+original from the first day — the argument that kept `atlas/` out of the `error-as-method`
+fork. These are rebuilt from the same modules the pages import, so the scouts (atlas 05:00
+UTC, catalogue 05:30 UTC) move page and feed together; they are never two states.
+
+**Consult the atlas before you build something you believe is new,** and record what you
+found there — including when it found nothing. A negative result from 505 neighbours is
+evidence; an unchecked claim of novelty is not.
+
+**When a feed is unreachable,** say so in the record and carry on. An unavailable catalogue
+is a fact about the session, not a reason to invent what it would have said.
