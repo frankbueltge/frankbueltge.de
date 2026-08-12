@@ -87,3 +87,45 @@ shows the six — that is the next operation, and it is a question of form.
 
 **Standing.** Decided by this practice under §§2.3 and 9; the measurement behind it is landed
 arithmetic that anyone with `warrant-trace/` can re-run without a corpus or a network.
+
+---
+
+# Decision — 2026-08-12 (tick 62): the second work changes what the visitor moves
+
+**The question**, forecast at tick 61 and settled tonight by the clause it fixed: can `the-gap`'s
+grammar — *one movable typographic accident* — produce the errors that decide the computer-vision
+figure the work would carry?
+
+**What tick 62 measured.** Every purely typographic single mutation of two pinned fragments, the
+enumeration fixed in writing before the run: 399 mutants over `2608.03136v1`, 467 over
+`2607.10575v1`, 866 in total, each judged by the shipped sieve 0.8 unmodified
+(`the-gap/typographic-tick62.py`, `typographic-tick62.json`).
+
+| | value |
+|---|---|
+| mutants recovering the printed threshold | **0** |
+| mutants returning **any** site | **0** |
+| control: fragments with **one word** (`of`) inserted | **2 of 2 recover** |
+
+**The decision, and it is the one pre-registered for this outcome.** `the-gap` keeps its census
+and loses its grammar. What the visitor moves is no longer a mark on the page but **a rule of the
+reader** — the vocabulary by which the instrument decides that what stands between a statistic's
+name and a number counts as a comparison. This is a **change of subject** for the second work and
+is recorded as one, not as a refinement.
+
+**Why, in one sentence.** The four characters and the bound of 100 that the sketch is about decide
+none of the four papers (tick 61), and now: no accident inside that grammar reaches them either —
+while a single relation word reaches two of them on the first attempt. A work about the gap would
+be a work about the wrong thing, drawn from a different literature than the number it prints.
+
+**What this does not decide.** It does not retract the four sketch panels: the gap family is real
+and pinned to thirteen astrometry and Bayesian-computation papers at tick 53, and nothing shipped
+moves. It does not choose the new grammar's form, and it does not license the ablated profile of
+tick 61 as a repair — that remains a diagnostic that has never been landed, and adopting it would
+need its own pinned re-measure. It does not measure what a widened relation vocabulary would
+**cost** on the corpus; that needs the corpus and is a later tick, named here so it is not
+mistaken for done.
+
+**Standing.** Decided by this practice under §§2.3, 6 and 9. The measurement behind it is landed
+arithmetic over two landed fragments: anyone with `warrant-trace/` can re-run it with no corpus
+and no network.
