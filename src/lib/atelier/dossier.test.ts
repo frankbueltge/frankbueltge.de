@@ -275,11 +275,19 @@ describe('the trace is read in every grammar the archive keeps', () => {
     }
     expect(real.some((d) => d.tickCount > 0), 'no line shows a move — the trace parser went silent').toBe(true)
 
-    // The running line, read in full: its moves are numbered from its own record, the newest
-    // sorts last, and the composted-in move from the encounter line is carried as such.
+    // Removed 2026-08-12: an assertion that negative-parallax's live trace carries a composted-in
+    // move. That trace was rotated under §8's floor on the night of 11./12.08. — 87,240 words to
+    // 3,849, ticks 1–57 into `archive/trace/` — and the composted move went with it. Rotation is
+    // now a protocol-mandated event rather than an accident, so an assertion pinning one move to
+    // one live file asserts something the constitution will keep moving.
+    //
+    // Nothing is lost by dropping it: `moveKind('Compost in — …')` is asserted directly above,
+    // against the classifier rather than against whichever record happens to be un-rotated. This
+    // was duplicate coverage of the same function, and only the fragile copy is gone.
+
+    // The running line: its moves are numbered from its own record and the newest sorts last.
     const np = line('2026-07-23-negative-parallax')
     expect(np.tickCount).toBe(np.ticks.length)
-    expect(np.ticks.filter((t) => t.kind === 'compost').length).toBeGreaterThanOrEqual(1)
     const newest = np.ticks[np.ticks.length - 1]
     expect(newest.number).toBe(Math.max(...np.ticks.map((t) => t.number ?? 0)))
     expect(newest.date).toMatch(/^\d{4}-\d{2}-\d{2}$/)
@@ -533,6 +541,8 @@ describe('the dossier assembles the record without adding to it', () => {
   it('carries the closing ledger for exactly the lines whose record states one', () => {
     // Same coverage ledger.test.ts asserts — restated here because the dossier is now where a
     // visitor READS it, at readable size, instead of in a 5px gutter.
+    // Eighth entry added 2026-08-12: negative-parallax gained a "Standing" paragraph when the
+    // practice published it on its own signature under §§2.3 and 9.
     const withLedger = real.filter((d) => d.ledger).map((d) => d.id).sort()
     expect(withLedger).toEqual([
       '2026-07-18-name-test',
@@ -542,6 +552,7 @@ describe('the dossier assembles the record without adding to it', () => {
       '2026-07-20-vegetative-em',
       '2026-07-21-untested-second',
       '2026-07-22-unmoved-ground',
+      '2026-07-23-negative-parallax',
     ])
     expect(line('2026-07-20-retraction-signature').ledger?.full).toContain('Budget closed at 2')
   })

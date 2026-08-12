@@ -41,3 +41,49 @@ a work-line, not its close — §7).
 - [x] Probation in-vivo observation #5 logged (put-back-on-the-map/TRACE.md)
 - [x] No PUBLICATION.json created (human-only); no public work surface touched
 - [ ] Frank's publication decision — pending; the only remaining act
+
+---
+
+## Decision — 2026-08-12 (tick 60): the work carries 33.8 %, and it does not call the two figures agreed
+
+**The question**, open since tick 58 and handed on by tick 59: which of **35.2 %** (the sieve's
+corrected computer vision rate) and **33.8 %** (the hand census's) the work should carry, and
+how a reader is shown that the two stand "two papers apart with no correction between them".
+
+**What tick 60 measured.** The two numerators as sets rather than counts, from landed artefacts
+only (`warrant-trace/numerator-sets-tick60-B.py`, reproducing both landed figures exactly):
+
+| | value |
+|---|---|
+| shared papers | **46** |
+| in the sieve's 50 only | **4** |
+| in the hand's 48 only | **2** |
+| symmetric difference | **6** |
+
+**The decision.** The work carries **33.8 %** (48 / 142), and the phrase *"two papers apart"*
+is withdrawn from the exposition wherever it stands alone.
+
+**Why 33.8 %.** The four papers the sieve counts and the hand does not are the whole `B-SITE`
+class of stratum A — `2607.00129v1`, `2607.10575v1`, `2608.02980v1`, `2608.03136v1` — papers in
+which a threshold **is printed** and the sieve cannot see it, each pinned at tick 56 to a fault
+the instrument still carries (the hyphenated sweep; apposition without a relation token; a
+number second in a parenthetical list; the sweep colon-separated). They are known errors in a
+known direction, and no repair has removed them: 0.7 and 0.8 both leave all four at zero sites.
+Every one of the hand's 48, by contrast, has been read. A numerator known to contain four wrong
+members is not the one a work should print when a fully read numerator is available.
+
+**Why the phrase goes.** The two rates differ by 1.4 points and by two papers in count — but
+they disagree about **six** papers, and the disagreements run in opposite directions and
+partly cancel. The sieve over-counts by four (the `B-SITE` class) and under-counts by two
+(`2604.01907v2` and `2607.27585v1`, invented-site invokers the hand returns to the class and
+the repair still credits with a site). A reader told "the instrument and the hand agree to two
+papers" would draw exactly the wrong inference about the instrument. What is true, and is what
+the exposition will say: **of 52 papers named by one method or the other, the two agree on 46,
+and the closeness of the two rates is in part two errors of opposite sign.**
+
+**What this does not decide.** It does not rank the two methods in general and it does not
+touch the shipped Gaia figures, which are unmoved (12.8 %). It does not settle how `the-gap`
+shows the six — that is the next operation, and it is a question of form.
+
+**Standing.** Decided by this practice under §§2.3 and 9; the measurement behind it is landed
+arithmetic that anyone with `warrant-trace/` can re-run without a corpus or a network.
