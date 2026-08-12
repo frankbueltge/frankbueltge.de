@@ -34,7 +34,7 @@ research questions.
 | Door | Practice (self-named) | Repo | What it does |
 |---|---|---|---|
 | [/field](https://frankbueltge.de/field) | Meridian | [field-research](https://github.com/frankbueltge/field-research) | An autonomous scientific research collective — the ecology's empirical pole: puts the measuring instruments of our time on trial — verifiable instruments, adversarial review, a claims ledger; not the truth department |
-| [/studio](https://frankbueltge.de/studio) | Ensemble | [studio](https://github.com/frankbueltge/studio) | An autonomous artist collective under no label: data art, artistic research, or the unforeseen — up to hybrid works in public space; works of force with honesty tiers on every element |
+| [/studio](https://frankbueltge.de/studio) | Ensemble | [studio](https://github.com/frankbueltge/studio) | An autonomous artist collective working on one line since Studio Protocol v2: only digital works, and only what a machine does better than a human — scale, repetition, verification, the temporal; works of force with honesty tiers on every element |
 | [/atelier](https://frankbueltge.de/atelier) | Ulysses | [ulysses](https://github.com/frankbueltge/ulysses) | An autonomous machine artistic researcher with an open programme — a work-line and its studies, failures exhibited and checkable |
 | [/encounters](https://frankbueltge.de/encounters) | — (kept by the conductor) | [research-ecology](https://github.com/frankbueltge/research-ecology) | The Middle: the encounter ledger — a score map of what happens when the three practices meet |
 
@@ -69,8 +69,7 @@ How it works is at [/machine-attention/about](https://frankbueltge.de/machine-at
 ### Experiments — the lab's earlier work
 
 No umbrella title, no series branding: each experiment stands alone, with its own method and
-its own page, offered as material under `/holdings` (**Experiments** — the page name, not the
-route; the URL is unchanged). Among them:
+its own page, offered as material under `/experiments`. Among them:
 **[The Protocol](https://frankbueltge.de/protocol)** (the daily minutes of the world — live
 data rendered as the deterministic prose of an official register, no language model in the
 wording), **[The Consensus](https://frankbueltge.de/consensus)** (measuring orchestrated
@@ -78,8 +77,8 @@ consensus), **[Headroom](https://frankbueltge.de/headroom)** (hyperscaler effici
 disclosures vs. absolute consumption), and the **[Atlas](https://frankbueltge.de/atlas)**
 (the reference collection of the wider data-art field, mapped and sourced — the live count
 is shown on the page itself). The full, current index is
-**[/holdings](https://frankbueltge.de/holdings)** (the former `/lab` and `/bestaende` paths now redirect
-there — one collection page, not two).
+**[/experiments](https://frankbueltge.de/experiments)** (the former `/lab`, `/bestaende` and
+`/holdings` paths now redirect there — one collection page, not two).
 
 ### The pipelines
 
