@@ -48,8 +48,8 @@
       },
       {
         "file": "src/data/nightly/works/*/meta.json",
-        "sha256": "677428c888619090",
-        "files": 5
+        "sha256": "122d558211f2979d",
+        "files": 6
       },
       {
         "file": "src/data/attention/export.json",
@@ -57,14 +57,14 @@
       }
     ],
     "counts": {
-      "nodes": 223,
-      "edges": 199,
+      "nodes": 224,
+      "edges": 200,
       "nodesByKind": {
         "decision": 40,
         "encounter": 6,
         "neighbor": 77,
         "practice": 9,
-        "practice-work": 65,
+        "practice-work": 66,
         "receiver": 6,
         "work": 20
       },
@@ -72,7 +72,7 @@
         "addresses": 6,
         "concerns": 2,
         "door": 5,
-        "made-by": 65,
+        "made-by": 66,
         "neighbor-of": 77,
         "participates": 17,
         "touches": 27
@@ -2010,6 +2010,21 @@
       "medium": "Measurement · the CCM's own procedure for the mass of the kilogram, implemented as a function and run on its published inputs: governor.py -> results.json -> figure.py -> figure.svg. Exact rational arithmetic (fractions.Fraction) throughout, square roots by integer bisection to twelve places, no floating-point value in any reported number. Stdlib only, deterministic, no randomness and therefore no seed, no network at run time; every input transcribed into data/inputs.json with the address it came from. Twelve predictions written into the script before its first execution and left there with verdicts appended -- all twelve confirmed, which the work treats as the ledger's failure rather than its success."
     },
     {
+      "id": "practice-work:atelier/2026-08-12-the-permanent-correction",
+      "kind": "practice-work",
+      "label": "The Permanent Correction",
+      "slug": "2026-08-12-the-permanent-correction",
+      "practiceId": "ulysses",
+      "date": "2026-08-12",
+      "href": "/error-as-method/2026-08-12-the-permanent-correction",
+      "source": {
+        "file": "src/data/nightly/works/2026-08-12-the-permanent-correction/meta.json",
+        "quote": "\"title\": \"The Permanent Correction\""
+      },
+      "embodies": "A norm whose permitted rate of change is zero cannot withhold an admitted error and release it later, so it institutes the error a second time instead: 39 Unicode characters carry a normative name the standard calls wrong plus a correction that is guaranteed as permanently as the fault. Measured across the population: a median of 13 years and a maximum of 24 between a name being frozen and its correction being filed, 442 character-years of unmarked error, 4 names wrong on the day they became unchangeable, and 387 character-years — growing by 39 a year, forever — in which both names are normative at once. Second finding, unlooked-for: the standard's uniqueness guarantee is synchronic, and 62 retired names now denote a different character than they did, 16 because the name moved rather than fell vacant. Records a year-mapping bug in its own instrument, a defective classification rule that refuted one of its own predictions in the author's favour and was not repaired to rescue it, and an unharvested third channel.",
+      "medium": "Measurement · twenty releases of the Unicode Character Database harvested and diffed against each other (measure.py → results.json → figure.py → figure.svg); stdlib only, deterministic, no randomness so no seed, no network at run time; loose matching rule UAX44-LM2 reimplemented from its published text; eleven predictions written into the script before its first run and kept with their verdicts, two refuted; harvested files committed under data/ with SHA-256 and source URLs"
+    },
+    {
       "id": "practice-work:field/2026-07-01-calibration-gap",
       "kind": "practice-work",
       "label": "Calibration Certificate",
@@ -3349,6 +3364,15 @@
       "source": {
         "file": "src/data/nightly/works/2026-08-11-the-governor/meta.json",
         "quote": "\"date\": \"2026-08-11\""
+      }
+    },
+    {
+      "kind": "made-by",
+      "from": "practice-work:atelier/2026-08-12-the-permanent-correction",
+      "to": "practice:ulysses",
+      "source": {
+        "file": "src/data/nightly/works/2026-08-12-the-permanent-correction/meta.json",
+        "quote": "\"date\": \"2026-08-12\""
       }
     },
     {
