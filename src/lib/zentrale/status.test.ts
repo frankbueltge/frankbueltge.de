@@ -287,6 +287,53 @@ describe('buildInbox', () => {
     expect(result[0].excerpt).toBe('')
   })
 
+  // The settled rule (2026-08-12): past SETTLED_AFTER_DAYS with no deadline still ahead,
+  // the standing rule has decided and the entry leaves the inbox entirely. These tests pin
+  // the exemptions as much as the rule: forwarding never expires, a future deadline keeps
+  // the window open, and fresh entries stay visible.
+  it('drops a running entry once the window is past and no deadline lies ahead', () => {
+    const head = (b: string) => `> tl;dr: one line\n> braucht: ${b}\n> frist: keine\n\nText.`
+    const issues = [
+      { number: 1, title: 'Request aus studio: old ask', html_url: 'u', created_at: '2026-08-01T00:00:00Z', body: head('entscheidung') },
+      { number: 2, title: 'Request aus studio: old notice', html_url: 'u', created_at: '2026-08-01T00:00:00Z', body: head('nichts') },
+      { number: 3, title: 'Request aus studio: fresh ask', html_url: 'u', created_at: '2026-08-10T00:00:00Z', body: head('entscheidung') },
+    ]
+    const result = buildInbox(issues, '2026-08-12T00:00:00Z')
+    expect(result.map((e) => e.issueNumber)).toEqual([3])
+  })
+
+  it('a future deadline keeps the window open past the age limit; a passed one does not', () => {
+    const head = (frist: string) => `> tl;dr: one line\n> braucht: entscheidung\n> frist: ${frist}\n\nText.`
+    const issues = [
+      { number: 1, title: 'Request aus field-research: due later', html_url: 'u', created_at: '2026-08-01T00:00:00Z', body: head('2026-09-05') },
+      { number: 2, title: 'Request aus field-research: due past', html_url: 'u', created_at: '2026-08-01T00:00:00Z', body: head('2026-08-05') },
+    ]
+    const result = buildInbox(issues, '2026-08-12T00:00:00Z')
+    expect(result.map((e) => e.issueNumber)).toEqual([1])
+  })
+
+  it('forwarding never expires — the post lies until Frank touches it', () => {
+    const issues = [
+      {
+        number: 1,
+        title: 'Request aus ulysses: a letter to forward',
+        html_url: 'u',
+        created_at: '2026-07-01T00:00:00Z',
+        body: '> tl;dr: one line\n> braucht: weiterleitung\n> frist: keine\n\nText.',
+      },
+    ]
+    const result = buildInbox(issues, '2026-08-12T00:00:00Z')
+    expect(result).toHaveLength(1)
+    expect(result[0].tray).toBe('postoffice')
+  })
+
+  it('an unstructured old-format request settles by the same rule', () => {
+    const issues = [
+      { number: 1, title: 'Request aus studio: headless old note', html_url: 'u', created_at: '2026-07-20T00:00:00Z', body: 'Just prose, no head.' },
+    ]
+    expect(buildInbox(issues, '2026-08-12T00:00:00Z')).toHaveLength(0)
+  })
+
   it('trägt Fach und Frist-Restlaufzeit an jedem Eintrag', () => {
     const head = (b: string, f: string) =>
       `> tl;dr: eine Zeile\n> braucht: ${b}\n> frist: ${f}\n> kontext: irgendwo\n\nText.`
