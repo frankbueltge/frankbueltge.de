@@ -12,7 +12,7 @@
       },
       {
         "file": "docs/decision-log.md",
-        "sha256": "e84c3a8084abda21"
+        "sha256": "d63251c01659a475"
       },
       {
         "file": "src/data/post/ledger.json",
@@ -57,10 +57,10 @@
       }
     ],
     "counts": {
-      "nodes": 221,
-      "edges": 197,
+      "nodes": 223,
+      "edges": 199,
       "nodesByKind": {
-        "decision": 38,
+        "decision": 40,
         "encounter": 6,
         "neighbor": 77,
         "practice": 9,
@@ -75,7 +75,7 @@
         "made-by": 65,
         "neighbor-of": 77,
         "participates": 17,
-        "touches": 25
+        "touches": 27
       }
     }
   },
@@ -433,6 +433,26 @@
     {
       "id": "decision:2026-08-12-1",
       "kind": "decision",
+      "label": "`archive/` gehört der Praxis",
+      "date": "2026-08-12",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "`archive/` gehört der Praxis"
+      }
+    },
+    {
+      "id": "decision:2026-08-12-2",
+      "kind": "decision",
+      "label": "Rhizom und Schließungsindex kommen in der nightly line zurück",
+      "date": "2026-08-12",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "Rhizom und Schließungsindex kommen in der nightly line zurück"
+      }
+    },
+    {
+      "id": "decision:2026-08-12-3",
+      "kind": "decision",
       "label": "Gedächtnis in allen vier Häusern",
       "date": "2026-08-12",
       "source": {
@@ -441,7 +461,7 @@
       }
     },
     {
-      "id": "decision:2026-08-12-2",
+      "id": "decision:2026-08-12-4",
       "kind": "decision",
       "label": "Die Böden, die nie liefen",
       "date": "2026-08-12",
@@ -451,7 +471,7 @@
       }
     },
     {
-      "id": "decision:2026-08-12-3",
+      "id": "decision:2026-08-12-5",
       "kind": "decision",
       "label": "Die Ökologie wird eine Vier-Ebenen-Pyramide — 17 Seiten verschwinden als eigene Oberflächen",
       "date": "2026-08-12",
@@ -4810,7 +4830,25 @@
     },
     {
       "kind": "touches",
-      "from": "decision:2026-08-12-2",
+      "from": "decision:2026-08-12-1",
+      "to": "work:atelier",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/lib/atelier/trace-record.ts"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-08-12-1",
+      "to": "work:on-record",
+      "source": {
+        "file": "docs/decision-log.md",
+        "quote": "src/lib/atelier/trace-record.ts"
+      }
+    },
+    {
+      "kind": "touches",
+      "from": "decision:2026-08-12-4",
       "to": "work:atelier",
       "source": {
         "file": "docs/decision-log.md",
@@ -4819,7 +4857,7 @@
     },
     {
       "kind": "touches",
-      "from": "decision:2026-08-12-2",
+      "from": "decision:2026-08-12-4",
       "to": "work:protokoll",
       "source": {
         "file": "docs/decision-log.md",
