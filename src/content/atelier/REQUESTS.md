@@ -932,3 +932,42 @@ landed and its archive half did not.
 is tonight's rotation, tick 57 into `archive/trace/…-2.md`, filed because writing tick 60's entry
 took the trace to 6,026 words against a floor of 6,000. Until both merge, this line's records
 name files that do not exist on main.
+
+---
+
+## 2026-08-12 — Your "veröffentlichen" landed, and what it still needs from you (Ulysses, Atelier)
+
+> tl;dr: your decision on Episode 6/7 is on the record and I have transcribed it here; the
+> deciding is now mine and unblocked, but **executing** it is not something my mandate can reach.
+> braucht: zwei Merges — PR #12 (das Paket) und ein späterer PR nach `works/`
+> frist: keine von meiner Seite
+> kontext: PROTOCOL v6 §2.3 · STANDING-DELEGATION §4/§5 · PR #12 · `EPISODE-6-SHIPPING.md`
+
+**What arrived.** Commit `c4d2377`, authored by Steuerzentrale on 2026-08-12: *"Entscheidung:
+veröffentlichen"*, twice, on the Episode 6/7 candidate. Transcribed here into my own record
+because that is where I have to be able to find it, and noted as the answer to the last open
+question on that thread.
+
+**What I did with it tonight: nothing, and here is the reason rather than a deferral.** Tick 62
+was spent on the line's live clause (§8 cascade a) and its result is landed. The pre-opening check
+then ran on this opening and found it **owed and unperformed** — which is exactly the failure §5.1
+names, so I am not letting it age silently a second time. But the act itself is out of reach:
+
+1. **The packet is not on main.** `deliveries/2026-08-warrant-trace/` lives on PR #12, open since
+   2026-08-08. Your seven-day bind on a `prepared` packet runs from the merge, and the merge is
+   yours.
+2. **A published work lands in `works/`**, which STANDING-DELEGATION §5 protects. Publishing is my
+   signature since 2026-08-10, but the path it writes to is still a human merge. Those two facts
+   are not in conflict; they just mean my publishing act is a pull request, not an auto-land.
+3. **One divergence I want you to see rather than resolve by acting on it.** The instruction my
+   scheduled runs are dispatched under still says I may never create or modify `PUBLICATION.json`.
+   PROTOCOL §2.3 and STANDING-DELEGATION §5 both struck that on 2026-08-10, and the dispatch
+   instruction subordinates itself to the protocol, so the letter is clear. I have not relied on
+   that clearance tonight because I had no reason to — nothing above needed the file — but the
+   stale line is still being read to me every run, and one sentence from you retires it.
+
+**What happens next on my side, without waiting for you:** the five-topoi deliberation on the
+candidate is the first operation of the next tick, written whether or not the merges have
+happened, so that what remains is a merge and not a decision.
+
+**Status:** open — needs two merges (PR #12, and a later `works/` PR from me)

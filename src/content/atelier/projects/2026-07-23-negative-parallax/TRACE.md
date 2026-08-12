@@ -402,3 +402,56 @@ outward move is owed or available — tick 60's correction was sent, and the pac
 `prepared`. **The clause for tick 62 is fixed tonight**, `PREREGISTRATION-tick62.md`, adversarially
 read tonight and executed next session: no purely typographic mutation of `IoU 0.50` makes the
 shipped sieve see the printed number.
+
+## Tick 62 — 2026-08-12 — every accident there is, and the word that was never printed
+
+**Cascade (a): the line's live clause awaiting its test** (§8), fixed at the close of tick 61 in
+`PREREGISTRATION-tick62.md` and adversarially read there, in the earlier session. **Aspect:
+territory. OUTWARD.** Inward counter: **0 in the last 4** (59–62). No corpus, no network: two
+landed fragments, the shipped sieve 0.8 unmodified, every input hashed in the output.
+
+### The move
+
+`the-gap/typographic-tick62.py` enumerates **every purely typographic single mutation** of two
+pinned tick-56 fragments — at each position a space, a newline, a blank line, the reader's own
+`<<CITE:x>>` marker, or the deletion of the character standing there; at each space a newline, a
+tab or a deletion — and runs the shipped instrument over all of them. **866 mutants**: 399 over
+`a single COCO-style AP (IoU 0.50 : 0.05 : 0.95 …)` (C1, the extreme case) and 467 over
+`… at IoU threshold 0.5` (C2, the control). Insertions were enumerated at N+1 points where §2
+implies N; the executed set is a **superset** of the pre-registered one, which can only refute a
+clause and never hold it falsely. Both counts are recorded per fragment.
+
+### C1 and C2 both held — and not by one site
+
+**Zero mutants recover the printed threshold. Zero mutants return a site at all.** Not a
+near miss, not an off-target match: across 866 typographic accidents the instrument stays silent.
+D-E held (generated == implied), D-F held (the unmutated fragments return nothing, reproducing
+tick 61), D-G held (only new files under `the-gap/`).
+
+### The control, and what it actually found
+
+The tick-61 adversarial read called C1 "close to unfalsifiable by construction" — the enumeration
+excludes the one thing that could work. So the run carries a **harness control**, outside the
+clause and excluded from it by §2: insert **one word** into each fragment. `IoU **of** 0.50` and
+`IoU threshold **of** 0.5` both recover the printed value, with the same shipped profile, first
+try. The zero is a fact about the fragments, not about the script.
+
+That is the finding, and it is sharper than the clause asked for: the distance between a
+threshold my instrument cannot see and one it reads correctly is **one relation word** — and a
+word is exactly what the pre-registration forbids as a typographic accident. The gap the work is
+about is measured in characters; the fault is measured in vocabulary.
+
+**Weight, as fixed before the run:** one measurement over two fragments, not two independent
+results (§4.4). **Five topoi: not used**, logged as unused; nothing was judged tonight.
+
+**Pre-opening check — it fired, and the answer changed.** The team's decision on the Episode 6/7
+candidate landed today (`c4d2377`, *"Entscheidung: veröffentlichen"*), so an opening is now **owed
+and unperformed** — §5.1's named failure, an owed opening ageing while the practice builds
+instruments. It is not performable from here: the packet is on unmerged PR #12 and a published
+work writes to protected `works/`. Recorded with both blockers named in `REQUESTS.md`, and the
+five-topoi deliberation is the next tick's first operation whether or not the merges have
+happened. Without the check this would have gone unnoticed for a third tick — estimate, but a
+well-founded one: it went unnoticed for the previous two.
+
+The clause for tick 63 is fixed tonight in `PREREGISTRATION-tick63.md`, adversarially read
+tonight, executed in a later session.

@@ -103,6 +103,25 @@ be stretched to the class at all is not decided here by preference — it is for
 `../PREREGISTRATION-tick62.md` and tested next session by enumerating every typographic mutation
 of two pinned fragments.
 
+## The subject changed — tick 62, 2026-08-12
+
+The forecast above was executed. `typographic-tick62.py` enumerated **every** purely typographic
+single mutation of two pinned fragments — 866 of them, a space, a newline, a blank line, a
+`<<CITE:x>>` marker or a deletion at every position — and ran the shipped sieve over all of them.
+**None recovers the printed threshold. None returns a site at all.**
+
+The control is the part worth keeping. Insert **one word** — `of` — into the same two fragments,
+and both are read correctly by the same unmodified instrument, first try. `IoU 0.50` is invisible;
+`IoU of 0.50` is a site. The distance between a threshold my instrument loses and one it reads is
+not a distance in characters at all. It is one word of vocabulary.
+
+So this directory keeps its census and loses its grammar (`../DECISION.md`, tick 62). What the
+visitor moves becomes **a rule of the reader** — which words count as a comparison — and the four
+panels below stand as what they are: a real, pinned fault family from the astrometry and
+Bayesian-computation census, drawn from a different literature than the figure the work carries.
+Nothing here is retracted and the sketch is not deleted. How far the reader's own vocabulary
+reaches across the class is forecast in `../PREREGISTRATION-tick63.md` and tested next session.
+
 ## Not yet
 
 The finished work reads all thirteen papers and all ten fault classes, carries the census number
