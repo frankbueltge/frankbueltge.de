@@ -131,7 +131,8 @@ Items 3 and 4 stand as listed.*
    were waiting on Frank. See §7.
 2. ~~**`archive/` is a protected path in `ulysses`.**~~ **Closed 2026-08-12.** Frank opened the
    path; the blocked rotations are merged. See §7.
-3. **The lines model in the frontend** (§4).
+3. ~~**The lines model in the frontend** (§4).~~ **Built 2026-08-13**, and §4's premise had
+   turned over too — see §8.
 4. **D4 from the floors spec** — shipping rate visible on the site. Never approved.
 5. ~~**The refrain's aspect floor is weaker on a rotated record.**~~ **Restored 2026-08-12**, once
    item 2 made the rotated halves reachable. See §7.
@@ -196,3 +197,47 @@ and the 19-aspect floor is unconditional again.
 v6 carries no self-development clause while the delegation still grants `PROTOCOL.md` on the
 strength of one. That is a fifth instance of §2's finding, and the second half of it is a real
 question for Frank: **may the practice still amend its own constitution unattended?**
+
+---
+
+## 8. The lines model, built — and §4 had turned over as well
+
+**§4's first bullet was already fixed when it was written down.** `/works` no longer lists the
+fork as a fourth source: `src/lib/engines/register.ts` gives it `ns: 'atelier'` and drops its
+inherited half, with the reason in the file — *"it IS the Atelier's practice by descent … and only
+its address differs"*. The repair was right, and it created the opposite fault: **within the
+Atelier the two lines became indistinguishable**, which is what Frank actually saw. So the job was
+never to separate a fourth practice out; it was to make one practice's two strands legible.
+
+**What was built** (`src/lib/ecology/lines.ts` and its callers):
+
+- **A line is attributed by the directory a work came from, then by its date.** The fork's works
+  are the nightly line's whatever their date says; anything up to 2026-07-18 in the Atelier's own
+  mirror is the first nightly era; everything after it is the work-line. Sniffing the URL would
+  have worked until the first route rename — `LatestWork.dir` is the fact.
+- **`/works` marks the line after the title**, never in the practice column: that column is
+  fixed-width so titles align down the whole register, and a second word in it would have moved
+  every title of every practice. The marker is a rule in the practice's own hairline, not a chip —
+  a chip is a state the record put on a work (withdrawn, little daylight), and a line is neither a
+  state nor a judgement.
+- **The station sheet gained two rows, inside the station:** `lines` (each line with its own
+  counted works) and `constitutions` — plural, because one row naming one law on a two-line
+  practice leaves the other line ungoverned on the page. It reads today as
+  *nightly line · 36 works · work-line · 2 works* / *v3 (nightly line) · v6 (work-line)*, which is
+  the differentiation this whole handoff started from, in two lines of a status panel.
+- **Both versions are read, never typed.** That required a fifth mirrored path: the nightly line's
+  `PROTOCOL.md` (contract updated in that repository's `SITE-API.md`, mirror in
+  `scripts/nightly/mirror.mjs`). Writing "v3" into a config would have been the exact fault §2 of
+  this document is about.
+- **A door to the other line.** The sheet's only trace of the nightly line was a link to whatever
+  it made last night; a visitor could read the whole page and never learn the practice runs two
+  lines at once. It is a door, not a station — the pyramid keeps three.
+
+**What was NOT changed, deliberately: "three practices".** The five occurrences §4 lists are not
+drift — three practices is the canon, and the code now agrees with it. What was missing was a word
+for the level *below* a practice, and that is what the two rows add.
+
+**Still open from §4:** the 30 nightly-phase works are still claimed by both eras in the sense that
+they sit in the Atelier's mirror while belonging to the nightly line's history. That is now
+*stated* rather than mixed — they carry the nightly marker — but the fork's `works/` still holds
+its inherited copy, and only the mirror's cut keeps the site from counting them twice.

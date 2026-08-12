@@ -9,7 +9,11 @@ import { daysUntil, readingDate, STATIONS, PRACTICE_STATIONS, MAP_NODES } from '
 import { firstClause, recordLine, newestCrossing, runningInquiry } from './landings'
 import { seamsFrom, worksPerWeek, weekOffset, buildTimeline, timelineGeometry } from './timeline'
 import { classifyVerdict, buildGauntlet, buildCrossings, LANES } from './figures'
-import { readConstitution, splitDoorLine } from './station'
+import { readConstitution, splitDoorLine, buildStationSheet } from './station'
+import { PYRAMID } from '@/config/ecology-pyramid-wording'
+import { ATELIER_LINES } from '@/lib/ecology/lines'
+import pulse from '@/data/pulse/pulse.json'
+import type { PulseSnapshot } from '@/lib/pulse/render'
 import type { LatestWork } from '@/lib/engines/latest'
 
 const work = (date: string, ns: LatestWork['ns'] = 'atelier'): LatestWork => ({
@@ -245,5 +249,42 @@ describe('the station sheet', () => {
 
   it('keeps a door line whole when it has no joint', () => {
     expect(splitDoorLine('One clause only.')).toEqual({ lead: 'One clause only.', rest: '' })
+  })
+
+  // ——— the two lines of the Atelier ————————————————————————————————————————————————————
+  // A practice that runs two lines under two constitutions must say both, INSIDE its station.
+  // One constitution row on a two-line practice names one law and leaves the other line
+  // ungoverned on the page; a second station would break the pyramid's three (canon 2026-08-12).
+  const sheetOf = (id: 'atelier' | 'field') =>
+    buildStationSheet({ id, snapshot: pulse as PulseSnapshot, log: [], made: 1 })
+
+  it('gives the Atelier a lines row and a plural constitutions row', () => {
+    const rows = sheetOf('atelier').status
+    const keys = rows.map((r) => r.key)
+    expect(keys).toContain(PYRAMID.station.statusKeys.lines)
+    expect(keys).toContain(PYRAMID.station.statusKeys.constitutions)
+    expect(keys, 'the singular row would name one law and hide the other').not.toContain(
+      PYRAMID.station.statusKeys.constitution,
+    )
+  })
+
+  it('states both lines with their own counts, read from the register', () => {
+    const value = sheetOf('atelier').status.find((r) => r.key === PYRAMID.station.statusKeys.lines)!.value
+    for (const line of ATELIER_LINES) expect(value).toContain(line.label)
+    // Counted, never carried in prose — a typed number is the drift this house spent 2026-08-12 on.
+    expect(value).toMatch(/\d+ works?/)
+  })
+
+  it('reads both constitutions out of their mirrors, and they differ', () => {
+    const value = sheetOf('atelier').status.find((r) => r.key === PYRAMID.station.statusKeys.constitutions)!.value
+    const versions = [...value.matchAll(/v(\d+)/g)].map((m) => m[1])
+    expect(versions).toHaveLength(2)
+    expect(new Set(versions).size, 'two lines reading the same version means one mirror is wrong').toBe(2)
+  })
+
+  it('leaves a one-line practice with its single constitution row', () => {
+    const keys = sheetOf('field').status.map((r) => r.key)
+    expect(keys).toContain(PYRAMID.station.statusKeys.constitution)
+    expect(keys).not.toContain(PYRAMID.station.statusKeys.lines)
   })
 })
