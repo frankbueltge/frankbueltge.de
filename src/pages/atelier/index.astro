@@ -48,10 +48,11 @@ const sheet = buildStationSheet({
 
 const map = buildLineMap(dossiers, works)
 const door = splitDoorLine(sheet.station.description)
+const SEO = PYRAMID.stationSeo.atelier
 const F = FIGURES.atelier
 ---
 
-<Page title={`${sheet.station.name} — ${door.lead} | Frank Bültge`} description={sheet.station.description}>
+<Page title={`${SEO.title} | Frank Bültge`} description={SEO.description}>
   <StationSheet
     id="atelier"
     kicker={`${sheet.station.name.toUpperCase()} · ${sheet.station.resident.toUpperCase()} · ${sheet.station.corner}`}
