@@ -1,0 +1,69 @@
+---
+// THE LINE MAP — the Atelier's figure: work-lines on one time axis, and how each one ended.
+//
+// The practice's own entrance map (2026-07-23, from its published process model "Cartography, not
+// Tracing"), reduced to the sheet's figure slot. Works are ink slabs standing on the axis; the
+// lines that produced them hang below it and end in the mark their record earned.
+//
+// No status colours. Under this practice's constitution a closed line costs what a continued one
+// costs — "closing costs what continuing costs" — so a killed line is an outcome, not a failure,
+// and it wears the practice's identity ink like every other ending. That rule is written down in
+// this repo (.claude/rules/dataviz-figures.md) precisely because a warning red here would be the
+// site editorialising over the practice.
+import type { LineMap } from '@/lib/ecology/pyramid/figures'
+
+interface Props {
+  map: LineMap
+}
+const { map } = Astro.props
+
+const BOX = { width: 660, height: 150, left: 20, right: 620, base: 74 }
+const span = Math.max(1, Date.parse(map.to) - Date.parse(map.from))
+const x = (date: string) => BOX.left + ((Date.parse(date) - Date.parse(map.from)) / span) * (BOX.right - BOX.left)
+
+/** Slab height carries how many works landed that day — the practice worked in nights once, and
+ *  several works could land in one. Counting them keeps the early density visible. */
+const perDay = new Map<string, number>()
+for (const work of map.works) perDay.set(work.date, (perDay.get(work.date) ?? 0) + 1)
+const slabs = [...perDay.entries()].map(([date, n]) => ({ date, n, height: Math.min(6 + n * 5, 34) }))
+
+/** Lines are laid out on staggered depths so overlapping runs stay tellable apart. */
+const lines = map.lines.map((line, i) => ({ ...line, depth: BOX.base + 16 + (i % 4) * 13 }))
+---
+
+<svg viewBox={`0 0 ${BOX.width} ${BOX.height}`} role="img" aria-label={`The Atelier's works on one time axis from ${map.from} to ${map.to}, with ${map.lines.length} work-lines below it, each ending in the mark its record earned.`}>
+  <line class="eco-fig-baseline" x1={BOX.left - 6} y1={BOX.base} x2={BOX.right + 10} y2={BOX.base} />
+  <path class="eco-fig-baseline" d={`M${BOX.right + 10} ${BOX.base} l 10 0 m -4 -3.5 l 4 3.5 l -4 3.5`} />
+
+  {slabs.map((slab) => (
+    <rect class="eco-fig-slab" x={x(slab.date) - 2} y={BOX.base - slab.height} width="4" height={slab.height}>
+      <title>{slab.date} — {slab.n} {slab.n === 1 ? 'work' : 'works'}</title>
+    </rect>
+  ))}
+
+  {lines.map((line) => (
+    <g class="eco-fig-line">
+      <line class="eco-fig-line-run" x1={x(line.from)} y1={BOX.base + 4} x2={x(line.to)} y2={line.depth} />
+      {line.end === 'kill' && (
+        <path class="eco-fig-end" d={`M${x(line.to) - 4} ${line.depth - 4} l8 8 M${x(line.to) + 4} ${line.depth - 4} l-8 8`}>
+          <title>{line.title} — stopped, {line.from} to {line.to}</title>
+        </path>
+      )}
+      {line.end === 'study' && (
+        <rect class="eco-fig-end-open" x={x(line.to) - 4} y={line.depth - 4} width="8" height="8">
+          <title>{line.title} — archived as study, {line.from} to {line.to}</title>
+        </rect>
+      )}
+      {line.end === 'publish' && (
+        <circle class="eco-fig-end-solid" cx={x(line.to)} cy={line.depth} r="4">
+          <title>{line.title} — published, {line.from} to {line.to}</title>
+        </circle>
+      )}
+      {line.end === 'running' && (
+        <path class="eco-fig-end-running" d={`M${x(line.to)} ${line.depth} l 12 0 m -4 -3 l 4 3 l -4 3`}>
+          <title>{line.title} — running since {line.from}</title>
+        </path>
+      )}
+    </g>
+  ))}
+</svg>

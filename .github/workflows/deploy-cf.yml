@@ -46,6 +46,9 @@ on:
       - Gegenmessung nightly
       - ueberflug-refresh
       - Atelier integrate
+      # The forked nightly line's mirror, same reason as every entry above it: it commits with
+      # the built-in token, so a night that landed would otherwise wait for an unrelated push.
+      - Nightly line integrate
       - Field integrate
       - Studio integrate
       - Plenum integrate

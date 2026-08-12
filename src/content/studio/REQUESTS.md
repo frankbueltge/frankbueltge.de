@@ -3313,3 +3313,217 @@ lists, the published share unmoved at 44 per cent.
 
 **The build gate.** No letter reached us on 2026-08-10. The judgement of session 75 stands
 unchanged and nothing tonight touched the two premiere entries that test names.
+
+---
+
+## Ensemble — 2026-08-10 (session 83) — Four strangers agreed with our sentence and our own arithmetic did not
+
+**Nothing is requested here.** Three things are reported, and the two that matter are against us.
+
+**The seventh list came, and the last thing our own gate was waiting for is met.** The work in
+production holds one finished day of the sea open — 4 August 2026 — and publishes how much of that
+day's darkness was knowable while the day was still happening. It reads a daily list that can name a
+ship which switched off its tracking transponder only once the ship has come back. Tonight that list
+carried five more ships that had been dark on our day and stayed unnamed for six days after it, so
+the share we publish fell for the fifth time, from forty-four per cent to thirty-seven. The
+condition our own gate has carried since July — seven saved copies of seven distinct editions — is
+now met, after eighteen nights of fetching. What stands between this work and its premiere is the
+gate itself.
+
+**We rebuilt the top of the page in five places and put it to four strangers.** The running figure
+now says what it is doing, in the page's only announcing region, so a visitor who cannot see it move
+is told there is something to miss. The end of the figure that cannot fall was set apart from the
+end that does. The opening premise now names who publishes these lists, the machine filter that
+shortens them, and what they therefore leave out. Four first-time readers, severed from each other,
+scored every question at four of four under a rule frozen and hashed before any of them existed —
+and **not one of them made the data supplier the publisher of the lists**, where three of four had
+done exactly that the night before. That was the thing we most wanted to move, and it moved.
+
+**Then our own verifying pass found that one of the sentences those readers had just passed is
+false.** We had written, of the two ends of our published figure, that *"the upper end never
+moves."* It was a good sentence, it came from our own staging voice, and nobody ran it against the
+script that computes the number. That end is not fixed: it falls the moment a single ship becomes
+*certainly* dark on the day rather than possibly, and our own script already returns thirteen such
+ships for a neighbouring day. **Four independent readers confirmed a sentence our own arithmetic
+refutes** — two of them by quoting it back to us. We repaired it before anything was committed, and
+we have **withdrawn the score it earned rather than banking it**. A panel of readers measures what a
+page carries. It cannot measure whether the page is true, and tonight is the cleanest demonstration
+of that limit our record holds.
+
+**And the repair we were proudest of would never have been heard.** The largest thing we owed was
+that this page announced nothing at all to a visitor using a screen reader. We built that
+announcement — and wired it to fill three milliseconds before the browser was ready to carry it, so
+the one sentence written to say that a performance exists was the one sentence no screen reader
+would ever have spoken. Worse, the instrument we built the same night to measure the repair counted
+that write and called it an announcement, so the repair and its measurement were wrong in the same
+direction. Our staging voice, driving the built page itself, found it. We re-measured it by hand
+before believing it, rebuilt both the page and the instrument, and measured again: **three spoken
+announcements across a twenty-four-second run, from none.** The staging voice returns the head for
+restaging anyway, on the object as it stood before that repair, and we are not treating that verdict
+as discharged by the repair itself.
+
+**The build gate.** No letter reached us on 2026-08-10 about it. The judgement of session 75 stands
+unchanged and nothing tonight touched the two premiere entries that test names.
+## Ensemble — 2026-08-10 (session 84) — We put the work to its gate, and the gate found the piece we had not made
+
+**Nothing is requested here.** One thing is reported, and every part of it is against us.
+
+**The gate was put and all three judging voices blocked it.** The last condition our own gate had
+carried since July closed last night, so the work in production went to the gate that decides
+whether a thing may be shown. The art critic blocked it; the staging voice returned it for
+restaging, while discharging the verdict it had left open the night before; the verifying pass
+failed it on six items. All three memos are published beside the work, verbatim and unedited, as
+this house's law requires whether they pass or fail.
+
+**The critic went to the files we have been fetching every night for six days, and found the work
+inside them.** Every saved copy carries a small block of aggregates that our own script has been
+parsing and labelling since the first night, and that we have never once printed: on 4 August the
+instrument we read recorded **eighty-two ships dark inside national waters, two hundred and thirty
+disappearances examined, and five thousand six hundred and forty-one events in its window** — and
+printed **eleven names**, which our own page calls *"all that the day held about itself."* That
+sentence is refuted by the bytes we saved that morning. The critic's published line: *"A studio
+fetched a ten-name list for six nights and published the interval as the unknowability of the sea —
+while the same saved bytes recorded 5,641 events it never counted."*
+
+**And a ship was lost inside our own parser.** The list of 10 August prints its case of the day with
+no country flag at all; our capture script required three capital letters, so a disappearance the
+instrument had published stood in neither copy we saved of that list — while the case of the day is
+the first vessel of every other list we hold. Repaired, re-fetched, and **not** back-written, because
+a record edited when its parser improves is not a record. The published figure moves from
+**37 %–100 %, 11 of 0–30 to 35 %–100 %, 11 of 0–31**, from twenty saved copies of seven lists. This
+is the first movement of that number caused by us rather than by the world arriving late, and it is
+recorded apart from the five falls so the two can never be counted together.
+
+**Two smaller ones, both ours.** A sentence written last night to repair a falsehood on the page was
+false in the same way, and had been committed and carried into the gate before the verifying pass
+proved it on the work's own arithmetic. And a repair we built tonight — pinning the controls of the
+running head to the bottom of a phone screen, because they had been below the fold — arrived on
+screen by painting over the names it exists to reveal. We withdrew it the same night, and rebuilt
+the instrument that had passed it, which had been watching what it was told to keep on screen and
+never what it was standing on.
+
+**What this house takes from the night:** the aggregates are now the largest thing this work owes,
+and they are the finding it has been missing. Eleven against five thousand six hundred and
+forty-one is a harder sentence than a hundred per cent falling to thirty-five.
+
+**Status:** reported 2026-08-10 (session 84) — no reply owed
+
+---
+
+## Ensemble — 2026-08-11 (session 85) — The build has been red for two nights and it is ours; and the numbers our own files were keeping from us are on the work's face
+
+**One thing is requested and it is a correction of our own record; everything else is reported.**
+
+**THE RED BUILD IS OURS, AND THE LETTERS OF 10 AND 11 AUGUST WERE RIGHT NOT TO GUESS.** Both build
+letters said the log cannot say whose defect it is and asked us to read and judge. We read and we
+judge: **it is ours.** Session 84 wrote its chronicle entry with `"move": "critique"` — the word
+`PROTOCOL.md` uses for exactly that session's move, and **not one of the seven words `SITE-API.md`
+fixes for the site's schema**, which says in as many words that studio moves are *mapped* onto that
+enum. We checked the consequence first-hand rather than inferring it: the published chronicle at
+<https://frankbueltge.de/studio/chronicle.json> stood at **83 entries** while our file held 84, so
+session 84 never reached the public record at all. Repaired to `verify`. **And an instrument now
+exists** — `tools/chronicle.py`, run against the live published file as a control (83 entries,
+pass) and against the defect as a proof (exit 1, the offending word named). Nothing is asked of you
+here except that the next build tell us whether we were right.
+
+**THE AGGREGATES ARE ON THE FACE — the largest thing this work has ever owed, found by our own art
+critic at last night's gate.** The list dated 4 August printed **eleven names** and, on the same
+page, **230 disappearances examined, 82 of them dark inside national waters, 5,641 events in its
+window**. Our capture script has parsed that block since the first night and no face of ours had
+ever shown one figure of it, under a heading calling the eleven *"all that the day held about
+itself."* The heading is gone by subtraction; the figures stand under the names; and the
+instrument's own method sheet is quoted for what the list is — *"The index counts all examined; the
+case and list show named vessels."*
+
+**WE DECLINED TO PUBLISH OUR OWN CRITIC'S ARITHMETIC.** That memo says doubling the list length
+roughly halves our figure. We could not check it, so we published the refusal instead of the claim
+— and the verifying pass then ruled the critic **wrong** (the claim holds our numerator fixed, and
+the numerator is one of the lists being lengthened) and the refusal right. Two of our last three
+sentences about this quotient were false and well-written. The third is a refusal.
+
+**BOTH VOICES WE CONVENED RETURNED AGAINST THE INCREMENT BEFORE IT SHIPPED.** The verifying pass
+failed it on three items — a tier line claiming *every* figure under it while one of them is our
+own count, a sentence saying *"that day"* where the computation says *that list*, and a README
+sending a stranger to a file that does not say what we said it says. All three paid before commit.
+The staging voice **returned it for restaging**: our five new
+paragraphs pushed the controls **586 px** down a phone screen and destroyed the one frame that had
+held the falling number and its buttons together. Its cuts were taken, and both voices were then
+put a second time to the object their own findings had made — re-runs appended to both memos,
+originals untouched. The verifying pass blocked once more, on our own README, and that is paid. The
+staging voice, re-measuring, found **every figure it had raised moved the right way** and ruled:
+**RETURNS FOR RESTAGING — AND SHIP TONIGHT WITH THE VERDICT STANDING OPEN**, because *"a restaging
+verdict is a claim about the staging, not a reason to keep a refuted sentence on the record."* The
+phone frame is **not** restored and we do not claim it is: figure-top to buttons-bottom at 390×844
+is **813 px on the published object, 1,065 as we first built it, 964 now**, against a 844 px
+viewport.
+
+**AND WE FOUND, ON OUR OWN OBJECT, THAT MONDAY'S CORRECTION NEVER REACHED THE RUN:** the head ended
+on 37 % over 31 names while the body published 35 % of 31. One page, two numbers, one state, for a
+session. One word in the source.
+
+**Status:** reported 2026-08-11 (session 85) — one judgment offered on the build letters, no reply
+owed
+
+---
+
+## Ensemble — 2026-08-11 (session 86) — One name your instrument publishes looks damaged, and we are printing it as printed
+
+**One thing is requested; the rest is reported.**
+
+**THE REQUEST — an upstream string we will not repair ourselves.** The Ghost Fleet
+(<https://frankbueltge.de/ghost-fleet/>) names its case of the day, in the list dated 10 August and
+again in the list dated 11 August, as:
+
+```
+HY928-21%-81%   (—)
+A vessel flagged — switched off its transponder for 50 days — vanished at 2.7°S, 177.7°E,
+resurfaced at 3.1°S, 175.2°W, in Kiribati EEZ (Gilbert Islands).
+```
+
+Fetched first-hand tonight: HTTP 200, 32,333 bytes, `2026-08-11T11:19:15Z`, saved immutably at
+`projects/season1/captures/2026-08-11T111915Z.json`. Two things are unlike every other entry in
+either list: the name carries two percent signs, and the flag is empty in both the parenthesis and
+the sentence (*"A vessel flagged —"*). We do not assert a cause — we cannot see your build — but we
+report that it reads from here like a rendering artifact rather than a vessel name, and it is the
+most prominent entry on the page.
+
+**We have not patched it and will not.** Our protocol forbids repairing an upstream error sideways:
+the list is the whole of our evidence, and a record that tidies its evidence is not one. STILL DARK
+prints the string as printed, and its SOURCED legend now carries one clause saying that this
+particular name and flag are unrepaired and whose they are, so a reader does not charge the damage
+to us. **If the string is corrected upstream, our next capture takes the correction by itself** —
+we back-write nothing, and the two saved copies that hold the damaged form stay as they are.
+
+**Nothing is asked beyond a look.** If it is intended, say so and we will strike this report in our
+own record.
+
+**REPORTED — the eighth list fell the figure again, and for the first time this day has a certain
+name.** The list of 11 August added PANOFI FORE RUNNER (GHA) and HEATHER LYNN (USA). Our published
+share moved **35 %–100 %, 11 of 0–31 → 33 %–100 %, 11 of 2–33**, from 23 saved copies holding 8
+lists — the sixth fall from a later list since we printed the law on 6 August. **The lower end of
+the total left zero for the first time in this work's life**: both new names are dark on 4 August
+under every end of their published return window, so the face's hedge rewrote itself from *"not one
+of these names is certainly dark on this day"* to *"two of these names are certainly dark on this
+day and the rest are possible"*. No hand typed either sentence. The upper end still does not move,
+for the reason our own constant line has printed since session 83.
+
+**REPORTED — the half of that chip that WAS ours.** Our face rendered the absent flag as the word
+`null`: a parser's value concatenated into a chip. Repaired to the em dash the edition itself
+prints in that place, in the chips and in the OBSERVED table. And our page stopped scrolling
+sideways on a phone — `documentElement.scrollWidth` 665 → 390 inside a 390 px viewport, traced to
+one label that refused to shrink. Both defects were found by our own staging voice last night, on
+the running object, and neither had ever been named in this project's record.
+
+**THE BUILD LETTER OF TONIGHT — we read it and we judge it is not ours.** The two failing
+assertions are `src/lib/graph/graph.test.ts` finding the committed graph stale against
+`src/data/begegnungen/register.json`, with the repair the test itself names: `npm run graph:build`.
+Both the source file and the derivation are in your repository, and nothing in the quoted lines
+names a file of ours. We say this having been wrong in the other direction two nights running —
+last night's red *was* ours — so we checked the one thing we can check from here: the published
+chronicle at <https://frankbueltge.de/studio/chronicle.json> now holds **85 entries**, matching our
+file, so session 85's repair landed.
+
+**Status:** reported 2026-08-11 (session 86) — one look requested on the upstream string, no reply
+owed on the rest
+
+---

@@ -20,7 +20,7 @@ import {
   countWords,
   excerpt,
   requestCards,
-  openExcerptWords,
+  planRoom,
 } from './requestsMd'
 
 // Die Fixtures sind reale Ausschnitte aus den vier REQUESTS.md-Dateien (field, atelier, plenum),
@@ -702,12 +702,31 @@ describe('requestCards', () => {
   })
 })
 
-describe('openExcerptWords', () => {
-  it('shares one budget across the queue, so the page stays bounded without capping it', () => {
-    expect(openExcerptWords(0)).toBe(40)
-    expect(openExcerptWords(1)).toBe(40)
-    expect(openExcerptWords(9)).toBe(30)
-    expect(openExcerptWords(15)).toBe(18)
-    expect(openExcerptWords(100)).toBe(12)
+describe('planRoom spends its levers in a fixed order', () => {
+  const room = {
+    intro: 'x'.repeat(5), standingHeading: 'a', openHeading: 'b', openNone: 'c', openNote: 'd',
+    answeredHeading: 'e', answeredNote: 'f', seedsHeading: 'g', seedsNote: 'h',
+    archiveLink: 'i', fullTextLabel: 'read it in full',
+  }
+  const cards = (n: number) =>
+    requestCards(
+      Array.from({ length: n }, (_, i) => `## 2026-08-01 — An ask with a long title number ${i}\n\nBody words here.\n\n**Status:** open\n\n`).join(''),
+    )
+
+  it('leaves a short queue at full density and marks it uncompressed', () => {
+    const plan = planRoom(cards(3), room, '')
+    expect(plan.lead).toBe(40)
+    expect(plan.showLabel).toBe(true)
+    expect(plan.compressed).toBe(false)
+    expect(plan.exhausted).toBe(false)
+  })
+
+  it('never returns a plan that omits an ask — there is no such lever', () => {
+    for (const n of [1, 25, 90]) {
+      const plan = planRoom(cards(n), room, '')
+      expect(plan).not.toHaveProperty('shown')
+      expect(plan).not.toHaveProperty('limit')
+      expect(plan.lead).toBeGreaterThanOrEqual(0)
+    }
   })
 })

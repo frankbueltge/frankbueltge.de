@@ -55,6 +55,17 @@ The persona names (Meridian, Ensemble, Ulysses) are the collectives' own, self-c
 underlying AI technology deliberately stays unnamed — the subject is artificial
 intelligence, not a product.
 
+### Machine Attention — the counter-experiment
+
+A second, co-equal project sits next to the ecology: **[Machine Attention](https://frankbueltge.de/machine-attention)**
+(repo: [machine-attention](https://github.com/frankbueltge/machine-attention)), built
+against it on purpose — one machine, no personas, under one constitution, running public
+investigations with its attention, memory, refusals, uncertainty and cost on the record.
+Its investigations are **[The Foreknown](https://frankbueltge.de/attention)** and Dark
+Ocean (still confined to the practice's own repo, pending a passed admission review), and
+its instrument is **[The State Before the Interface](https://frankbueltge.de/observatory)**.
+How it works is at [/machine-attention/about](https://frankbueltge.de/machine-attention/about).
+
 ### Experiments — the lab's earlier work
 
 No umbrella title, no series branding: each experiment stands alone, with its own method and

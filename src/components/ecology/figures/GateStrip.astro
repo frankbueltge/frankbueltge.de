@@ -1,0 +1,74 @@
+---
+// THE GATE, SESSION BY SESSION — the Field's figure.
+//
+// This is NOT the handoff's verdict spectrum. That figure wanted every instrument placed on an
+// axis from "claim confirmed" to "claim taken apart", and the handoff itself flagged that the
+// axis position has no committed source and must never be guessed. It has none: the Field's
+// instrument metadata carries title, date, author, medium and embodies, and no finding-position.
+//
+// What the Field's record DOES carry is a verdict per session, in its chronicle, written by the
+// practice at the gate. So the figure draws the gate instead of the findings: one mark per
+// session on a real time axis, at the height its recorded verdict earned, with the sessions that
+// shipped something ringed. Sessions whose verdict is a sentence rather than a word sit on the
+// "stated" line — a real category, and the honest one, because the alternative is a classifier
+// that guesses at prose.
+import { LANES } from '@/lib/ecology/pyramid/figures'
+import type { GateStrip } from '@/lib/ecology/pyramid/figures'
+
+interface Props {
+  strip: GateStrip
+}
+const { strip } = Astro.props
+
+// `left` leaves room for the band labels, which are long words and would otherwise run off the
+// panel — the labels are the figure's whole key, so the drawing yields the space, not them.
+const BOX = { width: 660, height: 138, left: 128, right: 640, top: 14, bottom: 100 }
+
+/** The bands, top to bottom: what the gate can say, from cleanest through to stopped, then the
+ *  two honest non-answers. `stated` means the record answered in a sentence this figure will not
+ *  parse; `none` means it recorded no verdict at all. Both are drawn rather than filtered — a
+ *  strip that hid them would show a practice whose gate always speaks in one word. */
+const BANDS = [
+  { id: 'graduated', label: 'GRADUATED' },
+  { id: 'pass', label: 'PASSED' },
+  { id: 'conditions', label: 'WITH CONDITIONS' },
+  { id: 'deferred', label: 'DEFERRED' },
+  { id: 'fail', label: 'STOPPED' },
+  { id: 'stated', label: 'STATED IN PROSE' },
+  { id: 'none', label: 'NO VERDICT RECORDED' },
+] as const
+
+const bandY = (verdict: string): number => {
+  const i = BANDS.findIndex((b) => b.id === verdict)
+  const rows = BANDS.length
+  return BOX.top + ((i < 0 ? rows - 1 : i) + 0.5) * ((BOX.bottom - BOX.top) / rows)
+}
+
+const marks = strip.marks
+const dates = marks.map((m) => m.date).sort()
+const first = dates[0] ?? ''
+const last = dates.at(-1) ?? ''
+const span = Math.max(1, Date.parse(last) - Date.parse(first))
+const x = (date: string) => BOX.left + ((Date.parse(date) - Date.parse(first)) / span) * (BOX.right - BOX.left)
+---
+
+<svg viewBox={`0 0 ${BOX.width} ${BOX.height}`} role="img" aria-label={`Every session of the Field on one time axis, placed by the verdict its own chronicle recorded at the gate. ${marks.length} sessions from ${first} to ${last}.`}>
+  {BANDS.map((band) => (
+    <>
+      <line class="eco-fig-band" x1={BOX.left} y1={bandY(band.id)} x2={BOX.right} y2={bandY(band.id)} />
+      <text class="eco-fig-band-label" x={BOX.left - 10} y={bandY(band.id) + 3} text-anchor="end">{band.label}</text>
+    </>
+  ))}
+  {marks.map((mark) => (
+    <g>
+      <circle class={mark.shipped ? 'eco-fig-mark eco-fig-mark-shipped' : 'eco-fig-mark'} cx={x(mark.date)} cy={bandY(mark.verdict)} r={mark.shipped ? 4 : 2.6}>
+        {/* the record's own words, not a paraphrase — a title element is the one tooltip that
+            needs no script and survives with JavaScript off */}
+        <title>{mark.session ? `S${mark.session} · ` : ''}{mark.date}{mark.words ? ` — ${mark.words}` : ''}</title>
+      </circle>
+    </g>
+  ))}
+  <line class="eco-fig-axis" x1={BOX.left} y1={BOX.bottom + 8} x2={BOX.right} y2={BOX.bottom + 8} />
+  <text class="eco-fig-tick" x={BOX.left} y={BOX.bottom + 22}>{first}</text>
+  <text class="eco-fig-tick" x={BOX.right} y={BOX.bottom + 22} text-anchor="end">{last}</text>
+</svg>

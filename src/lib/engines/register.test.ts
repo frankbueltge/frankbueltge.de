@@ -2,7 +2,7 @@ import { readdirSync, existsSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
 import { collectWorks, hrefFor } from './latest'
-import { WORK_SOURCES, allWorks, summarise } from './register'
+import { NIGHTLY_FORK_DIR, WORK_SOURCES, allWorks, summarise } from './register'
 
 const ROOT = fileURLToPath(new URL('../../..', import.meta.url))
 
@@ -33,17 +33,36 @@ describe('allWorks covers every committed work source', () => {
     for (const w of works) {
       expect(w.date, `${w.ns}/${w.slug} date`).toMatch(/^\d{4}-\d{2}-\d{2}$/)
       expect(w.title.length, `${w.ns}/${w.slug} title`).toBeGreaterThan(0)
-      expect(w.href, `${w.ns}/${w.slug} href`).toBe(hrefFor(w.ns, w.kind, w.slug, 'stage'))
+      // A work's link is the one its own source declares. Four of the five sources declare
+      // nothing and get the derived address; the fifth — the forked nightly line, whose works
+      // live at an address of their own — declares a stage, and is named rather than excused.
+      const expected =
+        w.dir === NIGHTLY_FORK_DIR ? `/error-as-method/${w.slug}/` : hrefFor(w.ns, w.kind, w.slug, 'stage')
+      expect(w.href, `${w.ns}/${w.slug} href`).toBe(expected)
     }
   })
 
   it('links html works to their own stage, not to the practice front page', () => {
-    const html = works.filter((w) => w.kind === 'html')
+    const html = works.filter((w) => w.kind === 'html' && w.dir !== NIGHTLY_FORK_DIR)
     expect(html.length).toBeGreaterThan(0)
     for (const w of html) {
       expect(w.href).toBe(`/${w.ns}/werke-html/${w.slug}/`)
       // the stage is a static file in public/ — a link that is not built is a link that 404s
       expect(existsSync(`${ROOT}public/${w.ns}/werke-html/${w.slug}/index.html`), w.slug).toBe(true)
+    }
+  })
+
+  it('links the forked line\'s works to their own mirrored page, which has a text to render', () => {
+    // The same obligation as the stage check above, for the source that cannot satisfy it the
+    // same way: there is no public/ stage here, there is a mirrored work.md and a route that
+    // renders it. A link with nothing behind it is a 404 either way.
+    const forked = works.filter((w) => w.dir === NIGHTLY_FORK_DIR)
+    for (const w of forked) {
+      expect(w.href).toBe(`/error-as-method/${w.slug}/`)
+      const text = existsSync(`${ROOT}${NIGHTLY_FORK_DIR}/${w.slug}/work.md`)
+      const stage = existsSync(`${ROOT}public/error-as-method/${w.slug}/index.html`)
+      expect(text || stage, `${w.slug} has neither a mirrored text nor a stage`).toBe(true)
+      expect(existsSync(`${ROOT}src/pages/error-as-method/[slug].astro`)).toBe(true)
     }
   })
 

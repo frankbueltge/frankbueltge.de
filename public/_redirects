@@ -93,3 +93,43 @@
 /de / 301
 /de/* /:splat 301
 /encounters/enc-2026-001/ /encounters/ 301
+
+# ── research ecology v3, the four-level pyramid (2026-08-12) ──────────────────────────────────
+# Design handoff: docs/design_handoff_research_ecology/README.md. The diagnosis was that the
+# ecology had grown too many pages to be understood; the cure is one entrance (/ecology), one
+# station sheet per room, and plain registers under them. Every route below was a page whose whole
+# content now stands on the sheet it points at — none of it is deleted, all of it is in Git.
+# Human-readable table with the reasoning per row: docs/redirect-matrix-site-v2.md.
+
+# the engine room: the entrance's LAST NIGHT board is what this page was, on the surface that
+# already answers the four questions around it
+/maschinenraum /ecology#now 301
+/maschinenraum/ /ecology#now 301
+
+# the practices' own second surfaces — history, apparatus and the tour each told one part of what
+# the station sheet now tells on one screen
+/atelier/history /atelier 301
+/atelier/apparatus /atelier 301
+/atelier/how-a-line-ends /atelier#figure 301
+/field/history /field 301
+/field/apparatus /field 301
+/field/how-a-claim-came-off /field#figure 301
+/studio/history /studio 301
+/studio/apparatus /studio 301
+/studio/how-a-premiere-returned /studio#figure 301
+
+# the Atelier's five standalone rooms: the sheet carries the state, the registers carry the lists
+/atelier/sheet /atelier 301
+/atelier/sheets /atelier 301
+/atelier/material /atelier 301
+/atelier/foundation /atelier 301
+/atelier/projects /atelier/works 301
+
+# the season: deleted as a level in the v2 rebuild (2026-08-08) and never a live surface after it;
+# the entrance's timeline carries the seam that replaced it
+/season /ecology#record 301
+/season/ /ecology#record 301
+
+# the notation: a document about how the house writes, which belongs with the documents
+/notation https://github.com/frankbueltge/research-ecology 301
+/notation/ https://github.com/frankbueltge/research-ecology 301

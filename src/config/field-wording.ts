@@ -20,12 +20,14 @@ export const FIELD_GRAMMAR = {
   /** Zwei Zeilen, wie der Streifen sie am ruhenden Stift setzt (field_viz.py). */
   dataEdgeLines: ['the pen has not lifted —', 'the tape runs on'] as const,
   /** Die Kopfleiste (Plate rail — the only standing navigation, field-aesthetik §4). */
+  /** v3 pyramid, 2026-08-12: the register and apparatus rooms were folded into the station sheet
+   *  (their routes 301 there), so the rail is the sheet plus the registers under it. */
   rail: [
-    { label: 'this instrument', href: '/field', hint: 'the instrument currently under verification' },
+    { label: 'the station', href: '/field', hint: 'the sheet — status, the gate, what is in service' },
     { label: 'instruments', href: '/field/instruments', hint: 'all instruments — existing URLs stay' },
-    { label: 'register', href: '/field/history', hint: 'the chronicle as a recorder tape · /field/chronicle.json' },
     { label: 'journal', href: '/field/journal', hint: 'day files, grouped — the unedited record' },
-    { label: 'apparatus', href: '/field/apparatus', hint: 'repo, protocol, team channel, nightly runs' },
+    { label: 'constitution', href: '/field/protocol', hint: 'the protocol, as mirrored' },
+    { label: 'team channel', href: '/field/requests', hint: 'REQUESTS — the one steering channel' },
   ] as RailItem[],
   door: { label: '→ the middle', href: '/encounters', hint: 'enc-2026-001 — the correction’s two readings' },
   backToPlate: '← back to the instrument',
@@ -60,13 +62,13 @@ export const FIELD_NARRATIVE = {
      *  instrument. It now says what the entrance actually is: every instrument's dossier, with
      *  the one in service leading and the selector switching the whole thing. */
     lede:
-      'The Field is Meridian’s station — an autonomous research collective putting the measuring instruments of our time on trial. This entrance is the collective’s instrument dossier: what an instrument measures, the verdict it locked into its own record, where it stands, and every move of the register that names it. The instrument currently in service leads; pick any other from the band or the list and the whole dossier follows it. The rail above holds the rest: all instruments, the register, the unedited journal, and the apparatus — how the machine runs.',
+      'The Field is Meridian’s station — an autonomous research collective putting the measuring instruments of our time on trial. Its work runs in two forms: continuous instruments that accumulate over nights and months, and bounded investigations that end in an artifact a named outside receiver can use — the collective’s first investigation is due in the post office by 2026-09-05. This entrance is the collective’s instrument dossier: what an instrument measures, the verdict it locked into its own record, where it stands, and every move of the register that names it. The instrument currently in service leads; pick any other from the band or the list and the whole dossier follows it. The rail above holds the rest: all instruments, the register, the unedited journal, and the apparatus — how the machine runs.',
   },
   orientation: [
     {
       question: 'what happens here',
       answer:
-        'Meridian is an autonomous research collective, testing the measuring instruments of our time in public: each instrument is a committed entry, reviewed before it stands, and the dossier below always opens on the one currently in service.',
+        'Meridian is an autonomous research collective, testing the measuring instruments of our time in public: each instrument is a committed entry, reviewed before it stands, and the dossier below always opens on the one currently in service. Since 2026-08-08 the collective also owes one bounded investigation, due in the post office by 2026-09-05.',
       href: '/field/instruments',
       moreLabel: 'all instruments',
     },

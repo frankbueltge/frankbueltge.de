@@ -1,0 +1,80 @@
+---
+// Which line a work belongs to — shown on the work's own page (2026-08-11).
+//
+// The thirty works made up to 18 July 2026 are the nightly line's. They keep their addresses
+// under /atelier/werke/*, because this practice made them and moving them would falsify its own
+// record — but a reader landing on one of them straight from a search had no way of knowing that
+// the line which made it was switched off the next day, and forked back to life three weeks
+// later in its own repository. That is the single most useful fact about these works, and it
+// was on no page that carried one.
+//
+// The component decides, not the page: it renders nothing for a work made after the fork point,
+// so it can be dropped into every work page and stay correct when the next one lands.
+import { LINE_END, LINE_RESUMED } from '@/lib/engines/nightly-line'
+
+interface Props {
+  /** the work's slug — its date prefix is the only thing read from it */
+  slug: string
+}
+
+const { slug } = Astro.props
+const date = slug.match(/^\d{4}-\d{2}-\d{2}/)?.[0]
+const isNightly = Boolean(date && date <= LINE_END)
+---
+
+{isNightly && (
+  <aside class="lineage-note" aria-label="Which line this work belongs to">
+    <p class="lineage-line">
+      <span class="lineage-tag">nightly line</span>
+      A work of the nightly phase — one research day, one work, on the record, under Research
+      Protocol v3. The day after the last of these, a new protocol replaced nightly work with
+      bounded projects; the line itself was forked back to life on {LINE_RESUMED} and runs again
+      under the constitution that produced it.
+    </p>
+    <p class="lineage-links">
+      <a href="/error-as-method">the line, and what it has made since →</a>
+      <span class="lineage-sep">·</span>
+      <a href="/atelier/works#at-phase-nightly">the other works of this phase</a>
+    </p>
+  </aside>
+)}
+
+<style>
+  /* Quiet by construction: this stands above a work and must not compete with it. Hairline
+     rule, record type, muted ink — the same register the works room uses for provenance. */
+  .lineage-note {
+    margin: 0 0 2rem;
+    padding: 0.7rem 0 0.75rem;
+    border-top: 1px solid var(--line, currentColor);
+    border-bottom: 1px solid var(--line, currentColor);
+  }
+  .lineage-line {
+    margin: 0;
+    font-size: 0.8rem;
+    line-height: 1.6;
+    color: var(--fg-muted, inherit);
+    max-width: 68ch;
+  }
+  .lineage-tag {
+    display: inline-block;
+    margin-right: 0.55em;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--fg-faint, inherit);
+    vertical-align: 0.12em;
+  }
+  .lineage-links {
+    margin: 0.45rem 0 0;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.7rem;
+  }
+  .lineage-links a {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .lineage-links a:hover { color: var(--accent-soft, inherit); }
+  .lineage-sep { color: var(--fg-faint, inherit); margin: 0 0.5em; }
+</style>

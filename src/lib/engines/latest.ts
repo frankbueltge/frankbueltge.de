@@ -36,6 +36,11 @@ export interface LatestWork {
   withdrawnNote?: string
   /** The date inside that marker, when it carries one. */
   withdrawnOn?: string
+  /** The committed directory this work was read from, when the caller declared one. A work
+   *  knowing its own source is what lets a test say "this row links there BECAUSE it came from
+   *  here" instead of inferring it from the namespace — which stopped being sufficient when a
+   *  second repository began contributing works to the same practice. */
+  dir?: string
 }
 
 /** Where a work's link points.
@@ -63,13 +68,22 @@ function withdrawalMarker(meta: EngineWorkMeta): string | undefined {
   return (trimmed.match(/^.*?\.(?=\s|$)/)?.[0] ?? trimmed).trim()
 }
 
-export function collectWorks(
-  input: { ns: EngineNs; kind: EngineKind; metas: Record<string, EngineWorkMeta> }[],
-  options: { hrefMode?: HrefMode } = {},
-): LatestWork[] {
+/** A committed source of work metadata. `stage` exists for the one case hrefFor cannot derive:
+ *  a source whose works live at an address of their own rather than at their practice's. It is
+ *  declared by the source, not patched onto the result, so every caller — register, entrance,
+ *  line page — reads the same link for the same work. */
+export interface WorkSource {
+  ns: EngineNs
+  kind: EngineKind
+  metas: Record<string, EngineWorkMeta>
+  dir?: string
+  stage?: (slug: string) => string
+}
+
+export function collectWorks(input: WorkSource[], options: { hrefMode?: HrefMode } = {}): LatestWork[] {
   const mode = options.hrefMode ?? 'engine'
   const all: LatestWork[] = []
-  for (const { ns, kind, metas } of input) {
+  for (const { ns, kind, metas, dir, stage } of input) {
     for (const [path, meta] of Object.entries(metas)) {
       const slug = path.match(/\/(?:werke|works)\/([^/]+)\//)?.[1]
       if (!slug) continue
@@ -79,7 +93,8 @@ export function collectWorks(
         ns, kind, slug, date,
         title: meta.title ?? slug,
         blurb: meta.embodies ?? meta.verkoerpert,
-        href: hrefFor(ns, kind, slug, mode),
+        href: stage ? stage(slug) : hrefFor(ns, kind, slug, mode),
+        dir,
         state: marker ? 'withdrawn' : ns === 'studio' ? 'premiered' : 'published',
         withdrawnNote: marker,
         withdrawnOn: marker?.match(/(\d{4}-\d{2}-\d{2})/)?.[1],
@@ -90,9 +105,6 @@ export function collectWorks(
   return all.sort((a, b) => b.date.localeCompare(a.date) || b.slug.localeCompare(a.slug))
 }
 
-export function latestWorks(
-  input: { ns: EngineNs; kind: EngineKind; metas: Record<string, EngineWorkMeta> }[],
-  limit = 4,
-): LatestWork[] {
+export function latestWorks(input: WorkSource[], limit = 4): LatestWork[] {
   return collectWorks(input).slice(0, limit)
 }

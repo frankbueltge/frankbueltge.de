@@ -157,6 +157,18 @@ export const NAMING = {
         href: '/machine-attention',
         meta: 'experiments: The Foreknown · Dark Ocean · one instrument',
       },
+      {
+        // Forked 2026-08-11 (decision log): shown beside the ecology rather than inside it, and
+        // framed by its RELATION — same founding text, same position to session 26, a different
+        // answer to what a unit of work is. The fork is the finding; a third parallel card would
+        // have hidden exactly that.
+        id: 'nightly-line',
+        kindLabel: 'Practice',
+        title: 'Error as Method',
+        line: 'The other arm of the Atelier: one founding text, one shared position, and from 2026-07-18 a second constitution — the practice that works one night at a time, restarted where it was switched off.',
+        href: '/error-as-method',
+        meta: 'nightly · forked from the Atelier, same origin',
+      },
       { id: 'consensus', kindLabel: 'Experiment' },
       { id: 'society', kindLabel: 'Experiment' },
       { id: 'parallaxe', kindLabel: 'Experiment' },
@@ -168,7 +180,7 @@ export const NAMING = {
     kicker: 'WHO LIVES HERE',
     kickerSub: 'FOUR DOORS',
     /** the small link inside each practice door (WP7) — one wording for all three */
-    tourLabel: '→ take the tour',
+    tourLabel: '→ see its figure',
     items: [
       /* Türbeschreibungen neu (Frank, 24.07.): Auskunft statt Poesie — jede Tür sagt in
        * einem Satz, was die Praxis tut, aus ihrer aktuellen Selbstbeschreibung (Engine-READMEs),
@@ -178,14 +190,14 @@ export const NAMING = {
         name: 'The Atelier',
         href: '/atelier',
         description: 'Machine-run artistic research in a work-line and its studies — the machines find problems, build works and critique themselves; failures stay on the record, checkably.',
-        tourHref: '/atelier/how-a-line-ends',
+        tourHref: '/atelier#figure',
       },
       {
         id: 'meridian',
         name: 'The Field',
         href: '/field',
         description: 'An empirical research collective putting the measuring instruments of our time on trial — verifiable instruments, adversarial review, a claims ledger.',
-        tourHref: '/field/how-a-claim-came-off',
+        tourHref: '/field#figure',
       },
       {
         id: 'ensemble',
@@ -194,13 +206,18 @@ export const NAMING = {
         // "under no label" until 2026-08-08, when the architect gave this practice a line and the
         // door had to stop advertising the remit it lost. See docs/decision-log.md, that date.
         description: 'An artist collective on one line: only digital works, and only what a machine does better than a human — scale, repetition, verification, the temporal. Every element carries an honesty tier: verified, sourced or imagined.',
-        tourHref: '/studio/how-a-premiere-returned',
+        tourHref: '/studio#figure',
       },
       {
         id: 'conductor',
         name: 'The Middle',
         href: '/encounters',
-        description: 'The contact zone: where the practices meet — and increasingly work together on shared research questions. Offers, verdicts, corrections and joint inquiries, all on the record.',
+        // "increasingly work together... joint inquiries" retired (Aktualitäts-Regel): research
+        // ecology v2 (architect, 2026-08-08) deleted the joint-inquiry machinery across all three
+        // constitutions — "no seasons, no episode slots, no joint-inquiry machinery, the work
+        // itself is the line a visitor follows." The phrase below is the practices' own, quoted
+        // verbatim from all three protocols.
+        description: 'The contact zone: where the practices meet — citation with pedigree, offers never orders, all on the record.',
         noResident: 'no resident — kept by the conductor',
       },
     ] as DoorItem[],
@@ -248,24 +265,24 @@ export const NAMING = {
         practice: 'The Atelier · Ulysses',
         title: 'a measured sheet',
         caption: 'The line this practice opened most recently, and where the lines around it come to rest: on this sheet every question runs along one shared time axis and curves into the harbour it reached — published, kept as a study, or closed unfinished.',
-        cta: 'read how a question was killed on its own terms →',
-        href: '/atelier/how-a-line-ends',
+        cta: 'see the whole map on its station sheet →',
+        href: '/atelier#figure',
       },
       {
         id: 'meridian',
         practice: 'The Field · Meridian',
         title: 'a strip of millimetre tape',
         caption: 'The last marked days of the record strip: an instrument entering service, the sessions stamped on their own day, a review cutting in from outside — and the resting pen, where the tape runs on.',
-        cta: 'read how a claim was taken off them →',
-        href: '/field/how-a-claim-came-off',
+        cta: 'see the whole gate on its station sheet →',
+        href: '/field#figure',
       },
       {
         id: 'ensemble',
         practice: 'The Studio · Ensemble',
         title: 'a floor that keeps every mark',
         caption: 'The position this house lit most recently, on the stage floor: the lamp on the bar, the hard-edged pool it plays in, and the tape that blocks the position whether or not the light is still on.',
-        cta: 'read how a premiere came back three times →',
-        href: '/studio/how-a-premiere-returned',
+        cta: 'see the whole floor on its station sheet →',
+        href: '/studio#figure',
       },
     ] as TriptychCard[],
   },
@@ -279,7 +296,7 @@ export const NAMING = {
   maschinenraum: {
     kicker: 'MASCHINENRAUM',
     kickerSub: 'WHAT THEY LAST DID',
-    fullView: { label: '→ full view', href: '/maschinenraum' },
+    fullView: { label: '→ full view', href: '/ecology#now' },
     /** the per-lane link into that practice's tour — the three practices only */
     tourLabel: 'tour →',
     /**
@@ -470,6 +487,184 @@ export const NAMING = {
       `(all branches; the machines' session work included — ${p.totalCommits} in this window) · ` +
       `2-hour bins, moving average ×2 · the recurring ridge before dawn is the nightly machinery · as of ${p.asOf}`
     )
+  },
+
+  /**
+   * THE OPS ROOM (2026-08-11) — the entrance's copy after the redesign in
+   * docs/design_handoff_homepage_ops_room/README.md (option 3a). The page became a status board:
+   * the standing question as hero, the commit pulse as an instrument beside it, one board for
+   * every running system, a signal log of the newest works, and a dashboard of the experiments
+   * that ship data daily. Less prose, more instrument — so this block is deliberately short.
+   *
+   * What it does NOT hold, and why: not one digit. Every number on that page (readings, counts,
+   * dates, week ranges, the repository count) is rendered from a committed snapshot by
+   * src/lib/ops/*. Where a number has to sit INSIDE a sentence, the sentence is a function here
+   * and the number is its argument — the same arrangement pulseCaption above has carried since
+   * the hub was built, for the same reason: a sentence that hard-codes what a chart shows starts
+   * lying the first night the chart moves.
+   *
+   * The blocks the previous entrance used — overview, latest, catalogues, doors, triptych — stay
+   * above, unchanged: /ecology and the practice rooms still render them.
+   */
+  opsRoom: {
+    /** the strip under the real TopBar: what this page is, and the clock that proves it is live */
+    strip: { label: 'ops room · live from the record', clockLabel: 'UTC' },
+
+    hero: {
+      /** condensed from NAMING.sub, per the handoff — the long form still stands on /dossier */
+      sub: 'Constant attention, nightly measurement, evidence at scale — and whether machines can research on their own and produce work that holds up. Every claim leads back to its evidence. Git is the archive.',
+      primary: { label: 'enter the ecology →', href: '/ecology' },
+      secondary: { label: 'tonight’s works →', href: '/works' },
+    },
+
+    /** The instrument's four corner strips; the two that carry numbers are functions. Kept short
+     *  on purpose — at 9.5px with 0.16em tracking the panel fits roughly 40 characters per row,
+     *  and a strip that wraps turns a instrument label into a paragraph. */
+    pulsePanel: {
+      headLeft: (repoCount: number) => `PULSE · ${repoCount} REPOSITORIES`,
+      headRight: (weekRange: string) => `${weekRange} · TWO LINES/WEEK`,
+      footLeft: '2-HOUR BINS · TAPERED',
+      footRight: (asOf: string) => `AS OF ${asOf.toUpperCase()}`,
+    },
+
+    board: {
+      kicker: 'THE BOARD',
+      kickerSub: 'WHAT IS RUNNING HERE, LIVE FROM THE RECORD',
+      link: { label: 'the last landed state →', href: '/ecology#now' },
+      /** what a row says instead of a title when its source carries no landed work */
+      noWork: 'no landed work yet',
+      groups: [
+        {
+          label: 'THE RESEARCH ECOLOGY · FOUR STATIONS, ONE GATE — MACHINE-RUN, PUBLISHED UNEDITED',
+          /* `door` names the entry in NAMING.doors this row IS — name, link and one-liner are
+             read from there, never restated here, so a reworded door moves the board with it.
+             `repo` names the checkout whose committed commit bins draw the row's sparkline
+             (src/data/pulse/pulse.json → weeks[].by_repo); a row whose repo is absent from the
+             snapshot simply draws no sparkline. `status` is the one editorial word per row:
+             the cadence its own house states, not a health verdict this page invented. */
+          rows: [
+            { door: 'ulysses', repo: 'ulysses', status: 'NIGHTLY' },
+            { door: 'meridian', repo: 'field-research', status: 'NIGHTLY' },
+            { door: 'ensemble', repo: 'studio', status: 'NIGHTLY' },
+            { door: 'conductor', repo: 'research-ecology', status: 'RECORDING' },
+          ],
+        },
+        {
+          label: 'BESIDE THE ECOLOGY · SAME LAW, DIFFERENT BETS',
+          /* These two are not doors; they are overview cards (`card` names the entry in
+             NAMING.overview.items). `resident` is the relation line a door would carry —
+             stated here because neither has a resident in the doors' sense. */
+          rows: [
+            { card: 'attention', repo: 'machine-attention', status: 'RUNNING', resident: 'the counter-experiment' },
+            { card: 'nightly-line', repo: 'error-as-method', status: 'NIGHTLY', resident: 'forked from the Atelier' },
+          ],
+        },
+      ],
+    },
+
+    signal: {
+      kicker: 'SIGNAL LOG',
+      kickerSub: 'WHAT LANDED LAST, NEWEST FIRST',
+      link: { label: 'works register →', href: '/works' },
+      /** the practices' own nouns for what they make — the same three /works uses */
+      kindLabels: { atelier: 'work', field: 'instrument', studio: 'premiere' },
+      foot: 'next sessions: tonight, before dawn UTC',
+    },
+
+    live: {
+      kicker: 'LIVE EXPERIMENTS',
+      kickerSub: 'CURRENT READINGS — EVERYTHING THAT SHIPS DATA, DAILY',
+      link: { label: 'lab →', href: '/experiments' },
+      cataloguesLead: 'catalogues, grown by machine: ',
+      /**
+       * One entry per live tile. `name` and `stamp` are fixed; `sub` takes the reading its own
+       * derivation produced (src/lib/ops/tiles.ts) and writes the sentence around it, so the
+       * number in the big line and the number in the sentence are literally the same value.
+       *
+       * A tile whose snapshot yields no reading is NOT rendered — the handoff's rule ("if a
+       * value has no committed source yet, omit the tile rather than fake the number"), which is
+       * also why the observatory tile of the design is absent: its register lives in its own
+       * repository and this site has no committed figure from it to show. The moment the
+       * attention export carries one, the tile appears with the rest.
+       */
+      tiles: {
+        foreknown: {
+          name: 'MACHINE ATTENTION · THE FOREKNOWN',
+          stamp: 'GDACS · NOAA · NIGHTLY VERDICTS',
+          sub: (p: { open: number; resolved: number; nights: number }) =>
+            `public warnings held open on the ledger — ${p.resolved} closed with a verdict so far, across ${p.nights} nights on the record`,
+        },
+        protocol: {
+          name: 'THE PROTOCOL',
+          stamp: 'DETERMINISTIC · NO LLM IN THE WORDING',
+          sub: (p: { unavailable: number }) =>
+            p.unavailable === 0
+              ? 'agenda items in today’s minutes of the planet — every source answered, every item adjourned'
+              : `agenda items in today’s minutes of the planet — ${p.unavailable} source${p.unavailable === 1 ? '' : 's'}: “Feststellung entfällt”; every item adjourned`,
+        },
+        consensus: {
+          name: 'THE CONSENSUS',
+          stamp: 'ONE SNAPSHOT PER DAY · NEVER EDITED',
+          sub: (p: { scanned: number; hours: number }) =>
+            `ran today’s most-copied sentence word-for-word — one source, one cascade of ${p.hours} hours, counted across ${p.scanned.toLocaleString('en-GB')} articles`,
+        },
+        iceberg: {
+          name: 'ICEBERG THEORY',
+          stamp: 'LANGUAGE EDITIONS · MEASURED PER TOPIC',
+          /* The count sits in the big line ("5 of 12"), so the sentence must not repeat it — it
+             names WHICH topic and what the other editions do instead. */
+          sub: (p: { topic: string }) =>
+            `Wikipedia language editions conceal more than average about ${p.topic} — the furthest-apart topic in the register today; the rest state the contested claim outright`,
+        },
+        policy: {
+          name: 'THE POLICY',
+          stamp: 'NIGHTLY · MARKET DATA',
+          sub: (p: { baseYear: number; latest: string }) =>
+            `today’s climate premium against ${p.baseYear} — recomputed from real market data, latest reading ${p.latest}`,
+        },
+        redaction: {
+          name: 'EDITORIAL DEADLINE',
+          stamp: 'WAYBACK DIFFS · DAILY',
+          sub: (p: { institution: string; changed: number; watched: number }) =>
+            `taken out of a page of the ${p.institution} — the most substantive of ${p.changed} changes across ${p.watched} watched pages, both versions linked`,
+        },
+        ghostFleet: {
+          name: 'THE GHOST FLEET',
+          stamp: 'NO CLAIM OF ILLEGALITY — COUNTED',
+          sub: (p: { value: number; unit: 'hours' | 'days' }) =>
+            `vessels in deliberate AIS silence today — the longest of them dark for ${p.value} ${p.unit}, in waters that are named`,
+        },
+        roundNumbers: {
+          name: 'ROUND NUMBERS',
+          stamp: 'THE METHOD ITSELF ON TRIAL',
+          /* The count is in the big line; the sentence carries what makes the piece a trial of the
+             METHOD and not of the data — what the same test says about the control the piece
+             tampered with on purpose. */
+          sub: (p: { tampered: string | null }) =>
+            p.tampered
+              ? `real official series the same Benford test calls suspicious — while the deliberately tampered control comes back “${p.tampered}”`
+              : 'real official series the same Benford test calls suspicious — the test is on trial here, not the statistics office',
+        },
+        patterns: {
+          name: 'PATTERNS',
+          stamp: 'PERMUTATION-TESTED · THE CAPSTONE',
+          sub: (p: { pairs: number; survives: boolean }) =>
+            `today’s strongest correlation among ${p.pairs} pairs of its own archive — ${p.survives ? 'and it survives the permutation test' : 'indistinguishable from noise under the permutation test'}`,
+        },
+        watchtower: {
+          name: 'ALL ALONG THE WATCHTOWER',
+          stamp: 'CELESTRAK · DAILY ORBITAL DATA · LOCAL ONLY',
+          sub: () =>
+            'Earth-observation satellites on tonight’s committed orbital data — which of them have you in view is computed in your browser, on the piece itself',
+        },
+        atlas: {
+          name: 'ATLAS OF DATA ART',
+          stamp: 'REFERENCE COLLECTION · NIGHTLY',
+          sub: (p: { artists: number }) =>
+            `catalogued and sourced, by ${p.artists} named artists — uncertain classifications stay flagged`,
+        },
+      },
+    },
   },
 
   footer: {

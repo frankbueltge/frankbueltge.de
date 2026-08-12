@@ -384,19 +384,133 @@ export function requestCards(md: string, opts: RequestCardOptions = {}): Request
 }
 
 /**
- * Words of body lead each open card may spend. The requests room never caps the LIST of open
- * items — hiding an ask behind a "show more" is the wall this page exists to tear down — so
- * the per-item cost has to give instead as the queue grows. One shared budget, divided:
- * nine open items get 36 words each, twenty get 16, and the page's total stays bounded.
+ * How much of each open item the room may print, planned against the page's own budget.
  *
- * Why bounded at all: the page's word count is asserted by requestsMd.test.ts, and that test
- * runs in the build that gates the practices' nightly publishing. A growing backlog must
- * make the page denser, not make the practices unable to publish.
+ * The rule this replaces had a floor and no ceiling on the QUEUE: at ten open items every
+ * excerpt still bought 27 words, the ten titles printed 158 untrimmed, and the room measured
+ * 1518 against a budget of 1500. The build that gates the practice's publishing then refused
+ * the integration — twelve times on 2026-08-10, the same wall on every retry — so a page-length
+ * rule silenced a practice for a day. The module already said this must not happen ("a growing
+ * backlog must make the page denser, not make the practices unable to publish"); it just did not
+ * guarantee it.
+ *
+ * So the room now PLANS itself instead of hoping a constant fits. It spends what it has, in a
+ * fixed order of sacrifice, and it never omits an open ask:
+ *
+ *   1. full lead (40 words) while the queue is short;
+ *   2. shorter leads as the queue grows, down to a readable 12;
+ *   3. no lead at all — title, status and the link to the full text;
+ *   4. and finally the titles themselves are trimmed.
+ *
+ * Step 4 is the last resort and the page says when it was taken. There is no step 5: an open ask
+ * is never hidden, and the budget is never raised to make an overflow disappear.
  */
-export function openExcerptWords(openCount: number): number {
-  const BUDGET = 270
-  const per = Math.floor(BUDGET / Math.max(1, openCount))
-  return Math.max(12, Math.min(40, per))
+export interface RoomPlan {
+  /** words of body lead each open card may print; 0 = title, status and link only */
+  lead: number
+  /** words a title may print before it is trimmed; Infinity while the room is not desperate */
+  titleCap: number
+  /** words of status prose an open card may print */
+  statusCap: number
+  /** whether each card still carries its "read it in full" link text */
+  showLabel: boolean
+  /** the room had to go below its normal density — the page states this rather than hiding it */
+  compressed: boolean
+  /** every lever is spent and the room STILL does not fit. Not a failure to fix in the code: a
+   *  queue this long is a fact about the house, and the page says so instead of hiding an ask or
+   *  refusing to build. Nothing downstream may treat this as a reason to block publishing. */
+  exhausted: boolean
+  /** what the plan is expected to render, for the test and for the page's own honesty line */
+  words: number
+}
+
+/** The room's copy, as every practice's wording config carries it. */
+export interface RoomCopy {
+  intro: string
+  standingHeading: string
+  openHeading: string
+  openNone: string
+  openNote: string
+  answeredHeading: string
+  answeredNote: string
+  seedsHeading: string
+  seedsNote: string
+  archiveLink: string
+  fullTextLabel: string
+}
+
+/** The page's word budget. One number, in one place, asserted by requestsRoom.test.ts. */
+export const ROOM_BUDGET = 1500
+/** Chrome the Frame renders around the room (nav, kicker, footer), measured from a built page. */
+export const ROOM_CHROME_WORDS = 220
+
+/**
+ * The cost model of a rendered room — ONE copy of it, used by the planner that has to fit inside
+ * the budget and by the test that checks it did. It used to live only in the test, which is how a
+ * constant and a budget could disagree without anything noticing.
+ */
+export function roomWords(
+  cards: RequestCard[],
+  room: RoomCopy,
+  preambleText: string,
+  plan: Pick<RoomPlan, 'lead' | 'titleCap' | 'statusCap' | 'showLabel'>,
+): number {
+  const open = cards.filter((c) => c.open)
+  const answered = cards.filter((c) => !c.open && !c.seeds).slice(-5)
+  const seeds = cards.filter((c) => c.seeds)
+
+  let words = countWords(preambleText)
+  words += countWords(
+    [room.intro, room.standingHeading, room.openHeading, room.answeredHeading, room.answeredNote, room.archiveLink].join(' '),
+  )
+  words += countWords(open.length === 0 ? room.openNone : room.openNote)
+  if (seeds.length > 0) words += countWords(`${room.seedsHeading} ${room.seedsNote}`)
+
+  for (const c of open) {
+    words += countWords(trimWords(c.title, plan.titleCap)) + (c.date ? 1 : 0)
+    words += countWords(trimWords(c.status ?? '', plan.statusCap)) + 2
+    if (plan.lead > 0) words += countWords(trimWords(c.excerpt, plan.lead))
+    if (plan.showLabel) words += countWords(room.fullTextLabel) + 1
+  }
+  for (const c of answered) {
+    words += countWords(c.title) + (c.date ? 1 : 0) + countWords(trimWords(c.status ?? '', STATUS_WORDS.closed)) + 2
+    words += countWords(c.excerpt)
+  }
+  for (const c of seeds) words += countWords(c.heading) + 3
+
+  return words + ROOM_CHROME_WORDS
+}
+
+/** Plan a room that fits. Always returns a plan; never throws, never omits an open item.
+ *
+ *  The levers, spent strictly in this order — the cheapest loss first, the ask itself never:
+ *  the body lead, then the "read it in full" label, then the status prose, then the title. */
+export function planRoom(cards: RequestCard[], room: RoomCopy, preambleText: string): RoomPlan {
+  const at = (p: Omit<RoomPlan, 'compressed' | 'exhausted' | 'words'>): RoomPlan => {
+    const words = roomWords(cards, room, preambleText, p)
+    const full = p.lead === 40 && p.showLabel && p.statusCap === STATUS_WORDS.open && p.titleCap === Number.POSITIVE_INFINITY
+    return { ...p, compressed: !full, exhausted: false, words }
+  }
+  const steps: Array<Omit<RoomPlan, 'compressed' | 'exhausted' | 'words'>> = [
+    ...[40, 34, 28, 22, 18, 15, 12].map((lead) => ({
+      lead,
+      titleCap: Number.POSITIVE_INFINITY,
+      statusCap: STATUS_WORDS.open,
+      showLabel: true,
+    })),
+    { lead: 0, titleCap: Number.POSITIVE_INFINITY, statusCap: STATUS_WORDS.open, showLabel: true },
+    { lead: 0, titleCap: Number.POSITIVE_INFINITY, statusCap: STATUS_WORDS.open, showLabel: false },
+    { lead: 0, titleCap: Number.POSITIVE_INFINITY, statusCap: 4, showLabel: false },
+    ...[14, 10, 7, 5, 3].map((titleCap) => ({ lead: 0, titleCap, statusCap: 4, showLabel: false })),
+  ]
+  for (const step of steps) {
+    const plan = at(step)
+    if (plan.words < ROOM_BUDGET) return plan
+  }
+  // Every lever spent and still over. The room renders at its tightest and SAYS so; it does not
+  // hide an ask and it does not refuse to build. A queue this long is the house's problem to
+  // answer, not the page's to conceal.
+  return { ...at(steps[steps.length - 1]), exhausted: true }
 }
 
 /** Words of status prose a card prints. An open item's status often carries the CONDITION

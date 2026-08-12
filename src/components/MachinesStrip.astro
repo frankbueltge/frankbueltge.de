@@ -17,6 +17,10 @@ const studioMeta = import.meta.glob('/src/components/studio/werke/*/meta.json', 
 const fieldHtmlMeta = import.meta.glob('/src/content/field/works/*/meta.json', { eager: true, import: 'default' }) as Record<string, EngineWorkMeta>
 const atelierHtmlMeta = import.meta.glob('/src/content/atelier/works/*/meta.json', { eager: true, import: 'default' }) as Record<string, EngineWorkMeta>
 const studioHtmlMeta = import.meta.glob('/src/content/studio/works/*/meta.json', { eager: true, import: 'default' }) as Record<string, EngineWorkMeta>
+// The forked nightly line (src/data/nightly/works, mirrored from its own repository). It
+// belongs on the entrance for the same reason as the rest: this strip shows the newest work the
+// machines made, and since 2026-08-10 the newest one can come from here.
+const nightlyMeta = import.meta.glob('/src/data/nightly/works/*/meta.json', { eager: true, import: 'default' }) as Record<string, EngineWorkMeta>
 
 const sources = [
   { ns: 'field' as const, kind: 'astro' as const, metas: fieldMeta },
@@ -27,6 +31,10 @@ const sources = [
   // until the first premiere; wired in now so it appears automatically, same as field/atelier.
   { ns: 'studio' as const, kind: 'astro' as const, metas: studioMeta },
   { ns: 'studio' as const, kind: 'html' as const, metas: studioHtmlMeta },
+  {
+    ns: 'atelier' as const, kind: 'html' as const, metas: nightlyMeta,
+    stage: (slug: string) => `/error-as-method/${slug}/`,
+  },
 ]
 const LIMIT = 4
 const overall = latestWorks(sources, LIMIT)
