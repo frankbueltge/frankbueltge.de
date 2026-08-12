@@ -63,6 +63,14 @@ jobs:
           # Markdown-Akten (SCORE/TRACE/DECISION/…), nie PUBLICATION.json, nie _template
           mkdir -p src/content/atelier/projects
           rsync -a --delete --exclude='_template' --include='*/' --include='*.md' --exclude='*' /tmp/atelier/projects/ src/content/atelier/projects/ 2>/dev/null || true
+          # Die aus jenen TRACE.md herausrotierten Hälften. Protokoll v6 §8 (ergänzt 2026-08-12)
+          # lässt eine Linie ab der Größengrenze rotieren: die älteren Ticks wandern unverändert
+          # nach `archive/trace/<line>-<n>.md`. Der Record wird dadurch nicht kleiner — er liegt
+          # an zwei Orten, und ein Spiegel, der nur den lebenden Teil holt, zeigt eine 62-Tick-
+          # Linie als 5-Tick-Linie und zählt bei jeder Rotation erneut herunter. Zusammengesetzt
+          # wird erst beim Lesen (src/lib/atelier/trace-record.ts); hier wird nur gespiegelt.
+          mkdir -p src/content/atelier/archive/trace
+          rsync -a --delete --include='*.md' --exclude='*' /tmp/atelier/archive/trace/ src/content/atelier/archive/trace/ 2>/dev/null || true
           # Markdown-Werke (fehlerkataster, genealogie, parry-problem …)
           cp /tmp/atelier/works/*.md src/content/atelier/works/ 2>/dev/null || true
           # HTML-/Astro-Werk-Verzeichnisse via Integrator (Pfad-Grenze erzwungen)

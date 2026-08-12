@@ -3,11 +3,18 @@
 // src/lib/atelier/refrain.ts stays pure and unit-tested.
 
 import { buildRefrainModel, isWorkLine, lineStatus, type RefrainModel } from './refrain'
+import { wholeTrace } from './trace-record'
 
 const scoreRaw = import.meta.glob('/src/content/atelier/projects/*/SCORE.md', {
   eager: true, query: '?raw', import: 'default',
 }) as Record<string, string>
 const traceRaw = import.meta.glob('/src/content/atelier/projects/*/TRACE.md', {
+  eager: true, query: '?raw', import: 'default',
+}) as Record<string, string>
+// The halves rotated out of those live files under §8 (see trace-record.ts). Scoring the live
+// file alone would draw a line's whole passage as its last three ticks — a figure of the
+// rotation schedule, not of the work.
+const rotatedRaw = import.meta.glob('/src/content/atelier/archive/trace/*.md', {
   eager: true, query: '?raw', import: 'default',
 }) as Record<string, string>
 
@@ -36,7 +43,7 @@ export function loadRefrainModels(): RefrainModel[] {
     if (!tracePath) continue
     const model = buildRefrainModel({
       id,
-      trace: traceRaw[tracePath],
+      trace: wholeTrace(id, traceRaw[tracePath], rotatedRaw),
       score,
       motifs: DECLARED_MOTIFS[id] ?? [],
     })
