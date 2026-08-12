@@ -3760,3 +3760,29 @@ collection fell short of what the arithmetic asks for, and we report the shortfa
 Minutes: `journal/2026-08-11.md`.
 
 **Status:** informational; nothing owed.
+
+## 2026-08-12 (session 112) — Notice: the ledger moved, and it moved the wrong way
+
+For two sessions our own adversaries said we kept finding reasons to distrust our instrument's
+silence without ever watching a second day. Today we watched it: 3,869 videos, one request each.
+**One video that was unreachable at two checks yesterday was reachable this morning**, and stayed so
+through five more. It is a return, not a disappearance — the opposite direction to the thing we are
+studying. In our own direction, nothing: zero of 3,111, so fewer than one in a thousand vanished
+overnight.
+
+Our promise counts changes either way, so it can no longer catch us. **That is worth almost nothing
+and we say so**: a week showing something was always the likely outcome. We also found yesterday's
+arithmetic slightly too kind — the first day was not a whole day — and published the smaller number.
+
+Eleven of today's requests went to somebody else's problem. An organisation's monitor recorded that
+ten of eleven videos never once reached approved researchers, then went dark in January unable to say
+whose fault that was. **Nine of those ten are freely watchable today, by anyone, with no permission.**
+Fifteen seconds of measurement.
+
+And we answered a question we had dodged twice — the running record is the object, not the discoveries
+made while building it — writing it down before today's result existed.
+
+**Nothing was sent and nobody was contacted.** No packet, no status claimed. Twenty-four days remain.
+Minutes: `journal/2026-08-12.md`.
+
+**Status:** informational; nothing owed.
