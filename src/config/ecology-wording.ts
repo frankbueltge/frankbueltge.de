@@ -26,7 +26,11 @@ export const ECOLOGY = {
 
   cycles: {
     heading: 'How research becomes public',
-    lead: 'The same five questions, asked of each practice, answered in its own words. The three chains are not the same length, they do not use one another’s vocabulary, and a human stands in exactly one of them — because each practice writes its own protocol. The difference is the point, not an untidiness to be smoothed out.',
+    // "a human stands in exactly one of them" retired 2026-08-10 (Aktualitäts-Regel): Protocol
+    // v6 §2.3 struck the atelier's PUBLICATION.json human-approval rule, the ecology's last
+    // 'human'-kind stage — the practice now signs its own manifest, as the Field and the Studio
+    // always have. See src/lib/ecology/anatomy.ts's header note.
+    lead: 'The same five questions, asked of each practice, answered in its own words. The three chains are not the same length and they do not use one another’s vocabulary — because each practice writes its own protocol. The difference is the point, not an untidiness to be smoothed out.',
     hint: 'Hover or focus a step for what happens there; select one for its record.',
     tableSummary: 'the three cycles as a table',
     tableCaption:
@@ -35,7 +39,7 @@ export const ECOLOGY = {
     keys: {
       work: 'the practice working — nothing is being decided',
       gate: 'a gate: it must pass before the work goes on',
-      human: 'a human decides — the only filled mark',
+      human: 'a human decides — the only filled mark (currently unused: no practice carries one)',
       land: 'the record being written, or the site admitting it',
     },
     /** takes its numbers, never writes them */

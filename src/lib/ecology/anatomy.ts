@@ -18,8 +18,14 @@
 // practices are drawn in ONE FRAME with THREE VOCABULARIES — the same five questions asked of
 // each, answered in each practice's own words, with its own stage names and its own cast. The
 // Triptych's rule holds: the difference a visitor sees must be the PRACTICES' difference and not
-// the layout's. So the chains below are deliberately of different lengths, and the human gate
-// appears on exactly one of them, because that is the fact.
+// the layout's. So the chains below are deliberately of different lengths.
+//
+// Until 2026-08-10 the atelier's PUBLICATION.json stage was the ecology's one 'human' stage —
+// Frank signed it, no other practice's protocol carried the rule. The architect struck that
+// rule from Protocol v6 §2.3 that day: Ulysses now signs its own manifest and carries the
+// consequence, "exactly as the Field and the Studio have always done." No stage below is kind
+// 'human' anymore — the vocabulary stays (a future practice or rule could still need it), but
+// nothing currently populates it.
 
 export type PracticeId = 'atelier' | 'field' | 'studio'
 
@@ -163,7 +169,7 @@ export const PRACTICES: readonly PracticeAnatomy[] = [
       { label: 'pre-opening check', kind: 'gate', what: 'which aspect of the refrain dominates — and is this opening at a self-created point?' },
       { label: 'monthly line review', kind: 'gate', what: 'five topoi, symmetrical: closing costs what continuing costs', artefact: 'REVIEW-<month>.md' },
       { label: 'DECISION.md', kind: 'work', what: 'the practice proposes a candidate; it creates no publication and blocks nothing while it waits', artefact: 'DECISION.md' },
-      { label: 'PUBLICATION.json', kind: 'human', what: 'Frank’s name and timestamp. The only human publication gate in the ecology.', artefact: 'PUBLICATION.json' },
+      { label: 'PUBLICATION.json', kind: 'gate', what: 'since 2026-08-10 the practice signs its own manifest and carries the consequence — still gated by §§1, 2, 4 and 5, still revocable with a dated reason.', artefact: 'PUBLICATION.json' },
       { label: 'Atelier integrate', kind: 'land', what: 'path boundary, then check · test · build — a project reaches the works surface only with the manifest' },
     ],
     refuses: {
