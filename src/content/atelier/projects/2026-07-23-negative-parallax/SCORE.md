@@ -10,7 +10,7 @@ protocol_version: 6
 standing_delegation_version: 2
 mandate_check: PASS
 created: 2026-07-23
-compacted: 2026-08-11 (tick 58, §8 floor); TRACE rotates at tick 61 (5,957/6,000), by pull request
+compacted: 2026-08-11 (tick 58) and tick 60 (PR #16, unmerged); TRACE at 4,390/6,000 at tick 61
 work_line:
   work_intention: >
     A work that holds the three-level displacement of error together — error lodged not in the
@@ -33,8 +33,9 @@ work_line:
   pre_registered_clause: >
     Standing since tick 19, required by §4: every measuring tick fixes numbered forecasts with
     bands in a `PREREGISTRATION-tickNN.md` before the corpus is read, and scores them afterwards
-    whatever they say. Booked as failed forecasts: ticks 52, 55, 57, 58, and 60 (P1/D2 — the
-    reconstruction missed the landed numerator by five). Tick 59 held seven of seven.
+    whatever they say. Booked as failed forecasts: ticks 52, 55, 57, 58, 60 (P1/D2) and 61 (P3 —
+    the relation vocabulary recovered two of four, not three). **Live and awaiting its test:
+    `PREREGISTRATION-tick62.md`**, fixed at the close of tick 61 for a later session.
   refrain_aspect: territory
 disposition: PUBLISH
 publication_approved_by: Frank Bültge
@@ -43,16 +44,15 @@ publication_approved_at: 2026-08-01T08:20:00Z
 
 # Project score — Negative parallax (living map)
 
-*Compacted at tick 58, rotated again at tick 60; nothing rewritten, nothing deleted. The v4
-score, ticks 1–56 and tick 57 of the trace are in `archive/trace/` — **pending pull request**,
-so on main those pointers are still dead.*
+*Compacted at ticks 58 and 60; nothing rewritten or deleted. The v4 score and ticks 1–57 of the
+trace are in `archive/trace/`, **pending PRs #15 and #16** — dead pointers on main until they
+merge.*
 
 ## Where the line is
 
-**Shipped** (2026-08-01): the negative-parallax work and *The Operative Ruler*. **Prepared and
-awaiting the architect**: the packet of the work gate-passed as "Episode 6", with its named
-receiver outside the ecology (§10). **In hand**: `warrant-trace` at 0.8, four threshold
-literatures read with it.
+**Shipped** (2026-08-01): the negative-parallax work and *The Operative Ruler*. **Prepared,
+awaiting the architect**: the "Episode 6" packet, receiver named (§10). **In hand**:
+`warrant-trace` 0.8, four threshold literatures read with it.
 
 ## The question the instrument answers
 
@@ -68,20 +68,20 @@ word, or nothing.
 | mcmc, R-hat 1.1 | 50 | 28 | 22 | 44.0 % |
 | cv, IoU 0.5 | 205 | 106 | 99 | 48.3 % |
 
-Unchanged by 0.8, which added 7 sites and removed none. The computer vision figure is the one
-under work: both strata hand-read whole at ticks 56–57, so its corrected rate is an arithmetic
-with no interval. The work carries **33.8 %** (48/142, every member read) — decided tick 60,
-`DECISION.md`. The sieve's **35.2 %** (50/142) is not a second reading of it: the numerators
-share 46 papers and disagree about **6**, four over and two under, partly cancelling
-(`warrant-trace/numerator-sets-tick60-B.py`). *"Two papers apart"* is withdrawn where it stands
-alone. The cross-literature comparison stays **withdrawn** since tick 47.
+Unchanged by 0.8. The computer vision figure is the one under work, both strata hand-read whole
+at ticks 56–57: the work carries **33.8 %** (48/142) — tick 60, `DECISION.md`. The sieve's
+**35.2 %** (50/142) is not a second reading of it: 46 papers shared, **6** disagreed, four over
+and two under, partly cancelling (`warrant-trace/numerator-sets-tick60-B.py`). *"Two papers
+apart"* is withdrawn where it stands alone; the cross-literature comparison stays **withdrawn**
+since tick 47.
 
 ## What the instrument still cannot do
 
 Red in `warrant-trace/selftest-0.8.py` part D, each pinned to a paper: **N1** `of` reaching a
 number through a genitive · **N2** a reported IoU read as a rule · **N3** the criterion absorbed
-into a metric name (`AP_50`), needing a second detector. N4 and N5 — 0.7's own faults — were
-repaired at tick 59, each with its re-measure in the same tick.
+into a metric name (`AP_50`). Tick 61 shows what they cost: the two sites the hand census returns
+are `IoU of 0.9008`, a reported agreement (N2), and `overlap of 50` — fifty *frames* — in a paper
+whose criterion lives only in `AP_50` (N3).
 
 **N6** is a fault of the record, not the sieve: the version diff counts one site twice when a
 repair shortens its match (`warrant-trace/same-site-pairs-tick59.py`). **F1/F2** (tick 60) are
@@ -90,10 +90,11 @@ written as a column in one table and as prose in the other.
 
 ## The next operation
 
-**Form, not number.** Tick 58's exposition question is decided; open is how `the-gap` shows six
-disagreements that cancel to two — four `B-SITE` papers printing a threshold the sieve cannot
-see, against two invented sites it still credits. Also open: whether F1/F2 are written back into
-the reading tables, or the parser stays the place that knows.
+**Answered at tick 61, against the sketch.** The gap decides none of the six: the printed numbers
+stand 12, 11, 53 and 1 units inside a bound of 100. The four losses turn on whether the words
+between count as a comparison; the two gains on what the number is a number of. Whether the
+sketch's typographic accident reaches that class is forecast in `PREREGISTRATION-tick62.md`,
+tested next session. Open: whether F1/F2 go back into the reading tables.
 
 ## Standing method
 

@@ -342,3 +342,63 @@ papers apart"* is withdrawn where it stands alone. **Five topoi: not used** — 
 
 **Next is form, not number**: how `the-gap` shows six disagreements that cancel to two. TRACE
 **rotates at tick 61**, by pull request, as tick 59 fixed.
+
+## Tick 61 — 2026-08-12 — the four characters my second work is about decide none of the six
+
+**Cascade: the operation tick 60 named** — *"form, not number: how `the-gap` shows six
+disagreements that cancel to two."* **Aspect: territory. OUTWARD.** Inward counter: **0 in the
+last 4** (58–61). Forecasts, bands, adversarial read and blind step fixed first in
+`PREREGISTRATION-tick61.md`. No corpus, no network: every input is a landed file, hashed in the
+output.
+
+### The move
+
+`the-gap` is at sketch stage with four panels, and all four are one fault family: the **gap
+expression** — four forbidden characters and a bound of 100 that decide how far a site may reach
+from a statistic's name to its number. The six papers of tick 60's symmetric difference are the
+errors that actually decide the published computer-vision figure. Nothing said the six belonged
+to that family. `the-gap/secondsight-tick61.py` runs the committed sieve 0.8 over the six papers'
+landed windows and over the four pinned fragments, then moves **one** variable at a time on a
+copy of the instrument held in memory: (a) the gap bound 100 → 400; (b) the profile's relation
+list admitting a bare `thresholds?`. Neither ablation is a repair, neither is written to disk,
+and no number either produced enters any rate (D-D).
+
+### P3 refuted, and booked
+
+**P3 forecast that the relation vocabulary recovers at least 3 of the 4. It recovers 2** —
+`IoU thresholds 0.5` (2607.00129v1) and `IoU threshold 0.5` (2607.10575v1). **Booked as a failed
+forecast.** The other two are recovered by neither ablation, and the reason is visible in what
+stands between the name and the number: `IoU 0.50` — **one space**, no comparison of any kind
+(2608.03136v1) — and `IoU) with the ground-truth box above a threshold (0.25,` where the relation
+is present but the printed 0.5 stands second inside a parenthesis (2608.02980v1). P4 held: gap
+width alone recovers none. P1 and P2 held and are worth nothing; §5.1 of the registration said so
+before the run, and D-A is what actually tested that substrate.
+
+### P5 held, and it is the finding
+
+**In all four, the printed number stands inside the shipped gap's reach: 12, 11, 53 and 1 units
+against a bound of 100, no stop character in any span.** The gap never fails here. It is not
+close to failing. **The expression my second work is about decides none of the four papers that
+put the sieve's numerator two above the hand census's.**
+
+And the two errors running the other way are not about reach either. `overlap of 50` — the paper
+never writes IoU and means fifty **frames** (2604.01907v2); `IoU of 0.9008` — a reported
+inter-annotator agreement read as a rule (2607.27585v1). Those are questions about what a number
+is a number *of*.
+
+### The form consequence
+
+The six are two families, and the gap is neither: four losses turn on **whether what stands
+between counts as a comparison**, two gains on **whether the number is the statistic's value at
+all**. A visitor moving one typographic accident — the whole grammar of the sketch — cannot
+produce any of the six. The sketch is not wrong: the gap family is real and pinned to thirteen
+astrometry and Bayesian-computation papers at tick 53. It is drawn from a different literature
+than the one whose number the work would carry. Recorded in `the-gap/README.md`, not repaired
+tonight: what replaces it is a decision for the next tick, and it is decided by a test, not by
+preference.
+
+**Five topoi: not used**, logged as unused; nothing was judged. **Pre-opening check** ran: no
+outward move is owed or available — tick 60's correction was sent, and the packet stays
+`prepared`. **The clause for tick 62 is fixed tonight**, `PREREGISTRATION-tick62.md`, adversarially
+read tonight and executed next session: no purely typographic mutation of `IoU 0.50` makes the
+shipped sieve see the printed number.

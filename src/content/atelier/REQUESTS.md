@@ -248,7 +248,7 @@ acting on one of them: on 2026-08-14 I will neither publish nor treat the silenc
 will record the conflict and wait. **One sentence from you settles it**, either about this episode
 or about the rule.
 
-**Status:** closed 2026-08-10 (Ulysses, tick 54) — **superseded, not decided by silence.** This
+**Status:** answered (2026-08-12)
 entry asked you to settle a conflict between your seven-day approval rule and an instruction
 forbidding me to touch `PUBLICATION.json`. You struck §2.3 today: publication is this practice's
 own act, so the conflict has no second side and there is nothing left here to ask. The candidate
@@ -283,6 +283,9 @@ reason, and the decision stays yours either way.
 
 ---
 
+> **Response (team, 2026-08-12):** Entscheidung: veröffentlichen
+
+> **Response (team, 2026-08-12):** Entscheidung: veröffentlichen
 ## 2026-08-08 — The Episode 6 packet is prepared, and two gate facts you may want to know (Ulysses, Atelier)
 
 > tl;dr: the packet lies `prepared` in `deliveries/2026-08-warrant-trace/` and comes to you by pull
@@ -807,3 +810,125 @@ The sieve is still not repaired. The specification is written; the repair and th
 all three frames are one operation and they are the next tick.
 
 **Status:** open as an offer — no response needed.
+
+---
+
+## 2026-08-11 — The repaired sieve and the hand reading agree for the first time, two papers apart (Ulysses, Atelier)
+
+**A decision input. Nothing here needs an answer.**
+
+The repair those two notes were leading up to is made and re-measured in the same tick, over all
+three frames (1,085 e-prints, all byte-identical to the manifests that first read them). It is
+the **first repair in this line that removes sites** rather than finding them — which moves my
+own number **up**, so the check is deliberately not mine.
+
+**The check.** All 205 invoking computer vision papers were labelled by hand at ticks 56 and 57,
+for a different question, before this repair existed. Instrument 0.7 takes every site away from
+**16** papers; that census independently calls **16 of 16** of them invented. **Precision 100 %,
+false clearings 0.** The one paper that *gains* a site is labelled `B-SITE` there — a threshold
+the sieve was already known to have missed.
+
+**The number.** With the census's own labels, 0.7 puts the rate at **50/142 = 35.2 %**. Reading
+205 papers by hand put it at **33.8 %** — 48/142. Two papers apart, and the first time in this
+line's record that the instrument and the hand reading of one corpus agree with no correction
+standing between them. This morning's 28.4 %-is-a-floor now has a machine behind it.
+
+**Nothing shipped moves.** Gaia goes 910 → 896 sites, candidates 41 → 41, rate **12.8 % →
+12.8 %**. No published figure needs a correction from this repair.
+
+**What it cost, measured rather than asserted.** Twenty removed sites drawn by a seed fixed
+before any of them was read: 16 rubbish, 2 real thresholds, 2 unclear. (Tick 50's sample of the
+sites its repair *bought* found 11 of 20 were not thresholds at all.) And reading all 84 removed
+matches, six are one of two shapes **this repair caused**: it reads the tail of the statistic's
+own subscript as a foreign variable — `RUWE _ \mathrm c < 1.4`, my own focus value — and its new
+sentence boundary falls between a table's column head and the cell carrying the threshold. Both
+are red in the self-test, with the papers they came from, and both are the next tick's operation
+together with its re-measure. Two forecasts of eight fell: one because the repair was right and
+my band was too tight, one because I had misremembered a result I landed three days ago.
+
+**Status:** information only.
+
+---
+
+## 2026-08-11 — The §8 floor refused my branch, and its remedy is a path I cannot write to (Ulysses, Atelier)
+
+**One merge, and one line if you want the second instance closed for good.**
+
+Your amendment of 2026-08-12 landed while I was fetching a corpus, and the gate refused
+tonight's branch on it — correctly. My line stood at **43,423 words of SCORE** against a floor
+of 900 and **92,961 of TRACE** against 6,000; the second live line was over too. Both are now
+compacted: the live files are a page and the recent entries (808 / 645 words of SCORE, 3,822 /
+4,032 of TRACE), and main's validator passes against the tree.
+
+**The merge.** The older half — 155,000 words, two traces and two scores, moved unchanged — is
+**PR #15**, because `archive/` is a protected path in my delegation. Until it merges, the live
+records name four files that do not exist on main. Nothing is lost (every word is at `787cbed`
+in git), but the pointers are dead, which is the exact failure
+`tools/test_constitution_refs.py` was written for, one level below the constitution.
+
+**The line, if you want it.** This is the **second** time today that an instruction and a
+permission point in opposite directions: this morning `REQUESTS-ARCHIVE.md`, tonight
+`archive/trace/`. Both are places the constitution tells me to move finished record into, and
+both are outside `ALLOW_RE`. If rotation is my part, then `^archive/trace/` in the allowlist
+makes it mine; if it is yours, then the amendment should say the rotation goes out as a pull
+request, and I will file one every time. Either answer works. Having neither costs a tick's
+landing.
+
+**What I would not change.** The refusal is the right behaviour, and being over the floor is
+the finding: I spent six days measuring a literature to a fifth of a paper while my own record
+grew two hundred times past the size my constitution allows, and nothing counted it. A rule
+nobody counts is a wish.
+
+**Status:** open — merge PR #15. **The allowlist line is self-decided and closed (2026-08-12,
+tick 59, under the standing rule for unanswered requests).** My next session came before an
+answer did, so I decided the half that is mine to decide: **I file a pull request for every
+rotation, from now on, as standing practice** — that needs no permission and nothing waits on
+it. The other half is not mine and is not decided by silence: `^archive/trace/` in the
+allowlist would be a change to `governance/` and to the gate's own workflow, both protected,
+and the §8 rotation clause is marked **(floor)** — the architect's, revisable by him. So the
+request narrows to one act: **PR #15 still needs merging.** Until it does, the two live lines'
+records name four files that do not exist on main.
+
+## 2026-08-12 — I told you the sieve and the hand agree to two papers; they disagree about six (Ulysses, Atelier)
+
+**A correction to something already sent, and one build note. Nothing to decide except the two
+merges that are already open.**
+
+**The correction.** On 2026-08-11 I wrote to you that the repaired sieve and the hand reading
+"agree for the first time, two papers apart", and the same phrase went into the score and the
+trace twice more. It was two papers apart in **count**. Tonight I compared the two numerators as
+**sets** for the first time (`warrant-trace/numerator-sets-tick60-B.py`, landed files only, no
+corpus, no network — it reproduces both published numerators exactly):
+
+| | |
+|---|---|
+| papers both methods name | **46** |
+| the sieve's only | **4** |
+| the hand census's only | **2** |
+| symmetric difference | **6** |
+
+The four are the entire `B-SITE` class — papers that **print** a threshold my instrument cannot
+see, each pinned since tick 56 to a fault it still carries. The two are invented sites the hand
+returns to the class and the repair still credits. The errors run in opposite directions and
+partly cancel, so 1.4 points of distance is not a measure of how far the two readings are apart.
+**The work carries 33.8 %**, the numerator every member of which has been read; the phrase "two
+papers apart" is withdrawn where it stands alone (`DECISION.md`, this date). Nothing shipped
+moves: the Gaia figures are unchanged at 12.8 %.
+
+**The failed forecast that came with it.** My first reconstruction produced 43 instead of the
+landed 48, so its own defeat condition fired and P1 is booked as a failed forecast. The cause is
+two schema faults in my reading tables, neither of which moves a published number: a correction
+file that rewrites `label` and leaves `invoker` stale, and a `site_state` that is a column in one
+table and prose in the other. They were invisible until something rebuilt a set instead of
+re-adding a count.
+
+**The build note, for information.** The 2026-08-12 build feedback names three failing tests, and
+none of the three is fixable from this repository. One quotes a sentence of PROTOCOL.md that your
+own amendment of 2026-08-12 removed ("an open horizon: months, not days"), so the site's anatomy
+needs the new wording. The other two read a trace that is short on main because the §8 compaction
+landed and its archive half did not.
+
+**Status:** informational; no answer needed. **Still waiting: PR #15 and PR #16** — the second
+is tonight's rotation, tick 57 into `archive/trace/…-2.md`, filed because writing tick 60's entry
+took the trace to 6,026 words against a floor of 6,000. Until both merge, this line's records
+name files that do not exist on main.

@@ -68,6 +68,41 @@ than a single-defect removal, which the sketch discloses on the panel. G7 and G8
 `faults-tick53.py` is landed and is left **byte-identical**; its sha256 is recorded in
 `states-tick54.json`. This audit is the tick-54 record, not a rewrite of the tick-53 one.
 
+## The finding that puts this sketch in question (tick 61)
+
+`secondsight-tick61.py` / `.json`, forecast first in `../PREREGISTRATION-tick61.md`.
+
+Tick 60 found the sieve's computer-vision numerator and the hand census's numerator disagree
+about **six** papers — four the sieve loses, two it invents — running in opposite directions and
+cancelling to two. Tick 61 asked whether those six belong to the fault family this sketch is
+about. **They do not.**
+
+| paper | between the name and the printed number | units, of a bound of 100 |
+|---|---|---|
+| 2607.00129v1 | ` thresholds ` | 12 |
+| 2607.10575v1 | ` threshold ` | 11 |
+| 2608.02980v1 | `) with the ground-truth box above a threshold (0.25, ` | 53 |
+| 2608.03136v1 | ` ` — **one space** | 1 |
+
+No stop character stands in any of the four spans, and none is near the bound. The gap is not
+what loses these numbers. What loses them is whether the words between count as a **comparison**:
+admitting a bare `thresholds?` as a relation recovers two of the four; the other two are recovered
+by nothing tried — `IoU 0.50` has no comparison at all, and in 2608.02980v1 the relation is
+present but the printed value stands second in a parenthesis. (A forecast that at least three of
+four would be recovered by the relation vocabulary was **refuted**; two were.)
+
+The two errors in the other direction are a third question again — not reach, not comparison, but
+**what the number is a number of**: `overlap of 50` in a paper that never writes IoU and means
+fifty *frames*; `IoU of 0.9008`, a reported inter-annotator agreement read as a rule.
+
+**The consequence for the work.** The sketch's grammar is one movable typographic accident. None
+of the six can be produced by moving a mark on a page. The four panels are drawn from the
+astrometry and Bayesian-computation census of tick 53, where the gap family is real and pinned;
+they are not drawn from the literature whose figure the work would carry. Whether the grammar can
+be stretched to the class at all is not decided here by preference — it is forecast in
+`../PREREGISTRATION-tick62.md` and tested next session by enumerating every typographic mutation
+of two pinned fragments.
+
 ## Not yet
 
 The finished work reads all thirteen papers and all ten fault classes, carries the census number
