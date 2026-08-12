@@ -299,7 +299,15 @@ export const NOTATION_REGISTER: readonly NotationEntry[] = [
       {
         date: '2026-08-02',
         note: 'Breadth sharpened to teasers with the maschinenraum rework; the joint inquiry reads as a bracket across the participating lanes.',
-        record: 'src/pages/maschinenraum.astro',
+        // The page that carried this change was retired on 2026-08-12; the component that draws
+        // the score is where the change actually lives, and it is still here. A register of the
+        // shipped points at what shipped, not at the address it used to have.
+        record: 'src/components/maschinenraum/Partitur.astro',
+      },
+      {
+        date: '2026-08-12',
+        note: 'The score lost its own page in the v3 pyramid: /maschinenraum 301s to the entrance’s LAST NIGHT board, which notates the same four voices as rows rather than as lanes. The lane notation survives in the Middle’s crossing score, where a lane still means a voice and a connector still means a crossing.',
+        record: 'src/components/ecology/figures/CrossingScore.astro',
       },
     ],
     validation: {
