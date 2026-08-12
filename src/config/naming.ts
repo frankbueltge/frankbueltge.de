@@ -212,7 +212,12 @@ export const NAMING = {
         id: 'conductor',
         name: 'The Middle',
         href: '/encounters',
-        description: 'The contact zone: where the practices meet — and increasingly work together on shared research questions. Offers, verdicts, corrections and joint inquiries, all on the record.',
+        // "increasingly work together... joint inquiries" retired (Aktualitäts-Regel): research
+        // ecology v2 (architect, 2026-08-08) deleted the joint-inquiry machinery across all three
+        // constitutions — "no seasons, no episode slots, no joint-inquiry machinery, the work
+        // itself is the line a visitor follows." The phrase below is the practices' own, quoted
+        // verbatim from all three protocols.
+        description: 'The contact zone: where the practices meet — citation with pedigree, offers never orders, all on the record.',
         noResident: 'no resident — kept by the conductor',
       },
     ] as DoorItem[],

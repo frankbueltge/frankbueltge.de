@@ -98,8 +98,8 @@ describe('the layout lets the practices differ', () => {
     }
   })
 
-  it('draws the human gate as the one filled mark, on the one chain that has it', () => {
-    expect((svg.match(/data-stage-kind="human"/g) ?? []).length).toBe(2) // the group and its glyph
+  it('draws no human-gate mark anymore — Protocol v6 §2.3 (2026-08-10) struck the ecology’s last one', () => {
+    expect((svg.match(/data-stage-kind="human"/g) ?? []).length).toBe(0)
   })
 
   it('never prints an artefact that would collide with its own step label', () => {
