@@ -134,7 +134,7 @@ describe('integrate — v4 publication gate', () => {
     expect(r.accepted).toContainEqual({ slug: '2026-07-18-published', kind: 'astro' })
     expect(existsSync(join(site, 'src/pages/atelier/werke/2026-07-18-published.astro'))).toBe(true)
   })
-  it('refuses a manifest without a human approver', () => {
+  it('refuses a manifest without a signer', () => {
     mkProject('2026-07-18-no-approver', { ...validPub('2026-07-18-no-approver'), approved_by: '' })
     const r = integrate({ sourceDir: src, siteDir: site })
     expect(r.rejected.find((x) => x.slug === '2026-07-18-no-approver')?.reason).toMatch(/approved_by/)
