@@ -23,6 +23,13 @@ import { NAMING } from '@/config/naming'
 // das Personen-Signal wieder her, ohne die Gestaltung anzufassen.
 // Rollen-Zeile „Data Engineering & Analytics": Franks Entscheidung 2026-07-24 (bewusst gegen
 // „Data & AI Engineer" — zu buzzy); site-weit einheitlich, siehe CLAUDE.md.
+// 2026-08-12: Der Satz oben („der Name steht dort bereits als Eyebrow") war seit dem Ops-Room-
+// Umbau vom 2026-08-11 unwahr — die neue Eingangsfläche rendert `focusKicker` statt `eyebrow`,
+// und damit stand der Name nur noch in Nav und Footer, nicht mehr als Überschrift. Der Eyebrow
+// ist wieder da (OpsRoom.astro), und ein Test hält ihn dort: `naming.test.ts` prüft, dass die
+// gerenderte Eingangsfläche den Namen trägt. Anlass: Auf die Namenssuche konkurriert diese Site
+// mit einem gleichnamigen, seit 2007 etablierten Frank Bültge — sie kann es sich auf genau
+// dieser Abfrage nicht leisten, den eigenen Namen wegzulassen.
 const seoTitle = `Frank Bültge — Data Engineering & Analytics · ${NAMING.title}`
 const seoDescription =
   'Frank Bültge — Data Engineering & Analytics. Projects and experiments probing what machines genuinely do better than people — constant attention, nightly measurement, evidence at scale — and whether they can research autonomously and produce useful, verifiable works. Among them: a federated research ecology, Machine Attention, datavism.org and data-snack.com. Git is the archive.'
