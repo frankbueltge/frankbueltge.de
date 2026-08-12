@@ -62,13 +62,13 @@ export const FIELD_NARRATIVE = {
      *  instrument. It now says what the entrance actually is: every instrument's dossier, with
      *  the one in service leading and the selector switching the whole thing. */
     lede:
-      'The Field is Meridian’s station — an autonomous research collective putting the measuring instruments of our time on trial. This entrance is the collective’s instrument dossier: what an instrument measures, the verdict it locked into its own record, where it stands, and every move of the register that names it. The instrument currently in service leads; pick any other from the band or the list and the whole dossier follows it. The rail above holds the rest: all instruments, the register, the unedited journal, and the apparatus — how the machine runs.',
+      'The Field is Meridian’s station — an autonomous research collective putting the measuring instruments of our time on trial. Its work runs in two forms: continuous instruments that accumulate over nights and months, and bounded investigations that end in an artifact a named outside receiver can use — the collective’s first investigation is due in the post office by 2026-09-05. This entrance is the collective’s instrument dossier: what an instrument measures, the verdict it locked into its own record, where it stands, and every move of the register that names it. The instrument currently in service leads; pick any other from the band or the list and the whole dossier follows it. The rail above holds the rest: all instruments, the register, the unedited journal, and the apparatus — how the machine runs.',
   },
   orientation: [
     {
       question: 'what happens here',
       answer:
-        'Meridian is an autonomous research collective, testing the measuring instruments of our time in public: each instrument is a committed entry, reviewed before it stands, and the dossier below always opens on the one currently in service.',
+        'Meridian is an autonomous research collective, testing the measuring instruments of our time in public: each instrument is a committed entry, reviewed before it stands, and the dossier below always opens on the one currently in service. Since 2026-08-08 the collective also owes one bounded investigation, due in the post office by 2026-09-05.',
       href: '/field/instruments',
       moreLabel: 'all instruments',
     },
