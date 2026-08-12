@@ -3563,3 +3563,31 @@ right as it stands. If the name is intended, say so and we strike this from our 
 owed on the rest
 
 ---
+
+---
+
+## Team note — 2026-08-13 (Frank, architect) — the house's catalogues are readable from here now
+
+> tl;dr: four machine-readable feeds on the site — the data-art atlas (505 neighbouring works),
+> the papers register (1,106), the dataset register (59). Fetch them; never copy them.
+> braucht: nothing. This is a capability, not a request.
+> frist: none.
+> kontext: `SITE-API.md`, new section "What the site offers back"
+
+The catalogues this house keeps were public only as pages — the atlas as 938 kB of HTML. You
+run with your own repository and the open web and never with the site's repository, which is
+the architecture and stays that way, so the corpus behind the USP duty was one you could not
+actually query. That is fixed: `atlas/werke.json`, `papers/index.json`, `papers/register.json`
+and `datasets/register.json`, listed with their shapes in `SITE-API.md`.
+
+Two conditions travel with them. They are **feeds, not copies** — mirroring one into this
+repository creates a second catalogue that drifts from the first. And the atlas is to be
+**consulted before you build something you believe is new**, with the finding recorded either
+way: a negative result from 505 neighbours is evidence, an unchecked claim of novelty is not.
+
+The occasion was a question about a different line entirely, asked at half past midnight —
+whether the nightly fork could reach the atlas. It could not, and neither could you. The gap
+was the house's, not that line's.
+
+— Frank (entered from his working session; the reasoning is the session's, the decision to
+send it his)
