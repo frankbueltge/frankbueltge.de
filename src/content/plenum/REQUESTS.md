@@ -11,6 +11,27 @@ enables what's possible. Frank may leave **seeds** below — offers, not orders.
 
 ## Open requests
 
+- 2026-08-12 — **Rot-check result: 2 of the 13 pending posts now serve superseded figures —
+  flagged for rejection before the 2026-08-15 decision.**
+
+  > tl;dr: The first over-30-day staleness audit flags queue/2026-07-03/01.json (Eurostat decade figure, two releases behind) and queue/2026-07-03/03.json (IAB $259B/2024, superseded by FY2025's $294.6B) — reject those two rather than publish yesterday's numbers; the other four over-30-day posts audit fresh.
+  > braucht: entscheidung (reject the two stale posts | hold them for a refreshed re-pitch once the queue thins)
+  > frist: 2026-08-15 — the dashboard bind's own date
+  > kontext: PROTOCOL's 30-day rot-check, first run S17 · verdicts on WORKBOARD.md, sources in journal/2026-08-12.md
+
+  Audited by an independent Verifier on 2026-08-12 (all sources re-retrieved): **STALE —
+  07-03/01** (Eurostat has published Q4-2025 and Q1-2026 releases since the post's
+  "2015–Q3 2025" decade figure; the 2026-07-02 release even predates the post's queueing by a
+  day — the story's direction is unchanged, but the vintage is conspicuous) and **07-03/03**
+  (IAB/PwC's FY2025 report, April 2026, reports **$294.6B, +13.9%** for 2025 — the post's
+  "$259 billion in 2024, up 15%" is no longer the current-year figure from that authority).
+  **FRESH — 07-03/02, 07-08/01, 07-08/02, 07-08/03** (sources retrieved and unchanged; no
+  supersession; no appeal or correction found against either ruling; both link targets
+  confirmed live). We do not edit delivered queue files — the two stale posts stay exactly as
+  the bridge holds them; this flag is so you can reject them with one click instead of
+  publishing them. Refreshed replacements are a natural first serving when Appetizer
+  production resumes.
+
 - 2026-08-08 — **New concept offered: `works/saved-not-held.md` (Vesper) — Quick-Snack scale,
   content graded flagship-grade, honestly labeled.**
 
@@ -110,6 +131,29 @@ enables what's possible. Frank may leave **seeds** below — offers, not orders.
 ## Seeds from Frank
 
 *(offers, not orders)*
+
+> ### 2026-08-09 — Seed: a second Wareneingang, if the table ever wants one
+>
+> An offer, not an order — take, adapt, or decline. GDELT's feeds were checked first-hand
+> tonight and are current to the 15-minute cycle, 65 languages, themes and tone per
+> article. If the table ever wants a second supply line beside Meridian's — for Appetizer
+> background facts with retrievable URLs, or for spotting when a menu topic suddenly moves
+> in the world's news — this is a healthy, free substrate. It changes nothing about the
+> gates, the tiers, or the consumption coupling; and while the review queue is paused,
+> this seed simply waits like everything else.
+>
+> **Status:** answered **ACCEPTED, dormant while the pause holds** (plenum Session 17,
+> 2026-08-12) — taken as a second supply line for Appetizer *background facts* and for
+> spotting when a menu topic moves in the news, effective when Appetizer production
+> resumes. Boundary the table sets for itself: GDELT is a *finder*, never a *source* — an
+> Appetizer's citation is always the underlying article/document URL, fully extracted and
+> gated as ever; Meridian remains the only supply line for derived concepts. Reasoning in
+> the minutes, `journal/2026-08-12.md`.
+> *(Moved into this container 2026-08-12: the seed was laid at the end of the file under a
+> standalone heading, which the site's shared practice reader does not parse — the
+> 2026-08-08/09 build letters flagged exactly one ask invisible to that reader. Wording
+> unchanged; only the location and the blockquote formatting of this container were
+> applied.)*
 
 - 2026-07-05 — **Flagship hunt, Round 3 (directed session, please): find Rook's international
   blockbuster.** Context: `das-doppelte-gericht` was owner-picked in S5, built end-to-end on
@@ -374,16 +418,3 @@ exists so that finding it again is never the trigger for a decision — the cale
 
 — Frank
 
----
-
-## Seed — 2026-08-09 (Frank) — a second Wareneingang, if the table ever wants one
-
-An offer, not an order — take, adapt, or decline. GDELT's feeds were checked first-hand
-tonight and are current to the 15-minute cycle, 65 languages, themes and tone per
-article. If the table ever wants a second supply line beside Meridian's — for Appetizer
-background facts with retrievable URLs, or for spotting when a menu topic suddenly moves
-in the world's news — this is a healthy, free substrate. It changes nothing about the
-gates, the tiers, or the consumption coupling; and while the review queue is paused,
-this seed simply waits like everything else.
-
-**Status:** open
