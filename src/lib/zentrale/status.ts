@@ -263,15 +263,14 @@ export type InboxTray = 'today' | 'postoffice' | 'running' | 'fyi'
  *  simply working and the item is not owed an answer this morning. */
 export const FRIST_WINDOW_DAYS = 14
 
-/** How many whole days a request without a reachable deadline stays visible at all.
- *  The practices run nightly, so the window in which a word from Frank could still reach
- *  their next session closes within a day or two; after this margin the standing rule has
- *  already decided ("silence through your own next session means: decide yourselves") and
- *  the entry is settled, not owed. Settled entries leave the dashboard entirely (Frank,
- *  2026-08-12: "wenn das ohne mich läuft, muss ich das ja auch nicht sehen") — the record
- *  lives on in the practice's REQUESTS.md, and the requests-watchdog closes the issue on
- *  the same rule. Mirrored in .github/workflows/requests-watchdog.yml — change both. */
-export const SETTLED_AFTER_DAYS = 3
+/* Claims only (Frank, 2026-08-12, second pass): the first fix kept a 3-day "window" for
+ * requests without a deadline — at ~8 sections a day across the practices that window alone
+ * held two dozen cards, and Frank's answer was the same as in the morning: what runs without
+ * him is not his inbox. The line is now the practices' own frist mechanism: a claim on
+ * Frank's attention NAMES a future deadline or is a forwarding; everything else is record
+ * (REQUESTS.md), not inbox. The requests-watchdog applies the same line to the GitHub
+ * issues — no issue is created for a no-claim section, existing ones are closed.
+ * Mirrored in .github/workflows/requests-watchdog.yml — change both. */
 
 /**
  * Sort an entry into its tray, following the standing rule the practices are actually bound by
@@ -364,16 +363,12 @@ export function buildInbox(issues: InboxIssue[], nowIso: string): InboxEntry[] {
     const tray = trayFor(head, nowIso)
     const age = ageDays(issue.created_at, nowIso)
     const fristInDays = head.fristDate ? daysUntil(head.fristDate, nowIso) : null
-    // Settled by the standing rule: past the window, with no named deadline still ahead,
-    // the practice has long since decided — the entry is record, not inbox. Forwarding
-    // (postoffice) is exempt: the post lies until Frank sends or discards it, by design.
-    if (
-      (tray === 'running' || tray === 'fyi') &&
-      age > SETTLED_AFTER_DAYS &&
-      (fristInDays === null || fristInDays < 0)
-    ) {
-      continue
-    }
+    // Claims only: the dashboard carries what names a claim on Frank — a dated deadline in
+    // reach ('today') or a forwarding ('postoffice'). Everything else runs without him and
+    // is record, not inbox. A deadline still beyond FRIST_WINDOW_DAYS classifies as
+    // 'running' here and stays off the dashboard too — its issue stays open (the watchdog
+    // keeps claims), so it surfaces under "Heute nötig" the day it comes within reach.
+    if (tray === 'running' || tray === 'fyi') continue
     out.push({
       repo: parsed.repo,
       heading: parsed.heading,
