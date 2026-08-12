@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs'
+import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
 import { numberWord } from '@/lib/atelier/sessions'
 import { NAMING } from './naming'
@@ -164,5 +166,42 @@ describe('NAMING.triptych', () => {
       expect(card.caption.length, `caption ${card.id}`).toBeGreaterThan(80)
       expect(card.cta.endsWith('→'), `cta ${card.id}`).toBe(true)
     }
+  })
+})
+
+/**
+ * The name on the entrance.
+ *
+ * This site competes for its own name with a different, long-established Frank Bültge, and it has
+ * lost that query once already: site-v2 (2026-07-16) turned every title and heading over to the
+ * abstract concept, the ranking fell, and the repair was to put the name back as the entrance's
+ * eyebrow — above an H1 that deliberately stays the house's question rather than a person.
+ *
+ * That repair was then silently undone: the ops room (2026-08-11) rendered `focusKicker` where
+ * `eyebrow` had been, and nothing failed, because nothing was checking. The comment in
+ * src/pages/index.astro went on describing an eyebrow that was no longer rendered. This test is
+ * what makes the third time impossible.
+ */
+describe('the entrance carries the name', () => {
+  const entrance = readFileSync(
+    fileURLToPath(new URL('../components/pages/OpsRoom.astro', import.meta.url)),
+    'utf8',
+  )
+
+  it('renders NAMING.eyebrow, which is where the person stands as a heading', () => {
+    expect(entrance).toContain('NAMING.eyebrow')
+  })
+
+  it('keeps the person and the role in that eyebrow', () => {
+    // Both halves matter: the name is the query, the role is what disambiguates it from the
+    // namesake. Either one alone is a weaker answer than the pair.
+    expect(NAMING.eyebrow).toContain('FRANK BÜLTGE')
+    expect(NAMING.eyebrow.toLowerCase()).toContain('data engineering')
+  })
+
+  it('does not put the name in the H1 — the H1 is the house’s question', () => {
+    // Stated as a test so the fix above is never "improved" into overwriting the headline: the
+    // eyebrow exists precisely so the H1 does not have to carry the name.
+    expect(NAMING.title.toLowerCase()).not.toContain('bültge')
   })
 })
