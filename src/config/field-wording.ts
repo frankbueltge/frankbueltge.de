@@ -20,12 +20,14 @@ export const FIELD_GRAMMAR = {
   /** Zwei Zeilen, wie der Streifen sie am ruhenden Stift setzt (field_viz.py). */
   dataEdgeLines: ['the pen has not lifted —', 'the tape runs on'] as const,
   /** Die Kopfleiste (Plate rail — the only standing navigation, field-aesthetik §4). */
+  /** v3 pyramid, 2026-08-12: the register and apparatus rooms were folded into the station sheet
+   *  (their routes 301 there), so the rail is the sheet plus the registers under it. */
   rail: [
-    { label: 'this instrument', href: '/field', hint: 'the instrument currently under verification' },
+    { label: 'the station', href: '/field', hint: 'the sheet — status, the gate, what is in service' },
     { label: 'instruments', href: '/field/instruments', hint: 'all instruments — existing URLs stay' },
-    { label: 'register', href: '/field/history', hint: 'the chronicle as a recorder tape · /field/chronicle.json' },
     { label: 'journal', href: '/field/journal', hint: 'day files, grouped — the unedited record' },
-    { label: 'apparatus', href: '/field/apparatus', hint: 'repo, protocol, team channel, nightly runs' },
+    { label: 'constitution', href: '/field/protocol', hint: 'the protocol, as mirrored' },
+    { label: 'team channel', href: '/field/requests', hint: 'REQUESTS — the one steering channel' },
   ] as RailItem[],
   door: { label: '→ the middle', href: '/encounters', hint: 'enc-2026-001 — the correction’s two readings' },
   backToPlate: '← back to the instrument',

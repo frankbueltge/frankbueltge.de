@@ -27,13 +27,15 @@ describe('approved field grammar (static formulas, test-protected)', () => {
     expect(FIELD_GRAMMAR.stripH1).toBe('The pen has not lifted.')
   })
 
-  it('keeps the plate rail exactly as designed', () => {
+  it('keeps the plate rail exactly as designed (v3 pyramid 2026-08-12: the station, then its registers)', () => {
+    // The register and apparatus rooms were folded into the station sheet by the v3 rebuild
+    // (docs/design_handoff_research_ecology/README.md); both routes 301 to it.
     expect(FIELD_GRAMMAR.rail.map((r) => r.label)).toEqual([
-      'this instrument',
+      'the station',
       'instruments',
-      'register',
       'journal',
-      'apparatus',
+      'constitution',
+      'team channel',
     ])
     expect(FIELD_GRAMMAR.door.label).toBe('→ the middle')
   })

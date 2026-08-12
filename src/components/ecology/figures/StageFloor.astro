@@ -1,0 +1,70 @@
+---
+// THE STAGE FLOOR — the Studio's figure: one work in the light, every earlier one dimmed, and
+// every strike still on the floor with its reason.
+//
+// The practice's own grammar: a premiere is a pool of light, a struck concept is a cross that
+// stays, and the Gasse at the side holds what was refused at the gate, unlit. The floor keeps
+// every mark — which is why the crosses are not filtered out for tidiness. Each one carries its
+// reason verbatim from src/data/studio/stage.curated.json, where every reason is a quotation from
+// the session commit that made it.
+import type { StageFloor } from '@/lib/ecology/pyramid/figures'
+
+interface Props {
+  floor: StageFloor
+}
+const { floor } = Astro.props
+
+const BOX = { width: 660, height: 150 }
+const FLOOR = { x: 16, y: 22, width: 520, height: 112 }
+const GASSE = { x: 560, width: 84 }
+
+/** Pools are laid across the floor in the order they premiered, the newest lit. Their positions
+ *  are spread evenly rather than dated: this is a stage, not a timeline — the Studio's own
+ *  chronicle is where the dates live. */
+const pools = floor.pools.map((pool, i) => {
+  const step = FLOOR.width / (floor.pools.length + 1)
+  return {
+    ...pool,
+    cx: FLOOR.x + step * (i + 1),
+    cy: FLOOR.y + 34 + ((i * 17) % 26),
+    rx: pool.lit ? 54 : 40,
+    ry: pool.lit ? 20 : 15,
+  }
+})
+
+const strikes = floor.strikes.map((strike, i) => ({
+  ...strike,
+  cx: FLOOR.x + 46 + ((i * 71) % (FLOOR.width - 80)),
+  cy: FLOOR.y + 76 + ((i % 2) * 16),
+}))
+---
+
+<svg viewBox={`0 0 ${BOX.width} ${BOX.height}`} role="img" aria-label={`The Studio's floor: ${floor.pools.length} premieres, the newest in the light, and ${floor.strikes.length} struck concepts that stay on the floor with their reasons.`}>
+  <rect class="eco-fig-floor" x={FLOOR.x} y={FLOOR.y} width={FLOOR.width} height={FLOOR.height} />
+
+  {pools.map((pool) => (
+    <g>
+      <ellipse class={pool.lit ? 'eco-fig-pool eco-fig-pool-lit' : 'eco-fig-pool'} cx={pool.cx} cy={pool.cy} rx={pool.rx} ry={pool.ry}>
+        <title>{pool.title} — premiered {pool.date}</title>
+      </ellipse>
+      {pool.lit && (
+        <text class="eco-fig-pool-title" x={pool.cx} y={pool.cy + 3} text-anchor="middle">{pool.title.toUpperCase()}</text>
+      )}
+    </g>
+  ))}
+
+  {strikes.map((strike) => (
+    <path class="eco-fig-strike" d={`M${strike.cx - 6} ${strike.cy - 6} l12 12 M${strike.cx + 6} ${strike.cy - 6} l-12 12`}>
+      <title>{strike.name} ({strike.session}) — {strike.reason}</title>
+    </path>
+  ))}
+
+  {/* the Gasse: held at the gate, not struck — unlit rectangles, and the floor still shows them */}
+  <line class="eco-fig-gasse-rule" x1={GASSE.x - 14} y1={FLOOR.y} x2={GASSE.x - 14} y2={FLOOR.y + FLOOR.height} />
+  {floor.held.map((held, i) => (
+    <rect class="eco-fig-gasse" x={GASSE.x} y={FLOOR.y + 22 + i * 22} width={GASSE.width} height="14">
+      <title>{held.name} — {held.session} {held.reason}</title>
+    </rect>
+  ))}
+  <text class="eco-fig-gasse-label" x={GASSE.x + GASSE.width / 2} y={FLOOR.y + FLOOR.height - 8} text-anchor="middle">GASSE</text>
+</svg>

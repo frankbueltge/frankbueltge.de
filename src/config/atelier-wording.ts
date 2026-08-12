@@ -27,14 +27,15 @@ export const ATELIER_GRAMMAR = {
    * Stufe-0-Revision 2026-07-20 (Franks Auftrag: verständliche Haustür): /atelier ist
    * jetzt der Eingang (ohne Rail), das Blatt zieht als Zimmer nach /atelier/sheet um —
    * Labels unverändert, nur die Tür des Blatts zeigt auf den neuen Ort. */
+  /** v3 pyramid, 2026-08-12: the rail is the way back up and the way down to the registers, and
+   *  nothing else. The five standalone rooms it used to list (sheet, sheets, material, foundation,
+   *  projects) were folded into the station sheet and its registers; their routes 301 there. */
   rail: [
-    { label: 'this sheet', href: '/atelier/sheet', hint: 'the current working sheet' },
-    { label: 'projects', href: '/atelier/projects', hint: 'the research log — the work-line and its studies under Protocol v5 (2026-07-24)' },
-    { label: 'sheets', href: '/atelier/sheets', hint: 'all sheets, one per thread' },
+    { label: 'the station', href: '/atelier', hint: 'the sheet — status, the running line, the map' },
     { label: 'works', href: '/atelier/works', hint: 'works & catalogue — existing URLs stay' },
     { label: 'journal', href: '/atelier/journal', hint: 'the journal as session register, S1…' },
-    { label: 'material', href: '/atelier/material', hint: 'sources & the atlas — Ulysses’ own shelf' },
-    { label: 'apparatus', href: '/atelier/apparatus', hint: 'repo, constitution, team channel, integration machinery' },
+    { label: 'constitution', href: '/atelier/protocol', hint: 'the protocol, as mirrored' },
+    { label: 'team channel', href: '/atelier/requests', hint: 'REQUESTS — the one steering channel' },
   ] as RailItem[],
   door: { label: '→ the middle', href: '/encounters', hint: 'encounters; the doorway at the sheet’s edge' },
   /** Rückweg-Konvention jeder Unterseite (atelier-aesthetik §5; Stufe-0-Revision

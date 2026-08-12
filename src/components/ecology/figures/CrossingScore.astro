@@ -1,0 +1,66 @@
+---
+// THE CROSSING SCORE — the Middle's figure: four voices on four lanes, and a connector wherever a
+// recorded crossing joined them.
+//
+// The columns are the register's own ORDER, not a time axis. Two of the recorded crossings carry
+// no as-of date, and an axis stretched over dates half the record does not have would place those
+// two somewhere they were never observed. The order is a fact; a position in time would be a
+// guess — and this is the surface whose whole subject is what actually passed between practices.
+//
+// The conductor gets no lane. A human keeping the record is not a voice crossing with the others,
+// and drawing him as one would make the Middle a fifth practice.
+import { LANES, type Crossing, type LaneId } from '@/lib/ecology/pyramid/figures'
+
+interface Props {
+  crossings: Crossing[]
+  /** the joint inquiry still in motion, bracketed above the columns it runs across */
+  running: { label: string; from: number; to: number } | null
+}
+const { crossings, running } = Astro.props
+
+const BOX = { width: 660, height: 150, left: 40, right: 596, top: 34, gap: 28 }
+const laneY = (lane: LaneId) => BOX.top + LANES.indexOf(lane) * BOX.gap
+const step = (BOX.right - BOX.left) / Math.max(1, crossings.length - 1 || 1)
+const columnX = (i: number) => (crossings.length === 1 ? (BOX.left + BOX.right) / 2 : BOX.left + i * step)
+
+const LANE_LABEL: Record<LaneId, string> = {
+  ulysses: 'AT',
+  meridian: 'FI',
+  ensemble: 'ST',
+  plenum: 'PL',
+}
+---
+
+<svg viewBox={`0 0 ${BOX.width} ${BOX.height}`} role="img" aria-label={`Four voices on four lanes; ${crossings.length} recorded crossings, each drawn as a connector between the lanes that took part.`}>
+  {LANES.map((lane) => (
+    <>
+      <line class={`eco-fig-lane eco-voice-${lane === 'plenum' ? 'conductor' : lane}`} x1={BOX.left - 16} y1={laneY(lane)} x2={BOX.right + 16} y2={laneY(lane)} />
+      <text class="eco-fig-lane-label" x={BOX.right + 24} y={laneY(lane) + 3}>{LANE_LABEL[lane]}</text>
+    </>
+  ))}
+
+  {crossings.map((crossing, i) => {
+    const ys = crossing.lanes.map(laneY)
+    return (
+      <g>
+        {ys.length > 1 && (
+          <line class="eco-fig-connector" x1={columnX(i)} y1={Math.min(...ys)} x2={columnX(i)} y2={Math.max(...ys)} />
+        )}
+        {crossing.lanes.map((lane) => (
+          <circle class={`eco-fig-move eco-voice-${lane === 'plenum' ? 'conductor' : lane}`} cx={columnX(i)} cy={laneY(lane)} r="3.4">
+            <title>{crossing.id}{crossing.date ? ` · ${crossing.date}` : ''} — {crossing.title}</title>
+          </circle>
+        ))}
+      </g>
+    )
+  })}
+
+  {running && (
+    <>
+      <path class="eco-fig-bracket" d={`M${columnX(running.from)} ${BOX.top - 18} L${columnX(running.from)} ${BOX.top - 24} L${columnX(running.to)} ${BOX.top - 24} L${columnX(running.to)} ${BOX.top - 18}`} />
+      <text class="eco-fig-bracket-label" x={(columnX(running.from) + columnX(running.to)) / 2} y={BOX.top - 28} text-anchor="middle">
+        {running.label}
+      </text>
+    </>
+  )}
+</svg>
